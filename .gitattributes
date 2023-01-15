@@ -1,0 +1,3 @@
+*.strings diff=localizablestrings
+TwoFAS/update.swift filter=git-crypt diff=git-crypt
+TwoFAS/Protection/Keys.swift filter=git-crypt diff=git-crypt

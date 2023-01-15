@@ -1,0 +1,6 @@
+sources:
+    - TwoFAS/
+templates:
+    - sourcery/Mock.stencil
+output:
+    TwoFASTests/Generated/

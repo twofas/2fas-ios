@@ -1,0 +1,18 @@
+{
+  "images" : [
+    {
+      "alignment-insets" : {
+        "bottom" : 0,
+        "left" : -6,
+        "right" : 6,
+        "top" : 0
+      },
+      "filename" : "IconArrowLeft.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

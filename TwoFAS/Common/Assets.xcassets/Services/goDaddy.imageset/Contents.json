@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "goDaddy.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

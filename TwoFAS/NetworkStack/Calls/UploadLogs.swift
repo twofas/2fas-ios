@@ -1,0 +1,48 @@
+//
+//  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
+//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Contributed by Zbigniew Cisiński. All rights reserved.
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
+//
+
+import Foundation
+
+public enum UploadLogs {
+    public struct Request: NetworkMultipartRequestFormat {
+        let auditID: String
+        let textLog: String
+        
+        let method: HTTPMethod = .POST
+        var path: String { "mobile/support/debug_logs/audit/\(auditID)" }
+        
+        // Multipart
+        let boundary: String = UUID().uuidString
+        let httpBody = NSMutableData()
+        
+        init(auditID: String, textLog: String) {
+            self.auditID = auditID
+            self.textLog = textLog
+            
+            addFileField(named: "file", data: textLog.data(using: .utf8)!, filename: "file", mimeType: "text/plain")
+        }
+    }
+    
+    public struct Response: Decodable {
+        public let code: Int
+        public let type: String?
+        public let description: String?
+        public let reason: String?
+    }
+}

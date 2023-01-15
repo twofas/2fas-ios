@@ -1,0 +1,28 @@
+{
+  "images" : [
+    {
+      "alignment-insets" : {
+        "bottom" : 18,
+        "left" : 0,
+        "right" : 0,
+        "top" : 0
+      },
+      "filename" : "ResetShield.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "ResetShieldDark.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

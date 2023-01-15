@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20E232" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="LogEntity" representedClassName="LogEntity" syncable="YES">
+        <attribute name="action" attributeType="String"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="entityID" attributeType="String"/>
+        <attribute name="isApplied" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="kind" attributeType="String"/>
+    </entity>
+    <entity name="SectionCacheEntity" representedClassName="SectionCacheEntity" syncable="YES">
+        <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="metadata" attributeType="Binary"/>
+        <attribute name="modificationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="order" attributeType="Integer 32" usesScalarValueType="YES"/>
+        <attribute name="sectionID" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+    </entity>
+    <entity name="ServiceCacheEntity" representedClassName="ServiceCacheEntity" syncable="YES">
+        <attribute name="additionalInfo" optional="YES" attributeType="String"/>
+        <attribute name="badgeColor" optional="YES" attributeType="String"/>
+        <attribute name="brandIcon" optional="YES" attributeType="String"/>
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="iconType" optional="YES" attributeType="String"/>
+        <attribute name="labelColor" optional="YES" attributeType="String"/>
+        <attribute name="labelTitle" optional="YES" attributeType="String"/>
+        <attribute name="metadata" attributeType="Binary"/>
+        <attribute name="mobileSecret" optional="YES" attributeType="String"/>
+        <attribute name="mobileSecretID" optional="YES" attributeType="String"/>
+        <attribute name="modificationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="order" attributeType="Integer 32" usesScalarValueType="YES"/>
+        <attribute name="rawIssuer" optional="YES" attributeType="String"/>
+        <attribute name="secret" attributeType="String"/>
+        <attribute name="secretLength" optional="YES" attributeType="Integer 16"/>
+        <attribute name="secretPeriod" optional="YES" attributeType="Integer 16"/>
+        <attribute name="sectionID" optional="YES" attributeType="String"/>
+        <attribute name="sectionOrder" attributeType="Integer 32" usesScalarValueType="YES"/>
+        <attribute name="serviceType" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="LogEntity" positionX="0" positionY="0" width="128" height="104"/>
+        <element name="SectionCacheEntity" positionX="216" positionY="135" width="128" height="119"/>
+        <element name="ServiceCacheEntity" positionX="429.5546875" positionY="-18.203125" width="128" height="329"/>
+    </elements>
+</model>

@@ -1,0 +1,82 @@
+disabled_rules:
+  - identifier_name
+  - multiple_closures_with_trailing_closure
+  - function_parameter_count
+  - trailing_whitespace
+  - for_where
+  - function_body_length
+  - force_cast
+  - function_default_parameter_at_end
+  - type_body_length
+  - file_length
+  - type_name
+  - todo
+  - cyclomatic_complexity
+  - large_tuple
+  - trailing_closure
+
+opt_in_rules:
+  - closure_spacing
+  - contains_over_filter_count
+  - balanced_xctest_lifecycle
+  - discouraged_object_literal
+  - function_default_parameter_at_end
+  - implicit_return
+  - static_operator
+  - unneeded_parentheses_in_closure_argument
+  - toggle_bool
+  - private_action
+  - convenience_type
+  - prefer_zero_over_explicit_init
+  - discouraged_assert
+  - weak_delegate
+  - redundant_nil_coalescing
+  - prefer_self_type_over_type_of_self
+  - self_binding
+  - empty_string
+  - shorthand_optional_binding
+  - redundant_type_annotation
+  - private_outlet
+  - first_where
+  - sorted_first_last
+  - xct_specific_matcher
+  - extension_access_modifier
+  - empty_xctest_method
+  - unused_declaration
+  - discouraged_none_name
+  - unused_import
+  - explicit_init
+  - fatal_error_message
+  - flatmap_over_map_reduce
+  - joined_default_parameter
+  - legacy_multiple
+  - yoda_condition
+  - unowned_variable_capture
+  - lower_acl_than_parent
+  - multiline_arguments
+  - multiline_function_chains
+  - multiline_literal_brackets
+  - multiline_parameters_brackets
+  - multiline_parameters
+  - operator_usage_whitespace
+  - optional_enum_case_matching
+  - vertical_parameter_alignment_on_call
+  - vertical_whitespace_closing_braces
+
+nesting:
+  type_level: 5
+
+line_length:
+  ignores_comments: true
+
+swiftlint_version: 0.50.1
+
+included:
+  - ./
+
+excluded:
+  - swiftgen
+  - TwoFAS/CodeSupport/GoogleAuthenticator
+  - TwoFAS/update.swift
+  - TwoFAS/Common/Generated
+  - TwoFAS/Other/External

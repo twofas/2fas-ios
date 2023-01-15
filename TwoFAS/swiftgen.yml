@@ -1,0 +1,23 @@
+strings:
+  inputs: TwoFAS/Other/en.lproj/Localizable.strings
+  options:
+      separator: __
+  outputs:
+    - templateName: structured-swift5
+      output: TwoFAS/Other/Generated/T.generated.swift
+      params:
+        enumName: T
+  inputs: TwoFAS/Other/en.lproj/Localizable.strings
+  options:
+      separator: __
+  outputs:
+    - templateName: structured-swift5
+      output: TwoFASAuth/Generated/T.generated.swift
+      params:
+        enumName: T
+xcassets:
+  inputs:
+    - TwoFAS/Other/Assets.xcassets
+  outputs:
+    - templateName: swift5
+      output: TwoFAS/Other/Generated/Assets.swift

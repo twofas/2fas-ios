@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "AdGuard.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

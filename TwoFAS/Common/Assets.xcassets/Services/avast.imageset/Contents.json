@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "avast.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

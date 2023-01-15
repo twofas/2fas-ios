@@ -1,0 +1,122 @@
+//
+//  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
+//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Contributed by Zbigniew Cisiński. All rights reserved.
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
+//
+
+// swiftlint:disable all
+// Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
+
+{% if tables.count > 0 %}
+{% set accessModifier %}{% if param.publicAccess %}public{% else %}internal{% endif %}{% endset %}
+import Foundation
+
+// swiftlint:disable superfluous_disable_command file_length implicit_return prefer_self_in_static_references
+
+// MARK: - Strings
+
+{% macro parametersBlock types %}
+  {%- for type in types -%}
+    {%- if type == "String" -%}
+    _ p{{forloop.counter}}: Any
+    {%- else -%}
+    _ p{{forloop.counter}}: {{type}}
+    {%- endif -%}
+    {{ ", " if not forloop.last }}
+  {%- endfor -%}
+{% endmacro %}
+{% macro argumentsBlock types %}
+  {%- for type in types -%}
+    {%- if type == "String" -%}
+    String(describing: p{{forloop.counter}})
+    {%- elif type == "UnsafeRawPointer" -%}
+    Int(bitPattern: p{{forloop.counter}})
+    {%- else -%}
+    p{{forloop.counter}}
+    {%- endif -%}
+    {{ ", " if not forloop.last }}
+  {%- endfor -%}
+{% endmacro %}
+{% macro recursiveBlock table item %}
+  {% for string in item.strings %}
+  {% if not param.noComments %}
+  {% for line in string.comment|default:string.translation|split:"\n" %}
+  /// {{line}}
+  {% endfor %}
+  {% endif %}
+  {% set translation string.translation|replace:'"','\"'|replace:'	','\t' %}
+  {% if string.types %}
+  {{accessModifier}} static func {{string.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords|replace:'_',''}}({% call parametersBlock string.types %}) -> String {
+    return {{enumName}}.tr("{{table}}", "{{string.key}}", {%+ call argumentsBlock string.types %}, fallback: "{{translation}}")
+  }
+  {% elif param.lookupFunction %}
+  {{accessModifier}} static var {{string.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords|replace:'_',''}}: String { return {{enumName}}.tr("{{table}}", "{{string.key}}", fallback: "{{translation}}") }
+  {% else %}
+  {{accessModifier}} static let {{string.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords|replace:'_',''}} = {{enumName}}.tr("{{table}}", "{{string.key}}", fallback: "{{translation}}")
+  {% endif %}
+  {% endfor %}
+  {% for child in item.children %}
+  {{accessModifier}} enum {{child.name|swiftIdentifier:"pretty"|escapeReservedKeywords}} {
+    {% filter indent:2," ",true %}{% call recursiveBlock table child %}{% endfilter %}
+  }
+  {% endfor %}
+{% endmacro %}
+// swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
+// swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
+{% set enumName %}{{param.enumName|default:"L10n"}}{% endset %}
+{{accessModifier}} enum {{enumName}} {
+  {% if tables.count > 1 or param.forceFileNameEnum %}
+  {% for table in tables %}
+  {{accessModifier}} enum {{table.name|swiftIdentifier:"pretty"|escapeReservedKeywords|replace:'_',''}} {
+    {% filter indent:2," ",true %}{% call recursiveBlock table.name table.levels %}{% endfilter %}
+  }
+  {% endfor %}
+  {% else %}
+  {% call recursiveBlock tables.first.name tables.first.levels %}
+  {% endif %}
+}
+// swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
+// swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces
+
+// MARK: - Implementation Details
+
+extension {{enumName}} {
+  private static func tr(_ table: String, _ key: String, _ args: CVarArg..., fallback value: String) -> String {
+    {% if param.lookupFunction %}
+    let format = {{ param.lookupFunction }}(key, table, value)
+    {% else %}
+    let format = {{param.bundle|default:"BundleToken.bundle"}}.localizedString(forKey: key, value: value, table: table)
+    {% endif %}
+    return String(format: format, locale: Locale.current, arguments: args)
+  }
+}
+{% if not param.bundle and not param.lookupFunction %}
+
+// swiftlint:disable convenience_type
+private final class BundleToken {
+  static let bundle: Bundle = {
+    #if SWIFT_PACKAGE
+    return Bundle.module
+    #else
+    return Bundle(for: BundleToken.self)
+    #endif
+  }()
+}
+// swiftlint:enable convenience_type
+{% endif %}
+{% else %}
+// No string found
+{% endif %}

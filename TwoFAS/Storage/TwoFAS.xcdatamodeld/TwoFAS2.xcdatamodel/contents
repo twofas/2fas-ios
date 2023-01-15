@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="RequestEntity" representedClassName="RequestEntity" syncable="YES">
+        <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="mobileSecret" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="param" attributeType="String"/>
+        <attribute name="secret" optional="YES" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+    </entity>
+    <entity name="ServiceEntity" representedClassName="ServiceEntity" syncable="YES">
+        <attribute name="additionalInfo" optional="YES" attributeType="String"/>
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="mobileSecret" optional="YES" attributeType="String"/>
+        <attribute name="mobileSecretID" optional="YES" attributeType="String"/>
+        <attribute name="modificationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="order" attributeType="Integer 32" usesScalarValueType="YES"/>
+        <attribute name="rawIssuer" optional="YES" attributeType="String"/>
+        <attribute name="secret" attributeType="String"/>
+        <attribute name="serviceType" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="RequestEntity" positionX="-63" positionY="27" width="128" height="135"/>
+        <element name="ServiceEntity" positionX="160" positionY="192" width="128" height="193"/>
+    </elements>
+</model>

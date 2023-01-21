@@ -304,7 +304,7 @@ final class ServiceRecord2 {
 
 extension ServiceRecord2: RecordIDGenerator {
     static func recordID(with identifier: String, zoneID: CKRecordZone.ID) -> CKRecord.ID {
-        CKRecord.ID(recordName: "\(identifier)_v2".encrypt(), zoneID: zoneID)
+        return CKRecord.ID(recordName: "\(identifier.iCloudIdentifier)_v2".encrypt(), zoneID: zoneID)
     }
 }
 

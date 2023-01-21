@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import CryptoKit
 
 public extension String {
     // swiftlint:disable no_magic_numbers
@@ -69,7 +70,7 @@ public extension String {
     // swiftlint:enable no_magic_numbers
     
     func isValidSecret() -> Bool {
-        let maxLength = 255
+        let maxLength = ServiceRules.privateKeyMaxLength
         guard count >= ServiceRules.minKeyLength && count <= maxLength else { return false }
         let chars = Array(self)
         for char in chars {
@@ -127,5 +128,21 @@ public extension String {
     var twoLetters: String {
         guard count > 1 else { return String(first ?? Character("")).uppercased()  }
         return self[0...1].uppercased()
+    }
+    
+    var iCloudIdentifier: String {
+        guard count > Config.maxIdentifierLength else {
+            return self
+        }
+        guard let data = self.data(using: .utf8) else { return self }
+        return SHA256.hash(data: data).compactMap { String(format: "%02x", $0) }.joined()
+    }
+    
+    func components(withMaxLength length: Int) -> [String] {
+        stride(from: 0, to: self.count, by: length).map {
+            let start = self.index(self.startIndex, offsetBy: $0)
+            let end = self.index(start, offsetBy: length, limitedBy: self.endIndex) ?? self.endIndex
+            return String(self[start..<end])
+        }
     }
 }

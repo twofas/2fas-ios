@@ -34,6 +34,13 @@ final class ServiceHandler {
     
     func delete(identifiedBy identifier: String) {
         let identifier = identifier.decrypt()
+        /*
+         - move _V2 to consts
+         - add custom Separator
+         - append beggining of the unencrypted secret + SHA128/64 + custom_separator
+         - check here if _V2 or custom sep. If custom sep then search beggining with unencrypted secret
+         - hash what's left - compare and select the one to be deleted
+        */
         guard let range = identifier.range(of: "_V2") else {
             Log("ServiceHandler - Can't find range in identifier")
             return

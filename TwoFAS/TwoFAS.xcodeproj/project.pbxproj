@@ -3282,10 +3282,8 @@
 				C23666761FB2644900989ACA /* AppDelegate.swift */,
 				C21111F3274ABDB300CA7C78 /* Interactors */,
 				C2BDC6BE1FC1A87400967D0E /* Root */,
-				C286ED4C25F4364000F92EDE /* ComposeService */,
-				C22D9E0C2468062E00AAE6EE /* Introduction */,
 				C2D44E6B275C14840043F5D6 /* MainRepository */,
-				C257FD161FDC69B600CF6898 /* Data Controllers */,
+				C257FD161FDC69B600CF6898 /* DataControllers */,
 				C2147CEE205D8C620001D011 /* Login */,
 				C2147CCC205D7B430001D011 /* PINPad */,
 				C2BDC6CD1FC1CBB700967D0E /* Common */,
@@ -3824,16 +3822,16 @@
 			path = TableView;
 			sourceTree = "<group>";
 		};
-		C257FD161FDC69B600CF6898 /* Data Controllers */ = {
+		C257FD161FDC69B600CF6898 /* DataControllers */ = {
 			isa = PBXGroup;
 			children = (
 				C20935CF29213610000F5AA7 /* Legacy */,
 				C27A1EAF291279E400702DB9 /* Analytics */,
-				C2B25665200FED7400C86667 /* Service Migration */,
+				C2B25665200FED7400C86667 /* ServiceMigration */,
 				C219CDB9278E26FE00CBBF09 /* SettingsEventController */,
-				C2AC21FC27660E5A00271402 /* ViewPath Controller */,
+				C2AC21FC27660E5A00271402 /* ViewPathController */,
 			);
-			path = "Data Controllers";
+			path = DataControllers;
 			sourceTree = "<group>";
 		};
 		C257FD191FDC69DB00CF6898 /* Permissions */ = {
@@ -4897,12 +4895,12 @@
 			path = Backup;
 			sourceTree = "<group>";
 		};
-		C2AC21FC27660E5A00271402 /* ViewPath Controller */ = {
+		C2AC21FC27660E5A00271402 /* ViewPathController */ = {
 			isa = PBXGroup;
 			children = (
 				C225E618241D35FE0041C238 /* ViewPathController.swift */,
 			);
-			path = "ViewPath Controller";
+			path = ViewPathController;
 			sourceTree = "<group>";
 		};
 		C2AC21FF276611EC00271402 /* Exporter */ = {
@@ -5203,12 +5201,12 @@
 			path = Flow;
 			sourceTree = "<group>";
 		};
-		C2B25665200FED7400C86667 /* Service Migration */ = {
+		C2B25665200FED7400C86667 /* ServiceMigration */ = {
 			isa = PBXGroup;
 			children = (
 				C2ACF9DE20A8A30E003E0987 /* ServiceMigrationController.swift */,
 			);
-			path = "Service Migration";
+			path = ServiceMigration;
 			sourceTree = "<group>";
 		};
 		C2B2ED1C27C4348200332255 /* AdvancedAlert */ = {
@@ -5277,7 +5275,7 @@
 			children = (
 				C2BDC6C01FC1AC0A00967D0E /* RootViewController.swift */,
 				C2BDC6C11FC1AC0A00967D0E /* RootCoordinator.swift */,
-				C2C66F8C1FE0683000AD5A1C /* Main */,
+				C2C66F8C1FE0683000AD5A1C /* Modules */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -5508,23 +5506,23 @@
 			path = Flow;
 			sourceTree = "<group>";
 		};
-		C2C66F8C1FE0683000AD5A1C /* Main */ = {
+		C2C66F8C1FE0683000AD5A1C /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				C2D75D38297DA07B0002531E /* Main */,
 				C244F9E022762A54009992D3 /* Tokens */,
 				C21111E1274AB8C100CA7C78 /* Settings */,
 				C25860AE28246D87009AE54F /* News */,
+				C22D9E0C2468062E00AAE6EE /* Introduction */,
+				C286ED4C25F4364000F92EDE /* ComposeService */,
 				C24590F0280F44DF0079C21C /* SelectService */,
 				C2FA3E86280B624D0097ED71 /* AuthRequests */,
 				C2932F051FFEC83700FBD4D0 /* Notifications */,
 				C2A277AC26DBCFFC00A18F25 /* SelectFromGallery */,
 				C2153BBB1FE9A991005FD297 /* Camera Scanner */,
 				C2E5482821831244001AD1A5 /* TrashService */,
-				C225E61A241E44DB0041C238 /* MainCoordinatorDependencies.swift */,
-				C2000F4F217C8A980020CA0B /* MainCoordinator.swift */,
-				C2C66F8D1FE0684100AD5A1C /* MainViewController.swift */,
 			);
-			path = Main;
+			path = Modules;
 			sourceTree = "<group>";
 		};
 		C2CB5D1125DB1B7E00A362A9 /* External */ = {
@@ -5658,6 +5656,16 @@
 				C2D50B5525C71A0900CBB959 /* CameraOutputQRScanner.swift */,
 			);
 			path = Output;
+			sourceTree = "<group>";
+		};
+		C2D75D38297DA07B0002531E /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				C225E61A241E44DB0041C238 /* MainCoordinatorDependencies.swift */,
+				C2000F4F217C8A980020CA0B /* MainCoordinator.swift */,
+				C2C66F8D1FE0684100AD5A1C /* MainViewController.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		C2DD28C421D5590600034476 /* Controls */ = {

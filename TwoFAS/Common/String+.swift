@@ -69,7 +69,7 @@ public extension String {
     // swiftlint:enable no_magic_numbers
     
     func isValidSecret() -> Bool {
-        let maxLength = 255
+        let maxLength = ServiceRules.privateKeyMaxLength
         guard count >= ServiceRules.minKeyLength && count <= maxLength else { return false }
         let chars = Array(self)
         for char in chars {
@@ -127,5 +127,13 @@ public extension String {
     var twoLetters: String {
         guard count > 1 else { return String(first ?? Character("")).uppercased()  }
         return self[0...1].uppercased()
+    }
+    
+    func components(withMaxLength length: Int) -> [String] {
+        stride(from: 0, to: self.count, by: length).map {
+            let start = self.index(self.startIndex, offsetBy: $0)
+            let end = self.index(start, offsetBy: length, limitedBy: self.endIndex) ?? self.endIndex
+            return String(self[start..<end])
+        }
     }
 }

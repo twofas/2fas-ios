@@ -32,4 +32,6 @@ public enum Config {
     public enum TokenConsts {
         public static let formatTimerWhenSecondsOrLess: Int = 5
     }
+    
+    public static let maxIdentifierLength: Int = 128
 }

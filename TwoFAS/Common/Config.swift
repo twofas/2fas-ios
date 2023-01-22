@@ -33,5 +33,5 @@ public enum Config {
         public static let formatTimerWhenSecondsOrLess: Int = 5
     }
     
-    static let maxIdentifierLength: Int = 128
+    public static let maxIdentifierLength: Int = 128
 }

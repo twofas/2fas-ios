@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import CryptoKit
 
 public extension String {
     // swiftlint:disable no_magic_numbers
@@ -128,14 +127,6 @@ public extension String {
     var twoLetters: String {
         guard count > 1 else { return String(first ?? Character("")).uppercased()  }
         return self[0...1].uppercased()
-    }
-    
-    var iCloudIdentifier: String {
-        guard count > Config.maxIdentifierLength else {
-            return self
-        }
-        guard let data = self.data(using: .utf8) else { return self }
-        return SHA256.hash(data: data).compactMap { String(format: "%02x", $0) }.joined()
     }
     
     func components(withMaxLength length: Int) -> [String] {

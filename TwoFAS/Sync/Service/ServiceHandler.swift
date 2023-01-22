@@ -34,19 +34,23 @@ final class ServiceHandler {
     
     func delete(identifiedBy identifier: String) {
         let identifier = identifier.decrypt()
-        /*
-         - move _V2 to consts
-         - add custom Separator
-         - append beggining of the unencrypted secret + SHA128/64 + custom_separator
-         - check here if _V2 or custom sep. If custom sep then search beggining with unencrypted secret
-         - hash what's left - compare and select the one to be deleted
-        */
-        guard let range = identifier.range(of: "_V2") else {
-            Log("ServiceHandler - Can't find range in identifier")
+        switch iCloudIdentifier.parse(identifier) {
+        case .v2(let secret):
+            ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: secret.encrypt())
+        case .long(let hash, let beginsWith):
+            let list = ServiceCacheEntity.listAll(on: coreDataStack.context)
+                .filter({ $0.secret.decrypt().hasPrefix(beginsWith) && $0.secret.count > Config.maxIdentifierLength })
+                .filter({ iCloudIdentifier.hash(from: $0.secret.decrypt()).uppercased() == hash })
+            guard let first = list.first, list.count == 1 else {
+                Log("ServiceHandler - Can't find long identifier", severity: .error)
+                return
+            }
+            ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: first.secret)
+        case .deprecated:
+            Log("ServiceHandler - Can't find range in identifier", severity: .error)
             return
         }
-        let secret = identifier.replacingCharacters(in: range, with: "")
-        ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: secret.encrypt())
+
         coreDataStack.save()
     }
     

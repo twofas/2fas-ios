@@ -798,6 +798,7 @@
 		C2D6731D25DB2C5D004BD697 /* ToastCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6731825DB2C5D004BD697 /* ToastCenter.swift */; };
 		C2D6731E25DB2C5D004BD697 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6731925DB2C5D004BD697 /* Toast.swift */; };
 		C2D6F4B427D414A100D933FB /* ServiceAddedServiceContainerViewHOTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6F4B327D414A100D933FB /* ServiceAddedServiceContainerViewHOTP.swift */; };
+		C2D75D37297D51B60002531E /* iCloudIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D75D36297D51B60002531E /* iCloudIdentifier.swift */; };
 		C2D958CE276F9F9700B5A6BD /* Algorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D958CD276F9F9700B5A6BD /* Algorithm.swift */; };
 		C2DB8E5D21F8FE33002F124B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2DB8E5C21F8FE33002F124B /* Assets.xcassets */; };
 		C2DBC891226FA92200EF6CF4 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DBC890226FA92200EF6CF4 /* Date+.swift */; };
@@ -1981,6 +1982,7 @@
 		C2D6731825DB2C5D004BD697 /* ToastCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastCenter.swift; sourceTree = "<group>"; };
 		C2D6731925DB2C5D004BD697 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		C2D6F4B327D414A100D933FB /* ServiceAddedServiceContainerViewHOTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceAddedServiceContainerViewHOTP.swift; sourceTree = "<group>"; };
+		C2D75D36297D51B60002531E /* iCloudIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudIdentifier.swift; sourceTree = "<group>"; };
 		C2D958CD276F9F9700B5A6BD /* Algorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Algorithm.swift; sourceTree = "<group>"; };
 		C2D958CF276FABE500B5A6BD /* TwoFAS5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS5.xcdatamodel; sourceTree = "<group>"; };
 		C2DB8E5C21F8FE33002F124B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -5933,6 +5935,7 @@
 				C244EF10268674650040A58F /* Extensions.swift */,
 				C24EECEB268772B600C6ABAA /* RecordType.swift */,
 				C2C4F64828FE002F00285B81 /* RecordIDGenerator.swift */,
+				C2D75D36297D51B60002531E /* iCloudIdentifier.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -7483,6 +7486,7 @@
 				C2EF401525582A7D0006735E /* Sync.xcdatamodeld in Sources */,
 				C24EECFA26878C5C00C6ABAA /* CommonItemHandler.swift in Sources */,
 				C2EF3F6E25575D730006735E /* ServiceRecord.swift in Sources */,
+				C2D75D37297D51B60002531E /* iCloudIdentifier.swift in Sources */,
 				C2EF402725582AFB0006735E /* ServiceCacheEntity+CoreDataProperties.swift in Sources */,
 				C2EF4045255860FC0006735E /* ServiceHandler.swift in Sources */,
 				C24EECF8268789DE00C6ABAA /* ItemHandler.swift in Sources */,

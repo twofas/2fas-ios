@@ -178,7 +178,7 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
         let date = Date()
         return services
             .sorted { $0.order.position < $1.order.position }
-            .map { item in
+            .compactMap { item in
                 let modificationDate: Date = {
                     guard let updatedAt = item.updatedAt else { return date }
                     return Date(timeIntervalSince1970: TimeInterval(Double(updatedAt) / 1000.0))
@@ -218,9 +218,12 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                     return secID
                 }()
                 
+                let secret = item.secret.sanitazeSecret()
+                guard secret.isValidSecret() else { return nil }
+                
                 return ServiceData(
                     name: item.name.sanitazeName(),
-                    secret: item.secret.sanitazeSecret(),
+                    secret: secret,
                     serviceTypeID: serviceDefinitionInteractor.findLegacyService(using: item.type),
                     additionalInfo: item.otp.account,
                     rawIssuer: item.otp.issuer,
@@ -251,7 +254,7 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
         let date = Date()
         return services
             .sorted { $0.order.position < $1.order.position }
-            .map { item in
+            .compactMap { item in
                 let modificationDate: Date = {
                     guard let updatedAt = item.updatedAt else { return date }
                     return Date(timeIntervalSince1970: TimeInterval(Double(updatedAt) / 1000.0))
@@ -298,9 +301,12 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                     return secID
                 }()
                 
+                let secret = item.secret.sanitazeSecret()
+                guard secret.isValidSecret() else { return nil }
+                
                 return ServiceData(
                     name: item.name.sanitazeName(),
-                    secret: item.secret.sanitazeSecret(),
+                    secret: secret,
                     serviceTypeID: itemServiceTypeID,
                     additionalInfo: item.otp.account,
                     rawIssuer: item.otp.issuer,
@@ -353,10 +359,13 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 period = periodParsed
             }
             
+            let secret = entry.info.secret.sanitazeSecret()
+            guard secret.isValidSecret() else { return nil }
+            
             let serviceDef = serviceDefinitionInteractor.findService(using: entry.issuer)
             return ServiceData(
                 name: entry.name.sanitazeName(),
-                secret: entry.info.secret.sanitazeSecret(),
+                secret: secret,
                 serviceTypeID: serviceDef?.serviceTypeID,
                 additionalInfo: entry.note,
                 rawIssuer: entry.issuer,

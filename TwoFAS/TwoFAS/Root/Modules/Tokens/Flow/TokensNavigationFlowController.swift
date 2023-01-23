@@ -21,7 +21,6 @@ import UIKit
 import Common
 
 protocol TokensNavigationFlowControllerParent: AnyObject {
-    func tokensEnableSyncIfPossible()
     func tokensSwitchToTokensTab()
 }
 
@@ -55,10 +54,6 @@ final class TokensNavigationFlowController: NavigationFlowController {
 }
 
 extension TokensNavigationFlowController: TokensPlainFlowControllerParent {
-    func tokensEnableSyncIfPossible() {
-        parent?.tokensEnableSyncIfPossible()
-    }
-    
     func tokensSwitchToTokensTab() {
         parent?.tokensSwitchToTokensTab()
     }

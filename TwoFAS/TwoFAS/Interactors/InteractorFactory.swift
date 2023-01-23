@@ -206,6 +206,14 @@ final class InteractorFactory {
             serviceInteractor: serviceModifyInteractor()
         )
     }
+    
+    private func viewPathInteractor() -> ViewPathIteracting {
+        ViewPathInteractor(mainRepository: MainRepositoryImpl.shared)
+    }
+    
+    func fileInteractor() -> FileInteracting {
+        FileIteractor(mainRepository: MainRepositoryImpl.shared)
+    }
 }
 
 private extension InteractorFactory {

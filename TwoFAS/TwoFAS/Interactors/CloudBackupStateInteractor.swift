@@ -23,6 +23,8 @@ import Common
 
 // sourcery: Mock
 protocol CloudBackupStateInteracting: AnyObject {
+    var secretSyncError: ((String) -> Void)? { get set }
+    
     func startMonitoring()
     func stopMonitoring()
     
@@ -66,6 +68,15 @@ final class CloudBackupStateInteractor {
 }
 
 extension CloudBackupStateInteractor: CloudBackupStateInteracting {
+    var secretSyncError: ((String) -> Void)? {
+        get {
+            mainRepository.secretSyncError
+        }
+        set {
+            mainRepository.secretSyncError = newValue
+        }
+    }
+    
     var isBackupEnabled: Bool { isEnabled }
     var isBackupAvailable: Bool { isAvailable }
     

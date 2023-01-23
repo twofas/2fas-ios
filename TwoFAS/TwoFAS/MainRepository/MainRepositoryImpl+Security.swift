@@ -106,6 +106,12 @@ extension MainRepositoryImpl {
     func clearLockAppUntil() {
         userDefaultsRepository.clearLockAppUntil()
     }
+    
+    // MARK: - App clear
+    
+    func clearAllUserDefaults() {
+        userDefaultsRepository.clearAll()
+    }
 }
 
 private extension PINType {

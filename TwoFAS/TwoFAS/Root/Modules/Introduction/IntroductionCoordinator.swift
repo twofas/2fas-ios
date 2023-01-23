@@ -20,12 +20,6 @@
 import UIKit
 
 final class IntroductionCoordinator: BaseCoordinator {
-    private let dataController: IntroductionDataController
-    
-    init(dataController: IntroductionDataController) {
-        self.dataController = dataController
-    }
-    
     override func start() {
         let vm = IntroductionViewModel()
         let vc = IntroductionViewController()
@@ -38,6 +32,7 @@ final class IntroductionCoordinator: BaseCoordinator {
     }
     
     private func markAsShown() {
-        dataController.markAsShown()
+        MainRepositoryImpl.shared.setIntroductionAsShown()
+        MainRepositoryImpl.shared.enableCloudBackup()
     }
 }

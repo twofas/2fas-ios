@@ -19,22 +19,16 @@
 
 import Foundation
 
-final class IntroductionDataController {
-    var wasFirstRun: Callback?
-
-    private let key = "IntroductionWasShown"
-    private let userDefaults = UserDefaults()
-    
-    var shouldShow: Bool { !userDefaults.bool(forKey: key) }
-    
-    func markAsShown() {
-        wasFirstRun?()
-        userDefaults.set(true, forKey: key)
-        userDefaults.synchronize()
+extension MainRepositoryImpl {
+    func clearViewPath() {
+        userDefaultsRepository.clearViewPath()
     }
     
-    func reset() {
-        userDefaults.set(false, forKey: key)
-        userDefaults.synchronize()
+    func saveViewPath(_ path: ViewPath) {
+        userDefaultsRepository.saveViewPath(path)
+    }
+    
+    func viewPath() -> (viewPath: ViewPath, savedAt: Date)? {
+        userDefaultsRepository.viewPath()
     }
 }

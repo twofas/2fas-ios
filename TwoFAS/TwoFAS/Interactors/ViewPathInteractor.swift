@@ -20,78 +20,6 @@
 import Foundation
 import Common
 
-protocol ViewPathType: AnyObject {
-    func set(_ path: ViewPath)
-    func clear()
-    func clearFor(_ path: ViewPath)
-    func get() -> ViewPath?
-}
-
-protocol ViewPathNodeType: AnyObject {
-    func updatePath(_ viewPath: ViewPathType)
-}
-
-final class ViewPathController: ViewPathType {
-    private enum Consts {
-        static let saveForMinutes: Int = 15
-        static let key = "ViewPathController.ViewStatePath"
-    }
-    
-    private let encoder: JSONEncoder
-    private let decoder: JSONDecoder
-    private let userDefaults: UserDefaults
-    
-    init() {
-        encoder = JSONEncoder()
-        decoder = JSONDecoder()
-        userDefaults = UserDefaults.standard
-    }
-    
-    func set(_ path: ViewPath) {
-        Log("ViewPathController: Setting path: \(path)")
-        let node = ViewStatePath(savedAt: Date(), path: path)
-        guard let encodedNode = try? encoder.encode(node) else {
-            assertionFailure()
-            return
-        }
-        userDefaults.set(encodedNode, forKey: Consts.key)
-        userDefaults.synchronize()
-    }
-    
-    func clearFor(_ path: ViewPath) {
-        Log("ViewPathController: Checking if should clear for path: \(path)")
-        guard let currentPath = get(), path == currentPath else { return }
-        clear()
-    }
-    
-    func clear() {
-        Log("ViewPathController: Clearing")
-        userDefaults.set(nil, forKey: Consts.key)
-        userDefaults.synchronize()
-    }
-    
-    func get() -> ViewPath? {
-        guard
-            let nodeData = userDefaults.object(forKey: Consts.key) as? Data,
-            let node = try? decoder.decode(ViewStatePath.self, from: nodeData)
-        else {
-            Log("ViewPathController: Can't get or decode anything")
-            return nil
-        }
-        
-        let currentDate = Date()
-        guard node.savedAt < currentDate && node.savedAt.minutes(to: currentDate) <= Consts.saveForMinutes else {
-            
-            Log("ViewPathController: Entry to old")
-            clear()
-            return nil
-        }
-        
-        Log("ViewPathController: Returning path: \(node.path)")
-        return node.path
-    }
-}
-
 enum ViewPath: Equatable {
     enum Settings {
         case vault
@@ -102,36 +30,74 @@ enum ViewPath: Equatable {
     case news
 }
 
-private struct ViewStatePath: Codable {
+protocol ViewPathIteracting: AnyObject {
+    func setViewPath(_ path: ViewPath)
+    func clear()
+    func clearFor(_ path: ViewPath)
+    func viewPath() -> ViewPath?
+}
+
+final class ViewPathInteractor {
+    private let saveForMinutes: Int = 15
     
-    let savedAt: Date
-    let path: ViewPath
+    private let mainRepository: MainRepository
+    
+    init(mainRepository: MainRepository) {
+        self.mainRepository = mainRepository
+    }
+}
+
+extension ViewPathInteractor: ViewPathIteracting {
+    func setViewPath(_ path: ViewPath) {
+        Log("ViewPathInteractor: Setting path: \(path)")
+        mainRepository.saveViewPath(path)
+    }
+    
+    func clearFor(_ path: ViewPath) {
+        Log("ViewPathInteractor: Checking if should clear for path: \(path)")
+        guard let currentPath = get(), path == currentPath else { return }
+        clear()
+    }
+    
+    func clear() {
+        Log("ViewPathInteractor: Clearing")
+        mainRepository.clearViewPath()
+    }
+    
+    func viewPath() -> ViewPath? {
+        guard let path = mainRepository.viewPath() else { return nil }
+        
+        let currentDate = Date()
+        guard path.savedAt < currentDate && path.savedAt.minutes(to: currentDate) <= saveForMinutes else {
+            Log("ViewPathInteractor: Entry to old")
+            clear()
+            return nil
+        }
+        
+        Log("ViewPathInteractor: Returning path: \(path.viewPath)")
+        return path.viewPath
+    }
 }
 
 // MARK: - Codable
 
 extension ViewPath: Codable {
-    
     enum Key: CodingKey {
-        
         case rawValue
         case associatedValue
     }
     
     enum Value: Int {
-        
         case main = 0
         case settings = 1
         case news = 2
     }
     
     enum CodingError: Error {
-        
         case unknownValue
     }
     
     init(from decoder: Decoder) throws {
-        
         let container = try decoder.container(keyedBy: Key.self)
         let rawValue = try container.decode(Int.self, forKey: .rawValue)
         switch rawValue {
@@ -146,7 +112,6 @@ extension ViewPath: Codable {
     }
     
     func encode(to encoder: Encoder) throws {
-        
         var container = encoder.container(keyedBy: Key.self)
         
         switch self {

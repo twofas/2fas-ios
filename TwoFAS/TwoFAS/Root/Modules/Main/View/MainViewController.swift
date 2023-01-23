@@ -22,9 +22,7 @@ import Storage
 import Common
 
 final class MainViewController: UITabBarController {
-    typealias DidSelectOffset = (Int) -> Void
-    var didSelectOffset: DidSelectOffset?
-    var mainViewIsVisible: Callback?
+    var presenter: MainPresenter!
     
     var previousSelectedIndex: Int = 0
     
@@ -67,6 +65,20 @@ final class MainViewController: UITabBarController {
             name: .pushNotificationAuthorizeFromApp,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(switchToSetupPIN),
+            name: .switchToSetupPIN,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(switchToBrowserExtension),
+            name: .switchToBrowserExtension,
+            object: nil
+        )
+        
+        presenter.viewDidLoad()
     }
     
     override func willMove(toParent parent: UIViewController?) {
@@ -121,11 +133,11 @@ final class MainViewController: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         changeStyling()
+        presenter.viewWillAppear()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        mainViewIsVisible?()
         
         guard !authRequestsFetched else { return }
         authRequestsFetched = true
@@ -167,11 +179,25 @@ final class MainViewController: UITabBarController {
         
         authRequestsFlowController?.authorizeFromApp(for: tokenRequestID)
     }
+    
+    @objc
+    private func switchToSetupPIN() {
+        //presenter.handleSwitchToSetupPIN()
+    }
+    
+    @objc
+    private func switchToBrowserExtension() {
+        //presenter.handleSwitchToBrowserExtension()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 extension MainViewController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        didSelectOffset?(selectedIndex)
+        //presenter.handleDidSelectTab(...) // add enum for that!, save position
         if previousSelectedIndex == selectedIndex && selectedIndex == settingsIndex {
             guard let settings = viewController as? SettingsViewController else { return }
             settings.navigateToRoot()

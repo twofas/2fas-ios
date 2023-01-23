@@ -19,14 +19,33 @@
 
 import Foundation
 
-final class InitializeSyncOnFirstRun {
-    private(set) var isFirstRun = false
+final class MainPresenter {
+    private let flowController: MainFlowController
+    private let interactor: MainModuleInteractor
     
-    func markAsFirstRun() {
-        isFirstRun = true
+    init(flowController: MainFlowController, interactor: MainModuleInteractor) {
+        self.flowController = flowController
+        self.interactor = interactor
+        interactor.secretSyncError = { [weak flowController] in flowController?.toSecretSyncError($0) }
     }
     
-    func markerConsumed() {
-        isFirstRun = false
+    func viewDidLoad() {
+        interactor.initialize()
+    }
+    
+    func viewWillAppear() {
+        if let url = interactor.checkForImport() {
+            flowController.toOpenFileImport(url: url)
+            interactor.clearImportedFileURL()
+        }
+        // restore view path
+    }
+    
+    func handleViewPathUpdate(_ viewPath: ViewPath) {
+        interactor.setViewPath(viewPath)
+    }
+    
+    func handleSwitchToTokens() {
+        //flow ->
     }
 }

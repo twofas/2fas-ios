@@ -38,6 +38,7 @@ protocol MainRepository: AnyObject {
     var isBiometryAvailable: Bool { get }
     func enableBiometry()
     func disableBiometry()
+    func clearAllUserDefaults()
         
     var pinType: PINType? { get }
     func setPINOff()
@@ -79,11 +80,14 @@ protocol MainRepository: AnyObject {
     
     // MARK: - General
     var currentAppVersion: String { get }
+    func setIntroductionAsShown()
+    func introductionWasShown() -> Bool
     
     // MARK: - Services
     var hasServices: Bool { get }
     
     // MARK: - Cloud
+    var secretSyncError: ((String) -> Void)? { get set }
     var isCloudBackupConnected: Bool { get }
     var cloudCurrentState: CloudState { get }
     func registerForCloudStateChanges(_ listener: @escaping CloudStateListener, id: CloudStateListenerID)
@@ -94,6 +98,7 @@ protocol MainRepository: AnyObject {
     func synchronizeBackup()
     
     // MARK: - Import
+    var fileURL: URL? { get set }
     func countNewServices(from services: [ServiceData]) -> Int
     func importServices(_ services: [ServiceData], sections: [CommonSectionData]) -> Int
     func openFile(url: URL, completion: @escaping (Result<Data, OpenError>) -> Void)
@@ -388,4 +393,9 @@ protocol MainRepository: AnyObject {
     var usedDiskSpace: String { get }
     var currentDevice: String { get }
     var systemVersion: String { get }
+    
+    // MARK: - View Path
+    func clearViewPath()
+    func saveViewPath(_ path: ViewPath)
+    func viewPath() -> (viewPath: ViewPath, savedAt: Date)?
 }

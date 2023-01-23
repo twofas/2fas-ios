@@ -157,7 +157,7 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     // MARK: - Links
     
     func handleURLIfNecessary() {
-        linkInteractor.handlURLIfNecessary()
+        linkInteractor.handleURLIfNecessary()
     }
     
     func clearStoredCode() {

@@ -42,12 +42,9 @@ final class RootCoordinator: Coordinator {
     private let protection: Protection
     private let storage: Storage
     private let timerHandler: TimerHandler
-    private let introDataController: IntroductionDataController
     private let timeVerificationController: TimeVerificationController
     private let sync: CloudHandlerType
-    private let viewPathController = ViewPathController()
-    private let fileHandler: FileOpenHandler
-    private let initializeSyncOnFirstRun: InitializeSyncOnFirstRun
+    private let fileInteractor: FileInteracting
     private let categoryHandler: CategoryHandler
     private let sectionHandler: SectionHandler
     
@@ -75,9 +72,7 @@ final class RootCoordinator: Coordinator {
         }
         
         LogStorage.setStorage(storage.log)
-        
-        fileHandler = FileOpenHandler()
-        
+                
         pushNotifications = PushNotifications(app: UIApplication.shared)
         
         let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
@@ -99,10 +94,7 @@ final class RootCoordinator: Coordinator {
         timerHandler = TokenHandler.timer
         
         sync = SyncInstance.getCloudHandler()
-        
-        introDataController = IntroductionDataController()
-        initializeSyncOnFirstRun = InitializeSyncOnFirstRun()
-        
+                
         Theme.applyAppearance()
         SpinnerViewLocalizations.voiceOverSpinner = T.Voiceover.spinner
         
@@ -115,8 +107,6 @@ final class RootCoordinator: Coordinator {
             alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
             self?.rootViewController.present(alert, animated: false, completion: nil)
         }
-                
-        introDataController.wasFirstRun = { [weak self] in self?.initializeSyncOnFirstRun.markAsFirstRun() }
         
         _ = MainRepositoryImpl(
             service: service,
@@ -127,12 +117,8 @@ final class RootCoordinator: Coordinator {
             storage: storage,
             timerHandler: timerHandler,
             counterHandler: TokenHandler.counter,
-            introDataController: introDataController,
             timeVerificationController: timeVerificationController,
             sync: sync,
-            viewPathController: viewPathController,
-            fileHandler: fileHandler,
-            initializeSyncOnFirstRun: initializeSyncOnFirstRun,
             categoryHandler: categoryHandler,
             sectionHandler: sectionHandler,
             cloudHandler: sync,
@@ -144,6 +130,8 @@ final class RootCoordinator: Coordinator {
             self?.sync.setTimeOffset($0)
             MainRepositoryImpl.shared.reloadWidgets()
         }
+        
+        fileInteractor = InteractorFactory.shared.fileInteractor()
         
         let pushInteractor = InteractorFactory.shared.pushNotificationRegistrationInteractor()
         pushNotificationRegistrationInteractor = pushInteractor
@@ -186,7 +174,6 @@ final class RootCoordinator: Coordinator {
         sync.synchronize()
         timeVerificationController.startVerification()
         security.applicationDidBecomeActive()
-        fileHandler.appBecomeActive()
         RatingController.uiIsVisible()
     }
     
@@ -197,7 +184,7 @@ final class RootCoordinator: Coordinator {
     
     func shouldHandleURL(url: URL) -> Bool {
         Log("App: shouldHandleURL")
-        return (linkInteractor?.shouldHandleURL(url: url) == true) || fileHandler.shouldHandleURL(url: url)
+        return (linkInteractor?.shouldHandleURL(url: url) == true) || fileInteractor.shouldHandleURL(url: url)
     }
     
     func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {
@@ -229,7 +216,7 @@ final class RootCoordinator: Coordinator {
         
         Log("RootCoordinator: Changing state for: \(currentState)")
         
-        if introDataController.shouldShow {
+        if !MainRepositoryImpl.shared.introductionWasShown() {
             presentIntroduction()
         } else if security.isAuthenticationRequired {
             presentLogin(immediately: coldRun)
@@ -245,7 +232,7 @@ final class RootCoordinator: Coordinator {
         changeState(.intro)
         Log("Presenting Introduction")
         let navigationController = CommonNavigationController()
-        let intro = IntroductionCoordinator(dataController: introDataController)
+        let intro = IntroductionCoordinator()
         
         let adapter = PreviousToCurrentCoordinatorAdapter(
             navigationController: navigationController,
@@ -263,29 +250,29 @@ final class RootCoordinator: Coordinator {
         let immediately = !(currentState == .login || currentState == .intro)
         changeState(.main)
         
-        let dependency = MainCoordinatorDependencies(
-            service: service,
-            codeStorage: protection.codeStorage,
-            biometricAuth: protection.biometricAuth,
-            timerHandler: timerHandler,
-            security: security,
-            rootViewController: rootViewController,
-            timeVerificationController: timeVerificationController,
-            accessTokenStorage: protection.tokenStorage,
-            viewPath: viewPathController,
-            sync: sync,
-            fileHandler: fileHandler,
-            initializeSyncOnFirstRun: initializeSyncOnFirstRun,
-            categoryHandler: categoryHandler,
-            sectionHandler: sectionHandler,
-            extensionStorage: protection.extensionsStorage
-        )
-        
-        let mainCoordinator = MainCoordinator(dependency: dependency, showImmidiately: immediately)
-        
-        mainCoordinator.parentCoordinatorDelegate = self
-        addChild(mainCoordinator)
-        mainCoordinator.start()
+//        let dependency = MainCoordinatorDependencies(
+//            service: service,
+//            codeStorage: protection.codeStorage,
+//            biometricAuth: protection.biometricAuth,
+//            timerHandler: timerHandler,
+//            security: security,
+//            rootViewController: rootViewController,
+//            timeVerificationController: timeVerificationController,
+//            accessTokenStorage: protection.tokenStorage,
+//            viewPath: viewPathController,
+//            sync: sync,
+//            fileHandler: fileHandler,
+//            initializeSyncOnFirstRun: initializeSyncOnFirstRun,
+//            categoryHandler: categoryHandler,
+//            sectionHandler: sectionHandler,
+//            extensionStorage: protection.extensionsStorage
+//        )
+//
+//        let mainCoordinator = MainCoordinator(dependency: dependency, showImmidiately: immediately)
+//
+//        mainCoordinator.parentCoordinatorDelegate = self
+//        addChild(mainCoordinator)
+//        mainCoordinator.start()
     }
     
     private func presentLogin(immediately: Bool) {

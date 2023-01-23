@@ -37,12 +37,8 @@ final class MainRepositoryImpl: MainRepository {
     let storage: Storage
     let timerHandler: TimerHandler
     let counterHandler: CounterHandler
-    let introDataController: IntroductionDataController
     let timeVerificationController: TimeVerificationController
     let sync: CloudHandlerType
-    let viewPathController: ViewPathController
-    let fileHandler: FileOpenHandler
-    let initializeSyncOnFirstRun: InitializeSyncOnFirstRun
     let categoryHandler: CategoryHandler
     let sectionHandler: SectionHandler
     let cloudHandler: CloudHandlerType
@@ -70,6 +66,7 @@ final class MainRepositoryImpl: MainRepository {
     static var shared: MainRepository { _shared }
     
     var storedURL: URL?
+    var fileURL: URL?
     
     // Cached values for higher pefrormance
     var cachedSortType: SortType?
@@ -85,12 +82,8 @@ final class MainRepositoryImpl: MainRepository {
         storage: Storage,
         timerHandler: TimerHandler,
         counterHandler: CounterHandler,
-        introDataController: IntroductionDataController,
         timeVerificationController: TimeVerificationController,
         sync: CloudHandlerType,
-        viewPathController: ViewPathController,
-        fileHandler: FileOpenHandler,
-        initializeSyncOnFirstRun: InitializeSyncOnFirstRun,
         categoryHandler: CategoryHandler,
         sectionHandler: SectionHandler,
         cloudHandler: CloudHandlerType,
@@ -104,12 +97,8 @@ final class MainRepositoryImpl: MainRepository {
         self.storage = storage
         self.timerHandler = timerHandler
         self.counterHandler = counterHandler
-        self.introDataController = introDataController
         self.timeVerificationController = timeVerificationController
         self.sync = sync
-        self.viewPathController = viewPathController
-        self.fileHandler = fileHandler
-        self.initializeSyncOnFirstRun = initializeSyncOnFirstRun
         self.categoryHandler = categoryHandler
         self.sectionHandler = sectionHandler
         self.cloudHandler = cloudHandler

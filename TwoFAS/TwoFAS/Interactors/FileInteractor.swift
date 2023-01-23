@@ -19,25 +19,34 @@
 
 import Foundation
 
-final class FileOpenHandler {
-    var openFileImport: ((URL) -> Bool)?
+protocol FileInteracting: AnyObject {
+    var url: URL? { get }
     
-    private var handleURL: URL?
+    func shouldHandleURL(url: URL) -> Bool
+    func markAsHandled()
+}
+
+final class FileIteractor {
+    private let mainRepository: MainRepository
+    
+    init(mainRepository: MainRepository) {
+        self.mainRepository = mainRepository
+    }
+}
+
+extension FileIteractor: FileInteracting {
+    var url: URL? { mainRepository.fileURL }
     
     func shouldHandleURL(url: URL) -> Bool {
-        guard url.pathExtension == ExchangeConsts.extension
-                || url.pathExtension == ExchangeConsts.extensionV2
-                || url.pathExtension == ExchangeConsts.extensionAEGIS
+        guard
+            url.pathExtension == ExchangeConsts.extension ||
+            url.pathExtension == ExchangeConsts.extensionV2 ||
+            url.pathExtension == ExchangeConsts.extensionAEGIS
         else { return false }
-        handleURL = url
+        mainRepository.fileURL = url
         return true
     }
-    
-    func viewWillAppear() { handleCodeIfNecessary() }
-    func appBecomeActive() { handleCodeIfNecessary() }
-    
-    private func handleCodeIfNecessary() {
-        guard let handleURL, openFileImport?(handleURL) == true else { return }
-        self.handleURL = nil
+    func markAsHandled() {
+        mainRepository.fileURL = nil
     }
 }

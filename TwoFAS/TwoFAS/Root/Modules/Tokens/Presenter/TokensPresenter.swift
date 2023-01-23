@@ -74,7 +74,6 @@ extension TokensPresenter {
     
     func viewWillAppear() {
         Log("TokensPresenter - viewWillAppear")
-        flowController.toTokensAreVisible()
         interactor.sync()
         appActiveActions()
     }

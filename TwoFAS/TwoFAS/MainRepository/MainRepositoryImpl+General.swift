@@ -23,4 +23,12 @@ extension MainRepositoryImpl {
     var currentAppVersion: String {
         appVersion ?? "-"
     }
+    
+    func setIntroductionAsShown() {
+        userDefaultsRepository.setIntroductionAsShown()
+    }
+    
+    func introductionWasShown() -> Bool {
+        userDefaultsRepository.introductionWasShown()
+    }
 }

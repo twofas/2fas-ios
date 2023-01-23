@@ -18,26 +18,9 @@
 //
 
 import Foundation
-import Storage
-import Protection
-import Token
-import Sync
-import TimeVerification
 
-struct MainCoordinatorDependencies {
-    let service: ServiceHandler
-    let codeStorage: CodeStorage
-    let biometricAuth: BiometricAuth
-    let timerHandler: TimerHandler
-    let security: SecurityProtocol
-    let rootViewController: ContainerViewController
-    let timeVerificationController: TimeVerificationControllerDifference
-    let accessTokenStorage: TokenStorageVerify
-    let viewPath: ViewPathType
-    let sync: CloudHandlerType
-    let fileHandler: FileOpenHandler
-    let initializeSyncOnFirstRun: InitializeSyncOnFirstRun
-    let categoryHandler: CategoryHandler
-    let sectionHandler: SectionHandler
-    let extensionStorage: ExtensionsStorage
+enum MainContent: Int {
+    case main = 0
+    case settings = 1
+    case news = 2
 }

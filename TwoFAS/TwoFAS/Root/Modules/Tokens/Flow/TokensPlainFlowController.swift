@@ -21,12 +21,10 @@ import UIKit
 import Common
 
 protocol TokensPlainFlowControllerParent: AnyObject {
-    func tokensEnableSyncIfPossible()
     func tokensSwitchToTokensTab()
 }
 
 protocol TokensPlainFlowControlling: AnyObject {
-    func toTokensAreVisible()
     // MARK: Service
     func toShowSelectAddingMethod(isCameraAvailable: Bool)
     func toDeleteService(serviceData: ServiceData)
@@ -80,10 +78,6 @@ final class TokensPlainFlowController: FlowController {
 }
 
 extension TokensPlainFlowController: TokensPlainFlowControlling {
-    func toTokensAreVisible() {
-        parent?.tokensEnableSyncIfPossible()
-    }
-    
     // MARK: - Service
     
     func toShowSelectAddingMethod(isCameraAvailable: Bool) {

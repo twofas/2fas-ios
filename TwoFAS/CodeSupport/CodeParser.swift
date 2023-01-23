@@ -44,8 +44,7 @@ final class CodeParser {
         
         guard let secret = items.find(forType: .secret(""))?
             .value
-            .trimmingCharacters(in: .init(charactersIn: "="))
-            .uppercased(),
+            .sanitazeSecret(),
               secret.isValidSecret()
         else { return nil }
         

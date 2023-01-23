@@ -74,7 +74,9 @@ public extension String {
         let chars = Array(self)
         for char in chars {
             if char.isASCII && (char.isLetter || char.isNumber || char.isPadding) {
-                // valid
+                if let num = Int(String(char)), char.isNumber, num < 2 || num > 7 {
+                    return false
+                }
             } else {
                 return false
             }
@@ -87,7 +89,8 @@ public extension String {
     }
     
     func sanitazeSecret() -> String {
-        replacingOccurrences(of: " ", with: "")
+        trimmingCharacters(in: .init(charactersIn: "="))
+            .replacingOccurrences(of: " ", with: "")
             .replacingOccurrences(of: "\\", with: "")
             .replacingOccurrences(of: "-", with: "")
             .uppercased()

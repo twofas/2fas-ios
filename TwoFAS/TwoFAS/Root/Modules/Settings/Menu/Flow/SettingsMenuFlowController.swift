@@ -39,6 +39,7 @@ protocol SettingsMenuFlowControllerParent: AnyObject {
     func toSocialChannel(_ socialChannel: SocialChannel)
     func toBrowserExtension()
     func toDonate()
+    func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
 }
 
 protocol SettingsMenuFlowControlling: AnyObject {
@@ -51,6 +52,7 @@ protocol SettingsMenuFlowControlling: AnyObject {
     func toBrowserExtension()
     func toAbout()
     func toDonate()
+    func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
 }
 
 final class SettingsMenuFlowController: FlowController {
@@ -97,6 +99,7 @@ extension SettingsMenuFlowController: SettingsMenuFlowControlling {
         parent?.toSocialChannel(socialChannel)
     }
     func toBrowserExtension() { parent?.toBrowserExtension() }
+    func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) { parent?.toUpdateCurrentPosition(viewPath) }
 }
 
 extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {

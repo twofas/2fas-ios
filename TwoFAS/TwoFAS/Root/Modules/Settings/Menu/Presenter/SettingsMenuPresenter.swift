@@ -39,6 +39,18 @@ final class SettingsMenuPresenter {
 }
 
 extension SettingsMenuPresenter {
+    var currentViewPath: ViewPath.Settings? {
+        guard let selectedModule else { return nil }
+        switch selectedModule {
+        case .backup: return .backup
+        case .security: return .security
+        case .browserExtension: return .browserExtension
+        case .trash: return .trash
+        case .about: return .about
+        default: return nil
+        }
+    }
+    
     func viewWillAppear() {
         reload()
     }
@@ -97,6 +109,7 @@ extension SettingsMenuPresenter {
         if isCollapsed {
             selectedIndex = nil
             selectedModule = nil
+            flowController.toUpdateCurrentPosition(nil)
         }
     }
     
@@ -130,6 +143,16 @@ extension SettingsMenuPresenter {
     func handleAppSecurityChaged() {
         reload()
     }
+    
+    func handleNavigateToViewPath(_ viewPath: ViewPath.Settings) {
+        switch viewPath {
+        case .backup: navigate(to: .backup)
+        case .security: navigate(to: .security)
+        case .browserExtension: navigate(to: .browserExtension)
+        case .trash: navigate(to: .trash)
+        case .about: navigate(to: .about)
+        }
+    }
 }
 
 private extension SettingsMenuPresenter {
@@ -138,6 +161,8 @@ private extension SettingsMenuPresenter {
         guard let indexPath = menu.indexPath(for: navigateTo) else { return }
         selectedModule = navigateTo
         selectedIndex = indexPath
+        
+        flowController.toUpdateCurrentPosition(navigateToViewPath(navigateTo: navigateTo))
         
         if !isCollapsed {
             view?.setSelection(at: indexPath)
@@ -182,6 +207,17 @@ private extension SettingsMenuPresenter {
             } else {
                 interactor.enableWidgets()
             }
+        }
+    }
+    
+    func navigateToViewPath(navigateTo: SettingsNavigationModule) -> ViewPath.Settings? {
+        switch navigateTo {
+        case .backup: return .backup
+        case .security: return .security
+        case .browserExtension: return .browserExtension
+        case .trash: return .trash
+        case .about: return .about
+        default: return nil
         }
     }
 }

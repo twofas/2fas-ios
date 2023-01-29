@@ -19,7 +19,9 @@
 
 import UIKit
 
-protocol SettingsFlowControllerParent: AnyObject {}
+protocol SettingsFlowControllerParent: AnyObject {
+    func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
+}
 
 protocol SettingsFlowControlling: AnyObject {
     func toInitialConfiguration()
@@ -165,6 +167,10 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
     
     func toDonate() {
         UIApplication.shared.open(URL(string: "https://2fas.com/donate")!, options: [:], completionHandler: nil)
+    }
+    
+    func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
+        parent?.toUpdateCurrentPosition(viewPath)
     }
 }
 extension SettingsFlowController: BackupMenuFlowControllerParent {

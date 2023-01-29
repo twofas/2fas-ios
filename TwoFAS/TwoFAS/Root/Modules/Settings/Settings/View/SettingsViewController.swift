@@ -71,20 +71,14 @@ final class SettingsViewController: UIViewController {
             }
             return
         }
-        // TODO: Add navigation here!
+        (navigationNavi.viewControllers.first as? SettingsMenuViewController)?
+            .presenter.handleNavigateToViewPath(viewPath)
     }
     
     var currentView: ViewPath.Settings? {
-        nil
+        (navigationNavi.viewControllers.first as? SettingsMenuViewController)?
+            .presenter.currentViewPath
     }
-    
-//    func switchToSetupPIN() {
-//        presenter.handleSwitchToSetupPIN()
-//    }
-//
-//    func switchToBrowserExtension() {
-//        presenter.handleSwitchToBrowserExtension()
-//    }
     
     @objc
     private func shouldRefresh() {

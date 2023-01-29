@@ -22,8 +22,11 @@ import Common
 
 enum ViewPath: Equatable, Codable {
     enum Settings: Codable {
-        case browserExtension
+        case backup
         case security
+        case browserExtension
+        case trash
+        case about
     }
     
     case main

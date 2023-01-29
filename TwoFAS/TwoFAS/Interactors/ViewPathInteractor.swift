@@ -55,7 +55,7 @@ extension ViewPathInteractor: ViewPathIteracting {
     
     func clearFor(_ path: ViewPath) {
         Log("ViewPathInteractor: Checking if should clear for path: \(path)")
-        guard let currentPath = get(), path == currentPath else { return }
+        guard let currentPath = viewPath(), path == currentPath else { return }
         clear()
     }
     

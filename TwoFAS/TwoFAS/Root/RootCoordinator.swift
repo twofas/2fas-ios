@@ -44,11 +44,11 @@ final class RootCoordinator: Coordinator {
     private let timerHandler: TimerHandler
     private let timeVerificationController: TimeVerificationController
     private let sync: CloudHandlerType
-    private let fileInteractor: FileInteracting
     private let categoryHandler: CategoryHandler
     private let sectionHandler: SectionHandler
     
     private var pushNotificationRegistrationInteractor: PushNotificationRegistrationInteracting?
+    private var fileInteractor: FileInteracting?
     private var registerDeviceInteractor: RegisterDeviceInteracting?
     private var linkInteractor: LinkInteracting?
     private var cameraPermissionInteractor: CameraPermissionInteracting?
@@ -184,7 +184,8 @@ final class RootCoordinator: Coordinator {
     
     func shouldHandleURL(url: URL) -> Bool {
         Log("App: shouldHandleURL")
-        return (linkInteractor?.shouldHandleURL(url: url) == true) || fileInteractor.shouldHandleURL(url: url)
+        return (linkInteractor?.shouldHandleURL(url: url) == true) ||
+        (fileInteractor?.shouldHandleURL(url: url) == true)
     }
     
     func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {

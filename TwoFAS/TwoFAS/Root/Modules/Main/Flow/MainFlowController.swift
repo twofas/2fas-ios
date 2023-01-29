@@ -18,8 +18,25 @@
 //
 
 import UIKit
+import Common
 
 final class MainFlowController: FlowController {
+    private var authRequestsFlowController: AuthRequestsFlowControllerChild?
+    
+    //authRequestsFlowController = AuthRequestsFlowController.create(parent: self)
+    
+    func toAuthRequestFetch() {
+        authRequestsFlowController?.refresh()
+    }
+    
+    func toClearAuthList() {
+        authRequestsFlowController?.clearList()
+    }
+    
+    func toAuthorize(for tokenRequestID: String) {
+        authRequestsFlowController?.authorizeFromApp(for: tokenRequestID)
+    }
+
     func toSecretSyncError(_ serviceName: String) {
         let alert = AlertControllerDismissFlow(
             title: T.Commons.error,
@@ -56,7 +73,51 @@ extension MainFlowController: TokensNavigationFlowControllerParent {
 extension MainFlowController: SettingsFlowControllerParent {}
 extension MainFlowController: NewsFlowControllerParent {}
 
+extension MainFlowController: AuthRequestsFlowControllerParent {
+    func authRequestAskUserForAuthorization(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest) {
+        AskForAuthFlowController.present(on: viewController, parent: self, auth: auth, pair: pair)
+    }
+    
+    func authRequestShowServiceSelection(auth: WebExtensionAwaitingAuth) {
+        SelectServiceNavigationFlowController.present(on: viewController, parent: self, authRequest: auth)
+    }
+}
+
+extension MainFlowController: SelectServiceNavigationFlowControllerParent {
+    func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth) {
+        viewController.dismiss(animated: true) { [weak self] in
+            self?.authRequestsFlowController?.didSelectService(serviceData, auth: authRequest)
+        }
+    }
+    
+    func serviceSelectionCancelled(for tokenRequestID: String) {
+        viewController.dismiss(animated: true) { [weak self] in
+            self?.authRequestsFlowController?.didCancelServiceSelection(for: tokenRequestID)
+        }
+    }
+}
+
+extension MainFlowController: AskForAuthFlowControllerParent {
+    func askForAuthAllow(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest) {
+        viewController.dismiss(animated: true) { [weak self] in
+            self?.authRequestsFlowController?.authorize(auth: auth, pair: pair)
+        }
+    }
+    
+    func askForAuthDeny(tokenRequestID: String) {
+        viewController.dismiss(animated: true) { [weak self] in
+            self?.authRequestsFlowController?.skip(for: tokenRequestID)
+        }
+    }
+}
+
+
 private extension MainFlowController {
+    
+// //        delegate = self
+
+    
+    
 //    @objc private func switchToSetupPIN() {
 //        mainViewController.selectedIndex = Indexes.settings.rawValue
 //        guard
@@ -126,4 +187,87 @@ private extension MainFlowController {
 //        if let newsVC = newsTab.viewControllers.first as? NewsViewController {
 //            newsVC.presenter.handleInitialLoad()
 //        }
+    
+//    private func changeStyling() {
+//        let app = tabBar.standardAppearance.copy()
+//        app.backgroundColor = Theme.Colors.Fill.background
+//        app.shadowColor = Theme.Colors.Line.secondaryLine
+//        app.shadowImage = Asset.shadowLine.image
+//            .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+//
+//        let tabBarItemAppearance = UITabBarItemAppearance()
+//        tabBarItemAppearance.normal.titleTextAttributes = [
+//            NSAttributedString.Key.foregroundColor: Theme.Colors.Controls.inactive,
+//            NSAttributedString.Key.font: Theme.Fonts.tabBar
+//        ]
+//        tabBarItemAppearance.selected.titleTextAttributes = [
+//            NSAttributedString.Key.foregroundColor: Theme.Colors.Controls.active,
+//            NSAttributedString.Key.font: Theme.Fonts.tabBar
+//        ]
+//        tabBarItemAppearance.focused.titleTextAttributes = [
+//            NSAttributedString.Key.foregroundColor: Theme.Colors.Controls.active,
+//            NSAttributedString.Key.font: Theme.Fonts.tabBar
+//        ]
+//
+//        tabBarItemAppearance.normal.badgeTextAttributes = [.foregroundColor: Theme.Colors.Fill.theme]
+//        tabBarItemAppearance.selected.badgeTextAttributes = [.foregroundColor: Theme.Colors.Fill.theme]
+//        tabBarItemAppearance.focused.badgeTextAttributes = [.foregroundColor: Theme.Colors.Fill.theme]
+//
+//        tabBarItemAppearance.normal.badgeBackgroundColor = .clear
+//        tabBarItemAppearance.selected.badgeBackgroundColor = .clear
+//        tabBarItemAppearance.focused.badgeBackgroundColor = .clear
+//
+//        app.compactInlineLayoutAppearance = tabBarItemAppearance
+//        app.inlineLayoutAppearance = tabBarItemAppearance
+//        app.stackedLayoutAppearance = tabBarItemAppearance
+//
+//        tabBar.standardAppearance = app
+//    }
+    
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//
+//        NotificationBottomOffset.offset = tabBar.frame.height
+//    }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        changeStyling()
+//    }
+    
+//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+//        super.traitCollectionDidChange(previousTraitCollection)
+//
+//        if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
+//            changeStyling()
+//        }
+//    }
+    
+//    extension MainViewController: UITabBarControllerDelegate {
+//        func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+//            //presenter.handleDidSelectTab(...) // add enum for that!, save position
+//            if previousSelectedIndex == selectedIndex && selectedIndex == settingsIndex {
+//                guard let settings = viewController as? SettingsViewController else { return }
+//                settings.navigateToRoot()
+//            }
+//            if previousSelectedIndex != selectedIndex && selectedIndex == settingsIndex {
+//                settingsEventController.tabSelected()
+//            }
+//            if previousSelectedIndex != selectedIndex && selectedIndex == mainIndex {
+//                authRequestsFlowController?.refresh()
+//            }
+//            previousSelectedIndex = selectedIndex
+//        }
+//    }
+    
+//    override func willMove(toParent parent: UIViewController?) {
+//        if parent == nil {
+//            viewControllers?.forEach({ vc in
+//                vc.willMove(toParent: nil)
+//            })
+//        }
+//
+//        super.willMove(toParent: parent)
+//    }
+
 }

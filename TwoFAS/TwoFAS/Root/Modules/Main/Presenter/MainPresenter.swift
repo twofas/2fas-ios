@@ -23,6 +23,8 @@ final class MainPresenter {
     private let flowController: MainFlowController
     private let interactor: MainModuleInteractor
     
+    private var authRequestsFetched = false
+    
     init(flowController: MainFlowController, interactor: MainModuleInteractor) {
         self.flowController = flowController
         self.interactor = interactor
@@ -37,6 +39,11 @@ final class MainPresenter {
         if let url = interactor.checkForImport() {
             flowController.toOpenFileImport(url: url)
             interactor.clearImportedFileURL()
+        } else {
+            if authRequestsFetched {
+                authRequestsFetched = false
+                flowController.toAuthRequestFetch()
+            }
         }
         // restore view path
     }
@@ -47,5 +54,25 @@ final class MainPresenter {
     
     func handleSwitchToTokens() {
         //flow ->
+    }
+    
+    func handleSwitchToSetupPIN() {
+        
+    }
+    
+    func handleSwitchToBrowserExtension() {
+        
+    }
+    
+    func handleClearAuthList() {
+        flowController.toClearAuthList()
+    }
+    
+    func handleRefreshAuthList() {
+        flowController.toAuthRequestFetch()
+    }
+    
+    func handleAuthorize(for tokenRequestID: String) {
+        flowController.toAuthorize(for: tokenRequestID)
     }
 }

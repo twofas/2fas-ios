@@ -273,7 +273,6 @@
 		C245702428A04CBA008E99F4 /* GridViewGAImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C245702328A04CBA008E99F4 /* GridViewGAImportPresenter.swift */; };
 		C245702628A04DF6008E99F4 /* GridViewGAImportFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C245702528A04DF6008E99F4 /* GridViewGAImportFlowController.swift */; };
 		C245702828A0500E008E99F4 /* GridViewGAImportNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C245702728A0500E008E99F4 /* GridViewGAImportNavigationFlowController.swift */; };
-		C24590F6280F48210079C21C /* SelectServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24590F5280F48210079C21C /* SelectServiceViewController.swift */; };
 		C24590F8280F52620079C21C /* SelectServicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24590F7280F52620079C21C /* SelectServicePresenter.swift */; };
 		C24590FA280F54400079C21C /* SelectServiceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24590F9280F54400079C21C /* SelectServiceModels.swift */; };
 		C24590FC280F54B30079C21C /* SelectServiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24590FB280F54B30079C21C /* SelectServiceTableViewCell.swift */; };
@@ -375,6 +374,8 @@
 		C26764B02872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26764AF2872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift */; };
 		C26764B22872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26764B12872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift */; };
 		C26764B428724A4200D468B2 /* ComposeServiceCategorySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26764B328724A4200D468B2 /* ComposeServiceCategorySelectionViewController.swift */; };
+		C2698B632986860F00EBC179 /* SelectServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B622986860F00EBC179 /* SelectServiceViewController.swift */; };
+		C2698B652986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B642986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift */; };
 		C26A5FE3290475EA00A5A620 /* Sync4-Sync5.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C26A5FE2290475EA00A5A620 /* Sync4-Sync5.xcmappingmodel */; };
 		C26BCE01281010A000CA6A9A /* SelectServiceModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE00281010A000CA6A9A /* SelectServiceModuleInteractor.swift */; };
 		C26BCE03281013A700CA6A9A /* SelectServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE02281013A700CA6A9A /* SelectServiceFlowController.swift */; };
@@ -708,7 +709,6 @@
 		C2C02242297F222100D596A8 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C02241297F222100D596A8 /* MainPresenter.swift */; };
 		C2C02244297F224700D596A8 /* MainModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C02243297F224700D596A8 /* MainModuleInteractor.swift */; };
 		C2C15140294E831300F8B511 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1513F294E831300F8B511 /* Keys.swift */; };
-		C2C1DDD727CAA417002C7867 /* ComposeServiceAdvancedEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1DDD627CAA417002C7867 /* ComposeServiceAdvancedEditViewController.swift */; };
 		C2C1DDD927CAA5CC002C7867 /* ComposeServiceAdvancedEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1DDD827CAA5CC002C7867 /* ComposeServiceAdvancedEditPresenter.swift */; };
 		C2C1DDDB27CAA619002C7867 /* ComposeServiceAdvancedEditPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1DDDA27CAA619002C7867 /* ComposeServiceAdvancedEditPresenter+Menu.swift */; };
 		C2C1DDDD27CAA773002C7867 /* ComposeServiceAdvancedEditModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1DDDC27CAA773002C7867 /* ComposeServiceAdvancedEditModuleInteractor.swift */; };
@@ -1464,7 +1464,6 @@
 		C245702328A04CBA008E99F4 /* GridViewGAImportPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewGAImportPresenter.swift; sourceTree = "<group>"; };
 		C245702528A04DF6008E99F4 /* GridViewGAImportFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewGAImportFlowController.swift; sourceTree = "<group>"; };
 		C245702728A0500E008E99F4 /* GridViewGAImportNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewGAImportNavigationFlowController.swift; sourceTree = "<group>"; };
-		C24590F5280F48210079C21C /* SelectServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectServiceViewController.swift; path = TwoFAS/Root/Main/SelectService/View/SelectServiceViewController.swift; sourceTree = SOURCE_ROOT; };
 		C24590F7280F52620079C21C /* SelectServicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServicePresenter.swift; sourceTree = "<group>"; };
 		C24590F9280F54400079C21C /* SelectServiceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServiceModels.swift; sourceTree = "<group>"; };
 		C24590FB280F54B30079C21C /* SelectServiceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectServiceTableViewCell.swift; sourceTree = "<group>"; };
@@ -1567,6 +1566,8 @@
 		C26764AF2872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceCategorySelectionPresenter.swift; sourceTree = "<group>"; };
 		C26764B12872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComposeServiceCategorySelectionPresenter+Menu.swift"; sourceTree = "<group>"; };
 		C26764B328724A4200D468B2 /* ComposeServiceCategorySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceCategorySelectionViewController.swift; sourceTree = "<group>"; };
+		C2698B622986860F00EBC179 /* SelectServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectServiceViewController.swift; sourceTree = "<group>"; };
+		C2698B642986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedEditViewController.swift; sourceTree = "<group>"; };
 		C26A5FE2290475EA00A5A620 /* Sync4-Sync5.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = "Sync4-Sync5.xcmappingmodel"; sourceTree = "<group>"; };
 		C26BCE00281010A000CA6A9A /* SelectServiceModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServiceModuleInteractor.swift; sourceTree = "<group>"; };
 		C26BCE02281013A700CA6A9A /* SelectServiceFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServiceFlowController.swift; sourceTree = "<group>"; };
@@ -1901,7 +1902,6 @@
 		C2C02241297F222100D596A8 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		C2C02243297F224700D596A8 /* MainModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModuleInteractor.swift; sourceTree = "<group>"; };
 		C2C1513F294E831300F8B511 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
-		C2C1DDD627CAA417002C7867 /* ComposeServiceAdvancedEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ComposeServiceAdvancedEditViewController.swift; path = TwoFAS/ComposeService/Modules/AdvancedEdit/View/ComposeServiceAdvancedEditViewController.swift; sourceTree = SOURCE_ROOT; };
 		C2C1DDD827CAA5CC002C7867 /* ComposeServiceAdvancedEditPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedEditPresenter.swift; sourceTree = "<group>"; };
 		C2C1DDDA27CAA619002C7867 /* ComposeServiceAdvancedEditPresenter+Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeServiceAdvancedEditPresenter+Menu.swift"; sourceTree = "<group>"; };
 		C2C1DDDC27CAA773002C7867 /* ComposeServiceAdvancedEditModuleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedEditModuleInteractor.swift; sourceTree = "<group>"; };
@@ -3658,9 +3658,9 @@
 		C24590F1280F44F60079C21C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C2698B622986860F00EBC179 /* SelectServiceViewController.swift */,
 				C26BCE062810287500CA6A9A /* SelectServiceTableViewHeader.swift */,
 				C24590FB280F54B30079C21C /* SelectServiceTableViewCell.swift */,
-				C24590F5280F48210079C21C /* SelectServiceViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5391,8 +5391,8 @@
 		C2C1DDD227CAA314002C7867 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C2698B642986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift */,
 				C2C1DDE027CAD2C1002C7867 /* Cells */,
-				C2C1DDD627CAA417002C7867 /* ComposeServiceAdvancedEditViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -7025,7 +7025,6 @@
 				C24048712765612F0076376E /* RootNavigationController.swift in Sources */,
 				C21111E8274AB98000CA7C78 /* SettingsViewController.swift in Sources */,
 				C2117181276CE54900042D28 /* VerifyPINFlowController.swift in Sources */,
-				C2C1DDD727CAA417002C7867 /* ComposeServiceAdvancedEditViewController.swift in Sources */,
 				C29FEFF92756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift in Sources */,
 				C2D6F4B427D414A100D933FB /* ServiceAddedServiceContainerViewHOTP.swift in Sources */,
 				C2D3B0F628EE0F1C00D2F991 /* MainRepositoryImpl+ServiceDefinition.swift in Sources */,
@@ -7167,6 +7166,7 @@
 				C278122D27FA4B5A00F31453 /* MainRepositoryImpl+DeviceName.swift in Sources */,
 				C2BD85E6264068C00087D087 /* IntroductionPage1View.swift in Sources */,
 				C2FDEE5F279CC316002CAB9E /* CameraScannerPresenter.swift in Sources */,
+				C2698B652986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift in Sources */,
 				C25F50392622411A008F7755 /* ServiceData+.swift in Sources */,
 				C2BE805B2811DF3D009CBC4A /* AuthRequestsFlowController.swift in Sources */,
 				C23B899527C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift in Sources */,
@@ -7181,6 +7181,7 @@
 				C240188D2618740200800DBF /* IconSelectorCollectionViewCell.swift in Sources */,
 				C284991327CC0FD40092098D /* ComposeServiceAlgorithmFlowController.swift in Sources */,
 				C21A9E8227CBF55500FE4CC4 /* ComposeServiceNumberOfDigitsFlowController.swift in Sources */,
+				C2698B632986860F00EBC179 /* SelectServiceViewController.swift in Sources */,
 				C24590F8280F52620079C21C /* SelectServicePresenter.swift in Sources */,
 				C2A2255A293BF34300B76115 /* ServiceAddedFlowController.swift in Sources */,
 				C278C05C26C97D6000FECBD4 /* InfoNextTokenView.swift in Sources */,
@@ -7244,7 +7245,6 @@
 				C25B221027C174EF0052AAC4 /* ComposeServiceModels+Extensions.swift in Sources */,
 				C2FC421F23AA8F7A00320ABE /* Router.swift in Sources */,
 				C278122B27FA49AA00F31453 /* WebExtensionLocalDeviceNameInteractor.swift in Sources */,
-				C24590F6280F48210079C21C /* SelectServiceViewController.swift in Sources */,
 				C20935D42921446A000F5AA7 /* NextTokenInteractor.swift in Sources */,
 				C240487A27656C590076376E /* ImporterFileErrorPresenter.swift in Sources */,
 				C25B221427C17F1E0052AAC4 /* ComposeServiceInputKind.swift in Sources */,

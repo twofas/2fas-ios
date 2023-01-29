@@ -248,32 +248,9 @@ final class RootCoordinator: Coordinator {
     
     private func presentMain(immediately: Bool) {
         guard currentState != .main else { return }
-//        let immediately = !(currentState == .login || currentState == .intro)
         changeState(.main)
         
-//        let dependency = MainCoordinatorDependencies(
-//            service: service,
-//            codeStorage: protection.codeStorage,
-//            biometricAuth: protection.biometricAuth,
-//            timerHandler: timerHandler,
-//            security: security,
-//            rootViewController: rootViewController,
-//            timeVerificationController: timeVerificationController,
-//            accessTokenStorage: protection.tokenStorage,
-//            viewPath: viewPathController,
-//            sync: sync,
-//            fileHandler: fileHandler,
-//            initializeSyncOnFirstRun: initializeSyncOnFirstRun,
-//            categoryHandler: categoryHandler,
-//            sectionHandler: sectionHandler,
-//            extensionStorage: protection.extensionsStorage
-//        )
-//
-//        let mainCoordinator = MainCoordinator(dependency: dependency, showImmidiately: immediately)
-//
-//        mainCoordinator.parentCoordinatorDelegate = self
-//        addChild(mainCoordinator)
-//        mainCoordinator.start()
+        MainFlowController.showAsRoot(in: rootViewController, parent: self)
     }
     
     private func presentLogin(immediately: Bool) {
@@ -313,3 +290,5 @@ final class RootCoordinator: Coordinator {
         handleViewFlow()
     }
 }
+
+extension RootCoordinator: MainFlowControllerParent {}

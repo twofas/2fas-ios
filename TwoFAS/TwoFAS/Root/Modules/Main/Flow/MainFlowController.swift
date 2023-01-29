@@ -20,11 +20,53 @@
 import UIKit
 import Common
 
+protocol MainFlowControllerParent: AnyObject {}
+
+protocol MainFlowControlling: AnyObject {
+    func toAuthRequestFetch()
+    func toClearAuthList()
+    func toAuthorize(for tokenRequestID: String)
+    func toSecretSyncError(_ serviceName: String)
+    func toOpenFileImport(url: URL)
+    
+    // MARK: - App update
+    func toShowNewVersionAlert(for appStoreURL: URL, skip: @escaping Callback)
+}
+
 final class MainFlowController: FlowController {
     private var authRequestsFlowController: AuthRequestsFlowControllerChild?
     
-    //authRequestsFlowController = AuthRequestsFlowController.create(parent: self)
+    private weak var parent: MainFlowControllerParent?
+    private weak var naviViewController: UINavigationController!
+    private var galleryViewController: UIViewController?
     
+    static func showAsRoot(
+        in viewController: UIViewController,
+        parent: MainFlowControllerParent
+    ) {
+        let view = MainViewController()
+        let flowController = MainFlowController(viewController: view)
+        flowController.parent = parent
+        flowController.authRequestsFlowController = AuthRequestsFlowController.create(parent: flowController)
+        let interactor = InteractorFactory.shared.mainModuleInteractor()
+        let presenter = MainPresenter(
+            flowController: flowController,
+            interactor: interactor
+        )
+        view.presenter = presenter
+        
+        viewController.addChild(view)
+        viewController.view.addSubview(view.view)
+        view.view.pinToParent()
+        view.didMove(toParent: viewController)
+    }
+}
+
+extension MainFlowController {
+    var viewController: MainViewController { _viewController as! MainViewController }
+}
+
+extension MainFlowController: MainFlowControlling {
     func toAuthRequestFetch() {
         authRequestsFlowController?.refresh()
     }
@@ -78,10 +120,6 @@ final class MainFlowController: FlowController {
 
         viewController.present(alertController, animated: true, completion: nil)
     }
-}
-
-extension MainFlowController {
-    var viewController: MainViewController { _viewController as! MainViewController }
 }
 
 extension MainFlowController: ImporterOpenFileFlowControllerParent {

@@ -19,6 +19,20 @@
 
 import Foundation
 
+protocol MainModuleInteracting: AnyObject {
+    var secretSyncError: ((String) -> Void)? { get set }
+    
+    func initialize()
+    func checkForImport() -> URL?
+    func clearImportedFileURL()
+    func restoreViewPath() -> ViewPath?
+    func setViewPath(_ viewPath: ViewPath)
+    
+    // MARK: - New app version
+    func checkForNewAppVersion(completion: @escaping (URL) -> Void)
+    func skipAppVersion()
+}
+
 final class MainModuleInteractor {
     var secretSyncError: ((String) -> Void)?
     
@@ -43,7 +57,9 @@ final class MainModuleInteractor {
 
         cloudBackupStateInteractor.secretSyncError = { [weak self] in self?.secretSyncError?($0) }
     }
-    
+}
+
+extension MainModuleInteractor: MainModuleInteracting {
     func initialize() {
         DebugLog(logUploadingInteractor.summarize())
     }

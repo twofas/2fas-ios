@@ -499,11 +499,20 @@ extension InteractorFactory {
             tokenInteractor: tokenInteractor(),
             sectionInteractor: sectionInteractor(),
             notificationsInteractor: notificationInteractor(),
-            newVersionInteractor: newVersionInteractor(),
             cloudBackupInteractor: cloudBackupStateInteractor(listenerID: ""),
             cameraPermissionInteractor: cameraPermissionInteractor(),
             linkInteractor: linkInteractor(),
             widgetsInteractor: widgetsInteractor()
+        )
+    }
+    
+    func mainModuleInteractor() -> MainModuleInteracting {
+        MainModuleInteractor(
+            logUploadingInteractor: logUploadingInteractor(),
+            viewPathInteractor: viewPathInteractor(),
+            cloudBackupStateInteractor: cloudBackupStateInteractor(listenerID: ""),
+            fileInteractor: fileInteractor(),
+            newVersionInteractor: newVersionInteractor()
         )
     }
 }

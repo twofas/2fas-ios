@@ -20,13 +20,13 @@
 import Foundation
 
 final class MainPresenter {
-    private let flowController: MainFlowController
-    private let interactor: MainModuleInteractor
+    private let flowController: MainFlowControlling
+    private let interactor: MainModuleInteracting
     
     private var authRequestsFetched = false
     private var appVersionFetched = false
     
-    init(flowController: MainFlowController, interactor: MainModuleInteractor) {
+    init(flowController: MainFlowControlling, interactor: MainModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
         interactor.secretSyncError = { [weak flowController] in flowController?.toSecretSyncError($0) }

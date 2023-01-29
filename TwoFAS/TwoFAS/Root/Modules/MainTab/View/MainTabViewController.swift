@@ -28,11 +28,7 @@ protocol MainTabViewControlling: AnyObject {
 }
 
 final class MainTabViewController: UITabBarController {
-    var presenter: MainTabPresenter! {
-        didSet {
-            presenter.viewDidLoad()
-        }
-    }
+    var presenter: MainTabPresenter!
     
     private var tokensVC: TokensViewController? {
         (viewControllers?[safe: ViewPath.main.index] as? UINavigationController)?
@@ -56,6 +52,7 @@ final class MainTabViewController: UITabBarController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        presenter.viewWillAppear()
         changeStyling()
     }
     

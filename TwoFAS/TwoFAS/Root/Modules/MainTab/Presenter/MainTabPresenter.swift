@@ -32,7 +32,7 @@ final class MainTabPresenter {
 }
 
 extension MainTabPresenter {
-    func viewDidLoad() {
+    func viewWillAppear() {
         flowController.toTabIsReady()
         if !areNewsPreloaded {
             areNewsPreloaded = true

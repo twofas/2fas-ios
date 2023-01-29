@@ -64,19 +64,27 @@ final class SettingsViewController: UIViewController {
         setInitialTrait()
     }
     
-    func navigateToRoot() {
-        if isCollapsed {
-            navigationNavi.popToRootViewController(animated: true)
+    func navigateToView(_ viewPath: ViewPath.Settings?) {
+        guard let viewPath else {
+            if isCollapsed {
+                navigationNavi.popToRootViewController(animated: true)
+            }
+            return
         }
+        // TODO: Add navigation here!
     }
     
-    func switchToSetupPIN() {
-        presenter.handleSwitchToSetupPIN()
+    var currentView: ViewPath.Settings? {
+        nil
     }
     
-    func switchToBrowserExtension() {
-        presenter.handleSwitchToBrowserExtension()
-    }
+//    func switchToSetupPIN() {
+//        presenter.handleSwitchToSetupPIN()
+//    }
+//
+//    func switchToBrowserExtension() {
+//        presenter.handleSwitchToBrowserExtension()
+//    }
     
     @objc
     private func shouldRefresh() {

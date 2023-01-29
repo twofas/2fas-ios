@@ -376,6 +376,10 @@
 		C26764B428724A4200D468B2 /* ComposeServiceCategorySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26764B328724A4200D468B2 /* ComposeServiceCategorySelectionViewController.swift */; };
 		C2698B632986860F00EBC179 /* SelectServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B622986860F00EBC179 /* SelectServiceViewController.swift */; };
 		C2698B652986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B642986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift */; };
+		C2698B6C2986B42400EBC179 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B6B2986B42400EBC179 /* MainTabViewController.swift */; };
+		C2698B6E2986C03600EBC179 /* MainTabPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B6D2986C03600EBC179 /* MainTabPresenter.swift */; };
+		C2698B702986CA3C00EBC179 /* MainTabFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B6F2986CA3C00EBC179 /* MainTabFlowController.swift */; };
+		C2698B722986F6E800EBC179 /* UITabBarController+addTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B712986F6E800EBC179 /* UITabBarController+addTab.swift */; };
 		C26A5FE3290475EA00A5A620 /* Sync4-Sync5.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C26A5FE2290475EA00A5A620 /* Sync4-Sync5.xcmappingmodel */; };
 		C26BCE01281010A000CA6A9A /* SelectServiceModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE00281010A000CA6A9A /* SelectServiceModuleInteractor.swift */; };
 		C26BCE03281013A700CA6A9A /* SelectServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE02281013A700CA6A9A /* SelectServiceFlowController.swift */; };
@@ -1568,6 +1572,10 @@
 		C26764B328724A4200D468B2 /* ComposeServiceCategorySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceCategorySelectionViewController.swift; sourceTree = "<group>"; };
 		C2698B622986860F00EBC179 /* SelectServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectServiceViewController.swift; sourceTree = "<group>"; };
 		C2698B642986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedEditViewController.swift; sourceTree = "<group>"; };
+		C2698B6B2986B42400EBC179 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
+		C2698B6D2986C03600EBC179 /* MainTabPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabPresenter.swift; sourceTree = "<group>"; };
+		C2698B6F2986CA3C00EBC179 /* MainTabFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabFlowController.swift; sourceTree = "<group>"; };
+		C2698B712986F6E800EBC179 /* UITabBarController+addTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController+addTab.swift"; sourceTree = "<group>"; };
 		C26A5FE2290475EA00A5A620 /* Sync4-Sync5.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = "Sync4-Sync5.xcmappingmodel"; sourceTree = "<group>"; };
 		C26BCE00281010A000CA6A9A /* SelectServiceModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServiceModuleInteractor.swift; sourceTree = "<group>"; };
 		C26BCE02281013A700CA6A9A /* SelectServiceFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServiceFlowController.swift; sourceTree = "<group>"; };
@@ -4053,6 +4061,40 @@
 			path = Flow;
 			sourceTree = "<group>";
 		};
+		C2698B662986B3E500EBC179 /* MainTab */ = {
+			isa = PBXGroup;
+			children = (
+				C2698B6A2986B40500EBC179 /* Flow */,
+				C2698B682986B3F400EBC179 /* Presenter */,
+				C2698B672986B3EF00EBC179 /* View */,
+			);
+			path = MainTab;
+			sourceTree = "<group>";
+		};
+		C2698B672986B3EF00EBC179 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C2698B6B2986B42400EBC179 /* MainTabViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C2698B682986B3F400EBC179 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C2698B6D2986C03600EBC179 /* MainTabPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C2698B6A2986B40500EBC179 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				C2698B6F2986CA3C00EBC179 /* MainTabFlowController.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
 		C26B7F0D23CB719900C6AAE2 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
@@ -5310,6 +5352,7 @@
 				C2DFE5BC264C851700F828C0 /* CircleView.swift */,
 				C2633EFC265A7D090034B836 /* TokenLabel.swift */,
 				C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */,
+				C2698B712986F6E800EBC179 /* UITabBarController+addTab.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -5526,6 +5569,7 @@
 			isa = PBXGroup;
 			children = (
 				C2D75D38297DA07B0002531E /* Main */,
+				C2698B662986B3E500EBC179 /* MainTab */,
 				C244F9E022762A54009992D3 /* Tokens */,
 				C21111E1274AB8C100CA7C78 /* Settings */,
 				C25860AE28246D87009AE54F /* News */,
@@ -6928,6 +6972,7 @@
 				C257FD071FD9F6F300CF6898 /* PermissionsStateDataControllerProtocol.swift in Sources */,
 				C230A89A275AE1A800FB83AE /* SettingsMenuToggle.swift in Sources */,
 				C2A7945727F9019D00E5C641 /* BrowserExtensionEditNameFlowController.swift in Sources */,
+				C2698B722986F6E800EBC179 /* UITabBarController+addTab.swift in Sources */,
 				C284AF7927601BCF00FEE810 /* BackupDeleteFlowController.swift in Sources */,
 				C2BDC6C31FC1AC0A00967D0E /* RootViewController.swift in Sources */,
 				C2147CDD205D7B630001D011 /* PINPadViewModel.swift in Sources */,
@@ -6936,6 +6981,7 @@
 				C2BDC6D51FC1CBE100967D0E /* Theme.swift in Sources */,
 				C2872DDA27A6B9C2000F5AE9 /* SortType+.swift in Sources */,
 				C21A9E9427CC0A7100FE4CC4 /* ComposeServiceRefreshTimePresenter+Menu.swift in Sources */,
+				C2698B702986CA3C00EBC179 /* MainTabFlowController.swift in Sources */,
 				C2014E0427BEED630046B75C /* ComposeServiceInputCell.swift in Sources */,
 				C2BDC6DD1FC1CEDC00967D0E /* ContainerViewController.swift in Sources */,
 				C2FDEE63279CC37E002CAB9E /* CameraScannerFlowController.swift in Sources */,
@@ -7308,6 +7354,7 @@
 				C2F51EFD27DAABD300A67C73 /* BrowserExtensionPairingSuccessfulView.swift in Sources */,
 				C2625F9228BBB87700D84C5C /* AboutModels.swift in Sources */,
 				C299B7D2236DE78700224F51 /* StackView+.swift in Sources */,
+				C2698B6E2986C03600EBC179 /* MainTabPresenter.swift in Sources */,
 				C23FD5102814648C00E4E9C5 /* ComposeServiceWebExtensionModuleInteractor.swift in Sources */,
 				C23666771FB2644900989ACA /* AppDelegate.swift in Sources */,
 				C2FA3E83280AF5210097ED71 /* ServiceListingInteractor.swift in Sources */,
@@ -7409,6 +7456,7 @@
 				C24471A425F503690024B4C5 /* ComposeServiceFormInput.swift in Sources */,
 				C2000F4B217C81490020CA0B /* LoginCoordinator.swift in Sources */,
 				C25860B828247CB7009AE54F /* NewsModels.swift in Sources */,
+				C2698B6C2986B42400EBC179 /* MainTabViewController.swift in Sources */,
 				C22D9E1124681EE000AAE6EE /* MainCointainerNavigationButtonGenerator.swift in Sources */,
 				C2A7945127F9016D00E5C641 /* BrowserExtensionEditNameViewController.swift in Sources */,
 				C21B3A1427AF0BC9005C603B /* ColorPickerFlowController.swift in Sources */,

@@ -19,14 +19,22 @@
 
 import UIKit
 
+protocol MainViewControlling: AnyObject {
+    func navigateToViewPath(_ viewPath: ViewPath)
+    func settingsTabActive()
+}
+
 final class MainViewController: UIViewController {
+    private enum ActiveView {
+        case tab
+        case split
+    }
     var presenter: MainPresenter!
     
-    var previousSelectedIndex: Int = 0
-    
-    private let mainIndex: Int = 0
-    private let settingsIndex: Int = 1
     private let settingsEventController = SettingsEventController()
+    
+    private var activeView: ActiveView = .tab
+    private var tabViewController: MainTabViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +52,16 @@ final class MainViewController: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    func setupTab(_ tabVC: MainTabViewController) {
+        // TODO: Move to split!
+        addChild(tabVC)
+        view.addSubview(tabVC.view)
+        tabVC.view.pinToParent()
+        tabVC.didMove(toParent: self)
+        
+        self.tabViewController = tabVC
     }
 }
 
@@ -117,5 +135,18 @@ extension MainViewController {
     @objc
     private func switchToBrowserExtension() {
         presenter.handleSwitchToBrowserExtension()
+    }
+}
+
+extension MainViewController: MainViewControlling {
+    func navigateToViewPath(_ viewPath: ViewPath) {
+        switch activeView {
+        case .tab: tabViewController?.changeViewPath(viewPath)
+        case .split: break
+        }
+    }
+    
+    func settingsTabActive() {
+        settingsEventController.tabSelected()
     }
 }

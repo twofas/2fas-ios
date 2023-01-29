@@ -248,9 +248,10 @@ final class RootCoordinator: Coordinator {
     
     private func presentMain(immediately: Bool) {
         guard currentState != .main else { return }
+        let immediately = !(currentState == .login || currentState == .intro)
         changeState(.main)
         
-        MainFlowController.showAsRoot(in: rootViewController, parent: self)
+        MainFlowController.showAsRoot(in: rootViewController, parent: self, immediately: immediately)
     }
     
     private func presentLogin(immediately: Bool) {

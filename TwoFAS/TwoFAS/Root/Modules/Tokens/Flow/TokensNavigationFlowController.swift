@@ -30,10 +30,10 @@ final class TokensNavigationFlowController: NavigationFlowController {
     static func showAsATab(
         in tabBarController: UITabBarController,
         parent: TokensNavigationFlowControllerParent
-    ) -> UINavigationController {
+    ) {
         let flowController = TokensNavigationFlowController()
         flowController.parent = parent
-
+        
         let navi = CommonNavigationControllerFlow(flowController: flowController)
         navi.tabBarItem = UITabBarItem(
             title: T.Commons.tokens,
@@ -47,9 +47,7 @@ final class TokensNavigationFlowController: NavigationFlowController {
             parent: flowController
         )
         
-        // TODO: Move it here. Temporary as a return value
-        // tabBarController.viewControllers?.append(navi)
-        return navi
+        tabBarController.addTab(navi)
     }
 }
 

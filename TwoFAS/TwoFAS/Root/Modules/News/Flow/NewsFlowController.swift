@@ -34,7 +34,7 @@ final class NewsFlowController: FlowController {
     static func showAsATab(
         in tabBarController: UITabBarController,
         parent: NewsFlowControllerParent
-    ) -> UINavigationController {
+    ) {
         let view = NewsViewController()
         let flowController = NewsFlowController(viewController: view)
         flowController.parent = parent
@@ -62,9 +62,7 @@ final class NewsFlowController: FlowController {
         
         presenter.handleRefreshView()
         
-        // TODO: Move it here. Temporary as a return value
-        // tabBarController.viewControllers?.append(view)
-        return naviController
+        tabBarController.addTab(naviController)
     }
 }
 

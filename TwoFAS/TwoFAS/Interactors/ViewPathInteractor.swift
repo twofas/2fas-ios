@@ -20,9 +20,10 @@
 import Foundation
 import Common
 
-enum ViewPath: Equatable {
-    enum Settings {
-        case vault
+enum ViewPath: Equatable, Codable {
+    enum Settings: Codable {
+        case browserExtension
+        case security
     }
     
     case main
@@ -76,86 +77,5 @@ extension ViewPathInteractor: ViewPathIteracting {
         
         Log("ViewPathInteractor: Returning path: \(path.viewPath)")
         return path.viewPath
-    }
-}
-
-// MARK: - Codable
-
-extension ViewPath: Codable {
-    enum Key: CodingKey {
-        case rawValue
-        case associatedValue
-    }
-    
-    enum Value: Int {
-        case main = 0
-        case settings = 1
-        case news = 2
-    }
-    
-    enum CodingError: Error {
-        case unknownValue
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: Key.self)
-        let rawValue = try container.decode(Int.self, forKey: .rawValue)
-        switch rawValue {
-        case Value.main.rawValue:
-            self = .main
-        case Value.settings.rawValue:
-            let value = try container.decodeIfPresent(Settings.self, forKey: .associatedValue)
-            self = .settings(option: value)
-        default:
-            throw CodingError.unknownValue
-        }
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: Key.self)
-        
-        switch self {
-        case .main:
-            try container.encode(Value.main.rawValue, forKey: .rawValue)
-        case .settings(let value):
-            try container.encode(Value.settings.rawValue, forKey: .rawValue)
-            try container.encode(value, forKey: .associatedValue)
-        case .news:
-            try container.encode(Value.news.rawValue, forKey: .rawValue)
-        }
-    }
-}
-
-extension ViewPath.Settings: Codable {
-    enum Key: CodingKey {
-        case rawValue
-    }
-    
-    enum Value: Int {
-        case vault = 0
-    }
-    
-    enum CodingError: Error {
-        case unknownValue
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: Key.self)
-        let rawValue = try container.decode(Int.self, forKey: .rawValue)
-        switch rawValue {
-        case Value.vault.rawValue:
-            self = .vault
-        default:
-            throw CodingError.unknownValue
-        }
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: Key.self)
-        
-        switch self {
-        case .vault:
-            try container.encode(Value.vault.rawValue, forKey: .rawValue)
-        }
     }
 }

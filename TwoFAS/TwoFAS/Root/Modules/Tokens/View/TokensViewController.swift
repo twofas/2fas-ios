@@ -57,6 +57,10 @@ final class TokensViewController: UIViewController {
         setupNotificationsListeners()
     }
     
+    func scrollToTop() {
+        gridView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+    }
+    
     // MARK: - App events
     
     override func viewWillLayoutSubviews() {

@@ -20,6 +20,8 @@
 import Foundation
 
 final class MainPresenter {
+    weak var view: MainViewControlling?
+    
     private let flowController: MainFlowControlling
     private let interactor: MainModuleInteracting
     
@@ -34,6 +36,7 @@ final class MainPresenter {
     
     func viewDidLoad() {
         interactor.initialize()
+        flowController.toSetupTab()
     }
     
     func viewWillAppear() {
@@ -52,7 +55,6 @@ final class MainPresenter {
             authRequestsFetched = true
             flowController.toAuthRequestFetch()
         }
-        // restore view path
     }
     
     func handleViewPathUpdate(_ viewPath: ViewPath) {
@@ -60,15 +62,15 @@ final class MainPresenter {
     }
     
     func handleSwitchToTokens() {
-        //flow ->
+        view?.navigateToViewPath(.main)
     }
-    
+
     func handleSwitchToSetupPIN() {
-        
+        view?.navigateToViewPath(.settings(option: .security))
     }
-    
+
     func handleSwitchToBrowserExtension() {
-        
+        view?.navigateToViewPath(.settings(option: .browserExtension))
     }
     
     func handleClearAuthList() {
@@ -81,5 +83,20 @@ final class MainPresenter {
     
     func handleAuthorize(for tokenRequestID: String) {
         flowController.toAuthorize(for: tokenRequestID)
+    }
+    
+    func handleDidChangePath(_ viewPath: ViewPath) {
+        interactor.setViewPath(viewPath)
+        if viewPath == .main {
+            flowController.toAuthRequestFetch()
+        } else if case ViewPath.settings(_) = viewPath {
+            view?.settingsTabActive()
+        }
+    }
+    
+    func handleReady() {
+        if let path = interactor.restoreViewPath() {
+            view?.navigateToViewPath(path)
+        }
     }
 }

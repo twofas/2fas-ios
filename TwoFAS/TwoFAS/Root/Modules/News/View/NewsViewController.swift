@@ -83,6 +83,10 @@ final class NewsViewController: UIViewController {
         presenter.viewDidLoad()
     }
     
+    func scrollToTop() {
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+    }
+    
     private func setupViewLayout() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false

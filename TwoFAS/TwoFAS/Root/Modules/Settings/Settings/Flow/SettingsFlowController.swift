@@ -42,7 +42,7 @@ final class SettingsFlowController: FlowController {
     static func showAsATab(
         in tabBarController: UITabBarController,
         parent: SettingsFlowControllerParent
-    ) -> SettingsViewController {
+    ) {
         let view = SettingsViewController()
         let flowController = SettingsFlowController(viewController: view)
         flowController.parent = parent
@@ -60,9 +60,7 @@ final class SettingsFlowController: FlowController {
             selectedImage: Asset.tabBarIconSettingsActive.image
         )
         
-        // TODO: Move it here. Temporary as a return value
-        // tabBarController.viewControllers?.append(view)
-        return view
+        tabBarController.addTab(view)
     }
 }
 

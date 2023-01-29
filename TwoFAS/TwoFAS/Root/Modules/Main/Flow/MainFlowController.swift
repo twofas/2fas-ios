@@ -28,6 +28,7 @@ protocol MainFlowControlling: AnyObject {
     func toAuthorize(for tokenRequestID: String)
     func toSecretSyncError(_ serviceName: String)
     func toOpenFileImport(url: URL)
+    func toSetupTab()
     
     // MARK: - App update
     func toShowNewVersionAlert(for appStoreURL: URL, skip: @escaping Callback)
@@ -41,8 +42,9 @@ final class MainFlowController: FlowController {
     private var galleryViewController: UIViewController?
     
     static func showAsRoot(
-        in viewController: UIViewController,
-        parent: MainFlowControllerParent
+        in viewController: ContainerViewController, // TODO: Change to plain VC
+        parent: MainFlowControllerParent,
+        immediately: Bool
     ) {
         let view = MainViewController()
         let flowController = MainFlowController(viewController: view)
@@ -54,11 +56,15 @@ final class MainFlowController: FlowController {
             interactor: interactor
         )
         view.presenter = presenter
+        presenter.view = view
+
+        viewController.present(view, immediately: immediately, animationType: .alpha)
         
-        viewController.addChild(view)
-        viewController.view.addSubview(view.view)
-        view.view.pinToParent()
-        view.didMove(toParent: viewController)
+        // TODO: Make it a child of root VC
+//        viewController.addChild(view)
+//        viewController.view.addSubview(view.view)
+//        view.view.pinToParent()
+//        view.didMove(toParent: viewController)
     }
 }
 
@@ -67,6 +73,10 @@ extension MainFlowController {
 }
 
 extension MainFlowController: MainFlowControlling {
+    func toSetupTab() {
+        let tab = MainTabFlowController.initialize(parent: self)
+        viewController.setupTab(tab)
+    }
     func toAuthRequestFetch() {
         authRequestsFlowController?.refresh()
     }
@@ -130,15 +140,6 @@ extension MainFlowController: ImporterOpenFileFlowControllerParent {
     }
 }
 
-extension MainFlowController: TokensNavigationFlowControllerParent {
-    func tokensSwitchToTokensTab() {
-        viewController.presenter.handleSwitchToTokens()
-    }
-}
-
-extension MainFlowController: SettingsFlowControllerParent {}
-extension MainFlowController: NewsFlowControllerParent {}
-
 extension MainFlowController: AuthRequestsFlowControllerParent {
     func authRequestAskUserForAuthorization(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest) {
         AskForAuthFlowController.present(on: viewController, parent: self, auth: auth, pair: pair)
@@ -177,163 +178,16 @@ extension MainFlowController: AskForAuthFlowControllerParent {
     }
 }
 
-
-private extension MainFlowController {
+extension MainFlowController: MainTabFlowControllerParent {
+    func tabNavigatedToViewPath(_ viewPath: ViewPath) {
+        viewController.presenter.handleDidChangePath(viewPath)
+    }
     
-// //        delegate = self
-
+    func tabReady() {
+        viewController.presenter.handleReady()
+    }
     
-    
-//    @objc private func switchToSetupPIN() {
-//        mainViewController.selectedIndex = Indexes.settings.rawValue
-//        guard
-//            let settingsVC = mainViewController.viewControllers?[
-//                safe: mainViewController.selectedIndex
-//            ] as? SettingsViewController else { return }
-//        // Delay so tab bar will have time to load properly the whole view
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            settingsVC.switchToSetupPIN()
-//        }
-//    }
-//
-//    @objc private func switchToBrowserExtension() {
-//        mainViewController.selectedIndex = Indexes.settings.rawValue
-//        guard
-//            let settingsVC = mainViewController.viewControllers?[
-//                safe: mainViewController.selectedIndex
-//            ] as? SettingsViewController else { return }
-//        // Delay so tab bar will have time to load properly the whole view
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            settingsVC.switchToBrowserExtension()
-//        }
-//    }
-//
-//    private func switchToTokensTab() {
-//        mainViewController.selectedIndex = Indexes.main.rawValue
-//    }
-//
-//    private func didSelectOffset(_ offset: Int) {
-//        switch offset {
-//        case Indexes.main.rawValue:
-//            dependency.viewPath.set(.main)
-//        case Indexes.settings.rawValue:
-//            dependency.viewPath.set(.settings(option: nil))
-//        case Indexes.news.rawValue:
-//            dependency.viewPath.set(.news)
-//        default:
-//            assertionFailure("UITabBarController has more options than supported for ViewPath")
-//        }
-//    }
-//
-//    private func checkIfViewSwitchIsNecessary() {
-//        guard let path = dependency.viewPath.get() else { return }
-//        let index: Int
-//        switch path {
-//        case .main:
-//            index = Indexes.main.rawValue
-//        case .settings:
-//            index = Indexes.settings.rawValue
-//        case .news:
-//            index = Indexes.news.rawValue
-//        }
-//        mainViewController.previousSelectedIndex = index
-//        mainViewController.selectedIndex = index
-//    }
-    
-    
-    
-    
-//        let tokens = TokensNavigationFlowController.showAsATab(in: mainViewController, parent: self)
-//
-//        let settingsTab = SettingsFlowController.showAsATab(in: mainViewController, parent: self)
-//
-//        let newsTab = NewsFlowController.showAsATab(in: mainViewController, parent: self)
-//
-//        mainViewController.setViewControllers([tokens, settingsTab, newsTab], animated: false)
-//        if let newsVC = newsTab.viewControllers.first as? NewsViewController {
-//            newsVC.presenter.handleInitialLoad()
-//        }
-    
-//    private func changeStyling() {
-//        let app = tabBar.standardAppearance.copy()
-//        app.backgroundColor = Theme.Colors.Fill.background
-//        app.shadowColor = Theme.Colors.Line.secondaryLine
-//        app.shadowImage = Asset.shadowLine.image
-//            .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
-//
-//        let tabBarItemAppearance = UITabBarItemAppearance()
-//        tabBarItemAppearance.normal.titleTextAttributes = [
-//            NSAttributedString.Key.foregroundColor: Theme.Colors.Controls.inactive,
-//            NSAttributedString.Key.font: Theme.Fonts.tabBar
-//        ]
-//        tabBarItemAppearance.selected.titleTextAttributes = [
-//            NSAttributedString.Key.foregroundColor: Theme.Colors.Controls.active,
-//            NSAttributedString.Key.font: Theme.Fonts.tabBar
-//        ]
-//        tabBarItemAppearance.focused.titleTextAttributes = [
-//            NSAttributedString.Key.foregroundColor: Theme.Colors.Controls.active,
-//            NSAttributedString.Key.font: Theme.Fonts.tabBar
-//        ]
-//
-//        tabBarItemAppearance.normal.badgeTextAttributes = [.foregroundColor: Theme.Colors.Fill.theme]
-//        tabBarItemAppearance.selected.badgeTextAttributes = [.foregroundColor: Theme.Colors.Fill.theme]
-//        tabBarItemAppearance.focused.badgeTextAttributes = [.foregroundColor: Theme.Colors.Fill.theme]
-//
-//        tabBarItemAppearance.normal.badgeBackgroundColor = .clear
-//        tabBarItemAppearance.selected.badgeBackgroundColor = .clear
-//        tabBarItemAppearance.focused.badgeBackgroundColor = .clear
-//
-//        app.compactInlineLayoutAppearance = tabBarItemAppearance
-//        app.inlineLayoutAppearance = tabBarItemAppearance
-//        app.stackedLayoutAppearance = tabBarItemAppearance
-//
-//        tabBar.standardAppearance = app
-//    }
-    
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//
-//        NotificationBottomOffset.offset = tabBar.frame.height
-//    }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        changeStyling()
-//    }
-    
-//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-//        super.traitCollectionDidChange(previousTraitCollection)
-//
-//        if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
-//            changeStyling()
-//        }
-//    }
-    
-//    extension MainViewController: UITabBarControllerDelegate {
-//        func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-//            //presenter.handleDidSelectTab(...) // add enum for that!, save position
-//            if previousSelectedIndex == selectedIndex && selectedIndex == settingsIndex {
-//                guard let settings = viewController as? SettingsViewController else { return }
-//                settings.navigateToRoot()
-//            }
-//            if previousSelectedIndex != selectedIndex && selectedIndex == settingsIndex {
-//                settingsEventController.tabSelected()
-//            }
-//            if previousSelectedIndex != selectedIndex && selectedIndex == mainIndex {
-//                authRequestsFlowController?.refresh()
-//            }
-//            previousSelectedIndex = selectedIndex
-//        }
-//    }
-    
-//    override func willMove(toParent parent: UIViewController?) {
-//        if parent == nil {
-//            viewControllers?.forEach({ vc in
-//                vc.willMove(toParent: nil)
-//            })
-//        }
-//
-//        super.willMove(toParent: parent)
-//    }
-
+    func tabToTokens() {
+        viewController.presenter.handleSwitchToTokens()
+    }
 }

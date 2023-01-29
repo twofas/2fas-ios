@@ -24,6 +24,7 @@ final class MainPresenter {
     private let interactor: MainModuleInteractor
     
     private var authRequestsFetched = false
+    private var appVersionFetched = false
     
     init(flowController: MainFlowController, interactor: MainModuleInteractor) {
         self.flowController = flowController
@@ -39,11 +40,17 @@ final class MainPresenter {
         if let url = interactor.checkForImport() {
             flowController.toOpenFileImport(url: url)
             interactor.clearImportedFileURL()
-        } else {
-            if authRequestsFetched {
-                authRequestsFetched = false
-                flowController.toAuthRequestFetch()
+        } else if !appVersionFetched {
+            appVersionFetched = true
+            
+            interactor.checkForNewAppVersion { [weak self] url in
+                self?.flowController.toShowNewVersionAlert(for: url) { [weak self] in
+                    self?.interactor.skipAppVersion()
+                }
             }
+        } else if !authRequestsFetched {
+            authRequestsFetched = true
+            flowController.toAuthRequestFetch()
         }
         // restore view path
     }

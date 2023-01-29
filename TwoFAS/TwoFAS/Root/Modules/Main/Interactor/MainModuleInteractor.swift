@@ -26,17 +26,20 @@ final class MainModuleInteractor {
     private let viewPathInteractor: ViewPathIteracting
     private let cloudBackupStateInteractor: CloudBackupStateInteracting
     private let fileInteractor: FileInteracting
+    private let newVersionInteractor: NewVersionInteracting
     
     init(
         logUploadingInteractor: LogUploadingInteracting,
         viewPathInteractor: ViewPathIteracting,
         cloudBackupStateInteractor: CloudBackupStateInteracting,
-        fileInteractor: FileInteracting
+        fileInteractor: FileInteracting,
+        newVersionInteractor: NewVersionInteracting
     ) {
         self.logUploadingInteractor = logUploadingInteractor
         self.viewPathInteractor = viewPathInteractor
         self.cloudBackupStateInteractor = cloudBackupStateInteractor
         self.fileInteractor = fileInteractor
+        self.newVersionInteractor = newVersionInteractor
 
         cloudBackupStateInteractor.secretSyncError = { [weak self] in self?.secretSyncError?($0) }
     }
@@ -59,5 +62,18 @@ final class MainModuleInteractor {
     
     func setViewPath(_ viewPath: ViewPath) {
         viewPathInteractor.setViewPath(viewPath)
+    }
+    
+    // MARK: - New app version
+    
+    func checkForNewAppVersion(completion: @escaping (URL) -> Void) {
+        newVersionInteractor.checkForNewVersion { [weak self] newVersionAvailable in
+            guard let appStoreURL = self?.newVersionInteractor.appStoreURL, newVersionAvailable else { return }
+            completion(appStoreURL)
+        }
+    }
+    
+    func skipAppVersion() {
+        newVersionInteractor.userSkippedVersion()
     }
 }

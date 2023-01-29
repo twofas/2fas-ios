@@ -43,8 +43,6 @@ protocol TokensModuleInteracting: AnyObject {
     func enableHOTPCounter(for secret: Secret)
     func stopCounters()
     func setSortType(_ sortType: SortType)
-    func checkForNewAppVersion(completion: @escaping (URL) -> Void)
-    func skipAppVersion()
     func createSection(with name: String)
     func toggleCollapseSection(_ section: GridSection)
     func moveDown(_ section: GridSection)
@@ -86,10 +84,9 @@ final class TokensModuleInteractor {
     private let tokenInteractor: TokenInteracting
     private let sectionInteractor: SectionInteracting
     private let notificationsInteractor: NotificationInteracting
-    private let newVersionInteractor: NewVersionInteracting // TODO: Move up in hierarchy
     private let cloudBackupInteractor: CloudBackupStateInteracting
     private let cameraPermissionInteractor: CameraPermissionInteracting
-    private let linkInteractor: LinkInteracting // TODO: Move up in hierarchy
+    private let linkInteractor: LinkInteracting
     private let widgetsInteractor: WidgetsInteracting
     
     private(set) var categoryData: [CategoryData] = []
@@ -105,7 +102,6 @@ final class TokensModuleInteractor {
         tokenInteractor: TokenInteracting,
         sectionInteractor: SectionInteracting,
         notificationsInteractor: NotificationInteracting,
-        newVersionInteractor: NewVersionInteracting,
         cloudBackupInteractor: CloudBackupStateInteracting,
         cameraPermissionInteractor: CameraPermissionInteracting,
         linkInteractor: LinkInteracting,
@@ -119,7 +115,6 @@ final class TokensModuleInteractor {
         self.tokenInteractor = tokenInteractor
         self.sectionInteractor = sectionInteractor
         self.notificationsInteractor = notificationsInteractor
-        self.newVersionInteractor = newVersionInteractor
         self.cloudBackupInteractor = cloudBackupInteractor
         self.cameraPermissionInteractor = cameraPermissionInteractor
         self.linkInteractor = linkInteractor
@@ -230,19 +225,6 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     func setSortType(_ sortType: SortType) {
         sortInteractor.setSort(sortType)
-    }
-    
-    // MARK: - New app version
-    
-    func checkForNewAppVersion(completion: @escaping (URL) -> Void) {
-        newVersionInteractor.checkForNewVersion { [weak self] newVersionAvailable in
-            guard let appStoreURL = self?.newVersionInteractor.appStoreURL, newVersionAvailable else { return }
-            completion(appStoreURL)
-        }
-    }
-    
-    func skipAppVersion() {
-        newVersionInteractor.userSkippedVersion()
     }
     
     // MARK: - Section

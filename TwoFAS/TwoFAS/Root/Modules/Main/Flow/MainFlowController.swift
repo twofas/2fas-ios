@@ -50,6 +50,34 @@ final class MainFlowController: FlowController {
     func toOpenFileImport(url: URL) {
         ImporterOpenFileFlowController.present(on: _viewController, parent: self, url: url)
     }
+    
+    // MARK: - App update
+    
+    func toShowNewVersionAlert(for appStoreURL: URL, skip: @escaping Callback) {
+        let alertTitle = T.NewVersion.newVersionTitle
+        let alertMessage = T.NewVersion.newVersionMessageIos
+        
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        
+        let updateButton = UIAlertAction(title: T.NewVersion.updateAction, style: .default) { _ in
+            guard UIApplication.shared.canOpenURL(appStoreURL) else { return }
+            UIApplication.shared.open(appStoreURL, options: [:], completionHandler: nil)
+        }
+        
+        alertController.addAction(updateButton)
+        
+        let notNowButton = UIAlertAction(title: T.NewVersion.updateLater, style: .cancel)
+        alertController.addAction(notNowButton)
+        
+        let skipButton = UIAlertAction(title: T.NewVersion.skipTitle, style: .destructive) { _ in
+            skip()
+        }
+        alertController.addAction(skipButton)
+        
+        guard viewController.presentedViewController == nil else { return }
+
+        viewController.present(alertController, animated: true, completion: nil)
+    }
 }
 
 extension MainFlowController {

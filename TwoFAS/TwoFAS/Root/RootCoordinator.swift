@@ -248,7 +248,7 @@ final class RootCoordinator: Coordinator {
     
     private func presentMain(immediately: Bool) {
         guard currentState != .main else { return }
-        let immediately = !(currentState == .login || currentState == .intro)
+//        let immediately = !(currentState == .login || currentState == .intro)
         changeState(.main)
         
 //        let dependency = MainCoordinatorDependencies(

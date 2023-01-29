@@ -81,12 +81,6 @@ extension TokensPresenter {
     func handleAppDidBecomeActive() {
         Log("TokensPresenter - handleAppDidBecomeActive")
         appActiveActions()
-        
-        interactor.checkForNewAppVersion { [weak self] url in
-            self?.flowController.toShowNewVersionAlert(for: url) { [weak self] in
-                self?.interactor.skipAppVersion()
-            }
-        }
     }
     
     func handleAppBecomesInactive() {
@@ -163,11 +157,6 @@ extension TokensPresenter {
     func handleServicesWereUpdated(modified: [Secret]?, deleted: [Secret]?) {
         interactor.servicesWereUpdated()
         handleNewData()
-    }
-    
-    func handleSkipAppVersion() {
-        Log("TokensPresenter - handleSkipAppVersion")
-        interactor.skipAppVersion()
     }
     
     // MARK: - Actions

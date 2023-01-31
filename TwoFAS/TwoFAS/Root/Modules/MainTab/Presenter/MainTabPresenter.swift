@@ -50,6 +50,7 @@ extension MainTabPresenter {
                 view?.scrollToTokensTop()
             case .settings:
                 view?.setSettingsView(nil)
+                previousSelectedViewPath = .settings(option: nil)
             case .news:
                 view?.scrollToNewsTop()
             }
@@ -67,7 +68,7 @@ extension MainTabPresenter {
         previousSelectedViewPath = viewPath
     }
     
-    func handleSettingsChangedViewPath(_ viewPath: ViewPath.Settings) {
-        flowController.toMainChangedViewPath(.settings(option: viewPath))
+    func handleSettingsChangedViewPath(_ viewPath: ViewPath.Settings?) {
+        previousSelectedViewPath = .settings(option: viewPath)
     }
 }

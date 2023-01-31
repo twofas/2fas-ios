@@ -157,6 +157,7 @@ extension SettingsMenuPresenter {
 
 private extension SettingsMenuPresenter {
     func navigate(to navigateTo: SettingsNavigationModule) {
+        guard navigateTo != selectedModule else { return }
         let menu = buildMenu()
         guard let indexPath = menu.indexPath(for: navigateTo) else { return }
         selectedModule = navigateTo

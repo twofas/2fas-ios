@@ -53,6 +53,10 @@ final class MainTabFlowController: FlowController {
     }
 }
 
+extension MainTabFlowController {
+    var viewController: MainTabViewController { _viewController as! MainTabViewController }
+}
+
 extension MainTabFlowController: MainTabFlowControlling {
     func toMainChangedViewPath(_ viewPath: ViewPath) {
         parent?.tabNavigatedToViewPath(viewPath)
@@ -72,6 +76,7 @@ extension MainTabFlowController: TokensNavigationFlowControllerParent {
 extension MainTabFlowController: SettingsFlowControllerParent {
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
         parent?.tabNavigatedToViewPath(.settings(option: viewPath))
+        viewController.presenter.handleSettingsChangedViewPath(viewPath)
     }
 }
 extension MainTabFlowController: NewsFlowControllerParent {}

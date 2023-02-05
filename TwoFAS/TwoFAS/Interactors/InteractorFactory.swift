@@ -515,4 +515,8 @@ extension InteractorFactory {
             newVersionInteractor: newVersionInteractor()
         )
     }
+    
+    func mainMenuModuleInteractor() -> MainMenuModuleInteracting {
+        MainMenuModuleInteractor(sectionInteractor: sectionInteractor())
+    }
 }

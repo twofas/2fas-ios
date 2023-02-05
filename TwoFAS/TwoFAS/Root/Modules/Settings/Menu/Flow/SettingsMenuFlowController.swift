@@ -25,7 +25,7 @@ protocol SettingsMenuFlowControllerChild: AnyObject {
     func toSelectedModule()
     func toShowingRoot()
     func toSwitchToSetupPIN()
-    func toSwitchToBroserExtension()
+    func toSwitchToBrowserExtension()
     func toSwitchToFAQ()
     func appSecurityChaged()
 }
@@ -131,7 +131,7 @@ extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {
         viewController.presenter.handleAppSecurityChaged()
     }
     
-    func toSwitchToBroserExtension() {
+    func toSwitchToBrowserExtension() {
         viewController.presenter.handleSwitchToBrowserExtension()
     }
 }

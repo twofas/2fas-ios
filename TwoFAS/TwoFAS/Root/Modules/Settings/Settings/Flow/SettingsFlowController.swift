@@ -108,7 +108,7 @@ extension SettingsFlowController: SettingsFlowControlling {
     }
     
     func toSwitchToBrowserExtension() {
-        navigationMenu?.toSwitchToBroserExtension()
+        navigationMenu?.toSwitchToBrowserExtension()
     }
 }
 

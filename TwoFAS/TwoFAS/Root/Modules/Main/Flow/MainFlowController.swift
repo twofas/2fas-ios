@@ -46,18 +46,20 @@ final class MainFlowController: FlowController {
         parent: MainFlowControllerParent,
         immediately: Bool
     ) {
-        let view = MainViewController()
-        let flowController = MainFlowController(viewController: view)
-        flowController.parent = parent
-        flowController.authRequestsFlowController = AuthRequestsFlowController.create(parent: flowController)
-        let interactor = InteractorFactory.shared.mainModuleInteractor()
-        let presenter = MainPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-        view.presenter = presenter
-        presenter.view = view
+//        let view = MainViewController()
+//        let flowController = MainFlowController(viewController: view)
+//        flowController.parent = parent
+//        flowController.authRequestsFlowController = AuthRequestsFlowController.create(parent: flowController)
+//        let interactor = InteractorFactory.shared.mainModuleInteractor()
+//        let presenter = MainPresenter(
+//            flowController: flowController,
+//            interactor: interactor
+//        )
+//        view.presenter = presenter
+//        presenter.view = view
 
+        let view = MainSplitViewController()
+        
         viewController.present(view, immediately: immediately, animationType: .alpha)
         
         // TODO: Make it a child of root VC

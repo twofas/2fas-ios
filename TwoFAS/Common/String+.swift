@@ -74,9 +74,7 @@ public extension String {
         let chars = Array(self)
         for char in chars {
             if char.isASCII && (char.isLetter || char.isNumber || char.isPadding) {
-                if let num = Int(String(char)), char.isNumber, num < 2 || num > 7 {
-                    return false
-                }
+                // valid
             } else {
                 return false
             }

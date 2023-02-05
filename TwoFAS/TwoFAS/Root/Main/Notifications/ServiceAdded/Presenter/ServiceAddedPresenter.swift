@@ -78,8 +78,8 @@ extension ServiceAddedPresenter {
 private extension ServiceAddedPresenter {
     func actionText() -> String {
         switch interactor.serviceTokenType {
-        case .hotp: return T.Tokens.retypeThisToken
-        case .totp: return T.Tokens.unlockAndRetypeTokenTitle
+        case .hotp: return T.Tokens.unlockAndRetypeTokenTitle
+        case .totp: return T.Tokens.retypeThisToken
         }
     }
 }

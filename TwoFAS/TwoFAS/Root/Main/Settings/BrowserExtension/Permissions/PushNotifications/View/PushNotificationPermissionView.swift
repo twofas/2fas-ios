@@ -71,7 +71,7 @@ struct PushNotificationPermissionView_Previews: PreviewProvider {
                 .previewDevice("iPhone SE (1st generation)")
                 .preferredColorScheme(.dark)
             PushNotificationPermissionView(action: {})
-                .previewDevice("iPhone 13 Pro Max")
+                .previewDevice("iPhone 13 Pro")
         }
     }
 }

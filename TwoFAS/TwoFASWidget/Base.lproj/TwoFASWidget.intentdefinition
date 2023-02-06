@@ -9,11 +9,11 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>88xZPY</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>20G95</string>
+	<string>22D49</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
-	<string>13A1030d</string>
+	<string>14C18</string>
 	<key>INIntentDefinitionToolsVersion</key>
-	<string>13.1</string>
+	<string>14.2</string>
 	<key>INIntents</key>
 	<array>
 		<dict>
@@ -63,6 +63,30 @@
 							<integer>12</integer>
 							<key>INIntentParameterArraySizeSizeClass</key>
 							<string>ExtraLarge</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterArraySizeSize</key>
+							<integer>1</integer>
+							<key>INIntentParameterArraySizeSizeClass</key>
+							<string>AccessoryInline</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterArraySizeSize</key>
+							<integer>1</integer>
+							<key>INIntentParameterArraySizeSizeClass</key>
+							<string>AccessoryCorner</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterArraySizeSize</key>
+							<integer>1</integer>
+							<key>INIntentParameterArraySizeSizeClass</key>
+							<string>AccessoryCircular</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterArraySizeSize</key>
+							<integer>2</integer>
+							<key>INIntentParameterArraySizeSizeClass</key>
+							<string>AccessoryRectangular</string>
 						</dict>
 					</array>
 					<key>INIntentParameterConfigurable</key>
@@ -134,7 +158,7 @@
 					</dict>
 					<dict>
 						<key>INIntentResponseCodeConciseFormatString</key>
-						<string>Not ready!!!!!</string>
+						<string>Not ready!</string>
 						<key>INIntentResponseCodeConciseFormatStringID</key>
 						<string>RJKeab</string>
 						<key>INIntentResponseCodeFormatString</key>

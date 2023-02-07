@@ -19,20 +19,25 @@
 
 import UIKit
 
-protocol MainMenuFlowControllerParent: AnyObject {}
+protocol MainMenuFlowControllerParent: AnyObject {
+    func mainMenuToMain()
+    func mainMenuToMainSection(_ sectionOffset: Int)
+    func mainMenuToSettings()
+    func mainMenuToNews()
+}
 
 protocol MainMenuFlowControlling: AnyObject {
-//    func toMain()
-//    func toMainSection(_ sectionOffset: Int)
-//    func toSettings()
-//    func toNews()
+    func toMain()
+    func toMainSection(_ sectionOffset: Int)
+    func toSettings()
+    func toNews()
 }
 
 final class MainMenuFlowController: FlowController {
     private weak var parent: MainMenuFlowControllerParent?
     
-    static func insert(
-        into split: UISplitViewController,
+    static func showAsRoot(
+        in navigationController: UINavigationController,
         parent: MainMenuFlowControllerParent
     ) {
         let view = MainMenuViewController()
@@ -48,7 +53,7 @@ final class MainMenuFlowController: FlowController {
         view.presenter = presenter
         presenter.view = view
 
-        split.setViewController(view, for: .primary)
+        navigationController.setViewControllers([view], animated: false)
     }
 }
 
@@ -57,5 +62,19 @@ extension MainMenuFlowController {
 }
 
 extension MainMenuFlowController: MainMenuFlowControlling {
+    func toMain() {
+        parent?.mainMenuToMain()
+    }
     
+    func toMainSection(_ sectionOffset: Int) {
+        parent?.mainMenuToMainSection(sectionOffset)
+    }
+    
+    func toSettings() {
+        parent?.mainMenuToSettings()
+    }
+    
+    func toNews() {
+        parent?.mainMenuToSettings()
+    }
 }

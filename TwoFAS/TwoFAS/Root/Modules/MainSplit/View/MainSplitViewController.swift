@@ -27,14 +27,13 @@ protocol MainSplitViewControlling: AnyObject {
 final class MainSplitViewController: UIViewController {
     var presenter: MainSplitPresenter!
     
-    private let split = PrimaryNavigationLayoutFixingSplitViewController(style: .doubleColumn)
+    let split = PrimaryNavigationLayoutFixingSplitViewController(style: .doubleColumn)
+    let navigationNavi = CommonNavigationController()
+    let contentNavi = CommonNavigationController()
     
     private let preferredPrimaryColumnWidthFraction: Double = 0.26
     private let minimumPrimaryColumnWidth: Double = 260
     private let maximumPrimaryColumnWidth: Double = 300
-        
-    let navigationNavi = CommonNavigationController()
-    let contentNavi = CommonNavigationController()
     
     var isCollapsed: Bool { split.isCollapsed }
     var isInitialConfigRead = false
@@ -44,9 +43,8 @@ final class MainSplitViewController: UIViewController {
         
         navigationNavi.navigationBar.isTranslucent = false
         contentNavi.navigationBar.isTranslucent = false
-        navigationNavi.delegate = self
         
-//        presenter.viewDidLoad()
+        presenter.viewDidLoad()
         
         setupSplit()
     }
@@ -109,20 +107,17 @@ final class MainSplitViewController: UIViewController {
         split.setViewController(navigationNavi, for: .primary)
         split.setViewController(contentNavi, for: .secondary)
         split.setViewController(navigationNavi, for: .compact)
-        
-        // TODO: Remove
-        navigationNavi.viewControllers = [MainMenuViewController()]
     }
     
     private func setInitialTrait() {
         guard traitCollection.horizontalSizeClass != .unspecified, !isInitialConfigRead else { return }
         
         isInitialConfigRead = true
-//        if traitCollection.horizontalSizeClass == .compact {
-//            presenter.handleCollapse()
-//        } else {
-//            presenter.handleExpansion()
-//        }
+        if traitCollection.horizontalSizeClass == .compact {
+            presenter.handleCollapse()
+        } else {
+            presenter.handleExpansion()
+        }
     }
     
     deinit {
@@ -132,17 +127,14 @@ final class MainSplitViewController: UIViewController {
 
 extension MainSplitViewController: MainSplitViewControlling {}
 
-extension MainSplitViewController: UINavigationControllerDelegate {
-    func navigationController(
-        _ navigationController: UINavigationController,
-        didShow viewController: UIViewController,
-        animated: Bool
-    ) {
-//        if viewController == navigationController.viewControllers.first {
-//            presenter.handleShowingRootMenu()
-//        }
-    }
-}
+//extension MainSplitViewController: UINavigationControllerDelegate {
+//    func navigationController(
+//        _ navigationController: UINavigationController,
+//        didShow viewController: UIViewController,
+//        animated: Bool
+//    ) {
+//    }
+//}
 
 extension MainSplitViewController: UISplitViewControllerDelegate {
     func splitViewController(
@@ -152,7 +144,7 @@ extension MainSplitViewController: UISplitViewControllerDelegate {
         // swiftlint:disable line_length
         Log("Main Split View collapsing into: primary: \(proposedTopColumn == UISplitViewController.Column.primary), secondary: \(proposedTopColumn == UISplitViewController.Column.secondary), compact: \(proposedTopColumn == UISplitViewController.Column.compact)", module: .ui)
         // swiftlint:enable line_length
-//        presenter.handleCollapse()
+        presenter.handleCollapse()
         
         return .primary
     }
@@ -163,7 +155,7 @@ extension MainSplitViewController: UISplitViewControllerDelegate {
     ) -> UISplitViewController.DisplayMode {
         Log("Main Split View expanding into into: \(proposedDisplayMode.rawValue)", module: .ui)
         
-//        presenter.handleExpansion()
+        presenter.handleExpansion()
         
         return proposedDisplayMode
     }

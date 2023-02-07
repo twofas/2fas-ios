@@ -19,10 +19,16 @@
 
 import UIKit
 
-protocol MainSplitFlowControllerParent: AnyObject {}
+protocol MainSplitFlowControllerParent: AnyObject {
+    func navigationNeedsRestoration()
+    func navigatedToViewPath(_ viewPath: ViewPath)
+    func navigationTabReady()
+    func navigationSwitchToTokens()
+}
 
 protocol MainSplitFlowControlling: AnyObject {
-
+     func toInitialConfiguration()
+    func toNavigationNeedsRestoration()
 }
 
 final class MainSplitFlowController: FlowController {
@@ -54,5 +60,65 @@ extension MainSplitFlowController {
 }
 
 extension MainSplitFlowController: MainSplitFlowControlling {
+    func toInitialConfiguration() {
+        
+        MainTabFlowController.insertAsCompact(into: viewController.split, parent: self)
+        MainMenuFlowController.showAsRoot(in: viewController.navigationNavi, parent: self)
+
+        parent?.navigationNeedsRestoration()
+    }
     
+    func toNavigationNeedsRestoration() {
+        parent?.navigationNeedsRestoration()
+    }
 }
+
+extension MainSplitFlowController: MainTabFlowControllerParent {
+    func tabNavigatedToViewPath(_ viewPath: ViewPath) {
+        parent?.navigatedToViewPath(viewPath)
+    }
+    
+    func tabReady() {
+        parent?.navigationTabReady()
+    }
+    
+    func tabToTokens() {
+        parent?.navigationSwitchToTokens()
+    }
+}
+
+extension MainSplitFlowController: MainMenuFlowControllerParent{
+    func mainMenuToMain() {
+        parent?.navigatedToViewPath(.main)
+        TokensPlainFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+    }
+    
+    func mainMenuToMainSection(_ sectionOffset: Int) {
+        parent?.navigatedToViewPath(.main)
+        // TODO: Add navigation to section!
+    }
+    
+    func mainMenuToSettings() {
+        parent?.navigatedToViewPath(.settings(option: nil))
+        SettingsFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+    }
+    
+    func mainMenuToNews() {
+        parent?.navigatedToViewPath(.news)
+        NewsFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+    }
+}
+
+extension MainSplitFlowController: TokensPlainFlowControllerParent {
+    func tokensSwitchToTokensTab() {
+        parent?.navigationSwitchToTokens()
+    }
+}
+
+extension MainSplitFlowController: SettingsFlowControllerParent {
+    func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
+        parent?.navigatedToViewPath(.settings(option: viewPath))
+    }
+}
+
+extension MainSplitFlowController: NewsFlowControllerParent {}

@@ -42,27 +42,25 @@ extension MainSplitPresenter {
         flowController.toInitialConfiguration()
     }
     
-    func handleShowingRootMenu() {
-        flowController.toShowingRootMenu()
-    }
-    
     func handleCollapse() {
         guard calledKind != Kind.collapsed else { return }
         calledKind = .collapsed
-        flowController.toCollapsedView()
+        
+        flowController.toNavigationNeedsRestoration()
     }
     
     func handleExpansion() {
         guard calledKind != Kind.expanded else { return }
         calledKind = .expanded
-        flowController.toExpandedView()
+
+        flowController.toNavigationNeedsRestoration()
     }
     
-    func handleSwitchToSetupPIN() {
-        flowController.toSwitchToSetupPIN()
-    }
-    
-    func handleSwitchToBrowserExtension() {
-        flowController.toSwitchToBrowserExtension()
+    func handleNavigationRestoration(to path: ViewPath?) {
+        switch calledKind {
+        case .collapsed: // tab
+        case .expanded: // menu
+        case .unspecified: return
+        }
     }
 }

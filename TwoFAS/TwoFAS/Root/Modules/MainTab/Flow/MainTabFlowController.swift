@@ -17,7 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 
 protocol MainTabFlowControllerParent: AnyObject {
     func tabNavigatedToViewPath(_ viewPath: ViewPath)
@@ -33,9 +33,10 @@ protocol MainTabFlowControlling: AnyObject {
 final class MainTabFlowController: FlowController {
     private weak var parent: MainTabFlowControllerParent?
     
-    static func initialize(
+    static func insertAsCompact(
+        into split: UISplitViewController,
         parent: MainTabFlowControllerParent
-    ) -> MainTabViewController {
+    ) {
         let view = MainTabViewController()
         let flowController = MainTabFlowController(viewController: view)
         flowController.parent = parent
@@ -48,8 +49,8 @@ final class MainTabFlowController: FlowController {
         TokensNavigationFlowController.showAsATab(in: view, parent: flowController)
         SettingsFlowController.showAsATab(in: view, parent: flowController)
         NewsFlowController.showAsATab(in: view, parent: flowController)
-
-        return view
+        
+        split.setViewController(view, for: .compact)
     }
 }
 

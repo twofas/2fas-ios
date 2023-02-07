@@ -98,6 +98,10 @@ final class MainMenuViewController: UIViewController {
         
         presenter.viewWillAppear()
     }
+    
+    func handleChangeViewPath(_ viewPath: ViewPath) {
+        presenter.handleChangeViewPath(viewPath)
+    }
 }
 
 extension MainMenuViewController {

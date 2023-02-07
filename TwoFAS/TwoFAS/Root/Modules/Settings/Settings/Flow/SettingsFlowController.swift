@@ -64,6 +64,24 @@ final class SettingsFlowController: FlowController {
         
         tabBarController.addTab(view)
     }
+    
+    static func showAsRoot(
+        in navigationController: UINavigationController,
+        parent: SettingsFlowControllerParent
+    ) {
+        let view = SettingsViewController()
+        let flowController = SettingsFlowController(viewController: view)
+        flowController.parent = parent
+        let interactor = InteractorFactory.shared.settingsModuleInteractor()
+        let presenter = SettingsPresenter(
+            flowController: flowController,
+            interactor: interactor
+        )
+        presenter.view = view
+        view.presenter = presenter
+        
+        navigationController.setViewControllers([view], animated: false)
+    }
 }
 
 private extension SettingsFlowController {

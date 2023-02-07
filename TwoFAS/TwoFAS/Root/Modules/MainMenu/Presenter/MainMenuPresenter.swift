@@ -44,18 +44,38 @@ extension MainMenuPresenter {
     }
     
     func handleSelection(at indexPath: IndexPath) {
-//        switch indexPath.section {
-//        case MainContent.main.rawValue:
-//            
-//        case MainContent.settings.rawValue:
-//        case MainContent.news.rawValue:
-//        default:
-//            Log("MainMenuPresenter: Can't change to \(indexPath)", severity: .error)
-//        }
+        selectedIndexPath = indexPath
+        
+        switch indexPath.section {
+        case MainContent.main.rawValue:
+            if indexPath.row == 0 {
+                flowController.toMain()
+            } else {
+                flowController.toMainSection(indexPath.row - 1)
+            }
+        case MainContent.settings.rawValue:
+            flowController.toSettings()
+        case MainContent.news.rawValue:
+            flowController.toNews()
+        default:
+            Log("MainMenuPresenter: Can't change to \(indexPath)", severity: .error)
+        }
     }
     
     func handleShouldLeaveSelection() -> Bool {
         false
+    }
+    
+    func handleChangeViewPath(_ viewPath: ViewPath) {
+        let indexPath = {
+            switch viewPath {
+            case .main: return IndexPath(row: 0, section: 0)
+            case .settings: return IndexPath(row: 0, section: 1)
+            case .news: return IndexPath(row: 0, section: 2)
+            }
+        }()
+        handleSelection(at: indexPath)
+        refresh()
     }
 }
 

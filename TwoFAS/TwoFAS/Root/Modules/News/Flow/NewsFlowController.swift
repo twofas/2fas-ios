@@ -64,6 +64,26 @@ final class NewsFlowController: FlowController {
         
         tabBarController.addTab(naviController)
     }
+    
+    static func showAsRoot(
+        in navigationController: UINavigationController,
+        parent: NewsFlowControllerParent
+    ) {
+        let view = NewsViewController()
+        let flowController = NewsFlowController(viewController: view)
+        flowController.parent = parent
+        let interactor = InteractorFactory.shared.newsModuleInteractor()
+        let presenter = NewsPresenter(
+            flowController: flowController,
+            interactor: interactor
+        )
+        presenter.view = view
+        view.presenter = presenter
+        
+        presenter.handleRefreshView()
+        
+        navigationController.setViewControllers([view], animated: false)
+    }
 }
 
 extension NewsFlowController {

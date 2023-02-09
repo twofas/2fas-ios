@@ -21,10 +21,10 @@ import UIKit
 
 extension UITabBarController {
     func addTab(_ childViewController: UIViewController) {
-        if var viewControllers {
+        if let viewControllers {
             self.viewControllers = viewControllers + [childViewController]
         } else {
-            viewControllers = [childViewController]
+            self.viewControllers = [childViewController]
         }
     }
 }

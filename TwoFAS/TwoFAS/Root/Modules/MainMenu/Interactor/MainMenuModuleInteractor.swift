@@ -40,7 +40,7 @@ extension MainMenuModuleInteractor: MainMenuModuleInteracting {
     var sections: [MainMenuModuleInteractorSection] {
         sectionInteractor.listSections()
             .enumerated()
-            .map({ (index, section) in
+            .map({ index, section in
                 MainMenuModuleInteractorSection(name: section.title, offset: index)
             })
     }

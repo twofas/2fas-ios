@@ -21,7 +21,8 @@ import UIKit
 import Common
 
 protocol MainSplitViewControlling: AnyObject {
-    
+    func updateTabBarPath(_ viewPath: ViewPath)
+    func updateMenuPath(_ viewPath: ViewPath)
 }
 
 final class MainSplitViewController: UIViewController {
@@ -37,6 +38,13 @@ final class MainSplitViewController: UIViewController {
     
     var isCollapsed: Bool { split.isCollapsed }
     var isInitialConfigRead = false
+    
+    private var menu: MainMenuViewController? {
+        navigationNavi.viewControllers.first as? MainMenuViewController
+    }
+    private var tabBar: MainTabViewController? {
+        split.viewController(for: .compact) as? MainTabViewController
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,15 +74,19 @@ final class MainSplitViewController: UIViewController {
         setInitialTrait()
     }
     
-    func navigateToView(_ viewPath: ViewPath.Settings?) {
-        guard let viewPath else {
-            if isCollapsed {
-                navigationNavi.popToRootViewController(animated: true)
-            }
-            return
-        }
-        (navigationNavi.viewControllers.first as? SettingsMenuViewController)?
-            .presenter.handleNavigateToViewPath(viewPath)
+//    func navigateToView(_ viewPath: ViewPath.Settings?) {
+//        guard let viewPath else {
+//            if isCollapsed {
+//                navigationNavi.popToRootViewController(animated: true)
+//            }
+//            return
+//        }
+//        (navigationNavi.viewControllers.first as? SettingsMenuViewController)?
+//            .presenter.handleNavigateToViewPath(viewPath)
+//    }
+  
+    func navigateToView(_ viewPath: ViewPath) {
+        presenter.handleNavigationRestoration(to: viewPath)
     }
     
     var currentView: ViewPath.Settings? {
@@ -125,16 +137,15 @@ final class MainSplitViewController: UIViewController {
     }
 }
 
-extension MainSplitViewController: MainSplitViewControlling {}
-
-//extension MainSplitViewController: UINavigationControllerDelegate {
-//    func navigationController(
-//        _ navigationController: UINavigationController,
-//        didShow viewController: UIViewController,
-//        animated: Bool
-//    ) {
-//    }
-//}
+extension MainSplitViewController: MainSplitViewControlling {
+    func updateTabBarPath(_ viewPath: ViewPath) {
+        tabBar?.presenter.handleChangeViewPath(viewPath)
+    }
+    
+    func updateMenuPath(_ viewPath: ViewPath) {
+        menu?.handleChangeViewPath(viewPath)
+    }
+}
 
 extension MainSplitViewController: UISplitViewControllerDelegate {
     func splitViewController(

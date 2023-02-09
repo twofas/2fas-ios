@@ -35,7 +35,7 @@ final class MainSplitFlowController: FlowController {
     private weak var parent: MainSplitFlowControllerParent?
     
     static func showAsRoot(
-        in viewController: UIViewController,
+        in viewController: MainViewController,
         parent: MainSplitFlowControllerParent
     ) {
         let view = MainSplitViewController()
@@ -52,6 +52,7 @@ final class MainSplitFlowController: FlowController {
         view.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         viewController.view.addSubview(view.view)
         view.didMove(toParent: viewController)
+        viewController.splitView = view
     }
 }
 
@@ -87,7 +88,7 @@ extension MainSplitFlowController: MainTabFlowControllerParent {
     }
 }
 
-extension MainSplitFlowController: MainMenuFlowControllerParent{
+extension MainSplitFlowController: MainMenuFlowControllerParent {
     func mainMenuToMain() {
         parent?.navigatedToViewPath(.main)
         TokensPlainFlowController.showAsRoot(in: viewController.contentNavi, parent: self)

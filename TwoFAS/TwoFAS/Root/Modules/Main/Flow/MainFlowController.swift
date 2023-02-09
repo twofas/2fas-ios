@@ -28,7 +28,7 @@ protocol MainFlowControlling: AnyObject {
     func toAuthorize(for tokenRequestID: String)
     func toSecretSyncError(_ serviceName: String)
     func toOpenFileImport(url: URL)
-    func toSetupTab()
+    func toSetupSplit()
     
     // MARK: - App update
     func toShowNewVersionAlert(for appStoreURL: URL, skip: @escaping Callback)
@@ -46,20 +46,18 @@ final class MainFlowController: FlowController {
         parent: MainFlowControllerParent,
         immediately: Bool
     ) {
-//        let view = MainViewController()
-//        let flowController = MainFlowController(viewController: view)
-//        flowController.parent = parent
-//        flowController.authRequestsFlowController = AuthRequestsFlowController.create(parent: flowController)
-//        let interactor = InteractorFactory.shared.mainModuleInteractor()
-//        let presenter = MainPresenter(
-//            flowController: flowController,
-//            interactor: interactor
-//        )
-//        view.presenter = presenter
-//        presenter.view = view
+        let view = MainViewController()
+        let flowController = MainFlowController(viewController: view)
+        flowController.parent = parent
+        flowController.authRequestsFlowController = AuthRequestsFlowController.create(parent: flowController)
+        let interactor = InteractorFactory.shared.mainModuleInteractor()
+        let presenter = MainPresenter(
+            flowController: flowController,
+            interactor: interactor
+        )
+        view.presenter = presenter
+        presenter.view = view
 
-        let view = MainSplitViewController()
-        
         viewController.present(view, immediately: immediately, animationType: .alpha)
         
         // TODO: Make it a child of root VC
@@ -75,9 +73,8 @@ extension MainFlowController {
 }
 
 extension MainFlowController: MainFlowControlling {
-    func toSetupTab() {
-        let tab = MainTabFlowController.initialize(parent: self)
-        viewController.setupTab(tab)
+    func toSetupSplit() {
+        MainSplitFlowController.showAsRoot(in: viewController, parent: self)
     }
     func toAuthRequestFetch() {
         authRequestsFlowController?.refresh()
@@ -180,16 +177,20 @@ extension MainFlowController: AskForAuthFlowControllerParent {
     }
 }
 
-extension MainFlowController: MainTabFlowControllerParent {
-    func tabNavigatedToViewPath(_ viewPath: ViewPath) {
+extension MainFlowController: MainSplitFlowControllerParent {
+    func navigationNeedsRestoration() {
+        viewController.presenter.handleNavigationRestoration()
+    }
+    
+    func navigatedToViewPath(_ viewPath: ViewPath) {
         viewController.presenter.handleDidChangePath(viewPath)
     }
     
-    func tabReady() {
+    func navigationTabReady() {
         viewController.presenter.handleReady()
     }
     
-    func tabToTokens() {
+    func navigationSwitchToTokens() {
         viewController.presenter.handleSwitchToTokens()
     }
 }

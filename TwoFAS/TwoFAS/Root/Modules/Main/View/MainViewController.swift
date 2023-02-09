@@ -36,10 +36,12 @@ final class MainViewController: UIViewController {
     private var activeView: ActiveView = .tab
     private var tabViewController: MainTabViewController?
     
+    var splitView: MainSplitViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        settingsEventController.setup()
+//        settingsEventController.setup()
         setupEvents()
         
         presenter.viewDidLoad()
@@ -52,16 +54,6 @@ final class MainViewController: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
-    }
-    
-    func setupTab(_ tabVC: MainTabViewController) {
-        // TODO: Move to split!
-        addChild(tabVC)
-        view.addSubview(tabVC.view)
-        tabVC.view.pinToParent()
-        tabVC.didMove(toParent: self)
-        
-        self.tabViewController = tabVC
     }
 }
 
@@ -140,10 +132,7 @@ extension MainViewController {
 
 extension MainViewController: MainViewControlling {
     func navigateToViewPath(_ viewPath: ViewPath) {
-        switch activeView {
-        case .tab: tabViewController?.changeViewPath(viewPath)
-        case .split: break
-        }
+        splitView?.navigateToView(viewPath)
     }
     
     func settingsTabActive() {

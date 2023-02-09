@@ -56,10 +56,10 @@ extension MainSplitPresenter {
         flowController.toNavigationNeedsRestoration()
     }
     
-    func handleNavigationRestoration(to path: ViewPath?) {
+    func handleNavigationRestoration(to path: ViewPath) {
         switch calledKind {
-        case .collapsed: // tab
-        case .expanded: // menu
+        case .collapsed: view?.updateTabBarPath(path)
+        case .expanded: view?.updateMenuPath(path)
         case .unspecified: return
         }
     }

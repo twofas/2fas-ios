@@ -44,7 +44,7 @@ extension MainMenuPresenter {
                                 && selectedIndexPath?.row == 0,
                     sectionOffset: nil
                 )
-            ] + serviceSections()),
+            ]),
             MainMenuSection(section: .settings, cells: [
                 MainMenuCell(
                     icon: Asset.tabBarIconSettingsInactive.image,

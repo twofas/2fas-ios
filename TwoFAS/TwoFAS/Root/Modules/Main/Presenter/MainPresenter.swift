@@ -36,7 +36,7 @@ final class MainPresenter {
     
     func viewDidLoad() {
         interactor.initialize()
-        flowController.toSetupTab()
+        flowController.toSetupSplit()
     }
     
     func viewWillAppear() {
@@ -98,5 +98,10 @@ final class MainPresenter {
         if let path = interactor.restoreViewPath() {
             view?.navigateToViewPath(path)
         }
+    }
+    
+    func handleNavigationRestoration() {
+        guard let path = interactor.restoreViewPath() else { return }
+        view?.navigateToViewPath(path)
     }
 }

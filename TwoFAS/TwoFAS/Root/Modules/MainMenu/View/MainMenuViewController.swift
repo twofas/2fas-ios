@@ -31,7 +31,7 @@ final class MainMenuViewController: UIViewController {
     private var collectionViewDataSource: UICollectionViewDiffableDataSource<MainMenuSection, MainMenuCell>!
 
     private var listLayout: UICollectionViewLayout = {
-        UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
+        UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment -> NSCollectionLayoutSection? in
             var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
             configuration.showsSeparators = false
             configuration.headerMode = .firstItemInSection
@@ -41,7 +41,7 @@ final class MainMenuViewController: UIViewController {
     }()
     
     private let contentCellRegistration = UICollectionView
-        .CellRegistration<UICollectionViewListCell, MainMenuCell> { (cell, indexPath, item) in
+        .CellRegistration<UICollectionViewListCell, MainMenuCell> { cell, indexPath, item in
         
         var contentConfiguration = UIListContentConfiguration.sidebarHeader()
         contentConfiguration.text = item.title
@@ -54,7 +54,7 @@ final class MainMenuViewController: UIViewController {
     }
     
     private let subContentCellRegistration = UICollectionView
-        .CellRegistration<UICollectionViewListCell, MainMenuCell> { (cell, indexPath, item) in
+        .CellRegistration<UICollectionViewListCell, MainMenuCell> { cell, indexPath, item in
         
         var contentConfiguration = UIListContentConfiguration.sidebarCell()
         contentConfiguration.text = item.title
@@ -76,6 +76,7 @@ final class MainMenuViewController: UIViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: listLayout)
         collectionView.backgroundColor = Theme.Colors.Fill.System.first
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.delegate = self
         
         collectionViewDataSource = UICollectionViewDiffableDataSource<MainMenuSection, MainMenuCell>(
             collectionView: collectionView,
@@ -159,3 +160,9 @@ extension MainMenuViewController: MainMenuViewControlling {
 
 // dodać refresh dla sekcji!
 // dodać refresh dla zaznaczenia!
+
+extension MainMenuViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter.handleSelection(at: indexPath)
+    }
+}

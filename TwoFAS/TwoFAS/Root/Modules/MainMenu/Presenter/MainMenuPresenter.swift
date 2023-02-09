@@ -23,7 +23,7 @@ import Common
 final class MainMenuPresenter {
     weak var view: MainMenuViewControlling?
     
-    private(set) var selectedIndexPath: IndexPath? = nil
+    private(set) var selectedIndexPath: IndexPath?
     
     private let flowController: MainMenuFlowControlling
     let interactor: MainMenuModuleInteracting

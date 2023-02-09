@@ -44,6 +44,7 @@ extension MainMenuPresenter {
     }
     
     func handleSelection(at indexPath: IndexPath) {
+        guard indexPath != selectedIndexPath else { return }
         selectedIndexPath = indexPath
         
         switch indexPath.section {
@@ -67,15 +68,15 @@ extension MainMenuPresenter {
     }
     
     func handleChangeViewPath(_ viewPath: ViewPath) {
-        let indexPath = {
-            switch viewPath {
-            case .main: return IndexPath(row: 0, section: 0)
-            case .settings: return IndexPath(row: 0, section: 1)
-            case .news: return IndexPath(row: 0, section: 2)
-            }
-        }()
-        handleSelection(at: indexPath)
-        refresh()
+//        let indexPath = {
+//            switch viewPath {
+//            case .main: return IndexPath(row: 0, section: 0)
+//            case .settings: return IndexPath(row: 0, section: 1)
+//            case .news: return IndexPath(row: 0, section: 2)
+//            }
+//        }()
+//        handleSelection(at: indexPath)
+//        refresh()
     }
 }
 

@@ -118,7 +118,6 @@ final class MainSplitViewController: UIViewController {
         
         split.setViewController(navigationNavi, for: .primary)
         split.setViewController(contentNavi, for: .secondary)
-        split.setViewController(navigationNavi, for: .compact)
     }
     
     private func setInitialTrait() {
@@ -157,7 +156,7 @@ extension MainSplitViewController: UISplitViewControllerDelegate {
         // swiftlint:enable line_length
         presenter.handleCollapse()
         
-        return .primary
+        return .compact
     }
 
     func splitViewController(

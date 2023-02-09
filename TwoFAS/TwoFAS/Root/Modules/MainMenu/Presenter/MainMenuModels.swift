@@ -18,9 +18,14 @@
 //
 
 import UIKit
+import Common
 
 struct MainMenuSection: Hashable {
-    let section: MainContent
+    enum Section {
+        case main
+    }
+    let section: Section
+    let showHeader: Bool
     let cells: [MainMenuCell]
 }
 
@@ -29,53 +34,51 @@ struct MainMenuCell: Hashable {
     let selectedIcon: UIImage?
     let title: String
     let isSelected: Bool
-    let sectionOffset: Int?
+    let section: SectionID?
 }
 
 extension MainMenuPresenter {
     var menu: [MainMenuSection] {
         [
-            MainMenuSection(section: .main, cells: [
+            MainMenuSection(
+                section: .main,
+                showHeader: false,
+                cells: [
                 MainMenuCell(
                     icon: Asset.tabBarIconServicesInactive.image,
                     selectedIcon: Asset.tabBarIconServicesActive.image,
                     title: T.Commons.tokens,
-                    isSelected: selectedIndexPath?.section == MainContent.main.rawValue
-                                && selectedIndexPath?.row == 0,
-                    sectionOffset: nil
-                )
-            ]),
-            MainMenuSection(section: .settings, cells: [
+                    isSelected: selectedIndexPath?.row == 1,
+                    section: nil
+                ),
                 MainMenuCell(
                     icon: Asset.tabBarIconSettingsInactive.image,
                     selectedIcon: Asset.tabBarIconSettingsActive.image,
                     title: T.Settings.settings,
-                    isSelected: selectedIndexPath?.section == MainContent.settings.rawValue,
-                    sectionOffset: nil
-                )
-            ]),
-            MainMenuSection(section: .news, cells: [
+                    isSelected: selectedIndexPath?.row == 2,
+                    section: nil
+                ),
                 MainMenuCell(
                     icon: Asset.tabBarIconNotificationsInactive.image,
                     selectedIcon: Asset.tabBarIconNotificationsActive.image,
                     title: T.Commons.notifications,
-                    isSelected: selectedIndexPath?.section == MainContent.news.rawValue,
-                    sectionOffset: nil
+                    isSelected: selectedIndexPath?.row == 3,
+                    section: nil
                 )
             ])
         ]
     }
     
-    func serviceSections() -> [MainMenuCell] {
-        interactor.sections.map { section in
-            MainMenuCell(
-                icon: nil,
-                selectedIcon: nil,
-                title: section.name,
-                isSelected: selectedIndexPath?.section == MainContent.main.rawValue
-                            && selectedIndexPath?.row == section.offset + 1,
-                sectionOffset: section.offset
-            )
-        }
-    }
+//    func serviceSections() -> [MainMenuCell] {
+//        interactor.sections.map { section in
+//            MainMenuCell(
+//                icon: nil,
+//                selectedIcon: nil,
+//                title: section.name,
+//                isSelected: selectedIndexPath?.section == MainContent.main.rawValue
+//                            && selectedIndexPath?.row == section.offset + 1,
+//                sectionOffset: section.offset
+//            )
+//        }
+//    }
 }

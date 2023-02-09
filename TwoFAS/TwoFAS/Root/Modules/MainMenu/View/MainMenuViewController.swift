@@ -21,7 +21,7 @@ import UIKit
 
 protocol MainMenuViewControlling: AnyObject {
     func reload(with data: [MainMenuSection])
-    //func select
+    // func select
 }
 
 final class MainMenuViewController: UIViewController {
@@ -29,12 +29,12 @@ final class MainMenuViewController: UIViewController {
     
     private var collectionView: UICollectionView!
     private var collectionViewDataSource: UICollectionViewDiffableDataSource<MainMenuSection, MainMenuCell>!
-
+    
     private var listLayout: UICollectionViewLayout = {
         UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment -> NSCollectionLayoutSection? in
             var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
             configuration.showsSeparators = false
-            configuration.headerMode = .firstItemInSection
+            configuration.headerMode = .none
             let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
             return section
         }
@@ -42,30 +42,28 @@ final class MainMenuViewController: UIViewController {
     
     private let contentCellRegistration = UICollectionView
         .CellRegistration<UICollectionViewListCell, MainMenuCell> { cell, indexPath, item in
-        
-        var contentConfiguration = UIListContentConfiguration.sidebarHeader()
-        contentConfiguration.text = item.title
-        contentConfiguration.textProperties.color = .label
-        contentConfiguration.image = item.icon
-        
-        cell.contentConfiguration = contentConfiguration
+            var contentConfiguration = UIListContentConfiguration.sidebarHeader()
+            contentConfiguration.text = item.title
+            contentConfiguration.textProperties.color = .label
+            contentConfiguration.image = item.icon
             
-        cell.accessories = [.outlineDisclosure()]
-    }
+            cell.contentConfiguration = contentConfiguration
+            
+            cell.accessories = [.outlineDisclosure()]
+        }
     
     private let subContentCellRegistration = UICollectionView
         .CellRegistration<UICollectionViewListCell, MainMenuCell> { cell, indexPath, item in
-        
-        var contentConfiguration = UIListContentConfiguration.sidebarCell()
-        contentConfiguration.text = item.title
-        contentConfiguration.textProperties.color = .label
-        
-        cell.contentConfiguration = contentConfiguration
-    }
+            var contentConfiguration = UIListContentConfiguration.sidebarCell()
+            contentConfiguration.text = item.title
+            contentConfiguration.textProperties.color = .label
+            
+            cell.contentConfiguration = contentConfiguration
+        }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = Theme.Colors.Table.background
         navigationItem.backButtonDisplayMode = .minimal
         
@@ -81,15 +79,11 @@ final class MainMenuViewController: UIViewController {
         collectionViewDataSource = UICollectionViewDiffableDataSource<MainMenuSection, MainMenuCell>(
             collectionView: collectionView,
             cellProvider: { [weak self] collectionView, indexPath, itemIdentifier in
-            self?.cell(for: itemIdentifier, in: collectionView, at: indexPath) ?? UICollectionViewCell()
-        })
-
+                self?.cell(for: itemIdentifier, in: collectionView, at: indexPath) ?? UICollectionViewCell()
+            })
+        
         collectionView.tintColor = Theme.Colors.Fill.theme
-
-//        collectionViewAdapter.delegatee.didSelectItemAt = { [weak self] _, indexPath in
-////            self?.presenter.handleSelection(at: indexPath)
-//        }
-
+        
         view.addSubview(collectionView)
         collectionView.pinToParent()
     }
@@ -111,31 +105,8 @@ extension MainMenuViewController {
         in collectionView: UICollectionView,
         at indexPath: IndexPath
     ) -> UICollectionViewCell? {
-        if let icon = item.icon {
-            return
-            collectionView.dequeueConfiguredReusableCell(using: contentCellRegistration, for: indexPath, item: item)
-        } else {
-            return
-            collectionView.dequeueConfiguredReusableCell(using: subContentCellRegistration, for: indexPath, item: item)
-        }
-        
-//        switch item.type {
-//        case .header:
-//            return collectionView.dequeueConfiguredReusableCell(using: headerRegistration, for: indexPath, item: item)
-//        case .expandableRow:
-//            return collectionView.dequeueConfiguredReusableCell(using: expandableRowRegistration, for: indexPath, item: item)
-//        default:
-//            return collectionView.dequeueConfiguredReusableCell(using: rowRegistration, for: indexPath, item: item)
-//        }
-        
-//        guard let cell = collectionView.dequeueReusableCell(
-//            withReuseIdentifier: IconSelectorCollectionViewCell.reuseIdentifier,
-//            for: indexPath
-//        ) as? IconSelectorCollectionViewCell
-//        else { return nil }
-//
-//        cell.setIcon(data.icon, serviceName: data.title, showTitle: data.showTitle)
-//        return cell
+        // TODO: Add seperate section with section shortcuts
+        collectionView.dequeueConfiguredReusableCell(using: contentCellRegistration, for: indexPath, item: item)
     }
 }
 
@@ -143,14 +114,9 @@ extension MainMenuViewController: MainMenuViewControlling {
     func reload(with data: [MainMenuSection]) {
         data.forEach { section in
             var snapshot = NSDiffableDataSourceSectionSnapshot<MainMenuCell>()
-            guard let first = section.cells.first else { return }
-            snapshot.append([first])
-            if section.cells.count > 1 {
-                let rest = Array(section.cells[1...])
-                snapshot.append(rest, to: first)
-            }
+            snapshot.append(section.cells)
             collectionViewDataSource.apply(snapshot, to: section, animatingDifferences: false)
-         }
+        }
     }
     
     func select() {

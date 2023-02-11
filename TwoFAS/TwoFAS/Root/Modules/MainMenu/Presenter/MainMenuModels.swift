@@ -67,18 +67,5 @@ extension MainMenuPresenter {
                 )
             ])
         ]
-    }
-    
-//    func serviceSections() -> [MainMenuCell] {
-//        interactor.sections.map { section in
-//            MainMenuCell(
-//                icon: nil,
-//                selectedIcon: nil,
-//                title: section.name,
-//                isSelected: selectedIndexPath?.section == MainContent.main.rawValue
-//                            && selectedIndexPath?.row == section.offset + 1,
-//                sectionOffset: section.offset
-//            )
-//        }
-//    }
+    }    
 }

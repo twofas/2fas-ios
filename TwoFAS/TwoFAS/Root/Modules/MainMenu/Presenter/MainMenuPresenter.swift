@@ -26,11 +26,9 @@ final class MainMenuPresenter {
     private(set) var selectedIndexPath: IndexPath?
     
     private let flowController: MainMenuFlowControlling
-    let interactor: MainMenuModuleInteracting
     
-    init(flowController: MainMenuFlowControlling, interactor: MainMenuModuleInteracting) {
+    init(flowController: MainMenuFlowControlling) {
         self.flowController = flowController
-        self.interactor = interactor
     }
 }
 

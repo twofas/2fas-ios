@@ -365,7 +365,6 @@
 		C2633EFD265A7D090034B836 /* TokenLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2633EFC265A7D090034B836 /* TokenLabel.swift */; };
 		C2633F1F265B045F0034B836 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2633F1E265B045F0034B836 /* UIApplication.swift */; };
 		C263F45A29900DED009B0837 /* MainMenuModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263F45929900DED009B0837 /* MainMenuModels.swift */; };
-		C263F45C29901475009B0837 /* MainMenuModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263F45B29901475009B0837 /* MainMenuModuleInteractor.swift */; };
 		C263F45E29901C4F009B0837 /* MainSplitFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263F45D29901C4F009B0837 /* MainSplitFlowController.swift */; };
 		C263F46029903B51009B0837 /* MainMenuFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263F45F29903B51009B0837 /* MainMenuFlowController.swift */; };
 		C263F462299040F0009B0837 /* MainSplitPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263F461299040F0009B0837 /* MainSplitPresenter.swift */; };
@@ -2391,7 +2390,6 @@
 			isa = PBXGroup;
 			children = (
 				C2079B54298EB374003FA86D /* Flow */,
-				C2079B53298EB36E003FA86D /* Interactor */,
 				C2079B52298EB363003FA86D /* Presenter */,
 				C2079B51298EB35F003FA86D /* View */,
 			);
@@ -2413,14 +2411,6 @@
 				C263F45929900DED009B0837 /* MainMenuModels.swift */,
 			);
 			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2079B53298EB36E003FA86D /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C263F45B29901475009B0837 /* MainMenuModuleInteractor.swift */,
-			);
-			path = Interactor;
 			sourceTree = "<group>";
 		};
 		C2079B54298EB374003FA86D /* Flow */ = {
@@ -7173,7 +7163,6 @@
 				C2D3B0F628EE0F1C00D2F991 /* MainRepositoryImpl+ServiceDefinition.swift in Sources */,
 				C2C1DDE227CAD2DF002C7867 /* ComposeServiceAdvancedEditTokenTypeCell.swift in Sources */,
 				C2959627267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift in Sources */,
-				C263F45C29901475009B0837 /* MainMenuModuleInteractor.swift in Sources */,
 				C2F5A9D9276E233000C422C4 /* SettingsMenuIcon.swift in Sources */,
 				C2B39C7327A58E0800D3B579 /* SelectFromGalleryView.swift in Sources */,
 				C206CACF27A35ABE0068284C /* View+.swift in Sources */,

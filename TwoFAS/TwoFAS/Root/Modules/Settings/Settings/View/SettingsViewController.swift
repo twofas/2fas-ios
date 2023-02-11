@@ -28,6 +28,7 @@ final class SettingsViewController: UIViewController {
     private let preferredPrimaryColumnWidthFraction: Double = 0.28
     private let minimumPrimaryColumnWidth: Double = 320
     private let maximumPrimaryColumnWidth: Double = 380
+    private let minimumSecondaryColumnWidth: Double = 600
         
     let navigationNavi = CommonNavigationController()
     let contentNavi = CommonNavigationController()
@@ -51,6 +52,17 @@ final class SettingsViewController: UIViewController {
         super.traitCollectionDidChange(previousTraitCollection)
  
         setInitialTrait()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        let current: UITraitCollection
+        if size.width < minimumSecondaryColumnWidth {
+            current = UITraitCollection(traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .compact)])
+        } else {
+            current = UITraitCollection(traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .regular)])
+        }
+        setOverrideTraitCollection(current, forChild: split)
     }
     
     override func viewWillAppear(_ animated: Bool) {

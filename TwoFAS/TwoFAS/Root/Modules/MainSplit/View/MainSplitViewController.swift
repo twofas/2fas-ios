@@ -108,7 +108,7 @@ final class MainSplitViewController: UIViewController {
         split.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         split.didMove(toParent: self)
         
-        split.preferredDisplayMode = .oneOverSecondary
+        split.preferredDisplayMode = .oneBesideSecondary
         split.preferredPrimaryColumnWidthFraction = preferredPrimaryColumnWidthFraction
         split.minimumPrimaryColumnWidth = minimumPrimaryColumnWidth
         split.maximumPrimaryColumnWidth = maximumPrimaryColumnWidth

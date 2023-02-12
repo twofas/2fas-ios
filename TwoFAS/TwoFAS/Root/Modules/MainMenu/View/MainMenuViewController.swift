@@ -51,8 +51,11 @@ final class MainMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = T.Commons._2fasToolbar
         view.backgroundColor = Theme.Colors.Table.background
         navigationItem.backButtonDisplayMode = .minimal
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
         
         setupCollectionView()
     }
@@ -77,7 +80,7 @@ final class MainMenuViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         presenter.viewWillAppear()
     }
     
@@ -106,8 +109,6 @@ extension MainMenuViewController: MainMenuViewControlling {
         }
     }
 }
-
-// dodać refresh dla zaznaczenia! chyba, że automatycznie?
 
 extension MainMenuViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

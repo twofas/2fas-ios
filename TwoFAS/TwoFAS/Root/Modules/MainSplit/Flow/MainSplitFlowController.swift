@@ -102,6 +102,9 @@ extension MainSplitFlowController: MainMenuFlowControllerParent {
             viewController.settingsViewController = SettingsFlowController
                 .showAsRoot(in: viewController.contentNavi, parent: self)
         }
+        DispatchQueue.main.async {
+            self.viewController.settingsViewController?.navigateToView(settingsPath)
+        }
     }
     
     func mainMenuToNews() {

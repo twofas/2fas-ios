@@ -52,11 +52,7 @@ final class MainSplitViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // TODO: Explore other options
-        navigationNavi.navigationBar.isTranslucent = false
-        contentNavi.navigationBar.isTranslucent = false
-        
+                
         presenter.viewDidLoad()
         
         setupSplit()

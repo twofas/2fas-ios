@@ -83,6 +83,7 @@ final class NewsFlowController: FlowController {
         presenter.handleRefreshView()
         
         navigationController.setViewControllers([view], animated: false)
+        navigationController.setNavigationBarHidden(false, animated: false)
         return view
     }
 }

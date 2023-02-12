@@ -72,6 +72,7 @@ final class TokensPlainFlowController: FlowController {
         view.presenter = presenter
         
         navigationController.setViewControllers([view], animated: false)
+        navigationController.setNavigationBarHidden(false, animated: false)
         return view
     }
 }

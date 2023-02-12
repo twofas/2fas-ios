@@ -36,6 +36,8 @@ final class SettingsViewController: UIViewController {
     var isCollapsed: Bool { split.isCollapsed }
     var isInitialConfigRead = false
     
+    var hideNavigationBar = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -67,6 +69,14 @@ final class SettingsViewController: UIViewController {
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
+        if hideNavigationBar {
+            navigationController?.setNavigationBarHidden(true, animated: animated)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     override func viewDidLayoutSubviews() {

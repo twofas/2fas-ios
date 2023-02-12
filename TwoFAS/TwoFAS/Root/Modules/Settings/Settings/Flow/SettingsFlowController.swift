@@ -79,8 +79,10 @@ final class SettingsFlowController: FlowController {
         )
         presenter.view = view
         view.presenter = presenter
+        view.hideNavigationBar = true
         
         navigationController.setViewControllers([view], animated: false)
+        navigationController.setNavigationBarHidden(true, animated: false)
         return view
     }
 }

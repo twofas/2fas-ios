@@ -56,14 +56,6 @@ final class MainPresenter {
             flowController.toAuthRequestFetch()
         }
     }
-    
-    func handleViewPathUpdate(_ viewPath: ViewPath) {
-        interactor.setViewPath(viewPath)
-    }
-    
-    func handleSwitchToTokens() {
-        view?.navigateToViewPath(.main)
-    }
 
     func handleSwitchToSetupPIN() {
         view?.navigateToViewPath(.settings(option: .security))
@@ -71,6 +63,10 @@ final class MainPresenter {
 
     func handleSwitchToBrowserExtension() {
         view?.navigateToViewPath(.settings(option: .browserExtension))
+    }
+    
+    func handleSwitchedToSettings() {
+        view?.settingsTabActive()
     }
     
     func handleClearAuthList() {
@@ -83,25 +79,5 @@ final class MainPresenter {
     
     func handleAuthorize(for tokenRequestID: String) {
         flowController.toAuthorize(for: tokenRequestID)
-    }
-    
-    func handleDidChangePath(_ viewPath: ViewPath) {
-        interactor.setViewPath(viewPath)
-        if viewPath == .main {
-            flowController.toAuthRequestFetch()
-        } else if case ViewPath.settings(_) = viewPath {
-            view?.settingsTabActive()
-        }
-    }
-    
-    func handleReady() {
-        if let path = interactor.restoreViewPath() {
-            view?.navigateToViewPath(path)
-        }
-    }
-    
-    func handleNavigationRestoration() {
-        guard let path = interactor.restoreViewPath() else { return }
-        view?.navigateToViewPath(path)
     }
 }

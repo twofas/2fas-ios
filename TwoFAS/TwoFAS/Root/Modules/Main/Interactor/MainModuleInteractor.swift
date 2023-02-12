@@ -25,8 +25,6 @@ protocol MainModuleInteracting: AnyObject {
     func initialize()
     func checkForImport() -> URL?
     func clearImportedFileURL()
-    func restoreViewPath() -> ViewPath?
-    func setViewPath(_ viewPath: ViewPath)
     
     // MARK: - New app version
     func checkForNewAppVersion(completion: @escaping (URL) -> Void)
@@ -37,7 +35,6 @@ final class MainModuleInteractor {
     var secretSyncError: ((String) -> Void)?
     
     private let logUploadingInteractor: LogUploadingInteracting
-    private let viewPathInteractor: ViewPathIteracting
     private let cloudBackupStateInteractor: CloudBackupStateInteracting
     private let fileInteractor: FileInteracting
     private let newVersionInteractor: NewVersionInteracting
@@ -50,7 +47,6 @@ final class MainModuleInteractor {
         newVersionInteractor: NewVersionInteracting
     ) {
         self.logUploadingInteractor = logUploadingInteractor
-        self.viewPathInteractor = viewPathInteractor
         self.cloudBackupStateInteractor = cloudBackupStateInteractor
         self.fileInteractor = fileInteractor
         self.newVersionInteractor = newVersionInteractor
@@ -70,14 +66,6 @@ extension MainModuleInteractor: MainModuleInteracting {
     
     func clearImportedFileURL() {
         fileInteractor.markAsHandled()
-    }
-    
-    func restoreViewPath() -> ViewPath? {
-        viewPathInteractor.viewPath()
-    }
-    
-    func setViewPath(_ viewPath: ViewPath) {
-        viewPathInteractor.setViewPath(viewPath)
     }
     
     // MARK: - New app version

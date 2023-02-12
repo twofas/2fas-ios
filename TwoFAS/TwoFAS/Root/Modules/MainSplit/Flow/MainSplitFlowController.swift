@@ -20,15 +20,12 @@
 import UIKit
 
 protocol MainSplitFlowControllerParent: AnyObject {
-    func navigationNeedsRestoration()
-    func navigatedToViewPath(_ viewPath: ViewPath)
-    func navigationTabReady()
-    func navigationSwitchToTokens()
+    func navigationSwitchedToTokens()
+    func navigationSwitchedToSettings()
 }
 
 protocol MainSplitFlowControlling: AnyObject {
-     func toInitialConfiguration()
-    func toNavigationNeedsRestoration()
+    func toInitialConfiguration()
 }
 
 final class MainSplitFlowController: FlowController {
@@ -41,9 +38,12 @@ final class MainSplitFlowController: FlowController {
         let view = MainSplitViewController()
         let flowController = MainSplitFlowController(viewController: view)
         flowController.parent = parent
+        
+        let interactor = InteractorFactory.shared.mainSplitModuleInteractor()
 
         let presenter = MainSplitPresenter(
-            flowController: flowController
+            flowController: flowController,
+            interactor: interactor
         )
         view.presenter = presenter
         presenter.view = view
@@ -62,63 +62,53 @@ extension MainSplitFlowController {
 
 extension MainSplitFlowController: MainSplitFlowControlling {
     func toInitialConfiguration() {
-        
         MainTabFlowController.insertAsCompact(into: viewController.split, parent: self)
         MainMenuFlowController.showAsRoot(in: viewController.navigationNavi, parent: self)
-
-        parent?.navigationNeedsRestoration()
-    }
-    
-    func toNavigationNeedsRestoration() {
-        parent?.navigationNeedsRestoration()
     }
 }
 
 extension MainSplitFlowController: MainTabFlowControllerParent {
     func tabNavigatedToViewPath(_ viewPath: ViewPath) {
-        parent?.navigatedToViewPath(viewPath)
+        viewController.presenter.handlePathWasUpdated(to: viewPath)
     }
     
     func tabReady() {
-        parent?.navigationTabReady()
+        // Check if needed
     }
     
     func tabToTokens() {
-        parent?.navigationSwitchToTokens()
+        parent?.navigationSwitchedToTokens()
     }
 }
 
 extension MainSplitFlowController: MainMenuFlowControllerParent {
     func mainMenuToMain() {
-        parent?.navigatedToViewPath(.main)
+        viewController.presenter.handlePathWasUpdated(to: .main)
         TokensPlainFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
-    }
-    
-    func mainMenuToMainSection(_ sectionOffset: Int) {
-        parent?.navigatedToViewPath(.main)
-        // TODO: Add navigation to section!
+        parent?.navigationSwitchedToTokens()
     }
     
     func mainMenuToSettings() {
-        parent?.navigatedToViewPath(.settings(option: nil))
+        // TODO: Navigate to subsection of Settings
+        viewController.presenter.handlePathWasUpdated(to: .news)
         SettingsFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
     }
     
     func mainMenuToNews() {
-        parent?.navigatedToViewPath(.news)
+        viewController.presenter.handlePathWasUpdated(to: .news)
         NewsFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
     }
 }
 
 extension MainSplitFlowController: TokensPlainFlowControllerParent {
     func tokensSwitchToTokensTab() {
-        parent?.navigationSwitchToTokens()
+        parent?.navigationSwitchedToTokens()
     }
 }
 
 extension MainSplitFlowController: SettingsFlowControllerParent {
-    func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
-        parent?.navigatedToViewPath(.settings(option: viewPath))
+    func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
+        viewController.presenter.handlePathWasUpdated(to: .settings(option: viewPath))
     }
 }
 

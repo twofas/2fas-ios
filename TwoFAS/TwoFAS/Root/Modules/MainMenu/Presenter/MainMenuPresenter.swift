@@ -37,21 +37,10 @@ extension MainMenuPresenter {
         refresh()
     }
     
-    func handleRefresh() {
-        refresh()
-    }
-    
     func handleSelection(at indexPath: IndexPath) {
-        guard indexPath != selectedIndexPath else { return }
-        selectedIndexPath = indexPath
-        
         switch indexPath.section {
         case MainContent.main.rawValue:
-            if indexPath.row == 0 {
-                flowController.toMain()
-            } else {
-                flowController.toMainSection(indexPath.row - 1)
-            }
+            flowController.toMain()
         case MainContent.settings.rawValue:
             flowController.toSettings()
         case MainContent.news.rawValue:
@@ -61,20 +50,17 @@ extension MainMenuPresenter {
         }
     }
     
-    func handleShouldLeaveSelection() -> Bool {
-        false
-    }
-    
     func handleChangeViewPath(_ viewPath: ViewPath) {
-//        let indexPath = {
-//            switch viewPath {
-//            case .main: return IndexPath(row: 0, section: 0)
-//            case .settings: return IndexPath(row: 0, section: 1)
-//            case .news: return IndexPath(row: 0, section: 2)
-//            }
-//        }()
-//        handleSelection(at: indexPath)
-//        refresh()
+        let indexPath = {
+            switch viewPath {
+            case .main: return IndexPath(row: 0, section: 0)
+            case .settings: return IndexPath(row: 0, section: 1)
+            case .news: return IndexPath(row: 0, section: 2)
+            }
+        }()
+        handleSelection(at: indexPath)
+        refresh()
+        // view?.select at index ...
     }
 }
 

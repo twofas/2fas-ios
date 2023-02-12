@@ -25,23 +25,16 @@ protocol MainViewControlling: AnyObject {
 }
 
 final class MainViewController: UIViewController {
-    private enum ActiveView {
-        case tab
-        case split
-    }
     var presenter: MainPresenter!
     
     private let settingsEventController = SettingsEventController()
-    
-    private var activeView: ActiveView = .tab
-    private var tabViewController: MainTabViewController?
-    
+        
     var splitView: MainSplitViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        settingsEventController.setup()
+        settingsEventController.setup()
         setupEvents()
         
         presenter.viewDidLoad()

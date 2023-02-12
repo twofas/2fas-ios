@@ -20,7 +20,7 @@
 import UIKit
 
 protocol SettingsFlowControllerParent: AnyObject {
-    func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
+    func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
 }
 
 protocol SettingsFlowControlling: AnyObject {
@@ -188,7 +188,7 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
     }
     
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
-        parent?.toUpdateCurrentPosition(viewPath)
+        parent?.settingsToUpdateCurrentPosition(viewPath)
     }
 }
 extension SettingsFlowController: BackupMenuFlowControllerParent {

@@ -178,19 +178,11 @@ extension MainFlowController: AskForAuthFlowControllerParent {
 }
 
 extension MainFlowController: MainSplitFlowControllerParent {
-    func navigationNeedsRestoration() {
-        viewController.presenter.handleNavigationRestoration()
+    func navigationSwitchedToTokens() {
+        toAuthRequestFetch()
     }
     
-    func navigatedToViewPath(_ viewPath: ViewPath) {
-        viewController.presenter.handleDidChangePath(viewPath)
-    }
-    
-    func navigationTabReady() {
-        viewController.presenter.handleReady()
-    }
-    
-    func navigationSwitchToTokens() {
-        viewController.presenter.handleSwitchToTokens()
+    func navigationSwitchedToSettings() {
+        viewController.presenter.handleSwitchedToSettings()
     }
 }

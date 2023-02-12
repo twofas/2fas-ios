@@ -49,6 +49,7 @@ final class MainSplitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // TODO: Explore other options
         navigationNavi.navigationBar.isTranslucent = false
         contentNavi.navigationBar.isTranslucent = false
         
@@ -72,26 +73,12 @@ final class MainSplitViewController: UIViewController {
             object: nil
         )
         setInitialTrait()
+        presenter.viewWillAppear()
     }
-    
-//    func navigateToView(_ viewPath: ViewPath.Settings?) {
-//        guard let viewPath else {
-//            if isCollapsed {
-//                navigationNavi.popToRootViewController(animated: true)
-//            }
-//            return
-//        }
-//        (navigationNavi.viewControllers.first as? SettingsMenuViewController)?
-//            .presenter.handleNavigateToViewPath(viewPath)
-//    }
   
+    // Called from parent
     func navigateToView(_ viewPath: ViewPath) {
-        presenter.handleNavigationRestoration(to: viewPath)
-    }
-    
-    var currentView: ViewPath.Settings? {
-        (navigationNavi.viewControllers.first as? SettingsMenuViewController)?
-            .presenter.currentViewPath
+        presenter.handleNavigationUpdate(to: viewPath)
     }
     
     @objc

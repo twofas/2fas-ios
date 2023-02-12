@@ -21,7 +21,6 @@ import UIKit
 
 protocol MainMenuViewControlling: AnyObject {
     func reload(with data: [MainMenuSection])
-    // func select
 }
 
 final class MainMenuViewController: UIViewController {
@@ -118,14 +117,9 @@ extension MainMenuViewController: MainMenuViewControlling {
             collectionViewDataSource.apply(snapshot, to: section, animatingDifferences: false)
         }
     }
-    
-    func select() {
-        
-    }
 }
 
-// dodać refresh dla sekcji!
-// dodać refresh dla zaznaczenia!
+// dodać refresh dla zaznaczenia! chyba, że automatycznie?
 
 extension MainMenuViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

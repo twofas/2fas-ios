@@ -21,14 +21,12 @@ import UIKit
 
 protocol MainMenuFlowControllerParent: AnyObject {
     func mainMenuToMain()
-    func mainMenuToMainSection(_ sectionOffset: Int)
     func mainMenuToSettings()
     func mainMenuToNews()
 }
 
 protocol MainMenuFlowControlling: AnyObject {
     func toMain()
-    func toMainSection(_ sectionOffset: Int)
     func toSettings()
     func toNews()
 }
@@ -61,10 +59,6 @@ extension MainMenuFlowController {
 extension MainMenuFlowController: MainMenuFlowControlling {
     func toMain() {
         parent?.mainMenuToMain()
-    }
-    
-    func toMainSection(_ sectionOffset: Int) {
-        parent?.mainMenuToMainSection(sectionOffset)
     }
     
     func toSettings() {

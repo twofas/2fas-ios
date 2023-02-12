@@ -515,4 +515,8 @@ extension InteractorFactory {
             newVersionInteractor: newVersionInteractor()
         )
     }
+    
+    func mainSplitModuleInteractor() -> MainSplitModuleInteracting {
+        MainSplitModuleInteractor(viewPathInteractor: viewPathInteractor())
+    }
 }

@@ -23,6 +23,7 @@ final class MainSplitPresenter {
     weak var view: MainSplitViewControlling?
     
     private let flowController: MainSplitFlowControlling
+    private let interactor: MainSplitModuleInteracting
     
     private enum Kind {
         case collapsed
@@ -32,8 +33,9 @@ final class MainSplitPresenter {
     
     private var calledKind: Kind = .unspecified
     
-    init(flowController: MainSplitFlowControlling) {
+    init(flowController: MainSplitFlowControlling, interactor: MainSplitModuleInteracting) {
         self.flowController = flowController
+        self.interactor = interactor
     }
 }
 
@@ -42,21 +44,48 @@ extension MainSplitPresenter {
         flowController.toInitialConfiguration()
     }
     
+    func viewWillAppear() {
+        restoreNavigation()
+    }
+    
     func handleCollapse() {
         guard calledKind != Kind.collapsed else { return }
         calledKind = .collapsed
         
-        flowController.toNavigationNeedsRestoration()
+        restoreNavigation()
     }
     
     func handleExpansion() {
         guard calledKind != Kind.expanded else { return }
         calledKind = .expanded
 
-        flowController.toNavigationNeedsRestoration()
+        restoreNavigation()
     }
     
-    func handleNavigationRestoration(to path: ViewPath) {
+    func handlePathWasUpdated(to path: ViewPath) {
+        guard interactor.restoreViewPath() != path else { return }
+        interactor.setViewPath(path)
+    }
+    
+    func handleNavigationUpdate(to path: ViewPath) {
+        updateNavigation(to: path)
+    }    
+}
+
+private extension MainSplitPresenter {
+    func restoreNavigation() {
+        let path: ViewPath = {
+            if let path = interactor.restoreViewPath() {
+                return path
+            }
+            return .main
+        }()
+        updateNavigation(to: path)
+    }
+    
+    func updateNavigation(to path: ViewPath) {
+        interactor.setViewPath(path)
+        
         switch calledKind {
         case .collapsed: view?.updateTabBarPath(path)
         case .expanded: view?.updateMenuPath(path)

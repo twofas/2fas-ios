@@ -547,6 +547,7 @@
 		C299110427C58A9100D334A3 /* MainRepositoryImpl+AdvancedAlertState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C299110327C58A9100D334A3 /* MainRepositoryImpl+AdvancedAlertState.swift */; };
 		C2997AA92454D767006D5943 /* SelectPINLengthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2997AA82454D767006D5943 /* SelectPINLengthController.swift */; };
 		C299B7D2236DE78700224F51 /* StackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C299B7D1236DE78700224F51 /* StackView+.swift */; };
+		C29B2B7929982E4900EDE75B /* MainSplitModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B2B7829982E4900EDE75B /* MainSplitModuleInteractor.swift */; };
 		C29DD5761FE844AE007ECEEE /* CodeSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = C29DD5741FE844AE007ECEEE /* CodeSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C29DD5791FE844AE007ECEEE /* CodeSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C29DD5721FE844AE007ECEEE /* CodeSupport.framework */; };
 		C29DD57A1FE844AE007ECEEE /* CodeSupport.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C29DD5721FE844AE007ECEEE /* CodeSupport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1754,6 +1755,7 @@
 		C299110327C58A9100D334A3 /* MainRepositoryImpl+AdvancedAlertState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+AdvancedAlertState.swift"; sourceTree = "<group>"; };
 		C2997AA82454D767006D5943 /* SelectPINLengthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPINLengthController.swift; sourceTree = "<group>"; };
 		C299B7D1236DE78700224F51 /* StackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView+.swift"; sourceTree = "<group>"; };
+		C29B2B7829982E4900EDE75B /* MainSplitModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitModuleInteractor.swift; sourceTree = "<group>"; };
 		C29DD5721FE844AE007ECEEE /* CodeSupport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CodeSupport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C29DD5741FE844AE007ECEEE /* CodeSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeSupport.h; sourceTree = "<group>"; };
 		C29DD5751FE844AE007ECEEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -3286,6 +3288,7 @@
 			isa = PBXGroup;
 			children = (
 				C235A00F298FD8F9008F4FD0 /* Flow */,
+				C29B2B7729982E2600EDE75B /* Interactor */,
 				C235A00D298FD8DB008F4FD0 /* Presenter */,
 				C235A00C298FD8D4008F4FD0 /* View */,
 			);
@@ -4756,6 +4759,14 @@
 				C29803BF245EE05C0066DFE0 /* MainContainerElementsStyling.swift */,
 			);
 			path = Styling;
+			sourceTree = "<group>";
+		};
+		C29B2B7729982E2600EDE75B /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				C29B2B7829982E4900EDE75B /* MainSplitModuleInteractor.swift */,
+			);
+			path = Interactor;
 			sourceTree = "<group>";
 		};
 		C29DD5731FE844AE007ECEEE /* CodeSupport */ = {
@@ -7097,6 +7108,7 @@
 				C23387042781068E00F8DBC3 /* TrashPresenter.swift in Sources */,
 				C21247F827B70D420044D9F2 /* LabelComposeFlowController.swift in Sources */,
 				C2E2C81127B03E7300F04B70 /* SearchResultEmptyView.swift in Sources */,
+				C29B2B7929982E4900EDE75B /* MainSplitModuleInteractor.swift in Sources */,
 				C2D568AB20B9DC6400B231C1 /* Date+Extensions.swift in Sources */,
 				C2147CE4205D7B790001D011 /* PINPadCircleView.swift in Sources */,
 				C249772E277F3D6100DC872C /* TrashingServiceInteractor.swift in Sources */,

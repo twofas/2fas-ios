@@ -75,7 +75,7 @@ extension MainTabFlowController: TokensNavigationFlowControllerParent {
 }
 
 extension MainTabFlowController: SettingsFlowControllerParent {
-    func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
+    func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
         parent?.tabNavigatedToViewPath(.settings(option: viewPath))
         viewController.presenter.handleSettingsChangedViewPath(viewPath)
     }

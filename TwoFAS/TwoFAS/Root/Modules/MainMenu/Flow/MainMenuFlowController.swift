@@ -68,7 +68,7 @@ extension MainMenuFlowController: MainMenuFlowControlling {
     }
     
     func toNews() {
-        parent?.mainMenuToSettings()
+        parent?.mainMenuToNews()
     }
     
     func toMenuIsReady() {

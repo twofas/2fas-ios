@@ -94,8 +94,8 @@ extension MainSplitFlowController: MainMenuFlowControllerParent {
     }
     
     func mainMenuToSettings() {
-        // TODO: Navigate to subsection of Settings
-        viewController.presenter.handlePathWasUpdated(to: .news)
+        let settingsPath = viewController.presenter.handleSettingsViewPath()
+        viewController.presenter.handlePathWasUpdated(to: .settings(option: settingsPath))
         if let vc = viewController.settingsViewController {
             viewController.contentNavi.setViewControllers([vc], animated: false)
         } else {

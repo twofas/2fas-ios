@@ -30,7 +30,7 @@ final class MainMenuViewController: UIViewController {
     private var collectionViewDataSource: UICollectionViewDiffableDataSource<MainMenuSection, MainMenuCell>!
     
     private var listLayout: UICollectionViewLayout = {
-        UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment -> NSCollectionLayoutSection? in
+        UICollectionViewCompositionalLayout { _, layoutEnvironment -> NSCollectionLayoutSection? in
             var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
             configuration.showsSeparators = false
             configuration.headerMode = .none
@@ -40,25 +40,13 @@ final class MainMenuViewController: UIViewController {
     }()
     
     private let contentCellRegistration = UICollectionView
-        .CellRegistration<UICollectionViewListCell, MainMenuCell> { cell, indexPath, item in
+        .CellRegistration<UICollectionViewListCell, MainMenuCell> { cell, _, item in
             var contentConfiguration = UIListContentConfiguration.sidebarHeader()
             contentConfiguration.text = item.title
             contentConfiguration.textProperties.color = .label
             contentConfiguration.image = item.icon
-            
             cell.contentConfiguration = contentConfiguration
-            
-            cell.accessories = [.outlineDisclosure()]
-        }
-    
-    private let subContentCellRegistration = UICollectionView
-        .CellRegistration<UICollectionViewListCell, MainMenuCell> { cell, indexPath, item in
-            var contentConfiguration = UIListContentConfiguration.sidebarCell()
-            contentConfiguration.text = item.title
-            contentConfiguration.textProperties.color = .label
-            
-            cell.contentConfiguration = contentConfiguration
-        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

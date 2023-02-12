@@ -80,6 +80,15 @@ extension MainSplitPresenter {
         }()
         updateNavigation(to: path)
     }
+    
+    func handleSettingsViewPath() -> ViewPath.Settings {
+        let firstValue: ViewPath.Settings = .backup
+        guard let path = interactor.restoreViewPath() else { return firstValue }
+        if case ViewPath.settings(let option) = path {
+            return option ?? firstValue
+        }
+        return firstValue
+    }
 }
 
 private extension MainSplitPresenter {

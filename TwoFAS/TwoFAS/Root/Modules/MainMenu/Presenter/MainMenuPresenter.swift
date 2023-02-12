@@ -40,7 +40,7 @@ extension MainMenuPresenter {
     }
     
     func handleSelection(at indexPath: IndexPath) {
-        switch indexPath.section {
+        switch indexPath.row {
         case MainContent.main.rawValue:
             flowController.toMain()
         case MainContent.settings.rawValue:
@@ -57,8 +57,8 @@ extension MainMenuPresenter {
         let indexPath = {
             switch viewPath {
             case .main: return IndexPath(row: 0, section: 0)
-            case .settings: return IndexPath(row: 0, section: 1)
-            case .news: return IndexPath(row: 0, section: 2)
+            case .settings: return IndexPath(row: 1, section: 0)
+            case .news: return IndexPath(row: 2, section: 0)
             }
         }()
         handleSelection(at: indexPath)

@@ -28,7 +28,7 @@ final class SettingsViewController: UIViewController {
     private let preferredPrimaryColumnWidthFraction: Double = 0.28
     private let minimumPrimaryColumnWidth: Double = 320
     private let maximumPrimaryColumnWidth: Double = 380
-    private let minimumSecondaryColumnWidth: Double = 600
+    private let minimumSecondaryColumnWidth: Double = 640
         
     let navigationNavi = CommonNavigationController()
     let contentNavi = CommonNavigationController()
@@ -56,13 +56,7 @@ final class SettingsViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        let current: UITraitCollection
-        if size.width < minimumSecondaryColumnWidth {
-            current = UITraitCollection(traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .compact)])
-        } else {
-            current = UITraitCollection(traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .regular)])
-        }
-        setOverrideTraitCollection(current, forChild: split)
+        updateSize(width: size.width)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,7 +67,11 @@ final class SettingsViewController: UIViewController {
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
-        setInitialTrait()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateSize(width: view.frame.size.width)
     }
     
     func navigateToView(_ viewPath: ViewPath.Settings?) {
@@ -94,6 +92,19 @@ final class SettingsViewController: UIViewController {
     
     @objc
     private func shouldRefresh() {
+        split.reload()
+    }
+    
+    private func updateSize(width: CGFloat) {
+        let current: UITraitCollection
+        if width < minimumSecondaryColumnWidth {
+            Log("SettingsViewController - setting: compact")
+            current = UITraitCollection(traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .compact)])
+        } else {
+            Log("SettingsViewController - setting: regular")
+            current = UITraitCollection(traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .regular)])
+        }
+        setOverrideTraitCollection(current, forChild: split)
         split.reload()
     }
 
@@ -211,7 +222,7 @@ final class PrimaryNavigationLayoutFixingSplitViewController: UISplitViewControl
     private func applyCorrectLayoutIfNeeded(
         toPrimaryColumnViewController primaryColumnViewController: UIViewController
     ) {
-        guard !isCollapsed, view.bounds.intersects(primaryColumnViewController.view.frame) else {
+        guard /*!isCollapsed, */view.bounds.intersects(primaryColumnViewController.view.frame) else {
             // The primary column view controller's view is not visible, so
             // we do not need to make any adjustments.
             return

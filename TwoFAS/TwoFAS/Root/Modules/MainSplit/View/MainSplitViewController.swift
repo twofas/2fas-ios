@@ -36,6 +36,10 @@ final class MainSplitViewController: UIViewController {
     private let minimumPrimaryColumnWidth: Double = 260
     private let maximumPrimaryColumnWidth: Double = 300
     
+    var tokensViewController: TokensViewController?
+    var settingsViewController: SettingsViewController?
+    var newsViewController: NewsViewController?
+    
     var isCollapsed: Bool { split.isCollapsed }
     var isInitialConfigRead = false
     

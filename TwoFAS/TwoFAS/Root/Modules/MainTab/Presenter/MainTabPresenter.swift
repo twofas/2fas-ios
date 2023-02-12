@@ -25,6 +25,7 @@ final class MainTabPresenter {
     private var areNewsPreloaded = false
     private var previousSelectedViewPath: ViewPath?
     private let flowController: MainTabFlowControlling
+    private var isViewLoaded = false
     
     init(flowController: MainTabFlowControlling) {
         self.flowController = flowController
@@ -33,6 +34,7 @@ final class MainTabPresenter {
 
 extension MainTabPresenter {
     func viewWillAppear() {
+        isViewLoaded = true
         flowController.toTabIsReady()
         if !areNewsPreloaded {
             areNewsPreloaded = true
@@ -58,7 +60,7 @@ extension MainTabPresenter {
     }
     
     func handleChangeViewPath(_ viewPath: ViewPath) {
-        guard viewPath != previousSelectedViewPath else { return }
+        guard viewPath != previousSelectedViewPath, isViewLoaded else { return }
         view?.setView(viewPath)
         switch viewPath {
         case .settings(let option):

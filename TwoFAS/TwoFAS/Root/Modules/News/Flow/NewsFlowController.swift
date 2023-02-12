@@ -68,7 +68,7 @@ final class NewsFlowController: FlowController {
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: NewsFlowControllerParent
-    ) {
+    ) -> NewsViewController {
         let view = NewsViewController()
         let flowController = NewsFlowController(viewController: view)
         flowController.parent = parent
@@ -83,6 +83,7 @@ final class NewsFlowController: FlowController {
         presenter.handleRefreshView()
         
         navigationController.setViewControllers([view], animated: false)
+        return view
     }
 }
 

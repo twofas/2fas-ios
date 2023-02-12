@@ -73,7 +73,7 @@ extension MainSplitFlowController: MainTabFlowControllerParent {
     }
     
     func tabReady() {
-        // Check if needed
+        viewController.presenter.handleRestoreNavigation()
     }
     
     func tabToTokens() {
@@ -84,19 +84,38 @@ extension MainSplitFlowController: MainTabFlowControllerParent {
 extension MainSplitFlowController: MainMenuFlowControllerParent {
     func mainMenuToMain() {
         viewController.presenter.handlePathWasUpdated(to: .main)
-        TokensPlainFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        if let vc = viewController.tokensViewController {
+            viewController.contentNavi.setViewControllers([vc], animated: false)
+        } else {
+            viewController.tokensViewController = TokensPlainFlowController
+                .showAsRoot(in: viewController.contentNavi, parent: self)
+        }
         parent?.navigationSwitchedToTokens()
     }
     
     func mainMenuToSettings() {
         // TODO: Navigate to subsection of Settings
         viewController.presenter.handlePathWasUpdated(to: .news)
-        SettingsFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        if let vc = viewController.settingsViewController {
+            viewController.contentNavi.setViewControllers([vc], animated: false)
+        } else {
+            viewController.settingsViewController = SettingsFlowController
+                .showAsRoot(in: viewController.contentNavi, parent: self)
+        }
     }
     
     func mainMenuToNews() {
         viewController.presenter.handlePathWasUpdated(to: .news)
-        NewsFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        if let vc = viewController.newsViewController {
+            viewController.contentNavi.setViewControllers([vc], animated: false)
+        } else {
+            viewController.newsViewController = NewsFlowController
+                .showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
+    
+    func mainMenuIsReady() {
+        viewController.presenter.handleRestoreNavigation()
     }
 }
 

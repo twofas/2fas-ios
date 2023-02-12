@@ -23,12 +23,14 @@ protocol MainMenuFlowControllerParent: AnyObject {
     func mainMenuToMain()
     func mainMenuToSettings()
     func mainMenuToNews()
+    func mainMenuIsReady()
 }
 
 protocol MainMenuFlowControlling: AnyObject {
     func toMain()
     func toSettings()
     func toNews()
+    func toMenuIsReady()
 }
 
 final class MainMenuFlowController: FlowController {
@@ -67,5 +69,9 @@ extension MainMenuFlowController: MainMenuFlowControlling {
     
     func toNews() {
         parent?.mainMenuToSettings()
+    }
+    
+    func toMenuIsReady() {
+        parent?.mainMenuIsReady()
     }
 }

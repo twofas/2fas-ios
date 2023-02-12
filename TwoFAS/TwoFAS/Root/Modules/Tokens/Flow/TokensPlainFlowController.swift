@@ -58,7 +58,7 @@ final class TokensPlainFlowController: FlowController {
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: TokensPlainFlowControllerParent
-    ) {
+    ) -> TokensViewController {
         let view = TokensViewController()
         let flowController = TokensPlainFlowController(viewController: view)
         flowController.parent = parent
@@ -72,6 +72,7 @@ final class TokensPlainFlowController: FlowController {
         view.presenter = presenter
         
         navigationController.setViewControllers([view], animated: false)
+        return view
     }
 }
 

@@ -45,21 +45,21 @@ extension MainSplitPresenter {
     }
     
     func viewWillAppear() {
-        restoreNavigation()
+        handleRestoreNavigation()
     }
     
     func handleCollapse() {
         guard calledKind != Kind.collapsed else { return }
         calledKind = .collapsed
         
-        restoreNavigation()
+        handleRestoreNavigation()
     }
     
     func handleExpansion() {
         guard calledKind != Kind.expanded else { return }
         calledKind = .expanded
 
-        restoreNavigation()
+        handleRestoreNavigation()
     }
     
     func handlePathWasUpdated(to path: ViewPath) {
@@ -69,11 +69,9 @@ extension MainSplitPresenter {
     
     func handleNavigationUpdate(to path: ViewPath) {
         updateNavigation(to: path)
-    }    
-}
-
-private extension MainSplitPresenter {
-    func restoreNavigation() {
+    }
+    
+    func handleRestoreNavigation() {
         let path: ViewPath = {
             if let path = interactor.restoreViewPath() {
                 return path
@@ -82,7 +80,9 @@ private extension MainSplitPresenter {
         }()
         updateNavigation(to: path)
     }
-    
+}
+
+private extension MainSplitPresenter {
     func updateNavigation(to path: ViewPath) {
         interactor.setViewPath(path)
         

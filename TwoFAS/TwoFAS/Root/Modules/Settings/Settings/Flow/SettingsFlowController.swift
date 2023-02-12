@@ -68,7 +68,7 @@ final class SettingsFlowController: FlowController {
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: SettingsFlowControllerParent
-    ) {
+    ) -> SettingsViewController {
         let view = SettingsViewController()
         let flowController = SettingsFlowController(viewController: view)
         flowController.parent = parent
@@ -81,6 +81,7 @@ final class SettingsFlowController: FlowController {
         view.presenter = presenter
         
         navigationController.setViewControllers([view], animated: false)
+        return view
     }
 }
 

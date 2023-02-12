@@ -24,7 +24,7 @@ final class MainMenuPresenter {
     weak var view: MainMenuViewControlling?
     
     private(set) var selectedIndexPath: IndexPath?
-    
+    private var isViewLoaded = false
     private let flowController: MainMenuFlowControlling
     
     init(flowController: MainMenuFlowControlling) {
@@ -35,6 +35,8 @@ final class MainMenuPresenter {
 extension MainMenuPresenter {
     func viewWillAppear() {
         refresh()
+        isViewLoaded = true
+        flowController.toMenuIsReady()
     }
     
     func handleSelection(at indexPath: IndexPath) {
@@ -51,6 +53,7 @@ extension MainMenuPresenter {
     }
     
     func handleChangeViewPath(_ viewPath: ViewPath) {
+        guard isViewLoaded else { return }
         let indexPath = {
             switch viewPath {
             case .main: return IndexPath(row: 0, section: 0)

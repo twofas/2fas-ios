@@ -34,6 +34,8 @@ final class MainMenuViewController: UIViewController {
             var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
             configuration.showsSeparators = false
             configuration.headerMode = .none
+            configuration.backgroundColor = .clear
+            configuration.headerTopPadding = Theme.Metrics.standardMargin
             let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
             return section
         }
@@ -52,19 +54,19 @@ final class MainMenuViewController: UIViewController {
         super.viewDidLoad()
         
         title = T.Commons._2fasToolbar
-        view.backgroundColor = Theme.Colors.Table.background
+        view.backgroundColor = Theme.Colors.Fill.System.second
         navigationItem.backButtonDisplayMode = .minimal
         navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.prefersLargeTitles = true
         
         setupCollectionView()
     }
     
     private func setupCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: listLayout)
-        collectionView.backgroundColor = Theme.Colors.Fill.System.first
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.isScrollEnabled = false
         collectionView.delegate = self
+        collectionView.backgroundColor = .clear
         
         collectionViewDataSource = UICollectionViewDiffableDataSource<MainMenuSection, MainMenuCell>(
             collectionView: collectionView,
@@ -73,6 +75,7 @@ final class MainMenuViewController: UIViewController {
             })
         
         collectionView.tintColor = Theme.Colors.Fill.theme
+        view.tintColor = Theme.Colors.Fill.theme
         
         view.addSubview(collectionView)
         collectionView.pinToParent()

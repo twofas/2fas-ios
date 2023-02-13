@@ -29,7 +29,7 @@ final class MainSplitViewController: UIViewController {
     var presenter: MainSplitPresenter!
     
     let split = PrimaryNavigationLayoutFixingSplitViewController(style: .doubleColumn)
-    let navigationNavi = CommonNavigationController()
+    let navigationNavi = LargeNavigationController()
     let contentNavi = CommonNavigationController()
     
     private let preferredPrimaryColumnWidthFraction: Double = 0.26
@@ -88,7 +88,7 @@ final class MainSplitViewController: UIViewController {
 
     private func setupSplit() {
         split.delegate = self
-
+        
         addChild(split)
         view.addSubview(split.view)
         split.view.frame = self.view.bounds
@@ -100,11 +100,16 @@ final class MainSplitViewController: UIViewController {
         split.minimumPrimaryColumnWidth = minimumPrimaryColumnWidth
         split.maximumPrimaryColumnWidth = maximumPrimaryColumnWidth
         split.preferredSplitBehavior = .tile
-        split.primaryBackgroundStyle = .sidebar
         split.presentsWithGesture = true
-        
+        split.primaryBackgroundStyle = .sidebar
+
         split.setViewController(navigationNavi, for: .primary)
         split.setViewController(contentNavi, for: .secondary)
+        
+        split.view.tintColor = Theme.Colors.Fill.theme
+        view.tintColor = Theme.Colors.Fill.theme
+        view.backgroundColor = .clear
+        split.view.backgroundColor = .clear
     }
     
     private func setInitialTrait() {

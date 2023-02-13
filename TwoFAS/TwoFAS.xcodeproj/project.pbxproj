@@ -373,6 +373,7 @@
 		C26618A026126A8200ED52CB /* LabelComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C266189F26126A8200ED52CB /* LabelComposeViewController.swift */; };
 		C26654292725D6EA00DC3A3C /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26654282725D6EA00DC3A3C /* PasswordTextField.swift */; };
 		C266542B2725EF7B00DC3A3C /* ExportFileRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */; };
+		C267315A299AC9C40031DE09 /* LargeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2673159299AC9C40031DE09 /* LargeNavigationController.swift */; };
 		C2673BE223D46F5D00A2CBA8 /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C257FD0E1FDC3B0F00CF6898 /* TokenStorage.swift */; };
 		C2673BE523D4765200A2CBA8 /* TokenStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2673BE423D4765200A2CBA8 /* TokenStorageType.swift */; };
 		C2673BEC23D48F7000A2CBA8 /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2673BDF23D465F500A2CBA8 /* Collection+.swift */; };
@@ -1579,6 +1580,7 @@
 		C266189F26126A8200ED52CB /* LabelComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelComposeViewController.swift; sourceTree = "<group>"; };
 		C26654282725D6EA00DC3A3C /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileRules.swift; sourceTree = "<group>"; };
+		C2673159299AC9C40031DE09 /* LargeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeNavigationController.swift; sourceTree = "<group>"; };
 		C2673BDF23D465F500A2CBA8 /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
 		C2673BE423D4765200A2CBA8 /* TokenStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorageType.swift; sourceTree = "<group>"; };
 		C26764AB287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceCategorySelectionFlowController.swift; sourceTree = "<group>"; };
@@ -3299,6 +3301,7 @@
 			isa = PBXGroup;
 			children = (
 				C235A010298FD97D008F4FD0 /* MainSplitViewController.swift */,
+				C2673159299AC9C40031DE09 /* LargeNavigationController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -7152,6 +7155,7 @@
 				C26654292725D6EA00DC3A3C /* PasswordTextField.swift in Sources */,
 				C25B221627C181690052AAC4 /* ComposeServiceInputCellKind.swift in Sources */,
 				C2A7946027F9071F00E5C641 /* BrowserExtensionServicePresenter.swift in Sources */,
+				C267315A299AC9C40031DE09 /* LargeNavigationController.swift in Sources */,
 				C2147CF2205D8C6C0001D011 /* LoginViewModel.swift in Sources */,
 				C2AB92E127668DE700698382 /* ShareActivityController.swift in Sources */,
 				C2AC22062766152C00271402 /* ExporterMainScreenViewController.swift in Sources */,

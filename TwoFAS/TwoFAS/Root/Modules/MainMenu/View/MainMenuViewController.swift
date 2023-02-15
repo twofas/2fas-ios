@@ -47,6 +47,7 @@ final class MainMenuViewController: UIViewController {
             var contentConfiguration = UIListContentConfiguration.sidebarHeader()
             contentConfiguration.text = item.title
             contentConfiguration.image = item.icon
+            contentConfiguration.imageProperties.reservedLayoutSize = .init(width: 32, height: 30)
             cell.contentConfiguration = contentConfiguration
     }
     

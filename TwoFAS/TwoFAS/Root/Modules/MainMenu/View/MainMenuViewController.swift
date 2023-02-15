@@ -45,7 +45,6 @@ final class MainMenuViewController: UIViewController {
         .CellRegistration<UICollectionViewListCell, MainMenuCell> { cell, _, item in
             var contentConfiguration = UIListContentConfiguration.sidebarHeader()
             contentConfiguration.text = item.title
-            contentConfiguration.textProperties.color = .label
             contentConfiguration.image = item.icon
             cell.contentConfiguration = contentConfiguration
     }

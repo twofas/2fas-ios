@@ -122,6 +122,12 @@ final class SettingsMenuTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(infoLabelContainer)
         stackView.addArrangedSubview(customViewContainer)
     }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        titleLabel.textColor = isSelected ? UIColor.white : UIColor.label
+        infoLabel.textColor = isSelected ? UIColor.white : UIColor.secondaryLabel
+    }
     
     func update(icon: UIImage?, title: String, kind: AccessoryType, decorateText: TextDecoration = .none) {
         if let icon {

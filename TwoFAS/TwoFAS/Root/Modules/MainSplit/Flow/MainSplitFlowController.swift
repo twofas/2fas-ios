@@ -132,6 +132,10 @@ extension MainSplitFlowController: SettingsFlowControllerParent {
     func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
         viewController.presenter.handlePathWasUpdated(to: .settings(option: viewPath))
     }
+    
+    func settingsToRevealMenu() {
+        viewController.split.preferredDisplayMode = .oneBesideSecondary
+    }
 }
 
 extension MainSplitFlowController: NewsFlowControllerParent {}

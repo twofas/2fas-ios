@@ -42,7 +42,7 @@ final class MainSplitViewController: UIViewController {
     
     var isCollapsed: Bool { split.isCollapsed }
     var isInitialConfigRead = false
-    
+        
     private var menu: MainMenuViewController? {
         navigationNavi.viewControllers.first as? MainMenuViewController
     }
@@ -160,5 +160,15 @@ extension MainSplitViewController: UISplitViewControllerDelegate {
         presenter.handleExpansion()
         
         return proposedDisplayMode
+    }
+    
+    func splitViewController(
+        _ svc: UISplitViewController,
+        willChangeTo displayMode: UISplitViewController.DisplayMode) {
+            if displayMode == .secondaryOnly {
+                settingsViewController?.showRevealButton()
+            } else {
+                settingsViewController?.hideRevealButton()
+            }
     }
 }

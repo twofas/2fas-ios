@@ -67,4 +67,8 @@ extension SettingsPresenter {
     func handleSwitchToBrowserExtension() {
         flowController.toSwitchToBrowserExtension()
     }
+    
+    func handleRevealMenu() {
+        flowController.toRevealMenu()
+    }
 }

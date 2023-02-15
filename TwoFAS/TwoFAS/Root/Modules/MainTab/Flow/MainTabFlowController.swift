@@ -79,5 +79,9 @@ extension MainTabFlowController: SettingsFlowControllerParent {
         parent?.tabNavigatedToViewPath(.settings(option: viewPath))
         viewController.presenter.handleSettingsChangedViewPath(viewPath)
     }
+    
+    func settingsToRevealMenu() {
+        // not needed
+    }
 }
 extension MainTabFlowController: NewsFlowControllerParent {}

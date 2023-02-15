@@ -84,6 +84,21 @@ final class SettingsViewController: UIViewController {
         updateSize(width: view.frame.size.width)
     }
     
+    func showRevealButton() {
+        (navigationNavi.viewControllers.first as? SettingsMenuViewController)?.navigationItem
+            .leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "sidebar.left"),
+            style: .plain,
+            target: self,
+            action: #selector(revealMenu)
+        )
+    }
+    
+    func hideRevealButton() {
+        (navigationNavi.viewControllers.first as? SettingsMenuViewController)?.navigationItem
+            .leftBarButtonItem = nil
+    }
+    
     func navigateToView(_ viewPath: ViewPath.Settings?) {
         guard let viewPath else {
             if isCollapsed {
@@ -98,6 +113,11 @@ final class SettingsViewController: UIViewController {
     var currentView: ViewPath.Settings? {
         (navigationNavi.viewControllers.first as? SettingsMenuViewController)?
             .presenter.currentViewPath
+    }
+    
+    @objc
+    private func revealMenu() {
+        presenter.handleRevealMenu()
     }
     
     @objc

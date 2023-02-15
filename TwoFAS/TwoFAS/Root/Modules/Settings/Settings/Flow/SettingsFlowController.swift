@@ -21,6 +21,7 @@ import UIKit
 
 protocol SettingsFlowControllerParent: AnyObject {
     func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
+    func settingsToRevealMenu()
 }
 
 protocol SettingsFlowControlling: AnyObject {
@@ -30,6 +31,7 @@ protocol SettingsFlowControlling: AnyObject {
     func toShowingRootMenu()
     func toSwitchToSetupPIN()
     func toSwitchToBrowserExtension()
+    func toRevealMenu()
 }
 
 final class SettingsFlowController: FlowController {
@@ -133,6 +135,10 @@ extension SettingsFlowController: SettingsFlowControlling {
     
     func toSwitchToBrowserExtension() {
         navigationMenu?.toSwitchToBrowserExtension()
+    }
+    
+    func toRevealMenu() {
+        parent?.settingsToRevealMenu()
     }
 }
 

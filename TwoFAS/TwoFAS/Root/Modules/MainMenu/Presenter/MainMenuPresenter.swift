@@ -63,7 +63,7 @@ extension MainMenuPresenter {
         }()
         handleSelection(at: indexPath)
         refresh()
-        // view?.select at index ...
+        view?.selectPosition(at: indexPath)
     }
 }
 

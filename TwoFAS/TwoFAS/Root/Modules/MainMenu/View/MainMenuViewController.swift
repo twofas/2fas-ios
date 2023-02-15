@@ -21,6 +21,7 @@ import UIKit
 
 protocol MainMenuViewControlling: AnyObject {
     func reload(with data: [MainMenuSection])
+    func selectPosition(at indexPath: IndexPath)
 }
 
 final class MainMenuViewController: UIViewController {
@@ -109,6 +110,10 @@ extension MainMenuViewController: MainMenuViewControlling {
             snapshot.append(section.cells)
             collectionViewDataSource.apply(snapshot, to: section, animatingDifferences: false)
         }
+    }
+    
+    func selectPosition(at indexPath: IndexPath) {
+        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .top)
     }
 }
 

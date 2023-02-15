@@ -164,7 +164,8 @@ extension MainSplitViewController: UISplitViewControllerDelegate {
     
     func splitViewController(
         _ svc: UISplitViewController,
-        willChangeTo displayMode: UISplitViewController.DisplayMode) {
+        willChangeTo displayMode: UISplitViewController.DisplayMode
+    ) {
             if displayMode == .secondaryOnly {
                 settingsViewController?.showRevealButton()
             } else {

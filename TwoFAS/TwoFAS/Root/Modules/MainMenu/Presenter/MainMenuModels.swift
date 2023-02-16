@@ -35,6 +35,7 @@ struct MainMenuCell: Hashable {
     let title: String
     let isSelected: Bool
     let section: SectionID?
+    let hasBadge: Bool
 }
 
 extension MainMenuPresenter {
@@ -49,21 +50,24 @@ extension MainMenuPresenter {
                     selectedIcon: Asset.tabBarIconServicesActive.image,
                     title: T.Commons.tokens,
                     isSelected: selectedIndexPath?.row == 1,
-                    section: nil
+                    section: nil,
+                    hasBadge: false
                 ),
                 MainMenuCell(
                     icon: Asset.tabBarIconSettingsInactive.image,
                     selectedIcon: Asset.tabBarIconSettingsActive.image,
                     title: T.Settings.settings,
                     isSelected: selectedIndexPath?.row == 2,
-                    section: nil
+                    section: nil,
+                    hasBadge: false
                 ),
                 MainMenuCell(
                     icon: Asset.tabBarIconNotificationsInactive.image,
                     selectedIcon: Asset.tabBarIconNotificationsActive.image,
                     title: T.Commons.notifications,
                     isSelected: selectedIndexPath?.row == 3,
-                    section: nil
+                    section: nil,
+                    hasBadge: true
                 )
             ])
         ]

@@ -69,7 +69,6 @@ extension MainMenuPresenter {
 
 private extension MainMenuPresenter {
     func refresh() {
-        guard !isViewLoaded else { return }
         view?.reload(with: menu)
     }
 }

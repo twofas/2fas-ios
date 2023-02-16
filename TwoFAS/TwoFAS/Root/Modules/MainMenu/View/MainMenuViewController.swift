@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 protocol MainMenuViewControlling: AnyObject {
     func reload(with data: [MainMenuSection])
@@ -26,7 +27,7 @@ protocol MainMenuViewControlling: AnyObject {
 
 final class MainMenuViewController: UIViewController {
     var presenter: MainMenuPresenter!
-    
+        
     private var collectionView: UICollectionView!
     private var collectionViewDataSource: UICollectionViewDiffableDataSource<MainMenuSection, MainMenuCell>!
     
@@ -44,10 +45,25 @@ final class MainMenuViewController: UIViewController {
     
     private let contentCellRegistration = UICollectionView
         .CellRegistration<UICollectionViewListCell, MainMenuCell> { cell, _, item in
+            let badgeSymbol = "●"
+
             var contentConfiguration = UIListContentConfiguration.sidebarHeader()
-            contentConfiguration.text = item.title
             contentConfiguration.image = item.icon
-            contentConfiguration.imageProperties.reservedLayoutSize = .init(width: 32, height: 30)
+            contentConfiguration.imageProperties.reservedLayoutSize = .init(width: 32, height: 32)
+            if item.hasBadge {
+                let attributedString = NSMutableAttributedString(string: "\(item.title)\(badgeSymbol)")
+                attributedString.decorate(
+                    textToDecorate: badgeSymbol,
+                    attributes: [
+                        .foregroundColor: Theme.Colors.Fill.theme,
+                        .baselineOffset: 10,
+                        .font: UIFont.systemFont(ofSize: 10, weight: .bold)
+                    ]
+                )
+                contentConfiguration.attributedText = attributedString
+            } else {
+                contentConfiguration.text = item.title
+            }
             cell.contentConfiguration = contentConfiguration
     }
     
@@ -106,11 +122,12 @@ extension MainMenuViewController {
 
 extension MainMenuViewController: MainMenuViewControlling {
     func reload(with data: [MainMenuSection]) {
+        var snapshot = NSDiffableDataSourceSnapshot<MainMenuSection, MainMenuCell>()
         data.forEach { section in
-            var snapshot = NSDiffableDataSourceSectionSnapshot<MainMenuCell>()
-            snapshot.append(section.cells)
-            collectionViewDataSource.apply(snapshot, to: section, animatingDifferences: false)
+            snapshot.appendSections([section])
+            snapshot.appendItems(section.cells, toSection: section)
         }
+        collectionViewDataSource.apply(snapshot)
     }
     
     func selectPosition(at indexPath: IndexPath) {

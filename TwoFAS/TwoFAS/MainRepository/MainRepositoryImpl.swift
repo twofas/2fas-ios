@@ -67,6 +67,8 @@ final class MainRepositoryImpl: MainRepository {
     
     var storedURL: URL?
     var fileURL: URL?
+    var lastFetchedNewsTimestamp: Date?
+    var isFetchingNewsFlag = false
     
     // Cached values for higher pefrormance
     var cachedSortType: SortType?

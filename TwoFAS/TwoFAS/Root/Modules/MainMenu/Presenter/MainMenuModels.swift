@@ -67,7 +67,7 @@ extension MainMenuPresenter {
                     title: T.Commons.notifications,
                     isSelected: selectedIndexPath?.row == 3,
                     section: nil,
-                    hasBadge: true
+                    hasBadge: interactor.hasUnreadNews
                 )
             ])
         ]

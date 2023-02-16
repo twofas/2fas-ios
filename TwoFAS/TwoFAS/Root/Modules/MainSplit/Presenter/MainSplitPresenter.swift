@@ -48,6 +48,9 @@ extension MainSplitPresenter {
     
     func viewWillAppear() {
         handleRestoreNavigation()
+        interactor.fetchNews { [weak self] in
+            self?.updateNewsBadge()
+        }
     }
     
     func handleCollapse() {
@@ -107,10 +110,24 @@ private extension MainSplitPresenter {
         }
     }
     
-    private func savePath(path: ViewPath) {
+    func savePath(path: ViewPath) {
+        checkNewsBadgeMark(oldPath: interactor.restoreViewPath(), newPath: path)
+
         interactor.setViewPath(path)
         if case ViewPath.settings(let option) = path {
             interactor.saveCurrentSettingsPath(option ?? firstSettingsValue)
         }
+    }
+    
+    func checkNewsBadgeMark(oldPath: ViewPath?, newPath: ViewPath) {
+        guard interactor.hasUnreadNews else { return }
+        if oldPath != nil && oldPath == .news && newPath != .news {
+            interactor.markNewsAsRead()
+            updateNewsBadge()
+        }
+    }
+    
+    func updateNewsBadge() {
+        view?.updateNewsBadge()
     }
 }

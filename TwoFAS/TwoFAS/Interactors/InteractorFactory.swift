@@ -214,6 +214,14 @@ final class InteractorFactory {
     func fileInteractor() -> FileInteracting {
         FileIteractor(mainRepository: MainRepositoryImpl.shared)
     }
+    
+    func newsInteractor() -> NewsInteracting {
+        NewsInteractor(
+            network: listNewsNetworkInteractor(),
+            storage: listNewsStorageInteractor(),
+            mainRepository: MainRepositoryImpl.shared
+        )
+    }
 }
 
 private extension InteractorFactory {
@@ -455,10 +463,7 @@ extension InteractorFactory {
     }
     
     func newsModuleInteractor() -> NewsModuleInteracting {
-        NewsModuleInteractor(
-            network: listNewsNetworkInteractor(),
-            storage: listNewsStorageInteractor()
-        )
+        NewsModuleInteractor(newsInteractor: newsInteractor())
     }
     
     func composeServiceCategorySelectionModuleInteractor(
@@ -517,6 +522,17 @@ extension InteractorFactory {
     }
     
     func mainSplitModuleInteractor() -> MainSplitModuleInteracting {
-        MainSplitModuleInteractor(viewPathInteractor: viewPathInteractor())
+        MainSplitModuleInteractor(
+            viewPathInteractor: viewPathInteractor(),
+            newsInteractor: newsInteractor()
+        )
+    }
+    
+    func mainMenuModuleInteractor() -> MainMenuModuleInteracting {
+        MainMenuModuleInteractor(newsInteractor: newsInteractor())
+    }
+    
+    func mainTabModuleInteractor() -> MainTabModuleInteracting {
+        MainTabModuleInteractor(newsInteractor: newsInteractor())
     }
 }

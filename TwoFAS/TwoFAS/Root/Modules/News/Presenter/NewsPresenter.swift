@@ -46,15 +46,9 @@ final class NewsPresenter {
     }
     
     func viewWillAppear() {
-        interactor.becameVisible()
         refreshView()
     }
-    
-    func viewWillDisappear() {
-        interactor.becameInvisible()
-        checkBadge()
-    }
-    
+        
     func handleRefreshView() {
         refreshView()
     }
@@ -64,12 +58,6 @@ final class NewsPresenter {
         interactor.markAsRead(newsEntry: entry)
         AnalyticsLog(.articleRead(entry.newsID))
         flowController.openWeb(with: link)
-    }
-    
-    func handleInitialLoad() {
-        interactor.fetchList { [weak self] _ in
-            self?.checkBadge()
-        }
     }
 }
 
@@ -86,8 +74,6 @@ private extension NewsPresenter {
     }
     
     func reload() {
-        checkBadge()
-        
         let now = Date()
         let cells = interactor
             .localList()
@@ -108,14 +94,6 @@ private extension NewsPresenter {
             view?.showEmptyScreen()
         } else {
             view?.reload(with: NewsSection(cells: cells))
-        }
-    }
-    
-    func checkBadge() {
-        if interactor.hasUnreadNews {
-            flowController.showBadge()
-        } else {
-            flowController.hideBadge()
         }
     }
 }

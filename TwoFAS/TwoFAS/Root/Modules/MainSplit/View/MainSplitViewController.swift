@@ -23,6 +23,7 @@ import Common
 protocol MainSplitViewControlling: AnyObject {
     func updateTabBarPath(_ viewPath: ViewPath)
     func updateMenuPath(_ viewPath: ViewPath)
+    func updateNewsBadge()
 }
 
 final class MainSplitViewController: UIViewController {
@@ -134,7 +135,12 @@ extension MainSplitViewController: MainSplitViewControlling {
     }
     
     func updateMenuPath(_ viewPath: ViewPath) {
-        menu?.handleChangeViewPath(viewPath)
+        menu?.presenter.handleChangeViewPath(viewPath)
+    }
+    
+    func updateNewsBadge() {
+        tabBar?.presenter.handleUpdateNewsBadge()
+        menu?.presenter.handleUpdateNewsBadge()
     }
 }
 

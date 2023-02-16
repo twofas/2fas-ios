@@ -338,6 +338,10 @@ protocol MainRepository: AnyObject {
     var currentDate: Date { get }
     
     // MARK: - News
+    func setIsFetchingNews(_ isFetching: Bool)
+    func isFetchingNews() -> Bool
+    func saveLastNewsFetch(_ lastFetch: Date)
+    func lastNewsFetch() -> Date?
     func createNewsEntry(from newsEntry: ListNewsEntry)
     func deleteNewsEntry(with newsEntry: ListNewsEntry)
     func updateNewsEntry(with newsEntry: ListNewsEntry)

@@ -55,6 +55,7 @@ final class TokensPlainFlowController: FlowController {
     private weak var naviViewController: UINavigationController!
     private var galleryViewController: UIViewController?
     
+    @discardableResult
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: TokensPlainFlowControllerParent

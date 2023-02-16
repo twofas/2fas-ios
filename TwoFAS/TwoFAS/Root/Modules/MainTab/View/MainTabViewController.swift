@@ -24,7 +24,8 @@ protocol MainTabViewControlling: AnyObject {
     func scrollToTokensTop()
     func setSettingsView(_ settingsViewPath: ViewPath.Settings?)
     func scrollToNewsTop()
-    func preloadNews()
+    func showNewsBadge()
+    func hideNewsBadge()
 }
 
 final class MainTabViewController: UITabBarController {
@@ -155,8 +156,12 @@ extension MainTabViewController: MainTabViewControlling {
         newsVC?.scrollToTop()
     }
     
-    func preloadNews() {
-        newsVC?.presenter.handleInitialLoad()
+    func showNewsBadge() {
+        newsVC?.navigationController?.tabBarItem.badgeValue = "●"
+    }
+    
+    func hideNewsBadge() {
+        newsVC?.navigationController?.tabBarItem.badgeValue = nil
     }
 }
 

@@ -43,9 +43,11 @@ final class MainMenuFlowController: FlowController {
         let view = MainMenuViewController()
         let flowController = MainMenuFlowController(viewController: view)
         flowController.parent = parent
+        let interactor = InteractorFactory.shared.mainMenuModuleInteractor()
         
         let presenter = MainMenuPresenter(
-            flowController: flowController
+            flowController: flowController,
+            interactor: interactor
         )
         view.presenter = presenter
         presenter.view = view

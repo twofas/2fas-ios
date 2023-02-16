@@ -22,13 +22,14 @@ import Foundation
 final class MainTabPresenter {
     weak var view: MainTabViewControlling?
     
-    private var areNewsPreloaded = false
     private var previousSelectedViewPath: ViewPath?
     private let flowController: MainTabFlowControlling
+    private let interactor: MainTabModuleInteracting
     private var isViewLoaded = false
     
-    init(flowController: MainTabFlowControlling) {
+    init(flowController: MainTabFlowControlling, interactor: MainTabModuleInteracting) {
         self.flowController = flowController
+        self.interactor = interactor
     }
 }
 
@@ -36,10 +37,6 @@ extension MainTabPresenter {
     func viewWillAppear() {
         isViewLoaded = true
         flowController.toTabIsReady()
-        if !areNewsPreloaded {
-            areNewsPreloaded = true
-            view?.preloadNews()
-        }
     }
     
     func handleDidSelectViewPath(_ viewPath: ViewPath) {
@@ -72,5 +69,13 @@ extension MainTabPresenter {
     
     func handleSettingsChangedViewPath(_ viewPath: ViewPath.Settings?) {
         previousSelectedViewPath = .settings(option: viewPath)
+    }
+    
+    func handleUpdateNewsBadge() {
+        if interactor.hasUnreadNews {
+            view?.showNewsBadge()
+        } else {
+            view?.hideNewsBadge()
+        }
     }
 }

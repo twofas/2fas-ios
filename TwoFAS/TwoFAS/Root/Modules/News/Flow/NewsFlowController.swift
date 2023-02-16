@@ -22,8 +22,6 @@ import UIKit
 protocol NewsFlowControllerParent: AnyObject {}
 
 protocol NewsFlowControlling: AnyObject {
-    func showBadge()
-    func hideBadge()
     func openWeb(with url: URL)
 }
 
@@ -93,14 +91,6 @@ extension NewsFlowController {
 }
 
 extension NewsFlowController: NewsFlowControlling {
-    func showBadge() {
-        navigationController?.tabBarItem.badgeValue = "●"
-    }
-    
-    func hideBadge() {
-        navigationController?.tabBarItem.badgeValue = nil
-    }
-    
     func openWeb(with url: URL) {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }

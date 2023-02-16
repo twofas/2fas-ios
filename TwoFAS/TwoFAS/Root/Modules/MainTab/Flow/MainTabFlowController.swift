@@ -40,8 +40,12 @@ final class MainTabFlowController: FlowController {
         let view = MainTabViewController()
         let flowController = MainTabFlowController(viewController: view)
         flowController.parent = parent
+        
+        let interactor = InteractorFactory.shared.mainTabModuleInteractor()
+        
         let presenter = MainTabPresenter(
-            flowController: flowController
+            flowController: flowController,
+            interactor: interactor
         )
         view.presenter = presenter
         presenter.view = view

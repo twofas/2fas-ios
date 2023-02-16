@@ -18,17 +18,12 @@
 //
 
 import Foundation
-import Common
 
-protocol NewsModuleInteracting: AnyObject {
+protocol MainMenuModuleInteracting: AnyObject {
     var hasUnreadNews: Bool { get }
-    
-    func localList() -> [ListNewsEntry]
-    func fetchList(completion: @escaping ([ListNewsEntry]) -> Void)
-    func markAsRead(newsEntry: ListNewsEntry)
 }
 
-final class NewsModuleInteractor {
+final class MainMenuModuleInteractor {
     private let newsInteractor: NewsInteracting
     
     init(newsInteractor: NewsInteracting) {
@@ -36,23 +31,8 @@ final class NewsModuleInteractor {
     }
 }
 
-extension NewsModuleInteractor: NewsModuleInteracting {
+extension MainMenuModuleInteractor: MainMenuModuleInteracting {
     var hasUnreadNews: Bool {
         newsInteractor.hasUnreadNews
-    }
-    
-    func localList() -> [ListNewsEntry] {
-        newsInteractor.localList()
-    }
-    
-    func fetchList(completion: @escaping ([ListNewsEntry]) -> Void) {
-        newsInteractor.fetchList(completion: { [weak self] in
-            guard let self else { return }
-            completion(self.newsInteractor.localList())
-        })
-    }
-    
-    func markAsRead(newsEntry: ListNewsEntry) {
-        newsInteractor.markAsRead(newsEntry: newsEntry)
     }
 }

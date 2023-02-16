@@ -27,6 +27,8 @@ enum ListNewsError: Error {
 }
 
 protocol ListNewsNetworkInteracting: AnyObject {
+    func setIsFetching(_ isFetching: Bool)
+    func isFetching() -> Bool
     func fetchNews(completion: @escaping (Result<[ListNewsEntry], ListNewsError>) -> Void)
 }
 
@@ -43,6 +45,14 @@ final class ListNewsNetworkInteractor {
 }
 
 extension ListNewsNetworkInteractor: ListNewsNetworkInteracting {
+    func setIsFetching(_ isFetching: Bool) {
+        mainRepository.setIsFetchingNews(isFetching)
+    }
+    
+    func isFetching() -> Bool {
+        mainRepository.isFetchingNews()
+    }
+
     func fetchNews(completion: @escaping (Result<[ListNewsEntry], ListNewsError>) -> Void) {
         Log("ListNewsNetworkInteractor - fetchNews", module: .interactor)
         mainRepository.listAllNews(publishedAfter: dateFormatter.string(from: date3MonthsAgo)) { [weak self] result in

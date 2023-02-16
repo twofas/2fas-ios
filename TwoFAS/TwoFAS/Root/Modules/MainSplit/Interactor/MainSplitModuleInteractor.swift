@@ -25,21 +25,32 @@ protocol MainSplitModuleInteracting: AnyObject {
     
     func restoreViewPath() -> ViewPath?
     func setViewPath(_ viewPath: ViewPath)
+    
+    var hasUnreadNews: Bool { get }
+    func markNewsAsRead()
+    func fetchNews(completion: @escaping () -> Void)
 }
 
 final class MainSplitModuleInteractor {
     private var settingsPath: ViewPath.Settings?
     
     private let viewPathInteractor: ViewPathIteracting
+    private let newsInteractor: NewsInteracting
     
     init(
-        viewPathInteractor: ViewPathIteracting
+        viewPathInteractor: ViewPathIteracting,
+        newsInteractor: NewsInteracting
     ) {
         self.viewPathInteractor = viewPathInteractor
+        self.newsInteractor = newsInteractor
     }
 }
 
 extension MainSplitModuleInteractor: MainSplitModuleInteracting {
+    var hasUnreadNews: Bool {
+        newsInteractor.hasUnreadNews
+    }
+    
     func restoreViewPath() -> ViewPath? {
         viewPathInteractor.viewPath()
     }
@@ -54,5 +65,13 @@ extension MainSplitModuleInteractor: MainSplitModuleInteracting {
     
     func saveCurrentSettingsPath(_ settingsPath: ViewPath.Settings?) {
         self.settingsPath = settingsPath
+    }
+    
+    func markNewsAsRead() {
+        newsInteractor.clearHasUnreadNews()
+    }
+    
+    func fetchNews(completion: @escaping () -> Void) {
+        newsInteractor.fetchList(completion: completion)
     }
 }

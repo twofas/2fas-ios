@@ -264,6 +264,9 @@
 		C241D452278B9E2D00D7C604 /* NetworkStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C241D450278B9E2D00D7C604 /* NetworkStack.swift */; };
 		C241D453278B9E2D00D7C604 /* AppVersionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C241D451278B9E2D00D7C604 /* AppVersionHandler.swift */; };
 		C2432FD426D2BBA7004AD9F7 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2932EF21FFE94A900FBD4D0 /* Common.framework */; };
+		C24336E8299ECEC700BF35B1 /* NewsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24336E7299ECEC700BF35B1 /* NewsInteractor.swift */; };
+		C24336EB299ED7CE00BF35B1 /* MainMenuModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24336EA299ED7CE00BF35B1 /* MainMenuModuleInteractor.swift */; };
+		C24336ED299ED95A00BF35B1 /* MainTabModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24336EC299ED95A00BF35B1 /* MainTabModuleInteractor.swift */; };
 		C244718825F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C244718725F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift */; };
 		C24471A425F503690024B4C5 /* ComposeServiceFormInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24471A325F503690024B4C5 /* ComposeServiceFormInput.swift */; };
 		C24471B325F506390024B4C5 /* ComposeServiceFormRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24471B225F506390024B4C5 /* ComposeServiceFormRow.swift */; };
@@ -1467,6 +1470,9 @@
 		C241D447278B9E0E00D7C604 /* NetworkStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkStack.h; sourceTree = "<group>"; };
 		C241D450278B9E2D00D7C604 /* NetworkStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStack.swift; sourceTree = "<group>"; };
 		C241D451278B9E2D00D7C604 /* AppVersionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersionHandler.swift; sourceTree = "<group>"; };
+		C24336E7299ECEC700BF35B1 /* NewsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsInteractor.swift; sourceTree = "<group>"; };
+		C24336EA299ED7CE00BF35B1 /* MainMenuModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuModuleInteractor.swift; sourceTree = "<group>"; };
+		C24336EC299ED95A00BF35B1 /* MainTabModuleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabModuleInteractor.swift; sourceTree = "<group>"; };
 		C244718725F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceFormRowTitleLabel.swift; sourceTree = "<group>"; };
 		C24471A325F503690024B4C5 /* ComposeServiceFormInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceFormInput.swift; sourceTree = "<group>"; };
 		C24471B225F506390024B4C5 /* ComposeServiceFormRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceFormRow.swift; sourceTree = "<group>"; };
@@ -2394,6 +2400,7 @@
 			isa = PBXGroup;
 			children = (
 				C2079B54298EB374003FA86D /* Flow */,
+				C24336E9299ED7B700BF35B1 /* Interactor */,
 				C2079B52298EB363003FA86D /* Presenter */,
 				C2079B51298EB35F003FA86D /* View */,
 			);
@@ -2653,6 +2660,7 @@
 				C225E618241D35FE0041C238 /* ViewPathInteractor.swift */,
 				C22CD79A2630D43F009C0258 /* FileInteractor.swift */,
 				C2A2255B293BFE1E00B76115 /* TokenInteractor.swift */,
+				C24336E7299ECEC700BF35B1 /* NewsInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -3679,6 +3687,22 @@
 			path = NetworkStack;
 			sourceTree = "<group>";
 		};
+		C24336E9299ED7B700BF35B1 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				C24336EA299ED7CE00BF35B1 /* MainMenuModuleInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		C24336EE299ED96500BF35B1 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				C24336EC299ED95A00BF35B1 /* MainTabModuleInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
 		C244F9DF22762955009992D3 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -4155,6 +4179,7 @@
 			isa = PBXGroup;
 			children = (
 				C2698B6A2986B40500EBC179 /* Flow */,
+				C24336EE299ED96500BF35B1 /* Interactor */,
 				C2698B682986B3F400EBC179 /* Presenter */,
 				C2698B672986B3EF00EBC179 /* View */,
 			);
@@ -7126,6 +7151,7 @@
 				C2E2C81627B070B700F04B70 /* CollectionViewDataSnapshot.swift in Sources */,
 				C21A9E8A27CBFDC200FE4CC4 /* ComposeServiceNumberOfDigitsViewController.swift in Sources */,
 				C2B2ED2227C44B1B00332255 /* AdvancedAlertFlowController.swift in Sources */,
+				C24336E8299ECEC700BF35B1 /* NewsInteractor.swift in Sources */,
 				C2A2D23428F751A000B5D91E /* ExchangeDataFormat.swift in Sources */,
 				C28681E72891D41F00BE0CA7 /* TimerInteractor.swift in Sources */,
 				C2E2C80B27B038DC00F04B70 /* IconSelectorModuleInteractor.swift in Sources */,
@@ -7254,6 +7280,7 @@
 				C21247F427B7062F0044D9F2 /* LabelComposeColorSelector.swift in Sources */,
 				C258593C280318BA002DC749 /* PairingWebExtensionInteractor.swift in Sources */,
 				C2B39C7527A58F0E00D3B579 /* SelectFromGalleryPresenter.swift in Sources */,
+				C24336EB299ED7CE00BF35B1 /* MainMenuModuleInteractor.swift in Sources */,
 				C20E578C29297593002B215B /* UploadLogsViewController.swift in Sources */,
 				C21111EC274ABA5700CA7C78 /* SettingsViewControlling.swift in Sources */,
 				C2FAE12528C7346900F2446F /* AEGISParseResultErrorStrings.swift in Sources */,
@@ -7522,6 +7549,7 @@
 				C27A1EB529127C8D00702DB9 /* AlertController+Ready.swift in Sources */,
 				C21C38A21FE30E62000EC252 /* LimitedTextField.swift in Sources */,
 				C296D1EA28B2D4AF001F026D /* UserIconInfoViewController.swift in Sources */,
+				C24336ED299ED95A00BF35B1 /* MainTabModuleInteractor.swift in Sources */,
 				C27BE519275D6E0D0090CA12 /* MainRepositoryImpl+Services.swift in Sources */,
 				C2BE80582811DF03009CBC4A /* AuthRequestsPresenter.swift in Sources */,
 				C274BDC2276941FB00EE28BC /* AppSecurityPresenter.swift in Sources */,

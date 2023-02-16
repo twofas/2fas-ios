@@ -26,20 +26,23 @@ final class MainMenuPresenter {
     private(set) var selectedIndexPath: IndexPath?
     private var isViewLoaded = false
     private let flowController: MainMenuFlowControlling
+    let interactor: MainMenuModuleInteracting
     
-    init(flowController: MainMenuFlowControlling) {
+    init(flowController: MainMenuFlowControlling, interactor: MainMenuModuleInteracting) {
         self.flowController = flowController
+        self.interactor = interactor
     }
 }
 
 extension MainMenuPresenter {
     func viewWillAppear() {
-        refresh()
         isViewLoaded = true
+        refresh()
         flowController.toMenuIsReady()
     }
     
     func handleSelection(at indexPath: IndexPath) {
+        selectedIndexPath = indexPath
         switch indexPath.row {
         case MainContent.main.rawValue:
             flowController.toMain()
@@ -63,12 +66,17 @@ extension MainMenuPresenter {
         }()
         handleSelection(at: indexPath)
         refresh()
-        view?.selectPosition(at: indexPath)
+    }
+    
+    func handleUpdateNewsBadge() {
+        refresh()
     }
 }
 
 private extension MainMenuPresenter {
     func refresh() {
+        guard isViewLoaded else { return }
         view?.reload(with: menu)
+        view?.selectPosition(at: selectedIndexPath ?? IndexPath(row: 0, section: 0))
     }
 }

@@ -21,6 +21,22 @@ import Foundation
 import Common
 
 extension MainRepositoryImpl {
+    func setIsFetchingNews(_ isFetching: Bool) {
+        isFetchingNewsFlag = isFetching
+    }
+    
+    func isFetchingNews() -> Bool {
+        isFetchingNewsFlag
+    }
+    
+    func saveLastNewsFetch(_ lastFetch: Date) {
+        lastFetchedNewsTimestamp = lastFetch
+    }
+    
+    func lastNewsFetch() -> Date? {
+        lastFetchedNewsTimestamp
+    }
+    
     func createNewsEntry(from newsEntry: ListNewsEntry) {
         storageRepository.createNewsEntry(from: newsEntry)
     }

@@ -121,9 +121,7 @@ final class NewsViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        
-        presenter.viewWillDisappear()
+        navigationController?.setNavigationBarHidden(false, animated: animated)        
     }
     
     private func setupConstraints() {

@@ -171,6 +171,7 @@ final class PINPadViewController: UIViewController, PINPadViewControllerProtocol
         container.font = Theme.Fonts.Text.content
         title.setAttributes(container)
         buttonConfiguration.attributedTitle = title
+        buttonConfiguration.titleAlignment = .center
         
         let resetButton = UIButton(configuration: buttonConfiguration)
         resetButton.configurationUpdateHandler = { button in
@@ -182,7 +183,15 @@ final class PINPadViewController: UIViewController, PINPadViewControllerProtocol
         }
         view.addSubview(resetButton, with: [
             resetButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            resetButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -Theme.Metrics.doubleMargin)
+            resetButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -Theme.Metrics.doubleMargin),
+            resetButton.leadingAnchor.constraint(
+                equalTo: view.safeLeadingAnchor,
+                constant: Theme.Metrics.standardMargin
+            ),
+            resetButton.trailingAnchor.constraint(
+                equalTo: view.safeTrailingAnchor,
+                constant: -Theme.Metrics.standardMargin
+            )
         ])
         resetButton.addTarget(self, action: #selector(resetAction), for: .touchUpInside)
     }

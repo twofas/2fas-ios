@@ -42,7 +42,6 @@ final class NewsPresenter {
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
-        refreshView()
     }
     
     func viewWillAppear() {

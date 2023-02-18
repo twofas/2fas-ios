@@ -56,16 +56,27 @@ extension NewsInteractor: NewsInteracting {
         storage.markAllAsRead()
     }
     
-    func fetchList(completion: @escaping ([ListNewsEntry]) -> Void) {
-        guard !mainRepository.isFetchingNews() && canFetchNow else { return }
+    func fetchList(completion: @escaping () -> Void) {
+        guard canFetchNow else {
+            completion()
+            return
+        }
+        
+        mainRepository.storeNewsCompletions(completion)
+        
+        guard !mainRepository.isFetchingNews() else {
+            return
+        }
+        
         mainRepository.setIsFetchingNews(true)
         network.fetchNews { [weak self] result in
             switch result {
             case .success(let newList):
                 self?.mainRepository.saveLastNewsFetch(Date())
-                self?.handleFetchedList(newList, completion: completion)
+                self?.handleFetchedList(newList)
             case .failure:
                 Log("NewsInteractor: Can't fetch new News list", module: .moduleInteractor)
+                self?.handleCompletions()
             }
             self?.mainRepository.setIsFetchingNews(false)
         }
@@ -77,6 +88,10 @@ extension NewsInteractor: NewsInteracting {
 }
 
 private extension NewsInteractor {
+    func handleCompletions() {
+        mainRepository.callAndClearNewsCompletions()
+    }
+    
     var canFetchNow: Bool {
         guard let lastFetched = mainRepository.lastNewsFetch() else { return true }
         let hour: TimeInterval = 3600
@@ -84,14 +99,14 @@ private extension NewsInteractor {
         return (now.timeIntervalSince1970 - lastFetched.timeIntervalSince1970) >= hour
     }
     
-    func handleFetchedList(_ newList: [ListNewsEntry], completion: @escaping () -> Void) {
+    func handleFetchedList(_ newList: [ListNewsEntry]) {
         let currentList = storage.listAll()
         guard currentList != newList else {
             Log(
                 "NewsInteractor - handleFetchedList. Fetched list is the same as local one. Exiting",
                 module: .moduleInteractor
             )
-            completion()
+            handleCompletions()
             return
         }
         var added = [ListNewsEntry]()
@@ -118,7 +133,7 @@ private extension NewsInteractor {
                 "NewsInteractor - handleFetchedList. No change needed. Exiting",
                 module: .moduleInteractor
             )
-            completion()
+            handleCompletions()
             return
         }
         
@@ -134,6 +149,6 @@ private extension NewsInteractor {
             storage.deleteNewsEntry(with: entry)
         }
         
-        completion()
+        handleCompletions()
     }
 }

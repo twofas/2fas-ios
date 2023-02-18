@@ -781,7 +781,7 @@
 		C2D39DDE28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDC28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift */; };
 		C2D39DE128232BC900E864E9 /* ListNewsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DE028232BC900E864E9 /* ListNewsEntry.swift */; };
 		C2D39DE32823302200E864E9 /* StorageRepositoryImpl+News.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DE22823302200E864E9 /* StorageRepositoryImpl+News.swift */; };
-		C2D39DE52823324E00E864E9 /* MainRepositoryImpl+NewsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DE42823324E00E864E9 /* MainRepositoryImpl+NewsStorage.swift */; };
+		C2D39DE52823324E00E864E9 /* MainRepositoryImpl+News.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DE42823324E00E864E9 /* MainRepositoryImpl+News.swift */; };
 		C2D3B0F628EE0F1C00D2F991 /* MainRepositoryImpl+ServiceDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D3B0F528EE0F1C00D2F991 /* MainRepositoryImpl+ServiceDefinition.swift */; };
 		C2D3B0F828EE115200D2F991 /* MainRepositoryImpl+Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D3B0F728EE115200D2F991 /* MainRepositoryImpl+Icons.swift */; };
 		C2D3B0FA28EE12A700D2F991 /* ServiceDefinitionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D3B0F928EE12A700D2F991 /* ServiceDefinitionInteractor.swift */; };
@@ -1987,7 +1987,7 @@
 		C2D39DDC28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C2D39DE028232BC900E864E9 /* ListNewsEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListNewsEntry.swift; sourceTree = "<group>"; };
 		C2D39DE22823302200E864E9 /* StorageRepositoryImpl+News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StorageRepositoryImpl+News.swift"; sourceTree = "<group>"; };
-		C2D39DE42823324E00E864E9 /* MainRepositoryImpl+NewsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+NewsStorage.swift"; sourceTree = "<group>"; };
+		C2D39DE42823324E00E864E9 /* MainRepositoryImpl+News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+News.swift"; sourceTree = "<group>"; };
 		C2D3B0F528EE0F1C00D2F991 /* MainRepositoryImpl+ServiceDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+ServiceDefinition.swift"; sourceTree = "<group>"; };
 		C2D3B0F728EE115200D2F991 /* MainRepositoryImpl+Icons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Icons.swift"; sourceTree = "<group>"; };
 		C2D3B0F928EE12A700D2F991 /* ServiceDefinitionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDefinitionInteractor.swift; sourceTree = "<group>"; };
@@ -5801,7 +5801,7 @@
 				C25859352802E73B002DC749 /* MainRepositoryImpl+PushNotifications.swift */,
 				C258593D2803380D002DC749 /* MainRepositoryImpl+WebExtensionPairing.swift */,
 				C2FA3E80280ADFDF0097ED71 /* MainRepositoryImpl+WebExtensionAuthRequest.swift */,
-				C2D39DE42823324E00E864E9 /* MainRepositoryImpl+NewsStorage.swift */,
+				C2D39DE42823324E00E864E9 /* MainRepositoryImpl+News.swift */,
 				C22A8669287F60BD009A43FE /* MainRepositoryImpl+Notifications.swift */,
 				C2D3B0F528EE0F1C00D2F991 /* MainRepositoryImpl+ServiceDefinition.swift */,
 				C2D3B0F728EE115200D2F991 /* MainRepositoryImpl+Icons.swift */,
@@ -7068,7 +7068,7 @@
 				C2ABA1CC24B24B7F008426D1 /* TokensViewController+ContextMenu.swift in Sources */,
 				C2A70682276D390500885D79 /* NewPINPresenter.swift in Sources */,
 				C2E948AD23B666BD003BDCC1 /* UnderscoredInput.swift in Sources */,
-				C2D39DE52823324E00E864E9 /* MainRepositoryImpl+NewsStorage.swift in Sources */,
+				C2D39DE52823324E00E864E9 /* MainRepositoryImpl+News.swift in Sources */,
 				C233BD222801CB2600A9CFF2 /* MainRepositoryImpl+Network.swift in Sources */,
 				C21247FB27B7181A0044D9F2 /* ComposeServiceModels.swift in Sources */,
 				C240486927655A0E0076376E /* ImporterOpenFileViewController.swift in Sources */,

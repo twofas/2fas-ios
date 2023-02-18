@@ -72,6 +72,7 @@ final class SettingsViewController: UIViewController {
         if hideNavigationBar {
             navigationController?.setNavigationBarHidden(true, animated: animated)
         }
+        updateSize(width: view.frame.size.width)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

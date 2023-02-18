@@ -21,6 +21,15 @@ import Foundation
 import Common
 
 extension MainRepositoryImpl {
+    func storeNewsCompletions(_ completion: @escaping () -> Void) {
+        newsCompletions.append(completion)
+    }
+    
+    func callAndClearNewsCompletions() {
+        newsCompletions.forEach({ $0() })
+        newsCompletions = []
+    }
+    
     func setIsFetchingNews(_ isFetching: Bool) {
         isFetchingNewsFlag = isFetching
     }

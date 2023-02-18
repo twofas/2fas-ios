@@ -57,9 +57,7 @@ final class NewsFlowController: FlowController {
         }()
         
         flowController.navigationController = naviController
-        
-        presenter.handleRefreshView()
-        
+                
         tabBarController.addTab(naviController)
     }
     
@@ -77,9 +75,7 @@ final class NewsFlowController: FlowController {
         )
         presenter.view = view
         view.presenter = presenter
-        
-        presenter.handleRefreshView()
-        
+                
         navigationController.setViewControllers([view], animated: false)
         navigationController.setNavigationBarHidden(false, animated: false)
         return view

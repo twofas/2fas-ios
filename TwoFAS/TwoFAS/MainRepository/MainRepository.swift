@@ -349,6 +349,8 @@ protocol MainRepository: AnyObject {
     func listAll() -> [ListNewsEntry]
     func hasNewsEntriesUnreadItems() -> Bool
     func markAllNewsEntriesAsRead()
+    func storeNewsCompletions(_ completion: @escaping () -> Void)
+    func callAndClearNewsCompletions()
         
     // MARK: - Push Notifications
     func lastSavedNotification() -> LastSavedNotification?

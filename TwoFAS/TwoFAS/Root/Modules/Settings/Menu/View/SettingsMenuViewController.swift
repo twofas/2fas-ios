@@ -60,6 +60,7 @@ final class SettingsMenuViewController: UIViewController {
     private func setupTableViewLayout() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.tintColor = Theme.Colors.Fill.theme
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

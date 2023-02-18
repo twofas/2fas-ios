@@ -34,7 +34,7 @@ extension Code {
         else { return nil }
                 
         return unpacked.otpParameters.compactMap { param -> Code? in
-            guard let secret = param.secretValue else { return nil }
+            guard let secret = param.secretValue?.sanitazeSecret(), secret.isValidSecret() else { return nil }
             let digits: Digits = {
                 if let value = param.digitsValue {
                     return value

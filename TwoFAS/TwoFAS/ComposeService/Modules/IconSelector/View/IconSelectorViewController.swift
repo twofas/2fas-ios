@@ -33,7 +33,7 @@ final class IconSelectorViewController: UIViewController {
         }
     }
     
-    private var collectionViewAdapter: CollectionViewAdapter<IconSelectorSection, IconSelectorCell>!
+    private(set) var collectionViewAdapter: CollectionViewAdapter<IconSelectorSection, IconSelectorCell>!
     private let delegatee = IconSelectorCollectionViewDelegatee<IconSelectorSection, IconSelectorCell>()
     private var gridLayout: UICollectionViewFlowLayout = {
         let horizontalMargin: CGFloat = Theme.Metrics.doubleMargin * 2
@@ -63,7 +63,7 @@ final class IconSelectorViewController: UIViewController {
 
         view.backgroundColor = Theme.Colors.Fill.System.third
         navigationController?.navigationBar.standardAppearance.backgroundColor = Theme.Colors.Fill.System.third
-
+        
         gridView = UICollectionView(frame: .zero, collectionViewLayout: gridLayout)
         gridView.backgroundColor = Theme.Colors.Fill.System.first
         gridView.register(
@@ -90,6 +90,8 @@ final class IconSelectorViewController: UIViewController {
             },
             delegatee: delegatee
         )
+        delegatee.collectionViewAdapter = collectionViewAdapter
+
         collectionViewAdapter.indexPathForTitleProvider = { [weak self] _, _, offset in
             guard let self else { return .init(index: .zero) }
             return self.presenter.handleIndexPathForOffset(offset)

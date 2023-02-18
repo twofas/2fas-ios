@@ -23,6 +23,7 @@ final class IconSelectorCollectionViewDelegatee<Section, Cell>:
     CollectionViewDelegatee<Section, Cell>, UICollectionViewDelegateFlowLayout
 where Section: CollectionViewSection, Section.Cell == Cell {
     var presenter: IconSelectorPresenter!
+    weak var collectionViewAdapter: CollectionViewAdapter<IconSelectorSection, IconSelectorCell>?
     
     func collectionView(
         _ collectionView: UICollectionView,
@@ -39,5 +40,26 @@ where Section: CollectionViewSection, Section.Cell == Cell {
             return IconSelectorHeaderReusableView.dimension
         }()
         return CGSize(width: UIView.noIntrinsicMetric, height: height)
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
+        let snapshot = collectionViewAdapter?.snapshot
+        let horizontalMargin: CGFloat = Theme.Metrics.doubleMargin * 2
+        
+        let spacing: CGFloat = Theme.Metrics.mediumSpacing
+        guard
+            let count = snapshot?.items(at: section).count,
+            count == 1
+        else {
+            return .init(top: spacing, left: horizontalMargin, bottom: spacing, right: horizontalMargin)
+        }
+        let cellWidth = IconSelectorCollectionViewCell.dimension
+        let width = collectionView.bounds.size.width
+        let right = width - cellWidth - 2 * horizontalMargin + 2 * spacing
+        return .init(top: spacing, left: horizontalMargin, bottom: spacing, right: right)
     }
 }

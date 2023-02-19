@@ -62,10 +62,14 @@ public final class BiometricAuth {
             return
         }
         
+        Log("Enabling Biometric Auth")
+        BiometryFingerprintStorage.clear()
         storage.saveBool(for: .bioAuthEnabled, value: true)
     }
     
     public func disable() {
+        Log("Disabling Biometric Auth")
+        BiometryFingerprintStorage.clear()
         storage.remove(for: .bioAuthEnabled)
     }
     
@@ -84,27 +88,32 @@ public final class BiometricAuth {
             
             return
         }
-            
-        if let currentVersion = UIDevice.current.systemVersion.splitVersion(),
-           currentVersion < VersionDecoded(major: 13, minor: 2, fix: 0) {
-            // Fix for bug in iOS 13.0 and 13.1 where TouchID window is invisible
-            evaluate(reason: reason, ignore: true)
-        }
         
-        evaluate(reason: reason, ignore: false)
+        evaluate(reason: reason)
     }
     
-    private func evaluate(reason: String, ignore: Bool) {
+    private func evaluate(reason: String) {
         context.evaluatePolicy(
             LAPolicy.deviceOwnerAuthenticationWithBiometrics,
             localizedReason: reason,
             reply: { [weak self] (success: Bool, evalPolicyError: Error?) -> Void in
-            guard !ignore else { return }
-            
+                
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 
                 if success {
+                    let currentFingerprint = BiometryFingerprintStorage.fingerprint
+                    let newFingerprint = self.context.evaluatedPolicyDomainState
+                    
+                    guard currentFingerprint == nil || currentFingerprint == newFingerprint else {
+                        self.disable()
+                        self.delegate?.bioAuthFailed()
+                        return
+                    }
+                    if let newFingerprint, currentFingerprint == nil {
+                        BiometryFingerprintStorage.save(fingerprint: newFingerprint)
+                    }
+                    
                     self.delegate?.bioAuthSuccess()
                     Log("BioAuthSuccess")
                 } else {

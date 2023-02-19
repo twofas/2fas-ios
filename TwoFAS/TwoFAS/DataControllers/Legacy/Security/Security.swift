@@ -99,7 +99,9 @@ final class Security: SecurityProtocol {
     }
     
     func authenticateUsingBioAuthIfPossible(reason: String) {
-        guard !appInBackground && isBioAuthEnabled && isBioAuthAvailable else { return }
+        guard
+            !appInBackground && isBioAuthEnabled && isBioAuthAvailable && !isAuthenticatingUsingBiometric
+        else { return }
         
         isAuthenticatingUsingBiometric = true
         biometric.authenticate(reason: reason)

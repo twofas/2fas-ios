@@ -37,8 +37,7 @@ extension Int {
             NSURLErrorDNSLookupFailed,
             NSURLErrorHTTPTooManyRedirects,
             NSURLErrorResourceUnavailable,
-            NSURLErrorNotConnectedToInternet,
-            NSURLErrorSecureConnectionFailed
+            NSURLErrorNotConnectedToInternet
         ]
     }
     

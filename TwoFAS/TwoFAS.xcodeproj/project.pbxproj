@@ -463,6 +463,8 @@
 		C27C03C527F4FF1E0020DB5E /* BrowserExtensionMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27C03C427F4FF1E0020DB5E /* BrowserExtensionMainViewController.swift */; };
 		C27CCE9A279DDAB000C3D88F /* NewCodeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27CCE99279DDAB000C3D88F /* NewCodeInteractor.swift */; };
 		C27CCE9C279DF8DC00C3D88F /* MainRepositoryImpl+Code.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27CCE9B279DF8DC00C3D88F /* MainRepositoryImpl+Code.swift */; };
+		C27CDA7729A2A01600DC7C98 /* NetworkNotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27CDA7629A2A01600DC7C98 /* NetworkNotificationName.swift */; };
+		C27CDA7929A2A55100DC7C98 /* NetworkStatusInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27CDA7829A2A55100DC7C98 /* NetworkStatusInteractor.swift */; };
 		C27D543D275D38E0001E9ABF /* BackupMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27D543C275D38E0001E9ABF /* BackupMenuViewController.swift */; };
 		C27D543F275D393D001E9ABF /* BackupMenuPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27D543E275D393D001E9ABF /* BackupMenuPresenter.swift */; };
 		C27D5441275D462D001E9ABF /* BackupMenuViewController+TableCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27D5440275D462D001E9ABF /* BackupMenuViewController+TableCellHandling.swift */; };
@@ -1362,6 +1364,7 @@
 		C2248BB02277935200AC231C /* GridViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewState.swift; sourceTree = "<group>"; };
 		C225E613241CFCD10041C238 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C225E616241CFCE90041C238 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C225E618241D35FE0041C238 /* ViewPathController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPathController.swift; sourceTree = "<group>"; };
 		C225E618241D35FE0041C238 /* ViewPathInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPathInteractor.swift; sourceTree = "<group>"; };
 		C228603126697250005E88E3 /* GridSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridSection.swift; sourceTree = "<group>"; };
 		C2286033266972B5005E88E3 /* GridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
@@ -1673,6 +1676,8 @@
 		C27C104926AE093E00F00191 /* TwoFASServiceIntent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASServiceIntent.entitlements; sourceTree = "<group>"; };
 		C27CCE99279DDAB000C3D88F /* NewCodeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCodeInteractor.swift; sourceTree = "<group>"; };
 		C27CCE9B279DF8DC00C3D88F /* MainRepositoryImpl+Code.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Code.swift"; sourceTree = "<group>"; };
+		C27CDA7629A2A01600DC7C98 /* NetworkNotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkNotificationName.swift; sourceTree = "<group>"; };
+		C27CDA7829A2A55100DC7C98 /* NetworkStatusInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusInteractor.swift; sourceTree = "<group>"; };
 		C27D543C275D38E0001E9ABF /* BackupMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupMenuViewController.swift; sourceTree = "<group>"; };
 		C27D543E275D393D001E9ABF /* BackupMenuPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupMenuPresenter.swift; sourceTree = "<group>"; };
 		C27D5440275D462D001E9ABF /* BackupMenuViewController+TableCellHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackupMenuViewController+TableCellHandling.swift"; sourceTree = "<group>"; };
@@ -2661,6 +2666,7 @@
 				C22CD79A2630D43F009C0258 /* FileInteractor.swift */,
 				C2A2255B293BFE1E00B76115 /* TokenInteractor.swift */,
 				C24336E7299ECEC700BF35B1 /* NewsInteractor.swift */,
+				C27CDA7829A2A55100DC7C98 /* NetworkStatusInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -3678,6 +3684,7 @@
 				C2E86AAF27FF6BF600C830BB /* Calls */,
 				C2E86AAB27FF5E3400C830BB /* Extensions */,
 				C241D451278B9E2D00D7C604 /* AppVersionHandler.swift */,
+				C27CDA7629A2A01600DC7C98 /* NetworkNotificationName.swift */,
 				C241D450278B9E2D00D7C604 /* NetworkStack.swift */,
 				C241D447278B9E0E00D7C604 /* NetworkStack.h */,
 				C2A8584727FB937A00CBD9ED /* NetworkStackRepository.swift */,
@@ -7153,6 +7160,7 @@
 				C2B2ED2227C44B1B00332255 /* AdvancedAlertFlowController.swift in Sources */,
 				C24336E8299ECEC700BF35B1 /* NewsInteractor.swift in Sources */,
 				C2A2D23428F751A000B5D91E /* ExchangeDataFormat.swift in Sources */,
+				C27CDA7929A2A55100DC7C98 /* NetworkStatusInteractor.swift in Sources */,
 				C28681E72891D41F00BE0CA7 /* TimerInteractor.swift in Sources */,
 				C2E2C80B27B038DC00F04B70 /* IconSelectorModuleInteractor.swift in Sources */,
 				C2727D512781E10800B8FA03 /* TrashViewTableViewCell.swift in Sources */,
@@ -7638,6 +7646,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2A8584227FB8D6400CBD9ED /* HTTPMethod.swift in Sources */,
+				C27CDA7729A2A01600DC7C98 /* NetworkNotificationName.swift in Sources */,
 				C2A8584827FB937A00CBD9ED /* NetworkStackRepository.swift in Sources */,
 				C2E86AB827FF78E200C830BB /* ListAllPairings.swift in Sources */,
 				C2C6FF6B28206F8800A5BFD2 /* ListNews.swift in Sources */,

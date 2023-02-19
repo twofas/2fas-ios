@@ -255,6 +255,10 @@ protocol MainRepository: AnyObject {
     func clearGCMToken()
     
     // MARK: - Network
+    var hasSSLNetworkError: Bool { get }
+    func markSSLNetworkError()
+    func clearSSLNetworkError()
+    
     func registerDevice(
         for name: String,
         gcmToken: GCMToken,

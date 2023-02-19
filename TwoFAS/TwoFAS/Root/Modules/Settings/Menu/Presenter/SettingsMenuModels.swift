@@ -37,6 +37,7 @@ struct SettingsMenuCell: Hashable {
         case toggle(kind: SettingsNavigationToggle, isOn: Bool)
         case customView(UIView)
         case external
+        case warning
     }
     enum Action: Hashable {
         case navigation(navigatesTo: SettingsNavigationModule)

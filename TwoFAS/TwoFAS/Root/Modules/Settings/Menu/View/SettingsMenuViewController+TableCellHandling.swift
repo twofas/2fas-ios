@@ -29,7 +29,7 @@ extension SettingsMenuViewController {
             icon: data.icon,
             title: data.title,
             kind: dataToKind(data, tableView: tableView),
-            decorateText: .none
+            decorateText: dataToTextDecoration(data)
         )
         if data.shouldSelectCell {
             cell.selectionStyle = .default
@@ -84,11 +84,20 @@ extension SettingsMenuViewController {
                 let view = UIImageView(image: img)
                 view.tintColor = Theme.Colors.Icon.theme
                 return .customView(customView: view)
+            case .warning:
+                return .none
             }
         } else if let info = data.info {
             return .info(text: info)
         }
         
         return .none
+    }
+    
+    private func dataToTextDecoration(_ data: SettingsMenuCell) -> SettingsMenuTableViewCell.TextDecoration {
+        switch data.accessory {
+        case .warning: return .action
+        default: return .none
+        }
     }
 }

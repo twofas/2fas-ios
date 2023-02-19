@@ -50,6 +50,10 @@ extension SettingsMenuPresenter {
         default: return nil
         }
     }
+
+    func viewDidLoad() {
+        interactor.enableNetworkListeners()
+	}
     
     func viewWillAppear() {
         reload()

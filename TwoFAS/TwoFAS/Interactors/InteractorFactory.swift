@@ -209,6 +209,10 @@ final class InteractorFactory {
     
     private func viewPathInteractor() -> ViewPathIteracting {
         ViewPathInteractor(mainRepository: MainRepositoryImpl.shared)
+	}
+
+    private func networkStatusInteractor() -> NetworkStatusInteracting {
+        NetworkStatusInteractor(mainRepository: MainRepositoryImpl.shared)
     }
     
     func fileInteractor() -> FileInteracting {
@@ -243,7 +247,8 @@ extension InteractorFactory {
             widgetsInteractor: widgetsInteractor(),
             pushNotifications: pushNotificationRegistrationInteractor(),
             protectionInteractor: protectionInteractor(),
-            nextTokenInteractor: nextTokenInteractor()
+            nextTokenInteractor: nextTokenInteractor(),
+            networkStatusInteractor: networkStatusInteractor()
         )
     }
     

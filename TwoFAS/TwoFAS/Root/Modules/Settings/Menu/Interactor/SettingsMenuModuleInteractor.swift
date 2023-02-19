@@ -25,7 +25,10 @@ protocol SettingsMenuModuleInteracting: AnyObject {
     var isNextTokenEnabled: Bool { get }
     var shouldShowWidgetWarning: Bool { get }
     var isPushNotificationDetermined: Bool { get }
+    var hasSSLNetworkError: Bool { get }
 
+    func enableNetworkListeners()
+    
     func enableWidgets()
     func disableWidgets()
         
@@ -37,17 +40,20 @@ final class SettingsMenuModuleInteractor {
     private let pushNotifications: PushNotificationRegistrationInteracting
     private let protectionInteractor: ProtectionInteracting
     private let nextTokenInteractor: NextTokenInteracting
+    private let networkStatusInteractor: NetworkStatusInteracting
     
     init(
         widgetsInteractor: WidgetsInteracting,
         pushNotifications: PushNotificationRegistrationInteracting,
         protectionInteractor: ProtectionInteracting,
-        nextTokenInteractor: NextTokenInteracting
+        nextTokenInteractor: NextTokenInteracting,
+        networkStatusInteractor: NetworkStatusInteracting
     ) {
         self.widgetsInteractor = widgetsInteractor
         self.pushNotifications = pushNotifications
         self.protectionInteractor = protectionInteractor
         self.nextTokenInteractor = nextTokenInteractor
+        self.networkStatusInteractor = networkStatusInteractor
     }
 }
 
@@ -57,6 +63,12 @@ extension SettingsMenuModuleInteractor: SettingsMenuModuleInteracting {
     var isNextTokenEnabled: Bool { nextTokenInteractor.isEnabled }
     var shouldShowWidgetWarning: Bool { widgetsInteractor.showWarning }
     var isPushNotificationDetermined: Bool { pushNotifications.wasUserAsked }
+    var hasSSLNetworkError: Bool { networkStatusInteractor.hasSSLNetworkError }
+    
+    // TODO: Move to MainSplit when TF-967 integrated
+    func enableNetworkListeners() {
+        networkStatusInteractor.installListeners()
+    }
     
     func enableWidgets() {
         widgetsInteractor.enable()

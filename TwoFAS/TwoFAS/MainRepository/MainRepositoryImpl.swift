@@ -67,6 +67,7 @@ final class MainRepositoryImpl: MainRepository {
     
     var storedURL: URL?
     var fileURL: URL?
+    var sslNetworkError: Bool = false
     var lastFetchedNewsTimestamp: Date?
     var isFetchingNewsFlag = false
     var newsCompletions: [() -> Void] = []

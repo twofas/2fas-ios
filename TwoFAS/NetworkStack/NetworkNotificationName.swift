@@ -19,21 +19,7 @@
 
 import Foundation
 
-public protocol NetworkStackType: AnyObject {
-    var appVersion: AppVersionHandling { get }
-    var network: NetworkStackRepository { get }
-}
-
-public final class NetworkStack {
-    private let appVersionHandler = AppVersionHandler()
-    private let networkHandler: NetworkStackRepositoryImpl
-        
-    public init(baseURL: URL) {
-        networkHandler = NetworkStackRepositoryImpl(baseURL: baseURL)
-    }
-}
-
-extension NetworkStack: NetworkStackType {
-    public var appVersion: AppVersionHandling { appVersionHandler }
-    public var network: NetworkStackRepository { networkHandler }
+public extension Notification.Name {
+    static let SSLNetworkErrorNotificationKey = Notification.Name("SSLNetworkErrorNotificationKey")
+    static let NoNetworkErrorNotificationKey = Notification.Name("NoNetworkErrorNotificationKey")
 }

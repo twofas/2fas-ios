@@ -55,6 +55,8 @@ final class SettingsMenuViewController: UIViewController {
                 
         hidesBottomBarWhenPushed = false
         navigationItem.backButtonDisplayMode = .minimal
+        
+        presenter.viewDidLoad()
     }
     
     private func setupTableViewLayout() {

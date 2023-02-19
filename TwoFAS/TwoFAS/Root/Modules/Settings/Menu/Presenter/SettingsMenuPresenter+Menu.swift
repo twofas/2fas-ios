@@ -21,6 +21,12 @@ import UIKit
 
 extension SettingsMenuPresenter {
     func buildMenu() -> [SettingsMenuSection] {
+        let networkSSLError = SettingsMenuSection(
+            title: T.Settings.sslErrorTitle,
+            cells: [
+                .init(title: T.Settings.sslErrorDescription, accessory: .warning, isEnabled: false)
+        ])
+        
         let backup = SettingsMenuSection(
             title: T.Settings.backupAndSynchronization,
             cells: [
@@ -140,7 +146,12 @@ extension SettingsMenuPresenter {
             ]
         )
         
-        let menu: [SettingsMenuSection] = [
+        var menu: [SettingsMenuSection] = []
+        if interactor.hasSSLNetworkError {
+            menu.append(networkSSLError)
+        }
+        
+        menu.append(contentsOf: [
             backup,
             security,
             donate,
@@ -149,7 +160,7 @@ extension SettingsMenuPresenter {
             trash,
             knowledge,
             about
-        ]
+        ])
         return menu
     }
 }

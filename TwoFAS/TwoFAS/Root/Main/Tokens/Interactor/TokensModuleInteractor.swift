@@ -36,6 +36,7 @@ protocol TokensModuleInteracting: AnyObject {
     var selectedSortType: SortType { get }
     var categoryData: [CategoryData] { get }
     var linkAction: ((TokensLinkAction) -> Void)? { get set }
+    var isMainOnlyCategory: Bool { get }
     
     func servicesWereUpdated()
     func sync()
@@ -147,6 +148,10 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     func sync() {
         cloudBackupInteractor.synchronizeBackup()
+    }
+    
+    var isMainOnlyCategory: Bool {
+        categoryData.contains(where: { $0.section == nil }) && categoryData.count == 1
     }
     
     // MARK: - Links

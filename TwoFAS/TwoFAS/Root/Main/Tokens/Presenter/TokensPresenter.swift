@@ -39,6 +39,8 @@ final class TokensPresenter {
     private let interactor: TokensModuleInteracting
     private let flowController: TokensPlainFlowControlling
     
+    var isMainOnlyCategory: Bool { interactor.isMainOnlyCategory }
+    
     init(flowController: TokensPlainFlowControlling, interactor: TokensModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor

@@ -36,15 +36,15 @@ final class IconSelectorViewController: UIViewController {
     private(set) var collectionViewAdapter: CollectionViewAdapter<IconSelectorSection, IconSelectorCell>!
     private let delegatee = IconSelectorCollectionViewDelegatee<IconSelectorSection, IconSelectorCell>()
     private var gridLayout: UICollectionViewFlowLayout = {
-        let horizontalMargin: CGFloat = Theme.Metrics.doubleMargin * 2
-        let spacing: CGFloat = Theme.Metrics.mediumSpacing
+        let horizontalMargin: CGFloat = Theme.Metrics.doubleMargin
+        let spacing: CGFloat = Theme.Metrics.halfSpacing
 
         let layout = UICollectionViewFlowLayout()
         layout.estimatedItemSize = CGSize(
             width: IconSelectorCollectionViewCell.dimension,
             height: IconSelectorCollectionViewCell.dimension
             + IconSelectorCollectionViewCell.labelHeight
-            + Theme.Metrics.standardSpacing
+            + Theme.Metrics.halfSpacing
         )
         layout.minimumInteritemSpacing = spacing
         layout.minimumLineSpacing = spacing

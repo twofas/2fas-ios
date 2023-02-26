@@ -22,7 +22,7 @@ import UIKit
 final class IconSelectorCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "IconSelectorCollectionViewCell"
     static let dimension: CGFloat = 65
-    static let labelHeight: CGFloat = 45
+    static let labelHeight: CGFloat = 20
     
     private static let maskAdditionalSize: CGFloat = 6
     
@@ -35,11 +35,11 @@ final class IconSelectorCollectionViewCell: UICollectionViewCell {
         l.textColor = Theme.Colors.Text.main
         l.font = Theme.Fonts.sectionHeader
         l.textAlignment = .center
-        l.numberOfLines = 3
+        l.numberOfLines = 1
         l.minimumScaleFactor = 0.9
         l.adjustsFontSizeToFitWidth = true
         l.allowsDefaultTighteningForTruncation = true
-        l.lineBreakMode = .byWordWrapping
+        l.lineBreakMode = .byTruncatingTail
         return l
     }()
     

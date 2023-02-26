@@ -147,7 +147,7 @@ extension SettingsMenuPresenter {
         )
         
         var menu: [SettingsMenuSection] = []
-        if interactor.hasSSLNetworkError {
+        if interactor.hasSSLNetworkError && interactor.hasActiveBrowserExtension {
             menu.append(networkSSLError)
         }
         

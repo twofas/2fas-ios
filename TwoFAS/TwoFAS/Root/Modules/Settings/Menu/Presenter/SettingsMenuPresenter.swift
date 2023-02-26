@@ -51,10 +51,6 @@ extension SettingsMenuPresenter {
         }
     }
 
-    func viewDidLoad() {
-        interactor.enableNetworkListeners()
-	}
-    
     func viewWillAppear() {
         reload()
     }

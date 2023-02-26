@@ -26,8 +26,7 @@ protocol SettingsMenuModuleInteracting: AnyObject {
     var shouldShowWidgetWarning: Bool { get }
     var isPushNotificationDetermined: Bool { get }
     var hasSSLNetworkError: Bool { get }
-
-    func enableNetworkListeners()
+    var hasActiveBrowserExtension: Bool { get }
     
     func enableWidgets()
     func disableWidgets()
@@ -41,19 +40,22 @@ final class SettingsMenuModuleInteractor {
     private let protectionInteractor: ProtectionInteracting
     private let nextTokenInteractor: NextTokenInteracting
     private let networkStatusInteractor: NetworkStatusInteracting
+    private let pairingDeviceInteractor: PairingWebExtensionInteracting
     
     init(
         widgetsInteractor: WidgetsInteracting,
         pushNotifications: PushNotificationRegistrationInteracting,
         protectionInteractor: ProtectionInteracting,
         nextTokenInteractor: NextTokenInteracting,
-        networkStatusInteractor: NetworkStatusInteracting
+        networkStatusInteractor: NetworkStatusInteracting,
+        pairingDeviceInteractor: PairingWebExtensionInteracting
     ) {
         self.widgetsInteractor = widgetsInteractor
         self.pushNotifications = pushNotifications
         self.protectionInteractor = protectionInteractor
         self.nextTokenInteractor = nextTokenInteractor
         self.networkStatusInteractor = networkStatusInteractor
+        self.pairingDeviceInteractor = pairingDeviceInteractor
     }
 }
 
@@ -64,12 +66,8 @@ extension SettingsMenuModuleInteractor: SettingsMenuModuleInteracting {
     var shouldShowWidgetWarning: Bool { widgetsInteractor.showWarning }
     var isPushNotificationDetermined: Bool { pushNotifications.wasUserAsked }
     var hasSSLNetworkError: Bool { networkStatusInteractor.hasSSLNetworkError }
-    
-    // TODO: Move to MainSplit when TF-967 integrated
-    func enableNetworkListeners() {
-        networkStatusInteractor.installListeners()
-    }
-    
+    var hasActiveBrowserExtension: Bool { !pairingDeviceInteractor.listAll().isEmpty }
+        
     func enableWidgets() {
         widgetsInteractor.enable()
     }

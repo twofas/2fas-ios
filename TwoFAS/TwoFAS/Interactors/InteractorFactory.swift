@@ -248,7 +248,8 @@ extension InteractorFactory {
             pushNotifications: pushNotificationRegistrationInteractor(),
             protectionInteractor: protectionInteractor(),
             nextTokenInteractor: nextTokenInteractor(),
-            networkStatusInteractor: networkStatusInteractor()
+            networkStatusInteractor: networkStatusInteractor(),
+            pairingDeviceInteractor: pairingWebExtensionInteractor()
         )
     }
     
@@ -522,7 +523,8 @@ extension InteractorFactory {
             viewPathInteractor: viewPathInteractor(),
             cloudBackupStateInteractor: cloudBackupStateInteractor(listenerID: ""),
             fileInteractor: fileInteractor(),
-            newVersionInteractor: newVersionInteractor()
+            newVersionInteractor: newVersionInteractor(),
+            networkStatusInteractor: networkStatusInteractor()
         )
     }
     

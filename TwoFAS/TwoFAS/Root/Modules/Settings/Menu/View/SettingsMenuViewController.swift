@@ -54,9 +54,7 @@ final class SettingsMenuViewController: UIViewController {
         footer.openURL = { [weak self] in self?.presenter.handleSocialChannel($0) }
                 
         hidesBottomBarWhenPushed = false
-        navigationItem.backButtonDisplayMode = .minimal
-        
-        presenter.viewDidLoad()
+        navigationItem.backButtonDisplayMode = .minimal        
     }
     
     private func setupTableViewLayout() {

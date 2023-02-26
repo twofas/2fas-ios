@@ -526,6 +526,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "ENEBA"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "4FE59FFA-9851-47DF-88A2-15104EA2985A")!,
+                name: "Privacy"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "E082188E-0759-4827-96FF-ACFB35702A52")!,
                 name: "MongoDB"
             ),
@@ -656,6 +660,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "3AA1B5AA-0F1D-41A1-8CE2-A3E76741EBB8")!,
                 name: "Sync"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "614E0E97-27E3-4DB2-9F6B-34D6027FA9D2")!,
+                name: "Squarespace"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "C5879187-E23D-4700-93F3-A6F868ACABAC")!,
@@ -998,6 +1006,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Kaspersky"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "5C7ADBB7-3438-424B-A7D9-F82B7360516C")!,
+                name: "Filen"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "88E25804-B257-416A-8CDC-68F71CAE5F32")!,
                 name: "NextDNS"
             ),
@@ -1180,6 +1192,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "2A90F267-5E37-4003-A114-E05892E5F4DF")!,
                 name: "SPID"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "6059F9E8-D90B-4CCA-ACEA-AE8797837ADB")!,
+                name: "Crowdin"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "FCB5345A-DACD-4898-884D-162C8263FD62")!,

@@ -1553,6 +1553,10 @@
 		C2633EFA265A79710034B836 /* ServiceAddedServiceContainerViewTOTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAddedServiceContainerViewTOTP.swift; sourceTree = "<group>"; };
 		C2633EFC265A7D090034B836 /* TokenLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenLabel.swift; sourceTree = "<group>"; };
 		C2633F1E265B045F0034B836 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
+		C263F46C299060FC009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
+		C263F46D299060FC009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C263F46E299060FD009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C263F46F299060FD009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C266189F26126A8200ED52CB /* LabelComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelComposeViewController.swift; sourceTree = "<group>"; };
 		C26654282725D6EA00DC3A3C /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileRules.swift; sourceTree = "<group>"; };
@@ -6587,6 +6591,7 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = C236666A1FB2644900989ACA;
 			packageReferences = (
@@ -7881,6 +7886,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C225E613241CFCD10041C238 /* en */,
+				C263F46E299060FD009B0837 /* de */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -7889,6 +7895,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C225E616241CFCE90041C238 /* en */,
+				C263F46D299060FC009B0837 /* de */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -7906,6 +7913,7 @@
 			children = (
 				C2A7B99126B706B000055738 /* Base */,
 				C284B41926BC700900321AC9 /* en */,
+				C263F46C299060FC009B0837 /* de */,
 			);
 			name = TwoFASWidget.intentdefinition;
 			sourceTree = "<group>";
@@ -7914,6 +7922,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C2A7B99826B7077400055738 /* en */,
+				C263F46F299060FD009B0837 /* de */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8161,6 +8170,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -8225,6 +8235,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -8301,7 +8312,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 4.0.3;
+				MARKETING_VERSION = 4.0.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
@@ -8342,7 +8353,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 4.0.3;
+				MARKETING_VERSION = 4.0.4;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"-ObjC",
@@ -8616,7 +8627,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.0.3;
+				MARKETING_VERSION = 4.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASAuth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -8644,7 +8655,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.0.3;
+				MARKETING_VERSION = 4.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASAuth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -8947,7 +8958,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.0.3;
+				MARKETING_VERSION = 4.0.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASWidget;
@@ -8977,7 +8988,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.0.3;
+				MARKETING_VERSION = 4.0.4;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -9004,7 +9015,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.0.3;
+				MARKETING_VERSION = 4.0.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASServiceIntent;
@@ -9032,7 +9043,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.0.3;
+				MARKETING_VERSION = 4.0.4;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASServiceIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";

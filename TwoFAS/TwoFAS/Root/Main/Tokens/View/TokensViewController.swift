@@ -225,9 +225,7 @@ private extension TokensViewController {
         
         gridLayout.itemSize = CGSize(width: elementWidth, height: cellHeight)
         gridLayout.minimumInteritemSpacing = margin
-        
-        gridLayout.headerReferenceSize = CGSize(width: 100, height: headerHeight)
-        
+                
         gridLayout.minimumLineSpacing = 0
     }
     

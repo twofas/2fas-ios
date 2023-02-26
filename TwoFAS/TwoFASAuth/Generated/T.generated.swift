@@ -139,6 +139,8 @@ internal enum T {
   internal static let importBackupCta = T.tr("Localizable", "import_backup_cta", fallback: "Import")
   /// You are going to import backup file with
   internal static let importBackupMsg1 = T.tr("Localizable", "import_backup_msg1", fallback: "You are going to import backup file with")
+  /// You are going to import an encrypted backup file.
+  internal static let importBackupMsg1Encrypted = T.tr("Localizable", "import_backup_msg1_encrypted", fallback: "You are going to import an encrypted backup file.")
   /// The file will be synchronised with the app's service list.
   internal static let importBackupMsg2 = T.tr("Localizable", "import_backup_msg2", fallback: "The file will be synchronised with the app's service list.")
   /// Import backup from the file
@@ -151,6 +153,50 @@ internal enum T {
   internal static let nsCameraUsageDescription = T.tr("Localizable", "NSCameraUsageDescription", fallback: "Used for scanning QR-codes")
   /// You can unlock the application using Face ID
   internal static let nsFaceIDUsageDescription = T.tr("Localizable", "NSFaceIDUsageDescription", fallback: "You can unlock the application using Face ID")
+  /// %d day ago
+  internal static func pastDurationDays(_ p1: Int) -> String {
+    return T.tr("Localizable", "past_duration_days", p1, fallback: "%d day ago")
+  }
+  /// %d days ago
+  internal static func pastDurationDaysPlural(_ p1: Int) -> String {
+    return T.tr("Localizable", "past_duration_days-plural", p1, fallback: "%d days ago")
+  }
+  /// %d hour ago
+  internal static func pastDurationHours(_ p1: Int) -> String {
+    return T.tr("Localizable", "past_duration_hours", p1, fallback: "%d hour ago")
+  }
+  /// %d hours ago
+  internal static func pastDurationHoursPlural(_ p1: Int) -> String {
+    return T.tr("Localizable", "past_duration_hours-plural", p1, fallback: "%d hours ago")
+  }
+  /// %d minute ago
+  internal static func pastDurationMinutes(_ p1: Int) -> String {
+    return T.tr("Localizable", "past_duration_minutes", p1, fallback: "%d minute ago")
+  }
+  /// %d minutes ago
+  internal static func pastDurationMinutesPlural(_ p1: Int) -> String {
+    return T.tr("Localizable", "past_duration_minutes-plural", p1, fallback: "%d minutes ago")
+  }
+  /// %d month ago
+  internal static func pastDurationMonths(_ p1: Int) -> String {
+    return T.tr("Localizable", "past_duration_months", p1, fallback: "%d month ago")
+  }
+  /// %d months ago
+  internal static func pastDurationMonthsPlural(_ p1: Int) -> String {
+    return T.tr("Localizable", "past_duration_months-plural", p1, fallback: "%d months ago")
+  }
+  /// moments ago
+  internal static let pastDurationSeconds = T.tr("Localizable", "past_duration_seconds", fallback: "moments ago")
+  /// moments ago
+  internal static let pastDurationSecondsPlural = T.tr("Localizable", "past_duration_seconds-plural", fallback: "moments ago")
+  /// %d week ago
+  internal static func pastDurationWeeks(_ p1: Int) -> String {
+    return T.tr("Localizable", "past_duration_weeks", p1, fallback: "%d week ago")
+  }
+  /// %d weeks ago
+  internal static func pastDurationWeeksPlural(_ p1: Int) -> String {
+    return T.tr("Localizable", "past_duration_weeks-plural", p1, fallback: "%d weeks ago")
+  }
   /// PIN does not match! Please try again.
   internal static let securityErrorNoMatch = T.tr("Localizable", "security_error_no_match", fallback: "PIN does not match! Please try again.")
   /// Developer Options
@@ -196,16 +242,26 @@ internal enum T {
     internal static let cloudBackup = T.tr("Localizable", "backup__cloud_backup", fallback: "Cloud Backup")
     /// Delete 2FAS Backup
     internal static let delete2fasBackup = T.tr("Localizable", "backup__delete_2fas_backup", fallback: "Delete 2FAS Backup")
+    /// Google Sync will be disabled. Your tokens will remain locally, but the 2FAS app will be logged out from your Google Account on this and your synced other devices.
+    internal static let deleteFileMsg = T.tr("Localizable", "backup__delete_file_msg", fallback: "Google Sync will be disabled. Your tokens will remain locally, but the 2FAS app will be logged out from your Google Account on this and your synced other devices.")
+    /// Delete your backup file from Google Drive?
+    internal static let deleteFileTitle = T.tr("Localizable", "backup__delete_file_title", fallback: "Delete your backup file from Google Drive?")
     /// I want to delete the Backup
     internal static let deleteTitle = T.tr("Localizable", "backup__delete_title", fallback: "I want to delete the Backup")
+    /// Google Drive sync
+    internal static let driveTitle = T.tr("Localizable", "backup__drive_title", fallback: "Google Drive sync")
     /// This file is encrypted. We support only unencrypted files
     internal static let encryptedFilesNotSupported = T.tr("Localizable", "backup__encrypted_files_not_supported", fallback: "This file is encrypted. We support only unencrypted files")
+    /// Type in password
+    internal static let enterPasswordDialogTitle = T.tr("Localizable", "backup__enter_password_dialog_title", fallback: "Type in password")
     /// Type in a password for this backup file to proceed with the import process
     internal static let enterPasswordTitle = T.tr("Localizable", "backup__enter_password_title", fallback: "Type in a password for this backup file to proceed with the import process")
     /// Error while exporting the file
     internal static let errorWhileExportingFile = T.tr("Localizable", "backup__error_while_exporting_file", fallback: "Error while exporting the file")
     /// Export
     internal static let export = T.tr("Localizable", "backup__export", fallback: "Export")
+    /// File successfully saved!
+    internal static let exportResultSuccess = T.tr("Localizable", "backup__export_result_success", fallback: "File successfully saved!")
     /// Export backup to file
     internal static let exportToBackupFile = T.tr("Localizable", "backup__export_to_backup_file", fallback: "Export backup to file")
     /// Export to file
@@ -250,6 +306,8 @@ internal enum T {
     internal static func incorrectSecret(_ p1: Any) -> String {
       return T.tr("Localizable", "backup__incorrect_secret", String(describing: p1), fallback: "Couldn't backup tokens because \"%@\" secret contains illegal characters. Remove it from list and try again")
     }
+    /// Local file
+    internal static let localFileTitle = T.tr("Localizable", "backup__local_file_title", fallback: "Local file")
     /// %d new services
     internal static func newServices(_ p1: Int) -> String {
       return T.tr("Localizable", "backup__new_services", p1, fallback: "%d new services")
@@ -264,8 +322,12 @@ internal enum T {
     internal static let password = T.tr("Localizable", "backup__password", fallback: "Password")
     /// Passwords don't match
     internal static let passwordsDontMatch = T.tr("Localizable", "backup__passwords_dont_match", fallback: "Passwords don't match")
+    /// Enter the backup password to proceed with remove.
+    internal static let removePasswordMsg = T.tr("Localizable", "backup__remove_password_msg", fallback: "Enter the backup password to proceed with remove.")
     /// Repeat password
     internal static let repeatPassword = T.tr("Localizable", "backup__repeat_password", fallback: "Repeat password")
+    /// Enter the backup password to proceed with revoking access to Google.
+    internal static let revokeGoogleAccessMsg = T.tr("Localizable", "backup__revoke_google_access_msg", fallback: "Enter the backup password to proceed with revoking access to Google.")
     /// Save and export
     internal static let saveAndExport = T.tr("Localizable", "backup__save_and_export", fallback: "Save and export")
     /// Save file
@@ -282,6 +344,14 @@ internal enum T {
     internal static let servicesMergeTitle = T.tr("Localizable", "backup__services_merge_title", fallback: "Services from the file will be merged with the ones in your app")
     /// To increase the protection of your backup file, please set the password
     internal static let setPasswordTitle = T.tr("Localizable", "backup__set_password_title", fallback: "To increase the protection of your backup file, please set the password")
+    /// Could not share file!
+    internal static let shareResultFailure = T.tr("Localizable", "backup__share_result_failure", fallback: "Could not share file!")
+    /// Syncing…
+    internal static let syncStatusProgress = T.tr("Localizable", "backup__sync_status_progress", fallback: "Syncing…")
+    /// Waiting for sync…
+    internal static let syncStatusWaiting = T.tr("Localizable", "backup__sync_status_waiting", fallback: "Waiting for sync…")
+    /// Synchronization settings
+    internal static let synchronizationSettings = T.tr("Localizable", "backup__synchronization_settings", fallback: "Synchronization settings")
     /// Provided phrase is too short (min. 3 char)
     internal static let toShortError = T.tr("Localizable", "backup__to_short_error", fallback: "Provided phrase is too short (min. 3 char)")
     /// You'll need a new version of the app to import the contents of this file. You can find the newest version in the App Store
@@ -482,6 +552,8 @@ internal enum T {
     internal static func pageOfPageTitle(_ p1: Int, _ p2: Int) -> String {
       return T.tr("Localizable", "commons__page_of_page_title", p1, p2, fallback: "%d of %d")
     }
+    /// Proceed
+    internal static let proceed = T.tr("Localizable", "commons__proceed", fallback: "Proceed")
     /// Rename
     internal static let rename = T.tr("Localizable", "commons__rename", fallback: "Rename")
     /// Retry
@@ -506,6 +578,10 @@ internal enum T {
     }
     /// Tokens
     internal static let tokens = T.tr("Localizable", "commons__tokens", fallback: "Tokens")
+    /// Try again
+    internal static let tryAgain = T.tr("Localizable", "commons__try_again", fallback: "Try again")
+    /// Unknown error occurred! Try again!
+    internal static let unknownError = T.tr("Localizable", "commons__unknown_error", fallback: "Unknown error occurred! Try again!")
     /// Warning
     internal static let warning = T.tr("Localizable", "commons__warning", fallback: "Warning")
     /// Yes
@@ -530,6 +606,10 @@ internal enum T {
     internal static let authorize = T.tr("Localizable", "extension__authorize", fallback: "Authorize")
     /// Cancel
     internal static let cancel = T.tr("Localizable", "extension__cancel", fallback: "Cancel")
+    /// Error occurred when sending code
+    internal static let codeSentErrorMsg = T.tr("Localizable", "extension__code_sent_error_msg", fallback: "Error occurred when sending code")
+    /// Code sent successfully
+    internal static let codeSentMsg = T.tr("Localizable", "extension__code_sent_msg", fallback: "Code sent successfully")
     /// Continue to app
     internal static let continueToApp = T.tr("Localizable", "extension__continue_to_app", fallback: "Continue to app")
     /// Deny
@@ -558,8 +638,38 @@ internal enum T {
     }
     /// Send token?
     internal static let sendQuestionTitle = T.tr("Localizable", "extension__send_question_title", fallback: "Send token?")
+    /// All services
+    internal static let servicesAllHeader = T.tr("Localizable", "extension__services_all_header", fallback: "All services")
+    /// Other services
+    internal static let servicesOtherHeader = T.tr("Localizable", "extension__services_other_header", fallback: "Other services")
+    /// Suggested
+    internal static let servicesSuggestedHeader = T.tr("Localizable", "extension__services_suggested_header", fallback: "Suggested")
     /// Please try again
     internal static let tryAgain = T.tr("Localizable", "extension__try_again", fallback: "Please try again")
+  }
+  internal enum Externalimport {
+    /// Export your accounts from Aegis to an unencrypted JSON file and upload it using the "Choose JSON file" button. Remember to remove the file after a successful import.
+    internal static let aegisMsg = T.tr("Localizable", "externalimport__aegis_msg", fallback: "Export your accounts from Aegis to an unencrypted JSON file and upload it using the \"Choose JSON file\" button. Remember to remove the file after a successful import.")
+    /// This JSON file allows importing tokens from Aegis.
+    internal static let aegisSuccessMsg = T.tr("Localizable", "externalimport__aegis_success_msg", fallback: "This JSON file allows importing tokens from Aegis.")
+    /// Importing 2FA tokens from Aegis app
+    internal static let aegisTitle = T.tr("Localizable", "externalimport__aegis_title", fallback: "Importing 2FA tokens from Aegis app")
+    /// Choose JSON file
+    internal static let chooseJsonCta = T.tr("Localizable", "externalimport__choose_json_cta", fallback: "Choose JSON file")
+    /// This QR code allows importing tokens from Google Authenticator.
+    internal static let gaSuccessMsg = T.tr("Localizable", "externalimport__ga_success_msg", fallback: "This QR code allows importing tokens from Google Authenticator.")
+    /// Importing 2FA tokens from Google Authenticator app
+    internal static let gaTitle = T.tr("Localizable", "externalimport__ga_title", fallback: "Importing 2FA tokens from Google Authenticator app")
+    /// However, there are no services that could be imported.
+    internal static let noTokensMsg = T.tr("Localizable", "externalimport__no_tokens_msg", fallback: "However, there are no services that could be imported.")
+    /// Use the "Export OTPs to ZIP archive" option in Raivo's Settings, save a ZIP file, extract it and import the JSON file using the "Choose JSON file" button.
+    internal static let raivoMsg = T.tr("Localizable", "externalimport__raivo_msg", fallback: "Use the \"Export OTPs to ZIP archive\" option in Raivo's Settings, save a ZIP file, extract it and import the JSON file using the \"Choose JSON file\" button.")
+    /// This JSON file allows importing tokens from Raivo.
+    internal static let raivoSuccessMsg = T.tr("Localizable", "externalimport__raivo_success_msg", fallback: "This JSON file allows importing tokens from Raivo.")
+    /// Importing 2FA tokens from Raivo app
+    internal static let raivoTitle = T.tr("Localizable", "externalimport__raivo_title", fallback: "Importing 2FA tokens from Raivo app")
+    /// Could not read any tokens. Try to select a different file.
+    internal static let readError = T.tr("Localizable", "externalimport__read_error", fallback: "Could not read any tokens. Try to select a different file.")
   }
   internal enum Fingerprint {
     /// Confirm Fingerprint to continue.
@@ -652,8 +762,8 @@ internal enum T {
   internal enum Permissions {
     /// Camera Permission
     internal static let cameraPermission = T.tr("Localizable", "permissions__camera_permission", fallback: "Camera Permission")
-    /// Camera permission is required to scan QR Codes. If you want to use this feature go to Application Information -&gt; Permissions and Enable Camera.
-    internal static let cameraPermissionDescription = T.tr("Localizable", "permissions__camera_permission_description", fallback: "Camera permission is required to scan QR Codes. If you want to use this feature go to Application Information -&gt; Permissions and Enable Camera.")
+    /// Camera permission is required to scan QR Codes. If you want to use this feature go to Application Information and Permissions and Enable Camera.
+    internal static let cameraPermissionDescription = T.tr("Localizable", "permissions__camera_permission_description", fallback: "Camera permission is required to scan QR Codes. If you want to use this feature go to Application Information and Permissions and Enable Camera.")
     /// Open Settings
     internal static let openSettings = T.tr("Localizable", "permissions__open_settings", fallback: "Open Settings")
   }
@@ -753,6 +863,10 @@ internal enum T {
     internal static let externalImport = T.tr("Localizable", "settings__external_import", fallback: "Import tokens")
     /// Face ID
     internal static let faceId = T.tr("Localizable", "settings__face_id", fallback: "Face ID")
+    /// Are you sure? Without Google Drive sync, you won't be able to restore your tokens if you lose or reset your phone!
+    internal static let gdSyncDisableConfirm = T.tr("Localizable", "settings__gd_sync_disable_confirm", fallback: "Are you sure? Without Google Drive sync, you won't be able to restore your tokens if you lose or reset your phone!")
+    /// Google Drive sync info
+    internal static let gdSyncInfo = T.tr("Localizable", "settings__gd_sync_info", fallback: "Google Drive sync info")
     /// General
     internal static let general = T.tr("Localizable", "settings__general", fallback: "General")
     /// Select the maximum number of unsuccessful passcode attempts before locking the application.
@@ -866,6 +980,8 @@ internal enum T {
   internal enum Tokens {
     /// Add group
     internal static let addGroup = T.tr("Localizable", "tokens__add_group", fallback: "Add group")
+    /// Add new service
+    internal static let addServiceTitle = T.tr("Localizable", "tokens__add_service_title", fallback: "Add new service")
     /// What service do you want to add?
     internal static let addingServiceQuestionTitle = T.tr("Localizable", "tokens__adding_service_question_title", fallback: "What service do you want to add?")
     /// Additional info
@@ -904,6 +1020,8 @@ internal enum T {
     internal static let copyToken = T.tr("Localizable", "tokens__copy_token", fallback: "Copy token")
     /// Counter
     internal static let counter = T.tr("Localizable", "tokens__counter", fallback: "Counter")
+    /// Customize service
+    internal static let customizeServiceTitle = T.tr("Localizable", "tokens__customize_service_title", fallback: "Customize service")
     /// Are you sure you want to delete the token for:
     internal static let deleteToken = T.tr("Localizable", "tokens__delete_token", fallback: "Are you sure you want to delete the token for:")
     /// Do you want to permanently delete this 2FA service?

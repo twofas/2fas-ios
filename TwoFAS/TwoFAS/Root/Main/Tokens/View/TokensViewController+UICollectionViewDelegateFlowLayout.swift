@@ -80,4 +80,17 @@ extension TokensViewController: UICollectionViewDelegateFlowLayout {
             presenter.handleRemoveHOTP(consumer)
         }
     }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
+        // Hide My Tokens if it's only category and not in edit mode
+        if !collectionView.isEditing && section == 0 && presenter.isMainOnlyCategory {
+            return CGSize.zero
+        }
+        
+        return CGSize(width: 100, height: headerHeight)
+    }
 }

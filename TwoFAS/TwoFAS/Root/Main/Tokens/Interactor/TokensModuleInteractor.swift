@@ -391,7 +391,9 @@ private extension TokensModuleInteractor {
                 title: category.section?.title,
                 sectionID: category.section?.sectionID,
                 sectionData: category.section,
-                isCollapsed: category.section?.isCollapsed ?? sectionInteractor.isSectionZeroCollapsed,
+                isCollapsed: category.section?.isCollapsed ?? (
+                    sectionInteractor.isSectionZeroCollapsed && !isMainOnlyCategory
+                ),
                 elementCount: gridCells.count,
                 isSearching: isSearching,
                 position: sectionPosition(for: startIndex, currentIndex: currentIndex, totalIndex: totalIndex)

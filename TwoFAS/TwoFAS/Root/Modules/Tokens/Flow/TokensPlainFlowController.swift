@@ -168,7 +168,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
             },
             cancel: nil,
             verify: { sectionName in
-                ServiceRules.isSectionNameValid(sectionName: sectionName)
+                ServiceRules.isSectionNameValid(sectionName: sectionName.trim())
             })
         
         naviViewController.present(alert, animated: true, completion: nil)

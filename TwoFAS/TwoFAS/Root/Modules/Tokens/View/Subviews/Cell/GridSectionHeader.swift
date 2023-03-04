@@ -137,7 +137,7 @@ final class GridSectionHeader: UICollectionReusableView {
         }
         
         titleInput.textDidChange = { [weak self] newText in
-            self?.doneButton.isEnabled = ServiceRules.isSectionNameValid(sectionName: newText)
+            self?.doneButton.isEnabled = ServiceRules.isSectionNameValid(sectionName: newText.trim())
         }
         
         doneButton.addTarget(self, action: #selector(doneAction), for: .touchUpInside)
@@ -278,7 +278,12 @@ final class GridSectionHeader: UICollectionReusableView {
         titleInput.resignFirstResponder()
         editContainer.isHidden = false
         editSectionContainer.isHidden = true
-        guard let config, let newTitle = titleInput.text, newTitle != config.title else { return }
+        guard
+            let config,
+            let newTitle = titleInput.text?.trim(),
+            newTitle != config.title,
+            !newTitle.isEmpty
+        else { return }
         dataSource?.rename(config, with: newTitle)
     }
     

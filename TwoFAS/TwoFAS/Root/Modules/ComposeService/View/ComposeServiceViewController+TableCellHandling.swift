@@ -41,7 +41,7 @@ extension ComposeServiceViewController {
             )
             cell.didSelectActionButton = { [weak self] in self?.presenter.handleActionButton(for: $0) }
             cell.didUpdateValue = { [weak self, weak tableView] kind, value, shouldReload in
-                self?.presenter.handleValueUpdate(for: kind, value: value)
+                self?.presenter.handleValueUpdate(for: kind, value: value?.trim())
                 if shouldReload {
                     tableView?.beginUpdates()
                     tableView?.endUpdates()

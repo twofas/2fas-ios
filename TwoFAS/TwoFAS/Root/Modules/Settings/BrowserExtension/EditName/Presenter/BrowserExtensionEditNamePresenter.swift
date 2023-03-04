@@ -43,7 +43,7 @@ final class BrowserExtensionEditNamePresenter {
     }
     
     func handleNewValue(_ newValue: String?) {
-        guard let newValue, newValue.count >= minLength, newValue.count <= maxLength else {
+        guard let newValue = newValue?.trim(), newValue.count >= minLength, newValue.count <= maxLength else {
             view?.disableSave()
             return
         }

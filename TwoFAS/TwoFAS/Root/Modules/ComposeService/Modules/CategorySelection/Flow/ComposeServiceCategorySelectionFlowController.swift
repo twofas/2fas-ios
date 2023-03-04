@@ -71,11 +71,11 @@ extension ComposeServiceCategorySelectionFlowController: ComposeServiceCategoryS
             actionName: T.Commons.add,
             defaultText: "",
             action: { [weak self] title in
-            self?.viewController.presenter.handleSectionAdded(with: title)
+                self?.viewController.presenter.handleSectionAdded(with: title.trim())
         },
             cancel: nil,
             verify: { sectionName in
-            ServiceRules.isSectionNameValid(sectionName: sectionName)
+                ServiceRules.isSectionNameValid(sectionName: sectionName.trim())
         })
         
         viewController.present(alert, animated: true, completion: nil)

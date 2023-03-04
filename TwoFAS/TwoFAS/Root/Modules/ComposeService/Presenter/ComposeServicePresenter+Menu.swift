@@ -104,7 +104,9 @@ extension ComposeServicePresenter {
         )
         
         let webExtension = ComposeServiceSection(title: nil, cells: [
-            .init(kind: .navigate(.init(kind: .browserExtension, isEnabled: true, accessory: nil)))
+            .init(kind:
+                    .navigate(.init(kind: .browserExtension, isEnabled: interactor.webExtensionActive, accessory: nil))
+            )
         ])
         
         let remove = ComposeServiceSection(
@@ -122,11 +124,8 @@ extension ComposeServicePresenter {
             personalization
         ]
         
-        if interactor.webExtensionActive {
-            array.append(webExtension)
-        }
-        
         if interactor.actionType == .edit {
+            array.append(webExtension)
             array.append(remove)
         }
         

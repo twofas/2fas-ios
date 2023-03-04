@@ -97,7 +97,13 @@ extension AboutViewController {
             return .customView(customView: imageView)
         }()
         
-        cell.update(icon: nil, title: data.title, kind: accessory, decorateText: .none)
+        let decorateText: SettingsMenuTableViewCell.TextDecoration = {
+            if case SettingsMenuTableViewCell.AccessoryType.none = accessory {
+                return .action
+            }
+            return .none
+        }()
+        cell.update(icon: nil, title: data.title, kind: accessory, decorateText: decorateText)
         return cell
     }
     

@@ -40,6 +40,9 @@ final class SettingsMenuTableViewCell: UITableViewCell {
     }
     // swiftlint:enable discouraged_none_name
     
+    private var isDisabled = false
+    private var decorateText: TextDecoration = .none
+    
     private let settingsIcon = SettingsMenuIcon()
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -125,11 +128,13 @@ final class SettingsMenuTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        titleLabel.textColor = isSelected ? UIColor.white : UIColor.label
-        infoLabel.textColor = isSelected ? UIColor.white : UIColor.secondaryLabel
+        updateTitleColor()
+        updateInfoLabelColor()
     }
     
     func update(icon: UIImage?, title: String, kind: AccessoryType, decorateText: TextDecoration = .none) {
+        self.decorateText = decorateText
+        
         if let icon {
             settingsIcon.image = icon
             iconContainer.isHidden = false
@@ -138,6 +143,7 @@ final class SettingsMenuTableViewCell: UITableViewCell {
             iconContainer.isHidden = true
         }
         
+        isDisabled = false
         titleLabel.text = title
         clearCustomContainer()
         
@@ -148,13 +154,11 @@ final class SettingsMenuTableViewCell: UITableViewCell {
             accessoryType = .disclosureIndicator
         case .info(let text):
             infoLabel.text = text
-            infoLabel.textColor = UIColor.secondaryLabel
             infoLabelContainer.isHidden = false
             accessoryView = nil
             accessoryType = .none
         case .infoArrow(let text):
             infoLabel.text = text
-            infoLabel.textColor = UIColor.secondaryLabel
             infoLabelContainer.isHidden = false
             accessoryView = nil
             accessoryType = .disclosureIndicator
@@ -192,16 +196,15 @@ final class SettingsMenuTableViewCell: UITableViewCell {
             customViewContainer.isHidden = false
         }
         
-        switch decorateText {
-        case .none: titleLabel.textColor = UIColor.label
-        case .action: titleLabel.textColor = Theme.Colors.Text.theme
-        }
+        updateTitleColor()
+        updateInfoLabelColor()
     }
     
     func disable() {
+        isDisabled = true
         settingsIcon.disable()
-        titleLabel.textColor = Theme.Colors.Text.inactive
-        infoLabel.textColor = Theme.Colors.Text.inactive
+        updateTitleColor()
+        updateInfoLabelColor()
         selectionStyle = .none
         disableToggle()
     }
@@ -215,5 +218,27 @@ final class SettingsMenuTableViewCell: UITableViewCell {
     private func clearCustomContainer() {
         customViewContainer.isHidden = true
         customViewContainer.removeAllSubviews()
+    }
+    
+    private func updateTitleColor() {
+        var color: UIColor = .label
+        if isDisabled {
+            color = Theme.Colors.Text.inactive
+        } else if isSelected {
+            color = .white
+        } else if decorateText == .action {
+            color = Theme.Colors.Text.theme
+        }
+        titleLabel.textColor = color
+    }
+    
+    private func updateInfoLabelColor() {
+        var color: UIColor = .secondaryLabel
+        if isDisabled {
+            color = Theme.Colors.Text.inactive
+        } else if isSelected {
+            color = .white
+        }
+        infoLabel.textColor = color
     }
 }

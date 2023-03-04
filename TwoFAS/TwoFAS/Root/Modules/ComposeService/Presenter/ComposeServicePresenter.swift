@@ -80,7 +80,7 @@ extension ComposeServicePresenter {
                 )
             case .advanced: checkAdvancedFlow()
             case .browserExtension:
-                guard let secret = interactor.serviceData?.secret else { return }
+                guard let secret = interactor.serviceData?.secret, interactor.webExtensionActive else { return }
                 flowController.toBrowserExtension(with: secret)
             case .category:
                 let sectionID = interactor.sectionID

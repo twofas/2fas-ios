@@ -101,14 +101,17 @@ final class SettingsViewController: UIViewController {
     }
     
     func navigateToView(_ viewPath: ViewPath.Settings?) {
-        guard let viewPath else {
+        var vp: ViewPath.Settings = .backup
+        if let viewPath {
+            vp = viewPath
+        } else {
             if isCollapsed {
                 navigationNavi.popToRootViewController(animated: true)
+                return
             }
-            return
         }
         (navigationNavi.viewControllers.first as? SettingsMenuViewController)?
-            .presenter.handleNavigateToViewPath(viewPath)
+            .presenter.handleNavigateToViewPath(vp)
     }
     
     var currentView: ViewPath.Settings? {

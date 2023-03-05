@@ -24,9 +24,7 @@ final class MainSplitPresenter {
     
     private let flowController: MainSplitFlowControlling
     private let interactor: MainSplitModuleInteracting
-    
-    let firstSettingsValue: ViewPath.Settings = .backup
-    
+        
     private enum Kind {
         case collapsed
         case expanded
@@ -86,7 +84,7 @@ extension MainSplitPresenter {
         updateNavigation(to: path)
     }
     
-    func handleSettingsViewPath() -> ViewPath.Settings {
+    func handleSettingsViewPath() -> ViewPath.Settings? {
         if let path = interactor.restoreViewPath(), case ViewPath.settings(let option) = path {
             if let option {
                 return option
@@ -95,7 +93,7 @@ extension MainSplitPresenter {
         if let savedOption = interactor.currentSettingsPath() {
             return savedOption
         }
-        return firstSettingsValue
+        return nil
     }
 }
 
@@ -115,7 +113,7 @@ private extension MainSplitPresenter {
 
         interactor.setViewPath(path)
         if case ViewPath.settings(let option) = path {
-            interactor.saveCurrentSettingsPath(option ?? firstSettingsValue)
+            interactor.saveCurrentSettingsPath(option)
         }
     }
     

@@ -121,6 +121,7 @@ final class ComposeServiceModuleInteractor {
     var serviceWasCreated: ((ServiceData) -> Void)?
     
     private var isServiceNameCorrect = false
+    private var isAdditionalInfoCorrect = false
     
     private(set) var serviceName: String?
     private(set) var additionalInfo: String?
@@ -306,7 +307,7 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
     }
     
     var isDataValid: Bool {
-        isServiceNameCorrect && (privateKeyError == nil)
+        isServiceNameCorrect && (privateKeyError == nil)  && isAdditionalInfoCorrect
     }
     
     var isPINSet: Bool {
@@ -424,8 +425,9 @@ private extension ComposeServiceModuleInteractor {
     func validate() {
         validateServiceName()
         validatePrivateKey()
+        validateAdditionalInfo()
         let correctData = isDataValid
-        Log("ComposeServiceModuleInteractor - validate: \(correctData)", module: .moduleInteractor)
+        Log("ComposeServiceModuleInteractor - validate: \(correctData)", module: .moduleInteractor, save: false)
         isDataCorrectNotifier?(correctData)
     }
     
@@ -459,6 +461,14 @@ private extension ComposeServiceModuleInteractor {
                 privateKeyError = .incorrect
             }
         }
+    }
+    
+    func validateAdditionalInfo() {
+        guard let additionalInfo else {
+            isAdditionalInfoCorrect = true
+            return
+        }
+        isAdditionalInfoCorrect = additionalInfo.count <= ServiceRules.additionalInfoMaxLenght
     }
     
     func serviceExists(for secret: String) -> Bool {

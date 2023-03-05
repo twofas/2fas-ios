@@ -464,8 +464,8 @@
 		C27CCE9A279DDAB000C3D88F /* NewCodeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27CCE99279DDAB000C3D88F /* NewCodeInteractor.swift */; };
 		C27CCE9C279DF8DC00C3D88F /* MainRepositoryImpl+Code.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27CCE9B279DF8DC00C3D88F /* MainRepositoryImpl+Code.swift */; };
 		C27CDA7729A2A01600DC7C98 /* NetworkNotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27CDA7629A2A01600DC7C98 /* NetworkNotificationName.swift */; };
-		C27CDA7B29A2CFA200DC7C98 /* BiometryFingerprintStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27CDA7A29A2CFA200DC7C98 /* BiometryFingerprintStorage.swift */; };
 		C27CDA7929A2A55100DC7C98 /* NetworkStatusInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27CDA7829A2A55100DC7C98 /* NetworkStatusInteractor.swift */; };
+		C27CDA7B29A2CFA200DC7C98 /* BiometryFingerprintStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27CDA7A29A2CFA200DC7C98 /* BiometryFingerprintStorage.swift */; };
 		C27D543D275D38E0001E9ABF /* BackupMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27D543C275D38E0001E9ABF /* BackupMenuViewController.swift */; };
 		C27D543F275D393D001E9ABF /* BackupMenuPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27D543E275D393D001E9ABF /* BackupMenuPresenter.swift */; };
 		C27D5441275D462D001E9ABF /* BackupMenuViewController+TableCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27D5440275D462D001E9ABF /* BackupMenuViewController+TableCellHandling.swift */; };
@@ -1365,7 +1365,6 @@
 		C2248BB02277935200AC231C /* GridViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewState.swift; sourceTree = "<group>"; };
 		C225E613241CFCD10041C238 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C225E616241CFCE90041C238 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		C225E618241D35FE0041C238 /* ViewPathController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPathController.swift; sourceTree = "<group>"; };
 		C225E618241D35FE0041C238 /* ViewPathInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPathInteractor.swift; sourceTree = "<group>"; };
 		C228603126697250005E88E3 /* GridSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridSection.swift; sourceTree = "<group>"; };
 		C2286033266972B5005E88E3 /* GridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
@@ -1578,15 +1577,14 @@
 		C2633EFA265A79710034B836 /* ServiceAddedServiceContainerViewTOTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAddedServiceContainerViewTOTP.swift; sourceTree = "<group>"; };
 		C2633EFC265A7D090034B836 /* TokenLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenLabel.swift; sourceTree = "<group>"; };
 		C2633F1E265B045F0034B836 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
-		C263F46C299060FC009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C263F45929900DED009B0837 /* MainMenuModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuModels.swift; sourceTree = "<group>"; };
-		C263F45B29901475009B0837 /* MainMenuModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuModuleInteractor.swift; sourceTree = "<group>"; };
-		C263F46D299060FC009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		C263F46E299060FD009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C263F46F299060FD009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C263F45D29901C4F009B0837 /* MainSplitFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitFlowController.swift; sourceTree = "<group>"; };
 		C263F45F29903B51009B0837 /* MainMenuFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuFlowController.swift; sourceTree = "<group>"; };
 		C263F461299040F0009B0837 /* MainSplitPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitPresenter.swift; sourceTree = "<group>"; };
+		C263F46C299060FC009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
+		C263F46D299060FC009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C263F46E299060FD009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C263F46F299060FD009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C266189F26126A8200ED52CB /* LabelComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelComposeViewController.swift; sourceTree = "<group>"; };
 		C26654282725D6EA00DC3A3C /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileRules.swift; sourceTree = "<group>"; };
@@ -2124,6 +2122,10 @@
 		C2FCB28D282589AC00AF8A37 /* NewsViewEmptyScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewEmptyScreen.swift; sourceTree = "<group>"; };
 		C2FCB28F28258B3A00AF8A37 /* NewsFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFlowController.swift; sourceTree = "<group>"; };
 		C2FDAE8F1FD0B42B004BABE4 /* NotificationStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStateProtocol.swift; sourceTree = "<group>"; };
+		C2FDC8B329B5379A00623145 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/TwoFASWidget.strings"; sourceTree = "<group>"; };
+		C2FDC8B429B5379A00623145 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		C2FDC8B529B5379B00623145 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		C2FDC8B629B5379B00623145 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C2FDEE53279C8F39002CAB9E /* CameraGoogleAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraGoogleAuth.swift; sourceTree = "<group>"; };
 		C2FDEE56279C8FF8002CAB9E /* SwiftUIButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIButtons.swift; sourceTree = "<group>"; };
 		C2FDEE5C279CC271002CAB9E /* CameraScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScannerViewController.swift; sourceTree = "<group>"; };
@@ -6790,6 +6792,7 @@
 				en,
 				Base,
 				de,
+				"pt-PT",
 			);
 			mainGroup = C236666A1FB2644900989ACA;
 			packageReferences = (
@@ -8105,6 +8108,7 @@
 			children = (
 				C225E613241CFCD10041C238 /* en */,
 				C263F46E299060FD009B0837 /* de */,
+				C2FDC8B529B5379B00623145 /* pt-PT */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -8114,6 +8118,7 @@
 			children = (
 				C225E616241CFCE90041C238 /* en */,
 				C263F46D299060FC009B0837 /* de */,
+				C2FDC8B429B5379A00623145 /* pt-PT */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8132,6 +8137,7 @@
 				C2A7B99126B706B000055738 /* Base */,
 				C284B41926BC700900321AC9 /* en */,
 				C263F46C299060FC009B0837 /* de */,
+				C2FDC8B329B5379A00623145 /* pt-PT */,
 			);
 			name = TwoFASWidget.intentdefinition;
 			sourceTree = "<group>";
@@ -8141,6 +8147,7 @@
 			children = (
 				C2A7B99826B7077400055738 /* en */,
 				C263F46F299060FD009B0837 /* de */,
+				C2FDC8B629B5379B00623145 /* pt-PT */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

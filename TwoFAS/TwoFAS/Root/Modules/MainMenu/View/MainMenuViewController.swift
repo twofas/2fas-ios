@@ -36,7 +36,7 @@ final class MainMenuViewController: UIViewController {
             var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
             configuration.showsSeparators = false
             configuration.headerMode = .none
-            configuration.backgroundColor = .clear
+//            configuration.backgroundColor = .clear
             configuration.headerTopPadding = Theme.Metrics.standardMargin
             let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
             return section

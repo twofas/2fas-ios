@@ -43,6 +43,7 @@ struct BrowserExtensionIntroView: View {
             Group {
                 Image(uiImage: image)
                     .renderingMode(.original)
+                    .padding(.top, Theme.Metrics.standardSpacing)
                     .frame(width: image.size.width, height: image.size.height)
             }
             .frame(maxHeight: .infinity, alignment: .center)

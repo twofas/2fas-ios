@@ -23,6 +23,7 @@ import SwiftUI
 struct RoundedFilledButtonStyle: SwiftUI.ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .multilineTextAlignment(.center)
             .font(.body.bold())
             .padding()
             .foregroundColor(.white)
@@ -36,6 +37,7 @@ struct RoundedFilledButtonStyle: SwiftUI.ButtonStyle {
 struct RoundedFilledInactiveButtonStyle: SwiftUI.ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .multilineTextAlignment(.center)
             .font(.body.bold())
             .padding()
             .foregroundColor(.white)
@@ -48,6 +50,7 @@ struct RoundedFilledInactiveButtonStyle: SwiftUI.ButtonStyle {
 struct LinkButtonStyle: SwiftUI.ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .multilineTextAlignment(.center)
             .font(.body.bold())
             .padding()
             .foregroundColor(
@@ -60,6 +63,7 @@ struct LinkButtonStyle: SwiftUI.ButtonStyle {
 struct TextLinkButtonStyle: SwiftUI.ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .multilineTextAlignment(.center)
             .font(.body)
             .padding()
             .foregroundColor(
@@ -72,6 +76,7 @@ struct TextLinkButtonStyle: SwiftUI.ButtonStyle {
 struct NoPaddingLinkButtonStyle: SwiftUI.ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .multilineTextAlignment(.center)
             .font(.body)
             .foregroundColor(
                 Color(configuration.isPressed ? Theme.Colors.Text.themeHighlighted : Theme.Colors.Text.theme)

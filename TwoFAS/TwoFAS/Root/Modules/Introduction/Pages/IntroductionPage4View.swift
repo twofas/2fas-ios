@@ -50,7 +50,7 @@ final class IntroductionPage4View: IntroductionPageView {
         bottomContainer.addSubview(titleLabel, with: [
             titleLabel.leadingAnchor.constraint(equalTo: bottomContainer.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: bottomContainer.trailingAnchor),
-            titleLabel.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: verticalSpacingLarge)
+            titleLabel.topAnchor.constraint(equalTo: bottomContainer.topAnchor, constant: verticalSpacingLarge / 2.0)
         ])
         bottomContainer.addSubview(contentLabel, with: [
             contentLabel.leadingAnchor.constraint(equalTo: bottomContainer.leadingAnchor),

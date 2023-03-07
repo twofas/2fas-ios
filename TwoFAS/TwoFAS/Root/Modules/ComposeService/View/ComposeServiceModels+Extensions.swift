@@ -80,7 +80,7 @@ extension ComposeServiceSectionCell.NavigationConfig.Kind {
         case .advanced: return T.Tokens.advanced
         case .badgeColor: return T.Tokens.badgeColor
         case .brandIcon: return T.Tokens.changeBrandIcon
-        case .browserExtension: return T.Browser.browserExtensionSettings
+        case .browserExtension: return T.Browser.browserExtension
         case .category: return T.Tokens.group
         }
     }

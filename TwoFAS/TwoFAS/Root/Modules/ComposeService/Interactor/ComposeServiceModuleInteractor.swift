@@ -307,7 +307,7 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
     }
     
     var isDataValid: Bool {
-        isServiceNameCorrect && (privateKeyError == nil)  && isAdditionalInfoCorrect
+        isServiceNameCorrect && (privateKeyError == nil) && isAdditionalInfoCorrect
     }
     
     var isPINSet: Bool {

@@ -135,12 +135,6 @@ extension ComposeServiceAdvancedSummaryViewController {
         ) as? SettingsMenuTableViewCell else { return UITableViewCell() }
         if data.isLocked {
             cell.update(icon: nil, title: data.title, kind: .none)
-            cell.update(icon: nil, title: data.title, kind: .customView(
-                customView: UIImageView(image: Asset.revealIcon.image
-                    .apply(Theme.Colors.Controls.active)?
-                    .withRenderingMode(.alwaysOriginal)
-                )
-            ))
         } else {
             cell.update(icon: nil, title: data.title, kind: .info(text: data.info ?? ""))
         }

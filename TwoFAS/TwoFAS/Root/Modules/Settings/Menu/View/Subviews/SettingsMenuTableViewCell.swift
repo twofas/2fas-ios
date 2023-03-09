@@ -224,7 +224,7 @@ final class SettingsMenuTableViewCell: UITableViewCell {
         var color: UIColor = .label
         if isDisabled {
             color = Theme.Colors.Text.inactive
-        } else if isSelected {
+        } else if isSelected && selectionStyle != .none {
             color = .white
         } else if decorateText == .action {
             color = Theme.Colors.Text.theme
@@ -236,7 +236,7 @@ final class SettingsMenuTableViewCell: UITableViewCell {
         var color: UIColor = .secondaryLabel
         if isDisabled {
             color = Theme.Colors.Text.inactive
-        } else if isSelected {
+        } else if isSelected && selectionStyle != .none {
             color = .white
         }
         infoLabel.textColor = color

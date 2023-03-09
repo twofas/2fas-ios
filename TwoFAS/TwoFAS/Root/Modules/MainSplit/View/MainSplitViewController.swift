@@ -43,7 +43,7 @@ final class MainSplitViewController: UIViewController {
     
     var isCollapsed: Bool { split.isCollapsed }
     var isInitialConfigRead = false
-        
+    
     private var menu: MainMenuViewController? {
         navigationNavi.viewControllers.first as? MainMenuViewController
     }
@@ -53,7 +53,7 @@ final class MainSplitViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         presenter.viewDidLoad()
         
         setupSplit()
@@ -61,7 +61,7 @@ final class MainSplitViewController: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
- 
+        
         setInitialTrait()
     }
     
@@ -76,7 +76,7 @@ final class MainSplitViewController: UIViewController {
         setInitialTrait()
         presenter.viewWillAppear()
     }
-  
+    
     // Called from parent
     func navigateToView(_ viewPath: ViewPath) {
         presenter.handleNavigationUpdate(to: viewPath)
@@ -86,7 +86,7 @@ final class MainSplitViewController: UIViewController {
     private func shouldRefresh() {
         split.reload()
     }
-
+    
     private func setupSplit() {
         split.delegate = self
         
@@ -103,7 +103,7 @@ final class MainSplitViewController: UIViewController {
         split.preferredSplitBehavior = .tile
         split.presentsWithGesture = true
         split.primaryBackgroundStyle = .sidebar
-
+        
         split.setViewController(navigationNavi, for: .primary)
         split.setViewController(contentNavi, for: .secondary)
         
@@ -156,7 +156,7 @@ extension MainSplitViewController: UISplitViewControllerDelegate {
         
         return .compact
     }
-
+    
     func splitViewController(
         _ svc: UISplitViewController,
         displayModeForExpandingToProposedDisplayMode proposedDisplayMode: UISplitViewController.DisplayMode
@@ -172,10 +172,10 @@ extension MainSplitViewController: UISplitViewControllerDelegate {
         _ svc: UISplitViewController,
         willChangeTo displayMode: UISplitViewController.DisplayMode
     ) {
-            if displayMode == .secondaryOnly {
-                settingsViewController?.showRevealButton()
-            } else {
-                settingsViewController?.hideRevealButton()
-            }
+        if displayMode == .secondaryOnly {
+            settingsViewController?.showRevealButton()
+        } else {
+            settingsViewController?.hideRevealButton()
+        }
     }
 }

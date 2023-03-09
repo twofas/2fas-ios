@@ -130,14 +130,26 @@ final class SettingsViewController: UIViewController {
     }
     
     private func updateSize(width: CGFloat) {
-        let current: UITraitCollection
+        var current: UITraitCollection = traitCollection
+        var changed = false
         if width < minimumSecondaryColumnWidth {
             Log("SettingsViewController - setting: compact")
-            current = UITraitCollection(traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .compact)])
+            if !traitCollection.containsTraits(in: UITraitCollection(horizontalSizeClass: .compact)) {
+                current = UITraitCollection(
+                    traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .compact)]
+                )
+                changed = true
+            }
         } else {
             Log("SettingsViewController - setting: regular")
-            current = UITraitCollection(traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .regular)])
+            if !traitCollection.containsTraits(in: UITraitCollection(horizontalSizeClass: .regular)) {
+                current = UITraitCollection(
+                    traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .regular)]
+                )
+                changed = true
+            }
         }
+        guard changed else { return }
         setOverrideTraitCollection(current, forChild: split)
         split.reload()
     }

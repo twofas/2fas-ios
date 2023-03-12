@@ -797,7 +797,7 @@ final class ServiceDefinitionDatabaseGenerated {
                 issuer: nil,
                 tags: nil,
                 matchingRules: [.init(field: .label, text: "UbuntuSSO", matcher: .contains, ignoreCase: true)],
-                iconTypeID: .default
+                iconTypeID: UUID(uuidString: "DBF20573-1304-4D12-BE11-13C590FF1FC1")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "473B0856-B105-4F77-B7EF-F5BF4529837C")!,
@@ -1061,7 +1061,7 @@ final class ServiceDefinitionDatabaseGenerated {
                 issuer: nil,
                 tags: nil,
                 matchingRules: [.init(field: .issuer, text: "ClouDNS", matcher: .startsWith, ignoreCase: true)],
-                iconTypeID: .default
+                iconTypeID: UUID(uuidString: "E4CA9FB2-281D-4146-9DD3-083899D1515D")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "5D4C1AD0-35E7-4205-811B-52D596651CA2")!,
@@ -2141,7 +2141,7 @@ final class ServiceDefinitionDatabaseGenerated {
                 issuer: nil,
                 tags: nil,
                 matchingRules: [.init(field: .label, text: "huawei", matcher: .startsWith, ignoreCase: true)],
-                iconTypeID: .default
+                iconTypeID: UUID(uuidString: "5425AC27-455D-42EB-9163-3A1262B11698")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "C2A740BA-8823-4ADD-9F60-3F87797251F0")!,
@@ -2263,6 +2263,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "5FFC6239-F3E6-40E7-8FBA-8C6965992A58")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "CB5E1F42-22EE-4993-A04F-9476A9C7C2B3")!,
+                name: "PlayStation",
+                issuer: nil,
+                tags: ["PS", "SONY", "PS4", "PS5"],
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "4A1E6984-020D-4184-8844-1D1465A925CC")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "CB6E08B9-DD63-45FE-A3C9-EE5A95EF4355")!,

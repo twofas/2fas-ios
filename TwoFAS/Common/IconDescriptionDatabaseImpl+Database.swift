@@ -406,6 +406,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Zoom"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "DBF20573-1304-4D12-BE11-13C590FF1FC1")!,
+                name: "Ubuntu"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "69123308-C433-4ACB-A876-D5045D25CC83")!,
                 name: "Mathworks"
             ),
@@ -524,6 +528,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "3C82E6EE-906C-4D6A-9992-01AB376614DB")!,
                 name: "Dropbox"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "E4CA9FB2-281D-4146-9DD3-083899D1515D")!,
+                name: "ClouDNS"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "6900249F-744B-43DF-86BD-8AD8FB51965A")!,
@@ -1058,6 +1066,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Stake"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "5425AC27-455D-42EB-9163-3A1262B11698")!,
+                name: "Huawei"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "699D4DD1-5144-49E6-9C77-BF065E7BCD14")!,
                 name: "Wealthsimple"
             ),
@@ -1116,6 +1128,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "5FFC6239-F3E6-40E7-8FBA-8C6965992A58")!,
                 name: "Wordfence"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "4A1E6984-020D-4184-8844-1D1465A925CC")!,
+                name: "PlayStation"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "108A8AD6-ACB2-43F5-A697-5DD1116D4DA5")!,

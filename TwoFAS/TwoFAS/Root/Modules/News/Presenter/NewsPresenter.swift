@@ -23,13 +23,13 @@ import UIKit
 final class NewsPresenter {
     weak var view: NewsViewControlling?
     
-    private let flowController: NewsFlowControlling
+    private let flowController: NewsPlainFlowControlling
     private let interactor: NewsModuleInteracting
     private let dateFormatter = RelativeDateTimeFormatter()
     
     private var viewIsLoaded = false
     
-    init(flowController: NewsFlowControlling, interactor: NewsModuleInteracting) {
+    init(flowController: NewsPlainFlowControlling, interactor: NewsModuleInteracting) {
         self.interactor = interactor
         self.flowController = flowController
     }

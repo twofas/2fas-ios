@@ -52,18 +52,25 @@ protocol TokensPlainFlowControlling: AnyObject {
 
 final class TokensPlainFlowController: FlowController {
     private weak var parent: TokensPlainFlowControllerParent?
-    private weak var naviViewController: UINavigationController!
+    private weak var mainSplitViewController: MainSplitViewController?
     private var galleryViewController: UIViewController?
     
-    @discardableResult
-    static func showAsRoot(
-        in navigationController: UINavigationController,
+    static func showAsTab(
+        viewController: TokensViewController,
+        in navigationController: UINavigationController
+    ) {
+        navigationController.setViewControllers([viewController], animated: false)
+        navigationController.setNavigationBarHidden(false, animated: false)
+    }
+    
+    static func setup(
+        mainSplitViewController: MainSplitViewController,
         parent: TokensPlainFlowControllerParent
     ) -> TokensViewController {
         let view = TokensViewController()
         let flowController = TokensPlainFlowController(viewController: view)
         flowController.parent = parent
-        flowController.naviViewController = navigationController
+        flowController.mainSplitViewController = mainSplitViewController
         let interactor = InteractorFactory.shared.tokensModuleInteractor()
         let presenter = TokensPresenter(
             flowController: flowController,
@@ -72,9 +79,14 @@ final class TokensPlainFlowController: FlowController {
         presenter.view = view
         view.presenter = presenter
         
-        navigationController.setViewControllers([view], animated: false)
-        navigationController.setNavigationBarHidden(false, animated: false)
         return view
+    }
+    
+    static func showAsRoot(
+        viewController: TokensViewController,
+        in navigationController: ContentNavigationController
+    ) {
+        navigationController.setRootViewController(viewController)
     }
 }
 
@@ -82,6 +94,8 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     // MARK: - Service
     
     func toShowSelectAddingMethod(isCameraAvailable: Bool) {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        
         let qrCode = UIAlertAction(title: T.Commons.scanQrCode, style: .default) { [weak self] _ in
             if isCameraAvailable {
                 self?.toShowCamera()
@@ -112,16 +126,18 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
             popover.permittedArrowDirections = .up
         }
         
-        naviViewController.present(controller, animated: true, completion: nil)
+        mainSplitViewController.present(controller, animated: true, completion: nil)
     }
     
     func toDeleteService(serviceData: ServiceData) {
-        TrashServiceFlowController.present(on: naviViewController, parent: self, serviceData: serviceData)
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        TrashServiceFlowController.present(on: mainSplitViewController, parent: self, serviceData: serviceData)
     }
     
     func toShowEditingService(with serviceData: ServiceData, freshlyAdded: Bool = false, gotoIconEdit: Bool = false) {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
         ComposeServiceNavigationFlowController.present(
-            on: naviViewController,
+            on: mainSplitViewController,
             parent: self,
             serviceData: serviceData,
             gotoIconEdit: gotoIconEdit,
@@ -130,13 +146,16 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     }
     
     func toServiceWasCreated(_ serviceData: ServiceData) {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        
         FirstCodeAddedStatsController.markStats() // TODO: Move to MainRepository and proper interactor
-        ServiceAddedFlowController.present(serviceData: serviceData, on: naviViewController, parent: self)
+        ServiceAddedFlowController.present(serviceData: serviceData, on: mainSplitViewController, parent: self)
     }
     
     func toShowAddingServiceManually() {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
         ComposeServiceNavigationFlowController.present(
-            on: naviViewController,
+            on: mainSplitViewController,
             parent: self,
             serviceData: nil,
             gotoIconEdit: false,
@@ -158,6 +177,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     }
     
     func toCreateSection(_ callback: @escaping (String) -> Void) {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
         let alert = AlertControllerPromptFactory.create(
             title: T.Tokens.addGroup,
             message: T.Tokens.groupName,
@@ -171,13 +191,14 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
                 ServiceRules.isSectionNameValid(sectionName: sectionName.trim())
             })
         
-        naviViewController.present(alert, animated: true, completion: nil)
+        mainSplitViewController.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Camera
     
     func toShowCamera() {
-        CameraScannerNavigationFlowController.present(on: naviViewController, parent: self)
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        CameraScannerNavigationFlowController.present(on: mainSplitViewController, parent: self)
     }
     
     func toCameraNotAvailable() {
@@ -188,16 +209,19 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     // MARK: - Initial screen
     
     func toFileImport() {
-        ImporterOpenFileFlowController.present(on: naviViewController, parent: self, url: nil)
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        ImporterOpenFileFlowController.present(on: mainSplitViewController, parent: self, url: nil)
     }
     
     func toImportGA() {
-        GridViewGAImportNavigationFlowController.present(on: naviViewController, parent: self)
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        GridViewGAImportNavigationFlowController.present(on: mainSplitViewController, parent: self)
     }
     
     func toShowGallery() {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
         galleryViewController = SelectFromGalleryFlowController.present(
-            on: naviViewController,
+            on: mainSplitViewController,
             applyOverlay: true,
             parent: self
         )
@@ -214,11 +238,13 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     // MARK: - Link actions
     
     func toCodeAlreadyExists() {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
         let alert = UIAlertController.makeSimple(with: T.Commons.info, message: T.Notifications.tokenAlreadyAdded)
-        naviViewController.present(alert, animated: true)
+        mainSplitViewController.present(alert, animated: true)
     }
     
     func toShowShouldAddCode(with descriptionText: String?) {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
         let msg = T.Notifications.addCodeQuestionTitle(descriptionText ?? T.Browser.unkownName)
         let alert = UIAlertController(title: T.Notifications.addingCode, message: msg, preferredStyle: .alert)
         
@@ -229,7 +255,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
             self?.viewController.presenter.handleAddStoredCode()
         })
         
-        naviViewController.present(alert, animated: true)
+        mainSplitViewController.present(alert, animated: true)
     }
     
     func toSendLogs(auditID: UUID) {
@@ -237,6 +263,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     }
     
     func toShouldRenameService(currentName: String, secret: String) {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
         let alert = AlertControllerPromptFactory.create(
             title: T.Tokens.enterServiceName,
             message: nil,
@@ -251,12 +278,14 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
             }
         )
         
-        naviViewController.present(alert, animated: true)
+        mainSplitViewController.present(alert, animated: true)
     }
     
     // MARK: - Sort
     
     func toShowSortTypes(selectedSortOption: SortType, callback: @escaping (SortType) -> Void) {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        
         let preferredStyle: UIAlertController.Style = {
             if UIDevice.isiPad {
                 return .alert
@@ -272,7 +301,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
             alertController.addAction(action)
         }
         alertController.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel, handler: { _ in }))
-        naviViewController.present(alertController, animated: true)
+        mainSplitViewController.present(alertController, animated: true)
     }
 }
 
@@ -282,14 +311,15 @@ extension TokensPlainFlowController {
 
 private extension TokensPlainFlowController {
     func dismiss(actions: Set<TokensExternalAction> = [.finishedFlow], completion: Callback? = nil) {
-        naviViewController.dismiss(animated: true) { [weak self] in
+        mainSplitViewController?.dismiss(animated: true) { [weak self] in
             completion?()
             self?.viewController.presenter.handleExternalAction(actions)
         }
     }
     
     func sendLogs(auditID: UUID) {
-        UploadLogsNavigationFlowController.present(on: naviViewController, auditID: auditID, parent: self)
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        UploadLogsNavigationFlowController.present(on: mainSplitViewController, auditID: auditID, parent: self)
     }
 }
 
@@ -376,7 +406,7 @@ extension TokensPlainFlowController: ComposeServiceNavigationFlowControllerParen
                 with: T.Commons.info,
                 message: T.Notifications.serviceAlreadyModifiedTitle
             )
-            self?.naviViewController.present(alert, animated: true)
+            self?.mainSplitViewController?.present(alert, animated: true)
         }
     }
     
@@ -386,7 +416,7 @@ extension TokensPlainFlowController: ComposeServiceNavigationFlowControllerParen
                 with: T.Commons.info,
                 message: T.Notifications.serviceAlreadyRemovedTitle
             )
-            self?.naviViewController.present(alert, animated: true)
+            self?.mainSplitViewController?.present(alert, animated: true)
         }
     }
 }

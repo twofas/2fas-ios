@@ -26,6 +26,8 @@ protocol MainSplitFlowControllerParent: AnyObject {
 
 protocol MainSplitFlowControlling: AnyObject {
     func toInitialConfiguration()
+    func toCompact()
+    func toExpanded()
 }
 
 final class MainSplitFlowController: FlowController {
@@ -53,6 +55,13 @@ final class MainSplitFlowController: FlowController {
         viewController.view.addSubview(view.view)
         view.didMove(toParent: viewController)
         viewController.splitView = view
+        
+        view.tokensViewController = TokensPlainFlowController
+            .setup(mainSplitViewController: view, parent: flowController)
+        view.settingsViewController = SettingsFlowController
+            .setup(parent: flowController)
+        view.newsViewController = NewsPlainFlowController
+            .setup(parent: flowController)
     }
 }
 
@@ -62,8 +71,34 @@ extension MainSplitFlowController {
 
 extension MainSplitFlowController: MainSplitFlowControlling {
     func toInitialConfiguration() {
-        MainTabFlowController.insertAsCompact(into: viewController.split, parent: self)
+        let navi = MainTabFlowController.insertAsCompact(into: viewController.split, parent: self)
         MainMenuFlowController.showAsRoot(in: viewController.navigationNavi, parent: self)
+        viewController.tokensTabNavi = navi.tokensNavi
+        viewController.newsTabNavi = navi.newsNavi
+    }
+    
+    func toCompact() {
+        guard
+            let tokensNavi = viewController.tokensTabNavi,
+            let newsNavi = viewController.newsTabNavi,
+            let tokensViewController = viewController.tokensViewController,
+            let settingsViewController = viewController.settingsViewController,
+            let newsViewController = viewController.newsViewController
+        else { return }
+        TokensPlainFlowController.showAsTab(viewController: tokensViewController, in: tokensNavi)
+        NewsPlainFlowController.showAsTab(viewController: newsViewController, in: newsNavi)
+        viewController.tabBar?.presenter.resetViewPath()
+        viewController.tabBar?.setViewControllers([tokensNavi, settingsViewController, newsNavi], animated: false)
+    }
+    
+    func toExpanded() {
+        guard
+            let tokensNavi = viewController.tokensTabNavi,
+            let newsNavi = viewController.newsTabNavi
+        else { return }
+        tokensNavi.setViewControllers([], animated: false)
+        newsNavi.setViewControllers([], animated: false)
+        viewController.tabBar?.setViewControllers([tokensNavi, newsNavi], animated: false)
     }
 }
 
@@ -83,38 +118,39 @@ extension MainSplitFlowController: MainTabFlowControllerParent {
 
 extension MainSplitFlowController: MainMenuFlowControllerParent {
     func mainMenuToMain() {
+        guard let tokens = viewController.tokensViewController else { return }
         viewController.presenter.handlePathWasUpdated(to: .main)
-        if let vc = viewController.tokensViewController {
-            viewController.contentNavi.setViewControllers([vc], animated: false)
-        } else {
-            viewController.tokensViewController = TokensPlainFlowController
-                .showAsRoot(in: viewController.contentNavi, parent: self)
-        }
+        guard viewController.contentNavi.viewControllers.first != tokens else { return }
+
+        TokensPlainFlowController.showAsRoot(viewController: tokens, in: viewController.contentNavi)
+
         parent?.navigationSwitchedToTokens()
     }
     
     func mainMenuToSettings() {
+        guard let settings = viewController.settingsViewController else { return }
+        
         let settingsPath = viewController.presenter.handleSettingsViewPath()
         viewController.presenter.handlePathWasUpdated(to: .settings(option: settingsPath))
-        if let vc = viewController.settingsViewController {
-            viewController.contentNavi.setViewControllers([vc], animated: false)
-        } else {
-            viewController.settingsViewController = SettingsFlowController
-                .showAsRoot(in: viewController.contentNavi, parent: self)
+        
+        guard viewController.contentNavi.viewControllers.first != settings else {
+            settings.navigateToView(settingsPath)
+            return
         }
-        DispatchQueue.main.async {
-            self.viewController.settingsViewController?.navigateToView(settingsPath)
-        }
+        
+        SettingsFlowController.showAsRoot(
+            viewController: settings,
+            in: viewController.contentNavi,
+            navigateToPath: settingsPath
+        )
     }
     
     func mainMenuToNews() {
+        guard let news = viewController.newsViewController else { return }
         viewController.presenter.handlePathWasUpdated(to: .news)
-        if let vc = viewController.newsViewController {
-            viewController.contentNavi.setViewControllers([vc], animated: false)
-        } else {
-            viewController.newsViewController = NewsFlowController
-                .showAsRoot(in: viewController.contentNavi, parent: self)
-        }
+        guard viewController.contentNavi.viewControllers.first != news else { return }
+        
+        NewsPlainFlowController.showAsRoot(viewController: news, in: viewController.contentNavi)
     }
     
     func mainMenuIsReady() {
@@ -138,4 +174,4 @@ extension MainSplitFlowController: SettingsFlowControllerParent {
     }
 }
 
-extension MainSplitFlowController: NewsFlowControllerParent {}
+extension MainSplitFlowController: NewsPlainFlowControllerParent {}

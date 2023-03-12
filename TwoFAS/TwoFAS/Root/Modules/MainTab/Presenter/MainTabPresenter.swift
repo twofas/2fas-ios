@@ -78,4 +78,8 @@ extension MainTabPresenter {
             view?.hideNewsBadge()
         }
     }
+    
+    func resetViewPath() {
+        previousSelectedViewPath = nil
+    }
 }

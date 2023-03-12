@@ -54,6 +54,7 @@ extension MainSplitPresenter {
     func handleCollapse() {
         guard calledKind != Kind.collapsed else { return }
         calledKind = .collapsed
+        flowController.toCompact()
         
         handleRestoreNavigation()
     }
@@ -61,6 +62,7 @@ extension MainSplitPresenter {
     func handleExpansion() {
         guard calledKind != Kind.expanded else { return }
         calledKind = .expanded
+        flowController.toExpanded()
 
         handleRestoreNavigation()
     }

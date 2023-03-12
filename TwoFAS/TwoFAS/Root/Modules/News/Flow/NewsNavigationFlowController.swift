@@ -18,30 +18,32 @@
 //
 
 import UIKit
-import Common
 
-protocol TokensNavigationFlowControllerParent: AnyObject {}
+protocol NewsNavigationFlowControllerParent: AnyObject {}
 
-final class TokensNavigationFlowController: NavigationFlowController {
+final class NewsNavigationFlowController: NavigationFlowController {
     private weak var parent: TokensNavigationFlowControllerParent?
     
     static func showAsEmptyTab(
         in tabBarController: UITabBarController,
         parent: TokensNavigationFlowControllerParent
     ) -> UINavigationController {
-        let flowController = TokensNavigationFlowController()
+        let flowController = NewsNavigationFlowController()
         flowController.parent = parent
         
-        let navi = CommonNavigationControllerFlow(flowController: flowController)
-        navi.tabBarItem = UITabBarItem(
-            title: T.Commons.tokens,
-            image: Asset.tabBarIconServicesInactive.image,
-            selectedImage: Asset.tabBarIconServicesActive.image
+        let naviController = CommonNavigationControllerFlow(flowController: flowController)
+        naviController.tabBarItem = UITabBarItem(
+            title: T.Commons.notifications,
+            image: Asset.tabBarIconNotificationsInactive.image
+                .withRenderingMode(.alwaysTemplate),
+            selectedImage: Asset.tabBarIconNotificationsActive.image
+                .withRenderingMode(.alwaysTemplate)
         )
-        flowController.navigationController = navi
-                
-        tabBarController.addTab(navi)
         
-        return navi
+        flowController.navigationController = naviController
+        
+        tabBarController.addTab(naviController)
+        
+        return naviController
     }
 }

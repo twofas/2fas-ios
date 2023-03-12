@@ -31,7 +31,7 @@ final class MainSplitViewController: UIViewController {
     
     let split = PrimaryNavigationLayoutFixingSplitViewController(style: .doubleColumn)
     let navigationNavi = LargeNavigationController()
-    let contentNavi = CommonNavigationController()
+    let contentNavi = ContentNavigationController()
     
     private let preferredPrimaryColumnWidthFraction: Double = 0.26
     private let minimumPrimaryColumnWidth: Double = 260
@@ -41,13 +41,16 @@ final class MainSplitViewController: UIViewController {
     var settingsViewController: SettingsViewController?
     var newsViewController: NewsViewController?
     
+    var tokensTabNavi: UINavigationController?
+    var newsTabNavi: UINavigationController?
+    
     var isCollapsed: Bool { split.isCollapsed }
     var isInitialConfigRead = false
     
     private var menu: MainMenuViewController? {
         navigationNavi.viewControllers.first as? MainMenuViewController
     }
-    private var tabBar: MainTabViewController? {
+    var tabBar: MainTabViewController? {
         split.viewController(for: .compact) as? MainTabViewController
     }
     

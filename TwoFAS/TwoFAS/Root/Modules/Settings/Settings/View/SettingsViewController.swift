@@ -20,7 +20,7 @@
 import UIKit
 import Common
 
-final class SettingsViewController: UIViewController {
+final class SettingsViewController: UIViewController, ContentNavigationControllerHideNavibar {
     var presenter: SettingsPresenter!
     
     private let split = PrimaryNavigationLayoutFixingSplitViewController(style: .doubleColumn)
@@ -29,14 +29,12 @@ final class SettingsViewController: UIViewController {
     private let minimumPrimaryColumnWidth: Double = 320
     private let maximumPrimaryColumnWidth: Double = 380
     private let minimumSecondaryColumnWidth: Double = 640
-        
+    
     let navigationNavi = CommonNavigationController()
     let contentNavi = CommonNavigationController()
     
     var isCollapsed: Bool { split.isCollapsed }
     var isInitialConfigRead = false
-    
-    var hideNavigationBar = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +50,7 @@ final class SettingsViewController: UIViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
- 
+        
         setInitialTrait()
     }
     
@@ -69,15 +67,8 @@ final class SettingsViewController: UIViewController {
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
-        if hideNavigationBar {
-            navigationController?.setNavigationBarHidden(true, animated: animated)
-        }
+        
         updateSize(width: view.frame.size.width)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     override func viewDidLayoutSubviews() {
@@ -88,11 +79,11 @@ final class SettingsViewController: UIViewController {
     func showRevealButton() {
         (navigationNavi.viewControllers.first as? SettingsMenuViewController)?.navigationItem
             .leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "sidebar.left"),
-            style: .plain,
-            target: self,
-            action: #selector(revealMenu)
-        )
+                image: UIImage(systemName: "sidebar.left"),
+                style: .plain,
+                target: self,
+                action: #selector(revealMenu)
+            )
     }
     
     func hideRevealButton() {
@@ -131,32 +122,28 @@ final class SettingsViewController: UIViewController {
     
     private func updateSize(width: CGFloat) {
         var current: UITraitCollection = traitCollection
-        var changed = false
+        
         if width < minimumSecondaryColumnWidth {
             Log("SettingsViewController - setting: compact")
-            if !traitCollection.containsTraits(in: UITraitCollection(horizontalSizeClass: .compact)) {
-                current = UITraitCollection(
-                    traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .compact)]
-                )
-                changed = true
-            }
+            current = UITraitCollection(
+                traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .compact)]
+            )
         } else {
             Log("SettingsViewController - setting: regular")
-            if !traitCollection.containsTraits(in: UITraitCollection(horizontalSizeClass: .regular)) {
-                current = UITraitCollection(
-                    traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .regular)]
-                )
-                changed = true
-            }
+            current = UITraitCollection(
+                traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .regular)]
+            )
         }
-        guard changed else { return }
-        setOverrideTraitCollection(current, forChild: split)
+        
+        guard current != split.traitCollection else { return }
+        
+        setOverrideTraitCollection(traitCollection, forChild: split)
         split.reload()
     }
-
+    
     private func setupSplit() {
         split.delegate = self
-
+        
         addChild(split)
         view.addSubview(split.view)
         split.view.frame = self.view.bounds
@@ -217,7 +204,7 @@ extension SettingsViewController: UISplitViewControllerDelegate {
         
         return .primary
     }
-
+    
     func splitViewController(
         _ svc: UISplitViewController,
         displayModeForExpandingToProposedDisplayMode proposedDisplayMode: UISplitViewController.DisplayMode
@@ -248,13 +235,9 @@ final class PrimaryNavigationLayoutFixingSplitViewController: UISplitViewControl
         primaryColumnSafeAreaInsetsKVOToken = viewController
             .view
             .observe(\.safeAreaInsets) { [weak self, weak viewController] _, _ in
-            guard
-                let viewController,
-                viewController.view.safeAreaInsets.left == 0,
-                viewController.view.safeAreaInsets.right == 0
-            else { return }
-            self?.applyCorrectLayoutIfNeeded(toPrimaryColumnViewController: viewController)
-        }
+                guard let viewController, let self else { return }
+                self.applyCorrectLayoutIfNeeded(toPrimaryColumnViewController: viewController)
+            }
     }
     
     func reload() {
@@ -292,11 +275,11 @@ final class PrimaryNavigationLayoutFixingSplitViewController: UISplitViewControl
         if viewController.view.safeAreaInsets.left != correctHorizontalSafeAreaInsets.left {
             viewController.additionalSafeAreaInsets.left = 0
             viewController.additionalSafeAreaInsets.left =
-                correctHorizontalSafeAreaInsets.left - viewController.view.safeAreaInsets.left
+            correctHorizontalSafeAreaInsets.left - viewController.view.safeAreaInsets.left
         } else if viewController.view.safeAreaInsets.right != correctHorizontalSafeAreaInsets.right {
             viewController.additionalSafeAreaInsets.right = 0
             viewController.additionalSafeAreaInsets.right =
-                correctHorizontalSafeAreaInsets.right - viewController.view.safeAreaInsets.right
+            correctHorizontalSafeAreaInsets.right - viewController.view.safeAreaInsets.right
         }
     }
     

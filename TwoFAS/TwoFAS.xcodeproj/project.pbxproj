@@ -297,6 +297,8 @@
 		C24D1C2C253C744F0029D27D /* Sync.h in Headers */ = {isa = PBXBuildFile; fileRef = C24D1C1C253C744E0029D27D /* Sync.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C24D1C2F253C744F0029D27D /* Sync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24D1C1A253C744E0029D27D /* Sync.framework */; };
 		C24D1C30253C744F0029D27D /* Sync.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C24D1C1A253C744E0029D27D /* Sync.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C24D8B3A29BDEED200C3E11E /* NewsNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24D8B3929BDEED200C3E11E /* NewsNavigationFlowController.swift */; };
+		C24D8B3C29BE41CA00C3E11E /* ContentNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24D8B3B29BE41CA00C3E11E /* ContentNavigationController.swift */; };
 		C24DFB2127D1770D00F3EACC /* CounterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24DFB2027D1770D00F3EACC /* CounterState.swift */; };
 		C24DFB2527D1778100F3EACC /* CounterHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24DFB2427D1778100F3EACC /* CounterHandler.swift */; };
 		C24EECEC268772B600C6ABAA /* RecordType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECEB268772B600C6ABAA /* RecordType.swift */; };
@@ -915,7 +917,7 @@
 		C2FCB28A28257A0500AF8A37 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FCB28928257A0500AF8A37 /* NewsTableViewCell.swift */; };
 		C2FCB28C2825819000AF8A37 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FCB28B2825819000AF8A37 /* NewsViewController.swift */; };
 		C2FCB28E282589AC00AF8A37 /* NewsViewEmptyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FCB28D282589AC00AF8A37 /* NewsViewEmptyScreen.swift */; };
-		C2FCB29028258B3A00AF8A37 /* NewsFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FCB28F28258B3A00AF8A37 /* NewsFlowController.swift */; };
+		C2FCB29028258B3A00AF8A37 /* NewsPlainFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FCB28F28258B3A00AF8A37 /* NewsPlainFlowController.swift */; };
 		C2FDAE901FD0B42B004BABE4 /* NotificationStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FDAE8F1FD0B42B004BABE4 /* NotificationStateProtocol.swift */; };
 		C2FDEE54279C8F39002CAB9E /* CameraGoogleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FDEE53279C8F39002CAB9E /* CameraGoogleAuth.swift */; };
 		C2FDEE57279C8FF8002CAB9E /* SwiftUIButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FDEE56279C8FF8002CAB9E /* SwiftUIButtons.swift */; };
@@ -1507,6 +1509,8 @@
 		C24D1C1A253C744E0029D27D /* Sync.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sync.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C24D1C1C253C744E0029D27D /* Sync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sync.h; sourceTree = "<group>"; };
 		C24D1C1D253C744E0029D27D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C24D8B3929BDEED200C3E11E /* NewsNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsNavigationFlowController.swift; sourceTree = "<group>"; };
+		C24D8B3B29BE41CA00C3E11E /* ContentNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentNavigationController.swift; sourceTree = "<group>"; };
 		C24DFB2027D1770D00F3EACC /* CounterState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterState.swift; sourceTree = "<group>"; };
 		C24DFB2427D1778100F3EACC /* CounterHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterHandler.swift; sourceTree = "<group>"; };
 		C24EECEB268772B600C6ABAA /* RecordType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordType.swift; sourceTree = "<group>"; };
@@ -2120,7 +2124,7 @@
 		C2FCB28928257A0500AF8A37 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		C2FCB28B2825819000AF8A37 /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		C2FCB28D282589AC00AF8A37 /* NewsViewEmptyScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewEmptyScreen.swift; sourceTree = "<group>"; };
-		C2FCB28F28258B3A00AF8A37 /* NewsFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFlowController.swift; sourceTree = "<group>"; };
+		C2FCB28F28258B3A00AF8A37 /* NewsPlainFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsPlainFlowController.swift; sourceTree = "<group>"; };
 		C2FDAE8F1FD0B42B004BABE4 /* NotificationStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStateProtocol.swift; sourceTree = "<group>"; };
 		C2FDC8B329B5379A00623145 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/TwoFASWidget.strings"; sourceTree = "<group>"; };
 		C2FDC8B429B5379A00623145 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -3321,6 +3325,7 @@
 			children = (
 				C235A010298FD97D008F4FD0 /* MainSplitViewController.swift */,
 				C2673159299AC9C40031DE09 /* LargeNavigationController.swift */,
+				C24D8B3B29BE41CA00C3E11E /* ContentNavigationController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4022,7 +4027,8 @@
 		C25860B128246D9D009AE54F /* Flow */ = {
 			isa = PBXGroup;
 			children = (
-				C2FCB28F28258B3A00AF8A37 /* NewsFlowController.swift */,
+				C24D8B3929BDEED200C3E11E /* NewsNavigationFlowController.swift */,
+				C2FCB28F28258B3A00AF8A37 /* NewsPlainFlowController.swift */,
 			);
 			path = Flow;
 			sourceTree = "<group>";
@@ -7252,6 +7258,7 @@
 				C26764AC287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift in Sources */,
 				C2B077C8292A938D0074517F /* UploadLogsModuleInteractorError+.swift in Sources */,
 				C22A866A287F60BD009A43FE /* MainRepositoryImpl+Notifications.swift in Sources */,
+				C24D8B3A29BDEED200C3E11E /* NewsNavigationFlowController.swift in Sources */,
 				C27CCE9A279DDAB000C3D88F /* NewCodeInteractor.swift in Sources */,
 				C20935DD29214FA7000F5AA7 /* IconInteractor.swift in Sources */,
 				C2633EFD265A7D090034B836 /* TokenLabel.swift in Sources */,
@@ -7363,10 +7370,11 @@
 				C2BE805B2811DF3D009CBC4A /* AuthRequestsFlowController.swift in Sources */,
 				C23B899527C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift in Sources */,
 				C2BD85E22640394B0087D087 /* IntroductionScrollView.swift in Sources */,
-				C2FCB29028258B3A00AF8A37 /* NewsFlowController.swift in Sources */,
+				C2FCB29028258B3A00AF8A37 /* NewsPlainFlowController.swift in Sources */,
 				C27BE517275D6ACC0090CA12 /* BackupMenuModuleInteractor.swift in Sources */,
 				C27D543F275D393D001E9ABF /* BackupMenuPresenter.swift in Sources */,
 				C23FD51228146E2E00E4E9C5 /* ComposeServiceWebExtensionPresenter.swift in Sources */,
+				C24D8B3C29BE41CA00C3E11E /* ContentNavigationController.swift in Sources */,
 				C287D4FD276A98FE0001B272 /* BiometryType.swift in Sources */,
 				C287D4FF276A9B5C0001B272 /* AppSecurityViewController.swift in Sources */,
 				C2AD653127F258B3008997DB /* BrowserExtensionFailureFlowController.swift in Sources */,

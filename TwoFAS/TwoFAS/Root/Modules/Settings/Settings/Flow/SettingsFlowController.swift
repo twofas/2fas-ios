@@ -43,10 +43,16 @@ final class SettingsFlowController: FlowController {
         viewController.isCollapsed
     }
     
-    static func showAsATab(
-        in tabBarController: UITabBarController,
-        parent: SettingsFlowControllerParent
+    static func showAsTab(
+        viewController: SettingsViewController,
+        in navigationController: UINavigationController
     ) {
+        navigationController.setViewControllers([viewController], animated: false)
+    }
+    
+    static func setup(
+        parent: SettingsFlowControllerParent
+    ) -> SettingsViewController {
         let view = SettingsViewController()
         let flowController = SettingsFlowController(viewController: view)
         flowController.parent = parent
@@ -64,28 +70,16 @@ final class SettingsFlowController: FlowController {
             selectedImage: Asset.tabBarIconSettingsActive.image
         )
         
-        tabBarController.addTab(view)
+        return view
     }
     
     static func showAsRoot(
-        in navigationController: UINavigationController,
-        parent: SettingsFlowControllerParent
-    ) -> SettingsViewController {
-        let view = SettingsViewController()
-        let flowController = SettingsFlowController(viewController: view)
-        flowController.parent = parent
-        let interactor = InteractorFactory.shared.settingsModuleInteractor()
-        let presenter = SettingsPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-        presenter.view = view
-        view.presenter = presenter
-        view.hideNavigationBar = true
-        
-        navigationController.setViewControllers([view], animated: false)
-        navigationController.setNavigationBarHidden(true, animated: false)
-        return view
+        viewController: SettingsViewController,
+        in navigationController: ContentNavigationController,
+        navigateToPath: ViewPath.Settings?
+    ) {
+        navigationController.setRootViewController(viewController)
+        viewController.navigateToView(navigateToPath)
     }
 }
 

@@ -44,6 +44,14 @@ enum CloudState: Equatable {
 }
 
 extension MainRepositoryImpl {
+    var secretSyncError: ((String) -> Void)? {
+        get {
+            sync.secretSyncError
+        }
+        set {
+            sync.secretSyncError = newValue
+        }
+    }
     var isCloudBackupConnected: Bool { cloudHandler.isConnected }
     var cloudCurrentState: CloudState { cloudCurrentStateToCloudState(cloudHandler.currentState) }
     

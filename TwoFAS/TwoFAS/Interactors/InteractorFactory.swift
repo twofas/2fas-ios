@@ -206,6 +206,26 @@ final class InteractorFactory {
             serviceInteractor: serviceModifyInteractor()
         )
     }
+    
+    private func viewPathInteractor() -> ViewPathIteracting {
+        ViewPathInteractor(mainRepository: MainRepositoryImpl.shared)
+	}
+
+    private func networkStatusInteractor() -> NetworkStatusInteracting {
+        NetworkStatusInteractor(mainRepository: MainRepositoryImpl.shared)
+    }
+    
+    func fileInteractor() -> FileInteracting {
+        FileIteractor(mainRepository: MainRepositoryImpl.shared)
+    }
+    
+    func newsInteractor() -> NewsInteracting {
+        NewsInteractor(
+            network: listNewsNetworkInteractor(),
+            storage: listNewsStorageInteractor(),
+            mainRepository: MainRepositoryImpl.shared
+        )
+    }
 }
 
 private extension InteractorFactory {
@@ -227,7 +247,9 @@ extension InteractorFactory {
             widgetsInteractor: widgetsInteractor(),
             pushNotifications: pushNotificationRegistrationInteractor(),
             protectionInteractor: protectionInteractor(),
-            nextTokenInteractor: nextTokenInteractor()
+            nextTokenInteractor: nextTokenInteractor(),
+            networkStatusInteractor: networkStatusInteractor(),
+            pairingDeviceInteractor: pairingWebExtensionInteractor()
         )
     }
     
@@ -447,10 +469,7 @@ extension InteractorFactory {
     }
     
     func newsModuleInteractor() -> NewsModuleInteracting {
-        NewsModuleInteractor(
-            network: listNewsNetworkInteractor(),
-            storage: listNewsStorageInteractor()
-        )
+        NewsModuleInteractor(newsInteractor: newsInteractor())
     }
     
     func composeServiceCategorySelectionModuleInteractor(
@@ -491,11 +510,36 @@ extension InteractorFactory {
             tokenInteractor: tokenInteractor(),
             sectionInteractor: sectionInteractor(),
             notificationsInteractor: notificationInteractor(),
-            newVersionInteractor: newVersionInteractor(),
             cloudBackupInteractor: cloudBackupStateInteractor(listenerID: ""),
             cameraPermissionInteractor: cameraPermissionInteractor(),
             linkInteractor: linkInteractor(),
             widgetsInteractor: widgetsInteractor()
         )
+    }
+    
+    func mainModuleInteractor() -> MainModuleInteracting {
+        MainModuleInteractor(
+            logUploadingInteractor: logUploadingInteractor(),
+            viewPathInteractor: viewPathInteractor(),
+            cloudBackupStateInteractor: cloudBackupStateInteractor(listenerID: ""),
+            fileInteractor: fileInteractor(),
+            newVersionInteractor: newVersionInteractor(),
+            networkStatusInteractor: networkStatusInteractor()
+        )
+    }
+    
+    func mainSplitModuleInteractor() -> MainSplitModuleInteracting {
+        MainSplitModuleInteractor(
+            viewPathInteractor: viewPathInteractor(),
+            newsInteractor: newsInteractor()
+        )
+    }
+    
+    func mainMenuModuleInteractor() -> MainMenuModuleInteracting {
+        MainMenuModuleInteractor(newsInteractor: newsInteractor())
+    }
+    
+    func mainTabModuleInteractor() -> MainTabModuleInteracting {
+        MainTabModuleInteractor(newsInteractor: newsInteractor())
     }
 }

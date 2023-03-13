@@ -21,7 +21,12 @@ import Foundation
 import Common
 
 final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
-    private enum Keys: String {
+    private struct ViewStatePath: Codable {
+        let savedAt: Date
+        let path: ViewPath
+    }
+    
+    private enum Keys: String, CaseIterable {
         case appLockAttempts
         case appLockBlockTime
         case newVersionCounter
@@ -37,9 +42,14 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case widgetWarning = "com.2fas.WidgetWarningStorage"
         case nextToken = "com.2fas.NextTokenStateController-TokenEnabled"
         case isSectionZeroCollapsed = "com.2fas.SectionZeroCollapsedState"
+        case viewPath = "ViewPathController.ViewStatePath"
+        case introductionWasShown = "IntroductionWasShown"
     }
     private let userDefaults = UserDefaults()
     private let sharedDefaults = UserDefaults(suiteName: Config.suiteName)!
+    
+    private let encoder = JSONEncoder()
+    private let decoder = JSONDecoder()
 
     var appLockAttempts: AppLockAttempts? {
         guard let value = userDefaults.string(forKey: Keys.appLockAttempts.rawValue) else { return nil }
@@ -191,5 +201,54 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
     func setSectionZeroIsCollapsed(_ collapsed: Bool) {
         userDefaults.set(collapsed, forKey: Keys.isSectionZeroCollapsed.rawValue)
         userDefaults.synchronize()
+    }
+    
+    // MARK: - Introduction
+    
+    func setIntroductionAsShown() {
+        userDefaults.set(true, forKey: Keys.introductionWasShown.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    func introductionWasShown() -> Bool {
+        userDefaults.bool(forKey: Keys.introductionWasShown.rawValue)
+    }
+    
+    // MARK: - View Path
+    
+    func clearViewPath() {
+        userDefaults.removeObject(forKey: Keys.viewPath.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    func saveViewPath(_ path: ViewPath) {
+        let path = ViewStatePath(savedAt: Date(), path: path)
+        guard let encodedNode = try? encoder.encode(path) else {
+            Log("Can't save View State Path!", severity: .error)
+            return
+        }
+        userDefaults.set(encodedNode, forKey: Keys.viewPath.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    func viewPath() -> (viewPath: ViewPath, savedAt: Date)? {
+        guard
+            let nodeData = userDefaults.object(forKey: Keys.viewPath.rawValue) as? Data,
+            let node = try? decoder.decode(ViewStatePath.self, from: nodeData)
+        else {
+            return nil
+        }
+        return (viewPath: node.path, savedAt: node.savedAt)
+    }
+    
+    // MARK: - Clear all
+    
+    func clearAll() {
+        Keys.allCases.forEach { key in
+            userDefaults.removeObject(forKey: key.rawValue)
+            sharedDefaults.removeObject(forKey: key.rawValue)
+        }
+        userDefaults.synchronize()
+        sharedDefaults.synchronize()
     }
 }

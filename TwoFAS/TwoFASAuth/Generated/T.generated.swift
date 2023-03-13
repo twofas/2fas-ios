@@ -292,6 +292,10 @@ internal enum T {
     internal static let importBackupFile = T.tr("Localizable", "backup__import_backup_file", fallback: "Import backup file")
     /// Import completed successfuly
     internal static let importCompletedSuccessfuly = T.tr("Localizable", "backup__import_completed_successfuly", fallback: "Import completed successfuly")
+    /// The file you are trying to import is invalid or damaged. Please choose another file.
+    internal static let importErrorFileInvalid = T.tr("Localizable", "backup__import_error_file_invalid", fallback: "The file you are trying to import is invalid or damaged. Please choose another file.")
+    /// The file you are trying to import is too big. Size limit is 10 MB.
+    internal static let importErrorFileSize = T.tr("Localizable", "backup__import_error_file_size", fallback: "The file you are trying to import is too big. Size limit is 10 MB.")
     /// Import file
     internal static let importFile = T.tr("Localizable", "backup__import_file", fallback: "Import file")
     /// You can import exported files on other devices with the 2FAS application
@@ -934,6 +938,10 @@ internal enum T {
     internal static let shareApp = T.tr("Localizable", "settings__share_app", fallback: "Share the app")
     /// Show next token
     internal static let showNextToken = T.tr("Localizable", "settings__show_next_token", fallback: "Show next token")
+    /// An SSL error has occurred and a secure connection to the server cannot be made. Ensure you have the latest version of the app or try to change the network.
+    internal static let sslErrorDescription = T.tr("Localizable", "settings__ssl_error_description", fallback: "An SSL error has occurred and a secure connection to the server cannot be made. Ensure you have the latest version of the app or try to change the network.")
+    /// SSL Error
+    internal static let sslErrorTitle = T.tr("Localizable", "settings__ssl_error_title", fallback: "SSL Error")
     /// Suggestion
     internal static let suggestion = T.tr("Localizable", "settings__suggestion", fallback: "Suggestion")
     /// 2FAS Support
@@ -1193,8 +1201,8 @@ internal enum T {
     internal static let serviceUnsavedChanges = T.tr("Localizable", "tokens__service_unsaved_changes", fallback: "Do you want to discard your changes?")
     /// Unsaved changes
     internal static let serviceUnsavedChangesTitle = T.tr("Localizable", "tokens__service_unsaved_changes_title", fallback: "Unsaved changes")
-    /// how Service Key
-    internal static let showServiceKey = T.tr("Localizable", "tokens__show_service_key", fallback: "how Service Key")
+    /// Show Service Key
+    internal static let showServiceKey = T.tr("Localizable", "tokens__show_service_key", fallback: "Show Service Key")
     /// Your Service Key is protected. Please add a PIN or Fingerprint lock to see it.
     internal static let showServiceKeySetupLock = T.tr("Localizable", "tokens__show_service_key_setup_lock", fallback: "Your Service Key is protected. Please add a PIN or Fingerprint lock to see it.")
     /// You will not be able to sign in to your %@ account without this token, as long as you have second factor authentication for %@ turned on.

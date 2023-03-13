@@ -23,6 +23,12 @@ public final class NetworkStackRepositoryImpl {
     private let networkCall: NetworkCall
     init(baseURL: URL) {
         self.networkCall = NetworkCall(baseURL: baseURL)
+        networkCall.sslError = {
+            NotificationCenter.default.post(name: .SSLNetworkErrorNotificationKey, object: nil)
+        }
+        networkCall.noError = {
+            NotificationCenter.default.post(name: .NoNetworkErrorNotificationKey, object: nil)
+        }
     }
 }
 

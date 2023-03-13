@@ -31,7 +31,7 @@ enum AlertControllerPromptFactory {
     ) -> UIAlertController {
         let alert = AlertControllerPrompt(title: title, message: message, preferredStyle: .alert)
         
-        let cancelAaction = UIAlertAction(title: T.Commons.cancel, style: .cancel) { _ in
+        let cancelAction = UIAlertAction(title: T.Commons.cancel, style: .cancel) { _ in
             cancel?()
         }
         
@@ -41,7 +41,7 @@ enum AlertControllerPromptFactory {
         }
         
         alert.verify = verify
-        alert.addAction(cancelAaction, type: .cancel)
+        alert.addAction(cancelAction, type: .cancel)
         alert.addAction(textAction, type: .textAction)
         alert.configureTextField(defaultText: defaultText)
 
@@ -76,7 +76,7 @@ final class AlertControllerPrompt: UIAlertController {
             tx.addTarget(self, action: #selector(self?.textChanged(sender:)), for: .editingChanged)
         }
         
-        textAction?.isEnabled = !(defaultText == nil)
+        textAction?.isEnabled = !(defaultText == nil || defaultText?.isEmpty == true)
     }
     
     @objc private func textChanged(sender: UITextField) {

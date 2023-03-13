@@ -27,7 +27,7 @@ public protocol NetworkStackType: AnyObject {
 public final class NetworkStack {
     private let appVersionHandler = AppVersionHandler()
     private let networkHandler: NetworkStackRepositoryImpl
-    
+        
     public init(baseURL: URL) {
         networkHandler = NetworkStackRepositoryImpl(baseURL: baseURL)
     }

@@ -22,7 +22,7 @@ import Storage
 import Common
 
 protocol SelectServiceModuleInteracting: AnyObject {
-    func listServices(filter: String?) -> [CategoryData]
+    func listServices(filter: String?, for domain: String) -> (bestMatch: [ServiceData], complete: [CategoryData])
     func browserName(for extensionID: ExtensionID) -> String
 }
 
@@ -31,6 +31,8 @@ final class SelectServiceModuleInteractor {
     private let serviceDefinitionInteractor: ServiceDefinitionInteracting
     private let sortInteractor: SortInteracting
     private let pairedBrowsers: PairingWebExtensionInteracting
+    
+    private var bestServiceTypes: [ServiceTypeID]?
     
     init(
         listingInteractor: ServiceListingInteracting,
@@ -46,16 +48,37 @@ final class SelectServiceModuleInteractor {
 }
 
 extension SelectServiceModuleInteractor: SelectServiceModuleInteracting {
-    func listServices(filter: String?) -> [CategoryData] {
+    func listServices(filter: String?, for domain: String) -> (bestMatch: [ServiceData], complete: [CategoryData]) {
         let currentSort = sortInteractor.currentSort
         let tags: [ServiceTypeID] = {
             guard let filter else { return [] }
             return serviceDefinitionInteractor.findServices(byTag: filter)
                 .map({ $0.serviceTypeID })
         }()
-        return listingInteractor
+        var list = listingInteractor
             .listAllWithingCategories(for: filter, sorting: currentSort, tags: tags)
             .filter({ !$0.services.isEmpty })
+        
+        var bestMatch: [ServiceData] = []
+        
+        if bestServiceTypes == nil {
+            bestServiceTypes = serviceDefinitionInteractor.findServices(domain: domain)
+                .map({ $0.serviceTypeID })
+        }
+        
+        if let bestServiceTypes {
+            list.forEach { category in
+                category.services.forEach { service in
+                    if domain.uppercased().contains(service.name.uppercased()) {
+                        bestMatch.append(service)
+                    } else if let typeID = service.serviceTypeID, bestServiceTypes.contains(typeID) {
+                        bestMatch.append(service)
+                    }
+                }
+            }
+        }
+        
+        return (bestMatch: bestMatch, complete: list)
     }
     
     func browserName(for extensionID: ExtensionID) -> String {

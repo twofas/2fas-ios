@@ -30,6 +30,7 @@ final class SelectServicePresenter {
     var domain: String { authRequest.domain }
     
     private var query: String?
+    private var lastList
     
     var showTableViewHeader: Bool { query == nil }
     
@@ -60,7 +61,7 @@ extension SelectServicePresenter {
     }
     
     func handleSelection(at indexPath: IndexPath) {
-        let categoryList = interactor.listServices(filter: query)
+        let categoryList = interactor.listServices(filter: query, for: domain)
         guard let category = categoryList[safe: indexPath.section],
               let serviceData = category.services[safe: indexPath.row]
         else { return }
@@ -75,7 +76,7 @@ extension SelectServicePresenter {
 private extension SelectServicePresenter {
     func reload() {
         let servicesWithCategories: [SelectServiceSection] = interactor
-            .listServices(filter: query)
+            .listServices(filter: query, for: domain)
             .map({ category -> SelectServiceSection in
                 let cells = category.services.map({ serviceData in SelectServiceCell(serviceData: serviceData) })
                 return SelectServiceSection(title: category.section?.title, cells: cells)

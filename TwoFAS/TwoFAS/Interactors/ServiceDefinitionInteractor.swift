@@ -33,6 +33,7 @@ protocol ServiceDefinitionInteracting: AnyObject {
     func findLegacyService(using string: String) -> ServiceTypeID?
     func findLegacyIcon(using string: String) -> IconTypeID?
     func findServices(byTag searchText: String) -> [ServiceDefinition]
+    func findServices(domain searchText: String) -> [ServiceDefinition]
 }
 
 final class ServiceDefinitionInteractor {
@@ -82,5 +83,9 @@ extension ServiceDefinitionInteractor: ServiceDefinitionInteracting {
     
     func findServices(byTag searchText: String) -> [ServiceDefinition] {
         mainRepository.findServices(byTag: searchText)
+    }
+    
+    func findServices(domain searchText: String) -> [ServiceDefinition] {
+        mainRepository.findServices(domain: searchText)
     }
 }

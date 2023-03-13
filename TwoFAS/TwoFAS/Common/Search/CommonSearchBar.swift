@@ -63,10 +63,12 @@ final class CommonSearchBar: UISearchBar {
 
 extension CommonSearchBar: UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        guard !UIDevice.isiPad else { return }
         searchBar.setShowsCancelButton(false, animated: true)
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        guard !UIDevice.isiPad else { return }
         searchBar.setShowsCancelButton(true, animated: true)
     }
     

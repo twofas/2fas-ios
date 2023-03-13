@@ -21,6 +21,9 @@ import Foundation
 import Common
 
 final class NetworkCall {
+    var sslError: (() -> Void)?
+    var noError: (() -> Void)?
+    
     private let baseURL: URL
     private let jsonDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
@@ -171,7 +174,9 @@ private extension NetworkCall {
     ) -> Bool {
         if let nsError = error, data == nil {
             let error = nsError as NSError
-            if error.code.isNetworkError {
+            if error.code == NSURLErrorSecureConnectionFailed {
+                sslError?()
+            } else if error.code.isNetworkError {
                 noInternetCall(error: error, completion: completion)
             } else if error.code.isServerError {
                 serverErrorCall(error: error, completion: completion)
@@ -318,6 +323,7 @@ private extension NetworkCall {
     }
     
     func successCall(completion: @escaping (Result<Void, NetworkError>) -> Void) {
+        noError?()
         DispatchQueue.main.async {
             completion(.success(Void()))
         }

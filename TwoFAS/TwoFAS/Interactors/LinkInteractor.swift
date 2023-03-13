@@ -30,7 +30,7 @@ protocol LinkInteracting: AnyObject {
     var serviceWasCreated: ((ServiceData) -> Void)? { get set }
     
     func shouldHandleURL(url: URL) -> Bool
-    func handlURLIfNecessary()
+    func handleURLIfNecessary()
     func addStoredCode()
     func clearStoredCode()
     
@@ -72,7 +72,7 @@ extension LinkInteractor: LinkInteracting {
         return true
     }
     
-    func handlURLIfNecessary() {
+    func handleURLIfNecessary() {
         Log("LinkInteractor - handleCodeIfNecessary", module: .interactor)
         guard mainRepository.hasStoredURL() else {
             Log("LinkInteractor - handleCodeIfNecessary - no url", module: .interactor)

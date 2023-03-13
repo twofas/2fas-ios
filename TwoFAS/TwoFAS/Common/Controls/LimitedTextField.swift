@@ -88,7 +88,11 @@ class LimitedTextField: UITextField, UITextFieldDelegate {
         let currentString = textField.text! as NSString
         let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
         
-        let should = newString.length <= maxLengthOfText
+        let isWhitespace: Bool = {
+            let str = String(newString)
+            return str.count == 1 && str.first?.isWhitespace == true
+        }()
+        let should = newString.length <= maxLengthOfText && !isWhitespace
         
         guard should else { return false }
         

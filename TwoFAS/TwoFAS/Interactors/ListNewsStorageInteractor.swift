@@ -21,6 +21,9 @@ import Foundation
 import Common
 
 protocol ListNewsStorageInteracting: AnyObject {
+    func saveLastFetch(_ lastFetch: Date)
+    func lastFetch() -> Date?
+    
     func createNewsEntry(from newsEntry: ListNewsEntry)
     func deleteNewsEntry(with newsEntry: ListNewsEntry)
     func updateNewsEntry(with newsEntry: ListNewsEntry)
@@ -39,6 +42,14 @@ final class ListNewsStorageInteractor {
 }
 
 extension ListNewsStorageInteractor: ListNewsStorageInteracting {
+    func saveLastFetch(_ lastFetch: Date) {
+        mainRepository.saveLastNewsFetch(lastFetch)
+    }
+    
+    func lastFetch() -> Date? {
+        mainRepository.lastNewsFetch()
+    }
+    
     func createNewsEntry(from newsEntry: ListNewsEntry) {
         Log("ListNewsStorageInteractor - createNewsEntry", module: .interactor)
         mainRepository.createNewsEntry(from: newsEntry)

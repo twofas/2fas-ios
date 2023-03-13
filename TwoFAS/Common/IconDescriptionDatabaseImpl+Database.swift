@@ -30,6 +30,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "USPTO"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "90AE4DBD-22CD-491D-9211-347DF50AABE2")!,
+                name: "Trading 212"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "236F8CE2-36D4-4C65-A7DB-645B2BE0261E")!,
                 name: "Stackhero"
             ),
@@ -290,6 +294,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Intuit"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "5847170F-EF51-49EF-A349-72874DC4AFE7")!,
+                name: "Jottacloud"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "C924F5D5-DC50-4121-B96F-B61DC8364EA6")!,
                 name: "Rec Room"
             ),
@@ -396,6 +404,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "8E3326A2-13C9-49BB-B28D-C4465B0CE62D")!,
                 name: "Zoom"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "DBF20573-1304-4D12-BE11-13C590FF1FC1")!,
+                name: "Ubuntu"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "69123308-C433-4ACB-A876-D5045D25CC83")!,
@@ -518,12 +530,20 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Dropbox"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "E4CA9FB2-281D-4146-9DD3-083899D1515D")!,
+                name: "ClouDNS"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "6900249F-744B-43DF-86BD-8AD8FB51965A")!,
                 name: "AngelList"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "D0239931-F1FB-4D08-AD44-06104A85C83C")!,
                 name: "ENEBA"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "4FE59FFA-9851-47DF-88A2-15104EA2985A")!,
+                name: "Privacy"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "E082188E-0759-4827-96FF-ACFB35702A52")!,
@@ -564,6 +584,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "C6360125-33FE-492A-A2CD-57DD72C18CD3")!,
                 name: "Storj.io"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "B92626FE-68FF-449E-BA64-3E92D55AC2D2")!,
+                name: "Dr. Windows"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "BF159C1F-31B1-4DB3-A8BD-802345EC8A4D")!,
@@ -658,6 +682,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Sync"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "614E0E97-27E3-4DB2-9F6B-34D6027FA9D2")!,
+                name: "Squarespace"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "C5879187-E23D-4700-93F3-A6F868ACABAC")!,
                 name: "IFTTT"
             ),
@@ -668,6 +696,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "DBEDB8F2-02A7-48C5-A41F-A009B989430C")!,
                 name: "Help Scout"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "07A242E2-8F53-4A02-86D2-BD3D1589F0BC")!,
+                name: "Unstoppable Domains"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "2143B701-156B-4D92-919F-00FA12423913")!,
@@ -998,6 +1030,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Kaspersky"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "5C7ADBB7-3438-424B-A7D9-F82B7360516C")!,
+                name: "Filen"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "88E25804-B257-416A-8CDC-68F71CAE5F32")!,
                 name: "NextDNS"
             ),
@@ -1030,8 +1066,16 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Stake"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "5425AC27-455D-42EB-9163-3A1262B11698")!,
+                name: "Huawei"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "699D4DD1-5144-49E6-9C77-BF065E7BCD14")!,
                 name: "Wealthsimple"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "91779097-9EE2-4E9D-A208-20D3D01D1643")!,
+                name: "VMware"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "163316F8-FB4A-45C4-A349-1187E51BFE72")!,
@@ -1084,6 +1128,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "5FFC6239-F3E6-40E7-8FBA-8C6965992A58")!,
                 name: "Wordfence"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "4A1E6984-020D-4184-8844-1D1465A925CC")!,
+                name: "PlayStation"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "108A8AD6-ACB2-43F5-A697-5DD1116D4DA5")!,
@@ -1182,6 +1230,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "SPID"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "6059F9E8-D90B-4CCA-ACEA-AE8797837ADB")!,
+                name: "Crowdin"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "FCB5345A-DACD-4898-884D-162C8263FD62")!,
                 name: "Rockstar Games"
             ),
@@ -1196,6 +1248,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "6582193F-C4BB-4AA2-B7FE-6EFA02BD6995")!,
                 name: "Robinhood"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "90CAF674-4269-4193-9749-4849F97CFB53")!,
+                name: "Apple"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "01F35A89-4444-4208-A405-C914340DF362")!,
@@ -1328,6 +1384,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "2F4917CA-8E34-4271-9E6C-5D234A181A94")!,
                 name: "BTCMarkets"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "38D29122-8FA4-484D-94EE-D10F1A5EFBC3")!,
+                name: "DEGIRO"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "86EE7A24-B59A-4F75-B2AA-18BB718B903A")!,

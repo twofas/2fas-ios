@@ -27,6 +27,18 @@ enum NetworkCallError: Error {
 }
 
 extension MainRepositoryImpl {
+    var hasSSLNetworkError: Bool {
+        sslNetworkError
+    }
+    
+    func markSSLNetworkError() {
+        sslNetworkError = true
+    }
+    
+    func clearSSLNetworkError() {
+        sslNetworkError = false
+    }
+    
     func registerDevice(
         for name: String,
         gcmToken: String,

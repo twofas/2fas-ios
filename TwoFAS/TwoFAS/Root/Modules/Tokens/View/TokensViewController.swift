@@ -58,7 +58,10 @@ final class TokensViewController: UIViewController {
     }
     
     func scrollToTop() {
-        gridView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        let snapshot = dataSource.snapshot()
+        let indexPath = IndexPath(row: 0, section: 0)
+        guard snapshot.item(for: indexPath) != nil else { return }
+        gridView.scrollToItem(at: indexPath, at: .top, animated: true)
     }
     
     // MARK: - App events

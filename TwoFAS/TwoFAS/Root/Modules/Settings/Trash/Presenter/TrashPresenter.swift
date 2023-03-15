@@ -44,7 +44,7 @@ final class TrashPresenter {
     
     func handleTrashing(at indexPath: IndexPath) {
         let list = interactor.listTrashedServices()
-        let serviceData = list[indexPath.row]
+        guard let serviceData = list[safe: indexPath.row] else { return }
         flowController.toDelete(with: serviceData)
     }
     

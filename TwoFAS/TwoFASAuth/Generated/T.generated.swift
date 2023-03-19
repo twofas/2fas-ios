@@ -32,8 +32,9 @@ internal enum T {
   internal static let backupNoticeCta = T.tr("Localizable", "backup_notice_cta", fallback: "Turn On")
   /// Maybe Later
   internal static let backupNoticeLater = T.tr("Localizable", "backup_notice_later", fallback: "Maybe Later")
-  /// Turn on 2FAS Backup and keep your codes secure in Google Drive.
-  internal static let backupNoticeMsg = T.tr("Localizable", "backup_notice_msg", fallback: "Turn on 2FAS Backup and keep your codes secure in Google Drive.")
+  /// Turn on 2FAS Backup. In case of resetting
+  /// or losing your phone, you will be able to restore all your tokens.
+  internal static let backupNoticeMsg = T.tr("Localizable", "backup_notice_msg", fallback: "Turn on 2FAS Backup. In case of resetting\nor losing your phone, you will be able to restore all your tokens.")
   /// 2FAS Backup
   internal static let backupNoticeTitle = T.tr("Localizable", "backup_notice_title", fallback: "2FAS Backup")
   /// Google account
@@ -224,6 +225,12 @@ internal enum T {
   internal enum App {
     /// 2FAS Authenticator
     internal static let name = T.tr("Localizable", "app__name", fallback: "2FAS Authenticator")
+  }
+  internal enum Appearance {
+    /// Active search on startup
+    internal static let activeSearchDescription = T.tr("Localizable", "appearance__active_search_description", fallback: "Active search on startup")
+    /// Active search
+    internal static let toggleActiveSearch = T.tr("Localizable", "appearance__toggle_active_search", fallback: "Active search")
   }
   internal enum Backup {
     /// 2FAS Backup
@@ -506,6 +513,8 @@ internal enum T {
     internal static let add = T.tr("Localizable", "commons__add", fallback: "Add")
     /// Approve
     internal static let approve = T.tr("Localizable", "commons__approve", fallback: "Approve")
+    /// Best match
+    internal static let bestMatch = T.tr("Localizable", "commons__best_match", fallback: "Best match")
     /// Point your camera at the screen to capture the QR code
     internal static let cameraTitle = T.tr("Localizable", "commons__camera_title", fallback: "Point your camera at the screen to capture the QR code")
     /// Cancel
@@ -600,6 +609,16 @@ internal enum T {
     internal static let outOfDiskSpace = T.tr("Localizable", "error__out_of_disk_space", fallback: "It appears that either you've run out of disk space now, or such an event in the past damaged the database")
   }
   internal enum Errors {
+    /// Input can not be empty
+    internal static let inputEmpty = T.tr("Localizable", "errors__input_empty", fallback: "Input can not be empty")
+    /// Input must be integer number
+    internal static let inputIntegerNumber = T.tr("Localizable", "errors__input_integer_number", fallback: "Input must be integer number")
+    /// Input must be a number
+    internal static let inputNumber = T.tr("Localizable", "errors__input_number", fallback: "Input must be a number")
+    /// Input is too long. Limit: %d
+    internal static func inputTooLong(_ p1: Int) -> String {
+      return T.tr("Localizable", "errors__input_too_long", p1, fallback: "Input is too long. Limit: %d")
+    }
     /// No application that supports this link
     internal static let noApp = T.tr("Localizable", "errors__no_app", fallback: "No application that supports this link")
   }
@@ -1305,6 +1324,12 @@ internal enum T {
     }
     /// Use the Add Service button to add a new service
     internal static let useAddServiceButtonTitle = T.tr("Localizable", "voiceover__use_add_service_button_title", fallback: "Use the Add Service button to add a new service")
+  }
+  internal enum Widgets {
+    /// Expires in:
+    internal static let expiresIn = T.tr("Localizable", "widgets__expires_in", fallback: "Expires in:")
+    /// Widget settings
+    internal static let settings = T.tr("Localizable", "widgets__settings", fallback: "Widget settings")
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

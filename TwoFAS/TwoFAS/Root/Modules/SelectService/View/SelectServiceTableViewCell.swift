@@ -62,7 +62,7 @@ final class SelectServiceTableViewCell: UITableViewCell {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fill
-        stackView.spacing = Theme.Metrics.standardSpacing
+        stackView.spacing = Theme.Metrics.halfSpacing
         stackView.alignment = .fill
         return stackView
     }()

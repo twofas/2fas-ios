@@ -470,6 +470,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Bitfinex"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "28703409-A58E-473D-9690-BA490C139F34")!,
+                name: "Healthchecks"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "400FCED8-6FAC-488A-8154-85BE47D84ABE")!,
                 name: "Chargebee"
             ),
@@ -586,6 +590,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Storj.io"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "A713516C-1656-40B8-91BA-85E986805575")!,
+                name: "Rapid"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "B92626FE-68FF-449E-BA64-3E92D55AC2D2")!,
                 name: "Dr. Windows"
             ),
@@ -652,6 +660,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "2100A131-7869-4CA6-B476-F1FC0EF103BF")!,
                 name: "Facebook"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "20C994FC-BFC4-4FFA-A2ED-B469E03451F1")!,
+                name: "Render"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "D506BFDD-D5CA-4AB4-A4C1-960B445226F4")!,
@@ -916,6 +928,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "2BFE0CFC-B557-4F2D-988C-72015254B671")!,
                 name: "Patreon"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "75D24465-2516-4598-A709-D28BBC17337B")!,
+                name: "Fly"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "BEBE73C4-8079-42AC-B735-5B991367CA25")!,
@@ -1432,5 +1448,9 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "1A0ADFA5-37EA-4315-8B48-EE1D7297B1B1")!,
                 name: "Kite"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "7C4A3FA2-5A2D-43E0-B87E-5C3628EAE326")!,
+                name: "Roberts Space Industries"
             )]}()
 }

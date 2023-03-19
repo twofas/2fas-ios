@@ -225,7 +225,7 @@ final class SyncHandler {
                                 list[cloudEntry.index] = currentEntry.item
                             } else {
                                 Log("SyncHandler - Creation: Moving to new order", module: .cloudSync)
-                                list.remove(at: cloudEntry.index)
+                                list.safeRemoval(at: cloudEntry.index)
                                 list.safeInsert(currentEntry.item, at: currentEntry.index)
                             }
                             listToSend[type] = list
@@ -267,7 +267,7 @@ final class SyncHandler {
                                 list[cloudEntry.index] = currentEntry.item
                             } else {
                                 Log("SyncHandler - Modification: Item overrided with local one", module: .cloudSync)
-                                list.remove(at: cloudEntry.index)
+                                list.safeRemoval(at: cloudEntry.index)
                                 list.safeInsert(currentEntry.item, at: currentEntry.index)
                             }
                             listToSend[type] = list

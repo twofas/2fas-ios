@@ -49,4 +49,12 @@ public extension Array {
         let index = at > count ? count : at
         insert(item, at: index)
     }
+    
+    mutating func safeRemoval(at index: Int) {
+        guard index < count else {
+            Log("Trying to remove item out of array length! index: \(index), count: \(count)", severity: .error)
+            return
+        }
+        remove(at: index)
+    }
 }

@@ -443,6 +443,7 @@
 		C27A1EB329127C5700702DB9 /* CameraPermissionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB229127C5700702DB9 /* CameraPermissionInteractor.swift */; };
 		C27A1EB529127C8D00702DB9 /* AlertController+Ready.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB429127C8D00702DB9 /* AlertController+Ready.swift */; };
 		C27A31CA29C8EEE40094679F /* LastPassData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A31C929C8EEE40094679F /* LastPassData.swift */; };
+		C27A31CC29C90B110094679F /* RaivoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A31CB29C90B110094679F /* RaivoData.swift */; };
 		C27A549927F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549827F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift */; };
 		C27A549B27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549A27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift */; };
 		C27A549F27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549E27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift */; };
@@ -1660,6 +1661,7 @@
 		C27A1EB229127C5700702DB9 /* CameraPermissionInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPermissionInteractor.swift; sourceTree = "<group>"; };
 		C27A1EB429127C8D00702DB9 /* AlertController+Ready.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertController+Ready.swift"; sourceTree = "<group>"; };
 		C27A31C929C8EEE40094679F /* LastPassData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastPassData.swift; sourceTree = "<group>"; };
+		C27A31CB29C90B110094679F /* RaivoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RaivoData.swift; sourceTree = "<group>"; };
 		C27A549827F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroViewController.swift; sourceTree = "<group>"; };
 		C27A549A27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroPresenter.swift; sourceTree = "<group>"; };
 		C27A549E27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroModuleInteractor.swift; sourceTree = "<group>"; };
@@ -3559,6 +3561,7 @@
 				C25859372802E75A002DC749 /* PushNotificationState.swift */,
 				C2069C9028C2922A00321E44 /* AEGISData.swift */,
 				C27A31C929C8EEE40094679F /* LastPassData.swift */,
+				C27A31CB29C90B110094679F /* RaivoData.swift */,
 			);
 			path = DataTypes;
 			sourceTree = "<group>";
@@ -7437,6 +7440,7 @@
 				C2AB92C92766520B00698382 /* ExporterPINViewController.swift in Sources */,
 				C217E17223D79D8800EE6C08 /* ToastNotification.swift in Sources */,
 				C2AD653527F25F24008997DB /* BrowserExtensionFailedViewController.swift in Sources */,
+				C27A31CC29C90B110094679F /* RaivoData.swift in Sources */,
 				C2FCB28E282589AC00AF8A37 /* NewsViewEmptyScreen.swift in Sources */,
 				C2508E152753AAFD0072C564 /* SettingsMenuModuleInteractor.swift in Sources */,
 				C2F6BB08264886B7002A9747 /* IntroductionViewModel.swift in Sources */,

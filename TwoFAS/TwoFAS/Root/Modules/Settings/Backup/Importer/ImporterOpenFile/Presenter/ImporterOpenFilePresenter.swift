@@ -86,6 +86,17 @@ private extension ImporterOpenFilePresenter {
                     )
                 }
             }
+        case .raivo(let raivoData):
+            let parseResult = interactor.parseRaivo(raivoData)
+            if parseResult.isEmpty {
+                flowController.toFileIsEmpty()
+            } else {
+                flowController.toPreimportSummary(
+                    count: parseResult.count,
+                    sections: [],
+                    services: parseResult
+                )
+            }
         case .aegis(let result):
             switch result {
             case .error, .encrypted, .newerVersion:

@@ -19,22 +19,23 @@
 
 import Foundation
 
-extension ImportFromFileParsing.AEGISParseResult {
-    var localizedDescription: String? {
-        switch self {
-        case .newerVersion: return T.Backup.newerFormatNotSupported
-        case .encrypted: return T.Backup.encryptedFilesNotSupported
-        case .error: return T.Backup.cantReadFileError
-        default: return nil
-        }
-    }
-}
-
-extension ImportFromFileParsing.LastPassResult {
-    var localizedDescription: String? {
-        switch self {
-        case .newerVersion: return T.Backup.newerFormatNotSupported
-        default: return nil
-        }
+struct LastPassData: Decodable {
+    static let supportedVersion: Int = 3
+    let deviceId: String
+    let deviceSecret: String
+    let localDeviceId: String
+    let deviceName: String
+    let version: Int
+    
+    let accounts: [Account]
+    
+    struct Account: Decodable {
+        let issuerName: String
+        let userName: String
+        let secret: String
+        let timeStep: Int
+        let digits: Int
+        let creationTimestamp: Date
+        let algorithm: String
     }
 }

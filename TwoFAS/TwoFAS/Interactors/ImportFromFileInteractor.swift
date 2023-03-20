@@ -33,8 +33,13 @@ enum ImportFromFileParsing {
         case newerVersion
         case success(AEGISData)
     }
+    enum LastPassResult {
+        case newerVersion
+        case success(LastPassData)
+    }
     case twoFAS(ExchangeDataFormat)
     case aegis(AEGISParseResult)
+    case lastPass(LastPassResult)
 }
 
 enum ImportFromFileTwoFASCheck {
@@ -68,6 +73,7 @@ protocol ImportFromFileInteracting: AnyObject {
     func countNewServices(_ services: [ServiceData]) -> Int
     func importServices(_ services: [ServiceData], sections: [CommonSectionData]) -> Int
     func parseAEGIS(_ data: AEGISData) -> [ServiceData]
+    func parseLastPass(_ data: LastPassData) -> [ServiceData]
 }
 
 final class ImportFromFileInteractor {
@@ -104,6 +110,13 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
         
         if let services = try? jsonDecoder.decode(ExchangeData.self, from: data) {
             return .twoFAS(.twoFAS(services))
+        }
+
+        if let lastPass = try? jsonDecoder.decode(LastPassData.self, from: data) {
+            guard lastPass.version == LastPassData.supportedVersion else {
+                return .lastPass(.newerVersion)
+            }
+            return .lastPass(.success(lastPass))
         }
         
         do {
@@ -383,6 +396,49 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 trashingDate: nil,
                 counter: entry.info.counter,
                 tokenType: entry.type.toTokenType,
+                source: .link,
+                otpAuth: nil,
+                order: nil,
+                sectionID: nil
+            )
+        }
+    }
+    
+    func parseLastPass(_ data: LastPassData) -> [ServiceData] {
+        Log("ImportFromFileInteractor - parseLastPass", module: .interactor)
+        
+        return data.accounts.compactMap { acc in
+            guard let digits = Digits(rawValue: acc.digits),
+                  acc.secret.isValidSecret()
+            else { return nil }
+            
+            let period = Period(rawValue: acc.timeStep) ?? .defaultValue
+            
+            let secret = acc.secret.sanitazeSecret()
+            guard secret.isValidSecret() else { return nil }
+            let algo = Algorithm(rawValue: acc.algorithm.uppercased())
+            
+            let serviceDef = serviceDefinitionInteractor.findService(using: acc.issuerName)
+            return ServiceData(
+                name: acc.userName.sanitazeName(),
+                secret: secret,
+                serviceTypeID: serviceDef?.serviceTypeID,
+                additionalInfo: nil,
+                rawIssuer: acc.issuerName,
+                modifiedAt: acc.creationTimestamp,
+                createdAt: acc.creationTimestamp,
+                tokenPeriod: period,
+                tokenLength: digits,
+                badgeColor: nil,
+                iconType: .brand,
+                iconTypeID: serviceDef?.iconTypeID ?? .default,
+                labelColor: .lightBlue,
+                labelTitle: acc.userName.twoLetters,
+                algorithm: algo ?? .defaultValue,
+                isTrashed: false,
+                trashingDate: nil,
+                counter: 0,
+                tokenType: .totp,
                 source: .link,
                 otpAuth: nil,
                 order: nil,

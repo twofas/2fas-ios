@@ -70,6 +70,22 @@ private extension ImporterOpenFilePresenter {
         }
         switch result {
         case .twoFAS(let data): checkTwoFAS(data)
+        case .lastPass(let result):
+            switch result {
+            case .newerVersion:
+                flowController.toFileError(error: .cantReadFile(reason: result.localizedDescription))
+            case .success(let lastPassData):
+                let parseResult = interactor.parseLastPass(lastPassData)
+                if parseResult.isEmpty {
+                    flowController.toFileIsEmpty()
+                } else {
+                    flowController.toPreimportSummary(
+                        count: parseResult.count,
+                        sections: [],
+                        services: parseResult
+                    )
+                }
+            }
         case .aegis(let result):
             switch result {
             case .error, .encrypted, .newerVersion:

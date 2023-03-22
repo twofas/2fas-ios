@@ -109,6 +109,19 @@ extension SettingsMenuPresenter {
             footer: T.Settings.seeIncomingTokens
         )
         
+        let externalImport = SettingsMenuSection(
+            title: T.Backup.import,
+            cells: [
+                .init(
+                    icon: Asset.settingsExternalImport.image,
+                    title: T.Settings.externalImport,
+                    accessory: .arrow,
+                    action: .navigation(navigatesTo: .externalImport)
+                )
+            ],
+            footer: nil
+        )
+        
         let trash = SettingsMenuSection(
             title: nil,
             cells: [
@@ -156,6 +169,7 @@ extension SettingsMenuPresenter {
             security,
             donate,
             advancedWidgets,
+            externalImport,
             advancedIncoming,
             trash,
             knowledge,

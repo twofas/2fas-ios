@@ -468,7 +468,7 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 let rawTimer = Int(acc.timer),
                 acc.secret.isValidSecret()
             else { return nil }
-            
+
             let period = Period(rawValue: rawTimer) ?? .defaultValue
             
             let secret = acc.secret.sanitazeSecret()

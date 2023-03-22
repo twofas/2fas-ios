@@ -1,22 +1,3 @@
-//
-//  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
-//  Contributed by Zbigniew Cisiński. All rights reserved.
-//
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-//  GNU General Public License for more details.
-//
-//  You should have received a copy of the GNU General Public License
-//  along with this program. If not, see <https://www.gnu.org/licenses/>
-//
-
 // swiftlint:disable all
 // Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
 
@@ -123,6 +104,7 @@ internal enum Asset {
   internal static let settingsDisablePIN = ImageAsset(name: "SettingsDisablePIN")
   internal static let settingsDonate = ImageAsset(name: "SettingsDonate")
   internal static let settingsExport = ImageAsset(name: "SettingsExport")
+  internal static let settingsExternalImport = ImageAsset(name: "SettingsExternalImport")
   internal static let settingsFAQ = ImageAsset(name: "SettingsFAQ")
   internal static let settingsImport = ImageAsset(name: "SettingsImport")
   internal static let settingsInfo = ImageAsset(name: "SettingsInfo")

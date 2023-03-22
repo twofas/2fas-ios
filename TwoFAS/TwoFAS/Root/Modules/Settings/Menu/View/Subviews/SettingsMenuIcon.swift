@@ -36,13 +36,17 @@ final class SettingsMenuIcon: UIImageView {
     }
     
     private func commonInit() {
-        applyBorder()
         tintColor = Theme.Colors.Fill.theme
         contentMode = .center
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        applyBorder()
+    }
+    
     private func applyBorder() {
-        applyRoundedBorder(withBorderColor: Theme.Colors.SettingsCell.iconBorder, width: Theme.Metrics.lineWidth)
+        applyRoundedBorder(withBorderColor: Theme.Colors.SettingsCell.iconBorder, width: Theme.Metrics.separatorHeight)
         backgroundColor = Theme.Colors.Icon.background
     }
     

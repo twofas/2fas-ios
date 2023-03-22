@@ -184,6 +184,8 @@ private extension SettingsMenuPresenter {
             flowController.toAbout()
         case .donate:
             flowController.toDonate()
+        case .externalImport:
+            print("")
         }
     }
     

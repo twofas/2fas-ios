@@ -223,12 +223,13 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
     
     func saveViewPath(_ path: ViewPath) {
         let path = ViewStatePath(savedAt: Date(), path: path)
-        guard let encodedNode = try? encoder.encode(path) else {
-            Log("Can't save View State Path!", severity: .error)
-            return
+        do {
+            let encodedNode = try encoder.encode(path)
+            userDefaults.set(encodedNode, forKey: Keys.viewPath.rawValue)
+            userDefaults.synchronize()
+        } catch {
+            Log("Can't save View State Path! Error: \(error)", severity: .error)
         }
-        userDefaults.set(encodedNode, forKey: Keys.viewPath.rawValue)
-        userDefaults.synchronize()
     }
     
     func viewPath() -> (viewPath: ViewPath, savedAt: Date)? {

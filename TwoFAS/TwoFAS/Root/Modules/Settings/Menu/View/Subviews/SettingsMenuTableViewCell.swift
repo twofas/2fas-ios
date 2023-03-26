@@ -215,6 +215,10 @@ final class SettingsMenuTableViewCell: UITableViewCell {
         }
     }
     
+    func disableIconBorder() {
+        settingsIcon.disableBorder()
+    }
+    
     private func clearCustomContainer() {
         customViewContainer.isHidden = true
         customViewContainer.removeAllSubviews()

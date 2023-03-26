@@ -28,6 +28,7 @@ protocol SettingsMenuFlowControllerChild: AnyObject {
     func toSwitchToBrowserExtension()
     func toSwitchToFAQ()
     func appSecurityChaged()
+    func toSwitchToExternlImport()
 }
 
 protocol SettingsMenuFlowControllerParent: AnyObject {
@@ -40,6 +41,7 @@ protocol SettingsMenuFlowControllerParent: AnyObject {
     func toBrowserExtension()
     func toDonate()
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
+    func toExternalImport()
 }
 
 protocol SettingsMenuFlowControlling: AnyObject {
@@ -53,6 +55,7 @@ protocol SettingsMenuFlowControlling: AnyObject {
     func toAbout()
     func toDonate()
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
+    func toExternalImport()
 }
 
 final class SettingsMenuFlowController: FlowController {
@@ -100,6 +103,7 @@ extension SettingsMenuFlowController: SettingsMenuFlowControlling {
     }
     func toBrowserExtension() { parent?.toBrowserExtension() }
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) { parent?.toUpdateCurrentPosition(viewPath) }
+    func toExternalImport() { parent?.toExternalImport() }
 }
 
 extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {
@@ -133,6 +137,10 @@ extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {
     
     func toSwitchToBrowserExtension() {
         viewController.presenter.handleSwitchToBrowserExtension()
+    }
+    
+    func toSwitchToExternlImport() {
+        viewController.presenter.handleToExternalImport()
     }
 }
 

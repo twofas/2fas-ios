@@ -167,6 +167,11 @@ extension UIView {
         layer.borderColor = color.cgColor
     }
     
+    func clearBorder() {
+        layer.borderWidth = 0
+        layer.borderColor = nil
+    }
+    
     var safeTopAnchor: NSLayoutYAxisAnchor { self.safeAreaLayoutGuide.topAnchor }
     var safeLeadingAnchor: NSLayoutXAxisAnchor { self.safeAreaLayoutGuide.leadingAnchor }
     var safeTrailingAnchor: NSLayoutXAxisAnchor { self.safeAreaLayoutGuide.trailingAnchor }

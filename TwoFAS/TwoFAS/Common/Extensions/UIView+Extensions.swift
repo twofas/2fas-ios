@@ -168,6 +168,9 @@ extension UIView {
     }
     
     func clearBorder() {
+        backgroundColor = UIColor.clear
+        layer.cornerRadius = Theme.Metrics.cornerRadius
+        layer.masksToBounds = true
         layer.borderWidth = 0
         layer.borderColor = nil
     }

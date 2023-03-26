@@ -34,6 +34,33 @@ struct RoundedFilledButtonStyle: SwiftUI.ButtonStyle {
     }
 }
 
+struct RoundedBorderButtonStyle: SwiftUI.ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .multilineTextAlignment(.center)
+            .font(.body.bold())
+            .foregroundColor(
+                configuration.isPressed
+                ? Color(Theme.Colors.Text.themeHighlighted)
+                : Color(Theme.Colors.Text.theme)
+            )
+            .padding()
+            .background(
+                ZStack {
+                    RoundedRectangle(cornerRadius: Theme.Metrics.cornerRadius)
+                        .fill(Color(Theme.Colors.Fill.background))
+                    RoundedRectangle(cornerRadius: Theme.Metrics.cornerRadius)
+                        .stroke(
+                            configuration.isPressed
+                            ? Color(Theme.Colors.Controls.highlighed)
+                            : Color(Theme.Colors.Controls.active),
+                            lineWidth: 2
+                        )
+                }
+            )
+    }
+}
+
 struct RoundedFilledInactiveButtonStyle: SwiftUI.ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label

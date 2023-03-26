@@ -41,11 +41,11 @@ final class ExternalImportPresenter {
         
         switch cell.action {
         case .aegis:
-            print("aegis")
+            flowController.toAegis()
         case .raivo:
-            print("raivo")
+            flowController.toRaivo()
         case .googleAuth:
-            print("google auth")
+            flowController.toGoogleAuth()
         }
     }
     

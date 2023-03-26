@@ -50,7 +50,7 @@ extension ExternalImportPresenter {
                     ),
                     .init(
                         icon: Asset.externalImportIconRaivo.image,
-                        title: "Raivo", // TODO: Add translation
+                        title: T.externalimportRaivo,
                         action: .raivo
                     ),
                     .init(

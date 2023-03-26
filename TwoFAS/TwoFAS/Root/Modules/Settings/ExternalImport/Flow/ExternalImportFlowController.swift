@@ -18,15 +18,20 @@
 //
 
 import UIKit
+import Common
 
 protocol ExternalImportFlowControllerParent: AnyObject {}
 
 protocol ExternalImportFlowControlling: AnyObject {
-    
+    func toAegis()
+    func toRaivo()
+    func toGoogleAuth()
 }
 
 final class ExternalImportFlowController: FlowController {
     private weak var parent: ExternalImportFlowControllerParent?
+    private weak var navigationController: UINavigationController?
+    private var galleryViewController: UIViewController?
     
     static func showAsRoot(
         in navigationController: UINavigationController,
@@ -35,6 +40,7 @@ final class ExternalImportFlowController: FlowController {
         let view = ExternalImportViewController()
         let flowController = ExternalImportFlowController(viewController: view)
         flowController.parent = parent
+        flowController.navigationController = navigationController
         let presenter = ExternalImportPresenter(
             flowController: flowController
         )
@@ -51,6 +57,7 @@ final class ExternalImportFlowController: FlowController {
         let view = ExternalImportViewController()
         let flowController = ExternalImportFlowController(viewController: view)
         flowController.parent = parent
+        flowController.navigationController = navigationController
         let presenter = ExternalImportPresenter(
             flowController: flowController
         )
@@ -62,5 +69,89 @@ final class ExternalImportFlowController: FlowController {
 }
 
 extension ExternalImportFlowController: ExternalImportFlowControlling {
+    func toAegis() {
+        guard let navigationController else { return }
+        ExternalImportInstructionsFlowController.push(
+            in: navigationController,
+            parent: self,
+            service: .aegis
+        )
+    }
     
+    func toRaivo() {
+        guard let navigationController else { return }
+        ExternalImportInstructionsFlowController.push(
+            in: navigationController,
+            parent: self,
+            service: .raivo
+        )
+    }
+    
+    func toGoogleAuth() {
+        guard let navigationController else { return }
+        ExternalImportInstructionsFlowController.push(
+            in: navigationController,
+            parent: self,
+            service: .googleAuth
+        )
+    }
+}
+
+extension ExternalImportFlowController: ExternalImportInstructionsFlowControllerParent {
+    func instructionsClose() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func instructionsOpenFile() {
+        guard let navigationController else { return }
+        ImporterOpenFileFlowController.present(on: navigationController, parent: self, url: nil)
+    }
+    
+    func instructionsCamera() {
+        guard let navigationController else { return }
+        CameraScannerFlowController.present(
+            on: navigationController,
+            parent: self
+        )
+    }
+    
+    func instructionsGallery() {
+        guard let navigationController else { return }
+        galleryViewController = SelectFromGalleryFlowController.present(
+            on: navigationController,
+            applyOverlay: true,
+            parent: self
+        )
+    }
+}
+
+extension ExternalImportFlowController: CameraScannerFlowControllerParent {
+    func cameraScannerDidFinish() { end() }
+    func cameraScannerServiceWasCreated(serviceData: ServiceData) { end() }
+}
+
+extension ExternalImportFlowController: SelectFromGalleryFlowControllerParent {
+    func galleryDidFinish() { endGallery() }
+    func galleryDidCancel() { endGallery() }
+    func galleryServiceWasCreated(serviceData: ServiceData) { endGallery() }
+    func galleryToSendLogs(auditID: UUID) { endGallery() }
+}
+
+extension ExternalImportFlowController: ImporterOpenFileFlowControllerParent {
+    func closeImporter() { end() }
+}
+
+private extension ExternalImportFlowController {
+    func endGallery() {
+        navigationController?.dismiss(animated: true) { [weak self] in
+            self?.galleryViewController = nil
+            self?.instructionsClose()
+        }
+    }
+    
+    func end() {
+        navigationController?.dismiss(animated: true) { [weak self] in
+            self?.instructionsClose()
+        }
+    }
 }

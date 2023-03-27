@@ -233,7 +233,12 @@ private extension NewCodeInteractor {
             service = String(splitPathArray[0]).trimmingCharacters(in: .whitespaces)
             value = String(splitPathArray[1]).trimmingCharacters(in: .whitespaces)
         } else {
-            service = String(splitPathArray[0]).trimmingCharacters(in: .whitespaces)
+            let str = String(splitPathArray[0]).trimmingCharacters(in: .whitespaces)
+            if str.isEmailValid() {
+                value = str
+            } else {
+                service = str
+            }
         }
         
         return (service, value)

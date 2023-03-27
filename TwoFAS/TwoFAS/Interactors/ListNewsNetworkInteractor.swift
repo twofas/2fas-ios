@@ -37,7 +37,8 @@ final class ListNewsNetworkInteractor {
     private let calendar = Calendar.current
     private let mainRepository: MainRepository
     
-    private let monthsAgo: Int = 3
+    // Temporary change 3 -> 24 months, take first 10
+    private let monthsAgo: Int = 24 // 3
     
     init(mainRepository: MainRepository) {
         self.mainRepository = mainRepository
@@ -60,7 +61,9 @@ extension ListNewsNetworkInteractor: ListNewsNetworkInteracting {
             case .success(let list):
                 Log("ListNewsNetworkInteractor - fetchNews. Success", module: .interactor)
                 let parsed = self?.parsedList(list) ?? []
-                completion(.success(parsed))
+                // Temporary taking last 10 entries
+                let lastTen = Array((parsed).suffix(10))
+                completion(.success(lastTen))
             case .failure(let error):
                 Log("ListNewsNetworkInteractor - fetchNews. Failure: \(error)", module: .interactor)
                 switch error {

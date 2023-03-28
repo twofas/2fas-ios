@@ -68,7 +68,7 @@ extension IconSelectorFlowController: IconSelectorFlowControlling {
     }
     
     func toOrderIcon(sourceView: UIView) {
-        AnalyticsLog(.orderIconClick)
+        AppEventLog(.orderIconClick)
         
         let actionSheet = UIAlertController(title: T.Tokens.orderMenuTitle, message: nil, preferredStyle: .actionSheet)
         if let popover = actionSheet.popoverPresentationController {
@@ -78,7 +78,7 @@ extension IconSelectorFlowController: IconSelectorFlowControlling {
         actionSheet.addAction(cancelActionButton)
 
         let user = UIAlertAction(title: T.Tokens.orderMenuOptionUser, style: .default) { [weak self] _ in
-            AnalyticsLog(.orderIconAsUser)
+            AppEventLog(.orderIconAsUser)
             self?.toUserIconInfo()
         }
         user.setValue(Asset.iconRequestUser.image, forKey: "image")
@@ -86,7 +86,7 @@ extension IconSelectorFlowController: IconSelectorFlowControlling {
         actionSheet.addAction(user)
         
         let company = UIAlertAction(title: T.Tokens.orderMenuOptionCompany, style: .default) { _ in
- 			AnalyticsLog(.orderIconAsCompany)
+            AppEventLog(.orderIconAsCompany)
             UIApplication.shared.open(
                 URL(string: "https://2fas.com/your-branding/")!,
                 options: [:],

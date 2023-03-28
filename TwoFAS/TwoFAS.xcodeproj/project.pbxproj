@@ -439,7 +439,7 @@
 		C279BD52286509F8000FD69D /* SectionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C279BD51286509F8000FD69D /* SectionInteractor.swift */; };
 		C27A1EAA2912791100702DB9 /* ExternalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EA92912791100702DB9 /* ExternalLinks.swift */; };
 		C27A1EAC2912797200702DB9 /* MainRepositoryImpl+Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EAB2912797200702DB9 /* MainRepositoryImpl+Camera.swift */; };
-		C27A1EB1291279E400702DB9 /* AnalyticsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB0291279E400702DB9 /* AnalyticsController.swift */; };
+		C27A1EB1291279E400702DB9 /* AppEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB0291279E400702DB9 /* AppEventController.swift */; };
 		C27A1EB329127C5700702DB9 /* CameraPermissionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB229127C5700702DB9 /* CameraPermissionInteractor.swift */; };
 		C27A1EB529127C8D00702DB9 /* AlertController+Ready.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB429127C8D00702DB9 /* AlertController+Ready.swift */; };
 		C27A549927F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549827F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift */; };
@@ -683,7 +683,6 @@
 		C2B6D7AA260BCB57005B599E /* TintColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B6D7A9260BCB57005B599E /* TintColor.swift */; };
 		C2B6D7B9260BCBC7005B599E /* TintColor.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2B6D7B8260BCBC7005B599E /* TintColor.xcassets */; };
 		C2B811D5284D1CFE009FD99D /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C2B811D4284D1CFE009FD99D /* FirebaseCrashlytics */; };
-		C2B811D7284D1D11009FD99D /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = C2B811D6284D1D11009FD99D /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		C2B811D9284D1D2C009FD99D /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = C2B811D8284D1D2C009FD99D /* FirebaseRemoteConfig */; };
 		C2B811DB284D1D62009FD99D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C2B811DA284D1D62009FD99D /* FirebaseMessaging */; };
 		C2B90EEE281EB3CF004B8AEC /* MainRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B90EED281EB3CF004B8AEC /* MainRepositoryImpl.swift */; };
@@ -1655,7 +1654,7 @@
 		C279BD51286509F8000FD69D /* SectionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionInteractor.swift; sourceTree = "<group>"; };
 		C27A1EA92912791100702DB9 /* ExternalLinks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExternalLinks.swift; sourceTree = "<group>"; };
 		C27A1EAB2912797200702DB9 /* MainRepositoryImpl+Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Camera.swift"; sourceTree = "<group>"; };
-		C27A1EB0291279E400702DB9 /* AnalyticsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsController.swift; sourceTree = "<group>"; };
+		C27A1EB0291279E400702DB9 /* AppEventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppEventController.swift; sourceTree = "<group>"; };
 		C27A1EB229127C5700702DB9 /* CameraPermissionInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPermissionInteractor.swift; sourceTree = "<group>"; };
 		C27A1EB429127C8D00702DB9 /* AlertController+Ready.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertController+Ready.swift"; sourceTree = "<group>"; };
 		C27A549827F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroViewController.swift; sourceTree = "<group>"; };
@@ -2169,7 +2168,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C253719C281DC900005FB118 /* Common.framework in Frameworks */,
-				C2B811D7284D1D11009FD99D /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				C2B811DB284D1D62009FD99D /* FirebaseMessaging in Frameworks */,
 				C2B811D5284D1CFE009FD99D /* FirebaseCrashlytics in Frameworks */,
 				C2B811D9284D1D2C009FD99D /* FirebaseRemoteConfig in Frameworks */,
@@ -4340,7 +4338,7 @@
 		C27A1EAF291279E400702DB9 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
-				C27A1EB0291279E400702DB9 /* AnalyticsController.swift */,
+				C27A1EB0291279E400702DB9 /* AppEventController.swift */,
 			);
 			path = Analytics;
 			sourceTree = "<group>";
@@ -6426,7 +6424,6 @@
 			name = PushNotifications;
 			packageProductDependencies = (
 				C2B811D4284D1CFE009FD99D /* FirebaseCrashlytics */,
-				C2B811D6284D1D11009FD99D /* FirebaseAnalyticsWithoutAdIdSupport */,
 				C2B811D8284D1D2C009FD99D /* FirebaseRemoteConfig */,
 				C2B811DA284D1D62009FD99D /* FirebaseMessaging */,
 			);
@@ -7203,7 +7200,7 @@
 				C2147CD1205D7B520001D011 /* PINPadViewController.swift in Sources */,
 				C20935E3292152FA000F5AA7 /* PushNotificationInteractor.swift in Sources */,
 				C2DDEB1F289ED4A300011712 /* IntroductionDots.swift in Sources */,
-				C27A1EB1291279E400702DB9 /* AnalyticsController.swift in Sources */,
+				C27A1EB1291279E400702DB9 /* AppEventController.swift in Sources */,
 				C26654292725D6EA00DC3A3C /* PasswordTextField.swift in Sources */,
 				C25B221627C181690052AAC4 /* ComposeServiceInputCellKind.swift in Sources */,
 				C2A7946027F9071F00E5C641 /* BrowserExtensionServicePresenter.swift in Sources */,
@@ -9607,11 +9604,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
-		};
-		C2B811D6284D1D11009FD99D /* FirebaseAnalyticsWithoutAdIdSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsWithoutAdIdSupport;
 		};
 		C2B811D8284D1D2C009FD99D /* FirebaseRemoteConfig */ = {
 			isa = XCSwiftPackageProductDependency;

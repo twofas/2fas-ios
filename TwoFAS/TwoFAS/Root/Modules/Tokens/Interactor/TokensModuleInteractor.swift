@@ -230,7 +230,7 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     // MARK: - Section
     
     func createSection(with name: String) {
-        AnalyticsLog(.groupAdd)
+        AppEventLog(.groupAdd)
         sectionInteractor.create(with: name)
     }
     
@@ -260,7 +260,7 @@ extension TokensModuleInteractor: TokensModuleInteracting {
 
     func delete(_ section: GridSection) {
         guard let sectionData = section.sectionData else { return }
-        AnalyticsLog(.groupRemove)
+        AppEventLog(.groupRemove)
         sectionInteractor.delete(sectionData)
     }
     

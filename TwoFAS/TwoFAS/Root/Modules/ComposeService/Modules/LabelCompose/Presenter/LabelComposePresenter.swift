@@ -52,7 +52,7 @@ extension LabelComposePresenter {
     }
     
     func handleSave() {
-        AnalyticsLog(.codeDetailsLabelSet)
+        AppEventLog(.codeDetailsLabelSet)
         flowController.toSave(title: title, color: color)
     }
     

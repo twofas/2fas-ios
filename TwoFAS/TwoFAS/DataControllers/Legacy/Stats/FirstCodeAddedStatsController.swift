@@ -32,7 +32,7 @@ enum FirstCodeAddedStatsController {
     
     static func markStats() {
         guard shouldMark else { return }
-        AnalyticsLog(.firstCode)
+        AppEventLog(.firstCode)
         mark()
     }
 }

@@ -44,12 +44,6 @@ final class FCM: NSObject, MessagingDelegate, FCMHandlerProtocol {
         FCMTokenObtained?(GCMToken)
     }
     
-    static func logEvent(_ key: String, parameters: [String: Any]? = nil) {
-        #if !DEBUG
-            Analytics.logEvent(key, parameters: nil)
-        #endif
-    }
-    
     static func logDebugInfo(_ message: String) {
         #if !DEBUG
             Crashlytics.crashlytics().log(message)

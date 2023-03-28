@@ -61,7 +61,7 @@ extension CameraScannerPresenter {
     
     func handleGoogleAuthImport(_ codes: [Code]) {
         guard !codes.isEmpty else { return }
-        AnalyticsLog(.importGoogleAuth)
+        AppEventLog(.importGoogleAuth)
         interactor.addCodes(codes)
         flowController.toFinish()
     }

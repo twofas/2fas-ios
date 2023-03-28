@@ -21,7 +21,7 @@ import Foundation
 import PushNotifications
 import Common
 
-enum AnalyticsEvent {
+enum AppEvent {
     case appUpdate(String)
     case firstCode
     case widgetEnabled
@@ -57,30 +57,29 @@ func DebugLog(_ str: String) {
     PushNotifications.logDebugInfo(str)
 }
 
-func AnalyticsLog(_ event: AnalyticsEvent) {
-    AnalyticsController.log(event: event)
+func AppEventLog(_ event: AppEvent) {
+    AppEventController.log(event: event)
 }
 
-private enum AnalyticsController {
+private enum AppEventController {
     fileprivate static let KeyType = "type"
     fileprivate static let KeyId = "id"
     fileprivate static let KeyValue = "value"
     
-    static func log(event: AnalyticsEvent) {
-        PushNotifications.logEvent(event.key, parameters: event.value)
+    static func log(event: AppEvent) {
         if let value = event.value {
             Log(
                 "Logging analytics event: \(event.key), with parameters: \(value)",
-                module: .analytics,
+                module: .appEvent,
                 severity: .trace
             )
         } else {
-            Log("Logging analytics event: \(event.key)", module: .analytics, severity: .trace)
+            Log("Logging analytics event: \(event.key)", module: .appEvent, severity: .trace)
         }
     }
 }
 
-private extension AnalyticsEvent {
+private extension AppEvent {
     var key: String {
         switch self {
         case .appUpdate: return "app_update"
@@ -117,16 +116,16 @@ private extension AnalyticsEvent {
     
     var value: [String: String]? {
         switch self {
-        case .appUpdate(let string): return [AnalyticsController.KeyValue: string]
-        case .missingIcon(let string): return [AnalyticsController.KeyType: string]
-        case .missingIssuer(let string): return [AnalyticsController.KeyType: string]
-        case .articleRead(let string): return [AnalyticsController.KeyId: string]
-        case .supportedCodeAdded(let string): return [AnalyticsController.KeyType: string]
-        case .codeDetailsTypeAdded(let string): return [AnalyticsController.KeyValue: string]
-        case .codeDetailsAlgorithmChosen(let string): return [AnalyticsController.KeyValue: string]
-        case .codeDetailsRefreshTimeChosen(let string): return [AnalyticsController.KeyValue: string]
-        case .codeDetailsNumberOfDigitsChosen(let string): return [AnalyticsController.KeyValue: string]
-        case .codeDetailsInitialCounterChosen(let string): return [AnalyticsController.KeyValue: string]
+        case .appUpdate(let string): return [AppEventController.KeyValue: string]
+        case .missingIcon(let string): return [AppEventController.KeyType: string]
+        case .missingIssuer(let string): return [AppEventController.KeyType: string]
+        case .articleRead(let string): return [AppEventController.KeyId: string]
+        case .supportedCodeAdded(let string): return [AppEventController.KeyType: string]
+        case .codeDetailsTypeAdded(let string): return [AppEventController.KeyValue: string]
+        case .codeDetailsAlgorithmChosen(let string): return [AppEventController.KeyValue: string]
+        case .codeDetailsRefreshTimeChosen(let string): return [AppEventController.KeyValue: string]
+        case .codeDetailsNumberOfDigitsChosen(let string): return [AppEventController.KeyValue: string]
+        case .codeDetailsInitialCounterChosen(let string): return [AppEventController.KeyValue: string]
         default: return nil
         }
     }

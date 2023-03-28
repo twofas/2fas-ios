@@ -113,7 +113,7 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
         isAvailable = false
         stateChanged?()
         
-        AnalyticsLog(.backupOn)
+        AppEventLog(.backupOn)
         mainRepository.enableCloudBackup()
     }
     
@@ -122,7 +122,7 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
         isAvailable = false
         stateChanged?()
         
-        AnalyticsLog(.backupOff)
+        AppEventLog(.backupOff)
         mainRepository.disableCloudBackup()
     }
     

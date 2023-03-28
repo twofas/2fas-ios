@@ -33,7 +33,7 @@ final class ExternalImportInstructionsPresenter {
 extension ExternalImportInstructionsPresenter {
     var hasSecondaryAction: Bool {
         switch service {
-        case .aegis, .raivo: return false
+        case .aegis, .raivo, .lastPass: return false
         case .googleAuth: return true
         }
     }
@@ -42,6 +42,7 @@ extension ExternalImportInstructionsPresenter {
         switch service {
         case .aegis: return Asset.externalImportAegis.swiftUIImage
         case .raivo: return Asset.externalImportRavio.swiftUIImage
+        case .lastPass: return Asset.externalImportLastPass.swiftUIImage
         case .googleAuth: return Asset.externalImportGoogleAuth.swiftUIImage
         }
     }
@@ -50,6 +51,7 @@ extension ExternalImportInstructionsPresenter {
         switch service {
         case .aegis: return T.externalimportAegis
         case .raivo: return T.externalimportRaivo
+        case .lastPass: return T.externalimportLastpass
         case .googleAuth: return T.externalimportGoogleAuthenticator
         }
     }
@@ -58,20 +60,21 @@ extension ExternalImportInstructionsPresenter {
         switch service {
         case .aegis: return T.Externalimport.aegisMsg
         case .raivo: return T.Externalimport.raivoMsg
+        case .lastPass: return T.Externalimport.lastpassMsg
         case .googleAuth: return T.Introduction.googleAuthenticatorImportProcess
         }
     }
     
     var actionName: String {
         switch service {
-        case .aegis, .raivo: return  T.Externalimport.chooseJsonCta
+        case .aegis, .raivo, .lastPass: return  T.Externalimport.chooseJsonCta
         case .googleAuth: return T.Commons.scanQrCode
         }
     }
     
     var secondaryActionName: String? {
         switch service {
-        case .aegis, .raivo: return nil
+        case .aegis, .raivo, .lastPass: return nil
         case .googleAuth: return T.Introduction.chooseQrCode
         }
     }
@@ -80,7 +83,7 @@ extension ExternalImportInstructionsPresenter {
     
     func handleAction() {
         switch service {
-        case .aegis, .raivo: flowController.toOpenFile()
+        case .aegis, .raivo, .lastPass: flowController.toOpenFile()
         case .googleAuth: flowController.toCamera()
         }
     }
@@ -91,7 +94,7 @@ extension ExternalImportInstructionsPresenter {
     
     func handleSecondaryAction() {
         switch service {
-        case .aegis, .raivo: break
+        case .aegis, .raivo, .lastPass: break
         case .googleAuth: flowController.toGallery()
         }
     }

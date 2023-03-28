@@ -29,6 +29,7 @@ struct ExternalImportCell: Hashable {
     enum ExternalImportAction: Hashable {
         case aegis
         case raivo
+        case lastPass
         case googleAuth
     }
     
@@ -52,6 +53,11 @@ extension ExternalImportPresenter {
                         icon: Asset.externalImportIconRaivo.image,
                         title: T.externalimportRaivo,
                         action: .raivo
+                    ),
+                    .init(
+                        icon: Asset.externalImportIconLastPass.image,
+                        title: T.externalimportLastpass,
+                        action: .lastPass
                     ),
                     .init(
                         icon: Asset.externalmportIconGoogleAuth.image,

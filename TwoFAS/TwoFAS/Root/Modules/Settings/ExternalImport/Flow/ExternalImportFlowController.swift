@@ -25,6 +25,7 @@ protocol ExternalImportFlowControllerParent: AnyObject {}
 protocol ExternalImportFlowControlling: AnyObject {
     func toAegis()
     func toRaivo()
+    func toLastPass()
     func toGoogleAuth()
 }
 
@@ -84,6 +85,15 @@ extension ExternalImportFlowController: ExternalImportFlowControlling {
             in: navigationController,
             parent: self,
             service: .raivo
+        )
+    }
+    
+    func toLastPass() {
+        guard let navigationController else { return }
+        ExternalImportInstructionsFlowController.push(
+            in: navigationController,
+            parent: self,
+            service: .lastPass
         )
     }
     

@@ -22,5 +22,6 @@ import Foundation
 enum ExternalImportInstructionsService {
     case aegis
     case raivo
+    case lastPass
     case googleAuth
 }

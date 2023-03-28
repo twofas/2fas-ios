@@ -44,6 +44,8 @@ final class ExternalImportPresenter {
             flowController.toAegis()
         case .raivo:
             flowController.toRaivo()
+        case .lastPass:
+            flowController.toLastPass()
         case .googleAuth:
             flowController.toGoogleAuth()
         }

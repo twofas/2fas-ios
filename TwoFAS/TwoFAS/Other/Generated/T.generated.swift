@@ -32,8 +32,9 @@ internal enum T {
   internal static let backupNoticeCta = T.tr("Localizable", "backup_notice_cta", fallback: "Turn On")
   /// Maybe Later
   internal static let backupNoticeLater = T.tr("Localizable", "backup_notice_later", fallback: "Maybe Later")
-  /// Turn on 2FAS Backup and keep your codes secure in Google Drive.
-  internal static let backupNoticeMsg = T.tr("Localizable", "backup_notice_msg", fallback: "Turn on 2FAS Backup and keep your codes secure in Google Drive.")
+  /// Turn on 2FAS Backup. In case of resetting
+  /// or losing your phone, you will be able to restore all your tokens.
+  internal static let backupNoticeMsg = T.tr("Localizable", "backup_notice_msg", fallback: "Turn on 2FAS Backup. In case of resetting\nor losing your phone, you will be able to restore all your tokens.")
   /// 2FAS Backup
   internal static let backupNoticeTitle = T.tr("Localizable", "backup_notice_title", fallback: "2FAS Backup")
   /// Google account
@@ -225,6 +226,12 @@ internal enum T {
     /// 2FAS Authenticator
     internal static let name = T.tr("Localizable", "app__name", fallback: "2FAS Authenticator")
   }
+  internal enum Appearance {
+    /// Active search on startup
+    internal static let activeSearchDescription = T.tr("Localizable", "appearance__active_search_description", fallback: "Active search on startup")
+    /// Active search
+    internal static let toggleActiveSearch = T.tr("Localizable", "appearance__toggle_active_search", fallback: "Active search")
+  }
   internal enum Backup {
     /// 2FAS Backup
     internal static let _2fasBackup = T.tr("Localizable", "backup__2fas_backup", fallback: "2FAS Backup")
@@ -326,6 +333,10 @@ internal enum T {
     internal static let password = T.tr("Localizable", "backup__password", fallback: "Password")
     /// Passwords don't match
     internal static let passwordsDontMatch = T.tr("Localizable", "backup__passwords_dont_match", fallback: "Passwords don't match")
+    /// Go to backup settings
+    internal static let reminderCta = T.tr("Localizable", "backup__reminder_cta", fallback: "Go to backup settings")
+    /// Google Drive not synced.
+    internal static let reminderMsg = T.tr("Localizable", "backup__reminder_msg", fallback: "Google Drive not synced.")
     /// Enter the backup password to proceed with remove.
     internal static let removePasswordMsg = T.tr("Localizable", "backup__remove_password_msg", fallback: "Enter the backup password to proceed with remove.")
     /// Repeat password
@@ -506,6 +517,8 @@ internal enum T {
     internal static let add = T.tr("Localizable", "commons__add", fallback: "Add")
     /// Approve
     internal static let approve = T.tr("Localizable", "commons__approve", fallback: "Approve")
+    /// Best match
+    internal static let bestMatch = T.tr("Localizable", "commons__best_match", fallback: "Best match")
     /// Point your camera at the screen to capture the QR code
     internal static let cameraTitle = T.tr("Localizable", "commons__camera_title", fallback: "Point your camera at the screen to capture the QR code")
     /// Cancel
@@ -600,6 +613,16 @@ internal enum T {
     internal static let outOfDiskSpace = T.tr("Localizable", "error__out_of_disk_space", fallback: "It appears that either you've run out of disk space now, or such an event in the past damaged the database")
   }
   internal enum Errors {
+    /// Input can not be empty
+    internal static let inputEmpty = T.tr("Localizable", "errors__input_empty", fallback: "Input can not be empty")
+    /// Input must be integer number
+    internal static let inputIntegerNumber = T.tr("Localizable", "errors__input_integer_number", fallback: "Input must be integer number")
+    /// Input must be a number
+    internal static let inputNumber = T.tr("Localizable", "errors__input_number", fallback: "Input must be a number")
+    /// Input is too long. Limit: %d
+    internal static func inputTooLong(_ p1: Int) -> String {
+      return T.tr("Localizable", "errors__input_too_long", p1, fallback: "Input is too long. Limit: %d")
+    }
     /// No application that supports this link
     internal static let noApp = T.tr("Localizable", "errors__no_app", fallback: "No application that supports this link")
   }
@@ -838,6 +861,8 @@ internal enum T {
     internal static let appBlocking = T.tr("Localizable", "settings__app_blocking", fallback: "Lockout settings")
     /// App security
     internal static let appSecurity = T.tr("Localizable", "settings__app_security", fallback: "App security")
+    /// Appearance
+    internal static let appearance = T.tr("Localizable", "settings__appearance", fallback: "Appearance")
     /// Backup and Synchronization
     internal static let backupAndSynchronization = T.tr("Localizable", "settings__backup_and_synchronization", fallback: "Backup and Synchronization")
     /// Biometric Authentication
@@ -863,14 +888,18 @@ internal enum T {
     internal static let donateTwofas = T.tr("Localizable", "settings__donate_twofas", fallback: "Donate to 2FAS")
     /// Donations
     internal static let donations = T.tr("Localizable", "settings__donations", fallback: "Donations")
+    /// Send anonymous crash reports
+    internal static let enableCrashlytics = T.tr("Localizable", "settings__enable_crashlytics", fallback: "Send anonymous crash reports")
+    /// Send anonymous crash reports to help 2FAS identify and solve issues in the app (app restart required).
+    internal static let enableCrashlyticsDescription = T.tr("Localizable", "settings__enable_crashlytics_description", fallback: "Send anonymous crash reports to help 2FAS identify and solve issues in the app (app restart required).")
     /// Import tokens
     internal static let externalImport = T.tr("Localizable", "settings__external_import", fallback: "Import tokens")
     /// Face ID
     internal static let faceId = T.tr("Localizable", "settings__face_id", fallback: "Face ID")
     /// Are you sure? Without Google Drive sync, you won't be able to restore your tokens if you lose or reset your phone!
     internal static let gdSyncDisableConfirm = T.tr("Localizable", "settings__gd_sync_disable_confirm", fallback: "Are you sure? Without Google Drive sync, you won't be able to restore your tokens if you lose or reset your phone!")
-    /// Google Drive sync info
-    internal static let gdSyncInfo = T.tr("Localizable", "settings__gd_sync_info", fallback: "Google Drive sync info")
+    /// Google Drive sync reminder
+    internal static let gdSyncInfo = T.tr("Localizable", "settings__gd_sync_info", fallback: "Google Drive sync reminder")
     /// General
     internal static let general = T.tr("Localizable", "settings__general", fallback: "General")
     /// Select the maximum number of unsuccessful passcode attempts before locking the application.
@@ -880,6 +909,12 @@ internal enum T {
     internal static let knowledge = T.tr("Localizable", "settings__knowledge", fallback: "Knowledge")
     /// Max failed attempts
     internal static let limitOfTrials = T.tr("Localizable", "settings__limit_of_trials", fallback: "Max failed attempts")
+    /// List style
+    internal static let listStyle = T.tr("Localizable", "settings__list_style", fallback: "List style")
+    /// Compact
+    internal static let listStyleOptionCompact = T.tr("Localizable", "settings__list_style_option_compact", fallback: "Compact")
+    /// Default
+    internal static let listStyleOptionDefault = T.tr("Localizable", "settings__list_style_option_default", fallback: "Default")
     /// Mail services are not available
     internal static let mailServicesNotAvailable = T.tr("Localizable", "settings__mail_services_not_available", fallback: "Mail services are not available")
     /// No limit
@@ -938,6 +973,8 @@ internal enum T {
     internal static let shareApp = T.tr("Localizable", "settings__share_app", fallback: "Share the app")
     /// Show next token
     internal static let showNextToken = T.tr("Localizable", "settings__show_next_token", fallback: "Show next token")
+    /// Show next token when current one is about to expire.
+    internal static let showNextTokenDesc = T.tr("Localizable", "settings__show_next_token_desc", fallback: "Show next token when current one is about to expire.")
     /// An SSL error has occurred and a secure connection to the server cannot be made. Ensure you have the latest version of the app or try to change the network.
     internal static let sslErrorDescription = T.tr("Localizable", "settings__ssl_error_description", fallback: "An SSL error has occurred and a secure connection to the server cannot be made. Ensure you have the latest version of the app or try to change the network.")
     /// SSL Error
@@ -1075,6 +1112,8 @@ internal enum T {
     internal static let label = T.tr("Localizable", "tokens__label", fallback: "Label")
     /// Label (1 or 2 characters):
     internal static let labelCharactersTitle = T.tr("Localizable", "tokens__label_characters_title", fallback: "Label (1 or 2 characters):")
+    /// Manage list
+    internal static let manageList = T.tr("Localizable", "tokens__manage_list", fallback: "Manage list")
     /// Move to Trash
     internal static let moveToTrash = T.tr("Localizable", "tokens__move_to_trash", fallback: "Move to Trash")
     /// My Tokens
@@ -1305,6 +1344,12 @@ internal enum T {
     }
     /// Use the Add Service button to add a new service
     internal static let useAddServiceButtonTitle = T.tr("Localizable", "voiceover__use_add_service_button_title", fallback: "Use the Add Service button to add a new service")
+  }
+  internal enum Widgets {
+    /// Expires in:
+    internal static let expiresIn = T.tr("Localizable", "widgets__expires_in", fallback: "Expires in:")
+    /// Widget settings
+    internal static let settings = T.tr("Localizable", "widgets__settings", fallback: "Widget settings")
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

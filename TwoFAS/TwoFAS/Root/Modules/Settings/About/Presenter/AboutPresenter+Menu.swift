@@ -34,14 +34,16 @@ extension AboutPresenter {
             .init(title: T.Settings.support, cells: [
                 .init(title: T.Settings.sendLogs, accessory: .noAccessory, action: .sendLogs)
             ]),
-            .init(title: "Crash info", cells: [
-                .init(
-                    title: "Opt-out of crash info",
-                    accessory: .toggle(isOn: interactor.isCrashlyticsDisabled),
-                    action: nil
-                )
-            ],
-                  footer: "Changes will be applied in next app session"
+            .init(
+                title: T.Settings.aboutCrashOptoutTitle,
+                cells: [
+                    .init(
+                        title: T.Settings.aboutCrashOptoutToggleTitle,
+                        accessory: .toggle(isOn: interactor.isCrashlyticsDisabled),
+                        action: nil
+                    )
+                ],
+                footer: T.Settings.aboutCrashOptoutDescription
             )
         ]
     }

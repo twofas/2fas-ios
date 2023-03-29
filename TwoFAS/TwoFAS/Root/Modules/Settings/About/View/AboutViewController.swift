@@ -28,9 +28,9 @@ final class AboutViewController: UIViewController {
     
     private let tableView = SettingsMenuTableView()
     private let footer = AboutFooter()
-
+    
     private var tableViewAdapter: TableViewAdapter<AboutSection, AboutCell>!
-            
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,6 +43,9 @@ final class AboutViewController: UIViewController {
         tableViewAdapter.titleForHeader = { [weak self] _, sectionOffset, snapshot in
             self?.titleForHeader(offset: sectionOffset, snapshot: snapshot)
         }
+        tableViewAdapter.titleForFooter = {  [weak self] _, sectionOffset, snapshot in
+            self?.titleForFooter(offset: sectionOffset, snapshot: snapshot)
+        }
         tableViewAdapter.delegatee.didSelectItem = { [weak self] tableView, indexPath, data in
             self?.didSelect(tableView: tableView, indexPath: indexPath, data: data)
         }
@@ -52,7 +55,7 @@ final class AboutViewController: UIViewController {
         setupTableViewLayout()
         
         title = T.Settings.about
-                
+        
         hidesBottomBarWhenPushed = false
         navigationItem.backButtonDisplayMode = .minimal
         
@@ -91,10 +94,18 @@ extension AboutViewController {
         ) as? SettingsMenuTableViewCell else { return nil }
         
         let accessory: SettingsMenuTableViewCell.AccessoryType = {
-            guard let image = data.accessory.icon else { return .none }
-            let imageView = UIImageView(image: image)
-            imageView.tintColor = Theme.Colors.Icon.theme
-            return .customView(customView: imageView)
+            if let image = data.accessory.icon {
+                let imageView = UIImageView(image: image)
+                imageView.tintColor = Theme.Colors.Icon.theme
+                return .customView(customView: imageView)
+            }
+            if case AboutCell.AccessoryKind.toggle(let isOn) = data.accessory {
+                return .toggle(isEnabled: isOn) { [weak self] _, _ in
+                    self?.presenter.handleToogle()
+                }
+            }
+            
+            return .none
         }()
         
         let decorateText: SettingsMenuTableViewCell.TextDecoration = {
@@ -103,6 +114,11 @@ extension AboutViewController {
             }
             return .none
         }()
+        if data.action == nil {
+            cell.selectionStyle = .none
+        } else {
+            cell.selectionStyle = .default
+        }
         cell.update(icon: nil, title: data.title, kind: accessory, decorateText: decorateText)
         return cell
     }
@@ -110,6 +126,14 @@ extension AboutViewController {
     func titleForHeader(offset: Int, snapshot: TableViewDataSnapshot<AboutSection, AboutCell>) -> String? {
         let section = snapshot.section(at: offset)
         return section.title
+    }
+    
+    func titleForFooter(
+        offset: Int,
+        snapshot: TableViewDataSnapshot<AboutSection, AboutCell>
+    ) -> String? {
+        let section = snapshot.section(at: offset)
+        return section.footer
     }
     
     func didSelect(tableView: UITableView, indexPath: IndexPath, data: AboutCell) {

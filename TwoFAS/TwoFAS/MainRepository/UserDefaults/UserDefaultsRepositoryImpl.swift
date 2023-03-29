@@ -44,6 +44,7 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case isSectionZeroCollapsed = "com.2fas.SectionZeroCollapsedState"
         case viewPath = "ViewPathController.ViewStatePath"
         case introductionWasShown = "IntroductionWasShown"
+        case crashlyticsDisabled
     }
     private let userDefaults = UserDefaults()
     private let sharedDefaults = UserDefaults(suiteName: Config.suiteName)!
@@ -239,6 +240,17 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
             return nil
         }
         return (viewPath: node.path, savedAt: node.savedAt)
+    }
+    
+    // MARK: - Crashlytics
+    
+    var isCrashlyticsDisabled: Bool {
+        userDefaults.bool(forKey: Keys.crashlyticsDisabled.rawValue)
+    }
+    
+    func setCrashlyticsDisabled(_ disabled: Bool) {
+        userDefaults.set(disabled, forKey: Keys.crashlyticsDisabled.rawValue)
+        userDefaults.synchronize()
     }
     
     // MARK: - Clear all

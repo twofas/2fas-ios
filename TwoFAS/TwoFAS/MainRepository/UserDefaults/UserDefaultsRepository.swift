@@ -72,4 +72,7 @@ protocol UserDefaultsRepository: AnyObject {
     func introductionWasShown() -> Bool
     
     func clearAll()
+    
+    var isCrashlyticsDisabled: Bool { get }
+    func setCrashlyticsDisabled(_ disabled: Bool)
 }

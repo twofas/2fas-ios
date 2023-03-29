@@ -82,6 +82,8 @@ protocol MainRepository: AnyObject {
     var currentAppVersion: String { get }
     func setIntroductionAsShown()
     func introductionWasShown() -> Bool
+    func setCrashlyticsDisabled(_ disabled: Bool)
+    var isCrashlyticsDisabled: Bool { get }
     
     // MARK: - Services
     var hasServices: Bool { get }

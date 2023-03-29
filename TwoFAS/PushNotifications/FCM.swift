@@ -27,10 +27,10 @@ final class FCM: NSObject, MessagingDelegate, FCMHandlerProtocol {
     
     var FCMTokenObtained: FCMTokenObtainedCompletion?
     
-    func initialize() {
+    func initialize(enableCrashlytics: Bool) {
         FirebaseApp.configure()
         #if !DEBUG
-            Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
+            Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(enableCrashlytics)
         #endif
         Messaging.messaging().delegate = self
         

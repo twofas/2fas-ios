@@ -21,7 +21,8 @@ import Foundation
 import Common
 
 enum ViewPath: Equatable, Codable {
-    enum Settings: Codable {
+    enum Settings: String, Equatable, Codable {
+        case externalImport
         case backup
         case security
         case browserExtension

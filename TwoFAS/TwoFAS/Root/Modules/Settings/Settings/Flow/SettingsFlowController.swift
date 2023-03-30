@@ -189,6 +189,14 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
         }
     }
     
+    func toExternalImport() {
+        if isCollapsed {
+            ExternalImportFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            ExternalImportFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
+    
     func toDonate() {
         UIApplication.shared.open(URL(string: "https://2fas.com/donate")!, options: [:], completionHandler: nil)
     }
@@ -206,7 +214,6 @@ extension SettingsFlowController: BackupMenuFlowControllerParent {
     }
 }
 
-extension SettingsFlowController: TrashFlowControllerParent {}
 
 extension SettingsFlowController: PushNotificationPermissionFlowControllerParent {
     func pushNotificationsDidEnd() {}
@@ -218,6 +225,7 @@ extension SettingsFlowController: AppSecurityFlowControllerParent {
     }
 }
 
+extension SettingsFlowController: TrashFlowControllerParent {}
 extension SettingsFlowController: BrowserExtensionMainFlowControllerParent {}
-
 extension SettingsFlowController: AboutFlowControllerParent {}
+extension SettingsFlowController: ExternalImportFlowControllerParent {}

@@ -34,7 +34,7 @@ final class ColorPickerPresenter {
 
 extension ColorPickerPresenter {
     func handleColorSelection(_ tintColor: TintColor) {
-        AnalyticsLog(.codeDetailsBadgeSet)
+        AppEventLog(.codeDetailsBadgeSet)
         flowController.toSelectColor(tintColor)
     }
 }

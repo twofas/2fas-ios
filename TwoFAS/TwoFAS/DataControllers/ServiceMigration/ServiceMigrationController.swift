@@ -43,7 +43,7 @@ final class ServiceMigrationController {
         
         if let sv = savedVersionString {
             if sv < currentVersion {
-                AnalyticsLog(.appUpdate(currentVersionString))
+                AppEventLog(.appUpdate(currentVersionString))
                 userDefaults.set(currentVersionString, forKey: migrationKey)
                 userDefaults.synchronize()
             } else {

@@ -21,18 +21,30 @@ import Foundation
 
 protocol AboutModuleInteracting: AnyObject {
     var currentAppVersion: String { get }
+    var isCrashlyticsDisabled: Bool { get }
+    func setCrashlyticsDisabled(_ disabled: Bool)
 }
 
 final class AboutModuleInteractor {
     private let appInfoInteractor: AppInfoInteracting
+    private let registerDeviceInteractor: RegisterDeviceInteracting
     
-    init(appInfoInteractor: AppInfoInteracting) {
+    init(appInfoInteractor: AppInfoInteracting, registerDeviceInteractor: RegisterDeviceInteracting) {
         self.appInfoInteractor = appInfoInteractor
+        self.registerDeviceInteractor = registerDeviceInteractor
     }
 }
 
 extension AboutModuleInteractor: AboutModuleInteracting {
     var currentAppVersion: String {
         appInfoInteractor.currentAppVersion
+    }
+    
+    var isCrashlyticsDisabled: Bool {
+        registerDeviceInteractor.isCrashlyticsDisabled
+    }
+    
+    func setCrashlyticsDisabled(_ disabled: Bool) {
+        registerDeviceInteractor.setCrashlyticsDisabled(disabled)
     }
 }

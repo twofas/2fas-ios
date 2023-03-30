@@ -22,6 +22,13 @@ import UIKit
 struct AboutSection: TableViewSection {
     let title: String
     var cells: [AboutCell]
+    let footer: String?
+    
+    init(title: String, cells: [AboutCell], footer: String? = nil) {
+        self.title = title
+        self.cells = cells
+        self.footer = footer
+    }
 }
 
 struct AboutCell: Hashable {
@@ -29,6 +36,7 @@ struct AboutCell: Hashable {
         case external
         case share
         case noAccessory
+        case toggle(isOn: Bool)
     }
     enum Action: Hashable {
         case writeReview
@@ -41,7 +49,7 @@ struct AboutCell: Hashable {
     
     let title: String
     let accessory: AccessoryKind
-    let action: Action
+    let action: Action?
 }
 
 extension AboutCell.AccessoryKind {
@@ -53,7 +61,7 @@ extension AboutCell.AccessoryKind {
         case .external: return Asset.externalLinkIcon.image
                 .withRenderingMode(.alwaysTemplate)
                 .withTintColor(Theme.Colors.Icon.theme)
-        case .noAccessory: return nil
+        case .noAccessory, .toggle: return nil
         }
     }
 }

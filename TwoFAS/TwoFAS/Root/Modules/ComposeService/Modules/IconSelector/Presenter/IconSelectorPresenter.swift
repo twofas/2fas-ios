@@ -51,7 +51,7 @@ extension IconSelectorPresenter {
     
     func handleSelection(at indexPath: IndexPath) {
         guard let iconTypeID = interactor.iconTypeID(for: indexPath) else { return }
-        AnalyticsLog(.codeDetailsBrandSet)
+        AppEventLog(.codeDetailsBrandSet)
         flowController.toSelection(iconTypeID: iconTypeID)
     }
     

@@ -29,7 +29,7 @@ public enum LogModule: Int, CaseIterable {
     case camera = 6
     case protection = 7
     case ui = 8
-    case analytics = 9
+    case appEvent = 9
     case interactor = 10
     case moduleInteractor = 11
 }
@@ -77,7 +77,7 @@ private extension LogModule {
         case .camera: return "📷"
         case .protection: return "🔒"
         case .ui: return "🖼"
-        case .analytics: return "🧬"
+        case .appEvent: return "🧬"
         case .interactor: return "🔌"
         case .moduleInteractor: return "🌀"
         }

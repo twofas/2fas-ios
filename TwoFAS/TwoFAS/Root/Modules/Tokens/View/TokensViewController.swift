@@ -241,11 +241,11 @@ private extension TokensViewController {
     func setupEmptyScreensEvents() {
         emptyListScreenView.pairNewService = { [weak self] in self?.presenter.handleShowCamera() }
         emptyListScreenView.import2FAS = { [weak self] in
-            AnalyticsLog(.onboardingBackupFile)
+            AppEventLog(.onboardingBackupFile)
             self?.presenter.handleImport2FAS()
         }
         emptyListScreenView.importGA = { [weak self] in
-            AnalyticsLog(.onboardingGA)
+            AppEventLog(.onboardingGA)
             self?.presenter.handleImportGA()
         }
         emptyListScreenView.help = { [weak self] in self?.presenter.handleShowHelp() }

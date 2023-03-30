@@ -27,10 +27,10 @@ final class FCM: NSObject, MessagingDelegate, FCMHandlerProtocol {
     
     var FCMTokenObtained: FCMTokenObtainedCompletion?
     
-    func initialize() {
+    func initialize(enableCrashlytics: Bool) {
         FirebaseApp.configure()
         #if !DEBUG
-            Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
+            Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(enableCrashlytics)
         #endif
         Messaging.messaging().delegate = self
         
@@ -42,12 +42,6 @@ final class FCM: NSObject, MessagingDelegate, FCMHandlerProtocol {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken GCMToken: String?) {
         guard let GCMToken else { return }
         FCMTokenObtained?(GCMToken)
-    }
-    
-    static func logEvent(_ key: String, parameters: [String: Any]? = nil) {
-        #if !DEBUG
-            Analytics.logEvent(key, parameters: nil)
-        #endif
     }
     
     static func logDebugInfo(_ message: String) {

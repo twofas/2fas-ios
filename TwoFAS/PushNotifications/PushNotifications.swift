@@ -48,10 +48,6 @@ public final class PushNotifications {
     public func didFailToRegisterForRemoteNotifications(with error: Error) {
         apns.didFailToRegisterForRemoteNotifications(with: error)
     }
-
-    public static func logEvent(_ key: String, parameters: [String: String]? = nil) {
-        FCM.logEvent(key, parameters: parameters)
-    }
     
     public static func logDebugInfo(_ message: String) {
         FCM.logDebugInfo(message)

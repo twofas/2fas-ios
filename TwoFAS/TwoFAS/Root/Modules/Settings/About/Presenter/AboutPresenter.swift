@@ -23,7 +23,7 @@ final class AboutPresenter {
     weak var view: AboutViewControlling?
     
     private let flowController: AboutFlowControlling
-    private let interactor: AboutModuleInteracting
+    let interactor: AboutModuleInteracting
     
     init(flowController: AboutFlowControlling, interactor: AboutModuleInteracting) {
         self.flowController = flowController
@@ -43,12 +43,14 @@ extension AboutPresenter {
     func handleSelection(at indexPath: IndexPath) {
         let menu = buildMenu()
         guard let section = menu[safe: indexPath.section],
-              let cell = section.cells[safe: indexPath.row] else {
+              let cell = section.cells[safe: indexPath.row],
+              let action = cell.action
+        else {
             reload()
             return
         }
         
-        switch cell.action {
+        switch action {
         case .tos:
             flowController.toTOS()
         case .privacyPolicy:
@@ -62,6 +64,12 @@ extension AboutPresenter {
         case .acknowledgements:
             flowController.toAcknowledgements()
         }
+    }
+    
+    func handleToogle() {
+        let value = interactor.isCrashlyticsDisabled
+        interactor.setCrashlyticsDisabled(!value)
+        reload()
     }
 }
 

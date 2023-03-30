@@ -483,7 +483,8 @@ extension InteractorFactory {
     
     func aboutModuleInteractor() -> AboutModuleInteracting {
         AboutModuleInteractor(
-            appInfoInteractor: appInfoInteractor()
+            appInfoInteractor: appInfoInteractor(),
+            registerDeviceInteractor: registerDeviceInteractor()
         )
     }
     

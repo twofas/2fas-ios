@@ -199,10 +199,10 @@ private extension NewCodeInteractor {
     
     private func logEvent(for code: Code, serviceDefinition: ServiceDefinition?) {
         if let serviceDefinition {
-            AnalyticsLog(.supportedCodeAdded(serviceDefinition.name))
+            AppEventLog(.supportedCodeAdded(serviceDefinition.name))
         } else {
             if let issuer = code.issuer {
-                AnalyticsLog(.missingIssuer(issuer))
+                AppEventLog(.missingIssuer(issuer))
             }
         }
     }

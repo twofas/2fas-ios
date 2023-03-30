@@ -501,6 +501,8 @@
 		C284AF732760159D00FEE810 /* BackupDeletePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284AF722760159D00FEE810 /* BackupDeletePresenter.swift */; };
 		C284AF77276016EB00FEE810 /* BackupDeleteModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284AF76276016EB00FEE810 /* BackupDeleteModuleInteractor.swift */; };
 		C284AF7927601BCF00FEE810 /* BackupDeleteFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284AF7827601BCF00FEE810 /* BackupDeleteFlowController.swift */; };
+		C286200229D5BCDF00217AF9 /* UUIDInputContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C286200129D5BCDF00217AF9 /* UUIDInputContainer.swift */; };
+		C286200429D5CA0200217AF9 /* UUIDInputLength.swift in Sources */ = {isa = PBXBuildFile; fileRef = C286200329D5CA0200217AF9 /* UUIDInputLength.swift */; };
 		C28633AD1FF57C8600C8F4B4 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28633AC1FF57C8600C8F4B4 /* Types.swift */; };
 		C28633C11FF92D8100C8F4B4 /* TokensViewController+TokensViewControlling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28633C01FF92D8100C8F4B4 /* TokensViewController+TokensViewControlling.swift */; };
 		C28633C41FF9327900C8F4B4 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28633C31FF9327900C8F4B4 /* AlertController.swift */; };
@@ -1721,6 +1723,8 @@
 		C284AF76276016EB00FEE810 /* BackupDeleteModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupDeleteModuleInteractor.swift; sourceTree = "<group>"; };
 		C284AF7827601BCF00FEE810 /* BackupDeleteFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupDeleteFlowController.swift; sourceTree = "<group>"; };
 		C284B41926BC700900321AC9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
+		C286200129D5BCDF00217AF9 /* UUIDInputContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDInputContainer.swift; sourceTree = "<group>"; };
+		C286200329D5CA0200217AF9 /* UUIDInputLength.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDInputLength.swift; sourceTree = "<group>"; };
 		C28633AC1FF57C8600C8F4B4 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		C28633C01FF92D8100C8F4B4 /* TokensViewController+TokensViewControlling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+TokensViewControlling.swift"; sourceTree = "<group>"; };
 		C28633C31FF9327900C8F4B4 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
@@ -2483,7 +2487,9 @@
 		C20E5787292944E7002B215B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C286200329D5CA0200217AF9 /* UUIDInputLength.swift */,
 				C20E578E292976DA002B215B /* UUIDInputField.swift */,
+				C286200129D5BCDF00217AF9 /* UUIDInputContainer.swift */,
 				C2B0779C292A35730074517F /* UUIDGroupInput.swift */,
 				C20E578B29297593002B215B /* UploadLogsViewController.swift */,
 			);
@@ -5350,8 +5356,8 @@
 		C2B077AF292A8F3E0074517F /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C2B077C5292A922B0074517F /* UploadLogsFailureViewController.swift */,
 				C2B077C3292A921D0074517F /* UploadLogsFailureView.swift */,
+				C2B077C5292A922B0074517F /* UploadLogsFailureViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -7321,6 +7327,7 @@
 				C2D44E71275C1FD30043F5D6 /* MainRepositoryImpl+Extensions.swift in Sources */,
 				C252B38C2981D45200C2074D /* MainContent.swift in Sources */,
 				C20E60FD28189D2000AB002E /* PushNotificationPermissionModuleInteractor.swift in Sources */,
+				C286200429D5CA0200217AF9 /* UUIDInputLength.swift in Sources */,
 				C2B077B3292A8F610074517F /* UploadLogsSuccessFlowController.swift in Sources */,
 				C2404883276571A70076376E /* ImporterPreimportSummaryViewController.swift in Sources */,
 				C263F462299040F0009B0837 /* MainSplitPresenter.swift in Sources */,
@@ -7329,6 +7336,7 @@
 				C2AD653B27F261CC008997DB /* BrowserExtensionSuccessViewController.swift in Sources */,
 				C223DAD9217BB012003F6E76 /* Coordinator.swift in Sources */,
 				C2AB92CB2766543700698382 /* ExporterPINModuleInteractor.swift in Sources */,
+				C286200229D5BCDF00217AF9 /* UUIDInputContainer.swift in Sources */,
 				C27BE515275D4EE70090CA12 /* BackupMenuModels.swift in Sources */,
 				C2B077B8292A8F980074517F /* UploadLogsSuccessView.swift in Sources */,
 				C2035AF1245DE59700C482D2 /* MainContainerTextStyling.swift in Sources */,

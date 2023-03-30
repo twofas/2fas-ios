@@ -27,10 +27,10 @@ enum ScanImageError: Error {
     case scanError
 }
 
-typealias VisionScanComplition = (Result<[String], ScanImageError>) -> Void
+typealias VisionScanCompletion = (Result<[String], ScanImageError>) -> Void
 
 extension MainRepositoryImpl {
-    func scan(image: UIImage, completion: @escaping VisionScanComplition) {
+    func scan(image: UIImage, completion: @escaping VisionScanCompletion) {
         let cgOrientation = CGImagePropertyOrientation(image.imageOrientation)
         guard let cgImage = image.cgImage else {
             Log("Can't get cgImage", module: .camera)
@@ -43,7 +43,7 @@ extension MainRepositoryImpl {
     private func performVisionRequest(
         image: CGImage,
         orientation: CGImagePropertyOrientation,
-        completion: @escaping VisionScanComplition
+        completion: @escaping VisionScanCompletion
     ) {
         DispatchQueue.global(qos: .userInitiated).async {
             let requests = self.createVisionRequests(completion: completion)
@@ -61,7 +61,7 @@ extension MainRepositoryImpl {
         }
     }
     
-    private func createVisionRequests(completion: @escaping VisionScanComplition) -> [VNRequest] {
+    private func createVisionRequests(completion: @escaping VisionScanCompletion) -> [VNRequest] {
         func errorWhileScanning() {
             DispatchQueue.main.async {
                 completion(.failure(.scanError))

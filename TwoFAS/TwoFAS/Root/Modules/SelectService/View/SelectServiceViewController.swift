@@ -223,7 +223,11 @@ extension SelectServiceViewController {
         snapshot: TableViewDataSnapshot<SelectServiceSection, SelectServiceCell>
     ) -> String? {
         let section = snapshot.section(at: offset)
-        return section.title ?? T.Tokens.myTokens
+        switch section.title {
+        case .noTitle: return T.Tokens.myTokens
+        case .bestMatch: return T.Commons.bestMatch
+        case .title(let title): return title
+        }
     }
 }
 

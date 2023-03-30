@@ -26,6 +26,7 @@ public protocol ServiceDefinitionDatabase: AnyObject {
     
     func findService(using issuer: String) -> ServiceDefinition?
     func findServices(byTag searchText: String) -> [ServiceDefinition]
+    func findServices(domain searchText: String) -> [ServiceDefinition]
     
     func findLegacyService(using string: String) -> ServiceTypeID?
     func findLegacyIcon(using string: String) -> IconTypeID?
@@ -95,6 +96,15 @@ extension ServiceDefinitionDatabaseImpl: ServiceDefinitionDatabase {
         return definitions.filter({ service in
             guard let tags = service.tags else { return false }
             return tags.contains(where: { $0.contains(query) })
+        })
+    }
+    
+    public func findServices(domain searchText: String) -> [ServiceDefinition] {
+        let query = searchText.uppercased()
+        let definitions = listAll()
+        return definitions.filter({ service in
+            query.contains(service.name.uppercased()) ||
+            service.issuer?.first(where: { query.contains($0.uppercased()) }) != nil
         })
     }
 }

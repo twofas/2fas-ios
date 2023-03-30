@@ -442,6 +442,7 @@
 		C27A1EB1291279E400702DB9 /* AppEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB0291279E400702DB9 /* AppEventController.swift */; };
 		C27A1EB329127C5700702DB9 /* CameraPermissionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB229127C5700702DB9 /* CameraPermissionInteractor.swift */; };
 		C27A1EB529127C8D00702DB9 /* AlertController+Ready.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB429127C8D00702DB9 /* AlertController+Ready.swift */; };
+		C27A31CA29C8EEE40094679F /* LastPassData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A31C929C8EEE40094679F /* LastPassData.swift */; };
 		C27A549927F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549827F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift */; };
 		C27A549B27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549A27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift */; };
 		C27A549F27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549E27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift */; };
@@ -1657,6 +1658,7 @@
 		C27A1EB0291279E400702DB9 /* AppEventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppEventController.swift; sourceTree = "<group>"; };
 		C27A1EB229127C5700702DB9 /* CameraPermissionInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPermissionInteractor.swift; sourceTree = "<group>"; };
 		C27A1EB429127C8D00702DB9 /* AlertController+Ready.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertController+Ready.swift"; sourceTree = "<group>"; };
+		C27A31C929C8EEE40094679F /* LastPassData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastPassData.swift; sourceTree = "<group>"; };
 		C27A549827F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroViewController.swift; sourceTree = "<group>"; };
 		C27A549A27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroPresenter.swift; sourceTree = "<group>"; };
 		C27A549E27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroModuleInteractor.swift; sourceTree = "<group>"; };
@@ -3554,6 +3556,7 @@
 				C2117178276CD11900042D28 /* PINType.swift */,
 				C25859372802E75A002DC749 /* PushNotificationState.swift */,
 				C2069C9028C2922A00321E44 /* AEGISData.swift */,
+				C27A31C929C8EEE40094679F /* LastPassData.swift */,
 			);
 			path = DataTypes;
 			sourceTree = "<group>";
@@ -7310,6 +7313,7 @@
 				C2FAE12528C7346900F2446F /* AEGISParseResultErrorStrings.swift in Sources */,
 				C21A9E8D27CC0A2300FE4CC4 /* ComposeServiceRefreshTimeFlowController.swift in Sources */,
 				C25B221227C177170052AAC4 /* ComposeServiceFlowController.swift in Sources */,
+				C27A31CA29C8EEE40094679F /* LastPassData.swift in Sources */,
 				C23386F52780E53800F8DBC3 /* DeleteServiceInteractor.swift in Sources */,
 				C28633C41FF9327900C8F4B4 /* AlertController.swift in Sources */,
 				C233BD252801D6F900A9CFF2 /* WebExtensionDeviceNameInteractor.swift in Sources */,

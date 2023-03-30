@@ -21,26 +21,30 @@ import UIKit
 
 final class UUIDGroupInput: UIView {
     // 8 4 4 4 12    0-9, a-f
-    private let firstTextField = UUIDInputField()
-    private let secondTextField = UUIDInputField()
-    private let thirdTextField = UUIDInputField()
-    private let forthTextField = UUIDInputField()
-    private let fifthTextField = UUIDInputField()
+    private let firstTextField = UUIDInputContainer()
+    private let secondTextField = UUIDInputContainer()
+    private let thirdTextField = UUIDInputContainer()
+    private let forthTextField = UUIDInputContainer()
+    private let fifthTextField = UUIDInputContainer()
     
-    private let line1 = FormLine()
-    private let line2 = FormLine()
-    private let line3 = FormLine()
-    private let line4 = FormLine()
-    private let line5 = FormLine()
+    private let spacing = Theme.Metrics.standardSpacing
     
-    private let dash1 = DashLabel()
-    private let dash2 = DashLabel()
-    private let dash3 = DashLabel()
-    private let dash4 = DashLabel()
+    private var containerWidth: CGFloat = 0
+    private var containerHeight: CGFloat = 0
+    
+    private var isReadOnly = false
+    
+    private lazy var elements = [
+        firstTextField,
+        secondTextField,
+        thirdTextField,
+        forthTextField,
+        fifthTextField
+    ]
     
     var value: String {
         // swiftlint:disable line_length
-        "\(firstTextField.text ?? "")-\(secondTextField.text ?? "")-\(thirdTextField.text ?? "")-\(forthTextField.text ?? "")-\(fifthTextField.text ?? "")"
+        "\(firstTextField.input.text ?? "")-\(secondTextField.input.text ?? "")-\(thirdTextField.input.text ?? "")-\(forthTextField.input.text ?? "")-\(fifthTextField.input.text ?? "")"
         // swiftlint:enable line_length
     }
     
@@ -60,91 +64,10 @@ final class UUIDGroupInput: UIView {
     }
     
     private func commonInit() {
-        let group = UIView()
-        
-        let scrollView = CenteringScrollView()
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.showsVerticalScrollIndicator = false
-        
-        addSubview(scrollView, with: [
-            scrollView.frameLayoutGuide.widthAnchor.constraint(equalTo: widthAnchor),
-            scrollView.frameLayoutGuide.leadingAnchor.constraint(equalTo: leadingAnchor),
-            scrollView.frameLayoutGuide.trailingAnchor.constraint(equalTo: trailingAnchor),
-            scrollView.frameLayoutGuide.topAnchor.constraint(equalTo: topAnchor),
-            scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
-        
-        scrollView.addSubview(group, with: [
-            scrollView.contentLayoutGuide.leadingAnchor.constraint(equalTo: group.leadingAnchor),
-            scrollView.contentLayoutGuide.trailingAnchor.constraint(equalTo: group.trailingAnchor),
-            scrollView.contentLayoutGuide.topAnchor.constraint(equalTo: group.topAnchor),
-            scrollView.contentLayoutGuide.bottomAnchor.constraint(lessThanOrEqualTo: group.bottomAnchor),
-            scrollView.contentLayoutGuide.widthAnchor.constraint(equalTo: group.widthAnchor),
-            scrollView.frameLayoutGuide.heightAnchor.constraint(equalTo: group.heightAnchor)
-        ])
-        
-        let elements = [
-            firstTextField,
-            dash1,
-            secondTextField,
-            dash2,
-            thirdTextField,
-            dash3,
-            forthTextField,
-            dash4,
-            fifthTextField
-        ]
-        
-        let spacing = Theme.Metrics.standardSpacing
-        var previous: UIView?
-        for current in elements {
-            group.addSubview(current, with: [
-                current.topAnchor.constraint(equalTo: group.topAnchor),
-                current.bottomAnchor.constraint(equalTo: group.bottomAnchor)
-            ])
-            if let previous {
-                NSLayoutConstraint.activate([
-                    current.leadingAnchor.constraint(equalTo: previous.trailingAnchor, constant: spacing)
-                ])
-            }
-            
-            previous = current
-        }
-        
-        let eightChars: CGFloat = 80
-        let oneChar: CGFloat = 5
-        let fourChars: CGFloat = 40
-        let twelveChars: CGFloat = 120
-        
-        NSLayoutConstraint.activate([
-            firstTextField.leadingAnchor.constraint(equalTo: group.leadingAnchor, constant: 2 * spacing),
-            fifthTextField.trailingAnchor.constraint(equalTo: group.trailingAnchor, constant: -2 * spacing),
-            firstTextField.widthAnchor.constraint(equalToConstant: eightChars),
-            dash1.widthAnchor.constraint(equalToConstant: oneChar),
-            secondTextField.widthAnchor.constraint(equalToConstant: fourChars),
-            dash2.widthAnchor.constraint(equalToConstant: oneChar),
-            thirdTextField.widthAnchor.constraint(equalToConstant: fourChars),
-            dash3.widthAnchor.constraint(equalToConstant: oneChar),
-            forthTextField.widthAnchor.constraint(equalToConstant: fourChars),
-            dash4.widthAnchor.constraint(equalToConstant: oneChar),
-            fifthTextField.widthAnchor.constraint(equalToConstant: twelveChars)
-        ])
-        
-        let lines: [UIView: UIView] = [
-            firstTextField: line1,
-            secondTextField: line2,
-            thirdTextField: line3,
-            forthTextField: line4,
-            fifthTextField: line5
-        ]
-        
-        lines.forEach { textField, line in
-            group.addSubview(line, with: [
-                line.leadingAnchor.constraint(equalTo: textField.leadingAnchor),
-                line.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
-                line.bottomAnchor.constraint(equalTo: textField.bottomAnchor)
-            ])
-        }
+        elements.forEach({
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            addSubview($0)
+        })
         
         firstTextField.setLength(.eight)
         secondTextField.setLength(.four)
@@ -152,23 +75,23 @@ final class UUIDGroupInput: UIView {
         forthTextField.setLength(.four)
         fifthTextField.setLength(.twelve)
         
-        firstTextField.overText = { [weak secondTextField] in secondTextField?.carryOverflow($0) }
-        secondTextField.overText = { [weak thirdTextField] in thirdTextField?.carryOverflow($0) }
-        thirdTextField.overText = { [weak forthTextField] in forthTextField?.carryOverflow($0) }
-        forthTextField.overText = { [weak fifthTextField] in fifthTextField?.carryOverflow($0) }
+        firstTextField.input.overText = { [weak secondTextField] in secondTextField?.input.carryOverflow($0) }
+        secondTextField.input.overText = { [weak thirdTextField] in thirdTextField?.input.carryOverflow($0) }
+        thirdTextField.input.overText = { [weak forthTextField] in forthTextField?.input.carryOverflow($0) }
+        forthTextField.input.overText = { [weak fifthTextField] in fifthTextField?.input.carryOverflow($0) }
         
-        fifthTextField.overDelete = { [weak forthTextField] in forthTextField?.carryDeletition() }
-        forthTextField.overDelete = { [weak thirdTextField] in thirdTextField?.carryDeletition() }
-        thirdTextField.overDelete = { [weak secondTextField] in secondTextField?.carryDeletition() }
-        secondTextField.overDelete = { [weak firstTextField] in firstTextField?.carryDeletition() }
+        fifthTextField.input.overDelete = { [weak forthTextField] in forthTextField?.input.carryDeletition() }
+        forthTextField.input.overDelete = { [weak thirdTextField] in thirdTextField?.input.carryDeletition() }
+        thirdTextField.input.overDelete = { [weak secondTextField] in secondTextField?.input.carryDeletition() }
+        secondTextField.input.overDelete = { [weak firstTextField] in firstTextField?.input.carryDeletition() }
         
-        firstTextField.textChanged = { [weak self] _ in self?.textChanged() }
-        secondTextField.textChanged = { [weak self] _ in self?.textChanged() }
-        thirdTextField.textChanged = { [weak self] _ in self?.textChanged() }
-        forthTextField.textChanged = { [weak self] _ in self?.textChanged() }
-        fifthTextField.textChanged = { [weak self] _ in self?.textChanged() }
+        firstTextField.input.textChanged = { [weak self] _ in self?.textChanged() }
+        secondTextField.input.textChanged = { [weak self] _ in self?.textChanged() }
+        thirdTextField.input.textChanged = { [weak self] _ in self?.textChanged() }
+        forthTextField.input.textChanged = { [weak self] _ in self?.textChanged() }
+        fifthTextField.input.textChanged = { [weak self] _ in self?.textChanged() }
         
-        fifthTextField.actionButtonTapped = { [weak self] in self?.actionCallback?() }
+        fifthTextField.input.actionButtonTapped = { [weak self] in self?.actionCallback?() }
     }
     
     private func textChanged() {
@@ -176,65 +99,99 @@ final class UUIDGroupInput: UIView {
     }
     
     func setReadOnlyValue(_ uuid: UUID) {
+        isReadOnly = true
         let strList = uuid
             .uuidString
             .uppercased()
             .split(separator: "-")
         guard strList.count == 5,
-              strList[0].count == UUIDInputField.Length.eight.rawValue,
-              strList[1].count == UUIDInputField.Length.four.rawValue,
-              strList[2].count == UUIDInputField.Length.four.rawValue,
-              strList[3].count == UUIDInputField.Length.four.rawValue,
-              strList[4].count == UUIDInputField.Length.twelve.rawValue
+              strList[0].count == UUIDInputLength.eight.rawValue,
+              strList[1].count == UUIDInputLength.four.rawValue,
+              strList[2].count == UUIDInputLength.four.rawValue,
+              strList[3].count == UUIDInputLength.four.rawValue,
+              strList[4].count == UUIDInputLength.twelve.rawValue
         else { return }
         
-        firstTextField.setTextAndDisable(String(strList[0]))
-        secondTextField.setTextAndDisable(String(strList[1]))
-        thirdTextField.setTextAndDisable(String(strList[2]))
-        forthTextField.setTextAndDisable(String(strList[3]))
-        fifthTextField.setTextAndDisable(String(strList[4]))
+        firstTextField.input.setTextAndDisable(String(strList[0]))
+        secondTextField.input.setTextAndDisable(String(strList[1]))
+        thirdTextField.input.setTextAndDisable(String(strList[2]))
+        forthTextField.input.setTextAndDisable(String(strList[3]))
+        fifthTextField.input.setTextAndDisable(String(strList[4]))
         
         valueChanged?(value)
     }
     
     func start(clearCode: Bool) {
         if clearCode {
-            firstTextField.text = nil
-            secondTextField.text = nil
-            thirdTextField.text = nil
-            forthTextField.text = nil
-            fifthTextField.text = nil
+            firstTextField.input.text = nil
+            secondTextField.input.text = nil
+            thirdTextField.input.text = nil
+            forthTextField.input.text = nil
+            fifthTextField.input.text = nil
         }
         
         firstTextField.becomeFirstResponder()
     }
     
     func stop() {
-        firstTextField.resignFirstResponder()
-        secondTextField.resignFirstResponder()
-        thirdTextField.resignFirstResponder()
-        forthTextField.resignFirstResponder()
-        fifthTextField.resignFirstResponder()
-    }
-}
-
-private final class DashLabel: UILabel {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        commonInit()
+        firstTextField.input.resignFirstResponder()
+        secondTextField.input.resignFirstResponder()
+        thirdTextField.input.resignFirstResponder()
+        forthTextField.input.resignFirstResponder()
+        fifthTextField.input.resignFirstResponder()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        commonInit()
+    func showKeyboard() {
+        guard !isReadOnly else { return }
+        firstTextField.input.becomeFirstResponder()
     }
     
-    private func commonInit() {
-        textColor = Theme.Colors.Text.inactive
-        font = Theme.Fonts.Form.uuidInput
-        text = "-"
-        textAlignment = .center
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        var row: Int = 0
+        var rowHeight: CGFloat = 0
+        var xOffset: CGFloat = 0
+        
+        let currentWidth = frame.width
+        let totalWidth = elements.map({
+            $0.layoutIfNeeded()
+            return $0.frame.width
+        })
+            .reduce(0) { $0 + $1 } + CGFloat(elements.count - 1) * spacing
+        
+        let startingXOffset: CGFloat = {
+            if totalWidth <= currentWidth {
+                return round((currentWidth - totalWidth) / 2.0)
+            }
+            return 0
+        }()
+        xOffset = startingXOffset
+        
+        for input in elements {
+            if rowHeight < input.frame.height {
+                rowHeight = input.frame.height
+            }
+            let inputWidth = input.frame.width
+            var possibleWidth = xOffset + inputWidth
+            if possibleWidth > currentWidth {
+                row += 1
+                xOffset = startingXOffset
+                possibleWidth = inputWidth
+            }
+            input.frame = CGRect(
+                origin: .init(x: xOffset, y: CGFloat(row) * (rowHeight + spacing)),
+                size: input.frame.size
+            )
+            
+            xOffset = possibleWidth + spacing
+        }
+        
+        containerWidth = currentWidth
+        containerHeight = CGFloat(row + 1) * rowHeight + CGFloat(row) * spacing
+        invalidateIntrinsicContentSize()
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        CGSize(width: containerWidth, height: containerHeight)
     }
 }

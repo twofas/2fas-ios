@@ -21,13 +21,7 @@ import UIKit
 import Common
 
 final class UUIDInputField: UITextField, UITextFieldDelegate {
-    enum Length: Int {
-        case four = 4
-        case eight = 8
-        case twelve = 12
-    }
-    
-    private var length: Length = .four
+    private var length: UUIDInputLength = .four
     
     private var isFirst = false
     private var isLast = false
@@ -67,11 +61,12 @@ final class UUIDInputField: UITextField, UITextFieldDelegate {
         font = Theme.Fonts.Form.uuidInput
     }
     
-    func setLength(_ length: Length) {
+    func setLength(_ length: UUIDInputLength) {
         self.length = length
         isFirst = length.isFirst
         isLast = length.isLast
         returnKeyType = length.returnKeyType
+        placeholder = Array(repeating: "0", count: length.rawValue).joined()
     }
     
     func textField(
@@ -186,7 +181,7 @@ final class UUIDInputField: UITextField, UITextFieldDelegate {
     }
 }
 
-extension UUIDInputField.Length {
+extension UUIDInputLength {
     var isFirst: Bool {
         switch self {
         case .four: return false

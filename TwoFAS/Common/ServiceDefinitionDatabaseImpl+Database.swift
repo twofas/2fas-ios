@@ -30,6 +30,17 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "A70BEA5A-EA3A-46C0-BAAF-E837A66AAC19")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "022B8E24-46BD-4236-B522-F48007A6F736")!,
+                name: "ANY.RUN",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "ANY.RUN", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "ANY.RUN", matcher: .contains, ignoreCase: true),
+.init(field: .issuer, text: "ANYRUN", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "ANYRUN", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "15A6D950-7998-412D-B7DA-9EA09BEAE210")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "0336ADDA-650E-4082-A24B-4A2165C3A043")!,
                 name: "USPTO",
                 issuer: ["MyUSPTO"],
@@ -128,7 +139,7 @@ final class ServiceDefinitionDatabaseGenerated {
             .init(
                 serviceTypeID: UUID(uuidString: "096B26F8-E5C9-467B-ACA7-E2FDB63C7E36")!,
                 name: "Jamf",
-                issuer: ["Jamf+Now"],
+                issuer: ["Jamf+Now", "Jamf Now"],
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "AE357171-6E23-456C-950A-E792B0EA53B3")!
@@ -199,7 +210,7 @@ final class ServiceDefinitionDatabaseGenerated {
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "104C80C0-5FF6-41D9-8C05-76C1860BD36B")!,
-                name: "Bethesda.net",
+                name: "Bethesda",
                 issuer: ["Bethesda.net"],
                 tags: nil,
                 matchingRules: nil,
@@ -246,6 +257,23 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "DC0D1BF9-DC12-4936-8441-CD54F433BE09")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "14E45151-0724-48C1-8D71-F262202307C7")!,
+                name: "(ISC)2",
+                issuer: nil,
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "E80AF02C-1616-42F1-AC93-89D8AAEC29C8")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "15733414-0160-4DD9-9FC1-187369CBB288")!,
+                name: "Above.com",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "Above", matcher: .startsWith, ignoreCase: true),
+.init(field: .label, text: "Above", matcher: .startsWith, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "6D0C4064-6096-46BB-92FD-584ECB64733C")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "15ABC44C-E519-488B-98F2-3A75AAF270AF")!,
                 name: "Reddit",
                 issuer: ["Reddit"],
@@ -260,6 +288,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "07F84AB8-8A93-4F0B-BC3B-00C20A3DFEC9")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "16E92D20-B1B4-4E23-BA0A-224D79B0A02A")!,
+                name: "CurseForge",
+                issuer: ["CurseForge"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "4F9313C6-FAB1-48EF-A642-4FB13007C82C")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "170388D7-479C-40D6-B624-B72D22ECF552")!,
@@ -292,6 +328,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "C8019718-56B2-406F-BF21-2ADDDA6B21FD")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "19D66171-A705-419B-BFAE-68FA91483130")!,
+                name: "Call of Duty Mobile",
+                issuer: nil,
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "3FB39B5B-027D-45EC-AC61-A59841CC8282")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "1A8546AD-903D-4F3D-9589-F7282D426007")!,
@@ -463,6 +507,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "C5981A81-FF16-4D3F-ABB2-E297140DB537")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "2726439F-7B21-45F0-805E-D8ACFA1EB84C")!,
+                name: "AVG",
+                issuer: ["AVG"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "4FCD28CA-176D-441A-BD66-E10D5F9E40A1")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "280053BA-084F-4F1F-A672-524DC7BA09D9")!,
                 name: "TrueNAS Core",
                 issuer: ["iXsystems"],
@@ -503,6 +555,17 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "13ADF493-63A7-4582-9FFA-B1BBAC783D67")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "29C7ACDB-AB9F-4775-B09A-CEFA18A95C12")!,
+                name: "ACTIVE 24",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "active 24", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "active 24", matcher: .contains, ignoreCase: true),
+.init(field: .issuer, text: "active24", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "active24", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "7ECEAB5B-04FC-4231-A766-70DDEF0EB4FE")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "2AD8DCB5-8EAC-43C8-A440-324CA8472F9F")!,
                 name: "TruckersMP",
                 issuer: ["TruckersMP.com"],
@@ -517,6 +580,15 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "7797B564-FED5-418E-B9A3-705C953C16E2")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "2BBA5977-2AD5-4F10-A576-9B536FFDB99B")!,
+                name: "ARIN",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "arin", matcher: .startsWith, ignoreCase: true),
+.init(field: .label, text: "arin", matcher: .startsWith, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "BB32B5EA-54FB-4D7F-AE6A-85FC5D319EB9")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "2C406558-A7FB-4C0A-BFE1-9287CFD6EEE4")!,
@@ -545,7 +617,7 @@ final class ServiceDefinitionDatabaseGenerated {
             .init(
                 serviceTypeID: UUID(uuidString: "2EE903FF-A9FD-44CE-970E-47FEA122A860")!,
                 name: "Nord Account",
-                issuer: ["Nord+Account"],
+                issuer: ["Nord+Account", "Nord Account"],
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "F7A9CBE9-7A5D-42BC-9B2F-93A8254A2660")!
@@ -585,7 +657,7 @@ final class ServiceDefinitionDatabaseGenerated {
             .init(
                 serviceTypeID: UUID(uuidString: "323A5859-1DA6-4FA8-8EC9-E90E44575F6D")!,
                 name: "USCIS",
-                issuer: ["USCIS+myAccount"],
+                issuer: ["USCIS+myAccount", "USCIS myAccount"],
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "55A7126C-C74B-4030-BE46-33BAF1D41794")!
@@ -647,12 +719,28 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "335C07EE-CC81-4C4D-9583-FBE4CE962901")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "37C35AA1-970C-4271-A4E1-5A0C49B66708")!,
+                name: "Porkbun",
+                issuer: ["Porkbun"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "1A9ACD1F-6265-4ED9-8DE6-BFCC356617B5")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "3842FBA8-47C3-45BB-9700-932E86721063")!,
                 name: "Norton",
                 issuer: ["NortonLifeLock"],
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "A659E300-C8B3-4DB3-8D11-2DDB1C46CEB8")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "3974A4FD-722F-4512-A636-310FDB59719A")!,
+                name: "Actionstep",
+                issuer: ["Actionstep+MFA", "Actionstep MFA"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "B69ADDB0-C23F-4BEE-A210-FDB1DFDABA1E")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "39AB5009-A9F4-44E2-90E8-BECFBECFDBBA")!,
@@ -677,6 +765,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "3AF6D11F-D879-4649-B183-20C5742F20DD")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "3A38D56B-A576-4EB9-84C9-2652087547DF")!,
+                name: "Philips Hue",
+                issuer: ["Philips Hue"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "1F762812-C7BC-4425-AAFA-DA4482812F1D")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "3B0C488C-BD30-4EDF-9441-8A6F97791124")!,
@@ -872,6 +968,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "0B032D00-41C4-4821-90A9-B18B8C27074A")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "4D9DE830-F4CC-4469-8D1C-3D710E918693")!,
+                name: "Panic Sync",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .label, text: "Panic Sync", matcher: .equals, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "F5CA216C-23B7-4CF0-A3F0-4C0006439B5F")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "4E7A1659-0A8A-42D5-A699-30837AAC73C4")!,
                 name: "Bitpanda",
                 issuer: nil,
@@ -888,8 +992,17 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "05C680D8-BB2F-4EF0-840A-6504FCFDACB5")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "4EE59893-9BA4-411C-A9FB-5906E1EBAD8E")!,
+                name: "23andMe",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "23andMe", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "23andMe", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "CD8D168F-8AD3-4817-8099-794D4F7F45B2")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "4F0726CF-418E-402D-8400-AFBFD772DA7B")!,
-                name: "bluehost",
+                name: "Bluehost",
                 issuer: nil,
                 tags: nil,
                 matchingRules: [.init(field: .label, text: "bluehost", matcher: .contains, ignoreCase: true)],
@@ -926,6 +1039,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: [.init(field: .label, text: "Bitfinex", matcher: .startsWith, ignoreCase: true)],
                 iconTypeID: UUID(uuidString: "24D139A7-9783-4668-BB22-59696C118069")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "51F6194C-93D1-41F4-B65F-F80136CE2FB7")!,
+                name: "Nuki",
+                issuer: ["Nuki"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "824651BB-1696-4A86-9C8A-A0AD50D15BA2")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "51FB583D-61D0-4BFE-8F6E-5E44ADC233BF")!,
@@ -1000,6 +1121,15 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "F4CAD0B9-00D5-420C-804C-D41CE8825EED")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "58E275D6-8398-4956-B703-64CF9F408CA1")!,
+                name: "Adafruit",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "Adafruit", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "Adafruit", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "A47DB328-5E4C-4F98-A37C-742990FE8B60")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "593DD333-B586-4FF7-B573-D30277D82789")!,
                 name: "Chevrolet",
                 issuer: nil,
@@ -1022,6 +1152,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "AB1DE355-E0F4-464A-9913-9357401D5E57")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "5B545E9A-9F41-4296-93A7-10B5336B8845")!,
+                name: "Call of Duty",
+                issuer: nil,
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "3A70FCC1-A406-4212-BD0C-440DBE6AE824")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "5BA2C9CD-CCA9-4330-A09D-7ADF5AFD0184")!,
@@ -1145,11 +1283,11 @@ final class ServiceDefinitionDatabaseGenerated {
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "63CBF7E9-87B0-41D1-B242-C90AD2783A63")!,
-                name: "litebit.eu",
+                name: "LiteBit",
                 issuer: ["litebit.eu"],
                 tags: nil,
                 matchingRules: nil,
-                iconTypeID: UUID(uuidString: "C8CC5FF4-0805-481F-90F8-40CC5F3245A8")!
+                iconTypeID: UUID(uuidString: "F4F47EAB-E255-48EF-9BE8-558F3C6AF045")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "63F0BDAF-94FE-4B4C-983F-90442877F0EC")!,
@@ -1169,7 +1307,7 @@ final class ServiceDefinitionDatabaseGenerated {
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "66917FB1-38A9-4AE7-95E6-F0EC44746D05")!,
-                name: "Storj.io",
+                name: "Storj",
                 issuer: nil,
                 tags: nil,
                 matchingRules: [.init(field: .issuer, text: "STORJ", matcher: .startsWith, ignoreCase: true)],
@@ -1190,6 +1328,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "B92626FE-68FF-449E-BA64-3E92D55AC2D2")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "67DD0749-99E2-405A-9D35-160A1439B1CE")!,
+                name: "Carrd",
+                issuer: ["Carrd"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "40577F08-9491-47AB-8D7A-DD9E4E0061B7")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "689E8B6B-63D2-41E3-A7BB-6F935260D0CF")!,
@@ -1230,6 +1376,17 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: [.init(field: .label, text: "BitKub.com", matcher: .startsWith, ignoreCase: true)],
                 iconTypeID: UUID(uuidString: "995DB454-F44B-4F16-BABF-9E7435DD64C9")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "6B563B30-0251-4F4D-BAD5-BAD41C04273B")!,
+                name: "ActiveState",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "ActiveState", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "ActiveState", matcher: .contains, ignoreCase: true),
+.init(field: .issuer, text: "Active State", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "Active State", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "7B8823BA-F7FD-4D17-B9AD-D5AE5DA25C46")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "6BE22AFD-1D40-4375-B5DA-5581B886EDB8")!,
@@ -1309,7 +1466,7 @@ final class ServiceDefinitionDatabaseGenerated {
                 issuer: ["Nintendo Account"],
                 tags: nil,
                 matchingRules: nil,
-                iconTypeID: UUID(uuidString: "BE5DD6CE-5266-4F00-BF9C-C778696BBDE7")!
+                iconTypeID: UUID(uuidString: "3FC48E21-AFBC-4A85-AA27-D07130D0C7F2")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "744E788D-3975-43AC-8166-0029C9A0871C")!,
@@ -1326,6 +1483,19 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "20C994FC-BFC4-4FFA-A2ED-B469E03451F1")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "784D131B-3688-40D5-A24F-39101716823A")!,
+                name: "AJ Bell Youinvest",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "ajbell", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "ajbell", matcher: .contains, ignoreCase: true),
+.init(field: .issuer, text: "aj bell", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "aj bell", matcher: .contains, ignoreCase: true),
+.init(field: .issuer, text: "youinvest", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "youinvest", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "C132E76A-5792-4B93-9E4E-E6220ADF5CC0")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "79549405-BA55-4C7B-9D48-3B15002B5B30")!,
@@ -1350,6 +1520,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "E1C6AA97-CF83-4655-B32E-FDA3D3594B27")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "7A7C167A-1EB9-4733-85FA-6C1553EBCE94")!,
+                name: "npm",
+                issuer: ["npm"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "B5D5A209-73C3-4A9F-AB39-16F8361A2513")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "7BD710EA-F376-48D8-AD1F-A0C02ECC3037")!,
@@ -1378,7 +1556,7 @@ final class ServiceDefinitionDatabaseGenerated {
             .init(
                 serviceTypeID: UUID(uuidString: "7D012425-7019-4320-90A5-38963E4A022E")!,
                 name: "Brave",
-                issuer: ["Brave+Rewards"],
+                issuer: ["Brave+Rewards", "Brave Rewards"],
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "E4E7DA2F-3D8B-4686-8C2C-FD94A23864AD")!
@@ -1434,7 +1612,7 @@ final class ServiceDefinitionDatabaseGenerated {
             .init(
                 serviceTypeID: UUID(uuidString: "80F023AF-B7E2-4395-A700-769BF968DCF6")!,
                 name: "JetBrains",
-                issuer: ["JetBrains+Account"],
+                issuer: ["JetBrains+Account", "JetBrains Account"],
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "2143B701-156B-4D92-919F-00FA12423913")!
@@ -1518,6 +1696,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "A2B78D57-46C7-49F9-9D28-0F3C58E35BE5")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "87628E28-8D71-4D26-9A81-84DA98F3C128")!,
+                name: "Wise",
+                issuer: ["Wise"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "B489E126-7964-4D8F-B3B9-8FC5E740710D")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "882C9046-B11F-4F4F-9F66-7095202A03A7")!,
@@ -1712,6 +1898,17 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "E547C093-2B09-4196-B69B-72E77EF1ED9C")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "97657A82-03B2-4267-9D75-90FACB792666")!,
+                name: "123 Form Builder",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "123 Form Builder", matcher: .contains, ignoreCase: true),
+.init(field: .issuer, text: "123FormBuilder", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "123 Form Builder", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "123FormBuilder", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "DFB1C4BF-9AD6-4CB9-A284-68C9DCD34645")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "97B7C609-EDCE-400D-B0CE-A1894AC4305B")!,
                 name: "OpenVPN",
                 issuer: ["OpenVPN"],
@@ -1808,12 +2005,31 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "1CF1197B-940E-4AB3-8FBB-261B6CB1D464")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "9F8CDE87-CDBE-4551-B2DE-7829A2FE9F42")!,
+                name: "ActiveCampaign",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "ActiveCampaign", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "ActiveCampaign", matcher: .contains, ignoreCase: true),
+.init(field: .issuer, text: "Active Campaign", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "Active Campaign", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "D77F98D5-D64C-4237-B343-A50219BC5226")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "A074D141-F92E-4521-971F-63304A45FEDF")!,
                 name: "Skiff",
                 issuer: ["Skiff"],
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "75595AD0-66C7-4BFC-A47D-99C001A4DF12")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "A174BBBA-0FF5-4827-ACFB-AB661E5A59B9")!,
+                name: "Pluralsight",
+                issuer: ["Pluralsight"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "AB7D3BEE-5A6B-4C0A-BED5-EFCB5E9EB61F")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "A2987AB4-AC5C-48CE-863C-D3D3D1220FDB")!,
@@ -1880,6 +2096,15 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "BEBE73C4-8079-42AC-B735-5B991367CA25")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "A916B5E1-627B-4E23-B690-81B33C4B701A")!,
+                name: "34SP.com",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "34SP", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "34SP", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "87FFDB0E-82AA-4571-99E1-C2506B4267DB")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "A9F9DEEB-C0DB-447C-9316-0BCC5C17D81D")!,
                 name: "OKX",
                 issuer: nil,
@@ -1902,6 +2127,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "7BEE53FC-F205-4A92-8984-CA0A11A9FE92")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "AD4D1C0E-382D-424E-BE1B-7A6F83874E51")!,
+                name: "Pushover",
+                issuer: ["Pushover"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "D2B279ED-90CA-4AA4-B02F-45E98AA008F5")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "AD6A5114-6205-4478-BBE2-36C63927FCBE")!,
@@ -1968,12 +2201,38 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "F9A2CD0D-B4CD-4130-9C06-AA354CBBD221")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "B1A9346E-79D0-419C-9DD8-DDC57540DB28")!,
+                name: "Accelo",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "Accelo", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "Accelo", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "AAB8250D-309F-4E4C-AB57-772DD7D73C40")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "B235239B-0FF5-4D74-BABB-3A76E8DCE4EB")!,
                 name: "GMX",
                 issuer: ["GMX"],
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "DCFA66E0-BEEE-4560-9946-1096A804C913")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "B359A557-2215-4623-8B4D-2975F310B6E5")!,
+                name: "namuwiki",
+                issuer: ["나무위키"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "6AECCDAE-1C03-4D50-87F4-4E5712DBE772")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "B36BBB0F-DC99-4F9F-B934-74C68AA0EB3A")!,
+                name: "101domain",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "101domain", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "101domain", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "66FC163C-D717-4C18-8277-CFC30291CD5F")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "B3AD7C69-D5DC-47E8-82B0-AC607E151329")!,
@@ -1998,6 +2257,15 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "0C91F7FD-783A-4F4C-846E-2E57E13727BA")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "B47CA012-EDA9-44FC-AEC8-39A16A2EE928")!,
+                name: "Acquia",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "Acquia", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "Acquia", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "0764B5C9-83C3-4E6C-A053-590ED3379D8C")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "B4ED9356-1B2D-4A21-BA2B-C96EEB4EDCF3")!,
@@ -2048,8 +2316,16 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "38A47686-7AF2-4B3B-827B-315B6B92EB74")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "B84DC9AD-9910-44B9-B065-99F06C679706")!,
+                name: "Mailgun",
+                issuer: ["Mailgun"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "9E4DB15D-4AC6-49FC-A22C-8A0B580BDE69")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "B872CBD5-DCAA-4A36-83DC-29B273009726")!,
-                name: "coinsquare",
+                name: "Coinsquare",
                 issuer: ["coinsquare.io"],
                 tags: nil,
                 matchingRules: nil,
@@ -2070,6 +2346,15 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "2DC7DD80-1B1E-420B-92EE-838298DE29A9")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "B90E407E-B5F8-4EF5-A3E5-CC3E2DDAF2B9")!,
+                name: "APNIC",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "APNIC", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "APNIC", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "8F68FF8F-35DF-4600-8A6D-ACF23BAA0E74")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "BB0CF5E7-D66F-442A-9F15-1623CFCFC57E")!,
@@ -2113,9 +2398,9 @@ final class ServiceDefinitionDatabaseGenerated {
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "BE87D55C-5786-41A2-8851-84BA49C7D4D0")!,
-                name: "DB",
+                name: "Deutsche Bahn",
                 issuer: ["Deutsche Bahn"],
-                tags: ["DEUTSCHE", "BAHN"],
+                tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "2DA66DFC-D49D-443C-9322-57AE6C623007")!
             ),
@@ -2200,6 +2485,15 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "163316F8-FB4A-45C4-A349-1187E51BFE72")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "C62E1EA9-E2D8-4742-A6A9-D9B3527A068A")!,
+                name: "15Five",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "15Five", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "15Five", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "978354B2-AF33-440D-BC4D-97D95024ED31")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "C679176D-D306-4A06-876A-3334B47D3975")!,
                 name: "AnyDesk",
                 issuer: ["anydesk.com"],
@@ -2247,6 +2541,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "7E40BA1B-12C4-46B5-B74D-AB362C21494A")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "C91E4DB8-6001-494D-8912-E09D2D371ECD")!,
+                name: "Abode",
+                issuer: ["my.goabode.com"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "486D0E95-A48D-4306-93BF-C926BFC9B8D2")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "C97EBAA8-7380-4E5D-9059-397F2A1FC982")!,
@@ -2311,6 +2613,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "108A8AD6-ACB2-43F5-A697-5DD1116D4DA5")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "CBA07980-5736-41CD-A7FF-7D1DED91908A")!,
+                name: "Topicbox",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "topicbox.com", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "2C1C87ED-E401-4234-BB14-85F632A9CFDC")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "CD2CCD13-EED6-4B66-8A89-8C3F0799B9B6")!,
@@ -2506,6 +2816,26 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "6059F9E8-D90B-4CCA-ACEA-AE8797837ADB")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "DDB8874C-4FB7-46AF-B478-5ABB52F30ADD")!,
+                name: "2Checkout",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "2Checkout", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "2Checkout", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "16A03F1C-AAD1-417B-875F-3DADC9E38F2D")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "DE8611E4-4B83-4B9B-B252-94FD02460916")!,
+                name: "A2 Hosting",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "A2 Hosting", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "A2 Hosting", matcher: .contains, ignoreCase: true),
+.init(field: .issuer, text: "A2Hosting", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "A2Hosting", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "4FD0608C-3721-4349-9F57-9930521F5BB5")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "DEEAD8DD-C9E3-463A-8C73-1E75C5EC13CF")!,
                 name: "Rockstar Games",
                 issuer: ["Rockstar+Games", "Rockstar Games"],
@@ -2563,7 +2893,7 @@ final class ServiceDefinitionDatabaseGenerated {
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "E32CB9ED-F0A0-46E5-8011-0C8D33617ADF")!,
-                name: "Tebex.io",
+                name: "Tebex",
                 issuer: ["Tebex.io"],
                 tags: nil,
                 matchingRules: nil,
@@ -2650,6 +2980,15 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "96B293B5-F4EE-4201-93A5-81C0B73581BF")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "ECBFA345-A65A-4516-8A8A-747A12703B7F")!,
+                name: "ALL-INKL.COM",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "all-inkl", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "all-inkl", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "B34A23F8-ACCC-43D6-8267-77B3F86C2B60")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "ED64D5AF-2641-465F-9936-4C5BC6075695")!,
                 name: "Plex",
                 issuer: ["Plex"],
@@ -2672,6 +3011,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: [.init(field: .label, text: "GoDaddy", matcher: .contains, ignoreCase: true)],
                 iconTypeID: UUID(uuidString: "51C99CC4-9C19-4D9D-8CCB-41C630F5E977")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "EE576944-E5F6-4AD1-8840-6C7AD8EB4715")!,
+                name: "3Commas",
+                issuer: ["3Commas"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "8541F4D5-513F-46E8-BC90-CC13F0764381")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "EE990E63-4E8D-4AA5-BE25-FD945108AAAC")!,
@@ -2851,7 +3198,7 @@ final class ServiceDefinitionDatabaseGenerated {
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "FA63A7F1-557E-4EDA-813A-274E405F0559")!,
-                name: "arena.net",
+                name: "ArenaNet",
                 issuer: ["ArenaNet"],
                 tags: nil,
                 matchingRules: nil,
@@ -2906,10 +3253,18 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "1A0ADFA5-37EA-4315-8B48-EE1D7297B1B1")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "FF0B65AA-FF15-4E42-BA4C-BD04A281F509")!,
+                name: "Parallels",
+                issuer: ["Parallels"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "EC02758E-B344-4E99-8AA6-BB4436CAD989")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "FF0ED7B6-0716-46FA-8646-052883572F1F")!,
                 name: "Roberts Space Industries",
                 issuer: ["Roberts Space Industries"],
-                tags: nil,
+                tags: ["RSI"],
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "7C4A3FA2-5A2D-43E0-B87E-5C3628EAE326")!
             )]}()

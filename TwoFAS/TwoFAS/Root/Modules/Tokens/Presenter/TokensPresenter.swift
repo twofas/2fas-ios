@@ -160,7 +160,6 @@ extension TokensPresenter {
     }
     
     // MARK: - Actions
-    
     func handleShowCamera() {
         Log("TokensPresenter - handleShowCamera")
         interactor.checkCameraPermission { [weak self] value in
@@ -197,7 +196,17 @@ extension TokensPresenter {
         }
     }
     
+    func handleTokensScreenIsVisible() {
+        if interactor.isActiveSearchEnabled && showSearchBar {
+            view?.showKeyboard()
+        }
+    }
+    
     // MARK: - Search
+    
+    var showSearchBar: Bool {
+        count > 1
+    }
     
     func handleSetSearchPhrase(_ phrase: String) {
         Log("TokensPresenter - handleSetSearchPhrase")

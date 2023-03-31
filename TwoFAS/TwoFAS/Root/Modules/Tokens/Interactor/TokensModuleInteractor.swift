@@ -37,6 +37,7 @@ protocol TokensModuleInteracting: AnyObject {
     var categoryData: [CategoryData] { get }
     var linkAction: ((TokensLinkAction) -> Void)? { get set }
     var isMainOnlyCategory: Bool { get }
+    var isActiveSearchEnabled: Bool { get }
     
     func servicesWereUpdated()
     func sync()
@@ -147,6 +148,10 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     var isMainOnlyCategory: Bool {
         categoryData.contains(where: { $0.section == nil }) && categoryData.count == 1
+    }
+    
+    var isActiveSearchEnabled: Bool {
+        appearanceInteractor.isActiveSearchEnabled
     }
     
     // MARK: - Links

@@ -18,10 +18,35 @@
 //
 
 import Foundation
+import Token
+import Common
 
-extension Notification.Name {
-    static let switchToSetupPIN = Notification.Name("switchToSetupPIN")
-    static let switchToBrowserExtension = Notification.Name("switchToBrowserExtension")
-    static let orientationSizeWillChange = Notification.Name("orientationSizeWillChange")
-    static let tokensScreenIsVisible = Notification.Name("tokensScreenIsVisible")
+extension MainRepositoryImpl {
+    // MARK: - Next Token
+    
+    var isNextTokenEnabled: Bool {
+        userDefaultsRepository.isNextTokenEnabled
+    }
+    
+    func enableNextToken() {
+        userDefaultsRepository.setNextTokenEnabled(true)
+    }
+    
+    func disableNextToken() {
+        userDefaultsRepository.setNextTokenEnabled(false)
+    }
+    
+    // MARK: - Active Search
+    
+    var isActiveSearchEnabled: Bool {
+        userDefaultsRepository.isActiveSearchEnabled
+    }
+    
+    func enableActiveSearch() {
+        userDefaultsRepository.setActiveSearchEnabled(true)
+    }
+    
+    func disableActiveSearch() {
+        userDefaultsRepository.setActiveSearchEnabled(false)
+    }
 }

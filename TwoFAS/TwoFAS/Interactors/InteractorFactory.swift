@@ -161,8 +161,8 @@ final class InteractorFactory {
         WidgetsInteractor(mainRepository: MainRepositoryImpl.shared)
     }
     
-    func nextTokenInteractor() -> NextTokenInteracting {
-        NextTokenInteractor(mainRepository: MainRepositoryImpl.shared)
+    func appearanceInteractor() -> AppearanceInteracting {
+        AppearanceInteractor(mainRepository: MainRepositoryImpl.shared)
     }
     
     private func cloudBackupStateInteractor(listenerID: String) -> CloudBackupStateInteracting {
@@ -247,7 +247,6 @@ extension InteractorFactory {
             widgetsInteractor: widgetsInteractor(),
             pushNotifications: pushNotificationRegistrationInteractor(),
             protectionInteractor: protectionInteractor(),
-            nextTokenInteractor: nextTokenInteractor(),
             networkStatusInteractor: networkStatusInteractor(),
             pairingDeviceInteractor: pairingWebExtensionInteractor()
         )
@@ -503,7 +502,7 @@ extension InteractorFactory {
     
     func tokensModuleInteractor() -> TokensModuleInteracting {
         TokensModuleInteractor(
-            nextTokenInteractor: nextTokenInteractor(),
+            appearanceInteractor: appearanceInteractor(),
             serviceDefinitionsInteractor: serviceDefinitionInteractor(),
             serviceInteractor: serviceListingInteractor(),
             serviceModifyInteractor: serviceModifyInteractor(),
@@ -542,5 +541,9 @@ extension InteractorFactory {
     
     func mainTabModuleInteractor() -> MainTabModuleInteracting {
         MainTabModuleInteractor(newsInteractor: newsInteractor())
+    }
+    
+    func appearanceModuleInteractor() -> AppearanceModuleInteracting {
+        AppearanceModuleInteractor(appearanceInteractor: appearanceInteractor())
     }
 }

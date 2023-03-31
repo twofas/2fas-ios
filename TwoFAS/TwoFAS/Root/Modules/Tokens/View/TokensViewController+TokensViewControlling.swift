@@ -40,6 +40,8 @@ protocol TokensViewControlling: AnyObject {
     
     func enableBounce()
     func disableBounce()
+    
+    func showKeyboard()
 }
 
 extension TokensViewController: TokensViewControlling {
@@ -55,7 +57,7 @@ extension TokensViewController: TokensViewControlling {
     
     // MARK: - Empty screen or list
     func showList() {
-        if presenter.count > 1 {
+        if presenter.showSearchBar {
             addSearchBar()
             gridView.alwaysBounceVertical = true
         } else {
@@ -97,6 +99,11 @@ extension TokensViewController: TokensViewControlling {
         ) {
             self.emptySearchScreenView.alpha = 1
         }
+    }
+    
+    func showKeyboard() {
+        guard !searchController.searchBar.isFirstResponder && searchBarAdded else { return }
+        searchController.searchBar.becomeFirstResponder()
     }
     
     // MARK: - Dragging
@@ -274,5 +281,22 @@ extension TokensViewController {
     @objc
     func notificationAppDidBecomeInactive() {
         presenter.handleAppBecomesInactive()
+    }
+    
+    @objc
+    func tokensScreenIsVisible() {
+        guard viewIfLoaded?.window != nil else { return }
+        var modalPresent = false
+        var vc: UIViewController? = self
+        repeat {
+            if vc?.presentedViewController != nil {
+                modalPresent = true
+                break
+            }
+            vc = vc?.parent
+        } while vc != nil
+        
+        guard !modalPresent else { return }
+        presenter.handleTokensScreenIsVisible()
     }
 }

@@ -19,9 +19,31 @@
 
 import Foundation
 
-extension Notification.Name {
-    static let switchToSetupPIN = Notification.Name("switchToSetupPIN")
-    static let switchToBrowserExtension = Notification.Name("switchToBrowserExtension")
-    static let orientationSizeWillChange = Notification.Name("orientationSizeWillChange")
-    static let tokensScreenIsVisible = Notification.Name("tokensScreenIsVisible")
+protocol AppearanceModuleInteracting: AnyObject {
+    var isActiveSearchEnabled: Bool { get }
+    var isNextTokenEnabled: Bool { get }
+    
+    func toogleIncomingToken()
+    func toggleActiveSearch()
+}
+
+final class AppearanceModuleInteractor {
+    private let appearanceInteractor: AppearanceInteracting
+    
+    init(appearanceInteractor: AppearanceInteracting) {
+        self.appearanceInteractor = appearanceInteractor
+    }
+}
+
+extension AppearanceModuleInteractor: AppearanceModuleInteracting {
+    var isActiveSearchEnabled: Bool { appearanceInteractor.isActiveSearchEnabled }
+    var isNextTokenEnabled: Bool { appearanceInteractor.isNextTokenEnabled }
+
+    func toogleIncomingToken() {
+        appearanceInteractor.toggleNextToken()
+    }
+    
+    func toggleActiveSearch() {
+        appearanceInteractor.toggleActiveSearch()
+    }
 }

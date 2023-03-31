@@ -18,43 +18,40 @@
 //
 
 import Foundation
-import Common
 
-protocol NextTokenInteracting: AnyObject {
-    var isEnabled: Bool { get }
-    func enable()
-    func disable()
-    func toggle()
-}
+final class AppearancePresenter {
+    weak var view: AppearanceViewControlling?
+    
+    private let flowController: AppearanceFlowControlling
+    let interactor: AppearanceModuleInteracting
+    
+    init(flowController: AppearanceFlowControlling, interactor: AppearanceModuleInteracting) {
+        self.flowController = flowController
+        self.interactor = interactor
+    }
 
-final class NextTokenInteractor {
-    private let mainRepository: MainRepository
-    
-    init(mainRepository: MainRepository) {
-        self.mainRepository = mainRepository
-    }
-}
-
-extension NextTokenInteractor: NextTokenInteracting {
-    var isEnabled: Bool {
-        mainRepository.isNextTokenEnabled
+    func viewWillAppear() {
+        reload()
     }
     
-    func enable() {
-        Log("NextTokenInteractor - enable", module: .interactor)
-        mainRepository.enableNextToken()
-    }
-    
-    func disable() {
-        Log("NextTokenInteractor - disable", module: .interactor)
-        mainRepository.disableNextToken()
-    }
-    
-    func toggle() {
-        if isEnabled {
-            disable()
-        } else {
-            enable()
+    func handleToggle(for kind: AppearanceCell.AppearanceToggle) {
+        switch kind {
+        case .incomingToken:
+            interactor.toogleIncomingToken()
+        case .activeSearch:
+            interactor.toggleActiveSearch()
         }
+        reload()
+    }
+    
+    func handleBecomeActive() {
+        reload()
+    }
+}
+
+private extension AppearancePresenter {
+    func reload() {
+        let menu = buildMenu()
+        view?.reload(with: menu)
     }
 }

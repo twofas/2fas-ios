@@ -105,6 +105,8 @@ internal enum Asset {
   internal static let scanErrorGeneralError = ImageAsset(name: "scanErrorGeneralError")
   internal static let selectFromGalleryAdviceIcon = ImageAsset(name: "SelectFromGalleryAdviceIcon")
   internal static let settingsAbout = ImageAsset(name: "SettingsAbout")
+  internal static let settingsActiveSearch = ImageAsset(name: "SettingsActiveSearch")
+  internal static let settingsAppearance = ImageAsset(name: "SettingsAppearance")
   internal static let settingsArrow = ImageAsset(name: "SettingsArrow")
   internal static let settingsBrowserExtension = ImageAsset(name: "SettingsBrowserExtension")
   internal static let settingsChangePIN = ImageAsset(name: "SettingsChangePIN")

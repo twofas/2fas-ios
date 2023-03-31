@@ -37,6 +37,7 @@ protocol TokensModuleInteracting: AnyObject {
     var categoryData: [CategoryData] { get }
     var linkAction: ((TokensLinkAction) -> Void)? { get set }
     var isMainOnlyCategory: Bool { get }
+    var isActiveSearchEnabled: Bool { get }
     
     func servicesWereUpdated()
     func sync()
@@ -76,7 +77,7 @@ final class TokensModuleInteractor {
         case next(TokenValue)
     }
     
-    private let nextTokenInteractor: NextTokenInteracting
+    private let appearanceInteractor: AppearanceInteracting
     private let serviceDefinitionsInteractor: ServiceDefinitionInteracting
     private let serviceInteractor: ServiceListingInteracting
     private let serviceModifyInteractor: ServiceModifyInteracting
@@ -94,7 +95,7 @@ final class TokensModuleInteractor {
     var linkAction: ((TokensLinkAction) -> Void)?
     
     init(
-        nextTokenInteractor: NextTokenInteracting,
+        appearanceInteractor: AppearanceInteracting,
         serviceDefinitionsInteractor: ServiceDefinitionInteracting,
         serviceInteractor: ServiceListingInteracting,
         serviceModifyInteractor: ServiceModifyInteracting,
@@ -107,7 +108,7 @@ final class TokensModuleInteractor {
         linkInteractor: LinkInteracting,
         widgetsInteractor: WidgetsInteracting
     ) {
-        self.nextTokenInteractor = nextTokenInteractor
+        self.appearanceInteractor = appearanceInteractor
         self.serviceDefinitionsInteractor = serviceDefinitionsInteractor
         self.serviceInteractor = serviceInteractor
         self.serviceModifyInteractor = serviceModifyInteractor
@@ -147,6 +148,10 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     var isMainOnlyCategory: Bool {
         categoryData.contains(where: { $0.section == nil }) && categoryData.count == 1
+    }
+    
+    var isActiveSearchEnabled: Bool {
+        appearanceInteractor.isActiveSearchEnabled
     }
     
     // MARK: - Links
@@ -469,7 +474,7 @@ private extension TokensModuleInteractor {
             category: serviceData.categoryColor,
             serviceData: serviceData,
             canBeDragged: canBeDragged,
-            useNextToken: nextTokenInteractor.isEnabled
+            useNextToken: appearanceInteractor.isNextTokenEnabled
         )
     }
 
@@ -484,7 +489,7 @@ private extension TokensModuleInteractor {
             category: TintColor.green,
             serviceData: nil,
             canBeDragged: canBeDragged,
-            useNextToken: nextTokenInteractor.isEnabled
+            useNextToken: appearanceInteractor.isNextTokenEnabled
         )
     }
     
@@ -504,7 +509,7 @@ private extension TokensModuleInteractor {
         
         if serviceData.tokenType == .totp {
             guard let token = tokenInteractor.TOTPToken(for: secret) else { return nil }
-            if nextTokenInteractor.isEnabled && token.willChangeSoon {
+            if appearanceInteractor.isNextTokenEnabled && token.willChangeSoon {
                 return .next(token.next)
             }
             return .current(token.current)

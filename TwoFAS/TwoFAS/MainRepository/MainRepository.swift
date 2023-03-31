@@ -64,10 +64,17 @@ protocol MainRepository: AnyObject {
     func markWidgetEnablingWarningAsShown()
     func reloadWidgets()
     
-    // MARK: - Tokens
+    // MARK: - Appearance
+    // MARK: Next Token
     var isNextTokenEnabled: Bool { get }
     func enableNextToken()
     func disableNextToken()
+    // MARK: Active Search
+    var isActiveSearchEnabled: Bool { get }
+    func enableActiveSearch()
+    func disableActiveSearch()
+    
+    // MARK: - Tokens
     func token(
         secret: Secret,
         time: Date?,

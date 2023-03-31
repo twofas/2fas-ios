@@ -22,18 +22,6 @@ import Token
 import Common
 
 extension MainRepositoryImpl {
-    var isNextTokenEnabled: Bool {
-        userDefaultsRepository.isNextTokenEnabled
-    }
-    
-    func enableNextToken() {
-        userDefaultsRepository.setNextTokenEnabled(true)
-    }
-    
-    func disableNextToken() {
-        userDefaultsRepository.setNextTokenEnabled(false)
-    }
-    
     // MARK: - DeviceID
     
     var isDeviceIDSet: Bool {

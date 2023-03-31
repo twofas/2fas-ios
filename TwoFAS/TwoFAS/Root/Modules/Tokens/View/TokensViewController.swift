@@ -277,5 +277,11 @@ private extension TokensViewController {
             name: UIApplication.didEnterBackgroundNotification,
             object: nil
         )
+        center.addObserver(
+            self,
+            selector: #selector(tokensScreenIsVisible),
+            name: .tokensScreenIsVisible,
+            object: nil
+        )
     }
 }

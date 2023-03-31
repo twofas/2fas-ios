@@ -45,6 +45,7 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case viewPath = "ViewPathController.ViewStatePath"
         case introductionWasShown = "IntroductionWasShown"
         case crashlyticsDisabled
+        case activeSearchEnabled
     }
     private let userDefaults = UserDefaults()
     private let sharedDefaults = UserDefaults(suiteName: Config.suiteName)!
@@ -201,6 +202,15 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
     
     func setSectionZeroIsCollapsed(_ collapsed: Bool) {
         userDefaults.set(collapsed, forKey: Keys.isSectionZeroCollapsed.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    var isActiveSearchEnabled: Bool {
+        userDefaults.bool(forKey: Keys.activeSearchEnabled.rawValue)
+    }
+    
+    func setActiveSearchEnabled(_ state: Bool) {
+        userDefaults.set(state, forKey: Keys.activeSearchEnabled.rawValue)
         userDefaults.synchronize()
     }
     

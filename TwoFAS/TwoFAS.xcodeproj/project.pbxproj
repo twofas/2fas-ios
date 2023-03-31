@@ -43,7 +43,7 @@
 		C208101B2794A3650035E339 /* MF_Base32Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = C22E423925DF1EC600105195 /* MF_Base32Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C208101D2794A5940035E339 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C208101C2794A5940035E339 /* Data+.swift */; };
 		C20935D2292142B4000F5AA7 /* WidgetsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935D1292142B4000F5AA7 /* WidgetsInteractor.swift */; };
-		C20935D42921446A000F5AA7 /* NextTokenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935D32921446A000F5AA7 /* NextTokenInteractor.swift */; };
+		C20935D42921446A000F5AA7 /* AppearanceInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935D32921446A000F5AA7 /* AppearanceInteractor.swift */; };
 		C20935D729214BC3000F5AA7 /* ExportToFileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935D629214BC3000F5AA7 /* ExportToFileInteractor.swift */; };
 		C20935DA29214E54000F5AA7 /* ScanInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935D929214E54000F5AA7 /* ScanInteractor.swift */; };
 		C20935DD29214FA7000F5AA7 /* IconInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935DC29214FA7000F5AA7 /* IconInteractor.swift */; };
@@ -666,6 +666,12 @@
 		C2B077C8292A938D0074517F /* UploadLogsModuleInteractorError+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077C7292A938D0074517F /* UploadLogsModuleInteractorError+.swift */; };
 		C2B077CD292A98AD0074517F /* UploadLogsNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077CC292A98AD0074517F /* UploadLogsNavigationFlowController.swift */; };
 		C2B077D1292AA0A00074517F /* ShortDateTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077D0292AA0A00074517F /* ShortDateTimeFormatter.swift */; };
+		C2B1208B29D767590020281E /* AppearanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1208A29D767590020281E /* AppearanceViewController.swift */; };
+		C2B1208D29D767B10020281E /* AppearancePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1208C29D767B10020281E /* AppearancePresenter.swift */; };
+		C2B1208F29D76BD10020281E /* AppearancePresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1208E29D76BD10020281E /* AppearancePresenter+Menu.swift */; };
+		C2B1209129D76FA60020281E /* AppearanceModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1209029D76FA60020281E /* AppearanceModuleInteractor.swift */; };
+		C2B1209329D771AA0020281E /* MainRepositoryImpl+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1209229D771AA0020281E /* MainRepositoryImpl+Appearance.swift */; };
+		C2B1209529D773770020281E /* AppearanceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1209429D773770020281E /* AppearanceFlowController.swift */; };
 		C2B2ED1E27C4349100332255 /* AdvancedAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B2ED1D27C4349100332255 /* AdvancedAlert.swift */; };
 		C2B2ED2227C44B1B00332255 /* AdvancedAlertFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B2ED2127C44B1B00332255 /* AdvancedAlertFlowController.swift */; };
 		C2B2ED2427C44BF300332255 /* AdvancedAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B2ED2327C44BF300332255 /* AdvancedAlertViewController.swift */; };
@@ -1272,7 +1278,7 @@
 		C2081015279494980035E339 /* MigrationPayload+Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MigrationPayload+Conversion.swift"; sourceTree = "<group>"; };
 		C208101C2794A5940035E339 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		C20935D1292142B4000F5AA7 /* WidgetsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsInteractor.swift; sourceTree = "<group>"; };
-		C20935D32921446A000F5AA7 /* NextTokenInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NextTokenInteractor.swift; sourceTree = "<group>"; };
+		C20935D32921446A000F5AA7 /* AppearanceInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceInteractor.swift; sourceTree = "<group>"; };
 		C20935D629214BC3000F5AA7 /* ExportToFileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportToFileInteractor.swift; sourceTree = "<group>"; };
 		C20935D929214E54000F5AA7 /* ScanInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanInteractor.swift; sourceTree = "<group>"; };
 		C20935DC29214FA7000F5AA7 /* IconInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconInteractor.swift; sourceTree = "<group>"; };
@@ -1904,6 +1910,12 @@
 		C2B077C7292A938D0074517F /* UploadLogsModuleInteractorError+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UploadLogsModuleInteractorError+.swift"; sourceTree = "<group>"; };
 		C2B077CC292A98AD0074517F /* UploadLogsNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogsNavigationFlowController.swift; sourceTree = "<group>"; };
 		C2B077D0292AA0A00074517F /* ShortDateTimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortDateTimeFormatter.swift; sourceTree = "<group>"; };
+		C2B1208A29D767590020281E /* AppearanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewController.swift; sourceTree = "<group>"; };
+		C2B1208C29D767B10020281E /* AppearancePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancePresenter.swift; sourceTree = "<group>"; };
+		C2B1208E29D76BD10020281E /* AppearancePresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppearancePresenter+Menu.swift"; sourceTree = "<group>"; };
+		C2B1209029D76FA60020281E /* AppearanceModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceModuleInteractor.swift; sourceTree = "<group>"; };
+		C2B1209229D771AA0020281E /* MainRepositoryImpl+Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Appearance.swift"; sourceTree = "<group>"; };
+		C2B1209429D773770020281E /* AppearanceFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceFlowController.swift; sourceTree = "<group>"; };
 		C2B2ED1D27C4349100332255 /* AdvancedAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedAlert.swift; sourceTree = "<group>"; };
 		C2B2ED2127C44B1B00332255 /* AdvancedAlertFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedAlertFlowController.swift; sourceTree = "<group>"; };
 		C2B2ED2327C44BF300332255 /* AdvancedAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedAlertViewController.swift; sourceTree = "<group>"; };
@@ -2596,6 +2608,7 @@
 		C21111E1274AB8C100CA7C78 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				C2B1208529D767150020281E /* Appearance */,
 				C2CC0A4129D08D7700677A7B /* ExternalImportInstructions */,
 				C2CC0A3429D056CF00677A7B /* ExternalImport */,
 				C2B077AE292A8F350074517F /* UploadLogsFailure */,
@@ -2694,7 +2707,7 @@
 				C2D3B0F928EE12A700D2F991 /* ServiceDefinitionInteractor.swift */,
 				C27A1EB229127C5700702DB9 /* CameraPermissionInteractor.swift */,
 				C20935D1292142B4000F5AA7 /* WidgetsInteractor.swift */,
-				C20935D32921446A000F5AA7 /* NextTokenInteractor.swift */,
+				C20935D32921446A000F5AA7 /* AppearanceInteractor.swift */,
 				C20935D629214BC3000F5AA7 /* ExportToFileInteractor.swift */,
 				C20935D929214E54000F5AA7 /* ScanInteractor.swift */,
 				C20935DC29214FA7000F5AA7 /* IconInteractor.swift */,
@@ -5402,6 +5415,50 @@
 			path = Flow;
 			sourceTree = "<group>";
 		};
+		C2B1208529D767150020281E /* Appearance */ = {
+			isa = PBXGroup;
+			children = (
+				C2B1208929D767310020281E /* Flow */,
+				C2B1208829D767280020281E /* Interactor */,
+				C2B1208729D767210020281E /* Presenter */,
+				C2B1208629D7671C0020281E /* View */,
+			);
+			path = Appearance;
+			sourceTree = "<group>";
+		};
+		C2B1208629D7671C0020281E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C2B1208A29D767590020281E /* AppearanceViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C2B1208729D767210020281E /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C2B1208C29D767B10020281E /* AppearancePresenter.swift */,
+				C2B1208E29D76BD10020281E /* AppearancePresenter+Menu.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C2B1208829D767280020281E /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				C2B1209029D76FA60020281E /* AppearanceModuleInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		C2B1208929D767310020281E /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				C2B1209429D773770020281E /* AppearanceFlowController.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
 		C2B25665200FED7400C86667 /* ServiceMigration */ = {
 			isa = PBXGroup;
 			children = (
@@ -5906,6 +5963,7 @@
 				C2D44E6E275C19220043F5D6 /* MainRepositoryImpl+Security.swift */,
 				C2D44E70275C1FD30043F5D6 /* MainRepositoryImpl+Extensions.swift */,
 				C2D44E72275C1FE90043F5D6 /* MainRepositoryImpl+Tokens.swift */,
+				C2B1209229D771AA0020281E /* MainRepositoryImpl+Appearance.swift */,
 				C2D44E74275C1FF40043F5D6 /* MainRepositoryImpl+General.swift */,
 				C27BE518275D6E0D0090CA12 /* MainRepositoryImpl+Services.swift */,
 				C27BE51C275D80230090CA12 /* MainRepositoryImpl+Cloud.swift */,
@@ -6799,8 +6857,9 @@
 		C236666B1FB2644900989ACA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "Two Factor Authentication Service, Inc.";
 				TargetAttributes = {
 					C200E4991FB3911B00D7C748 = {
@@ -7182,6 +7241,7 @@
 				C240485A276540970076376E /* ImporterEnterPasswordPresenter.swift in Sources */,
 				C2AA9D112088C124001B14FF /* Notifications.swift in Sources */,
 				C233BD292801E5A200A9CFF2 /* PushNotificationRegistrationInteractor.swift in Sources */,
+				C2B1208B29D767590020281E /* AppearanceViewController.swift in Sources */,
 				C27A54AE27F0FD0C00321D2B /* BrowserExtensionPairingViewController.swift in Sources */,
 				C2B077CD292A98AD0074517F /* UploadLogsNavigationFlowController.swift in Sources */,
 				C2FA3E77280AC5130097ED71 /* WebExtensionAuthInteractor.swift in Sources */,
@@ -7284,6 +7344,7 @@
 				C28681E72891D41F00BE0CA7 /* TimerInteractor.swift in Sources */,
 				C2E2C80B27B038DC00F04B70 /* IconSelectorModuleInteractor.swift in Sources */,
 				C2727D512781E10800B8FA03 /* TrashViewTableViewCell.swift in Sources */,
+				C2B1209129D76FA60020281E /* AppearanceModuleInteractor.swift in Sources */,
 				C2D44E68275C10850043F5D6 /* SettingsMenuTableView.swift in Sources */,
 				C2A74FE62610D510007E5AB3 /* ColorGridSelector.swift in Sources */,
 				C25C661428BADAB0008EC66A /* AboutFlowController.swift in Sources */,
@@ -7316,6 +7377,7 @@
 				C23FD50A2814635400E4E9C5 /* ComposeServiceWebExtensionFlowController.swift in Sources */,
 				C249AF66278A40FE005F9D80 /* UserDefaultsRepositoryImpl.swift in Sources */,
 				C26618A026126A8200ED52CB /* LabelComposeViewController.swift in Sources */,
+				C2B1209529D773770020281E /* AppearanceFlowController.swift in Sources */,
 				C2FA3E81280ADFDF0097ED71 /* MainRepositoryImpl+WebExtensionAuthRequest.swift in Sources */,
 				C21111F2274ABD5200CA7C78 /* SettingsModuleInteractor.swift in Sources */,
 				C23387002780F14700F8DBC3 /* TrashFlowController.swift in Sources */,
@@ -7344,6 +7406,7 @@
 				C2AC221527661C0600271402 /* ExporterPasswordProtectionPresenter.swift in Sources */,
 				C284991B27CC28810092098D /* ComposeServiceCounterPresenter.swift in Sources */,
 				C240485C276549C00076376E /* ImportFromFileInteractor.swift in Sources */,
+				C2B1208D29D767B10020281E /* AppearancePresenter.swift in Sources */,
 				C2D3B0F828EE115200D2F991 /* MainRepositoryImpl+Icons.swift in Sources */,
 				C2AB92E32766956F00698382 /* SettingsViewFooter.swift in Sources */,
 				C2508E1D2753AFBD0072C564 /* TableViewDataSnapshot.swift in Sources */,
@@ -7561,7 +7624,7 @@
 				C2CC0A4629D098CB00677A7B /* ExternalImportInstructionsView.swift in Sources */,
 				C2FC421F23AA8F7A00320ABE /* Router.swift in Sources */,
 				C278122B27FA49AA00F31453 /* WebExtensionLocalDeviceNameInteractor.swift in Sources */,
-				C20935D42921446A000F5AA7 /* NextTokenInteractor.swift in Sources */,
+				C20935D42921446A000F5AA7 /* AppearanceInteractor.swift in Sources */,
 				C240487A27656C590076376E /* ImporterFileErrorPresenter.swift in Sources */,
 				C25B221427C17F1E0052AAC4 /* ComposeServiceInputKind.swift in Sources */,
 				C2A7945327F9018400E5C641 /* BrowserExtensionEditNamePresenter+Menu.swift in Sources */,
@@ -7688,6 +7751,7 @@
 				C27A1EB529127C8D00702DB9 /* AlertController+Ready.swift in Sources */,
 				C21C38A21FE30E62000EC252 /* LimitedTextField.swift in Sources */,
 				C296D1EA28B2D4AF001F026D /* UserIconInfoViewController.swift in Sources */,
+				C2B1209329D771AA0020281E /* MainRepositoryImpl+Appearance.swift in Sources */,
 				C24336ED299ED95A00BF35B1 /* MainTabModuleInteractor.swift in Sources */,
 				C27BE519275D6E0D0090CA12 /* MainRepositoryImpl+Services.swift in Sources */,
 				C2BE80582811DF03009CBC4A /* AuthRequestsPresenter.swift in Sources */,
@@ -7735,6 +7799,7 @@
 				C25860B828247CB7009AE54F /* NewsModels.swift in Sources */,
 				C2698B6C2986B42400EBC179 /* MainTabViewController.swift in Sources */,
 				C22D9E1124681EE000AAE6EE /* MainCointainerNavigationButtonGenerator.swift in Sources */,
+				C2B1208F29D76BD10020281E /* AppearancePresenter+Menu.swift in Sources */,
 				C2A7945127F9016D00E5C641 /* BrowserExtensionEditNameViewController.swift in Sources */,
 				C21B3A1427AF0BC9005C603B /* ColorPickerFlowController.swift in Sources */,
 				C26BCE01281010A000CA6A9A /* SelectServiceModuleInteractor.swift in Sources */,
@@ -8315,6 +8380,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Storage;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -8352,6 +8419,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Storage;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -8388,6 +8457,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Protection;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -8426,6 +8497,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Protection;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -8462,6 +8535,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
@@ -8504,6 +8579,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"-ObjC",
@@ -8754,6 +8831,8 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.NetworkStack;
@@ -8797,6 +8876,8 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.NetworkStack;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -8834,6 +8915,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Sync;
@@ -8872,6 +8955,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Sync;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -8910,6 +8995,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Token;
@@ -8950,6 +9037,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Token;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -9043,6 +9132,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Common;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -9081,6 +9172,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Common;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -9117,6 +9210,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TimeVerification;
@@ -9156,6 +9251,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TimeVerification;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -9193,6 +9290,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.CodeSupport;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -9231,6 +9330,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.CodeSupport;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

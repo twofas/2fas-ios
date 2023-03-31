@@ -29,6 +29,7 @@ protocol SettingsMenuFlowControllerChild: AnyObject {
     func toSwitchToFAQ()
     func appSecurityChaged()
     func toSwitchToExternlImport()
+    func toSwitchToAppearance()
 }
 
 protocol SettingsMenuFlowControllerParent: AnyObject {
@@ -42,6 +43,7 @@ protocol SettingsMenuFlowControllerParent: AnyObject {
     func toDonate()
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func toExternalImport()
+    func toAppearance()
 }
 
 protocol SettingsMenuFlowControlling: AnyObject {
@@ -56,6 +58,7 @@ protocol SettingsMenuFlowControlling: AnyObject {
     func toDonate()
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func toExternalImport()
+    func toAppearance()
 }
 
 final class SettingsMenuFlowController: FlowController {
@@ -64,7 +67,7 @@ final class SettingsMenuFlowController: FlowController {
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: SettingsMenuFlowControllerParent
-    ) -> SettingsMenuFlowControllerChild {
+    ) -> (flow: SettingsMenuFlowControllerChild, view: SettingsMenuViewController) {
         let view = SettingsMenuViewController()
         let flowController = SettingsMenuFlowController(viewController: view)
         flowController.parent = parent
@@ -78,7 +81,7 @@ final class SettingsMenuFlowController: FlowController {
     
         navigationController.setViewControllers([view], animated: false)
         
-        return flowController
+        return (flow: flowController, view: view)
     }
 }
 
@@ -104,6 +107,7 @@ extension SettingsMenuFlowController: SettingsMenuFlowControlling {
     func toBrowserExtension() { parent?.toBrowserExtension() }
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) { parent?.toUpdateCurrentPosition(viewPath) }
     func toExternalImport() { parent?.toExternalImport() }
+    func toAppearance() { parent?.toAppearance() }
 }
 
 extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {
@@ -141,6 +145,9 @@ extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {
     
     func toSwitchToExternlImport() {
         viewController.presenter.handleToExternalImport()
+    }
+    func toSwitchToAppearance() {
+        viewController.presenter.handleSwitchToAppearance()
     }
 }
 

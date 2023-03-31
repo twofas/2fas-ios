@@ -48,6 +48,7 @@ extension SettingsMenuPresenter {
         case .trash: return .trash
         case .about: return .about
         case .externalImport: return .externalImport
+        case .appearance: return .appearance
         default: return nil
         }
     }
@@ -127,6 +128,10 @@ extension SettingsMenuPresenter {
         navigate(to: .externalImport)
     }
     
+    func handleSwitchToAppearance() {
+        navigate(to: .appearance)
+    }
+    
     func handleSwitchToBrowserExtension() {
         guard selectedModule != .browserExtension else { return }
         navigate(to: .browserExtension)
@@ -157,6 +162,7 @@ extension SettingsMenuPresenter {
         case .trash: navigate(to: .trash)
         case .about: navigate(to: .about)
         case .externalImport: navigate(to: .externalImport)
+        case .appearance: navigate(to: .appearance)
         }
     }
 }
@@ -192,12 +198,13 @@ private extension SettingsMenuPresenter {
             flowController.toDonate()
         case .externalImport:
             flowController.toExternalImport()
+        case .appearance:
+            flowController.toAppearance()
         }
     }
     
     func toggleAction(kind: SettingsNavigationToggle) {
         switch kind {
-        case .incomingToken: interactor.toogleIncomingToken()
         case .widgets: widgetAction()
         }
     }
@@ -227,6 +234,7 @@ private extension SettingsMenuPresenter {
         case .trash: return .trash
         case .about: return .about
         case .externalImport: return .externalImport
+        case .appearance: return .appearance
         default: return nil
         }
     }

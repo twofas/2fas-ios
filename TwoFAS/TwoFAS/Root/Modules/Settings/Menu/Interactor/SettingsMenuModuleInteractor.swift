@@ -22,7 +22,6 @@ import Foundation
 protocol SettingsMenuModuleInteracting: AnyObject {
     var isSecurityEnabled: Bool { get }
     var areWidgetsEnabled: Bool { get }
-    var isNextTokenEnabled: Bool { get }
     var shouldShowWidgetWarning: Bool { get }
     var isPushNotificationDetermined: Bool { get }
     var hasSSLNetworkError: Bool { get }
@@ -30,15 +29,12 @@ protocol SettingsMenuModuleInteracting: AnyObject {
     
     func enableWidgets()
     func disableWidgets()
-        
-    func toogleIncomingToken()
 }
 
 final class SettingsMenuModuleInteractor {
     private let widgetsInteractor: WidgetsInteracting
     private let pushNotifications: PushNotificationRegistrationInteracting
     private let protectionInteractor: ProtectionInteracting
-    private let nextTokenInteractor: NextTokenInteracting
     private let networkStatusInteractor: NetworkStatusInteracting
     private let pairingDeviceInteractor: PairingWebExtensionInteracting
     
@@ -46,14 +42,12 @@ final class SettingsMenuModuleInteractor {
         widgetsInteractor: WidgetsInteracting,
         pushNotifications: PushNotificationRegistrationInteracting,
         protectionInteractor: ProtectionInteracting,
-        nextTokenInteractor: NextTokenInteracting,
         networkStatusInteractor: NetworkStatusInteracting,
         pairingDeviceInteractor: PairingWebExtensionInteracting
     ) {
         self.widgetsInteractor = widgetsInteractor
         self.pushNotifications = pushNotifications
         self.protectionInteractor = protectionInteractor
-        self.nextTokenInteractor = nextTokenInteractor
         self.networkStatusInteractor = networkStatusInteractor
         self.pairingDeviceInteractor = pairingDeviceInteractor
     }
@@ -62,7 +56,6 @@ final class SettingsMenuModuleInteractor {
 extension SettingsMenuModuleInteractor: SettingsMenuModuleInteracting {
     var isSecurityEnabled: Bool { protectionInteractor.isPINSet }
     var areWidgetsEnabled: Bool { widgetsInteractor.areEnabled }
-    var isNextTokenEnabled: Bool { nextTokenInteractor.isEnabled }
     var shouldShowWidgetWarning: Bool { widgetsInteractor.showWarning }
     var isPushNotificationDetermined: Bool { pushNotifications.wasUserAsked }
     var hasSSLNetworkError: Bool { networkStatusInteractor.hasSSLNetworkError }
@@ -74,9 +67,5 @@ extension SettingsMenuModuleInteractor: SettingsMenuModuleInteracting {
     
     func disableWidgets() {
         widgetsInteractor.disable()
-    }
-    
-    func toogleIncomingToken() {
-        nextTokenInteractor.toggle()
     }
 }

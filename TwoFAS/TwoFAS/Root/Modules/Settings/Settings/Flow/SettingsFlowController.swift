@@ -85,7 +85,9 @@ final class SettingsFlowController: FlowController {
 
 private extension SettingsFlowController {
     func setInitialMenu() {
-        navigationMenu = SettingsMenuFlowController.showAsRoot(in: viewController.navigationNavi, parent: self)
+        let menu = SettingsMenuFlowController.showAsRoot(in: viewController.navigationNavi, parent: self)
+        navigationMenu = menu.flow
+        viewController.menu = menu.view
     }
 }
 
@@ -204,6 +206,14 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
         parent?.settingsToUpdateCurrentPosition(viewPath)
     }
+    
+    func toAppearance() {
+        if isCollapsed {
+            AppearanceFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            AppearanceFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
 }
 extension SettingsFlowController: BackupMenuFlowControllerParent {
     func showFAQ() {
@@ -213,7 +223,6 @@ extension SettingsFlowController: BackupMenuFlowControllerParent {
         navigationMenu?.toSwitchToFAQ()
     }
 }
-
 
 extension SettingsFlowController: PushNotificationPermissionFlowControllerParent {
     func pushNotificationsDidEnd() {}
@@ -229,3 +238,4 @@ extension SettingsFlowController: TrashFlowControllerParent {}
 extension SettingsFlowController: BrowserExtensionMainFlowControllerParent {}
 extension SettingsFlowController: AboutFlowControllerParent {}
 extension SettingsFlowController: ExternalImportFlowControllerParent {}
+extension SettingsFlowController: AppearanceFlowControllerParent {}

@@ -28,6 +28,7 @@ enum ViewPath: Equatable, Codable {
         case browserExtension
         case trash
         case about
+        case appearance
     }
     
     case main

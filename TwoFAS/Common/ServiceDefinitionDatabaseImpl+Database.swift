@@ -2343,7 +2343,7 @@ final class ServiceDefinitionDatabaseGenerated {
                 serviceTypeID: UUID(uuidString: "B8CCC448-1C97-4D5C-A781-25C48996B00F")!,
                 name: "Sony",
                 issuer: ["Sony"],
-                tags: nil,
+                tags: ["PS", "PLAYSTATION"],
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "2DC7DD80-1B1E-420B-92EE-838298DE29A9")!
             ),
@@ -3235,6 +3235,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "C4E2D69C-F532-4795-990D-FE380BD517BA")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "FD8F0A74-239D-42BF-A537-38CF9CF2C7F2")!,
+                name: "Qualifio",
+                issuer: nil,
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "284940C6-710D-473A-A7E5-C9F43001033B")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "FDB95870-569C-471F-84CE-0356D13DA20E")!,

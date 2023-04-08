@@ -1598,6 +1598,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Razer"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "284940C6-710D-473A-A7E5-C9F43001033B")!,
+                name: "Qualifio"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "66190B0F-9600-4A6F-B06B-33254B5316AD")!,
                 name: "Google"
             ),

@@ -28,7 +28,8 @@ protocol ListNewsStorageInteracting: AnyObject {
     func deleteNewsEntry(with newsEntry: ListNewsEntry)
     func updateNewsEntry(with newsEntry: ListNewsEntry)
     func markNewsEntryAsRead(with newsEntry: ListNewsEntry)
-    func listAll() -> [ListNewsEntry]
+    func listAllNews() -> [ListNewsEntry]
+    func listAllFreshlyAddedNews() -> [ListNewsEntry]
     func hasNewsEntriesUnreadItems() -> Bool
     func markAllAsRead()
 }
@@ -70,8 +71,12 @@ extension ListNewsStorageInteractor: ListNewsStorageInteracting {
         mainRepository.markNewsEntryAsRead(with: newsEntry)
     }
     
-    func listAll() -> [ListNewsEntry] {
-        mainRepository.listAll()
+    func listAllNews() -> [ListNewsEntry] {
+        mainRepository.listAllNews()
+    }
+    
+    func listAllFreshlyAddedNews() -> [ListNewsEntry] {
+        mainRepository.listAllFreshlyAddedNews()
     }
     
     func hasNewsEntriesUnreadItems() -> Bool {

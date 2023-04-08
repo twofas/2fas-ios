@@ -359,7 +359,8 @@ protocol MainRepository: AnyObject {
     func deleteNewsEntry(with newsEntry: ListNewsEntry)
     func updateNewsEntry(with newsEntry: ListNewsEntry)
     func markNewsEntryAsRead(with newsEntry: ListNewsEntry)
-    func listAll() -> [ListNewsEntry]
+    func listAllNews() -> [ListNewsEntry]
+    func listAllFreshlyAddedNews() -> [ListNewsEntry]
     func hasNewsEntriesUnreadItems() -> Bool
     func markAllNewsEntriesAsRead()
     func storeNewsCompletions(_ completion: @escaping () -> Void)

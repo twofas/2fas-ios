@@ -415,10 +415,9 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
         
         return data.accounts.compactMap { acc in
             guard let digits = Digits(rawValue: acc.digits),
+                  let period = Period(rawValue: acc.timeStep),
                   acc.secret.isValidSecret()
             else { return nil }
-            
-            let period = Period(rawValue: acc.timeStep) ?? .defaultValue
             
             let secret = acc.secret.sanitazeSecret()
             guard secret.isValidSecret() else { return nil }
@@ -466,11 +465,10 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 let algo = Algorithm(rawValue: acc.algorithm.uppercased()),
                 let counter = Int(acc.counter),
                 let rawTimer = Int(acc.timer),
+                let period = Period(rawValue: rawTimer),
                 acc.secret.isValidSecret()
             else { return nil }
-            
-            let period = Period(rawValue: rawTimer) ?? .defaultValue
-            
+                        
             let secret = acc.secret.sanitazeSecret()
             guard secret.isValidSecret() else { return nil }
             

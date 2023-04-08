@@ -47,7 +47,7 @@ extension NewsInteractor: NewsInteracting {
     }
     
     func localList() -> [ListNewsEntry] {
-        storage.listAll()
+        storage.listAllNews()
     }
     
     func clearHasUnreadNews() {
@@ -100,7 +100,7 @@ private extension NewsInteractor {
     }
     
     func handleFetchedList(_ newList: [ListNewsEntry]) {
-        let currentList = storage.listAll()
+        let currentList = storage.listAllNews()
         guard currentList != newList else {
             Log(
                 "NewsInteractor - handleFetchedList. Fetched list is the same as local one. Exiting",
@@ -147,6 +147,17 @@ private extension NewsInteractor {
         
         deleted.forEach { entry in
             storage.deleteNewsEntry(with: entry)
+        }
+        
+        let listAfterChanges = storage.listAllFreshlyAddedNews()
+        
+        // Hardcoded fix for a change to show more news - marking them as read if first item is read
+        if let first = listAfterChanges.first, first.newsID == "421eaa98-cfde-43ee-8f1f-5dea9c07e5c5" {
+            if first.wasRead {
+                listAfterChanges.forEach({
+                    storage.markNewsEntryAsRead(with: $0)
+                })
+            }
         }
         
         handleCompletions()

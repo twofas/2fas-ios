@@ -60,6 +60,8 @@ extension MainTabPresenter {
         guard viewPath != previousSelectedViewPath, isViewLoaded else { return }
         view?.setView(viewPath)
         switch viewPath {
+        case .main:
+            flowController.tokensSwitchToTokensTab()
         case .settings(let option):
             view?.setSettingsView(option)
         default: break

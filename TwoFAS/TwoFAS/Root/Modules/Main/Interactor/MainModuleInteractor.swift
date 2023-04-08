@@ -27,7 +27,7 @@ protocol MainModuleInteracting: AnyObject {
     func clearImportedFileURL()
     
     // MARK: - New app version
-    func checkForNewAppVersion(completion: @escaping (URL) -> Void)
+    func checkForNewAppVersion(completion: @escaping (URL?) -> Void)
     func skipAppVersion()
 }
 
@@ -74,9 +74,12 @@ extension MainModuleInteractor: MainModuleInteracting {
     
     // MARK: - New app version
     
-    func checkForNewAppVersion(completion: @escaping (URL) -> Void) {
+    func checkForNewAppVersion(completion: @escaping (URL?) -> Void) {
         newVersionInteractor.checkForNewVersion { [weak self] newVersionAvailable in
-            guard let appStoreURL = self?.newVersionInteractor.appStoreURL, newVersionAvailable else { return }
+            guard let appStoreURL = self?.newVersionInteractor.appStoreURL, newVersionAvailable else {
+                completion(nil)
+                return
+            }
             completion(appStoreURL)
         }
     }

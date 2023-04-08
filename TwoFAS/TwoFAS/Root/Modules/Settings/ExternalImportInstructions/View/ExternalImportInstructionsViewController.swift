@@ -44,16 +44,11 @@ final class ExternalImportInstructionsViewController: UIViewController {
             secondaryActionName: presenter.secondaryActionName,
             secondaryAction: secondaryAction
         )
-        let vc = NavigationBarHiddenHostingController(rootView: v)
+        let vc = UIHostingController(rootView: v)
         vc.willMove(toParent: self)
         addChild(vc)
         view.addSubview(vc.view)
         vc.view.pinToParent()
         vc.didMove(toParent: self)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        tabBarController?.tabBar.isHidden = false
     }
 }

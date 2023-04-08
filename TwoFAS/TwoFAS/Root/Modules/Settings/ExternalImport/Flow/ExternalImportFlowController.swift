@@ -72,6 +72,7 @@ final class ExternalImportFlowController: FlowController {
 extension ExternalImportFlowController: ExternalImportFlowControlling {
     func toAegis() {
         guard let navigationController else { return }
+        navigationController.setNavigationBarHidden(true, animated: true)
         ExternalImportInstructionsFlowController.push(
             in: navigationController,
             parent: self,
@@ -81,6 +82,7 @@ extension ExternalImportFlowController: ExternalImportFlowControlling {
     
     func toRaivo() {
         guard let navigationController else { return }
+        navigationController.setNavigationBarHidden(true, animated: true)
         ExternalImportInstructionsFlowController.push(
             in: navigationController,
             parent: self,
@@ -90,6 +92,7 @@ extension ExternalImportFlowController: ExternalImportFlowControlling {
     
     func toLastPass() {
         guard let navigationController else { return }
+        navigationController.setNavigationBarHidden(true, animated: true)
         ExternalImportInstructionsFlowController.push(
             in: navigationController,
             parent: self,
@@ -99,6 +102,7 @@ extension ExternalImportFlowController: ExternalImportFlowControlling {
     
     func toGoogleAuth() {
         guard let navigationController else { return }
+        navigationController.setNavigationBarHidden(true, animated: true)
         ExternalImportInstructionsFlowController.push(
             in: navigationController,
             parent: self,
@@ -110,6 +114,8 @@ extension ExternalImportFlowController: ExternalImportFlowControlling {
 extension ExternalImportFlowController: ExternalImportInstructionsFlowControllerParent {
     func instructionsClose() {
         navigationController?.popViewController(animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.tabBarController?.tabBar.isHidden = false
     }
     
     func instructionsOpenFile() {
@@ -155,13 +161,10 @@ private extension ExternalImportFlowController {
     func endGallery() {
         navigationController?.dismiss(animated: true) { [weak self] in
             self?.galleryViewController = nil
-            self?.instructionsClose()
         }
     }
     
     func end() {
-        navigationController?.dismiss(animated: true) { [weak self] in
-            self?.instructionsClose()
-        }
+        navigationController?.dismiss(animated: true)
     }
 }

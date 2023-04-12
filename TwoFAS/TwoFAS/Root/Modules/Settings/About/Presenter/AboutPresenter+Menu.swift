@@ -38,12 +38,12 @@ extension AboutPresenter {
                 title: T.Settings.aboutCrashOptoutTitle,
                 cells: [
                     .init(
-                        title: T.Settings.aboutCrashOptoutToggleTitle,
-                        accessory: .toggle(isOn: interactor.isCrashlyticsDisabled),
+                        title: T.Settings.enableCrashlytics,
+                        accessory: .toggle(isOn: !interactor.isCrashlyticsDisabled),
                         action: nil
                     )
                 ],
-                footer: T.Settings.aboutCrashOptoutDescription
+                footer: T.Settings.enableCrashlyticsDescription
             )
         ]
     }

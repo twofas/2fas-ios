@@ -759,6 +759,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "F391FCEB-2FF9-4F12-984D-EE59E91E157C")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "3A1B611C-599A-4664-960D-E60A941C1971")!,
+                name: "PolySwarm",
+                issuer: ["PolySwarm"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "9EC3A35F-B09D-42FD-A1DF-354ACCF630AC")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "3A26C02C-1C6E-49BA-B282-C640F6C05804")!,
                 name: "WEB.DE",
                 issuer: ["WEB.DE"],

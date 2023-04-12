@@ -386,6 +386,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Unraid"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "9EC3A35F-B09D-42FD-A1DF-354ACCF630AC")!,
+                name: "PolySwarm"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "3AF6D11F-D879-4649-B183-20C5742F20DD")!,
                 name: "WEB.DE"
             ),

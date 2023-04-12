@@ -22,6 +22,7 @@ import Common
 
 protocol TokensPlainFlowControllerParent: AnyObject {
     func tokensSwitchToTokensTab()
+    func tokensSwitchToSettingsExternalImport()
 }
 
 protocol TokensPlainFlowControlling: AnyObject {
@@ -38,7 +39,6 @@ protocol TokensPlainFlowControlling: AnyObject {
     func toCameraNotAvailable()
     // MARK: Initial screen
     func toFileImport()
-    func toImportGA()
     func toShowGallery()
     func toHelp()
     // MARK: Link actions
@@ -209,13 +209,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     // MARK: - Initial screen
     
     func toFileImport() {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
-        ImporterOpenFileFlowController.present(on: mainSplitViewController, parent: self, url: nil)
-    }
-    
-    func toImportGA() {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
-        GridViewGAImportNavigationFlowController.present(on: mainSplitViewController, parent: self)
+        parent?.tokensSwitchToSettingsExternalImport()
     }
     
     func toShowGallery() {

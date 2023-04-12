@@ -173,14 +173,9 @@ extension TokensPresenter {
         }
     }
     
-    func handleImport2FAS() {
-        Log("TokensPresenter - handleImport2FAS")
+    func handleImportExternalFile() {
+        Log("TokensPresenter - handleImportExternalFile")
         flowController.toFileImport()
-    }
-    
-    func handleImportGA() {
-        Log("TokensPresenter - handleImportGA")
-        flowController.toImportGA()
     }
     
     func handleShowHelp() {

@@ -473,6 +473,7 @@ private extension TokensPresenter {
             } else {
                 view?.showEmptyScreen()
             }
+            view?.reloadData(newSnapshot: interactor.emptySnapshot)
         }
                 
         changeRequriesTokenRefresh = false

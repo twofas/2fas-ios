@@ -28,6 +28,7 @@ enum TokensModuleInteractorState {
 }
 
 protocol TokensModuleInteracting: AnyObject {
+    var emptySnapshot: NSDiffableDataSourceSnapshot<GridSection, GridCell> { get }
     var isiPhone: Bool { get }
     var canBeDragged: Bool { get }
     var hasServices: Bool { get }
@@ -126,6 +127,10 @@ final class TokensModuleInteractor {
 }
 
 extension TokensModuleInteractor: TokensModuleInteracting {
+    var emptySnapshot: NSDiffableDataSourceSnapshot<GridSection, GridCell> {
+        NSDiffableDataSourceSnapshot<GridSection, GridCell>()
+    }
+    
     var isiPhone: Bool {
         !UIDevice.isiPad
     }

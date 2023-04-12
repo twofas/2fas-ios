@@ -27,7 +27,6 @@ enum AppEvent {
     case widgetEnabled
     case widgetDisabled
     case onboardingStart
-    case onboardingGA
     case onboardingBackupFile
     case missingIcon(String)
     case missingIssuer(String)
@@ -87,7 +86,6 @@ private extension AppEvent {
         case .widgetEnabled: return "widget_add_service"
         case .widgetDisabled: return "widget_remove_service"
         case .onboardingStart: return "onboarding_start"
-        case .onboardingGA: return "onboarding_GA"
         case .onboardingBackupFile: return "onboarding_backup_file"
         case .missingIcon: return "missing_icon"
         case .missingIssuer: return "no_image_for_issuer_on_ios"

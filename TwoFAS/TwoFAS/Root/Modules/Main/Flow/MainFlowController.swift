@@ -187,4 +187,8 @@ extension MainFlowController: MainSplitFlowControllerParent {
     func navigationSwitchedToSettings() {
         viewController.presenter.handleSwitchedToSettings()
     }
+    
+    func navigationSwitchedToSettingsExternalImport() {
+        viewController.presenter.handleSwitchToExternalImport()
+    }
 }

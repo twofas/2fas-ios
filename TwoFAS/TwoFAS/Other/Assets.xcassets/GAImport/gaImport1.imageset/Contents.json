@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "gaImport1.pdf",
+      "filename" : "ImportArrowLigth.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "ImportArrowDark.pdf",
       "idiom" : "universal"
     }
   ],

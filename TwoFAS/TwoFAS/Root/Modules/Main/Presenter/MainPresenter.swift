@@ -68,6 +68,10 @@ final class MainPresenter {
         view?.navigateToViewPath(.settings(option: .browserExtension))
     }
     
+    func handleSwitchToExternalImport() {
+        view?.navigateToViewPath(.settings(option: .externalImport))
+    }
+    
     func handleSwitchedToSettings() {
         view?.settingsTabActive()
     }

@@ -19,9 +19,10 @@
 
 import Foundation
 
-enum ExternalImportInstructionsService {
+enum ExternalImportService {
     case aegis
     case raivo
     case lastPass
     case googleAuth
+    case twofas
 }

@@ -779,7 +779,7 @@
 		C2CC0A4629D098CB00677A7B /* ExternalImportInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A4529D098CB00677A7B /* ExternalImportInstructionsView.swift */; };
 		C2CC0A4829D0C9FC00677A7B /* ExternalImportInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A4729D0C9FC00677A7B /* ExternalImportInstructionsViewController.swift */; };
 		C2CC0A4A29D0CACC00677A7B /* ExternalImportInstructionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A4929D0CACC00677A7B /* ExternalImportInstructionsPresenter.swift */; };
-		C2CC0A4C29D0D4FC00677A7B /* ExternalImportInstructionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A4B29D0D4FC00677A7B /* ExternalImportInstructionsService.swift */; };
+		C2CC0A4C29D0D4FC00677A7B /* ExternalImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A4B29D0D4FC00677A7B /* ExternalImportService.swift */; };
 		C2CC0A4E29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A4D29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift */; };
 		C2CC80D627B99AF700294CF2 /* ComposeServicePresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC80D527B99AF700294CF2 /* ComposeServicePresenter+Menu.swift */; };
 		C2CC80D827B99B0600294CF2 /* ComposeServicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC80D727B99B0600294CF2 /* ComposeServicePresenter.swift */; };
@@ -2019,7 +2019,7 @@
 		C2CC0A4529D098CB00677A7B /* ExternalImportInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportInstructionsView.swift; sourceTree = "<group>"; };
 		C2CC0A4729D0C9FC00677A7B /* ExternalImportInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportInstructionsViewController.swift; sourceTree = "<group>"; };
 		C2CC0A4929D0CACC00677A7B /* ExternalImportInstructionsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportInstructionsPresenter.swift; sourceTree = "<group>"; };
-		C2CC0A4B29D0D4FC00677A7B /* ExternalImportInstructionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportInstructionsService.swift; sourceTree = "<group>"; };
+		C2CC0A4B29D0D4FC00677A7B /* ExternalImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportService.swift; sourceTree = "<group>"; };
 		C2CC0A4D29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportInstructionsFlowController.swift; sourceTree = "<group>"; };
 		C2CC80D527B99AF700294CF2 /* ComposeServicePresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComposeServicePresenter+Menu.swift"; sourceTree = "<group>"; };
 		C2CC80D727B99B0600294CF2 /* ComposeServicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServicePresenter.swift; sourceTree = "<group>"; };
@@ -5584,6 +5584,7 @@
 				C2DFE5BC264C851700F828C0 /* CircleView.swift */,
 				C2633EFC265A7D090034B836 /* TokenLabel.swift */,
 				C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */,
+				C2CC0A4B29D0D4FC00677A7B /* ExternalImportService.swift */,
 				C2698B712986F6E800EBC179 /* UITabBarController+addTab.swift */,
 			);
 			path = Common;
@@ -5894,7 +5895,6 @@
 		C2CC0A4129D08D7700677A7B /* ExternalImportInstructions */ = {
 			isa = PBXGroup;
 			children = (
-				C2CC0A4B29D0D4FC00677A7B /* ExternalImportInstructionsService.swift */,
 				C2CC0A4429D08DAD00677A7B /* Flow */,
 				C2CC0A4329D08DA500677A7B /* Presenter */,
 				C2CC0A4229D08DA000677A7B /* View */,
@@ -7461,7 +7461,7 @@
 				C240485E27654C5F0076376E /* ImporterEnterPasswordFlowController.swift in Sources */,
 				C2A7944D27F795E900E5C641 /* BrowserExtensionPairedService.swift in Sources */,
 				C287D4FB276A92460001B272 /* AppSecurityExtensions.swift in Sources */,
-				C2CC0A4C29D0D4FC00677A7B /* ExternalImportInstructionsService.swift in Sources */,
+				C2CC0A4C29D0D4FC00677A7B /* ExternalImportService.swift in Sources */,
 				C244718825F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift in Sources */,
 				C2D587362650549700D9C4BD /* IntroductionPage4View.swift in Sources */,
 				C21A9E8827CBF77100FE4CC4 /* ComposeServiceNumberOfDigitsPresenter+Menu.swift in Sources */,

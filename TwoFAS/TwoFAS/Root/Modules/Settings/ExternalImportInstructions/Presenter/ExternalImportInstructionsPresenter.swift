@@ -22,9 +22,9 @@ import SwiftUI
 
 final class ExternalImportInstructionsPresenter {
     private let flowController: ExternalImportInstructionsFlowControlling
-    private let service: ExternalImportInstructionsService
+    private let service: ExternalImportService
     
-    init(flowController: ExternalImportInstructionsFlowControlling, service: ExternalImportInstructionsService) {
+    init(flowController: ExternalImportInstructionsFlowControlling, service: ExternalImportService) {
         self.flowController = flowController
         self.service = service
     }
@@ -33,7 +33,7 @@ final class ExternalImportInstructionsPresenter {
 extension ExternalImportInstructionsPresenter {
     var hasSecondaryAction: Bool {
         switch service {
-        case .aegis, .raivo, .lastPass: return false
+        case .aegis, .raivo, .lastPass, .twofas: return false
         case .googleAuth: return true
         }
     }
@@ -44,6 +44,7 @@ extension ExternalImportInstructionsPresenter {
         case .raivo: return Asset.externalImportRavio.swiftUIImage
         case .lastPass: return Asset.externalImportLastPass.swiftUIImage
         case .googleAuth: return Asset.externalImportGoogleAuth.swiftUIImage
+        case .twofas: return Asset.externalImportGoogleAuth.swiftUIImage // Not used here
         }
     }
     
@@ -53,6 +54,7 @@ extension ExternalImportInstructionsPresenter {
         case .raivo: return T.externalimportRaivo
         case .lastPass: return T.externalimportLastpass
         case .googleAuth: return T.externalimportGoogleAuthenticator
+        case .twofas: return T.Commons._2fasToolbar // Not used here
         }
     }
     
@@ -62,6 +64,7 @@ extension ExternalImportInstructionsPresenter {
         case .raivo: return T.Externalimport.raivoMsg
         case .lastPass: return T.Externalimport.lastpassMsg
         case .googleAuth: return T.Introduction.googleAuthenticatorImportProcess
+        case .twofas: return ""  // Not used here
         }
     }
     
@@ -69,12 +72,13 @@ extension ExternalImportInstructionsPresenter {
         switch service {
         case .aegis, .raivo, .lastPass: return  T.Externalimport.chooseJsonCta
         case .googleAuth: return T.Commons.scanQrCode
+        case .twofas: return "" // Not used here
         }
     }
     
     var secondaryActionName: String? {
         switch service {
-        case .aegis, .raivo, .lastPass: return nil
+        case .aegis, .raivo, .lastPass, .twofas: return nil
         case .googleAuth: return T.Introduction.chooseQrCode
         }
     }
@@ -83,7 +87,7 @@ extension ExternalImportInstructionsPresenter {
     
     func handleAction() {
         switch service {
-        case .aegis, .raivo, .lastPass: flowController.toOpenFile()
+        case .aegis, .raivo, .lastPass, .twofas: flowController.toOpenFile()
         case .googleAuth: flowController.toCamera()
         }
     }
@@ -94,7 +98,7 @@ extension ExternalImportInstructionsPresenter {
     
     func handleSecondaryAction() {
         switch service {
-        case .aegis, .raivo, .lastPass: break
+        case .aegis, .raivo, .lastPass, .twofas: break
         case .googleAuth: flowController.toGallery()
         }
     }

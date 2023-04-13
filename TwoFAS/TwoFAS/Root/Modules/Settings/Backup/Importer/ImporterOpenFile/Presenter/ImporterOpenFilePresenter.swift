@@ -82,7 +82,8 @@ private extension ImporterOpenFilePresenter {
                     flowController.toPreimportSummary(
                         count: parseResult.count,
                         sections: [],
-                        services: parseResult
+                        services: parseResult,
+                        externalImportService: .lastPass
                     )
                 }
             }
@@ -94,7 +95,8 @@ private extension ImporterOpenFilePresenter {
                 flowController.toPreimportSummary(
                     count: parseResult.count,
                     sections: [],
-                    services: parseResult
+                    services: parseResult,
+                    externalImportService: .raivo
                 )
             }
         case .aegis(let result):
@@ -109,7 +111,8 @@ private extension ImporterOpenFilePresenter {
                     flowController.toPreimportSummary(
                         count: parseResult.count,
                         sections: [],
-                        services: parseResult
+                        services: parseResult,
+                        externalImportService: .aegis
                     )
                 }
             }
@@ -121,7 +124,7 @@ private extension ImporterOpenFilePresenter {
     func checkTwoFAS(_ data: ExchangeDataFormat) {
         switch interactor.checkTwoFAS(data) {
         case .unencrypted: twoFASSummary(for: data)
-        case .encrypted: flowController.toEnterPassword(for: data)
+        case .encrypted: flowController.toEnterPassword(for: data, externalImportService: .twofas)
         case .newerSchema: flowController.toFileError(error: .newerSchema)
         }
     }
@@ -131,7 +134,12 @@ private extension ImporterOpenFilePresenter {
         let services = interactor.parseTwoFASServices(with: data.services, sections: sections)
         let count = interactor.countNewServices(services)
         if count > 0 {
-            flowController.toPreimportSummary(count: count, sections: sections, services: services)
+            flowController.toPreimportSummary(
+                count: count,
+                sections: sections,
+                services: services,
+                externalImportService: .twofas
+            )
         } else {
             flowController.toFileIsEmpty()
         }

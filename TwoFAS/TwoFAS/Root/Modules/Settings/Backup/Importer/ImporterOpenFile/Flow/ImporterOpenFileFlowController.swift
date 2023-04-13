@@ -26,10 +26,15 @@ protocol ImporterOpenFileFlowControllerParent: AnyObject {
 
 protocol ImporterOpenFileFlowControlling: AnyObject {
     func toClose()
-    func toPreimportSummary(count: Int, sections: [CommonSectionData], services: [ServiceData])
+    func toPreimportSummary(
+        count: Int,
+        sections: [CommonSectionData],
+        services: [ServiceData],
+        externalImportService: ExternalImportService
+    )
     func toFileError(error: ImporterOpenFileError)
     func toFileIsEmpty()
-    func toEnterPassword(for data: ExchangeDataFormat)
+    func toEnterPassword(for data: ExchangeDataFormat, externalImportService: ExternalImportService)
 }
 
 final class ImporterOpenFileFlowController: FlowController {
@@ -67,13 +72,19 @@ extension ImporterOpenFileFlowController: ImporterOpenFileFlowControlling {
         parent?.closeImporter()
     }
     
-    func toPreimportSummary(count: Int, sections: [CommonSectionData], services: [ServiceData]) {
+    func toPreimportSummary(
+        count: Int,
+        sections: [CommonSectionData],
+        services: [ServiceData],
+        externalImportService: ExternalImportService
+    ) {
         ImporterPreimportSummaryFlowController.push(
             in: navigationController,
             parent: self,
             count: count,
             sections: sections,
-            services: services
+            services: services,
+            externalImportService: externalImportService
         )
     }
     
@@ -85,8 +96,13 @@ extension ImporterOpenFileFlowController: ImporterOpenFileFlowControlling {
         ImporterFileErrorFlowController.push(in: navigationController, parent: self, fileError: .noNewServices)
     }
     
-    func toEnterPassword(for data: ExchangeDataFormat) {
-        ImporterEnterPasswordFlowController.push(in: navigationController, parent: self, data: data)
+    func toEnterPassword(for data: ExchangeDataFormat, externalImportService: ExternalImportService) {
+        ImporterEnterPasswordFlowController.push(
+            in: navigationController,
+            parent: self,
+            data: data,
+            externalImportService: externalImportService
+        )
     }
 }
 
@@ -95,8 +111,18 @@ extension ImporterOpenFileFlowController: ImporterEnterPasswordFlowControllerPar
         parent?.closeImporter()
     }
     
-    func showPreimportSummary(count: Int, sections: [CommonSectionData], services: [ServiceData]) {
-        toPreimportSummary(count: count, sections: sections, services: services)
+    func showPreimportSummary(
+        count: Int,
+        sections: [CommonSectionData],
+        services: [ServiceData],
+        externalImportService: ExternalImportService
+    ) {
+        toPreimportSummary(
+            count: count,
+            sections: sections,
+            services: services,
+            externalImportService: externalImportService
+        )
     }
     
     func showFileError(error: ImporterOpenFileError) {

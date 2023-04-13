@@ -47,7 +47,12 @@ final class ImporterPreimportSummaryViewController: UIViewController {
         let count = presenter.count
         
         let contentMiddle = MainContainerMiddleContentGenerator(placement: .centerHorizontallyLimitWidth, elements: [
-            .image(name: "importBackup", size: CGSize(width: 116, height: 94)),
+            { () -> MainContainerContentGenerator.Element in
+                if let icon = presenter.additionalIcon {
+                    return .view(view: createImportImage(with: icon))
+                }
+                return .image(name: "importBackup", size: CGSize(width: 116, height: 94))
+            }(),
             .extraSpacing,
             .text(text: T.Backup.importBackupFile, style: MainContainerTextStyling.title),
             .extraSpacing,
@@ -76,6 +81,34 @@ final class ImporterPreimportSummaryViewController: UIViewController {
         vc.configure(with: config)
         
         return vc
+    }
+    
+    private func createImportImage(with icon: UIImage) -> UIView {
+        let views = [
+            UIImageView(image: icon),
+            UIImageView(image: Asset.gaImport1.image),
+            UIImageView(image: Asset.gaImport2.image)
+        ]
+        views.forEach({
+            $0.contentMode = .center
+        })
+        let stackView = UIStackView(arrangedSubviews: views)
+        
+        stackView.spacing = Theme.Metrics.doubleSpacing
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.axis = .horizontal
+        
+        let container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            container.widthAnchor.constraint(greaterThanOrEqualToConstant: 200),
+            container.heightAnchor.constraint(equalToConstant: 80)
+        ])
+        container.addSubview(stackView)
+        stackView.pinToParentCenter()
+        
+        return container
     }
 }
 

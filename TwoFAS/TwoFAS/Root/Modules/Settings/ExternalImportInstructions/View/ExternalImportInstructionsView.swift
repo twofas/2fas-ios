@@ -37,12 +37,13 @@ struct ExternalImportInstructionsView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-            HStack(spacing: spacing) {
-                sourceLogo
-            }
-            .frame(minHeight: minIconSpaceHeight, maxHeight: .infinity, alignment: .center)
-            
             VStack(spacing: spacing) {
+                HStack(spacing: spacing) {
+                    sourceLogo
+                    Asset.gaImport1.swiftUIImage
+                    Asset.gaImport2.swiftUIImage
+                }
+                .frame(minHeight: minIconSpaceHeight, alignment: .center)
                 Text(sourceName.uppercased())
                     .font(.title)
                     .multilineTextAlignment(.center)
@@ -97,7 +98,7 @@ struct ExternalImportInstructionsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ExternalImportInstructionsView(
-                sourceLogo: Asset.externalmportIconGoogleAuth.swiftUIImage,
+                sourceLogo: Asset.externalImportRavio.swiftUIImage,
                 sourceName: T.externalimportGoogleAuthenticator,
                 info: T.Introduction.googleAuthenticatorImportProcess,
                 action: {},
@@ -109,7 +110,7 @@ struct ExternalImportInstructionsView_Previews: PreviewProvider {
                 .previewDevice("iPhone SE (1st generation)")
             
             ExternalImportInstructionsView(
-                sourceLogo: Asset.externalmportIconGoogleAuth.swiftUIImage,
+                sourceLogo: Asset.externalImportGoogleAuth.swiftUIImage,
                 sourceName: T.externalimportGoogleAuthenticator,
                 info: T.Introduction.googleAuthenticatorImportProcess,
                 action: {},

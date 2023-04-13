@@ -40,7 +40,7 @@ final class ExternalImportInstructionsFlowController: FlowController {
     static func push(
         in navigationController: UINavigationController,
         parent: ExternalImportInstructionsFlowControllerParent,
-        service: ExternalImportInstructionsService
+        service: ExternalImportService
     ) {
         let view = ExternalImportInstructionsViewController()
         

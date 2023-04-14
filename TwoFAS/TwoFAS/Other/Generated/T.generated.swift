@@ -714,8 +714,8 @@ internal enum T {
     internal static let chooseQrCode = T.tr("Localizable", "introduction__choose_qr_code", fallback: "Choose QR code")
     /// Pair your online service account with 2FAS or import your tokens
     internal static let descriptionTitle = T.tr("Localizable", "introduction__description_title", fallback: "Pair your online service account with 2FAS or import your tokens")
-    /// Export your accounts from Google Authenticator to a QR code using the "Transfer Accounts" option. Then make a screenshot and use the "Choose QR code" button below. If you're importing codes from another device, use the "Scan QR code" button instead.
-    internal static let googleAuthenticatorImportProcess = T.tr("Localizable", "introduction__google_authenticator_import_process", fallback: "Export your accounts from Google Authenticator to a QR code using the \"Transfer Accounts\" option. Then make a screenshot and use the \"Choose QR code\" button below. If you're importing codes from another device, use the \"Scan QR code\" button instead.")
+    /// Export your accounts from Google Authenticator to a QR code using the "Transfer Accounts" option. Then using another device, take a picture of exported QR code, send it to your device (or make a screenshot if possible), and use the "Choose QR code" option below. If you're importing codes from another device, use the "Scan QR code" button instead.
+    internal static let googleAuthenticatorImportProcess = T.tr("Localizable", "introduction__google_authenticator_import_process", fallback: "Export your accounts from Google Authenticator to a QR code using the \"Transfer Accounts\" option. Then using another device, take a picture of exported QR code, send it to your device (or make a screenshot if possible), and use the \"Choose QR code\" option below. If you're importing codes from another device, use the \"Scan QR code\" button instead.")
     /// Import 2FAS backup file
     internal static let import2fasTitle = T.tr("Localizable", "introduction__import_2fas_title", fallback: "Import 2FAS backup file")
     /// Import from external app
@@ -856,12 +856,8 @@ internal enum T {
     internal static let _5Minutes = T.tr("Localizable", "settings__5_minutes", fallback: "5 minutes")
     /// About
     internal static let about = T.tr("Localizable", "settings__about", fallback: "About")
-    /// Crash Reports help us improve the app when things go very wrong. Changes will be applied on the next app run.
-    internal static let aboutCrashOptoutDescription = T.tr("Localizable", "settings__about_crash_optout_description", fallback: "Crash Reports help us improve the app when things go very wrong. Changes will be applied on the next app run.")
     /// Crash Reports
     internal static let aboutCrashOptoutTitle = T.tr("Localizable", "settings__about_crash_optout_title", fallback: "Crash Reports")
-    /// Opt-out of Crash Reports
-    internal static let aboutCrashOptoutToggleTitle = T.tr("Localizable", "settings__about_crash_optout_toggle_title", fallback: "Opt-out of Crash Reports")
     /// Acknowledgements
     internal static let acknowledgements = T.tr("Localizable", "settings__acknowledgements", fallback: "Acknowledgements")
     /// Advanced

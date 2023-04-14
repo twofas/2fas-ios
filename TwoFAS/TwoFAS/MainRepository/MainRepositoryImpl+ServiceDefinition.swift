@@ -48,4 +48,8 @@ extension MainRepositoryImpl {
     func findServices(byTag searchText: String) -> [ServiceDefinition] {
         serviceDefinitionDatabase.findServices(byTag: searchText)
     }
+    
+    func findServices(domain searchText: String) -> [ServiceDefinition] {
+        serviceDefinitionDatabase.findServices(domain: searchText)
+    }
 }

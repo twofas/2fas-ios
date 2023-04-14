@@ -23,4 +23,5 @@ extension Notification.Name {
     static let switchToSetupPIN = Notification.Name("switchToSetupPIN")
     static let switchToBrowserExtension = Notification.Name("switchToBrowserExtension")
     static let orientationSizeWillChange = Notification.Name("orientationSizeWillChange")
+    static let tokensScreenIsVisible = Notification.Name("tokensScreenIsVisible")
 }

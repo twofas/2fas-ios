@@ -60,7 +60,7 @@ final class IntroductionPage4View: IntroductionPageView {
         ])
         
         mainButtonAdditionalAction = {
-            AnalyticsLog(.onboardingStart)
+            AppEventLog(.onboardingStart)
         }
     }
     

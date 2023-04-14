@@ -508,11 +508,11 @@ private extension ComposeServiceModuleInteractor {
     
     func logSave() {
         let codeType: String = tokenType.rawValue
-        AnalyticsLog(.codeDetailsTypeAdded(codeType))
+        AppEventLog(.codeDetailsTypeAdded(codeType))
         
         let algorithmString: String = algorithm.rawValue
         
-        AnalyticsLog(.codeDetailsAlgorithmChosen(algorithmString))
+        AppEventLog(.codeDetailsAlgorithmChosen(algorithmString))
         
         let refreshTime: String = {
             if let period {
@@ -521,11 +521,11 @@ private extension ComposeServiceModuleInteractor {
             return String(Period.defaultValue.rawValue)
         }()
         
-        AnalyticsLog(.codeDetailsRefreshTimeChosen(refreshTime))
+        AppEventLog(.codeDetailsRefreshTimeChosen(refreshTime))
         
         let digitsString = String(digits.rawValue)
         
-        AnalyticsLog(.codeDetailsNumberOfDigitsChosen(digitsString))
+        AppEventLog(.codeDetailsNumberOfDigitsChosen(digitsString))
         
         let counterString: String = {
             if let counter {
@@ -535,7 +535,7 @@ private extension ComposeServiceModuleInteractor {
         }()
         
         if tokenType == .hotp {
-            AnalyticsLog(.codeDetailsInitialCounterChosen(counterString))
+            AppEventLog(.codeDetailsInitialCounterChosen(counterString))
         }
     }
 }

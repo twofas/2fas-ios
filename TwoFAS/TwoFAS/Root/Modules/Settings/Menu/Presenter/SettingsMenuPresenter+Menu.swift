@@ -95,18 +95,31 @@ extension SettingsMenuPresenter {
             cells: advancedCells,
             footer: T.Settings.displaySelectedServices
         )
-                
-        let isIncomingTokenEnabled = interactor.isNextTokenEnabled
-        let advancedIncoming = SettingsMenuSection(
+        
+        let appearance = SettingsMenuSection(
             title: nil,
             cells: [
                 .init(
-                    icon: Asset.settingsNextToken.image,
-                    title: T.Settings.showNextToken,
-                    accessory: .toggle(kind: .incomingToken, isOn: isIncomingTokenEnabled)
+                    icon: Asset.settingsAppearance.image,
+                    title: T.Settings.appearance,
+                    accessory: .arrow,
+                    action: .navigation(navigatesTo: .appearance)
                 )
             ],
-            footer: T.Settings.seeIncomingTokens
+            footer: nil
+        )
+        
+        let externalImport = SettingsMenuSection(
+            title: T.Backup.import,
+            cells: [
+                .init(
+                    icon: Asset.settingsExternalImport.image,
+                    title: T.Settings.externalImport,
+                    accessory: .arrow,
+                    action: .navigation(navigatesTo: .externalImport)
+                )
+            ],
+            footer: nil
         )
         
         let trash = SettingsMenuSection(
@@ -156,7 +169,8 @@ extension SettingsMenuPresenter {
             security,
             donate,
             advancedWidgets,
-            advancedIncoming,
+            externalImport,
+            appearance,
             trash,
             knowledge,
             about

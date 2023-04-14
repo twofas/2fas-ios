@@ -47,13 +47,16 @@ final class MainPresenter {
             appVersionFetched = true
             
             interactor.checkForNewAppVersion { [weak self] url in
+                guard let url else {
+                    self?.handleAuthRequest()
+                    return
+                }
                 self?.flowController.toShowNewVersionAlert(for: url) { [weak self] in
                     self?.interactor.skipAppVersion()
                 }
             }
         } else if !authRequestsFetched {
-            authRequestsFetched = true
-            flowController.toAuthRequestFetch()
+            handleAuthRequest()
         }
     }
 
@@ -63,6 +66,10 @@ final class MainPresenter {
 
     func handleSwitchToBrowserExtension() {
         view?.navigateToViewPath(.settings(option: .browserExtension))
+    }
+    
+    func handleSwitchToExternalImport() {
+        view?.navigateToViewPath(.settings(option: .externalImport))
     }
     
     func handleSwitchedToSettings() {
@@ -79,5 +86,12 @@ final class MainPresenter {
     
     func handleAuthorize(for tokenRequestID: String) {
         flowController.toAuthorize(for: tokenRequestID)
+    }
+}
+
+private extension MainPresenter {
+    func handleAuthRequest() {
+        authRequestsFetched = true
+        flowController.toAuthRequestFetch()
     }
 }

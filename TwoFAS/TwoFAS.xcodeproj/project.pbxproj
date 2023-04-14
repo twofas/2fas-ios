@@ -43,7 +43,7 @@
 		C208101B2794A3650035E339 /* MF_Base32Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = C22E423925DF1EC600105195 /* MF_Base32Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C208101D2794A5940035E339 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C208101C2794A5940035E339 /* Data+.swift */; };
 		C20935D2292142B4000F5AA7 /* WidgetsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935D1292142B4000F5AA7 /* WidgetsInteractor.swift */; };
-		C20935D42921446A000F5AA7 /* NextTokenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935D32921446A000F5AA7 /* NextTokenInteractor.swift */; };
+		C20935D42921446A000F5AA7 /* AppearanceInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935D32921446A000F5AA7 /* AppearanceInteractor.swift */; };
 		C20935D729214BC3000F5AA7 /* ExportToFileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935D629214BC3000F5AA7 /* ExportToFileInteractor.swift */; };
 		C20935DA29214E54000F5AA7 /* ScanInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935D929214E54000F5AA7 /* ScanInteractor.swift */; };
 		C20935DD29214FA7000F5AA7 /* IconInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935DC29214FA7000F5AA7 /* IconInteractor.swift */; };
@@ -439,9 +439,11 @@
 		C279BD52286509F8000FD69D /* SectionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C279BD51286509F8000FD69D /* SectionInteractor.swift */; };
 		C27A1EAA2912791100702DB9 /* ExternalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EA92912791100702DB9 /* ExternalLinks.swift */; };
 		C27A1EAC2912797200702DB9 /* MainRepositoryImpl+Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EAB2912797200702DB9 /* MainRepositoryImpl+Camera.swift */; };
-		C27A1EB1291279E400702DB9 /* AnalyticsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB0291279E400702DB9 /* AnalyticsController.swift */; };
+		C27A1EB1291279E400702DB9 /* AppEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB0291279E400702DB9 /* AppEventController.swift */; };
 		C27A1EB329127C5700702DB9 /* CameraPermissionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB229127C5700702DB9 /* CameraPermissionInteractor.swift */; };
 		C27A1EB529127C8D00702DB9 /* AlertController+Ready.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB429127C8D00702DB9 /* AlertController+Ready.swift */; };
+		C27A31CA29C8EEE40094679F /* LastPassData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A31C929C8EEE40094679F /* LastPassData.swift */; };
+		C27A31CC29C90B110094679F /* RaivoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A31CB29C90B110094679F /* RaivoData.swift */; };
 		C27A549927F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549827F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift */; };
 		C27A549B27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549A27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift */; };
 		C27A549F27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549E27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift */; };
@@ -500,6 +502,8 @@
 		C284AF732760159D00FEE810 /* BackupDeletePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284AF722760159D00FEE810 /* BackupDeletePresenter.swift */; };
 		C284AF77276016EB00FEE810 /* BackupDeleteModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284AF76276016EB00FEE810 /* BackupDeleteModuleInteractor.swift */; };
 		C284AF7927601BCF00FEE810 /* BackupDeleteFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C284AF7827601BCF00FEE810 /* BackupDeleteFlowController.swift */; };
+		C286200229D5BCDF00217AF9 /* UUIDInputContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C286200129D5BCDF00217AF9 /* UUIDInputContainer.swift */; };
+		C286200429D5CA0200217AF9 /* UUIDInputLength.swift in Sources */ = {isa = PBXBuildFile; fileRef = C286200329D5CA0200217AF9 /* UUIDInputLength.swift */; };
 		C28633AD1FF57C8600C8F4B4 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28633AC1FF57C8600C8F4B4 /* Types.swift */; };
 		C28633C11FF92D8100C8F4B4 /* TokensViewController+TokensViewControlling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28633C01FF92D8100C8F4B4 /* TokensViewController+TokensViewControlling.swift */; };
 		C28633C41FF9327900C8F4B4 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28633C31FF9327900C8F4B4 /* AlertController.swift */; };
@@ -662,6 +666,12 @@
 		C2B077C8292A938D0074517F /* UploadLogsModuleInteractorError+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077C7292A938D0074517F /* UploadLogsModuleInteractorError+.swift */; };
 		C2B077CD292A98AD0074517F /* UploadLogsNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077CC292A98AD0074517F /* UploadLogsNavigationFlowController.swift */; };
 		C2B077D1292AA0A00074517F /* ShortDateTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077D0292AA0A00074517F /* ShortDateTimeFormatter.swift */; };
+		C2B1208B29D767590020281E /* AppearanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1208A29D767590020281E /* AppearanceViewController.swift */; };
+		C2B1208D29D767B10020281E /* AppearancePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1208C29D767B10020281E /* AppearancePresenter.swift */; };
+		C2B1208F29D76BD10020281E /* AppearancePresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1208E29D76BD10020281E /* AppearancePresenter+Menu.swift */; };
+		C2B1209129D76FA60020281E /* AppearanceModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1209029D76FA60020281E /* AppearanceModuleInteractor.swift */; };
+		C2B1209329D771AA0020281E /* MainRepositoryImpl+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1209229D771AA0020281E /* MainRepositoryImpl+Appearance.swift */; };
+		C2B1209529D773770020281E /* AppearanceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1209429D773770020281E /* AppearanceFlowController.swift */; };
 		C2B2ED1E27C4349100332255 /* AdvancedAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B2ED1D27C4349100332255 /* AdvancedAlert.swift */; };
 		C2B2ED2227C44B1B00332255 /* AdvancedAlertFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B2ED2127C44B1B00332255 /* AdvancedAlertFlowController.swift */; };
 		C2B2ED2427C44BF300332255 /* AdvancedAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B2ED2327C44BF300332255 /* AdvancedAlertViewController.swift */; };
@@ -683,7 +693,6 @@
 		C2B6D7AA260BCB57005B599E /* TintColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B6D7A9260BCB57005B599E /* TintColor.swift */; };
 		C2B6D7B9260BCBC7005B599E /* TintColor.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2B6D7B8260BCBC7005B599E /* TintColor.xcassets */; };
 		C2B811D5284D1CFE009FD99D /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C2B811D4284D1CFE009FD99D /* FirebaseCrashlytics */; };
-		C2B811D7284D1D11009FD99D /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = C2B811D6284D1D11009FD99D /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		C2B811D9284D1D2C009FD99D /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = C2B811D8284D1D2C009FD99D /* FirebaseRemoteConfig */; };
 		C2B811DB284D1D62009FD99D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C2B811DA284D1D62009FD99D /* FirebaseMessaging */; };
 		C2B90EEE281EB3CF004B8AEC /* MainRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B90EED281EB3CF004B8AEC /* MainRepositoryImpl.swift */; };
@@ -763,6 +772,15 @@
 		C2C93FBD2604005E00E10981 /* MainContainerToggleWithLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C93FBC2604005E00E10981 /* MainContainerToggleWithLabel.swift */; };
 		C2CA2B7D258699DA009FB700 /* FirstCodeAddedStatsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CA2B7C258699DA009FB700 /* FirstCodeAddedStatsController.swift */; };
 		C2CB5D3A25DB1C9300A362A9 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CB5D3925DB1C9300A362A9 /* Orientation.swift */; };
+		C2CC0A3A29D0580B00677A7B /* ExternalImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3929D0580B00677A7B /* ExternalImportViewController.swift */; };
+		C2CC0A3C29D05DC900677A7B /* ExternalImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3B29D05DC900677A7B /* ExternalImportPresenter.swift */; };
+		C2CC0A3E29D0603000677A7B /* ExternalImportPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3D29D0603000677A7B /* ExternalImportPresenter+Menu.swift */; };
+		C2CC0A4029D067EF00677A7B /* ExternalImportFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3F29D067EF00677A7B /* ExternalImportFlowController.swift */; };
+		C2CC0A4629D098CB00677A7B /* ExternalImportInstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A4529D098CB00677A7B /* ExternalImportInstructionsView.swift */; };
+		C2CC0A4829D0C9FC00677A7B /* ExternalImportInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A4729D0C9FC00677A7B /* ExternalImportInstructionsViewController.swift */; };
+		C2CC0A4A29D0CACC00677A7B /* ExternalImportInstructionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A4929D0CACC00677A7B /* ExternalImportInstructionsPresenter.swift */; };
+		C2CC0A4C29D0D4FC00677A7B /* ExternalImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A4B29D0D4FC00677A7B /* ExternalImportService.swift */; };
+		C2CC0A4E29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A4D29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift */; };
 		C2CC80D627B99AF700294CF2 /* ComposeServicePresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC80D527B99AF700294CF2 /* ComposeServicePresenter+Menu.swift */; };
 		C2CC80D827B99B0600294CF2 /* ComposeServicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC80D727B99B0600294CF2 /* ComposeServicePresenter.swift */; };
 		C2CCEAC225CCAC150020AAE3 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2932EF21FFE94A900FBD4D0 /* Common.framework */; platformFilter = ios; };
@@ -1260,7 +1278,7 @@
 		C2081015279494980035E339 /* MigrationPayload+Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MigrationPayload+Conversion.swift"; sourceTree = "<group>"; };
 		C208101C2794A5940035E339 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		C20935D1292142B4000F5AA7 /* WidgetsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsInteractor.swift; sourceTree = "<group>"; };
-		C20935D32921446A000F5AA7 /* NextTokenInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NextTokenInteractor.swift; sourceTree = "<group>"; };
+		C20935D32921446A000F5AA7 /* AppearanceInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceInteractor.swift; sourceTree = "<group>"; };
 		C20935D629214BC3000F5AA7 /* ExportToFileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportToFileInteractor.swift; sourceTree = "<group>"; };
 		C20935D929214E54000F5AA7 /* ScanInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanInteractor.swift; sourceTree = "<group>"; };
 		C20935DC29214FA7000F5AA7 /* IconInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconInteractor.swift; sourceTree = "<group>"; };
@@ -1655,9 +1673,11 @@
 		C279BD51286509F8000FD69D /* SectionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionInteractor.swift; sourceTree = "<group>"; };
 		C27A1EA92912791100702DB9 /* ExternalLinks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExternalLinks.swift; sourceTree = "<group>"; };
 		C27A1EAB2912797200702DB9 /* MainRepositoryImpl+Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Camera.swift"; sourceTree = "<group>"; };
-		C27A1EB0291279E400702DB9 /* AnalyticsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsController.swift; sourceTree = "<group>"; };
+		C27A1EB0291279E400702DB9 /* AppEventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppEventController.swift; sourceTree = "<group>"; };
 		C27A1EB229127C5700702DB9 /* CameraPermissionInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPermissionInteractor.swift; sourceTree = "<group>"; };
 		C27A1EB429127C8D00702DB9 /* AlertController+Ready.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertController+Ready.swift"; sourceTree = "<group>"; };
+		C27A31C929C8EEE40094679F /* LastPassData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastPassData.swift; sourceTree = "<group>"; };
+		C27A31CB29C90B110094679F /* RaivoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RaivoData.swift; sourceTree = "<group>"; };
 		C27A549827F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroViewController.swift; sourceTree = "<group>"; };
 		C27A549A27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroPresenter.swift; sourceTree = "<group>"; };
 		C27A549E27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroModuleInteractor.swift; sourceTree = "<group>"; };
@@ -1720,6 +1740,8 @@
 		C284AF76276016EB00FEE810 /* BackupDeleteModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupDeleteModuleInteractor.swift; sourceTree = "<group>"; };
 		C284AF7827601BCF00FEE810 /* BackupDeleteFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupDeleteFlowController.swift; sourceTree = "<group>"; };
 		C284B41926BC700900321AC9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
+		C286200129D5BCDF00217AF9 /* UUIDInputContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDInputContainer.swift; sourceTree = "<group>"; };
+		C286200329D5CA0200217AF9 /* UUIDInputLength.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDInputLength.swift; sourceTree = "<group>"; };
 		C28633AC1FF57C8600C8F4B4 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		C28633C01FF92D8100C8F4B4 /* TokensViewController+TokensViewControlling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+TokensViewControlling.swift"; sourceTree = "<group>"; };
 		C28633C31FF9327900C8F4B4 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
@@ -1888,6 +1910,12 @@
 		C2B077C7292A938D0074517F /* UploadLogsModuleInteractorError+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UploadLogsModuleInteractorError+.swift"; sourceTree = "<group>"; };
 		C2B077CC292A98AD0074517F /* UploadLogsNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogsNavigationFlowController.swift; sourceTree = "<group>"; };
 		C2B077D0292AA0A00074517F /* ShortDateTimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortDateTimeFormatter.swift; sourceTree = "<group>"; };
+		C2B1208A29D767590020281E /* AppearanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewController.swift; sourceTree = "<group>"; };
+		C2B1208C29D767B10020281E /* AppearancePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancePresenter.swift; sourceTree = "<group>"; };
+		C2B1208E29D76BD10020281E /* AppearancePresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppearancePresenter+Menu.swift"; sourceTree = "<group>"; };
+		C2B1209029D76FA60020281E /* AppearanceModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceModuleInteractor.swift; sourceTree = "<group>"; };
+		C2B1209229D771AA0020281E /* MainRepositoryImpl+Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Appearance.swift"; sourceTree = "<group>"; };
+		C2B1209429D773770020281E /* AppearanceFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceFlowController.swift; sourceTree = "<group>"; };
 		C2B2ED1D27C4349100332255 /* AdvancedAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedAlert.swift; sourceTree = "<group>"; };
 		C2B2ED2127C44B1B00332255 /* AdvancedAlertFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedAlertFlowController.swift; sourceTree = "<group>"; };
 		C2B2ED2327C44BF300332255 /* AdvancedAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedAlertViewController.swift; sourceTree = "<group>"; };
@@ -1984,6 +2012,15 @@
 		C2C93FBC2604005E00E10981 /* MainContainerToggleWithLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerToggleWithLabel.swift; sourceTree = "<group>"; };
 		C2CA2B7C258699DA009FB700 /* FirstCodeAddedStatsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstCodeAddedStatsController.swift; sourceTree = "<group>"; };
 		C2CB5D3925DB1C9300A362A9 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
+		C2CC0A3929D0580B00677A7B /* ExternalImportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportViewController.swift; sourceTree = "<group>"; };
+		C2CC0A3B29D05DC900677A7B /* ExternalImportPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportPresenter.swift; sourceTree = "<group>"; };
+		C2CC0A3D29D0603000677A7B /* ExternalImportPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExternalImportPresenter+Menu.swift"; sourceTree = "<group>"; };
+		C2CC0A3F29D067EF00677A7B /* ExternalImportFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportFlowController.swift; sourceTree = "<group>"; };
+		C2CC0A4529D098CB00677A7B /* ExternalImportInstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportInstructionsView.swift; sourceTree = "<group>"; };
+		C2CC0A4729D0C9FC00677A7B /* ExternalImportInstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportInstructionsViewController.swift; sourceTree = "<group>"; };
+		C2CC0A4929D0CACC00677A7B /* ExternalImportInstructionsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportInstructionsPresenter.swift; sourceTree = "<group>"; };
+		C2CC0A4B29D0D4FC00677A7B /* ExternalImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportService.swift; sourceTree = "<group>"; };
+		C2CC0A4D29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportInstructionsFlowController.swift; sourceTree = "<group>"; };
 		C2CC80D527B99AF700294CF2 /* ComposeServicePresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComposeServicePresenter+Menu.swift"; sourceTree = "<group>"; };
 		C2CC80D727B99B0600294CF2 /* ComposeServicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServicePresenter.swift; sourceTree = "<group>"; };
 		C2CD687225FEC94400EFEFCF /* FormLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormLine.swift; path = TwoFAS/Common/Controls/FormLine.swift; sourceTree = SOURCE_ROOT; };
@@ -2169,7 +2206,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C253719C281DC900005FB118 /* Common.framework in Frameworks */,
-				C2B811D7284D1D11009FD99D /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				C2B811DB284D1D62009FD99D /* FirebaseMessaging in Frameworks */,
 				C2B811D5284D1CFE009FD99D /* FirebaseCrashlytics in Frameworks */,
 				C2B811D9284D1D2C009FD99D /* FirebaseRemoteConfig in Frameworks */,
@@ -2483,7 +2519,9 @@
 		C20E5787292944E7002B215B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C286200329D5CA0200217AF9 /* UUIDInputLength.swift */,
 				C20E578E292976DA002B215B /* UUIDInputField.swift */,
+				C286200129D5BCDF00217AF9 /* UUIDInputContainer.swift */,
 				C2B0779C292A35730074517F /* UUIDGroupInput.swift */,
 				C20E578B29297593002B215B /* UploadLogsViewController.swift */,
 			);
@@ -2570,6 +2608,9 @@
 		C21111E1274AB8C100CA7C78 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				C2B1208529D767150020281E /* Appearance */,
+				C2CC0A4129D08D7700677A7B /* ExternalImportInstructions */,
+				C2CC0A3429D056CF00677A7B /* ExternalImport */,
 				C2B077AE292A8F350074517F /* UploadLogsFailure */,
 				C2B077AA292A8F040074517F /* UploadLogsSuccess */,
 				C20E5786292944C5002B215B /* UploadLogs */,
@@ -2666,7 +2707,7 @@
 				C2D3B0F928EE12A700D2F991 /* ServiceDefinitionInteractor.swift */,
 				C27A1EB229127C5700702DB9 /* CameraPermissionInteractor.swift */,
 				C20935D1292142B4000F5AA7 /* WidgetsInteractor.swift */,
-				C20935D32921446A000F5AA7 /* NextTokenInteractor.swift */,
+				C20935D32921446A000F5AA7 /* AppearanceInteractor.swift */,
 				C20935D629214BC3000F5AA7 /* ExportToFileInteractor.swift */,
 				C20935D929214E54000F5AA7 /* ScanInteractor.swift */,
 				C20935DC29214FA7000F5AA7 /* IconInteractor.swift */,
@@ -3556,6 +3597,8 @@
 				C2117178276CD11900042D28 /* PINType.swift */,
 				C25859372802E75A002DC749 /* PushNotificationState.swift */,
 				C2069C9028C2922A00321E44 /* AEGISData.swift */,
+				C27A31C929C8EEE40094679F /* LastPassData.swift */,
+				C27A31CB29C90B110094679F /* RaivoData.swift */,
 			);
 			path = DataTypes;
 			sourceTree = "<group>";
@@ -4340,7 +4383,7 @@
 		C27A1EAF291279E400702DB9 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
-				C27A1EB0291279E400702DB9 /* AnalyticsController.swift */,
+				C27A1EB0291279E400702DB9 /* AppEventController.swift */,
 			);
 			path = Analytics;
 			sourceTree = "<group>";
@@ -5349,8 +5392,8 @@
 		C2B077AF292A8F3E0074517F /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C2B077C5292A922B0074517F /* UploadLogsFailureViewController.swift */,
 				C2B077C3292A921D0074517F /* UploadLogsFailureView.swift */,
+				C2B077C5292A922B0074517F /* UploadLogsFailureViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5368,6 +5411,50 @@
 			isa = PBXGroup;
 			children = (
 				C2B077BE292A91C80074517F /* UploadLogsFailureFlowController.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		C2B1208529D767150020281E /* Appearance */ = {
+			isa = PBXGroup;
+			children = (
+				C2B1208929D767310020281E /* Flow */,
+				C2B1208829D767280020281E /* Interactor */,
+				C2B1208729D767210020281E /* Presenter */,
+				C2B1208629D7671C0020281E /* View */,
+			);
+			path = Appearance;
+			sourceTree = "<group>";
+		};
+		C2B1208629D7671C0020281E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C2B1208A29D767590020281E /* AppearanceViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C2B1208729D767210020281E /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C2B1208C29D767B10020281E /* AppearancePresenter.swift */,
+				C2B1208E29D76BD10020281E /* AppearancePresenter+Menu.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C2B1208829D767280020281E /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				C2B1209029D76FA60020281E /* AppearanceModuleInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		C2B1208929D767310020281E /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				C2B1209429D773770020281E /* AppearanceFlowController.swift */,
 			);
 			path = Flow;
 			sourceTree = "<group>";
@@ -5497,6 +5584,7 @@
 				C2DFE5BC264C851700F828C0 /* CircleView.swift */,
 				C2633EFC265A7D090034B836 /* TokenLabel.swift */,
 				C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */,
+				C2CC0A4B29D0D4FC00677A7B /* ExternalImportService.swift */,
 				C2698B712986F6E800EBC179 /* UITabBarController+addTab.swift */,
 			);
 			path = Common;
@@ -5769,6 +5857,76 @@
 			path = OneTimePassword;
 			sourceTree = "<group>";
 		};
+		C2CC0A3429D056CF00677A7B /* ExternalImport */ = {
+			isa = PBXGroup;
+			children = (
+				C2CC0A3829D056F700677A7B /* Flow */,
+				C2CC0A3629D056E700677A7B /* Presenter */,
+				C2CC0A3529D056DE00677A7B /* View */,
+			);
+			path = ExternalImport;
+			sourceTree = "<group>";
+		};
+		C2CC0A3529D056DE00677A7B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C2CC0A3929D0580B00677A7B /* ExternalImportViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C2CC0A3629D056E700677A7B /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C2CC0A3B29D05DC900677A7B /* ExternalImportPresenter.swift */,
+				C2CC0A3D29D0603000677A7B /* ExternalImportPresenter+Menu.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C2CC0A3829D056F700677A7B /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				C2CC0A3F29D067EF00677A7B /* ExternalImportFlowController.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		C2CC0A4129D08D7700677A7B /* ExternalImportInstructions */ = {
+			isa = PBXGroup;
+			children = (
+				C2CC0A4429D08DAD00677A7B /* Flow */,
+				C2CC0A4329D08DA500677A7B /* Presenter */,
+				C2CC0A4229D08DA000677A7B /* View */,
+			);
+			path = ExternalImportInstructions;
+			sourceTree = "<group>";
+		};
+		C2CC0A4229D08DA000677A7B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C2CC0A4529D098CB00677A7B /* ExternalImportInstructionsView.swift */,
+				C2CC0A4729D0C9FC00677A7B /* ExternalImportInstructionsViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C2CC0A4329D08DA500677A7B /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C2CC0A4929D0CACC00677A7B /* ExternalImportInstructionsPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C2CC0A4429D08DAD00677A7B /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				C2CC0A4D29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
 		C2CE0E1427934709007DB667 /* GoogleAuthenticator */ = {
 			isa = PBXGroup;
 			children = (
@@ -5805,6 +5963,7 @@
 				C2D44E6E275C19220043F5D6 /* MainRepositoryImpl+Security.swift */,
 				C2D44E70275C1FD30043F5D6 /* MainRepositoryImpl+Extensions.swift */,
 				C2D44E72275C1FE90043F5D6 /* MainRepositoryImpl+Tokens.swift */,
+				C2B1209229D771AA0020281E /* MainRepositoryImpl+Appearance.swift */,
 				C2D44E74275C1FF40043F5D6 /* MainRepositoryImpl+General.swift */,
 				C27BE518275D6E0D0090CA12 /* MainRepositoryImpl+Services.swift */,
 				C27BE51C275D80230090CA12 /* MainRepositoryImpl+Cloud.swift */,
@@ -6426,7 +6585,6 @@
 			name = PushNotifications;
 			packageProductDependencies = (
 				C2B811D4284D1CFE009FD99D /* FirebaseCrashlytics */,
-				C2B811D6284D1D11009FD99D /* FirebaseAnalyticsWithoutAdIdSupport */,
 				C2B811D8284D1D2C009FD99D /* FirebaseRemoteConfig */,
 				C2B811DA284D1D62009FD99D /* FirebaseMessaging */,
 			);
@@ -6699,8 +6857,9 @@
 		C236666B1FB2644900989ACA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "Two Factor Authentication Service, Inc.";
 				TargetAttributes = {
 					C200E4991FB3911B00D7C748 = {
@@ -7076,11 +7235,13 @@
 				C21A9E9227CC0A5F00FE4CC4 /* ComposeServiceRefreshTimePresenter.swift in Sources */,
 				C2FC4CE828AC461000AA6A79 /* IconSelectorOrderIconReusableView.swift in Sources */,
 				C2147CF4205D8C6C0001D011 /* LoginViewModelDelegate.swift in Sources */,
+				C2CC0A4029D067EF00677A7B /* ExternalImportFlowController.swift in Sources */,
 				C21111EA274ABA4300CA7C78 /* SettingsPresenter.swift in Sources */,
 				C27A54AA27F0FAC500321D2B /* BrowserExtensionPairingModuleInteractor.swift in Sources */,
 				C240485A276540970076376E /* ImporterEnterPasswordPresenter.swift in Sources */,
 				C2AA9D112088C124001B14FF /* Notifications.swift in Sources */,
 				C233BD292801E5A200A9CFF2 /* PushNotificationRegistrationInteractor.swift in Sources */,
+				C2B1208B29D767590020281E /* AppearanceViewController.swift in Sources */,
 				C27A54AE27F0FD0C00321D2B /* BrowserExtensionPairingViewController.swift in Sources */,
 				C2B077CD292A98AD0074517F /* UploadLogsNavigationFlowController.swift in Sources */,
 				C2FA3E77280AC5130097ED71 /* WebExtensionAuthInteractor.swift in Sources */,
@@ -7114,6 +7275,7 @@
 				C2C56D4A27C99314003B4C43 /* ComposeServiceAdvancedSummaryFlowController.swift in Sources */,
 				C245702228A04BAB008E99F4 /* GridViewGAImportViewController.swift in Sources */,
 				C296D1EC28B2D4CA001F026D /* UserIconInfoPresenter.swift in Sources */,
+				C2CC0A3E29D0603000677A7B /* ExternalImportPresenter+Menu.swift in Sources */,
 				C25371A2281DCF56005FB118 /* UINavigationController+.swift in Sources */,
 				C27D5443275D478E001E9ABF /* BackupMenuViewControlling.swift in Sources */,
 				C27A54AC27F0FCC600321D2B /* BrowserExtensionPairingPresenter.swift in Sources */,
@@ -7182,6 +7344,7 @@
 				C28681E72891D41F00BE0CA7 /* TimerInteractor.swift in Sources */,
 				C2E2C80B27B038DC00F04B70 /* IconSelectorModuleInteractor.swift in Sources */,
 				C2727D512781E10800B8FA03 /* TrashViewTableViewCell.swift in Sources */,
+				C2B1209129D76FA60020281E /* AppearanceModuleInteractor.swift in Sources */,
 				C2D44E68275C10850043F5D6 /* SettingsMenuTableView.swift in Sources */,
 				C2A74FE62610D510007E5AB3 /* ColorGridSelector.swift in Sources */,
 				C25C661428BADAB0008EC66A /* AboutFlowController.swift in Sources */,
@@ -7203,7 +7366,7 @@
 				C2147CD1205D7B520001D011 /* PINPadViewController.swift in Sources */,
 				C20935E3292152FA000F5AA7 /* PushNotificationInteractor.swift in Sources */,
 				C2DDEB1F289ED4A300011712 /* IntroductionDots.swift in Sources */,
-				C27A1EB1291279E400702DB9 /* AnalyticsController.swift in Sources */,
+				C27A1EB1291279E400702DB9 /* AppEventController.swift in Sources */,
 				C26654292725D6EA00DC3A3C /* PasswordTextField.swift in Sources */,
 				C25B221627C181690052AAC4 /* ComposeServiceInputCellKind.swift in Sources */,
 				C2A7946027F9071F00E5C641 /* BrowserExtensionServicePresenter.swift in Sources */,
@@ -7214,6 +7377,7 @@
 				C23FD50A2814635400E4E9C5 /* ComposeServiceWebExtensionFlowController.swift in Sources */,
 				C249AF66278A40FE005F9D80 /* UserDefaultsRepositoryImpl.swift in Sources */,
 				C26618A026126A8200ED52CB /* LabelComposeViewController.swift in Sources */,
+				C2B1209529D773770020281E /* AppearanceFlowController.swift in Sources */,
 				C2FA3E81280ADFDF0097ED71 /* MainRepositoryImpl+WebExtensionAuthRequest.swift in Sources */,
 				C21111F2274ABD5200CA7C78 /* SettingsModuleInteractor.swift in Sources */,
 				C23387002780F14700F8DBC3 /* TrashFlowController.swift in Sources */,
@@ -7231,6 +7395,7 @@
 				C2D3B0F628EE0F1C00D2F991 /* MainRepositoryImpl+ServiceDefinition.swift in Sources */,
 				C2C1DDE227CAD2DF002C7867 /* ComposeServiceAdvancedEditTokenTypeCell.swift in Sources */,
 				C2959627267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift in Sources */,
+				C2CC0A4E29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift in Sources */,
 				C2F5A9D9276E233000C422C4 /* SettingsMenuIcon.swift in Sources */,
 				C2B39C7327A58E0800D3B579 /* SelectFromGalleryView.swift in Sources */,
 				C206CACF27A35ABE0068284C /* View+.swift in Sources */,
@@ -7241,6 +7406,7 @@
 				C2AC221527661C0600271402 /* ExporterPasswordProtectionPresenter.swift in Sources */,
 				C284991B27CC28810092098D /* ComposeServiceCounterPresenter.swift in Sources */,
 				C240485C276549C00076376E /* ImportFromFileInteractor.swift in Sources */,
+				C2B1208D29D767B10020281E /* AppearancePresenter.swift in Sources */,
 				C2D3B0F828EE115200D2F991 /* MainRepositoryImpl+Icons.swift in Sources */,
 				C2AB92E32766956F00698382 /* SettingsViewFooter.swift in Sources */,
 				C2508E1D2753AFBD0072C564 /* TableViewDataSnapshot.swift in Sources */,
@@ -7295,6 +7461,7 @@
 				C240485E27654C5F0076376E /* ImporterEnterPasswordFlowController.swift in Sources */,
 				C2A7944D27F795E900E5C641 /* BrowserExtensionPairedService.swift in Sources */,
 				C287D4FB276A92460001B272 /* AppSecurityExtensions.swift in Sources */,
+				C2CC0A4C29D0D4FC00677A7B /* ExternalImportService.swift in Sources */,
 				C244718825F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift in Sources */,
 				C2D587362650549700D9C4BD /* IntroductionPage4View.swift in Sources */,
 				C21A9E8827CBF77100FE4CC4 /* ComposeServiceNumberOfDigitsPresenter+Menu.swift in Sources */,
@@ -7313,6 +7480,7 @@
 				C2FAE12528C7346900F2446F /* AEGISParseResultErrorStrings.swift in Sources */,
 				C21A9E8D27CC0A2300FE4CC4 /* ComposeServiceRefreshTimeFlowController.swift in Sources */,
 				C25B221227C177170052AAC4 /* ComposeServiceFlowController.swift in Sources */,
+				C27A31CA29C8EEE40094679F /* LastPassData.swift in Sources */,
 				C23386F52780E53800F8DBC3 /* DeleteServiceInteractor.swift in Sources */,
 				C28633C41FF9327900C8F4B4 /* AlertController.swift in Sources */,
 				C233BD252801D6F900A9CFF2 /* WebExtensionDeviceNameInteractor.swift in Sources */,
@@ -7320,6 +7488,7 @@
 				C2D44E71275C1FD30043F5D6 /* MainRepositoryImpl+Extensions.swift in Sources */,
 				C252B38C2981D45200C2074D /* MainContent.swift in Sources */,
 				C20E60FD28189D2000AB002E /* PushNotificationPermissionModuleInteractor.swift in Sources */,
+				C286200429D5CA0200217AF9 /* UUIDInputLength.swift in Sources */,
 				C2B077B3292A8F610074517F /* UploadLogsSuccessFlowController.swift in Sources */,
 				C2404883276571A70076376E /* ImporterPreimportSummaryViewController.swift in Sources */,
 				C263F462299040F0009B0837 /* MainSplitPresenter.swift in Sources */,
@@ -7328,6 +7497,7 @@
 				C2AD653B27F261CC008997DB /* BrowserExtensionSuccessViewController.swift in Sources */,
 				C223DAD9217BB012003F6E76 /* Coordinator.swift in Sources */,
 				C2AB92CB2766543700698382 /* ExporterPINModuleInteractor.swift in Sources */,
+				C286200229D5BCDF00217AF9 /* UUIDInputContainer.swift in Sources */,
 				C27BE515275D4EE70090CA12 /* BackupMenuModels.swift in Sources */,
 				C2B077B8292A8F980074517F /* UploadLogsSuccessView.swift in Sources */,
 				C2035AF1245DE59700C482D2 /* MainContainerTextStyling.swift in Sources */,
@@ -7433,6 +7603,7 @@
 				C2AB92C92766520B00698382 /* ExporterPINViewController.swift in Sources */,
 				C217E17223D79D8800EE6C08 /* ToastNotification.swift in Sources */,
 				C2AD653527F25F24008997DB /* BrowserExtensionFailedViewController.swift in Sources */,
+				C27A31CC29C90B110094679F /* RaivoData.swift in Sources */,
 				C2FCB28E282589AC00AF8A37 /* NewsViewEmptyScreen.swift in Sources */,
 				C2508E152753AAFD0072C564 /* SettingsMenuModuleInteractor.swift in Sources */,
 				C2F6BB08264886B7002A9747 /* IntroductionViewModel.swift in Sources */,
@@ -7450,9 +7621,10 @@
 				C2FDEE61279CC36C002CAB9E /* CameraScannerModuleInteractor.swift in Sources */,
 				C21B3A1927AF124E005C603B /* ColorPickerPresenter.swift in Sources */,
 				C25B221027C174EF0052AAC4 /* ComposeServiceModels+Extensions.swift in Sources */,
+				C2CC0A4629D098CB00677A7B /* ExternalImportInstructionsView.swift in Sources */,
 				C2FC421F23AA8F7A00320ABE /* Router.swift in Sources */,
 				C278122B27FA49AA00F31453 /* WebExtensionLocalDeviceNameInteractor.swift in Sources */,
-				C20935D42921446A000F5AA7 /* NextTokenInteractor.swift in Sources */,
+				C20935D42921446A000F5AA7 /* AppearanceInteractor.swift in Sources */,
 				C240487A27656C590076376E /* ImporterFileErrorPresenter.swift in Sources */,
 				C25B221427C17F1E0052AAC4 /* ComposeServiceInputKind.swift in Sources */,
 				C2A7945327F9018400E5C641 /* BrowserExtensionEditNamePresenter+Menu.swift in Sources */,
@@ -7553,6 +7725,7 @@
 				C2EA567128569ADD00026BFE /* AskForAuthFlowController.swift in Sources */,
 				C2147CE3205D7B790001D011 /* PINPadScreenData.swift in Sources */,
 				C2A74FF52610DDF5007E5AB3 /* Array+.swift in Sources */,
+				C2CC0A3C29D05DC900677A7B /* ExternalImportPresenter.swift in Sources */,
 				C2117179276CD11900042D28 /* PINType.swift in Sources */,
 				C2FF3EEC27B1CF0100642FA4 /* IconSelectorModels.swift in Sources */,
 				C25859362802E73B002DC749 /* MainRepositoryImpl+PushNotifications.swift in Sources */,
@@ -7560,6 +7733,7 @@
 				C2FF3EEA27B1A81100642FA4 /* CollectionViewDelegatee.swift in Sources */,
 				C2147CF3205D8C6C0001D011 /* LoginViewController.swift in Sources */,
 				C24590FC280F54B30079C21C /* SelectServiceTableViewCell.swift in Sources */,
+				C2CC0A4A29D0CACC00677A7B /* ExternalImportInstructionsPresenter.swift in Sources */,
 				C2B077C6292A922B0074517F /* UploadLogsFailureViewController.swift in Sources */,
 				C2035D482939533700B94834 /* ServiceAddedViewController.swift in Sources */,
 				C27C03BF27F4FD6C0020DB5E /* BrowserExtensionMainModuleInteractor.swift in Sources */,
@@ -7577,6 +7751,7 @@
 				C27A1EB529127C8D00702DB9 /* AlertController+Ready.swift in Sources */,
 				C21C38A21FE30E62000EC252 /* LimitedTextField.swift in Sources */,
 				C296D1EA28B2D4AF001F026D /* UserIconInfoViewController.swift in Sources */,
+				C2B1209329D771AA0020281E /* MainRepositoryImpl+Appearance.swift in Sources */,
 				C24336ED299ED95A00BF35B1 /* MainTabModuleInteractor.swift in Sources */,
 				C27BE519275D6E0D0090CA12 /* MainRepositoryImpl+Services.swift in Sources */,
 				C2BE80582811DF03009CBC4A /* AuthRequestsPresenter.swift in Sources */,
@@ -7593,6 +7768,7 @@
 				C284991127CC0FC70092098D /* ComposeServiceAlgorithmPresenter.swift in Sources */,
 				C2DCDB3E28A9A00E00DABB0F /* EditCommonIcon.swift in Sources */,
 				C2F6BB0326488290002A9747 /* IntroductionNaviContainer.swift in Sources */,
+				C2CC0A4829D0C9FC00677A7B /* ExternalImportInstructionsViewController.swift in Sources */,
 				C2404848276520F90076376E /* WidgetWarningViewController.swift in Sources */,
 				C2C93FBD2604005E00E10981 /* MainContainerToggleWithLabel.swift in Sources */,
 				C2508E182753AB590072C564 /* SettingsMenuViewControlling.swift in Sources */,
@@ -7623,6 +7799,7 @@
 				C25860B828247CB7009AE54F /* NewsModels.swift in Sources */,
 				C2698B6C2986B42400EBC179 /* MainTabViewController.swift in Sources */,
 				C22D9E1124681EE000AAE6EE /* MainCointainerNavigationButtonGenerator.swift in Sources */,
+				C2B1208F29D76BD10020281E /* AppearancePresenter+Menu.swift in Sources */,
 				C2A7945127F9016D00E5C641 /* BrowserExtensionEditNameViewController.swift in Sources */,
 				C21B3A1427AF0BC9005C603B /* ColorPickerFlowController.swift in Sources */,
 				C26BCE01281010A000CA6A9A /* SelectServiceModuleInteractor.swift in Sources */,
@@ -7657,6 +7834,7 @@
 				C2C66F951FE068CC00AD5A1C /* TokensViewController.swift in Sources */,
 				C240487C27656DB40076376E /* ImporterFileErrorFlowController.swift in Sources */,
 				C2A74FD72610D3A8007E5AB3 /* TintColor.swift in Sources */,
+				C2CC0A3A29D0580B00677A7B /* ExternalImportViewController.swift in Sources */,
 				C2B6D78E260BB024005B599E /* ColorPickerButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8202,6 +8380,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Storage;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -8239,6 +8419,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Storage;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -8275,6 +8457,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Protection;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -8313,6 +8497,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Protection;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -8349,6 +8535,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
@@ -8391,6 +8579,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"-ObjC",
@@ -8554,7 +8744,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 4.1.2;
+				MARKETING_VERSION = 4.2.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
@@ -8595,7 +8785,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 4.1.2;
+				MARKETING_VERSION = 4.2.0;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"-ObjC",
@@ -8641,6 +8831,8 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.NetworkStack;
@@ -8684,6 +8876,8 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.NetworkStack;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -8721,6 +8915,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Sync;
@@ -8759,6 +8955,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Sync;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -8797,6 +8995,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Token;
@@ -8837,6 +9037,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Token;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -8869,7 +9071,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.1.2;
+				MARKETING_VERSION = 4.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASAuth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -8897,7 +9099,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.1.2;
+				MARKETING_VERSION = 4.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASAuth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -8930,6 +9132,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Common;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -8968,6 +9172,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Common;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -9004,6 +9210,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TimeVerification;
@@ -9043,6 +9251,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TimeVerification;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -9080,6 +9290,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.CodeSupport;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -9118,6 +9330,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.CodeSupport;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -9200,7 +9414,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.1.2;
+				MARKETING_VERSION = 4.2.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASWidget;
@@ -9230,7 +9444,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.1.2;
+				MARKETING_VERSION = 4.2.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -9257,7 +9471,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.1.2;
+				MARKETING_VERSION = 4.2.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASServiceIntent;
@@ -9285,7 +9499,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.1.2;
+				MARKETING_VERSION = 4.2.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASServiceIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -9607,11 +9821,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
-		};
-		C2B811D6284D1D11009FD99D /* FirebaseAnalyticsWithoutAdIdSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsWithoutAdIdSupport;
 		};
 		C2B811D8284D1D2C009FD99D /* FirebaseRemoteConfig */ = {
 			isa = XCSwiftPackageProductDependency;

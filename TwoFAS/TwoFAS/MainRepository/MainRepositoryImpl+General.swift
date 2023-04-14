@@ -31,4 +31,12 @@ extension MainRepositoryImpl {
     func introductionWasShown() -> Bool {
         userDefaultsRepository.introductionWasShown()
     }
+    
+    func setCrashlyticsDisabled(_ disabled: Bool) {
+        userDefaultsRepository.setCrashlyticsDisabled(disabled)
+    }
+    
+    var isCrashlyticsDisabled: Bool {
+        userDefaultsRepository.isCrashlyticsDisabled
+    }
 }

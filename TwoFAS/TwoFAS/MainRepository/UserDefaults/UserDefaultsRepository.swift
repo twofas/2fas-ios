@@ -61,6 +61,9 @@ protocol UserDefaultsRepository: AnyObject {
     var isNextTokenEnabled: Bool { get }
     func setNextTokenEnabled(_ state: Bool)
     
+    var isActiveSearchEnabled: Bool { get }
+    func setActiveSearchEnabled(_ state: Bool)
+    
     var isSectionZeroCollapsed: Bool { get }
     func setSectionZeroIsCollapsed(_ collapsed: Bool)
     
@@ -72,4 +75,7 @@ protocol UserDefaultsRepository: AnyObject {
     func introductionWasShown() -> Bool
     
     func clearAll()
+    
+    var isCrashlyticsDisabled: Bool { get }
+    func setCrashlyticsDisabled(_ disabled: Bool)
 }

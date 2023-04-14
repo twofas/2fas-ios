@@ -22,7 +22,12 @@ import Common
 
 protocol ImporterEnterPasswordFlowControllerParent: AnyObject {
     func hidePasswordImport()
-    func showPreimportSummary(count: Int, sections: [CommonSectionData], services: [ServiceData])
+    func showPreimportSummary(
+        count: Int,
+        sections: [CommonSectionData],
+        services: [ServiceData],
+        externalImportService: ExternalImportService
+    )
     func showFileError(error: ImporterOpenFileError)
     func showFileIsEmpty()
     func showWrongPassword()
@@ -30,7 +35,12 @@ protocol ImporterEnterPasswordFlowControllerParent: AnyObject {
 
 protocol ImporterEnterPasswordFlowControlling: AnyObject {
     func toClose()
-    func toPreimportSummary(count: Int, sections: [CommonSectionData], services: [ServiceData])
+    func toPreimportSummary(
+        count: Int,
+        sections: [CommonSectionData],
+        services: [ServiceData],
+        externalImportService: ExternalImportService
+    )
     func toFileError(error: ImporterOpenFileError)
     func toFileIsEmpty()
     func toWrongPassword()
@@ -42,7 +52,8 @@ final class ImporterEnterPasswordFlowController: FlowController {
     static func push(
         in navigationController: UINavigationController,
         parent: ImporterEnterPasswordFlowControllerParent,
-        data: ExchangeDataFormat
+        data: ExchangeDataFormat,
+        externalImportService: ExternalImportService
     ) {
         let view = ImporterEnterPasswordViewController()
         let flowController = ImporterEnterPasswordFlowController(viewController: view)
@@ -52,7 +63,8 @@ final class ImporterEnterPasswordFlowController: FlowController {
         )
         let presenter = ImporterEnterPasswordPresenter(
             flowController: flowController,
-            interactor: interactor
+            interactor: interactor,
+            externalImportService: externalImportService
         )
         presenter.view = view
         view.presenter = presenter
@@ -66,8 +78,18 @@ extension ImporterEnterPasswordFlowController: ImporterEnterPasswordFlowControll
         parent?.hidePasswordImport()
     }
     
-    func toPreimportSummary(count: Int, sections: [CommonSectionData], services: [ServiceData]) {
-        parent?.showPreimportSummary(count: count, sections: sections, services: services)
+    func toPreimportSummary(
+        count: Int,
+        sections: [CommonSectionData],
+        services: [ServiceData],
+        externalImportService: ExternalImportService
+    ) {
+        parent?.showPreimportSummary(
+            count: count,
+            sections: sections,
+            services: services,
+            externalImportService: externalImportService
+        )
     }
     
     func toFileError(error: ImporterOpenFileError) {

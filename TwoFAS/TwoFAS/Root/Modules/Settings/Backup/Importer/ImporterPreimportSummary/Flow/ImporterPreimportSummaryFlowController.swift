@@ -40,7 +40,8 @@ final class ImporterPreimportSummaryFlowController: FlowController {
         parent: ImporterPreimportSummaryFlowControllerParent,
         count: Int,
         sections: [CommonSectionData],
-        services: [ServiceData]
+        services: [ServiceData],
+        externalImportService: ExternalImportService
     ) {
         let view = ImporterPreimportSummaryViewController()
         let flowController = ImporterPreimportSummaryFlowController(viewController: view)
@@ -52,7 +53,8 @@ final class ImporterPreimportSummaryFlowController: FlowController {
         )
         let presenter = ImporterPreimportSummaryPresenter(
             flowController: flowController,
-            interactor: interactor
+            interactor: interactor,
+            externalImportService: externalImportService
         )
         view.presenter = presenter
         

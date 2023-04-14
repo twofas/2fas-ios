@@ -1,22 +1,3 @@
-//
-//  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
-//  Contributed by Zbigniew Cisiński. All rights reserved.
-//
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-//  GNU General Public License for more details.
-//
-//  You should have received a copy of the GNU General Public License
-//  along with this program. If not, see <https://www.gnu.org/licenses/>
-//
-
 // swiftlint:disable all
 // Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
 
@@ -75,6 +56,14 @@ internal enum Asset {
   internal static let exportBackup = ImageAsset(name: "exportBackup")
   internal static let fileError = ImageAsset(name: "fileError")
   internal static let importBackup = ImageAsset(name: "importBackup")
+  internal static let externalImportAegis = ImageAsset(name: "ExternalImportAegis")
+  internal static let externalImportGoogleAuth = ImageAsset(name: "ExternalImportGoogleAuth")
+  internal static let externalImportIconAegis = ImageAsset(name: "ExternalImportIconAegis")
+  internal static let externalImportIconLastPass = ImageAsset(name: "ExternalImportIconLastPass")
+  internal static let externalImportIconRaivo = ImageAsset(name: "ExternalImportIconRaivo")
+  internal static let externalImportLastPass = ImageAsset(name: "ExternalImportLastPass")
+  internal static let externalImportRavio = ImageAsset(name: "ExternalImportRavio")
+  internal static let externalmportIconGoogleAuth = ImageAsset(name: "ExternalmportIconGoogleAuth")
   internal static let externalLinkIcon = ImageAsset(name: "ExternalLinkIcon")
   internal static let gaImport0 = ImageAsset(name: "gaImport0")
   internal static let gaImport1 = ImageAsset(name: "gaImport1")
@@ -116,6 +105,8 @@ internal enum Asset {
   internal static let scanErrorGeneralError = ImageAsset(name: "scanErrorGeneralError")
   internal static let selectFromGalleryAdviceIcon = ImageAsset(name: "SelectFromGalleryAdviceIcon")
   internal static let settingsAbout = ImageAsset(name: "SettingsAbout")
+  internal static let settingsActiveSearch = ImageAsset(name: "SettingsActiveSearch")
+  internal static let settingsAppearance = ImageAsset(name: "SettingsAppearance")
   internal static let settingsArrow = ImageAsset(name: "SettingsArrow")
   internal static let settingsBrowserExtension = ImageAsset(name: "SettingsBrowserExtension")
   internal static let settingsChangePIN = ImageAsset(name: "SettingsChangePIN")
@@ -123,6 +114,7 @@ internal enum Asset {
   internal static let settingsDisablePIN = ImageAsset(name: "SettingsDisablePIN")
   internal static let settingsDonate = ImageAsset(name: "SettingsDonate")
   internal static let settingsExport = ImageAsset(name: "SettingsExport")
+  internal static let settingsExternalImport = ImageAsset(name: "SettingsExternalImport")
   internal static let settingsFAQ = ImageAsset(name: "SettingsFAQ")
   internal static let settingsImport = ImageAsset(name: "SettingsImport")
   internal static let settingsInfo = ImageAsset(name: "SettingsInfo")

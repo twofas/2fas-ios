@@ -22,6 +22,7 @@ import UIKit
 protocol MainSplitFlowControllerParent: AnyObject {
     func navigationSwitchedToTokens()
     func navigationSwitchedToSettings()
+    func navigationSwitchedToSettingsExternalImport()
 }
 
 protocol MainSplitFlowControlling: AnyObject {
@@ -161,6 +162,10 @@ extension MainSplitFlowController: MainMenuFlowControllerParent {
 extension MainSplitFlowController: TokensPlainFlowControllerParent {
     func tokensSwitchToTokensTab() {
         parent?.navigationSwitchedToTokens()
+    }
+    
+    func tokensSwitchToSettingsExternalImport() {
+        parent?.navigationSwitchedToSettingsExternalImport()
     }
 }
 

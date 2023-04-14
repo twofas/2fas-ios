@@ -55,7 +55,7 @@ final class NewsPresenter {
     func handleSelection(at row: Int) {
         guard let entry = interactor.localList()[safe: row], let link = entry.link else { return }
         interactor.markAsRead(newsEntry: entry)
-        AnalyticsLog(.articleRead(entry.newsID))
+        AppEventLog(.articleRead(entry.newsID))
         flowController.openWeb(with: link)
     }
 }

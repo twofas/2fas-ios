@@ -32,9 +32,8 @@ internal enum T {
   internal static let backupNoticeCta = T.tr("Localizable", "backup_notice_cta", fallback: "Turn On")
   /// Maybe Later
   internal static let backupNoticeLater = T.tr("Localizable", "backup_notice_later", fallback: "Maybe Later")
-  /// Turn on 2FAS Backup. In case of resetting
-  /// or losing your phone, you will be able to restore all your tokens.
-  internal static let backupNoticeMsg = T.tr("Localizable", "backup_notice_msg", fallback: "Turn on 2FAS Backup. In case of resetting\nor losing your phone, you will be able to restore all your tokens.")
+  /// Enable 2FAS Backup. In the event of a reset or loss of your phone, you will be able to restore all your tokens.
+  internal static let backupNoticeMsg = T.tr("Localizable", "backup_notice_msg", fallback: "Enable 2FAS Backup. In the event of a reset or loss of your phone, you will be able to restore all your tokens.")
   /// 2FAS Backup
   internal static let backupNoticeTitle = T.tr("Localizable", "backup_notice_title", fallback: "2FAS Backup")
   /// Google account
@@ -120,6 +119,8 @@ internal enum T {
   internal static let externalimportDescription = T.tr("Localizable", "externalimport_description", fallback: "You can import your tokens to 2FAS from different apps. Choose an app from the list and follow the instructions.")
   /// Google Authenticator
   internal static let externalimportGoogleAuthenticator = T.tr("Localizable", "externalimport_google_authenticator", fallback: "Google Authenticator")
+  /// LastPass
+  internal static let externalimportLastpass = T.tr("Localizable", "externalimport_lastpass", fallback: "LastPass")
   /// Raivo OTP
   internal static let externalimportRaivo = T.tr("Localizable", "externalimport_raivo", fallback: "Raivo OTP")
   /// Select app
@@ -687,6 +688,8 @@ internal enum T {
     internal static let gaSuccessMsg = T.tr("Localizable", "externalimport__ga_success_msg", fallback: "This QR code allows importing tokens from Google Authenticator.")
     /// Importing 2FA tokens from Google Authenticator app
     internal static let gaTitle = T.tr("Localizable", "externalimport__ga_title", fallback: "Importing 2FA tokens from Google Authenticator app")
+    /// Export your accounts from LastPass to an unencrypted JSON file and upload it using the "Choose JSON file" button. Remember to remove the file after a successful import.
+    internal static let lastpassMsg = T.tr("Localizable", "externalimport__lastpass_msg", fallback: "Export your accounts from LastPass to an unencrypted JSON file and upload it using the \"Choose JSON file\" button. Remember to remove the file after a successful import.")
     /// However, there are no services that could be imported.
     internal static let noTokensMsg = T.tr("Localizable", "externalimport__no_tokens_msg", fallback: "However, there are no services that could be imported.")
     /// Use the "Export OTPs to ZIP archive" option in Raivo's Settings, save a ZIP file, extract it and import the JSON file using the "Choose JSON file" button.
@@ -853,6 +856,12 @@ internal enum T {
     internal static let _5Minutes = T.tr("Localizable", "settings__5_minutes", fallback: "5 minutes")
     /// About
     internal static let about = T.tr("Localizable", "settings__about", fallback: "About")
+    /// Crash Reports help us improve the app when things go very wrong. Changes will be applied on the next app run.
+    internal static let aboutCrashOptoutDescription = T.tr("Localizable", "settings__about_crash_optout_description", fallback: "Crash Reports help us improve the app when things go very wrong. Changes will be applied on the next app run.")
+    /// Crash Reports
+    internal static let aboutCrashOptoutTitle = T.tr("Localizable", "settings__about_crash_optout_title", fallback: "Crash Reports")
+    /// Opt-out of Crash Reports
+    internal static let aboutCrashOptoutToggleTitle = T.tr("Localizable", "settings__about_crash_optout_toggle_title", fallback: "Opt-out of Crash Reports")
     /// Acknowledgements
     internal static let acknowledgements = T.tr("Localizable", "settings__acknowledgements", fallback: "Acknowledgements")
     /// Advanced

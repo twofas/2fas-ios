@@ -141,10 +141,12 @@ extension MainFlowController: ImporterOpenFileFlowControllerParent {
 
 extension MainFlowController: AuthRequestsFlowControllerParent {
     func authRequestAskUserForAuthorization(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest) {
+        guard viewController.presentedViewController == nil else { return }
         AskForAuthFlowController.present(on: viewController, parent: self, auth: auth, pair: pair)
     }
     
     func authRequestShowServiceSelection(auth: WebExtensionAwaitingAuth) {
+        guard viewController.presentedViewController == nil else { return }
         SelectServiceNavigationFlowController.present(on: viewController, parent: self, authRequest: auth)
     }
 }
@@ -184,5 +186,9 @@ extension MainFlowController: MainSplitFlowControllerParent {
     
     func navigationSwitchedToSettings() {
         viewController.presenter.handleSwitchedToSettings()
+    }
+    
+    func navigationSwitchedToSettingsExternalImport() {
+        viewController.presenter.handleSwitchToExternalImport()
     }
 }

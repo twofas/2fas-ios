@@ -17,24 +17,36 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 
 final class ImporterPreimportSummaryPresenter {
     weak var view: ImporterPreimportSummaryViewControlling?
     
     private let flowController: ImporterPreimportSummaryFlowControlling
     private let interactor: ImporterPreimportSummaryModuleInteracting
+    private let externalImportService: ExternalImportService
     
     var count: Int {
         interactor.count
     }
     
+    var additionalIcon: UIImage? {
+        switch externalImportService {
+        case .aegis: return Asset.externalImportAegis.image
+        case .raivo: return Asset.externalImportRavio.image
+        case .lastPass: return Asset.externalImportLastPass.image
+        case .googleAuth, .twofas: return nil
+        }
+    }
+    
     init(
         flowController: ImporterPreimportSummaryFlowControlling,
-        interactor: ImporterPreimportSummaryModuleInteracting
+        interactor: ImporterPreimportSummaryModuleInteracting,
+        externalImportService: ExternalImportService
     ) {
         self.flowController = flowController
         self.interactor = interactor
+        self.externalImportService = externalImportService
     }
 }
 

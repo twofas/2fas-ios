@@ -160,7 +160,6 @@ extension TokensPresenter {
     }
     
     // MARK: - Actions
-    
     func handleShowCamera() {
         Log("TokensPresenter - handleShowCamera")
         interactor.checkCameraPermission { [weak self] value in
@@ -174,14 +173,9 @@ extension TokensPresenter {
         }
     }
     
-    func handleImport2FAS() {
-        Log("TokensPresenter - handleImport2FAS")
+    func handleImportExternalFile() {
+        Log("TokensPresenter - handleImportExternalFile")
         flowController.toFileImport()
-    }
-    
-    func handleImportGA() {
-        Log("TokensPresenter - handleImportGA")
-        flowController.toImportGA()
     }
     
     func handleShowHelp() {
@@ -197,7 +191,17 @@ extension TokensPresenter {
         }
     }
     
+    func handleTokensScreenIsVisible() {
+        if interactor.isActiveSearchEnabled && showSearchBar {
+            view?.showKeyboard()
+        }
+    }
+    
     // MARK: - Search
+    
+    var showSearchBar: Bool {
+        count > 1
+    }
     
     func handleSetSearchPhrase(_ phrase: String) {
         Log("TokensPresenter - handleSetSearchPhrase")
@@ -464,6 +468,7 @@ private extension TokensPresenter {
             } else {
                 view?.showEmptyScreen()
             }
+            view?.reloadData(newSnapshot: interactor.emptySnapshot)
         }
                 
         changeRequriesTokenRefresh = false

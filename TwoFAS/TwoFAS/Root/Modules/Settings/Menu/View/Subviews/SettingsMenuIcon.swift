@@ -20,6 +20,7 @@
 import UIKit
 
 final class SettingsMenuIcon: UIImageView {
+    private var borderEnabled = true
     init() {
         super.init(frame: CGRect.zero)
         commonInit()
@@ -36,13 +37,24 @@ final class SettingsMenuIcon: UIImageView {
     }
     
     private func commonInit() {
-        applyBorder()
         tintColor = Theme.Colors.Fill.theme
         contentMode = .center
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        applyBorder()
+    }
+    
     private func applyBorder() {
-        applyRoundedBorder(withBorderColor: Theme.Colors.SettingsCell.iconBorder, width: Theme.Metrics.lineWidth)
+        if borderEnabled {
+            applyRoundedBorder(
+                withBorderColor: Theme.Colors.SettingsCell.iconBorder,
+                width: Theme.Metrics.separatorHeight
+            )
+        } else {
+            clearBorder()
+        }
         backgroundColor = Theme.Colors.Icon.background
     }
     
@@ -57,5 +69,10 @@ final class SettingsMenuIcon: UIImageView {
     
     func enable() {
         tintColor = Theme.Colors.Fill.theme
+    }
+    
+    func disableBorder() {
+        borderEnabled = false
+        setNeedsLayout()
     }
 }

@@ -62,8 +62,12 @@ extension MainRepositoryImpl {
         storageRepository.markNewsEntryAsRead(with: newsEntry)
     }
     
-    func listAll() -> [ListNewsEntry] {
-        storageRepository.listAll()
+    func listAllNews() -> [ListNewsEntry] {
+        storageRepository.listAllNews()
+    }
+    
+    func listAllFreshlyAddedNews() -> [ListNewsEntry] {
+        storageRepository.listAllFreshlyAddedNews()
     }
     
     func hasNewsEntriesUnreadItems() -> Bool {

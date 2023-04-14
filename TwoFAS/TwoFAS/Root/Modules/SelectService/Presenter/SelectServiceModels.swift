@@ -21,7 +21,12 @@ import UIKit
 import Common
 
 struct SelectServiceSection: TableViewSection {
-    let title: String?
+    enum TitleType: Hashable {
+        case noTitle
+        case bestMatch
+        case title(String)
+    }
+    let title: TitleType
     var cells: [SelectServiceCell]
 }
 

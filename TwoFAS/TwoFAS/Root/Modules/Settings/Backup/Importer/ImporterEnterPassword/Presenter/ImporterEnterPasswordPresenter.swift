@@ -41,10 +41,16 @@ final class ImporterEnterPasswordPresenter {
     
     private let flowController: ImporterEnterPasswordFlowControlling
     private let interactor: ImporterEnterPasswordModuleInteracting
+    private let externalImportService: ExternalImportService
     
-    init(flowController: ImporterEnterPasswordFlowControlling, interactor: ImporterEnterPasswordModuleInteracting) {
+    init(
+        flowController: ImporterEnterPasswordFlowControlling,
+        interactor: ImporterEnterPasswordModuleInteracting,
+        externalImportService: ExternalImportService
+    ) {
         self.flowController = flowController
         self.interactor = interactor
+        self.externalImportService = externalImportService
     }
 }
 
@@ -59,7 +65,7 @@ extension ImporterEnterPasswordPresenter {
             return
         }
         switch interactor.openFile(with: password) {
-        case .success(let data): parseData(data)
+        case .success(let data): parseData(data, externalImportService: externalImportService)
         case .cantReadFile: flowController.toFileError(error: .cantReadFile(reason: nil))
         case .wrongPassword: flowController.toWrongPassword()
         }
@@ -91,11 +97,16 @@ extension ImporterEnterPasswordPresenter {
 }
 
 private extension ImporterEnterPasswordPresenter {
-    func parseData(_ data: ExchangeDataServices) {
+    func parseData(_ data: ExchangeDataServices, externalImportService: ExternalImportService) {
         let result = interactor.parseFile(with: data)
         
         if result.count > 0 {
-            flowController.toPreimportSummary(count: result.count, sections: result.sections, services: result.services)
+            flowController.toPreimportSummary(
+                count: result.count,
+                sections: result.sections,
+                services: result.services,
+                externalImportService: externalImportService
+            )
         } else {
             flowController.toFileIsEmpty()
         }

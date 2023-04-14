@@ -44,4 +44,6 @@ public enum ThemeColor {
     public static let decoratedContainerButtonInverted = UIColor(named: "ColorDecoratedContainerButtonInverted", in: bundle, compatibleWith: nil)!
     public static let overlay = UIColor(named: "ColorOverlay", in: bundle, compatibleWith: nil)!
     public static let cameraOverlay = UIColor(white: 0, alpha: 0.67)
+    public static let uuidInputBackground = UIColor(named: "UUIDInputBackground", in: bundle, compatibleWith: nil)!
+    public static let uuidInputText = UIColor(named: "UUIDInputText", in: bundle, compatibleWith: nil)!
 }

@@ -85,7 +85,9 @@ final class SettingsFlowController: FlowController {
 
 private extension SettingsFlowController {
     func setInitialMenu() {
-        navigationMenu = SettingsMenuFlowController.showAsRoot(in: viewController.navigationNavi, parent: self)
+        let menu = SettingsMenuFlowController.showAsRoot(in: viewController.navigationNavi, parent: self)
+        navigationMenu = menu.flow
+        viewController.menu = menu.view
     }
 }
 
@@ -189,12 +191,28 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
         }
     }
     
+    func toExternalImport() {
+        if isCollapsed {
+            ExternalImportFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            ExternalImportFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
+    
     func toDonate() {
         UIApplication.shared.open(URL(string: "https://2fas.com/donate")!, options: [:], completionHandler: nil)
     }
     
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
         parent?.settingsToUpdateCurrentPosition(viewPath)
+    }
+    
+    func toAppearance() {
+        if isCollapsed {
+            AppearanceFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            AppearanceFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
     }
 }
 extension SettingsFlowController: BackupMenuFlowControllerParent {
@@ -206,8 +224,6 @@ extension SettingsFlowController: BackupMenuFlowControllerParent {
     }
 }
 
-extension SettingsFlowController: TrashFlowControllerParent {}
-
 extension SettingsFlowController: PushNotificationPermissionFlowControllerParent {
     func pushNotificationsDidEnd() {}
 }
@@ -218,6 +234,8 @@ extension SettingsFlowController: AppSecurityFlowControllerParent {
     }
 }
 
+extension SettingsFlowController: TrashFlowControllerParent {}
 extension SettingsFlowController: BrowserExtensionMainFlowControllerParent {}
-
 extension SettingsFlowController: AboutFlowControllerParent {}
+extension SettingsFlowController: ExternalImportFlowControllerParent {}
+extension SettingsFlowController: AppearanceFlowControllerParent {}

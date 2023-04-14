@@ -56,8 +56,27 @@ extension StorageRepositoryImpl {
         save()
     }
     
-    func listAll() -> [ListNewsEntry] {
-        NewsEntity.listAll(on: context)
+    func listAllNews() -> [ListNewsEntry] {
+        listAllNews(includesPendingChanges: false)
+    }
+    
+    func listAllFreshlyAddedNews() -> [ListNewsEntry] {
+        listAllNews(includesPendingChanges: true)
+    }
+    
+    func hasNewsEntriesUnreadItems() -> Bool {
+        NewsEntity.countUnreadItems(on: context) > 0
+    }
+    
+    func markAllAsRead() {
+        NewsEntity.markAllAsRead(on: context)
+        save()
+    }
+}
+
+private extension StorageRepositoryImpl {
+    func listAllNews(includesPendingChanges: Bool) -> [ListNewsEntry] {
+        NewsEntity.listAll(on: context, includesPendingChanges: includesPendingChanges)
             .map({ entity in
                 ListNewsEntry(
                     newsID: entity.newsID,
@@ -69,14 +88,5 @@ extension StorageRepositoryImpl {
                     wasRead: entity.wasRead
                 )
             })
-    }
-    
-    func hasNewsEntriesUnreadItems() -> Bool {
-        NewsEntity.countUnreadItems(on: context) > 0
-    }
-    
-    func markAllAsRead() {
-        NewsEntity.markAllAsRead(on: context)
-        save()
     }
 }

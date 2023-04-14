@@ -35,6 +35,7 @@ final class UploadLogsViewController: UIViewController {
         l.textColor = Theme.Colors.Text.main
         l.font = Theme.Fonts.Text.boldContent
         l.numberOfLines = 0
+        l.textAlignment = .center
         l.lineBreakMode = .byWordWrapping
         return l
     }()
@@ -49,7 +50,7 @@ final class UploadLogsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = Theme.Colors.Fill.System.second
+        view.backgroundColor = Theme.Colors.Fill.System.first
         
         title = T.Settings.sendLogsTitle
         
@@ -69,12 +70,12 @@ final class UploadLogsViewController: UIViewController {
         ])
         view.addSubview(group, with: [
             group.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 2 * spacing),
-            group.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            group.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            group.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Theme.Metrics.standardSpacing),
+            group.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Theme.Metrics.standardSpacing)
         ])
         view.addSubview(sendButton, with: [
             sendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            sendButton.topAnchor.constraint(equalTo: group.bottomAnchor, constant: 2 * spacing)
+            sendButton.topAnchor.constraint(equalTo: group.bottomAnchor, constant: 4 * spacing)
         ])
         
         group.valueChanged = { [weak self] value in
@@ -86,7 +87,7 @@ final class UploadLogsViewController: UIViewController {
         sendButton.action = { [weak self] in
             self?.group.stop()
             self?.sendAction()
-        }
+        }        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -98,7 +99,7 @@ final class UploadLogsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        group.showKeyboard()
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     

@@ -33,8 +33,14 @@ enum ImportFromFileParsing {
         case newerVersion
         case success(AEGISData)
     }
+    enum LastPassResult {
+        case newerVersion
+        case success(LastPassData)
+    }
     case twoFAS(ExchangeDataFormat)
     case aegis(AEGISParseResult)
+    case lastPass(LastPassResult)
+    case raivo([RaivoData])
 }
 
 enum ImportFromFileTwoFASCheck {
@@ -68,6 +74,8 @@ protocol ImportFromFileInteracting: AnyObject {
     func countNewServices(_ services: [ServiceData]) -> Int
     func importServices(_ services: [ServiceData], sections: [CommonSectionData]) -> Int
     func parseAEGIS(_ data: AEGISData) -> [ServiceData]
+    func parseLastPass(_ data: LastPassData) -> [ServiceData]
+    func parseRaivo(_ data: [RaivoData]) -> [ServiceData]
 }
 
 final class ImportFromFileInteractor {
@@ -104,6 +112,17 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
         
         if let services = try? jsonDecoder.decode(ExchangeData.self, from: data) {
             return .twoFAS(.twoFAS(services))
+        }
+
+        if let lastPass = try? jsonDecoder.decode(LastPassData.self, from: data) {
+            guard lastPass.version == LastPassData.supportedVersion else {
+                return .lastPass(.newerVersion)
+            }
+            return .lastPass(.success(lastPass))
+        }
+        
+        if let raivo = try? jsonDecoder.decode([RaivoData].self, from: data) {
+            return .raivo(raivo)
         }
         
         do {
@@ -383,6 +402,97 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 trashingDate: nil,
                 counter: entry.info.counter,
                 tokenType: entry.type.toTokenType,
+                source: .link,
+                otpAuth: nil,
+                order: nil,
+                sectionID: nil
+            )
+        }
+    }
+    
+    func parseLastPass(_ data: LastPassData) -> [ServiceData] {
+        Log("ImportFromFileInteractor - parseLastPass", module: .interactor)
+        
+        return data.accounts.compactMap { acc in
+            guard let digits = Digits(rawValue: acc.digits),
+                  let period = Period(rawValue: acc.timeStep),
+                  acc.secret.isValidSecret()
+            else { return nil }
+            
+            let secret = acc.secret.sanitazeSecret()
+            guard secret.isValidSecret() else { return nil }
+            let algo = Algorithm(rawValue: acc.algorithm.uppercased())
+            
+            let serviceDef = serviceDefinitionInteractor.findService(using: acc.issuerName)
+            return ServiceData(
+                name: acc.userName.sanitazeName(),
+                secret: secret,
+                serviceTypeID: serviceDef?.serviceTypeID,
+                additionalInfo: nil,
+                rawIssuer: acc.issuerName,
+                modifiedAt: acc.creationTimestamp,
+                createdAt: acc.creationTimestamp,
+                tokenPeriod: period,
+                tokenLength: digits,
+                badgeColor: nil,
+                iconType: .brand,
+                iconTypeID: serviceDef?.iconTypeID ?? .default,
+                labelColor: .lightBlue,
+                labelTitle: acc.userName.twoLetters,
+                algorithm: algo ?? .defaultValue,
+                isTrashed: false,
+                trashingDate: nil,
+                counter: 0,
+                tokenType: .totp,
+                source: .link,
+                otpAuth: nil,
+                order: nil,
+                sectionID: nil
+            )
+        }
+    }
+    
+    func parseRaivo(_ data: [RaivoData]) -> [ServiceData] {
+        Log("ImportFromFileInteractor - parseRaivo", module: .interactor)
+        
+        let date = Date()
+        
+        return data.compactMap { acc in
+            guard
+                let rawDigits = Int(acc.digits),
+                let digits = Digits(rawValue: rawDigits),
+                let kind = TokenType(rawValue: acc.kind.uppercased()),
+                let algo = Algorithm(rawValue: acc.algorithm.uppercased()),
+                let counter = Int(acc.counter),
+                let rawTimer = Int(acc.timer),
+                let period = Period(rawValue: rawTimer),
+                acc.secret.isValidSecret()
+            else { return nil }
+                        
+            let secret = acc.secret.sanitazeSecret()
+            guard secret.isValidSecret() else { return nil }
+            
+            let serviceDef = serviceDefinitionInteractor.findService(using: acc.issuer)
+            return ServiceData(
+                name: acc.issuer.sanitazeName(),
+                secret: secret,
+                serviceTypeID: serviceDef?.serviceTypeID,
+                additionalInfo: acc.account,
+                rawIssuer: acc.issuer,
+                modifiedAt: date,
+                createdAt: date,
+                tokenPeriod: period,
+                tokenLength: digits,
+                badgeColor: nil,
+                iconType: .brand,
+                iconTypeID: serviceDef?.iconTypeID ?? .default,
+                labelColor: .lightBlue,
+                labelTitle: acc.issuer.twoLetters,
+                algorithm: algo,
+                isTrashed: false,
+                trashingDate: nil,
+                counter: counter,
+                tokenType: kind,
                 source: .link,
                 otpAuth: nil,
                 order: nil,

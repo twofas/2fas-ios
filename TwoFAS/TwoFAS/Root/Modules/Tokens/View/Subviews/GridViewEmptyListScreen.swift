@@ -21,8 +21,7 @@ import UIKit
 
 final class GridViewEmptyListScreen: UIView {
     var pairNewService: Callback?
-    var import2FAS: Callback?
-    var importGA: Callback?
+    var importFromExternalService: Callback?
     var help: Callback?
     
     private let iconImage: UIImageView = {
@@ -50,17 +49,10 @@ final class GridViewEmptyListScreen: UIView {
         return button
     }()
     
-    private let import2FASButton: LoadingContentButton = {
+    private let importButton: LoadingContentButton = {
         let button = LoadingContentButton()
-        button.apply(MainContainerButtonStyling.borderOnly.value)
-        button.update(title: T.Introduction.import2fasTitle)
-        return button
-    }()
-    
-    private let importGAButton: LoadingContentButton = {
-        let button = LoadingContentButton()
-        button.apply(MainContainerButtonStyling.borderOnly.value)
-        button.update(title: T.Introduction.importGoogleAuthenticator)
+        button.apply(MainContainerButtonStyling.textOnly.value)
+        button.update(title: T.Introduction.importExternalApp)
         return button
     }()
     
@@ -124,7 +116,7 @@ final class GridViewEmptyListScreen: UIView {
         
         mainStackView.addArrangedSubviews([headerStackView, buttonsStackView])
         headerStackView.addArrangedSubviews([iconImage, headerLabel])
-        buttonsStackView.addArrangedSubviews([pairNewServiceButton, import2FASButton, importGAButton])
+        buttonsStackView.addArrangedSubviews([pairNewServiceButton, importButton])
         
         addSubview(helpButton, with: [
             helpButton.topAnchor.constraint(
@@ -140,8 +132,7 @@ final class GridViewEmptyListScreen: UIView {
         ])
         
         pairNewServiceButton.action = { [weak self] in self?.pairNewService?() }
-        import2FASButton.action = { [weak self] in self?.import2FAS?() }
-        importGAButton.action = { [weak self] in self?.importGA?() }
+        importButton.action = { [weak self] in self?.importFromExternalService?() }
         helpButton.action = { [weak self] in self?.help?() }
     }
 }

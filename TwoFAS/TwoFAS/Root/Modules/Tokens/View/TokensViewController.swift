@@ -239,14 +239,10 @@ private extension TokensViewController {
     }
     
     func setupEmptyScreensEvents() {
-        emptyListScreenView.pairNewService = { [weak self] in self?.presenter.handleShowCamera() }
-        emptyListScreenView.import2FAS = { [weak self] in
-            AnalyticsLog(.onboardingBackupFile)
-            self?.presenter.handleImport2FAS()
-        }
-        emptyListScreenView.importGA = { [weak self] in
-            AnalyticsLog(.onboardingGA)
-            self?.presenter.handleImportGA()
+        emptyListScreenView.pairNewService = { [weak self] in self?.presenter.handleAddService() }
+        emptyListScreenView.importFromExternalService = { [weak self] in
+            AppEventLog(.onboardingBackupFile)
+            self?.presenter.handleImportExternalFile()
         }
         emptyListScreenView.help = { [weak self] in self?.presenter.handleShowHelp() }
     }
@@ -275,6 +271,12 @@ private extension TokensViewController {
             self,
             selector: #selector(notificationAppDidBecomeInactive),
             name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
+        center.addObserver(
+            self,
+            selector: #selector(tokensScreenIsVisible),
+            name: .tokensScreenIsVisible,
             object: nil
         )
     }

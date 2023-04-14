@@ -62,7 +62,7 @@ final class RootCoordinator: Coordinator {
     }
     
     override init() {
-        ServiceIcon.log = { AnalyticsLog(.missingIcon($0)) }
+        ServiceIcon.log = { AppEventLog(.missingIcon($0)) }
         protection = Protection()
         
         EncryptionHolder.initialize(with: protection.localKeyEncryption)

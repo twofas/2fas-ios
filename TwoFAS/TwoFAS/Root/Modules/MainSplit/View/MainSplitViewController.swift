@@ -24,6 +24,7 @@ protocol MainSplitViewControlling: AnyObject {
     func updateTabBarPath(_ viewPath: ViewPath)
     func updateMenuPath(_ viewPath: ViewPath)
     func updateNewsBadge()
+    func notifyTokensVisible()
 }
 
 final class MainSplitViewController: UIViewController {
@@ -76,6 +77,12 @@ final class MainSplitViewController: UIViewController {
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didBecomeActive),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
         setInitialTrait()
         presenter.viewWillAppear()
     }
@@ -88,6 +95,10 @@ final class MainSplitViewController: UIViewController {
     @objc
     private func shouldRefresh() {
         split.reload()
+    }
+    
+    @objc func didBecomeActive() {
+        presenter.didBecomeActive()
     }
     
     private func setupSplit() {
@@ -144,6 +155,13 @@ extension MainSplitViewController: MainSplitViewControlling {
     func updateNewsBadge() {
         tabBar?.presenter.handleUpdateNewsBadge()
         menu?.presenter.handleUpdateNewsBadge()
+    }
+    
+    func notifyTokensVisible() {
+        // Highly possible that Tokens screen isn't loaded yet. Let's schedule a delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            NotificationCenter.default.post(name: .tokensScreenIsVisible, object: nil)
+        }
     }
 }
 

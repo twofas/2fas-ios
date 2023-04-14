@@ -32,13 +32,13 @@ extension MainRepositoryImpl {
     
     func enableWidgets() {
         extensionsStorage.saveWidgetsEnabled(true)
-        AnalyticsLog(.widgetEnabled)
+        AppEventLog(.widgetEnabled)
         reloadWidgets()
     }
     
     func disableWidgets() {
         extensionsStorage.saveWidgetsEnabled(false)
-        AnalyticsLog(.widgetDisabled)
+        AppEventLog(.widgetDisabled)
         reloadWidgets()
     }
     

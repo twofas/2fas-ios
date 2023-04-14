@@ -28,6 +28,7 @@ protocol MainTabFlowControllerParent: AnyObject {
 protocol MainTabFlowControlling: AnyObject {
     func toMainChangedViewPath(_ viewPath: ViewPath)
     func toTabIsReady()
+    func tokensSwitchToTokensTab()
 }
 
 final class MainTabFlowController: FlowController {
@@ -71,9 +72,7 @@ extension MainTabFlowController: MainTabFlowControlling {
     func toTabIsReady() {
         parent?.tabReady()
     }
-}
-
-extension MainTabFlowController: TokensNavigationFlowControllerParent {
+    
     func tokensSwitchToTokensTab() {
         parent?.tabToTokens()
     }
@@ -90,3 +89,4 @@ extension MainTabFlowController: SettingsFlowControllerParent {
     }
 }
 extension MainTabFlowController: NewsPlainFlowControllerParent {}
+extension MainTabFlowController: TokensNavigationFlowControllerParent {}

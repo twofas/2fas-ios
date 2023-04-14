@@ -29,3 +29,12 @@ extension ImportFromFileParsing.AEGISParseResult {
         }
     }
 }
+
+extension ImportFromFileParsing.LastPassResult {
+    var localizedDescription: String? {
+        switch self {
+        case .newerVersion: return T.Backup.newerFormatNotSupported
+        default: return nil
+        }
+    }
+}

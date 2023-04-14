@@ -64,10 +64,17 @@ protocol MainRepository: AnyObject {
     func markWidgetEnablingWarningAsShown()
     func reloadWidgets()
     
-    // MARK: - Tokens
+    // MARK: - Appearance
+    // MARK: Next Token
     var isNextTokenEnabled: Bool { get }
     func enableNextToken()
     func disableNextToken()
+    // MARK: Active Search
+    var isActiveSearchEnabled: Bool { get }
+    func enableActiveSearch()
+    func disableActiveSearch()
+    
+    // MARK: - Tokens
     func token(
         secret: Secret,
         time: Date?,
@@ -82,6 +89,8 @@ protocol MainRepository: AnyObject {
     var currentAppVersion: String { get }
     func setIntroductionAsShown()
     func introductionWasShown() -> Bool
+    func setCrashlyticsDisabled(_ disabled: Bool)
+    var isCrashlyticsDisabled: Bool { get }
     
     // MARK: - Services
     var hasServices: Bool { get }
@@ -350,7 +359,8 @@ protocol MainRepository: AnyObject {
     func deleteNewsEntry(with newsEntry: ListNewsEntry)
     func updateNewsEntry(with newsEntry: ListNewsEntry)
     func markNewsEntryAsRead(with newsEntry: ListNewsEntry)
-    func listAll() -> [ListNewsEntry]
+    func listAllNews() -> [ListNewsEntry]
+    func listAllFreshlyAddedNews() -> [ListNewsEntry]
     func hasNewsEntriesUnreadItems() -> Bool
     func markAllNewsEntriesAsRead()
     func storeNewsCompletions(_ completion: @escaping () -> Void)
@@ -384,6 +394,7 @@ protocol MainRepository: AnyObject {
     func findLegacyService(using string: String) -> ServiceTypeID?
     func findLegacyIcon(using string: String) -> IconTypeID?
     func findServices(byTag searchText: String) -> [ServiceDefinition]
+    func findServices(domain searchText: String) -> [ServiceDefinition]
     
     // MARK: - Icons
     func iconTypeID(for serviceTypeID: ServiceTypeID?) -> UIImage

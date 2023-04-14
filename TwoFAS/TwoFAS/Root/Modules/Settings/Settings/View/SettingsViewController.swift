@@ -22,6 +22,13 @@ import Common
 
 final class SettingsViewController: UIViewController, ContentNavigationControllerHideNavibar {
     var presenter: SettingsPresenter!
+    weak var menu: SettingsMenuViewController? {
+        didSet {
+            guard let savedViewPath else { return }
+            menu?.presenter.handleNavigateToViewPath(savedViewPath)
+            self.savedViewPath = nil
+        }
+    }
     
     private let split = PrimaryNavigationLayoutFixingSplitViewController(style: .doubleColumn)
     
@@ -35,6 +42,8 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     
     var isCollapsed: Bool { split.isCollapsed }
     var isInitialConfigRead = false
+    
+    private var savedViewPath: ViewPath.Settings?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,18 +86,16 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     }
     
     func showRevealButton() {
-        (navigationNavi.viewControllers.first as? SettingsMenuViewController)?.navigationItem
-            .leftBarButtonItem = UIBarButtonItem(
-                image: UIImage(systemName: "sidebar.left"),
-                style: .plain,
-                target: self,
-                action: #selector(revealMenu)
-            )
+        menu?.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "sidebar.left"),
+            style: .plain,
+            target: self,
+            action: #selector(revealMenu)
+        )
     }
     
     func hideRevealButton() {
-        (navigationNavi.viewControllers.first as? SettingsMenuViewController)?.navigationItem
-            .leftBarButtonItem = nil
+        menu?.navigationItem.leftBarButtonItem = nil
     }
     
     func navigateToView(_ viewPath: ViewPath.Settings?) {
@@ -101,13 +108,15 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
                 return
             }
         }
-        (navigationNavi.viewControllers.first as? SettingsMenuViewController)?
-            .presenter.handleNavigateToViewPath(vp)
+        if let menuVC = menu {
+            menuVC.presenter.handleNavigateToViewPath(vp)
+        } else {
+            savedViewPath = vp
+        }
     }
     
     var currentView: ViewPath.Settings? {
-        (navigationNavi.viewControllers.first as? SettingsMenuViewController)?
-            .presenter.currentViewPath
+        menu?.presenter.currentViewPath
     }
     
     @objc

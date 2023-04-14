@@ -33,7 +33,18 @@ extension AboutPresenter {
             ]),
             .init(title: T.Settings.support, cells: [
                 .init(title: T.Settings.sendLogs, accessory: .noAccessory, action: .sendLogs)
-            ])
+            ]),
+            .init(
+                title: T.Settings.aboutCrashOptoutTitle,
+                cells: [
+                    .init(
+                        title: T.Settings.enableCrashlytics,
+                        accessory: .toggle(isOn: !interactor.isCrashlyticsDisabled),
+                        action: nil
+                    )
+                ],
+                footer: T.Settings.enableCrashlyticsDescription
+            )
         ]
     }
 }

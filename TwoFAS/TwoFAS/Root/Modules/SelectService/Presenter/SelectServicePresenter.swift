@@ -30,6 +30,7 @@ final class SelectServicePresenter {
     var domain: String { authRequest.domain }
     
     private var query: String?
+    private var lastList: [SelectServiceSection]?
     
     var showTableViewHeader: Bool { query == nil }
     
@@ -60,10 +61,12 @@ extension SelectServicePresenter {
     }
     
     func handleSelection(at indexPath: IndexPath) {
-        let categoryList = interactor.listServices(filter: query)
-        guard let category = categoryList[safe: indexPath.section],
-              let serviceData = category.services[safe: indexPath.row]
+        guard
+            let lastList,
+            let category = lastList[safe: indexPath.section],
+            let serviceData = category.cells[safe: indexPath.row]?.serviceData
         else { return }
+
         flowController.toServiceSelection(with: serviceData, authRequest: authRequest)
     }
     
@@ -75,12 +78,9 @@ extension SelectServicePresenter {
 private extension SelectServicePresenter {
     func reload() {
         let servicesWithCategories: [SelectServiceSection] = interactor
-            .listServices(filter: query)
-            .map({ category -> SelectServiceSection in
-                let cells = category.services.map({ serviceData in SelectServiceCell(serviceData: serviceData) })
-                return SelectServiceSection(title: category.section?.title, cells: cells)
-            })
-        if servicesWithCategories.isEmpty || servicesWithCategories.first?.cells.isEmpty == true {
+            .listServices(filter: query, for: domain)
+        lastList = servicesWithCategories
+        if servicesWithCategories.isEmpty {
             view?.showEmptyScreen()
             return
         }

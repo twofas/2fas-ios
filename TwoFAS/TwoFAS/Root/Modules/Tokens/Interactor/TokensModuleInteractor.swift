@@ -28,6 +28,7 @@ enum TokensModuleInteractorState {
 }
 
 protocol TokensModuleInteracting: AnyObject {
+    var emptySnapshot: NSDiffableDataSourceSnapshot<GridSection, GridCell> { get }
     var isiPhone: Bool { get }
     var canBeDragged: Bool { get }
     var hasServices: Bool { get }
@@ -37,6 +38,7 @@ protocol TokensModuleInteracting: AnyObject {
     var categoryData: [CategoryData] { get }
     var linkAction: ((TokensLinkAction) -> Void)? { get set }
     var isMainOnlyCategory: Bool { get }
+    var isActiveSearchEnabled: Bool { get }
     
     func servicesWereUpdated()
     func sync()
@@ -76,7 +78,7 @@ final class TokensModuleInteractor {
         case next(TokenValue)
     }
     
-    private let nextTokenInteractor: NextTokenInteracting
+    private let appearanceInteractor: AppearanceInteracting
     private let serviceDefinitionsInteractor: ServiceDefinitionInteracting
     private let serviceInteractor: ServiceListingInteracting
     private let serviceModifyInteractor: ServiceModifyInteracting
@@ -94,7 +96,7 @@ final class TokensModuleInteractor {
     var linkAction: ((TokensLinkAction) -> Void)?
     
     init(
-        nextTokenInteractor: NextTokenInteracting,
+        appearanceInteractor: AppearanceInteracting,
         serviceDefinitionsInteractor: ServiceDefinitionInteracting,
         serviceInteractor: ServiceListingInteracting,
         serviceModifyInteractor: ServiceModifyInteracting,
@@ -107,7 +109,7 @@ final class TokensModuleInteractor {
         linkInteractor: LinkInteracting,
         widgetsInteractor: WidgetsInteracting
     ) {
-        self.nextTokenInteractor = nextTokenInteractor
+        self.appearanceInteractor = appearanceInteractor
         self.serviceDefinitionsInteractor = serviceDefinitionsInteractor
         self.serviceInteractor = serviceInteractor
         self.serviceModifyInteractor = serviceModifyInteractor
@@ -125,6 +127,10 @@ final class TokensModuleInteractor {
 }
 
 extension TokensModuleInteractor: TokensModuleInteracting {
+    var emptySnapshot: NSDiffableDataSourceSnapshot<GridSection, GridCell> {
+        NSDiffableDataSourceSnapshot<GridSection, GridCell>()
+    }
+    
     var isiPhone: Bool {
         !UIDevice.isiPad
     }
@@ -147,6 +153,10 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     var isMainOnlyCategory: Bool {
         categoryData.contains(where: { $0.section == nil }) && categoryData.count == 1
+    }
+    
+    var isActiveSearchEnabled: Bool {
+        appearanceInteractor.isActiveSearchEnabled
     }
     
     // MARK: - Links
@@ -230,7 +240,7 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     // MARK: - Section
     
     func createSection(with name: String) {
-        AnalyticsLog(.groupAdd)
+        AppEventLog(.groupAdd)
         sectionInteractor.create(with: name)
     }
     
@@ -260,7 +270,7 @@ extension TokensModuleInteractor: TokensModuleInteracting {
 
     func delete(_ section: GridSection) {
         guard let sectionData = section.sectionData else { return }
-        AnalyticsLog(.groupRemove)
+        AppEventLog(.groupRemove)
         sectionInteractor.delete(sectionData)
     }
     
@@ -469,7 +479,7 @@ private extension TokensModuleInteractor {
             category: serviceData.categoryColor,
             serviceData: serviceData,
             canBeDragged: canBeDragged,
-            useNextToken: nextTokenInteractor.isEnabled
+            useNextToken: appearanceInteractor.isNextTokenEnabled
         )
     }
 
@@ -484,7 +494,7 @@ private extension TokensModuleInteractor {
             category: TintColor.green,
             serviceData: nil,
             canBeDragged: canBeDragged,
-            useNextToken: nextTokenInteractor.isEnabled
+            useNextToken: appearanceInteractor.isNextTokenEnabled
         )
     }
     
@@ -504,7 +514,7 @@ private extension TokensModuleInteractor {
         
         if serviceData.tokenType == .totp {
             guard let token = tokenInteractor.TOTPToken(for: secret) else { return nil }
-            if nextTokenInteractor.isEnabled && token.willChangeSoon {
+            if appearanceInteractor.isNextTokenEnabled && token.willChangeSoon {
                 return .next(token.next)
             }
             return .current(token.current)

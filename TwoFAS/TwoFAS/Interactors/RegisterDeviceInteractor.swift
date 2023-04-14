@@ -36,9 +36,11 @@ enum UpdateDeviceError: Error {
 
 protocol RegisterDeviceInteracting: AnyObject {
     var isDeviceRegistered: Bool { get }
+    var isCrashlyticsDisabled: Bool { get }
     func initialize()
     func registerDevice(completion: @escaping (Result<Void, RegisterDeviceError>) -> Void)
     func updateDevice(completion: @escaping (Result<Void, UpdateDeviceError>) -> Void)
+    func setCrashlyticsDisabled(_ disabled: Bool)
 }
 
 final class RegisterDeviceInteractor {
@@ -59,9 +61,13 @@ extension RegisterDeviceInteractor: RegisterDeviceInteracting {
         mainRepository.isDeviceIDSet
     }
     
+    var isCrashlyticsDisabled: Bool {
+        mainRepository.isCrashlyticsDisabled
+    }
+    
     func initialize() {
         Log("RegisterDeviceInteractor - Initializing", module: .interactor)
-        channelState.initialize()
+        channelState.initialize(enableCrashlytics: !mainRepository.isCrashlyticsDisabled)
     }
     
     func registerDevice(completion: @escaping (Result<Void, RegisterDeviceError>) -> Void) {
@@ -123,6 +129,10 @@ extension RegisterDeviceInteractor: RegisterDeviceInteracting {
                 }
             }
         }
+    }
+    
+    func setCrashlyticsDisabled(_ disabled: Bool) {
+        mainRepository.setCrashlyticsDisabled(disabled)
     }
 }
 private extension RegisterDeviceInteractor {

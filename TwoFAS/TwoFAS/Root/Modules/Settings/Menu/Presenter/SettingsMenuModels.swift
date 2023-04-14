@@ -75,11 +75,12 @@ enum SettingsNavigationModule: Hashable {
     case faq
     case about
     case donate
+    case externalImport
+    case appearance
 }
 
 enum SettingsNavigationToggle: Hashable {
     case widgets
-    case incomingToken
 }
 
 extension Array where Element == SettingsMenuSection {

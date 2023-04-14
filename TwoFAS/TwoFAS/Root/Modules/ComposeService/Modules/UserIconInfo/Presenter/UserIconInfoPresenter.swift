@@ -29,12 +29,12 @@ final class UserIconInfoPresenter {
 
 extension UserIconInfoPresenter {
     func handleSocial() {
-        AnalyticsLog(.orderIconDiscord)
+        AppEventLog(.orderIconDiscord)
         flowController.toSocial()
     }
     
     func handleShare() {
-        AnalyticsLog(.orderIconShare)
+        AppEventLog(.orderIconShare)
         flowController.toShare()
     }
 }

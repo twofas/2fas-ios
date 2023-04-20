@@ -44,7 +44,6 @@ final class ImporterPreimportSummaryViewController: UIViewController {
             hideNavigationBar: true,
             statusBar: nil
         )
-        let count = presenter.count
         
         let contentMiddle = MainContainerMiddleContentGenerator(placement: .centerHorizontallyLimitWidth, elements: [
             { () -> MainContainerContentGenerator.Element in
@@ -54,11 +53,24 @@ final class ImporterPreimportSummaryViewController: UIViewController {
                 return .image(name: "importBackup", size: CGSize(width: 116, height: 94))
             }(),
             .extraSpacing,
-            .text(text: T.Backup.importBackupFile, style: MainContainerTextStyling.title),
+            .text(text: presenter.title, style: MainContainerTextStyling.title),
             .extraSpacing,
-            .text(text: T.Backup.importOtherDevices, style: MainContainerTextStyling.content),
-            .text(text: T.Backup.newServices(count), style: MainContainerTextStyling.boldContent),
-            .text(text: T.Backup.servicesMergeTitle, style: MainContainerTextStyling.content)
+            .text(text: presenter.subtitle, style: MainContainerTextStyling.content),
+            .text(
+                text: {
+                    if presenter.isBackupFile {
+                        return T.Backup.newServices(presenter.countNew)
+                    }
+                    return T.Tokens.googleAuthOutOfTitle(presenter.countNew, presenter.countTotal)
+                }(),
+                style: MainContainerTextStyling.boldContent
+            ),
+            .text(text: {
+                if presenter.isBackupFile {
+                    return T.Backup.servicesMergeTitle
+                }
+                return T.Tokens.googleAuthImportSubtitleEnd
+            }(), style: MainContainerTextStyling.content)
         ])
         
         let contentBottom = MainContainerBottomContentGenerator(elements: [

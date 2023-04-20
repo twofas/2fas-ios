@@ -38,7 +38,8 @@ final class ImporterPreimportSummaryFlowController: FlowController {
     static func push(
         in navigationController: UINavigationController,
         parent: ImporterPreimportSummaryFlowControllerParent,
-        count: Int,
+        countNew: Int,
+        countTotal: Int,
         sections: [CommonSectionData],
         services: [ServiceData],
         externalImportService: ExternalImportService
@@ -47,7 +48,8 @@ final class ImporterPreimportSummaryFlowController: FlowController {
         let flowController = ImporterPreimportSummaryFlowController(viewController: view)
         flowController.parent = parent
         let interactor = InteractorFactory.shared.importerPreimportSummaryModuleInteractor(
-            count: count,
+            countNew: countNew,
+            countTotal: countTotal,
             sections: sections,
             services: services
         )

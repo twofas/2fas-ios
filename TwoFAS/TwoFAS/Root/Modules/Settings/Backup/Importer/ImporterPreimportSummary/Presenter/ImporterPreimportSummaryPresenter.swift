@@ -26,8 +26,16 @@ final class ImporterPreimportSummaryPresenter {
     private let interactor: ImporterPreimportSummaryModuleInteracting
     private let externalImportService: ExternalImportService
     
-    var count: Int {
-        interactor.count
+    var countNew: Int {
+        interactor.countNew
+    }
+    
+    var countTotal: Int {
+        interactor.countTotal
+    }
+    
+    var isBackupFile: Bool {
+        externalImportService == .twofas
     }
     
     var additionalIcon: UIImage? {
@@ -36,6 +44,24 @@ final class ImporterPreimportSummaryPresenter {
         case .raivo: return Asset.externalImportRavio.image
         case .lastPass: return Asset.externalImportLastPass.image
         case .googleAuth, .twofas: return nil
+        }
+    }
+    
+    var title: String {
+        switch externalImportService {
+        case .aegis: return T.Externalimport.aegisTitle
+        case .raivo: return T.Externalimport.raivoTitle
+        case .lastPass: return T.Externalimport.lastpassTitle
+        case .googleAuth, .twofas: return T.Backup.importBackupFile
+        }
+    }
+    
+    var subtitle: String {
+        switch externalImportService {
+        case .aegis: return T.Externalimport.aegisSuccessMsg
+        case .raivo: return T.Externalimport.raivoSuccessMsg
+        case .lastPass: return T.Externalimport.lastpassSuccessMsg
+        case .googleAuth, .twofas: return T.Backup.importOtherDevices
         }
     }
     

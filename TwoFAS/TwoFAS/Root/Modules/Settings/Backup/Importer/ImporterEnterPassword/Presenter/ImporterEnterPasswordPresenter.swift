@@ -100,9 +100,10 @@ private extension ImporterEnterPasswordPresenter {
     func parseData(_ data: ExchangeDataServices, externalImportService: ExternalImportService) {
         let result = interactor.parseFile(with: data)
         
-        if result.count > 0 {
+        if result.countNew > 0 {
             flowController.toPreimportSummary(
-                count: result.count,
+                countNew: result.countNew,
+                countTotal: result.countTotal,
                 sections: result.sections,
                 services: result.services,
                 externalImportService: externalImportService

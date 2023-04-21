@@ -700,6 +700,14 @@ internal enum T {
     internal static let gaSuccessMsg = T.tr("Localizable", "externalimport__ga_success_msg", fallback: "This QR code allows importing tokens from Google Authenticator.")
     /// Importing 2FA tokens from Google Authenticator app
     internal static let gaTitle = T.tr("Localizable", "externalimport__ga_title", fallback: "Importing 2FA tokens from Google Authenticator app")
+    /// Import tokens from Aegis
+    internal static let infoAegisTitle = T.tr("Localizable", "externalimport__info_aegis_title", fallback: "Import tokens from Aegis")
+    /// Import tokens from Google Authenticator
+    internal static let infoGoogleAuthenticatorTitle = T.tr("Localizable", "externalimport__info_google_authenticator_title", fallback: "Import tokens from Google Authenticator")
+    /// Import tokens from LastPass
+    internal static let infoLastpassTitle = T.tr("Localizable", "externalimport__info_lastpass_title", fallback: "Import tokens from LastPass")
+    /// Import tokens from Raivo OTP
+    internal static let infoRaivoTitle = T.tr("Localizable", "externalimport__info_raivo_title", fallback: "Import tokens from Raivo OTP")
     /// Export your accounts from LastPass to an unencrypted JSON file and upload it using the "Choose JSON file" button. Remember to remove the file after a successful import.
     internal static let lastpassMsg = T.tr("Localizable", "externalimport__lastpass_msg", fallback: "Export your accounts from LastPass to an unencrypted JSON file and upload it using the \"Choose JSON file\" button. Remember to remove the file after a successful import.")
     /// This JSON file allows importing tokens from LastPass.

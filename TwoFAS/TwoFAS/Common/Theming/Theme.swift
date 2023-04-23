@@ -221,6 +221,7 @@ enum Theme {
         
         static let warning = UIFont.systemFont(ofSize: 13, weight: .medium)
         static let iconLabel = UIFont.systemFont(ofSize: 13, weight: .bold)
+        static let iconLabelSmall = UIFont.systemFont(ofSize: 12, weight: .bold)
         static let sectionHeader = UIFont.systemFont(ofSize: 13, weight: .regular)
         static let iconLabelInputTitle = UIFont.systemFont(ofSize: 22, weight: .light)
         static let tabBar = UIFont.systemFont(ofSize: 10, weight: .semibold)

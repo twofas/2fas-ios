@@ -682,6 +682,12 @@
 		C2B39C7727A5908F00D3B579 /* SelectFromGalleryModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39C7627A5908F00D3B579 /* SelectFromGalleryModuleInteractor.swift */; };
 		C2B39C7A27A5921900D3B579 /* MainRepositoryImpl+Vision.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39C7927A5921900D3B579 /* MainRepositoryImpl+Vision.swift */; };
 		C2B39C7C27A5B7D600D3B579 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39C7B27A5B7D600D3B579 /* ViewController.swift */; };
+		C2B39E5029F5841700EC31F6 /* TokensEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E4F29F5841700EC31F6 /* TokensEditCell.swift */; };
+		C2B39E5229F5848700EC31F6 /* TokensLogoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5129F5848700EC31F6 /* TokensLogoComponent.swift */; };
+		C2B39E5429F5880600EC31F6 /* TokensLogoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5329F5880600EC31F6 /* TokensLogoSize.swift */; };
+		C2B39E5729F59C1B00EC31F6 /* LogoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5629F59C1B00EC31F6 /* LogoType.swift */; };
+		C2B39E5929F5BD7800EC31F6 /* TokensCategoryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5829F5BD7800EC31F6 /* TokensCategoryComponent.swift */; };
+		C2B39E5B29F5D0AA00EC31F6 /* TokensServiceNameComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5A29F5D0AA00EC31F6 /* TokensServiceNameComponent.swift */; };
 		C2B3D1A8267E6BEC009E6DE0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B3D1A7267E6BEC009E6DE0 /* Extensions.swift */; };
 		C2B3D1AA267E91E9009E6DE0 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B3D1A9267E91E9009E6DE0 /* GridView.swift */; };
 		C2B563F51FD895460011CAAA /* PermissionsStateDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B563F41FD895460011CAAA /* PermissionsStateDataController.swift */; };
@@ -1938,6 +1944,12 @@
 		C2B39C7627A5908F00D3B579 /* SelectFromGalleryModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFromGalleryModuleInteractor.swift; sourceTree = "<group>"; };
 		C2B39C7927A5921900D3B579 /* MainRepositoryImpl+Vision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Vision.swift"; sourceTree = "<group>"; };
 		C2B39C7B27A5B7D600D3B579 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C2B39E4F29F5841700EC31F6 /* TokensEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensEditCell.swift; sourceTree = "<group>"; };
+		C2B39E5129F5848700EC31F6 /* TokensLogoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensLogoComponent.swift; sourceTree = "<group>"; };
+		C2B39E5329F5880600EC31F6 /* TokensLogoSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensLogoSize.swift; sourceTree = "<group>"; };
+		C2B39E5629F59C1B00EC31F6 /* LogoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoType.swift; sourceTree = "<group>"; };
+		C2B39E5829F5BD7800EC31F6 /* TokensCategoryComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCategoryComponent.swift; sourceTree = "<group>"; };
+		C2B39E5A29F5D0AA00EC31F6 /* TokensServiceNameComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensServiceNameComponent.swift; sourceTree = "<group>"; };
 		C2B3D1A7267E6BEC009E6DE0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C2B3D1A9267E91E9009E6DE0 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		C2B563F41FD895460011CAAA /* PermissionsStateDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsStateDataController.swift; sourceTree = "<group>"; };
@@ -3786,6 +3798,9 @@
 		C244F9DF22762955009992D3 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				C2B39E5529F5880D00EC31F6 /* Types */,
+				C2B39E4F29F5841700EC31F6 /* TokensEditCell.swift */,
+				C2B39E4E29F5834400EC31F6 /* Components */,
 				C22D3EEF25EAB590007E86CF /* GridCollectionViewCell.swift */,
 				C209E9B8267A9D8600417D80 /* GridEmptyCollectionViewCell.swift */,
 				C2C66F9C1FE06AD700AD5A1C /* GridViewItemCell.swift */,
@@ -4500,6 +4515,7 @@
 				C258594128033A49002DC749 /* TypeAliases.swift */,
 				C2D39DE028232BC900E864E9 /* ListNewsEntry.swift */,
 				C22EEB5B28E9E917008C0118 /* ServiceSource.swift */,
+				C2B39E5629F59C1B00EC31F6 /* LogoType.swift */,
 			);
 			path = GlobalTypes;
 			sourceTree = "<group>";
@@ -5523,6 +5539,24 @@
 				C2B39C7227A58E0800D3B579 /* SelectFromGalleryView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		C2B39E4E29F5834400EC31F6 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				C2B39E5129F5848700EC31F6 /* TokensLogoComponent.swift */,
+				C2B39E5829F5BD7800EC31F6 /* TokensCategoryComponent.swift */,
+				C2B39E5A29F5D0AA00EC31F6 /* TokensServiceNameComponent.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		C2B39E5529F5880D00EC31F6 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				C2B39E5329F5880600EC31F6 /* TokensLogoSize.swift */,
+			);
+			path = Types;
 			sourceTree = "<group>";
 		};
 		C2B6D78C260BAFE1005B599E /* LabelCompose */ = {
@@ -7450,6 +7484,7 @@
 				C2B077C8292A938D0074517F /* UploadLogsModuleInteractorError+.swift in Sources */,
 				C22A866A287F60BD009A43FE /* MainRepositoryImpl+Notifications.swift in Sources */,
 				C24D8B3A29BDEED200C3E11E /* NewsNavigationFlowController.swift in Sources */,
+				C2B39E5029F5841700EC31F6 /* TokensEditCell.swift in Sources */,
 				C27CCE9A279DDAB000C3D88F /* NewCodeInteractor.swift in Sources */,
 				C20935DD29214FA7000F5AA7 /* IconInteractor.swift in Sources */,
 				C2633EFD265A7D090034B836 /* TokenLabel.swift in Sources */,
@@ -7567,6 +7602,7 @@
 				C2BD85E22640394B0087D087 /* IntroductionScrollView.swift in Sources */,
 				C2FCB29028258B3A00AF8A37 /* NewsPlainFlowController.swift in Sources */,
 				C27BE517275D6ACC0090CA12 /* BackupMenuModuleInteractor.swift in Sources */,
+				C2B39E5B29F5D0AA00EC31F6 /* TokensServiceNameComponent.swift in Sources */,
 				C27D543F275D393D001E9ABF /* BackupMenuPresenter.swift in Sources */,
 				C23FD51228146E2E00E4E9C5 /* ComposeServiceWebExtensionPresenter.swift in Sources */,
 				C24D8B3C29BE41CA00C3E11E /* ContentNavigationController.swift in Sources */,
@@ -7681,6 +7717,7 @@
 				C20935D729214BC3000F5AA7 /* ExportToFileInteractor.swift in Sources */,
 				C249773C277F62B100DC872C /* TrashServiceViewController.swift in Sources */,
 				C2338702278103B000F8DBC3 /* TrashModuleInteractor.swift in Sources */,
+				C2B39E5229F5848700EC31F6 /* TokensLogoComponent.swift in Sources */,
 				C25859382802E75A002DC749 /* PushNotificationState.swift in Sources */,
 				C233870A2781113800F8DBC3 /* TrashViewController+TableCellHandling.swift in Sources */,
 				C2ADD6162752DF770010F5E7 /* BackupMenuFlowController.swift in Sources */,
@@ -7698,6 +7735,7 @@
 				C2508E1F2753B00D0072C564 /* TableViewDelegatee.swift in Sources */,
 				C2EA566B2856925B00026BFE /* AskForAuthView.swift in Sources */,
 				C2830D7C293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift in Sources */,
+				C2B39E5429F5880600EC31F6 /* TokensLogoSize.swift in Sources */,
 				C2323C4E276B52A100038B76 /* AppLockModuleInteractor.swift in Sources */,
 				C2AB92CD276655EF00698382 /* ExporterPINPresenter.swift in Sources */,
 				C2B077C4292A921D0074517F /* UploadLogsFailureView.swift in Sources */,
@@ -7822,6 +7860,7 @@
 				C2B1208F29D76BD10020281E /* AppearancePresenter+Menu.swift in Sources */,
 				C2A7945127F9016D00E5C641 /* BrowserExtensionEditNameViewController.swift in Sources */,
 				C21B3A1427AF0BC9005C603B /* ColorPickerFlowController.swift in Sources */,
+				C2B39E5929F5BD7800EC31F6 /* TokensCategoryComponent.swift in Sources */,
 				C26BCE01281010A000CA6A9A /* SelectServiceModuleInteractor.swift in Sources */,
 				C2508E222753D1EE0072C564 /* SettingsMenuModels.swift in Sources */,
 				C23386F72780E54200F8DBC3 /* DeleteServicePresenter.swift in Sources */,
@@ -8009,6 +8048,7 @@
 				C2896B7026A3771100F91F5B /* ServiceIcon.swift in Sources */,
 				C2D958CE276F9F9700B5A6BD /* Algorithm.swift in Sources */,
 				C2D61E7225604F1D00C5BE3A /* CommonServiceHandler.swift in Sources */,
+				C2B39E5729F59C1B00EC31F6 /* LogoType.swift in Sources */,
 				C2E881D628F2FA310053A89D /* ServiceType.swift in Sources */,
 				C2497732277F424B00DC872C /* ServiceExistenceStatus.swift in Sources */,
 				C22EEB6028EA1EFE008C0118 /* ServiceDefinitionDatabase.swift in Sources */,

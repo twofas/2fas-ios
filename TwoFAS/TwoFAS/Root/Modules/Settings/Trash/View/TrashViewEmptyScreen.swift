@@ -52,7 +52,7 @@ final class TrashViewEmptyScreen: UIView {
         
         let iconOffset: CGFloat = {
             if let height = icon.image?.size.height {
-                return round(height / 2.0)
+                return height.half
             }
             return Theme.Metrics.standardSpacing
         }()

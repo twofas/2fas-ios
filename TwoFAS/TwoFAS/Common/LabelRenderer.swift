@@ -21,7 +21,11 @@ import UIKit
 import Common
 
 final class LabelRenderer: UIView {
-    private let dimension: CGFloat = 40
+    private var currentSize: TokensLogoSize = .normal
+    
+    private var circleWidthConstraint: NSLayoutConstraint?
+    private var circleHeightConstraint: NSLayoutConstraint?
+    
     private let circle = Circle()
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -38,7 +42,10 @@ final class LabelRenderer: UIView {
     private var accessibilityText: String?
     
     override init(frame: CGRect) {
-        super.init(frame: CGRect(origin: .zero, size: CGSize(width: dimension, height: dimension)))
+        super.init(frame: CGRect(
+            origin: .zero,
+            size: CGSize(width: currentSize.dimension, height: currentSize.dimension)
+        ))
         commonInit()
     }
     
@@ -50,10 +57,11 @@ final class LabelRenderer: UIView {
     private func commonInit() {
         addSubview(circle)
         circle.pinToParent()
-        NSLayoutConstraint.activate([
-            circle.widthAnchor.constraint(equalToConstant: dimension),
-            circle.heightAnchor.constraint(equalToConstant: dimension)
-        ])
+        let width = circle.widthAnchor.constraint(equalToConstant: currentSize.dimension)
+        let height = circle.heightAnchor.constraint(equalToConstant: currentSize.dimension)
+        circleWidthConstraint = width
+        circleHeightConstraint = height
+        NSLayoutConstraint.activate([width, height])
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         let margin = Theme.Metrics.standardMargin
@@ -63,7 +71,7 @@ final class LabelRenderer: UIView {
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin)
         ])
-        circle.setDimension(dimension)
+        circle.setDimension(currentSize.dimension)
         
         isAccessibilityElement = true
     }
@@ -86,17 +94,36 @@ final class LabelRenderer: UIView {
         updateAccessibility()
     }
     
+    func setSize(_ size: TokensLogoSize) {
+        guard size != currentSize else { return }
+        currentSize = size
+        let dimension = currentSize.dimension
+        switch size {
+        case .small:
+            titleLabel.font = Theme.Fonts.iconLabelSmall
+        case .normal:
+            titleLabel.font = Theme.Fonts.iconLabel
+        }
+        circleWidthConstraint?.constant = dimension
+        circleHeightConstraint?.constant = dimension
+        circle.setDimension(dimension)
+        
+        invalidateIntrinsicContentSize()
+    }
+    
     private func updateAccessibility() {
         guard let text = accessibilityText, let color = accessibilityColor else { return }
         accessibilityLabel = T.Voiceover.serviceLabelWithNameAndColor(text, color)
     }
     
-    override var intrinsicContentSize: CGSize { CGSize(width: dimension, height: dimension) }
+    override var intrinsicContentSize: CGSize {
+        CGSize(width: currentSize.dimension, height: currentSize.dimension)
+    }
 }
 
 private final class Circle: UIView {
     private let animKey = "fillColor"
-    private var dimension: CGFloat = 10
+    private var dimension: CGFloat = TokensLogoSize.normal.dimension
     private var color: UIColor = .white
     
     override class var layerClass: AnyClass { CAShapeLayer.self }

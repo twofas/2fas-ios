@@ -19,19 +19,11 @@
 
 import UIKit
 
-final class TokensServiceNameComponent: UIView {
-    private let label: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
-        label.minimumScaleFactor = 0.5
-        label.numberOfLines = 1
-        label.allowsDefaultTighteningForTruncation = true
-        label.lineBreakMode = .byTruncatingTail
-        label.adjustsFontSizeToFitWidth = true
-        label.textColor = Theme.Colors.Text.main
-        return label
+final class TokensDragIconComponent: UIView {
+    private var imageView: UIImageView = {
+        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 24.0, weight: .medium, scale: .medium)
+        return .init(image: UIImage(systemName: "line.3.horizontal", withConfiguration: symbolConfig)!)
     }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -43,16 +35,13 @@ final class TokensServiceNameComponent: UIView {
     }
     
     private func commonInit() {
-        addSubview(label)
-        label.pinToParent()
+        addSubview(imageView)
+        imageView.contentMode = .center
+        imageView.tintColor = Theme.Colors.Line.primaryLine
+        imageView.pinToParent()
     }
     
-    func setKind(_ kind: TokensCellKind) {
-        switch kind {
-        case .compact, .edit:
-            label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
-        case .normal:
-            label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        }
+    override var intrinsicContentSize: CGSize {
+        CGSize(width: 24, height: 21)
     }
 }

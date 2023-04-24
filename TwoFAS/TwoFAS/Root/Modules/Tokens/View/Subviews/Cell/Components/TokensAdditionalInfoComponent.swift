@@ -19,16 +19,16 @@
 
 import UIKit
 
-final class TokensServiceNameComponent: UIView {
+final class TokensAdditionalInfoComponent: UIView {
     private let label: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         label.minimumScaleFactor = 0.5
         label.numberOfLines = 1
         label.allowsDefaultTighteningForTruncation = true
         label.lineBreakMode = .byTruncatingTail
         label.adjustsFontSizeToFitWidth = true
-        label.textColor = Theme.Colors.Text.main
+        label.textColor = Theme.Colors.Text.subtitle
         return label
     }()
     
@@ -50,9 +50,9 @@ final class TokensServiceNameComponent: UIView {
     func setKind(_ kind: TokensCellKind) {
         switch kind {
         case .compact, .edit:
-            label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+            label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         case .normal:
-            label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+            label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         }
     }
 }

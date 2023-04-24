@@ -23,7 +23,7 @@ import Common
 final class TokensLogoComponent: UIView {
     private let imageView = UIImageView()
     private let labelRenderer = LabelRenderer()
-    private var currentSize: TokensLogoSize = .normal
+    private var currentKind: TokensCellKind = .normal
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,9 +44,9 @@ final class TokensLogoComponent: UIView {
         labelRenderer.pinToParent()
     }
     
-    func configure(with logoType: LogoType, size: TokensLogoSize) {
-        let refresh = size != currentSize
-        currentSize = size
+    func configure(with logoType: LogoType, kind: TokensCellKind) {
+        let refresh = kind != currentKind
+        currentKind = kind
         
         switch logoType {
         case .image(let image):
@@ -57,7 +57,7 @@ final class TokensLogoComponent: UIView {
         case .label(let text, let tintColor):
             labelRenderer.setColor(tintColor, animated: false)
             labelRenderer.setText(text)
-            labelRenderer.setSize(size)
+            labelRenderer.setKind(kind)
             
             imageView.isHidden = true
             labelRenderer.isHidden = false
@@ -69,7 +69,7 @@ final class TokensLogoComponent: UIView {
     }
     
     override var intrinsicContentSize: CGSize {
-        let size = currentSize.dimension
+        let size = currentKind.iconDimension
         return CGSize(width: size, height: size)
     }
 }

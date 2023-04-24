@@ -35,6 +35,8 @@
 		C2069C9128C2922A00321E44 /* AEGISData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2069C9028C2922A00321E44 /* AEGISData.swift */; };
 		C206AAD029636A3E0032B85E /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C206AACF29636A3E0032B85E /* Configs.swift */; };
 		C206CACF27A35ABE0068284C /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C206CACE27A35ABE0068284C /* View+.swift */; };
+		C207324929F724AB00FB294E /* TokensAdditionalInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207324829F724AB00FB294E /* TokensAdditionalInfoComponent.swift */; };
+		C207324B29F725DE00FB294E /* TokensDragIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207324A29F725DE00FB294E /* TokensDragIconComponent.swift */; };
 		C2079B56298EF621003FA86D /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2079B55298EF621003FA86D /* MainMenuViewController.swift */; };
 		C207C11F2559F1CB0053975E /* CloudKitErrorParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207C11E2559F1CB0053975E /* CloudKitErrorParser.swift */; };
 		C208101427948DFD0035E339 /* Code+GoogleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = C208101327948DFD0035E339 /* Code+GoogleAuth.swift */; };
@@ -684,7 +686,7 @@
 		C2B39C7C27A5B7D600D3B579 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39C7B27A5B7D600D3B579 /* ViewController.swift */; };
 		C2B39E5029F5841700EC31F6 /* TokensEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E4F29F5841700EC31F6 /* TokensEditCell.swift */; };
 		C2B39E5229F5848700EC31F6 /* TokensLogoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5129F5848700EC31F6 /* TokensLogoComponent.swift */; };
-		C2B39E5429F5880600EC31F6 /* TokensLogoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5329F5880600EC31F6 /* TokensLogoSize.swift */; };
+		C2B39E5429F5880600EC31F6 /* TokensCellKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5329F5880600EC31F6 /* TokensCellKind.swift */; };
 		C2B39E5729F59C1B00EC31F6 /* LogoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5629F59C1B00EC31F6 /* LogoType.swift */; };
 		C2B39E5929F5BD7800EC31F6 /* TokensCategoryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5829F5BD7800EC31F6 /* TokensCategoryComponent.swift */; };
 		C2B39E5B29F5D0AA00EC31F6 /* TokensServiceNameComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5A29F5D0AA00EC31F6 /* TokensServiceNameComponent.swift */; };
@@ -1278,6 +1280,8 @@
 		C2069C9028C2922A00321E44 /* AEGISData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AEGISData.swift; sourceTree = "<group>"; };
 		C206AACF29636A3E0032B85E /* Configs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configs.swift; sourceTree = "<group>"; };
 		C206CACE27A35ABE0068284C /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
+		C207324829F724AB00FB294E /* TokensAdditionalInfoComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensAdditionalInfoComponent.swift; sourceTree = "<group>"; };
+		C207324A29F725DE00FB294E /* TokensDragIconComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensDragIconComponent.swift; sourceTree = "<group>"; };
 		C2079B55298EF621003FA86D /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		C207C11E2559F1CB0053975E /* CloudKitErrorParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitErrorParser.swift; sourceTree = "<group>"; };
 		C208101327948DFD0035E339 /* Code+GoogleAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Code+GoogleAuth.swift"; sourceTree = "<group>"; };
@@ -1946,7 +1950,7 @@
 		C2B39C7B27A5B7D600D3B579 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C2B39E4F29F5841700EC31F6 /* TokensEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensEditCell.swift; sourceTree = "<group>"; };
 		C2B39E5129F5848700EC31F6 /* TokensLogoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensLogoComponent.swift; sourceTree = "<group>"; };
-		C2B39E5329F5880600EC31F6 /* TokensLogoSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensLogoSize.swift; sourceTree = "<group>"; };
+		C2B39E5329F5880600EC31F6 /* TokensCellKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCellKind.swift; sourceTree = "<group>"; };
 		C2B39E5629F59C1B00EC31F6 /* LogoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoType.swift; sourceTree = "<group>"; };
 		C2B39E5829F5BD7800EC31F6 /* TokensCategoryComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCategoryComponent.swift; sourceTree = "<group>"; };
 		C2B39E5A29F5D0AA00EC31F6 /* TokensServiceNameComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensServiceNameComponent.swift; sourceTree = "<group>"; };
@@ -3800,12 +3804,12 @@
 			children = (
 				C2B39E5529F5880D00EC31F6 /* Types */,
 				C2B39E4F29F5841700EC31F6 /* TokensEditCell.swift */,
+				C213E46A2277561700AE1620 /* GridViewEditItemCell.swift */,
 				C2B39E4E29F5834400EC31F6 /* Components */,
 				C22D3EEF25EAB590007E86CF /* GridCollectionViewCell.swift */,
 				C209E9B8267A9D8600417D80 /* GridEmptyCollectionViewCell.swift */,
 				C2C66F9C1FE06AD700AD5A1C /* GridViewItemCell.swift */,
 				C2DEC2DE27CD298400EAC01A /* GridViewCounterItemCell.swift */,
-				C213E46A2277561700AE1620 /* GridViewEditItemCell.swift */,
 				C25E898D2663DF9700A60CE5 /* GridSectionHeader.swift */,
 				C295962A267F79190086DEB1 /* GridSectionHeader+.swift */,
 				C278C05B26C97D6000FECBD4 /* InfoNextTokenView.swift */,
@@ -5547,6 +5551,8 @@
 				C2B39E5129F5848700EC31F6 /* TokensLogoComponent.swift */,
 				C2B39E5829F5BD7800EC31F6 /* TokensCategoryComponent.swift */,
 				C2B39E5A29F5D0AA00EC31F6 /* TokensServiceNameComponent.swift */,
+				C207324829F724AB00FB294E /* TokensAdditionalInfoComponent.swift */,
+				C207324A29F725DE00FB294E /* TokensDragIconComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -5554,7 +5560,7 @@
 		C2B39E5529F5880D00EC31F6 /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				C2B39E5329F5880600EC31F6 /* TokensLogoSize.swift */,
+				C2B39E5329F5880600EC31F6 /* TokensCellKind.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -7396,6 +7402,7 @@
 				C2A2D23428F751A000B5D91E /* ExchangeDataFormat.swift in Sources */,
 				C27CDA7929A2A55100DC7C98 /* NetworkStatusInteractor.swift in Sources */,
 				C28681E72891D41F00BE0CA7 /* TimerInteractor.swift in Sources */,
+				C207324B29F725DE00FB294E /* TokensDragIconComponent.swift in Sources */,
 				C2E2C80B27B038DC00F04B70 /* IconSelectorModuleInteractor.swift in Sources */,
 				C2727D512781E10800B8FA03 /* TrashViewTableViewCell.swift in Sources */,
 				C2B1209129D76FA60020281E /* AppearanceModuleInteractor.swift in Sources */,
@@ -7666,6 +7673,7 @@
 				C287D4F9276A90EC0001B272 /* AppLock.swift in Sources */,
 				C27A54A127F0CAFC00321D2B /* BrowserExtensionIntroFlowController.swift in Sources */,
 				C2625F8E28BB858600D84C5C /* AboutPresenter.swift in Sources */,
+				C207324929F724AB00FB294E /* TokensAdditionalInfoComponent.swift in Sources */,
 				C2EC83DE21E69B4800DF5C49 /* ViewTheme.swift in Sources */,
 				C2147CD0205D7B520001D011 /* PINPadViewControllerProtocol.swift in Sources */,
 				C240484C276522320076376E /* WidgetWarningFlowController.swift in Sources */,
@@ -7735,7 +7743,7 @@
 				C2508E1F2753B00D0072C564 /* TableViewDelegatee.swift in Sources */,
 				C2EA566B2856925B00026BFE /* AskForAuthView.swift in Sources */,
 				C2830D7C293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift in Sources */,
-				C2B39E5429F5880600EC31F6 /* TokensLogoSize.swift in Sources */,
+				C2B39E5429F5880600EC31F6 /* TokensCellKind.swift in Sources */,
 				C2323C4E276B52A100038B76 /* AppLockModuleInteractor.swift in Sources */,
 				C2AB92CD276655EF00698382 /* ExporterPINPresenter.swift in Sources */,
 				C2B077C4292A921D0074517F /* UploadLogsFailureView.swift in Sources */,

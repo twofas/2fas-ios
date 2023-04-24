@@ -19,14 +19,17 @@
 
 import Foundation
 
-enum TokensLogoSize {
-    case small
+enum TokensCellKind {
+    case compact
     case normal
-    
-    var dimension: CGFloat {
+    case edit
+}
+
+extension TokensCellKind {
+    var iconDimension: CGFloat {
         switch self {
         case .normal: return 40
-        case .small: return 32
+        case .compact, .edit: return 32
         }
     }
 }

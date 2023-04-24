@@ -21,7 +21,7 @@ import UIKit
 import Common
 
 final class LabelRenderer: UIView {
-    private var currentSize: TokensLogoSize = .normal
+    private var currentKind: TokensCellKind = .normal
     
     private var circleWidthConstraint: NSLayoutConstraint?
     private var circleHeightConstraint: NSLayoutConstraint?
@@ -44,7 +44,7 @@ final class LabelRenderer: UIView {
     override init(frame: CGRect) {
         super.init(frame: CGRect(
             origin: .zero,
-            size: CGSize(width: currentSize.dimension, height: currentSize.dimension)
+            size: CGSize(width: currentKind.iconDimension, height: currentKind.iconDimension)
         ))
         commonInit()
     }
@@ -57,8 +57,8 @@ final class LabelRenderer: UIView {
     private func commonInit() {
         addSubview(circle)
         circle.pinToParent()
-        let width = circle.widthAnchor.constraint(equalToConstant: currentSize.dimension)
-        let height = circle.heightAnchor.constraint(equalToConstant: currentSize.dimension)
+        let width = circle.widthAnchor.constraint(equalToConstant: currentKind.iconDimension)
+        let height = circle.heightAnchor.constraint(equalToConstant: currentKind.iconDimension)
         circleWidthConstraint = width
         circleHeightConstraint = height
         NSLayoutConstraint.activate([width, height])
@@ -71,7 +71,7 @@ final class LabelRenderer: UIView {
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin)
         ])
-        circle.setDimension(currentSize.dimension)
+        circle.setDimension(currentKind.iconDimension)
         
         isAccessibilityElement = true
     }
@@ -94,12 +94,12 @@ final class LabelRenderer: UIView {
         updateAccessibility()
     }
     
-    func setSize(_ size: TokensLogoSize) {
-        guard size != currentSize else { return }
-        currentSize = size
-        let dimension = currentSize.dimension
-        switch size {
-        case .small:
+    func setKind(_ kind: TokensCellKind) {
+        guard kind != currentKind else { return }
+        currentKind = kind
+        let dimension = currentKind.iconDimension
+        switch kind {
+        case .compact, .edit:
             titleLabel.font = Theme.Fonts.iconLabelSmall
         case .normal:
             titleLabel.font = Theme.Fonts.iconLabel
@@ -117,13 +117,13 @@ final class LabelRenderer: UIView {
     }
     
     override var intrinsicContentSize: CGSize {
-        CGSize(width: currentSize.dimension, height: currentSize.dimension)
+        CGSize(width: currentKind.iconDimension, height: currentKind.iconDimension)
     }
 }
 
 private final class Circle: UIView {
     private let animKey = "fillColor"
-    private var dimension: CGFloat = TokensLogoSize.normal.dimension
+    private var dimension: CGFloat = TokensCellKind.normal.iconDimension
     private var color: UIColor = .white
     
     override class var layerClass: AnyClass { CAShapeLayer.self }

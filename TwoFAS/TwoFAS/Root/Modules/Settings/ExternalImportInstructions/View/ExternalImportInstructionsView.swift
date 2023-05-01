@@ -44,7 +44,7 @@ struct ExternalImportInstructionsView: View {
                     Asset.gaImport2.swiftUIImage
                 }
                 .frame(minHeight: minIconSpaceHeight, alignment: .center)
-                Text(sourceName.uppercased())
+                Text(sourceName)
                     .font(.title)
                     .multilineTextAlignment(.center)
                     .layoutPriority(1)

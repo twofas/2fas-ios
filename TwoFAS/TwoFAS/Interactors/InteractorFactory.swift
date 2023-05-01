@@ -286,13 +286,15 @@ extension InteractorFactory {
     }
     
     func importerPreimportSummaryModuleInteractor(
-        count: Int,
+        countNew: Int,
+        countTotal: Int,
         sections: [CommonSectionData],
         services: [ServiceData]
     ) -> ImporterPreimportSummaryModuleInteracting {
         ImporterPreimportSummaryModuleInteractor(
             importInteractor: importFromFileInteractor(),
-            count: count,
+            countNew: countNew,
+            countTotal: countTotal,
             sections: sections,
             services: services
         )

@@ -27,7 +27,8 @@ protocol ImporterOpenFileFlowControllerParent: AnyObject {
 protocol ImporterOpenFileFlowControlling: AnyObject {
     func toClose()
     func toPreimportSummary(
-        count: Int,
+        countNew: Int,
+        countTotal: Int,
         sections: [CommonSectionData],
         services: [ServiceData],
         externalImportService: ExternalImportService
@@ -73,7 +74,8 @@ extension ImporterOpenFileFlowController: ImporterOpenFileFlowControlling {
     }
     
     func toPreimportSummary(
-        count: Int,
+        countNew: Int,
+        countTotal: Int,
         sections: [CommonSectionData],
         services: [ServiceData],
         externalImportService: ExternalImportService
@@ -81,7 +83,8 @@ extension ImporterOpenFileFlowController: ImporterOpenFileFlowControlling {
         ImporterPreimportSummaryFlowController.push(
             in: navigationController,
             parent: self,
-            count: count,
+            countNew: countNew,
+            countTotal: countTotal,
             sections: sections,
             services: services,
             externalImportService: externalImportService
@@ -112,13 +115,15 @@ extension ImporterOpenFileFlowController: ImporterEnterPasswordFlowControllerPar
     }
     
     func showPreimportSummary(
-        count: Int,
+        countNew: Int,
+        countTotal: Int,
         sections: [CommonSectionData],
         services: [ServiceData],
         externalImportService: ExternalImportService
     ) {
         toPreimportSummary(
-            count: count,
+            countNew: countNew,
+            countTotal: countTotal,
             sections: sections,
             services: services,
             externalImportService: externalImportService

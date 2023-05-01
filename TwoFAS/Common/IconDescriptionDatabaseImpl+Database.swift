@@ -26,8 +26,16 @@ final class IconDescriptionDatabaseGenerated {
                 name: "IONOS"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "F100A5CA-C5E7-4336-9AF6-C9BE4CE44641")!,
+                name: "Airtable"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "15A6D950-7998-412D-B7DA-9EA09BEAE210")!,
                 name: "ANY.RUN"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "9F4E3AC3-C09F-4229-9F99-27B94E6E3372")!,
+                name: "Airbrake"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "13838D86-6882-4851-81C1-272B128FEB5D")!,
@@ -222,6 +230,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Hostinger"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "F7F34153-2231-4494-80A6-2817BE0BEAE9")!,
+                name: "Twilio"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "2006F387-1BC7-4E9B-8EA7-0A8C3A9924F8")!,
                 name: "Epic Games"
             ),
@@ -302,8 +314,16 @@ final class IconDescriptionDatabaseGenerated {
                 name: "ARIN"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "5C66B6D2-748A-49D3-89AE-A350F0AD6199")!,
+                name: "Bitflyer"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "6A6F2199-7CEF-41EA-9294-EC735000F369")!,
                 name: "Wargaming"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "4C0DC113-103F-44BC-BC2A-68CC75B8D77E")!,
+                name: "Addiko Bank"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "3A742037-5520-4679-AD2F-E74F8CAB7E25")!,
@@ -458,6 +478,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Ubuntu"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "85C74031-9BC7-40C2-98F1-A7F0E5242AF6")!,
+                name: "Adyen"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "69123308-C433-4ACB-A876-D5045D25CC83")!,
                 name: "Mathworks"
             ),
@@ -480,6 +504,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "FD806401-613D-44D2-B170-79B9DEE2C024")!,
                 name: "WazirX"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "D7B81ED8-7B51-40BC-BB4E-4B465E6EBB73")!,
+                name: "Airship"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "96F65174-F24D-4A85-A89E-89FCF4CC7EE3")!,
@@ -536,6 +564,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "400FCED8-6FAC-488A-8154-85BE47D84ABE")!,
                 name: "Chargebee"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "0C8F14A4-D69D-4021-BDAA-5A7821E3F0B4")!,
+                name: "ESET HOME"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "2FB7A45B-7E61-40A8-A258-3C7E5172F355")!,
@@ -934,6 +966,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "CryptoMKT"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "2388F03A-9E91-4462-917F-70D86678B002")!,
+                name: "Asana"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "EE3F948D-DE04-4D92-9899-949B0B193A1D")!,
                 name: "Autodesk"
             ),
@@ -1072,6 +1108,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "E5C1469C-C522-4DBF-973D-5C6F1AA54EA8")!,
                 name: "Sentry"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "3DAC779E-08D6-452F-9088-C1C6ACD087D7")!,
+                name: "Xbox Live"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "96003CAA-758C-493E-B177-CCD27EC3434A")!,
@@ -1378,6 +1418,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "MyAnimeList"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "EFF97B47-0A43-42E3-B276-CB235E1457DD")!,
+                name: "AllMyLinks"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "CAA08091-57D6-409D-A45E-F684CDBC79B0")!,
                 name: "Nextcloud"
             ),
@@ -1442,6 +1486,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Tutanota"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "2897C31F-95E3-470B-A5E9-E2BFB1BA5D40")!,
+                name: "Wikipedia"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "02B0A535-36C4-46D3-9273-22DBF5236CE8")!,
                 name: "Square Enix"
             ),
@@ -1464,6 +1512,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "FFAD6E64-14F5-4B1F-B2AA-41232A4EEDF4")!,
                 name: "Fintegri"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "4B756B32-40D3-4AE0-B8F8-1B81308DBEAF")!,
+                name: "Amazon Pay"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "7D4E81CD-EC45-491D-BE61-18C0652FCF8B")!,

@@ -80,7 +80,8 @@ private extension ImporterOpenFilePresenter {
                     flowController.toFileIsEmpty()
                 } else {
                     flowController.toPreimportSummary(
-                        count: parseResult.count,
+                        countNew: interactor.countNewServices(parseResult),
+                        countTotal: parseResult.count,
                         sections: [],
                         services: parseResult,
                         externalImportService: .lastPass
@@ -93,7 +94,8 @@ private extension ImporterOpenFilePresenter {
                 flowController.toFileIsEmpty()
             } else {
                 flowController.toPreimportSummary(
-                    count: parseResult.count,
+                    countNew: interactor.countNewServices(parseResult),
+                    countTotal: parseResult.count,
                     sections: [],
                     services: parseResult,
                     externalImportService: .raivo
@@ -109,7 +111,8 @@ private extension ImporterOpenFilePresenter {
                     flowController.toFileIsEmpty()
                 } else {
                     flowController.toPreimportSummary(
-                        count: parseResult.count,
+                        countNew: interactor.countNewServices(parseResult),
+                        countTotal: parseResult.count,
                         sections: [],
                         services: parseResult,
                         externalImportService: .aegis
@@ -132,10 +135,11 @@ private extension ImporterOpenFilePresenter {
     func twoFASSummary(for data: ExchangeDataFormat) {
         let sections = interactor.parseSectionsTwoFAS(data)
         let services = interactor.parseTwoFASServices(with: data.services, sections: sections)
-        let count = interactor.countNewServices(services)
-        if count > 0 {
+        let countNew = interactor.countNewServices(services)
+        if countNew > 0 {
             flowController.toPreimportSummary(
-                count: count,
+                countNew: countNew,
+                countTotal: services.count,
                 sections: sections,
                 services: services,
                 externalImportService: .twofas

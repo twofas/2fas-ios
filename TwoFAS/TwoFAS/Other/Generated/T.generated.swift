@@ -163,6 +163,8 @@ internal enum T {
   internal static func pastDurationDaysPlural(_ p1: Int) -> String {
     return T.tr("Localizable", "past_duration_days-plural", p1, fallback: "%d days ago")
   }
+  /// 
+  internal static let pastDurationDaysPlural2 = T.tr("Localizable", "past_duration_days-plural-2", fallback: "")
   /// %d hour ago
   internal static func pastDurationHours(_ p1: Int) -> String {
     return T.tr("Localizable", "past_duration_hours", p1, fallback: "%d hour ago")
@@ -171,6 +173,8 @@ internal enum T {
   internal static func pastDurationHoursPlural(_ p1: Int) -> String {
     return T.tr("Localizable", "past_duration_hours-plural", p1, fallback: "%d hours ago")
   }
+  /// 
+  internal static let pastDurationHoursPlural2 = T.tr("Localizable", "past_duration_hours-plural-2", fallback: "")
   /// %d minute ago
   internal static func pastDurationMinutes(_ p1: Int) -> String {
     return T.tr("Localizable", "past_duration_minutes", p1, fallback: "%d minute ago")
@@ -179,6 +183,8 @@ internal enum T {
   internal static func pastDurationMinutesPlural(_ p1: Int) -> String {
     return T.tr("Localizable", "past_duration_minutes-plural", p1, fallback: "%d minutes ago")
   }
+  /// 
+  internal static let pastDurationMinutesPlural2 = T.tr("Localizable", "past_duration_minutes-plural-2", fallback: "")
   /// %d month ago
   internal static func pastDurationMonths(_ p1: Int) -> String {
     return T.tr("Localizable", "past_duration_months", p1, fallback: "%d month ago")
@@ -187,10 +193,14 @@ internal enum T {
   internal static func pastDurationMonthsPlural(_ p1: Int) -> String {
     return T.tr("Localizable", "past_duration_months-plural", p1, fallback: "%d months ago")
   }
+  /// 
+  internal static let pastDurationMonthsPlural2 = T.tr("Localizable", "past_duration_months-plural-2", fallback: "")
   /// moments ago
   internal static let pastDurationSeconds = T.tr("Localizable", "past_duration_seconds", fallback: "moments ago")
   /// moments ago
   internal static let pastDurationSecondsPlural = T.tr("Localizable", "past_duration_seconds-plural", fallback: "moments ago")
+  /// 
+  internal static let pastDurationSecondsPlural2 = T.tr("Localizable", "past_duration_seconds-plural-2", fallback: "")
   /// %d week ago
   internal static func pastDurationWeeks(_ p1: Int) -> String {
     return T.tr("Localizable", "past_duration_weeks", p1, fallback: "%d week ago")
@@ -199,6 +209,8 @@ internal enum T {
   internal static func pastDurationWeeksPlural(_ p1: Int) -> String {
     return T.tr("Localizable", "past_duration_weeks-plural", p1, fallback: "%d weeks ago")
   }
+  /// 
+  internal static let pastDurationWeeksPlural2 = T.tr("Localizable", "past_duration_weeks-plural-2", fallback: "")
   /// PIN does not match! Please try again.
   internal static let securityErrorNoMatch = T.tr("Localizable", "security_error_no_match", fallback: "PIN does not match! Please try again.")
   /// Developer Options
@@ -688,8 +700,20 @@ internal enum T {
     internal static let gaSuccessMsg = T.tr("Localizable", "externalimport__ga_success_msg", fallback: "This QR code allows importing tokens from Google Authenticator.")
     /// Importing 2FA tokens from Google Authenticator app
     internal static let gaTitle = T.tr("Localizable", "externalimport__ga_title", fallback: "Importing 2FA tokens from Google Authenticator app")
+    /// Import tokens from Aegis
+    internal static let infoAegisTitle = T.tr("Localizable", "externalimport__info_aegis_title", fallback: "Import tokens from Aegis")
+    /// Import tokens from Google Authenticator
+    internal static let infoGoogleAuthenticatorTitle = T.tr("Localizable", "externalimport__info_google_authenticator_title", fallback: "Import tokens from Google Authenticator")
+    /// Import tokens from LastPass
+    internal static let infoLastpassTitle = T.tr("Localizable", "externalimport__info_lastpass_title", fallback: "Import tokens from LastPass")
+    /// Import tokens from Raivo OTP
+    internal static let infoRaivoTitle = T.tr("Localizable", "externalimport__info_raivo_title", fallback: "Import tokens from Raivo OTP")
     /// Export your accounts from LastPass to an unencrypted JSON file and upload it using the "Choose JSON file" button. Remember to remove the file after a successful import.
     internal static let lastpassMsg = T.tr("Localizable", "externalimport__lastpass_msg", fallback: "Export your accounts from LastPass to an unencrypted JSON file and upload it using the \"Choose JSON file\" button. Remember to remove the file after a successful import.")
+    /// This JSON file allows importing tokens from LastPass.
+    internal static let lastpassSuccessMsg = T.tr("Localizable", "externalimport__lastpass_success_msg", fallback: "This JSON file allows importing tokens from LastPass.")
+    /// Importing 2FA tokens from LastPass app
+    internal static let lastpassTitle = T.tr("Localizable", "externalimport__lastpass_title", fallback: "Importing 2FA tokens from LastPass app")
     /// However, there are no services that could be imported.
     internal static let noTokensMsg = T.tr("Localizable", "externalimport__no_tokens_msg", fallback: "However, there are no services that could be imported.")
     /// Use the "Export OTPs to ZIP archive" option in Raivo's Settings, save a ZIP file, extract it and import the JSON file using the "Choose JSON file" button.
@@ -714,8 +738,8 @@ internal enum T {
     internal static let chooseQrCode = T.tr("Localizable", "introduction__choose_qr_code", fallback: "Choose QR code")
     /// Pair your online service account with 2FAS or import your tokens
     internal static let descriptionTitle = T.tr("Localizable", "introduction__description_title", fallback: "Pair your online service account with 2FAS or import your tokens")
-    /// Export your accounts from Google Authenticator to a QR code using the "Transfer Accounts" option. Then make a screenshot and use the "Choose QR code" button below. If you're importing codes from another device, use the "Scan QR code" button instead.
-    internal static let googleAuthenticatorImportProcess = T.tr("Localizable", "introduction__google_authenticator_import_process", fallback: "Export your accounts from Google Authenticator to a QR code using the \"Transfer Accounts\" option. Then make a screenshot and use the \"Choose QR code\" button below. If you're importing codes from another device, use the \"Scan QR code\" button instead.")
+    /// Export your accounts from Google Authenticator to a QR code using the "Transfer Accounts" option. Then using another device, take a picture of exported QR code, send it to your device (or make a screenshot if possible), and use the "Choose QR code" option below. If you're importing codes from another device, use the "Scan QR code" button instead.
+    internal static let googleAuthenticatorImportProcess = T.tr("Localizable", "introduction__google_authenticator_import_process", fallback: "Export your accounts from Google Authenticator to a QR code using the \"Transfer Accounts\" option. Then using another device, take a picture of exported QR code, send it to your device (or make a screenshot if possible), and use the \"Choose QR code\" option below. If you're importing codes from another device, use the \"Scan QR code\" button instead.")
     /// Import 2FAS backup file
     internal static let import2fasTitle = T.tr("Localizable", "introduction__import_2fas_title", fallback: "Import 2FAS backup file")
     /// Import from external app
@@ -856,12 +880,8 @@ internal enum T {
     internal static let _5Minutes = T.tr("Localizable", "settings__5_minutes", fallback: "5 minutes")
     /// About
     internal static let about = T.tr("Localizable", "settings__about", fallback: "About")
-    /// Crash Reports help us improve the app when things go very wrong. Changes will be applied on the next app run.
-    internal static let aboutCrashOptoutDescription = T.tr("Localizable", "settings__about_crash_optout_description", fallback: "Crash Reports help us improve the app when things go very wrong. Changes will be applied on the next app run.")
     /// Crash Reports
     internal static let aboutCrashOptoutTitle = T.tr("Localizable", "settings__about_crash_optout_title", fallback: "Crash Reports")
-    /// Opt-out of Crash Reports
-    internal static let aboutCrashOptoutToggleTitle = T.tr("Localizable", "settings__about_crash_optout_toggle_title", fallback: "Opt-out of Crash Reports")
     /// Acknowledgements
     internal static let acknowledgements = T.tr("Localizable", "settings__acknowledgements", fallback: "Acknowledgements")
     /// Advanced

@@ -27,6 +27,22 @@ final class TokensCategoryComponent: UIView {
         backgroundColor = tintColor.color
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        NSLayoutConstraint.activate([
+            widthAnchor.constraint(equalToConstant: Self.width)
+        ])
+    }
+    
     override var intrinsicContentSize: CGSize {
         CGSize(width: Self.width, height: UIView.noIntrinsicMetric)
     }

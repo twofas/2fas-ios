@@ -474,8 +474,8 @@ private extension TokensModuleInteractor {
             secret: serviceData.secret,
             cellType: cellType,
             serviceTypeName: serviceDefinitionsInteractor.serviceName(for: serviceData.serviceTypeID) ?? "",
-            additionalInfo: serviceData.additionalInfo ?? "",
-            iconType: serviceData.iconTypeParsed,
+            additionalInfo: serviceData.additionalInfo,
+            logoType: serviceData.iconTypeParsed,
             category: serviceData.categoryColor,
             serviceData: serviceData,
             canBeDragged: canBeDragged,
@@ -489,8 +489,8 @@ private extension TokensModuleInteractor {
             secret: UUID().uuidString,
             cellType: .placeholder,
             serviceTypeName: "",
-            additionalInfo: "",
-            iconType: .image(UIImage()),
+            additionalInfo: nil,
+            logoType: .image(UIImage()),
             category: TintColor.green,
             serviceData: nil,
             canBeDragged: canBeDragged,
@@ -543,7 +543,7 @@ private extension TokensModuleInteractor {
 private extension ServiceData {
     var categoryColor: TintColor { self.badgeColor ?? .default }
     
-    var iconTypeParsed: GridCollectionViewCell.IconType {
+    var iconTypeParsed: LogoType {
         switch iconType {
         case .brand:
             return .image(ServiceIcon.for(iconTypeID: iconTypeID))

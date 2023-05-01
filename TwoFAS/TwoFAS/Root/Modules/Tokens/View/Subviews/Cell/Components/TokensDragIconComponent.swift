@@ -39,6 +39,7 @@ final class TokensDragIconComponent: UIView {
         imageView.contentMode = .center
         imageView.tintColor = Theme.Colors.Line.primaryLine
         imageView.pinToParent()
+        setContentHuggingPriority(.defaultLow - 2, for: .vertical)
     }
     
     override var intrinsicContentSize: CGSize {

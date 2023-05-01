@@ -43,8 +43,8 @@ final class GridViewItemCell: GridCollectionViewCell, TokenTimerConsumer {
         name: String,
         secret: String,
         serviceTypeName: String,
-        additionalInfo: String,
-        iconType: IconType,
+        additionalInfo: String?,
+        logoType: LogoType,
         category: TintColor,
         useNextToken: Bool
     ) {
@@ -56,7 +56,7 @@ final class GridViewItemCell: GridCollectionViewCell, TokenTimerConsumer {
         clearTokenMarking()
         categoryView.backgroundColor = category.color
         categoryView.accessibilityLabel = T.Voiceover.badgeColor(category.localizedName)
-        configureIcon(with: iconType, serviceTypeName: serviceTypeName)
+//        configureIcon(with: iconType, serviceTypeName: serviceTypeName)
         setupAccessibility()
         self.useNextToken = useNextToken
     }

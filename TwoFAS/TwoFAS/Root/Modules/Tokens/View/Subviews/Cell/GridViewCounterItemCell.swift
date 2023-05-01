@@ -44,8 +44,8 @@ final class GridViewCounterItemCell: GridCollectionViewCell, TokenCounterConsume
         name: String,
         secret: String,
         serviceTypeName: String,
-        additionalInfo: String,
-        iconType: IconType,
+        additionalInfo: String?,
+        logoType: LogoType,
         category: TintColor
     ) {
         tokenLabel.clear()
@@ -55,7 +55,7 @@ final class GridViewCounterItemCell: GridCollectionViewCell, TokenCounterConsume
         infoNextToken.set(info: additionalInfo)
         categoryView.backgroundColor = category.color
         categoryView.accessibilityLabel = T.Voiceover.badgeColor(category.localizedName)
-        configureIcon(with: iconType, serviceTypeName: serviceTypeName)
+//        configureIcon(with: iconType, serviceTypeName: serviceTypeName)
         setupAccessibility()
     }
     

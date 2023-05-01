@@ -39,32 +39,44 @@ final class TokensLogoComponent: UIView {
         addSubview(imageView)
         imageView.contentMode = .center
         imageView.pinToParent()
+        setContentHuggingPriority(.defaultHigh + 2, for: .horizontal)
+        setContentHuggingPriority(.defaultLow - 2, for: .vertical)
         
         addSubview(labelRenderer)
-        labelRenderer.pinToParent()
+        labelRenderer.pinToParentCenter()
     }
     
-    func configure(with logoType: LogoType, kind: TokensCellKind) {
+    func setKind(_ kind: TokensCellKind) {
         let refresh = kind != currentKind
         currentKind = kind
         
+        labelRenderer.setKind(kind)
+        
+        if refresh {
+            invalidateIntrinsicContentSize()
+        }
+    }
+    
+    func configure(with logoType: LogoType) {
         switch logoType {
         case .image(let image):
-            imageView.image = image
+            if currentKind == .compact || currentKind == .edit {
+                let img = image.preparingThumbnail(
+                    of: CGSize(width: currentKind.iconDimension, height: currentKind.iconDimension)
+                )
+                imageView.image = img
+            } else {
+                imageView.image = image
+            }
             
             imageView.isHidden = false
             labelRenderer.isHidden = true
         case .label(let text, let tintColor):
             labelRenderer.setColor(tintColor, animated: false)
             labelRenderer.setText(text)
-            labelRenderer.setKind(kind)
             
             imageView.isHidden = true
             labelRenderer.isHidden = false
-        }
-        
-        if refresh {
-            invalidateIntrinsicContentSize()
         }
     }
     

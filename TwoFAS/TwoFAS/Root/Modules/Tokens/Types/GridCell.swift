@@ -31,8 +31,8 @@ struct GridCell: Hashable {
     let secret: String
     let cellType: CellType
     let serviceTypeName: String
-    let additionalInfo: String
-    let iconType: GridCollectionViewCell.IconType
+    let additionalInfo: String?
+    let logoType: LogoType
     let category: TintColor
     let serviceData: ServiceData?
     let canBeDragged: Bool

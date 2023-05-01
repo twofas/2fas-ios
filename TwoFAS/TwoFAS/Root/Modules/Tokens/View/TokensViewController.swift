@@ -26,21 +26,21 @@ final class TokensViewController: UIViewController {
         navigationItem.rightBarButtonItem
     }
     private(set) var gridView: GridView!
-    private(set) var gridLayout: UICollectionViewFlowLayout!
     private(set) var dataSource: UICollectionViewDiffableDataSource<GridSection, GridCell>!
     
     let headerHeight: CGFloat = 50
     let emptySearchScreenView = GridViewEmptySearchScreen()
     let emptyListScreenView = GridViewEmptyListScreen()
     
-    private var configuredWidth: CGFloat = 0
+    private var layout: UICollectionViewCompositionalLayout!
+    
     var searchBarAdded = false
     
     let searchController = CommonSearchController()
     
     override func loadView() {
-        gridLayout = UICollectionViewFlowLayout()
-        gridView = GridView(frame: .zero, collectionViewLayout: gridLayout)
+        createLayout()
+        gridView = GridView(frame: .zero, collectionViewLayout: layout)
         self.view = gridView
         gridView.configure()
     }
@@ -65,11 +65,6 @@ final class TokensViewController: UIViewController {
     }
     
     // MARK: - App events
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        configureLayout()
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -105,18 +100,18 @@ private extension TokensViewController {
     func setupDataSource() {
         dataSource = UICollectionViewDiffableDataSource(
             collectionView: gridView,
-            cellProvider: { collectionView, indexPath, item in
+            cellProvider: { collectionView, indexPath, item -> UICollectionViewCell? in
                 if item.cellType == .serviceTOTP {
                     if collectionView.isEditing {
                         let cell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: GridViewEditItemCell.reuseIdentifier,
+                            withReuseIdentifier: TokensEditCell.reuseIdentifier,
                             for: indexPath
-                        ) as? GridViewEditItemCell
+                        ) as? TokensEditCell
                         cell?.update(
                             name: item.name,
                             additionalInfo: item.additionalInfo,
                             serviceTypeName: item.serviceTypeName,
-                            iconType: item.iconType,
+                            logoType: item.logoType,
                             category: item.category,
                             canBeDragged: item.canBeDragged
                         )
@@ -131,7 +126,7 @@ private extension TokensViewController {
                             secret: item.secret,
                             serviceTypeName: item.serviceTypeName,
                             additionalInfo: item.additionalInfo,
-                            iconType: item.iconType,
+                            logoType: item.logoType,
                             category: item.category,
                             useNextToken: item.useNextToken
                         )
@@ -140,14 +135,14 @@ private extension TokensViewController {
                 } else if item.cellType == .serviceHOTP {
                     if collectionView.isEditing {
                         let cell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: GridViewEditItemCell.reuseIdentifier,
+                            withReuseIdentifier: TokensEditCell.reuseIdentifier,
                             for: indexPath
-                        ) as? GridViewEditItemCell
+                        ) as? TokensEditCell
                         cell?.update(
                             name: item.name,
                             additionalInfo: item.additionalInfo,
                             serviceTypeName: item.serviceTypeName,
-                            iconType: item.iconType,
+                            logoType: item.logoType,
                             category: item.category,
                             canBeDragged: item.canBeDragged
                         )
@@ -162,7 +157,7 @@ private extension TokensViewController {
                             secret: item.secret,
                             serviceTypeName: item.serviceTypeName,
                             additionalInfo: item.additionalInfo,
-                            iconType: item.iconType,
+                            logoType: item.logoType,
                             category: item.category
                         )
                         return cell
@@ -216,26 +211,62 @@ private extension TokensViewController {
         emptyListScreenView.alpha = 0
     }
     
-    func configureLayout() {
-        guard let screenWidth = UIApplication.keyWindow?.bounds.size.width,
-              configuredWidth != screenWidth else { return }
-        
-        configuredWidth = screenWidth
-        
-        let cellHeight = Theme.Metrics.servicesCellHeight
-        
-        let minimumCellWidth: CGFloat = Theme.Metrics.pageWidth
-        let itemsInRow = Int(screenWidth / minimumCellWidth)
-        let margin: CGFloat = 0
-        
-        let marginsWidth = margin * CGFloat(itemsInRow - 1)
-        let screenWidthWithoutMargins = screenWidth - marginsWidth
-        let elementWidth = floor(screenWidthWithoutMargins / CGFloat(itemsInRow))
-        
-        gridLayout.itemSize = CGSize(width: elementWidth, height: cellHeight)
-        gridLayout.minimumInteritemSpacing = margin
-                
-        gridLayout.minimumLineSpacing = 0
+    private func createLayout() {
+        layout = UICollectionViewCompositionalLayout { [weak self] sectionOffset, env in
+            guard let self else { return nil }
+            let minimumCellWidth: CGFloat = Theme.Metrics.pageWidth
+            let itemsInRow: Int = {
+                let snapshot = self.dataSource.snapshot()
+                if let section = snapshot.sectionIdentifiers[safe: sectionOffset],
+                   let item = snapshot.itemIdentifiers(inSection: section).first,
+                   item.cellType == .placeholder {
+                    return 1
+                }
+                let availableWidth = env.container.effectiveContentSize.width
+                var columns = Int(availableWidth / minimumCellWidth)
+                let layoutMultiplier = env.traitCollection.preferredContentSizeCategory.layoutMultiplier
+                if columns > 1 && layoutMultiplier != 1.0 {
+                    let newSize = minimumCellWidth * layoutMultiplier
+                    columns = Int(availableWidth / newSize)
+                }
+                if columns < 1 {
+                    columns = 1
+                }
+                return columns
+            }()
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .estimated(60) // TODO: Move to constant depending on cell type
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .estimated(60) // TODO: Move to constant depending on cell type
+            )
+            let group = NSCollectionLayoutGroup.horizontal(
+                layoutSize: groupSize,
+                subitem: item,
+                count: itemsInRow
+            )
+            
+            let headerFooterSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(self.headerHeight)
+            )
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerFooterSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            )
+            let section = NSCollectionLayoutSection(group: group)
+            
+            if !(!self.gridView.isEditing && sectionOffset == 0 && self.presenter.isMainOnlyCategory) {
+                section.boundarySupplementaryItems = [sectionHeader]
+            }
+            
+            return section
+        }
     }
     
     func setupEmptyScreensEvents() {
@@ -250,10 +281,16 @@ private extension TokensViewController {
     func setupNotificationsListeners() {
         let center = NotificationCenter.default
         center.addObserver(
-            self, selector: #selector(notificationServicesWereUpdated), name: .servicesWereUpdated, object: nil
+            self,
+            selector: #selector(notificationServicesWereUpdated),
+            name: .servicesWereUpdated,
+            object: nil
         )
         center.addObserver(
-            self, selector: #selector(notificationSectionsWereUpdated), name: .sectionsWereUpdated, object: nil
+            self,
+            selector: #selector(notificationSectionsWereUpdated),
+            name: .sectionsWereUpdated,
+            object: nil
         )
         center.addObserver(
             self,
@@ -279,5 +316,25 @@ private extension TokensViewController {
             name: .tokensScreenIsVisible,
             object: nil
         )
+    }
+}
+
+extension UIContentSizeCategory {
+    var layoutMultiplier: CGFloat {
+        switch self {
+        case UIContentSizeCategory.accessibilityExtraExtraExtraLarge: return 23.0 / 16.0
+        case UIContentSizeCategory.accessibilityExtraExtraLarge: return 22.0 / 16.0
+        case UIContentSizeCategory.accessibilityExtraLarge: return 21.0 / 16.0
+        case UIContentSizeCategory.accessibilityLarge: return 20.0 / 16.0
+        case UIContentSizeCategory.accessibilityMedium: return 19.0 / 16.0
+        case UIContentSizeCategory.extraExtraExtraLarge: return 19.0 / 16.0
+        case UIContentSizeCategory.extraExtraLarge: return 18.0 / 16.0
+        case UIContentSizeCategory.extraLarge: return 17.0 / 16.0
+        case UIContentSizeCategory.large: return 1.0
+        case UIContentSizeCategory.medium: return 15.0 / 16.0
+        case UIContentSizeCategory.small: return 14.0 / 16.0
+        case UIContentSizeCategory.extraSmall: return 13.0 / 16.0
+        default: return 1.0
+        }
     }
 }

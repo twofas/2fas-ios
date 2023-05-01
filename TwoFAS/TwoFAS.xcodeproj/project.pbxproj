@@ -488,7 +488,7 @@
 		C2823B1626F3E84F00583586 /* RevealPasswordInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2823B1526F3E84F00583586 /* RevealPasswordInput.swift */; };
 		C2830D7A293D440900B3DDAF /* TokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D79293D440900B3DDAF /* TokensPresenter.swift */; };
 		C2830D7C293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D7B293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift */; };
-		C2830D7E293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegateFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D7D293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegateFlowLayout.swift */; };
+		C2830D7E293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D7D293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegate.swift */; };
 		C2830D80293D4BDC00B3DDAF /* TokensViewController+TokensSectionHeaderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D7F293D4BDC00B3DDAF /* TokensViewController+TokensSectionHeaderDataSource.swift */; };
 		C2830D82293D53CA00B3DDAF /* TokensMoveItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D81293D53CA00B3DDAF /* TokensMoveItem.swift */; };
 		C28356232897098300421882 /* SelectFromGalleryAdvice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28356222897098300421882 /* SelectFromGalleryAdvice.swift */; };
@@ -1745,7 +1745,7 @@
 		C2823B1526F3E84F00583586 /* RevealPasswordInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealPasswordInput.swift; sourceTree = "<group>"; };
 		C2830D79293D440900B3DDAF /* TokensPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensPresenter.swift; sourceTree = "<group>"; };
 		C2830D7B293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+CommonSearchDataSourceSearchable.swift"; sourceTree = "<group>"; };
-		C2830D7D293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegateFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+UICollectionViewDelegateFlowLayout.swift"; sourceTree = "<group>"; };
+		C2830D7D293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		C2830D7F293D4BDC00B3DDAF /* TokensViewController+TokensSectionHeaderDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+TokensSectionHeaderDataSource.swift"; sourceTree = "<group>"; };
 		C2830D81293D53CA00B3DDAF /* TokensMoveItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensMoveItem.swift; sourceTree = "<group>"; };
 		C28356222897098300421882 /* SelectFromGalleryAdvice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectFromGalleryAdvice.swift; sourceTree = "<group>"; };
@@ -4648,7 +4648,7 @@
 				C258EC6D227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift */,
 				C2ABA1CB24B24B7F008426D1 /* TokensViewController+ContextMenu.swift */,
 				C2830D7B293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift */,
-				C2830D7D293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegateFlowLayout.swift */,
+				C2830D7D293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegate.swift */,
 				C2830D7F293D4BDC00B3DDAF /* TokensViewController+TokensSectionHeaderDataSource.swift */,
 			);
 			path = View;
@@ -7845,7 +7845,7 @@
 				C271B64827BAE67500D0D743 /* ComposeServiceModuleInteractor.swift in Sources */,
 				C29626B8236F80A200C133BC /* Animate.swift in Sources */,
 				C21A9E8427CBF75E00FE4CC4 /* ComposeServiceNumberOfDigitsPresenter.swift in Sources */,
-				C2830D7E293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegateFlowLayout.swift in Sources */,
+				C2830D7E293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegate.swift in Sources */,
 				C2B077C2292A920B0074517F /* UploadLogsFailurePresenter.swift in Sources */,
 				C20E578F292976DA002B215B /* UUIDInputField.swift in Sources */,
 				C2CD687325FEC94400EFEFCF /* FormLine.swift in Sources */,

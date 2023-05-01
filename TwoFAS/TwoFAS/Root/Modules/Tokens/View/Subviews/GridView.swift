@@ -36,7 +36,7 @@ final class GridView: UICollectionView {
         backgroundColor = Theme.Colors.Fill.background
         register(GridViewItemCell.self, forCellWithReuseIdentifier: GridViewItemCell.reuseIdentifier)
         register(GridViewCounterItemCell.self, forCellWithReuseIdentifier: GridViewCounterItemCell.reuseIdentifier)
-        register(GridViewEditItemCell.self, forCellWithReuseIdentifier: GridViewEditItemCell.reuseIdentifier)
+        register(TokensEditCell.self, forCellWithReuseIdentifier: TokensEditCell.reuseIdentifier)
         register(
             GridEmptyCollectionViewCell.self,
             forCellWithReuseIdentifier: GridEmptyCollectionViewCell.reuseIdentifier

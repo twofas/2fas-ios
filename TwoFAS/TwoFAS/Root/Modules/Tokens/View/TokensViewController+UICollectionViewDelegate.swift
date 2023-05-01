@@ -19,27 +19,7 @@
 
 import UIKit
 
-extension TokensViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        let snapshot = dataSource.snapshot()
-        guard
-            let section = snapshot.sectionIdentifiers[safe: indexPath.section],
-            let item = snapshot.itemIdentifiers(inSection: section)[safe: indexPath.row],
-            item.cellType == .placeholder
-        else {
-            return gridLayout.itemSize
-        }
-        if let screenWidth = UIApplication.keyWindow?.bounds.size.width, UIDevice.isiPad {
-            return CGSize(width: screenWidth, height: headerHeight)
-        } else {
-            return CGSize(width: gridLayout.itemSize.width, height: headerHeight)
-        }
-    }
-    
+extension TokensViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: false)
         
@@ -79,18 +59,5 @@ extension TokensViewController: UICollectionViewDelegateFlowLayout {
             consumer.didTapRefreshCounter = nil
             presenter.handleRemoveHOTP(consumer)
         }
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForHeaderInSection section: Int
-    ) -> CGSize {
-        // Hide My Tokens if it's only category and not in edit mode
-        if !collectionView.isEditing && section == 0 && presenter.isMainOnlyCategory {
-            return CGSize.zero
-        }
-        
-        return CGSize(width: 100, height: headerHeight)
     }
 }

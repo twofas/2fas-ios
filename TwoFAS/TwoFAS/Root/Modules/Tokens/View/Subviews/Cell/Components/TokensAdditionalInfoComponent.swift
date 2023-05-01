@@ -22,13 +22,18 @@ import UIKit
 final class TokensAdditionalInfoComponent: UIView {
     private let label: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        label.font = UIFontMetrics(forTextStyle: .body)
+            .scaledFont(for: .systemFont(ofSize: 17, weight: .medium))
         label.minimumScaleFactor = 0.5
+        label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 1
         label.allowsDefaultTighteningForTruncation = true
         label.lineBreakMode = .byTruncatingTail
         label.adjustsFontSizeToFitWidth = true
         label.textColor = Theme.Colors.Text.subtitle
+        label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
+        label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
+        label.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
         return label
     }()
     
@@ -50,9 +55,20 @@ final class TokensAdditionalInfoComponent: UIView {
     func setKind(_ kind: TokensCellKind) {
         switch kind {
         case .compact, .edit:
-            label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+            label.font = UIFontMetrics(forTextStyle: .body)
+                .scaledFont(for: .systemFont(ofSize: 13, weight: .medium))
         case .normal:
-            label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+            label.font = UIFontMetrics(forTextStyle: .body)
+                .scaledFont(for: .systemFont(ofSize: 17, weight: .medium))
         }
+    }
+    
+    func setText(_ text: String) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1.16 // Line height: 18 pt
+        label.attributedText = NSAttributedString(
+            string: text,
+            attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle]
+        )
     }
 }

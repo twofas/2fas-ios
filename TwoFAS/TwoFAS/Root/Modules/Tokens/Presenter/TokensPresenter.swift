@@ -200,7 +200,7 @@ extension TokensPresenter {
     // MARK: - Search
     
     var showSearchBar: Bool {
-        count > 1
+        count > 1 && currentState == .normal
     }
     
     func handleSetSearchPhrase(_ phrase: String) {

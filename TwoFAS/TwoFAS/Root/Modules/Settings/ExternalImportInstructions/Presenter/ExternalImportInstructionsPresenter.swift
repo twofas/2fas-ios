@@ -50,10 +50,10 @@ extension ExternalImportInstructionsPresenter {
     
     var sourceName: String {
         switch service {
-        case .aegis: return T.externalimportAegis
-        case .raivo: return T.externalimportRaivo
-        case .lastPass: return T.externalimportLastpass
-        case .googleAuth: return T.externalimportGoogleAuthenticator
+        case .aegis: return T.Externalimport.infoAegisTitle
+        case .raivo: return T.Externalimport.infoRaivoTitle
+        case .lastPass: return T.Externalimport.infoLastpassTitle
+        case .googleAuth: return T.Externalimport.infoGoogleAuthenticatorTitle
         case .twofas: return T.Commons._2fasToolbar // Not used here
         }
     }

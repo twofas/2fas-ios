@@ -23,7 +23,8 @@ import Common
 protocol ImporterEnterPasswordModuleInteracting: AnyObject {
     func openFile(with password: String) -> ImportFromFileTwoFASDecrypt
     func parseFile(with decryptedServices: ExchangeDataServices) -> (
-        count: Int,
+        countNew: Int,
+        countTotal: Int,
         sections: [CommonSectionData],
         services: [ServiceData]
     )
@@ -47,13 +48,14 @@ extension ImporterEnterPasswordModuleInteractor: ImporterEnterPasswordModuleInte
     }
     
     func parseFile(with decryptedServices: ExchangeDataServices) -> (
-        count: Int,
+        countNew: Int,
+        countTotal: Int,
         sections: [CommonSectionData],
         services: [ServiceData]
     ) {
         let sections = importInteractor.parseSectionsTwoFAS(data)
         let services = importInteractor.parseTwoFASServices(with: decryptedServices, sections: sections)
-        let newCount = importInteractor.countNewServices(services)
-        return (count: newCount, sections: sections, services: services)
+        let countNew = importInteractor.countNewServices(services)
+        return (countNew: countNew, countTotal: services.count, sections: sections, services: services)
     }
 }

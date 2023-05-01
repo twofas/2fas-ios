@@ -21,24 +21,28 @@ import Foundation
 import Common
 
 protocol ImporterPreimportSummaryModuleInteracting: AnyObject {
-    var count: Int { get }
+    var countNew: Int { get }
+    var countTotal: Int { get }
     func importFromFile() -> Int
 }
 
 final class ImporterPreimportSummaryModuleInteractor {
     private let importInteractor: ImportFromFileInteracting
-    let count: Int
+    let countNew: Int
+    let countTotal: Int
     private let sections: [CommonSectionData]
     private let services: [ServiceData]
     
     init(
         importInteractor: ImportFromFileInteracting,
-        count: Int,
+        countNew: Int,
+        countTotal: Int,
         sections: [CommonSectionData],
         services: [ServiceData]
     ) {
         self.importInteractor = importInteractor
-        self.count = count
+        self.countNew = countNew
+        self.countTotal = countTotal
         self.sections = sections
         self.services = services
     }

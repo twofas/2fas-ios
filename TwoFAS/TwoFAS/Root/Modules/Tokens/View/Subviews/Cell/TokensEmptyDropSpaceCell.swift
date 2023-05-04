@@ -19,8 +19,8 @@
 
 import UIKit
 
-final class GridEmptyCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = "GridEmptyCollectionViewCell"
+final class TokensEmptyDropSpaceCell: UICollectionViewCell {
+    static let reuseIdentifier = "TokensEmptyDropSpaceCell"
     
     override var intrinsicContentSize: CGSize { CGSize(width: UIView.noIntrinsicMetric, height: 30) }
 }

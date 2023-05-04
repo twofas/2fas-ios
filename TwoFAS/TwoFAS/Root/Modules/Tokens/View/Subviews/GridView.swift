@@ -38,8 +38,8 @@ final class GridView: UICollectionView {
         register(GridViewCounterItemCell.self, forCellWithReuseIdentifier: GridViewCounterItemCell.reuseIdentifier)
         register(TokensEditCell.self, forCellWithReuseIdentifier: TokensEditCell.reuseIdentifier)
         register(
-            GridEmptyCollectionViewCell.self,
-            forCellWithReuseIdentifier: GridEmptyCollectionViewCell.reuseIdentifier
+            TokensEmptyDropSpaceCell.self,
+            forCellWithReuseIdentifier: TokensEmptyDropSpaceCell.reuseIdentifier
         )
         register(
             GridSectionHeader.self,

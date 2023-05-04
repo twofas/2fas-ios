@@ -164,9 +164,9 @@ private extension TokensViewController {
                     }
                 }
                 let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: GridEmptyCollectionViewCell.reuseIdentifier,
+                    withReuseIdentifier: TokensEmptyDropSpaceCell.reuseIdentifier,
                     for: indexPath
-                ) as? GridEmptyCollectionViewCell
+                ) as? TokensEmptyDropSpaceCell
                 return cell
             })
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath

@@ -52,7 +52,7 @@
 		C20935E02921510A000F5AA7 /* AdvancedAlertInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935DF2921510A000F5AA7 /* AdvancedAlertInteractor.swift */; };
 		C20935E3292152FA000F5AA7 /* PushNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935E2292152FA000F5AA7 /* PushNotificationInteractor.swift */; };
 		C20935E629215453000F5AA7 /* AppInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935E529215453000F5AA7 /* AppInfoInteractor.swift */; };
-		C209E9B9267A9D8600417D80 /* GridEmptyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C209E9B8267A9D8600417D80 /* GridEmptyCollectionViewCell.swift */; };
+		C209E9B9267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C209E9B8267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift */; };
 		C20A3B8326E6A7D90020D8C5 /* MainContainerCenteredImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20A3B8226E6A7D90020D8C5 /* MainContainerCenteredImage.swift */; };
 		C20B004D26813953009D2334 /* CommonSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B004C26813953009D2334 /* CommonSectionData.swift */; };
 		C20B94DA281C859A008FA230 /* PushNotificationsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B94D9281C859A008FA230 /* PushNotificationsConfig.swift */; };
@@ -1295,7 +1295,7 @@
 		C20935DF2921510A000F5AA7 /* AdvancedAlertInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedAlertInteractor.swift; sourceTree = "<group>"; };
 		C20935E2292152FA000F5AA7 /* PushNotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationInteractor.swift; sourceTree = "<group>"; };
 		C20935E529215453000F5AA7 /* AppInfoInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoInteractor.swift; sourceTree = "<group>"; };
-		C209E9B8267A9D8600417D80 /* GridEmptyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridEmptyCollectionViewCell.swift; sourceTree = "<group>"; };
+		C209E9B8267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensEmptyDropSpaceCell.swift; sourceTree = "<group>"; };
 		C20A3B8226E6A7D90020D8C5 /* MainContainerCenteredImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerCenteredImage.swift; sourceTree = "<group>"; };
 		C20B004C26813953009D2334 /* CommonSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSectionData.swift; sourceTree = "<group>"; };
 		C20B94D9281C859A008FA230 /* PushNotificationsConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsConfig.swift; sourceTree = "<group>"; };
@@ -3805,9 +3805,9 @@
 				C2B39E5529F5880D00EC31F6 /* Types */,
 				C2B39E4F29F5841700EC31F6 /* TokensEditCell.swift */,
 				C213E46A2277561700AE1620 /* GridViewEditItemCell.swift */,
+				C209E9B8267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift */,
 				C2B39E4E29F5834400EC31F6 /* Components */,
 				C22D3EEF25EAB590007E86CF /* GridCollectionViewCell.swift */,
-				C209E9B8267A9D8600417D80 /* GridEmptyCollectionViewCell.swift */,
 				C2C66F9C1FE06AD700AD5A1C /* GridViewItemCell.swift */,
 				C2DEC2DE27CD298400EAC01A /* GridViewCounterItemCell.swift */,
 				C25E898D2663DF9700A60CE5 /* GridSectionHeader.swift */,
@@ -7375,7 +7375,7 @@
 				C206AAD029636A3E0032B85E /* Configs.swift in Sources */,
 				C2E2C80927B0377B00F04B70 /* IconSelectorFlowController.swift in Sources */,
 				C2B077D1292AA0A00074517F /* ShortDateTimeFormatter.swift in Sources */,
-				C209E9B9267A9D8600417D80 /* GridEmptyCollectionViewCell.swift in Sources */,
+				C209E9B9267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift in Sources */,
 				C23386F92780E54B00F8DBC3 /* DeleteServiceViewController.swift in Sources */,
 				C2147CEC205D7FCA0001D011 /* SecurityProtocol.swift in Sources */,
 				C24471B325F506390024B4C5 /* ComposeServiceFormRow.swift in Sources */,

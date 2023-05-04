@@ -34,6 +34,7 @@ public enum ThemeColor {
     public static let divider = UIColor(named: "ColorDivider", in: bundle, compatibleWith: nil)!
     public static let primary = UIColor(named: "ColorPrimary", in: bundle, compatibleWith: nil)!
     public static let secondary = UIColor(named: "ColorSecondary", in: bundle, compatibleWith: nil)!
+    public static let secondarySofter = UIColor(named: "ColorSecondarySofter", in: bundle, compatibleWith: nil)!
     public static let tertiary = UIColor(named: "ColorTertiary", in: bundle, compatibleWith: nil)!
     public static let quaternary = UIColor(named: "ColorQuaternary", in: bundle, compatibleWith: nil)!
     public static let inactive = UIColor(named: "ColorInactive", in: bundle, compatibleWith: nil)!

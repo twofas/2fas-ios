@@ -798,7 +798,6 @@
 		C2CE84A12814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CE84A02814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift */; };
 		C2CF23FE23623DE000B759DD /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = C2CF23FD23623DE000B759DD /* KeychainAccess */; };
 		C2CFFCDD2007FDD600600AC6 /* CircleProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CFFCDC2007FDD600600AC6 /* CircleProgress.swift */; };
-		C2D07ED226A4259000AF8E7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C21AF6A326A2378A00BDAA37 /* Assets.xcassets */; };
 		C2D07ED726A45BBD00AF8E7B /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C2D07EDC26A45BC700AF8E7B /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
 		C2D07EE126A45BD700AF8E7B /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2932EF21FFE94A900FBD4D0 /* Common.framework */; };
@@ -1373,7 +1372,6 @@
 		C21A9E9527CC0A8800FE4CC4 /* ComposeServiceRefreshTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceRefreshTimeViewController.swift; sourceTree = "<group>"; };
 		C21A9E9B27CC0F6200FE4CC4 /* ComposeServiceAlgorithmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAlgorithmViewController.swift; sourceTree = "<group>"; };
 		C21A9E9D27CC0F7200FE4CC4 /* ComposeServiceAlgorithmPresenter+Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeServiceAlgorithmPresenter+Menu.swift"; sourceTree = "<group>"; };
-		C21AF6A326A2378A00BDAA37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C21AF6A526A237EA00BDAA37 /* ServiceIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceIcon.swift; sourceTree = "<group>"; };
 		C21AF8D8253F912B0055A8DF /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		C21B3A1327AF0BC9005C603B /* ColorPickerFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerFlowController.swift; sourceTree = "<group>"; };
@@ -4776,7 +4774,6 @@
 				C2932EFE1FFE94B400FBD4D0 /* Config.swift */,
 				C28F369E25C605AF006EC6F4 /* ServiceRules.swift */,
 				C208101E2794A5EA0035E339 /* Base32 */,
-				C21AF6A326A2378A00BDAA37 /* Assets.xcassets */,
 				C29E56792809A18400141238 /* Spinner */,
 				C2B90F0E281EFD2B004B8AEC /* ThemeColor.swift */,
 				C21BC4CC25B2FA3400B15F99 /* Legacy */,
@@ -7129,7 +7126,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2B90F0D281EFD03004B8AEC /* ThemeColor.xcassets in Resources */,
-				C2D07ED226A4259000AF8E7B /* Assets.xcassets in Resources */,
 				C2787C3D28FB536000E6C989 /* Icons.xcassets in Resources */,
 				C2B6D7B9260BCBC7005B599E /* TintColor.xcassets in Resources */,
 			);

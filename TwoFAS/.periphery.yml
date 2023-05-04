@@ -1,0 +1,20 @@
+project: TwoFAS.xcodeproj
+retain_objc_accessible: true
+schemes:
+- TwoFAS
+targets:
+- CodeSupport
+- Common
+- NetworkStack
+- Protection
+- ProtectionTests
+- PushNotifications
+- Storage
+- Sync
+- TimeVerification
+- Token
+- TwoFAS
+- TwoFASAuth
+- TwoFASServiceIntent
+- TwoFASTests
+- TwoFASWidgetExtension

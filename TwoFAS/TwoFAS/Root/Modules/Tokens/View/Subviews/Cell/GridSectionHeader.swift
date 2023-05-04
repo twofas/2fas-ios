@@ -39,56 +39,17 @@ final class GridSectionHeader: UICollectionReusableView {
         return v
     }()
     
-    private let titleLabelNormal = StandardLabel()
-    private let titleLabelEdit = StandardLabel()
+    private let titleLabel = StandardLabel()
+    private let counter = ElementCounter()
     
     private let collapseButton = CollapseButton()
     private let upDown = UpDown()
+    private let menuButton = MenuButton()
     
-    private let deleteButtonWidth: CGFloat = 35
-    private let deleteButton: UIButton = {
-        let b = UIButton()
-        b.setImage(Asset.deleteIcon.image, for: .normal)
-        return b
-    }()
-    
-    private let titleInput: UnderscoredInput = {
-        let input = UnderscoredInput()
-        input.hideUnderscore()
-        input.textColor = Theme.Colors.inactiveInverted
-        input.font = Theme.Fonts.sectionHeader
-        input.maxLength = ServiceRules.maxSectionNameLenght
-        input.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
-        input.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
-        return input
-    }()
-    
-    private var editLabelLeading: NSLayoutConstraint?
-    
-    private let editButton: UIButton = {
-        let b = UIButton()
-        b.setTitle(T.Commons.edit, for: .normal)
-        b.titleLabel?.font = Theme.Fonts.Text.content
-        b.setTitleColor(Theme.Colors.Text.theme, for: .normal)
-        b.setTitleColor(Theme.Colors.Text.themeHighlighted, for: .highlighted)
-        b.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
-        return b
-    }()
-    
-    private let doneButton: UIButton = {
-        let b = UIButton()
-        b.setTitle(T.Commons.done, for: .normal)
-        b.titleLabel?.font = Theme.Fonts.Text.content
-        b.setTitleColor(Theme.Colors.Text.theme, for: .normal)
-        b.setTitleColor(Theme.Colors.Text.themeHighlighted, for: .highlighted)
-        b.setTitleColor(Theme.Colors.Text.inactive, for: .disabled)
-        b.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
-        return b
-    }()
+//    private var editLabelLeading: NSLayoutConstraint?
     
     private let normalContainer = UIView()
     private let editContainer = UIView()
-    private let editSectionContainer = UIView()
         
     private var config: GridSection?
     
@@ -105,6 +66,9 @@ final class GridSectionHeader: UICollectionReusableView {
     private func commonInit() {
         backgroundColor = Theme.Colors.Fill.System.forth
         
+//        accessoryView = menuButton
+        menuButton.menu = menu()
+        
         collapseButton.userChangedCollapse = { [weak self] in self?.collapseAction() }
         
         addSubview(spacingLineView, with: [
@@ -114,17 +78,20 @@ final class GridSectionHeader: UICollectionReusableView {
             spacingLineView.heightAnchor.constraint(equalToConstant: Theme.Metrics.lineWidth)
         ])
         
-        addSubview(normalContainer)
-        normalContainer.pinToParent()
-        setupNormalContainerContent()
+        addSubview(counter, with: [
+            counter.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.standardMargin),
+            counter.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Theme.Metrics.standardMargin),
+            counter.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Theme.Metrics.doubleMargin)
+        ])
         
-        addSubview(editContainer)
-        editContainer.pinToParent()
-        setupEditContainerContent()
+        addSubview(titleLabel, with: [
+            counter.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.standardMargin),
+            counter.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Theme.Metrics.standardMargin),
+            counter.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: Theme.Metrics.doubleMargin)
+        ])
         
-        addSubview(editSectionContainer)
-        editSectionContainer.pinToParent()
-        setupEditSectionContainerContent()
+        setupNormalContainer()
+        setupEditContainer()
         
         upDown.moveUp = { [weak self] in
             guard let config = self?.config else { return }
@@ -136,19 +103,13 @@ final class GridSectionHeader: UICollectionReusableView {
             self?.dataSource?.moveDown(config)
         }
         
-        titleInput.textDidChange = { [weak self] newText in
-            self?.doneButton.isEnabled = ServiceRules.isSectionNameValid(sectionName: newText.trim())
-        }
-        
-        doneButton.addTarget(self, action: #selector(doneAction), for: .touchUpInside)
-        deleteButton.addTarget(self, action: #selector(deleteAction), for: .touchUpInside)
-        editButton.addTarget(self, action: #selector(editAction), for: .touchUpInside)
+        //ServiceRules.isSectionNameValid(sectionName: newText.trim())
     }
         
     func setIsEditing(_ isEditing: Bool) {
         normalContainer.isHidden = isEditing
         editContainer.isHidden = !isEditing
-        editSectionContainer.isHidden = true
+        // switch anchors for title label!
     }
     
     func setConfiguration(_ config: GridSection) {
@@ -158,18 +119,16 @@ final class GridSectionHeader: UICollectionReusableView {
         let isNilSection = (config.sectionID == nil)
         
         upDown.isHidden = isNilSection || config.position == .notUsed
-        editButton.isHidden = isNilSection
-        if isNilSection {
-            editLabelLeading?.constant = Theme.Metrics.doubleMargin
-        } else {
-            editLabelLeading?.constant = Theme.Metrics.doubleMargin + UpDown.totalWidth
-        }
+//        if isNilSection {
+//            editLabelLeading?.constant = Theme.Metrics.doubleMargin
+//        } else {
+//            editLabelLeading?.constant = Theme.Metrics.doubleMargin + UpDown.totalWidth
+//        }
         
         setTitle(config.title ?? T.Tokens.myTokens, numberOfItems: config.elementCount)
         upDown.setState(config.position)
         
-        titleInput.setText(config.title ?? "")
-        doneButton.isEnabled = true
+        setTitle(config.title ?? "", numberOfItems: config.elementCount)
     }
     
     private func updateCollapsedState() {
@@ -186,85 +145,39 @@ final class GridSectionHeader: UICollectionReusableView {
         }
     }
     
-    private func setupNormalContainerContent() {
-        normalContainer.addSubview(titleLabelNormal, with: [
-            titleLabelNormal.topAnchor.constraint(equalTo: normalContainer.topAnchor),
-            titleLabelNormal.bottomAnchor.constraint(equalTo: normalContainer.bottomAnchor),
-            titleLabelNormal.leadingAnchor.constraint(
-                equalTo: normalContainer.leadingAnchor,
-                constant: Theme.Metrics.doubleMargin
-            )
+    private func setupNormalContainer() {
+        addSubview(normalContainer, with: [
+            normalContainer.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.standardMargin),
+            normalContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Theme.Metrics.standardMargin),
+            normalContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Theme.Metrics.standardMargin)
         ])
         
-        normalContainer.addSubview(collapseButton, with: [
-            collapseButton.topAnchor.constraint(equalTo: normalContainer.topAnchor),
-            collapseButton.bottomAnchor.constraint(equalTo: normalContainer.bottomAnchor),
-            collapseButton.trailingAnchor.constraint(equalTo: normalContainer.trailingAnchor),
-            collapseButton.heightAnchor.constraint(equalTo: collapseButton.widthAnchor)
-        ])
-        
+        normalContainer.addSubview(collapseButton)
+        collapseButton.pinToParent()
+                
         normalContainer.addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(normalContainerTapAction))
         )
     }
     
-    private func setupEditContainerContent() {
+    private func setupEditContainer() {
+        addSubview(editContainer, with: [
+            editContainer.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.standardMargin),
+            editContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Theme.Metrics.standardMargin),
+            editContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Theme.Metrics.standardMargin)
+        ])
+        
         editContainer.addSubview(upDown, with: [
             upDown.topAnchor.constraint(equalTo: editContainer.topAnchor),
             upDown.bottomAnchor.constraint(equalTo: editContainer.bottomAnchor),
             upDown.leadingAnchor.constraint(equalTo: editContainer.leadingAnchor)
         ])
         
-        let leading = titleLabelEdit.leadingAnchor.constraint(
-            equalTo: editContainer.leadingAnchor, constant: Theme.Metrics.doubleMargin + UpDown.totalWidth
-        )
-        editLabelLeading = leading
-        editContainer.addSubview(titleLabelEdit, with: [
-            titleLabelEdit.topAnchor.constraint(equalTo: editContainer.topAnchor),
-            titleLabelEdit.bottomAnchor.constraint(equalTo: editContainer.bottomAnchor),
-            leading
-        ])
-        editContainer.addSubview(editButton, with: [
-            editButton.leadingAnchor.constraint(
-                equalTo: titleLabelEdit.trailingAnchor,
-                constant: Theme.Metrics.doubleMargin
-            ),
-            editButton.topAnchor.constraint(equalTo: normalContainer.topAnchor),
-            editButton.bottomAnchor.constraint(equalTo: normalContainer.bottomAnchor),
-            editButton.trailingAnchor.constraint(
-                equalTo: normalContainer.trailingAnchor,
-                constant: -Theme.Metrics.doubleMargin
-            )
-        ])
-    }
-    
-    private func setupEditSectionContainerContent() {
-        editSectionContainer.addSubview(deleteButton, with: [
-            deleteButton.topAnchor.constraint(equalTo: editSectionContainer.topAnchor),
-            deleteButton.bottomAnchor.constraint(equalTo: editSectionContainer.bottomAnchor),
-            deleteButton.leadingAnchor.constraint(equalTo: editSectionContainer.leadingAnchor),
-            deleteButton.widthAnchor.constraint(equalToConstant: deleteButtonWidth)
-        ])
-        
-        editSectionContainer.addSubview(titleInput, with: [
-            titleInput.topAnchor.constraint(equalTo: editSectionContainer.topAnchor),
-            titleInput.bottomAnchor.constraint(equalTo: editSectionContainer.bottomAnchor),
-            titleInput.leadingAnchor.constraint(
-                equalTo: deleteButton.trailingAnchor,
-                constant: Theme.Metrics.standardMargin
-            )
-        ])
-        editSectionContainer.addSubview(doneButton, with: [
-            doneButton.leadingAnchor.constraint(
-                equalTo: titleInput.trailingAnchor,
-                constant: Theme.Metrics.doubleMargin
-            ),
-            doneButton.topAnchor.constraint(equalTo: editSectionContainer.topAnchor),
-            doneButton.bottomAnchor.constraint(equalTo: editSectionContainer.bottomAnchor),
-            doneButton.trailingAnchor.constraint(
-                equalTo: editSectionContainer.trailingAnchor,
-                constant: -Theme.Metrics.doubleMargin
-            )
+        editContainer.addSubview(menuButton, with: [
+            menuButton.topAnchor.constraint(equalTo: editContainer.topAnchor),
+            menuButton.bottomAnchor.constraint(equalTo: editContainer.bottomAnchor),
+            menuButton.leadingAnchor.constraint(equalTo: upDown.trailingAnchor, constant: Theme.Metrics.standardMargin),
+            menuButton.trailingAnchor.constraint(equalTo: editContainer.trailingAnchor)
         ])
     }
     
@@ -273,32 +186,19 @@ final class GridSectionHeader: UICollectionReusableView {
         collapseAction()
     }
     
-    @objc
-    private func doneAction() {
-        titleInput.resignFirstResponder()
-        editContainer.isHidden = false
-        editSectionContainer.isHidden = true
-        guard
-            let config,
-            let newTitle = titleInput.text?.trim(),
-            newTitle != config.title,
-            !newTitle.isEmpty
-        else { return }
-        dataSource?.rename(config, with: newTitle)
-    }
-    
-    @objc
-    private func deleteAction() {
-        guard let config else { return }
-        dataSource?.delete(config)
-    }
-    
-    @objc
-    private func editAction() {
-        editContainer.isHidden = true
-        editSectionContainer.isHidden = false
-        titleInput.becomeFirstResponder()
-    }
+//    @objc
+//    private func doneAction() {
+//        titleInput.resignFirstResponder()
+//        editContainer.isHidden = false
+//        editSectionContainer.isHidden = true
+//        guard
+//            let config,
+//            let newTitle = titleInput.text?.trim(),
+//            newTitle != config.title,
+//            !newTitle.isEmpty
+//        else { return }
+//        dataSource?.rename(config, with: newTitle)
+//    }
     
     private func collapseAction() {
         guard let config, collapseButton.isActive else { return }
@@ -312,8 +212,28 @@ final class GridSectionHeader: UICollectionReusableView {
     }
     
     private func setTitle(_ title: String, numberOfItems: Int) {
-        let text = "\(title) (\(numberOfItems))".uppercased()
-        titleLabelNormal.text = text
-        titleLabelEdit.text = text
+        titleLabel.text = title.uppercased()
+    }
+    
+    private func menu() -> UIMenu {
+        let edit = UIAction(
+            title: T.Commons.edit,
+            image: UIImage(systemName: "pencil")
+        ) { [weak self] _ in
+            guard let config = self?.config else { return }
+//            guard let currentIndexPath = self?.currentIndexPath else { return }
+//            self?.restore?(currentIndexPath)
+        }
+        
+        let delete = UIAction(
+            title: T.Commons.delete,
+            image: UIImage(systemName: "trash"),
+            attributes: .destructive
+        ) { [weak self] _ in
+            guard let config = self?.config else { return }
+            self?.dataSource?.delete(config)
+        }
+        
+        return UIMenu(children: [edit, delete])
     }
 }

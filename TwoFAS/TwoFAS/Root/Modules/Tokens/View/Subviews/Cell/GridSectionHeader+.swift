@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 extension GridSectionHeader {
     final class CollapseButton: UIView {
@@ -203,5 +204,73 @@ extension GridSectionHeader {
             setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
             textColor = Theme.Colors.inactiveInverted
         }
+    }
+    
+    final class ElementCounter: UIView {
+        private let label: UILabel = {
+            let label = UILabel()
+            label.font = UIFontMetrics(forTextStyle: .caption1)
+                .scaledFont(for: .systemFont(ofSize: 12, weight: .medium))
+            label.adjustsFontForContentSizeCategory = true
+            label.minimumScaleFactor = 0.5
+            label.numberOfLines = 1
+            label.textAlignment = .center
+            label.allowsDefaultTighteningForTruncation = true
+            label.adjustsFontSizeToFitWidth = true
+            label.lineBreakMode = .byTruncatingTail
+            label.textColor = Theme.Colors.Text.subtitle
+            label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
+            label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
+            label.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+            return label
+        }()
+        
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            commonInit()
+        }
+        
+        required init?(coder: NSCoder) {
+            super.init(coder: coder)
+            commonInit()
+        }
+        
+        private func commonInit() {
+            applyRoundedBorder(withBorderColor: ThemeColor.secondarySofter, width: 1)
+            let margin = Theme.Metrics.standardMargin
+            addSubview(label, with: [
+                label.widthAnchor.constraint(equalTo: label.heightAnchor),
+                label.topAnchor.constraint(equalTo: topAnchor, constant: margin),
+                label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
+                label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
+                label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin)
+            ])
+        }
+        
+        func setCount(_ count: String) {
+            label.text = count
+        }
+    }
+    
+    final class MenuButton: UIButton {
+        static let buttonSize: CGFloat = 50
+        
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            commonInit()
+        }
+        
+        required init?(coder: NSCoder) {
+            super.init(coder: coder)
+            commonInit()
+        }
+        
+        private func commonInit() {
+            setImage(UIImage(systemName: "ellipsis"), for: .normal)
+            imageView?.tintColor = Theme.Colors.Icon.normal
+            showsMenuAsPrimaryAction = true
+        }
+        
+        override var intrinsicContentSize: CGSize { CGSize(width: Self.buttonSize, height: Self.buttonSize) }
     }
 }

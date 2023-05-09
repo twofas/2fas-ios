@@ -1389,6 +1389,10 @@
 		C228603126697250005E88E3 /* GridSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridSection.swift; sourceTree = "<group>"; };
 		C2286033266972B5005E88E3 /* GridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
 		C2290333276BA78C0005C8F2 /* AppLockStateInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockStateInteractor.swift; sourceTree = "<group>"; };
+		C22A82E829EDCC5E00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
+		C22A82E929EDCC5F00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C22A82EA29EDCC5F00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C22A82EB29EDCC5F00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C22A8669287F60BD009A43FE /* MainRepositoryImpl+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Notifications.swift"; sourceTree = "<group>"; };
 		C22C1398267682B4001AA5F1 /* CategoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryData.swift; sourceTree = "<group>"; };
 		C22C139A267684DC001AA5F1 /* CategoryHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHandler.swift; sourceTree = "<group>"; };
@@ -6968,6 +6972,7 @@
 				"pt-PT",
 				fr,
 				es,
+				uk,
 			);
 			mainGroup = C236666A1FB2644900989ACA;
 			packageReferences = (
@@ -8307,6 +8312,7 @@
 				C2FDC8B529B5379B00623145 /* pt-PT */,
 				C26DE43C29C7B9EE003D0804 /* fr */,
 				C262E83729E9AA97008D148E /* es */,
+				C22A82EA29EDCC5F00CCF6B1 /* uk */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -8319,6 +8325,7 @@
 				C2FDC8B429B5379A00623145 /* pt-PT */,
 				C26DE43B29C7B9ED003D0804 /* fr */,
 				C262E83629E9AA96008D148E /* es */,
+				C22A82E929EDCC5F00CCF6B1 /* uk */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8340,6 +8347,7 @@
 				C2FDC8B329B5379A00623145 /* pt-PT */,
 				C26DE43A29C7B9ED003D0804 /* fr */,
 				C262E83529E9AA96008D148E /* es */,
+				C22A82E829EDCC5E00CCF6B1 /* uk */,
 			);
 			name = TwoFASWidget.intentdefinition;
 			sourceTree = "<group>";
@@ -8352,6 +8360,7 @@
 				C2FDC8B629B5379B00623145 /* pt-PT */,
 				C26DE43D29C7B9EE003D0804 /* fr */,
 				C262E83829E9AA97008D148E /* es */,
+				C22A82EB29EDCC5F00CCF6B1 /* uk */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8753,7 +8762,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 4.2.1;
+				MARKETING_VERSION = 4.2.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
@@ -8794,7 +8803,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 4.2.1;
+				MARKETING_VERSION = 4.2.2;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"-ObjC",
@@ -9080,7 +9089,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.2.1;
+				MARKETING_VERSION = 4.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASAuth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -9108,7 +9117,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.2.1;
+				MARKETING_VERSION = 4.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASAuth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -9423,7 +9432,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.2.1;
+				MARKETING_VERSION = 4.2.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASWidget;
@@ -9453,7 +9462,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.2.1;
+				MARKETING_VERSION = 4.2.2;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -9480,7 +9489,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.2.1;
+				MARKETING_VERSION = 4.2.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASServiceIntent;
@@ -9508,7 +9517,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.2.1;
+				MARKETING_VERSION = 4.2.2;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASServiceIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";

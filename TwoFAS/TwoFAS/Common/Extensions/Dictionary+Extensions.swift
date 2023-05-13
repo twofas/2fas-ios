@@ -27,3 +27,4 @@ func + <K, V> (left: [K: V], right: [K: V]) -> [K: V] {
     }
     return tmp
 }
+// swiftlint:enable static_operator

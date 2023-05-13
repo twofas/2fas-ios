@@ -40,3 +40,4 @@ public enum Keys {
         public static let key: String = "P$5U80SQZNT2^I"
     }
 }
+// swiftlint:enable all

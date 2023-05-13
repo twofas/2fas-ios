@@ -4610,3 +4610,4 @@ final class IconDescriptionDatabaseGenerated {
                 name: "University of Groningen"
             )]}()
 }
+// swiftlint:enable all

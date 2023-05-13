@@ -237,6 +237,7 @@ final class ServiceRecord {
         record[.tokenType] = (tokenType ?? "") as CKRecordValue
     }
 }
+// swiftlint:enable line_length
 
 extension ServiceRecord: RecordIDGenerator {
     static func recordID(with identifier: String, zoneID: CKRecordZone.ID) -> CKRecord.ID {

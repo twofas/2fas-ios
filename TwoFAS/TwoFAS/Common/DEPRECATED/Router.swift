@@ -66,7 +66,6 @@ final class Router: NSObject, RouterType {
         
         // swiftlint:disable empty_count
         if count == 0 || count == 1 {
-            
             setRoot(module, animated: animated, hideBar: false, completion: nil)
             return
         }
@@ -87,6 +86,7 @@ final class Router: NSObject, RouterType {
         all.removeSubrange(removedRange)
         all.append(module.toPresent())
         navigationController.setViewControllers(all, animated: animated)
+        // swiftlint:enable empty_count
     }
     
     func setRoot(

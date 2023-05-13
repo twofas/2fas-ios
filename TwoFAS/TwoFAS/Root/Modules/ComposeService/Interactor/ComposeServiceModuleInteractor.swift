@@ -57,6 +57,7 @@ enum ComposeServiceModuleInteractorSectionState {
         }
     }
 }
+// swiftlint:enable discouraged_none_name
 
 protocol ComposeServiceModuleInteracting: AnyObject {
     var webExtensionActive: Bool { get }

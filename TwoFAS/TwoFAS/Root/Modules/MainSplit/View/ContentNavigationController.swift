@@ -63,4 +63,5 @@ final class ContentNavigationController: CommonNavigationController {
             self.navigationBar.isHidden = !self.shouldHide
         }
     }
+    // swiftlint:enable vertical_parameter_alignment_on_call
 }

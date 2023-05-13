@@ -44,6 +44,7 @@ struct AppSecurityMenuCell: Hashable {
         case info(text: String)
         case toggle(toggle: Toggle)
     }
+    // swiftlint:enable discouraged_none_name
     
     enum Action: Hashable {
         case changePIN

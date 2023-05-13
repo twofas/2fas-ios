@@ -72,6 +72,7 @@ extension Code: CustomDebugStringConvertible {
         "[CODE]: \n\t\tIssuer: \(String(describing: issuer)))\n\t\tlabel: \(String(describing: label))\n\t\tperiod: \(String(describing: period))\n\t\tdigits: \(String(describing: digits))\n\t\talgorithm: \(String(describing: algorithm))\n\t\ttokenType: \(tokenType)\n\t\tcounter: \(String(describing: counter))\n\t\totpAuth: \(String(describing: otpAuth))"
         #endif
     }
+    // swiftlint: enable line_length
 }
 
 public extension Code {

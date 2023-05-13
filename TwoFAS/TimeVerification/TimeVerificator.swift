@@ -20,20 +20,20 @@
 import Foundation
 import Kronos
 
-public final class TimeVerificator {
+final class TimeVerificator {
     private let allowedInterval: Int
     
-    public typealias TimeOffset = (Bool, Int) -> Void
+    typealias TimeOffset = (Bool, Int) -> Void
     
-    public var savedTimeOffset: TimeOffset?
-    public var fetchedTimeOffset: TimeOffset?
-    public var cantFetchOffset: (() -> Void)?
+    var savedTimeOffset: TimeOffset?
+    var fetchedTimeOffset: TimeOffset?
+    var cantFetchOffset: (() -> Void)?
     
-    public init(allowedInterval: Int) {
+    init(allowedInterval: Int) {
         self.allowedInterval = allowedInterval
     }
     
-    public func verify() {
+    func verify() {
         var offsetTooLarge = false
         let savedOffset = TimeOffsetStorage.offset
         

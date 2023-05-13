@@ -20,13 +20,7 @@
 import Foundation
 import Common
 
-public protocol TimeVerificationControllerDifference: AnyObject {
-    var currentDate: Date { get }
-    var offset: Int { get }
-    var offsetUpdated: ((Int) -> Void)? { get set }
-}
-
-public final class TimeVerificationController: TimeVerificationControllerDifference {
+public final class TimeVerificationController {
     private let timeVerificator: TimeVerificator
     
     private var isTimeValid = true

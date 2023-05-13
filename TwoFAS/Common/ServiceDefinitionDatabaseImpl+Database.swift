@@ -927,7 +927,7 @@ final class ServiceDefinitionDatabaseGenerated {
             .init(
                 serviceTypeID: UUID(uuidString: "1818B58D-1A0E-48BC-B122-33CB8F48F248")!,
                 name: "Packagist",
-                issuer: nil,
+                issuer: ["Private Packagist"],
                 tags: nil,
                 matchingRules: [.init(field: .issuer, text: "Packagist", matcher: .contains, ignoreCase: true),
 .init(field: .label, text: "Packagist", matcher: .contains, ignoreCase: true)],
@@ -3673,15 +3673,6 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "FF415E4A-32F1-47BE-9274-44AB42F79720")!
-            ),
-            .init(
-                serviceTypeID: UUID(uuidString: "5D274F92-BAB0-408C-979D-358148D6D1CB")!,
-                name: "BTC Markets",
-                issuer: nil,
-                tags: nil,
-                matchingRules: [.init(field: .issuer, text: "BTC Markets", matcher: .contains, ignoreCase: true),
-.init(field: .label, text: "BTC Markets", matcher: .contains, ignoreCase: true)],
-                iconTypeID: UUID(uuidString: "951E95A0-E90B-4BC9-9AE4-6FB9495B0E26")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "5D2778B3-E293-49E7-A39E-66D86C21DD96")!,
@@ -9645,7 +9636,7 @@ final class ServiceDefinitionDatabaseGenerated {
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "F6DE2CAF-AA67-4E98-A6AA-3682B826A21C")!,
-                name: "BTCMarkets",
+                name: "BTC Markets",
                 issuer: ["BtcMarkets"],
                 tags: nil,
                 matchingRules: nil,

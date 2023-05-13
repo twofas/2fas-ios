@@ -1698,10 +1698,6 @@ final class IconDescriptionDatabaseGenerated {
                 name: "PayPal"
             ),
             .init(
-                iconTypeID: IconTypeID(uuidString: "951E95A0-E90B-4BC9-9AE4-6FB9495B0E26")!,
-                name: "BTC Markets"
-            ),
-            .init(
                 iconTypeID: IconTypeID(uuidString: "3C82E6EE-906C-4D6A-9992-01AB376614DB")!,
                 name: "Dropbox"
             ),

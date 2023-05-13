@@ -33,14 +33,19 @@ extension GridSectionHeader {
         
         private let collapse: UIButton = {
             let b = UIButton()
-            b.setImage(Asset.collapseGroup.image, for: .normal)
+            let config = UIImage.SymbolConfiguration(textStyle: .body)
+            b.setImage(UIImage(systemName: "chevron.up", withConfiguration: config), for: .normal)
             b.imageView?.tintColor = Theme.Colors.inactiveInverted
+            b.adjustsImageSizeForAccessibilityContentSizeCategory = true
+            b.setPreferredSymbolConfiguration(config, forImageIn: .normal)
             return b
         }()
         private let expand: UIButton = {
             let b = UIButton()
-            b.setImage(Asset.expandGroup.image, for: .normal)
+            let config = UIImage.SymbolConfiguration(textStyle: .body)
+            b.setImage(UIImage(systemName: "chevron.down", withConfiguration: config), for: .normal)
             b.imageView?.tintColor = Theme.Colors.inactiveInverted
+            b.adjustsImageSizeForAccessibilityContentSizeCategory = true
             return b
         }()
         
@@ -93,9 +98,6 @@ extension GridSectionHeader {
     }
     
     final class UpDown: UIView {
-        static let totalWidth: CGFloat = 70
-        private let width: CGFloat = 35
-        
         var moveUp: Callback?
         var moveDown: Callback?
         
@@ -103,14 +105,19 @@ extension GridSectionHeader {
         
         private let down: UIButton = {
             let b = UIButton()
-            b.setImage(Asset.expandGroup.image, for: .normal)
+            let config = UIImage.SymbolConfiguration(textStyle: .body)
+            b.setImage(UIImage(systemName: "chevron.down", withConfiguration: config), for: .normal)
             b.imageView?.tintColor = Theme.Colors.inactiveInverted
+            b.adjustsImageSizeForAccessibilityContentSizeCategory = true
             return b
         }()
         private let up: UIButton = {
             let b = UIButton()
-            b.setImage(Asset.collapseGroup.image, for: .normal)
+            let config = UIImage.SymbolConfiguration(textStyle: .body)
+            b.setImage(UIImage(systemName: "chevron.up", withConfiguration: config), for: .normal)
             b.imageView?.tintColor = Theme.Colors.inactiveInverted
+            b.adjustsImageSizeForAccessibilityContentSizeCategory = true
+            b.setPreferredSymbolConfiguration(config, forImageIn: .normal)
             return b
         }()
         
@@ -127,20 +134,21 @@ extension GridSectionHeader {
         private func commonInit() {
             addSubview(up, with: [
                 up.leadingAnchor.constraint(equalTo: leadingAnchor),
-                up.widthAnchor.constraint(equalToConstant: width),
                 up.topAnchor.constraint(equalTo: topAnchor),
                 up.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
             up.addTarget(self, action: #selector(upAction), for: .touchUpInside)
             
             addSubview(down, with: [
-                down.leadingAnchor.constraint(equalTo: up.trailingAnchor),
-                down.widthAnchor.constraint(equalToConstant: width),
+                down.leadingAnchor.constraint(equalTo: up.trailingAnchor, constant: ThemeMetrics.spacing),
                 down.topAnchor.constraint(equalTo: topAnchor),
                 down.bottomAnchor.constraint(equalTo: bottomAnchor),
                 down.trailingAnchor.constraint(equalTo: trailingAnchor)
             ])
             down.addTarget(self, action: #selector(downAction), for: .touchUpInside)
+            
+            up.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
+            down.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
             
             setState(.notUsed)
         }
@@ -195,11 +203,10 @@ extension GridSectionHeader {
         }
         
         private func commonInit() {
-            font = Theme.Fonts.sectionHeader
+            font = UIFont.preferredFont(forTextStyle: .body)
             textAlignment = .left
             numberOfLines = 1
             allowsDefaultTighteningForTruncation = true
-            minimumScaleFactor = 0.7
             lineBreakMode = .byTruncatingTail
             setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
             textColor = Theme.Colors.inactiveInverted
@@ -212,16 +219,10 @@ extension GridSectionHeader {
             label.font = UIFontMetrics(forTextStyle: .caption1)
                 .scaledFont(for: .systemFont(ofSize: 12, weight: .medium))
             label.adjustsFontForContentSizeCategory = true
-            label.minimumScaleFactor = 0.5
             label.numberOfLines = 1
             label.textAlignment = .center
-            label.allowsDefaultTighteningForTruncation = true
-            label.adjustsFontSizeToFitWidth = true
-            label.lineBreakMode = .byTruncatingTail
-            label.textColor = Theme.Colors.Text.subtitle
-            label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
-            label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
-            label.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+            label.textColor = Theme.Colors.inactiveInverted
+            label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
             return label
         }()
         
@@ -236,12 +237,12 @@ extension GridSectionHeader {
         }
         
         private func commonInit() {
-            applyRoundedBorder(withBorderColor: ThemeColor.secondarySofter, width: 1)
-            let margin = Theme.Metrics.standardMargin
+            let margin = Theme.Metrics.standardMargin / 2.0
+            applyRoundedBorder(withBorderColor: ThemeColor.tableSeparator, width: 1)
             addSubview(label, with: [
-                label.widthAnchor.constraint(equalTo: label.heightAnchor),
-                label.topAnchor.constraint(equalTo: topAnchor, constant: margin),
-                label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
+                widthAnchor.constraint(equalTo: heightAnchor),
+                label.topAnchor.constraint(equalTo: topAnchor),
+                label.bottomAnchor.constraint(equalTo: bottomAnchor),
                 label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
                 label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin)
             ])
@@ -253,8 +254,6 @@ extension GridSectionHeader {
     }
     
     final class MenuButton: UIButton {
-        static let buttonSize: CGFloat = 50
-        
         override init(frame: CGRect) {
             super.init(frame: frame)
             commonInit()
@@ -266,11 +265,11 @@ extension GridSectionHeader {
         }
         
         private func commonInit() {
-            setImage(UIImage(systemName: "ellipsis"), for: .normal)
+            let config = UIImage.SymbolConfiguration(textStyle: .body)
+            adjustsImageSizeForAccessibilityContentSizeCategory = true
+            setImage(UIImage(systemName: "ellipsis", withConfiguration: config), for: .normal)
             imageView?.tintColor = Theme.Colors.Icon.normal
             showsMenuAsPrimaryAction = true
         }
-        
-        override var intrinsicContentSize: CGSize { CGSize(width: Self.buttonSize, height: Self.buttonSize) }
     }
 }

@@ -369,11 +369,10 @@ private extension TokensModuleInteractor {
         
         var startIndex: Int = 0
         var currentIndex: Int = 0
-        var totalIndex: Int = categoryData.count - 1
+        let totalIndex: Int = categoryData.count - 1
         
         if categoryData.contains(where: { $0.section == nil }) {
             startIndex = 1
-            totalIndex -= 1
         }
         
         let data = categoryData.reduce([GridSection: [GridCell]]()) { dict, category -> [GridSection: [GridCell]] in
@@ -411,7 +410,7 @@ private extension TokensModuleInteractor {
     func createEditSnapshot(isSearching: Bool) -> NSDiffableDataSourceSnapshot<GridSection, GridCell> {
         var snapshot = NSDiffableDataSourceSnapshot<GridSection, GridCell>()
         
-        let startIndex: Int = 1
+        var startIndex: Int = 0
         var currentIndex: Int = 0
         let totalIndex: Int = categoryData.count - 1
         
@@ -427,7 +426,8 @@ private extension TokensModuleInteractor {
             )
             snapshot.appendSections([emptySection])
             snapshot.appendItems([createEmptyCell()], toSection: emptySection)
-            currentIndex += 1
+        } else {
+            startIndex = 1
         }
         var sections: [GridSection] = []
         let data = categoryData.reduce([GridSection: [GridCell]]()) { dict, category -> [GridSection: [GridCell]] in
@@ -499,7 +499,9 @@ private extension TokensModuleInteractor {
     }
     
     func sectionPosition(for startIndex: Int, currentIndex: Int, totalIndex: Int) -> GridSection.Position {
-        guard startIndex <= currentIndex || totalIndex > 1  else { return .notUsed }
+        if startIndex > currentIndex || totalIndex < 2 {
+            return .notUsed
+        }
         if startIndex == currentIndex {
             return .first
         } else if currentIndex == totalIndex {

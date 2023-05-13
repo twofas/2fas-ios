@@ -24,7 +24,7 @@ protocol TokensSectionHeaderDataSource: AnyObject {
     func collapseAction(with section: GridSection)
     func moveDown(_ section: GridSection)
     func moveUp(_ section: GridSection)
-    func rename(_ section: GridSection, with title: String)
+    func rename(_ section: GridSection)
     func delete(_ section: GridSection)
 }
 
@@ -46,11 +46,14 @@ final class GridSectionHeader: UICollectionReusableView {
     private let upDown = UpDown()
     private let menuButton = MenuButton()
     
-//    private var editLabelLeading: NSLayoutConstraint?
+    private var normalConstraint: NSLayoutConstraint?
+    private var editConstraint: NSLayoutConstraint?
     
     private let normalContainer = UIView()
     private let editContainer = UIView()
-        
+    
+    private var isEditing = false
+    
     private var config: GridSection?
     
     override init(frame: CGRect) {
@@ -66,7 +69,6 @@ final class GridSectionHeader: UICollectionReusableView {
     private func commonInit() {
         backgroundColor = Theme.Colors.Fill.System.forth
         
-//        accessoryView = menuButton
         menuButton.menu = menu()
         
         collapseButton.userChangedCollapse = { [weak self] in self?.collapseAction() }
@@ -85,13 +87,29 @@ final class GridSectionHeader: UICollectionReusableView {
         ])
         
         addSubview(titleLabel, with: [
-            counter.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.standardMargin),
-            counter.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Theme.Metrics.standardMargin),
-            counter.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: Theme.Metrics.doubleMargin)
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.standardMargin),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Theme.Metrics.standardMargin),
+            counter.trailingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -Theme.Metrics.doubleMargin)
         ])
         
         setupNormalContainer()
         setupEditContainer()
+        
+        normalConstraint = titleLabel.trailingAnchor.constraint(
+            equalTo: normalContainer.leadingAnchor,
+            constant: -Theme.Metrics.doubleMargin
+        )
+        editConstraint = titleLabel.trailingAnchor.constraint(
+            equalTo: editContainer.leadingAnchor,
+            constant: -Theme.Metrics.doubleMargin
+        )
+        
+        normalConstraint?.isActive = true
+        counter.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
+        counter.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
+        upDown.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
+        collapseButton.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
+        menuButton.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
         
         upDown.moveUp = { [weak self] in
             guard let config = self?.config else { return }
@@ -101,34 +119,41 @@ final class GridSectionHeader: UICollectionReusableView {
         upDown.moveDown = { [weak self] in
             guard let config = self?.config else { return }
             self?.dataSource?.moveDown(config)
-        }
-        
-        //ServiceRules.isSectionNameValid(sectionName: newText.trim())
+        }        
     }
         
     func setIsEditing(_ isEditing: Bool) {
-        normalContainer.isHidden = isEditing
-        editContainer.isHidden = !isEditing
-        // switch anchors for title label!
+        self.isEditing = isEditing
+        setupContainers()
     }
     
     func setConfiguration(_ config: GridSection) {
         self.config = config
         updateCollapsedState()
         
-        let isNilSection = (config.sectionID == nil)
+        upDown.isHidden = config.isNilSection || config.position == .notUsed
+
+        setupContainers()
+        counter.setCount(String(config.elementCount))
+        setTitle(config.title ?? T.Tokens.myTokens)
         
-        upDown.isHidden = isNilSection || config.position == .notUsed
-//        if isNilSection {
-//            editLabelLeading?.constant = Theme.Metrics.doubleMargin
-//        } else {
-//            editLabelLeading?.constant = Theme.Metrics.doubleMargin + UpDown.totalWidth
-//        }
-        
-        setTitle(config.title ?? T.Tokens.myTokens, numberOfItems: config.elementCount)
         upDown.setState(config.position)
-        
-        setTitle(config.title ?? "", numberOfItems: config.elementCount)
+    }
+    
+    private func setupContainers() {
+        if config?.isNilSection == true {
+            normalContainer.isHidden = true
+            editContainer.isHidden = true
+            
+            normalConstraint?.isActive = true
+            editConstraint?.isActive = false
+        } else {
+            normalContainer.isHidden = isEditing
+            editContainer.isHidden = !isEditing
+            
+            normalConstraint?.isActive = !isEditing
+            editConstraint?.isActive = isEditing
+        }
     }
     
     private func updateCollapsedState() {
@@ -146,14 +171,19 @@ final class GridSectionHeader: UICollectionReusableView {
     }
     
     private func setupNormalContainer() {
+        let margin = Theme.Metrics.standardMargin
         addSubview(normalContainer, with: [
-            normalContainer.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.standardMargin),
-            normalContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Theme.Metrics.standardMargin),
-            normalContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Theme.Metrics.standardMargin)
+            normalContainer.topAnchor.constraint(equalTo: topAnchor, constant: margin),
+            normalContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
+            normalContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin)
         ])
         
-        normalContainer.addSubview(collapseButton)
-        collapseButton.pinToParent()
+        normalContainer.addSubview(collapseButton, with: [
+            collapseButton.leadingAnchor.constraint(equalTo: normalContainer.leadingAnchor, constant: margin),
+            collapseButton.topAnchor.constraint(equalTo: normalContainer.topAnchor),
+            collapseButton.bottomAnchor.constraint(equalTo: normalContainer.bottomAnchor),
+            collapseButton.trailingAnchor.constraint(equalTo: normalContainer.trailingAnchor, constant: -margin)
+        ])
                 
         normalContainer.addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(normalContainerTapAction))
@@ -161,10 +191,11 @@ final class GridSectionHeader: UICollectionReusableView {
     }
     
     private func setupEditContainer() {
+        let margin = Theme.Metrics.standardMargin
         addSubview(editContainer, with: [
-            editContainer.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.standardMargin),
-            editContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Theme.Metrics.standardMargin),
-            editContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Theme.Metrics.standardMargin)
+            editContainer.topAnchor.constraint(equalTo: topAnchor, constant: margin),
+            editContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
+            editContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin)
         ])
         
         editContainer.addSubview(upDown, with: [
@@ -176,8 +207,8 @@ final class GridSectionHeader: UICollectionReusableView {
         editContainer.addSubview(menuButton, with: [
             menuButton.topAnchor.constraint(equalTo: editContainer.topAnchor),
             menuButton.bottomAnchor.constraint(equalTo: editContainer.bottomAnchor),
-            menuButton.leadingAnchor.constraint(equalTo: upDown.trailingAnchor, constant: Theme.Metrics.standardMargin),
-            menuButton.trailingAnchor.constraint(equalTo: editContainer.trailingAnchor)
+            menuButton.leadingAnchor.constraint(equalTo: upDown.trailingAnchor, constant: margin),
+            menuButton.trailingAnchor.constraint(equalTo: editContainer.trailingAnchor, constant: -margin)
         ])
     }
     
@@ -185,20 +216,6 @@ final class GridSectionHeader: UICollectionReusableView {
     private func normalContainerTapAction() {
         collapseAction()
     }
-    
-//    @objc
-//    private func doneAction() {
-//        titleInput.resignFirstResponder()
-//        editContainer.isHidden = false
-//        editSectionContainer.isHidden = true
-//        guard
-//            let config,
-//            let newTitle = titleInput.text?.trim(),
-//            newTitle != config.title,
-//            !newTitle.isEmpty
-//        else { return }
-//        dataSource?.rename(config, with: newTitle)
-//    }
     
     private func collapseAction() {
         guard let config, collapseButton.isActive else { return }
@@ -211,7 +228,7 @@ final class GridSectionHeader: UICollectionReusableView {
         dataSource?.collapseAction(with: config)
     }
     
-    private func setTitle(_ title: String, numberOfItems: Int) {
+    private func setTitle(_ title: String) {
         titleLabel.text = title.uppercased()
     }
     
@@ -221,8 +238,7 @@ final class GridSectionHeader: UICollectionReusableView {
             image: UIImage(systemName: "pencil")
         ) { [weak self] _ in
             guard let config = self?.config else { return }
-//            guard let currentIndexPath = self?.currentIndexPath else { return }
-//            self?.restore?(currentIndexPath)
+            self?.dataSource?.rename(config)
         }
         
         let delete = UIAction(

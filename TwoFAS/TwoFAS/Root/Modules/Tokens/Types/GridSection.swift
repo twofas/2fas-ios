@@ -38,4 +38,8 @@ struct GridSection: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(sectionID)
     }
+    
+    var isNilSection: Bool {
+        sectionID == nil
+    }
 }

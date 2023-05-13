@@ -32,8 +32,8 @@ extension TokensViewController: TokensSectionHeaderDataSource {
         presenter.handleMoveUp(section)
     }
     
-    func rename(_ section: GridSection, with title: String) {
-        presenter.handleRename(section, with: title)
+    func rename(_ section: GridSection) {
+        presenter.handleRename(section)
     }
     
     func delete(_ section: GridSection) {

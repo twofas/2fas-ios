@@ -34,6 +34,7 @@ protocol TokensPlainFlowControlling: AnyObject {
     // MARK: Section
     func toAskDeleteSection(_ callback: @escaping Callback)
     func toCreateSection(_ callback: @escaping (String) -> Void)
+    func toRenameSection(current name: String, callback: @escaping (String) -> Void)
     // MARK: Camera
     func toShowCamera()
     func toCameraNotAvailable()
@@ -183,6 +184,24 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
             message: T.Tokens.groupName,
             actionName: T.Commons.add,
             defaultText: "",
+            action: { newName in
+                callback(newName.trim())
+            },
+            cancel: nil,
+            verify: { sectionName in
+                ServiceRules.isSectionNameValid(sectionName: sectionName.trim())
+            })
+        
+        mainSplitViewController.present(alert, animated: true, completion: nil)
+    }
+    
+    func toRenameSection(current name: String, callback: @escaping (String) -> Void) {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        let alert = AlertControllerPromptFactory.create(
+            title: T.Commons.rename,
+            message: T.Tokens.groupName,
+            actionName: T.Commons.rename,
+            defaultText: name,
             action: { newName in
                 callback(newName.trim())
             },

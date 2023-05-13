@@ -319,10 +319,12 @@ extension TokensPresenter {
         reloadData()
     }
     
-    func handleRename(_ section: GridSection, with title: String) {
+    func handleRename(_ section: GridSection) {
         Log("TokensPresenter - handleRename")
-        interactor.rename(section, with: title)
-        reloadData()
+        flowController.toRenameSection(current: section.title ?? "") { [weak self] name in
+            self?.interactor.rename(section, with: name)
+            self?.reloadData()
+        }
     }
     
     func handleShowSectionDeleteQuestion(_ section: GridSection) {

@@ -28,7 +28,7 @@ final class TokensViewController: UIViewController {
     private(set) var gridView: GridView!
     private(set) var dataSource: UICollectionViewDiffableDataSource<GridSection, GridCell>!
     
-    let headerHeight: CGFloat = 50
+    let headerHeight: CGFloat = 44
     let emptySearchScreenView = GridViewEmptySearchScreen()
     let emptyListScreenView = GridViewEmptyListScreen()
     
@@ -235,7 +235,7 @@ private extension TokensViewController {
                 return columns
             }()
             let itemSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
+                widthDimension: .fractionalWidth(1.0),
                 heightDimension: .estimated(60) // TODO: Move to constant depending on cell type
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -252,13 +252,14 @@ private extension TokensViewController {
             
             let headerFooterSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .absolute(self.headerHeight)
+                heightDimension: .estimated(self.headerHeight)
             )
             let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: headerFooterSize,
                 elementKind: UICollectionView.elementKindSectionHeader,
                 alignment: .top
             )
+            sectionHeader.pinToVisibleBounds = true
             let section = NSCollectionLayoutSection(group: group)
             
             if !(!self.gridView.isEditing && sectionOffset == 0 && self.presenter.isMainOnlyCategory) {

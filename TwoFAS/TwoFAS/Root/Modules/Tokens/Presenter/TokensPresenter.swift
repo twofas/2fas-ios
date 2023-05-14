@@ -302,24 +302,24 @@ extension TokensPresenter {
         reloadData()
     }
     
-    func handleToggleCollapseAction(with section: GridSection) {
+    func handleToggleCollapseAction(with section: TokensSection) {
         interactor.toggleCollapseSection(section)
         reloadData()
     }
     
-    func handleMoveDown(_ section: GridSection) {
+    func handleMoveDown(_ section: TokensSection) {
         Log("TokensPresenter - handleMoveDown")
         interactor.moveDown(section)
         reloadData()
     }
     
-    func handleMoveUp(_ section: GridSection) {
+    func handleMoveUp(_ section: TokensSection) {
         Log("TokensPresenter - handleMoveUp")
         interactor.moveUp(section)
         reloadData()
     }
     
-    func handleRename(_ section: GridSection) {
+    func handleRename(_ section: TokensSection) {
         Log("TokensPresenter - handleRename")
         flowController.toRenameSection(current: section.title ?? "") { [weak self] name in
             self?.interactor.rename(section, with: name)
@@ -327,7 +327,7 @@ extension TokensPresenter {
         }
     }
     
-    func handleShowSectionDeleteQuestion(_ section: GridSection) {
+    func handleShowSectionDeleteQuestion(_ section: TokensSection) {
         Log("TokensPresenter - handleShowSectionDeleteQuestion")
         flowController.toAskDeleteSection { [weak self] in
             Log("TokensPresenter - handleShowSectionDeleteQuestion - deleting")

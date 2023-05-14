@@ -86,7 +86,6 @@
 		C21247F627B70D340044D9F2 /* LabelComposePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21247F527B70D340044D9F2 /* LabelComposePresenter.swift */; };
 		C21247F827B70D420044D9F2 /* LabelComposeFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21247F727B70D420044D9F2 /* LabelComposeFlowController.swift */; };
 		C21247FB27B7181A0044D9F2 /* ComposeServiceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21247FA27B7181A0044D9F2 /* ComposeServiceModels.swift */; };
-		C213E46B2277561700AE1620 /* GridViewEditItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C213E46A2277561700AE1620 /* GridViewEditItemCell.swift */; };
 		C2147CB9205D78600001D011 /* Protection.h in Headers */ = {isa = PBXBuildFile; fileRef = C2147CB7205D78600001D011 /* Protection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2147CBC205D78600001D011 /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
 		C2147CBD205D78600001D011 /* Protection.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -150,8 +149,8 @@
 		C225E612241CFCD10041C238 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C225E614241CFCD10041C238 /* InfoPlist.strings */; };
 		C225E615241CFCE90041C238 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C225E617241CFCE90041C238 /* Localizable.strings */; };
 		C225E619241D35FE0041C238 /* ViewPathInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C225E618241D35FE0041C238 /* ViewPathInteractor.swift */; };
-		C228603226697250005E88E3 /* GridSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C228603126697250005E88E3 /* GridSection.swift */; };
-		C2286034266972B5005E88E3 /* GridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2286033266972B5005E88E3 /* GridCell.swift */; };
+		C228603226697250005E88E3 /* TokensSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C228603126697250005E88E3 /* TokensSection.swift */; };
+		C2286034266972B5005E88E3 /* TokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2286033266972B5005E88E3 /* TokenCell.swift */; };
 		C2290334276BA78C0005C8F2 /* AppLockStateInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2290333276BA78C0005C8F2 /* AppLockStateInteractor.swift */; };
 		C22A866A287F60BD009A43FE /* MainRepositoryImpl+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22A8669287F60BD009A43FE /* MainRepositoryImpl+Notifications.swift */; };
 		C22C1399267682B4001AA5F1 /* CategoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22C1398267682B4001AA5F1 /* CategoryData.swift */; };
@@ -356,11 +355,11 @@
 		C25C318D2881BC5A002C9044 /* NotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C318C2881BC5A002C9044 /* NotificationInteractor.swift */; };
 		C25C318F2881CDA4002C9044 /* LinkInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C318E2881CDA4002C9044 /* LinkInteractor.swift */; };
 		C25C661428BADAB0008EC66A /* AboutFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C661328BADAB0008EC66A /* AboutFlowController.swift */; };
-		C25E898E2663DF9700A60CE5 /* GridSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E898D2663DF9700A60CE5 /* GridSectionHeader.swift */; };
+		C25E898E2663DF9700A60CE5 /* TokensSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E898D2663DF9700A60CE5 /* TokensSectionHeader.swift */; };
 		C25E89902663F11900A60CE5 /* SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E898F2663F11900A60CE5 /* SectionData.swift */; };
 		C25E8994266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E8992266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift */; };
 		C25E8995266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E8993266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift */; };
-		C25F4FDB2622207F008F7755 /* GridViewEmptySearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25F4FDA2622207F008F7755 /* GridViewEmptySearchScreen.swift */; };
+		C25F4FDB2622207F008F7755 /* TokensViewEmptySearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25F4FDA2622207F008F7755 /* TokensViewEmptySearchScreen.swift */; };
 		C25F50392622411A008F7755 /* ServiceData+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25F50382622411A008F7755 /* ServiceData+.swift */; };
 		C2625F8C28BB853D00D84C5C /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F8B28BB853D00D84C5C /* AboutViewController.swift */; };
 		C2625F8E28BB858600D84C5C /* AboutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F8D28BB858600D84C5C /* AboutPresenter.swift */; };
@@ -545,7 +544,7 @@
 		C2932EFF1FFE94B400FBD4D0 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2932EFE1FFE94B400FBD4D0 /* Config.swift */; };
 		C2932F001FFE959B00FBD4D0 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2932EF21FFE94A900FBD4D0 /* Common.framework */; };
 		C2959627267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2959626267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift */; };
-		C295962B267F79190086DEB1 /* GridSectionHeader+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C295962A267F79190086DEB1 /* GridSectionHeader+.swift */; };
+		C295962B267F79190086DEB1 /* TokensSectionHeader+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C295962A267F79190086DEB1 /* TokensSectionHeader+.swift */; };
 		C29626B8236F80A200C133BC /* Animate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29626B7236F80A200C133BC /* Animate.swift */; };
 		C29626DA2370BD7F00C133BC /* TimeVerification.h in Headers */ = {isa = PBXBuildFile; fileRef = C29626D82370BD7F00C133BC /* TimeVerification.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C29626DD2370BD7F00C133BC /* TimeVerification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C29626D62370BD7F00C133BC /* TimeVerification.framework */; };
@@ -582,6 +581,7 @@
 		C2A283352186071200967022 /* AlertControllerPromptFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A283342186071200967022 /* AlertControllerPromptFactory.swift */; };
 		C2A2AF6F23D8EA710059094D /* UIActivityIndicator+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A2AF6E23D8EA710059094D /* UIActivityIndicator+.swift */; };
 		C2A2D23428F751A000B5D91E /* ExchangeDataFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A2D23228F7513400B5D91E /* ExchangeDataFormat.swift */; };
+		C2A4C8352A10F13800AFD67C /* TokensTOTPCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4C8342A10F13800AFD67C /* TokensTOTPCell.swift */; };
 		C2A57C5A26ACAB2800D3B344 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A57C5826ACAAD000D3B344 /* Extensions.swift */; };
 		C2A5C67523D7144200B556A5 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC6DA1FC1CC6700967D0E /* Log.swift */; };
 		C2A6E7041FC7664800C83DCE /* PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A6E7031FC7664800C83DCE /* PushNotifications.swift */; };
@@ -691,7 +691,7 @@
 		C2B39E5929F5BD7800EC31F6 /* TokensCategoryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5829F5BD7800EC31F6 /* TokensCategoryComponent.swift */; };
 		C2B39E5B29F5D0AA00EC31F6 /* TokensServiceNameComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5A29F5D0AA00EC31F6 /* TokensServiceNameComponent.swift */; };
 		C2B3D1A8267E6BEC009E6DE0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B3D1A7267E6BEC009E6DE0 /* Extensions.swift */; };
-		C2B3D1AA267E91E9009E6DE0 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B3D1A9267E91E9009E6DE0 /* GridView.swift */; };
+		C2B3D1AA267E91E9009E6DE0 /* TokensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B3D1A9267E91E9009E6DE0 /* TokensView.swift */; };
 		C2B563F51FD895460011CAAA /* PermissionsStateDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B563F41FD895460011CAAA /* PermissionsStateDataController.swift */; };
 		C2B5BF53294601BE00E5092D /* TokensPlainFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BF52294601BE00E5092D /* TokensPlainFlowController.swift */; };
 		C2B5BF5529460E9C00E5092D /* TokensExternalAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BF5429460E9C00E5092D /* TokensExternalAction.swift */; };
@@ -852,7 +852,7 @@
 		C2DBE59C243A513A00E96242 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2932EF21FFE94A900FBD4D0 /* Common.framework */; platformFilter = ios; };
 		C2DCDB3E28A9A00E00DABB0F /* EditCommonIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DCDB3D28A9A00E00DABB0F /* EditCommonIcon.swift */; };
 		C2DDEB1F289ED4A300011712 /* IntroductionDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DDEB1E289ED4A300011712 /* IntroductionDots.swift */; };
-		C2DDEB25289F3D5200011712 /* GridViewEmptyListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DDEB24289F3D5200011712 /* GridViewEmptyListScreen.swift */; };
+		C2DDEB25289F3D5200011712 /* TokensViewEmptyListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */; };
 		C2DEC2DF27CD298400EAC01A /* GridViewCounterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DEC2DE27CD298400EAC01A /* GridViewCounterItemCell.swift */; };
 		C2DEC7A326767B28006DB1E6 /* SectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DEC7A226767B28006DB1E6 /* SectionHandler.swift */; };
 		C2DF246029859F9700762A26 /* MainRepository+ViewPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DF245F29859F9700762A26 /* MainRepository+ViewPath.swift */; };
@@ -1329,7 +1329,6 @@
 		C21247F527B70D340044D9F2 /* LabelComposePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelComposePresenter.swift; sourceTree = "<group>"; };
 		C21247F727B70D420044D9F2 /* LabelComposeFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelComposeFlowController.swift; sourceTree = "<group>"; };
 		C21247FA27B7181A0044D9F2 /* ComposeServiceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceModels.swift; sourceTree = "<group>"; };
-		C213E46A2277561700AE1620 /* GridViewEditItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridViewEditItemCell.swift; sourceTree = "<group>"; };
 		C2147CB5205D78600001D011 /* Protection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Protection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2147CB7205D78600001D011 /* Protection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Protection.h; sourceTree = "<group>"; };
 		C2147CB8205D78600001D011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1394,8 +1393,8 @@
 		C225E613241CFCD10041C238 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C225E616241CFCE90041C238 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C225E618241D35FE0041C238 /* ViewPathInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPathInteractor.swift; sourceTree = "<group>"; };
-		C228603126697250005E88E3 /* GridSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridSection.swift; sourceTree = "<group>"; };
-		C2286033266972B5005E88E3 /* GridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
+		C228603126697250005E88E3 /* TokensSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensSection.swift; sourceTree = "<group>"; };
+		C2286033266972B5005E88E3 /* TokenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCell.swift; sourceTree = "<group>"; };
 		C2290333276BA78C0005C8F2 /* AppLockStateInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockStateInteractor.swift; sourceTree = "<group>"; };
 		C22A82E829EDCC5E00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C22A82E929EDCC5F00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1595,12 +1594,12 @@
 		C25C318C2881BC5A002C9044 /* NotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationInteractor.swift; sourceTree = "<group>"; };
 		C25C318E2881CDA4002C9044 /* LinkInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkInteractor.swift; sourceTree = "<group>"; };
 		C25C661328BADAB0008EC66A /* AboutFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutFlowController.swift; sourceTree = "<group>"; };
-		C25E898D2663DF9700A60CE5 /* GridSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridSectionHeader.swift; sourceTree = "<group>"; };
+		C25E898D2663DF9700A60CE5 /* TokensSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensSectionHeader.swift; sourceTree = "<group>"; };
 		C25E898F2663F11900A60CE5 /* SectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionData.swift; sourceTree = "<group>"; };
 		C25E89912664021900A60CE5 /* TwoFAS4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS4.xcdatamodel; sourceTree = "<group>"; };
 		C25E8992266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C25E8993266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		C25F4FDA2622207F008F7755 /* GridViewEmptySearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewEmptySearchScreen.swift; sourceTree = "<group>"; };
+		C25F4FDA2622207F008F7755 /* TokensViewEmptySearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensViewEmptySearchScreen.swift; sourceTree = "<group>"; };
 		C25F50382622411A008F7755 /* ServiceData+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceData+.swift"; sourceTree = "<group>"; };
 		C261A1212A12BECC00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C261A1222A12BECC00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1800,7 +1799,7 @@
 		C2932EF51FFE94A900FBD4D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C2932EFE1FFE94B400FBD4D0 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		C2959626267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDiffableDataSourceSnapshot+.swift"; sourceTree = "<group>"; };
-		C295962A267F79190086DEB1 /* GridSectionHeader+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GridSectionHeader+.swift"; sourceTree = "<group>"; };
+		C295962A267F79190086DEB1 /* TokensSectionHeader+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensSectionHeader+.swift"; sourceTree = "<group>"; };
 		C29626B7236F80A200C133BC /* Animate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animate.swift; sourceTree = "<group>"; };
 		C29626D62370BD7F00C133BC /* TimeVerification.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TimeVerification.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C29626D82370BD7F00C133BC /* TimeVerification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeVerification.h; sourceTree = "<group>"; };
@@ -1841,6 +1840,7 @@
 		C2A283342186071200967022 /* AlertControllerPromptFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControllerPromptFactory.swift; sourceTree = "<group>"; };
 		C2A2AF6E23D8EA710059094D /* UIActivityIndicator+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicator+.swift"; sourceTree = "<group>"; };
 		C2A2D23228F7513400B5D91E /* ExchangeDataFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeDataFormat.swift; sourceTree = "<group>"; };
+		C2A4C8342A10F13800AFD67C /* TokensTOTPCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTOTPCell.swift; sourceTree = "<group>"; };
 		C2A57C5826ACAAD000D3B344 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C2A6E7031FC7664800C83DCE /* PushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotifications.swift; sourceTree = "<group>"; };
 		C2A6E7071FC9D14500C83DCE /* APNS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APNS.swift; sourceTree = "<group>"; };
@@ -1953,7 +1953,7 @@
 		C2B39E5829F5BD7800EC31F6 /* TokensCategoryComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCategoryComponent.swift; sourceTree = "<group>"; };
 		C2B39E5A29F5D0AA00EC31F6 /* TokensServiceNameComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensServiceNameComponent.swift; sourceTree = "<group>"; };
 		C2B3D1A7267E6BEC009E6DE0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		C2B3D1A9267E91E9009E6DE0 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		C2B3D1A9267E91E9009E6DE0 /* TokensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensView.swift; sourceTree = "<group>"; };
 		C2B563F41FD895460011CAAA /* PermissionsStateDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsStateDataController.swift; sourceTree = "<group>"; };
 		C2B5BF52294601BE00E5092D /* TokensPlainFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensPlainFlowController.swift; sourceTree = "<group>"; };
 		C2B5BF5429460E9C00E5092D /* TokensExternalAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensExternalAction.swift; sourceTree = "<group>"; };
@@ -2103,7 +2103,7 @@
 		C2DBC890226FA92200EF6CF4 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		C2DCDB3D28A9A00E00DABB0F /* EditCommonIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommonIcon.swift; sourceTree = "<group>"; };
 		C2DDEB1E289ED4A300011712 /* IntroductionDots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionDots.swift; sourceTree = "<group>"; };
-		C2DDEB24289F3D5200011712 /* GridViewEmptyListScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridViewEmptyListScreen.swift; sourceTree = "<group>"; };
+		C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensViewEmptyListScreen.swift; sourceTree = "<group>"; };
 		C2DEC2DE27CD298400EAC01A /* GridViewCounterItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridViewCounterItemCell.swift; sourceTree = "<group>"; };
 		C2DEC7A226767B28006DB1E6 /* SectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHandler.swift; sourceTree = "<group>"; };
 		C2DF245F29859F9700762A26 /* MainRepository+ViewPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepository+ViewPath.swift"; sourceTree = "<group>"; };
@@ -3802,14 +3802,14 @@
 			children = (
 				C2B39E5529F5880D00EC31F6 /* Types */,
 				C2B39E4F29F5841700EC31F6 /* TokensEditCell.swift */,
-				C213E46A2277561700AE1620 /* GridViewEditItemCell.swift */,
 				C209E9B8267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift */,
+				C25E898D2663DF9700A60CE5 /* TokensSectionHeader.swift */,
+				C295962A267F79190086DEB1 /* TokensSectionHeader+.swift */,
+				C2A4C8342A10F13800AFD67C /* TokensTOTPCell.swift */,
 				C2B39E4E29F5834400EC31F6 /* Components */,
 				C22D3EEF25EAB590007E86CF /* GridCollectionViewCell.swift */,
 				C2C66F9C1FE06AD700AD5A1C /* GridViewItemCell.swift */,
 				C2DEC2DE27CD298400EAC01A /* GridViewCounterItemCell.swift */,
-				C25E898D2663DF9700A60CE5 /* GridSectionHeader.swift */,
-				C295962A267F79190086DEB1 /* GridSectionHeader+.swift */,
 				C278C05B26C97D6000FECBD4 /* InfoNextTokenView.swift */,
 				C28B38C827CD784D00BD4A96 /* RefreshTokenCounter.swift */,
 			);
@@ -4207,9 +4207,9 @@
 			isa = PBXGroup;
 			children = (
 				C245701D28A048D1008E99F4 /* GAImport */,
-				C2B3D1A9267E91E9009E6DE0 /* GridView.swift */,
-				C25F4FDA2622207F008F7755 /* GridViewEmptySearchScreen.swift */,
-				C2DDEB24289F3D5200011712 /* GridViewEmptyListScreen.swift */,
+				C2B3D1A9267E91E9009E6DE0 /* TokensView.swift */,
+				C25F4FDA2622207F008F7755 /* TokensViewEmptySearchScreen.swift */,
+				C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */,
 				C244F9DF22762955009992D3 /* Cell */,
 			);
 			path = Subviews;
@@ -4218,8 +4218,8 @@
 		C25F502A26223F73008F7755 /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				C2286033266972B5005E88E3 /* GridCell.swift */,
-				C228603126697250005E88E3 /* GridSection.swift */,
+				C2286033266972B5005E88E3 /* TokenCell.swift */,
+				C228603126697250005E88E3 /* TokensSection.swift */,
 				C2872DD927A6B9C2000F5AE9 /* SortType+.swift */,
 				C29646DB257421D2007FD35F /* ActiveEditingProtocol.swift */,
 				C2248BB02277935200AC231C /* GridViewState.swift */,
@@ -7358,7 +7358,7 @@
 				C22D3EF025EAB590007E86CF /* GridCollectionViewCell.swift in Sources */,
 				C2AD653727F26139008997DB /* BrowserExtensionPairingSuccessFlowController.swift in Sources */,
 				C2248BB12277935200AC231C /* GridViewState.swift in Sources */,
-				C25E898E2663DF9700A60CE5 /* GridSectionHeader.swift in Sources */,
+				C25E898E2663DF9700A60CE5 /* TokensSectionHeader.swift in Sources */,
 				C2AB92C227664B9200698382 /* PINKeyboardPresenter.swift in Sources */,
 				C263F45E29901C4F009B0837 /* MainSplitFlowController.swift in Sources */,
 				C20935D2292142B4000F5AA7 /* WidgetsInteractor.swift in Sources */,
@@ -7446,6 +7446,7 @@
 				C2117183276CE83B00042D28 /* VerifyPINModuleInteractor.swift in Sources */,
 				C24048712765612F0076376E /* RootNavigationController.swift in Sources */,
 				C21111E8274AB98000CA7C78 /* SettingsViewController.swift in Sources */,
+				C2A4C8352A10F13800AFD67C /* TokensTOTPCell.swift in Sources */,
 				C2117181276CE54900042D28 /* VerifyPINFlowController.swift in Sources */,
 				C29FEFF92756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift in Sources */,
 				C2D6F4B427D414A100D933FB /* ServiceAddedServiceContainerViewHOTP.swift in Sources */,
@@ -7502,7 +7503,7 @@
 				C2F5F9E328611D6200F778E1 /* BrowserExtensionPairingAlreadyPairedFlowController.swift in Sources */,
 				C28356232897098300421882 /* SelectFromGalleryAdvice.swift in Sources */,
 				C296D1EE28B2D52C001F026D /* UserIconInfoFlowController.swift in Sources */,
-				C228603226697250005E88E3 /* GridSection.swift in Sources */,
+				C228603226697250005E88E3 /* TokensSection.swift in Sources */,
 				C2C66F9D1FE06AD700AD5A1C /* GridViewItemCell.swift in Sources */,
 				C2823B1626F3E84F00583586 /* RevealPasswordInput.swift in Sources */,
 				C26764B22872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift in Sources */,
@@ -7571,7 +7572,7 @@
 				C22E6F9F21E21A1E00A2E66B /* NotificationIcon.swift in Sources */,
 				C2625F9428BBC01900D84C5C /* AboutPresenter+Menu.swift in Sources */,
 				C2AD653927F26196008997DB /* BrowserExtensionSuccessPresenter.swift in Sources */,
-				C2B3D1AA267E91E9009E6DE0 /* GridView.swift in Sources */,
+				C2B3D1AA267E91E9009E6DE0 /* TokensView.swift in Sources */,
 				C2F33940214AB53F0072FE80 /* RatingController.swift in Sources */,
 				C2CE84A12814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift in Sources */,
 				C26D1AC52600041400D3D868 /* UIImage+.swift in Sources */,
@@ -7692,7 +7693,7 @@
 				C249773A277F618A00DC872C /* TrashServiceFlowController.swift in Sources */,
 				C2147CEB205D7FCA0001D011 /* Security.swift in Sources */,
 				C2BD85DC26402A910087D087 /* IntroductionContainerView.swift in Sources */,
-				C2DDEB25289F3D5200011712 /* GridViewEmptyListScreen.swift in Sources */,
+				C2DDEB25289F3D5200011712 /* TokensViewEmptyListScreen.swift in Sources */,
 				C2872DD627A6A1FE000F5AE9 /* SortInteractor.swift in Sources */,
 				C2147CDB205D7B630001D011 /* PINPadDataModelProtocol.swift in Sources */,
 				C2C02244297F224700D596A8 /* MainModuleInteractor.swift in Sources */,
@@ -7730,7 +7731,6 @@
 				C24018C92618DE8100800DBF /* ComposeServiceIconTypeSelection.swift in Sources */,
 				C2AC220A2766178400271402 /* ExporterMainScreenModuleInteractor.swift in Sources */,
 				C2DFE5BD264C851700F828C0 /* CircleView.swift in Sources */,
-				C213E46B2277561700AE1620 /* GridViewEditItemCell.swift in Sources */,
 				C27D543D275D38E0001E9ABF /* BackupMenuViewController.swift in Sources */,
 				C2F6BB00264869B7002A9747 /* IntroductionCommons.swift in Sources */,
 				C274BDC62769428700EE28BC /* AppSecurityModels.swift in Sources */,
@@ -7762,17 +7762,17 @@
 				C2C56D3927C96743003B4C43 /* ComposeServiceAdvancedSettings.swift in Sources */,
 				C23FD51428146FAB00E4E9C5 /* ComposeServiceWebExtensionPresenter+Menu.swift in Sources */,
 				C21111F5274ABDDA00CA7C78 /* InteractorFactory.swift in Sources */,
-				C295962B267F79190086DEB1 /* GridSectionHeader+.swift in Sources */,
+				C295962B267F79190086DEB1 /* TokensSectionHeader+.swift in Sources */,
 				C21B3A1727AF122B005C603B /* ColorPickerModuleInteractor.swift in Sources */,
 				C2A7945E27F9071000E5C641 /* BrowserExtensionServiceFlowController.swift in Sources */,
 				C240485827653DE30076376E /* ImporterEnterPasswordViewController.swift in Sources */,
 				C27A1EAC2912797200702DB9 /* MainRepositoryImpl+Camera.swift in Sources */,
 				C2323C4C276B521200038B76 /* AppLockFlowController.swift in Sources */,
-				C25F4FDB2622207F008F7755 /* GridViewEmptySearchScreen.swift in Sources */,
+				C25F4FDB2622207F008F7755 /* TokensViewEmptySearchScreen.swift in Sources */,
 				C2404885276572060076376E /* ImporterPreimportSummaryPresenter.swift in Sources */,
 				C2B563F51FD895460011CAAA /* PermissionsStateDataController.swift in Sources */,
 				C233870827810D1A00F8DBC3 /* TrashModels.swift in Sources */,
-				C2286034266972B5005E88E3 /* GridCell.swift in Sources */,
+				C2286034266972B5005E88E3 /* TokenCell.swift in Sources */,
 				C25860B428246DC9009AE54F /* NewsModuleInteractor.swift in Sources */,
 				C2ACF9DF20A8A30E003E0987 /* ServiceMigrationController.swift in Sources */,
 				C2625F9028BB85B100D84C5C /* AboutModuleInteractor.swift in Sources */,

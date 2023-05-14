@@ -21,15 +21,15 @@ import UIKit
 import Common
 
 protocol TokensSectionHeaderDataSource: AnyObject {
-    func collapseAction(with section: GridSection)
-    func moveDown(_ section: GridSection)
-    func moveUp(_ section: GridSection)
-    func rename(_ section: GridSection)
-    func delete(_ section: GridSection)
+    func collapseAction(with section: TokensSection)
+    func moveDown(_ section: TokensSection)
+    func moveUp(_ section: TokensSection)
+    func rename(_ section: TokensSection)
+    func delete(_ section: TokensSection)
 }
 
-final class GridSectionHeader: UICollectionReusableView {
-    static let reuseIdentifier = "GridSectionHeader"
+final class TokensSectionHeader: UICollectionReusableView {
+    static let reuseIdentifier = "TokensSectionHeader"
     
     weak var dataSource: TokensSectionHeaderDataSource?
     
@@ -54,7 +54,7 @@ final class GridSectionHeader: UICollectionReusableView {
     
     private var isEditing = false
     
-    private var config: GridSection?
+    private var config: TokensSection?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -71,8 +71,31 @@ final class GridSectionHeader: UICollectionReusableView {
         
         menuButton.menu = menu()
         
-        collapseButton.userChangedCollapse = { [weak self] in self?.collapseAction() }
+        setupLayout()
+        setupCallbacks()
+    }
         
+    func setIsEditing(_ isEditing: Bool) {
+        self.isEditing = isEditing
+        setupContainers()
+    }
+    
+    func setConfiguration(_ config: TokensSection) {
+        self.config = config
+        updateCollapsedState()
+        
+        upDown.isHidden = config.isNilSection || config.position == .notUsed
+
+        setupContainers()
+        counter.setCount(String(config.elementCount))
+        setTitle(config.title ?? T.Tokens.myTokens)
+        
+        upDown.setState(config.position)
+    }
+}
+
+private extension TokensSectionHeader {
+    func setupLayout() {
         addSubview(spacingLineView, with: [
             spacingLineView.leadingAnchor.constraint(equalTo: leadingAnchor),
             spacingLineView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -103,13 +126,17 @@ final class GridSectionHeader: UICollectionReusableView {
             equalTo: editContainer.leadingAnchor,
             constant: -Theme.Metrics.doubleMargin
         )
-        
         normalConstraint?.isActive = true
+        
         counter.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
         counter.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         upDown.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
         collapseButton.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
         menuButton.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
+    }
+    
+    func setupCallbacks() {
+        collapseButton.userChangedCollapse = { [weak self] in self?.collapseAction() }
         
         upDown.moveUp = { [weak self] in
             guard let config = self?.config else { return }
@@ -119,58 +146,10 @@ final class GridSectionHeader: UICollectionReusableView {
         upDown.moveDown = { [weak self] in
             guard let config = self?.config else { return }
             self?.dataSource?.moveDown(config)
-        }        
-    }
-        
-    func setIsEditing(_ isEditing: Bool) {
-        self.isEditing = isEditing
-        setupContainers()
-    }
-    
-    func setConfiguration(_ config: GridSection) {
-        self.config = config
-        updateCollapsedState()
-        
-        upDown.isHidden = config.isNilSection || config.position == .notUsed
-
-        setupContainers()
-        counter.setCount(String(config.elementCount))
-        setTitle(config.title ?? T.Tokens.myTokens)
-        
-        upDown.setState(config.position)
-    }
-    
-    private func setupContainers() {
-        if config?.isNilSection == true {
-            normalContainer.isHidden = true
-            editContainer.isHidden = true
-            
-            normalConstraint?.isActive = true
-            editConstraint?.isActive = false
-        } else {
-            normalContainer.isHidden = isEditing
-            editContainer.isHidden = !isEditing
-            
-            normalConstraint?.isActive = !isEditing
-            editConstraint?.isActive = isEditing
         }
     }
     
-    private func updateCollapsedState() {
-        guard let config else { return }
-        
-        if config.elementCount == 0 || config.isSearching {
-            collapseButton.setState(.invisible)
-        } else {
-            if config.isCollapsed {
-                collapseButton.setState(.collapsed)
-            } else {
-                collapseButton.setState(.expaned)
-            }
-        }
-    }
-    
-    private func setupNormalContainer() {
+    func setupNormalContainer() {
         let margin = Theme.Metrics.standardMargin
         addSubview(normalContainer, with: [
             normalContainer.topAnchor.constraint(equalTo: topAnchor, constant: margin),
@@ -190,7 +169,7 @@ final class GridSectionHeader: UICollectionReusableView {
         )
     }
     
-    private func setupEditContainer() {
+    func setupEditContainer() {
         let margin = Theme.Metrics.standardMargin
         addSubview(editContainer, with: [
             editContainer.topAnchor.constraint(equalTo: topAnchor, constant: margin),
@@ -212,12 +191,42 @@ final class GridSectionHeader: UICollectionReusableView {
         ])
     }
     
+    func setupContainers() {
+        if config?.isNilSection == true {
+            normalContainer.isHidden = true
+            editContainer.isHidden = true
+            
+            normalConstraint?.isActive = true
+            editConstraint?.isActive = false
+        } else {
+            normalContainer.isHidden = isEditing
+            editContainer.isHidden = !isEditing
+            
+            normalConstraint?.isActive = !isEditing
+            editConstraint?.isActive = isEditing
+        }
+    }
+    
+    func updateCollapsedState() {
+        guard let config else { return }
+        
+        if config.elementCount == 0 || config.isSearching {
+            collapseButton.setState(.invisible)
+        } else {
+            if config.isCollapsed {
+                collapseButton.setState(.collapsed)
+            } else {
+                collapseButton.setState(.expaned)
+            }
+        }
+    }
+    
     @objc
-    private func normalContainerTapAction() {
+    func normalContainerTapAction() {
         collapseAction()
     }
     
-    private func collapseAction() {
+    func collapseAction() {
         guard let config, collapseButton.isActive else { return }
         // Called here so changes in collection view won't animate it into "X"
         if config.isCollapsed {
@@ -228,11 +237,11 @@ final class GridSectionHeader: UICollectionReusableView {
         dataSource?.collapseAction(with: config)
     }
     
-    private func setTitle(_ title: String) {
+    func setTitle(_ title: String) {
         titleLabel.text = title.uppercased()
     }
     
-    private func menu() -> UIMenu {
+    func menu() -> UIMenu {
         let edit = UIAction(
             title: T.Commons.edit,
             image: UIImage(systemName: "pencil")

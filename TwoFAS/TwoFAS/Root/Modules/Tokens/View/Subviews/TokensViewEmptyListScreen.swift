@@ -19,7 +19,7 @@
 
 import UIKit
 
-final class GridViewEmptyListScreen: UIView {
+final class TokensViewEmptyListScreen: UIView {
     var pairNewService: Callback?
     var importFromExternalService: Callback?
     var help: Callback?

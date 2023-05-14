@@ -21,7 +21,7 @@ import Foundation
 import Storage
 import Common
 
-struct GridCell: Hashable {
+struct TokenCell: Hashable {
     enum CellType: Equatable {
         case serviceTOTP
         case serviceHOTP

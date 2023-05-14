@@ -20,7 +20,7 @@
 import UIKit
 
 protocol TokensViewControlling: AnyObject {
-    func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<GridSection, GridCell>)
+    func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>)
         
     func showList()
     func showEmptyScreen()
@@ -46,7 +46,7 @@ protocol TokensViewControlling: AnyObject {
 
 extension TokensViewController: TokensViewControlling {
     // MARK: - Data managment
-    func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<GridSection, GridCell>) {
+    func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>) {
         if gridView.hasActiveDrag || gridView.hasActiveDrop {
             gridView.cancelInteractiveMovement()
         }
@@ -185,7 +185,7 @@ extension TokensViewController: TokensViewControlling {
         navigationItem.leftBarButtonItem = button
     }
     
-    func gridCell(for indexPath: IndexPath) -> GridCell? {
+    func gridCell(for indexPath: IndexPath) -> TokenCell? {
         let snapshot = dataSource.snapshot()
         guard
             let section = snapshot.sectionIdentifiers[safe: indexPath.section],

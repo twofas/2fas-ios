@@ -19,7 +19,7 @@
 
 import UIKit
 
-final class GridView: UICollectionView {
+final class TokensView: UICollectionView {
     override var isEditing: Bool {
         get {
             super.isEditing
@@ -42,9 +42,9 @@ final class GridView: UICollectionView {
             forCellWithReuseIdentifier: TokensEmptyDropSpaceCell.reuseIdentifier
         )
         register(
-            GridSectionHeader.self,
+            TokensSectionHeader.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: GridSectionHeader.reuseIdentifier
+            withReuseIdentifier: TokensSectionHeader.reuseIdentifier
         )
         allowsSelectionDuringEditing = true
     }
@@ -52,7 +52,7 @@ final class GridView: UICollectionView {
     private func reloadHeaders() {
         guard let visible = visibleSupplementaryViews(
             ofKind: UICollectionView.elementKindSectionHeader
-        ) as? [GridSectionHeader] else { return }
+        ) as? [TokensSectionHeader] else { return }
         visible.forEach({ $0.setIsEditing(isEditing) })
     }
 }

@@ -19,7 +19,7 @@
 
 import UIKit
 
-final class GridViewEmptySearchScreen: UIView {
+final class TokensViewEmptySearchScreen: UIView {
     private let spacingIconTitle: CGFloat = 12
     private let spacingTitleDescription: CGFloat = 6
     private let marginHorizontal: CGFloat = 30

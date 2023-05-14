@@ -20,7 +20,7 @@
 import Foundation
 import Storage
 
-struct GridSection: Hashable {
+struct TokensSection: Hashable {
     enum Position {
         case notUsed
         case first

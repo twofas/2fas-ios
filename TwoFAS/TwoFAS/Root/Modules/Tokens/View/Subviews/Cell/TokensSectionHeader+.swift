@@ -20,7 +20,7 @@
 import UIKit
 import Common
 
-extension GridSectionHeader {
+extension TokensSectionHeader {
     final class CollapseButton: UIView {
         enum State {
             case collapsed
@@ -101,7 +101,7 @@ extension GridSectionHeader {
         var moveUp: Callback?
         var moveDown: Callback?
         
-        private var state: GridSection.Position = .notUsed
+        private var state: TokensSection.Position = .notUsed
         
         private let down: UIButton = {
             let b = UIButton()
@@ -153,7 +153,7 @@ extension GridSectionHeader {
             setState(.notUsed)
         }
         
-        func setState(_ state: GridSection.Position) {
+        func setState(_ state: TokensSection.Position) {
             self.state = state
             //
             switch state {

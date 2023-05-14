@@ -25,12 +25,12 @@ final class TokensViewController: UIViewController {
     var addButton: UIBarButtonItem? {
         navigationItem.rightBarButtonItem
     }
-    private(set) var gridView: GridView!
-    private(set) var dataSource: UICollectionViewDiffableDataSource<GridSection, GridCell>!
+    private(set) var gridView: TokensView!
+    private(set) var dataSource: UICollectionViewDiffableDataSource<TokensSection, TokenCell>!
     
     let headerHeight: CGFloat = 44
-    let emptySearchScreenView = GridViewEmptySearchScreen()
-    let emptyListScreenView = GridViewEmptyListScreen()
+    let emptySearchScreenView = TokensViewEmptySearchScreen()
+    let emptyListScreenView = TokensViewEmptyListScreen()
     
     private var layout: UICollectionViewCompositionalLayout!
     
@@ -40,7 +40,7 @@ final class TokensViewController: UIViewController {
     
     override func loadView() {
         createLayout()
-        gridView = GridView(frame: .zero, collectionViewLayout: layout)
+        gridView = TokensView(frame: .zero, collectionViewLayout: layout)
         self.view = gridView
         gridView.configure()
     }
@@ -173,9 +173,9 @@ private extension TokensViewController {
             -> UICollectionReusableView? in
             let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: GridSectionHeader.reuseIdentifier,
+                withReuseIdentifier: TokensSectionHeader.reuseIdentifier,
                 for: indexPath
-            ) as? GridSectionHeader
+            ) as? TokensSectionHeader
             header?.setIsEditing(collectionView.isEditing)
             header?.dataSource = self
             if let data = self?.dataSource.snapshot().sectionIdentifiers[indexPath.section] {

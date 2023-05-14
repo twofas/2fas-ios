@@ -17,26 +17,8 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 
-extension TokensViewController: TokensSectionHeaderDataSource {
-    func collapseAction(with section: TokensSection) {
-        presenter.handleToggleCollapseAction(with: section)
-    }
+final class TokensTOTPCell: UICollectionViewCell {
     
-    func moveDown(_ section: TokensSection) {
-        presenter.handleMoveDown(section)
-    }
-    
-    func moveUp(_ section: TokensSection) {
-        presenter.handleMoveUp(section)
-    }
-    
-    func rename(_ section: TokensSection) {
-        presenter.handleRename(section)
-    }
-    
-    func delete(_ section: TokensSection) {
-        presenter.handleShowSectionDeleteQuestion(section)
-    }
 }

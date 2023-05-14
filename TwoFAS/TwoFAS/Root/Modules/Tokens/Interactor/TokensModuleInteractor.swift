@@ -28,7 +28,7 @@ enum TokensModuleInteractorState {
 }
 
 protocol TokensModuleInteracting: AnyObject {
-    var emptySnapshot: NSDiffableDataSourceSnapshot<GridSection, GridCell> { get }
+    var emptySnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell> { get }
     var isiPhone: Bool { get }
     var canBeDragged: Bool { get }
     var hasServices: Bool { get }
@@ -46,11 +46,11 @@ protocol TokensModuleInteracting: AnyObject {
     func stopCounters()
     func setSortType(_ sortType: SortType)
     func createSection(with name: String)
-    func toggleCollapseSection(_ section: GridSection)
-    func moveDown(_ section: GridSection)
-    func moveUp(_ section: GridSection)
-    func rename(_ section: GridSection, with title: String)
-    func delete(_ section: GridSection)
+    func toggleCollapseSection(_ section: TokensSection)
+    func moveDown(_ section: TokensSection)
+    func moveUp(_ section: TokensSection)
+    func rename(_ section: TokensSection, with title: String)
+    func delete(_ section: TokensSection)
     func moveService(_ service: ServiceData, from old: IndexPath, to new: IndexPath, newSection: SectionData?)
     func copyToken(from serviceData: ServiceData)
     func copyTokenValue(from serviceData: ServiceData) -> String?
@@ -62,7 +62,7 @@ protocol TokensModuleInteracting: AnyObject {
     func reloadTokens()
     func createSnapshot(
         state: TokensModuleInteractorState, isSearching: Bool
-    ) -> NSDiffableDataSourceSnapshot<GridSection, GridCell>
+    ) -> NSDiffableDataSourceSnapshot<TokensSection, TokenCell>
     func checkCameraPermission(completion: @escaping (Bool) -> Void)
     // MARK: Links
     func handleURLIfNecessary()
@@ -127,8 +127,8 @@ final class TokensModuleInteractor {
 }
 
 extension TokensModuleInteractor: TokensModuleInteracting {
-    var emptySnapshot: NSDiffableDataSourceSnapshot<GridSection, GridCell> {
-        NSDiffableDataSourceSnapshot<GridSection, GridCell>()
+    var emptySnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell> {
+        NSDiffableDataSourceSnapshot<TokensSection, TokenCell>()
     }
     
     var isiPhone: Bool {
@@ -244,7 +244,7 @@ extension TokensModuleInteractor: TokensModuleInteracting {
         sectionInteractor.create(with: name)
     }
     
-    func toggleCollapseSection(_ section: GridSection) {
+    func toggleCollapseSection(_ section: TokensSection) {
         let toggleValue = !section.isCollapsed
         if let sectionData = section.sectionData {
             sectionInteractor.collapse(sectionData, isCollapsed: toggleValue)
@@ -253,22 +253,22 @@ extension TokensModuleInteractor: TokensModuleInteracting {
         }
     }
 
-    func moveDown(_ section: GridSection) {
+    func moveDown(_ section: TokensSection) {
         guard let sectionData = section.sectionData else { return }
         sectionInteractor.moveDown(sectionData)
     }
 
-    func moveUp(_ section: GridSection) {
+    func moveUp(_ section: TokensSection) {
         guard let sectionData = section.sectionData else { return }
         sectionInteractor.moveUp(sectionData)
     }
 
-    func rename(_ section: GridSection, with title: String) {
+    func rename(_ section: TokensSection, with title: String) {
         guard let sectionData = section.sectionData else { return }
         sectionInteractor.rename(sectionData, newTitle: title)
     }
 
-    func delete(_ section: GridSection) {
+    func delete(_ section: TokensSection) {
         guard let sectionData = section.sectionData else { return }
         AppEventLog(.groupRemove)
         sectionInteractor.delete(sectionData)
@@ -340,8 +340,8 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     func createSnapshot(
         state: TokensModuleInteractorState,
         isSearching: Bool
-    ) -> NSDiffableDataSourceSnapshot<GridSection, GridCell> {
-        let snapshot: NSDiffableDataSourceSnapshot<GridSection, GridCell>
+    ) -> NSDiffableDataSourceSnapshot<TokensSection, TokenCell> {
+        let snapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>
         switch state {
         case .normal: snapshot = createNormalSnapshot(isSearching: isSearching)
         case .edit: snapshot = createEditSnapshot(isSearching: isSearching)
@@ -363,9 +363,9 @@ private extension TokensModuleInteractor {
         linkInteractor.serviceWasCreated = { [weak self] in self?.linkAction?(.serviceWasCreaded(serviceData: $0)) }
     }
     
-    func createNormalSnapshot(isSearching: Bool) -> NSDiffableDataSourceSnapshot<GridSection, GridCell> {
-        var snapshot = NSDiffableDataSourceSnapshot<GridSection, GridCell>()
-        var sections: [GridSection] = []
+    func createNormalSnapshot(isSearching: Bool) -> NSDiffableDataSourceSnapshot<TokensSection, TokenCell> {
+        var snapshot = NSDiffableDataSourceSnapshot<TokensSection, TokenCell>()
+        var sections: [TokensSection] = []
         
         var startIndex: Int = 0
         var currentIndex: Int = 0
@@ -375,10 +375,12 @@ private extension TokensModuleInteractor {
             startIndex = 1
         }
         
-        let data = categoryData.reduce([GridSection: [GridCell]]()) { dict, category -> [GridSection: [GridCell]] in
+        let data = categoryData.reduce([TokensSection: [TokenCell]]()) { dict, category -> [
+            TokensSection: [TokenCell]
+        ] in
             var dict = dict
             let gridCells = category.services
-            let gridSection = GridSection(
+            let gridSection = TokensSection(
                 title: category.section?.title,
                 sectionID: category.section?.sectionID,
                 sectionData: category.section,
@@ -407,15 +409,15 @@ private extension TokensModuleInteractor {
         return snapshot
     }
 
-    func createEditSnapshot(isSearching: Bool) -> NSDiffableDataSourceSnapshot<GridSection, GridCell> {
-        var snapshot = NSDiffableDataSourceSnapshot<GridSection, GridCell>()
+    func createEditSnapshot(isSearching: Bool) -> NSDiffableDataSourceSnapshot<TokensSection, TokenCell> {
+        var snapshot = NSDiffableDataSourceSnapshot<TokensSection, TokenCell>()
         
         var startIndex: Int = 0
         var currentIndex: Int = 0
         let totalIndex: Int = categoryData.count - 1
         
         if !categoryData.contains(where: { $0.section == nil }) {
-            let emptySection = GridSection(
+            let emptySection = TokensSection(
                 title: nil,
                 sectionID: nil,
                 sectionData: nil,
@@ -429,11 +431,13 @@ private extension TokensModuleInteractor {
         } else {
             startIndex = 1
         }
-        var sections: [GridSection] = []
-        let data = categoryData.reduce([GridSection: [GridCell]]()) { dict, category -> [GridSection: [GridCell]] in
+        var sections: [TokensSection] = []
+        let data = categoryData.reduce([TokensSection: [TokenCell]]()) { dict, category -> [
+            TokensSection: [TokenCell]
+        ] in
             var dict = dict
             let gridCells = category.services
-            let gridSection = GridSection(
+            let gridSection = TokensSection(
                 title: category.section?.title,
                 sectionID: category.section?.sectionID,
                 sectionData: category.section,
@@ -462,8 +466,8 @@ private extension TokensModuleInteractor {
         return snapshot
     }
 
-    func createCell(with serviceData: ServiceData) -> GridCell {
-        let cellType: GridCell.CellType = {
+    func createCell(with serviceData: ServiceData) -> TokenCell {
+        let cellType: TokenCell.CellType = {
             switch serviceData.tokenType {
             case .totp: return .serviceTOTP
             case .hotp: return .serviceHOTP
@@ -483,7 +487,7 @@ private extension TokensModuleInteractor {
         )
     }
 
-    func createEmptyCell() -> GridCell {
+    func createEmptyCell() -> TokenCell {
         .init(
             name: "",
             secret: UUID().uuidString,
@@ -498,7 +502,7 @@ private extension TokensModuleInteractor {
         )
     }
     
-    func sectionPosition(for startIndex: Int, currentIndex: Int, totalIndex: Int) -> GridSection.Position {
+    func sectionPosition(for startIndex: Int, currentIndex: Int, totalIndex: Int) -> TokensSection.Position {
         if startIndex > currentIndex || totalIndex < 2 {
             return .notUsed
         }

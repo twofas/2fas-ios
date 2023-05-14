@@ -582,6 +582,9 @@
 		C2A2AF6F23D8EA710059094D /* UIActivityIndicator+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A2AF6E23D8EA710059094D /* UIActivityIndicator+.swift */; };
 		C2A2D23428F751A000B5D91E /* ExchangeDataFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A2D23228F7513400B5D91E /* ExchangeDataFormat.swift */; };
 		C2A4C8352A10F13800AFD67C /* TokensTOTPCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4C8342A10F13800AFD67C /* TokensTOTPCell.swift */; };
+		C2A4C8372A11141D00AFD67C /* TokensNextTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4C8362A11141D00AFD67C /* TokensNextTokenView.swift */; };
+		C2A4C8392A1153A200AFD67C /* TokensTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4C8382A1153A200AFD67C /* TokensTokenView.swift */; };
+		C2A4C83B2A11736200AFD67C /* TokensCircleProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4C83A2A11736200AFD67C /* TokensCircleProgress.swift */; };
 		C2A57C5A26ACAB2800D3B344 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A57C5826ACAAD000D3B344 /* Extensions.swift */; };
 		C2A5C67523D7144200B556A5 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC6DA1FC1CC6700967D0E /* Log.swift */; };
 		C2A6E7041FC7664800C83DCE /* PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A6E7031FC7664800C83DCE /* PushNotifications.swift */; };
@@ -1841,6 +1844,9 @@
 		C2A2AF6E23D8EA710059094D /* UIActivityIndicator+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicator+.swift"; sourceTree = "<group>"; };
 		C2A2D23228F7513400B5D91E /* ExchangeDataFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeDataFormat.swift; sourceTree = "<group>"; };
 		C2A4C8342A10F13800AFD67C /* TokensTOTPCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTOTPCell.swift; sourceTree = "<group>"; };
+		C2A4C8362A11141D00AFD67C /* TokensNextTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNextTokenView.swift; sourceTree = "<group>"; };
+		C2A4C8382A1153A200AFD67C /* TokensTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTokenView.swift; sourceTree = "<group>"; };
+		C2A4C83A2A11736200AFD67C /* TokensCircleProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCircleProgress.swift; sourceTree = "<group>"; };
 		C2A57C5826ACAAD000D3B344 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C2A6E7031FC7664800C83DCE /* PushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotifications.swift; sourceTree = "<group>"; };
 		C2A6E7071FC9D14500C83DCE /* APNS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APNS.swift; sourceTree = "<group>"; };
@@ -5550,6 +5556,9 @@
 				C2B39E5A29F5D0AA00EC31F6 /* TokensServiceNameComponent.swift */,
 				C207324829F724AB00FB294E /* TokensAdditionalInfoComponent.swift */,
 				C207324A29F725DE00FB294E /* TokensDragIconComponent.swift */,
+				C2A4C8362A11141D00AFD67C /* TokensNextTokenView.swift */,
+				C2A4C8382A1153A200AFD67C /* TokensTokenView.swift */,
+				C2A4C83A2A11736200AFD67C /* TokensCircleProgress.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -7639,6 +7648,7 @@
 				C2D44E6A275C14790043F5D6 /* MainRepository.swift in Sources */,
 				C2FE362A2517FF8D00035643 /* VoiceOver.swift in Sources */,
 				C2830D82293D53CA00B3DDAF /* TokensMoveItem.swift in Sources */,
+				C2A4C8392A1153A200AFD67C /* TokensTokenView.swift in Sources */,
 				C26BCE072810287500CA6A9A /* SelectServiceTableViewHeader.swift in Sources */,
 				C22CD79B2630D43F009C0258 /* FileInteractor.swift in Sources */,
 				C2EE37AA291D2B9800CAB85C /* Assets.swift in Sources */,
@@ -7651,6 +7661,7 @@
 				C2633EFB265A79710034B836 /* ServiceAddedServiceContainerViewTOTP.swift in Sources */,
 				C2AC220C276618AD00271402 /* ExporterMainScreenFlowController.swift in Sources */,
 				C240186F2618685500800DBF /* IconSelectorViewController.swift in Sources */,
+				C2A4C83B2A11736200AFD67C /* TokensCircleProgress.swift in Sources */,
 				C2F51F0127DAB37200A67C73 /* BrowserExtensionPairingAnimationView.swift in Sources */,
 				C2A22558293BF32400B76115 /* ServiceAddedModuleInteractor.swift in Sources */,
 				C2B5BF592946616900E5092D /* TokensNavigationFlowController.swift in Sources */,
@@ -7815,6 +7826,7 @@
 				C296D1EA28B2D4AF001F026D /* UserIconInfoViewController.swift in Sources */,
 				C2B1209329D771AA0020281E /* MainRepositoryImpl+Appearance.swift in Sources */,
 				C24336ED299ED95A00BF35B1 /* MainTabModuleInteractor.swift in Sources */,
+				C2A4C8372A11141D00AFD67C /* TokensNextTokenView.swift in Sources */,
 				C27BE519275D6E0D0090CA12 /* MainRepositoryImpl+Services.swift in Sources */,
 				C2BE80582811DF03009CBC4A /* AuthRequestsPresenter.swift in Sources */,
 				C274BDC2276941FB00EE28BC /* AppSecurityPresenter.swift in Sources */,

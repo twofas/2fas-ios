@@ -71,4 +71,8 @@ final class TokensAdditionalInfoComponent: UIView {
             attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle]
         )
     }
+    
+    func clear() {
+        label.text = nil
+    }
 }

@@ -66,7 +66,7 @@ final class TokensEditCell: UICollectionViewCell {
     private func commonInit() {
         setupBackground()
         setupLayout()
-        //        setupAccessibility()
+        //        setupAccessibility() // TODO: Add accessibility
     }
     
     func update(

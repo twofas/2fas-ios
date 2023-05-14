@@ -25,6 +25,7 @@ final class TokensCategoryComponent: UIView {
     
     func setColor(_ tintColor: TintColor) {
         backgroundColor = tintColor.color
+        accessibilityLabel = T.Voiceover.badgeColor(tintColor.localizedName)
     }
     
     override init(frame: CGRect) {

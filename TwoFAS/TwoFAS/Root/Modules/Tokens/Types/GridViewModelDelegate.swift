@@ -26,9 +26,9 @@ enum TokensViewControllerEditState {
     case none
 }
 
-// swiftlint:disable discouraged_none_name
 enum TokensViewControllerAddState {
     case firstTime
     case normal
     case none
 }
+// swiftlint:enable discouraged_none_name

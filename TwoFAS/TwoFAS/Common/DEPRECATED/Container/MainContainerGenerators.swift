@@ -28,6 +28,7 @@ struct MainContainerBarConfiguration: MainContainerBarConfigurable {
     let hideNavigationBar: Bool?
     let statusBar: MainContainerViewController.StatusBar?
 }
+// swiftlint:enable discouraged_optional_boolean
 
 struct MainContainerTopContentGenerator: MainContainerContentGeneratable {
     let placement: MainContainerViewController.ViewPlacement

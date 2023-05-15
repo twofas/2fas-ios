@@ -20,7 +20,6 @@
 import Foundation
 
 // swiftlint:disable all
-
 enum HTTPMethod: Equatable {
     internal enum HasBody {
         case yes
@@ -91,3 +90,4 @@ extension HTTPMethod: RawRepresentable {
         }
     }
 }
+// swiftlint:enable all

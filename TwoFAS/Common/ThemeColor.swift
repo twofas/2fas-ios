@@ -47,3 +47,4 @@ public enum ThemeColor {
     public static let uuidInputBackground = UIColor(named: "UUIDInputBackground", in: bundle, compatibleWith: nil)!
     public static let uuidInputText = UIColor(named: "UUIDInputText", in: bundle, compatibleWith: nil)!
 }
+// swiftlint:enable all

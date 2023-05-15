@@ -42,6 +42,7 @@ final class NotificationView: UIView {
     private let logo: UIImageView = {
         // swiftlint:disable discouraged_object_literal
         let imgView = UIImageView(image: #imageLiteral(resourceName: "LogoGrid"))
+        // swiftlint:enable discouraged_object_literal
         imgView.contentMode = .center
         imgView.frame.size = imgView.image?.size ?? CGSize.zero
         return imgView

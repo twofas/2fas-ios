@@ -96,3 +96,4 @@ final class ColorGridSelector: UIView {
         }
     }
 }
+// swiftlint:enable no_magic_numbers

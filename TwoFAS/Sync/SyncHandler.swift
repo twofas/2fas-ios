@@ -386,4 +386,5 @@ final class SyncHandler {
     private func dateOffsetet(for logEntity: LogEntity) -> Date {
         logEntity.date.addingTimeInterval(TimeInterval(timeOffset))
     }
+    // swiftlint:enable line_length
 }

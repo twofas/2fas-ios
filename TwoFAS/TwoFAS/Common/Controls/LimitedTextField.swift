@@ -20,8 +20,8 @@
 import UIKit
 import Common
 
-// swiftlint:disable discouraged_none_name
 class LimitedTextField: UITextField, UITextFieldDelegate {
+    // swiftlint:disable discouraged_none_name
     enum Config {
         case none
         case email
@@ -30,6 +30,7 @@ class LimitedTextField: UITextField, UITextFieldDelegate {
         case label
         case password
     }
+    // swiftlint:enable discouraged_none_name
     
     var actionButtonTapped: Callback?
     var shouldUppercase = false

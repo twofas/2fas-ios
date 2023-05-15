@@ -49,3 +49,4 @@ enum AppLockBlockTime: String, CaseIterable, Equatable {
         }
     }
 }
+// swiftlint:enable no_magic_numbers

@@ -25,3 +25,4 @@ enum BiometryType {
     case touchID
     case faceID
 }
+// swiftlint:enable discouraged_none_name

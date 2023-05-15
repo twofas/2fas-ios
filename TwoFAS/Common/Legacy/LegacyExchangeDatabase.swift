@@ -288,3 +288,4 @@ final class LegacyExchangeDatabase {
         return entry.importType
     }
 }
+// swiftlint:enable all

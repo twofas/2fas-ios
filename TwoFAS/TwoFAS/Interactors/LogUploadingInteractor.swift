@@ -108,6 +108,7 @@ extension LogUploadingInteractor: LogUploadingInteracting {
         summary.append("Tokens count: \(mainRepository.countServices())")
         
         return summary.joined(separator: "\n") + "\n\n\n------------------------------\n\n\n"
+        // swiftlint:enable line_length
     }
 }
 

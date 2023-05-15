@@ -128,6 +128,7 @@ final class CloudKitErrorParser {
         }
     }
 }
+// swiftlint:enable legacy_objc_type
 
 private extension NSError {
     var isOffline: Bool {

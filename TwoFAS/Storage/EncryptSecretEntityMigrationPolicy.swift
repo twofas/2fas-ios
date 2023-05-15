@@ -85,5 +85,6 @@ final class EncryptSecretEntityMigrationPolicy: NSEntityMigrationPolicy {
         newEntity.setValue(rawIssuer ?? nil, forKey: Keys.rawIssuer.rawValue)
         newEntity.setValue(secretEncrypted, forKey: Keys.secret.rawValue)
         newEntity.setValue(serviceType, forKey: Keys.serviceType.rawValue)
+        // swiftlint:enable redundant_nil_coalescing
     }
 }

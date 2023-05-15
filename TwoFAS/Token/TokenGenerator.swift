@@ -73,4 +73,5 @@ public enum TokenGenerator {
         
         return token.currentPassword ?? ""
     }
+    // swiftlint:enable function_default_parameter_at_end
 }

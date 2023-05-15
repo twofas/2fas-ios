@@ -38,3 +38,4 @@ public final class ServiceIcon {
         UIImage(named: iconTypeID.uuidString, in: Bundle(for: Self.self), with: nil) != nil
     }
 }
+// swiftlint:enable convenience_type

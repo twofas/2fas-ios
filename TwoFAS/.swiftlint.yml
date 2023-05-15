@@ -14,6 +14,7 @@ disabled_rules:
   - cyclomatic_complexity
   - large_tuple
   - trailing_closure
+  - blanket_disable_command
 
 opt_in_rules:
   - closure_spacing
@@ -42,9 +43,7 @@ opt_in_rules:
   - xct_specific_matcher
   - extension_access_modifier
   - empty_xctest_method
-  - unused_declaration
   - discouraged_none_name
-  - unused_import
   - explicit_init
   - fatal_error_message
   - flatmap_over_map_reduce
@@ -63,13 +62,17 @@ opt_in_rules:
   - vertical_parameter_alignment_on_call
   - vertical_whitespace_closing_braces
 
+analyzer_rules:
+  - unused_import
+  - unused_declaration
+
 nesting:
   type_level: 5
 
 line_length:
   ignores_comments: true
 
-swiftlint_version: 0.50.1
+swiftlint_version: 0.52.1
 
 included:
   - ./

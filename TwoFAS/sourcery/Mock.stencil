@@ -141,3 +141,4 @@ import AppKit
    {{ type.accessLevel }} init() {}
 }
 {% endif %}{% endfor %}
+// swiftlint:enable all

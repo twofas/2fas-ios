@@ -264,3 +264,4 @@ extension LegacyServiceDatabaseImpl: LegacyServiceDatabase {
         }
     }
 }
+// swiftlint:enable all

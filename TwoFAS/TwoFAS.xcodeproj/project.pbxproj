@@ -1594,6 +1594,10 @@
 		C25E8993266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C25F4FDA2622207F008F7755 /* GridViewEmptySearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewEmptySearchScreen.swift; sourceTree = "<group>"; };
 		C25F50382622411A008F7755 /* ServiceData+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceData+.swift"; sourceTree = "<group>"; };
+		C261A1212A12BECC00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
+		C261A1222A12BECC00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C261A1232A12BECD00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C261A1242A12BECD00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C2625F8B28BB853D00D84C5C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		C2625F8D28BB858600D84C5C /* AboutPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPresenter.swift; sourceTree = "<group>"; };
 		C2625F8F28BB85B100D84C5C /* AboutModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutModuleInteractor.swift; sourceTree = "<group>"; };
@@ -6973,6 +6977,7 @@
 				fr,
 				es,
 				uk,
+				it,
 			);
 			mainGroup = C236666A1FB2644900989ACA;
 			packageReferences = (
@@ -8313,6 +8318,7 @@
 				C26DE43C29C7B9EE003D0804 /* fr */,
 				C262E83729E9AA97008D148E /* es */,
 				C22A82EA29EDCC5F00CCF6B1 /* uk */,
+				C261A1232A12BECD00A1519F /* it */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -8326,6 +8332,7 @@
 				C26DE43B29C7B9ED003D0804 /* fr */,
 				C262E83629E9AA96008D148E /* es */,
 				C22A82E929EDCC5F00CCF6B1 /* uk */,
+				C261A1222A12BECC00A1519F /* it */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8348,6 +8355,7 @@
 				C26DE43A29C7B9ED003D0804 /* fr */,
 				C262E83529E9AA96008D148E /* es */,
 				C22A82E829EDCC5E00CCF6B1 /* uk */,
+				C261A1212A12BECC00A1519F /* it */,
 			);
 			name = TwoFASWidget.intentdefinition;
 			sourceTree = "<group>";
@@ -8361,6 +8369,7 @@
 				C26DE43D29C7B9EE003D0804 /* fr */,
 				C262E83829E9AA97008D148E /* es */,
 				C22A82EB29EDCC5F00CCF6B1 /* uk */,
+				C261A1242A12BECD00A1519F /* it */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

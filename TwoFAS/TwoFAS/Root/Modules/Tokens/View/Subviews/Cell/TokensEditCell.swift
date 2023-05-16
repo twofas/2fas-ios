@@ -146,6 +146,14 @@ final class TokensEditCell: UICollectionViewCell {
             dragHandles.widthAnchor.constraint(equalToConstant: dragHandlesWidth),
             dragHandles.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hMargin)
         ])
+        
+        serviceNameLabel.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
+        serviceNameLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
+        serviceNameLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+        
+        additionalInfoLabel.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
+        additionalInfoLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
+        additionalInfoLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
     }
     
     //    private func setupAccessibility() {

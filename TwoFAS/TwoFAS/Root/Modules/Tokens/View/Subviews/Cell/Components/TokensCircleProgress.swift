@@ -119,4 +119,3 @@ final class TokensCircleProgress: UIView {
         circle.setLineColor(color, animated: animated)
     }
 }
-

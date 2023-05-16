@@ -34,7 +34,7 @@ final class TokensView: UICollectionView {
     
     func configure() {
         backgroundColor = Theme.Colors.Fill.background
-        register(GridViewItemCell.self, forCellWithReuseIdentifier: GridViewItemCell.reuseIdentifier)
+        register(TokensTOTPCell.self, forCellWithReuseIdentifier: TokensTOTPCell.reuseIdentifier)
         register(GridViewCounterItemCell.self, forCellWithReuseIdentifier: GridViewCounterItemCell.reuseIdentifier)
         register(TokensEditCell.self, forCellWithReuseIdentifier: TokensEditCell.reuseIdentifier)
         register(

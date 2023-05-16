@@ -82,7 +82,7 @@ final class TokensNextTokenView: UIView {
         movingConstraint = innerContainer.topAnchor.constraint(equalTo: outerContainer.topAnchor)
         
         NSLayoutConstraint.activate([
-            movingConstraint,
+            movingConstraint
         ])
         
         innerContainer.addSubview(nextTokenLabel, with: [

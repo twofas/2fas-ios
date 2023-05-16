@@ -25,7 +25,7 @@ final class TokensTokenView: UILabel {
         .scaledFont(for: UIFont.monospacedSystemFont(ofSize: 43, weight: .regular))
     private let unmaskedFont = UIFontMetrics(forTextStyle: .largeTitle)
         .scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 50, weight: .thin))
-        //.scaledFont(for: .systemFont(ofSize: 17, weight: .bold))
+
     private lazy var maskAttributedString: NSAttributedString = {
         NSAttributedString(
             string: "••• •••",

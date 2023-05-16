@@ -47,21 +47,21 @@ protocol TokensViewControlling: AnyObject {
 extension TokensViewController: TokensViewControlling {
     // MARK: - Data managment
     func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>) {
-        if gridView.hasActiveDrag || gridView.hasActiveDrop {
-            gridView.cancelInteractiveMovement()
+        if tokensView.hasActiveDrag || tokensView.hasActiveDrop {
+            tokensView.cancelInteractiveMovement()
         }
-        dataSource.apply(newSnapshot, animatingDifferences: !gridView.hasActiveDrag, completion: nil)
+        dataSource.apply(newSnapshot, animatingDifferences: !tokensView.hasActiveDrag, completion: nil)
         // no need to call reload other than seconds/consumer update
-        gridView.reloadData()
+        tokensView.reloadData()
     }
     
     // MARK: - Empty screen or list
     func showList() {
         if presenter.showSearchBar {
             addSearchBar()
-            gridView.alwaysBounceVertical = true
+            tokensView.alwaysBounceVertical = true
         } else {
-            gridView.alwaysBounceVertical = false
+            tokensView.alwaysBounceVertical = false
         }
         UIView.animate(
             withDuration: Theme.Animations.Timing.show,
@@ -108,11 +108,11 @@ extension TokensViewController: TokensViewControlling {
     
     // MARK: - Dragging
     func enableDragging() {
-        gridView.dragInteractionEnabled = true
+        tokensView.dragInteractionEnabled = true
     }
     
     func disableDragging() {
-        gridView.dragInteractionEnabled = false
+        tokensView.dragInteractionEnabled = false
     }
     
     // MARK: - Navibar icons
@@ -168,7 +168,7 @@ extension TokensViewController: TokensViewControlling {
                 target: self,
                 action: #selector(enterEditMode)
             )
-            gridView.isEditing = false
+            tokensView.isEditing = false
         case .cancel:
             button = UIBarButtonItem(
                 title: T.Commons.done,
@@ -176,10 +176,10 @@ extension TokensViewController: TokensViewControlling {
                 target: self,
                 action: #selector(leaveEditMode)
             )
-            gridView.isEditing = true
+            tokensView.isEditing = true
         case .none:
             button = nil
-            gridView.isEditing = false
+            tokensView.isEditing = false
         }
         
         navigationItem.leftBarButtonItem = button
@@ -225,11 +225,11 @@ extension TokensViewController: TokensViewControlling {
     // MARK: - Bounce
     
     func enableBounce() {
-        gridView.alwaysBounceVertical = true
+        tokensView.alwaysBounceVertical = true
     }
     
     func disableBounce() {
-        gridView.alwaysBounceVertical = false
+        tokensView.alwaysBounceVertical = false
     }
 }
 

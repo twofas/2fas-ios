@@ -25,7 +25,7 @@ final class TokensViewController: UIViewController {
     var addButton: UIBarButtonItem? {
         navigationItem.rightBarButtonItem
     }
-    private(set) var gridView: TokensView!
+    private(set) var tokensView: TokensView!
     private(set) var dataSource: UICollectionViewDiffableDataSource<TokensSection, TokenCell>!
     
     let headerHeight: CGFloat = 44
@@ -40,9 +40,9 @@ final class TokensViewController: UIViewController {
     
     override func loadView() {
         createLayout()
-        gridView = TokensView(frame: .zero, collectionViewLayout: layout)
-        self.view = gridView
-        gridView.configure()
+        tokensView = TokensView(frame: .zero, collectionViewLayout: layout)
+        self.view = tokensView
+        tokensView.configure()
     }
     
     override func viewDidLoad() {
@@ -61,7 +61,7 @@ final class TokensViewController: UIViewController {
         let snapshot = dataSource.snapshot()
         let indexPath = IndexPath(row: 0, section: 0)
         guard snapshot.item(for: indexPath) != nil else { return }
-        gridView.scrollToItem(at: indexPath, at: .top, animated: true)
+        tokensView.scrollToItem(at: indexPath, at: .top, animated: true)
     }
     
     // MARK: - App events
@@ -94,12 +94,12 @@ private extension TokensViewController {
     
     func setupDelegates() {
         searchController.searchBarDelegate = self
-        gridView.delegate = self
+        tokensView.delegate = self
     }
     
     func setupDataSource() {
         dataSource = UICollectionViewDiffableDataSource(
-            collectionView: gridView,
+            collectionView: tokensView,
             cellProvider: { collectionView, indexPath, item -> UICollectionViewCell? in
                 if item.cellType == .serviceTOTP {
                     if collectionView.isEditing {
@@ -118,9 +118,9 @@ private extension TokensViewController {
                         return cell
                     } else {
                         let cell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: GridViewItemCell.reuseIdentifier,
+                            withReuseIdentifier: TokensTOTPCell.reuseIdentifier,
                             for: indexPath
-                        ) as? GridViewItemCell
+                        ) as? TokensTOTPCell
                         cell?.update(
                             name: item.name,
                             secret: item.secret,
@@ -186,26 +186,26 @@ private extension TokensViewController {
     }
     
     func setupDragAndDrop() {
-        gridView.dragDelegate = self
-        gridView.dropDelegate = self
-        gridView.dragInteractionEnabled = presenter.enableDragAndDropOnStart
+        tokensView.dragDelegate = self
+        tokensView.dropDelegate = self
+        tokensView.dragInteractionEnabled = presenter.enableDragAndDropOnStart
     }
     
     func setupEmptyScreensLayout() {
         view.addSubview(emptySearchScreenView, with: [
-            emptySearchScreenView.leadingAnchor.constraint(equalTo: gridView.frameLayoutGuide.leadingAnchor),
-            emptySearchScreenView.trailingAnchor.constraint(equalTo: gridView.frameLayoutGuide.trailingAnchor),
-            emptySearchScreenView.topAnchor.constraint(equalTo: gridView.frameLayoutGuide.topAnchor),
-            emptySearchScreenView.bottomAnchor.constraint(equalTo: gridView.frameLayoutGuide.bottomAnchor)
+            emptySearchScreenView.leadingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.leadingAnchor),
+            emptySearchScreenView.trailingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.trailingAnchor),
+            emptySearchScreenView.topAnchor.constraint(equalTo: tokensView.frameLayoutGuide.topAnchor),
+            emptySearchScreenView.bottomAnchor.constraint(equalTo: tokensView.frameLayoutGuide.bottomAnchor)
         ])
         emptySearchScreenView.isHidden = true
         emptySearchScreenView.alpha = 0
         
         view.addSubview(emptyListScreenView, with: [
-            emptyListScreenView.leadingAnchor.constraint(equalTo: gridView.frameLayoutGuide.leadingAnchor),
-            emptyListScreenView.trailingAnchor.constraint(equalTo: gridView.frameLayoutGuide.trailingAnchor),
-            emptyListScreenView.topAnchor.constraint(equalTo: gridView.safeTopAnchor),
-            emptyListScreenView.bottomAnchor.constraint(equalTo: gridView.safeBottomAnchor)
+            emptyListScreenView.leadingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.leadingAnchor),
+            emptyListScreenView.trailingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.trailingAnchor),
+            emptyListScreenView.topAnchor.constraint(equalTo: tokensView.safeTopAnchor),
+            emptyListScreenView.bottomAnchor.constraint(equalTo: tokensView.safeBottomAnchor)
         ])
         emptyListScreenView.isHidden = true
         emptyListScreenView.alpha = 0
@@ -236,13 +236,13 @@ private extension TokensViewController {
             }()
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(60) // TODO: Move to constant depending on cell type
+                heightDimension: .estimated(132)//(60) // TODO: Move to constant depending on cell type
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(60) // TODO: Move to constant depending on cell type
+                heightDimension: .estimated(132)//(60) // TODO: Move to constant depending on cell type
             )
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: groupSize,
@@ -262,7 +262,7 @@ private extension TokensViewController {
             sectionHeader.pinToVisibleBounds = true
             let section = NSCollectionLayoutSection(group: group)
             
-            if !(!self.gridView.isEditing && sectionOffset == 0 && self.presenter.isMainOnlyCategory) {
+            if !(!self.tokensView.isEditing && sectionOffset == 0 && self.presenter.isMainOnlyCategory) {
                 section.boundarySupplementaryItems = [sectionHeader]
             }
             

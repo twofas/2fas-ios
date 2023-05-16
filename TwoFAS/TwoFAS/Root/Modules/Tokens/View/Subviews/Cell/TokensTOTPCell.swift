@@ -54,9 +54,12 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
         comp.setKind(.normal)
         return comp
     }()
+    private let accessoryContainer = UIView()
     
-    private var bottomNameConstraint: NSLayoutConstraint?
-    private var bottomAdditionalNameConstraint: NSLayoutConstraint?
+    private var bottomServiceNameConstraint: NSLayoutConstraint?
+    private var bottomAdditionalInfoConstraint: NSLayoutConstraint?
+    private var bottomTokenConstraint: NSLayoutConstraint?
+    private var bottomNextTokenConstraint: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -97,80 +100,55 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
             serviceNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin)
         ])
         
-        bottomNameConstraint = serviceNameLabel.bottomAnchor.constraint(
-            equalTo: contentView.bottomAnchor,
-            constant: -vMargin
-        )
-        
         contentView.addSubview(additionalInfoLabel, with: [
             additionalInfoLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
             additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor),
-            additionalInfoLabel.heightAnchor.constraint(equalTo: serviceNameLabel.heightAnchor),
             additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
         ])
         
-        bottomAdditionalNameConstraint = additionalInfoLabel.bottomAnchor.constraint(
+        contentView.addSubview(tokenLabel, with: [
+            tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
+            tokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
+        ])
+        
+        contentView.addSubview(nextTokenLabel, with: [
+            nextTokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
+            nextTokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor),
+            nextTokenLabel.topAnchor.constraint(equalTo: tokenLabel.bottomAnchor)
+        ])
+                
+        bottomServiceNameConstraint = serviceNameLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor)
+        bottomAdditionalInfoConstraint = additionalInfoLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor)
+        bottomTokenConstraint = tokenLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: vMargin)
+        bottomNextTokenConstraint = nextTokenLabel.bottomAnchor.constraint(
             equalTo: contentView.bottomAnchor,
-            constant: -vMargin
+            constant: vMargin
         )
         
-        contentView.addSubview(iconImageView, with: [
-            iconImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            iconImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Consts.margin),
-            iconImageView.widthAnchor.constraint(equalToConstant: Consts.imageSize)
+        contentView.addSubview(accessoryContainer, with: [
+            serviceNameLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: hMargin),
+            accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: hMargin),
+            accessoryContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin),
+            accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
         ])
         
-        contentView.addSubview(labelRendererContainer, with: [
-            labelRendererContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
-            labelRendererContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            labelRendererContainer.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor,
-                constant: Consts.margin
-            ),
-            labelRendererContainer.widthAnchor.constraint(equalToConstant: Consts.imageSize)
+        accessoryContainer.addSubview(circularProgress, with: [
+            circularProgress.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor),
+            circularProgress.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
+            circularProgress.topAnchor.constraint(equalTo: accessoryContainer.topAnchor),
+            circularProgress.bottomAnchor.constraint(equalTo: accessoryContainer.bottomAnchor)
         ])
         
-        contentView.addSubview(stackView, with: [
-            stackView.topAnchor.constraint(
-                equalTo: contentView.topAnchor,
-                constant: Consts.smallHeight
-            ),
-            stackView.bottomAnchor.constraint(
-                equalTo: contentView.bottomAnchor,
-                constant: -Consts.smallHeight
-            ),
-            stackView.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor,
-                constant: ViewItemConsts.stackViewLeading
-            )
-        ])
+        accessoryContainer.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
         
-        stackView.addArrangedSubviews([
-            nameLabel,
-            tokenLabel,
-            infoNextToken
-        ])
-        
-        contentView.addSubview(circularProgress, with: [
-            circularProgress.widthAnchor.constraint(equalToConstant: ViewItemConsts.circularProgressSize),
-            circularProgress.heightAnchor.constraint(equalToConstant: ViewItemConsts.circularProgressSize),
-            circularProgress.trailingAnchor.constraint(
-                equalTo: contentView.trailingAnchor,
-                constant: -Consts.margin
-            ),
-            circularProgress.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
-            nameLabel.heightAnchor.constraint(equalToConstant: Consts.smallHeight),
-            tokenLabel.heightAnchor.constraint(equalToConstant: ViewItemConsts.tokenHeight),
-            infoNextToken.heightAnchor.constraint(equalToConstant: Consts.smallHeight),
-            stackView.trailingAnchor.constraint(
-                lessThanOrEqualTo: circularProgress.leadingAnchor,
-                constant: -Consts.margin
-            )
-        ])
+        wireLayout()
+    }
+    
+    private func wireLayout() {
+        bottomServiceNameConstraint?.isActive = !hasAdditionalInfo
+        bottomAdditionalInfoConstraint?.isActive = hasAdditionalInfo
+        bottomTokenConstraint?.isActive = !useNextToken
+        bottomNextTokenConstraint?.isActive = useNextToken
     }
     
     func update(

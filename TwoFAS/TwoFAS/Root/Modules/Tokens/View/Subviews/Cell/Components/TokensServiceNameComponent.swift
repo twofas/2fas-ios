@@ -32,6 +32,10 @@ final class TokensServiceNameComponent: UIView {
         label.adjustsFontSizeToFitWidth = true
         label.lineBreakMode = .byTruncatingTail
         label.textColor = Theme.Colors.Text.main
+        label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
+        label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
+        label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
+        label.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
         return label
     }()
     

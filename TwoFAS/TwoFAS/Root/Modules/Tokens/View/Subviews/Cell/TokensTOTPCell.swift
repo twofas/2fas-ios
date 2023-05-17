@@ -119,15 +119,18 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
                 
         bottomServiceNameConstraint = serviceNameLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor)
         bottomAdditionalInfoConstraint = additionalInfoLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor)
-        bottomTokenConstraint = tokenLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: vMargin)
+        bottomTokenConstraint = tokenLabel.bottomAnchor.constraint(
+            equalTo: contentView.bottomAnchor,
+            constant: -vMargin
+        )
         bottomNextTokenConstraint = nextTokenLabel.bottomAnchor.constraint(
             equalTo: contentView.bottomAnchor,
-            constant: vMargin
+            constant: -vMargin
         )
         
         contentView.addSubview(accessoryContainer, with: [
-            serviceNameLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: hMargin),
-            accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: hMargin),
+            serviceNameLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
+            accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hMargin),
             accessoryContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin),
             accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
         ])
@@ -135,11 +138,16 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
         accessoryContainer.addSubview(circularProgress, with: [
             circularProgress.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor),
             circularProgress.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
-            circularProgress.topAnchor.constraint(equalTo: accessoryContainer.topAnchor),
-            circularProgress.bottomAnchor.constraint(equalTo: accessoryContainer.bottomAnchor)
+            circularProgress.topAnchor.constraint(greaterThanOrEqualTo: accessoryContainer.topAnchor),
+            circularProgress.bottomAnchor.constraint(lessThanOrEqualTo: accessoryContainer.bottomAnchor),
+            circularProgress.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor)
         ])
         
-        accessoryContainer.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
+        tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
+        tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
+        tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+//        circularProgress.setContentHuggingPriority(.defaultHigh + 2, for: .horizontal)
+//        circularProgress.setContentHuggingPriority(.defaultHigh + 2, for: .vertical)
         
         wireLayout()
     }

@@ -31,6 +31,10 @@ final class TokensAdditionalInfoComponent: UIView {
         label.lineBreakMode = .byTruncatingTail
         label.adjustsFontSizeToFitWidth = true
         label.textColor = Theme.Colors.Text.subtitle
+        label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
+        label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
+        label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
+        label.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
         return label
     }()
     
@@ -56,7 +60,7 @@ final class TokensAdditionalInfoComponent: UIView {
                 .scaledFont(for: .systemFont(ofSize: 13, weight: .medium))
         case .normal:
             label.font = UIFontMetrics(forTextStyle: .body)
-                .scaledFont(for: .systemFont(ofSize: 17, weight: .medium))
+                .scaledFont(for: .systemFont(ofSize: 17, weight: .regular))
         }
     }
     

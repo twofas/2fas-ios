@@ -25,14 +25,14 @@ final class TokensCircleProgress: UIView {
         let label = UILabel()
         label.font = UIFontMetrics(forTextStyle: .caption2)
             .scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular))
-        label.allowsDefaultTighteningForTruncation = true
-        label.adjustsFontSizeToFitWidth = true
         label.numberOfLines = 1
-        label.minimumScaleFactor = 0.7
         label.textAlignment = .center
         label.isAccessibilityElement = true
         label.accessibilityLabel = T.Voiceover.secondsLeftCounterTitle
         label.accessibilityTraits = .updatesFrequently
+        label.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
+        label.setContentHuggingPriority(.defaultHigh + 1, for: .vertical)
+        label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
         return label
     }()
     private var marked = false
@@ -53,7 +53,7 @@ final class TokensCircleProgress: UIView {
         circle.lineWidth = 1
         setCircleColor(marked: false, animated: false)
         addSubview(circle)
-        circle.pinToParent()
+        circle.pinToParent(with: .init(top: -4, left: -4, bottom: -4, right: -4))
         
         addSubview(valueLabel)
         valueLabel.pinToParent(with: .init(top: 0, left: 4, bottom: 0, right: 4))
@@ -69,7 +69,15 @@ final class TokensCircleProgress: UIView {
     }
     
     func setProgress(_ progress: Int, animated: Bool) {
-        let secondsLeft = "\(progress - 1)"
+        let val: UInt32 = 0x2000
+        let halfSpace = UnicodeScalar(val)!
+        let secondsLeft = {
+            let p = progress - 1
+            if p < 10 {
+                return  "\(halfSpace)\(p)\(halfSpace)"
+            }
+            return "\(p)"
+        }()
         
         valueLabel.text = secondsLeft
         valueLabel.accessibilityValue = secondsLeft
@@ -114,7 +122,6 @@ final class TokensCircleProgress: UIView {
     }
     
     private func setCircleColor(marked: Bool, animated: Bool) {
-        
         let color = marked ? Theme.Colors.Line.theme : Theme.Colors.Line.primaryLine
         circle.setLineColor(color, animated: animated)
     }

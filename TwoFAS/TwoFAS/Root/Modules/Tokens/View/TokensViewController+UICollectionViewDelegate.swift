@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Token
 
 extension TokensViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -36,7 +37,7 @@ extension TokensViewController: UICollectionViewDelegate {
         willDisplay cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
-        if let consumer = cell as? GridViewItemCell {
+        if let consumer = cell as? TokenTimerConsumer {
             presenter.handleRegisterTOTP(consumer)
         } else if let consumer = cell as? GridViewCounterItemCell {
             consumer.didTapRefreshCounter = { [weak self] secret in
@@ -53,7 +54,7 @@ extension TokensViewController: UICollectionViewDelegate {
         didEndDisplaying cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
-        if let consumer = cell as? GridViewItemCell {
+        if let consumer = cell as? TokenTimerConsumer {
             presenter.handleRemoveTOTP(consumer)
         } else if let consumer = cell as? GridViewCounterItemCell {
             consumer.didTapRefreshCounter = nil

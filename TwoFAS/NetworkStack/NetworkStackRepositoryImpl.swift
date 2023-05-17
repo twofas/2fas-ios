@@ -20,6 +20,7 @@
 import Foundation
 
 public final class NetworkStackRepositoryImpl {
+    private let platform = "ios"
     private let networkCall: NetworkCall
     init(baseURL: URL) {
         self.networkCall = NetworkCall(baseURL: baseURL)
@@ -39,7 +40,7 @@ extension NetworkStackRepositoryImpl: NetworkStackRepository {
         completion: @escaping (Result<RegisterDevice.ResultData, NetworkError>) -> Void
     ) {
         let req = RegisterDevice.Request()
-        let reqData = RegisterDevice.RequestData(name: name, fcm_token: gcmToken, platform: "ios")
+        let reqData = RegisterDevice.RequestData(name: name, fcm_token: gcmToken, platform: platform)
         networkCall.handleCall(with: req, data: reqData, completion: completion)
     }
     
@@ -100,7 +101,7 @@ extension NetworkStackRepositoryImpl: NetworkStackRepository {
         completion: @escaping (Result<Void, NetworkError>) -> Void
     ) {
         let req = UpdateDeviceName.Request(deviceID: deviceID)
-        let reqData = UpdateDeviceName.RequestData(name: deviceName, fcm_token: gcmToken, platform: "ios")
+        let reqData = UpdateDeviceName.RequestData(name: deviceName, fcm_token: gcmToken, platform: platform)
         networkCall.handleCall(with: req, data: reqData, completion: completion)
     }
     

@@ -22,7 +22,7 @@ import Common
 
 final class TokensNextTokenView: UIView {
     private let animationDuration: TimeInterval = Theme.Animations.Timing.quick
-    private let animationCurve = Theme.Animations.Curve.show
+    private let animationCurve = UIView.AnimationOptions.curveEaseInOut
     
     private enum State {
         case hidden
@@ -38,7 +38,6 @@ final class TokensNextTokenView: UIView {
         label.minimumScaleFactor = 0.5
         label.numberOfLines = 1
         label.allowsDefaultTighteningForTruncation = true
-        label.lineBreakMode = .byTruncatingTail
         label.adjustsFontSizeToFitWidth = true
         label.lineBreakMode = .byTruncatingTail
         label.textColor = Theme.Colors.Text.main
@@ -89,12 +88,15 @@ final class TokensNextTokenView: UIView {
             nextTokenLabel.leadingAnchor.constraint(equalTo: innerContainer.leadingAnchor),
             nextTokenLabel.trailingAnchor.constraint(equalTo: innerContainer.trailingAnchor),
             nextTokenLabel.topAnchor.constraint(equalTo: innerContainer.topAnchor),
-            innerContainer.heightAnchor.constraint(equalTo: nextTokenLabel.heightAnchor)
+            innerContainer.heightAnchor.constraint(equalTo: nextTokenLabel.heightAnchor),
+            outerContainer.heightAnchor.constraint(equalTo: innerContainer.heightAnchor)
         ])
+        
+        nextTokenLabel.alpha = 0
     }
     
     func set(nextToken: TokenValue) {
-        nextTokenLabel.text = T.Tokens.nextToken(nextToken.formattedValue)
+        nextTokenLabel.text = nextToken.formattedValue
         let tokenVO = (nextToken.components(separatedBy: "")).joined(separator: " ")
         nextTokenLabel.accessibilityValue = tokenVO
         
@@ -102,26 +104,37 @@ final class TokensNextTokenView: UIView {
     }
     
     func showNextToken(animated: Bool) {
+        guard currentState == .hidden else {
+            nextTokenLabel.alpha = 1
+            movingConstraint.constant = 0
+            return
+        }
         let duration: TimeInterval = animated ? animationDuration : 0
         layoutIfNeeded()
         currentState = .animating
+        nextTokenLabel.alpha = 0
         movingConstraint.constant = 0
         
         UIView.animate(withDuration: duration, delay: 0, options: [animationCurve]) {
             self.layoutIfNeeded()
+            self.nextTokenLabel.alpha = 1
         } completion: { _ in
             self.currentState = .visible
+            self.movingConstraint.constant = 0
         }
     }
     
     func hideNextToken(animated: Bool) {
+        guard currentState == .visible else { return }
         let duration: TimeInterval = animated ? animationDuration : 0
         layoutIfNeeded()
         currentState = .animating
+        nextTokenLabel.alpha = 1
         movingConstraint.constant = -lineHeight
         
         UIView.animate(withDuration: duration, delay: 0, options: [animationCurve]) {
             self.layoutIfNeeded()
+            self.nextTokenLabel.alpha = 0
         } completion: { _ in
             self.currentState = .hidden
             self.movingConstraint.constant = -self.lineHeight
@@ -137,5 +150,6 @@ final class TokensNextTokenView: UIView {
         lineHeight = nextTokenLabel.frame.height
         guard currentState == .hidden else { return }
         movingConstraint.constant = -lineHeight
+        maskingView.frame = CGRect(origin: .zero, size: outerContainer.frame.size)
     }
 }

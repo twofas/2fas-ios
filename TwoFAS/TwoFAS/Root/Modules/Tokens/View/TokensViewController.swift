@@ -320,7 +320,7 @@ private extension TokensViewController {
     }
 }
 
-extension UIContentSizeCategory {
+private extension UIContentSizeCategory {
     var layoutMultiplier: CGFloat {
         switch self {
         case UIContentSizeCategory.accessibilityExtraExtraExtraLarge: return 23.0 / 16.0

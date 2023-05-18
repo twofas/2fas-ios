@@ -24,12 +24,9 @@ final class TokensAdditionalInfoComponent: UIView {
         let label = UILabel()
         label.font = UIFontMetrics(forTextStyle: .body)
             .scaledFont(for: .systemFont(ofSize: 17, weight: .medium))
-        label.minimumScaleFactor = 0.5
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 1
-        label.allowsDefaultTighteningForTruncation = true
         label.lineBreakMode = .byTruncatingTail
-        label.adjustsFontSizeToFitWidth = true
         label.textColor = Theme.Colors.Text.subtitle
         label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
@@ -65,12 +62,7 @@ final class TokensAdditionalInfoComponent: UIView {
     }
     
     func setText(_ text: String) {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.16 // Line height: 18 pt
-        label.attributedText = NSAttributedString(
-            string: text,
-            attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle]
-        )
+        label.text = text
     }
     
     func clear() {

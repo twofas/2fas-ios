@@ -35,7 +35,28 @@ final class TokensCircleProgress: UIView {
         label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
         return label
     }()
+    private let sizeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFontMetrics(forTextStyle: .caption2)
+            .scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular))
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.isAccessibilityElement = true
+        label.accessibilityLabel = T.Voiceover.secondsLeftCounterTitle
+        label.accessibilityTraits = .updatesFrequently
+        label.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
+        label.setContentHuggingPriority(.defaultHigh + 1, for: .vertical)
+        label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
+        label.text = "00"
+        label.isHidden = true
+        return label
+    }()
     private var marked = false
+    
+    private var sizeLeading: NSLayoutConstraint?
+    private var sizeTrailing: NSLayoutConstraint?
+    private var valueLeading: NSLayoutConstraint?
+    private var valueTrailing: NSLayoutConstraint?
     
     init() {
         super.init(frame: CGRect.zero)
@@ -50,13 +71,42 @@ final class TokensCircleProgress: UIView {
     }
     
     private func commonInit() {
-        circle.lineWidth = 1
+        setLineWidth()
         setCircleColor(marked: false, animated: false)
         addSubview(circle)
-        circle.pinToParent(with: .init(top: -4, left: -4, bottom: -4, right: -4))
+//        circle.pinToParent(with: .init(top: -4, left: -4, bottom: -4, right: -4))
+        circle.translatesAutoresizingMaskIntoConstraints = false
+        
+        sizeLeading = circle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -4)
+        sizeTrailing = circle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 4)
+        valueLeading = circle.topAnchor.constraint(equalTo: topAnchor, constant: -4)
+        valueTrailing = circle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 4)
+
+        [sizeLeading, sizeTrailing, valueLeading, valueTrailing].forEach { $0?.isActive = true }
+        
+        addSubview(sizeLabel)
+        sizeLabel.pinToParent(with: .init(top: 0, left: 4, bottom: 0, right: 4))
         
         addSubview(valueLabel)
         valueLabel.pinToParent(with: .init(top: 0, left: 4, bottom: 0, right: 4))
+        
+//        addSubview(sizeLabel, with: [
+//            sizeLabel.topAnchor.constraint(equalTo: topAnchor),
+//            sizeLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+//        ])
+//
+//        addSubview(valueLabel, with: [
+//            valueLabel.topAnchor.constraint(equalTo: topAnchor),
+//            valueLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+//        ])
+//
+//        sizeLeading = sizeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4)
+//        sizeTrailing = sizeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4)
+//        valueLeading = valueLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4)
+//        valueTrailing = valueLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4)
+//
+//        [sizeLeading, sizeTrailing, valueLeading, valueTrailing].forEach { $0?.isActive = true }
+        setMargins()
         
         backgroundColor = UIColor.clear
         
@@ -119,10 +169,65 @@ final class TokensCircleProgress: UIView {
         if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
             setCircleColor(marked: marked, animated: false)
         }
+        
+        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
+            setLineWidth()
+            setMargins()
+        }
     }
     
     private func setCircleColor(marked: Bool, animated: Bool) {
         let color = marked ? Theme.Colors.Line.theme : Theme.Colors.Line.primaryLine
         circle.setLineColor(color, animated: animated)
+    }
+    
+    private func setLineWidth() {
+        circle.lineWidth = traitCollection.preferredContentSizeCategory.lineWidth
+    }
+    
+    private func setMargins() {
+        let value = -traitCollection.preferredContentSizeCategory.margin
+        sizeLeading?.constant = value
+        sizeTrailing?.constant = -value
+        valueLeading?.constant = value
+        valueTrailing?.constant = -value
+    }
+}
+
+private extension UIContentSizeCategory {
+    var lineWidth: CGFloat {
+        switch self {
+        case UIContentSizeCategory.accessibilityExtraExtraExtraLarge: return 3.0
+        case UIContentSizeCategory.accessibilityExtraExtraLarge: return 2.75
+        case UIContentSizeCategory.accessibilityExtraLarge: return 2.5
+        case UIContentSizeCategory.accessibilityLarge: return 2.25
+        case UIContentSizeCategory.accessibilityMedium: return 2.0
+        case UIContentSizeCategory.extraExtraExtraLarge: return 1.75
+        case UIContentSizeCategory.extraExtraLarge: return 1.5
+        case UIContentSizeCategory.extraLarge: return 1.25
+        case UIContentSizeCategory.large: return 1.0
+        case UIContentSizeCategory.medium: return 1.0
+        case UIContentSizeCategory.small: return 1.0
+        case UIContentSizeCategory.extraSmall: return 1.0
+        default: return 1.0
+        }
+    }
+    
+    var margin: CGFloat {
+        switch self {
+        case UIContentSizeCategory.accessibilityExtraExtraExtraLarge: return 12
+        case UIContentSizeCategory.accessibilityExtraExtraLarge: return 11.5
+        case UIContentSizeCategory.accessibilityExtraLarge: return 11
+        case UIContentSizeCategory.accessibilityLarge: return 10.5
+        case UIContentSizeCategory.accessibilityMedium: return 10
+        case UIContentSizeCategory.extraExtraExtraLarge: return 9.5
+        case UIContentSizeCategory.extraExtraLarge: return 9
+        case UIContentSizeCategory.extraLarge: return 8.5
+        case UIContentSizeCategory.large: return 8.0
+        case UIContentSizeCategory.medium: return 8.0
+        case UIContentSizeCategory.small: return 8.0
+        case UIContentSizeCategory.extraSmall: return 8.0
+        default: return 8.0
+        }
     }
 }

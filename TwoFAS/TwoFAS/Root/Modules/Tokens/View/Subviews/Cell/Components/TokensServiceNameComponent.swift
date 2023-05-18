@@ -25,11 +25,7 @@ final class TokensServiceNameComponent: UIView {
         label.font = UIFontMetrics(forTextStyle: .headline)
             .scaledFont(for: .systemFont(ofSize: 17, weight: .bold))
         label.adjustsFontForContentSizeCategory = true
-        label.minimumScaleFactor = 0.5
         label.numberOfLines = 1
-        label.allowsDefaultTighteningForTruncation = true
-        label.lineBreakMode = .byTruncatingTail
-        label.adjustsFontSizeToFitWidth = true
         label.lineBreakMode = .byTruncatingTail
         label.textColor = Theme.Colors.Text.main
         label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
@@ -66,11 +62,6 @@ final class TokensServiceNameComponent: UIView {
     }
     
     func setText(_ text: String) {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.16 // Line height: 18 pt
-        label.attributedText = NSAttributedString(
-            string: text,
-            attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle]
-        )
+        label.text = text
     }
 }

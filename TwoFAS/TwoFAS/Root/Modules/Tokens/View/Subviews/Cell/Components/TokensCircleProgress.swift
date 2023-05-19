@@ -32,7 +32,7 @@ final class TokensCircleProgress: UIView {
         label.accessibilityTraits = .updatesFrequently
         label.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
         label.setContentHuggingPriority(.defaultHigh + 1, for: .vertical)
-        label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
+        label.setContentCompressionResistancePriority(.defaultHigh + 2, for: .horizontal)
         return label
     }()
     private let sizeLabel: UILabel = {
@@ -41,22 +41,21 @@ final class TokensCircleProgress: UIView {
             .scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular))
         label.numberOfLines = 1
         label.textAlignment = .center
-        label.isAccessibilityElement = true
-        label.accessibilityLabel = T.Voiceover.secondsLeftCounterTitle
+        label.isAccessibilityElement = false
         label.accessibilityTraits = .updatesFrequently
         label.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
         label.setContentHuggingPriority(.defaultHigh + 1, for: .vertical)
-        label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
+        label.setContentCompressionResistancePriority(.defaultHigh + 2, for: .horizontal)
         label.text = "00"
         label.isHidden = true
         return label
     }()
     private var marked = false
     
-    private var sizeLeading: NSLayoutConstraint?
-    private var sizeTrailing: NSLayoutConstraint?
-    private var valueLeading: NSLayoutConstraint?
-    private var valueTrailing: NSLayoutConstraint?
+    private var cLeading: NSLayoutConstraint?
+    private var cTrailing: NSLayoutConstraint?
+    private var cTop: NSLayoutConstraint?
+    private var cBottom: NSLayoutConstraint?
     
     init() {
         super.init(frame: CGRect.zero)
@@ -74,38 +73,23 @@ final class TokensCircleProgress: UIView {
         setLineWidth()
         setCircleColor(marked: false, animated: false)
         addSubview(circle)
-//        circle.pinToParent(with: .init(top: -4, left: -4, bottom: -4, right: -4))
         circle.translatesAutoresizingMaskIntoConstraints = false
         
-        sizeLeading = circle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -4)
-        sizeTrailing = circle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 4)
-        valueLeading = circle.topAnchor.constraint(equalTo: topAnchor, constant: -4)
-        valueTrailing = circle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 4)
+        cLeading = circle.leadingAnchor.constraint(equalTo: leadingAnchor)
+        cTrailing = circle.trailingAnchor.constraint(equalTo: trailingAnchor)
+        cTop = circle.topAnchor.constraint(equalTo: topAnchor)
+        cBottom = circle.bottomAnchor.constraint(equalTo: bottomAnchor)
 
-        [sizeLeading, sizeTrailing, valueLeading, valueTrailing].forEach { $0?.isActive = true }
+        [cLeading, cTrailing, cTop, cBottom].forEach { $0?.isActive = true }
+        
+        let edgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
         
         addSubview(sizeLabel)
-        sizeLabel.pinToParent(with: .init(top: 0, left: 4, bottom: 0, right: 4))
+        sizeLabel.pinToParent(with: edgeInsets)
         
         addSubview(valueLabel)
-        valueLabel.pinToParent(with: .init(top: 0, left: 4, bottom: 0, right: 4))
+        valueLabel.pinToParent(with: edgeInsets)
         
-//        addSubview(sizeLabel, with: [
-//            sizeLabel.topAnchor.constraint(equalTo: topAnchor),
-//            sizeLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
-//        ])
-//
-//        addSubview(valueLabel, with: [
-//            valueLabel.topAnchor.constraint(equalTo: topAnchor),
-//            valueLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
-//        ])
-//
-//        sizeLeading = sizeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4)
-//        sizeTrailing = sizeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4)
-//        valueLeading = valueLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4)
-//        valueTrailing = valueLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4)
-//
-//        [sizeLeading, sizeTrailing, valueLeading, valueTrailing].forEach { $0?.isActive = true }
         setMargins()
         
         backgroundColor = UIColor.clear
@@ -119,15 +103,7 @@ final class TokensCircleProgress: UIView {
     }
     
     func setProgress(_ progress: Int, animated: Bool) {
-        let val: UInt32 = 0x2000
-        let halfSpace = UnicodeScalar(val)!
-        let secondsLeft = {
-            let p = progress - 1
-            if p < 10 {
-                return  "\(halfSpace)\(p)\(halfSpace)"
-            }
-            return "\(p)"
-        }()
+        let secondsLeft = "\(progress - 1)"
         
         valueLabel.text = secondsLeft
         valueLabel.accessibilityValue = secondsLeft
@@ -187,10 +163,10 @@ final class TokensCircleProgress: UIView {
     
     private func setMargins() {
         let value = -traitCollection.preferredContentSizeCategory.margin
-        sizeLeading?.constant = value
-        sizeTrailing?.constant = -value
-        valueLeading?.constant = value
-        valueTrailing?.constant = -value
+        cLeading?.constant = value
+        cTrailing?.constant = -value
+        cTop?.constant = value
+        cBottom?.constant = -value
     }
 }
 

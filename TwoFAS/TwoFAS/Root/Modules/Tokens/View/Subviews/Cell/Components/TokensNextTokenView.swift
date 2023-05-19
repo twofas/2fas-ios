@@ -54,6 +54,10 @@ final class TokensNextTokenView: UIView {
     private var lineHeight: CGFloat = 0
     private var currentState: State = .hidden
     
+    private var options: UIView.AnimationOptions = []
+    
+    private var currentValue: TokenValue?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -66,6 +70,7 @@ final class TokensNextTokenView: UIView {
     
     private func commonInit() {
         maskingView.backgroundColor = .black
+        options = [animationCurve, .beginFromCurrentState]
         
         addSubview(outerContainer)
         outerContainer.pinToParent()
@@ -96,6 +101,9 @@ final class TokensNextTokenView: UIView {
     }
     
     func set(nextToken: TokenValue) {
+        guard currentState != .animating, currentValue != nextToken else { return }
+        currentValue = nextToken
+
         nextTokenLabel.text = nextToken.formattedValue
         let tokenVO = (nextToken.components(separatedBy: "")).joined(separator: " ")
         nextTokenLabel.accessibilityValue = tokenVO
@@ -104,40 +112,52 @@ final class TokensNextTokenView: UIView {
     }
     
     func showNextToken(animated: Bool) {
-        guard currentState == .hidden else {
+        guard currentState == .hidden || currentState == .animating else {
             nextTokenLabel.alpha = 1
             movingConstraint.constant = 0
             return
         }
-        let duration: TimeInterval = animated ? animationDuration : 0
-        layoutIfNeeded()
+
         currentState = .animating
         nextTokenLabel.alpha = 0
         movingConstraint.constant = 0
         
-        UIView.animate(withDuration: duration, delay: 0, options: [animationCurve]) {
-            self.layoutIfNeeded()
-            self.nextTokenLabel.alpha = 1
-        } completion: { _ in
-            self.currentState = .visible
-            self.movingConstraint.constant = 0
+        if animated {
+            UIView.animate(withDuration: animationDuration, delay: 0, options: options) {
+                self.layoutIfNeeded()
+                self.nextTokenLabel.alpha = 1
+            } completion: { _ in
+                self.currentState = .visible
+                self.movingConstraint.constant = 0
+            }
+        } else {
+            nextTokenLabel.alpha = 1
+            currentState = .visible
+            movingConstraint.constant = 0
+            layoutIfNeeded()
         }
     }
     
     func hideNextToken(animated: Bool) {
-        guard currentState == .visible else { return }
-        let duration: TimeInterval = animated ? animationDuration : 0
-        layoutIfNeeded()
+        guard currentState == .visible || currentState == .animating else { return }
+
         currentState = .animating
         nextTokenLabel.alpha = 1
         movingConstraint.constant = -lineHeight
         
-        UIView.animate(withDuration: duration, delay: 0, options: [animationCurve]) {
-            self.layoutIfNeeded()
-            self.nextTokenLabel.alpha = 0
-        } completion: { _ in
-            self.currentState = .hidden
-            self.movingConstraint.constant = -self.lineHeight
+        if animated {
+            UIView.animate(withDuration: animationDuration, delay: 0, options: options) {
+                self.layoutIfNeeded()
+                self.nextTokenLabel.alpha = 0
+            } completion: { _ in
+                self.currentState = .hidden
+                self.movingConstraint.constant = -self.lineHeight
+            }
+        } else {
+            nextTokenLabel.alpha = 0
+            movingConstraint.constant = -self.lineHeight
+            currentState = .hidden
+            layoutIfNeeded()
         }
     }
     

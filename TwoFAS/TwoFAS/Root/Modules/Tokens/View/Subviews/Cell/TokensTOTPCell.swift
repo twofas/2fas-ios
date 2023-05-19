@@ -146,8 +146,6 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
         tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
         tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
-//        circularProgress.setContentHuggingPriority(.defaultHigh + 2, for: .horizontal)
-//        circularProgress.setContentHuggingPriority(.defaultHigh + 2, for: .vertical)
         
         wireLayout()
     }
@@ -200,8 +198,8 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
     func setUpdate(_ progress: Int, isPlanned: Bool, currentToken: String, nextToken: String, willChangeSoon: Bool) {
         circularProgress.setProgress(progress, animated: isPlanned)
         tokenLabel.setToken(currentToken)
-        nextTokenLabel.set(nextToken: nextToken)
         shouldMark(willChangeSoon: willChangeSoon, isPlanned: isPlanned)
+        nextTokenLabel.set(nextToken: nextToken)
     }
     
     private func shouldMark(willChangeSoon: Bool, isPlanned: Bool) {

@@ -777,7 +777,6 @@
 		C2C66F8E1FE0684100AD5A1C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C66F8D1FE0684100AD5A1C /* MainViewController.swift */; };
 		C2C66F951FE068CC00AD5A1C /* TokensViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C66F941FE068CC00AD5A1C /* TokensViewController.swift */; };
 		C2C66F9B1FE06A4500AD5A1C /* GridViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C66F9A1FE06A4500AD5A1C /* GridViewModelDelegate.swift */; };
-		C2C66F9D1FE06AD700AD5A1C /* GridViewItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C66F9C1FE06AD700AD5A1C /* GridViewItemCell.swift */; };
 		C2C6FF6B28206F8800A5BFD2 /* ListNews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C6FF6A28206F8800A5BFD2 /* ListNews.swift */; };
 		C2C93FA12603F87100E10981 /* MainContainerDecoratedVerticalContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C93FA02603F87100E10981 /* MainContainerDecoratedVerticalContainer.swift */; };
 		C2C93FBD2604005E00E10981 /* MainContainerToggleWithLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C93FBC2604005E00E10981 /* MainContainerToggleWithLabel.swift */; };
@@ -2038,7 +2037,6 @@
 		C2C66F8D1FE0684100AD5A1C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C2C66F941FE068CC00AD5A1C /* TokensViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensViewController.swift; sourceTree = "<group>"; };
 		C2C66F9A1FE06A4500AD5A1C /* GridViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewModelDelegate.swift; sourceTree = "<group>"; };
-		C2C66F9C1FE06AD700AD5A1C /* GridViewItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewItemCell.swift; sourceTree = "<group>"; };
 		C2C6FF6A28206F8800A5BFD2 /* ListNews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListNews.swift; sourceTree = "<group>"; };
 		C2C93FA02603F87100E10981 /* MainContainerDecoratedVerticalContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerDecoratedVerticalContainer.swift; sourceTree = "<group>"; };
 		C2C93FBC2604005E00E10981 /* MainContainerToggleWithLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerToggleWithLabel.swift; sourceTree = "<group>"; };
@@ -3814,10 +3812,8 @@
 				C2A4C8342A10F13800AFD67C /* TokensTOTPCell.swift */,
 				C2B39E4E29F5834400EC31F6 /* Components */,
 				C22D3EEF25EAB590007E86CF /* GridCollectionViewCell.swift */,
-				C2C66F9C1FE06AD700AD5A1C /* GridViewItemCell.swift */,
 				C2DEC2DE27CD298400EAC01A /* GridViewCounterItemCell.swift */,
 				C278C05B26C97D6000FECBD4 /* InfoNextTokenView.swift */,
-				C28B38C827CD784D00BD4A96 /* RefreshTokenCounter.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -5633,6 +5629,7 @@
 				C26B7F0D23CB719900C6AAE2 /* Camera */,
 				C2DD28C421D5590600034476 /* Controls */,
 				C223DAD7217BAFC0003F6E76 /* Architecture */,
+				C28B38C827CD784D00BD4A96 /* RefreshTokenCounter.swift */,
 				C2A7501026112B7F007E5AB3 /* LabelRenderer.swift */,
 				C2D6731625DB2C5C004BD697 /* KeyboardObserver.swift */,
 				C2AA9D102088C124001B14FF /* Notifications.swift */,
@@ -7513,7 +7510,6 @@
 				C28356232897098300421882 /* SelectFromGalleryAdvice.swift in Sources */,
 				C296D1EE28B2D52C001F026D /* UserIconInfoFlowController.swift in Sources */,
 				C228603226697250005E88E3 /* TokensSection.swift in Sources */,
-				C2C66F9D1FE06AD700AD5A1C /* GridViewItemCell.swift in Sources */,
 				C2823B1626F3E84F00583586 /* RevealPasswordInput.swift in Sources */,
 				C26764B22872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift in Sources */,
 				C2AB92E52766A9A700698382 /* SocialChannel.swift in Sources */,

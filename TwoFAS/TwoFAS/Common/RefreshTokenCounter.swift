@@ -22,7 +22,6 @@ import UIKit
 final class RefreshTokenCounter: UIView {
     var didAnimate: Callback?
     
-    private let size: CGFloat = 28
     private let image = RefreshImage()
     
     override init(frame: CGRect) {
@@ -38,10 +37,6 @@ final class RefreshTokenCounter: UIView {
     private func commonInit() {
         addSubview(image)
         image.pinToParent()
-        NSLayoutConstraint.activate([
-            image.widthAnchor.constraint(equalToConstant: size),
-            image.heightAnchor.constraint(equalToConstant: size)
-        ])
         image.didAnimate = { [weak self] in self?.didAnimate?() }
     }
     
@@ -62,8 +57,8 @@ private extension RefreshTokenCounter {
     final class RefreshImage: UIView {
         var didAnimate: Callback?
         
-        private let image = UIImageView(image: Asset.refreshTokenCounter.image
-            .withRenderingMode(.alwaysTemplate)
+        private let image = UIImageView(
+            image: Asset.refreshTokenCounter.image.withRenderingMode(.alwaysTemplate)
         )
         
         override init(frame: CGRect) {
@@ -78,6 +73,7 @@ private extension RefreshTokenCounter {
         
         private func commonInit() {
             addSubview(image)
+            image.adjustsImageSizeForAccessibilityContentSizeCategory = true
             unlock()
         }
         
@@ -104,6 +100,10 @@ private extension RefreshTokenCounter {
         
         func unlock() {
             image.tintColor = Theme.Colors.Controls.active
+        }
+        
+        override var intrinsicContentSize: CGSize {
+            image.bounds.size
         }
     }
 }

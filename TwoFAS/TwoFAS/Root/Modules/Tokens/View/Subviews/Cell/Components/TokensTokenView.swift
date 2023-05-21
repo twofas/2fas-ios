@@ -21,19 +21,9 @@ import UIKit
 import Common
 
 final class TokensTokenView: UILabel {
-    private let maskedFont = UIFontMetrics(forTextStyle: .largeTitle)
-        .scaledFont(for: UIFont.monospacedSystemFont(ofSize: 43, weight: .regular))
-    private let unmaskedFont = UIFontMetrics(forTextStyle: .largeTitle)
+    private let maskedText = "••• •••"
+    private let codeFont = UIFontMetrics(forTextStyle: .largeTitle)
         .scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 50, weight: .thin))
-
-    private lazy var maskAttributedString: NSAttributedString = {
-        NSAttributedString(
-            string: "••• •••",
-            attributes: [
-                NSAttributedString.Key.font: maskedFont
-            ]
-        )
-    }()
     
     private var isMarked = false
     private var isMasked = false
@@ -50,7 +40,7 @@ final class TokensTokenView: UILabel {
     }
     
     private func commonInit() {
-        font = unmaskedFont
+        font = codeFont
         minimumScaleFactor = 0.5
         numberOfLines = 1
         allowsDefaultTighteningForTruncation = true
@@ -79,7 +69,6 @@ final class TokensTokenView: UILabel {
     func setToken(_ token: TokenValue) {
         guard previousToken != token || isMasked else { return }
         if isMasked {
-            font = unmaskedFont
             isMasked = false
         }
         text = token.formattedValue
@@ -95,7 +84,7 @@ final class TokensTokenView: UILabel {
     
     func maskToken() {
         isMasked = true
-        attributedText = maskAttributedString
+        text = maskedText
     }
         
     func clear() {

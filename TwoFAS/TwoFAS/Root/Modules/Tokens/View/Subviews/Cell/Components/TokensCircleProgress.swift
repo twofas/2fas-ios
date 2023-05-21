@@ -173,12 +173,12 @@ final class TokensCircleProgress: UIView {
 private extension UIContentSizeCategory {
     var lineWidth: CGFloat {
         switch self {
-        case UIContentSizeCategory.accessibilityExtraExtraExtraLarge: return 3.0
-        case UIContentSizeCategory.accessibilityExtraExtraLarge: return 2.75
-        case UIContentSizeCategory.accessibilityExtraLarge: return 2.5
-        case UIContentSizeCategory.accessibilityLarge: return 2.25
-        case UIContentSizeCategory.accessibilityMedium: return 2.0
-        case UIContentSizeCategory.extraExtraExtraLarge: return 1.75
+        case UIContentSizeCategory.accessibilityExtraExtraExtraLarge: return 4.0
+        case UIContentSizeCategory.accessibilityExtraExtraLarge: return 3.75
+        case UIContentSizeCategory.accessibilityExtraLarge: return 3.5
+        case UIContentSizeCategory.accessibilityLarge: return 3
+        case UIContentSizeCategory.accessibilityMedium: return 2.5
+        case UIContentSizeCategory.extraExtraExtraLarge: return 2
         case UIContentSizeCategory.extraExtraLarge: return 1.5
         case UIContentSizeCategory.extraLarge: return 1.25
         case UIContentSizeCategory.large: return 1.0

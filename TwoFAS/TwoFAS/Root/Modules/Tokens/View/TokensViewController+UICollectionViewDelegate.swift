@@ -39,7 +39,7 @@ extension TokensViewController: UICollectionViewDelegate {
     ) {
         if let consumer = cell as? TokenTimerConsumer {
             presenter.handleRegisterTOTP(consumer)
-        } else if let consumer = cell as? GridViewCounterItemCell {
+        } else if let consumer = cell as? TokenCounterConsumer {
             consumer.didTapRefreshCounter = { [weak self] secret in
                 DispatchQueue.main.asyncAfter(deadline: .now() + Theme.Animations.Timing.quick) {
                     self?.presenter.handleEnableHOTPCounter(for: secret)
@@ -56,7 +56,7 @@ extension TokensViewController: UICollectionViewDelegate {
     ) {
         if let consumer = cell as? TokenTimerConsumer {
             presenter.handleRemoveTOTP(consumer)
-        } else if let consumer = cell as? GridViewCounterItemCell {
+        } else if let consumer = cell as? TokenCounterConsumer {
             consumer.didTapRefreshCounter = nil
             presenter.handleRemoveHOTP(consumer)
         }

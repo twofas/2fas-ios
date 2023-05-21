@@ -30,18 +30,7 @@ final class TokensNextTokenView: UIView {
         case visible
     }
     
-    private let nextTokenLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFontMetrics(forTextStyle: .headline)
-            .scaledFont(for: .systemFont(ofSize: 17, weight: .bold))
-        label.adjustsFontForContentSizeCategory = true
-        label.numberOfLines = 1
-        label.textColor = Theme.Colors.Text.main
-        label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
-        label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
-        label.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
-        return label
-    }()
+    private let nextTokenLabel = TokensNextTokenLabel()
     private let innerContainer = UIView()
     private let outerContainer = UIView()
     private let maskingView = UIView()

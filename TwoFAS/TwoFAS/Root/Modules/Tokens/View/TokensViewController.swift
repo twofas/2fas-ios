@@ -149,9 +149,9 @@ private extension TokensViewController {
                         return cell
                     } else {
                         let cell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: GridViewCounterItemCell.reuseIdentifier,
+                            withReuseIdentifier: TokensHOTPCell.reuseIdentifier,
                             for: indexPath
-                        ) as? GridViewCounterItemCell
+                        ) as? TokensHOTPCell
                         cell?.update(
                             name: item.name,
                             secret: item.secret,

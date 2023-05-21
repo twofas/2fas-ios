@@ -52,6 +52,8 @@ final class TokensSectionHeader: UICollectionReusableView {
     private let normalContainer = UIView()
     private let editContainer = UIView()
     
+    private let bgView = UIView()
+    
     private var isEditing = false
     
     private var config: TokensSection?
@@ -67,12 +69,10 @@ final class TokensSectionHeader: UICollectionReusableView {
     }
     
     private func commonInit() {
-        backgroundColor = Theme.Colors.Fill.System.forth
-        
-        menuButton.menu = menu()
-        
+        setupBackground()
         setupLayout()
         setupCallbacks()
+        setupMenu()
     }
         
     func setIsEditing(_ isEditing: Bool) {
@@ -95,6 +95,10 @@ final class TokensSectionHeader: UICollectionReusableView {
 }
 
 private extension TokensSectionHeader {
+    func setupBackground() {
+        backgroundColor = Theme.Colors.Fill.System.second
+    }
+    
     func setupLayout() {
         addSubview(spacingLineView, with: [
             spacingLineView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -219,6 +223,10 @@ private extension TokensSectionHeader {
                 collapseButton.setState(.expaned)
             }
         }
+    }
+    
+    func setupMenu() {
+        menuButton.menu = menu()
     }
     
     @objc

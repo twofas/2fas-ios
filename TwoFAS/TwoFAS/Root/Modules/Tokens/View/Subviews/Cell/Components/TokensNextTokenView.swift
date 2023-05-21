@@ -35,11 +35,7 @@ final class TokensNextTokenView: UIView {
         label.font = UIFontMetrics(forTextStyle: .headline)
             .scaledFont(for: .systemFont(ofSize: 17, weight: .bold))
         label.adjustsFontForContentSizeCategory = true
-        label.minimumScaleFactor = 0.5
         label.numberOfLines = 1
-        label.allowsDefaultTighteningForTruncation = true
-        label.adjustsFontSizeToFitWidth = true
-        label.lineBreakMode = .byTruncatingTail
         label.textColor = Theme.Colors.Text.main
         label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)

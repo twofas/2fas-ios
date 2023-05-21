@@ -36,7 +36,6 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
     private var serviceTypeName: String = ""
     
     private var useNextToken = false
-    private var hasAdditionalInfo = false
     
     private let categoryView = TokensCategoryComponent()
     private var logoView: TokensLogoComponent = {
@@ -55,12 +54,14 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
         return comp
     }()
     private let accessoryContainer = UIView()
-    
-    private var bottomServiceNameConstraint: NSLayoutConstraint?
-    private var bottomAdditionalInfoConstraint: NSLayoutConstraint?
-    private var bottomTokenConstraint: NSLayoutConstraint?
-    private var bottomNextTokenConstraint: NSLayoutConstraint?
-    
+    private let separator: UIView = {
+        let line = UIView()
+        line.backgroundColor = Theme.Colors.Line.separator
+        line.isAccessibilityElement = false
+        line.isUserInteractionEnabled = false
+        return line
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -83,6 +84,16 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
     }
     
     private func setupLayout() {
+        let tokenNegativeMargin = round(hMargin / 4.0)
+        let logoViewTopOffset = vMargin + 14.0
+        let accessoryContainerTopOffset = vMargin + 16.0
+        contentView.addSubview(separator, with: [
+            separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            separator.heightAnchor.constraint(equalToConstant: Theme.Metrics.separatorHeight),
+            separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+        
         contentView.addSubview(categoryView, with: [
             categoryView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             categoryView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -91,7 +102,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
         
         contentView.addSubview(logoView, with: [
             logoView.leadingAnchor.constraint(equalTo: categoryView.trailingAnchor, constant: hMargin),
-            logoView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin),
+            logoView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: logoViewTopOffset),
             logoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
         ])
         
@@ -107,6 +118,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
         ])
         
         contentView.addSubview(tokenLabel, with: [
+            additionalInfoLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor, constant: tokenNegativeMargin),
             tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
             tokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
         ])
@@ -114,24 +126,17 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
         contentView.addSubview(nextTokenLabel, with: [
             nextTokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
             nextTokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor),
-            nextTokenLabel.topAnchor.constraint(equalTo: tokenLabel.bottomAnchor)
+            nextTokenLabel.topAnchor.constraint(equalTo: tokenLabel.bottomAnchor, constant: -tokenNegativeMargin),
+            nextTokenLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
         ])
-                
-        bottomServiceNameConstraint = serviceNameLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor)
-        bottomAdditionalInfoConstraint = additionalInfoLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor)
-        bottomTokenConstraint = tokenLabel.bottomAnchor.constraint(
-            equalTo: contentView.bottomAnchor,
-            constant: -vMargin
-        )
-        bottomNextTokenConstraint = nextTokenLabel.bottomAnchor.constraint(
-            equalTo: contentView.bottomAnchor,
-            constant: -vMargin
-        )
-        
+
         contentView.addSubview(accessoryContainer, with: [
             serviceNameLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
             accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hMargin),
-            accessoryContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin),
+            accessoryContainer.topAnchor.constraint(
+                equalTo: contentView.topAnchor,
+                constant: accessoryContainerTopOffset
+            ),
             accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
         ])
         
@@ -146,15 +151,6 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
         tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
         tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
-        
-        wireLayout()
-    }
-    
-    private func wireLayout() {
-        bottomServiceNameConstraint?.isActive = !hasAdditionalInfo
-        bottomAdditionalInfoConstraint?.isActive = hasAdditionalInfo
-        bottomTokenConstraint?.isActive = !useNextToken
-        bottomNextTokenConstraint?.isActive = useNextToken
     }
     
     func update(
@@ -171,10 +167,10 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
         self.secret = secret
         self.serviceTypeName = serviceTypeName
         if let additionalInfo {
-            hasAdditionalInfo = true
+            additionalInfoLabel.isHidden = false
             additionalInfoLabel.setText(additionalInfo)
         } else {
-            hasAdditionalInfo = false
+            additionalInfoLabel.isHidden = true
             additionalInfoLabel.clear()
         }
         
@@ -184,7 +180,12 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
 
         self.useNextToken = useNextToken
         
-        wireLayout()
+        if useNextToken {
+            nextTokenLabel.isHidden = false
+        } else {
+            nextTokenLabel.isHidden = true
+            nextTokenLabel.set(nextToken: .empty)
+        }
     }
     
     func setInitial(_ progress: Int, period: Int, currentToken: String, nextToken: String, willChangeSoon: Bool) {

@@ -17,23 +17,26 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 
-public typealias DeviceID = String
-public typealias GCMToken = String
-public typealias ExtensionID = String
-public typealias IconTypeName = String
-public typealias ServiceTypeID = UUID
-public typealias IconTypeID = UUID
-public typealias SectionID = UUID
-
-public typealias Secret = String
-public typealias TokenValue = String
-
-public extension IconTypeID {
-    static let `default`: IconTypeID = UUID(uuidString: "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD")!
-}
-
-public extension TokenValue {
-    static let empty = "000000"
+final class TokensLine: UICollectionReusableView {
+    static let reuseIdentifier = "TokensLine"
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        backgroundColor = Theme.Colors.Line.separator
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        CGSize(width: UIView.noIntrinsicMetric, height: Theme.Metrics.lineWidth)
+    }
 }

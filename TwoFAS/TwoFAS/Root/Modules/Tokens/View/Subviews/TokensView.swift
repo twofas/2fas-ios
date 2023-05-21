@@ -43,9 +43,15 @@ final class TokensView: UICollectionView {
         )
         register(
             TokensSectionHeader.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            forSupplementaryViewOfKind: TokensSectionHeader.reuseIdentifier,
             withReuseIdentifier: TokensSectionHeader.reuseIdentifier
         )
+        register(
+            TokensLine.self,
+            forSupplementaryViewOfKind: TokensLine.reuseIdentifier,
+            withReuseIdentifier: TokensLine.reuseIdentifier
+        )
+    
         allowsSelectionDuringEditing = true
     }
     

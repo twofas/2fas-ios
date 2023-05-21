@@ -173,15 +173,23 @@ private extension TokensViewController {
             -> UICollectionReusableView? in
             let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: TokensSectionHeader.reuseIdentifier,
+                withReuseIdentifier: kind,
                 for: indexPath
-            ) as? TokensSectionHeader
-            header?.setIsEditing(collectionView.isEditing)
-            header?.dataSource = self
-            if let data = self?.dataSource.snapshot().sectionIdentifiers[indexPath.section] {
-                header?.setConfiguration(data)
+            )
+            switch kind {
+            case TokensSectionHeader.reuseIdentifier:
+                let header = header as? TokensSectionHeader
+                header?.setIsEditing(collectionView.isEditing)
+                header?.dataSource = self
+                if let data = self?.dataSource.snapshot().sectionIdentifiers[indexPath.section] {
+                    header?.setConfiguration(data)
+                }
+                return header
+            case TokensLine.reuseIdentifier:
+                return header
+            default:
+                return header
             }
-            return header
         }
     }
     
@@ -244,11 +252,26 @@ private extension TokensViewController {
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .estimated(132)//(60) // TODO: Move to constant depending on cell type
             )
+            
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: groupSize,
                 subitem: item,
                 count: itemsInRow
             )
+                
+            let lineAnchor = NSCollectionLayoutAnchor(edges: [.top], absoluteOffset: .zero)
+               
+            let lineSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(1)
+            )
+            let lineItem = NSCollectionLayoutSupplementaryItem(
+                layoutSize: lineSize,
+                elementKind: TokensLine.reuseIdentifier,
+                containerAnchor: lineAnchor
+            )
+            
+            group.supplementaryItems = [lineItem]
             
             let headerFooterSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
@@ -256,11 +279,12 @@ private extension TokensViewController {
             )
             let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: headerFooterSize,
-                elementKind: UICollectionView.elementKindSectionHeader,
+                elementKind: TokensSectionHeader.reuseIdentifier,
                 alignment: .top
             )
             sectionHeader.pinToVisibleBounds = true
             let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = .zero
             
             if !(!self.tokensView.isEditing && sectionOffset == 0 && self.presenter.isMainOnlyCategory) {
                 section.boundarySupplementaryItems = [sectionHeader]

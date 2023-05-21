@@ -57,7 +57,7 @@ final class TokensAdditionalInfoComponent: UIView {
                 .scaledFont(for: .systemFont(ofSize: 13, weight: .medium))
         case .normal:
             label.font = UIFontMetrics(forTextStyle: .body)
-                .scaledFont(for: .systemFont(ofSize: 17, weight: .regular))
+                .scaledFont(for: .systemFont(ofSize: 15, weight: .regular))
         }
     }
     
@@ -66,6 +66,6 @@ final class TokensAdditionalInfoComponent: UIView {
     }
     
     func clear() {
-        label.text = nil
+        label.text = "<empty string>"
     }
 }

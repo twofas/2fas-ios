@@ -118,6 +118,8 @@
 		C217E17223D79D8800EE6C08 /* ToastNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217E17123D79D8800EE6C08 /* ToastNotification.swift */; };
 		C218513C2A1A873F00A8352A /* TokensHOTPCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513B2A1A873F00A8352A /* TokensHOTPCell.swift */; };
 		C218513E2A1A8EF600A8352A /* TokensNextTokenLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */; };
+		C21851402A1AB01600A8352A /* TokensTOTPCompactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */; };
+		C21851422A1AC77900A8352A /* TokensHOTPCompactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21851412A1AC77900A8352A /* TokensHOTPCompactCell.swift */; };
 		C21987C727961BF600724E63 /* CameraErrorTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21987C627961BF600724E63 /* CameraErrorTemplate.swift */; };
 		C219CDBB278E270F00CBBF09 /* SettingsEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C219CDBA278E270F00CBBF09 /* SettingsEventController.swift */; };
 		C21A9E8227CBF55500FE4CC4 /* ComposeServiceNumberOfDigitsFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21A9E8127CBF55400FE4CC4 /* ComposeServiceNumberOfDigitsFlowController.swift */; };
@@ -1363,6 +1365,8 @@
 		C217E17123D79D8800EE6C08 /* ToastNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastNotification.swift; sourceTree = "<group>"; };
 		C218513B2A1A873F00A8352A /* TokensHOTPCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensHOTPCell.swift; sourceTree = "<group>"; };
 		C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNextTokenLabel.swift; sourceTree = "<group>"; };
+		C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensTOTPCompactCell.swift; sourceTree = "<group>"; };
+		C21851412A1AC77900A8352A /* TokensHOTPCompactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensHOTPCompactCell.swift; sourceTree = "<group>"; };
 		C21987C627961BF600724E63 /* CameraErrorTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraErrorTemplate.swift; sourceTree = "<group>"; };
 		C219CDBA278E270F00CBBF09 /* SettingsEventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEventController.swift; sourceTree = "<group>"; };
 		C21A9E8127CBF55400FE4CC4 /* ComposeServiceNumberOfDigitsFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceNumberOfDigitsFlowController.swift; sourceTree = "<group>"; };
@@ -3811,6 +3815,8 @@
 				C295962A267F79190086DEB1 /* TokensSectionHeader+.swift */,
 				C2A4C8342A10F13800AFD67C /* TokensTOTPCell.swift */,
 				C218513B2A1A873F00A8352A /* TokensHOTPCell.swift */,
+				C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */,
+				C21851412A1AC77900A8352A /* TokensHOTPCompactCell.swift */,
 				C2B39E4E29F5834400EC31F6 /* Components */,
 			);
 			path = Cell;
@@ -7548,6 +7554,7 @@
 				C27A31CA29C8EEE40094679F /* LastPassData.swift in Sources */,
 				C23386F52780E53800F8DBC3 /* DeleteServiceInteractor.swift in Sources */,
 				C28633C41FF9327900C8F4B4 /* AlertController.swift in Sources */,
+				C21851402A1AB01600A8352A /* TokensTOTPCompactCell.swift in Sources */,
 				C233BD252801D6F900A9CFF2 /* WebExtensionDeviceNameInteractor.swift in Sources */,
 				C2117185276CE95F00042D28 /* VerifyPINPresenter.swift in Sources */,
 				C2D44E71275C1FD30043F5D6 /* MainRepositoryImpl+Extensions.swift in Sources */,
@@ -7851,6 +7858,7 @@
 				C2830D7E293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegate.swift in Sources */,
 				C2B077C2292A920B0074517F /* UploadLogsFailurePresenter.swift in Sources */,
 				C20E578F292976DA002B215B /* UUIDInputField.swift in Sources */,
+				C21851422A1AC77900A8352A /* TokensHOTPCompactCell.swift in Sources */,
 				C2CD687325FEC94400EFEFCF /* FormLine.swift in Sources */,
 				C2C93FA12603F87100E10981 /* MainContainerDecoratedVerticalContainer.swift in Sources */,
 				C25860AD28246B39009AE54F /* ListNewsStorageInteractor.swift in Sources */,

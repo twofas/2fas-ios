@@ -52,7 +52,9 @@ final class TokensAdditionalInfoComponent: UIView {
     
     func setKind(_ kind: TokensCellKind) {
         switch kind {
-        case .compact, .edit:
+        case .compact:
+            label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        case .edit:
             label.font = UIFontMetrics(forTextStyle: .body)
                 .scaledFont(for: .systemFont(ofSize: 13, weight: .medium))
         case .normal:

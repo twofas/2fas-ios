@@ -32,7 +32,11 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer {
     
     private let tokenLabel = TokensTokenView()
     private let nextTokenLabel = TokensNextTokenLabel()
-    private let refreshCounter = RefreshTokenCounter()
+    private let refreshCounter: RefreshTokenCounter = {
+        let view = RefreshTokenCounter()
+        view.adjustsImageSizeForAccessibilityContentSizeCategory(true)
+        return view
+    }()
 
     private(set) var secret: String = ""
     private var serviceTypeName: String = ""

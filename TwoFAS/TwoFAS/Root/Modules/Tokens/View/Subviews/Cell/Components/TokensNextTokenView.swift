@@ -37,11 +37,20 @@ final class TokensNextTokenView: UIView {
     
     private var movingConstraint: NSLayoutConstraint!
     private var lineHeight: CGFloat = 0
+    private var lineWidth: CGFloat = 0
     private var currentState: State = .hidden
+    private var kind: TokensCellKind = .normal
     
     private var options: UIView.AnimationOptions = []
     
     private var currentValue: TokenValue?
+    
+    private var constraintValue: CGFloat {
+        switch kind {
+        case .compact, .edit: return -lineWidth
+        case .normal: return -lineHeight
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -63,15 +72,8 @@ final class TokensNextTokenView: UIView {
         outerContainer.clipsToBounds = true
         
         outerContainer.addSubview(innerContainer, with: [
-            innerContainer.leadingAnchor.constraint(equalTo: outerContainer.leadingAnchor),
-            innerContainer.trailingAnchor.constraint(equalTo: outerContainer.trailingAnchor),
+            innerContainer.widthAnchor.constraint(equalTo: outerContainer.widthAnchor),
             heightAnchor.constraint(equalTo: outerContainer.heightAnchor)
-        ])
-        
-        movingConstraint = innerContainer.topAnchor.constraint(equalTo: outerContainer.topAnchor)
-        
-        NSLayoutConstraint.activate([
-            movingConstraint
         ])
         
         innerContainer.addSubview(nextTokenLabel, with: [
@@ -125,10 +127,10 @@ final class TokensNextTokenView: UIView {
     
     func hideNextToken(animated: Bool) {
         guard currentState == .visible || currentState == .animating else { return }
-
+        
         currentState = .animating
         nextTokenLabel.alpha = 1
-        movingConstraint.constant = -lineHeight
+        movingConstraint.constant = constraintValue
         
         if animated {
             UIView.animate(withDuration: animationDuration, delay: 0, options: options) {
@@ -136,14 +138,35 @@ final class TokensNextTokenView: UIView {
                 self.nextTokenLabel.alpha = 0
             } completion: { _ in
                 self.currentState = .hidden
-                self.movingConstraint.constant = -self.lineHeight
+                self.movingConstraint.constant = self.constraintValue
             }
         } else {
             nextTokenLabel.alpha = 0
-            movingConstraint.constant = -self.lineHeight
+            movingConstraint.constant = constraintValue
             currentState = .hidden
             layoutIfNeeded()
         }
+    }
+    
+    func setKind(_ kind: TokensCellKind) {
+        self.kind = kind
+        switch kind {
+        case .compact:
+            movingConstraint = innerContainer.leadingAnchor.constraint(equalTo: outerContainer.leadingAnchor)
+            NSLayoutConstraint.activate([
+                innerContainer.topAnchor.constraint(equalTo: outerContainer.topAnchor),
+                movingConstraint
+            ])
+        case .normal:
+            movingConstraint = innerContainer.topAnchor.constraint(equalTo: outerContainer.topAnchor)
+            NSLayoutConstraint.activate([
+                innerContainer.leadingAnchor.constraint(equalTo: outerContainer.leadingAnchor),
+                movingConstraint
+            ])
+        default:
+            break
+        }
+        nextTokenLabel.setKind(kind)
     }
     
     override func layoutSubviews() {
@@ -153,8 +176,10 @@ final class TokensNextTokenView: UIView {
     
     private func updateConsts() {
         lineHeight = nextTokenLabel.frame.height
+        lineWidth = nextTokenLabel.frame.width
         guard currentState == .hidden else { return }
-        movingConstraint.constant = -lineHeight
+        movingConstraint.constant = constraintValue
+        
         maskingView.frame = CGRect(origin: .zero, size: outerContainer.frame.size)
     }
 }

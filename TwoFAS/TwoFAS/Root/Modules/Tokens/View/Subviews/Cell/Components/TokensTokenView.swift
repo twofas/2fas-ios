@@ -22,8 +22,6 @@ import Common
 
 final class TokensTokenView: UILabel {
     private let maskedText = "••• •••"
-    private let codeFont = UIFontMetrics(forTextStyle: .largeTitle)
-        .scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 50, weight: .thin))
     
     private var isMarked = false
     private var isMasked = false
@@ -40,7 +38,6 @@ final class TokensTokenView: UILabel {
     }
     
     private func commonInit() {
-        font = codeFont
         minimumScaleFactor = 0.5
         numberOfLines = 1
         allowsDefaultTighteningForTruncation = true
@@ -79,6 +76,18 @@ final class TokensTokenView: UILabel {
         previousToken = token
         if let element = UIAccessibility.focusedElement(using: nil) as? UILabel, element == self, previous != token {
             UIAccessibility.post(notification: .layoutChanged, argument: self)
+        }
+    }
+    
+    func setKind(_ kind: TokensCellKind) {
+        switch kind {
+        case .compact:
+            font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .thin)
+        case .normal:
+            font = UIFontMetrics(forTextStyle: .largeTitle)
+                .scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 50, weight: .thin))
+        default:
+            break
         }
     }
     

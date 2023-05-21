@@ -33,13 +33,23 @@ final class TokensNextTokenLabel: UILabel {
     }
     
     private func commonInit() {
-        font = UIFontMetrics(forTextStyle: .headline)
-            .scaledFont(for: .systemFont(ofSize: 17, weight: .bold))
         adjustsFontForContentSizeCategory = true
         numberOfLines = 1
         textColor = Theme.Colors.Text.main
         setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
         setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+    }
+    
+    func setKind(_ kind: TokensCellKind) {
+        switch kind {
+        case .compact:
+            font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        case .normal:
+            font = UIFontMetrics(forTextStyle: .headline)
+                .scaledFont(for: .systemFont(ofSize: 17, weight: .bold))
+        default:
+            break
+        }
     }
 }

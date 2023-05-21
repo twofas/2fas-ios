@@ -21,8 +21,8 @@ import UIKit
 import Common
 import Token
 
-final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
-    static let reuseIdentifier = "TokensTOTPCell"
+final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer {
+    static let reuseIdentifier = "TokensTOTPCompactCell"
     let autoManagable = true
     
     private let hMargin: CGFloat = Theme.Metrics.doubleMargin
@@ -30,17 +30,17 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
     
     private let tokenLabel: TokensTokenView = {
         let view = TokensTokenView()
-        view.setKind(.normal)
+        view.setKind(.compact)
         return view
     }()
     private let nextTokenLabel: TokensNextTokenView = {
         let view = TokensNextTokenView()
-        view.setKind(.normal)
+        view.setKind(.compact)
         return view
     }()
     private let circularProgress: TokensCircleProgress = {
         let view = TokensCircleProgress()
-        view.setKind(.normal)
+        view.setKind(.compact)
         return view
     }()
     
@@ -52,17 +52,17 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
     private let categoryView = TokensCategoryComponent()
     private var logoView: TokensLogoComponent = {
         let comp = TokensLogoComponent()
-        comp.setKind(.normal)
+        comp.setKind(.compact)
         return comp
     }()
     private var serviceNameLabel: TokensServiceNameComponent = {
         let comp = TokensServiceNameComponent()
-        comp.setKind(.normal)
+        comp.setKind(.compact)
         return comp
     }()
     private var additionalInfoLabel: TokensAdditionalInfoComponent = {
         let comp = TokensAdditionalInfoComponent()
-        comp.setKind(.normal)
+        comp.setKind(.compact)
         return comp
     }()
     private let accessoryContainer = UIView()
@@ -96,9 +96,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
     }
     
     private func setupLayout() {
-        let tokenNegativeMargin = round(hMargin / 4.0)
-        let logoViewTopOffset = vMargin + 14.0
-        let accessoryContainerTopOffset = vMargin + 16.0
+        let tokenBottomOffset = 2.0
         contentView.addSubview(separator, with: [
             separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -114,7 +112,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
         
         contentView.addSubview(logoView, with: [
             logoView.leadingAnchor.constraint(equalTo: categoryView.trailingAnchor, constant: hMargin),
-            logoView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: logoViewTopOffset),
+            logoView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin),
             logoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
         ])
         
@@ -130,25 +128,30 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
         ])
         
         contentView.addSubview(tokenLabel, with: [
-            additionalInfoLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor, constant: tokenNegativeMargin),
+            additionalInfoLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor),
             tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            tokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
+            tokenLabel.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor,
+                constant: -vMargin + tokenBottomOffset
+            )
         ])
         
         contentView.addSubview(nextTokenLabel, with: [
-            nextTokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            nextTokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor),
-            nextTokenLabel.topAnchor.constraint(equalTo: tokenLabel.bottomAnchor, constant: -tokenNegativeMargin),
+            nextTokenLabel.leadingAnchor.constraint(equalTo: tokenLabel.trailingAnchor, constant: hMargin),
             nextTokenLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
         ])
 
         contentView.addSubview(accessoryContainer, with: [
-            serviceNameLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
-            accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hMargin),
-            accessoryContainer.topAnchor.constraint(
-                equalTo: contentView.topAnchor,
-                constant: accessoryContainerTopOffset
+            nextTokenLabel.trailingAnchor.constraint(
+                greaterThanOrEqualTo: accessoryContainer.leadingAnchor,
+                constant: -hMargin
             ),
+            serviceNameLabel.trailingAnchor.constraint(
+                greaterThanOrEqualTo: accessoryContainer.leadingAnchor,
+                constant: -hMargin
+            ),
+            accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hMargin),
+            accessoryContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin),
             accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
         ])
         
@@ -161,8 +164,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
         ])
         
         tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
-        tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
-        tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+        nextTokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
     }
     
     func update(

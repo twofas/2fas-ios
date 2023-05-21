@@ -51,6 +51,10 @@ final class RefreshTokenCounter: UIView {
     func unlock() {
         image.unlock()
     }
+    
+    func adjustsImageSizeForAccessibilityContentSizeCategory(_ value: Bool) {
+        image.adjustsImageSizeForAccessibilityContentSizeCategory(value)
+    }
 }
 
 private extension RefreshTokenCounter {
@@ -73,8 +77,11 @@ private extension RefreshTokenCounter {
         
         private func commonInit() {
             addSubview(image)
-            image.adjustsImageSizeForAccessibilityContentSizeCategory = true
             unlock()
+        }
+        
+        func adjustsImageSizeForAccessibilityContentSizeCategory(_ value: Bool) {
+            image.adjustsImageSizeForAccessibilityContentSizeCategory = value
         }
         
         func rotate() {

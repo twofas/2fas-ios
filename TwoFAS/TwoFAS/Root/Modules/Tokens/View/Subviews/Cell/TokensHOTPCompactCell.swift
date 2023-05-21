@@ -21,48 +21,44 @@ import UIKit
 import Common
 import Token
 
-final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
-    static let reuseIdentifier = "TokensTOTPCell"
+final class TokensHOTPCompactCell: UICollectionViewCell, TokenCounterConsumer {
+    static let reuseIdentifier = "TokensHOTPCompactCell"
     let autoManagable = true
+    
+    var didTapRefreshCounter: ((Secret) -> Void)?
     
     private let hMargin: CGFloat = Theme.Metrics.doubleMargin
     private let vMargin: CGFloat = Theme.Metrics.mediumMargin
     
     private let tokenLabel: TokensTokenView = {
         let view = TokensTokenView()
-        view.setKind(.normal)
+        view.setKind(.compact)
         return view
     }()
-    private let nextTokenLabel: TokensNextTokenView = {
-        let view = TokensNextTokenView()
-        view.setKind(.normal)
+    private let refreshCounter: RefreshTokenCounter = {
+        let view = RefreshTokenCounter()
+        view.adjustsImageSizeForAccessibilityContentSizeCategory(false)
         return view
     }()
-    private let circularProgress: TokensCircleProgress = {
-        let view = TokensCircleProgress()
-        view.setKind(.normal)
-        return view
-    }()
-    
+
     private(set) var secret: String = ""
     private var serviceTypeName: String = ""
-    
-    private var useNextToken = false
-    
+    private var isActive = true
+        
     private let categoryView = TokensCategoryComponent()
     private var logoView: TokensLogoComponent = {
         let comp = TokensLogoComponent()
-        comp.setKind(.normal)
+        comp.setKind(.compact)
         return comp
     }()
     private var serviceNameLabel: TokensServiceNameComponent = {
         let comp = TokensServiceNameComponent()
-        comp.setKind(.normal)
+        comp.setKind(.compact)
         return comp
     }()
     private var additionalInfoLabel: TokensAdditionalInfoComponent = {
         let comp = TokensAdditionalInfoComponent()
-        comp.setKind(.normal)
+        comp.setKind(.compact)
         return comp
     }()
     private let accessoryContainer = UIView()
@@ -87,6 +83,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
     private func commonInit() {
         setupBackground()
         setupLayout()
+        setupConfiguration()
         //        setupAccessibility() // TODO: Add accessibility
     }
     
@@ -96,9 +93,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
     }
     
     private func setupLayout() {
-        let tokenNegativeMargin = round(hMargin / 4.0)
-        let logoViewTopOffset = vMargin + 14.0
-        let accessoryContainerTopOffset = vMargin + 16.0
+        let tokenBottomOffset = 2.0
         contentView.addSubview(separator, with: [
             separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -114,7 +109,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
         
         contentView.addSubview(logoView, with: [
             logoView.leadingAnchor.constraint(equalTo: categoryView.trailingAnchor, constant: hMargin),
-            logoView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: logoViewTopOffset),
+            logoView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin),
             logoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
         ])
         
@@ -130,34 +125,28 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
         ])
         
         contentView.addSubview(tokenLabel, with: [
-            additionalInfoLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor, constant: tokenNegativeMargin),
+            additionalInfoLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor),
             tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            tokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
-        ])
-        
-        contentView.addSubview(nextTokenLabel, with: [
-            nextTokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            nextTokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor),
-            nextTokenLabel.topAnchor.constraint(equalTo: tokenLabel.bottomAnchor, constant: -tokenNegativeMargin),
-            nextTokenLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
+            tokenLabel.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor,
+                constant: -vMargin + tokenBottomOffset
+            )
         ])
 
         contentView.addSubview(accessoryContainer, with: [
+            tokenLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
             serviceNameLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
             accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hMargin),
-            accessoryContainer.topAnchor.constraint(
-                equalTo: contentView.topAnchor,
-                constant: accessoryContainerTopOffset
-            ),
+            accessoryContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin),
             accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
         ])
         
-        accessoryContainer.addSubview(circularProgress, with: [
-            circularProgress.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor),
-            circularProgress.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
-            circularProgress.topAnchor.constraint(greaterThanOrEqualTo: accessoryContainer.topAnchor),
-            circularProgress.bottomAnchor.constraint(lessThanOrEqualTo: accessoryContainer.bottomAnchor),
-            circularProgress.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor)
+        accessoryContainer.addSubview(refreshCounter, with: [
+            refreshCounter.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor),
+            refreshCounter.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
+            refreshCounter.topAnchor.constraint(greaterThanOrEqualTo: accessoryContainer.topAnchor),
+            refreshCounter.bottomAnchor.constraint(lessThanOrEqualTo: accessoryContainer.bottomAnchor),
+            refreshCounter.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor)
         ])
         
         tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
@@ -171,8 +160,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
         serviceTypeName: String,
         additionalInfo: String?,
         logoType: LogoType,
-        category: TintColor,
-        useNextToken: Bool
+        category: TintColor
     ) {
         tokenLabel.clear()
         serviceNameLabel.setText(name)
@@ -186,57 +174,69 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
             additionalInfoLabel.clear()
         }
         
-        clearTokenMarking()
         categoryView.setColor(category)
         logoView.configure(with: logoType)
+    }
 
-        self.useNextToken = useNextToken
-        
-        if useNextToken {
-            nextTokenLabel.isHidden = false
-        } else {
-            nextTokenLabel.isHidden = true
-            nextTokenLabel.set(nextToken: .empty)
-        }
-    }
-    
-    func setInitial(_ progress: Int, period: Int, currentToken: String, nextToken: String, willChangeSoon: Bool) {
-        circularProgress.setPeriod(period)
-        circularProgress.setProgress(progress, animated: false)
-        tokenLabel.setToken(currentToken)
-        nextTokenLabel.set(nextToken: nextToken)
-        shouldMark(willChangeSoon: willChangeSoon, isPlanned: false)
-    }
-    
-    func setUpdate(_ progress: Int, isPlanned: Bool, currentToken: String, nextToken: String, willChangeSoon: Bool) {
-        circularProgress.setProgress(progress, animated: isPlanned)
-        tokenLabel.setToken(currentToken)
-        shouldMark(willChangeSoon: willChangeSoon, isPlanned: isPlanned)
-        nextTokenLabel.set(nextToken: nextToken)
-    }
-    
-    private func shouldMark(willChangeSoon: Bool, isPlanned: Bool) {
-        if useNextToken {
-            if willChangeSoon {
-                nextTokenLabel.showNextToken(animated: isPlanned)
+    func setInitial(_ state: TokenCounterConsumerState) {
+        switch state {
+        case .locked:
+            isActive = true
+            tokenLabel.maskToken()
+            refreshCounter.unlock()
+            
+        case .unlocked(let isRefreshLocked, let currentToken):
+            isActive = !isRefreshLocked
+            tokenLabel.setToken(currentToken)
+            if isRefreshLocked {
+                refreshCounter.lock()
             } else {
-                nextTokenLabel.hideNextToken(animated: isPlanned)
+                refreshCounter.unlock()
             }
         }
-        if willChangeSoon {
-            markToken()
-        } else {
-            clearTokenMarking()
+    }
+    
+    func setUpdate(_ state: TokenCounterConsumerState, isPlanned: Bool) {
+        switch state {
+        case .locked:
+            isActive = true
+            tokenLabel.maskToken()
+            refreshCounter.unlock()
+            
+        case .unlocked(let isRefreshLocked, let currentToken):
+            isActive = !isRefreshLocked
+            tokenLabel.setToken(currentToken)
+            if isRefreshLocked {
+                refreshCounter.lock()
+            } else {
+                refreshCounter.unlock()
+            }
         }
     }
     
-    private func markToken() {
-        tokenLabel.mark()
-        circularProgress.mark()
+    private func setupConfiguration() {
+        accessoryContainer.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(animateRefreshCounter))
+        )
+        tokenLabel.maskToken()
     }
     
-    private func clearTokenMarking() {
-        tokenLabel.clearMarking()
-        circularProgress.unmark()
+    @objc
+    private func animateRefreshCounter() {
+        guard isActive else { return }
+        isActive = false
+        refreshCounter.rotate()
+        didTapRefreshCounter?(secret)
     }
+    
+//    func setupAccessibility() {
+//        super.setupAccessibility()
+//
+//        var accViews: [UIView] = [categoryView]
+//        if let current = currentAccessibilityIcon {
+//            accViews.append(current)
+//        }
+//        accViews.append(contentsOf: [nameLabel, tokenLabel, infoNextToken])
+//        accessibilityElements = accViews
+//    }
 }

@@ -23,8 +23,6 @@ final class TokensCircleProgress: UIView {
     private let circle = CircularShape()
     private let valueLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFontMetrics(forTextStyle: .caption2)
-            .scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular))
         label.numberOfLines = 1
         label.textAlignment = .center
         label.isAccessibilityElement = true
@@ -37,8 +35,6 @@ final class TokensCircleProgress: UIView {
     }()
     private let sizeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFontMetrics(forTextStyle: .caption2)
-            .scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular))
         label.numberOfLines = 1
         label.textAlignment = .center
         label.isAccessibilityElement = false
@@ -56,6 +52,11 @@ final class TokensCircleProgress: UIView {
     private var cTrailing: NSLayoutConstraint?
     private var cTop: NSLayoutConstraint?
     private var cBottom: NSLayoutConstraint?
+    
+    private let standardLineWidth = 1.0
+    private let standardMargin = 8.0
+    
+    private var kind: TokensCellKind = .normal
     
     init() {
         super.init(frame: CGRect.zero)
@@ -152,17 +153,43 @@ final class TokensCircleProgress: UIView {
         }
     }
     
+    func setKind(_ kind: TokensCellKind) {
+        self.kind = kind
+        switch kind {
+        case .compact:
+            let font = UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular)
+            valueLabel.font = font
+            sizeLabel.font = font
+        case .normal:
+            let font = UIFontMetrics(forTextStyle: .caption2)
+                .scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular))
+            valueLabel.font = font
+            sizeLabel.font = font
+        default:
+            break
+        }
+    }
+    
     private func setCircleColor(marked: Bool, animated: Bool) {
         let color = marked ? Theme.Colors.Line.theme : Theme.Colors.Line.primaryLine
         circle.setLineColor(color, animated: animated)
     }
     
     private func setLineWidth() {
-        circle.lineWidth = traitCollection.preferredContentSizeCategory.lineWidth
+        if kind == .normal {
+            circle.lineWidth = traitCollection.preferredContentSizeCategory.lineWidth
+            return
+        }
+        circle.lineWidth = standardLineWidth
     }
     
     private func setMargins() {
-        let value = -traitCollection.preferredContentSizeCategory.margin
+        let value: CGFloat = {
+            if kind == .normal {
+                return -traitCollection.preferredContentSizeCategory.margin
+            }
+            return standardMargin
+        }()
         cLeading?.constant = value
         cTrailing?.constant = -value
         cTop?.constant = value

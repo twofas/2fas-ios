@@ -118,9 +118,9 @@ private extension TokensViewController {
                         return cell
                     } else {
                         let cell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: TokensTOTPCell.reuseIdentifier,
+                            withReuseIdentifier: TokensTOTPCompactCell.reuseIdentifier,//TokensTOTPCell.reuseIdentifier,
                             for: indexPath
-                        ) as? TokensTOTPCell
+                        ) as? TokensTOTPCompactCell//TokensTOTPCell
                         cell?.update(
                             name: item.name,
                             secret: item.secret,
@@ -149,9 +149,9 @@ private extension TokensViewController {
                         return cell
                     } else {
                         let cell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: TokensHOTPCell.reuseIdentifier,
+                            withReuseIdentifier: TokensHOTPCompactCell.reuseIdentifier,//TokensHOTPCell.reuseIdentifier,
                             for: indexPath
-                        ) as? TokensHOTPCell
+                        ) as? TokensHOTPCompactCell//TokensHOTPCell
                         cell?.update(
                             name: item.name,
                             secret: item.secret,
@@ -244,13 +244,13 @@ private extension TokensViewController {
             }()
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(132)//(60) // TODO: Move to constant depending on cell type
+                heightDimension: .absolute(90)//.estimated(135)//(60) // TODO: Move to constant depending on cell type
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(132)//(60) // TODO: Move to constant depending on cell type
+                heightDimension: .absolute(90)//.estimated(135)//(60) // TODO: Move to constant depending on cell type
             )
             
             let group = NSCollectionLayoutGroup.horizontal(

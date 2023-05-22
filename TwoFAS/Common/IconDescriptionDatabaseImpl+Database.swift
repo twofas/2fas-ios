@@ -74,6 +74,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "USPTO"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "A2D05CD0-6C88-45EE-9997-B77ADB726BFA")!,
+                name: "X-Plane.org"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "90AE4DBD-22CD-491D-9211-347DF50AABE2")!,
                 name: "Trading 212"
             ),
@@ -232,6 +236,14 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "68D9C9C8-487E-4496-A40A-46412E6C4187")!,
                 name: "Onehub"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "685D98ED-CA33-470C-82B8-6AE671C2EC15")!,
+                name: "Cfx.re Community"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "E65EEE11-1129-447D-BFE5-C91512540EAF")!,
+                name: "BookStack"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "942FDE6E-E260-4C0A-8C60-3EBAE7251352")!,
@@ -524,6 +536,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "D1BAD917-1FC3-4C34-8CF7-8089143D8DC4")!,
                 name: "Northwestern Mutual"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "C595ED6B-E331-4139-9183-49D1353635A4")!,
+                name: "Prusa"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "8D3B0A32-4A3E-445C-B1C3-0529BDE24AA5")!,
@@ -1198,6 +1214,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Planning Center"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "7FFFE036-01B2-4C2D-B739-BCDBB76395C7")!,
+                name: "Icedrive"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "2CC80AC1-879E-43DB-90F9-12A3A97B5151")!,
                 name: "RealMe"
             ),
@@ -1336,6 +1356,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "A7FBA7AF-35D1-486C-B664-C38211C10E53")!,
                 name: "Particle"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "0A1BCFE8-C98D-48EF-9450-731E34343EE5")!,
+                name: "Sipgate"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "248A84E0-5B72-4B81-BB4E-32D4698EB4EA")!,
@@ -1604,6 +1628,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "6EC7D249-30AA-4164-9BA6-87AAD37692D8")!,
                 name: "Nexus Mods"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "0775DB30-2BDC-42B6-AAF8-439AAF276C49")!,
+                name: "OpenAI"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "F4CAD0B9-00D5-420C-804C-D41CE8825EED")!,
@@ -1966,6 +1994,14 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Gusto"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "61022FE4-5B24-452C-8085-81BF30CC6DEC")!,
+                name: "The Good Cloud"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "C0559E31-612C-4A18-B030-65AC6B60E950")!,
+                name: "TP-Link"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "8405FBA4-A4C1-49BF-B7E9-87479E2D17E8")!,
                 name: "Dynadot"
             ),
@@ -2200,6 +2236,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "60EDA106-9A16-4E73-BE93-54E83C878983")!,
                 name: "University of Colorado Boulder"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "E78FB201-6932-4E6D-A4E5-01A42005822D")!,
+                name: "Kick"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "50B56493-7D97-48BF-AE85-CAFB69265FE5")!,
@@ -2962,6 +3002,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "RightCapital"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "0AA806DB-7B34-4387-91BD-08D4547B0B4A")!,
+                name: "Passbolt"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "6BEF5540-2E6D-4125-90AC-88905AE42FC3")!,
                 name: "NO-IP"
             ),
@@ -3430,6 +3474,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Stake"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "BDEA153C-20D7-4844-9C97-D694EE191353")!,
+                name: "Canva"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "E1CAE46B-2A0F-47B5-9750-73E3DAA333D4")!,
                 name: "ConnectWise Control (ScreenConnect)"
             ),
@@ -3674,6 +3722,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Vancity"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "D9EECF73-C935-48D6-9AAC-A9A3C63F7D0B")!,
+                name: "Mailcow"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "00595FA8-96D3-48CB-85FE-AF8B6967DB08")!,
                 name: "University of Notre Dame"
             ),
@@ -3898,6 +3950,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Nextcloud"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "15CA416A-3212-4DB7-9BCA-60548203B411")!,
+                name: "Twingate"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "1054C554-F8BC-46C5-9C79-F7A8B74DD5FE")!,
                 name: "Minergate"
             ),
@@ -4060,6 +4116,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "856858A8-25F9-49BF-9EA6-10B07A618D1D")!,
                 name: "Tutanota"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "A11C8FFA-44B1-47FD-B1B4-043973BD9D4D")!,
+                name: "Replit"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "552EB7E2-2FB8-4735-A6E3-72FC0015BF14")!,
@@ -4358,6 +4418,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Oculus"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "886B383C-A02A-4566-A618-A0FC0A9E9CD1")!,
+                name: "Matrixport"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "EF5B7DF4-55D3-49CA-9EC0-93D380302884")!,
                 name: "MyHeritage"
             ),
@@ -4522,6 +4586,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Fathom"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "391C7F84-6909-4019-A1C2-5DC208364ACE")!,
+                name: "Threshold"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "816E759C-2C73-45B7-AD93-702C184CFF77")!,
                 name: "CoinStats"
             ),
@@ -4610,4 +4678,3 @@ final class IconDescriptionDatabaseGenerated {
                 name: "University of Groningen"
             )]}()
 }
-// swiftlint:enable all

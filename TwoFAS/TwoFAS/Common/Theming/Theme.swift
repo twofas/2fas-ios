@@ -300,6 +300,10 @@ enum Theme {
         
         /// 288
         static let componentWidth: CGFloat = 288
+        /// 280
+        static let compactCellWidth: CGFloat = 280
+        /// 310
+        static let defaultCellWidth: CGFloat = pageWidth
         /// 310
         static let pageWidth: CGFloat = 310
         

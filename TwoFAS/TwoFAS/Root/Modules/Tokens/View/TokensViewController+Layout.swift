@@ -148,7 +148,10 @@ extension TokensViewController {
     }
     
     func getLayout(sectionOffset: Int, enviroment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
-        let minimumCellWidth: CGFloat = Theme.Metrics.pageWidth // TODO: Check if it can be smaller for compact
+        let minimumCellWidth: CGFloat = {
+            guard presenter.listStyle == .default else { return Theme.Metrics.compactCellWidth }
+            return Theme.Metrics.defaultCellWidth
+        }()
         let itemsInRow: Int = {
             let snapshot = self.dataSource.snapshot()
             if let section = snapshot.sectionIdentifiers[safe: sectionOffset],
@@ -158,7 +161,10 @@ extension TokensViewController {
             }
             let availableWidth = enviroment.container.effectiveContentSize.width
             var columns = Int(availableWidth / minimumCellWidth)
-            let layoutMultiplier = enviroment.traitCollection.preferredContentSizeCategory.layoutMultiplier
+            let layoutMultiplier: CGFloat = {
+                guard presenter.listStyle == .default else { return 1.0 }
+                return enviroment.traitCollection.preferredContentSizeCategory.layoutMultiplier
+            }()
             if columns > 1 && layoutMultiplier != 1.0 {
                 let newSize = minimumCellWidth * layoutMultiplier
                 columns = Int(availableWidth / newSize)
@@ -187,7 +193,7 @@ extension TokensViewController {
         
         let headerFooterSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(self.headerHeight)
+            heightDimension: .estimated(headerHeight)
         )
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerFooterSize,
@@ -198,7 +204,7 @@ extension TokensViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .zero
         
-        if !(!self.tokensView.isEditing && sectionOffset == 0 && self.presenter.isMainOnlyCategory) {
+        if !(!tokensView.isEditing && sectionOffset == 0 && presenter.isMainOnlyCategory) {
             section.boundarySupplementaryItems = [sectionHeader]
         }
         

@@ -41,6 +41,10 @@ final class TokensPresenter {
     
     var isMainOnlyCategory: Bool { interactor.isMainOnlyCategory }
     
+    var listStyle: ListStyle {
+        interactor.currentListStyle
+    }
+    
     init(flowController: TokensPlainFlowControlling, interactor: TokensModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor

@@ -100,96 +100,12 @@ private extension TokensViewController {
     func setupDataSource() {
         dataSource = UICollectionViewDiffableDataSource(
             collectionView: tokensView,
-            cellProvider: { collectionView, indexPath, item -> UICollectionViewCell? in
-                if item.cellType == .serviceTOTP {
-                    if collectionView.isEditing {
-                        let cell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: TokensEditCell.reuseIdentifier,
-                            for: indexPath
-                        ) as? TokensEditCell
-                        cell?.update(
-                            name: item.name,
-                            additionalInfo: item.additionalInfo,
-                            serviceTypeName: item.serviceTypeName,
-                            logoType: item.logoType,
-                            category: item.category,
-                            canBeDragged: item.canBeDragged
-                        )
-                        return cell
-                    } else {
-                        let cell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: TokensTOTPCompactCell.reuseIdentifier,//TokensTOTPCell.reuseIdentifier,
-                            for: indexPath
-                        ) as? TokensTOTPCompactCell//TokensTOTPCell
-                        cell?.update(
-                            name: item.name,
-                            secret: item.secret,
-                            serviceTypeName: item.serviceTypeName,
-                            additionalInfo: item.additionalInfo,
-                            logoType: item.logoType,
-                            category: item.category,
-                            useNextToken: item.useNextToken
-                        )
-                        return cell
-                    }
-                } else if item.cellType == .serviceHOTP {
-                    if collectionView.isEditing {
-                        let cell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: TokensEditCell.reuseIdentifier,
-                            for: indexPath
-                        ) as? TokensEditCell
-                        cell?.update(
-                            name: item.name,
-                            additionalInfo: item.additionalInfo,
-                            serviceTypeName: item.serviceTypeName,
-                            logoType: item.logoType,
-                            category: item.category,
-                            canBeDragged: item.canBeDragged
-                        )
-                        return cell
-                    } else {
-                        let cell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: TokensHOTPCompactCell.reuseIdentifier,//TokensHOTPCell.reuseIdentifier,
-                            for: indexPath
-                        ) as? TokensHOTPCompactCell//TokensHOTPCell
-                        cell?.update(
-                            name: item.name,
-                            secret: item.secret,
-                            serviceTypeName: item.serviceTypeName,
-                            additionalInfo: item.additionalInfo,
-                            logoType: item.logoType,
-                            category: item.category
-                        )
-                        return cell
-                    }
-                }
-                let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: TokensEmptyDropSpaceCell.reuseIdentifier,
-                    for: indexPath
-                ) as? TokensEmptyDropSpaceCell
-                return cell
+            cellProvider: { [weak self] collectionView, indexPath, item -> UICollectionViewCell? in
+                self?.getCell(for: collectionView, indexPath: indexPath, item: item)
             })
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath
             -> UICollectionReusableView? in
-            let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: kind,
-                for: indexPath
-            )
-            switch kind {
-            case TokensSectionHeader.reuseIdentifier:
-                let header = header as? TokensSectionHeader
-                header?.setIsEditing(collectionView.isEditing)
-                header?.dataSource = self
-                if let data = self?.dataSource.snapshot().sectionIdentifiers[indexPath.section] {
-                    header?.setConfiguration(data)
-                }
-                return header
-            case TokensLine.reuseIdentifier:
-                return header
-            default:
-                return header
-            }
+            self?.getHeader(for: collectionView, kind: kind, indexPath: indexPath)
         }
     }
     
@@ -220,77 +136,8 @@ private extension TokensViewController {
     }
     
     private func createLayout() {
-        layout = UICollectionViewCompositionalLayout { [weak self] sectionOffset, env in
-            guard let self else { return nil }
-            let minimumCellWidth: CGFloat = Theme.Metrics.pageWidth
-            let itemsInRow: Int = {
-                let snapshot = self.dataSource.snapshot()
-                if let section = snapshot.sectionIdentifiers[safe: sectionOffset],
-                   let item = snapshot.itemIdentifiers(inSection: section).first,
-                   item.cellType == .placeholder {
-                    return 1
-                }
-                let availableWidth = env.container.effectiveContentSize.width
-                var columns = Int(availableWidth / minimumCellWidth)
-                let layoutMultiplier = env.traitCollection.preferredContentSizeCategory.layoutMultiplier
-                if columns > 1 && layoutMultiplier != 1.0 {
-                    let newSize = minimumCellWidth * layoutMultiplier
-                    columns = Int(availableWidth / newSize)
-                }
-                if columns < 1 {
-                    columns = 1
-                }
-                return columns
-            }()
-            let itemSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .absolute(90)//.estimated(135)//(60) // TODO: Move to constant depending on cell type
-            )
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            
-            let groupSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .absolute(90)//.estimated(135)//(60) // TODO: Move to constant depending on cell type
-            )
-            
-            let group = NSCollectionLayoutGroup.horizontal(
-                layoutSize: groupSize,
-                subitem: item,
-                count: itemsInRow
-            )
-                
-            let lineAnchor = NSCollectionLayoutAnchor(edges: [.top], absoluteOffset: .zero)
-               
-            let lineSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(1)
-            )
-            let lineItem = NSCollectionLayoutSupplementaryItem(
-                layoutSize: lineSize,
-                elementKind: TokensLine.reuseIdentifier,
-                containerAnchor: lineAnchor
-            )
-            
-            group.supplementaryItems = [lineItem]
-            
-            let headerFooterSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(self.headerHeight)
-            )
-            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: headerFooterSize,
-                elementKind: TokensSectionHeader.reuseIdentifier,
-                alignment: .top
-            )
-            sectionHeader.pinToVisibleBounds = true
-            let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = .zero
-            
-            if !(!self.tokensView.isEditing && sectionOffset == 0 && self.presenter.isMainOnlyCategory) {
-                section.boundarySupplementaryItems = [sectionHeader]
-            }
-            
-            return section
+        layout = UICollectionViewCompositionalLayout { [weak self] sectionOffset, enviroment in
+            self?.getLayout(sectionOffset: sectionOffset, enviroment: enviroment)
         }
     }
     
@@ -341,25 +188,5 @@ private extension TokensViewController {
             name: .tokensScreenIsVisible,
             object: nil
         )
-    }
-}
-
-private extension UIContentSizeCategory {
-    var layoutMultiplier: CGFloat {
-        switch self {
-        case UIContentSizeCategory.accessibilityExtraExtraExtraLarge: return 23.0 / 16.0
-        case UIContentSizeCategory.accessibilityExtraExtraLarge: return 22.0 / 16.0
-        case UIContentSizeCategory.accessibilityExtraLarge: return 21.0 / 16.0
-        case UIContentSizeCategory.accessibilityLarge: return 20.0 / 16.0
-        case UIContentSizeCategory.accessibilityMedium: return 19.0 / 16.0
-        case UIContentSizeCategory.extraExtraExtraLarge: return 19.0 / 16.0
-        case UIContentSizeCategory.extraExtraLarge: return 18.0 / 16.0
-        case UIContentSizeCategory.extraLarge: return 17.0 / 16.0
-        case UIContentSizeCategory.large: return 1.0
-        case UIContentSizeCategory.medium: return 15.0 / 16.0
-        case UIContentSizeCategory.small: return 14.0 / 16.0
-        case UIContentSizeCategory.extraSmall: return 13.0 / 16.0
-        default: return 1.0
-        }
     }
 }

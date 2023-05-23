@@ -56,6 +56,9 @@
 		C20A3B8326E6A7D90020D8C5 /* MainContainerCenteredImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20A3B8226E6A7D90020D8C5 /* MainContainerCenteredImage.swift */; };
 		C20B004D26813953009D2334 /* CommonSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B004C26813953009D2334 /* CommonSectionData.swift */; };
 		C20B94DA281C859A008FA230 /* PushNotificationsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B94D9281C859A008FA230 /* PushNotificationsConfig.swift */; };
+		C20CD53C2A1CF03F00A7F324 /* TokensViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20CD53B2A1CF03F00A7F324 /* TokensViewController+Layout.swift */; };
+		C20CD53E2A1D013200A7F324 /* TokensTOTPCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20CD53D2A1D013200A7F324 /* TokensTOTPCellType.swift */; };
+		C20CD5402A1D017700A7F324 /* TokensHOTPCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20CD53F2A1D017700A7F324 /* TokensHOTPCellType.swift */; };
 		C20E578C29297593002B215B /* UploadLogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E578B29297593002B215B /* UploadLogsViewController.swift */; };
 		C20E578F292976DA002B215B /* UUIDInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E578E292976DA002B215B /* UUIDInputField.swift */; };
 		C20E60F728188A8E00AB002E /* PushNotificationPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E60F628188A8E00AB002E /* PushNotificationPermissionView.swift */; };
@@ -802,7 +805,6 @@
 		C2CE0E162793471E007DB667 /* GoogleAuth.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CE0E152793471E007DB667 /* GoogleAuth.pb.swift */; };
 		C2CE84A12814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CE84A02814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift */; };
 		C2CF23FE23623DE000B759DD /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = C2CF23FD23623DE000B759DD /* KeychainAccess */; };
-		C2CF61182A18FBF900A0B61C /* TokensLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CF61172A18FBF900A0B61C /* TokensLine.swift */; };
 		C2CFFCDD2007FDD600600AC6 /* CircleProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CFFCDC2007FDD600600AC6 /* CircleProgress.swift */; };
 		C2D07ED726A45BBD00AF8E7B /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C2D07EDC26A45BC700AF8E7B /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
@@ -1303,6 +1305,9 @@
 		C20A3B8226E6A7D90020D8C5 /* MainContainerCenteredImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerCenteredImage.swift; sourceTree = "<group>"; };
 		C20B004C26813953009D2334 /* CommonSectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSectionData.swift; sourceTree = "<group>"; };
 		C20B94D9281C859A008FA230 /* PushNotificationsConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsConfig.swift; sourceTree = "<group>"; };
+		C20CD53B2A1CF03F00A7F324 /* TokensViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+Layout.swift"; sourceTree = "<group>"; };
+		C20CD53D2A1D013200A7F324 /* TokensTOTPCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTOTPCellType.swift; sourceTree = "<group>"; };
+		C20CD53F2A1D017700A7F324 /* TokensHOTPCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensHOTPCellType.swift; sourceTree = "<group>"; };
 		C20E578B29297593002B215B /* UploadLogsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogsViewController.swift; sourceTree = "<group>"; };
 		C20E578E292976DA002B215B /* UUIDInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDInputField.swift; sourceTree = "<group>"; };
 		C20E60F628188A8E00AB002E /* PushNotificationPermissionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionView.swift; sourceTree = "<group>"; };
@@ -2062,7 +2067,6 @@
 		C2CD687225FEC94400EFEFCF /* FormLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormLine.swift; path = TwoFAS/Common/Controls/FormLine.swift; sourceTree = SOURCE_ROOT; };
 		C2CE0E152793471E007DB667 /* GoogleAuth.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAuth.pb.swift; sourceTree = "<group>"; };
 		C2CE84A02814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionTableViewHeader.swift; sourceTree = "<group>"; };
-		C2CF61172A18FBF900A0B61C /* TokensLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensLine.swift; sourceTree = "<group>"; };
 		C2CFFCDC2007FDD600600AC6 /* CircleProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgress.swift; sourceTree = "<group>"; };
 		C2CFFCDE2008006600600AC6 /* RefreshTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTimer.swift; sourceTree = "<group>"; };
 		C2D07ED326A43FD200AF8E7B /* WidgetServiceHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetServiceHandlerType.swift; sourceTree = "<group>"; };
@@ -4233,6 +4237,8 @@
 				C2248BB02277935200AC231C /* GridViewState.swift */,
 				C235FA75229DAED80098F8E9 /* GridViewItemProviderWriting.swift */,
 				C2C66F9A1FE06A4500AD5A1C /* GridViewModelDelegate.swift */,
+				C20CD53D2A1D013200A7F324 /* TokensTOTPCellType.swift */,
+				C20CD53F2A1D017700A7F324 /* TokensHOTPCellType.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -4657,6 +4663,7 @@
 				C2830D7B293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift */,
 				C2830D7D293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegate.swift */,
 				C2830D7F293D4BDC00B3DDAF /* TokensViewController+TokensSectionHeaderDataSource.swift */,
+				C20CD53B2A1CF03F00A7F324 /* TokensViewController+Layout.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5554,7 +5561,6 @@
 		C2B39E4E29F5834400EC31F6 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				C2CF61172A18FBF900A0B61C /* TokensLine.swift */,
 				C2B39E5129F5848700EC31F6 /* TokensLogoComponent.swift */,
 				C2B39E5829F5BD7800EC31F6 /* TokensCategoryComponent.swift */,
 				C2B39E5A29F5D0AA00EC31F6 /* TokensServiceNameComponent.swift */,
@@ -7413,7 +7419,6 @@
 				C27CDA7929A2A55100DC7C98 /* NetworkStatusInteractor.swift in Sources */,
 				C28681E72891D41F00BE0CA7 /* TimerInteractor.swift in Sources */,
 				C207324B29F725DE00FB294E /* TokensDragIconComponent.swift in Sources */,
-				C2CF61182A18FBF900A0B61C /* TokensLine.swift in Sources */,
 				C2E2C80B27B038DC00F04B70 /* IconSelectorModuleInteractor.swift in Sources */,
 				C2727D512781E10800B8FA03 /* TrashViewTableViewCell.swift in Sources */,
 				C2B1209129D76FA60020281E /* AppearanceModuleInteractor.swift in Sources */,
@@ -7439,6 +7444,7 @@
 				C20935E3292152FA000F5AA7 /* PushNotificationInteractor.swift in Sources */,
 				C2DDEB1F289ED4A300011712 /* IntroductionDots.swift in Sources */,
 				C27A1EB1291279E400702DB9 /* AppEventController.swift in Sources */,
+				C20CD53C2A1CF03F00A7F324 /* TokensViewController+Layout.swift in Sources */,
 				C26654292725D6EA00DC3A3C /* PasswordTextField.swift in Sources */,
 				C25B221627C181690052AAC4 /* ComposeServiceInputCellKind.swift in Sources */,
 				C2A7946027F9071F00E5C641 /* BrowserExtensionServicePresenter.swift in Sources */,
@@ -7717,6 +7723,7 @@
 				C274BDC42769425900EE28BC /* AppSecurityPresenter+Menu.swift in Sources */,
 				C2069C9128C2922A00321E44 /* AEGISData.swift in Sources */,
 				C27C03BD27F4FA980020DB5E /* BrowserExtensionMainFlowController.swift in Sources */,
+				C20CD53E2A1D013200A7F324 /* TokensTOTPCellType.swift in Sources */,
 				C2404855276529FF0076376E /* MainRepositoryImpl+Export.swift in Sources */,
 				C2069C8F28C2866900321E44 /* MainRepositoryImpl+Import.swift in Sources */,
 				C27CCE9C279DF8DC00C3D88F /* MainRepositoryImpl+Code.swift in Sources */,
@@ -7819,6 +7826,7 @@
 				C24AEDC0291BD11A005F59CB /* T.generated.swift in Sources */,
 				C2035AEF245DE27700C482D2 /* MainContainerContentGenerator.swift in Sources */,
 				C2E2C80D27B0392D00F04B70 /* IconSelectorPresenter.swift in Sources */,
+				C20CD5402A1D017700A7F324 /* TokensHOTPCellType.swift in Sources */,
 				C2C1DDDD27CAA773002C7867 /* ComposeServiceAdvancedEditModuleInteractor.swift in Sources */,
 				C29803C0245EE05C0066DFE0 /* MainContainerElementsStyling.swift in Sources */,
 				C2AB92BF2766342900698382 /* PINKeyboardViewController.swift in Sources */,

@@ -21,7 +21,7 @@ import UIKit
 import Common
 import Token
 
-final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer {
+final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTPCellType {
     static let reuseIdentifier = "TokensTOTPCell"
     let autoManagable = true
     

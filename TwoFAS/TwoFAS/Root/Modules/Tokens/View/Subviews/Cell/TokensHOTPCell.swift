@@ -21,7 +21,7 @@ import UIKit
 import Common
 import Token
 
-final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer {
+final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHOTPCellType {
     static let reuseIdentifier = "TokensHOTPCell"
     let autoManagable = true
     

@@ -17,26 +17,17 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
+import Foundation
+import Common
 
-final class TokensLine: UICollectionReusableView {
-    static let reuseIdentifier = "TokensLine"
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
-    
-    private func commonInit() {
-        backgroundColor = Theme.Colors.Line.separator
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        CGSize(width: UIView.noIntrinsicMetric, height: Theme.Metrics.lineWidth)
-    }
+protocol TokensTOTPCellType: AnyObject {
+    func update(
+        name: String,
+        secret: String,
+        serviceTypeName: String,
+        additionalInfo: String?,
+        logoType: LogoType,
+        category: TintColor,
+        useNextToken: Bool
+    )
 }

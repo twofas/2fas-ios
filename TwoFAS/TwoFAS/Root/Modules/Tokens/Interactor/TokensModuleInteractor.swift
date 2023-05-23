@@ -39,6 +39,7 @@ protocol TokensModuleInteracting: AnyObject {
     var linkAction: ((TokensLinkAction) -> Void)? { get set }
     var isMainOnlyCategory: Bool { get }
     var isActiveSearchEnabled: Bool { get }
+    var currentListStyle: ListStyle { get }
     
     func servicesWereUpdated()
     func sync()
@@ -157,6 +158,10 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     var isActiveSearchEnabled: Bool {
         appearanceInteractor.isActiveSearchEnabled
+    }
+    
+    var currentListStyle: ListStyle {
+        appearanceInteractor.selectedListStyle
     }
     
     // MARK: - Links

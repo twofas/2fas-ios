@@ -48,11 +48,6 @@ final class TokensView: UICollectionView {
             forSupplementaryViewOfKind: TokensSectionHeader.reuseIdentifier,
             withReuseIdentifier: TokensSectionHeader.reuseIdentifier
         )
-        register(
-            TokensLine.self,
-            forSupplementaryViewOfKind: TokensLine.reuseIdentifier,
-            withReuseIdentifier: TokensLine.reuseIdentifier
-        )
     
         allowsSelectionDuringEditing = true
     }

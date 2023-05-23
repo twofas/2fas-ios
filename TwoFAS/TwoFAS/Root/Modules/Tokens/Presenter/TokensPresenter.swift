@@ -386,6 +386,10 @@ extension TokensPresenter {
     func handleEnableHOTPCounter(for secret: Secret) {
         interactor.enableHOTPCounter(for: secret)
     }
+    
+    func handleUnlockTOTP(for consumer: TokenTimerConsumer) {
+        interactor.unlockTOTPConsumer(consumer)
+    }
 }
 
 private extension TokensPresenter {

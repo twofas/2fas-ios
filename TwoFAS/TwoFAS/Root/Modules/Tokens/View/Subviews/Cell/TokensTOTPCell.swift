@@ -25,6 +25,8 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
     static let reuseIdentifier = "TokensTOTPCell"
     let autoManagable = true
     
+    var didTapUnlock: ((TokenTimerConsumer) -> Void)?
+    
     private let hMargin: CGFloat = Theme.Metrics.doubleMargin
     private let vMargin: CGFloat = Theme.Metrics.mediumMargin
     
@@ -48,6 +50,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
     private var serviceTypeName: String = ""
     
     private var useNextToken = false
+    private var isLocked = false
     
     private let categoryView = TokensCategoryComponent()
     private var logoView: TokensLogoComponent = {
@@ -200,19 +203,44 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         }
     }
     
-    func setInitial(_ progress: Int, period: Int, currentToken: String, nextToken: String, willChangeSoon: Bool) {
-        circularProgress.setPeriod(period)
-        circularProgress.setProgress(progress, animated: false)
-        tokenLabel.setToken(currentToken)
-        nextTokenLabel.set(nextToken: nextToken)
-        shouldMark(willChangeSoon: willChangeSoon, isPlanned: false)
+    func setInitial(_ state: TokenTimerInitialConsumerState) {
+        switch state {
+        case .locked:
+            isLocked = true
+            
+            nextTokenLabel.hideNextToken(animated: false)
+            tokenLabel.maskToken()
+            // hide timer
+            // show eye
+        case .unlocked(let progress, let period, let currentToken, let nextToken, let willChangeSoon):
+            isLocked = false
+            
+            circularProgress.setPeriod(period)
+            circularProgress.setProgress(progress, animated: false)
+            tokenLabel.setToken(currentToken)
+            nextTokenLabel.set(nextToken: nextToken)
+            shouldMark(willChangeSoon: willChangeSoon, isPlanned: false)
+        }
     }
     
-    func setUpdate(_ progress: Int, isPlanned: Bool, currentToken: String, nextToken: String, willChangeSoon: Bool) {
-        circularProgress.setProgress(progress, animated: isPlanned)
-        tokenLabel.setToken(currentToken)
-        shouldMark(willChangeSoon: willChangeSoon, isPlanned: isPlanned)
-        nextTokenLabel.set(nextToken: nextToken)
+    func setUpdate(_ state: TokenTimerUpdateConsumerState) {
+        switch state {
+        case .locked:
+            guard !isLocked else { return }
+            isLocked = true
+            
+            nextTokenLabel.hideNextToken(animated: true)
+            tokenLabel.maskToken()
+            // hide timer
+            // show eye
+        case .unlocked(let progress, let isPlanned, let currentToken, let nextToken, let willChangeSoon):
+            isLocked = false
+            
+            circularProgress.setProgress(progress, animated: isPlanned)
+            tokenLabel.setToken(currentToken)
+            shouldMark(willChangeSoon: willChangeSoon, isPlanned: isPlanned)
+            nextTokenLabel.set(nextToken: nextToken)
+        }
     }
     
     private func shouldMark(willChangeSoon: Bool, isPlanned: Bool) {

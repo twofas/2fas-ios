@@ -32,6 +32,7 @@ protocol TokenInteracting: AnyObject {
     
     func registerTOTP(_ consumer: TokenTimerConsumer)
     func removeTOTP(_ consumer: TokenTimerConsumer)
+    func unlockTOTPConsumer(_ consumer: TokenTimerConsumer)
     func registerHOTP(_ consumer: TokenCounterConsumer)
     func removeHOTP(_ consumer: TokenCounterConsumer)
     
@@ -56,7 +57,7 @@ final class TokenInteractor {
 extension TokenInteractor: TokenInteracting {
     // MARK: - TOTP
     func startTimer(_ tokenConsumer: TokenTimerConsumer) {
-        timerHandler.register(tokenConsumer)
+        timerHandler.register(tokenConsumer, isLocked: false)
     }
     
     func stopTimer(_ tokenConsumer: TokenTimerConsumer) {
@@ -98,11 +99,15 @@ extension TokenInteractor: TokenInteracting {
     // MARK: - Registration
     
     func registerTOTP(_ consumer: TokenTimerConsumer) {
-        timerHandler.register(consumer)
+        timerHandler.register(consumer, isLocked: true)
     }
     
     func removeTOTP(_ consumer: TokenTimerConsumer) {
         timerHandler.remove(consumer)
+    }
+    
+    func unlockTOTPConsumer(_ consumer: TokenTimerConsumer) {
+        timerHandler.unlockConsumer(consumer)
     }
     
     func registerHOTP(_ consumer: TokenCounterConsumer) {

@@ -39,6 +39,9 @@ extension TokensViewController: UICollectionViewDelegate {
     ) {
         if let consumer = cell as? TokenTimerConsumer {
             presenter.handleRegisterTOTP(consumer)
+            consumer.didTapUnlock = { [weak self] cons in
+                self?.presenter.handleUnlockTOTP(for: cons)
+            }
         } else if let consumer = cell as? TokenCounterConsumer {
             consumer.didTapRefreshCounter = { [weak self] secret in
                 DispatchQueue.main.asyncAfter(deadline: .now() + Theme.Animations.Timing.quick) {

@@ -57,6 +57,7 @@ protocol TokensModuleInteracting: AnyObject {
     func copyTokenValue(from serviceData: ServiceData) -> String?
     func registerTOTP(_ consumer: TokenTimerConsumer)
     func removeTOTP(_ consumer: TokenTimerConsumer)
+    func unlockTOTPConsumer(_ consumer: TokenTimerConsumer)
     func registerHOTP(_ consumer: TokenCounterConsumer)
     func removeHOTP(_ consumer: TokenCounterConsumer)
     func fetchData(phrase: String?)
@@ -204,6 +205,10 @@ extension TokensModuleInteractor: TokensModuleInteracting {
         tokenInteractor.unlockCounter(for: secret)
     }
     
+    func unlockConsumer(for consumer: TokenTimerConsumer) {
+        tokenInteractor.unlockTOTPConsumer(consumer)
+    }
+    
     func stopCounters() {
         tokenInteractor.stopTimers()
     }
@@ -304,6 +309,10 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     func registerHOTP(_ consumer: TokenCounterConsumer) {
         tokenInteractor.registerHOTP(consumer)
+    }
+    
+    func unlockTOTPConsumer(_ consumer: TokenTimerConsumer) {
+        tokenInteractor.unlockTOTPConsumer(consumer)
     }
     
     func removeHOTP(_ consumer: TokenCounterConsumer) {

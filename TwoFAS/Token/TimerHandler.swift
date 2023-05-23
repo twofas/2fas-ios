@@ -20,26 +20,37 @@
 import Foundation
 import Common
 
-public protocol TokenTimerConsumer: AnyObject {
-    func setInitial(
-        _ progress: Int,
+public enum TokenTimerInitialConsumerState {
+    case locked
+    case unlocked(
+        progress: Int,
         period: Int,
         currentToken: TokenValue,
         nextToken: TokenValue,
         willChangeSoon: Bool
     )
-    func setUpdate(
-        _ progress: Int,
+}
+
+public enum TokenTimerUpdateConsumerState {
+    case locked
+    case unlocked(
+        progress: Int,
         isPlanned: Bool,
         currentToken: TokenValue,
         nextToken: TokenValue,
         willChangeSoon: Bool
     )
+}
+
+public protocol TokenTimerConsumer: AnyObject {
+    func setInitial(_ state: TokenTimerInitialConsumerState)
+    func setUpdate(_ state: TokenTimerUpdateConsumerState)
     // swiftlint:disable legacy_hashing
     var hashValue: Int { get }
     // swiftlint:enable legacy_hashing
     var secret: String { get }
     var autoManagable: Bool { get }
+    var didTapUnlock: ((TokenTimerConsumer) -> Void)? { get set }
 }
 
 public protocol TimerHandlerStart {
@@ -47,9 +58,11 @@ public protocol TimerHandlerStart {
 }
 
 public protocol TimerHandlerTokens {
-    func register(_ consumer: TokenTimerConsumer)
+    func register(_ consumer: TokenTimerConsumer, isLocked: Bool)
+    func unlockConsumer(_ consumer: TokenTimerConsumer)
     func remove(_ consumer: TokenTimerConsumer)
     func token(for secret: Secret) -> (current: TokenValue, next: TokenValue, willChangeSoon: Bool)?
+    func lockAllConsumers()
 }
 
 public protocol TimerHandlerStop {
@@ -81,10 +94,16 @@ public final class TimerHandler: TimerHandlerStart & TimerHandlerTokens & TimerH
         }
     }
     
-    public func register(_ consumer: TokenTimerConsumer) {
+    public func register(_ consumer: TokenTimerConsumer, isLocked: Bool) {
         guard let tokenState = tokenState(for: consumer.secret) else { return }
         
-        tokenState.registerConsumer(consumer)
+        tokenState.registerConsumer(consumer, isLocked: isLocked)
+    }
+    
+    public func unlockConsumer(_ consumer: TokenTimerConsumer) {
+        guard let tokenState = tokenState(for: consumer.secret) else { return }
+        
+        tokenState.unlockConsumer(consumer)
     }
     
     public func remove(_ consumer: TokenTimerConsumer) {
@@ -148,6 +167,10 @@ public final class TimerHandler: TimerHandlerStart & TimerHandlerTokens & TimerH
     public func token(for secret: Secret) -> (current: TokenValue, next: TokenValue, willChangeSoon: Bool)? {
         guard let tokenState = tokenState(for: secret) else { return nil }
         return (current: tokenState.currentToken, next: tokenState.nextToken, willChangeSoon: tokenState.willChangeSoon)
+    }
+    
+    public func lockAllConsumers() {
+        tokens.forEach({ $0.lockAllConsumers() })
     }
     
     // MARK: - Private

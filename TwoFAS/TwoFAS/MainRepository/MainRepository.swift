@@ -65,6 +65,7 @@ protocol MainRepository: AnyObject {
     func reloadWidgets()
     
     // MARK: - Appearance
+    
     // MARK: Next Token
     var isNextTokenEnabled: Bool { get }
     func enableNextToken()
@@ -73,6 +74,12 @@ protocol MainRepository: AnyObject {
     var isActiveSearchEnabled: Bool { get }
     func enableActiveSearch()
     func disableActiveSearch()
+    // MARK: List style
+    var selectedListStyle: ListStyle { get }
+    func setSelectListStyle(_ listStyle: ListStyle)
+    // MARK: Hide tokens
+    var areTokensHidden: Bool { get }
+    func setTokensHidden(_ hidden: Bool)
     
     // MARK: - Tokens
     func token(

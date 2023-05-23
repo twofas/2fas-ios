@@ -302,6 +302,8 @@ enum Theme {
         static let componentWidth: CGFloat = 288
         /// 310
         static let pageWidth: CGFloat = 310
+        
+        static let settingsSmallIconSize: CGSize = .init(width: 16, height: 16)
     }
     
     enum Consts {

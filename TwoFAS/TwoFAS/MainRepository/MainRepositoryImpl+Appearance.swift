@@ -49,4 +49,22 @@ extension MainRepositoryImpl {
     func disableActiveSearch() {
         userDefaultsRepository.setActiveSearchEnabled(false)
     }
+    
+    // MARK: - List style
+    var selectedListStyle: ListStyle {
+        userDefaultsRepository.selectedListStyle
+    }
+    
+    func setSelectListStyle(_ listStyle: ListStyle) {
+        userDefaultsRepository.setSelectListStyle(listStyle)
+    }
+    
+    // MARK: - Hide tokens
+    var areTokensHidden: Bool {
+        userDefaultsRepository.areTokensHidden
+    }
+    
+    func setTokensHidden(_ hidden: Bool) {
+        userDefaultsRepository.setTokensHidden(hidden)
+    }
 }

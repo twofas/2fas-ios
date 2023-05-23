@@ -34,17 +34,33 @@ final class AppearancePresenter {
         reload()
     }
     
-    func handleToggle(for kind: AppearanceCell.AppearanceToggle) {
+    func handleToggle(for kind: AppearanceCell.Kind) {
         switch kind {
         case .incomingToken:
             interactor.toogleIncomingToken()
         case .activeSearch:
             interactor.toggleActiveSearch()
+        case .hideTokens:
+            interactor.toggleTokensHidden()
+        default:
+            break
         }
         reload()
     }
     
     func handleBecomeActive() {
+        reload()
+    }
+    
+    func handleRowSelection(for kind: AppearanceCell.Kind) {
+        switch kind {
+        case .defaultList:
+            interactor.setSelectListStyle(.default)
+        case .compactList:
+            interactor.setSelectListStyle(.compact)
+        default:
+            break
+        }
         reload()
     }
 }

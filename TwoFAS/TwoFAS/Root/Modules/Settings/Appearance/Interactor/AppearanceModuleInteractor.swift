@@ -18,13 +18,18 @@
 //
 
 import Foundation
+import Common
 
 protocol AppearanceModuleInteracting: AnyObject {
     var isActiveSearchEnabled: Bool { get }
     var isNextTokenEnabled: Bool { get }
+    var selectedListStyle: ListStyle { get }
+    var areTokensHidden: Bool { get }
     
     func toogleIncomingToken()
     func toggleActiveSearch()
+    func setSelectListStyle(_ listStyle: ListStyle)
+    func toggleTokensHidden()
 }
 
 final class AppearanceModuleInteractor {
@@ -38,6 +43,8 @@ final class AppearanceModuleInteractor {
 extension AppearanceModuleInteractor: AppearanceModuleInteracting {
     var isActiveSearchEnabled: Bool { appearanceInteractor.isActiveSearchEnabled }
     var isNextTokenEnabled: Bool { appearanceInteractor.isNextTokenEnabled }
+    var selectedListStyle: ListStyle { appearanceInteractor.selectedListStyle }
+    var areTokensHidden: Bool { appearanceInteractor.areTokensHidden }
 
     func toogleIncomingToken() {
         appearanceInteractor.toggleNextToken()
@@ -45,5 +52,13 @@ extension AppearanceModuleInteractor: AppearanceModuleInteracting {
     
     func toggleActiveSearch() {
         appearanceInteractor.toggleActiveSearch()
+    }
+    
+    func setSelectListStyle(_ listStyle: ListStyle) {
+        appearanceInteractor.setSelectListStyle(listStyle)
+    }
+    
+    func toggleTokensHidden() {
+        appearanceInteractor.toggleTokensHidden()
     }
 }

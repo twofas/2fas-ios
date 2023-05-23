@@ -124,7 +124,7 @@ final class ServiceAddedServiceContainerViewHOTP: UIView, ServiceAddedViewContai
         }
     }
     
-    func setUpdate(_ state: TokenCounterConsumerState, isPlanned: Bool) {
+    func setUpdate(_ state: TokenCounterConsumerState) {
         switch state {
         case .locked:
             isActive = true

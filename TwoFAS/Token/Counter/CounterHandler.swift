@@ -27,7 +27,7 @@ public enum TokenCounterConsumerState {
 
 public protocol TokenCounterConsumer: AnyObject {
     func setInitial(_ state: TokenCounterConsumerState)
-    func setUpdate(_ state: TokenCounterConsumerState, isPlanned: Bool)
+    func setUpdate(_ state: TokenCounterConsumerState)
     // swiftlint:disable legacy_hashing
     var hashValue: Int { get }
     // swiftlint:enable legacy_hashing

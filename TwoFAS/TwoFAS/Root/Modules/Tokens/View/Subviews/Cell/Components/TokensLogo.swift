@@ -20,7 +20,7 @@
 import UIKit
 import Common
 
-final class TokensLogoComponent: UIView {
+final class TokensLogo: UIView {
     private let imageView = UIImageView()
     private let labelRenderer = LabelRenderer()
     private var currentKind: TokensCellKind = .normal

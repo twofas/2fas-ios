@@ -19,7 +19,7 @@
 
 import UIKit
 
-final class TokensAdditionalInfoComponent: UIView {
+final class TokensAdditionalInfo: UIView {
     private let label: UILabel = {
         let label = UILabel()
         label.font = UIFontMetrics(forTextStyle: .body)

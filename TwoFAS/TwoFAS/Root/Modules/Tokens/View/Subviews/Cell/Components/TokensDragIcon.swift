@@ -19,7 +19,7 @@
 
 import UIKit
 
-final class TokensDragIconComponent: UIView {
+final class TokensDragIcon: UIView {
     private var imageView: UIImageView = {
         let symbolConfig = UIImage.SymbolConfiguration(pointSize: 24.0, weight: .medium, scale: .medium)
         return .init(image: UIImage(systemName: "line.3.horizontal", withConfiguration: symbolConfig)!)

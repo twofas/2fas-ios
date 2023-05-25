@@ -20,7 +20,7 @@
 import UIKit
 import Common
 
-final class TokensCategoryComponent: UIView {
+final class TokensCategory: UIView {
     static let width: CGFloat = 5
     
     func setColor(_ tintColor: TintColor) {

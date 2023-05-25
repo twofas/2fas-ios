@@ -27,19 +27,19 @@ final class TokensEditCell: UICollectionViewCell {
     private let vMargin: CGFloat = Theme.Metrics.mediumMargin
     private let dragHandlesWidth: CGFloat = 16
     
-    private let categoryView = TokensCategoryComponent()
-    private var logoView: TokensLogoComponent = {
-        let comp = TokensLogoComponent()
+    private let categoryView = TokensCategory()
+    private var logoView: TokensLogo = {
+        let comp = TokensLogo()
         comp.setKind(.edit)
         return comp
     }()
-    private var serviceNameLabel: TokensServiceNameComponent = {
-        let comp = TokensServiceNameComponent()
+    private var serviceNameLabel: TokensServiceName = {
+        let comp = TokensServiceName()
         comp.setKind(.edit)
         return comp
     }()
-    private var additionalInfoLabel: TokensAdditionalInfoComponent = {
-        let comp = TokensAdditionalInfoComponent()
+    private var additionalInfoLabel: TokensAdditionalInfo = {
+        let comp = TokensAdditionalInfo()
         comp.setKind(.edit)
         return comp
     }()

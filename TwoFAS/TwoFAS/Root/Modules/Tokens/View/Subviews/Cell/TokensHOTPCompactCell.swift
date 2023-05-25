@@ -45,19 +45,19 @@ final class TokensHOTPCompactCell: UICollectionViewCell, TokenCounterConsumer, T
     private var serviceTypeName: String = ""
     private var isActive = true
         
-    private let categoryView = TokensCategoryComponent()
-    private var logoView: TokensLogoComponent = {
-        let comp = TokensLogoComponent()
+    private let categoryView = TokensCategory()
+    private var logoView: TokensLogo = {
+        let comp = TokensLogo()
         comp.setKind(.compact)
         return comp
     }()
-    private var serviceNameLabel: TokensServiceNameComponent = {
-        let comp = TokensServiceNameComponent()
+    private var serviceNameLabel: TokensServiceName = {
+        let comp = TokensServiceName()
         comp.setKind(.compact)
         return comp
     }()
-    private var additionalInfoLabel: TokensAdditionalInfoComponent = {
-        let comp = TokensAdditionalInfoComponent()
+    private var additionalInfoLabel: TokensAdditionalInfo = {
+        let comp = TokensAdditionalInfo()
         comp.setKind(.compact)
         return comp
     }()

@@ -19,7 +19,7 @@
 
 import UIKit
 
-final class TokensServiceNameComponent: UIView {
+final class TokensServiceName: UIView {
     private let label: UILabel = {
         let label = UILabel()
         label.font = UIFontMetrics(forTextStyle: .headline)

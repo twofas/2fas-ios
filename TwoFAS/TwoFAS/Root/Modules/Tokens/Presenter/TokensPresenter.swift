@@ -63,6 +63,10 @@ extension TokensPresenter {
         interactor.isSortingEnabled
     }
     
+    var shouldAnimate: Bool {
+        interactor.shouldAnimate
+    }
+    
     var count: Int { interactor.count }
     
     var selectedSortType: SortType {

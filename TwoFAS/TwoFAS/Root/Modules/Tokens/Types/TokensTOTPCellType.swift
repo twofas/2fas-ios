@@ -28,6 +28,7 @@ protocol TokensTOTPCellType: AnyObject {
         additionalInfo: String?,
         logoType: LogoType,
         category: TintColor,
-        useNextToken: Bool
+        useNextToken: Bool,
+        shouldAnimate: Bool
     )
 }

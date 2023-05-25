@@ -51,6 +51,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
     
     private var useNextToken = false
     private var isLocked = false
+    private var shouldAnimate = true
     
     private let categoryView = TokensCategoryComponent()
     private var logoView: TokensLogoComponent = {
@@ -175,7 +176,8 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         additionalInfo: String?,
         logoType: LogoType,
         category: TintColor,
-        useNextToken: Bool
+        useNextToken: Bool,
+        shouldAnimate: Bool
     ) {
         tokenLabel.clear()
         serviceNameLabel.setText(name)
@@ -201,6 +203,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
             nextTokenLabel.isHidden = true
             nextTokenLabel.set(nextToken: .empty)
         }
+        self.shouldAnimate = shouldAnimate
     }
     
     func setInitial(_ state: TokenTimerInitialConsumerState) {
@@ -246,9 +249,9 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
     private func shouldMark(willChangeSoon: Bool, isPlanned: Bool) {
         if useNextToken {
             if willChangeSoon {
-                nextTokenLabel.showNextToken(animated: isPlanned)
+                nextTokenLabel.showNextToken(animated: isPlanned && shouldAnimate)
             } else {
-                nextTokenLabel.hideNextToken(animated: isPlanned)
+                nextTokenLabel.hideNextToken(animated: isPlanned && shouldAnimate)
             }
         }
         if willChangeSoon {

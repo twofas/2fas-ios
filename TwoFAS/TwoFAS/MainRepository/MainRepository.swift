@@ -80,6 +80,8 @@ protocol MainRepository: AnyObject {
     // MARK: Hide tokens
     var areTokensHidden: Bool { get }
     func setTokensHidden(_ hidden: Bool)
+    // MARK: Animation
+    var shouldAnimate: Bool { get }
     
     // MARK: - Tokens
     func token(

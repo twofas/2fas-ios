@@ -40,6 +40,7 @@ protocol TokensModuleInteracting: AnyObject {
     var isMainOnlyCategory: Bool { get }
     var isActiveSearchEnabled: Bool { get }
     var currentListStyle: ListStyle { get }
+    var shouldAnimate: Bool { get }
     
     func servicesWereUpdated()
     func sync()
@@ -163,6 +164,10 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     var currentListStyle: ListStyle {
         appearanceInteractor.selectedListStyle
+    }
+    
+    var shouldAnimate: Bool {
+        appearanceInteractor.shouldAnimate
     }
     
     // MARK: - Links

@@ -67,4 +67,9 @@ extension MainRepositoryImpl {
     func setTokensHidden(_ hidden: Bool) {
         userDefaultsRepository.setTokensHidden(hidden)
     }
+    
+    // MARK: - Animation
+    var shouldAnimate: Bool {
+        !ProcessInfo.processInfo.isLowPowerModeEnabled
+    }
 }

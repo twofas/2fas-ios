@@ -36,13 +36,18 @@ protocol AppearanceInteracting: AnyObject {
     func toggleActiveSearch()
     
     // MARK: - List style
+    
     var selectedListStyle: ListStyle { get }
     func setSelectListStyle(_ listStyle: ListStyle)
     
     // MARK: - Hide tokens
+    
     var areTokensHidden: Bool { get }
     func setTokensHidden(_ hidden: Bool)
     func toggleTokensHidden()
+    
+    // MARK: - Animation
+    var shouldAnimate: Bool { get }
 }
 
 final class AppearanceInteractor {
@@ -124,5 +129,10 @@ extension AppearanceInteractor: AppearanceInteracting {
     
     func toggleTokensHidden() {
         setTokensHidden(!areTokensHidden)
+    }
+    
+    // MARK: - Animation
+    var shouldAnimate: Bool {
+        mainRepository.shouldAnimate
     }
 }

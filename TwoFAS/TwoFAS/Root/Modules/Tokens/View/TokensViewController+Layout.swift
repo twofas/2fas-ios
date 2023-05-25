@@ -93,7 +93,8 @@ extension TokensViewController {
             additionalInfo: item.additionalInfo,
             logoType: item.logoType,
             category: item.category,
-            useNextToken: item.useNextToken
+            useNextToken: item.useNextToken,
+            shouldAnimate: presenter.shouldAnimate
         )
         return cell
     }

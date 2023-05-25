@@ -70,6 +70,11 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
         return comp
     }()
     private let accessoryContainer = UIView()
+    private var revealButton: TokensRevealButton = {
+        let button = TokensRevealButton()
+        button.setKind(.compact)
+        return button
+    }()
     private let separator: UIView = {
         let line = UIView()
         line.backgroundColor = Theme.Colors.Line.separator
@@ -91,6 +96,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
     private func commonInit() {
         setupBackground()
         setupLayout()
+        setupRevealButton()
         //        setupAccessibility() // TODO: Add accessibility
     }
     
@@ -167,16 +173,24 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             circularProgress.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor)
         ])
         
+        accessoryContainer.addSubview(revealButton, with: [
+            revealButton.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
+            revealButton.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor, constant: hMargin),
+            revealButton.topAnchor.constraint(equalTo: accessoryContainer.topAnchor),
+            revealButton.bottomAnchor.constraint(equalTo: accessoryContainer.bottomAnchor),
+            revealButton.heightAnchor.constraint(equalTo: accessoryContainer.heightAnchor)
+        ])
+        
         tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         nextTokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
-        
-        // TODO: Remove - for tests only
-        serviceNameLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTap)))
-        serviceNameLabel.isUserInteractionEnabled = true
-        // Add eye icon, add lock from global var
     }
     
-    @objc func didTap() {
+    private func setupRevealButton() {
+        revealButton.addTarget(self, action: #selector(ditTapReveal), for: .touchUpInside)
+    }
+    
+    @objc
+    private func ditTapReveal() {
         didTapUnlock?(self)
     }
     
@@ -224,12 +238,13 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             
             nextTokenLabel.hideNextToken(animated: false)
             tokenLabel.maskToken()
-            //circularProgress.isHidden = true
-            // show eye
+            circularProgress.isHidden = true
+            revealButton.isHidden = false
         case .unlocked(let progress, let period, let currentToken, let nextToken, let willChangeSoon):
             isLocked = false
             
-            //circularProgress.isHidden = false
+            circularProgress.isHidden = false
+            revealButton.isHidden = true
             circularProgress.setPeriod(period)
             circularProgress.setProgress(progress, animated: false)
             tokenLabel.setToken(currentToken)
@@ -246,12 +261,13 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             
             nextTokenLabel.hideNextToken(animated: true)
             tokenLabel.maskToken()
-            //circularProgress.isHidden = true
-            // show eye
+            circularProgress.isHidden = true
+            revealButton.isHidden = false
         case .unlocked(let progress, let isPlanned, let currentToken, let nextToken, let willChangeSoon):
             isLocked = false
             
-            //circularProgress.isHidden = false
+            circularProgress.isHidden = false
+            revealButton.isHidden = true
             circularProgress.setProgress(progress, animated: isPlanned)
             tokenLabel.setToken(currentToken)
             shouldMark(willChangeSoon: willChangeSoon, isPlanned: isPlanned)

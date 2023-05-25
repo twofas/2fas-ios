@@ -81,7 +81,7 @@ final class TokenState {
     
     func unlockConsumer(_ consumer: TokenTimerConsumer) {
         guard
-            var consumerInstance = consumers.first(where: { $0.value?.hashValue == consumer.hashValue }),
+            let consumerInstance = consumers.first(where: { $0.value?.hashValue == consumer.hashValue }),
             let consumerValue = consumerInstance.value
         else {
             registerConsumer(consumer, isLocked: false)

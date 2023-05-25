@@ -926,6 +926,7 @@
 		C2F6BB0626488349002A9747 /* IntroductionPage2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F6BB0526488349002A9747 /* IntroductionPage2View.swift */; };
 		C2F6BB08264886B7002A9747 /* IntroductionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F6BB07264886B7002A9747 /* IntroductionViewModel.swift */; };
 		C2F9038626BFF77B008DBC4A /* TimeOffsetStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F9038526BFF77B008DBC4A /* TimeOffsetStorage.swift */; };
+		C2F9D60A2A1FEC700085B65A /* TokensRevealButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F9D6092A1FEC700085B65A /* TokensRevealButton.swift */; };
 		C2FA3E77280AC5130097ED71 /* WebExtensionAuthInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA3E76280AC5130097ED71 /* WebExtensionAuthInteractor.swift */; };
 		C2FA3E79280ACF780097ED71 /* PairedAuthRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA3E78280ACF780097ED71 /* PairedAuthRequest.swift */; };
 		C2FA3E7B280AD60D0097ED71 /* AuthRequestFilterOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA3E7A280AD60D0097ED71 /* AuthRequestFilterOptions.swift */; };
@@ -2185,6 +2186,7 @@
 		C2F6BB0526488349002A9747 /* IntroductionPage2View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductionPage2View.swift; sourceTree = "<group>"; };
 		C2F6BB07264886B7002A9747 /* IntroductionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionViewModel.swift; sourceTree = "<group>"; };
 		C2F9038526BFF77B008DBC4A /* TimeOffsetStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOffsetStorage.swift; sourceTree = "<group>"; };
+		C2F9D6092A1FEC700085B65A /* TokensRevealButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensRevealButton.swift; sourceTree = "<group>"; };
 		C2FA3E76280AC5130097ED71 /* WebExtensionAuthInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebExtensionAuthInteractor.swift; sourceTree = "<group>"; };
 		C2FA3E78280ACF780097ED71 /* PairedAuthRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairedAuthRequest.swift; sourceTree = "<group>"; };
 		C2FA3E7A280AD60D0097ED71 /* AuthRequestFilterOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestFilterOptions.swift; sourceTree = "<group>"; };
@@ -5570,6 +5572,7 @@
 				C2A4C8382A1153A200AFD67C /* TokensTokenView.swift */,
 				C2A4C83A2A11736200AFD67C /* TokensCircleProgress.swift */,
 				C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */,
+				C2F9D6092A1FEC700085B65A /* TokensRevealButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -7366,6 +7369,7 @@
 				C2BDC6C31FC1AC0A00967D0E /* RootViewController.swift in Sources */,
 				C2147CDD205D7B630001D011 /* PINPadViewModel.swift in Sources */,
 				C2BD85E02640308C0087D087 /* IntroductionPageView.swift in Sources */,
+				C2F9D60A2A1FEC700085B65A /* TokensRevealButton.swift in Sources */,
 				C27A54A827F0F3C700321D2B /* BrowserExtensionPairingFlowController.swift in Sources */,
 				C2BDC6D51FC1CBE100967D0E /* Theme.swift in Sources */,
 				C2872DDA27A6B9C2000F5AE9 /* SortType+.swift in Sources */,

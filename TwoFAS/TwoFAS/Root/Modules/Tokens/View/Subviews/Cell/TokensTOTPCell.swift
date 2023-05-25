@@ -54,6 +54,12 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
     private var shouldAnimate = true
     
     private let categoryView = TokensCategory()
+    private var revealButton: TokensRevealButton = {
+        let button = TokensRevealButton()
+        button.setKind(.normal)
+        return button
+    }()
+
     private var logoView: TokensLogo = {
         let comp = TokensLogo()
         comp.setKind(.normal)
@@ -91,6 +97,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
     private func commonInit() {
         setupBackground()
         setupLayout()
+        setupRevealButton()
         //        setupAccessibility() // TODO: Add accessibility
     }
     
@@ -164,9 +171,26 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
             circularProgress.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor)
         ])
         
+        accessoryContainer.addSubview(revealButton, with: [
+            revealButton.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
+            revealButton.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor, constant: hMargin),
+            revealButton.topAnchor.constraint(equalTo: accessoryContainer.topAnchor),
+            revealButton.bottomAnchor.constraint(equalTo: accessoryContainer.bottomAnchor),
+            revealButton.heightAnchor.constraint(equalTo: accessoryContainer.heightAnchor)
+        ])
+        
         tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
         tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+    }
+    
+    private func setupRevealButton() {
+        revealButton.addTarget(self, action: #selector(ditTapReveal), for: .touchUpInside)
+    }
+    
+    @objc
+    private func ditTapReveal() {
+        didTapUnlock?(self)
     }
     
     func update(
@@ -213,11 +237,14 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
             
             nextTokenLabel.hideNextToken(animated: false)
             tokenLabel.maskToken()
-            // hide timer
-            // show eye
+            circularProgress.isHidden = true
+            revealButton.isHidden = false
         case .unlocked(let progress, let period, let currentToken, let nextToken, let willChangeSoon):
             isLocked = false
-            
+
+            circularProgress.isHidden = false
+            revealButton.isHidden = true
+
             circularProgress.setPeriod(period)
             circularProgress.setProgress(progress, animated: false)
             tokenLabel.setToken(currentToken)
@@ -234,10 +261,13 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
             
             nextTokenLabel.hideNextToken(animated: true)
             tokenLabel.maskToken()
-            // hide timer
-            // show eye
+            circularProgress.isHidden = true
+            revealButton.isHidden = false
         case .unlocked(let progress, let isPlanned, let currentToken, let nextToken, let willChangeSoon):
             isLocked = false
+            
+            circularProgress.isHidden = false
+            revealButton.isHidden = true
             
             circularProgress.setProgress(progress, animated: isPlanned)
             tokenLabel.setToken(currentToken)

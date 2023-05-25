@@ -40,14 +40,20 @@ protocol TokenInteracting: AnyObject {
     func HOTPToken(for secret: Secret) -> TokenValue?
     
     func start(timedSecrets: [TimedSecret], counterSecrets: [CounterSecret])
+    
+    func lockAllConsumers()
 }
 
 final class TokenInteractor {
+    private let mainRepository: MainRepository
     private let timerHandler: TimerHandlerTokens & TimerHandlerStart & TimerHandlerStop
     private let counterHandler: CounterHandlerTokens & CounterHandlerStart & CounterHandlerStop
     private let serviceInteractor: ServiceModifyInteracting
     
+    private var areTokensHidden = false
+    
     init(mainRepository: MainRepository, serviceInteractor: ServiceModifyInteracting) {
+        self.mainRepository = mainRepository
         timerHandler = mainRepository.timerHandler
         counterHandler = mainRepository.counterHandler
         self.serviceInteractor = serviceInteractor
@@ -99,7 +105,7 @@ extension TokenInteractor: TokenInteracting {
     // MARK: - Registration
     
     func registerTOTP(_ consumer: TokenTimerConsumer) {
-        timerHandler.register(consumer, isLocked: true)
+        timerHandler.register(consumer, isLocked: areTokensHidden)
     }
     
     func removeTOTP(_ consumer: TokenTimerConsumer) {
@@ -119,7 +125,15 @@ extension TokenInteractor: TokenInteracting {
     }
     
     func start(timedSecrets: [TimedSecret], counterSecrets: [CounterSecret]) {
+        areTokensHidden = mainRepository.areTokensHidden
         timerHandler.start(with: timedSecrets)
         counterHandler.start(with: counterSecrets)
+    }
+    
+    // MARK: -
+    
+    func lockAllConsumers() {
+        guard mainRepository.areTokensHidden else { return }
+        timerHandler.lockAllConsumers()
     }
 }

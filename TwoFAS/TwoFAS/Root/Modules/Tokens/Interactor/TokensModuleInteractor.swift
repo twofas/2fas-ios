@@ -216,6 +216,7 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     func stopCounters() {
         tokenInteractor.stopTimers()
+        tokenInteractor.lockAllConsumers()
     }
     
     func copyToken(from serviceData: ServiceData) {

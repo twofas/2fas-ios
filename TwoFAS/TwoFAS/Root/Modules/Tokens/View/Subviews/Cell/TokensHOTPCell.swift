@@ -30,18 +30,22 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
     private let hMargin: CGFloat = Theme.Metrics.doubleMargin
     private let vMargin: CGFloat = Theme.Metrics.mediumMargin
     
-    private let tokenLabel = TokensTokenView()
+    private let tokenLabel: TokensTokenView = {
+        let view = TokensTokenView()
+        view.setKind(.normal)
+        return view
+    }()
     private let nextTokenLabel = TokensNextTokenLabel()
     private let refreshCounter: RefreshTokenCounter = {
         let view = RefreshTokenCounter()
         view.adjustsImageSizeForAccessibilityContentSizeCategory(true)
         return view
     }()
-
+    
     private(set) var secret: String = ""
     private var serviceTypeName: String = ""
     private var isActive = true
-        
+    
     private let categoryView = TokensCategory()
     private var logoView: TokensLogo = {
         let comp = TokensLogo()
@@ -66,7 +70,7 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         line.isUserInteractionEnabled = false
         return line
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -81,15 +85,76 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         setupBackground()
         setupLayout()
         setupConfiguration()
-        //        setupAccessibility() // TODO: Add accessibility
     }
     
-    private func setupBackground() {
+    func update(
+        name: String,
+        secret: String,
+        serviceTypeName: String,
+        additionalInfo: String?,
+        logoType: LogoType,
+        category: TintColor
+    ) {
+        tokenLabel.clear()
+        serviceNameLabel.setText(name)
+        self.secret = secret
+        self.serviceTypeName = serviceTypeName
+        if let additionalInfo {
+            additionalInfoLabel.isHidden = false
+            additionalInfoLabel.setText(additionalInfo)
+        } else {
+            additionalInfoLabel.isHidden = true
+            additionalInfoLabel.clear()
+        }
+        
+        categoryView.setColor(category)
+        logoView.configure(with: logoType)
+    }
+    
+    func setInitial(_ state: TokenCounterConsumerState) {
+        switch state {
+        case .locked:
+            isActive = true
+            tokenLabel.maskToken()
+            refreshCounter.unlock()
+            
+        case .unlocked(let isRefreshLocked, let currentToken):
+            isActive = !isRefreshLocked
+            tokenLabel.setToken(currentToken)
+            if isRefreshLocked {
+                refreshCounter.lock()
+            } else {
+                refreshCounter.unlock()
+            }
+        }
+    }
+    
+    func setUpdate(_ state: TokenCounterConsumerState) {
+        switch state {
+        case .locked:
+            isActive = true
+            tokenLabel.maskToken()
+            refreshCounter.unlock()
+            
+        case .unlocked(let isRefreshLocked, let currentToken):
+            isActive = !isRefreshLocked
+            tokenLabel.setToken(currentToken)
+            if isRefreshLocked {
+                refreshCounter.lock()
+            } else {
+                refreshCounter.unlock()
+            }
+        }
+    }
+}
+
+private extension TokensHOTPCell {
+    func setupBackground() {
         contentView.backgroundColor = Theme.Colors.Fill.background
         backgroundColor = Theme.Colors.Fill.background
     }
     
-    private func setupLayout() {
+    func setupLayout() {
         let tokenNegativeMargin = round(hMargin / 4.0)
         let logoViewTopOffset = vMargin + 14.0
         let accessoryContainerTopOffset = vMargin + 16.0
@@ -159,67 +224,7 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
     }
     
-    func update(
-        name: String,
-        secret: String,
-        serviceTypeName: String,
-        additionalInfo: String?,
-        logoType: LogoType,
-        category: TintColor
-    ) {
-        tokenLabel.clear()
-        serviceNameLabel.setText(name)
-        self.secret = secret
-        self.serviceTypeName = serviceTypeName
-        if let additionalInfo {
-            additionalInfoLabel.isHidden = false
-            additionalInfoLabel.setText(additionalInfo)
-        } else {
-            additionalInfoLabel.isHidden = true
-            additionalInfoLabel.clear()
-        }
-        
-        categoryView.setColor(category)
-        logoView.configure(with: logoType)
-    }
-
-    func setInitial(_ state: TokenCounterConsumerState) {
-        switch state {
-        case .locked:
-            isActive = true
-            tokenLabel.maskToken()
-            refreshCounter.unlock()
-            
-        case .unlocked(let isRefreshLocked, let currentToken):
-            isActive = !isRefreshLocked
-            tokenLabel.setToken(currentToken)
-            if isRefreshLocked {
-                refreshCounter.lock()
-            } else {
-                refreshCounter.unlock()
-            }
-        }
-    }
-    
-    func setUpdate(_ state: TokenCounterConsumerState) {
-        switch state {
-        case .locked:
-            isActive = true
-            tokenLabel.maskToken()
-            refreshCounter.unlock()
-            
-        case .unlocked(let isRefreshLocked, let currentToken):
-            isActive = !isRefreshLocked
-            tokenLabel.setToken(currentToken)
-            if isRefreshLocked {
-                refreshCounter.lock()
-            } else {
-                refreshCounter.unlock()
-            }
-        }
-    }
-    
-    private func setupConfiguration() {
+    func setupConfiguration() {
         accessoryContainer.addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(animateRefreshCounter))
         )
@@ -229,21 +234,10 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
     }
     
     @objc
-    private func animateRefreshCounter() {
+    func animateRefreshCounter() {
         guard isActive else { return }
         isActive = false
         refreshCounter.rotate()
         didTapRefreshCounter?(secret)
     }
-    
-//    func setupAccessibility() {
-//        super.setupAccessibility()
-//
-//        var accViews: [UIView] = [categoryView]
-//        if let current = currentAccessibilityIcon {
-//            accViews.append(current)
-//        }
-//        accViews.append(contentsOf: [nameLabel, tokenLabel, infoNextToken])
-//        accessibilityElements = accViews
-//    }
 }

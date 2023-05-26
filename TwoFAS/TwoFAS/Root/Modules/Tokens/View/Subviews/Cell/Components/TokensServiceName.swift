@@ -32,6 +32,7 @@ final class TokensServiceName: UIView {
         label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
         label.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+        label.accessibilityTraits = .header
         return label
     }()
     

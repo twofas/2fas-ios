@@ -55,6 +55,8 @@ final class TokensLogo: UIView {
         if refresh {
             invalidateIntrinsicContentSize()
         }
+        
+        isAccessibilityElement = false
     }
     
     func configure(with logoType: LogoType) {

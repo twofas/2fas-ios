@@ -59,7 +59,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         button.setKind(.normal)
         return button
     }()
-
+    
     private var logoView: TokensLogo = {
         let comp = TokensLogo()
         comp.setKind(.normal)
@@ -83,7 +83,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         line.isUserInteractionEnabled = false
         return line
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -98,99 +98,6 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         setupBackground()
         setupLayout()
         setupRevealButton()
-        //        setupAccessibility() // TODO: Add accessibility
-    }
-    
-    private func setupBackground() {
-        contentView.backgroundColor = Theme.Colors.Fill.background
-        backgroundColor = Theme.Colors.Fill.background
-    }
-    
-    private func setupLayout() {
-        let tokenNegativeMargin = round(hMargin / 4.0)
-        let logoViewTopOffset = vMargin + 14.0
-        let accessoryContainerTopOffset = vMargin + 16.0
-        contentView.addSubview(separator, with: [
-            separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            separator.heightAnchor.constraint(equalToConstant: Theme.Metrics.separatorHeight),
-            separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
-        
-        contentView.addSubview(categoryView, with: [
-            categoryView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            categoryView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            categoryView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        ])
-        
-        contentView.addSubview(logoView, with: [
-            logoView.leadingAnchor.constraint(equalTo: categoryView.trailingAnchor, constant: hMargin),
-            logoView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: logoViewTopOffset),
-            logoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
-        ])
-        
-        contentView.addSubview(serviceNameLabel, with: [
-            serviceNameLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            serviceNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin)
-        ])
-        
-        contentView.addSubview(additionalInfoLabel, with: [
-            additionalInfoLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor),
-            additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
-        ])
-        
-        contentView.addSubview(tokenLabel, with: [
-            additionalInfoLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor, constant: tokenNegativeMargin),
-            tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            tokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
-        ])
-        
-        contentView.addSubview(nextTokenLabel, with: [
-            nextTokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            nextTokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor),
-            nextTokenLabel.topAnchor.constraint(equalTo: tokenLabel.bottomAnchor, constant: -tokenNegativeMargin),
-            nextTokenLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
-        ])
-
-        contentView.addSubview(accessoryContainer, with: [
-            serviceNameLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
-            accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hMargin),
-            accessoryContainer.topAnchor.constraint(
-                equalTo: contentView.topAnchor,
-                constant: accessoryContainerTopOffset
-            ),
-            accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
-        ])
-        
-        accessoryContainer.addSubview(circularProgress, with: [
-            circularProgress.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor),
-            circularProgress.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
-            circularProgress.topAnchor.constraint(greaterThanOrEqualTo: accessoryContainer.topAnchor),
-            circularProgress.bottomAnchor.constraint(lessThanOrEqualTo: accessoryContainer.bottomAnchor),
-            circularProgress.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor)
-        ])
-        
-        accessoryContainer.addSubview(revealButton, with: [
-            revealButton.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
-            revealButton.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor, constant: hMargin),
-            revealButton.topAnchor.constraint(equalTo: accessoryContainer.topAnchor),
-            revealButton.bottomAnchor.constraint(equalTo: accessoryContainer.bottomAnchor),
-            revealButton.heightAnchor.constraint(equalTo: accessoryContainer.heightAnchor)
-        ])
-        
-        tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
-        tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
-        tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
-    }
-    
-    private func setupRevealButton() {
-        revealButton.addTarget(self, action: #selector(ditTapReveal), for: .touchUpInside)
-    }
-    
-    @objc
-    private func ditTapReveal() {
-        didTapUnlock?(self)
     }
     
     func update(
@@ -275,8 +182,102 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
             nextTokenLabel.set(nextToken: nextToken)
         }
     }
+}
+
+private extension TokensTOTPCell {
+    func setupBackground() {
+        contentView.backgroundColor = Theme.Colors.Fill.background
+        backgroundColor = Theme.Colors.Fill.background
+    }
     
-    private func shouldMark(willChangeSoon: Bool, isPlanned: Bool) {
+    func setupLayout() {
+        let tokenNegativeMargin = round(hMargin / 4.0)
+        let logoViewTopOffset = vMargin + 14.0
+        let accessoryContainerTopOffset = vMargin + 16.0
+        contentView.addSubview(separator, with: [
+            separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            separator.heightAnchor.constraint(equalToConstant: Theme.Metrics.separatorHeight),
+            separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+        
+        contentView.addSubview(categoryView, with: [
+            categoryView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            categoryView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            categoryView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+        
+        contentView.addSubview(logoView, with: [
+            logoView.leadingAnchor.constraint(equalTo: categoryView.trailingAnchor, constant: hMargin),
+            logoView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: logoViewTopOffset),
+            logoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
+        ])
+        
+        contentView.addSubview(serviceNameLabel, with: [
+            serviceNameLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
+            serviceNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin)
+        ])
+        
+        contentView.addSubview(additionalInfoLabel, with: [
+            additionalInfoLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
+            additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor),
+            additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
+        ])
+        
+        contentView.addSubview(tokenLabel, with: [
+            additionalInfoLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor, constant: tokenNegativeMargin),
+            tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
+            tokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
+        ])
+        
+        contentView.addSubview(nextTokenLabel, with: [
+            nextTokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
+            nextTokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor),
+            nextTokenLabel.topAnchor.constraint(equalTo: tokenLabel.bottomAnchor, constant: -tokenNegativeMargin),
+            nextTokenLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
+        ])
+
+        contentView.addSubview(accessoryContainer, with: [
+            serviceNameLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
+            accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hMargin),
+            accessoryContainer.topAnchor.constraint(
+                equalTo: contentView.topAnchor,
+                constant: accessoryContainerTopOffset
+            ),
+            accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
+        ])
+        
+        accessoryContainer.addSubview(circularProgress, with: [
+            circularProgress.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor),
+            circularProgress.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
+            circularProgress.topAnchor.constraint(greaterThanOrEqualTo: accessoryContainer.topAnchor),
+            circularProgress.bottomAnchor.constraint(lessThanOrEqualTo: accessoryContainer.bottomAnchor),
+            circularProgress.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor)
+        ])
+        
+        accessoryContainer.addSubview(revealButton, with: [
+            revealButton.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
+            revealButton.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor, constant: hMargin),
+            revealButton.topAnchor.constraint(equalTo: accessoryContainer.topAnchor),
+            revealButton.bottomAnchor.constraint(equalTo: accessoryContainer.bottomAnchor),
+            revealButton.heightAnchor.constraint(equalTo: accessoryContainer.heightAnchor)
+        ])
+        
+        tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
+        tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
+        tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+    }
+    
+    func setupRevealButton() {
+        revealButton.addTarget(self, action: #selector(ditTapReveal), for: .touchUpInside)
+    }
+    
+    @objc
+    func ditTapReveal() {
+        didTapUnlock?(self)
+    }
+    
+    func shouldMark(willChangeSoon: Bool, isPlanned: Bool) {
         if useNextToken {
             if willChangeSoon {
                 nextTokenLabel.showNextToken(animated: isPlanned && shouldAnimate)
@@ -291,12 +292,12 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         }
     }
     
-    private func markToken() {
+    func markToken() {
         tokenLabel.mark()
         circularProgress.mark()
     }
     
-    private func clearTokenMarking() {
+    func clearTokenMarking() {
         tokenLabel.clearMarking()
         circularProgress.unmark()
     }

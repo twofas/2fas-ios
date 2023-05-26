@@ -32,6 +32,7 @@ final class TokensAdditionalInfo: UIView {
         label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
         label.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+        label.accessibilityTraits = .staticText
         return label
     }()
     

@@ -210,6 +210,7 @@ extension TokensSectionHeader {
             lineBreakMode = .byTruncatingTail
             setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
             textColor = Theme.Colors.inactiveInverted
+            accessibilityTraits = .header
         }
     }
     

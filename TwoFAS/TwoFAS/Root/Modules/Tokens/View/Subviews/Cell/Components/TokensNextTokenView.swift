@@ -85,6 +85,8 @@ final class TokensNextTokenView: UIView {
         ])
         
         nextTokenLabel.alpha = 0
+        
+        nextTokenLabel.isAccessibilityElement = false
     }
     
     func set(nextToken: TokenValue) {
@@ -93,7 +95,7 @@ final class TokensNextTokenView: UIView {
 
         nextTokenLabel.text = nextToken.formattedValue
         let tokenVO = (nextToken.components(separatedBy: "")).joined(separator: " ")
-        nextTokenLabel.accessibilityValue = tokenVO
+        accessibilityValue = T.Tokens.nextToken(tokenVO)
         
         updateConsts()
     }
@@ -104,7 +106,8 @@ final class TokensNextTokenView: UIView {
             movingConstraint.constant = 0
             return
         }
-
+        
+        isAccessibilityElement = true
         currentState = .animating
         nextTokenLabel.alpha = 0
         movingConstraint.constant = 0
@@ -128,6 +131,7 @@ final class TokensNextTokenView: UIView {
     func hideNextToken(animated: Bool) {
         guard currentState == .visible || currentState == .animating else { return }
         
+        isAccessibilityElement = false
         currentState = .animating
         nextTokenLabel.alpha = 1
         movingConstraint.constant = constraintValue

@@ -42,6 +42,7 @@ final class TokensCategory: UIView {
         NSLayoutConstraint.activate([
             widthAnchor.constraint(equalToConstant: Self.width)
         ])
+        isAccessibilityElement = true
     }
     
     override var intrinsicContentSize: CGSize {

@@ -38,6 +38,8 @@ final class RefreshTokenCounter: UIView {
         addSubview(image)
         image.pinToParent()
         image.didAnimate = { [weak self] in self?.didAnimate?() }
+        isAccessibilityElement = true
+        accessibilityValue = T.Tokens.showServiceKey
     }
     
     func rotate() {

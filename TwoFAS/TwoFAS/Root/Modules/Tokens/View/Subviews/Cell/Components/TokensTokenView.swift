@@ -71,6 +71,7 @@ final class TokensTokenView: UILabel {
         text = token.formattedValue
         let tokenVO = (token.components(separatedBy: "")).joined(separator: " ")
         accessibilityLabel = T.Voiceover.tokenTapToCopy(tokenVO)
+        isAccessibilityElement = true
         
         let previous = previousToken
         previousToken = token
@@ -94,6 +95,7 @@ final class TokensTokenView: UILabel {
     func maskToken() {
         isMasked = true
         text = maskedText
+        isAccessibilityElement = false
     }
         
     func clear() {

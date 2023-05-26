@@ -37,6 +37,8 @@ final class TokensRevealButton: UIButton {
     private func commonInit() {
         imageView?.contentMode = .scaleAspectFit
         tintColor = ThemeColor.secondary
+        isAccessibilityElement = true
+        accessibilityValue = T.Tokens.showServiceKey
     }
     
     func setKind(_ kind: TokensCellKind) {

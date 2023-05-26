@@ -406,6 +406,10 @@ private extension TokensPresenter {
     }
     
     func updateEditStateButton() {
+        guard !isSearching else {
+            view?.updateEditState(using: .none)
+            return
+        }
         switch currentState {
         case .edit:
             view?.updateEditState(using: mapCancelState(hasServices: interactor.hasServices))
@@ -425,8 +429,12 @@ private extension TokensPresenter {
             changeRequriesTokenRefresh = true
             reloadData()
             interactor.sync()
+            if showSearchBar {
+                view?.addSearchBar()
+            }
             
         case .edit:
+            view?.removeSearchBar()
             changeDragAndDropIfNecessary(enable: true)
             reloadData()
         }

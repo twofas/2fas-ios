@@ -82,7 +82,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
         line.isUserInteractionEnabled = false
         return line
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -97,15 +97,99 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
         setupBackground()
         setupLayout()
         setupRevealButton()
-        //        setupAccessibility() // TODO: Add accessibility
     }
     
-    private func setupBackground() {
+    func update(
+        name: String,
+        secret: String,
+        serviceTypeName: String,
+        additionalInfo: String?,
+        logoType: LogoType,
+        category: TintColor,
+        useNextToken: Bool,
+        shouldAnimate: Bool
+    ) {
+        tokenLabel.clear()
+        serviceNameLabel.setText(name)
+        self.secret = secret
+        self.serviceTypeName = serviceTypeName
+        if let additionalInfo {
+            additionalInfoLabel.isHidden = false
+            additionalInfoLabel.setText(additionalInfo)
+        } else {
+            additionalInfoLabel.isHidden = true
+            additionalInfoLabel.clear()
+        }
+        
+        clearTokenMarking()
+        categoryView.setColor(category)
+        logoView.configure(with: logoType)
+
+        self.useNextToken = useNextToken
+        
+        if useNextToken {
+            nextTokenLabel.isHidden = false
+        } else {
+            nextTokenLabel.isHidden = true
+            nextTokenLabel.set(nextToken: .empty)
+        }
+        self.shouldAnimate = shouldAnimate
+    }
+    
+    func setInitial(_ state: TokenTimerInitialConsumerState) {
+        switch state {
+        case .locked:
+            isLocked = true
+            
+            nextTokenLabel.hideNextToken(animated: false)
+            tokenLabel.maskToken()
+            circularProgress.isHidden = true
+            revealButton.isHidden = false
+        case .unlocked(let progress, let period, let currentToken, let nextToken, let willChangeSoon):
+            isLocked = false
+            
+            circularProgress.isHidden = false
+            revealButton.isHidden = true
+            circularProgress.setPeriod(period)
+            circularProgress.setProgress(progress, animated: false)
+            tokenLabel.setToken(currentToken)
+            nextTokenLabel.set(nextToken: nextToken)
+            shouldMark(willChangeSoon: willChangeSoon, isPlanned: false)
+        }
+        updateAccessibility()
+    }
+    
+    func setUpdate(_ state: TokenTimerUpdateConsumerState) {
+        switch state {
+        case .locked:
+            guard !isLocked else { return }
+            isLocked = true
+            
+            nextTokenLabel.hideNextToken(animated: true)
+            tokenLabel.maskToken()
+            circularProgress.isHidden = true
+            revealButton.isHidden = false
+        case .unlocked(let progress, let isPlanned, let currentToken, let nextToken, let willChangeSoon):
+            isLocked = false
+            
+            circularProgress.isHidden = false
+            revealButton.isHidden = true
+            circularProgress.setProgress(progress, animated: isPlanned)
+            tokenLabel.setToken(currentToken)
+            shouldMark(willChangeSoon: willChangeSoon, isPlanned: isPlanned)
+            nextTokenLabel.set(nextToken: nextToken)
+        }
+        updateAccessibility()
+    }
+}
+
+private extension TokensTOTPCompactCell {
+    func setupBackground() {
         contentView.backgroundColor = Theme.Colors.Fill.background
         backgroundColor = Theme.Colors.Fill.background
     }
     
-    private func setupLayout() {
+    func setupLayout() {
         let tokenBottomOffset = 2.0
         contentView.addSubview(separator, with: [
             separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -185,97 +269,16 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
         nextTokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
     }
     
-    private func setupRevealButton() {
+    func setupRevealButton() {
         revealButton.addTarget(self, action: #selector(ditTapReveal), for: .touchUpInside)
     }
     
     @objc
-    private func ditTapReveal() {
+    func ditTapReveal() {
         didTapUnlock?(self)
     }
     
-    func update(
-        name: String,
-        secret: String,
-        serviceTypeName: String,
-        additionalInfo: String?,
-        logoType: LogoType,
-        category: TintColor,
-        useNextToken: Bool,
-        shouldAnimate: Bool
-    ) {
-        tokenLabel.clear()
-        serviceNameLabel.setText(name)
-        self.secret = secret
-        self.serviceTypeName = serviceTypeName
-        if let additionalInfo {
-            additionalInfoLabel.isHidden = false
-            additionalInfoLabel.setText(additionalInfo)
-        } else {
-            additionalInfoLabel.isHidden = true
-            additionalInfoLabel.clear()
-        }
-        
-        clearTokenMarking()
-        categoryView.setColor(category)
-        logoView.configure(with: logoType)
-
-        self.useNextToken = useNextToken
-        
-        if useNextToken {
-            nextTokenLabel.isHidden = false
-        } else {
-            nextTokenLabel.isHidden = true
-            nextTokenLabel.set(nextToken: .empty)
-        }
-        self.shouldAnimate = shouldAnimate
-    }
-    
-    func setInitial(_ state: TokenTimerInitialConsumerState) {
-        switch state {
-        case .locked:
-            isLocked = true
-            
-            nextTokenLabel.hideNextToken(animated: false)
-            tokenLabel.maskToken()
-            circularProgress.isHidden = true
-            revealButton.isHidden = false
-        case .unlocked(let progress, let period, let currentToken, let nextToken, let willChangeSoon):
-            isLocked = false
-            
-            circularProgress.isHidden = false
-            revealButton.isHidden = true
-            circularProgress.setPeriod(period)
-            circularProgress.setProgress(progress, animated: false)
-            tokenLabel.setToken(currentToken)
-            nextTokenLabel.set(nextToken: nextToken)
-            shouldMark(willChangeSoon: willChangeSoon, isPlanned: false)
-        }
-    }
-    
-    func setUpdate(_ state: TokenTimerUpdateConsumerState) {
-        switch state {
-        case .locked:
-            guard !isLocked else { return }
-            isLocked = true
-            
-            nextTokenLabel.hideNextToken(animated: true)
-            tokenLabel.maskToken()
-            circularProgress.isHidden = true
-            revealButton.isHidden = false
-        case .unlocked(let progress, let isPlanned, let currentToken, let nextToken, let willChangeSoon):
-            isLocked = false
-            
-            circularProgress.isHidden = false
-            revealButton.isHidden = true
-            circularProgress.setProgress(progress, animated: isPlanned)
-            tokenLabel.setToken(currentToken)
-            shouldMark(willChangeSoon: willChangeSoon, isPlanned: isPlanned)
-            nextTokenLabel.set(nextToken: nextToken)
-        }
-    }
-    
-    private func shouldMark(willChangeSoon: Bool, isPlanned: Bool) {
+    func shouldMark(willChangeSoon: Bool, isPlanned: Bool) {
         if useNextToken {
             if willChangeSoon {
                 nextTokenLabel.showNextToken(animated: isPlanned && shouldAnimate)
@@ -290,13 +293,28 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
         }
     }
     
-    private func markToken() {
+    func markToken() {
         tokenLabel.mark()
         circularProgress.mark()
     }
     
-    private func clearTokenMarking() {
+    func clearTokenMarking() {
         tokenLabel.clearMarking()
         circularProgress.unmark()
+    }
+    
+    func updateAccessibility() {
+        if isLocked {
+            accessibilityElements = [categoryView, serviceNameLabel, additionalInfoLabel, accessoryContainer]
+        } else {
+            accessibilityElements = [
+                categoryView,
+                serviceNameLabel,
+                additionalInfoLabel,
+                tokenLabel,
+                nextTokenLabel,
+                circularProgress
+            ]
+        }
     }
 }

@@ -84,8 +84,8 @@ final class NewsViewController: UIViewController {
     }
     
     func scrollToTop() {
-        guard let numSections = tableViewAdapter.snapshot?.numberOfSections, numSections > 0 else { return }
-        guard let items = tableViewAdapter.snapshot?.numberOfItems(for: 0), items > 0 else { return }
+        guard let numSections = tableViewAdapter?.snapshot?.numberOfSections, numSections > 0 else { return }
+        guard let items = tableViewAdapter?.snapshot?.numberOfItems(for: 0), items > 0 else { return }
         tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
     

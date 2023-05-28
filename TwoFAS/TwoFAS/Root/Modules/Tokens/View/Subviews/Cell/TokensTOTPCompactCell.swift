@@ -126,6 +126,9 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
         logoView.configure(with: logoType)
 
         self.useNextToken = useNextToken
+        self.shouldAnimate = shouldAnimate
+        
+        isLocked = false
         
         if useNextToken {
             nextTokenLabel.isHidden = false
@@ -133,7 +136,6 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             nextTokenLabel.isHidden = true
             nextTokenLabel.set(nextToken: .empty)
         }
-        self.shouldAnimate = shouldAnimate
     }
     
     func setInitial(_ state: TokenTimerInitialConsumerState) {

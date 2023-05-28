@@ -125,16 +125,13 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         clearTokenMarking()
         categoryView.setColor(category)
         logoView.configure(with: logoType)
+        
+        isLocked = false
 
         self.useNextToken = useNextToken
-        
-        if useNextToken {
-            nextTokenLabel.isHidden = false
-        } else {
-            nextTokenLabel.isHidden = true
-            nextTokenLabel.set(nextToken: .empty)
-        }
         self.shouldAnimate = shouldAnimate
+        
+        nextTokenLabel.hideNextToken(animated: false)
     }
     
     func setInitial(_ state: TokenTimerInitialConsumerState) {

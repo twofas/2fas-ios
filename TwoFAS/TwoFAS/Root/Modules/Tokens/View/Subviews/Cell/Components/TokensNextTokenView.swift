@@ -84,7 +84,8 @@ final class TokensNextTokenView: UIView {
             outerContainer.heightAnchor.constraint(equalTo: innerContainer.heightAnchor)
         ])
         
-        nextTokenLabel.alpha = 0
+        nextTokenLabel.text = TokenValue.empty
+        setNextTokenHidden()
         
         nextTokenLabel.isAccessibilityElement = false
     }
@@ -111,6 +112,7 @@ final class TokensNextTokenView: UIView {
         currentState = .animating
         nextTokenLabel.alpha = 0
         movingConstraint.constant = 0
+        nextTokenLabel.textColor = Theme.Colors.Text.main
         
         if animated {
             UIView.animate(withDuration: animationDuration, delay: 0, options: options) {
@@ -129,7 +131,10 @@ final class TokensNextTokenView: UIView {
     }
     
     func hideNextToken(animated: Bool) {
-        guard currentState == .visible || currentState == .animating else { return }
+        guard currentState == .visible || currentState == .animating else {
+            setNextTokenHidden()
+            return
+        }
         
         isAccessibilityElement = false
         currentState = .animating
@@ -145,7 +150,8 @@ final class TokensNextTokenView: UIView {
                 self.movingConstraint.constant = self.constraintValue
             }
         } else {
-            nextTokenLabel.alpha = 0
+            setNextTokenHidden()
+            
             movingConstraint.constant = constraintValue
             currentState = .hidden
             layoutIfNeeded()
@@ -176,6 +182,11 @@ final class TokensNextTokenView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         updateConsts()
+    }
+    
+    private func setNextTokenHidden() {
+        nextTokenLabel.textColor = Theme.Colors.Fill.background.withAlphaComponent(0.1)
+        nextTokenLabel.alpha = 0.1
     }
     
     private func updateConsts() {

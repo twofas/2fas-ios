@@ -71,6 +71,8 @@ final class TokensCircleProgress: UIView {
     }
     
     private func commonInit() {
+        setLineWidth()
+        
         setCircleColor(marked: false, animated: false)
         addSubview(circle)
         circle.translatesAutoresizingMaskIntoConstraints = false
@@ -89,7 +91,9 @@ final class TokensCircleProgress: UIView {
         
         addSubview(valueLabel)
         valueLabel.pinToParent(with: edgeInsets)
-                
+        
+        setMargins()
+        
         backgroundColor = UIColor.clear
         
         isAccessibilityElement = false
@@ -166,7 +170,6 @@ final class TokensCircleProgress: UIView {
             break
         }
         setLineWidth()
-        setMargins()
     }
     
     private func setCircleColor(marked: Bool, animated: Bool) {

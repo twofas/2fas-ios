@@ -130,12 +130,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
         
         isLocked = false
         
-        if useNextToken {
-            nextTokenLabel.isHidden = false
-        } else {
-            nextTokenLabel.isHidden = true
-            nextTokenLabel.set(nextToken: .empty)
-        }
+        nextTokenLabel.hideNextToken(animated: false)
     }
     
     func setInitial(_ state: TokenTimerInitialConsumerState) {
@@ -240,11 +235,11 @@ private extension TokensTOTPCompactCell {
 
         contentView.addSubview(accessoryContainer, with: [
             nextTokenLabel.trailingAnchor.constraint(
-                greaterThanOrEqualTo: accessoryContainer.leadingAnchor,
+                equalTo: contentView.trailingAnchor,
                 constant: -hMargin
             ),
             serviceNameLabel.trailingAnchor.constraint(
-                greaterThanOrEqualTo: accessoryContainer.leadingAnchor,
+                equalTo: accessoryContainer.leadingAnchor,
                 constant: -hMargin
             ),
             accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hMargin),

@@ -229,8 +229,9 @@ private extension TokensHOTPCell {
             UITapGestureRecognizer(target: self, action: #selector(animateRefreshCounter))
         )
         tokenLabel.maskToken()
-        nextTokenLabel.isHidden = true
+        nextTokenLabel.textColor = Theme.Colors.Fill.background.withAlphaComponent(0.1)
         nextTokenLabel.text = TokenValue.empty
+        nextTokenLabel.isAccessibilityElement = false
     }
     
     @objc

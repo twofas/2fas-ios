@@ -30,11 +30,7 @@ final class TokensViewEmptySearchScreen: UIView {
         img.tintColor = Theme.Colors.Line.secondaryLine
         return img
     }()
-    private let iconImage: UIImageView = {
-        let img = UIImageView(image: Asset.emptyScreenIcon.image)
-        img.tintColor = Theme.Colors.Line.primaryLine
-        return img
-    }()
+    private let iconImage = UIImageView(image: Asset.emptyScreenSearch.image)
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center

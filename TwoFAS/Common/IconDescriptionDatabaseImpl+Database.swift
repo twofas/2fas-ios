@@ -194,10 +194,6 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Jamf"
             ),
             .init(
-                iconTypeID: IconTypeID(uuidString: "48109C54-B324-4CA7-A5C2-C2BE7814ED96")!,
-                name: "GeForce (Nvidia)"
-            ),
-            .init(
                 iconTypeID: IconTypeID(uuidString: "FEFA43E1-CE67-49D3-9A20-8C88D5AC5FA5")!,
                 name: "SatoshiTango"
             ),
@@ -418,6 +414,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Scryfall"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "1FF6314F-90CB-40D6-BA16-B0AB8746BF5A")!,
+                name: "Cryptology"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "07F84AB8-8A93-4F0B-BC3B-00C20A3DFEC9")!,
                 name: "Drupal"
             ),
@@ -546,6 +546,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Docker"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "A3DB825D-B56E-42DA-82B4-33D75214C472")!,
+                name: "my529"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "B7852AC0-B4ED-4873-B1E0-5595092A2D9C")!,
                 name: "Independer"
             ),
@@ -572,6 +576,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "F46F357A-272F-4467-8C2B-A49F99CE22DC")!,
                 name: "Earth Class Mail"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "0E2C86E0-1815-4C89-9DF6-C145364127DE")!,
+                name: "iLovePDF"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "245252F6-77B2-46F6-A4AB-74298597F300")!,
@@ -770,7 +778,7 @@ final class IconDescriptionDatabaseGenerated {
                 name: "BtcTurk"
             ),
             .init(
-                iconTypeID: IconTypeID(uuidString: "13ADF493-63A7-4582-9FFA-B1BBAC783D67")!,
+                iconTypeID: IconTypeID(uuidString: "E8C7B9FD-94BE-4015-A6BE-FFBD626AAA8B")!,
                 name: "1Password"
             ),
             .init(
@@ -934,6 +942,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Fritzbox"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "5FABB7C6-F73C-45E1-8CD2-AEA9A3923719")!,
+                name: "ConnectWise"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "034A9D9C-E124-4FE3-AB27-14A8EC6151FD")!,
                 name: "Buildium"
             ),
@@ -1068,6 +1080,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "1C7F0CD9-23F6-4E4A-BEBC-75A1ECFC3121")!,
                 name: "Segment"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "9C9EA2D0-EAE8-421F-AFD6-70585D7D959D")!,
+                name: "authentik"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "6E0B0B5E-F43A-44C1-9569-6FE8C5D926D3")!,
@@ -1216,6 +1232,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "2CC80AC1-879E-43DB-90F9-12A3A97B5151")!,
                 name: "RealMe"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "D8AF5AFE-0F77-4675-81ED-EA3C27ECB14B")!,
+                name: "Too Lost"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "96D6723E-B5D2-4B90-9CE3-BCCB3F919642")!,
@@ -1374,6 +1394,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Assembla"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "A5C7A549-CBDB-43DF-BBFD-95B3867AAF2C")!,
+                name: "ReelCrafter"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "B7C7550A-F6D7-4204-929C-6006AD8207D9")!,
                 name: "Netcore Cloud Email API"
             ),
@@ -1450,6 +1474,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "DMOJ"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "DC72A1A9-6DFA-4AFA-8147-6C579F11C277")!,
+                name: "OnlyFans"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "C20236ED-2E95-476C-B29C-F425D29826EF")!,
                 name: "Bitpanda"
             ),
@@ -1520,6 +1548,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "28703409-A58E-473D-9690-BA490C139F34")!,
                 name: "Healthchecks"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "46DFC67B-6FA3-45F0-A1E9-58982EB56031")!,
+                name: "NinjaRMM"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "01D0DE55-64F4-477F-8EA4-A28A81A1666C")!,
@@ -2514,6 +2546,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "BKEX"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "E4241DFF-21A0-4990-9561-174DB4BAB356")!,
+                name: "Plutus"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "58535F61-5B07-44E5-B2C6-62C45D6B484B")!,
                 name: "When I Work"
             ),
@@ -3494,6 +3530,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Wealthsimple"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "E40B5B59-34F0-406A-87D8-3E2E27F79B2A")!,
+                name: "Uptime Kuma"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "D63DED88-E3C9-48AC-A7F9-C7E1D2A433B0")!,
                 name: "Poli Systems"
             ),
@@ -3910,6 +3950,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "DreamHost"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "D08818CF-2843-46C1-AF6E-2989750838D2")!,
+                name: "Truth Social"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "2D1132CD-59F5-4E61-A383-6A0D58F0A14E")!,
                 name: "Taboola"
             ),
@@ -3996,6 +4040,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "4FD0608C-3721-4349-9F57-9930521F5BB5")!,
                 name: "A2 Hosting"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "20911304-BFF2-4754-8B53-15A43F2AADF0")!,
+                name: "Gab Social"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "77977D70-B13E-4B8F-A420-9E0412E0EB46")!,
@@ -4408,6 +4456,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "0D3E1D87-06AB-4E79-8CF5-A08C7940A5B1")!,
                 name: "Mintos"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "BB9DA84A-2B56-4160-B2AC-CEF537A20E4F")!,
+                name: "WireGuard"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "F49EFC49-CC3A-4CCD-B796-E4CF38E0174F")!,

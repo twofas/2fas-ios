@@ -1206,6 +1206,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Substack"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "CA81AE1F-20F6-45D2-BBEF-24BA47ADAB79")!,
+                name: "Acronis"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "6FCED2F9-550E-4E85-B98D-A26DD1D2768D")!,
                 name: "Republic"
             ),
@@ -1738,6 +1742,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Discord"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "67AEE011-7509-41B7-8ABB-584F529B9E70")!,
+                name: "Alibaba Cloud"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "529AC5A2-27DE-4C74-9673-5E6CBB382AC7")!,
                 name: "ORCID"
             ),
@@ -2240,6 +2248,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "29798D06-C48D-4343-B844-C22A07E62CE3")!,
                 name: "Chatwork"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "74E8BF33-83D5-444D-8162-352DE6F997B9")!,
+                name: "Capital.com"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "C498FF0B-4787-4FDD-B036-98E17F660479")!,
@@ -3398,6 +3410,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Anycoin Direct"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "8F243E82-97D7-4906-B641-CC00A59576C3")!,
+                name: "Tixte"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "50A61314-EAF4-46D9-8DEB-2B470266937C")!,
                 name: "GoTo"
             ),
@@ -3608,6 +3624,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "8250908F-6FD4-4FDF-9250-1FB45E27B595")!,
                 name: "XDA"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "70D6C5D3-7184-486B-96B1-D3B35E038209")!,
+                name: "LBMG"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "A45B3994-FD70-44AA-9A94-FE72B24B0015")!,
@@ -4358,7 +4378,7 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Xplenty"
             ),
             .init(
-                iconTypeID: IconTypeID(uuidString: "04CD575A-F255-4803-94C6-85CFD470E1E0")!,
+                iconTypeID: IconTypeID(uuidString: "E4A960D1-971E-4330-BE1D-E6F9247941BC")!,
                 name: "Hushmail"
             ),
             .init(

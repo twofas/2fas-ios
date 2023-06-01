@@ -1994,6 +1994,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Onshape"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "C3F63528-EECE-438A-A74D-AE7AC8C74BFB")!,
+                name: "Packagist.org"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "995DB454-F44B-4F16-BABF-9E7435DD64C9")!,
                 name: "Bitkub"
             ),

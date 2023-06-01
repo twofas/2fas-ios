@@ -4294,6 +4294,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "3014F069-0E58-4015-AFCD-5224DB4BFF96")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "6AB00AEB-5F0E-4E29-BB8C-E5B4AE76774C")!,
+                name: "Packagist.org",
+                issuer: ["Packagist"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "C3F63528-EECE-438A-A74D-AE7AC8C74BFB")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "6AB5F6F1-40F4-41E4-82FF-0DD11F9B676C")!,
                 name: "Bitkub",
                 issuer: nil,

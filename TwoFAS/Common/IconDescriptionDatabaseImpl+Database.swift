@@ -451,7 +451,7 @@ final class IconDescriptionDatabaseGenerated {
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "53CBAF51-A4B3-45F9-832E-31EC7E38EE91")!,
-                name: "Packagist"
+                name: "Packagist.com"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "2C349A9C-AEB3-4AD4-94E2-682C3CFBD7D8")!,

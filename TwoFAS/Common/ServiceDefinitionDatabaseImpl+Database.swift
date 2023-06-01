@@ -947,7 +947,7 @@ final class ServiceDefinitionDatabaseGenerated {
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "1818B58D-1A0E-48BC-B122-33CB8F48F248")!,
-                name: "Packagist",
+                name: "Packagist.com",
                 issuer: ["Private Packagist"],
                 tags: nil,
                 matchingRules: [.init(field: .issuer, text: "Packagist", matcher: .contains, ignoreCase: true),

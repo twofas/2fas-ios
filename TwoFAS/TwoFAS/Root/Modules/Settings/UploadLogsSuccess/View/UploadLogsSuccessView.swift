@@ -41,7 +41,7 @@ struct UploadLogsSuccessView: View {
             .frame(maxHeight: .infinity, alignment: .center)
             
             VStack(spacing: spacing) {
-                Text(T.Settings.sendLogsTitle)
+                Text(T.Settings.sendLogsSentTitle)
                     .font(.title)
                     .multilineTextAlignment(.center)
                 Text(T.Settings.sendLogsSentDescription)

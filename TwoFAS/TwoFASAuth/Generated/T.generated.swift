@@ -215,6 +215,8 @@ internal enum T {
   internal static let securityErrorNoMatch = T.tr("Localizable", "security_error_no_match", fallback: "PIN does not match! Please try again.")
   /// Developer Options
   internal static let settingsDeveloperOptions = T.tr("Localizable", "settings_developer_options", fallback: "Developer Options")
+  /// s
+  internal static let timeUnitSecondsShort = T.tr("Localizable", "time_unit_seconds_short", fallback: "s")
   /// Please update to the newest 2FAS version to get all features and maintain a high-security level.
   internal static let updateAppMsg = T.tr("Localizable", "update_app_msg", fallback: "Please update to the newest 2FAS version to get all features and maintain a high-security level.")
   /// Update app
@@ -806,8 +808,8 @@ internal enum T {
     internal static let serviceAlreadyModifiedTitle = T.tr("Localizable", "notifications__service_already_modified_title", fallback: "Service already modified in Backup")
     /// Service already removed from Backup
     internal static let serviceAlreadyRemovedTitle = T.tr("Localizable", "notifications__service_already_removed_title", fallback: "Service already removed from Backup")
-    /// Service Key Copied
-    internal static let serviceKeyCopied = T.tr("Localizable", "notifications__service_key_copied", fallback: "Service Key Copied")
+    /// Secret Key Copied
+    internal static let serviceKeyCopied = T.tr("Localizable", "notifications__service_key_copied", fallback: "Secret Key Copied")
     /// This token is already present on the list
     internal static let tokenAlreadyAdded = T.tr("Localizable", "notifications__token_already_added", fallback: "This token is already present on the list")
     /// Token Copied
@@ -931,9 +933,9 @@ internal enum T {
     internal static let gdSyncInfo = T.tr("Localizable", "settings__gd_sync_info", fallback: "Google Drive sync reminder")
     /// General
     internal static let general = T.tr("Localizable", "settings__general", fallback: "General")
-    /// Select the maximum number of unsuccessful passcode attempts before locking the application.
+    /// Select the maximum number of unsuccessful attempts to enter the passcode before locking the application (lockout time can be changed below).
     /// 
-    internal static let howManyAttemptsFooter = T.tr("Localizable", "settings__how_many_attempts_footer", fallback: "Select the maximum number of unsuccessful passcode attempts before locking the application.\n")
+    internal static let howManyAttemptsFooter = T.tr("Localizable", "settings__how_many_attempts_footer", fallback: "Select the maximum number of unsuccessful attempts to enter the passcode before locking the application (lockout time can be changed below).\n")
     /// Knowledge
     internal static let knowledge = T.tr("Localizable", "settings__knowledge", fallback: "Knowledge")
     /// Max failed attempts
@@ -952,6 +954,15 @@ internal enum T {
     internal static let optionFingerprint = T.tr("Localizable", "settings__option_fingerprint", fallback: "Biometric Lock")
     /// To enable Biometric Lock, you need to enable and set a PIN Code.
     internal static let optionFingerprintDescription = T.tr("Localizable", "settings__option_fingerprint_description", fallback: "To enable Biometric Lock, you need to enable and set a PIN Code.")
+    /// Allow screenshots
+    internal static let optionScreenshots = T.tr("Localizable", "settings__option_screenshots", fallback: "Allow screenshots")
+    /// Are you sure? This option allows you to screenshot and record any screen within the app. However, this will also allow any external attempts of capturing screens in the app.
+    /// For safety reasons, this option will be automatically turned off after 5 minutes.
+    internal static let optionScreenshotsConfirmDescription = T.tr("Localizable", "settings__option_screenshots_confirm_description", fallback: "Are you sure? This option allows you to screenshot and record any screen within the app. However, this will also allow any external attempts of capturing screens in the app.\nFor safety reasons, this option will be automatically turned off after 5 minutes.")
+    /// Allow screenshots of the app?
+    internal static let optionScreenshotsConfirmTitle = T.tr("Localizable", "settings__option_screenshots_confirm_title", fallback: "Allow screenshots of the app?")
+    /// Allow screenshots of the app for 5 minutes.
+    internal static let optionScreenshotsDescription = T.tr("Localizable", "settings__option_screenshots_description", fallback: "Allow screenshots of the app for 5 minutes.")
     /// Theme
     internal static let optionTheme = T.tr("Localizable", "settings__option_theme", fallback: "Theme")
     /// 4-digits code
@@ -990,8 +1001,8 @@ internal enum T {
     internal static let sendLogsErrorServer = T.tr("Localizable", "settings__send_logs_error_server", fallback: "There seems to be a problem with our server. If it persists please contact our support team")
     /// Operation failed
     internal static let sendLogsErrorTitle = T.tr("Localizable", "settings__send_logs_error_title", fallback: "Operation failed")
-    /// We'll check them out, but it could take some time.
-    internal static let sendLogsSentDescription = T.tr("Localizable", "settings__send_logs_sent_description", fallback: "We'll check them out, but it could take some time.")
+    /// Thanks for reaching out. We'll analyze them as soon as possible.
+    internal static let sendLogsSentDescription = T.tr("Localizable", "settings__send_logs_sent_description", fallback: "Thanks for reaching out. We'll analyze them as soon as possible.")
     /// Logs sent
     internal static let sendLogsSentTitle = T.tr("Localizable", "settings__send_logs_sent_title", fallback: "Logs sent")
     /// Sending logs
@@ -1052,10 +1063,46 @@ internal enum T {
     internal static let writeAReview = T.tr("Localizable", "settings__write_a_review", fallback: "Write a review")
   }
   internal enum Tokens {
+    /// Point your camera at the screen to capture the QR code.
+    internal static let addDescription = T.tr("Localizable", "tokens__add_description", fallback: "Point your camera at the screen to capture the QR code.")
+    /// Enter secret key
+    internal static let addEnterManual = T.tr("Localizable", "tokens__add_enter_manual", fallback: "Enter secret key")
+    /// Upload an image with the QR code
+    internal static let addFromGallery = T.tr("Localizable", "tokens__add_from_gallery", fallback: "Upload an image with the QR code")
     /// Add group
     internal static let addGroup = T.tr("Localizable", "tokens__add_group", fallback: "Add group")
+    /// Additional info
+    internal static let addManualAdditionalInfo = T.tr("Localizable", "tokens__add_manual_additional_info", fallback: "Additional info")
+    /// Advanced token settings
+    internal static let addManualAdvanced = T.tr("Localizable", "tokens__add_manual_advanced", fallback: "Advanced token settings")
+    /// Changing default token settings is not recommended. Do so only when your 2FA provider requires it and when you have clear instructions.
+    internal static let addManualAdvancedDescription = T.tr("Localizable", "tokens__add_manual_advanced_description", fallback: "Changing default token settings is not recommended. Do so only when your 2FA provider requires it and when you have clear instructions.")
+    /// Type in the service name and secret key.
+    internal static let addManualDescription = T.tr("Localizable", "tokens__add_manual_description", fallback: "Type in the service name and secret key.")
+    /// Add service
+    internal static let addManualDoneCta = T.tr("Localizable", "tokens__add_manual_done_cta", fallback: "Add service")
+    /// Don’t know what to do? Tap for help
+    internal static let addManualHelpCta = T.tr("Localizable", "tokens__add_manual_help_cta", fallback: "Don’t know what to do? Tap for help")
+    /// Other settings
+    internal static let addManualOther = T.tr("Localizable", "tokens__add_manual_other", fallback: "Other settings")
+    /// (optional)
+    internal static let addManualOtherOptional = T.tr("Localizable", "tokens__add_manual_other_optional", fallback: "(optional)")
+    /// Secret Key (required)
+    internal static let addManualServiceKey = T.tr("Localizable", "tokens__add_manual_service_key", fallback: "Secret Key (required)")
+    /// Service name (required)
+    internal static let addManualServiceName = T.tr("Localizable", "tokens__add_manual_service_name", fallback: "Service name (required)")
+    /// Pair the service with 2FAS
+    internal static let addManualTitle = T.tr("Localizable", "tokens__add_manual_title", fallback: "Pair the service with 2FAS")
+    /// Other methods
+    internal static let addOtherMethods = T.tr("Localizable", "tokens__add_other_methods", fallback: "Other methods")
     /// Add new service
     internal static let addServiceTitle = T.tr("Localizable", "tokens__add_service_title", fallback: "Add new service")
+    /// To finish pairing the service, you need to retype this token.
+    internal static let addSuccessDescription = T.tr("Localizable", "tokens__add_success_description", fallback: "To finish pairing the service, you need to retype this token.")
+    /// Almost done!
+    internal static let addSuccessTitle = T.tr("Localizable", "tokens__add_success_title", fallback: "Almost done!")
+    /// Pair the service with 2FAS
+    internal static let addTitle = T.tr("Localizable", "tokens__add_title", fallback: "Pair the service with 2FAS")
     /// What service do you want to add?
     internal static let addingServiceQuestionTitle = T.tr("Localizable", "tokens__adding_service_question_title", fallback: "What service do you want to add?")
     /// Additional info
@@ -1100,8 +1147,8 @@ internal enum T {
     internal static let deleteToken = T.tr("Localizable", "tokens__delete_token", fallback: "Are you sure you want to delete the token for:")
     /// Do you want to permanently delete this 2FA service?
     internal static let doYouReallyWantToRemoveAllDevices = T.tr("Localizable", "tokens__do_you_really_want_to_remove_all_devices", fallback: "Do you want to permanently delete this 2FA service?")
-    /// Duplicated Service Key
-    internal static let duplicatedPrivateKey = T.tr("Localizable", "tokens__duplicated_private_key", fallback: "Duplicated Service Key")
+    /// Duplicated Secret Key
+    internal static let duplicatedPrivateKey = T.tr("Localizable", "tokens__duplicated_private_key", fallback: "Duplicated Secret Key")
     /// Enter Service Name
     internal static let enterServiceName = T.tr("Localizable", "tokens__enter_service_name", fallback: "Enter Service Name")
     /// Add manually
@@ -1133,8 +1180,8 @@ internal enum T {
     internal static let hotp = T.tr("Localizable", "tokens__hotp", fallback: "HOTP")
     /// Yes, I want to delete this service
     internal static let iWantToDeleteThisToken = T.tr("Localizable", "tokens__i_want_to_delete_this_token", fallback: "Yes, I want to delete this service")
-    /// Incorrect service key (only numbers 2 to 7, letters), max. 512 chars long
-    internal static let incorrectServiceKey = T.tr("Localizable", "tokens__incorrect_service_key", fallback: "Incorrect service key (only numbers 2 to 7, letters), max. 512 chars long")
+    /// Incorrect Secret key (only numbers 2 to 7, letters), max. 512 chars long
+    internal static let incorrectServiceKey = T.tr("Localizable", "tokens__incorrect_service_key", fallback: "Incorrect Secret key (only numbers 2 to 7, letters), max. 512 chars long")
     /// Initial counter
     internal static let initialCounter = T.tr("Localizable", "tokens__initial_counter", fallback: "Initial counter")
     /// Label
@@ -1241,17 +1288,17 @@ internal enum T {
     internal static let selectGroup = T.tr("Localizable", "tokens__select_group", fallback: "Select group")
     /// Select Service
     internal static let selectService = T.tr("Localizable", "tokens__select_service", fallback: "Select Service")
-    /// Service could not be added because Service Key is invalid. Try again.
-    internal static let serviceAddError = T.tr("Localizable", "tokens__service_add_error", fallback: "Service could not be added because Service Key is invalid. Try again.")
-    /// Service with this Service Key already exists. Do you want to override it?
-    internal static let serviceAlreadyExists = T.tr("Localizable", "tokens__service_already_exists", fallback: "Service with this Service Key already exists. Do you want to override it?")
+    /// Service could not be added because Secret Key is invalid. Try again.
+    internal static let serviceAddError = T.tr("Localizable", "tokens__service_add_error", fallback: "Service could not be added because Secret Key is invalid. Try again.")
+    /// Service with this Secret Key already exists. Do you want to override it?
+    internal static let serviceAlreadyExists = T.tr("Localizable", "tokens__service_already_exists", fallback: "Service with this Secret Key already exists. Do you want to override it?")
     /// Service Information
     internal static let serviceInformation = T.tr("Localizable", "tokens__service_information", fallback: "Service Information")
-    /// Service Key
-    internal static let serviceKey = T.tr("Localizable", "tokens__service_key", fallback: "Service Key")
-    /// Service key from scanned code is already used in %@. You're probably scanning it again
+    /// Secret Key
+    internal static let serviceKey = T.tr("Localizable", "tokens__service_key", fallback: "Secret Key")
+    /// Secret key from scanned code is already used in %@. You're probably scanning it again
     internal static func serviceKeyAlreadyUsedTitle(_ p1: Any) -> String {
-      return T.tr("Localizable", "tokens__service_key_already_used_title", String(describing: p1), fallback: "Service key from scanned code is already used in %@. You're probably scanning it again")
+      return T.tr("Localizable", "tokens__service_key_already_used_title", String(describing: p1), fallback: "Secret key from scanned code is already used in %@. You're probably scanning it again")
     }
     /// Key contains invalid characters
     internal static let serviceKeyInvalidCharacters = T.tr("Localizable", "tokens__service_key_invalid_characters", fallback: "Key contains invalid characters")
@@ -1269,10 +1316,10 @@ internal enum T {
     internal static let serviceUnsavedChanges = T.tr("Localizable", "tokens__service_unsaved_changes", fallback: "Do you want to discard your changes?")
     /// Unsaved changes
     internal static let serviceUnsavedChangesTitle = T.tr("Localizable", "tokens__service_unsaved_changes_title", fallback: "Unsaved changes")
-    /// Show Service Key
-    internal static let showServiceKey = T.tr("Localizable", "tokens__show_service_key", fallback: "Show Service Key")
-    /// Your Service Key is protected. Please add a PIN or Fingerprint lock to see it.
-    internal static let showServiceKeySetupLock = T.tr("Localizable", "tokens__show_service_key_setup_lock", fallback: "Your Service Key is protected. Please add a PIN or Fingerprint lock to see it.")
+    /// Show Secret Key
+    internal static let showServiceKey = T.tr("Localizable", "tokens__show_service_key", fallback: "Show Secret Key")
+    /// Your Secret key is protected. Please add a PIN or Fingerprint lock to see it.
+    internal static let showServiceKeySetupLock = T.tr("Localizable", "tokens__show_service_key_setup_lock", fallback: "Your Secret key is protected. Please add a PIN or Fingerprint lock to see it.")
     /// You will not be able to sign in to your %@ account without this token, as long as you have second factor authentication for %@ turned on.
     internal static func signInNotPossibleTitle(_ p1: Any, _ p2: Any) -> String {
       return T.tr("Localizable", "tokens__sign_in_not_possible_title", String(describing: p1), String(describing: p2), fallback: "You will not be able to sign in to your %@ account without this token, as long as you have second factor authentication for %@ turned on.")
@@ -1325,8 +1372,8 @@ internal enum T {
     internal static func badgeColor(_ p1: Any) -> String {
       return T.tr("Localizable", "voiceover__badge_color", String(describing: p1), fallback: "Badge color: %@")
     }
-    /// Copy Service Key
-    internal static let copyServiceKey = T.tr("Localizable", "voiceover__copy_service_key", fallback: "Copy Service Key")
+    /// Copy Secret Key
+    internal static let copyServiceKey = T.tr("Localizable", "voiceover__copy_service_key", fallback: "Copy Secret Key")
     /// Delete button
     internal static let deleteButton = T.tr("Localizable", "voiceover__delete_button", fallback: "Delete button")
     /// Dismissing
@@ -1361,8 +1408,8 @@ internal enum T {
     internal static func serviceName(_ p1: Any) -> String {
       return T.tr("Localizable", "voiceover__service_name", String(describing: p1), fallback: "Service name: %@")
     }
-    /// Show Service Key
-    internal static let showServiceKey = T.tr("Localizable", "voiceover__show_service_key", fallback: "Show Service Key")
+    /// Show Secret Key
+    internal static let showServiceKey = T.tr("Localizable", "voiceover__show_service_key", fallback: "Show Secret Key")
     /// Use Sort By to set service sorting
     internal static let sortByTitle = T.tr("Localizable", "voiceover__sort_by_title", fallback: "Use Sort By to set service sorting")
     /// Loading content

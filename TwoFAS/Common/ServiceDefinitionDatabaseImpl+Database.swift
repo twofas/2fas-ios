@@ -10210,7 +10210,7 @@ final class ServiceDefinitionDatabaseGenerated {
             .init(
                 serviceTypeID: UUID(uuidString: "FD8F0A74-239D-42BF-A537-38CF9CF2C7F2")!,
                 name: "Qualifio",
-                issuer: nil,
+                issuer: ["Qualifio"],
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "284940C6-710D-473A-A7E5-C9F43001033B")!

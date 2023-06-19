@@ -22,6 +22,7 @@ import CodeSupport
 import Common
 
 protocol LinkInteracting: AnyObject {
+    var hasStoredURL: Bool { get }
     var showCodeAlreadyExists: Callback? { get set }
     var showShouldAddCode: ((String?) -> Void)? { get set }
     var showSendLogs: ((UUID) -> Void)? { get set }
@@ -59,6 +60,10 @@ final class LinkInteractor {
 }
 
 extension LinkInteractor: LinkInteracting {
+    var hasStoredURL: Bool {
+        mainRepository.hasStoredURL()
+    }
+    
     func shouldHandleURL(url: URL) -> Bool {
         Log("LinkInteractor - shouldHandleURL", module: .interactor)
         Log("URL: \(url)", module: .interactor, save: false)

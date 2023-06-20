@@ -197,7 +197,7 @@ private extension TokensSectionHeader {
     
     func setupContainers() {
         if config?.isNilSection == true {
-            normalContainer.isHidden = true
+            normalContainer.isHidden = isEditing
             editContainer.isHidden = true
             
             normalConstraint?.isActive = true

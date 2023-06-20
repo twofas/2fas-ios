@@ -45,6 +45,7 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
     private(set) var secret: String = ""
     private var serviceTypeName: String = ""
     private var isActive = true
+    private var shouldAnimate = true
     
     private let categoryView = TokensCategory()
     private var logoView: TokensLogo = {
@@ -93,7 +94,8 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         serviceTypeName: String,
         additionalInfo: String?,
         logoType: LogoType,
-        category: TintColor
+        category: TintColor,
+        shouldAnimate: Bool
     ) {
         tokenLabel.clear()
         serviceNameLabel.setText(name)
@@ -106,6 +108,8 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
             additionalInfoLabel.isHidden = true
             additionalInfoLabel.clear()
         }
+        
+        self.shouldAnimate = shouldAnimate
         
         categoryView.setColor(category)
         logoView.configure(with: logoType)
@@ -138,7 +142,7 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
             
         case .unlocked(let isRefreshLocked, let currentToken):
             isActive = !isRefreshLocked
-            tokenLabel.setToken(currentToken, animated: true)
+            tokenLabel.setToken(currentToken, animated: shouldAnimate)
             if isRefreshLocked {
                 refreshCounter.lock()
             } else {

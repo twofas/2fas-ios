@@ -122,7 +122,8 @@ extension TokensViewController {
             serviceTypeName: item.serviceTypeName,
             additionalInfo: item.additionalInfo,
             logoType: item.logoType,
-            category: item.category
+            category: item.category,
+            shouldAnimate: presenter.shouldAnimate
         )
         return cell
     }

@@ -220,7 +220,8 @@ private extension TokensHOTPCell {
             refreshCounter.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
             refreshCounter.topAnchor.constraint(greaterThanOrEqualTo: accessoryContainer.topAnchor),
             refreshCounter.bottomAnchor.constraint(lessThanOrEqualTo: accessoryContainer.bottomAnchor),
-            refreshCounter.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor)
+            refreshCounter.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor),
+            refreshCounter.widthAnchor.constraint(equalTo: accessoryContainer.widthAnchor)
         ])
         
         tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)

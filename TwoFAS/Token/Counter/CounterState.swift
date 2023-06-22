@@ -27,7 +27,7 @@ final class CounterState {
     private let algorithm: Algorithm
     
     private var isRefreshCounterLocked = false
-    private var isUnlocked = false
+    private(set) var isUnlocked = false
     private var lockCounter: Int
     private(set) var currentToken: TokenValue?
     private var consumers: [Weak] = []
@@ -78,6 +78,13 @@ final class CounterState {
     func unlock(with counter: Int) {
         self.counter = counter
         startCounter()
+    }
+    
+    func lock() {
+        isUnlocked = false
+        isRefreshCounterLocked = false
+        lockCounter = Int(TokenType.hotpRefreshLockTime)
+        currentToken = nil
     }
     
     // MARK: - Private

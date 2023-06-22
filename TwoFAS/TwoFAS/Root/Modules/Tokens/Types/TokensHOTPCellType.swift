@@ -27,6 +27,7 @@ protocol TokensHOTPCellType: AnyObject {
         serviceTypeName: String,
         additionalInfo: String?,
         logoType: LogoType,
-        category: TintColor
+        category: TintColor,
+        shouldAnimate: Bool
     )
 }

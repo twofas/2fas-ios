@@ -85,7 +85,7 @@ extension TokenInteractor: TokenInteracting {
     }
     
     func disableCounter(_ counterConsumer: TokenCounterConsumer) {
-        counterHandler.remove(counterConsumer)
+        counterHandler.remove(counterConsumer, lock: false)
     }
     
     func unlockCounter(for secret: String) {
@@ -121,13 +121,13 @@ extension TokenInteractor: TokenInteracting {
     }
     
     func removeHOTP(_ consumer: TokenCounterConsumer) {
-        counterHandler.remove(consumer)
+        counterHandler.remove(consumer, lock: areTokensHidden)
     }
     
     func start(timedSecrets: [TimedSecret], counterSecrets: [CounterSecret]) {
         areTokensHidden = mainRepository.areTokensHidden
         timerHandler.start(with: timedSecrets)
-        counterHandler.start(with: counterSecrets)
+        counterHandler.start(with: counterSecrets, startLocked: areTokensHidden)
     }
     
     // MARK: -
@@ -135,5 +135,6 @@ extension TokenInteractor: TokenInteracting {
     func lockAllConsumers() {
         guard mainRepository.areTokensHidden else { return }
         timerHandler.lockAllConsumers()
+        counterHandler.lockAllConsumers()
     }
 }

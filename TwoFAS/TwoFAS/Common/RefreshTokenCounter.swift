@@ -35,8 +35,14 @@ final class RefreshTokenCounter: UIView {
     }
     
     private func commonInit() {
-        addSubview(image)
-        image.pinToParent()
+        addSubview(image, with: [
+            image.topAnchor.constraint(equalTo: topAnchor),
+            image.bottomAnchor.constraint(equalTo: bottomAnchor),
+            image.leadingAnchor.constraint(equalTo: leadingAnchor),
+            image.trailingAnchor.constraint(equalTo: trailingAnchor),
+            image.widthAnchor.constraint(equalTo: widthAnchor)
+        ])
+
         image.didAnimate = { [weak self] in self?.didAnimate?() }
         isAccessibilityElement = true
         accessibilityValue = T.Tokens.showServiceKey
@@ -79,6 +85,9 @@ private extension RefreshTokenCounter {
         
         private func commonInit() {
             addSubview(image)
+            setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
+            setContentHuggingPriority(.defaultHigh + 1, for: .vertical)
+            setContentCompressionResistancePriority(.defaultHigh + 2, for: .horizontal)
             unlock()
         }
         

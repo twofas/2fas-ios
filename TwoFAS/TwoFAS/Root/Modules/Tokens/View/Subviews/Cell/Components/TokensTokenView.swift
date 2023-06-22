@@ -222,7 +222,7 @@ private class TokensTokenLabel: UILabel {
     }
     
     private func commonInit() {
-        minimumScaleFactor = 0.5
+        minimumScaleFactor = 0.4
         numberOfLines = 1
         allowsDefaultTighteningForTruncation = true
         adjustsFontSizeToFitWidth = true

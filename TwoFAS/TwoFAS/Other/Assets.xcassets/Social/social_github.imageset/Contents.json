@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "social_twitter.pdf",
+      "filename" : "2FAS_Social_Github.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,15 +11,12 @@
           "value" : "dark"
         }
       ],
-      "filename" : "2FAS_Social_Twitter_dark.pdf",
+      "filename" : "2FAS_Social_Github_dark.pdf",
       "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "template-rendering-intent" : "original"
   }
 }

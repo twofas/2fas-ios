@@ -24,10 +24,12 @@ extension SocialChannel {
         switch self {
         case .discord:
             return URL(string: "https://discord.gg/q4cP6qh2g5")!
-        case .twitter:
-            return URL(string: "https://twitter.com/2fas_com")!
         case .youtube:
             return URL(string: "https://www.youtube.com/@2fas")!
+        case .twitter:
+            return URL(string: "https://twitter.com/2fas_com")!
+        case .github:
+            return URL(string: "https://github.com/twofas")!
         }
     }
 }

@@ -21,6 +21,7 @@ import Foundation
 
 enum SocialChannel {
     case discord
-    case twitter
     case youtube
+    case twitter
+    case github
 }

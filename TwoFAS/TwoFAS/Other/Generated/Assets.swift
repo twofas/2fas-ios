@@ -134,6 +134,7 @@ internal enum Asset {
   internal static let widgetWarningIcon = ImageAsset(name: "WidgetWarningIcon")
   internal static let shadowLine = ImageAsset(name: "ShadowLine")
   internal static let socialDiscord = ImageAsset(name: "social_discord")
+  internal static let socialGithub = ImageAsset(name: "social_github")
   internal static let socialTwitter = ImageAsset(name: "social_twitter")
   internal static let socialYoutube = ImageAsset(name: "social_youtube")
   internal static let startScreenCircle = ImageAsset(name: "StartScreenCircle")

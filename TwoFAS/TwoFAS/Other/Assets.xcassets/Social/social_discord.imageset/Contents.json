@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "social_discord.pdf",
+      "filename" : "2FAS_social_discord.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "2FAS_social_discord_dark.pdf",
       "idiom" : "universal"
     }
   ],

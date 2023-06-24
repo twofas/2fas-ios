@@ -24,4 +24,7 @@ enum SocialChannel {
     case youtube
     case twitter
     case github
+    case facebook
+    case reddit
+    case linkedin
 }

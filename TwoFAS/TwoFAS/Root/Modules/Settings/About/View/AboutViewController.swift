@@ -119,7 +119,13 @@ extension AboutViewController {
         } else {
             cell.selectionStyle = .default
         }
-        cell.update(icon: nil, title: data.title, kind: accessory, decorateText: decorateText)
+        let icon: UIImage? = {
+            guard let img = data.icon else { return nil }
+            let traitCollection = UITraitCollection(userInterfaceStyle: .light)
+            return img.withConfiguration(traitCollection.imageConfiguration)
+        }()
+        
+        cell.update(icon: icon, title: data.title, kind: accessory, decorateText: decorateText)
         return cell
     }
     

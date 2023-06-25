@@ -22,12 +22,12 @@ import Common
 
 enum Theme {
     static func applyAppearance() {
-        
+
         let bgImage = Asset.barsBackground.image
             .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         let shadowLine = Asset.shadowLine.image
             .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
-        
+
         let navibarAppearance = UINavigationBar.appearance()
         navibarAppearance.isTranslucent = false
         navibarAppearance.setBackgroundImage(bgImage, for: .any, barMetrics: .default)
@@ -35,29 +35,6 @@ enum Theme {
         navibarAppearance.backgroundColor = Theme.Colors.Fill.background
         navibarAppearance.tintColor = Theme.Colors.Fill.theme
         navibarAppearance.barTintColor = Theme.Colors.Fill.theme
-        navibarAppearance.titleTextAttributes = [
-                                                NSAttributedString.Key.font: Theme.Fonts.Controls.title,
-                                                NSAttributedString.Key.foregroundColor: Theme.Colors.Text.onBackground
-                                                ]
-
-        let naviButton = UIBarButtonItem.appearance()
-        naviButton.setTitleTextAttributes([
-            NSAttributedString.Key.font: Theme.Fonts.Controls.title,
-            NSAttributedString.Key.foregroundColor: Theme.Colors.Text.theme
-        ], for: .normal)
-        naviButton.setTitleTextAttributes([
-            NSAttributedString.Key.font: Theme.Fonts.Controls.title,
-            NSAttributedString.Key.foregroundColor: Colors.Controls.highlighed
-        ], for: .highlighted)
-        naviButton.setTitleTextAttributes([
-            NSAttributedString.Key.font: Theme.Fonts.Controls.title,
-            NSAttributedString.Key.foregroundColor: Colors.Controls.inactive
-        ], for: .disabled)
-
-        UINavigationBar.appearance().titleTextAttributes = convertToNSAttributedStringKeyDictionary([
-            NSAttributedString.Key.foregroundColor.rawValue: Colors.Text.main,
-            NSAttributedString.Key.font.rawValue: Fonts.Controls.title
-            ])
 
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = Theme.Colors.Fill.theme
         

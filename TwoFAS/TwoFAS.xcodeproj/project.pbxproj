@@ -222,6 +222,7 @@
 		C2379D0C26B6DE660010C6B1 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2932EF21FFE94A900FBD4D0 /* Common.framework */; };
 		C2379D1026B6DF720010C6B1 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE31269E274700506ACF /* IntentsUI.framework */; };
 		C239DE9026CC5366002301E2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C239DE8F26CC5366002301E2 /* Localizable.strings */; };
+		C23B33F12A48DF6A0014B804 /* ImporterOpenFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */; };
 		C23B5D6628F229CC00FC6364 /* ServiceMatchRules+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B5D6528F229CC00FC6364 /* ServiceMatchRules+.swift */; };
 		C23B899527C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B899427C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift */; };
 		C23B899727C287480028FE34 /* NavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B899627C287480028FE34 /* NavigationFlowController.swift */; };
@@ -254,7 +255,6 @@
 		C240485C276549C00076376E /* ImportFromFileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240485B276549C00076376E /* ImportFromFileInteractor.swift */; };
 		C240485E27654C5F0076376E /* ImporterEnterPasswordFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240485D27654C5F0076376E /* ImporterEnterPasswordFlowController.swift */; };
 		C240486027654E370076376E /* ImporterEnterPasswordModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240485F27654E370076376E /* ImporterEnterPasswordModuleInteractor.swift */; };
-		C240486927655A0E0076376E /* ImporterOpenFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240486827655A0E0076376E /* ImporterOpenFileViewController.swift */; };
 		C240486B27655BD70076376E /* ImporterOpenFilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240486A27655BD70076376E /* ImporterOpenFilePresenter.swift */; };
 		C240486F27655E760076376E /* ImporterOpenFileFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240486E27655E760076376E /* ImporterOpenFileFlowController.swift */; };
 		C24048712765612F0076376E /* RootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24048702765612F0076376E /* RootNavigationController.swift */; };
@@ -1474,6 +1474,7 @@
 		C236C3EE2A1CC105002A2129 /* ListStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStyle.swift; sourceTree = "<group>"; };
 		C23721A02804C07600DE335D /* CameraScannerNavigationFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraScannerNavigationFlowController.swift; sourceTree = "<group>"; };
 		C239DE8F26CC5366002301E2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileViewController.swift; sourceTree = "<group>"; };
 		C23B5D6528F229CC00FC6364 /* ServiceMatchRules+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceMatchRules+.swift"; sourceTree = "<group>"; };
 		C23B899427C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceNavigationFlowController.swift; sourceTree = "<group>"; };
 		C23B899627C287480028FE34 /* NavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationFlowController.swift; sourceTree = "<group>"; };
@@ -1503,7 +1504,6 @@
 		C240485B276549C00076376E /* ImportFromFileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFromFileInteractor.swift; sourceTree = "<group>"; };
 		C240485D27654C5F0076376E /* ImporterEnterPasswordFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterEnterPasswordFlowController.swift; sourceTree = "<group>"; };
 		C240485F27654E370076376E /* ImporterEnterPasswordModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterEnterPasswordModuleInteractor.swift; sourceTree = "<group>"; };
-		C240486827655A0E0076376E /* ImporterOpenFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileViewController.swift; sourceTree = "<group>"; };
 		C240486A27655BD70076376E /* ImporterOpenFilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFilePresenter.swift; sourceTree = "<group>"; };
 		C240486E27655E760076376E /* ImporterOpenFileFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileFlowController.swift; sourceTree = "<group>"; };
 		C24048702765612F0076376E /* RootNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootNavigationController.swift; sourceTree = "<group>"; };
@@ -3677,8 +3677,8 @@
 		C2404864276559D50076376E /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C240486827655A0E0076376E /* ImporterOpenFileViewController.swift */,
 				C2FAE12428C7346900F2446F /* AEGISParseResultErrorStrings.swift */,
+				C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -7342,7 +7342,6 @@
 				C2D39DE52823324E00E864E9 /* MainRepositoryImpl+News.swift in Sources */,
 				C233BD222801CB2600A9CFF2 /* MainRepositoryImpl+Network.swift in Sources */,
 				C21247FB27B7181A0044D9F2 /* ComposeServiceModels.swift in Sources */,
-				C240486927655A0E0076376E /* ImporterOpenFileViewController.swift in Sources */,
 				C2D6731D25DB2C5D004BD697 /* ToastCenter.swift in Sources */,
 				C2497730277F3EFB00DC872C /* ServiceModifyInteractor.swift in Sources */,
 				C25860B628247B87009AE54F /* NewsPresenter.swift in Sources */,
@@ -7379,6 +7378,7 @@
 				C2BDC6D51FC1CBE100967D0E /* Theme.swift in Sources */,
 				C2872DDA27A6B9C2000F5AE9 /* SortType+.swift in Sources */,
 				C21A9E9427CC0A7100FE4CC4 /* ComposeServiceRefreshTimePresenter+Menu.swift in Sources */,
+				C23B33F12A48DF6A0014B804 /* ImporterOpenFileViewController.swift in Sources */,
 				C2698B702986CA3C00EBC179 /* MainTabFlowController.swift in Sources */,
 				C2014E0427BEED630046B75C /* ComposeServiceInputCell.swift in Sources */,
 				C2BDC6DD1FC1CEDC00967D0E /* ContainerViewController.swift in Sources */,

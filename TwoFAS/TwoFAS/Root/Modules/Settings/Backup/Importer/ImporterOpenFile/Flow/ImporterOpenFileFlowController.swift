@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import UniformTypeIdentifiers
 
 protocol ImporterOpenFileFlowControllerParent: AnyObject {
     func closeImporter()
@@ -47,7 +48,16 @@ final class ImporterOpenFileFlowController: FlowController {
         parent: ImporterOpenFileFlowControllerParent,
         url: URL?
     ) {
-        let view = ImporterOpenFileViewController(forOpening: nil)
+//        UIToolbar.appearance(whenContainedInInstancesOf: [UIDocumentBrowserViewController.self]).barTintColor = UIColor.orange
+//        UINavigationBar.appearance(whenContainedInInstancesOf: [UIDocumentBrowserViewController.self]).tintColor = UIColor.orange
+//        let supportedTypes: [UTType] = [
+//            UTType.json,
+//            UTType(filenameExtension: "2fas", conformingTo: UTType.json),
+//            UTType(filenameExtension: "bak", conformingTo: UTType.json)
+//        ].compactMap({ $0 })
+//        let view = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes)
+//        view.shouldShowFileExtensions = true
+        let view = ImporterOpenFileViewController(forOpeningContentTypes: nil, asCopy: false)
         let flowController = ImporterOpenFileFlowController(viewController: view)
         flowController.parent = parent
         let interactor = InteractorFactory.shared.importerOpenFileModuleInteractor(url: url)
@@ -55,16 +65,16 @@ final class ImporterOpenFileFlowController: FlowController {
             flowController: flowController,
             interactor: interactor
         )
-        view.presenter = presenter
+//        view.presenter = presenter
         
-        let navi = RootNavigationController(rootViewController: view)
-        navi.configureAsModal()
-        navi.rootFlowController = flowController
-        navi.isNavigationBarHidden = true
+//        let navi = RootNavigationController(rootViewController: view)
+//        navi.configureAsModal()
+//        navi.rootFlowController = flowController
+//        navi.isNavigationBarHidden = true
 
-        flowController.navigationController = navi
+//        flowController.navigationController = navi
         
-        viewController.present(navi, animated: true, completion: nil)
+        viewController.present(view, animated: true, completion: nil)
     }
 }
 
@@ -80,32 +90,32 @@ extension ImporterOpenFileFlowController: ImporterOpenFileFlowControlling {
         services: [ServiceData],
         externalImportService: ExternalImportService
     ) {
-        ImporterPreimportSummaryFlowController.push(
-            in: navigationController,
-            parent: self,
-            countNew: countNew,
-            countTotal: countTotal,
-            sections: sections,
-            services: services,
-            externalImportService: externalImportService
-        )
+//        ImporterPreimportSummaryFlowController.push(
+//            in: navigationController,
+//            parent: self,
+//            countNew: countNew,
+//            countTotal: countTotal,
+//            sections: sections,
+//            services: services,
+//            externalImportService: externalImportService
+//        )
     }
     
     func toFileError(error: ImporterOpenFileError) {
-        ImporterFileErrorFlowController.push(in: navigationController, parent: self, fileError: error)
+//        ImporterFileErrorFlowController.push(in: navigationController, parent: self, fileError: error)
     }
     
     func toFileIsEmpty() {
-        ImporterFileErrorFlowController.push(in: navigationController, parent: self, fileError: .noNewServices)
+//        ImporterFileErrorFlowController.push(in: navigationController, parent: self, fileError: .noNewServices)
     }
     
     func toEnterPassword(for data: ExchangeDataFormat, externalImportService: ExternalImportService) {
-        ImporterEnterPasswordFlowController.push(
-            in: navigationController,
-            parent: self,
-            data: data,
-            externalImportService: externalImportService
-        )
+//        ImporterEnterPasswordFlowController.push(
+//            in: navigationController,
+//            parent: self,
+//            data: data,
+//            externalImportService: externalImportService
+//        )
     }
 }
 
@@ -139,8 +149,8 @@ extension ImporterOpenFileFlowController: ImporterEnterPasswordFlowControllerPar
     }
     
     func showWrongPassword() {
-        let vc = createWrongPassword()
-        navigationController.present(vc, animated: true, completion: nil)
+//        let vc = createWrongPassword()
+//        navigationController.present(vc, animated: true, completion: nil)
     }
 }
 
@@ -156,8 +166,8 @@ extension ImporterOpenFileFlowController: ImporterPreimportSummaryFlowController
     }
     
     func showImportSummary(count: Int) {
-        let vc = createSummary(count: count)
-        navigationController.present(vc, animated: true, completion: nil)
+//        let vc = createSummary(count: count)
+//        navigationController.present(vc, animated: true, completion: nil)
     }    
 }
 

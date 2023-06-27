@@ -395,7 +395,7 @@ final class IconDescriptionDatabaseGenerated {
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "E80AF02C-1616-42F1-AC93-89D8AAEC29C8")!,
-                name: "(ISC)2"
+                name: "ISC2"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "6D0C4064-6096-46BB-92FD-584ECB64733C")!,

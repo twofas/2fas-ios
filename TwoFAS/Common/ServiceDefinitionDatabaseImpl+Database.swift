@@ -828,7 +828,7 @@ final class ServiceDefinitionDatabaseGenerated {
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "14E45151-0724-48C1-8D71-F262202307C7")!,
-                name: "(ISC)2",
+                name: "ISC2",
                 issuer: nil,
                 tags: nil,
                 matchingRules: nil,

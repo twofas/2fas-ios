@@ -171,6 +171,8 @@ final class TokensNextTokenView: UIView {
                 innerContainer.topAnchor.constraint(equalTo: outerContainer.topAnchor),
                 movingConstraint
             ])
+            
+            nextTokenLabel.setContentCompressionResistancePriority(.defaultHigh + 2, for: .horizontal)
         case .normal:
             movingConstraint = innerContainer.topAnchor.constraint(equalTo: outerContainer.topAnchor)
             NSLayoutConstraint.activate([

@@ -21,6 +21,7 @@ import UIKit
 import Common
 
 final class TokensRevealButton: UIButton {
+    static let size: CGFloat = 50
     private let imageNormalValue = "eye"
     private let imageActiveValue = "eye.fill"
     

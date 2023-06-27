@@ -67,7 +67,7 @@ final class TokensTokenView: UIView {
         
         NSLayoutConstraint.activate([
             spacingLabel.widthAnchor.constraint(equalTo: tokenLabel.widthAnchor),
-            spacingLabel.heightAnchor.constraint(equalTo: tokenLabel.heightAnchor)
+            spacingLabel.heightAnchor.constraint(equalTo: tokenLabel.heightAnchor),
         ])
         
         spacingLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
@@ -194,7 +194,7 @@ final class TokensTokenView: UIView {
         let offset = Int(start + progressInterval)
         let matrix = currentText.map { $0.isWhitespace ? " " : invisibleSpace }.joined()
         
-        if offset < currentText.count - 1 {
+        if offset < currentText.count {
             let txt: String = {
                 if offset == 0 {
                     return carret

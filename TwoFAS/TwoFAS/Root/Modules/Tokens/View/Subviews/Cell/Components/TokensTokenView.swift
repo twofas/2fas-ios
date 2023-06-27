@@ -194,7 +194,7 @@ final class TokensTokenView: UIView {
         let offset = Int(start + progressInterval)
         let matrix = currentText.map { $0.isWhitespace ? " " : invisibleSpace }.joined()
         
-        if offset < currentText.count {
+        if offset < currentText.count - 1 {
             let txt: String = {
                 if offset == 0 {
                     return carret

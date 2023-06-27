@@ -254,11 +254,12 @@ private extension TokensTOTPCell {
         ])
         
         accessoryContainer.addSubview(revealButton, with: [
-            revealButton.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
-            revealButton.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor, constant: hMargin),
+            revealButton.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor),
+            revealButton.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
             revealButton.topAnchor.constraint(equalTo: accessoryContainer.topAnchor),
             revealButton.bottomAnchor.constraint(equalTo: accessoryContainer.bottomAnchor),
-            revealButton.heightAnchor.constraint(equalTo: accessoryContainer.heightAnchor)
+            revealButton.heightAnchor.constraint(equalToConstant: TokensRevealButton.size),
+            revealButton.widthAnchor.constraint(equalToConstant: TokensRevealButton.size)
         ])
         
         tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)

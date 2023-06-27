@@ -105,16 +105,19 @@ final class TokensNextTokenView: UIView {
         guard currentState == .hidden || currentState == .animating else {
             nextTokenLabel.alpha = 1
             movingConstraint.constant = 0
+            layoutIfNeeded()
             return
         }
         
         isAccessibilityElement = true
-        currentState = .animating
-        nextTokenLabel.alpha = 0
-        movingConstraint.constant = 0
+       
         nextTokenLabel.textColor = Theme.Colors.Text.main
         
         if animated {
+            currentState = .animating
+            nextTokenLabel.alpha = 0
+            movingConstraint.constant = 0
+            
             UIView.animate(withDuration: animationDuration, delay: 0, options: options) {
                 self.layoutIfNeeded()
                 self.nextTokenLabel.alpha = 1
@@ -126,6 +129,7 @@ final class TokensNextTokenView: UIView {
             nextTokenLabel.alpha = 1
             currentState = .visible
             movingConstraint.constant = 0
+            
             layoutIfNeeded()
         }
     }
@@ -167,6 +171,8 @@ final class TokensNextTokenView: UIView {
                 innerContainer.topAnchor.constraint(equalTo: outerContainer.topAnchor),
                 movingConstraint
             ])
+            
+            nextTokenLabel.setContentCompressionResistancePriority(.defaultHigh + 2, for: .horizontal)
         case .normal:
             movingConstraint = innerContainer.topAnchor.constraint(equalTo: outerContainer.topAnchor)
             NSLayoutConstraint.activate([
@@ -192,9 +198,9 @@ final class TokensNextTokenView: UIView {
     private func updateConsts() {
         lineHeight = nextTokenLabel.frame.height
         lineWidth = nextTokenLabel.frame.width
+        maskingView.frame = CGRect(origin: .zero, size: outerContainer.frame.size)
+        
         guard currentState == .hidden else { return }
         movingConstraint.constant = constraintValue
-        
-        maskingView.frame = CGRect(origin: .zero, size: outerContainer.frame.size)
     }
 }

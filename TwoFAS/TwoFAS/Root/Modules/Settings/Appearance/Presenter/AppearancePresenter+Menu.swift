@@ -106,12 +106,12 @@ extension AppearancePresenter {
                     icon: UIImage(systemName: "eye.fill")?
                         .apply(Theme.Colors.Fill.theme)?
                         .scalePreservingAspectRatio(targetSize: Theme.Metrics.settingsSmallIconSize),
-                    title: "Hide tokens",
+                    title: T.Settings.hideTokensTitle,
                     accessory: .toggle(isOn: interactor.areTokensHidden),
                     kind: .hideTokens
                 )
             ],
-            footer: "Tokens will be revealed on tap"
+            footer: T.Settings.hideTokensDescription
         )
         
         return[

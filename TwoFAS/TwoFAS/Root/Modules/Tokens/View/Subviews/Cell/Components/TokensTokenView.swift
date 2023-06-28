@@ -67,7 +67,7 @@ final class TokensTokenView: UIView {
         
         NSLayoutConstraint.activate([
             spacingLabel.widthAnchor.constraint(equalTo: tokenLabel.widthAnchor),
-            spacingLabel.heightAnchor.constraint(equalTo: tokenLabel.heightAnchor),
+            spacingLabel.heightAnchor.constraint(equalTo: tokenLabel.heightAnchor)
         ])
         
         spacingLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)

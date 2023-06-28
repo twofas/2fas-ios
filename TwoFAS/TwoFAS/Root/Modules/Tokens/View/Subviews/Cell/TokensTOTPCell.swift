@@ -258,7 +258,7 @@ private extension TokensTOTPCell {
             revealButton.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
             revealButton.topAnchor.constraint(equalTo: accessoryContainer.topAnchor),
             revealButton.bottomAnchor.constraint(equalTo: accessoryContainer.bottomAnchor),
-            revealButton.heightAnchor.constraint(equalToConstant: TokensRevealButton.size),
+            revealButton.heightAnchor.constraint(greaterThanOrEqualToConstant: TokensRevealButton.size),
             revealButton.widthAnchor.constraint(equalToConstant: TokensRevealButton.size)
         ])
         

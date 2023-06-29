@@ -29,6 +29,7 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
     
     private let hMargin: CGFloat = Theme.Metrics.doubleMargin
     private let vMargin: CGFloat = Theme.Metrics.mediumMargin
+    private let manualOffset: CGFloat = 3
     
     private let tokenLabel: TokensTokenView = {
         let view = TokensTokenView()
@@ -207,7 +208,10 @@ private extension TokensHOTPCell {
 
         contentView.addSubview(accessoryContainer, with: [
             serviceNameLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
-            accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hMargin),
+            accessoryContainer.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor,
+                constant: -hMargin - manualOffset
+            ),
             accessoryContainer.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
                 constant: accessoryContainerTopOffset

@@ -28,6 +28,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
     var didTapUnlock: ((TokenTimerConsumer) -> Void)?
     
     private let hMargin: CGFloat = Theme.Metrics.doubleMargin
+    private let sMargin: CGFloat = Theme.Metrics.standardMargin
     private let vMargin: CGFloat = Theme.Metrics.mediumMargin
     
     private let tokenLabel: TokensTokenView = {
@@ -242,7 +243,7 @@ private extension TokensTOTPCompactCell {
                 equalTo: accessoryContainer.leadingAnchor,
                 constant: -hMargin
             ),
-            accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hMargin),
+            accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -sMargin),
             accessoryContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin),
             accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
         ])
@@ -252,6 +253,7 @@ private extension TokensTOTPCompactCell {
             circularProgress.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
             circularProgress.topAnchor.constraint(greaterThanOrEqualTo: accessoryContainer.topAnchor),
             circularProgress.bottomAnchor.constraint(lessThanOrEqualTo: accessoryContainer.bottomAnchor),
+            circularProgress.centerXAnchor.constraint(equalTo: accessoryContainer.centerXAnchor),
             circularProgress.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor)
         ])
         

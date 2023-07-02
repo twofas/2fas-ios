@@ -130,7 +130,7 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     }
     
     private func updateSize(width: CGFloat) {
-        var current: UITraitCollection = traitCollection
+        var current: UITraitCollection = split.traitCollection
         
         if width < minimumSecondaryColumnWidth {
             Log("SettingsViewController - setting: compact")
@@ -146,7 +146,7 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
         
         guard current != split.traitCollection else { return }
         
-        setOverrideTraitCollection(traitCollection, forChild: split)
+        setOverrideTraitCollection(current, forChild: split)
         split.reload()
     }
     

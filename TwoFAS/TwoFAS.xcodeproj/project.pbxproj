@@ -1644,6 +1644,10 @@
 		C266189F26126A8200ED52CB /* LabelComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelComposeViewController.swift; sourceTree = "<group>"; };
 		C26654282725D6EA00DC3A3C /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileRules.swift; sourceTree = "<group>"; };
+		C2671C892A51C5A60002C4BB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/TwoFASWidget.strings"; sourceTree = "<group>"; };
+		C2671C8A2A51C5A60002C4BB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		C2671C8B2A51C5A60002C4BB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		C2671C8C2A51C5A70002C4BB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C2673159299AC9C40031DE09 /* LargeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeNavigationController.swift; sourceTree = "<group>"; };
 		C2673BDF23D465F500A2CBA8 /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
 		C2673BE423D4765200A2CBA8 /* TokenStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorageType.swift; sourceTree = "<group>"; };
@@ -7044,6 +7048,7 @@
 				uk,
 				it,
 				pl,
+				"pt-BR",
 			);
 			mainGroup = C236666A1FB2644900989ACA;
 			packageReferences = (
@@ -8401,6 +8406,7 @@
 				C22A82EA29EDCC5F00CCF6B1 /* uk */,
 				C261A1232A12BECD00A1519F /* it */,
 				C2F2E0152A24AB5B00E81225 /* pl */,
+				C2671C8B2A51C5A60002C4BB /* pt-BR */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -8416,6 +8422,7 @@
 				C22A82E929EDCC5F00CCF6B1 /* uk */,
 				C261A1222A12BECC00A1519F /* it */,
 				C2F2E0142A24AB5900E81225 /* pl */,
+				C2671C8A2A51C5A60002C4BB /* pt-BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8440,6 +8447,7 @@
 				C22A82E829EDCC5E00CCF6B1 /* uk */,
 				C261A1212A12BECC00A1519F /* it */,
 				C2F2E0132A24AB5800E81225 /* pl */,
+				C2671C892A51C5A60002C4BB /* pt-BR */,
 			);
 			name = TwoFASWidget.intentdefinition;
 			sourceTree = "<group>";
@@ -8455,6 +8463,7 @@
 				C22A82EB29EDCC5F00CCF6B1 /* uk */,
 				C261A1242A12BECD00A1519F /* it */,
 				C2F2E0162A24AB5D00E81225 /* pl */,
+				C2671C8C2A51C5A70002C4BB /* pt-BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

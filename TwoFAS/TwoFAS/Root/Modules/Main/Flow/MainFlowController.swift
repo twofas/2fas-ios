@@ -40,6 +40,7 @@ final class MainFlowController: FlowController {
     private weak var parent: MainFlowControllerParent?
     private weak var naviViewController: UINavigationController!
     private var galleryViewController: UIViewController?
+    private var importer: ImporterOpenFileHeadlessFlowController?
     
     static func showAsRoot(
         in viewController: ContainerViewController, // TODO: Change to plain VC
@@ -99,7 +100,7 @@ extension MainFlowController: MainFlowControlling {
     }
     
     func toOpenFileImport(url: URL) {
-        ImporterOpenFileFlowController.present(on: _viewController, parent: self, url: url)
+        importer = ImporterOpenFileHeadlessFlowController.present(on: _viewController, parent: self, url: url)
     }
     
     // MARK: - App update
@@ -131,10 +132,11 @@ extension MainFlowController: MainFlowControlling {
     }
 }
 
-extension MainFlowController: ImporterOpenFileFlowControllerParent {
-    func closeImporter() {
-        viewController.dismiss(animated: true) {
+extension MainFlowController: ImporterOpenFileHeadlessFlowControllerParent {
+    func importerClose() {
+        viewController.dismiss(animated: true) { [weak self] in
             NotificationCenter.default.post(name: .servicesWereUpdated, object: nil)
+            self?.importer = nil
         }
     }
 }

@@ -21,11 +21,14 @@ import UIKit
 import UniformTypeIdentifiers
 
 final class ImporterOpenFileViewController: UIDocumentPickerViewController {
-    var presenter: ImporterOpenFilePresenter?
+    var handleCantReadFile: Callback?
+    var handleFileOpen: ((URL) -> Void)?
+    var handleCancelFileOpen: Callback?
     
     override init(forOpeningContentTypes contentTypes: [UTType]?, asCopy: Bool) {
         let supportedTypes: [UTType] = [
             UTType.json,
+            UTType.text,
             UTType(filenameExtension: "2fas", conformingTo: UTType.json),
             UTType(filenameExtension: "bak", conformingTo: UTType.json)
         ].compactMap({ $0 })
@@ -45,28 +48,18 @@ final class ImporterOpenFileViewController: UIDocumentPickerViewController {
         allowsMultipleSelection = false
         delegate = self
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        presenter?.viewDidAppear()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        presenter = nil
-    }
 }
 
 extension ImporterOpenFileViewController: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let url = urls.first else {
-            presenter?.handleCantReadFile()
+            handleCantReadFile?()
             return
         }
-        presenter?.handleFileOpen(url)
+        handleFileOpen?(url)
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        presenter?.handleCancelFileOpen()
+        handleCancelFileOpen?()
     }
 }

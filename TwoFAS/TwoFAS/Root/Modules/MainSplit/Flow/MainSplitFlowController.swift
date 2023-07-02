@@ -176,6 +176,7 @@ extension MainSplitFlowController: SettingsFlowControllerParent {
     
     func settingsToRevealMenu() {
         viewController.split.preferredDisplayMode = .oneBesideSecondary
+        viewController.settingsViewController?.view.setNeedsLayout()
     }
 }
 

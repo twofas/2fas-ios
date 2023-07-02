@@ -48,6 +48,9 @@ final class MainSplitViewController: UIViewController {
     var isCollapsed: Bool { split.isCollapsed }
     var isInitialConfigRead = false
     
+    private var menuOverlayCollapsed = false
+    private var changingState = false
+    
     private var menu: MainMenuViewController? {
         navigationNavi.viewControllers.first as? MainMenuViewController
     }
@@ -127,6 +130,27 @@ final class MainSplitViewController: UIViewController {
         split.view.backgroundColor = .clear
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        var isLandscape: Bool {
+            UIApplication.shared.windows.first?.windowScene?.interfaceOrientation.isLandscape ?? false
+        }
+        print(">>> \(isLandscape)")
+        if isLandscape {
+            split.preferredDisplayMode = .oneBesideSecondary
+            split.preferredSplitBehavior = .tile
+        } else {
+            split.preferredDisplayMode = .oneOverSecondary
+            split.preferredSplitBehavior = .overlay
+            if menuOverlayCollapsed {
+                split.hide(.primary)
+            } else {
+                split.show(.primary)
+            }
+        }
+    }
+    
     private func setInitialTrait() {
         guard traitCollection.horizontalSizeClass != .unspecified, !isInitialConfigRead else { return }
         
@@ -189,6 +213,21 @@ extension MainSplitViewController: UISplitViewControllerDelegate {
         return proposedDisplayMode
     }
     
+    func splitViewController(_ svc: UISplitViewController, willHide column: UISplitViewController.Column) {
+        if split.displayMode == .oneOverSecondary {
+            menuOverlayCollapsed = true
+            print("hide >>> \(column)")
+        }
+    }
+    
+    func splitViewController(_ svc: UISplitViewController, willShow column: UISplitViewController.Column) {
+        if split.displayMode == .oneOverSecondary && !changingState {
+            print("show >>> \(column)")
+            menuOverlayCollapsed = false
+        }
+        changingState = false
+    }
+    
     func splitViewController(
         _ svc: UISplitViewController,
         willChangeTo displayMode: UISplitViewController.DisplayMode
@@ -197,6 +236,10 @@ extension MainSplitViewController: UISplitViewControllerDelegate {
             settingsViewController?.showRevealButton()
         } else {
             settingsViewController?.hideRevealButton()
+        }
+        
+        if displayMode == .oneBesideSecondary {
+            changingState = true
         }
     }
 }

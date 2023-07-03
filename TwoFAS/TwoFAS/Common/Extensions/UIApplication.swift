@@ -31,4 +31,8 @@ extension UIApplication {
     var currentScene: UIWindowScene? {
         connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
     }
+    
+    static var isLandscape: Bool {
+        keyWindow?.windowScene?.interfaceOrientation.isLandscape ?? false
+    }
 }

@@ -50,7 +50,6 @@ final class MainSplitViewController: UIViewController {
     
     private var menuOverlayCollapsed = false
     private var changingState = false
-    
     private var menu: MainMenuViewController? {
         navigationNavi.viewControllers.first as? MainMenuViewController
     }
@@ -87,6 +86,7 @@ final class MainSplitViewController: UIViewController {
             object: nil
         )
         setInitialTrait()
+        updateDisplayMode()
         presenter.viewWillAppear()
     }
     
@@ -130,25 +130,18 @@ final class MainSplitViewController: UIViewController {
         split.view.backgroundColor = .clear
     }
     
+    // swiftlint:disable line_length
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        // swiftlint:enable line_length
+        super.willTransition(to: newCollection, with: coordinator)
+
+        updateDisplayMode()
+    }
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
-        var isLandscape: Bool {
-            UIApplication.shared.windows.first?.windowScene?.interfaceOrientation.isLandscape ?? false
-        }
-        print(">>> \(isLandscape)")
-        if isLandscape {
-            split.preferredDisplayMode = .oneBesideSecondary
-            split.preferredSplitBehavior = .tile
-        } else {
-            split.preferredDisplayMode = .oneOverSecondary
-            split.preferredSplitBehavior = .overlay
-            if menuOverlayCollapsed {
-                split.hide(.primary)
-            } else {
-                split.show(.primary)
-            }
-        }
+        updateDisplayMode()
     }
     
     private func setInitialTrait() {
@@ -159,6 +152,27 @@ final class MainSplitViewController: UIViewController {
             presenter.handleCollapse()
         } else {
             presenter.handleExpansion()
+        }
+    }
+    
+    private func updateDisplayMode() {
+        if UIApplication.isLandscape {
+            guard split.preferredDisplayMode != .oneBesideSecondary else { return }
+            split.preferredDisplayMode = .oneBesideSecondary
+            split.preferredSplitBehavior = .tile
+        } else {
+            guard
+                split.preferredDisplayMode != .oneOverSecondary &&
+                split.preferredDisplayMode != .secondaryOnly
+            else { return }
+
+            split.preferredSplitBehavior = .overlay
+            
+            if menuOverlayCollapsed {
+                split.preferredDisplayMode = .secondaryOnly
+            } else {
+                split.preferredDisplayMode = .oneOverSecondary
+            }
         }
     }
     
@@ -213,21 +227,6 @@ extension MainSplitViewController: UISplitViewControllerDelegate {
         return proposedDisplayMode
     }
     
-    func splitViewController(_ svc: UISplitViewController, willHide column: UISplitViewController.Column) {
-        if split.displayMode == .oneOverSecondary {
-            menuOverlayCollapsed = true
-            print("hide >>> \(column)")
-        }
-    }
-    
-    func splitViewController(_ svc: UISplitViewController, willShow column: UISplitViewController.Column) {
-        if split.displayMode == .oneOverSecondary && !changingState {
-            print("show >>> \(column)")
-            menuOverlayCollapsed = false
-        }
-        changingState = false
-    }
-    
     func splitViewController(
         _ svc: UISplitViewController,
         willChangeTo displayMode: UISplitViewController.DisplayMode
@@ -238,8 +237,11 @@ extension MainSplitViewController: UISplitViewControllerDelegate {
             settingsViewController?.hideRevealButton()
         }
         
-        if displayMode == .oneBesideSecondary {
-            changingState = true
+        guard !UIApplication.isLandscape else { return }
+        if svc.displayMode == .oneOverSecondary && displayMode == .secondaryOnly {
+            menuOverlayCollapsed = true
+        } else if svc.displayMode == .secondaryOnly && displayMode == .oneOverSecondary {
+            menuOverlayCollapsed = false
         }
     }
 }

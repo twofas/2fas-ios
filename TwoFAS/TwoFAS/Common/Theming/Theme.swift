@@ -132,6 +132,7 @@ enum Theme {
                 static let forth = UIColor.quaternarySystemFill
             }
             static let theme = ThemeColor.theme
+            static let themeLight = ThemeColor.highlighed
             static let notification = ThemeColor.quaternary
             static let background = ThemeColor.background
             static let backgroundLight = ThemeColor.backgroundLight

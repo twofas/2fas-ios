@@ -134,7 +134,7 @@ final class TokensTokenView: UIView {
     }
     
     func maskToken() {
-        guard !isMarked else { return }
+        guard !isMasked else { return }
         isMasked = true
         currentText = maskedText
         spacingLabel.text = maskedText

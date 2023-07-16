@@ -45,6 +45,7 @@ enum AppEvent {
     case groupAdd
     case groupRemove
     case importGoogleAuth
+    case importLastPass
     case orderIconClick
     case orderIconAsUser
     case orderIconAsCompany
@@ -104,6 +105,7 @@ private extension AppEvent {
         case .groupAdd: return "group_add"
         case .groupRemove: return "group_remove"
         case .importGoogleAuth: return "import_google_authenticator"
+        case .importLastPass: return "import_last_pass"
         case .orderIconClick: return "request_icon_click"
         case .orderIconAsUser: return "request_icon_as_user_click"
         case .orderIconAsCompany: return "request_icon_as_company_click"

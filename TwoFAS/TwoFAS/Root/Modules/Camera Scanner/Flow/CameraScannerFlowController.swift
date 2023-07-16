@@ -35,6 +35,7 @@ protocol CameraScannerFlowControlling: AnyObject {
     func toGallery()
     func toFinish()
     func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
+    func toLastPassSummary(importable: Int, total: Int, codes: [Code])
     func toCameraError(_ error: String)
     func toTwoFASWebExtensionPairing(for extensionID: ExtensionID)
     func toSendLogs(auditID: UUID)
@@ -146,6 +147,26 @@ extension CameraScannerFlowController: CameraScannerFlowControlling {
             })
         
         let vc = UIHostingController(rootView: google)
+        vc.view.backgroundColor = .clear
+        vc.configureAsModal()
+        viewController.present(vc, animated: true, completion: nil)
+    }
+    
+    func toLastPassSummary(importable: Int, total: Int, codes: [Code]) {
+        let lastPass = CameraLastPass(
+            importedCount: importable,
+            totalCount: total,
+            action: { [weak self] in
+                if importable == 0 {
+                    self?.dismissModal()
+                } else {
+                    self?.viewController.presenter.handleLastPassImport(codes)
+                }
+            }, cancel: { [weak self] in
+                self?.dismissModal()
+            })
+        
+        let vc = UIHostingController(rootView: lastPass)
         vc.view.backgroundColor = .clear
         vc.configureAsModal()
         viewController.present(vc, animated: true, completion: nil)

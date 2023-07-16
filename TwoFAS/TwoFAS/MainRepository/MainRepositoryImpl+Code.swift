@@ -23,7 +23,7 @@ import CodeSupport
 extension MainRepositoryImpl {
     func shouldHandleURL(_ url: URL) -> Bool {
         switch Code.parse(with: url.absoluteString) {
-        case .unknown, .appStore, .googleAuth, .twoFASWebExtension: return false
+        case .unknown, .appStore, .googleAuth, .twoFASWebExtension, .lastPass: return false
         case .support, .service: return true
         }
     }

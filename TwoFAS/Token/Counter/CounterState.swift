@@ -27,7 +27,7 @@ final class CounterState {
     private let algorithm: Algorithm
     
     private var isRefreshCounterLocked = false
-    private var isUnlocked = false
+    private(set) var isUnlocked = false
     private var lockCounter: Int
     private(set) var currentToken: TokenValue?
     private var consumers: [Weak] = []
@@ -55,7 +55,7 @@ final class CounterState {
         updateCounter()
         checkCounter()
         if !isRefreshCounterLocked {
-            updateConsumersProgress(plannedUpdate: true)
+            updateConsumersProgress()
         }
     }
     
@@ -80,6 +80,13 @@ final class CounterState {
         startCounter()
     }
     
+    func lock() {
+        isUnlocked = false
+        isRefreshCounterLocked = false
+        lockCounter = Int(TokenType.hotpRefreshLockTime)
+        currentToken = nil
+    }
+    
     // MARK: - Private
     
     private func startCounter() {
@@ -88,7 +95,7 @@ final class CounterState {
         lockCounter = Int(TokenType.hotpRefreshLockTime)
         
         updateToken()
-        updateConsumersProgress(plannedUpdate: true)
+        updateConsumersProgress()
     }
     
     private func updateToken() {
@@ -112,13 +119,13 @@ final class CounterState {
         }
     }
     
-    private func updateConsumersProgress(plannedUpdate: Bool) {
+    private func updateConsumersProgress() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             let state = self.currentState
             for c in self.consumers {
                 guard let cons = c.value else { continue }
-                cons.setUpdate(state, isPlanned: plannedUpdate)
+                cons.setUpdate(state)
             }
         }
     }

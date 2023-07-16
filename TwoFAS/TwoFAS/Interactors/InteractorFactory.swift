@@ -533,7 +533,8 @@ extension InteractorFactory {
     func mainSplitModuleInteractor() -> MainSplitModuleInteracting {
         MainSplitModuleInteractor(
             viewPathInteractor: viewPathInteractor(),
-            newsInteractor: newsInteractor()
+            newsInteractor: newsInteractor(),
+            linkInteractor: linkInteractor()
         )
     }
     

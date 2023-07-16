@@ -148,10 +148,15 @@ extension AppearanceViewController {
         ) as? SettingsMenuTableViewCell else { return UITableViewCell() }
         let accessory: SettingsMenuTableViewCell.AccessoryType = {
             switch data.accessory {
-            case .toggle(let kind, let isOn):
+            case .toggle(let isOn):
                 return .toggle(isEnabled: isOn) { [weak self] _, _ in
-                    self?.presenter.handleToggle(for: kind)
+                    self?.presenter.handleToggle(for: data.kind)
                 }
+            case .checkmark(let selected):
+                if selected {
+                    return .checkmark
+                }
+                return .none
             }
         }()
         cell.selectionStyle = .none
@@ -183,5 +188,6 @@ extension AppearanceViewController {
     
     func didSelect(tableView: UITableView, indexPath: IndexPath, data: AppearanceCell) {
         tableView.deselectRow(at: indexPath, animated: true)
+        presenter.handleRowSelection(for: data.kind)
     }
 }

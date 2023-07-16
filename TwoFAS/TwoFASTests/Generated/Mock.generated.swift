@@ -45,6 +45,7 @@ import AppKit
 
 
 internal final class CloudBackupStateInteractingMock: CloudBackupStateInteracting {
+    internal var secretSyncError: ((String) -> Void)?
     internal var isBackupEnabled: Bool {
         get { return underlyingIsBackupEnabled }
         set(value) { underlyingIsBackupEnabled = value }

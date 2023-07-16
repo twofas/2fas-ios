@@ -33,3 +33,7 @@ public typealias TokenValue = String
 public extension IconTypeID {
     static let `default`: IconTypeID = UUID(uuidString: "A5B3FB65-4EC5-43E6-8EC1-49E24CA9E7AD")!
 }
+
+public extension TokenValue {
+    static let empty = "000000"
+}

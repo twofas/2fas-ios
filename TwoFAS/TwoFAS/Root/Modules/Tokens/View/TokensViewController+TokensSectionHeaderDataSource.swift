@@ -20,23 +20,23 @@
 import Foundation
 
 extension TokensViewController: TokensSectionHeaderDataSource {
-    func collapseAction(with section: GridSection) {
+    func collapseAction(with section: TokensSection) {
         presenter.handleToggleCollapseAction(with: section)
     }
     
-    func moveDown(_ section: GridSection) {
+    func moveDown(_ section: TokensSection) {
         presenter.handleMoveDown(section)
     }
     
-    func moveUp(_ section: GridSection) {
+    func moveUp(_ section: TokensSection) {
         presenter.handleMoveUp(section)
     }
     
-    func rename(_ section: GridSection, with title: String) {
-        presenter.handleRename(section, with: title)
+    func rename(_ section: TokensSection) {
+        presenter.handleRename(section)
     }
     
-    func delete(_ section: GridSection) {
+    func delete(_ section: TokensSection) {
         presenter.handleShowSectionDeleteQuestion(section)
     }
 }

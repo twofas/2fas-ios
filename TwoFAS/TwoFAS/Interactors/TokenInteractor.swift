@@ -32,6 +32,7 @@ protocol TokenInteracting: AnyObject {
     
     func registerTOTP(_ consumer: TokenTimerConsumer)
     func removeTOTP(_ consumer: TokenTimerConsumer)
+    func unlockTOTPConsumer(_ consumer: TokenTimerConsumer)
     func registerHOTP(_ consumer: TokenCounterConsumer)
     func removeHOTP(_ consumer: TokenCounterConsumer)
     
@@ -39,14 +40,20 @@ protocol TokenInteracting: AnyObject {
     func HOTPToken(for secret: Secret) -> TokenValue?
     
     func start(timedSecrets: [TimedSecret], counterSecrets: [CounterSecret])
+    
+    func lockAllConsumers()
 }
 
 final class TokenInteractor {
+    private let mainRepository: MainRepository
     private let timerHandler: TimerHandlerTokens & TimerHandlerStart & TimerHandlerStop
     private let counterHandler: CounterHandlerTokens & CounterHandlerStart & CounterHandlerStop
     private let serviceInteractor: ServiceModifyInteracting
     
+    private var areTokensHidden = false
+    
     init(mainRepository: MainRepository, serviceInteractor: ServiceModifyInteracting) {
+        self.mainRepository = mainRepository
         timerHandler = mainRepository.timerHandler
         counterHandler = mainRepository.counterHandler
         self.serviceInteractor = serviceInteractor
@@ -56,7 +63,7 @@ final class TokenInteractor {
 extension TokenInteractor: TokenInteracting {
     // MARK: - TOTP
     func startTimer(_ tokenConsumer: TokenTimerConsumer) {
-        timerHandler.register(tokenConsumer)
+        timerHandler.register(tokenConsumer, isLocked: false)
     }
     
     func stopTimer(_ tokenConsumer: TokenTimerConsumer) {
@@ -78,7 +85,7 @@ extension TokenInteractor: TokenInteracting {
     }
     
     func disableCounter(_ counterConsumer: TokenCounterConsumer) {
-        counterHandler.remove(counterConsumer)
+        counterHandler.remove(counterConsumer, lock: false)
     }
     
     func unlockCounter(for secret: String) {
@@ -98,11 +105,15 @@ extension TokenInteractor: TokenInteracting {
     // MARK: - Registration
     
     func registerTOTP(_ consumer: TokenTimerConsumer) {
-        timerHandler.register(consumer)
+        timerHandler.register(consumer, isLocked: areTokensHidden)
     }
     
     func removeTOTP(_ consumer: TokenTimerConsumer) {
         timerHandler.remove(consumer)
+    }
+    
+    func unlockTOTPConsumer(_ consumer: TokenTimerConsumer) {
+        timerHandler.unlockConsumer(consumer)
     }
     
     func registerHOTP(_ consumer: TokenCounterConsumer) {
@@ -110,11 +121,20 @@ extension TokenInteractor: TokenInteracting {
     }
     
     func removeHOTP(_ consumer: TokenCounterConsumer) {
-        counterHandler.remove(consumer)
+        counterHandler.remove(consumer, lock: areTokensHidden)
     }
     
     func start(timedSecrets: [TimedSecret], counterSecrets: [CounterSecret]) {
+        areTokensHidden = mainRepository.areTokensHidden
         timerHandler.start(with: timedSecrets)
-        counterHandler.start(with: counterSecrets)
+        counterHandler.start(with: counterSecrets, startLocked: areTokensHidden)
+    }
+    
+    // MARK: -
+    
+    func lockAllConsumers() {
+        guard mainRepository.areTokensHidden else { return }
+        timerHandler.lockAllConsumers()
+        counterHandler.lockAllConsumers()
     }
 }

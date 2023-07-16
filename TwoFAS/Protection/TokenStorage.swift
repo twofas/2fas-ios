@@ -19,42 +19,42 @@
 
 import Foundation
 
-final public class TokenStorage: TokenStorageType {
+final class TokenStorage: TokenStorageType {
     private let storage: LocalEncryptedStorage
     
     init(storage: LocalEncryptedStorage) {
         self.storage = storage
     }
     
-    public func save(GCMToken: String) {
+    func save(GCMToken: String) {
         storage.saveString(for: .gcmToken, value: GCMToken)
     }
     
-    public func save(deviceID: String) {
+    func save(deviceID: String) {
         storage.saveString(for: .deviceID, value: deviceID)
     }
  
-    public func update(newGCMToken GCMToken: GCMToken) {
+    func update(newGCMToken GCMToken: GCMToken) {
         storage.saveString(for: .gcmToken, value: GCMToken)
     }
     
-    public func update(newDeviceID deviceID: String) {
+    func update(newDeviceID deviceID: String) {
         storage.saveString(for: .deviceID, value: deviceID)
     }
     
-    public func removeAll() {
+    func removeAll() {
         storage.remove(for: .gcmToken)
         storage.remove(for: .deviceID)
     }
     
-    public func removeDeviceID() {
+    func removeDeviceID() {
         storage.remove(for: .deviceID)
     }
     
-    public func removeGCMToken() {
+    func removeGCMToken() {
         storage.remove(for: .gcmToken)
     }
     
-    public var deviceID: String? { storage.stringValue(for: .deviceID) }
-    public var GCMToken: String? { storage.stringValue(for: .gcmToken) }
+    var deviceID: String? { storage.stringValue(for: .deviceID) }
+    var GCMToken: String? { storage.stringValue(for: .gcmToken) }
 }

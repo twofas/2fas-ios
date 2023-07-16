@@ -46,6 +46,8 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case introductionWasShown = "IntroductionWasShown"
         case crashlyticsDisabled
         case activeSearchEnabled
+        case selectedListStyle
+        case tokensHidden
     }
     private let userDefaults = UserDefaults()
     private let sharedDefaults = UserDefaults(suiteName: Config.suiteName)!
@@ -211,6 +213,25 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
     
     func setActiveSearchEnabled(_ state: Bool) {
         userDefaults.set(state, forKey: Keys.activeSearchEnabled.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    var selectedListStyle: ListStyle {
+        let intValue = userDefaults.integer(forKey: Keys.selectedListStyle.rawValue)
+        return ListStyle(rawValue: intValue) ?? .default
+    }
+    
+    func setSelectListStyle(_ listStyle: ListStyle) {
+        userDefaults.set(listStyle.rawValue, forKey: Keys.selectedListStyle.rawValue)
+        userDefaults.synchronize()
+    }
+
+    var areTokensHidden: Bool {
+        userDefaults.bool(forKey: Keys.tokensHidden.rawValue)
+    }
+    
+    func setTokensHidden(_ hidden: Bool) {
+        userDefaults.set(hidden, forKey: Keys.tokensHidden.rawValue)
         userDefaults.synchronize()
     }
     

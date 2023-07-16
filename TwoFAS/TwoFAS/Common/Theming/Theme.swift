@@ -221,6 +221,7 @@ enum Theme {
         
         static let warning = UIFont.systemFont(ofSize: 13, weight: .medium)
         static let iconLabel = UIFont.systemFont(ofSize: 13, weight: .bold)
+        static let iconLabelSmall = UIFont.systemFont(ofSize: 12, weight: .bold)
         static let sectionHeader = UIFont.systemFont(ofSize: 13, weight: .regular)
         static let iconLabelInputTitle = UIFont.systemFont(ofSize: 22, weight: .light)
         static let tabBar = UIFont.systemFont(ofSize: 10, weight: .semibold)
@@ -262,9 +263,12 @@ enum Theme {
         static let mediumSpacing: CGFloat = 15
         static let doubleSpacing: CGFloat = 2 * standardSpacing
         
+        /// 8
         static let standardMargin: CGFloat = ThemeMetrics.margin
+        /// 12
+        static let mediumMargin: CGFloat = (3 * ThemeMetrics.margin) / 2
         /// 16
-        static let doubleMargin: CGFloat = 16
+        static let doubleMargin: CGFloat = 2 * ThemeMetrics.margin
         
         static let lineWidth: CGFloat = ThemeMetrics.lineWidth
         static let separatorHeight: CGFloat = 0.5
@@ -296,8 +300,14 @@ enum Theme {
         
         /// 288
         static let componentWidth: CGFloat = 288
+        /// 280
+        static let compactCellWidth: CGFloat = 280
+        /// 310
+        static let defaultCellWidth: CGFloat = pageWidth
         /// 310
         static let pageWidth: CGFloat = 310
+        
+        static let settingsSmallIconSize: CGSize = .init(width: 16, height: 16)
     }
     
     enum Consts {

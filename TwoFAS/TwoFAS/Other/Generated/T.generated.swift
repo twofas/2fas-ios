@@ -165,6 +165,12 @@ internal enum T {
   }
   /// 
   internal static let pastDurationDaysPlural2 = T.tr("Localizable", "past_duration_days-plural-2", fallback: "")
+  /// 
+  internal static let pastDurationDaysPlural3 = T.tr("Localizable", "past_duration_days-plural-3", fallback: "")
+  /// 
+  internal static let pastDurationDaysPlural4 = T.tr("Localizable", "past_duration_days-plural-4", fallback: "")
+  /// 
+  internal static let pastDurationDaysPlural5 = T.tr("Localizable", "past_duration_days-plural-5", fallback: "")
   /// %d hour ago
   internal static func pastDurationHours(_ p1: Int) -> String {
     return T.tr("Localizable", "past_duration_hours", p1, fallback: "%d hour ago")
@@ -175,6 +181,12 @@ internal enum T {
   }
   /// 
   internal static let pastDurationHoursPlural2 = T.tr("Localizable", "past_duration_hours-plural-2", fallback: "")
+  /// 
+  internal static let pastDurationHoursPlural3 = T.tr("Localizable", "past_duration_hours-plural-3", fallback: "")
+  /// 
+  internal static let pastDurationHoursPlural4 = T.tr("Localizable", "past_duration_hours-plural-4", fallback: "")
+  /// 
+  internal static let pastDurationHoursPlural5 = T.tr("Localizable", "past_duration_hours-plural-5", fallback: "")
   /// %d minute ago
   internal static func pastDurationMinutes(_ p1: Int) -> String {
     return T.tr("Localizable", "past_duration_minutes", p1, fallback: "%d minute ago")
@@ -185,6 +197,12 @@ internal enum T {
   }
   /// 
   internal static let pastDurationMinutesPlural2 = T.tr("Localizable", "past_duration_minutes-plural-2", fallback: "")
+  /// 
+  internal static let pastDurationMinutesPlural3 = T.tr("Localizable", "past_duration_minutes-plural-3", fallback: "")
+  /// 
+  internal static let pastDurationMinutesPlural4 = T.tr("Localizable", "past_duration_minutes-plural-4", fallback: "")
+  /// 
+  internal static let pastDurationMinutesPlural5 = T.tr("Localizable", "past_duration_minutes-plural-5", fallback: "")
   /// %d month ago
   internal static func pastDurationMonths(_ p1: Int) -> String {
     return T.tr("Localizable", "past_duration_months", p1, fallback: "%d month ago")
@@ -195,12 +213,20 @@ internal enum T {
   }
   /// 
   internal static let pastDurationMonthsPlural2 = T.tr("Localizable", "past_duration_months-plural-2", fallback: "")
+  /// 
+  internal static let pastDurationMonthsPlural3 = T.tr("Localizable", "past_duration_months-plural-3", fallback: "")
+  /// 
+  internal static let pastDurationMonthsPlural4 = T.tr("Localizable", "past_duration_months-plural-4", fallback: "")
+  /// 
+  internal static let pastDurationMonthsPlural5 = T.tr("Localizable", "past_duration_months-plural-5", fallback: "")
   /// moments ago
   internal static let pastDurationSeconds = T.tr("Localizable", "past_duration_seconds", fallback: "moments ago")
   /// moments ago
   internal static let pastDurationSecondsPlural = T.tr("Localizable", "past_duration_seconds-plural", fallback: "moments ago")
   /// 
   internal static let pastDurationSecondsPlural2 = T.tr("Localizable", "past_duration_seconds-plural-2", fallback: "")
+  /// 
+  internal static let pastDurationSecondsPlural3 = T.tr("Localizable", "past_duration_seconds-plural-3", fallback: "")
   /// %d week ago
   internal static func pastDurationWeeks(_ p1: Int) -> String {
     return T.tr("Localizable", "past_duration_weeks", p1, fallback: "%d week ago")
@@ -211,6 +237,12 @@ internal enum T {
   }
   /// 
   internal static let pastDurationWeeksPlural2 = T.tr("Localizable", "past_duration_weeks-plural-2", fallback: "")
+  /// 
+  internal static let pastDurationWeeksPlural3 = T.tr("Localizable", "past_duration_weeks-plural-3", fallback: "")
+  /// 
+  internal static let pastDurationWeeksPlural4 = T.tr("Localizable", "past_duration_weeks-plural-4", fallback: "")
+  /// 
+  internal static let pastDurationWeeksPlural5 = T.tr("Localizable", "past_duration_weeks-plural-5", fallback: "")
   /// PIN does not match! Please try again.
   internal static let securityErrorNoMatch = T.tr("Localizable", "security_error_no_match", fallback: "PIN does not match! Please try again.")
   /// Developer Options
@@ -933,6 +965,10 @@ internal enum T {
     internal static let gdSyncInfo = T.tr("Localizable", "settings__gd_sync_info", fallback: "Google Drive sync reminder")
     /// General
     internal static let general = T.tr("Localizable", "settings__general", fallback: "General")
+    /// Tokens will be revealed on tap
+    internal static let hideTokensDescription = T.tr("Localizable", "settings__hide_tokens_description", fallback: "Tokens will be revealed on tap")
+    /// Hide tokens
+    internal static let hideTokensTitle = T.tr("Localizable", "settings__hide_tokens_title", fallback: "Hide tokens")
     /// Select the maximum number of unsuccessful attempts to enter the passcode before locking the application (lockout time can be changed below).
     /// 
     internal static let howManyAttemptsFooter = T.tr("Localizable", "settings__how_many_attempts_footer", fallback: "Select the maximum number of unsuccessful attempts to enter the passcode before locking the application (lockout time can be changed below).\n")
@@ -1061,6 +1097,24 @@ internal enum T {
     internal static let widgetsTitle = T.tr("Localizable", "settings__widgets_title", fallback: "After you enable widgets, all your tokens can be accessed without your PIN code.\n\nAre you sure you want to enable widgets?")
     /// Write a review
     internal static let writeAReview = T.tr("Localizable", "settings__write_a_review", fallback: "Write a review")
+  }
+  internal enum Social {
+    /// Discord
+    internal static let discord = T.tr("Localizable", "social__discord", fallback: "Discord")
+    /// Facebook
+    internal static let facebook = T.tr("Localizable", "social__facebook", fallback: "Facebook")
+    /// GitHub
+    internal static let github = T.tr("Localizable", "social__github", fallback: "GitHub")
+    /// LinkedIn
+    internal static let linkedin = T.tr("Localizable", "social__linkedin", fallback: "LinkedIn")
+    /// Reddit
+    internal static let reddit = T.tr("Localizable", "social__reddit", fallback: "Reddit")
+    /// Social media
+    internal static let socialMedia = T.tr("Localizable", "social__social_media", fallback: "Social media")
+    /// Twitter
+    internal static let twitter = T.tr("Localizable", "social__twitter", fallback: "Twitter")
+    /// YouTube
+    internal static let youtube = T.tr("Localizable", "social__youtube", fallback: "YouTube")
   }
   internal enum Tokens {
     /// Point your camera at the screen to capture the QR code.

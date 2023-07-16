@@ -108,6 +108,15 @@ extension RegisterDeviceInteractor: RegisterDeviceInteracting {
             return
         }
         
+        updateDevice(using: gcmToken, completion: completion)
+    }
+    
+    func setCrashlyticsDisabled(_ disabled: Bool) {
+        mainRepository.setCrashlyticsDisabled(disabled)
+    }
+}
+private extension RegisterDeviceInteractor {
+    func updateDevice(using gcmToken: String, completion: @escaping (Result<Void, UpdateDeviceError>) -> Void) {
         guard let deviceID = mainRepository.deviceID else {
             Log("RegisterDeviceInteractor - Updating failure! Device is not registered!", module: .interactor)
             completion(.failure(.notRegistered))
@@ -131,11 +140,6 @@ extension RegisterDeviceInteractor: RegisterDeviceInteracting {
         }
     }
     
-    func setCrashlyticsDisabled(_ disabled: Bool) {
-        mainRepository.setCrashlyticsDisabled(disabled)
-    }
-}
-private extension RegisterDeviceInteractor {
     func gcmTokenObtained(_ token: String) {
         func register() {
             mainRepository.saveGCMToken(token)
@@ -143,7 +147,8 @@ private extension RegisterDeviceInteractor {
         }
         
         func update() {
-            updateDevice(completion: { [weak self] result in
+            Log("RegisterDeviceInteractor - Updating with new FCM token")
+            updateDevice(using: token) { [weak self] result in
                 switch result {
                 case .success: self?.mainRepository.saveGCMToken(token)
                 case .failure(let error):
@@ -152,7 +157,7 @@ private extension RegisterDeviceInteractor {
                         module: .interactor
                     )
                 }
-            })
+            }
         }
         
         Log("RegisterDeviceInteractor - FCM token obtained!", module: .interactor)

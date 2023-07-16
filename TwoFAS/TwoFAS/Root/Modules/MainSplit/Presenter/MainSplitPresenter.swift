@@ -100,6 +100,10 @@ extension MainSplitPresenter {
 
 private extension MainSplitPresenter {
     var restoredPath: ViewPath {
+        guard !interactor.hasStoredURL else {
+            return .main
+        }
+        
         if let path = interactor.restoreViewPath() {
             return path
         }

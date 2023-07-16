@@ -25,24 +25,24 @@ final class TokensViewController: UIViewController {
     var addButton: UIBarButtonItem? {
         navigationItem.rightBarButtonItem
     }
-    private(set) var gridView: GridView!
-    private(set) var gridLayout: UICollectionViewFlowLayout!
-    private(set) var dataSource: UICollectionViewDiffableDataSource<GridSection, GridCell>!
+    private(set) var tokensView: TokensView!
+    private(set) var dataSource: UICollectionViewDiffableDataSource<TokensSection, TokenCell>!
     
-    let headerHeight: CGFloat = 50
-    let emptySearchScreenView = GridViewEmptySearchScreen()
-    let emptyListScreenView = GridViewEmptyListScreen()
+    let headerHeight: CGFloat = 44
+    let emptySearchScreenView = TokensViewEmptySearchScreen()
+    let emptyListScreenView = TokensViewEmptyListScreen()
     
-    private var configuredWidth: CGFloat = 0
+    private var layout: UICollectionViewCompositionalLayout!
+    
     var searchBarAdded = false
     
     let searchController = CommonSearchController()
     
     override func loadView() {
-        gridLayout = UICollectionViewFlowLayout()
-        gridView = GridView(frame: .zero, collectionViewLayout: gridLayout)
-        self.view = gridView
-        gridView.configure()
+        createLayout()
+        tokensView = TokensView(frame: .zero, collectionViewLayout: layout)
+        self.view = tokensView
+        tokensView.configure()
     }
     
     override func viewDidLoad() {
@@ -61,15 +61,10 @@ final class TokensViewController: UIViewController {
         let snapshot = dataSource.snapshot()
         let indexPath = IndexPath(row: 0, section: 0)
         guard snapshot.item(for: indexPath) != nil else { return }
-        gridView.scrollToItem(at: indexPath, at: .top, animated: true)
+        tokensView.scrollToItem(at: indexPath, at: .top, animated: true)
     }
     
     // MARK: - App events
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        configureLayout()
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -99,143 +94,51 @@ private extension TokensViewController {
     
     func setupDelegates() {
         searchController.searchBarDelegate = self
-        gridView.delegate = self
+        tokensView.delegate = self
     }
     
     func setupDataSource() {
         dataSource = UICollectionViewDiffableDataSource(
-            collectionView: gridView,
-            cellProvider: { collectionView, indexPath, item in
-                if item.cellType == .serviceTOTP {
-                    if collectionView.isEditing {
-                        let cell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: GridViewEditItemCell.reuseIdentifier,
-                            for: indexPath
-                        ) as? GridViewEditItemCell
-                        cell?.update(
-                            name: item.name,
-                            additionalInfo: item.additionalInfo,
-                            serviceTypeName: item.serviceTypeName,
-                            iconType: item.iconType,
-                            category: item.category,
-                            canBeDragged: item.canBeDragged
-                        )
-                        return cell
-                    } else {
-                        let cell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: GridViewItemCell.reuseIdentifier,
-                            for: indexPath
-                        ) as? GridViewItemCell
-                        cell?.update(
-                            name: item.name,
-                            secret: item.secret,
-                            serviceTypeName: item.serviceTypeName,
-                            additionalInfo: item.additionalInfo,
-                            iconType: item.iconType,
-                            category: item.category,
-                            useNextToken: item.useNextToken
-                        )
-                        return cell
-                    }
-                } else if item.cellType == .serviceHOTP {
-                    if collectionView.isEditing {
-                        let cell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: GridViewEditItemCell.reuseIdentifier,
-                            for: indexPath
-                        ) as? GridViewEditItemCell
-                        cell?.update(
-                            name: item.name,
-                            additionalInfo: item.additionalInfo,
-                            serviceTypeName: item.serviceTypeName,
-                            iconType: item.iconType,
-                            category: item.category,
-                            canBeDragged: item.canBeDragged
-                        )
-                        return cell
-                    } else {
-                        let cell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: GridViewCounterItemCell.reuseIdentifier,
-                            for: indexPath
-                        ) as? GridViewCounterItemCell
-                        cell?.update(
-                            name: item.name,
-                            secret: item.secret,
-                            serviceTypeName: item.serviceTypeName,
-                            additionalInfo: item.additionalInfo,
-                            iconType: item.iconType,
-                            category: item.category
-                        )
-                        return cell
-                    }
-                }
-                let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: GridEmptyCollectionViewCell.reuseIdentifier,
-                    for: indexPath
-                ) as? GridEmptyCollectionViewCell
-                return cell
+            collectionView: tokensView,
+            cellProvider: { [weak self] collectionView, indexPath, item -> UICollectionViewCell? in
+                self?.getCell(for: collectionView, indexPath: indexPath, item: item)
             })
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath
             -> UICollectionReusableView? in
-            let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: GridSectionHeader.reuseIdentifier,
-                for: indexPath
-            ) as? GridSectionHeader
-            header?.setIsEditing(collectionView.isEditing)
-            header?.dataSource = self
-            if let data = self?.dataSource.snapshot().sectionIdentifiers[indexPath.section] {
-                header?.setConfiguration(data)
-            }
-            return header
+            self?.getHeader(for: collectionView, kind: kind, indexPath: indexPath)
         }
     }
     
     func setupDragAndDrop() {
-        gridView.dragDelegate = self
-        gridView.dropDelegate = self
-        gridView.dragInteractionEnabled = presenter.enableDragAndDropOnStart
+        tokensView.dragDelegate = self
+        tokensView.dropDelegate = self
+        tokensView.dragInteractionEnabled = presenter.enableDragAndDropOnStart
     }
     
     func setupEmptyScreensLayout() {
         view.addSubview(emptySearchScreenView, with: [
-            emptySearchScreenView.leadingAnchor.constraint(equalTo: gridView.frameLayoutGuide.leadingAnchor),
-            emptySearchScreenView.trailingAnchor.constraint(equalTo: gridView.frameLayoutGuide.trailingAnchor),
-            emptySearchScreenView.topAnchor.constraint(equalTo: gridView.frameLayoutGuide.topAnchor),
-            emptySearchScreenView.bottomAnchor.constraint(equalTo: gridView.frameLayoutGuide.bottomAnchor)
+            emptySearchScreenView.leadingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.leadingAnchor),
+            emptySearchScreenView.trailingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.trailingAnchor),
+            emptySearchScreenView.topAnchor.constraint(equalTo: tokensView.frameLayoutGuide.topAnchor),
+            emptySearchScreenView.bottomAnchor.constraint(equalTo: tokensView.frameLayoutGuide.bottomAnchor)
         ])
         emptySearchScreenView.isHidden = true
         emptySearchScreenView.alpha = 0
         
         view.addSubview(emptyListScreenView, with: [
-            emptyListScreenView.leadingAnchor.constraint(equalTo: gridView.frameLayoutGuide.leadingAnchor),
-            emptyListScreenView.trailingAnchor.constraint(equalTo: gridView.frameLayoutGuide.trailingAnchor),
-            emptyListScreenView.topAnchor.constraint(equalTo: gridView.safeTopAnchor),
-            emptyListScreenView.bottomAnchor.constraint(equalTo: gridView.safeBottomAnchor)
+            emptyListScreenView.leadingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.leadingAnchor),
+            emptyListScreenView.trailingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.trailingAnchor),
+            emptyListScreenView.topAnchor.constraint(equalTo: tokensView.safeTopAnchor),
+            emptyListScreenView.bottomAnchor.constraint(equalTo: tokensView.safeBottomAnchor)
         ])
         emptyListScreenView.isHidden = true
         emptyListScreenView.alpha = 0
     }
     
-    func configureLayout() {
-        guard let screenWidth = UIApplication.keyWindow?.bounds.size.width,
-              configuredWidth != screenWidth else { return }
-        
-        configuredWidth = screenWidth
-        
-        let cellHeight = Theme.Metrics.servicesCellHeight
-        
-        let minimumCellWidth: CGFloat = Theme.Metrics.pageWidth
-        let itemsInRow = Int(screenWidth / minimumCellWidth)
-        let margin: CGFloat = 0
-        
-        let marginsWidth = margin * CGFloat(itemsInRow - 1)
-        let screenWidthWithoutMargins = screenWidth - marginsWidth
-        let elementWidth = floor(screenWidthWithoutMargins / CGFloat(itemsInRow))
-        
-        gridLayout.itemSize = CGSize(width: elementWidth, height: cellHeight)
-        gridLayout.minimumInteritemSpacing = margin
-                
-        gridLayout.minimumLineSpacing = 0
+    private func createLayout() {
+        layout = UICollectionViewCompositionalLayout { [weak self] sectionOffset, enviroment in
+            self?.getLayout(sectionOffset: sectionOffset, enviroment: enviroment)
+        }
     }
     
     func setupEmptyScreensEvents() {
@@ -250,10 +153,16 @@ private extension TokensViewController {
     func setupNotificationsListeners() {
         let center = NotificationCenter.default
         center.addObserver(
-            self, selector: #selector(notificationServicesWereUpdated), name: .servicesWereUpdated, object: nil
+            self,
+            selector: #selector(notificationServicesWereUpdated),
+            name: .servicesWereUpdated,
+            object: nil
         )
         center.addObserver(
-            self, selector: #selector(notificationSectionsWereUpdated), name: .sectionsWereUpdated, object: nil
+            self,
+            selector: #selector(notificationSectionsWereUpdated),
+            name: .sectionsWereUpdated,
+            object: nil
         )
         center.addObserver(
             self,

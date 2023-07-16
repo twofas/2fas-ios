@@ -395,7 +395,7 @@ final class IconDescriptionDatabaseGenerated {
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "E80AF02C-1616-42F1-AC93-89D8AAEC29C8")!,
-                name: "(ISC)2"
+                name: "ISC2"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "6D0C4064-6096-46BB-92FD-584ECB64733C")!,
@@ -1014,6 +1014,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Ko-fi"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "D772EE7F-8F5B-476F-A498-6D13B285C012")!,
+                name: "Cyberreason"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "B69ADDB0-C23F-4BEE-A210-FDB1DFDABA1E")!,
                 name: "Actionstep"
             ),
@@ -1526,6 +1530,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Doppler"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "BCC809B3-41D2-4C7D-BF2F-9509260D194A")!,
+                name: "BeMovil"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "7E4420D5-62DE-45D2-A86D-CE14B017064F")!,
                 name: "San Francisco Fire Credit Union"
             ),
@@ -1544,6 +1552,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "24D139A7-9783-4668-BB22-59696C118069")!,
                 name: "Bitfinex"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "C8F30ED4-4AB0-4607-9B0C-B7F3178AF38E")!,
+                name: "SoulSoftware"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "824651BB-1696-4A86-9C8A-A0AD50D15BA2")!,
@@ -2394,6 +2406,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Coinberry"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "CE893D40-34CE-444B-AFB9-BCF51EF8ED25")!,
+                name: "Cloud Panel"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "DBEDB8F2-02A7-48C5-A41F-A009B989430C")!,
                 name: "Help Scout"
             ),
@@ -2870,6 +2886,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "OPNsense"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "724D854A-F90F-43DB-B815-9791621F3936")!,
+                name: "NOYB"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "94159DE2-2211-4F21-AE47-221CC364A31E")!,
                 name: "DeinServerHost"
             ),
@@ -2888,6 +2908,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "D3B86FF6-7DDA-40CC-A63E-C3DB426460B7")!,
                 name: "AWS"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "218622BA-B10C-4B24-B5CE-8B98735ED84E")!,
+                name: "Osirium PAM"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "163F6301-123D-4925-8058-07B04146B750")!,
@@ -3002,6 +3026,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "State Department Federal Credit Union"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "FA910F5C-1AF2-458B-AD3B-163E9A5DBEFB")!,
+                name: "MeshCentral"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "75595AD0-66C7-4BFC-A47D-99C001A4DF12")!,
                 name: "Skiff"
             ),
@@ -3080,6 +3108,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "2788457B-F9A1-45F3-B453-18DE6A706464")!,
                 name: "Tilaa"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "AC919310-C2F0-4DF2-8159-5F809715DBAE")!,
+                name: "SkySilk"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "0A2FB648-547D-4295-8395-9541530E5FCA")!,
@@ -3592,6 +3624,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "163316F8-FB4A-45C4-A349-1187E51BFE72")!,
                 name: "coindeal.io"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "C7266099-CBD6-4EBF-BF20-A882C3350AF9")!,
+                name: "Purelymail"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "441A0F17-B8E3-4165-819C-CD17473BA6E0")!,
@@ -4446,6 +4482,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Technische Universität Berlin"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "D42BBA17-706F-4179-8D4C-C8506A1BE809")!,
+                name: "Tessian"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "E43CFE9C-4875-4C29-8EE4-F0EFBCD0FEFC")!,
                 name: "American Century Investments"
             ),
@@ -4728,6 +4768,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "9F0CF664-B0A5-4174-9F16-E55B49BB8289")!,
                 name: "Coincheck"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "85FBEB02-CEFF-42BB-A852-A377ECE60BBF")!,
+                name: "Hestia Control Panel"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "1A0ADFA5-37EA-4315-8B48-EE1D7297B1B1")!,

@@ -41,6 +41,10 @@ final class TokensPresenter {
     
     var isMainOnlyCategory: Bool { interactor.isMainOnlyCategory }
     
+    var listStyle: ListStyle {
+        interactor.currentListStyle
+    }
+    
     init(flowController: TokensPlainFlowControlling, interactor: TokensModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
@@ -57,6 +61,10 @@ extension TokensPresenter {
     // MARK: - Sort Type
     var isSortingEnabled: Bool {
         interactor.isSortingEnabled
+    }
+    
+    var shouldAnimate: Bool {
+        interactor.shouldAnimate
     }
     
     var count: Int { interactor.count }
@@ -200,7 +208,7 @@ extension TokensPresenter {
     // MARK: - Search
     
     var showSearchBar: Bool {
-        count > 1
+        count > 1 && currentState == .normal
     }
     
     func handleSetSearchPhrase(_ phrase: String) {
@@ -302,30 +310,32 @@ extension TokensPresenter {
         reloadData()
     }
     
-    func handleToggleCollapseAction(with section: GridSection) {
+    func handleToggleCollapseAction(with section: TokensSection) {
         interactor.toggleCollapseSection(section)
         reloadData()
     }
     
-    func handleMoveDown(_ section: GridSection) {
+    func handleMoveDown(_ section: TokensSection) {
         Log("TokensPresenter - handleMoveDown")
         interactor.moveDown(section)
         reloadData()
     }
     
-    func handleMoveUp(_ section: GridSection) {
+    func handleMoveUp(_ section: TokensSection) {
         Log("TokensPresenter - handleMoveUp")
         interactor.moveUp(section)
         reloadData()
     }
     
-    func handleRename(_ section: GridSection, with title: String) {
+    func handleRename(_ section: TokensSection) {
         Log("TokensPresenter - handleRename")
-        interactor.rename(section, with: title)
-        reloadData()
+        flowController.toRenameSection(current: section.title ?? "") { [weak self] name in
+            self?.interactor.rename(section, with: name)
+            self?.reloadData()
+        }
     }
     
-    func handleShowSectionDeleteQuestion(_ section: GridSection) {
+    func handleShowSectionDeleteQuestion(_ section: TokensSection) {
         Log("TokensPresenter - handleShowSectionDeleteQuestion")
         flowController.toAskDeleteSection { [weak self] in
             Log("TokensPresenter - handleShowSectionDeleteQuestion - deleting")
@@ -380,6 +390,10 @@ extension TokensPresenter {
     func handleEnableHOTPCounter(for secret: Secret) {
         interactor.enableHOTPCounter(for: secret)
     }
+    
+    func handleUnlockTOTP(for consumer: TokenTimerConsumer) {
+        interactor.unlockTOTPConsumer(consumer)
+    }
 }
 
 private extension TokensPresenter {
@@ -392,6 +406,10 @@ private extension TokensPresenter {
     }
     
     func updateEditStateButton() {
+        guard !isSearching else {
+            view?.updateEditState(using: .none)
+            return
+        }
         switch currentState {
         case .edit:
             view?.updateEditState(using: mapCancelState(hasServices: interactor.hasServices))
@@ -411,8 +429,12 @@ private extension TokensPresenter {
             changeRequriesTokenRefresh = true
             reloadData()
             interactor.sync()
+            if showSearchBar {
+                view?.addSearchBar()
+            }
             
         case .edit:
+            view?.removeSearchBar()
             changeDragAndDropIfNecessary(enable: true)
             reloadData()
         }

@@ -69,16 +69,43 @@ final class TokenState {
         consumers.removeAll(where: { $0.value?.autoManagable == true })
     }
     
-    func registerConsumer(_ consumer: TokenTimerConsumer) {
+    func registerConsumer(_ consumer: TokenTimerConsumer, isLocked: Bool) {
         cleanUnusedConsumers()
-        consumers.append(Weak(value: consumer))
-        consumer.setInitial(
-            counter,
+        consumers.append(Weak(value: consumer, isLocked: isLocked))
+        if isLocked {
+            consumer.setInitial(.locked)
+        } else {
+            setInitalUnlocked(consumer)
+        }
+    }
+    
+    func unlockConsumer(_ consumer: TokenTimerConsumer) {
+        guard
+            let consumerInstance = consumers.first(where: { $0.value?.hashValue == consumer.hashValue }),
+            let consumerValue = consumerInstance.value
+        else {
+            registerConsumer(consumer, isLocked: false)
+            return
+        }
+        consumerInstance.unlock()
+        setInitalUnlocked(consumerValue)
+    }
+    
+    func lockAllConsumers() {
+        consumers.forEach({
+            $0.lock()
+            $0.value?.setUpdate(.locked)
+        })
+    }
+    
+    private func setInitalUnlocked(_ consumer: TokenTimerConsumer) {
+        consumer.setInitial(.unlocked(
+            progress: counter,
             period: period.rawValue,
             currentToken: currentToken,
             nextToken: nextToken,
             willChangeSoon: willChangeSoon
-        )
+        ))
     }
     
     private func updateMarked() {
@@ -106,13 +133,17 @@ final class TokenState {
     private func updateConsumersProgress(plannedUpdate: Bool) {
         for c in self.consumers {
             guard let cons = c.value else { continue }
-            cons.setUpdate(
-                counter,
-                isPlanned: plannedUpdate,
-                currentToken: currentToken,
-                nextToken: nextToken,
-                willChangeSoon: willChangeSoon
-            )
+            if c.isLocked {
+                cons.setUpdate(.locked)
+            } else {
+                cons.setUpdate(.unlocked(
+                    progress: counter,
+                    isPlanned: plannedUpdate,
+                    currentToken: currentToken,
+                    nextToken: nextToken,
+                    willChangeSoon: willChangeSoon
+                ))
+            }
         }
     }
     
@@ -123,8 +154,16 @@ final class TokenState {
 
 private final class Weak {
     private(set) weak var value: TokenTimerConsumer?
-    init (value: TokenTimerConsumer) {
+    private(set) var isLocked: Bool
+    init(value: TokenTimerConsumer, isLocked: Bool = true) {
         self.value = value
+        self.isLocked = isLocked
     }
     var hasObject: Bool { value != nil }
+    func unlock() {
+        isLocked = false
+    }
+    func lock() {
+        isLocked = true
+    }
 }

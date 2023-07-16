@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 struct AppearanceSection: TableViewSection {
     let title: String?
@@ -26,33 +27,39 @@ struct AppearanceSection: TableViewSection {
 }
 
 struct AppearanceCell: Hashable {
-    enum AppearanceAccessory: Hashable {
-        case toggle(kind: AppearanceToggle, isOn: Bool)
+    enum Accessory: Hashable {
+        case toggle(isOn: Bool)
+        case checkmark(selected: Bool)
     }
-    enum AppearanceToggle: Hashable {
+    enum Kind: Hashable {
         case incomingToken
         case activeSearch
+        case defaultList
+        case compactList
+        case hideTokens
     }
     
-    let icon: UIImage
+    let icon: UIImage?
     let title: String
-    let accessory: AppearanceAccessory
+    let accessory: Accessory
+    let kind: Kind
 }
 
 extension AppearancePresenter {
     func buildMenu() -> [AppearanceSection] {
-                let isIncomingTokenEnabled = interactor.isNextTokenEnabled
-                let incoming = AppearanceSection(
-                    title: nil,
-                    cells: [
-                        .init(
-                            icon: Asset.settingsNextToken.image,
-                            title: T.Settings.showNextToken,
-                            accessory: .toggle(kind: .incomingToken, isOn: isIncomingTokenEnabled)
-                        )
-                    ],
-                    footer: T.Settings.seeIncomingTokens
+        let isIncomingTokenEnabled = interactor.isNextTokenEnabled
+        let incoming = AppearanceSection(
+            title: nil,
+            cells: [
+                .init(
+                    icon: Asset.settingsNextToken.image,
+                    title: T.Settings.showNextToken,
+                    accessory: .toggle(isOn: isIncomingTokenEnabled),
+                    kind: .incomingToken
                 )
+            ],
+            footer: T.Settings.seeIncomingTokens
+        )
         let isActiveSearchEnabled = interactor.isActiveSearchEnabled
         
         let activeSearch = AppearanceSection(
@@ -61,15 +68,57 @@ extension AppearancePresenter {
                 .init(
                     icon: Asset.settingsActiveSearch.image,
                     title: T.Appearance.toggleActiveSearch,
-                    accessory: .toggle(kind: .activeSearch, isOn: isActiveSearchEnabled)
+                    accessory: .toggle(isOn: isActiveSearchEnabled),
+                    kind: .activeSearch
                 )
             ],
             footer: T.Appearance.activeSearchDescription
         )
         
+        let selectedStyle = interactor.selectedListStyle
+        let listStyle = AppearanceSection(
+            title: T.Settings.listStyle,
+            cells: [
+                .init(
+                    icon: UIImage(systemName: "rectangle.grid.1x2.fill")?
+                        .apply(Theme.Colors.Fill.theme)?
+                        .scalePreservingAspectRatio(targetSize: Theme.Metrics.settingsSmallIconSize),
+                    title: T.Settings.listStyleOptionDefault,
+                    accessory: .checkmark(selected: selectedStyle == .default),
+                    kind: .defaultList
+                ),
+                .init(
+                    icon: UIImage(systemName: "rectangle.grid.2x2.fill")?
+                        .apply(Theme.Colors.Fill.theme)?
+                        .scalePreservingAspectRatio(targetSize: Theme.Metrics.settingsSmallIconSize),
+                    title: T.Settings.listStyleOptionCompact,
+                    accessory: .checkmark(selected: selectedStyle == .compact),
+                    kind: .compactList
+                )
+            ],
+            footer: nil
+        )
+        
+        let tokensHidden = AppearanceSection(
+            title: nil,
+            cells: [
+                .init(
+                    icon: UIImage(systemName: "eye.fill")?
+                        .apply(Theme.Colors.Fill.theme)?
+                        .scalePreservingAspectRatio(targetSize: Theme.Metrics.settingsSmallIconSize),
+                    title: T.Settings.hideTokensTitle,
+                    accessory: .toggle(isOn: interactor.areTokensHidden),
+                    kind: .hideTokens
+                )
+            ],
+            footer: T.Settings.hideTokensDescription
+        )
+        
         return[
-           incoming,
-           activeSearch
+            incoming,
+            activeSearch,
+            listStyle,
+            tokensHidden
         ]
     }
 }

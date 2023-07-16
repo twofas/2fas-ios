@@ -27,6 +27,8 @@ protocol TokenTimerConsumerWithCopy: TokenTimerConsumer {
 
 final class ServiceAddedServiceContainerViewTOTP: UIView, ServiceAddedViewContaining, TokenTimerConsumerWithCopy {
     var didTapRefreshCounter: ((String) -> Void)? // not used
+    var didTapUnlock: ((TokenTimerConsumer) -> Void)? // not used
+    
     private(set) var secret: String = ""
     let autoManagable = false
     
@@ -99,31 +101,29 @@ final class ServiceAddedServiceContainerViewTOTP: UIView, ServiceAddedViewContai
     
     // MARK: - Public
     
-    func setInitial(
-        _ progress: Int,
-        period: Int,
-        currentToken: TokenValue,
-        nextToken: TokenValue,
-        willChangeSoon: Bool
-    ) {
-        circularProgress.setPeriod(period)
-        circularProgress.setProgress(progress, animated: false)
-        tokenLabel.setToken(currentToken)
-        shouldMark(willChangeSoon: willChangeSoon)
-        tokenValue = currentToken
+    func setInitial(_ state: TokenTimerInitialConsumerState) {
+        switch state {
+        case .unlocked(let progress, let period, let currentToken, _, let willChangeSoon):
+            circularProgress.setPeriod(period)
+            circularProgress.setProgress(progress, animated: false)
+            tokenLabel.setToken(currentToken)
+            shouldMark(willChangeSoon: willChangeSoon)
+            tokenValue = currentToken
+        default:
+            break
+        }
     }
     
-    func setUpdate(
-        _ progress: Int,
-        isPlanned: Bool,
-        currentToken: TokenValue,
-        nextToken: TokenValue,
-        willChangeSoon: Bool
-    ) {
-        circularProgress.setProgress(progress, animated: isPlanned)
-        tokenLabel.setToken(currentToken)
-        shouldMark(willChangeSoon: willChangeSoon)
-        tokenValue = currentToken
+    func setUpdate(_ state: TokenTimerUpdateConsumerState) {
+        switch state {
+        case .unlocked(let progress, let isPlanned, let currentToken, _, let willChangeSoon):
+            circularProgress.setProgress(progress, animated: isPlanned)
+            tokenLabel.setToken(currentToken)
+            shouldMark(willChangeSoon: willChangeSoon)
+            tokenValue = currentToken
+        default:
+            break
+        }
     }
     
     func copyToken() -> String? {

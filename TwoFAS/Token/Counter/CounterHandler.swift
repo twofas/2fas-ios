@@ -27,7 +27,7 @@ public enum TokenCounterConsumerState {
 
 public protocol TokenCounterConsumer: AnyObject {
     func setInitial(_ state: TokenCounterConsumerState)
-    func setUpdate(_ state: TokenCounterConsumerState, isPlanned: Bool)
+    func setUpdate(_ state: TokenCounterConsumerState)
     // swiftlint:disable legacy_hashing
     var hashValue: Int { get }
     // swiftlint:enable legacy_hashing
@@ -37,14 +37,15 @@ public protocol TokenCounterConsumer: AnyObject {
 }
 
 public protocol CounterHandlerStart {
-    func start(with counterSecrets: [CounterSecret])
+    func start(with counterSecrets: [CounterSecret], startLocked: Bool)
 }
 
 public protocol CounterHandlerTokens {
     func register(_ consumer: TokenCounterConsumer)
-    func remove(_ consumer: TokenCounterConsumer)
+    func remove(_ consumer: TokenCounterConsumer, lock: Bool)
     func token(for secret: Secret) -> TokenValue?
     func unlock(for secret: Secret, counter: Int)
+    func lockAllConsumers()
 }
 
 public protocol CounterHandlerStop {
@@ -72,13 +73,18 @@ public final class CounterHandler: CounterHandlerStart & CounterHandlerTokens & 
         counterState.registerConsumer(consumer)
     }
     
-    public func remove(_ consumer: TokenCounterConsumer) {
+    public func remove(_ consumer: TokenCounterConsumer, lock: Bool) {
         guard let counterState = counterState(for: consumer.secret) else { return }
         
         counterState.removeConsumerIfPresent(consumer)
+        
+        if lock {
+            storage.remove(for: consumer.secret)
+            counterState.lock()
+        }
     }
     
-    public func start(with counterSecrets: [CounterSecret]) {
+    public func start(with counterSecrets: [CounterSecret], startLocked: Bool) {
         seconds = nil
         
         var currentTokens = tokens
@@ -103,6 +109,10 @@ public final class CounterHandler: CounterHandlerStart & CounterHandlerTokens & 
         }
         
         tokens = currentTokens
+        if startLocked {
+            tokens.forEach({ $0.lock() })
+            storage.removeAll()
+        }
         
         restartTokens()
         
@@ -122,6 +132,14 @@ public final class CounterHandler: CounterHandlerStart & CounterHandlerTokens & 
     public func unlock(for secret: Secret, counter: Int) {
         storage.register(for: secret, counter: counter)
         counterState(for: secret)?.unlock(with: counter)
+    }
+    
+    public func lockAllConsumers() {
+        storage.removeAll()
+        tokens.forEach({
+            $0.removeAllConsumers()
+            $0.lock()
+        })
     }
     
     // MARK: - Private
@@ -164,5 +182,13 @@ final class CounterStartStorage {
     
     func find(for secret: Secret) -> CounterInTime? {
         dict[secret]
+    }
+    
+    func remove(for secret: Secret) {
+        dict[secret] = nil
+    }
+    
+    func removeAll() {
+        dict = [:]
     }
 }

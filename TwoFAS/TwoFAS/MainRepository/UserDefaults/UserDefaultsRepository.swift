@@ -78,4 +78,10 @@ protocol UserDefaultsRepository: AnyObject {
     
     var isCrashlyticsDisabled: Bool { get }
     func setCrashlyticsDisabled(_ disabled: Bool)
+    
+    var selectedListStyle: ListStyle { get }
+    func setSelectListStyle(_ listStyle: ListStyle)
+
+    var areTokensHidden: Bool { get }
+    func setTokensHidden(_ hidden: Bool)
 }

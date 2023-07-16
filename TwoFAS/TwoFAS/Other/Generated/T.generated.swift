@@ -478,6 +478,10 @@ internal enum T {
     internal static let moreInfoLinkTitle = T.tr("Localizable", "browser__more_info_link_title", fallback: "2fas.com/be")
     /// Name
     internal static let name = T.tr("Localizable", "browser__name", fallback: "Name")
+    /// Pair manually
+    internal static let pairManuallyCta = T.tr("Localizable", "browser__pair_manually_cta", fallback: "Pair manually")
+    /// Pairing code
+    internal static let pairManuallyHint = T.tr("Localizable", "browser__pair_manually_hint", fallback: "Pairing code")
     /// Pair with web browser
     internal static let pairWithWebBrowser = T.tr("Localizable", "browser__pair_with_web_browser", fallback: "Pair with web browser")
     /// Paired devices (web browsers)
@@ -728,14 +732,26 @@ internal enum T {
     internal static let aegisSuccessMsg = T.tr("Localizable", "externalimport__aegis_success_msg", fallback: "This JSON file allows importing tokens from Aegis.")
     /// Importing 2FA tokens from Aegis app
     internal static let aegisTitle = T.tr("Localizable", "externalimport__aegis_title", fallback: "Importing 2FA tokens from Aegis app")
+    /// Authenticator Pro
+    internal static let authenticatorpro = T.tr("Localizable", "externalimport__authenticatorpro", fallback: "Authenticator Pro")
+    /// Export your accounts from Authenticator Pro to an unencrypted text file and upload it using the "Choose text file" button. Remember to remove the file after a successful import.
+    internal static let authenticatorproMsg = T.tr("Localizable", "externalimport__authenticatorpro_msg", fallback: "Export your accounts from Authenticator Pro to an unencrypted text file and upload it using the \"Choose text file\" button. Remember to remove the file after a successful import.")
+    /// This text file allows importing tokens from Authenticator Pro.
+    internal static let authenticatorproSuccessMsg = T.tr("Localizable", "externalimport__authenticatorpro_success_msg", fallback: "This text file allows importing tokens from Authenticator Pro.")
+    /// Importing 2FA tokens from Authenticator Pro app
+    internal static let authenticatorproTitle = T.tr("Localizable", "externalimport__authenticatorpro_title", fallback: "Importing 2FA tokens from Authenticator Pro app")
     /// Choose JSON file
     internal static let chooseJsonCta = T.tr("Localizable", "externalimport__choose_json_cta", fallback: "Choose JSON file")
+    /// Choose text file
+    internal static let chooseTxtCta = T.tr("Localizable", "externalimport__choose_txt_cta", fallback: "Choose text file")
     /// This QR code allows importing tokens from Google Authenticator.
     internal static let gaSuccessMsg = T.tr("Localizable", "externalimport__ga_success_msg", fallback: "This QR code allows importing tokens from Google Authenticator.")
     /// Importing 2FA tokens from Google Authenticator app
     internal static let gaTitle = T.tr("Localizable", "externalimport__ga_title", fallback: "Importing 2FA tokens from Google Authenticator app")
     /// Import tokens from Aegis
     internal static let infoAegisTitle = T.tr("Localizable", "externalimport__info_aegis_title", fallback: "Import tokens from Aegis")
+    /// Import tokens from Authenticator Pro
+    internal static let infoAuthenticatorproTitle = T.tr("Localizable", "externalimport__info_authenticatorpro_title", fallback: "Import tokens from Authenticator Pro")
     /// Import tokens from Google Authenticator
     internal static let infoGoogleAuthenticatorTitle = T.tr("Localizable", "externalimport__info_google_authenticator_title", fallback: "Import tokens from Google Authenticator")
     /// Import tokens from LastPass
@@ -760,6 +776,8 @@ internal enum T {
     internal static let readError = T.tr("Localizable", "externalimport__read_error", fallback: "Could not read any tokens. Try to select a different file.")
   }
   internal enum Fingerprint {
+    /// Biometric login is disabled due to changes in system fingerprint settings
+    internal static let biometricInvalidated = T.tr("Localizable", "fingerprint__biometric_invalidated", fallback: "Biometric login is disabled due to changes in system fingerprint settings")
     /// Confirm Fingerprint to continue.
     internal static let confirmTitle = T.tr("Localizable", "fingerprint__confirm_title", fallback: "Confirm Fingerprint to continue.")
     /// Use PIN this time
@@ -1109,8 +1127,8 @@ internal enum T {
     internal static let linkedin = T.tr("Localizable", "social__linkedin", fallback: "LinkedIn")
     /// Reddit
     internal static let reddit = T.tr("Localizable", "social__reddit", fallback: "Reddit")
-    /// Social media
-    internal static let socialMedia = T.tr("Localizable", "social__social_media", fallback: "Social media")
+    /// Social media links
+    internal static let socialMedia = T.tr("Localizable", "social__social_media", fallback: "Social media links")
     /// Twitter
     internal static let twitter = T.tr("Localizable", "social__twitter", fallback: "Twitter")
     /// YouTube
@@ -1242,6 +1260,10 @@ internal enum T {
     internal static let label = T.tr("Localizable", "tokens__label", fallback: "Label")
     /// Label (1 or 2 characters):
     internal static let labelCharactersTitle = T.tr("Localizable", "tokens__label_characters_title", fallback: "Label (1 or 2 characters):")
+    /// Importing 2FA tokens from the LastPass app
+    internal static let lastPassImport = T.tr("Localizable", "tokens__last_pass_import", fallback: "Importing 2FA tokens from the LastPass app")
+    /// This QR code allows importing tokens from LastPass
+    internal static let lastPassImportSubtitle = T.tr("Localizable", "tokens__last_pass_import_subtitle", fallback: "This QR code allows importing tokens from LastPass")
     /// Manage list
     internal static let manageList = T.tr("Localizable", "tokens__manage_list", fallback: "Manage list")
     /// Move to Trash

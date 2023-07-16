@@ -776,6 +776,8 @@ internal enum T {
     internal static let readError = T.tr("Localizable", "externalimport__read_error", fallback: "Could not read any tokens. Try to select a different file.")
   }
   internal enum Fingerprint {
+    /// Biometric login is disabled due to changes in system fingerprint settings
+    internal static let biometricInvalidated = T.tr("Localizable", "fingerprint__biometric_invalidated", fallback: "Biometric login is disabled due to changes in system fingerprint settings")
     /// Confirm Fingerprint to continue.
     internal static let confirmTitle = T.tr("Localizable", "fingerprint__confirm_title", fallback: "Confirm Fingerprint to continue.")
     /// Use PIN this time
@@ -1258,6 +1260,10 @@ internal enum T {
     internal static let label = T.tr("Localizable", "tokens__label", fallback: "Label")
     /// Label (1 or 2 characters):
     internal static let labelCharactersTitle = T.tr("Localizable", "tokens__label_characters_title", fallback: "Label (1 or 2 characters):")
+    /// Importing 2FA tokens from the LastPass app
+    internal static let lastPassImport = T.tr("Localizable", "tokens__last_pass_import", fallback: "Importing 2FA tokens from the LastPass app")
+    /// This QR code allows importing tokens from LastPass
+    internal static let lastPassImportSubtitle = T.tr("Localizable", "tokens__last_pass_import_subtitle", fallback: "This QR code allows importing tokens from LastPass")
     /// Manage list
     internal static let manageList = T.tr("Localizable", "tokens__manage_list", fallback: "Manage list")
     /// Move to Trash

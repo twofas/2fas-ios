@@ -33,8 +33,8 @@ final class ExternalImportInstructionsPresenter {
 extension ExternalImportInstructionsPresenter {
     var hasSecondaryAction: Bool {
         switch service {
-        case .aegis, .raivo, .lastPass, .twofas: return false
-        case .googleAuth: return true
+        case .aegis, .raivo, .twofas: return false
+        case .googleAuth, .lastPass: return true
         }
     }
     
@@ -78,7 +78,8 @@ extension ExternalImportInstructionsPresenter {
     
     var secondaryActionName: String? {
         switch service {
-        case .aegis, .raivo, .lastPass, .twofas: return nil
+        case .aegis, .raivo, .twofas: return nil
+        case .lastPass: return T.Commons.scanQrCode
         case .googleAuth: return T.Introduction.chooseQrCode
         }
     }
@@ -98,7 +99,8 @@ extension ExternalImportInstructionsPresenter {
     
     func handleSecondaryAction() {
         switch service {
-        case .aegis, .raivo, .lastPass, .twofas: break
+        case .aegis, .raivo, .twofas: break
+        case .lastPass: flowController.toCamera()
         case .googleAuth: flowController.toGallery()
         }
     }

@@ -29,25 +29,25 @@ final class SettingsViewFooter: UIView {
     
     private var discordButton: UIButton = {
         let button = UIButton()
-        button.setImage(Asset.socialDiscord.image, for: .normal)
+        button.setImage(Asset.socialLargeDiscord.image, for: .normal)
         return button
     }()
     
     private var youtubeButton: UIButton = {
         let button = UIButton()
-        button.setImage(Asset.socialYoutube.image, for: .normal)
+        button.setImage(Asset.socialLargeYoutube.image, for: .normal)
         return button
     }()
     
     private var twitterButton: UIButton = {
         let button = UIButton()
-        button.setImage(Asset.socialTwitter.image, for: .normal)
+        button.setImage(Asset.socialLargeTwitter.image, for: .normal)
         return button
     }()
     
     private var githubButton: UIButton = {
         let button = UIButton()
-        button.setImage(Asset.socialGithub.image, for: .normal)
+        button.setImage(Asset.socialLargeGithub.image, for: .normal)
         return button
     }()
     

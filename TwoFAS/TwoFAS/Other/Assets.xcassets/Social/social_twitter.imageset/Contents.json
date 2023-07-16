@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "social_twitter.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "2FAS_Social_Twitter_dark.pdf",
+      "filename" : "twitter.pdf",
       "idiom" : "universal"
     }
   ],

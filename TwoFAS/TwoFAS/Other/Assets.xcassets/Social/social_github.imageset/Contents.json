@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "2FAS_Social_Github.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "2FAS_Social_Github_dark.pdf",
+      "filename" : "github.pdf",
       "idiom" : "universal"
     }
   ],

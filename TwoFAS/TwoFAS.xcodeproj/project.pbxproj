@@ -1768,6 +1768,10 @@
 		C2830D7F293D4BDC00B3DDAF /* TokensViewController+TokensSectionHeaderDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+TokensSectionHeaderDataSource.swift"; sourceTree = "<group>"; };
 		C2830D81293D53CA00B3DDAF /* TokensMoveItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensMoveItem.swift; sourceTree = "<group>"; };
 		C28356222897098300421882 /* SelectFromGalleryAdvice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectFromGalleryAdvice.swift; sourceTree = "<group>"; };
+		C284180F2A65E57000E0F700 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
+		C28418102A65E57100E0F700 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C28418112A65E57100E0F700 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C28418122A65E57200E0F700 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C2842EFF23492A0900642255 /* VersionDecoded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionDecoded.swift; sourceTree = "<group>"; };
 		C2842F0123492A7E00642255 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		C284991027CC0FC70092098D /* ComposeServiceAlgorithmPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAlgorithmPresenter.swift; sourceTree = "<group>"; };
@@ -7055,6 +7059,7 @@
 				it,
 				pl,
 				"pt-BR",
+				id,
 			);
 			mainGroup = C236666A1FB2644900989ACA;
 			packageReferences = (
@@ -8415,6 +8420,7 @@
 				C261A1232A12BECD00A1519F /* it */,
 				C2F2E0152A24AB5B00E81225 /* pl */,
 				C2671C8B2A51C5A60002C4BB /* pt-BR */,
+				C28418112A65E57100E0F700 /* id */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -8431,6 +8437,7 @@
 				C261A1222A12BECC00A1519F /* it */,
 				C2F2E0142A24AB5900E81225 /* pl */,
 				C2671C8A2A51C5A60002C4BB /* pt-BR */,
+				C28418102A65E57100E0F700 /* id */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8456,6 +8463,7 @@
 				C261A1212A12BECC00A1519F /* it */,
 				C2F2E0132A24AB5800E81225 /* pl */,
 				C2671C892A51C5A60002C4BB /* pt-BR */,
+				C284180F2A65E57000E0F700 /* id */,
 			);
 			name = TwoFASWidget.intentdefinition;
 			sourceTree = "<group>";
@@ -8472,6 +8480,7 @@
 				C261A1242A12BECD00A1519F /* it */,
 				C2F2E0162A24AB5D00E81225 /* pl */,
 				C2671C8C2A51C5A70002C4BB /* pt-BR */,
+				C28418122A65E57200E0F700 /* id */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

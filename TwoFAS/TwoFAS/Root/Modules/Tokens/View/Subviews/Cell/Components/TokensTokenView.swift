@@ -33,7 +33,7 @@ final class TokensTokenView: UIView {
     private var currentText: String = ""
     
     let start: Double = 0
-    let duration: CFTimeInterval = 0.7
+    let duration: CFTimeInterval = Theme.Animations.Timing.quick
 
     var end: Double = 0
     var startTime: CFTimeInterval = 0

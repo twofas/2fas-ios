@@ -60,12 +60,7 @@ final class AboutViewController: UIViewController {
         navigationItem.backButtonDisplayMode = .minimal
         
         footer.setText(T.Settings.version(presenter.appVersion))
-        
-        view.addSubview(footer, with: [
-            footer.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-            footer.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
-            footer.bottomAnchor.constraint(equalTo: view.safeBottomAnchor)
-        ])
+        tableView.tableFooterView = footer
     }
     
     private func setupTableViewLayout() {

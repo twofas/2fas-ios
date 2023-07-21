@@ -59,8 +59,8 @@ final class AboutViewController: UIViewController {
         hidesBottomBarWhenPushed = false
         navigationItem.backButtonDisplayMode = .minimal
         
-        footer.setText(T.Settings.version(presenter.appVersion))
-        tableView.tableFooterView = footer
+        setupFooter()
+        
         tableView.separatorInset = .zero
     }
     
@@ -73,6 +73,11 @@ final class AboutViewController: UIViewController {
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor)
         ])
+    }
+    
+    private func setupFooter() {
+        footer.setText(T.Settings.version(presenter.appVersion))
+        tableView.tableFooterView = footer
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -64,7 +64,7 @@ final class AboutFooter: UIView {
         ])
         
         addSubview(image, with: [
-            image.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: margin),
+            image.leadingAnchor.constraint(lessThanOrEqualTo: label.trailingAnchor, constant: margin),
             image.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
             image.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor, constant: -margin),
             image.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 2 * margin)

@@ -61,6 +61,7 @@ final class AboutViewController: UIViewController {
         
         footer.setText(T.Settings.version(presenter.appVersion))
         tableView.tableFooterView = footer
+        tableView.separatorInset = .zero
     }
     
     private func setupTableViewLayout() {

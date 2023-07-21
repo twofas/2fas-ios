@@ -64,6 +64,12 @@ extension SelectFromGalleryPresenter {
         flowController.toDidImport()
     }
     
+    func handleLastPassImport(_ codes: [Code]) {
+        guard !codes.isEmpty else { return }
+        interactor.addSelectedCodes(codes)
+        flowController.toDidImport()
+    }
+    
     func handleSelectedCode(_ code: Code) {
         handleService(code)
     }
@@ -105,9 +111,21 @@ private extension SelectFromGalleryPresenter {
         case .service(let code):
             handleService(code)
         case .googleAuth(let codes):
-            Log("SelectFromGalleryPresenter: Found Google Auth codes: \(codes)")
+            Log("SelectFromGalleryPresenter: Found Google Auth codes: \(codes.count)")
+            Log("Codes: \(codes)", save: false)
+            
             let importableCodes = interactor.filterImportableCodes(codes)
             flowController.toGoogleAuthSummary(
+                importable: importableCodes.count,
+                total: codes.count,
+                codes: importableCodes
+            )
+        case .lastPass(let codes):
+            Log("SelectFromGalleryPresenter: Found LastPass codes: \(codes.count)")
+            Log("Codes: \(codes)", save: false)
+            
+            let importableCodes = interactor.filterImportableCodes(codes)
+            flowController.toLastPassSummary(
                 importable: importableCodes.count,
                 total: codes.count,
                 codes: importableCodes

@@ -40,6 +40,7 @@ protocol SelectFromGalleryFlowControlling: AnyObject {
     func toAppStore()
     func toCancel()
     func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
+    func toLastPassSummary(importable: Int, total: Int, codes: [Code])
     func toRename(currentName: String, secret: String)
     func toSendLogs(auditID: UUID)
 }
@@ -183,6 +184,25 @@ extension SelectFromGalleryFlowController: SelectFromGalleryFlowControlling {
             })
         
         let vc = UIHostingController(rootView: google)
+        configureViewController(vc)
+        parentViewController?.present(vc, animated: true, completion: nil)
+    }
+    
+    func toLastPassSummary(importable: Int, total: Int, codes: [Code]) {
+        let lastPass = CameraLastPass(
+            importedCount: importable,
+            totalCount: total,
+            action: { [weak self] in
+                if importable == 0 {
+                    self?.dismissModal()
+                } else {
+                    self?.viewController.presenter.handleLastPassImport(codes)
+                }
+            }, cancel: { [weak self] in
+                self?.dismissModal()
+            })
+        
+        let vc = UIHostingController(rootView: lastPass)
         configureViewController(vc)
         parentViewController?.present(vc, animated: true, completion: nil)
     }

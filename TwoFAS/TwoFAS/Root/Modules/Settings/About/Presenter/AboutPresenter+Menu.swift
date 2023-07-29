@@ -31,6 +31,51 @@ extension AboutPresenter {
             .init(title: T.Settings.shareApp, cells: [
                 .init(title: T.Settings.tellAFriend, accessory: .share, action: .share)
             ]),
+            
+            .init(title: T.Social.socialMedia, cells: [
+                .init(
+                    title: T.Social.discord,
+                    accessory: .external,
+                    action: .social(.discord),
+                    icon: Asset.socialDiscord.image
+                ),
+                .init(
+                    title: T.Social.youtube,
+                    accessory: .external,
+                    action: .social(.youtube),
+                    icon: Asset.socialYoutube.image
+                ),
+                .init(
+                    title: T.Social.twitter,
+                    accessory: .external,
+                    action: .social(.twitter),
+                    icon: Asset.socialTwitter.image
+                ),
+                .init(
+                    title: T.Social.github,
+                    accessory: .external,
+                    action: .social(.github),
+                    icon: Asset.socialGithub.image
+                ),
+                .init(
+                    title: T.Social.linkedin,
+                    accessory: .external,
+                    action: .social(.linkedin),
+                    icon: Asset.socialLinkedin.image
+                ),
+                .init(
+                    title: T.Social.reddit,
+                    accessory: .external,
+                    action: .social(.reddit),
+                    icon: Asset.socialReddit.image
+                ),
+                .init(
+                    title: T.Social.facebook,
+                    accessory: .external,
+                    action: .social(.facebook),
+                    icon: Asset.socialFacebook.image
+                )
+            ]),
             .init(title: T.Settings.support, cells: [
                 .init(title: T.Settings.sendLogs, accessory: .noAccessory, action: .sendLogs)
             ]),

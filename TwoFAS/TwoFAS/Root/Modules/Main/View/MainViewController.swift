@@ -42,7 +42,7 @@ final class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presenter.viewWillAppear()
+        presenter.viewDidAppear()
     }
     
     deinit {
@@ -88,6 +88,12 @@ extension MainViewController {
             name: .switchToBrowserExtension,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(fileAwaitsOpening),
+            name: .fileAwaitsOpening,
+            object: nil
+        )
     }
 
     @objc
@@ -120,6 +126,11 @@ extension MainViewController {
     @objc
     private func switchToBrowserExtension() {
         presenter.handleSwitchToBrowserExtension()
+    }
+    
+    @objc
+    private func fileAwaitsOpening() {
+        presenter.handleOpenFile()
     }
 }
 

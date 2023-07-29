@@ -66,6 +66,13 @@ extension CameraScannerPresenter {
         flowController.toFinish()
     }
     
+    func handleLastPassImport(_ codes: [Code]) {
+        guard !codes.isEmpty else { return }
+        AppEventLog(.importLastPass)
+        interactor.addCodes(codes)
+        flowController.toFinish()
+    }
+    
     func handleDidFound(_ codeType: CodeType) {
         guard !lockScanning else { return }
         lockScanning = true
@@ -88,6 +95,14 @@ extension CameraScannerPresenter {
             view?.enableOverlay()
             let importableCodes = interactor.filterImportableCodes(codes)
             flowController.toGoogleAuthSummary(
+                importable: importableCodes.count,
+                total: codes.count,
+                codes: importableCodes
+            )
+        case .lastPass(let codes):
+            view?.enableOverlay()
+            let importableCodes = interactor.filterImportableCodes(codes)
+            flowController.toLastPassSummary(
                 importable: importableCodes.count,
                 total: codes.count,
                 codes: importableCodes

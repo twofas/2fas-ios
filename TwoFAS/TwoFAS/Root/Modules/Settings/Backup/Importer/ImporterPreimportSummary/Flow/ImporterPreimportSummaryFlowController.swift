@@ -42,7 +42,8 @@ final class ImporterPreimportSummaryFlowController: FlowController {
         countTotal: Int,
         sections: [CommonSectionData],
         services: [ServiceData],
-        externalImportService: ExternalImportService
+        externalImportService: ExternalImportService,
+        animated: Bool = true
     ) {
         let view = ImporterPreimportSummaryViewController()
         let flowController = ImporterPreimportSummaryFlowController(viewController: view)
@@ -60,7 +61,7 @@ final class ImporterPreimportSummaryFlowController: FlowController {
         )
         view.presenter = presenter
         
-        navigationController.pushViewController(view, animated: true)
+        navigationController.pushViewController(view, animated: animated)
     }
 }
 

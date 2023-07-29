@@ -239,7 +239,7 @@ extension TokensSectionHeader {
         
         private func commonInit() {
             let margin = Theme.Metrics.standardMargin / 2.0
-            applyRoundedBorder(withBorderColor: ThemeColor.tableSeparator, width: 1)
+            
             addSubview(label, with: [
                 widthAnchor.constraint(equalTo: heightAnchor),
                 label.topAnchor.constraint(equalTo: topAnchor),
@@ -251,6 +251,23 @@ extension TokensSectionHeader {
         
         func setCount(_ count: String) {
             label.text = count
+        }
+        
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            applyBorder()
+        }
+        
+        override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+            super.traitCollectionDidChange(previousTraitCollection)
+            
+            guard traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle else { return }
+
+            applyBorder()
+        }
+        
+        private func applyBorder() {
+            applyRoundedBorder(withBorderColor: ThemeColor.tableSeparator, width: 1)
         }
     }
     

@@ -20,11 +20,19 @@
 import UIKit
 import UniformTypeIdentifiers
 
-final class ImporterOpenFileViewController: UIDocumentBrowserViewController {
-    var presenter: ImporterOpenFilePresenter?
+final class ImporterOpenFileViewController: UIDocumentPickerViewController {
+    var handleCantReadFile: Callback?
+    var handleFileOpen: ((URL) -> Void)?
+    var handleCancelFileOpen: Callback?
     
-    override init(forOpening contentTypes: [UTType]?) {
-        super.init(forOpening: contentTypes)
+    override init(forOpeningContentTypes contentTypes: [UTType]?, asCopy: Bool) {
+        let supportedTypes: [UTType] = [
+            UTType.json,
+            UTType.text,
+            UTType(filenameExtension: "2fas", conformingTo: UTType.json),
+            UTType(filenameExtension: "bak", conformingTo: UTType.json)
+        ].compactMap({ $0 })
+        super.init(forOpeningContentTypes: supportedTypes, asCopy: false)
         
         commonInit()
     }
@@ -36,45 +44,22 @@ final class ImporterOpenFileViewController: UIDocumentBrowserViewController {
     }
     
     private func commonInit() {
-        allowsDocumentCreation = false
-        allowsPickingMultipleItems = false
         shouldShowFileExtensions = true
+        allowsMultipleSelection = false
         delegate = self
-        additionalTrailingNavigationBarButtonItems = [
-            UIBarButtonItem(
-                title: T.Commons.cancel,
-                style: .plain,
-                target: self,
-                action: #selector(cancelImportAction)
-            )
-        ]
-        UINavigationBar.appearance(whenContainedInInstancesOf: [
-            UIDocumentBrowserViewController.self
-        ]).tintColor = Theme.Colors.Text.theme
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        presenter?.viewDidAppear()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        presenter = nil
-    }
-    
-    @objc
-    private func cancelImportAction() {
-        presenter?.handleCancelFileOpen()
     }
 }
 
-extension ImporterOpenFileViewController: UIDocumentBrowserViewControllerDelegate {
-    func documentBrowser(_ controller: UIDocumentBrowserViewController, didPickDocumentsAt documentURLs: [URL]) {
-        guard let url = documentURLs.first else {
-            presenter?.handleCantReadFile()
+extension ImporterOpenFileViewController: UIDocumentPickerDelegate {
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let url = urls.first else {
+            handleCantReadFile?()
             return
         }
-        presenter?.handleFileOpen(url)
+        handleFileOpen?(url)
+    }
+    
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        handleCancelFileOpen?()
     }
 }

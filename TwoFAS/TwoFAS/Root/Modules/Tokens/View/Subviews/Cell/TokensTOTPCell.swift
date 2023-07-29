@@ -145,7 +145,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
             circularProgress.isHidden = true
             revealButton.isHidden = false
         case .unlocked(let progress, let period, let currentToken, let nextToken, let willChangeSoon):
-            let wasLocked = isLocked && shouldAnimate
+            let wasLocked = isLocked && shouldAnimate && !willChangeSoon
             isLocked = false
 
             circularProgress.isHidden = false
@@ -170,14 +170,15 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
             circularProgress.isHidden = true
             revealButton.isHidden = false
         case .unlocked(let progress, let isPlanned, let currentToken, let nextToken, let willChangeSoon):
+            let blockAnimation = isLocked && willChangeSoon
             isLocked = false
             
             circularProgress.isHidden = false
             revealButton.isHidden = true
             
             circularProgress.setProgress(progress, animated: isPlanned)
-            tokenLabel.setToken(currentToken, animated: !isPlanned)
-            shouldMark(willChangeSoon: willChangeSoon, isPlanned: isPlanned)
+            tokenLabel.setToken(currentToken, animated: !isPlanned && !blockAnimation)
+            shouldMark(willChangeSoon: willChangeSoon, isPlanned: isPlanned && !blockAnimation)
             nextTokenLabel.set(nextToken: nextToken)
         }
     }

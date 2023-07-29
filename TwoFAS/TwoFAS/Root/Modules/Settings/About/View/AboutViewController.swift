@@ -59,13 +59,9 @@ final class AboutViewController: UIViewController {
         hidesBottomBarWhenPushed = false
         navigationItem.backButtonDisplayMode = .minimal
         
-        footer.setText(T.Settings.version(presenter.appVersion))
+        setupFooter()
         
-        view.addSubview(footer, with: [
-            footer.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-            footer.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
-            footer.bottomAnchor.constraint(equalTo: view.safeBottomAnchor)
-        ])
+        tableView.separatorInset = .zero
     }
     
     private func setupTableViewLayout() {
@@ -77,6 +73,11 @@ final class AboutViewController: UIViewController {
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor)
         ])
+    }
+    
+    private func setupFooter() {
+        footer.setText(T.Settings.version(presenter.appVersion))
+        tableView.tableFooterView = footer
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,7 +120,13 @@ extension AboutViewController {
         } else {
             cell.selectionStyle = .default
         }
-        cell.update(icon: nil, title: data.title, kind: accessory, decorateText: decorateText)
+        let icon: UIImage? = {
+            guard let img = data.icon else { return nil }
+            let traitCollection = UITraitCollection(userInterfaceStyle: .light)
+            return img.withConfiguration(traitCollection.imageConfiguration)
+        }()
+        
+        cell.update(icon: icon, title: data.title, kind: accessory, decorateText: decorateText)
         return cell
     }
     

@@ -79,7 +79,7 @@ extension LinkInteractor: LinkInteracting {
     
     func handleURLIfNecessary() {
         Log("LinkInteractor - handleCodeIfNecessary", module: .interactor)
-        guard mainRepository.hasStoredURL() else {
+        guard hasStoredURL else {
             Log("LinkInteractor - handleCodeIfNecessary - no url", module: .interactor)
             return
         }

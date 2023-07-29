@@ -138,7 +138,7 @@ private extension NewCodeInteractor {
             name: codeName,
             secret: code.secret,
             serviceTypeID: serviceDefinition?.serviceTypeID,
-            additionalInfo: additionalInfoValue,
+            additionalInfo: additionalInfoValue?.sanitizeInfo(),
             rawIssuer: code.issuer,
             otpAuth: code.otpAuth,
             tokenPeriod: code.period,

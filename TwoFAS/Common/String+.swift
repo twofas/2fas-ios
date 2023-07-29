@@ -130,11 +130,34 @@ public extension String {
         return self[0...1].uppercased()
     }
     
+    func trim() -> String {
+        trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
     func components(withMaxLength length: Int) -> [String] {
         stride(from: 0, to: self.count, by: length).map {
             let start = self.index(self.startIndex, offsetBy: $0)
             let end = self.index(start, offsetBy: length, limitedBy: self.endIndex) ?? self.endIndex
             return String(self[start..<end])
         }
+    }
+    
+    func sanitizeInfo() -> String {
+        let elipsis = "..."
+        let str = self.trim()
+            .replacingOccurrences(of: "https://", with: "")
+            .replacingOccurrences(of: "http://", with: "")
+        var append = false
+        var strEnd = str.count
+        if str.count > ServiceRules.additionalInfoMaxLength {
+            strEnd = ServiceRules.additionalInfoMaxLength - elipsis.count
+            append = true
+        }
+        var cutStr = String(str[0..<strEnd])
+        if append {
+            cutStr += elipsis
+        }
+        
+        return cutStr
     }
 }

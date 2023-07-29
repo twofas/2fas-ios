@@ -41,7 +41,7 @@ extension ComposeServiceSectionCell.InputConfig.Kind {
             canPaste: true,
             shouldUppercase: false,
             returnKeyType: .done,
-            maxLength: ServiceRules.additionalInfoMaxLenght,
+            maxLength: ServiceRules.additionalInfoMaxLength,
             autocapitalizationType: UITextAutocapitalizationType.none
         )
         case .serviceName: return

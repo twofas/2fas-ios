@@ -102,7 +102,7 @@
 	<key>GOOGLE_ANALYTICS_REGISTRATION_WITH_AD_NETWORK_ENABLED</key>
 	<false/>
 	<key>FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED</key>
-	<string>YES</string>
+	<true/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
@@ -113,6 +113,24 @@
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSPinnedDomains</key>
+		<dict>
+			<key>api2.2fas.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<false/>
+				<key>NSPinnedLeafIdentities</key>
+				<array>
+					<dict>
+						<key>SPKI-SHA256-BASE64</key>
+						<string>n2w9C3WwaSon887HddnNt5Duchxhs//fJ/1/Lgm2fd0=</string>
+					</dict>
+				</array>
+			</dict>
+		</dict>
+	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Used for scanning QR-codes</string>
 	<key>NSFaceIDUsageDescription</key>

@@ -20,26 +20,18 @@
 import Foundation
 
 final class ImporterOpenFilePresenter {
-    private let flowController: ImporterOpenFileFlowControlling
+    private let flowController: ImporterOpenFileHeadlessFlowControlling
     private let interactor: ImporterOpenFileModuleInteracting
     
     private var didHandleURL = false
     
-    init(flowController: ImporterOpenFileFlowControlling, interactor: ImporterOpenFileModuleInteracting) {
+    init(flowController: ImporterOpenFileHeadlessFlowControlling, interactor: ImporterOpenFileModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
     }
 }
 
 extension ImporterOpenFilePresenter {
-    func handleCancelFileOpen() {
-        flowController.toClose()
-    }
-    
-    func handleCantReadFile() {
-        flowController.toFileError(error: .cantReadFile(reason: nil))
-    }
-    
     func handleFileOpen(_ url: URL) {
         interactor.openFile(url) { [weak self] result in
             switch result {
@@ -53,11 +45,13 @@ extension ImporterOpenFilePresenter {
         }
     }
     
-    func viewDidAppear() {
+    func start() {
         guard !didHandleURL else { return }
         didHandleURL = true
         if let url = interactor.url {
             handleFileOpen(url)
+        } else {
+            flowController.toOpenFile()
         }
     }
 }

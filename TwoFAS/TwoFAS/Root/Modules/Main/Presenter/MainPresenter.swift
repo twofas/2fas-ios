@@ -39,7 +39,7 @@ final class MainPresenter {
         flowController.toSetupSplit()
     }
     
-    func viewWillAppear() {
+    func viewDidAppear() {
         if let url = interactor.checkForImport() {
             flowController.toOpenFileImport(url: url)
             interactor.clearImportedFileURL()
@@ -86,6 +86,12 @@ final class MainPresenter {
     
     func handleAuthorize(for tokenRequestID: String) {
         flowController.toAuthorize(for: tokenRequestID)
+    }
+    
+    func handleOpenFile() {
+        guard let url = interactor.checkForImport() else { return }
+        flowController.toOpenFileImport(url: url)
+        interactor.clearImportedFileURL()
     }
 }
 

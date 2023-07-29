@@ -50,19 +50,12 @@ extension ComposeServicePresenter {
                         error: keyError
                     )
                 )),
-                .init(kind: .input(.init(kind: .additionalInfo, value: additionalInfo)))
+                .init(kind: .input(.init(kind: .additionalInfo, value: additionalInfo))),
+                .init(kind: .navigate(.init(kind: .advanced, isEnabled: true, accessory: nil)))
             ]
         )
-        
+
         let currentCategory = interactor.selectedSectionTitle ?? T.Tokens.myTokens
-        let advanced = ComposeServiceSection(
-            title: nil,
-            cells: [
-                .init(kind: .navigate(.init(kind: .advanced, isEnabled: true, accessory: nil))),
-                .init(kind: .navigate(.init(kind: .category, isEnabled: true, accessory: .label(currentCategory))))
-            ]
-        )
-        
         let iconKind: IconType = interactor.iconType
         let iconTypeID: IconTypeID = interactor.iconTypeID
         let labelTitle: String = interactor.labelTitle
@@ -99,11 +92,12 @@ extension ComposeServicePresenter {
                     kind: .navigate(
                         .init(kind: .badgeColor, isEnabled: true, accessory: .badgeColor(badgeColor))
                     )
-                )
+                ),
+                .init(kind: .navigate(.init(kind: .category, isEnabled: true, accessory: .label(currentCategory))))
             ]
         )
         
-        let webExtension = ComposeServiceSection(title: nil, cells: [
+        let webExtension = ComposeServiceSection(title: T.Tokens.addManualOther, cells: [
             .init(kind:
                     .navigate(.init(kind: .browserExtension, isEnabled: interactor.webExtensionActive, accessory: nil))
             )
@@ -120,7 +114,6 @@ extension ComposeServicePresenter {
         
         var array = [
             service,
-            advanced,
             personalization
         ]
         

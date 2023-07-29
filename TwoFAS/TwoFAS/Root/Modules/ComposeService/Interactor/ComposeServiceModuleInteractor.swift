@@ -469,7 +469,7 @@ private extension ComposeServiceModuleInteractor {
             isAdditionalInfoCorrect = true
             return
         }
-        isAdditionalInfoCorrect = additionalInfo.count <= ServiceRules.additionalInfoMaxLenght
+        isAdditionalInfoCorrect = additionalInfo.count <= ServiceRules.additionalInfoMaxLength
     }
     
     func serviceExists(for secret: String) -> Bool {

@@ -29,22 +29,25 @@ final class SettingsViewFooter: UIView {
     
     private var discordButton: UIButton = {
         let button = UIButton()
-        button.setImage(Asset.socialDiscord.image, for: .normal)
-        button.imageView?.tintColor = UIColor.systemGray2
-        return button
-    }()
-    
-    private var twitterButton: UIButton = {
-        let button = UIButton()
-        button.setImage(Asset.socialTwitter.image, for: .normal)
-        button.imageView?.tintColor = UIColor.systemGray2
+        button.setImage(Asset.socialLargeDiscord.image, for: .normal)
         return button
     }()
     
     private var youtubeButton: UIButton = {
         let button = UIButton()
-        button.setImage(Asset.socialYoutube.image, for: .normal)
-        button.imageView?.tintColor = UIColor.systemGray2
+        button.setImage(Asset.socialLargeYoutube.image, for: .normal)
+        return button
+    }()
+    
+    private var twitterButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Asset.socialLargeTwitter.image, for: .normal)
+        return button
+    }()
+    
+    private var githubButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Asset.socialLargeGithub.image, for: .normal)
         return button
     }()
     
@@ -81,11 +84,12 @@ final class SettingsViewFooter: UIView {
         constraint = stackView.centerXAnchor.constraint(equalTo: centerXAnchor)
         constraint?.isActive = true
         
-        stackView.addArrangedSubviews([discordButton, twitterButton, youtubeButton])
+        stackView.addArrangedSubviews([discordButton, youtubeButton, twitterButton, githubButton])
         
         discordButton.addTarget(self, action: #selector(discordAction), for: .touchUpInside)
-        twitterButton.addTarget(self, action: #selector(twitterAction), for: .touchUpInside)
         youtubeButton.addTarget(self, action: #selector(youtubeAction), for: .touchUpInside)
+        twitterButton.addTarget(self, action: #selector(twitterAction), for: .touchUpInside)
+        githubButton.addTarget(self, action: #selector(githubAction), for: .touchUpInside)
     }
     
     override func layoutMarginsDidChange() {
@@ -99,6 +103,11 @@ final class SettingsViewFooter: UIView {
     private func discordAction() {
         openURL?(.discord)
     }
+
+    @objc
+    private func youtubeAction() {
+        openURL?(.youtube)
+    }
     
     @objc
     private func twitterAction() {
@@ -106,7 +115,7 @@ final class SettingsViewFooter: UIView {
     }
     
     @objc
-    private func youtubeAction() {
-        openURL?(.youtube)
+    private func githubAction() {
+        openURL?(.github)
     }
 }

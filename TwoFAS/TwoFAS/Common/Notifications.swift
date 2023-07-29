@@ -24,4 +24,5 @@ extension Notification.Name {
     static let switchToBrowserExtension = Notification.Name("switchToBrowserExtension")
     static let orientationSizeWillChange = Notification.Name("orientationSizeWillChange")
     static let tokensScreenIsVisible = Notification.Name("tokensScreenIsVisible")
+    static let fileAwaitsOpening = Notification.Name("fileAwaitsOpening")
 }

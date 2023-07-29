@@ -29,6 +29,7 @@ protocol AboutFlowControlling: AnyObject {
     func toSendReport(with vc: UIViewController)
     func toSendLogs()
     func toAcknowledgements()
+    func toSocial(_ channel: SocialChannel)
 }
 
 final class AboutFlowController: FlowController {
@@ -117,6 +118,14 @@ extension AboutFlowController: AboutFlowControlling {
     
     func toAcknowledgements() {
         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+    }
+    
+    func toSocial(_ channel: SocialChannel) {
+        UIApplication.shared.open(
+            channel.url,
+            options: [:],
+            completionHandler: nil
+        )
     }
 }
 

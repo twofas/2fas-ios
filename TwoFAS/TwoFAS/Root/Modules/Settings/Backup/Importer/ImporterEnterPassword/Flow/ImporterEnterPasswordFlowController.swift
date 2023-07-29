@@ -55,7 +55,8 @@ final class ImporterEnterPasswordFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: ImporterEnterPasswordFlowControllerParent,
         data: ExchangeDataFormat,
-        externalImportService: ExternalImportService
+        externalImportService: ExternalImportService,
+        animated: Bool = true
     ) {
         let view = ImporterEnterPasswordViewController()
         let flowController = ImporterEnterPasswordFlowController(viewController: view)
@@ -71,7 +72,7 @@ final class ImporterEnterPasswordFlowController: FlowController {
         presenter.view = view
         view.presenter = presenter
         
-        navigationController.pushViewController(view, animated: true)
+        navigationController.pushViewController(view, animated: animated)
     }
 }
 

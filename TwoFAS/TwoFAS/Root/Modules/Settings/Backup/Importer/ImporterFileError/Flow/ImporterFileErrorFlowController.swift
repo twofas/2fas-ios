@@ -33,7 +33,8 @@ final class ImporterFileErrorFlowController: FlowController {
     static func push(
         in navigationController: UINavigationController,
         parent: ImporterFileErrorFlowControllerParent,
-        fileError: ImporterOpenFileError
+        fileError: ImporterOpenFileError,
+        animated: Bool = true
     ) {
         let view = ImporterFileErrorViewController()
         let flowController = ImporterFileErrorFlowController(viewController: view)
@@ -44,7 +45,7 @@ final class ImporterFileErrorFlowController: FlowController {
         )
         view.presenter = presenter
         
-        navigationController.pushViewController(view, animated: true)
+        navigationController.pushViewController(view, animated: animated)
     }
 }
 

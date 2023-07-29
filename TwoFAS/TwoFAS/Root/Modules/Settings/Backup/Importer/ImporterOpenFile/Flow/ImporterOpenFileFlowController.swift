@@ -19,13 +19,15 @@
 
 import UIKit
 import Common
+import UniformTypeIdentifiers
 
-protocol ImporterOpenFileFlowControllerParent: AnyObject {
-    func closeImporter()
+protocol ImporterOpenFileHeadlessFlowControllerParent: AnyObject {
+    func importerClose()
 }
 
-protocol ImporterOpenFileFlowControlling: AnyObject {
+protocol ImporterOpenFileHeadlessFlowControlling: AnyObject {
     func toClose()
+    func toOpenFile()
     func toPreimportSummary(
         countNew: Int,
         countTotal: Int,
@@ -38,39 +40,43 @@ protocol ImporterOpenFileFlowControlling: AnyObject {
     func toEnterPassword(for data: ExchangeDataFormat, externalImportService: ExternalImportService)
 }
 
-final class ImporterOpenFileFlowController: FlowController {
-    private weak var parent: ImporterOpenFileFlowControllerParent?
-    private weak var navigationController: UINavigationController!
+final class ImporterOpenFileHeadlessFlowController: FlowController {
+    private weak var parent: ImporterOpenFileHeadlessFlowControllerParent?
+    private var navigationController: UINavigationController?
+    private var presenter: ImporterOpenFilePresenter!
+    
+    private var isNaviPresented = false
     
     static func present(
         on viewController: UIViewController,
-        parent: ImporterOpenFileFlowControllerParent,
+        parent: ImporterOpenFileHeadlessFlowControllerParent,
         url: URL?
-    ) {
-        let view = ImporterOpenFileViewController(forOpening: nil)
-        let flowController = ImporterOpenFileFlowController(viewController: view)
+    ) -> ImporterOpenFileHeadlessFlowController {
+        let flowController = ImporterOpenFileHeadlessFlowController(viewController: viewController)
         flowController.parent = parent
         let interactor = InteractorFactory.shared.importerOpenFileModuleInteractor(url: url)
         let presenter = ImporterOpenFilePresenter(
             flowController: flowController,
             interactor: interactor
         )
-        view.presenter = presenter
         
-        let navi = RootNavigationController(rootViewController: view)
+        flowController.presenter = presenter
+        
+        let navi = RootNavigationController(rootViewController: UIViewController())
         navi.configureAsModal()
         navi.rootFlowController = flowController
         navi.isNavigationBarHidden = true
-
         flowController.navigationController = navi
         
-        viewController.present(navi, animated: true, completion: nil)
+        presenter.start()
+        
+        return flowController
     }
 }
 
-extension ImporterOpenFileFlowController: ImporterOpenFileFlowControlling {
+extension ImporterOpenFileHeadlessFlowController: ImporterOpenFileHeadlessFlowControlling {
     func toClose() {
-        parent?.closeImporter()
+        parent?.importerClose()
     }
     
     func toPreimportSummary(
@@ -80,38 +86,66 @@ extension ImporterOpenFileFlowController: ImporterOpenFileFlowControlling {
         services: [ServiceData],
         externalImportService: ExternalImportService
     ) {
-        ImporterPreimportSummaryFlowController.push(
-            in: navigationController,
-            parent: self,
-            countNew: countNew,
-            countTotal: countTotal,
-            sections: sections,
-            services: services,
-            externalImportService: externalImportService
-        )
+        showNavigationController { [weak self, weak navigationController] animated in
+            guard let self, let navigationController else { return }
+            
+            ImporterPreimportSummaryFlowController.push(
+                in: navigationController,
+                parent: self,
+                countNew: countNew,
+                countTotal: countTotal,
+                sections: sections,
+                services: services,
+                externalImportService: externalImportService,
+                animated: animated
+            )
+        }
     }
     
     func toFileError(error: ImporterOpenFileError) {
-        ImporterFileErrorFlowController.push(in: navigationController, parent: self, fileError: error)
+        showNavigationController { [weak self, weak navigationController] animated in
+            guard let self, let navigationController else { return }
+            
+            ImporterFileErrorFlowController.push(
+                in: navigationController,
+                parent: self,
+                fileError: error,
+                animated: animated
+            )
+        }
     }
     
     func toFileIsEmpty() {
-        ImporterFileErrorFlowController.push(in: navigationController, parent: self, fileError: .noNewServices)
+        showNavigationController { [weak self, weak navigationController] animated in
+            guard let self, let navigationController else { return }
+            
+            ImporterFileErrorFlowController.push(
+                in: navigationController,
+                parent: self,
+                fileError: .noNewServices,
+                animated: animated
+            )
+        }
     }
     
     func toEnterPassword(for data: ExchangeDataFormat, externalImportService: ExternalImportService) {
-        ImporterEnterPasswordFlowController.push(
-            in: navigationController,
-            parent: self,
-            data: data,
-            externalImportService: externalImportService
-        )
+        showNavigationController { [weak self, weak navigationController] animated in
+            guard let self, let navigationController else { return }
+            
+            ImporterEnterPasswordFlowController.push(
+                in: navigationController,
+                parent: self,
+                data: data,
+                externalImportService: externalImportService,
+                animated: animated
+            )
+        }
     }
 }
 
-extension ImporterOpenFileFlowController: ImporterEnterPasswordFlowControllerParent {
+extension ImporterOpenFileHeadlessFlowController: ImporterEnterPasswordFlowControllerParent {
     func hidePasswordImport() {
-        parent?.closeImporter()
+        parent?.importerClose()
     }
     
     func showPreimportSummary(
@@ -140,28 +174,46 @@ extension ImporterOpenFileFlowController: ImporterEnterPasswordFlowControllerPar
     
     func showWrongPassword() {
         let vc = createWrongPassword()
-        navigationController.present(vc, animated: true, completion: nil)
+        showNavigationController { [weak navigationController] _ in
+            navigationController?.present(vc, animated: true, completion: nil)
+        }
+    }
+    
+    func toOpenFile() {
+        let view = ImporterOpenFileViewController(forOpeningContentTypes: nil, asCopy: false)
+        view.handleCantReadFile = { [weak self] in
+            self?.toFileError(error: .cantReadFile(reason: nil))
+        }
+        view.handleFileOpen = { [weak self] url in
+            self?.presenter.handleFileOpen(url)
+        }
+        view.handleCancelFileOpen = { [weak self] in
+            self?.toClose()
+        }
+        _viewController.present(view, animated: true)
     }
 }
 
-extension ImporterOpenFileFlowController: ImporterFileErrorFlowControllerParent {
+extension ImporterOpenFileHeadlessFlowController: ImporterFileErrorFlowControllerParent {
     func hideFileError() {
-        parent?.closeImporter()
+        parent?.importerClose()
     }
 }
 
-extension ImporterOpenFileFlowController: ImporterPreimportSummaryFlowControllerParent {
+extension ImporterOpenFileHeadlessFlowController: ImporterPreimportSummaryFlowControllerParent {
     func hidePreimportSummary() {
-        parent?.closeImporter()
+        parent?.importerClose()
     }
     
     func showImportSummary(count: Int) {
         let vc = createSummary(count: count)
-        navigationController.present(vc, animated: true, completion: nil)
+        showNavigationController { [weak navigationController] _ in
+            navigationController?.present(vc, animated: true, completion: nil)
+        }
     }    
 }
 
-private extension ImporterOpenFileFlowController {
+private extension ImporterOpenFileHeadlessFlowController {
     func createWrongPassword() -> UIViewController {
         let alert = UIAlertController(
             title: T.Commons.error,
@@ -181,8 +233,20 @@ private extension ImporterOpenFileFlowController {
         )
         alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
         alert.didDisappear = { [weak self] _ in
-            self?.parent?.closeImporter()
+            self?.parent?.importerClose()
         }
         return alert
+    }
+    
+    func showNavigationController(completion: @escaping (Bool) -> Void) {
+        guard !isNaviPresented, let navigationController else {
+            completion(true)
+            return
+        }
+        
+        completion(false)
+        _viewController.present(navigationController, animated: true) { [weak self] in
+            self?.isNaviPresented = true
+        }
     }
 }

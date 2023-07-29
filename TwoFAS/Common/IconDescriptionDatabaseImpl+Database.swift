@@ -270,6 +270,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Nulab"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "403040EC-544E-40B3-A4FD-82C8947B19EC")!,
+                name: "BayPort Credit Union"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "492CFDB1-B046-49C4-B8C8-0232FD3F4675")!,
                 name: "Paddle"
             ),
@@ -336,6 +340,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "F9EF0672-FAEA-4223-A8CB-69B4718330D7")!,
                 name: "Phrase"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "C1FF2651-DFFC-42AA-8342-A78809E6020C")!,
+                name: "GradeSteps"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "26F2C4C6-39D2-4F8A-8D61-7F2E39424F4E")!,
@@ -426,6 +434,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Web Hosting Canada"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "C4E8280E-75C9-4742-8FBE-59406ED093EA")!,
+                name: "solo.to"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "5226962C-4F84-469D-9D64-1A0A466C3C5E")!,
                 name: "SouthXchange"
             ),
@@ -440,6 +452,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "F0359E70-4297-4693-AA8D-BA5FCA0668E8")!,
                 name: "Kayako"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "19F412EC-F01A-4976-955B-7F0D5AF83C07")!,
+                name: "Surety"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "51CDDF69-C85C-4A24-9790-209680D296E3")!,
@@ -484,6 +500,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "3FB39B5B-027D-45EC-AC61-A59841CC8282")!,
                 name: "Call of Duty Mobile"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "3686D8ED-CE4B-464A-AFC2-5451B18312C9")!,
+                name: "ETH Zürich"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "DB199EBC-BAC9-4A00-BFAD-5C4A017C853B")!,
@@ -698,6 +718,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Xink"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "A0D99D43-409E-4969-922E-356B14A831EF")!,
+                name: "OnMail"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "B887CA8F-06DC-4D85-9990-03C1DEA2060F")!,
                 name: "Karatbit"
             ),
@@ -748,6 +772,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "A7D645E3-28BB-4E7B-8283-EC5E8B899423")!,
                 name: "Coda"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "49F85B32-651C-421D-B564-2AFAC43B4591")!,
+                name: "Alarm.com"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "3D17C742-2A60-44FC-931A-60537102D17C")!,
@@ -1618,6 +1646,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Shareworks"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "2E13BE43-BAD8-4E37-BC19-1C95D90C986A")!,
+                name: "Trellix"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "2FB7A45B-7E61-40A8-A258-3C7E5172F355")!,
                 name: "NDAX"
             ),
@@ -2218,6 +2250,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "The Ohio State University"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "4AE2B7C2-0A3F-4B4D-8A74-8BE8CE6C6C46")!,
+                name: "Ukr.Net"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "CB2E0939-87C3-49B5-B727-3DEA0F888149")!,
                 name: "Wasabi"
             ),
@@ -2642,6 +2678,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Evernote"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "37DE87F7-1F31-49FF-BDA4-DADB082038CA")!,
+                name: "Barracuda Networks"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "49AC9022-B8ED-4911-B7A2-8D49712C935B")!,
                 name: "TaxBit"
             ),
@@ -2874,6 +2914,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "OpenVPN"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "6B777110-46A2-40E0-BEE7-391D19D5073B")!,
+                name: "Biterfill"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "67378F92-09C0-4113-8C7E-958BDA6EA387")!,
                 name: "Studio Ninja"
             ),
@@ -2944,6 +2988,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "DF2E67AF-C0D4-4DF7-9D14-69126C64B63B")!,
                 name: "GrowingIO"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "68BA2620-B4D0-48BE-962F-59C720FA92FB")!,
+                name: "Mailersend"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "EC70005A-F837-48BA-9117-0FE03E7BB81F")!,
@@ -3542,8 +3590,16 @@ final class IconDescriptionDatabaseGenerated {
                 name: "WitherHosting"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "B3682443-D203-4ACC-AE08-8FF904D2D57D")!,
+                name: "HT-Hosting"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "4417B65E-35F8-48A7-83D4-0C6AE4391D3C")!,
                 name: "Mist"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "0A1FDE94-C899-4FAA-B086-D039C2B2A178")!,
+                name: "StickyPassword"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "928647E4-14DE-434A-8210-817202D36D73")!,
@@ -4428,6 +4484,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "A29152D6-0AC4-41C6-8CE8-A84C4D87EBEF")!,
                 name: "Plex"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "13B54BA3-33FF-454F-8CDA-E538EBBEC5B5")!,
+                name: "Brick Hill"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "2FA5A5BD-FF1B-41DA-9109-25F9EA49F56F")!,

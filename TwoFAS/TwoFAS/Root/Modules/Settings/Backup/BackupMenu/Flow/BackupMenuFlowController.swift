@@ -33,6 +33,8 @@ protocol BackupMenuFlowControlling: AnyObject {
 final class BackupMenuFlowController: FlowController {
     private weak var parent: BackupMenuFlowControllerParent?
     
+    private var importer: ImporterOpenFileHeadlessFlowController?
+    
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: BackupMenuFlowControllerParent
@@ -76,7 +78,7 @@ extension BackupMenuFlowController: BackupMenuFlowControlling {
     }
     
     func toFileImport() {
-        ImporterOpenFileFlowController.present(on: viewController, parent: self, url: nil)
+        importer = ImporterOpenFileHeadlessFlowController.present(on: viewController, parent: self, url: nil)
     }
     
     func toFileExport() {
@@ -88,9 +90,11 @@ extension BackupMenuFlowController: BackupMenuFlowControlling {
     }
 }
 
-extension BackupMenuFlowController: ImporterOpenFileFlowControllerParent {
-    func closeImporter() {
-        viewController.dismiss(animated: true, completion: nil)
+extension BackupMenuFlowController: ImporterOpenFileHeadlessFlowControllerParent {
+    func importerClose() {
+        viewController.dismiss(animated: true) { [weak self] in
+            self?.importer = nil
+        }
     }
 }
 

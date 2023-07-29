@@ -48,6 +48,8 @@ final class MainSplitViewController: UIViewController {
     var isCollapsed: Bool { split.isCollapsed }
     var isInitialConfigRead = false
     
+    private var menuOverlayCollapsed = false
+    private var changingState = false
     private var menu: MainMenuViewController? {
         navigationNavi.viewControllers.first as? MainMenuViewController
     }
@@ -84,6 +86,7 @@ final class MainSplitViewController: UIViewController {
             object: nil
         )
         setInitialTrait()
+        updateDisplayMode()
         presenter.viewWillAppear()
     }
     
@@ -127,6 +130,20 @@ final class MainSplitViewController: UIViewController {
         split.view.backgroundColor = .clear
     }
     
+    // swiftlint:disable line_length
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        // swiftlint:enable line_length
+        super.willTransition(to: newCollection, with: coordinator)
+
+        updateDisplayMode()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        updateDisplayMode()
+    }
+    
     private func setInitialTrait() {
         guard traitCollection.horizontalSizeClass != .unspecified, !isInitialConfigRead else { return }
         
@@ -135,6 +152,27 @@ final class MainSplitViewController: UIViewController {
             presenter.handleCollapse()
         } else {
             presenter.handleExpansion()
+        }
+    }
+    
+    private func updateDisplayMode() {
+        if UIApplication.isLandscape {
+            guard split.preferredDisplayMode != .oneBesideSecondary else { return }
+            split.preferredDisplayMode = .oneBesideSecondary
+            split.preferredSplitBehavior = .tile
+        } else {
+            guard
+                split.preferredDisplayMode != .oneOverSecondary &&
+                split.preferredDisplayMode != .secondaryOnly
+            else { return }
+
+            split.preferredSplitBehavior = .overlay
+            
+            if menuOverlayCollapsed {
+                split.preferredDisplayMode = .secondaryOnly
+            } else {
+                split.preferredDisplayMode = .oneOverSecondary
+            }
         }
     }
     
@@ -197,6 +235,13 @@ extension MainSplitViewController: UISplitViewControllerDelegate {
             settingsViewController?.showRevealButton()
         } else {
             settingsViewController?.hideRevealButton()
+        }
+        
+        guard !UIApplication.isLandscape else { return }
+        if svc.displayMode == .oneOverSecondary && displayMode == .secondaryOnly {
+            menuOverlayCollapsed = true
+        } else if svc.displayMode == .secondaryOnly && displayMode == .oneOverSecondary {
+            menuOverlayCollapsed = false
         }
     }
 }

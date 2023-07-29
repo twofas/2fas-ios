@@ -28,7 +28,7 @@ protocol FileInteracting: AnyObject {
 
 final class FileIteractor {
     private let mainRepository: MainRepository
-    
+        
     init(mainRepository: MainRepository) {
         self.mainRepository = mainRepository
     }
@@ -44,8 +44,12 @@ extension FileIteractor: FileInteracting {
             url.pathExtension == ExchangeConsts.extensionAEGIS
         else { return false }
         mainRepository.fileURL = url
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: .fileAwaitsOpening, object: nil)
+        }
         return true
     }
+    
     func markAsHandled() {
         mainRepository.fileURL = nil
     }

@@ -222,6 +222,7 @@
 		C2379D0C26B6DE660010C6B1 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2932EF21FFE94A900FBD4D0 /* Common.framework */; };
 		C2379D1026B6DF720010C6B1 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE31269E274700506ACF /* IntentsUI.framework */; };
 		C239DE9026CC5366002301E2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C239DE8F26CC5366002301E2 /* Localizable.strings */; };
+		C23B33F12A48DF6A0014B804 /* ImporterOpenFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */; };
 		C23B5D6628F229CC00FC6364 /* ServiceMatchRules+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B5D6528F229CC00FC6364 /* ServiceMatchRules+.swift */; };
 		C23B899527C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B899427C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift */; };
 		C23B899727C287480028FE34 /* NavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B899627C287480028FE34 /* NavigationFlowController.swift */; };
@@ -254,7 +255,6 @@
 		C240485C276549C00076376E /* ImportFromFileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240485B276549C00076376E /* ImportFromFileInteractor.swift */; };
 		C240485E27654C5F0076376E /* ImporterEnterPasswordFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240485D27654C5F0076376E /* ImporterEnterPasswordFlowController.swift */; };
 		C240486027654E370076376E /* ImporterEnterPasswordModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240485F27654E370076376E /* ImporterEnterPasswordModuleInteractor.swift */; };
-		C240486927655A0E0076376E /* ImporterOpenFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240486827655A0E0076376E /* ImporterOpenFileViewController.swift */; };
 		C240486B27655BD70076376E /* ImporterOpenFilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240486A27655BD70076376E /* ImporterOpenFilePresenter.swift */; };
 		C240486F27655E760076376E /* ImporterOpenFileFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240486E27655E760076376E /* ImporterOpenFileFlowController.swift */; };
 		C24048712765612F0076376E /* RootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24048702765612F0076376E /* RootNavigationController.swift */; };
@@ -362,6 +362,8 @@
 		C25C318D2881BC5A002C9044 /* NotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C318C2881BC5A002C9044 /* NotificationInteractor.swift */; };
 		C25C318F2881CDA4002C9044 /* LinkInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C318E2881CDA4002C9044 /* LinkInteractor.swift */; };
 		C25C661428BADAB0008EC66A /* AboutFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C661328BADAB0008EC66A /* AboutFlowController.swift */; };
+		C25D5E762A64863000CA359B /* Code+LastPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25D5E752A64863000CA359B /* Code+LastPass.swift */; };
+		C25D5E782A64908200CA359B /* CameraLastPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25D5E772A64908200CA359B /* CameraLastPass.swift */; };
 		C25E898E2663DF9700A60CE5 /* TokensSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E898D2663DF9700A60CE5 /* TokensSectionHeader.swift */; };
 		C25E89902663F11900A60CE5 /* SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E898F2663F11900A60CE5 /* SectionData.swift */; };
 		C25E8994266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E8992266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift */; };
@@ -1474,6 +1476,7 @@
 		C236C3EE2A1CC105002A2129 /* ListStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStyle.swift; sourceTree = "<group>"; };
 		C23721A02804C07600DE335D /* CameraScannerNavigationFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraScannerNavigationFlowController.swift; sourceTree = "<group>"; };
 		C239DE8F26CC5366002301E2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileViewController.swift; sourceTree = "<group>"; };
 		C23B5D6528F229CC00FC6364 /* ServiceMatchRules+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceMatchRules+.swift"; sourceTree = "<group>"; };
 		C23B899427C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceNavigationFlowController.swift; sourceTree = "<group>"; };
 		C23B899627C287480028FE34 /* NavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationFlowController.swift; sourceTree = "<group>"; };
@@ -1503,7 +1506,6 @@
 		C240485B276549C00076376E /* ImportFromFileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFromFileInteractor.swift; sourceTree = "<group>"; };
 		C240485D27654C5F0076376E /* ImporterEnterPasswordFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterEnterPasswordFlowController.swift; sourceTree = "<group>"; };
 		C240485F27654E370076376E /* ImporterEnterPasswordModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterEnterPasswordModuleInteractor.swift; sourceTree = "<group>"; };
-		C240486827655A0E0076376E /* ImporterOpenFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileViewController.swift; sourceTree = "<group>"; };
 		C240486A27655BD70076376E /* ImporterOpenFilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFilePresenter.swift; sourceTree = "<group>"; };
 		C240486E27655E760076376E /* ImporterOpenFileFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileFlowController.swift; sourceTree = "<group>"; };
 		C24048702765612F0076376E /* RootNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootNavigationController.swift; sourceTree = "<group>"; };
@@ -1609,6 +1611,8 @@
 		C25C318C2881BC5A002C9044 /* NotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationInteractor.swift; sourceTree = "<group>"; };
 		C25C318E2881CDA4002C9044 /* LinkInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkInteractor.swift; sourceTree = "<group>"; };
 		C25C661328BADAB0008EC66A /* AboutFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutFlowController.swift; sourceTree = "<group>"; };
+		C25D5E752A64863000CA359B /* Code+LastPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Code+LastPass.swift"; sourceTree = "<group>"; };
+		C25D5E772A64908200CA359B /* CameraLastPass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraLastPass.swift; sourceTree = "<group>"; };
 		C25E898D2663DF9700A60CE5 /* TokensSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensSectionHeader.swift; sourceTree = "<group>"; };
 		C25E898F2663F11900A60CE5 /* SectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionData.swift; sourceTree = "<group>"; };
 		C25E89912664021900A60CE5 /* TwoFAS4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS4.xcdatamodel; sourceTree = "<group>"; };
@@ -1764,6 +1768,10 @@
 		C2830D7F293D4BDC00B3DDAF /* TokensViewController+TokensSectionHeaderDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+TokensSectionHeaderDataSource.swift"; sourceTree = "<group>"; };
 		C2830D81293D53CA00B3DDAF /* TokensMoveItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensMoveItem.swift; sourceTree = "<group>"; };
 		C28356222897098300421882 /* SelectFromGalleryAdvice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectFromGalleryAdvice.swift; sourceTree = "<group>"; };
+		C284180F2A65E57000E0F700 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
+		C28418102A65E57100E0F700 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C28418112A65E57100E0F700 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C28418122A65E57200E0F700 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C2842EFF23492A0900642255 /* VersionDecoded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionDecoded.swift; sourceTree = "<group>"; };
 		C2842F0123492A7E00642255 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		C284991027CC0FC70092098D /* ComposeServiceAlgorithmPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAlgorithmPresenter.swift; sourceTree = "<group>"; };
@@ -2950,6 +2958,7 @@
 				C2FDEE58279CC17A002CAB9E /* View */,
 				C21987C627961BF600724E63 /* CameraErrorTemplate.swift */,
 				C2FDEE53279C8F39002CAB9E /* CameraGoogleAuth.swift */,
+				C25D5E772A64908200CA359B /* CameraLastPass.swift */,
 			);
 			path = "Camera Scanner";
 			sourceTree = "<group>";
@@ -3677,8 +3686,8 @@
 		C2404864276559D50076376E /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C240486827655A0E0076376E /* ImporterOpenFileViewController.swift */,
 				C2FAE12428C7346900F2446F /* AEGISParseResultErrorStrings.swift */,
+				C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4933,6 +4942,7 @@
 				C2F245D2293566F0006F7F5B /* Code+Support.swift */,
 				C208101327948DFD0035E339 /* Code+GoogleAuth.swift */,
 				C278122427FA3A3200F31453 /* Code+TwoFASWebExtension.swift */,
+				C25D5E752A64863000CA359B /* Code+LastPass.swift */,
 			);
 			path = CodeSupport;
 			sourceTree = "<group>";
@@ -7049,6 +7059,7 @@
 				it,
 				pl,
 				"pt-BR",
+				id,
 			);
 			mainGroup = C236666A1FB2644900989ACA;
 			packageReferences = (
@@ -7342,7 +7353,6 @@
 				C2D39DE52823324E00E864E9 /* MainRepositoryImpl+News.swift in Sources */,
 				C233BD222801CB2600A9CFF2 /* MainRepositoryImpl+Network.swift in Sources */,
 				C21247FB27B7181A0044D9F2 /* ComposeServiceModels.swift in Sources */,
-				C240486927655A0E0076376E /* ImporterOpenFileViewController.swift in Sources */,
 				C2D6731D25DB2C5D004BD697 /* ToastCenter.swift in Sources */,
 				C2497730277F3EFB00DC872C /* ServiceModifyInteractor.swift in Sources */,
 				C25860B628247B87009AE54F /* NewsPresenter.swift in Sources */,
@@ -7379,6 +7389,7 @@
 				C2BDC6D51FC1CBE100967D0E /* Theme.swift in Sources */,
 				C2872DDA27A6B9C2000F5AE9 /* SortType+.swift in Sources */,
 				C21A9E9427CC0A7100FE4CC4 /* ComposeServiceRefreshTimePresenter+Menu.swift in Sources */,
+				C23B33F12A48DF6A0014B804 /* ImporterOpenFileViewController.swift in Sources */,
 				C2698B702986CA3C00EBC179 /* MainTabFlowController.swift in Sources */,
 				C2014E0427BEED630046B75C /* ComposeServiceInputCell.swift in Sources */,
 				C2BDC6DD1FC1CEDC00967D0E /* ContainerViewController.swift in Sources */,
@@ -7406,6 +7417,7 @@
 				C24471B325F506390024B4C5 /* ComposeServiceFormRow.swift in Sources */,
 				C2A22553293BEF3300B76115 /* ServiceAddedViewContaining.swift in Sources */,
 				C23387042781068E00F8DBC3 /* TrashPresenter.swift in Sources */,
+				C25D5E782A64908200CA359B /* CameraLastPass.swift in Sources */,
 				C21247F827B70D420044D9F2 /* LabelComposeFlowController.swift in Sources */,
 				C2E2C81127B03E7300F04B70 /* SearchResultEmptyView.swift in Sources */,
 				C29B2B7929982E4900EDE75B /* MainSplitModuleInteractor.swift in Sources */,
@@ -8137,6 +8149,7 @@
 				C2D50B5E25C71A0A00CBB959 /* CameraController.swift in Sources */,
 				C2081016279494980035E339 /* MigrationPayload+Conversion.swift in Sources */,
 				C2D50B6325C71A0A00CBB959 /* CameraPreview.swift in Sources */,
+				C25D5E762A64863000CA359B /* Code+LastPass.swift in Sources */,
 				C2D50B6125C71A0A00CBB959 /* CameraControllerDelegate.swift in Sources */,
 				C2F245D3293566F0006F7F5B /* Code+Support.swift in Sources */,
 				C29DD5861FE84575007ECEEE /* Code.swift in Sources */,
@@ -8407,6 +8420,7 @@
 				C261A1232A12BECD00A1519F /* it */,
 				C2F2E0152A24AB5B00E81225 /* pl */,
 				C2671C8B2A51C5A60002C4BB /* pt-BR */,
+				C28418112A65E57100E0F700 /* id */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -8423,6 +8437,7 @@
 				C261A1222A12BECC00A1519F /* it */,
 				C2F2E0142A24AB5900E81225 /* pl */,
 				C2671C8A2A51C5A60002C4BB /* pt-BR */,
+				C28418102A65E57100E0F700 /* id */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8448,6 +8463,7 @@
 				C261A1212A12BECC00A1519F /* it */,
 				C2F2E0132A24AB5800E81225 /* pl */,
 				C2671C892A51C5A60002C4BB /* pt-BR */,
+				C284180F2A65E57000E0F700 /* id */,
 			);
 			name = TwoFASWidget.intentdefinition;
 			sourceTree = "<group>";
@@ -8464,6 +8480,7 @@
 				C261A1242A12BECD00A1519F /* it */,
 				C2F2E0162A24AB5D00E81225 /* pl */,
 				C2671C8C2A51C5A70002C4BB /* pt-BR */,
+				C28418122A65E57200E0F700 /* id */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8487,7 +8504,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -8563,7 +8580,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -8641,7 +8658,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -8865,7 +8882,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 4.4.0;
+				MARKETING_VERSION = 4.5.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
@@ -8906,7 +8923,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 4.4.0;
+				MARKETING_VERSION = 4.5.0;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"-ObjC",
@@ -8936,7 +8953,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -9022,7 +9039,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -9101,7 +9118,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -9182,7 +9199,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFASAuth/Info.plist;
@@ -9192,7 +9209,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.4.0;
+				MARKETING_VERSION = 4.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASAuth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -9220,7 +9237,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.4.0;
+				MARKETING_VERSION = 4.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASAuth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -9238,7 +9255,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
@@ -9317,7 +9334,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -9396,7 +9413,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -9472,6 +9489,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = TwoFASTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
@@ -9526,7 +9544,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = TwoFASWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
@@ -9535,7 +9553,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.4.0;
+				MARKETING_VERSION = 4.5.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASWidget;
@@ -9565,7 +9583,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.4.0;
+				MARKETING_VERSION = 4.5.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -9583,7 +9601,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = TwoFASServiceIntent/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
@@ -9592,7 +9610,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.4.0;
+				MARKETING_VERSION = 4.5.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASServiceIntent;
@@ -9620,7 +9638,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.4.0;
+				MARKETING_VERSION = 4.5.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASServiceIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -9636,6 +9654,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(EMBEDDED_CONTENT_CONTAINS_SWIFT)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = ProtectionTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.4;

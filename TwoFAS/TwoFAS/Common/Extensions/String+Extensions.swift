@@ -66,10 +66,6 @@ extension String {
         return randomString
     }
     
-    func trim() -> String {
-        trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-    
     var twoLetters: String {
         guard self.count > 1 else {
             if self.count == 1 {

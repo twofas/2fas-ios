@@ -25,9 +25,9 @@ public enum ServiceRules {
     public static let privateKeyMaxLength = 512
     public static let privateKeyRegex = "^[a-zA-Z2-7]*$"
     public static let privateKeyAllowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz234567"
-    public static let additionalInfoMaxLenght = 50
+    public static let additionalInfoMaxLength = 50
     public static let minKeyLength: Int = 4
-    public static let maxSectionNameLenght: Int = 32
+    public static let maxSectionNameLength: Int = 32
     public static let defaultTwoLetters = "MN"
     
     public static func isPrivateKeyTooShort(privateKey: String) -> Bool {
@@ -48,6 +48,6 @@ public enum ServiceRules {
     }
     
     public static func isSectionNameValid(sectionName: String) -> Bool {
-        !sectionName.isEmpty && sectionName.count <= maxSectionNameLenght
+        !sectionName.isEmpty && sectionName.count <= maxSectionNameLength
     }
 }

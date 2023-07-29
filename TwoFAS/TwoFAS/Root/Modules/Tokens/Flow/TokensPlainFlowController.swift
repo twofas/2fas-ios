@@ -434,12 +434,6 @@ extension TokensPlainFlowController: ComposeServiceNavigationFlowControllerParen
     }
 }
 
-extension TokensPlainFlowController: ImporterOpenFileFlowControllerParent {
-    func closeImporter() {
-        dismiss(actions: [.finishedFlow, .newData])
-    }
-}
-
 extension TokensPlainFlowController: UploadLogsNavigationFlowControllerParent {
     func uploadLogsClose() {
         dismiss()

@@ -45,11 +45,20 @@ struct AboutCell: Hashable {
         case share
         case sendLogs
         case acknowledgements
+        case social(SocialChannel)
     }
     
     let title: String
     let accessory: AccessoryKind
     let action: Action?
+    let icon: UIImage?
+    
+    init(title: String, accessory: AccessoryKind, action: Action?, icon: UIImage? = nil) {
+        self.title = title
+        self.accessory = accessory
+        self.action = action
+        self.icon = icon
+    }
 }
 
 extension AboutCell.AccessoryKind {

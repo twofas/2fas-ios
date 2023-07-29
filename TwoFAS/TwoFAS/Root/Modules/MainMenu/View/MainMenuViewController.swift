@@ -27,7 +27,7 @@ protocol MainMenuViewControlling: AnyObject {
 
 final class MainMenuViewController: UIViewController {
     var presenter: MainMenuPresenter!
-        
+    
     private var collectionView: UICollectionView!
     private var collectionViewDataSource: UICollectionViewDiffableDataSource<MainMenuSection, MainMenuCell>!
     
@@ -36,7 +36,6 @@ final class MainMenuViewController: UIViewController {
             var configuration = UICollectionLayoutListConfiguration(appearance: .sidebar)
             configuration.showsSeparators = false
             configuration.headerMode = .none
-//            configuration.backgroundColor = .clear
             configuration.headerTopPadding = Theme.Metrics.standardMargin
             let section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
             return section
@@ -44,12 +43,20 @@ final class MainMenuViewController: UIViewController {
     }()
     
     private let contentCellRegistration = UICollectionView
-        .CellRegistration<UICollectionViewListCell, MainMenuCell> { cell, _, item in
+        .CellRegistration<MenuCell, MainMenuCell> { cell, _, item in
             let badgeSymbol = "●"
-
-            var contentConfiguration = UIListContentConfiguration.sidebarHeader()
+            
+            var contentConfiguration = UIListContentConfiguration.sidebarCell()
+            
+            cell.normalImage = item.icon
+            cell.selectedImage = item.selectedIcon
+            
             contentConfiguration.image = item.icon
-            contentConfiguration.imageProperties.reservedLayoutSize = .init(width: 32, height: 32)
+            contentConfiguration.textProperties.font = contentConfiguration
+                .textProperties.font.withTraits(traits: .traitBold)
+            contentConfiguration.imageProperties.reservedLayoutSize = .init(width: 24, height: 24)
+            contentConfiguration.textProperties.color = Theme.Colors.Text.main
+            
             if item.hasBadge {
                 let attributedString = NSMutableAttributedString(string: "\(item.title)\(badgeSymbol)")
                 attributedString.decorate(
@@ -64,8 +71,9 @@ final class MainMenuViewController: UIViewController {
             } else {
                 contentConfiguration.text = item.title
             }
+                        
             cell.contentConfiguration = contentConfiguration
-    }
+        }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,6 +92,7 @@ final class MainMenuViewController: UIViewController {
         collectionView.isScrollEnabled = false
         collectionView.delegate = self
         collectionView.backgroundColor = .clear
+        collectionView.allowsMultipleSelection = false
         
         collectionViewDataSource = UICollectionViewDiffableDataSource<MainMenuSection, MainMenuCell>(
             collectionView: collectionView,
@@ -100,7 +109,7 @@ final class MainMenuViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         presenter.viewWillAppear()
     }
 }
@@ -111,7 +120,6 @@ extension MainMenuViewController {
         in collectionView: UICollectionView,
         at indexPath: IndexPath
     ) -> UICollectionViewCell? {
-        // TODO: Add seperate section with section shortcuts
         collectionView.dequeueConfiguredReusableCell(using: contentCellRegistration, for: indexPath, item: item)
     }
 }
@@ -123,16 +131,67 @@ extension MainMenuViewController: MainMenuViewControlling {
             snapshot.appendSections([section])
             snapshot.appendItems(section.cells, toSection: section)
         }
-        collectionViewDataSource.apply(snapshot)
+
+        collectionViewDataSource.apply(snapshot, animatingDifferences: false)
     }
     
     func selectPosition(at indexPath: IndexPath) {
-        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .top)
+        guard self.collectionView.indexPathsForSelectedItems?.first != indexPath else { return }
+        self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .top)
     }
 }
 
 extension MainMenuViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         presenter.handleSelection(at: indexPath)
+    }
+}
+
+private final class MenuCell: UICollectionViewListCell {
+    weak var normalImage: UIImage?
+    weak var selectedImage: UIImage?
+    
+    override func updateConfiguration(using state: UICellConfigurationState) {
+        super.updateConfiguration(using: state)
+        guard
+            var cConfig = self.contentConfiguration?.updated(for: state) as? UIListContentConfiguration
+        else { return }
+        
+        if state.isSelected, let selectedImage {
+            cConfig.image = selectedImage
+        } else if let normalImage {
+            cConfig.image = normalImage
+        }
+        
+        cConfig.textProperties.colorTransformer = UIConfigurationColorTransformer { _ in
+            if state.isSelected {
+                return Theme.Colors.Text.light
+            } else if state.isHighlighted {
+                return Theme.Colors.Text.mainHighlighted
+            }
+            return Theme.Colors.Text.main
+        }
+        
+        cConfig.imageProperties.tintColorTransformer = UIConfigurationColorTransformer { _ in
+            if state.isSelected {
+                return Theme.Colors.Text.light
+            } else if state.isHighlighted {
+                return Theme.Colors.Text.mainHighlighted
+            }
+            return Theme.Colors.Controls.inactive
+        }
+        
+        self.contentConfiguration = cConfig
+        
+        guard var bConfig = self.backgroundConfiguration?.updated(for: state) else { return }
+        bConfig.backgroundColorTransformer = UIConfigurationColorTransformer { _ in
+            if state.isSelected {
+                return Theme.Colors.Fill.theme
+            } else if state.isHighlighted {
+                return Theme.Colors.Fill.themeLight
+            }
+            return .clear
+        }
+        self.backgroundConfiguration = bConfig
     }
 }

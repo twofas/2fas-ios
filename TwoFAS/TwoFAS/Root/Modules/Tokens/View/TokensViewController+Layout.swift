@@ -164,7 +164,7 @@ extension TokensViewController {
             let availableWidth = enviroment.container.effectiveContentSize.width
             var columns = Int(availableWidth / minimumCellWidth)
             let layoutMultiplier: CGFloat = {
-                guard presenter.listStyle == .default else { return 1.3 }
+                guard presenter.listStyle == .default else { return 1.25 }
                 return enviroment.traitCollection.preferredContentSizeCategory.layoutMultiplier
             }()
             if columns > 1 && layoutMultiplier != 1.0 {

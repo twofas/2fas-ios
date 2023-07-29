@@ -33,6 +33,7 @@ final class ExternalImportFlowController: FlowController {
     private weak var parent: ExternalImportFlowControllerParent?
     private weak var navigationController: UINavigationController?
     private var galleryViewController: UIViewController?
+    private var importer: ImporterOpenFileHeadlessFlowController?
     
     static func showAsRoot(
         in navigationController: UINavigationController,
@@ -120,7 +121,7 @@ extension ExternalImportFlowController: ExternalImportInstructionsFlowController
     
     func instructionsOpenFile() {
         guard let navigationController else { return }
-        ImporterOpenFileFlowController.present(on: navigationController, parent: self, url: nil)
+        importer = ImporterOpenFileHeadlessFlowController.present(on: navigationController, parent: self, url: nil)
     }
     
     func instructionsCamera() {
@@ -153,8 +154,11 @@ extension ExternalImportFlowController: SelectFromGalleryFlowControllerParent {
     func galleryToSendLogs(auditID: UUID) { endGallery() }
 }
 
-extension ExternalImportFlowController: ImporterOpenFileFlowControllerParent {
-    func closeImporter() { end() }
+extension ExternalImportFlowController: ImporterOpenFileHeadlessFlowControllerParent {
+    func importerClose() {
+        importer = nil
+        end()
+    }
 }
 
 private extension ExternalImportFlowController {

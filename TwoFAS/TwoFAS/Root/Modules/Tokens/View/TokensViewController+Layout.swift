@@ -189,7 +189,7 @@ extension TokensViewController {
         
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
-            subitem: item,
+            repeatingSubitem: item,
             count: itemsInRow
         )
         

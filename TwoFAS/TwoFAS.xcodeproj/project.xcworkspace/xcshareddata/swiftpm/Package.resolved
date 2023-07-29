@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GoogleUtilities.git",
       "state" : {
-        "revision" : "58d03d22beae762eaddbd30cb5a61af90d4b309f",
-        "version" : "7.11.3"
+        "revision" : "4446686bc3714d49ce043d0f68318f42ed718cb6",
+        "version" : "7.11.4"
       }
     },
     {
@@ -140,8 +140,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/promises.git",
       "state" : {
-        "revision" : "ec957ccddbcc710ccc64c9dcbd4c7006fcf8b73a",
-        "version" : "2.2.0"
+        "revision" : "e70e889c0196c76d22759eb50d6a0270ca9f1d9e",
+        "version" : "2.3.1"
       }
     },
     {
@@ -158,8 +158,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-protobuf.git",
       "state" : {
-        "revision" : "f25867a208f459d3c5a06935dceb9083b11cd539",
-        "version" : "1.22.0"
+        "revision" : "ce20dc083ee485524b802669890291c0d8090170",
+        "version" : "1.22.1"
       }
     }
   ],

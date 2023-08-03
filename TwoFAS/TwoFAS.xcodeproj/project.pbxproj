@@ -60,6 +60,14 @@
 		C20CD53E2A1D013200A7F324 /* TokensTOTPCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20CD53D2A1D013200A7F324 /* TokensTOTPCellType.swift */; };
 		C20CD5402A1D017700A7F324 /* TokensHOTPCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20CD53F2A1D017700A7F324 /* TokensHOTPCellType.swift */; };
 		C20E2DE52A7C27A500DB64BB /* GlobalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2DE42A7C27A500DB64BB /* GlobalState.swift */; };
+		C20E2DF32A7C4A7500DB64BB /* AddingServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2DF22A7C4A7400DB64BB /* AddingServiceViewController.swift */; };
+		C20E2DF52A7C4A8000DB64BB /*  AddingServicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2DF42A7C4A8000DB64BB /*  AddingServicePresenter.swift */; };
+		C20E2DF72A7C4AC900DB64BB /* AddingServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2DF62A7C4AC900DB64BB /* AddingServiceFlowController.swift */; };
+		C20E2DFE2A7C4DE000DB64BB /* AddingServiceMainFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2DFD2A7C4DE000DB64BB /* AddingServiceMainFlowController.swift */; };
+		C20E2E002A7C4EF200DB64BB /* AddingServiceMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2DFF2A7C4EF200DB64BB /* AddingServiceMainViewController.swift */; };
+		C20E2E072A7C51E700DB64BB /* AddingServiceTokenFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2E062A7C51E700DB64BB /* AddingServiceTokenFlowController.swift */; };
+		C20E2E092A7C51F500DB64BB /* AddingServiceTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2E082A7C51F500DB64BB /* AddingServiceTokenViewController.swift */; };
+		C20E2E0B2A7C52AA00DB64BB /* AddingServiceMainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2E0A2A7C52AA00DB64BB /* AddingServiceMainPresenter.swift */; };
 		C20E578C29297593002B215B /* UploadLogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E578B29297593002B215B /* UploadLogsViewController.swift */; };
 		C20E578F292976DA002B215B /* UUIDInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E578E292976DA002B215B /* UUIDInputField.swift */; };
 		C20E60F728188A8E00AB002E /* PushNotificationPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E60F628188A8E00AB002E /* PushNotificationPermissionView.swift */; };
@@ -1314,6 +1322,14 @@
 		C20CD53D2A1D013200A7F324 /* TokensTOTPCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTOTPCellType.swift; sourceTree = "<group>"; };
 		C20CD53F2A1D017700A7F324 /* TokensHOTPCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensHOTPCellType.swift; sourceTree = "<group>"; };
 		C20E2DE42A7C27A500DB64BB /* GlobalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalState.swift; sourceTree = "<group>"; };
+		C20E2DF22A7C4A7400DB64BB /* AddingServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceViewController.swift; sourceTree = "<group>"; };
+		C20E2DF42A7C4A8000DB64BB /*  AddingServicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " AddingServicePresenter.swift"; sourceTree = "<group>"; };
+		C20E2DF62A7C4AC900DB64BB /* AddingServiceFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceFlowController.swift; sourceTree = "<group>"; };
+		C20E2DFD2A7C4DE000DB64BB /* AddingServiceMainFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceMainFlowController.swift; sourceTree = "<group>"; };
+		C20E2DFF2A7C4EF200DB64BB /* AddingServiceMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceMainViewController.swift; sourceTree = "<group>"; };
+		C20E2E062A7C51E700DB64BB /* AddingServiceTokenFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceTokenFlowController.swift; sourceTree = "<group>"; };
+		C20E2E082A7C51F500DB64BB /* AddingServiceTokenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceTokenViewController.swift; sourceTree = "<group>"; };
+		C20E2E0A2A7C52AA00DB64BB /* AddingServiceMainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceMainPresenter.swift; sourceTree = "<group>"; };
 		C20E578B29297593002B215B /* UploadLogsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogsViewController.swift; sourceTree = "<group>"; };
 		C20E578E292976DA002B215B /* UUIDInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDInputField.swift; sourceTree = "<group>"; };
 		C20E60F628188A8E00AB002E /* PushNotificationPermissionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionView.swift; sourceTree = "<group>"; };
@@ -2565,6 +2581,133 @@
 				C2147CE7205D7FB50001D011 /* Security */,
 			);
 			path = Legacy;
+			sourceTree = "<group>";
+		};
+		C20E2DED2A7C4A3D00DB64BB /* AddingService */ = {
+			isa = PBXGroup;
+			children = (
+				C20E2DEE2A7C4A4900DB64BB /* AddingService */,
+				C20E2DF82A7C4D7700DB64BB /* Main */,
+				C20E2E012A7C519A00DB64BB /* Token */,
+			);
+			path = AddingService;
+			sourceTree = "<group>";
+		};
+		C20E2DEE2A7C4A4900DB64BB /* AddingService */ = {
+			isa = PBXGroup;
+			children = (
+				C20E2DF12A7C4A5A00DB64BB /* Flow */,
+				C20E2DF02A7C4A5400DB64BB /* Presenter */,
+				C20E2DEF2A7C4A5000DB64BB /* View */,
+			);
+			path = AddingService;
+			sourceTree = "<group>";
+		};
+		C20E2DEF2A7C4A5000DB64BB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C20E2DF22A7C4A7400DB64BB /* AddingServiceViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C20E2DF02A7C4A5400DB64BB /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C20E2DF42A7C4A8000DB64BB /*  AddingServicePresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C20E2DF12A7C4A5A00DB64BB /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				C20E2DF62A7C4AC900DB64BB /* AddingServiceFlowController.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		C20E2DF82A7C4D7700DB64BB /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				C20E2DFC2A7C4DB000DB64BB /* Flow */,
+				C20E2DFB2A7C4DA900DB64BB /* Interactor */,
+				C20E2DFA2A7C4DA300DB64BB /* Presenter */,
+				C20E2DF92A7C4D9D00DB64BB /* View */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		C20E2DF92A7C4D9D00DB64BB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C20E2DFF2A7C4EF200DB64BB /* AddingServiceMainViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C20E2DFA2A7C4DA300DB64BB /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C20E2E0A2A7C52AA00DB64BB /* AddingServiceMainPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C20E2DFB2A7C4DA900DB64BB /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		C20E2DFC2A7C4DB000DB64BB /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				C20E2DFD2A7C4DE000DB64BB /* AddingServiceMainFlowController.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		C20E2E012A7C519A00DB64BB /* Token */ = {
+			isa = PBXGroup;
+			children = (
+				C20E2E052A7C51D500DB64BB /* Flow */,
+				C20E2E042A7C51C700DB64BB /* Interactor */,
+				C20E2E032A7C51BF00DB64BB /* Presenter */,
+				C20E2E022A7C51BB00DB64BB /* View */,
+			);
+			path = Token;
+			sourceTree = "<group>";
+		};
+		C20E2E022A7C51BB00DB64BB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C20E2E082A7C51F500DB64BB /* AddingServiceTokenViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C20E2E032A7C51BF00DB64BB /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C20E2E042A7C51C700DB64BB /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		C20E2E052A7C51D500DB64BB /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				C20E2E062A7C51E700DB64BB /* AddingServiceTokenFlowController.swift */,
+			);
+			path = Flow;
 			sourceTree = "<group>";
 		};
 		C20E5786292944C5002B215B /* UploadLogs */ = {
@@ -5898,6 +6041,7 @@
 		C2C66F8C1FE0683000AD5A1C /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				C20E2DED2A7C4A3D00DB64BB /* AddingService */,
 				C2D75D38297DA07B0002531E /* Main */,
 				C235A00B298FD8BF008F4FD0 /* MainSplit */,
 				C2698B662986B3E500EBC179 /* MainTab */,
@@ -7346,6 +7490,7 @@
 				C2B1208B29D767590020281E /* AppearanceViewController.swift in Sources */,
 				C27A54AE27F0FD0C00321D2B /* BrowserExtensionPairingViewController.swift in Sources */,
 				C2B077CD292A98AD0074517F /* UploadLogsNavigationFlowController.swift in Sources */,
+				C20E2DF52A7C4A8000DB64BB /*  AddingServicePresenter.swift in Sources */,
 				C2FA3E77280AC5130097ED71 /* WebExtensionAuthInteractor.swift in Sources */,
 				C2A2255C293BFE1E00B76115 /* TokenInteractor.swift in Sources */,
 				C270365C293E9DDC00659CBF /* TokensModuleInteractor.swift in Sources */,
@@ -7445,6 +7590,7 @@
 				C24336E8299ECEC700BF35B1 /* NewsInteractor.swift in Sources */,
 				C2A2D23428F751A000B5D91E /* ExchangeDataFormat.swift in Sources */,
 				C27CDA7929A2A55100DC7C98 /* NetworkStatusInteractor.swift in Sources */,
+				C20E2DF72A7C4AC900DB64BB /* AddingServiceFlowController.swift in Sources */,
 				C28681E72891D41F00BE0CA7 /* TimerInteractor.swift in Sources */,
 				C207324B29F725DE00FB294E /* TokensDragIcon.swift in Sources */,
 				C2E2C80B27B038DC00F04B70 /* IconSelectorModuleInteractor.swift in Sources */,
@@ -7562,6 +7708,7 @@
 				C23B899727C287480028FE34 /* NavigationFlowController.swift in Sources */,
 				C2FC422123AA902700320ABE /* PresentableType.swift in Sources */,
 				C21A9E9C27CC0F6200FE4CC4 /* ComposeServiceAlgorithmViewController.swift in Sources */,
+				C20E2DFE2A7C4DE000DB64BB /* AddingServiceMainFlowController.swift in Sources */,
 				C2147CD9205D7B630001D011 /* PINPadVerifyPINDataModel.swift in Sources */,
 				C2CC80D827B99B0600294CF2 /* ComposeServicePresenter.swift in Sources */,
 				C2727D55278207D000B8FA03 /* TrashViewEmptyScreen.swift in Sources */,
@@ -7579,6 +7726,7 @@
 				C2D39DDA2823184500E864E9 /* ListNewsNetworkInteractor.swift in Sources */,
 				C240487827656AB50076376E /* ImporterFileErrorViewController.swift in Sources */,
 				C2FCB28C2825819000AF8A37 /* NewsViewController.swift in Sources */,
+				C20E2E002A7C4EF200DB64BB /* AddingServiceMainViewController.swift in Sources */,
 				C21247F427B7062F0044D9F2 /* LabelComposeColorSelector.swift in Sources */,
 				C258593C280318BA002DC749 /* PairingWebExtensionInteractor.swift in Sources */,
 				C2B39C7527A58F0E00D3B579 /* SelectFromGalleryPresenter.swift in Sources */,
@@ -7616,6 +7764,7 @@
 				C2BDC6D91FC1CBE100967D0E /* String+Extensions.swift in Sources */,
 				C2D6731C25DB2C5D004BD697 /* ToastWindow.swift in Sources */,
 				C29803C2245EEB470066DFE0 /* MainContainerGenerators.swift in Sources */,
+				C20E2E072A7C51E700DB64BB /* AddingServiceTokenFlowController.swift in Sources */,
 				C20935E629215453000F5AA7 /* AppInfoInteractor.swift in Sources */,
 				C235FA76229DAED80098F8E9 /* GridViewItemProviderWriting.swift in Sources */,
 				C23721A12804C07600DE335D /* CameraScannerNavigationFlowController.swift in Sources */,
@@ -7715,6 +7864,7 @@
 				C2AD653527F25F24008997DB /* BrowserExtensionFailedViewController.swift in Sources */,
 				C27A31CC29C90B110094679F /* RaivoData.swift in Sources */,
 				C2FCB28E282589AC00AF8A37 /* NewsViewEmptyScreen.swift in Sources */,
+				C20E2DF32A7C4A7500DB64BB /* AddingServiceViewController.swift in Sources */,
 				C2508E152753AAFD0072C564 /* SettingsMenuModuleInteractor.swift in Sources */,
 				C2F6BB08264886B7002A9747 /* IntroductionViewModel.swift in Sources */,
 				C287D4F9276A90EC0001B272 /* AppLock.swift in Sources */,
@@ -7773,6 +7923,7 @@
 				C21A9E9E27CC0F7200FE4CC4 /* ComposeServiceAlgorithmPresenter+Menu.swift in Sources */,
 				C20935D729214BC3000F5AA7 /* ExportToFileInteractor.swift in Sources */,
 				C249773C277F62B100DC872C /* TrashServiceViewController.swift in Sources */,
+				C20E2E092A7C51F500DB64BB /* AddingServiceTokenViewController.swift in Sources */,
 				C2338702278103B000F8DBC3 /* TrashModuleInteractor.swift in Sources */,
 				C2B39E5229F5848700EC31F6 /* TokensLogo.swift in Sources */,
 				C25859382802E75A002DC749 /* PushNotificationState.swift in Sources */,
@@ -7837,6 +7988,7 @@
 				C235A013298FE785008F4FD0 /* MainMenuPresenter.swift in Sources */,
 				C27A1EB329127C5700702DB9 /* CameraPermissionInteractor.swift in Sources */,
 				C2EA567128569ADD00026BFE /* AskForAuthFlowController.swift in Sources */,
+				C20E2E0B2A7C52AA00DB64BB /* AddingServiceMainPresenter.swift in Sources */,
 				C2147CE3205D7B790001D011 /* PINPadScreenData.swift in Sources */,
 				C2A74FF52610DDF5007E5AB3 /* Array+.swift in Sources */,
 				C2CC0A3C29D05DC900677A7B /* ExternalImportPresenter.swift in Sources */,

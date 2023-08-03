@@ -59,6 +59,7 @@
 		C20CD53C2A1CF03F00A7F324 /* TokensViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20CD53B2A1CF03F00A7F324 /* TokensViewController+Layout.swift */; };
 		C20CD53E2A1D013200A7F324 /* TokensTOTPCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20CD53D2A1D013200A7F324 /* TokensTOTPCellType.swift */; };
 		C20CD5402A1D017700A7F324 /* TokensHOTPCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20CD53F2A1D017700A7F324 /* TokensHOTPCellType.swift */; };
+		C20E2DE52A7C27A500DB64BB /* GlobalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2DE42A7C27A500DB64BB /* GlobalState.swift */; };
 		C20E578C29297593002B215B /* UploadLogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E578B29297593002B215B /* UploadLogsViewController.swift */; };
 		C20E578F292976DA002B215B /* UUIDInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E578E292976DA002B215B /* UUIDInputField.swift */; };
 		C20E60F728188A8E00AB002E /* PushNotificationPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E60F628188A8E00AB002E /* PushNotificationPermissionView.swift */; };
@@ -1312,6 +1313,7 @@
 		C20CD53B2A1CF03F00A7F324 /* TokensViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+Layout.swift"; sourceTree = "<group>"; };
 		C20CD53D2A1D013200A7F324 /* TokensTOTPCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTOTPCellType.swift; sourceTree = "<group>"; };
 		C20CD53F2A1D017700A7F324 /* TokensHOTPCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensHOTPCellType.swift; sourceTree = "<group>"; };
+		C20E2DE42A7C27A500DB64BB /* GlobalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalState.swift; sourceTree = "<group>"; };
 		C20E578B29297593002B215B /* UploadLogsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogsViewController.swift; sourceTree = "<group>"; };
 		C20E578E292976DA002B215B /* UUIDInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDInputField.swift; sourceTree = "<group>"; };
 		C20E60F628188A8E00AB002E /* PushNotificationPermissionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionView.swift; sourceTree = "<group>"; };
@@ -5679,6 +5681,7 @@
 				C2633EFC265A7D090034B836 /* TokenLabel.swift */,
 				C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */,
 				C2CC0A4B29D0D4FC00677A7B /* ExternalImportService.swift */,
+				C20E2DE42A7C27A500DB64BB /* GlobalState.swift */,
 				C2698B712986F6E800EBC179 /* UITabBarController+addTab.swift */,
 			);
 			path = Common;
@@ -7765,6 +7768,7 @@
 				C284AF77276016EB00FEE810 /* BackupDeleteModuleInteractor.swift in Sources */,
 				C2EA566F28569A5E00026BFE /* AskForAuthPresenter.swift in Sources */,
 				C223DAE1217BBE82003F6E76 /* CoordinatorDelegate.swift in Sources */,
+				C20E2DE52A7C27A500DB64BB /* GlobalState.swift in Sources */,
 				C2BDC6C41FC1AC0A00967D0E /* RootCoordinator.swift in Sources */,
 				C21A9E9E27CC0F7200FE4CC4 /* ComposeServiceAlgorithmPresenter+Menu.swift in Sources */,
 				C20935D729214BC3000F5AA7 /* ExportToFileInteractor.swift in Sources */,

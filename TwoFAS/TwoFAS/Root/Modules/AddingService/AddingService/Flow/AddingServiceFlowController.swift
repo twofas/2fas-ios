@@ -43,7 +43,7 @@ final class AddingServiceFlowController: FlowController {
         if let sheet = view.sheetPresentationController {
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             sheet.prefersEdgeAttachedInCompactHeight = true
-            sheet.preferredCornerRadius = Theme.Metrics.cornerRadius * 5
+            sheet.preferredCornerRadius = 14
         }
         
         viewController.present(view, animated: true, completion: nil)

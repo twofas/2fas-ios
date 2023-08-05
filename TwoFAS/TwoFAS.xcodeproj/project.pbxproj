@@ -953,6 +953,7 @@
 		C2FAE12528C7346900F2446F /* AEGISParseResultErrorStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAE12428C7346900F2446F /* AEGISParseResultErrorStrings.swift */; };
 		C2FB8A6E277F98BF0066DDE2 /* TrashServiceInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FB8A6D277F98BF0066DDE2 /* TrashServiceInteractor.swift */; };
 		C2FB8A70277F990E0066DDE2 /* TrashServicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FB8A6F277F990E0066DDE2 /* TrashServicePresenter.swift */; };
+		C2FBF1302A7EBCCB00CA80CE /* AddingServiceCameraViewport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FBF12F2A7EBCCB00CA80CE /* AddingServiceCameraViewport.swift */; };
 		C2FC421F23AA8F7A00320ABE /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FC421E23AA8F7A00320ABE /* Router.swift */; };
 		C2FC422123AA902700320ABE /* PresentableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FC422023AA902700320ABE /* PresentableType.swift */; };
 		C2FC422323AA960400320ABE /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FC422223AA960400320ABE /* Module.swift */; };
@@ -2234,6 +2235,7 @@
 		C2FAE12428C7346900F2446F /* AEGISParseResultErrorStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AEGISParseResultErrorStrings.swift; sourceTree = "<group>"; };
 		C2FB8A6D277F98BF0066DDE2 /* TrashServiceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashServiceInteractor.swift; sourceTree = "<group>"; };
 		C2FB8A6F277F990E0066DDE2 /* TrashServicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashServicePresenter.swift; sourceTree = "<group>"; };
+		C2FBF12F2A7EBCCB00CA80CE /* AddingServiceCameraViewport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceCameraViewport.swift; sourceTree = "<group>"; };
 		C2FC421E23AA8F7A00320ABE /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		C2FC422023AA902700320ABE /* PresentableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableType.swift; sourceTree = "<group>"; };
 		C2FC422223AA960400320ABE /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
@@ -2642,6 +2644,7 @@
 			isa = PBXGroup;
 			children = (
 				C20E2DFF2A7C4EF200DB64BB /* AddingServiceMainViewController.swift */,
+				C2FBF12F2A7EBCCB00CA80CE /* AddingServiceCameraViewport.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -8106,6 +8109,7 @@
 				C240487C27656DB40076376E /* ImporterFileErrorFlowController.swift in Sources */,
 				C2A74FD72610D3A8007E5AB3 /* TintColor.swift in Sources */,
 				C2CC0A3A29D0580B00677A7B /* ExternalImportViewController.swift in Sources */,
+				C2FBF1302A7EBCCB00CA80CE /* AddingServiceCameraViewport.swift in Sources */,
 				C2B6D78E260BB024005B599E /* ColorPickerButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -24,15 +24,17 @@ final class AddingServiceMainViewController: UIViewController {
     var heightChange: ((CGFloat) -> Void)?
     var presenter: AddingServiceMainPresenter!
     
+    var test: Binding<String?> = .constant(nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tmp = V { [weak self] height in
+        let tmp = AddingServiceMain() { [weak self] height in
             self?.heightChange?(height)
         } nextOne: { [weak self] in
             self?.presenter.handleToToken()
         }
-
+        
         let vc = UIHostingController(rootView: tmp)
         vc.willMove(toParent: self)
         addChild(vc)
@@ -43,56 +45,52 @@ final class AddingServiceMainViewController: UIViewController {
     }
 }
 
-struct V: View {
+private struct AddingServiceMain: View {
+    @State var errorReason: String?
+    
     let change: (CGFloat) -> Void
     let nextOne: Callback
-  
+    
     @State var currentHeight: CGFloat = 400
-    @State var username: String = "Test"
     
     @State private var height = CGFloat.zero
     
     var body: some View {
-            GeometryReader { geo in
-                VStack(alignment: .center, spacing: 10) {
-                    Button("Change") {
-                        nextOne()
-                    }
-                    .frame(height: currentHeight)
-                    TextField(
-                        "User name (email address)",
-                        text: $username
-                    )
-                    .foregroundColor(.white)
-                    .background(
-                        Rectangle()
-                            .fill(.blue)
-                    )
+        VStack(alignment: .center, spacing: 10) {
+            Text("Pair service with 2FAS")
+                .font(
+                    Font.custom("SF Pro Text", size: 17)
+                        .weight(.semibold)
+                )
+                .multilineTextAlignment(.center)
+            
+            Text("Point your camera to the screen to capture the QR code.")
+                .font(Font.custom("SF Pro Text", size: 16.99999))
+                .multilineTextAlignment(.center)
+            
+            if let errorReason {
+                Text(errorReason)
+            } else {
+                AddingServiceCameraViewport(errorReason: $errorReason) { codeType in
+                    print(codeType)
                 }
-                .background(GeometryReader {
-                                    // store half of current width (which is screen-wide)
-                                    // in preference
-                                    Color.clear
-                                        .preference(key: ViewHeightKey.self,
-                                            value: $0.frame(in: .local).size.height)
-                                })
-                                .onPreferenceChange(ViewHeightKey.self) {
-                                    // read value from preference in state
-                                    self.height = $0
-                                    change(height)
-                                }
-//                .onChange(of: geo.size.height) { newValue in
-//                    print(">>> \(newValue)")
-//                    change(newValue)
-//                }
+                .cornerRadius(14)
             }
-    }
-    
-    struct ViewHeightKey: PreferenceKey {
-        typealias Value = CGFloat
-        static var defaultValue = CGFloat.zero
-        static func reduce(value: inout Value, nextValue: () -> Value) {
-            value += nextValue()
+            Text("Other methods?")
+                .font(
+                    Font.custom("SF Pro Text", size: 17)
+                        .weight(.semibold)
+                )
+                .multilineTextAlignment(.center)
+            
+            Text("Enter secret key manually")
+                .font(Font.custom("SF Pro Text", size: 16.99999))
+            
+            Text("Upload screen with QR code")
+                .font(Font.custom("SF Pro Text", size: 16.99999))
         }
+        .observeHeight(onChange: { height in
+            change(height)
+        })
     }
 }

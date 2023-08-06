@@ -219,8 +219,8 @@ internal enum T {
   internal static let pastDurationMonthsPlural4 = T.tr("Localizable", "past_duration_months-plural-4", fallback: "")
   /// 
   internal static let pastDurationMonthsPlural5 = T.tr("Localizable", "past_duration_months-plural-5", fallback: "")
-  /// moments ago
-  internal static let pastDurationSeconds = T.tr("Localizable", "past_duration_seconds", fallback: "moments ago")
+  /// moment ago
+  internal static let pastDurationSeconds = T.tr("Localizable", "past_duration_seconds", fallback: "moment ago")
   /// moments ago
   internal static let pastDurationSecondsPlural = T.tr("Localizable", "past_duration_seconds-plural", fallback: "moments ago")
   /// 
@@ -785,6 +785,16 @@ internal enum T {
     /// Verifying…
     internal static let verifying = T.tr("Localizable", "fingerprint__verifying", fallback: "Verifying…")
   }
+  internal enum Guides {
+    /// Select service to pair with the 2FAS app
+    internal static let selectDescription = T.tr("Localizable", "guides__select_description", fallback: "Select service to pair with the 2FAS app")
+    /// Do you want to provide 2FA guides for your service?
+    internal static let selectProvideGuide = T.tr("Localizable", "guides__select_provide_guide", fallback: "Do you want to provide 2FA guides for your service?")
+    /// Apply now
+    internal static let selectProvideGuideCta = T.tr("Localizable", "guides__select_provide_guide_cta", fallback: "Apply now")
+    /// Browse services
+    internal static let selectTitle = T.tr("Localizable", "guides__select_title", fallback: "Browse services")
+  }
   internal enum Introduction {
     /// Choose QR code
     internal static let chooseQrCode = T.tr("Localizable", "introduction__choose_qr_code", fallback: "Choose QR code")
@@ -1175,6 +1185,8 @@ internal enum T {
     internal static let addSuccessTitle = T.tr("Localizable", "tokens__add_success_title", fallback: "Almost done!")
     /// Pair the service with 2FAS
     internal static let addTitle = T.tr("Localizable", "tokens__add_title", fallback: "Pair the service with 2FAS")
+    /// Guide me
+    internal static let addWithGuide = T.tr("Localizable", "tokens__add_with_guide", fallback: "Guide me")
     /// What service do you want to add?
     internal static let addingServiceQuestionTitle = T.tr("Localizable", "tokens__adding_service_question_title", fallback: "What service do you want to add?")
     /// Additional info

@@ -17,31 +17,17 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
 import SwiftUI
 
-final class RootViewController: ContainerViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = Theme.Colors.Fill.background
-    }
-    
-    override var shouldAutorotate: Bool { UIDevice.isiPad }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        NotificationCenter.default.post(Notification(name: Notification.Name.orientationSizeWillChange))
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        AddingServiceFlowController.present(on: self, parent: self)
+struct AddingServiceLargeSpacing: View {
+    var body: some View {
+        Spacer()
+            .frame(height: AddingServiceMetrics.largeSpacing)
     }
 }
 
-extension RootViewController: AddingServiceFlowControllerParent {
-    func addingServiceDismiss() {
-        dismiss(animated: true)
+struct AddingServiceLargeSpacing_Previews: PreviewProvider {
+    static var previews: some View {
+        AddingServiceLargeSpacing()
     }
 }

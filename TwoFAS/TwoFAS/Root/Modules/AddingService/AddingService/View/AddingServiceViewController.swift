@@ -24,9 +24,9 @@ protocol AddingServiceViewControlling: AnyObject {
     func embedViewController(_ newVC: UIViewController)
 }
 // TODO: Add conformance in other VC. Block dismissal when data is entered
-//protocol AddingServiceIsDismissable: AnyObject {
+// protocol AddingServiceIsDismissable: AnyObject {
 //    var isDismissable: Bool { get }
-//}
+// }
 
 final class AddingServiceViewController: UIViewController {
     var presenter: AddingServicePresenter!
@@ -41,6 +41,10 @@ final class AddingServiceViewController: UIViewController {
         presentationController?.delegate = self
         
         presenter.viewDidLoad()
+        
+        if let sheet = sheetPresentationController {
+            sheet.prefersGrabberVisible = true // TODO: Change according to isDismissable
+        }
     }
 }
 
@@ -62,9 +66,8 @@ extension AddingServiceViewController: AddingServiceViewControlling {
         sheet.animateChanges {
             sheet.detents = [
                 .custom(resolver: { context in
-                    let margin = Theme.Metrics.standardMargin
-                    let doubleMargin = Theme.Metrics.doubleMargin
-                    return min(height + margin + doubleMargin, context.maximumDetentValue)
+                    let margin = 4 * Theme.Metrics.standardMargin
+                    return min(height + margin, context.maximumDetentValue)
                 })
             ]
         }
@@ -94,18 +97,18 @@ private extension AddingServiceViewController {
     
     func addNewChildController(with newVC: UIViewController) {
         let margin = Theme.Metrics.standardMargin
-        let doubleMargin = Theme.Metrics.doubleMargin
+        let top = 3 * margin
         newVC.willMove(toParent: self)
         addChild(newVC)
         view.addSubview(newVC.view)
         newVC.view.backgroundColor = Theme.Colors.Fill.System.second
         newVC.view.pinToParent(with: .init(
-            top: doubleMargin,
-            left: doubleMargin,
+            top: top,
+            left: 0,
             bottom: margin,
-            right: doubleMargin)
+            right: 0)
         )
-        newVC.view.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -2 * doubleMargin).isActive = true
+        newVC.view.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         newVC.didMove(toParent: self)
         currentViewController = newVC
     }

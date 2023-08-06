@@ -21,10 +21,12 @@ import UIKit
 
 protocol AddingServiceMainFlowControllerParent: AnyObject {
     func mainToToken()
+    func mainToDismiss()
 }
 
 protocol AddingServiceMainFlowControlling: AnyObject {
     func toToken()
+    func toDismiss()
 }
 
 final class AddingServiceMainFlowController: FlowController {
@@ -38,12 +40,15 @@ final class AddingServiceMainFlowController: FlowController {
         let flowController = AddingServiceMainFlowController(viewController: view)
         flowController.parent = parent
         
+        let interactor = InteractorFactory.shared.addingServiceMainModuleInteractor()
+        
         view.heightChange = { [weak viewController] height in
             viewController?.updateHeight(height)
         }
         
-        let presenter = AddingServiceMainPresenter(flowController: flowController)
+        let presenter = AddingServiceMainPresenter(flowController: flowController, interactor: interactor)
         view.presenter = presenter
+        presenter.view = view
         
         viewController.embedViewController(view)
     }
@@ -56,5 +61,9 @@ final class AddingServiceMainFlowController: FlowController {
 extension AddingServiceMainFlowController: AddingServiceMainFlowControlling {
     func toToken() {
         parent?.mainToToken()
+    }
+    
+    func toDismiss() {
+        parent?.mainToDismiss()
     }
 }

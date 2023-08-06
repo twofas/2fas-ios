@@ -17,31 +17,34 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
 import SwiftUI
 
-final class RootViewController: ContainerViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = Theme.Colors.Fill.background
+struct AddingServiceTextContentView: View {
+    let text: String
+    let alignToLeading: Bool
+    
+    init(text: String, alignToLeading: Bool = false) {
+        self.text = text
+        self.alignToLeading = alignToLeading
     }
     
-    override var shouldAutorotate: Bool { UIDevice.isiPad }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        NotificationCenter.default.post(Notification(name: Notification.Name.orientationSizeWillChange))
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        AddingServiceFlowController.present(on: self, parent: self)
+    var body: some View {
+        Text(text)
+            .font(.body)
+            .foregroundColor(Color(Theme.Colors.Text.main))
+            .ifElse(alignToLeading,
+            contentIf: {
+                $0.multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }, contentElse: {
+                $0.multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity, alignment: .center)
+            })
     }
 }
 
-extension RootViewController: AddingServiceFlowControllerParent {
-    func addingServiceDismiss() {
-        dismiss(animated: true)
+struct AddingServiceTextContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddingServiceTextContentView(text: "Test text")
     }
 }

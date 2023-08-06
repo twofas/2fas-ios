@@ -19,7 +19,9 @@
 
 import UIKit
 
-protocol AddingServiceFlowControllerParent: AnyObject {}
+protocol AddingServiceFlowControllerParent: AnyObject {
+    func addingServiceDismiss()
+}
 
 protocol AddingServiceFlowControlling: AnyObject {
     func toMain()
@@ -63,6 +65,10 @@ extension AddingServiceFlowController: AddingServiceFlowControlling {
 extension AddingServiceFlowController: AddingServiceMainFlowControllerParent {
     func mainToToken() {
         AddingServiceTokenFlowController.embed(in: viewController, parent: self)
+    }
+    
+    func mainToDismiss() {
+        parent?.addingServiceDismiss()
     }
 }
 

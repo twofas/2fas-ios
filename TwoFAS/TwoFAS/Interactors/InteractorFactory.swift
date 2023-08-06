@@ -550,4 +550,8 @@ extension InteractorFactory {
     func appearanceModuleInteractor() -> AppearanceModuleInteracting {
         AppearanceModuleInteractor(appearanceInteractor: appearanceInteractor())
     }
+    
+    func addingServiceMainModuleInteractor() -> AddingServiceMainModuleInteracting {
+        AddingServiceMainModuleInteractor(cameraPermissionInteractor: cameraPermissionInteractor())
+    }
 }

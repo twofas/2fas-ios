@@ -18,17 +18,41 @@
 //
 
 import Foundation
+import CodeSupport
 
 final class AddingServiceMainPresenter {
-    private let flowController: AddingServiceMainFlowControlling
+    weak var view: AddingServiceMainViewControlling?
     
-    init(flowController: AddingServiceMainFlowControlling) {
+    private let flowController: AddingServiceMainFlowControlling
+    private let interactor: AddingServiceMainModuleInteracting
+    
+    init(flowController: AddingServiceMainFlowControlling, interactor: AddingServiceMainModuleInteracting) {
         self.flowController = flowController
+        self.interactor = interactor
     }
 }
 
 extension AddingServiceMainPresenter {
-    func handleToToken() {
-        flowController.toToken()
+    func handleFoundCode(codeType: CodeType) {
+        print(">>> Code type: \(codeType)")
+        flowController.toDismiss()
+    }
+        
+    func handleToGallery() {
+        
+    }
+    
+    func handleToAddManually() {
+        
+    }
+    
+    func handleToAppSettings() {
+        
+    }
+    
+    func handleCameraAvailbility(callback: @escaping (Bool) -> Void) {
+        interactor.checkCameraPermission { available in
+            callback(available)
+        }
     }
 }

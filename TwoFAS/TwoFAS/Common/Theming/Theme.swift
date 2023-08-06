@@ -250,8 +250,10 @@ enum Theme {
         
         static let lineWidth: CGFloat = ThemeMetrics.lineWidth
         static let separatorHeight: CGFloat = 0.5
-
+        /// 6
         static let cornerRadius: CGFloat = 6
+        /// 14
+        static let modalCornerRadius: CGFloat = 14
         static let notificationMargin: CGFloat = 8
         
         static let PINDotBorderWidth: CGFloat = 0.5

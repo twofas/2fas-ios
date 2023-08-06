@@ -24,6 +24,8 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 internal enum Asset {
   internal static let aboutLogo = ImageAsset(name: "AboutLogo")
   internal static let addCategory = ImageAsset(name: "AddCategory")
+  internal static let imageIcon = ImageAsset(name: "imageIcon")
+  internal static let keybordIcon = ImageAsset(name: "keybordIcon")
   internal static let alertIcon = ImageAsset(name: "AlertIcon")
   internal static let authRequestQuestion = ImageAsset(name: "AuthRequestQuestion")
   internal static let deleteSettingsIcon = ImageAsset(name: "DeleteSettingsIcon")

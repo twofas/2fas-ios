@@ -17,31 +17,30 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import SwiftUI
+import Foundation
 
-final class RootViewController: ContainerViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = Theme.Colors.Fill.background
-    }
+protocol AddingServiceMainModuleInteracting: AnyObject {
+    func checkCameraPermission(completion: @escaping (Bool) -> Void)
+}
+
+final class AddingServiceMainModuleInteractor {
+    private let cameraPermissionInteractor: CameraPermissionInteracting
     
-    override var shouldAutorotate: Bool { UIDevice.isiPad }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        NotificationCenter.default.post(Notification(name: Notification.Name.orientationSizeWillChange))
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        AddingServiceFlowController.present(on: self, parent: self)
+    init(cameraPermissionInteractor: CameraPermissionInteracting) {
+        self.cameraPermissionInteractor = cameraPermissionInteractor
     }
 }
 
-extension RootViewController: AddingServiceFlowControllerParent {
-    func addingServiceDismiss() {
-        dismiss(animated: true)
+extension AddingServiceMainModuleInteractor: AddingServiceMainModuleInteracting {
+    // MARK: - Camera permissions
+    
+    func checkCameraPermission(completion: @escaping (Bool) -> Void) {
+        if cameraPermissionInteractor.isCameraAvailable == false {
+            completion(false)
+            return
+        }
+        cameraPermissionInteractor.checkPermission { value in
+            completion(value)
+        }
     }
 }

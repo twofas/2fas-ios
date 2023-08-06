@@ -22,9 +22,9 @@ import CodeSupport
 import AVFoundation
 
 struct AddingServiceCameraViewport: UIViewRepresentable {
-    private let height: CGFloat = 240
+    private let height = AddingServiceMetrics.cameraActiveAreaHeight
     
-    @Binding var errorReason: String?
+    var didRegisterError: (String) -> Void
     var didFoundCode: (CodeType) -> Void
     
     final class Coordinator {
@@ -54,11 +54,10 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
                 let reasonKey = notification.userInfo?[AVCaptureSessionInterruptionReasonKey] as? Int,
                 let reason = AVCaptureSession.InterruptionReason(rawValue: reasonKey)
             else {
-                parent.errorReason = nil
                 return
             }
-            
-            parent.errorReason = {
+
+            let errorReason = {
                 switch reason {
                 case .videoDeviceInUseByAnotherClient:
                     return T.Camera.cameraUsedByOtherAppTitle
@@ -69,6 +68,7 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
                 default: return T.Camera.cantInitializeCameraGeneral
                 }
             }()
+            parent.didRegisterError(errorReason)
         }
     }
     

@@ -154,6 +154,12 @@
 		C21BC54D25B37C8900B15F99 /* ExchangeConsts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21BC54C25B37C8900B15F99 /* ExchangeConsts.swift */; };
 		C21C38A21FE30E62000EC252 /* LimitedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21C38A11FE30E62000EC252 /* LimitedTextField.swift */; };
 		C21E0B3E2299F2190063EE7C /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21E0B3D2299F2190063EE7C /* UIDevice+.swift */; };
+		C21EB2EE2A7FC55800FA8AA1 /* AddingServiceMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21EB2ED2A7FC55800FA8AA1 /* AddingServiceMetrics.swift */; };
+		C21EB2F12A7FD77000FA8AA1 /* AddingServiceTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21EB2F02A7FD77000FA8AA1 /* AddingServiceTitleView.swift */; };
+		C21EB2F32A7FD8C400FA8AA1 /* AddingServiceTextContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21EB2F22A7FD8C400FA8AA1 /* AddingServiceTextContentView.swift */; };
+		C21EB2F52A7FDEB600FA8AA1 /* AddingServiceLargeSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21EB2F42A7FDEB600FA8AA1 /* AddingServiceLargeSpacing.swift */; };
+		C21EB2F72A7FF64700FA8AA1 /* AddingServiceFullWidthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21EB2F62A7FF64700FA8AA1 /* AddingServiceFullWidthButton.swift */; };
+		C21EB2FA2A800E7200FA8AA1 /* AddingServiceMainModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21EB2F92A800E7200FA8AA1 /* AddingServiceMainModuleInteractor.swift */; };
 		C21F05BE1FC761450038E28F /* PushNotifications.h in Headers */ = {isa = PBXBuildFile; fileRef = C21F05BC1FC761450038E28F /* PushNotifications.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C21F05C11FC761450038E28F /* PushNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C21F05BA1FC761450038E28F /* PushNotifications.framework */; };
 		C21F05C21FC761450038E28F /* PushNotifications.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C21F05BA1FC761450038E28F /* PushNotifications.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1420,6 +1426,12 @@
 		C21BC54C25B37C8900B15F99 /* ExchangeConsts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeConsts.swift; sourceTree = "<group>"; };
 		C21C38A11FE30E62000EC252 /* LimitedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedTextField.swift; sourceTree = "<group>"; };
 		C21E0B3D2299F2190063EE7C /* UIDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
+		C21EB2ED2A7FC55800FA8AA1 /* AddingServiceMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceMetrics.swift; sourceTree = "<group>"; };
+		C21EB2F02A7FD77000FA8AA1 /* AddingServiceTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceTitleView.swift; sourceTree = "<group>"; };
+		C21EB2F22A7FD8C400FA8AA1 /* AddingServiceTextContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceTextContentView.swift; sourceTree = "<group>"; };
+		C21EB2F42A7FDEB600FA8AA1 /* AddingServiceLargeSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceLargeSpacing.swift; sourceTree = "<group>"; };
+		C21EB2F62A7FF64700FA8AA1 /* AddingServiceFullWidthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceFullWidthButton.swift; sourceTree = "<group>"; };
+		C21EB2F92A800E7200FA8AA1 /* AddingServiceMainModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceMainModuleInteractor.swift; sourceTree = "<group>"; };
 		C21F05BA1FC761450038E28F /* PushNotifications.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PushNotifications.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C21F05BC1FC761450038E28F /* PushNotifications.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PushNotifications.h; sourceTree = "<group>"; };
 		C21F05BD1FC761450038E28F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2588,6 +2600,7 @@
 		C20E2DED2A7C4A3D00DB64BB /* AddingService */ = {
 			isa = PBXGroup;
 			children = (
+				C21EB2EF2A7FD73D00FA8AA1 /* Common */,
 				C20E2DEE2A7C4A4900DB64BB /* AddingService */,
 				C20E2DF82A7C4D7700DB64BB /* Main */,
 				C20E2E012A7C519A00DB64BB /* Token */,
@@ -2660,6 +2673,7 @@
 		C20E2DFB2A7C4DA900DB64BB /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
+				C21EB2F92A800E7200FA8AA1 /* AddingServiceMainModuleInteractor.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -3297,6 +3311,18 @@
 				C21BC4DD25B2FB7700B15F99 /* LegacyExchangeDatabase.swift */,
 			);
 			path = Legacy;
+			sourceTree = "<group>";
+		};
+		C21EB2EF2A7FD73D00FA8AA1 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				C21EB2ED2A7FC55800FA8AA1 /* AddingServiceMetrics.swift */,
+				C21EB2F02A7FD77000FA8AA1 /* AddingServiceTitleView.swift */,
+				C21EB2F22A7FD8C400FA8AA1 /* AddingServiceTextContentView.swift */,
+				C21EB2F42A7FDEB600FA8AA1 /* AddingServiceLargeSpacing.swift */,
+				C21EB2F62A7FF64700FA8AA1 /* AddingServiceFullWidthButton.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		C21F05BB1FC761450038E28F /* PushNotifications */ = {
@@ -7569,6 +7595,7 @@
 				C209E9B9267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift in Sources */,
 				C23386F92780E54B00F8DBC3 /* DeleteServiceViewController.swift in Sources */,
 				C2147CEC205D7FCA0001D011 /* SecurityProtocol.swift in Sources */,
+				C21EB2FA2A800E7200FA8AA1 /* AddingServiceMainModuleInteractor.swift in Sources */,
 				C24471B325F506390024B4C5 /* ComposeServiceFormRow.swift in Sources */,
 				C2A22553293BEF3300B76115 /* ServiceAddedViewContaining.swift in Sources */,
 				C23387042781068E00F8DBC3 /* TrashPresenter.swift in Sources */,
@@ -7768,14 +7795,17 @@
 				C2D6731C25DB2C5D004BD697 /* ToastWindow.swift in Sources */,
 				C29803C2245EEB470066DFE0 /* MainContainerGenerators.swift in Sources */,
 				C20E2E072A7C51E700DB64BB /* AddingServiceTokenFlowController.swift in Sources */,
+				C21EB2F32A7FD8C400FA8AA1 /* AddingServiceTextContentView.swift in Sources */,
 				C20935E629215453000F5AA7 /* AppInfoInteractor.swift in Sources */,
 				C235FA76229DAED80098F8E9 /* GridViewItemProviderWriting.swift in Sources */,
 				C23721A12804C07600DE335D /* CameraScannerNavigationFlowController.swift in Sources */,
 				C22E6F9F21E21A1E00A2E66B /* NotificationIcon.swift in Sources */,
 				C2625F9428BBC01900D84C5C /* AboutPresenter+Menu.swift in Sources */,
+				C21EB2F72A7FF64700FA8AA1 /* AddingServiceFullWidthButton.swift in Sources */,
 				C2AD653927F26196008997DB /* BrowserExtensionSuccessPresenter.swift in Sources */,
 				C2B3D1AA267E91E9009E6DE0 /* TokensView.swift in Sources */,
 				C2F33940214AB53F0072FE80 /* RatingController.swift in Sources */,
+				C21EB2F52A7FDEB600FA8AA1 /* AddingServiceLargeSpacing.swift in Sources */,
 				C2CE84A12814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift in Sources */,
 				C26D1AC52600041400D3D868 /* UIImage+.swift in Sources */,
 				C2B5BF53294601BE00E5092D /* TokensPlainFlowController.swift in Sources */,
@@ -7853,6 +7883,7 @@
 				C2AC220C276618AD00271402 /* ExporterMainScreenFlowController.swift in Sources */,
 				C240186F2618685500800DBF /* IconSelectorViewController.swift in Sources */,
 				C2A4C83B2A11736200AFD67C /* TokensCircleProgress.swift in Sources */,
+				C21EB2EE2A7FC55800FA8AA1 /* AddingServiceMetrics.swift in Sources */,
 				C2F51F0127DAB37200A67C73 /* BrowserExtensionPairingAnimationView.swift in Sources */,
 				C2A22558293BF32400B76115 /* ServiceAddedModuleInteractor.swift in Sources */,
 				C2B5BF592946616900E5092D /* TokensNavigationFlowController.swift in Sources */,
@@ -8044,6 +8075,7 @@
 				C2C93FBD2604005E00E10981 /* MainContainerToggleWithLabel.swift in Sources */,
 				C2508E182753AB590072C564 /* SettingsMenuViewControlling.swift in Sources */,
 				C249AF80278A537F005F9D80 /* MainRepositoryImpl+AppInfo.swift in Sources */,
+				C21EB2F12A7FD77000FA8AA1 /* AddingServiceTitleView.swift in Sources */,
 				C2B39C7A27A5921900D3B579 /* MainRepositoryImpl+Vision.swift in Sources */,
 				C274BDC02769419300EE28BC /* AppSecurityModuleInteractor.swift in Sources */,
 				C21675C52808C71F00D43EDD /* ShortDateFormatter.swift in Sources */,

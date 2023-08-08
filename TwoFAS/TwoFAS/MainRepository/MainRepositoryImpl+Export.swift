@@ -101,7 +101,7 @@ private extension MainRepositoryImpl {
     }
     
     func packServices() -> [ExchangeData2.Service] {
-        let services = storageRepository.listAllWithingCategories(for: nil, sorting: .manual, tags: [])
+        let services = storageRepository.listAllWithingCategories(for: nil, sorting: .manual, ids: [])
         return services.map { categoryData -> [ExchangeData2.Service] in
             let sectionID = categoryData.section?.sectionID
             let serviceList = categoryData.services

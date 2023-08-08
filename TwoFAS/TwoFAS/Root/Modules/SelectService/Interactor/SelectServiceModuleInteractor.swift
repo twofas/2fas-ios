@@ -50,13 +50,13 @@ final class SelectServiceModuleInteractor {
 extension SelectServiceModuleInteractor: SelectServiceModuleInteracting {
     func listServices(filter: String?, for domain: String) -> [SelectServiceSection] {
         let currentSort = sortInteractor.currentSort
-        let tags: [ServiceTypeID] = {
+        let ids: [ServiceTypeID] = {
             guard let filter else { return [] }
             return serviceDefinitionInteractor.findServices(byTag: filter)
                 .map({ $0.serviceTypeID })
         }()
         let list = listingInteractor
-            .listAllWithingCategories(for: filter, sorting: currentSort, tags: tags)
+            .listAllWithingCategories(for: filter, sorting: currentSort, ids: ids)
             .filter({ !$0.services.isEmpty })
         
         var bestMatch: [ServiceData] = []

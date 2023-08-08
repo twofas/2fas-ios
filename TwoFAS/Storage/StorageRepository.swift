@@ -84,7 +84,7 @@ public protocol StorageRepository: AnyObject {
     func listAllWithingCategories(
         for phrase: String?,
         sorting: SortType,
-        tags: [ServiceTypeID]
+        ids: [ServiceTypeID]
     ) -> [CategoryData]
     func findService(for secret: String) -> ServiceData?
     func findAllUnknownServices() -> [ServiceData]

@@ -281,13 +281,13 @@ final class StorageRepositoryImpl: StorageRepository {
     func listAllWithingCategories(
         for phrase: String?,
         sorting: SortType = .az,
-        tags: [ServiceTypeID] = []
+        ids: [ServiceTypeID] = []
     ) -> [CategoryData] {
         let allSections = SectionEntity
             .listAll(on: coreDataStack.context)
             .transformToSectionData()
         let allServices = ServiceEntity
-            .listItems(on: coreDataStack.context, phrase: phrase, sort: sorting, tags: tags)
+            .listItems(on: coreDataStack.context, phrase: phrase, sort: sorting, ids: ids)
             .groupByCategory
             .mapValues { $0.toServiceData() }
         

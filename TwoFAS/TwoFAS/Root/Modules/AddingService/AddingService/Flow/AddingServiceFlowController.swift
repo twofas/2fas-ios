@@ -48,7 +48,9 @@ final class AddingServiceFlowController: FlowController {
             sheet.preferredCornerRadius = 14
         }
         
-        viewController.present(view, animated: true, completion: nil)
+        viewController.present(view, animated: true) { [weak flowController] in // TODO: Remove it
+            flowController?.mainToToken()
+        }
     }
 }
 

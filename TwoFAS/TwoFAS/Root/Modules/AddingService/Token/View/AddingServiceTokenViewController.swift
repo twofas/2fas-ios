@@ -22,16 +22,18 @@ import SwiftUI
 
 final class AddingServiceTokenViewController: UIViewController {
     var heightChange: ((CGFloat) -> Void)?
-//    var presenter: AddingServicePresenter!
+//    var presenter: AddingServiceTokenPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tmp = V2 { [weak self] height in
+        let token = AddingServiceToken(copyCode: { [weak self] in
+            //self?.presenter.handleCopyToken()
+        }, changeHeight: { [weak self] height in
             self?.heightChange?(height)
-        }
+        })
         
-        let vc = UIHostingController(rootView: tmp)
+        let vc = UIHostingController(rootView: token)
         vc.willMove(toParent: self)
         addChild(vc)
         view.addSubview(vc.view)
@@ -43,47 +45,47 @@ final class AddingServiceTokenViewController: UIViewController {
     }
 }
 
-struct V2: View {
-    let change: (CGFloat) -> Void
-  
-    @State private var height = CGFloat.zero
+private struct AddingServiceToken: View {
+    @State private var errorReason: String?
+    
+    let serviceIcon: Image
+    let serviceTitle: String
+    let additionalInfo: String?
+    let copyCode: Callback
+    let changeHeight: (CGFloat) -> Void
     
     var body: some View {
-            GeometryReader { geo in
-                VStack(alignment: .center, spacing: 10) {
-                    Text("Test")
-                    Text("Test")
-                    Text("Test")
-                    Text("Test")
-                    Text("Test")
-                    Text("Test")
-                    Text("Test")
-                    
-                }
-                .background(GeometryReader {
-                                    // store half of current width (which is screen-wide)
-                                    // in preference
-                                    Color.clear
-                                        .preference(key: ViewHeightKey.self,
-                                            value: $0.frame(in: .local).size.height)
-                                })
-                                .onPreferenceChange(ViewHeightKey.self) {
-                                    // read value from preference in state
-                                    self.height = $0
-                                    change(height)
-                                }
-//                .onChange(of: geo.size.height) { newValue in
-//                    print(">>> \(newValue)")
-//                    change(newValue)
-//                }
-            }
-    }
-}
+        VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+            AddingServiceTitleView(text: "Almost done!")
+            AddingServiceTextContentView(text: "To finish pairing, you might need to retype this token in the service.")
+            AddingServiceLargeSpacing()
 
-struct ViewHeightKey: PreferenceKey {
-    typealias Value = CGFloat
-    static var defaultValue = CGFloat.zero
-    static func reduce(value: inout Value, nextValue: () -> Value) {
-        value += nextValue()
+            Group {
+                HStack {
+                    serviceIcon
+                    VStack {
+                        AddingServiceTitleView(text: serviceTitle, alignToLeading: true)
+                        
+                    }
+                }
+                Text("Test")
+            }
+            .cornerRadius(Theme.Metrics.modalCornerRadius)
+            .frame(maxWidth: .infinity)
+            .border(.black)
+
+            AddingServiceLargeSpacing()
+
+            AddingServiceFullWidthButton(
+                text: "Copy code",
+                icon: Asset.keybordIcon.swiftUIImage
+            ) {
+                copyCode()
+            }
+        }
+        .padding(.horizontal, Theme.Metrics.doubleMargin)
+        .observeHeight(onChange: { height in
+            changeHeight(height)
+        })
     }
 }

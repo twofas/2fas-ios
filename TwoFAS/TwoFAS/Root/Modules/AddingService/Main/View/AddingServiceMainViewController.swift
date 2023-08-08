@@ -62,7 +62,7 @@ final class AddingServiceMainViewController: UIViewController {
 extension AddingServiceMainViewController: AddingServiceMainViewControlling {}
 
 private struct AddingServiceMain: View {
-    @State private var errorReason2: String?
+    @State private var errorReason: String?
     
     let cameraUnavailable: Bool
     let foundCode: (CodeType) -> Void
@@ -87,7 +87,7 @@ private struct AddingServiceMain: View {
         self.cameraTapAction = cameraTapAction
         
         if cameraUnavailable {
-            errorReason2 = "Camera is unavailable. Check app's access permission"
+            errorReason = "Camera is unavailable. Check app's access permission"
         }
     }
     
@@ -98,10 +98,10 @@ private struct AddingServiceMain: View {
             AddingServiceLargeSpacing()
 
             Group {
-                if errorReason2 != nil || cameraUnavailable {
+                if errorReason != nil || cameraUnavailable {
                     let reason: AttributedString = {
-                        if let errorReason2 {
-                            return AttributedString(errorReason2)
+                        if let errorReason {
+                            return AttributedString(errorReason)
                         }
                         var result = AttributedString("Camera is unavailable. Check app's access permission in System Settings")
                         if let range = result.range(of: "System Settings") {
@@ -113,7 +113,7 @@ private struct AddingServiceMain: View {
                     ErrorTextView(attributedString: reason)
                 } else {
                     AddingServiceCameraViewport(didRegisterError: { errorReason in
-                        self.errorReason2 = errorReason
+                        self.errorReason = errorReason
                     }, didFoundCode: { codeType in
                         foundCode(codeType)
                     })

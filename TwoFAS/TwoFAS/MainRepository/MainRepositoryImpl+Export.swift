@@ -79,7 +79,7 @@ extension MainRepositoryImpl {
         guard let encoded = try? jsonEncoder.encode(exportedStruct) else {
             finished(nil); return }
 
-        let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(ExchangeConsts.fileName)
+        let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(createFileName())
         do {
             try encoded.write(to: fileURL)
         } catch {
@@ -93,7 +93,14 @@ extension MainRepositoryImpl {
 }
 
 private extension MainRepositoryImpl {
-    private func packServices() -> [ExchangeData2.Service] {
+    func createFileName() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date = dateFormatter.string(from: Date())
+        return "\(ExchangeConsts.fileNameStart)\(date)\(ExchangeConsts.fileNameEnd)"
+    }
+    
+    func packServices() -> [ExchangeData2.Service] {
         let services = storageRepository.listAllWithingCategories(for: nil, sorting: .manual, tags: [])
         return services.map { categoryData -> [ExchangeData2.Service] in
             let sectionID = categoryData.section?.sectionID

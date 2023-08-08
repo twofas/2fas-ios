@@ -22,7 +22,8 @@ import Foundation
 enum ExchangeConsts {
     static let schemaVersionV3: Int = 3
     static let schemaVersion: Int = 3
-    static let fileName = "Backup.2fas"
+    static let fileNameStart = "Backup_"
+    static let fileNameEnd = ".2fas"
     static let `extension` = "bak"
     static let `extensionV2` = "2fas"
     static let `extensionAEGIS` = "json"

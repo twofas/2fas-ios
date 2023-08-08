@@ -190,9 +190,9 @@ extension MainRepositoryImpl {
     func listAllServicesWithingCategories(
         for phrase: String?,
         sorting: SortType,
-        tags: [ServiceTypeID]
+        ids: [ServiceTypeID]
     ) -> [CategoryData] {
-        storageRepository.listAllWithingCategories(for: phrase, sorting: sorting, tags: tags)
+        storageRepository.listAllWithingCategories(for: phrase, sorting: sorting, ids: ids)
     }
     
     func countServices() -> Int {

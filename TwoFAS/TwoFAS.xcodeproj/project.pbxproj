@@ -167,6 +167,7 @@
 		C21F4CDF24719909003CF1F5 /* MainContainerElementGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21F4CDE24719909003CF1F5 /* MainContainerElementGenerator.swift */; };
 		C223DAD9217BB012003F6E76 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C223DAD8217BB012003F6E76 /* Coordinator.swift */; };
 		C223DAE1217BBE82003F6E76 /* CoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C223DAE0217BBE82003F6E76 /* CoordinatorDelegate.swift */; };
+		C223E7B12A8428EE007E2546 /* AddingServiceTokenModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C223E7B02A8428EE007E2546 /* AddingServiceTokenModuleInteractor.swift */; };
 		C2248BB12277935200AC231C /* GridViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2248BB02277935200AC231C /* GridViewState.swift */; };
 		C225E612241CFCD10041C238 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C225E614241CFCD10041C238 /* InfoPlist.strings */; };
 		C225E615241CFCE90041C238 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C225E617241CFCE90041C238 /* Localizable.strings */; };
@@ -1438,6 +1439,7 @@
 		C21F4CDE24719909003CF1F5 /* MainContainerElementGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerElementGenerator.swift; sourceTree = "<group>"; };
 		C223DAD8217BB012003F6E76 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		C223DAE0217BBE82003F6E76 /* CoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorDelegate.swift; sourceTree = "<group>"; };
+		C223E7B02A8428EE007E2546 /* AddingServiceTokenModuleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceTokenModuleInteractor.swift; sourceTree = "<group>"; };
 		C2248BB02277935200AC231C /* GridViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewState.swift; sourceTree = "<group>"; };
 		C225E613241CFCD10041C238 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C225E616241CFCE90041C238 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2715,6 +2717,7 @@
 		C20E2E042A7C51C700DB64BB /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
+				C223E7B02A8428EE007E2546 /* AddingServiceTokenModuleInteractor.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -7946,6 +7949,7 @@
 				C263F46029903B51009B0837 /* MainMenuFlowController.swift in Sources */,
 				C2035AF3245DE60D00C482D2 /* MainContainerButtonStyling.swift in Sources */,
 				C20935DA29214E54000F5AA7 /* ScanInteractor.swift in Sources */,
+				C223E7B12A8428EE007E2546 /* AddingServiceTokenModuleInteractor.swift in Sources */,
 				C2323C52276B535D00038B76 /* AppLockViewController.swift in Sources */,
 				C2C66F9B1FE06A4500AD5A1C /* GridViewModelDelegate.swift in Sources */,
 				C2CA2B7D258699DA009FB700 /* FirstCodeAddedStatsController.swift in Sources */,

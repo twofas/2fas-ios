@@ -19,6 +19,7 @@
 
 import UIKit
 import SwiftUI
+import Common
 
 final class AddingServiceTokenViewController: UIViewController {
     var heightChange: ((CGFloat) -> Void)?
@@ -56,26 +57,59 @@ private struct AddingServiceToken: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-            AddingServiceTitleView(text: "Almost done!")
-            AddingServiceTextContentView(text: "To finish pairing, you might need to retype this token in the service.")
-            AddingServiceLargeSpacing()
-
-            Group {
-                HStack {
-                    serviceIcon
-                    VStack {
-                        AddingServiceTitleView(text: serviceTitle, alignToLeading: true)
+            VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+                AddingServiceTitleView(text: "Almost done!")
+                AddingServiceTextContentView(text: "To finish pairing, you might need to retype this token in the service.")
+                AddingServiceLargeSpacing()
+                
+                VStack(spacing: 6) {
+                    HStack(spacing: 12) {
+                        serviceIcon
+                        VStack(spacing: 4) {
+                            AddingServiceTitleView(text: serviceTitle, alignToLeading: true)
+                            Text("Subtitle")
+                                .font(.footnote)
+                                .foregroundColor(Color(Theme.Colors.Text.subtitle))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                    HStack(alignment: .center) {
+                        Text("343 342")
+                            .foregroundColor(Color(Theme.Colors.Text.main))
+                            .font(Font(Theme.Fonts.Counter.syncCounter))
+                            .minimumScaleFactor(0.5)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         
+                        ZStack(alignment: .center) {
+                            Text("25")
+                                .font(.caption)
+                                .fontWeight(.medium)
+                                .foregroundColor(Color(Theme.Colors.Text.main))
+                            
+                            Circle()
+                                .trim(from: 0, to: CGFloat(0.3)/CGFloat(1))
+                                .stroke(Color(ThemeColor.primary),
+                                        style: StrokeStyle(
+                                            lineWidth: 1,
+                                            lineCap: .round
+                                        ))
+                                .rotationEffect(.degrees(-90))
+                                .padding(0.5)
+                                .frame(width: 30, height: 30)
+                            
+                        }
                     }
                 }
-                Text("Test")
-            }
-            .cornerRadius(Theme.Metrics.modalCornerRadius)
-            .frame(maxWidth: .infinity)
-            .border(.black)
-
+                .padding(.init(top: 16, leading: 20, bottom: 12, trailing: 20))
+                .frame(maxWidth: .infinity)
+                .overlay(
+                    RoundedRectangle(cornerRadius: Theme.Metrics.modalCornerRadius)
+                        .stroke(Color(Theme.Colors.Line.separator), lineWidth: 1)
+                )
+            }.padding(.horizontal, Theme.Metrics.doubleMargin * 3.0 / 4.0)
+            
             AddingServiceLargeSpacing()
-
+            
             AddingServiceFullWidthButton(
                 text: "Copy code",
                 icon: Asset.keybordIcon.swiftUIImage

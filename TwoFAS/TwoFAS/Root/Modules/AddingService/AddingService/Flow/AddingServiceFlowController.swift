@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 protocol AddingServiceFlowControllerParent: AnyObject {
     func addingServiceDismiss()
@@ -48,9 +49,7 @@ final class AddingServiceFlowController: FlowController {
             sheet.preferredCornerRadius = 14
         }
         
-        viewController.present(view, animated: true) { [weak flowController] in // TODO: Remove it
-            flowController?.mainToToken()
-        }
+        viewController.present(view, animated: true)
     }
 }
 
@@ -65,8 +64,8 @@ extension AddingServiceFlowController: AddingServiceFlowControlling {
 }
 
 extension AddingServiceFlowController: AddingServiceMainFlowControllerParent {
-    func mainToToken() {
-        AddingServiceTokenFlowController.embed(in: viewController, parent: self)
+    func mainToToken(serviceData: ServiceData) {
+        AddingServiceTokenFlowController.embed(in: viewController, parent: self, serviceData: serviceData)
     }
     
     func mainToDismiss() {

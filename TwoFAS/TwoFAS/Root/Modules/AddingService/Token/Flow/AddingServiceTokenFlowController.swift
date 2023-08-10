@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 protocol AddingServiceTokenFlowControllerParent: AnyObject {}
 
@@ -28,7 +29,8 @@ final class AddingServiceTokenFlowController: FlowController {
     
     static func embed(
         in viewController: UIViewController & AddingServiceViewControlling,
-        parent: AddingServiceTokenFlowControllerParent
+        parent: AddingServiceTokenFlowControllerParent,
+        serviceData: ServiceData
     ) {
         let view = AddingServiceTokenViewController()
         let flowController = AddingServiceTokenFlowController(viewController: view)
@@ -38,9 +40,14 @@ final class AddingServiceTokenFlowController: FlowController {
             viewController?.updateHeight(height)
         }
         
-//        let presenter = AddingServiceTokenPresenter(flowController: flowController)
-//        view.presenter = presenter
-//        presenter.view = view
+        let interactor = InteractorFactory.shared.addingServiceTokenModuleInteractor(serviceData: serviceData)
+        
+        let presenter = AddingServiceTokenPresenter(
+            flowController: flowController,
+            interactor: interactor
+        )
+        view.presenter = presenter
+        presenter.view = view
         
         viewController.embedViewController(view)
     }

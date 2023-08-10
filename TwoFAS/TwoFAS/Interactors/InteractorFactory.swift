@@ -552,6 +552,20 @@ extension InteractorFactory {
     }
     
     func addingServiceMainModuleInteractor() -> AddingServiceMainModuleInteracting {
-        AddingServiceMainModuleInteractor(cameraPermissionInteractor: cameraPermissionInteractor())
+        AddingServiceMainModuleInteractor(
+            cameraPermissionInteractor: cameraPermissionInteractor(),
+            newCodeInteractor: newCodeInteractor(),
+            pushNotificationPermission: pushNotificationRegistrationInteractor(),
+            notificationInteractor: notificationInteractor()
+        )
+    }
+    
+    func addingServiceTokenModuleInteractor(serviceData: ServiceData) -> AddingServiceTokenModuleInteracting {
+        AddingServiceTokenModuleInteractor(
+            notificationsInteractor: notificationInteractor(),
+            tokenInteractor: tokenInteractor(),
+            serviceDefinitionInteractor: serviceDefinitionInteractor(),
+            serviceData: serviceData
+        )
     }
 }

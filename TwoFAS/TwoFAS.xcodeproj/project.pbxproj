@@ -431,6 +431,7 @@
 		C26D14792263C73100599101 /* TokenHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D14642263A45100599101 /* TokenHandler.swift */; };
 		C26D147D2263D4D900599101 /* TimerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D147C2263D4D900599101 /* TimerHandler.swift */; };
 		C26D1AC52600041400D3D868 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D1AC42600041400D3D868 /* UIImage+.swift */; };
+		C26D4F542A856F590025E5BA /* AddingServiceTokenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D4F532A856F590025E5BA /* AddingServiceTokenPresenter.swift */; };
 		C270365C293E9DDC00659CBF /* TokensModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C270365B293E9DDC00659CBF /* TokensModuleInteractor.swift */; };
 		C2712218288D607D002F2018 /* ProtectionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2712217288D607D002F2018 /* ProtectionInteractor.swift */; };
 		C271B64827BAE67500D0D743 /* ComposeServiceModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C271B64727BAE67500D0D743 /* ComposeServiceModuleInteractor.swift */; };
@@ -1712,6 +1713,7 @@
 		C26D146E2263C5B500599101 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C26D147C2263D4D900599101 /* TimerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerHandler.swift; sourceTree = "<group>"; };
 		C26D1AC42600041400D3D868 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
+		C26D4F532A856F590025E5BA /* AddingServiceTokenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceTokenPresenter.swift; sourceTree = "<group>"; };
 		C26DE43A29C7B9ED003D0804 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C26DE43B29C7B9ED003D0804 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C26DE43C29C7B9EE003D0804 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2710,6 +2712,7 @@
 		C20E2E032A7C51BF00DB64BB /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				C26D4F532A856F590025E5BA /* AddingServiceTokenPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -7931,6 +7934,7 @@
 				C2147CEB205D7FCA0001D011 /* Security.swift in Sources */,
 				C2BD85DC26402A910087D087 /* IntroductionContainerView.swift in Sources */,
 				C2DDEB25289F3D5200011712 /* TokensViewEmptyListScreen.swift in Sources */,
+				C26D4F542A856F590025E5BA /* AddingServiceTokenPresenter.swift in Sources */,
 				C2872DD627A6A1FE000F5AE9 /* SortInteractor.swift in Sources */,
 				C2147CDB205D7B630001D011 /* PINPadDataModelProtocol.swift in Sources */,
 				C2C02244297F224700D596A8 /* MainModuleInteractor.swift in Sources */,

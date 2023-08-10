@@ -22,8 +22,8 @@ import Common
 import Token
 
 protocol AddingServiceTokenModuleInteracting: AnyObject {
-    var tokenConsumer: TokenTimerConsumerWithCopy? { get set }
-    var counterConsumer: TokenCounterConsumerWithCopy? { get set }
+    var tokenConsumer: TokenTimerConsumer? { get set }
+    var counterConsumer: TokenCounterConsumer? { get set }
     
     var serviceData: ServiceData { get }
     var serviceName: String { get }
@@ -33,7 +33,7 @@ protocol AddingServiceTokenModuleInteracting: AnyObject {
     var secret: String { get }
     var serviceTokenType: TokenType { get }
         
-    func copyToken()
+    func copyToken(_ token: String)
     func refresh()
     
     func start()
@@ -46,8 +46,8 @@ final class AddingServiceTokenModuleInteractor {
     private let serviceDefinitionInteractor: ServiceDefinitionInteracting
     let serviceData: ServiceData
     
-    weak var tokenConsumer: TokenTimerConsumerWithCopy?
-    weak var counterConsumer: TokenCounterConsumerWithCopy?
+    weak var tokenConsumer: TokenTimerConsumer?
+    weak var counterConsumer: TokenCounterConsumer?
     
     init(
         notificationsInteractor: NotificationInteracting,
@@ -71,17 +71,7 @@ extension AddingServiceTokenModuleInteractor: AddingServiceTokenModuleInteractin
 
     var serviceTokenType: TokenType { serviceData.tokenType }
     
-    func copyToken() {
-        var token = ""
-        switch serviceTokenType {
-        case .totp:
-            guard let tokenConsumer, let tokenValue = tokenConsumer.copyToken() else { return }
-            token = tokenValue
-        case .hotp:
-            guard let counterConsumer, let tokenValue = counterConsumer.copyToken() else { return }
-            token = tokenValue
-        }
-
+    func copyToken(_ token: String) {
         notificationsInteractor.copyWithSuccess(
             title: T.Notifications.tokenCopied,
             value: token,

@@ -111,14 +111,14 @@ private struct AddingServiceToken: View {
     @State private var errorReason: String?
     @State private var rotationAngle = 0.0
     
-    @State private var anim = false
+    @State private var animationProgress: CGFloat = 0
     
     @ObservedObject var presenter: AddingServiceTokenPresenter
     let changeHeight: (CGFloat) -> Void
     
     private let animation = Animation
-        .easeInOut(duration: 1.0 / 60.0)
-        .repeatForever(autoreverses: false)
+        .linear(duration: 1)
+        .repeatCount(1)
     
     var body: some View {
         VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
@@ -162,7 +162,7 @@ private struct AddingServiceToken: View {
                                     ))
                                 
                                 Circle()
-                                    .trim(from: 0, to: presenter.part)
+                                    .trim(from: 0, to: $animationProgress.animation(animation).wrappedValue)
                                     .stroke(Color(presenter.willChangeSoon ? ThemeColor.theme : ThemeColor.primary),
                                             style: StrokeStyle(
                                                 lineWidth: 1,
@@ -171,7 +171,6 @@ private struct AddingServiceToken: View {
                                     .rotationEffect(.degrees(-90))
                                     .padding(0.5)
                                     .frame(width: 30, height: 30)
-                                    .animation(animation, value: anim)
                             }
                         case .hotp:
                             Button {
@@ -217,10 +216,9 @@ private struct AddingServiceToken: View {
             changeHeight(height)
         })
         .onChange(of: presenter.part) { newValue in
-            anim = true
-        }
-        .onAnimationCompleted(for: anim) {
-            anim = false
+            withAnimation(animation) {
+                animationProgress = newValue
+            }
         }
     }
 }

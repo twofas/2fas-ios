@@ -21,8 +21,7 @@ import UIKit
 import SwiftUI
 import CodeSupport
 
-protocol AddingServiceMainViewControlling: AnyObject {
-}
+protocol AddingServiceMainViewControlling: AnyObject {}
 
 final class AddingServiceMainViewController: UIViewController {
     var heightChange: ((CGFloat) -> Void)?

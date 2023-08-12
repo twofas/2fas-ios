@@ -51,10 +51,35 @@ final class AddingServiceTokenFlowController: FlowController {
         
         viewController.embedViewController(view)
     }
+    
+    static func present(
+        on viewController: UIViewController,
+        parent: AddingServiceTokenFlowControllerParent,
+        serviceData: ServiceData
+    ) {
+        let view = AddingServiceTokenViewController()
+        let flowController = AddingServiceTokenFlowController(viewController: view)
+        flowController.parent = parent
+        
+        let containerView = AddingServiceViewController()
+        
+        view.heightChange = { [weak containerView] height in
+            containerView?.updateHeight(height)
+        }
+        
+        let interactor = InteractorFactory.shared.addingServiceTokenModuleInteractor(serviceData: serviceData)
+        
+        let presenter = AddingServiceTokenPresenter(
+            flowController: flowController,
+            interactor: interactor
+        )
+        view.presenter = presenter
+        presenter.view = view
+        
+        containerView.embedViewController(view)
+        
+        viewController.present(containerView, animated: true)
+    }
 }
-
-//extension AddingServiceTokenFlowController {
-//    var viewController: AddingServiceTokenViewController { _viewController as! AddingServiceTokenViewController }
-//}
 
 extension AddingServiceTokenFlowController: AddingServiceTokenFlowControlling {}

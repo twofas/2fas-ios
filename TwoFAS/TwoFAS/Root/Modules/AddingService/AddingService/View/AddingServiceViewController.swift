@@ -23,13 +23,9 @@ protocol AddingServiceViewControlling: AnyObject {
     func updateHeight(_ height: CGFloat)
     func embedViewController(_ newVC: UIViewController)
 }
-// TODO: Add conformance in other VC. Block dismissal when data is entered
-// protocol AddingServiceIsDismissable: AnyObject {
-//    var isDismissable: Bool { get }
-// }
 
 final class AddingServiceViewController: UIViewController {
-    var presenter: AddingServicePresenter!
+    var presenter: AddingServicePresenter?
     
     private let animTime = Theme.Animations.Timing.quick
     
@@ -38,19 +34,15 @@ final class AddingServiceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Theme.Colors.Fill.System.second
-        presentationController?.delegate = self
         
-        presenter.viewDidLoad()
+        presenter?.viewDidLoad()
         
         if let sheet = sheetPresentationController {
-            sheet.prefersGrabberVisible = true // TODO: Change according to isDismissable
+            sheet.prefersGrabberVisible = true
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersEdgeAttachedInCompactHeight = true
+            sheet.preferredCornerRadius = Theme.Metrics.modalCornerRadius
         }
-    }
-}
-
-extension AddingServiceViewController: UIAdaptivePresentationControllerDelegate {
-    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
-        true
     }
 }
 

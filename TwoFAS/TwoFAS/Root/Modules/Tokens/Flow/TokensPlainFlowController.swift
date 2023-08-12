@@ -150,7 +150,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
         
         FirstCodeAddedStatsController.markStats() // TODO: Move to MainRepository and proper interactor
-        ServiceAddedFlowController.present(serviceData: serviceData, on: mainSplitViewController, parent: self)
+        AddingServiceTokenFlowController.present(on: mainSplitViewController, parent: self, serviceData: serviceData)
     }
     
     func toShowAddingServiceManually() {
@@ -440,22 +440,8 @@ extension TokensPlainFlowController: UploadLogsNavigationFlowControllerParent {
     }
 }
 
-extension TokensPlainFlowController: ServiceAddedFlowControllerParent {
-    func serviceAddedEditService(_ serviceData: ServiceData) {
-        dismiss(actions: [.continuesFlow]) { [weak self] in
-            self?.toShowEditingService(with: serviceData, freshlyAdded: true)
-        }
-    }
-    
-    func serviceAddedEditIcon(_ serviceData: ServiceData) {
-        dismiss(actions: [.continuesFlow]) { [weak self] in
-            self?.toShowEditingService(with: serviceData, freshlyAdded: true, gotoIconEdit: true)
-        }
-    }
-    
-    func serviceAddedClose(_ serviceData: ServiceData) {
-        dismiss { [weak self] in
-            self?.viewController.presenter.handleFocusOnService(serviceData)
-        }
-    }
+extension TokensPlainFlowController: AddingServiceTokenFlowControllerParent {
+	func addingServiceClose(_ serviceData: ServiceData) { [weak self] in
+		self?.viewController.presenter.handleFocusOnService(serviceData)
+	}
 }

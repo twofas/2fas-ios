@@ -493,15 +493,6 @@ extension InteractorFactory {
         UploadLogsModuleInteractor(logUploadingInteractor: logUploadingInteractor(), passedUUID: auditID)
     }
     
-    func serviceAddedModuleInteractor(serviceData: ServiceData) -> ServiceAddedModuleInteracting {
-        ServiceAddedModuleInteractor(
-            notificationsInteractor: notificationInteractor(),
-            tokenInteractor: tokenInteractor(),
-            serviceDefinitionInteractor: serviceDefinitionInteractor(),
-            serviceData: serviceData
-        )
-    }
-    
     func tokensModuleInteractor() -> TokensModuleInteracting {
         TokensModuleInteractor(
             appearanceInteractor: appearanceInteractor(),

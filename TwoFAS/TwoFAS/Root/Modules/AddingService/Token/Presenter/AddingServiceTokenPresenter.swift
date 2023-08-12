@@ -64,7 +64,7 @@ final class AddingServiceTokenPresenter: ObservableObject {
 extension AddingServiceTokenPresenter {
     func viewDidLoad() {
         interactor.tokenConsumer = view?.totpAdapter
-        interactor.start() // TMP!!!!
+        interactor.counterConsumer = view?.hotpAdapter        
     }
     
     func viewWillAppear() {
@@ -81,11 +81,15 @@ extension AddingServiceTokenPresenter {
     
     func handleCopyCode() {
         interactor.copyToken(token)
+        interactor.start()
     }
+    
+    // MARK: - TOTP
     
     func handleTOTPInital(progress: Int, period: Int, token: TokenValue, willChangeSoon: Bool) {
         self.progress = progress
         self.period = period
+        self.time = String(progress - 1)
         self.token = token.formattedValue
         self.willChangeSoon = willChangeSoon
         part = CGFloat(progress) / CGFloat(period)
@@ -93,8 +97,16 @@ extension AddingServiceTokenPresenter {
     
     func handleTOTPUpdate(progress: Int, token: TokenValue, willChangeSoon: Bool) {
         self.progress = progress
+        self.time = String(progress - 1)
         self.token = token.formattedValue
         self.willChangeSoon = willChangeSoon
         part = CGFloat(progress) / CGFloat(period)
+    }
+    
+    // MARK: - HOTP
+    
+    func handleHOTP(isRefreshLocked: Bool, token: TokenValue) {
+        self.refreshTokenLocked = isRefreshLocked
+        self.token = token.formattedValue
     }
 }

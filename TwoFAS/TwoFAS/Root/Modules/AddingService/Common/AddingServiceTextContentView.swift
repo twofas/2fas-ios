@@ -32,14 +32,15 @@ struct AddingServiceTextContentView: View {
         Text(text)
             .font(.body)
             .foregroundColor(Color(Theme.Colors.Text.main))
-            .ifElse(alignToLeading,
-            contentIf: {
-                $0.multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }, contentElse: {
-                $0.multilineTextAlignment(.center)
-                    .frame(maxWidth: .infinity, alignment: .center)
-            })
+            .ifElse(
+                alignToLeading,
+                contentIf: {
+                    $0.multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }, contentElse: {
+                    $0.multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                })
     }
 }
 

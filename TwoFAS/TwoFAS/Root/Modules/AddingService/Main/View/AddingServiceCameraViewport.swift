@@ -23,7 +23,7 @@ import AVFoundation
 
 struct AddingServiceCameraViewport: UIViewRepresentable {
     private let height = AddingServiceMetrics.cameraActiveAreaHeight
-    
+        
     var didRegisterError: (String) -> Void
     var didFoundCode: (CodeType) -> Void
     

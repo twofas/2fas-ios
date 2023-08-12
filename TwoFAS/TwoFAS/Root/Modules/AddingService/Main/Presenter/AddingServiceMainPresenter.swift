@@ -21,7 +21,7 @@ import Foundation
 import CodeSupport
 import Common
 
-final class AddingServiceMainPresenter {
+final class AddingServiceMainPresenter: ObservableObject {
     weak var view: AddingServiceMainViewControlling?
     
     private var lockScanning = false
@@ -102,14 +102,14 @@ extension AddingServiceMainPresenter {
     }
     
     func handleToAddManually() {
-        
+        flowController.toAddManually()
     }
     
     func handleToAppSettings() {
-        
+        flowController.toAppSettings()
     }
     
-    func handleCameraAvailbility(callback: @escaping (Bool) -> Void) {
+    func handleCameraAvailability(callback: @escaping (Bool) -> Void) {
         interactor.checkCameraPermission { available in
             callback(available)
         }

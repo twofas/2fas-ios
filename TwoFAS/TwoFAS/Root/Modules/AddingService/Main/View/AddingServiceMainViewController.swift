@@ -26,28 +26,23 @@ protocol AddingServiceMainViewControlling: AnyObject {}
 final class AddingServiceMainViewController: UIViewController {
     var heightChange: ((CGFloat) -> Void)?
     var presenter: AddingServiceMainPresenter!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        presenter.handleCameraAvailbility { [weak self] isCameraAvailable in
+        presenter.handleCameraAvailability { [weak self] isCameraAvailable in
             self?.setupView(cameraUnavailable: !isCameraAvailable)
         }
     }
     
     private func setupView(cameraUnavailable: Bool) {
-        let main = AddingServiceMain(cameraUnavailable: cameraUnavailable) { [weak self] codeType in
-            self?.presenter.handleFoundCode(codeType: codeType)
-        } addManually: { [weak self] in
-            self?.presenter.handleToAddManually()
-        } gotoGallery: { [weak self] in
-            self?.presenter.handleToGallery()
-        } changeHeight: { [weak self] height in
-            self?.heightChange?(height)
-        } cameraTapAction: { [weak self] in
-            self?.presenter.handleToAppSettings()
-        }
-                
+        let main = AddingServiceMain(
+            cameraUnavailable: cameraUnavailable,
+            changeHeight: { [weak self] height in
+                self?.heightChange?(height)
+            }, presenter: presenter
+        )
+        
         let vc = UIHostingController(rootView: main)
         vc.willMove(toParent: self)
         addChild(vc)
@@ -64,46 +59,38 @@ private struct AddingServiceMain: View {
     @State private var errorReason: String?
     
     let cameraUnavailable: Bool
-    let foundCode: (CodeType) -> Void
-    let addManually: Callback
-    let gotoGallery: Callback
     let changeHeight: (CGFloat) -> Void
-    let cameraTapAction: Callback
+    
+    @ObservedObject var presenter: AddingServiceMainPresenter
     
     init(
         cameraUnavailable: Bool,
-        foundCode: @escaping (CodeType) -> Void,
-        addManually: @escaping Callback,
-        gotoGallery: @escaping Callback,
         changeHeight: @escaping (CGFloat) -> Void,
-        cameraTapAction: @escaping Callback
+        presenter: AddingServiceMainPresenter
     ) {
         self.cameraUnavailable = cameraUnavailable
-        self.foundCode = foundCode
-        self.addManually = addManually
-        self.gotoGallery = gotoGallery
         self.changeHeight = changeHeight
-        self.cameraTapAction = cameraTapAction
+        self.presenter = presenter
         
         if cameraUnavailable {
-            errorReason = "Camera is unavailable. Check app's access permission"
+            errorReason = T.Tokens.cameraIsUnavailableAppPermission
         }
     }
     
     var body: some View {
         VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-            AddingServiceTitleView(text: "Pair service with 2FAS")
-            AddingServiceTextContentView(text: "Point your camera to the screen to\ncapture the QR code.")
+            AddingServiceTitleView(text: T.Tokens.addManualTitle)
+            AddingServiceTextContentView(text: T.Tokens.addDescription)
             AddingServiceLargeSpacing()
-
+            
             Group {
                 if errorReason != nil || cameraUnavailable {
                     let reason: AttributedString = {
                         if let errorReason {
                             return AttributedString(errorReason)
                         }
-                        var result = AttributedString("Camera is unavailable. Check app's access permission in System Settings")
-                        if let range = result.range(of: "System Settings") {
+                        var result = AttributedString(T.Tokens.cameraIsUnavailableAppPermission)
+                        if let range = result.range(of: T.Tokens.cameraIsUnavailableAppPermissionUnderline) {
                             result[range].underlineStyle = .single
                         }
                         
@@ -114,7 +101,7 @@ private struct AddingServiceMain: View {
                     AddingServiceCameraViewport(didRegisterError: { errorReason in
                         self.errorReason = errorReason
                     }, didFoundCode: { codeType in
-                        foundCode(codeType)
+                        presenter.handleFoundCode(codeType: codeType)
                     })
                 }
             }
@@ -124,25 +111,25 @@ private struct AddingServiceMain: View {
             .cornerRadius(Theme.Metrics.modalCornerRadius)
             .onTapGesture {
                 guard cameraUnavailable else { return }
-                
+                presenter.handleToAppSettings()
             }
-
+            
             AddingServiceLargeSpacing()
-
-            AddingServiceTitleView(text: "Other methods?", alignToLeading: true)
-
+            
+            AddingServiceTitleView(text: T.Tokens.addOtherMethods, alignToLeading: true)
+            
             AddingServiceFullWidthButton(
-                text: "Enter secret key manually",
+                text: T.Tokens.fabAddmanually,
                 icon: Asset.keybordIcon.swiftUIImage
             ) {
-                addManually()
+                presenter.handleToAddManually()
             }
-
+            
             AddingServiceFullWidthButton(
-                text: "Upload screen with QR code",
+                text: T.Tokens.addFromGallery,
                 icon: Asset.imageIcon.swiftUIImage
             ) {
-                gotoGallery()
+                presenter.handleToGallery()
             }
         }
         .padding(.horizontal, Theme.Metrics.doubleMargin)

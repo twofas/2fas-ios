@@ -30,6 +30,8 @@ protocol AddingServiceMainFlowControlling: AnyObject {
     func toToken(serviceData: ServiceData)
     func close()
     
+    func toAddManually()
+    func toAppSettings()
     func toGeneralError()
     func toDuplicatedCode(usedIn: String)
     func toAppStore()
@@ -80,6 +82,14 @@ extension AddingServiceMainFlowController: AddingServiceMainFlowControlling {
     
     func close() {
         parent?.mainToDismiss()
+    }
+    
+    func toAddManually() {
+        
+    }
+    
+    func toAppSettings() {
+        // open system settings app view, check if we need to dismiss adding service on app show (camera)
     }
     
     func toGeneralError() {

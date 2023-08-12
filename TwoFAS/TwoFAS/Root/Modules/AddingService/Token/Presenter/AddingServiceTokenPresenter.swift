@@ -43,14 +43,14 @@ final class AddingServiceTokenPresenter: ObservableObject {
         interactor.secret
     }
     
-    @Published private(set) var token: String = ""
-    @Published private(set) var refreshTokenLocked = true
-    @Published private(set) var time: String = ""
-    @Published private(set) var willChangeSoon = false
+    @Published var token: String = ""
+    @Published var refreshTokenLocked = true
+    @Published var time: String = ""
+    @Published var willChangeSoon = false
     
-    @Published private(set) var progress: Int = 0
-    @Published private(set) var period: Int = 0
-    @Published private(set) var part: CGFloat = 0
+    @Published var progress: Int = 0
+    @Published var period: Int = 0
+    @Published var part: CGFloat = 0
     
     private let flowController: AddingServiceTokenFlowControlling
     private let interactor: AddingServiceTokenModuleInteracting
@@ -81,7 +81,6 @@ extension AddingServiceTokenPresenter {
     
     func handleCopyCode() {
         interactor.copyToken(token)
-        interactor.start()
     }
     
     // MARK: - TOTP
@@ -89,18 +88,18 @@ extension AddingServiceTokenPresenter {
     func handleTOTPInital(progress: Int, period: Int, token: TokenValue, willChangeSoon: Bool) {
         self.progress = progress
         self.period = period
-        self.time = String(progress - 1)
         self.token = token.formattedValue
         self.willChangeSoon = willChangeSoon
-        part = CGFloat(progress) / CGFloat(period)
+        updateTime(progress)
+        updatePart(progress)
     }
     
     func handleTOTPUpdate(progress: Int, token: TokenValue, willChangeSoon: Bool) {
         self.progress = progress
-        self.time = String(progress - 1)
         self.token = token.formattedValue
         self.willChangeSoon = willChangeSoon
-        part = CGFloat(progress) / CGFloat(period)
+        updateTime(progress)
+        updatePart(progress)
     }
     
     // MARK: - HOTP
@@ -108,5 +107,15 @@ extension AddingServiceTokenPresenter {
     func handleHOTP(isRefreshLocked: Bool, token: TokenValue) {
         self.refreshTokenLocked = isRefreshLocked
         self.token = token.formattedValue
+    }
+}
+
+private extension AddingServiceTokenPresenter {
+    func updatePart(_ progress: Int) {
+        part = CGFloat(progress) / CGFloat(period)
+    }
+    
+    func updateTime(_ progress: Int) {
+        time = String(progress - 1)
     }
 }

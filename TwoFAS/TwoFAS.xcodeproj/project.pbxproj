@@ -147,6 +147,9 @@
 		C21B1B272A8811920021CAF1 /* TOTPAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21B1B262A8811920021CAF1 /* TOTPAdapter.swift */; };
 		C21B1B292A8820BE0021CAF1 /* HOTPAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21B1B282A8820BD0021CAF1 /* HOTPAdapter.swift */; };
 		C21B1B2B2A8820FB0021CAF1 /* AddingServiceTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21B1B2A2A8820FB0021CAF1 /* AddingServiceTokenView.swift */; };
+		C21B1B2D2A8827D30021CAF1 /* AddingServiceTokenValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21B1B2C2A8827D30021CAF1 /* AddingServiceTokenValueView.swift */; };
+		C21B1B2F2A882A3B0021CAF1 /* AddingServiceAdditionalInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21B1B2E2A882A3B0021CAF1 /* AddingServiceAdditionalInfoView.swift */; };
+		C21B1B312A882A920021CAF1 /* AddingServiceTOTPTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21B1B302A882A920021CAF1 /* AddingServiceTOTPTimerView.swift */; };
 		C21B3A1427AF0BC9005C603B /* ColorPickerFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21B3A1327AF0BC9005C603B /* ColorPickerFlowController.swift */; };
 		C21B3A1727AF122B005C603B /* ColorPickerModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21B3A1627AF122B005C603B /* ColorPickerModuleInteractor.swift */; };
 		C21B3A1927AF124E005C603B /* ColorPickerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21B3A1827AF124E005C603B /* ColorPickerPresenter.swift */; };
@@ -1415,6 +1418,9 @@
 		C21B1B262A8811920021CAF1 /* TOTPAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOTPAdapter.swift; sourceTree = "<group>"; };
 		C21B1B282A8820BD0021CAF1 /* HOTPAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HOTPAdapter.swift; sourceTree = "<group>"; };
 		C21B1B2A2A8820FB0021CAF1 /* AddingServiceTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceTokenView.swift; sourceTree = "<group>"; };
+		C21B1B2C2A8827D30021CAF1 /* AddingServiceTokenValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceTokenValueView.swift; sourceTree = "<group>"; };
+		C21B1B2E2A882A3B0021CAF1 /* AddingServiceAdditionalInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceAdditionalInfoView.swift; sourceTree = "<group>"; };
+		C21B1B302A882A920021CAF1 /* AddingServiceTOTPTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceTOTPTimerView.swift; sourceTree = "<group>"; };
 		C21B3A1327AF0BC9005C603B /* ColorPickerFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerFlowController.swift; sourceTree = "<group>"; };
 		C21B3A1627AF122B005C603B /* ColorPickerModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerModuleInteractor.swift; sourceTree = "<group>"; };
 		C21B3A1827AF124E005C603B /* ColorPickerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerPresenter.swift; sourceTree = "<group>"; };
@@ -2661,8 +2667,8 @@
 		C20E2E022A7C51BB00DB64BB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C20E2E082A7C51F500DB64BB /* AddingServiceTokenViewController.swift */,
 				C21B1B2A2A8820FB0021CAF1 /* AddingServiceTokenView.swift */,
+				C20E2E082A7C51F500DB64BB /* AddingServiceTokenViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3294,6 +3300,9 @@
 				C21EB2F22A7FD8C400FA8AA1 /* AddingServiceTextContentView.swift */,
 				C21EB2F42A7FDEB600FA8AA1 /* AddingServiceLargeSpacing.swift */,
 				C21EB2F62A7FF64700FA8AA1 /* AddingServiceFullWidthButton.swift */,
+				C21B1B2C2A8827D30021CAF1 /* AddingServiceTokenValueView.swift */,
+				C21B1B2E2A882A3B0021CAF1 /* AddingServiceAdditionalInfoView.swift */,
+				C21B1B302A882A920021CAF1 /* AddingServiceTOTPTimerView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -7475,6 +7484,7 @@
 				C2E948AD23B666BD003BDCC1 /* UnderscoredInput.swift in Sources */,
 				C2D39DE52823324E00E864E9 /* MainRepositoryImpl+News.swift in Sources */,
 				C233BD222801CB2600A9CFF2 /* MainRepositoryImpl+Network.swift in Sources */,
+				C21B1B2D2A8827D30021CAF1 /* AddingServiceTokenValueView.swift in Sources */,
 				C21247FB27B7181A0044D9F2 /* ComposeServiceModels.swift in Sources */,
 				C2D6731D25DB2C5D004BD697 /* ToastCenter.swift in Sources */,
 				C2497730277F3EFB00DC872C /* ServiceModifyInteractor.swift in Sources */,
@@ -7719,6 +7729,7 @@
 				C20E60FD28189D2000AB002E /* PushNotificationPermissionModuleInteractor.swift in Sources */,
 				C286200429D5CA0200217AF9 /* UUIDInputLength.swift in Sources */,
 				C2B077B3292A8F610074517F /* UploadLogsSuccessFlowController.swift in Sources */,
+				C21B1B2F2A882A3B0021CAF1 /* AddingServiceAdditionalInfoView.swift in Sources */,
 				C2404883276571A70076376E /* ImporterPreimportSummaryViewController.swift in Sources */,
 				C263F462299040F0009B0837 /* MainSplitPresenter.swift in Sources */,
 				C27C03C327F4FF0D0020DB5E /* BrowserExtensionMainPresenter+Menu.swift in Sources */,
@@ -7780,6 +7791,7 @@
 				C23B899527C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift in Sources */,
 				C2BD85E22640394B0087D087 /* IntroductionScrollView.swift in Sources */,
 				C2FCB29028258B3A00AF8A37 /* NewsPlainFlowController.swift in Sources */,
+				C21B1B312A882A920021CAF1 /* AddingServiceTOTPTimerView.swift in Sources */,
 				C27BE517275D6ACC0090CA12 /* BackupMenuModuleInteractor.swift in Sources */,
 				C2B39E5B29F5D0AA00EC31F6 /* TokensServiceName.swift in Sources */,
 				C27D543F275D393D001E9ABF /* BackupMenuPresenter.swift in Sources */,

@@ -21,9 +21,7 @@ import SwiftUI
 import Common
 
 struct AddingServiceTokenView: View {
-    @State private var errorReason: String?
     @State private var rotationAngle = 0.0
-    
     @State private var animationProgress: CGFloat = 0
     
     @ObservedObject var presenter: AddingServiceTokenPresenter
@@ -36,8 +34,8 @@ struct AddingServiceTokenView: View {
     var body: some View {
         VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
             VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-                AddingServiceTitleView(text: "Almost done!")
-                AddingServiceTextContentView(text: "To finish pairing, you might need to retype this token in the service.")
+                AddingServiceTitleView(text: T.Tokens.addSuccessTitle)
+                AddingServiceTextContentView(text: T.Tokens.addSuccessDescription)
                 AddingServiceLargeSpacing()
                 
                 VStack(spacing: 6) {
@@ -49,35 +47,20 @@ struct AddingServiceTokenView: View {
                             AddingServiceTitleView(text: presenter.serviceName, alignToLeading: true)
                                 .lineLimit(1)
                             if let serviceAdditionalInfo = presenter.serviceAdditionalInfo {
-                                Text(serviceAdditionalInfo)
-                                    .font(.footnote)
-                                    .foregroundColor(Color(Theme.Colors.Text.subtitle))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .lineLimit(1)
+                                AddingServiceAdditionalInfoView(text: serviceAdditionalInfo)
                             }
                         }
                     }
                     HStack(alignment: .center, spacing: 2 * ThemeMetrics.spacing) {
-                        Text(presenter.token)
-                            .foregroundColor(Color(
-                                presenter.willChangeSoon ? ThemeColor.theme : ThemeColor.primary
-                            ))
-                            .font(Font(Theme.Fonts.Counter.syncCounter))
-                            .minimumScaleFactor(0.5)
-                            .lineLimit(1)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        AddingServiceTokenValueView(text: $presenter.token, willChangeSoon: $presenter.willChangeSoon)
                         
                         switch presenter.serviceTokenType {
                         case .totp:
                             ZStack(alignment: .center) {
-                                Text(presenter.time)
-                                    .font(Font(Theme.Fonts.Controls.counter))
-                                    .lineLimit(1)
-                                    .multilineTextAlignment(.center)
-                                    .fontWeight(.medium)
-                                    .foregroundColor(Color(
-                                        presenter.willChangeSoon ? ThemeColor.theme : ThemeColor.primary
-                                    ))
+                                AddingServiceTOTPTimerView(
+                                    text: $presenter.time,
+                                    willChangeSoon: $presenter.willChangeSoon
+                                )
                                 
                                 Circle()
                                     .trim(from: 0, to: $animationProgress.animation(animation).wrappedValue)
@@ -118,12 +101,13 @@ struct AddingServiceTokenView: View {
                     RoundedRectangle(cornerRadius: Theme.Metrics.modalCornerRadius)
                         .stroke(Color(Theme.Colors.Line.separator), lineWidth: 1)
                 )
-            }.padding(.horizontal, Theme.Metrics.doubleMargin * 3.0 / 4.0)
+            }
+            .padding(.horizontal, Theme.Metrics.doubleMargin * 3.0 / 4.0)
             
             AddingServiceLargeSpacing()
             
             AddingServiceFullWidthButton(
-                text: "Copy code",
+                text: T.Tokens.copyToken,
                 icon: Asset.keybordIcon.swiftUIImage
             ) {
                 presenter.handleCopyCode()
@@ -140,4 +124,3 @@ struct AddingServiceTokenView: View {
         }
     }
 }
-

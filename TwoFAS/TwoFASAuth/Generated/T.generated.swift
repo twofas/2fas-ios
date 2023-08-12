@@ -540,6 +540,8 @@ internal enum T {
     internal static let cantInitializeCameraSplitView = T.tr("Localizable", "camera__cant_initialize_camera_split_view", fallback: "Can't initialize camera in Split View mode. Open app in full screen and try again")
   }
   internal enum Color {
+    /// Brown
+    internal static let brown = T.tr("Localizable", "color__brown", fallback: "Brown")
     /// Green
     internal static let green = T.tr("Localizable", "color__green", fallback: "Green")
     /// Indigo
@@ -550,6 +552,8 @@ internal enum T {
     internal static let neutral = T.tr("Localizable", "color__neutral", fallback: "Neutral")
     /// Orange
     internal static let orange = T.tr("Localizable", "color__orange", fallback: "Orange")
+    /// Pink
+    internal static let pink = T.tr("Localizable", "color__pink", fallback: "Pink")
     /// Purple
     internal static let purple = T.tr("Localizable", "color__purple", fallback: "Purple")
     /// Red
@@ -1209,6 +1213,10 @@ internal enum T {
     internal static let brandIcon = T.tr("Localizable", "tokens__brand_icon", fallback: "Brand icon")
     /// Camera is unavailable
     internal static let cameraIsUnavailable = T.tr("Localizable", "tokens__camera_is_unavailable", fallback: "Camera is unavailable")
+    /// Camera is unavailable. Check apps' access permission in System Settings
+    internal static let cameraIsUnavailableAppPermission = T.tr("Localizable", "tokens__camera_is_unavailable_app_permission", fallback: "Camera is unavailable. Check apps' access permission in System Settings")
+    /// System Settings
+    internal static let cameraIsUnavailableAppPermissionUnderline = T.tr("Localizable", "tokens__camera_is_unavailable_app_permission_underline", fallback: "System Settings")
     /// CAUTION
     internal static let caution = T.tr("Localizable", "tokens__caution", fallback: "CAUTION")
     /// Change brand icon
@@ -1312,6 +1320,8 @@ internal enum T {
     internal static let orderMenuOptionUser = T.tr("Localizable", "tokens__order_menu_option_user", fallback: "Request icon as a user")
     /// Select the request method
     internal static let orderMenuTitle = T.tr("Localizable", "tokens__order_menu_title", fallback: "Select the request method")
+    /// Other methods?
+    internal static let otherMethodsHeader = T.tr("Localizable", "tokens__other_methods_header", fallback: "Other methods?")
     /// OTP Authentication
     internal static let otpAuthentication = T.tr("Localizable", "tokens__otp_authentication", fallback: "OTP Authentication")
     /// Personalization

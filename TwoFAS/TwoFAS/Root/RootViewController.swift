@@ -32,16 +32,4 @@ final class RootViewController: ContainerViewController {
         super.viewWillTransition(to: size, with: coordinator)
         NotificationCenter.default.post(Notification(name: Notification.Name.orientationSizeWillChange))
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        AddingServiceFlowController.present(on: self, parent: self)
-    }
-}
-
-extension RootViewController: AddingServiceFlowControllerParent {
-    func addingServiceDismiss() {
-        dismiss(animated: true)
-    }
 }

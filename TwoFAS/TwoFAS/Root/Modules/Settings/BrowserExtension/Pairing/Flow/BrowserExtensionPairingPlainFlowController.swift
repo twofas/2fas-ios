@@ -20,28 +20,28 @@
 import UIKit
 import Common
 
-protocol BrowserExtensionPairingFlowControllerParent: AnyObject {
+protocol BrowserExtensionPairingPlainFlowControllerParent: AnyObject {
     func pairingSuccess()
     func pairingAlreadyPaired()
     func pairingError()
 }
 
-protocol BrowserExtensionPairingFlowControlling: AnyObject {
+protocol BrowserExtensionPairingPlainFlowControlling: AnyObject {
     func toError(_ error: PairingWebExtensionError)
     func toAlreadyPaired()
     func toSuccess()
 }
 
-final class BrowserExtensionPairingFlowController: FlowController {
-    private weak var parent: BrowserExtensionPairingFlowControllerParent?
+final class BrowserExtensionPairingPlainFlowController: FlowController {
+    private weak var parent: BrowserExtensionPairingPlainFlowControllerParent?
     
     static func push(
         in navigationController: UINavigationController,
-        parent: BrowserExtensionPairingFlowControllerParent,
+        parent: BrowserExtensionPairingPlainFlowControllerParent,
         with extensionID: ExtensionID
     ) {
         let view = BrowserExtensionPairingViewController()
-        let flowController = BrowserExtensionPairingFlowController(viewController: view)
+        let flowController = BrowserExtensionPairingPlainFlowController(viewController: view)
         flowController.parent = parent
         let interactor = InteractorFactory.shared.browserExtensionPairingModuleInteractor(extensionID: extensionID)
         let presenter = BrowserExtensionPairingPresenter(
@@ -52,9 +52,27 @@ final class BrowserExtensionPairingFlowController: FlowController {
         
         navigationController.pushViewController(view, animated: true)
     }
+    
+    static func showAsRoot(
+        in navigationController: UINavigationController,
+        parent: BrowserExtensionPairingPlainFlowControllerParent,
+        with extensionID: ExtensionID
+    ) {
+        let view = BrowserExtensionPairingViewController()
+        let flowController = BrowserExtensionPairingPlainFlowController(viewController: view)
+        flowController.parent = parent
+        let interactor = InteractorFactory.shared.browserExtensionPairingModuleInteractor(extensionID: extensionID)
+        let presenter = BrowserExtensionPairingPresenter(
+            flowController: flowController,
+            interactor: interactor
+        )
+        view.presenter = presenter
+        
+        navigationController.setViewControllers([view], animated: false)
+    }
 }
 
-extension BrowserExtensionPairingFlowController: BrowserExtensionPairingFlowControlling {
+extension BrowserExtensionPairingPlainFlowController: BrowserExtensionPairingPlainFlowControlling {
     func toError(_ error: PairingWebExtensionError) {
         // TODO: Pass error!
         parent?.pairingError()

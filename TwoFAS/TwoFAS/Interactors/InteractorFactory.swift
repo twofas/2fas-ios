@@ -506,7 +506,8 @@ extension InteractorFactory {
             cloudBackupInteractor: cloudBackupStateInteractor(listenerID: ""),
             cameraPermissionInteractor: cameraPermissionInteractor(),
             linkInteractor: linkInteractor(),
-            widgetsInteractor: widgetsInteractor()
+            widgetsInteractor: widgetsInteractor(),
+            newCodeInteractor: newCodeInteractor()
         )
     }
     

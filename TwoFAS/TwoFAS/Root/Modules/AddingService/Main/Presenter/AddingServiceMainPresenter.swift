@@ -25,7 +25,6 @@ final class AddingServiceMainPresenter: ObservableObject {
     weak var view: AddingServiceMainViewControlling?
     
     private var lockScanning = false
-    private var extensionID: String?
     
     private let flowController: AddingServiceMainFlowControlling
     private let interactor: AddingServiceMainModuleInteracting
@@ -82,8 +81,7 @@ extension AddingServiceMainPresenter {
             if interactor.wasUserAskedAboutPush {
                 flowController.toTwoFASWebExtensionPairing(for: extensionID)
             } else {
-                self.extensionID = extensionID
-                flowController.toPushPermissions()
+                flowController.toPushPermissions(for: extensionID)
             }
         case .support(let auditID):
             Log("CameraScannerPresenter: Found 2FAS support request. AuditID: \(auditID)")
@@ -115,40 +113,21 @@ extension AddingServiceMainPresenter {
         }
     }
     
-    func handleGoogleAuthImport(_ codes: [Code]) {
-        guard !codes.isEmpty else { return }
-        AppEventLog(.importGoogleAuth)
-        interactor.addCodes(codes)
-        flowController.close()
-    }
-    
-    func handleLastPassImport(_ codes: [Code]) {
-        guard !codes.isEmpty else { return }
-        AppEventLog(.importLastPass)
-        interactor.addCodes(codes)
-        flowController.close()
-    }
-    
-    func handleCameraError(_ str: String) {
-        interactor.warning()
-        flowController.toCameraError(str)
-    }
-    
     func handleRename(newName: String, secret: String) {
         interactor.renameService(newName: newName, secret: secret)
+        guard let serviceData = interactor.service(for: secret) else { return }
+        flowController.toToken(serviceData: serviceData)
     }
     
     func handleCancelRename(secret: String) {
         interactor.cancelRenaming(secret: secret)
+        guard let serviceData = interactor.service(for: secret) else { return }
+        flowController.toToken(serviceData: serviceData)
     }
     
-    func handlePushNotificationEnded() {
-        guard let extensionID else {
-            flowController.close()
-            return
-        }
-        flowController.toTwoFASWebExtensionPairing(for: extensionID)
-        self.extensionID = nil
+    func handleResumeCamera() {
+        // TODO: Add
+        lockScanning = false
     }
 }
 

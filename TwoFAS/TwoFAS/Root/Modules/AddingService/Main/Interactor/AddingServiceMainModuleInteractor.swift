@@ -31,10 +31,11 @@ protocol AddingServiceMainModuleInteracting: AnyObject {
     func addCode(_ code: Code)
     func codeExists(_ code: Code) -> Bool
     func filterImportableCodes(_ codes: [Code]) -> [Code]
-    func addCodes(_ codes: [Code])
     func serviceDescription(for code: Code) -> String?
     func renameService(newName: String, secret: String)
     func cancelRenaming(secret: String)
+    
+    func service(for secret: String) -> ServiceData?
     
     func warning()
 }
@@ -100,10 +101,6 @@ extension AddingServiceMainModuleInteractor: AddingServiceMainModuleInteracting 
         newCodeInteractor.filterImportableCodes(codes)
     }
     
-    func addCodes(_ codes: [Code]) {
-        newCodeInteractor.addCodes(codes)
-    }
-    
     func serviceDescription(for code: Code) -> String? {
         newCodeInteractor.service(for: code.secret)?.summarizeDescription
     }
@@ -114,6 +111,10 @@ extension AddingServiceMainModuleInteractor: AddingServiceMainModuleInteracting 
     
     func cancelRenaming(secret: String) {
         newCodeInteractor.cancelRenaming(secret: secret)
+    }
+    
+    func service(for secret: String) -> ServiceData? {
+        newCodeInteractor.service(for: secret)
     }
     
     // MARK: - Notifications

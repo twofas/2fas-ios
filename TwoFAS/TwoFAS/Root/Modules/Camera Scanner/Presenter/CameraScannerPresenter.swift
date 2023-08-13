@@ -26,7 +26,6 @@ final class CameraScannerPresenter {
     weak var view: CameraScannerViewControlling?
         
     private var lockScanning = false
-    private var extensionID: String?
     
     private let flowController: CameraScannerFlowControlling
     private let interactor: CameraScannerModuleInteracting
@@ -121,8 +120,7 @@ extension CameraScannerPresenter {
             if interactor.wasUserAskedAboutPush {
                 flowController.toTwoFASWebExtensionPairing(for: extensionID)
             } else {
-                self.extensionID = extensionID
-                flowController.toPushPermissions()
+                flowController.toPushPermissions(extensionID: extensionID)
             }
         case .support(let auditID):
             Log("CameraScannerPresenter: Found 2FAS support request. AuditID: \(auditID)")
@@ -150,15 +148,6 @@ extension CameraScannerPresenter {
     
     func handleCancelRename(secret: String) {
         interactor.cancelRenaming(secret: secret)
-    }
-    
-    func handlePushNotificationEnded() {
-        guard let extensionID else {
-            flowController.toFinish()
-            return
-        }
-        flowController.toTwoFASWebExtensionPairing(for: extensionID)
-        self.extensionID = nil
     }
 }
 

@@ -73,7 +73,7 @@
 		C20E60F928188AA500AB002E /* PushNotificationPermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E60F828188AA500AB002E /* PushNotificationPermissionViewController.swift */; };
 		C20E60FB2818971300AB002E /* PushNotificationPermissionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E60FA2818971300AB002E /* PushNotificationPermissionPresenter.swift */; };
 		C20E60FD28189D2000AB002E /* PushNotificationPermissionModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E60FC28189D2000AB002E /* PushNotificationPermissionModuleInteractor.swift */; };
-		C20E60FF28189E8800AB002E /* PushNotificationPermissionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E60FE28189E8800AB002E /* PushNotificationPermissionFlowController.swift */; };
+		C20E60FF28189E8800AB002E /* PushNotificationPermissionPlainFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E60FE28189E8800AB002E /* PushNotificationPermissionPlainFlowController.swift */; };
 		C20EBD2A2788605600E8DD42 /* Character+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20EBD292788605600E8DD42 /* Character+.swift */; };
 		C20F00A0256946550026FBB2 /* TwoFas-TwoFas2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C20F009F256946550026FBB2 /* TwoFas-TwoFas2.xcmappingmodel */; };
 		C20F00B0256946930026FBB2 /* EncryptSecretEntityMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20F00AF256946930026FBB2 /* EncryptSecretEntityMigrationPolicy.swift */; };
@@ -478,7 +478,7 @@
 		C27A549B27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549A27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift */; };
 		C27A549F27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549E27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift */; };
 		C27A54A127F0CAFC00321D2B /* BrowserExtensionIntroFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A54A027F0CAFC00321D2B /* BrowserExtensionIntroFlowController.swift */; };
-		C27A54A827F0F3C700321D2B /* BrowserExtensionPairingFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A54A727F0F3C700321D2B /* BrowserExtensionPairingFlowController.swift */; };
+		C27A54A827F0F3C700321D2B /* BrowserExtensionPairingPlainFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A54A727F0F3C700321D2B /* BrowserExtensionPairingPlainFlowController.swift */; };
 		C27A54AA27F0FAC500321D2B /* BrowserExtensionPairingModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A54A927F0FAC500321D2B /* BrowserExtensionPairingModuleInteractor.swift */; };
 		C27A54AC27F0FCC600321D2B /* BrowserExtensionPairingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A54AB27F0FCC600321D2B /* BrowserExtensionPairingPresenter.swift */; };
 		C27A54AE27F0FD0C00321D2B /* BrowserExtensionPairingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A54AD27F0FD0C00321D2B /* BrowserExtensionPairingViewController.swift */; };
@@ -583,6 +583,8 @@
 		C296D1EA28B2D4AF001F026D /* UserIconInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D1E928B2D4AF001F026D /* UserIconInfoViewController.swift */; };
 		C296D1EC28B2D4CA001F026D /* UserIconInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D1EB28B2D4CA001F026D /* UserIconInfoPresenter.swift */; };
 		C296D1EE28B2D52C001F026D /* UserIconInfoFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D1ED28B2D52C001F026D /* UserIconInfoFlowController.swift */; };
+		C296D4D22A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D4D12A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift */; };
+		C296D4D42A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D4D32A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift */; };
 		C29787DE27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29787DD27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift */; };
 		C29803C0245EE05C0066DFE0 /* MainContainerElementsStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29803BF245EE05C0066DFE0 /* MainContainerElementsStyling.swift */; };
 		C29803C2245EEB470066DFE0 /* MainContainerGenerators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29803C1245EEB470066DFE0 /* MainContainerGenerators.swift */; };
@@ -1342,7 +1344,7 @@
 		C20E60F828188AA500AB002E /* PushNotificationPermissionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionViewController.swift; sourceTree = "<group>"; };
 		C20E60FA2818971300AB002E /* PushNotificationPermissionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionPresenter.swift; sourceTree = "<group>"; };
 		C20E60FC28189D2000AB002E /* PushNotificationPermissionModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionModuleInteractor.swift; sourceTree = "<group>"; };
-		C20E60FE28189E8800AB002E /* PushNotificationPermissionFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionFlowController.swift; sourceTree = "<group>"; };
+		C20E60FE28189E8800AB002E /* PushNotificationPermissionPlainFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionPlainFlowController.swift; sourceTree = "<group>"; };
 		C20EBD292788605600E8DD42 /* Character+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+.swift"; sourceTree = "<group>"; };
 		C20F0080256938240026FBB2 /* TwoFAS2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS2.xcdatamodel; sourceTree = "<group>"; };
 		C20F009F256946550026FBB2 /* TwoFas-TwoFas2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = "TwoFas-TwoFas2.xcmappingmodel"; sourceTree = "<group>"; };
@@ -1761,7 +1763,7 @@
 		C27A549A27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroPresenter.swift; sourceTree = "<group>"; };
 		C27A549E27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroModuleInteractor.swift; sourceTree = "<group>"; };
 		C27A54A027F0CAFC00321D2B /* BrowserExtensionIntroFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroFlowController.swift; sourceTree = "<group>"; };
-		C27A54A727F0F3C700321D2B /* BrowserExtensionPairingFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionPairingFlowController.swift; sourceTree = "<group>"; };
+		C27A54A727F0F3C700321D2B /* BrowserExtensionPairingPlainFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionPairingPlainFlowController.swift; sourceTree = "<group>"; };
 		C27A54A927F0FAC500321D2B /* BrowserExtensionPairingModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionPairingModuleInteractor.swift; sourceTree = "<group>"; };
 		C27A54AB27F0FCC600321D2B /* BrowserExtensionPairingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionPairingPresenter.swift; sourceTree = "<group>"; };
 		C27A54AD27F0FD0C00321D2B /* BrowserExtensionPairingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionPairingViewController.swift; sourceTree = "<group>"; };
@@ -1874,6 +1876,8 @@
 		C296D1E928B2D4AF001F026D /* UserIconInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIconInfoViewController.swift; sourceTree = "<group>"; };
 		C296D1EB28B2D4CA001F026D /* UserIconInfoPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIconInfoPresenter.swift; sourceTree = "<group>"; };
 		C296D1ED28B2D52C001F026D /* UserIconInfoFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIconInfoFlowController.swift; sourceTree = "<group>"; };
+		C296D4D12A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionNavigationFlowController.swift; sourceTree = "<group>"; };
+		C296D4D32A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionPairingNavigationFlowController.swift; sourceTree = "<group>"; };
 		C29787DD27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetLineViewGrid.swift; sourceTree = "<group>"; };
 		C29803BF245EE05C0066DFE0 /* MainContainerElementsStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerElementsStyling.swift; sourceTree = "<group>"; };
 		C29803C1245EEB470066DFE0 /* MainContainerGenerators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerGenerators.swift; sourceTree = "<group>"; };
@@ -2792,7 +2796,8 @@
 		C20E60F52818888C00AB002E /* Flow */ = {
 			isa = PBXGroup;
 			children = (
-				C20E60FE28189E8800AB002E /* PushNotificationPermissionFlowController.swift */,
+				C296D4D12A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift */,
+				C20E60FE28189E8800AB002E /* PushNotificationPermissionPlainFlowController.swift */,
 			);
 			path = Flow;
 			sourceTree = "<group>";
@@ -4680,7 +4685,8 @@
 		C27A54A627F0DAB800321D2B /* Flow */ = {
 			isa = PBXGroup;
 			children = (
-				C27A54A727F0F3C700321D2B /* BrowserExtensionPairingFlowController.swift */,
+				C296D4D32A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift */,
+				C27A54A727F0F3C700321D2B /* BrowserExtensionPairingPlainFlowController.swift */,
 			);
 			path = Flow;
 			sourceTree = "<group>";
@@ -7519,7 +7525,7 @@
 				C2147CDD205D7B630001D011 /* PINPadViewModel.swift in Sources */,
 				C2BD85E02640308C0087D087 /* IntroductionPageView.swift in Sources */,
 				C2F9D60A2A1FEC700085B65A /* TokensRevealButton.swift in Sources */,
-				C27A54A827F0F3C700321D2B /* BrowserExtensionPairingFlowController.swift in Sources */,
+				C27A54A827F0F3C700321D2B /* BrowserExtensionPairingPlainFlowController.swift in Sources */,
 				C2BDC6D51FC1CBE100967D0E /* Theme.swift in Sources */,
 				C2872DDA27A6B9C2000F5AE9 /* SortType+.swift in Sources */,
 				C21A9E9427CC0A7100FE4CC4 /* ComposeServiceRefreshTimePresenter+Menu.swift in Sources */,
@@ -8054,6 +8060,7 @@
 				C2000F4B217C81490020CA0B /* LoginCoordinator.swift in Sources */,
 				C25860B828247CB7009AE54F /* NewsModels.swift in Sources */,
 				C2698B6C2986B42400EBC179 /* MainTabViewController.swift in Sources */,
+				C296D4D22A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift in Sources */,
 				C22D9E1124681EE000AAE6EE /* MainCointainerNavigationButtonGenerator.swift in Sources */,
 				C2B1208F29D76BD10020281E /* AppearancePresenter+Menu.swift in Sources */,
 				C2A7945127F9016D00E5C641 /* BrowserExtensionEditNameViewController.swift in Sources */,
@@ -8083,12 +8090,13 @@
 				C2C66F8E1FE0684100AD5A1C /* MainViewController.swift in Sources */,
 				C2F51EFF27DAAD9900A67C73 /* BrowserExtensionPairingFailureView.swift in Sources */,
 				C21BC54D25B37C8900B15F99 /* ExchangeConsts.swift in Sources */,
-				C20E60FF28189E8800AB002E /* PushNotificationPermissionFlowController.swift in Sources */,
+				C20E60FF28189E8800AB002E /* PushNotificationPermissionPlainFlowController.swift in Sources */,
 				C2C56D4427C98316003B4C43 /* ComposeServiceAdvancedSummaryPresenter+Menu.swift in Sources */,
 				C2290334276BA78C0005C8F2 /* AppLockStateInteractor.swift in Sources */,
 				C258593E2803380D002DC749 /* MainRepositoryImpl+WebExtensionPairing.swift in Sources */,
 				C2323C56276B575D00038B76 /* AppLockPresenter+Menu.swift in Sources */,
 				C2D44E6F275C19220043F5D6 /* MainRepositoryImpl+Security.swift in Sources */,
+				C296D4D42A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift in Sources */,
 				C2C66F951FE068CC00AD5A1C /* TokensViewController.swift in Sources */,
 				C240487C27656DB40076376E /* ImporterFileErrorFlowController.swift in Sources */,
 				C2A74FD72610D3A8007E5AB3 /* TintColor.swift in Sources */,

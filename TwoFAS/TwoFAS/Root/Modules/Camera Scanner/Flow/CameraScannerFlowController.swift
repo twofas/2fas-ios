@@ -39,7 +39,7 @@ protocol CameraScannerFlowControlling: AnyObject {
     func toCameraError(_ error: String)
     func toTwoFASWebExtensionPairing(for extensionID: ExtensionID)
     func toSendLogs(auditID: UUID)
-    func toPushPermissions()
+    func toPushPermissions(extensionID: ExtensionID)
     func toRename(currentName: String, secret: String)
     func toServiceWasCreated(serviceData: ServiceData)
 }
@@ -182,16 +182,16 @@ extension CameraScannerFlowController: CameraScannerFlowControlling {
         viewController.present(alert, animated: true, completion: nil)
     }
     
-    func toPushPermissions() {
+    func toPushPermissions(extensionID: ExtensionID) {
         guard let navi = viewController.navigationController else { return }
         navi.setNavigationBarHidden(true, animated: false)
-        PushNotificationPermissionFlowController.push(on: navi, parent: self)
+        PushNotificationPermissionPlainFlowController.push(on: navi, parent: self, extensionID: extensionID)
     }
     
     func toTwoFASWebExtensionPairing(for extensionID: ExtensionID) {
         guard let navi = viewController.navigationController else { return }
         navi.setNavigationBarHidden(true, animated: false)
-        BrowserExtensionPairingFlowController.push(in: navi, parent: self, with: extensionID)
+        BrowserExtensionPairingPlainFlowController.push(in: navi, parent: self, with: extensionID)
     }
     
     func toRename(currentName: String, secret: String) {
@@ -230,9 +230,13 @@ extension CameraScannerFlowController {
     }
 }
 
-extension CameraScannerFlowController: PushNotificationPermissionFlowControllerParent {
-    func pushNotificationsDidEnd() {
-        viewController.presenter.handlePushNotificationEnded()
+extension CameraScannerFlowController: PushNotificationPermissionPlainFlowControllerParent {
+    func pushNotificationsClose(extensionID: ExtensionID?) {
+        guard let extensionID else {
+            toFinish()
+            return
+        }
+        toTwoFASWebExtensionPairing(for: extensionID)
     }
 }
 
@@ -258,7 +262,7 @@ extension CameraScannerFlowController: SelectFromGalleryFlowControllerParent {
     }
 }
 
-extension CameraScannerFlowController: BrowserExtensionPairingFlowControllerParent {
+extension CameraScannerFlowController: BrowserExtensionPairingPlainFlowControllerParent {
     func pairingSuccess() {
         guard let navi = viewController.navigationController else { return }
         navi.setNavigationBarHidden(true, animated: false)

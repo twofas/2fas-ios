@@ -20,10 +20,13 @@
 import Foundation
 
 final class BrowserExtensionPairingPresenter {
-    private let flowController: BrowserExtensionPairingFlowControlling
+    private let flowController: BrowserExtensionPairingPlainFlowControlling
     private let interactor: BrowserExtensionPairingModuleInteracting
     
-    init(flowController: BrowserExtensionPairingFlowControlling, interactor: BrowserExtensionPairingModuleInteracting) {
+    init(
+        flowController: BrowserExtensionPairingPlainFlowControlling,
+        interactor: BrowserExtensionPairingModuleInteracting
+    ) {
         self.flowController = flowController
         self.interactor = interactor
     }

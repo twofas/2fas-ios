@@ -21,6 +21,7 @@ import Foundation
 import Common
 import Token
 import Storage
+import CodeSupport
 
 final class TokensPresenter {
     enum State {
@@ -165,6 +166,20 @@ extension TokensPresenter {
     
     func handleServicesWereUpdated(modified: [Secret]?, deleted: [Secret]?) {
         interactor.servicesWereUpdated()
+        handleNewData()
+    }
+    
+    func handleGoogleAuthImport(_ codes: [Code]) {
+        guard !codes.isEmpty else { return }
+        AppEventLog(.importGoogleAuth)
+        interactor.addCodes(codes)
+        handleNewData()
+    }
+
+    func handleLastPassImport(_ codes: [Code]) {
+        guard !codes.isEmpty else { return }
+        AppEventLog(.importLastPass)
+        interactor.addCodes(codes)
         handleNewData()
     }
     
@@ -348,11 +363,8 @@ extension TokensPresenter {
     // MARK: - Services
     
     func handleAddService() {
-        Log("TokensPresenter - handleAddService")
-        interactor.checkCameraPermission { [weak self] permission in
-            Log("TokensPresenter - handleAddService - toShowSelectAddingMethod")
-            self?.flowController.toShowSelectAddingMethod(isCameraAvailable: permission)
-        }
+        Log("TokensPresenter - handleAddService - toAddService")
+        flowController.toAddService()
     }
     
     func handleEditService(_ serviceData: ServiceData) {

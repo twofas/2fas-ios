@@ -19,9 +19,16 @@
 
 import UIKit
 import Common
+import CodeSupport
 
 protocol AddingServiceFlowControllerParent: AnyObject {
     func addingServiceDismiss()
+    func addingServiceToGallery()
+    func addingServiceToGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
+    func addingServiceToLastPassSummary(importable: Int, total: Int, codes: [Code])
+    func addingServiceToSendLogs(auditID: UUID)
+    func addingServiceToPushPermissions(for extensionID: Common.ExtensionID)
+    func addingServiceToTwoFASWebExtensionPairing(for extensionID: Common.ExtensionID)
 }
 
 protocol AddingServiceFlowControlling: AnyObject {
@@ -58,12 +65,40 @@ extension AddingServiceFlowController: AddingServiceFlowControlling {
 }
 
 extension AddingServiceFlowController: AddingServiceMainFlowControllerParent {
+    func mainDismiss() {
+        parent?.addingServiceDismiss()
+    }
+    
+    func mainToGallery() {
+        parent?.addingServiceToGallery()
+    }
+    
+    func mainToGoogleAuthSummary(importable: Int, total: Int, codes: [Code]) {
+        parent?.addingServiceToGoogleAuthSummary(importable: importable, total: total, codes: codes)
+    }
+    
+    func mainToLastPassSummary(importable: Int, total: Int, codes: [Code]) {
+        parent?.addingServiceToLastPassSummary(importable: importable, total: total, codes: codes)
+    }
+    
+    func mainToSendLogs(auditID: UUID) {
+        parent?.addingServiceToSendLogs(auditID: auditID)
+    }
+    
+    func mainToPushPermissions(for extensionID: ExtensionID) {
+        parent?.addingServiceToPushPermissions(for: extensionID)
+    }
+    
+    func mainToTwoFASWebExtensionPairing(for extensionID: ExtensionID) {
+        parent?.addingServiceToTwoFASWebExtensionPairing(for: extensionID)
+    }
+    
     func mainToToken(serviceData: ServiceData) {
         AddingServiceTokenFlowController.embed(in: viewController, parent: self, serviceData: serviceData)
     }
-    
-    func mainToDismiss() {
-        parent?.addingServiceDismiss()
+        
+    func mainToAddManually() {
+        // TODO: Embed manuall
     }
 }
 

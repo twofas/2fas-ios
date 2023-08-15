@@ -560,4 +560,8 @@ extension InteractorFactory {
             serviceData: serviceData
         )
     }
+    
+    func addingServiceManuallyModuleInteractor() -> AddingServiceManuallyModuleInteracting {
+        AddingServiceManuallyModuleInteractor()
+    }
 }

@@ -50,8 +50,14 @@ final class AddingServiceFlowController: FlowController {
         view.presenter = presenter
         presenter.view = view
         
-        viewController.present(view, animated: true)
+        viewController.present(view, animated: true) {
+            AddingServiceManuallyFlowController.embed(in: view, parent: flowController)
+        }
     }
+}
+
+extension AddingServiceFlowController: AddingServiceManuallyFlowControllerParent {
+    
 }
 
 extension AddingServiceFlowController {

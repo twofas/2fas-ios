@@ -106,7 +106,7 @@ struct AddingServiceTokenView: View {
             
             AddingServiceLargeSpacing()
             
-            AddingServiceFullWidthButton(
+            AddingServiceFullWidthButtonWithImage(
                 text: T.Tokens.copyToken,
                 icon: Asset.keybordIcon.swiftUIImage
             ) {

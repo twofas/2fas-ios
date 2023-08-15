@@ -118,14 +118,14 @@ private struct AddingServiceMain: View {
             
             AddingServiceTitleView(text: T.Tokens.addOtherMethods, alignToLeading: true)
             
-            AddingServiceFullWidthButton(
+            AddingServiceFullWidthButtonWithImage(
                 text: T.Tokens.fabAddmanually,
                 icon: Asset.keybordIcon.swiftUIImage
             ) {
                 presenter.handleToAddManually()
             }
             
-            AddingServiceFullWidthButton(
+            AddingServiceFullWidthButtonWithImage(
                 text: T.Tokens.addFromGallery,
                 icon: Asset.imageIcon.swiftUIImage
             ) {

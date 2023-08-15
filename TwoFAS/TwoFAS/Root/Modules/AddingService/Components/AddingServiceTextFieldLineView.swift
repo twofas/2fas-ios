@@ -19,38 +19,16 @@
 
 import SwiftUI
 
-struct AddingServiceFullWidthButton: View {
-    private let minHeight: CGFloat = 57
-    
-    let text: String
-    let icon: Image
-    let action: Callback
-    
+struct AddingServiceTextFieldLineView: View {
     var body: some View {
         Divider()
             .frame(height: 1)
-            .overlay(Color(Theme.Colors.Line.separator))
-            .padding(.horizontal, -Theme.Metrics.doubleMargin)
-        
-        Button {
-            action()
-        } label: {
-            HStack(spacing: Theme.Metrics.doubleMargin) {
-                icon
-                    .tint(Color(Theme.Colors.Fill.theme))
-                AddingServiceTextContentView(text: text, alignToLeading: true)
-            }
-            .frame(minHeight: minHeight)
-        }
+            .overlay(Color(Theme.Colors.Line.primaryLine))
     }
 }
 
-struct AddingServiceFullWidthButton_Previews: PreviewProvider {
+struct AddingServiceTextFieldLineView_Previews: PreviewProvider {
     static var previews: some View {
-        AddingServiceFullWidthButton(
-            text: "Enter secret key manually",
-            icon: Asset.keybordIcon.swiftUIImage,
-            action: {}
-        )
+        AddingServiceTextFieldLineView()
     }
 }

@@ -1,16 +1,16 @@
 {
   "images": [  {
-    "filename": "9889F776-434D-46AB-97EE-EF2AD88FE615@1x.png",
+    "filename": "BC8676FA-016B-470B-9266-50D107B4C943@1x.png",
     "idiom": "universal",
     "scale": "1x"
   },
   {
-    "filename": "9889F776-434D-46AB-97EE-EF2AD88FE615@2x.png",
+    "filename": "BC8676FA-016B-470B-9266-50D107B4C943@2x.png",
     "idiom": "universal",
     "scale": "2x"
   },
   {
-    "filename": "9889F776-434D-46AB-97EE-EF2AD88FE615@3x.png",
+    "filename": "BC8676FA-016B-470B-9266-50D107B4C943@3x.png",
     "idiom": "universal",
     "scale": "3x"
   },
@@ -20,7 +20,7 @@
             "value": "dark"
         }
     ],
-    "filename": "9889F776-434D-46AB-97EE-EF2AD88FE615_dark@1x.png",
+    "filename": "BC8676FA-016B-470B-9266-50D107B4C943_dark@1x.png",
     "idiom": "universal",
     "scale": "1x"
   },
@@ -30,7 +30,7 @@
             "value": "dark"
         }
     ],
-    "filename": "9889F776-434D-46AB-97EE-EF2AD88FE615_dark@2x.png",
+    "filename": "BC8676FA-016B-470B-9266-50D107B4C943_dark@2x.png",
     "idiom": "universal",
     "scale": "2x"
   },
@@ -40,7 +40,7 @@
             "value": "dark"
         }
     ],
-    "filename": "9889F776-434D-46AB-97EE-EF2AD88FE615_dark@3x.png",
+    "filename": "BC8676FA-016B-470B-9266-50D107B4C943_dark@3x.png",
     "idiom": "universal",
     "scale": "3x"
   }],

@@ -20,7 +20,7 @@
 import UIKit
 
 protocol AddingServiceManuallyModuleInteracting: AnyObject {
-    func checkForServiceIcon(callback: @escaping (UIImage?) -> Void)
+    func checkForServiceIcon(using str: String, callback: @escaping (UIImage?) -> Void)
 }
 
 final class AddingServiceManuallyModuleInteractor {
@@ -32,7 +32,7 @@ final class AddingServiceManuallyModuleInteractor {
 }
 
 extension AddingServiceManuallyModuleInteractor: AddingServiceManuallyModuleInteracting {
-    func checkForServiceIcon(callback: @escaping (UIImage?) -> Void) {
-        
+    func checkForServiceIcon(using str: String, callback: @escaping (UIImage?) -> Void) {
+        callback(serviceDatabase.findServicesByTagOrIssuer(str, exactMatch: true).first?.icon)
     }
 }

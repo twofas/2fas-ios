@@ -408,7 +408,7 @@ protocol MainRepository: AnyObject {
     func findLegacyService(using string: String) -> ServiceTypeID?
     func findLegacyIcon(using string: String) -> IconTypeID?
     func findServices(byTag searchText: String) -> [ServiceDefinition]
-    func findServicesByTagOrIssuer(_ searchText: String) -> [ServiceDefinition]
+    func findServicesByTagOrIssuer(_ searchText: String, exactMatch: Bool) -> [ServiceDefinition]
     func findServices(domain searchText: String) -> [ServiceDefinition]
     
     // MARK: - Icons

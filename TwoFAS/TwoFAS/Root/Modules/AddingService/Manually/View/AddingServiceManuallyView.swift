@@ -26,8 +26,8 @@ struct AddingServiceManuallyView: View {
     
     @FocusState private var focusedField: Field?
     private enum Field: Int, Hashable {
-       case serviceName
-       case secret
+        case serviceName
+        case secret
     }
     
     @State private var serviceName = ""
@@ -35,6 +35,9 @@ struct AddingServiceManuallyView: View {
     
     @State private var secret = ""
     @State private var secretError: String?
+    
+    @State private var additionalInfo = ""
+    @State private var additionalInfoError: String?
     
     var body: some View {
         VStack {
@@ -101,9 +104,52 @@ struct AddingServiceManuallyView: View {
                         AddingServiceTextFieldLineView()
                     }
                     .frame(maxWidth: .infinity)
-                }
-                if let secretError {
-                    AddingServiceErrorTextView(text: secretError)
+                    
+                    if let secretError {
+                        AddingServiceErrorTextView(text: secretError)
+                    }
+                    
+                    AddingServiceAdvancedRevealView(isVisible: $presenter.advancedShown) {
+                        presenter.advancedShown.toggle()
+                    }
+                    .padding(.top, 24)
+                    
+                    if presenter.advancedShown {
+                        VStack {
+                            AddingServiceSmallTitleView(text: T.Tokens.additionalInfo)
+                                .padding(.top, 24)
+                                .padding(.bottom, 10)
+                            TextField("", text: $additionalInfo)
+                                .onChange(of: additionalInfo) { newValue in
+                                    let status = presenter.validateAdditionalInfo(newValue)
+                                    additionalInfoError = status.error
+                                }
+                                .textInputAutocapitalization(.never)
+                                .keyboardType(.alphabet)
+                                .autocorrectionDisabled(true)
+                                .submitLabel(.done)
+                                .onSubmit {
+                                    presenter.handleAddService()
+                                }
+                                .padding(.bottom, 5)
+                            AddingServiceTextFieldLineView()
+                        }
+                        .frame(maxWidth: .infinity)
+                        
+                        if let additionalInfoError {
+                            AddingServiceErrorTextView(text: additionalInfoError)
+                        }
+                        
+                        AddServiceAdvancedWarningView()
+                        
+                        AddingServiceServiceTypeSelector(selectedTokenType: $presenter.selectedTokenType)
+                        
+                        if presenter.selectedTokenType == .totp {
+                            Text("TOTP")
+                        } else if presenter.selectedTokenType == .hotp {
+                            Text("HOTP")
+                        }
+                    }
                 }
             }
             

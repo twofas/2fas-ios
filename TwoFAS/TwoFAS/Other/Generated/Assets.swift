@@ -96,6 +96,8 @@ internal enum Asset {
   internal static let permissionsPushNotifications = ImageAsset(name: "PermissionsPushNotifications")
   internal static let radioDeselected = ImageAsset(name: "RadioDeselected")
   internal static let radioSelected = ImageAsset(name: "RadioSelected")
+  internal static let radioSelectionDeselected = ImageAsset(name: "RadioSelectionDeselected")
+  internal static let radioSelectionSelected = ImageAsset(name: "RadioSelectionSelected")
   internal static let refreshTokenCounter = ImageAsset(name: "RefreshTokenCounter")
   internal static let requestProvider = ImageAsset(name: "RequestProvider")
   internal static let requestSocial = ImageAsset(name: "RequestSocial")

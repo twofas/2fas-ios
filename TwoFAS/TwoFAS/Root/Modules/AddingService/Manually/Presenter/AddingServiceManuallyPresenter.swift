@@ -25,12 +25,14 @@ final class AddingServiceManuallyPresenter: ObservableObject {
     
     private var isCorrectServiceName = false
     private var isCorrectSecret = false
-    private var isCorrectAdditionalInfo = false
+    private var isCorrectAdditionalInfo = true
     
     @Published var serviceName: String = ""
     @Published var serviceIcon: UIImage?
     @Published var secret: String = ""
     @Published var advancedShown = false
+    @Published var additionalInfo: String = ""
+    @Published var selectedTokenType: TokenType = .totp
     
     weak var view: AddingServiceManuallyViewControlling?
     
@@ -62,7 +64,9 @@ extension AddingServiceManuallyPresenter {
 
 extension AddingServiceManuallyPresenter {
     func validateAddService() {
-        isAddServiceEnabled = isCorrectServiceName && isCorrectSecret //&& isCorrectAdditionalInfo
+        isAddServiceEnabled = isCorrectServiceName &&
+        isCorrectSecret &&
+        ((advancedShown && isCorrectAdditionalInfo) || (!advancedShown))
     }
     
     enum ServiceNameValidationResult: Error {
@@ -138,6 +142,35 @@ extension AddingServiceManuallyPresenter {
         } else {
             isCorrectSecret = true
             self.secret = secret
+            value = .correct
+        }
+        
+        validateAddService()
+        return value
+    }
+    
+    enum AdditionalInfoValidationResult {
+        case correct
+        case tooLong
+        
+        var error: String? {
+            switch self {
+            case .correct: return nil
+            case .tooLong: return T.Commons.textLongTitle(ServiceRules.additionalInfoMaxLength)
+            }
+        }
+    }
+    
+    func validateAdditionalInfo(_ additionalInfo: String) -> AdditionalInfoValidationResult {
+        let value: AdditionalInfoValidationResult
+        isCorrectAdditionalInfo = false
+        
+        if additionalInfo.count > ServiceRules.additionalInfoMaxLength {
+            value = .tooLong
+            self.additionalInfo = ""
+        } else {
+            isCorrectAdditionalInfo = true
+            self.additionalInfo = additionalInfo
             value = .correct
         }
         

@@ -57,7 +57,6 @@ final class AddingServiceFlowController: FlowController {
 }
 
 extension AddingServiceFlowController: AddingServiceManuallyFlowControllerParent {
-    
 }
 
 extension AddingServiceFlowController {

@@ -21,18 +21,28 @@ import UIKit
 
 protocol AddingServiceManuallyModuleInteracting: AnyObject {
     func checkForServiceIcon(using str: String, callback: @escaping (UIImage?) -> Void)
+    func isPrivateKeyUsed(_ privateKey: String) -> Bool
 }
 
 final class AddingServiceManuallyModuleInteractor {
     private let serviceDatabase: ServiceDefinitionInteracting
+    private let serviceListingInteractor: ServiceListingInteracting
     
-    init(serviceDatabase: ServiceDefinitionInteracting) {
+    init(
+        serviceDatabase: ServiceDefinitionInteracting,
+        serviceListingInteractor: ServiceListingInteracting
+    ) {
         self.serviceDatabase = serviceDatabase
+        self.serviceListingInteractor = serviceListingInteractor
     }
 }
 
 extension AddingServiceManuallyModuleInteractor: AddingServiceManuallyModuleInteracting {
     func checkForServiceIcon(using str: String, callback: @escaping (UIImage?) -> Void) {
         callback(serviceDatabase.findServicesByTagOrIssuer(str, exactMatch: true).first?.icon)
+    }
+    
+    func isPrivateKeyUsed(_ privateKey: String) -> Bool {
+        serviceListingInteractor.service(for: privateKey) != nil
     }
 }

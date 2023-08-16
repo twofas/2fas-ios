@@ -648,6 +648,10 @@ internal enum T {
     internal static func textLongTitle(_ p1: Int) -> String {
       return T.tr("Localizable", "commons__text_long_title", p1, fallback: "The provided text is too long (max. %d chars)")
     }
+    /// The provided text is too short (min. %d chars)
+    internal static func textShortTitle(_ p1: Int) -> String {
+      return T.tr("Localizable", "commons__text_short_title", p1, fallback: "The provided text is too short (min. %d chars)")
+    }
     /// Tokens
     internal static let tokens = T.tr("Localizable", "commons__tokens", fallback: "Tokens")
     /// Try again

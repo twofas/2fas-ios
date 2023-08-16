@@ -33,47 +33,78 @@ struct AddingServiceManuallyView: View {
     @State private var serviceName = ""
     @State private var serviceNameError: String?
     
+    @State private var secret = ""
+    @State private var secretError: String?
+    
     var body: some View {
         VStack {
             AddingServiceTitleView(text: T.Tokens.addManualTitle)
             
             ScrollView {
                 AddingServiceTextContentView(text: T.Tokens.addManualDescription)
+                    .padding(.bottom, 24)
                 
-                HStack(spacing: 10) {
-                    VStack {
-                        AddingServiceSmallTitleView(text: T.Tokens.addManualServiceName)
-                            .padding(.bottom, 10)
-                        TextField("", text: $serviceName)
-                            .onChange(of: serviceName) { newValue in
-                                switch presenter.validateServiceName(newValue) {
-                                case .correct:
-                                    serviceNameError = nil
-                                case .tooLong:
-                                    serviceNameError = T.Commons.textLongTitle(ServiceRules.serviceNameMaxLength)
-                                case .tooShort:
-                                    serviceNameError = nil
+                VStack(spacing: 10) {
+                    HStack(spacing: 10) {
+                        VStack {
+                            AddingServiceSmallTitleView(text: T.Tokens.addManualServiceName)
+                                .padding(.bottom, 10)
+                            TextField("", text: $serviceName)
+                                .onChange(of: serviceName) { newValue in
+                                    let trimmed = newValue.trim()
+                                    if trimmed != newValue {
+                                        serviceName = trimmed
+                                    }
+                                    let value = presenter.validateServiceName(trimmed)
+                                    serviceNameError = value.error
                                 }
+                                .textInputAutocapitalization(.sentences)
+                                .keyboardType(.alphabet)
+                                .focused($focusedField, equals: .serviceName)
+                                .autocorrectionDisabled(true)
+                                .submitLabel(.next)
+                                .onSubmit {
+                                    focusedField = .secret
+                                }
+                                .padding(.bottom, 5)
+                            AddingServiceTextFieldLineView()
+                        }
+                        .frame(maxWidth: .infinity)
+                        AddingServiceServiceIconView(serviceImage: $presenter.serviceIcon)
+                    }
+                    if let serviceNameError {
+                        AddingServiceErrorTextView(text: serviceNameError)
+                    }
+                    
+                    VStack {
+                        AddingServiceSmallTitleView(text: T.Tokens.addManualServiceKey)
+                            .padding(.top, 24)
+                            .padding(.bottom, 10)
+                        TextField("", text: $secret)
+                            .onChange(of: secret) { newValue in
+                                let trimmed = newValue.removeWhitespaces()
+                                if trimmed != newValue {
+                                    secret = trimmed
+                                }
+                                let status = presenter.validateSecret(trimmed)
+                                secretError = status.error
                             }
-                            .textInputAutocapitalization(.sentences)
+                            .textInputAutocapitalization(.characters)
                             .keyboardType(.alphabet)
-                            .focused($focusedField, equals: .serviceName)
+                            .focused($focusedField, equals: .secret)
                             .autocorrectionDisabled(true)
-                            .submitLabel(.next)
+                            .submitLabel(.done)
                             .onSubmit {
-                                focusedField = .secret
+                                presenter.handleAddService()
                             }
                             .padding(.bottom, 5)
                         AddingServiceTextFieldLineView()
                     }
                     .frame(maxWidth: .infinity)
-                    AddingServiceServiceIconView(serviceImage: $presenter.serviceIcon)
                 }
-                if let serviceNameError {
-                    AddingServiceErrorTextView(text: serviceNameError)
+                if let secretError {
+                    AddingServiceErrorTextView(text: secretError)
                 }
-                
-                
             }
             
             AddingServiceDividerView()
@@ -93,32 +124,3 @@ struct AddingServiceManuallyView: View {
         })
     }
 }
-
-//maxLength: ServiceRules.serviceNameMaxLength,
-// T.Commons.textLongTitle(maxLength)
-
-//let keyError: ComposeServiceSectionCell.PrivateKeyConfig.PrivateKeyError? = {
-//    switch interactor.privateKeyError {
-//    case .duplicated: return .duplicated
-//    case .incorrect: return .incorrect
-//    case .tooShort: return .tooShort
-//    case .none, .empty: return nil
-//    }
-//}()
-//
-//extension ComposeServiceSectionCell.PrivateKeyConfig.PrivateKeyError {
-//    var localizedStringValue: String {
-//        switch self {
-//        case .duplicated: return T.Tokens.duplicatedPrivateKey
-//        case .incorrect: return T.Tokens.incorrectServiceKey
-//        case .tooShort: return T.Tokens.serviceKeyToShort
-//        }
-//    }
-//}
-//
-
-
-//---
-//
-//maxLength: ServiceRules.additionalInfoMaxLength,
-//autocapitalizationType: UITextAutocapitalizationType.none

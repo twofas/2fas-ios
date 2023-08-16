@@ -29,6 +29,8 @@ final class AddingServiceManuallyPresenter: ObservableObject {
     
     @Published var serviceName: String = ""
     @Published var serviceIcon: UIImage?
+    @Published var secret: String = ""
+    @Published var advancedShown = false
     
     weak var view: AddingServiceManuallyViewControlling?
     
@@ -60,33 +62,85 @@ extension AddingServiceManuallyPresenter {
 
 extension AddingServiceManuallyPresenter {
     func validateAddService() {
-        isAddServiceEnabled = isCorrectServiceName //&& isCorrectSecret && isCorrectAdditionalInfo
+        isAddServiceEnabled = isCorrectServiceName && isCorrectSecret //&& isCorrectAdditionalInfo
     }
     
     enum ServiceNameValidationResult: Error {
         case correct
         case tooLong
         case tooShort
+        
+        var error: String? {
+            switch self {
+            case .correct: return nil
+            case .tooLong: return T.Commons.textLongTitle(ServiceRules.serviceNameMaxLength)
+            case .tooShort: return T.Commons.textShortTitle(ServiceRules.serviceNameMinLength)
+            }
+        }
     }
     
     func validateServiceName(_ serviceName: String) -> ServiceNameValidationResult {
         let value: ServiceNameValidationResult
-        if serviceName.count >= 1 && serviceName.count <= ServiceRules.serviceNameMaxLength {
+        isCorrectServiceName = false
+        if serviceName.count >= ServiceRules.serviceNameMinLength &&
+            serviceName.count <= ServiceRules.serviceNameMaxLength {
             isCorrectServiceName = true
             self.serviceName = serviceName
             checkForServiceIcon()
             value = .correct
         } else if serviceName.isEmpty {
-            isCorrectServiceName = false
             self.serviceName = ""
             serviceIcon = nil
             value = .tooShort
         } else {
-            isCorrectServiceName = false
             self.serviceName = ""
             serviceIcon = nil
             value = .tooLong
         }
+        validateAddService()
+        return value
+    }
+    
+    enum SecretValidationResult {
+        case correct
+        case duplicated
+        case incorrect
+        case tooShort
+        case tooLong
+        
+        var error: String? {
+            switch self {
+            case .correct: return nil
+            case .duplicated: return T.Tokens.duplicatedPrivateKey
+            case .incorrect: return T.Tokens.incorrectServiceKey
+            case .tooShort: return T.Tokens.serviceKeyToShort
+            case .tooLong: return T.Commons.textLongTitle(ServiceRules.privateKeyMaxLength)
+            }
+        }
+    }
+    
+    func validateSecret(_ secret: String) -> SecretValidationResult {
+        let value: SecretValidationResult
+        isCorrectSecret = false
+        
+        if ServiceRules.isPrivateKeyTooShort(privateKey: secret) {
+            value = .tooShort
+            self.secret = ""
+        } else if ServiceRules.isPrivateKeyTooLong(privateKey: secret) {
+            value = .tooLong
+            self.secret = ""
+        } else if !ServiceRules.isPrivateKeyValid(privateKey: secret) {
+            value = .incorrect
+            self.secret = ""
+        } else if interactor.isPrivateKeyUsed(secret) {
+            value = .duplicated
+            self.secret = ""
+        } else {
+            isCorrectSecret = true
+            self.secret = secret
+            value = .correct
+        }
+        
         validateAddService()
         return value
     }

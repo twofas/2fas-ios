@@ -86,6 +86,7 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     }
     
     func showRevealButton() {
+        menu?.loadViewIfNeeded()
         menu?.navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "sidebar.left"),
             style: .plain,

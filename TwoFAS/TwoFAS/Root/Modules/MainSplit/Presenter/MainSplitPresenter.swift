@@ -22,6 +22,14 @@ import Foundation
 final class MainSplitPresenter {
     weak var view: MainSplitViewControlling?
     
+    var isMenuPortraitOverlayCollapsed: Bool {
+        interactor.isMenuPortraitOverlayCollapsed
+    }
+    
+    var isMenuLandscapeCollapsed: Bool {
+        interactor.isMenuLandscapeCollapsed
+    }
+    
     private let flowController: MainSplitFlowControlling
     private let interactor: MainSplitModuleInteracting
         
@@ -95,6 +103,14 @@ extension MainSplitPresenter {
             return savedOption
         }
         return nil
+    }
+    
+    func handlePortraitMenuOverlayCollapsed(_ isCollapsed: Bool) {
+        interactor.handlePortraitMenuOverlayCollapsed(isCollapsed)
+    }
+    
+    func handleLandscapeMenuCollapsed(_ isCollapsed: Bool) {
+        interactor.handleLandscapeMenuCollapsed(isCollapsed)
     }
 }
 

@@ -25,6 +25,8 @@ final class MainMenuPresenter {
     
     private(set) var selectedIndexPath: IndexPath?
     private var isViewLoaded = false
+    private var viewPathToHandleAfterLoad: ViewPath?
+    
     private let flowController: MainMenuFlowControlling
     let interactor: MainMenuModuleInteracting
     
@@ -35,13 +37,18 @@ final class MainMenuPresenter {
 }
 
 extension MainMenuPresenter {
-    func viewWillAppear() {
+    func viewDidLoad() {
         isViewLoaded = true
         refresh()
         flowController.toMenuIsReady()
+        if let viewPathToHandleAfterLoad {
+            handleChangeViewPath(viewPathToHandleAfterLoad)
+            self.viewPathToHandleAfterLoad = nil
+        }
     }
     
     func handleSelection(at indexPath: IndexPath) {
+        guard selectedIndexPath != indexPath else { return }
         selectedIndexPath = indexPath
         switch indexPath.row {
         case MainContent.main.rawValue:
@@ -56,7 +63,10 @@ extension MainMenuPresenter {
     }
     
     func handleChangeViewPath(_ viewPath: ViewPath) {
-        guard isViewLoaded else { return }
+        guard isViewLoaded else {
+            viewPathToHandleAfterLoad = viewPath
+            return
+        }
         let indexPath = {
             switch viewPath {
             case .main: return IndexPath(row: 0, section: 0)

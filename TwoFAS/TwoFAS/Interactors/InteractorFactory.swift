@@ -534,7 +534,8 @@ extension InteractorFactory {
         MainSplitModuleInteractor(
             viewPathInteractor: viewPathInteractor(),
             newsInteractor: newsInteractor(),
-            linkInteractor: linkInteractor()
+            linkInteractor: linkInteractor(),
+            appearanceInteractor: appearanceInteractor()
         )
     }
     

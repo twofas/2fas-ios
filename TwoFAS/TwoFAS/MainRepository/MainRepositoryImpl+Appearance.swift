@@ -72,4 +72,21 @@ extension MainRepositoryImpl {
     var shouldAnimate: Bool {
         !ProcessInfo.processInfo.isLowPowerModeEnabled
     }
+    
+    // MARK: - Main menu
+    var isMainMenuPortraitCollapsed: Bool {
+        userDefaultsRepository.isMainMenuPortraitCollapsed
+    }
+    
+    func setIsMainMenuPortraitCollapsed(_ isCollapsed: Bool) {
+        userDefaultsRepository.setIsMainMenuPortraitCollapsed(isCollapsed)
+    }
+    
+    var isMainMenuLandscapeCollapsed: Bool {
+        userDefaultsRepository.isMainMenuLandscapeCollapsed
+    }
+    
+    func setIsMainMenuLandscapeCollapsed(_ isCollapsed: Bool) {
+        userDefaultsRepository.setIsMainMenuLandscapeCollapsed(isCollapsed)
+    }
 }

@@ -48,6 +48,8 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case activeSearchEnabled
         case selectedListStyle
         case tokensHidden
+        case mainMenuPortraitCollapsed
+        case mainMenuLandscapeCollapsed
     }
     private let userDefaults = UserDefaults()
     private let sharedDefaults = UserDefaults(suiteName: Config.suiteName)!
@@ -232,6 +234,24 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
     
     func setTokensHidden(_ hidden: Bool) {
         userDefaults.set(hidden, forKey: Keys.tokensHidden.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    var isMainMenuPortraitCollapsed: Bool {
+        userDefaults.bool(forKey: Keys.mainMenuPortraitCollapsed.rawValue)
+    }
+    
+    func setIsMainMenuPortraitCollapsed(_ isCollapsed: Bool) {
+        userDefaults.set(isCollapsed, forKey: Keys.mainMenuPortraitCollapsed.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    var isMainMenuLandscapeCollapsed: Bool {
+        userDefaults.bool(forKey: Keys.mainMenuLandscapeCollapsed.rawValue)
+    }
+    
+    func setIsMainMenuLandscapeCollapsed(_ isCollapsed: Bool) {
+        userDefaults.set(isCollapsed, forKey: Keys.mainMenuLandscapeCollapsed.rawValue)
         userDefaults.synchronize()
     }
     

@@ -42,6 +42,13 @@ final class MainSplitFlowController: FlowController {
         let flowController = MainSplitFlowController(viewController: view)
         flowController.parent = parent
         
+        view.tokensViewController = TokensPlainFlowController
+            .setup(mainSplitViewController: view, parent: flowController)
+        view.settingsViewController = SettingsFlowController
+            .setup(parent: flowController)
+        view.newsViewController = NewsPlainFlowController
+            .setup(parent: flowController)
+        
         let interactor = InteractorFactory.shared.mainSplitModuleInteractor()
 
         let presenter = MainSplitPresenter(
@@ -56,13 +63,6 @@ final class MainSplitFlowController: FlowController {
         viewController.view.addSubview(view.view)
         view.didMove(toParent: viewController)
         viewController.splitView = view
-        
-        view.tokensViewController = TokensPlainFlowController
-            .setup(mainSplitViewController: view, parent: flowController)
-        view.settingsViewController = SettingsFlowController
-            .setup(parent: flowController)
-        view.newsViewController = NewsPlainFlowController
-            .setup(parent: flowController)
     }
 }
 
@@ -130,7 +130,7 @@ extension MainSplitFlowController: MainMenuFlowControllerParent {
     
     func mainMenuToSettings() {
         guard let settings = viewController.settingsViewController else { return }
-        
+
         let settingsPath = viewController.presenter.handleSettingsViewPath()
         viewController.presenter.handlePathWasUpdated(to: .settings(option: settingsPath))
         

@@ -82,6 +82,11 @@ protocol MainRepository: AnyObject {
     func setTokensHidden(_ hidden: Bool)
     // MARK: Animation
     var shouldAnimate: Bool { get }
+    // MARK: Main menu
+    var isMainMenuPortraitCollapsed: Bool { get }
+    func setIsMainMenuPortraitCollapsed(_ isCollapsed: Bool)
+    var isMainMenuLandscapeCollapsed: Bool { get }
+    func setIsMainMenuLandscapeCollapsed(_ isCollapsed: Bool)
     
     // MARK: - Tokens
     func token(

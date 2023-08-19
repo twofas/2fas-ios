@@ -84,6 +84,7 @@ final class MainMenuViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .always
         
         setupCollectionView()
+        presenter.viewDidLoad()
     }
     
     private func setupCollectionView() {
@@ -105,12 +106,6 @@ final class MainMenuViewController: UIViewController {
         
         view.addSubview(collectionView)
         collectionView.pinToParent()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        presenter.viewWillAppear()
     }
 }
 

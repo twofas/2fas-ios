@@ -24,9 +24,14 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     var presenter: SettingsPresenter!
     weak var menu: SettingsMenuViewController? {
         didSet {
-            guard let savedViewPath else { return }
-            menu?.presenter.handleNavigateToViewPath(savedViewPath)
-            self.savedViewPath = nil
+            if let savedViewPath {
+                menu?.presenter.handleNavigateToViewPath(savedViewPath)
+                self.savedViewPath = nil
+            }
+            if isMenuPositionPending {
+                setMenuPosition()
+                isMenuPositionPending = false
+            }
         }
     }
     
@@ -42,6 +47,8 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     
     var isCollapsed: Bool { split.isCollapsed }
     var isInitialConfigRead = false
+    
+    private var isMenuPositionPending = false
     
     private var savedViewPath: ViewPath.Settings?
     
@@ -86,13 +93,11 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     }
     
     func showRevealButton() {
-        menu?.loadViewIfNeeded()
-        menu?.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "sidebar.left"),
-            style: .plain,
-            target: self,
-            action: #selector(revealMenu)
-        )
+        guard let menu else {
+            isMenuPositionPending = true
+            return
+        }
+        setMenuPosition()
     }
     
     func hideRevealButton() {
@@ -181,6 +186,15 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
         } else {
             presenter.handleExpansion()
         }
+    }
+    
+    private func setMenuPosition() {
+        menu?.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "sidebar.left"),
+            style: .plain,
+            target: self,
+            action: #selector(revealMenu)
+        )
     }
     
     deinit {

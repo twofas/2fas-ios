@@ -140,7 +140,7 @@ private extension TokensSectionHeader {
     }
     
     func setupCallbacks() {
-        collapseButton.userChangedCollapse = { [weak self] in self?.collapseAction() }
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(collapseAction)))
         
         upDown.moveUp = { [weak self] in
             guard let config = self?.config else { return }
@@ -234,6 +234,7 @@ private extension TokensSectionHeader {
         collapseAction()
     }
     
+    @objc
     func collapseAction() {
         guard let config, collapseButton.isActive else { return }
         // Called here so changes in collection view won't animate it into "X"

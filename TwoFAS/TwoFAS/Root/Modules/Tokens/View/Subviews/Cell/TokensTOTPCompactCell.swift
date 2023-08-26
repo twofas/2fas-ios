@@ -31,6 +31,14 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
     private let sMargin: CGFloat = Theme.Metrics.standardMargin
     private let vMargin: CGFloat = Theme.Metrics.mediumMargin
     
+    private var serviceName2TopConstraint: NSLayoutConstraint?
+    private var serviceName2AdditionalInfoConstraint: NSLayoutConstraint?
+    private var serviceName2TokenConstraint: NSLayoutConstraint?
+    private var serviceName2BottomConstraint: NSLayoutConstraint?
+    private var serviceName2CenterYConstraint: NSLayoutConstraint?
+    
+    private var additionalInfo2TokenConstraint: NSLayoutConstraint?
+    
     private let tokenLabel: TokensTokenView = {
         let view = TokensTokenView()
         view.setKind(.compact)
@@ -114,7 +122,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
         serviceNameLabel.setText(name)
         self.secret = secret
         self.serviceTypeName = serviceTypeName
-        if let additionalInfo {
+        if let additionalInfo, !additionalInfo.isEmpty {
             additionalInfoLabel.isHidden = false
             additionalInfoLabel.setText(additionalInfo)
         } else {
@@ -130,6 +138,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
         self.shouldAnimate = shouldAnimate
         
         isLocked = false
+        showToken()
         
         nextTokenLabel.hideNextToken(animated: false)
     }
@@ -141,6 +150,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             
             nextTokenLabel.hideNextToken(animated: false)
             tokenLabel.maskToken()
+            hideToken()
             circularProgress.isHidden = true
             revealButton.isHidden = false
         case .unlocked(let progress, let period, let currentToken, let nextToken, let willChangeSoon):
@@ -153,6 +163,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             circularProgress.setProgress(progress, animated: false)
             tokenLabel.setToken(currentToken, animated: wasLocked)
             nextTokenLabel.set(nextToken: nextToken)
+            showToken()
             shouldMark(willChangeSoon: willChangeSoon, isPlanned: false)
         }
         updateAccessibility()
@@ -166,6 +177,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             
             nextTokenLabel.hideNextToken(animated: true)
             tokenLabel.maskToken()
+            hideToken()
             circularProgress.isHidden = true
             revealButton.isHidden = false
         case .unlocked(let progress, let isPlanned, let currentToken, let nextToken, let willChangeSoon):
@@ -176,6 +188,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             revealButton.isHidden = true
             circularProgress.setProgress(progress, animated: isPlanned)
             tokenLabel.setToken(currentToken, animated: !isPlanned && !blockAnimation)
+            showToken()
             shouldMark(willChangeSoon: willChangeSoon, isPlanned: isPlanned && !blockAnimation)
             nextTokenLabel.set(nextToken: nextToken)
         }
@@ -211,25 +224,43 @@ private extension TokensTOTPCompactCell {
         ])
         
         contentView.addSubview(serviceNameLabel, with: [
-            serviceNameLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            serviceNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin)
+            serviceNameLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin)
         ])
         
         contentView.addSubview(additionalInfoLabel, with: [
             additionalInfoLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor),
-            additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
+            additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor),
+            additionalInfoLabel.heightAnchor.constraint(equalTo: serviceNameLabel.heightAnchor)
         ])
         
         contentView.addSubview(tokenLabel, with: [
-            additionalInfoLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor),
             tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
             tokenLabel.bottomAnchor.constraint(
                 equalTo: contentView.bottomAnchor,
                 constant: -vMargin + tokenBottomOffset
             )
         ])
-        
+
+        serviceName2TopConstraint = serviceNameLabel.topAnchor.constraint(
+            equalTo: contentView.topAnchor,
+            constant: vMargin
+        )
+        serviceName2AdditionalInfoConstraint = additionalInfoLabel.topAnchor.constraint(
+            equalTo: serviceNameLabel.bottomAnchor
+        )
+        serviceName2TokenConstraint = tokenLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor)
+        serviceName2BottomConstraint = serviceNameLabel.bottomAnchor.constraint(
+            equalTo: contentView.bottomAnchor,
+            constant: -vMargin
+        )
+        serviceName2CenterYConstraint = serviceNameLabel.bottomAnchor.constraint(equalTo: contentView.centerYAnchor)
+
+        additionalInfo2TokenConstraint = tokenLabel.topAnchor.constraint(equalTo: additionalInfoLabel.bottomAnchor)
+
+        serviceName2TopConstraint?.isActive = true
+        serviceName2AdditionalInfoConstraint?.isActive = true
+        additionalInfo2TokenConstraint?.isActive = true
+
         contentView.addSubview(nextTokenLabel, with: [
             nextTokenLabel.leadingAnchor.constraint(equalTo: tokenLabel.trailingAnchor, constant: hMargin),
             nextTokenLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
@@ -269,6 +300,44 @@ private extension TokensTOTPCompactCell {
         
         tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         nextTokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
+    }
+    
+    func showToken() {
+        tokenLabel.isHidden = false
+        if additionalInfoLabel.isHidden {
+            serviceName2TopConstraint?.isActive = true
+            serviceName2AdditionalInfoConstraint?.isActive = false
+            serviceName2TokenConstraint?.isActive = true
+            serviceName2BottomConstraint?.isActive = false
+            serviceName2CenterYConstraint?.isActive = false
+            additionalInfo2TokenConstraint?.isActive = false
+        } else {
+            serviceName2TopConstraint?.isActive = true
+            serviceName2AdditionalInfoConstraint?.isActive = true
+            serviceName2TokenConstraint?.isActive = false
+            serviceName2BottomConstraint?.isActive = false
+            serviceName2CenterYConstraint?.isActive = false
+            additionalInfo2TokenConstraint?.isActive = true
+        }
+    }
+    
+    func hideToken() {
+        tokenLabel.isHidden = true
+        if additionalInfoLabel.isHidden {
+            serviceName2TopConstraint?.isActive = true
+            serviceName2AdditionalInfoConstraint?.isActive = false
+            serviceName2TokenConstraint?.isActive = false
+            serviceName2BottomConstraint?.isActive = true
+            serviceName2CenterYConstraint?.isActive = false
+            additionalInfo2TokenConstraint?.isActive = false
+        } else {
+            serviceName2TopConstraint?.isActive = false
+            serviceName2AdditionalInfoConstraint?.isActive = true
+            serviceName2TokenConstraint?.isActive = false
+            serviceName2BottomConstraint?.isActive = false
+            serviceName2CenterYConstraint?.isActive = true
+            additionalInfo2TokenConstraint?.isActive = false
+        }
     }
     
     func setupRevealButton() {

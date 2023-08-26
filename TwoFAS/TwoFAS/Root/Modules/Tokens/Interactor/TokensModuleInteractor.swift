@@ -334,7 +334,6 @@ extension TokensModuleInteractor: TokensModuleInteracting {
         } else {
             categoryData = sectionInteractor.listAll(sort: sortInteractor.currentSort)
         }
-        return
     }
     
     func reloadTokens() {

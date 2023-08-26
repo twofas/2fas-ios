@@ -115,7 +115,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         serviceNameLabel.setText(name)
         self.secret = secret
         self.serviceTypeName = serviceTypeName
-        if let additionalInfo {
+        if let additionalInfo, !additionalInfo.isEmpty {
             additionalInfoLabel.isHidden = false
             additionalInfoLabel.setText(additionalInfo)
         } else {

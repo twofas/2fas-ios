@@ -66,7 +66,6 @@ final class TokensEditCell: UICollectionViewCell {
     private func commonInit() {
         setupBackground()
         setupLayout()
-        //        setupAccessibility() // TODO: Add accessibility
     }
     
     func update(
@@ -88,14 +87,10 @@ final class TokensEditCell: UICollectionViewCell {
             bottomNameConstraint?.isActive = true
             bottomAdditionalNameConstraint?.isActive = false
         }
-        //        self.serviceTypeName = serviceTypeName
+
         categoryView.setColor(category)
-        
-        //        categoryView.accessibilityLabel = T.Voiceover.badgeColor(category.localizedName)
         logoView.configure(with: logoType)
-        //        configureIcon(with: iconType, serviceTypeName: serviceTypeName)
         dragHandles.isHidden = !canBeDragged
-        //        setupAccessibility()
     }
     
     private func setupBackground() {
@@ -146,54 +141,5 @@ final class TokensEditCell: UICollectionViewCell {
             dragHandles.widthAnchor.constraint(equalToConstant: dragHandlesWidth),
             dragHandles.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hMargin)
         ])
-        
-//        serviceNameLabel.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
-//        serviceNameLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
-//        serviceNameLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
-//        
-//        additionalInfoLabel.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
-//        additionalInfoLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
-//        additionalInfoLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
     }
-    
-    //    private func setupAccessibility() {
-    //        super.setupAccessibility()
-    //        contentView.isAccessibilityElement = true
-    //        contentView.accessibilityLabel = T.Voiceover.edit(serviceTypeName)
-    //        contentView.accessibilityTraits = .button
-    //        var accViews: [UIView] = [categoryView]
-    //        if let current = currentAccessibilityIcon {
-    //            accViews.append(current)
-    //        }
-    //        accViews.append(contentsOf: [nameLabel, infoNextToken, contentView])
-    //        accessibilityElements = accViews
-    //    }
-    
-    //    func configureIcon(with iconType: IconType, serviceTypeName: String?) {
-    //        switch iconType {
-    //        case .image(let image):
-    //            iconImageView.image = image
-    //            iconImageView.accessibilityLabel = serviceTypeName
-    //
-    //            iconImageView.isHidden = false
-    //            labelRenderer.isHidden = true
-    //
-    //            iconImageView.isAccessibilityElement = true
-    //            labelRenderer.isAccessibilityElement = false
-    //
-    //            currentAccessibilityIcon = iconImageView
-    //        case .label(let title, let color):
-    //            labelRenderer.setText(title)
-    //            labelRenderer.setColor(color, animated: false)
-    //
-    //            labelRenderer.isHidden = false
-    //            iconImageView.isHidden = true
-    //
-    //            iconImageView.isAccessibilityElement = false
-    //            labelRenderer.isAccessibilityElement = true
-    //
-    //            currentAccessibilityIcon = labelRenderer
-    //        }
-    //    }
-    //
 }

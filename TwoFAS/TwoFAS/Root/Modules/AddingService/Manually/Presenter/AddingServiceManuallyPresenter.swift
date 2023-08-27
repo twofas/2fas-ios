@@ -56,6 +56,7 @@ extension AddingServiceManuallyPresenter {
     }
     
     func handleAddService() {
+        // serviceName.trim() !!!
     }
     
     func handleHelp() {
@@ -86,13 +87,14 @@ extension AddingServiceManuallyPresenter {
     func validateServiceName(_ serviceName: String) -> ServiceNameValidationResult {
         let value: ServiceNameValidationResult
         isCorrectServiceName = false
-        if serviceName.count >= ServiceRules.serviceNameMinLength &&
-            serviceName.count <= ServiceRules.serviceNameMaxLength {
+        let trimmed = serviceName.trim()
+        if trimmed.count >= ServiceRules.serviceNameMinLength &&
+            trimmed.count <= ServiceRules.serviceNameMaxLength {
             isCorrectServiceName = true
             self.serviceName = serviceName
             checkForServiceIcon()
             value = .correct
-        } else if serviceName.isEmpty {
+        } else if trimmed.isEmpty {
             self.serviceName = ""
             serviceIcon = nil
             value = .tooShort

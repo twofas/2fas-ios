@@ -43,89 +43,53 @@ struct AddingServiceManuallyView: View {
         VStack {
             AddingServiceTitleView(text: T.Tokens.addManualTitle)
             
-            ScrollView {
-                AddingServiceTextContentView(text: T.Tokens.addManualDescription)
-                    .padding(.bottom, 24)
-                
-                VStack(spacing: 10) {
-                    HStack(spacing: 10) {
-                        VStack {
-                            AddingServiceSmallTitleView(text: T.Tokens.addManualServiceName)
-                                .padding(.bottom, 10)
-                            TextField("", text: $serviceName)
-                                .onChange(of: serviceName) { newValue in
-                                    let trimmed = newValue.trim()
-                                    if trimmed != newValue {
-                                        serviceName = trimmed
+            ScrollView(.vertical) {
+                Group {
+                    AddingServiceTextContentView(text: T.Tokens.addManualDescription)
+                        .padding(.bottom, 24)
+                    
+                    VStack(spacing: 10) {
+                        HStack(spacing: 10) {
+                            VStack {
+                                AddingServiceSmallTitleView(text: T.Tokens.addManualServiceName)
+                                    .padding(.bottom, 10)
+                                TextField("", text: $serviceName)
+                                    .onChange(of: serviceName) { newValue in
+                                        serviceNameError = presenter.validateServiceName(newValue.trim()).error
                                     }
-                                    let value = presenter.validateServiceName(trimmed)
-                                    serviceNameError = value.error
-                                }
-                                .textInputAutocapitalization(.sentences)
-                                .keyboardType(.alphabet)
-                                .focused($focusedField, equals: .serviceName)
-                                .autocorrectionDisabled(true)
-                                .submitLabel(.next)
-                                .onSubmit {
-                                    focusedField = .secret
-                                }
-                                .padding(.bottom, 5)
-                            AddingServiceTextFieldLineView()
+                                    .textInputAutocapitalization(.sentences)
+                                    .keyboardType(.alphabet)
+                                    .focused($focusedField, equals: .serviceName)
+                                    .autocorrectionDisabled(true)
+                                    .submitLabel(.next)
+                                    .onSubmit {
+                                        focusedField = .secret
+                                    }
+                                    .padding(.bottom, 5)
+                                AddingServiceTextFieldLineView()
+                            }
+                            .frame(maxWidth: .infinity)
+                            AddingServiceServiceIconView(serviceImage: $presenter.serviceIcon)
                         }
-                        .frame(maxWidth: .infinity)
-                        AddingServiceServiceIconView(serviceImage: $presenter.serviceIcon)
-                    }
-                    if let serviceNameError {
-                        AddingServiceErrorTextView(text: serviceNameError)
-                    }
-                    
-                    VStack {
-                        AddingServiceSmallTitleView(text: T.Tokens.addManualServiceKey)
-                            .padding(.top, 24)
-                            .padding(.bottom, 10)
-                        TextField("", text: $secret)
-                            .onChange(of: secret) { newValue in
-                                let trimmed = newValue.removeWhitespaces()
-                                if trimmed != newValue {
-                                    secret = trimmed
-                                }
-                                let status = presenter.validateSecret(trimmed)
-                                secretError = status.error
-                            }
-                            .textInputAutocapitalization(.characters)
-                            .keyboardType(.alphabet)
-                            .focused($focusedField, equals: .secret)
-                            .autocorrectionDisabled(true)
-                            .submitLabel(.done)
-                            .onSubmit {
-                                presenter.handleAddService()
-                            }
-                            .padding(.bottom, 5)
-                        AddingServiceTextFieldLineView()
-                    }
-                    .frame(maxWidth: .infinity)
-                    
-                    if let secretError {
-                        AddingServiceErrorTextView(text: secretError)
-                    }
-                    
-                    AddingServiceAdvancedRevealView(isVisible: $presenter.advancedShown) {
-                        presenter.advancedShown.toggle()
-                    }
-                    .padding(.top, 24)
-                    
-                    if presenter.advancedShown {
+                        if let serviceNameError {
+                            AddingServiceErrorTextView(text: serviceNameError)
+                        }
+                        
                         VStack {
-                            AddingServiceSmallTitleView(text: T.Tokens.additionalInfo)
+                            AddingServiceSmallTitleView(text: T.Tokens.addManualServiceKey)
                                 .padding(.top, 24)
                                 .padding(.bottom, 10)
-                            TextField("", text: $additionalInfo)
-                                .onChange(of: additionalInfo) { newValue in
-                                    let status = presenter.validateAdditionalInfo(newValue)
-                                    additionalInfoError = status.error
+                            TextField("", text: $secret)
+                                .onChange(of: secret) { newValue in
+                                    let trimmed = newValue.removeWhitespaces()
+                                    if trimmed != newValue {
+                                        secret = trimmed
+                                    }
+                                    secretError = presenter.validateSecret(trimmed).error
                                 }
-                                .textInputAutocapitalization(.never)
+                                .textInputAutocapitalization(.characters)
                                 .keyboardType(.alphabet)
+                                .focused($focusedField, equals: .secret)
                                 .autocorrectionDisabled(true)
                                 .submitLabel(.done)
                                 .onSubmit {
@@ -136,37 +100,95 @@ struct AddingServiceManuallyView: View {
                         }
                         .frame(maxWidth: .infinity)
                         
-                        if let additionalInfoError {
-                            AddingServiceErrorTextView(text: additionalInfoError)
+                        if let secretError {
+                            AddingServiceErrorTextView(text: secretError)
                         }
                         
-                        AddServiceAdvancedWarningView()
+                        AddingServiceAdvancedRevealView(isVisible: $presenter.advancedShown) {
+                            if let focusedField {
+                                dismissKeyboard()
+                                DispatchQueue.main.async {
+                                    presenter.advancedShown.toggle()
+                                }
+                            } else {
+                                presenter.advancedShown.toggle()
+                            }
+                        }
+                        .padding(.top, 24)
                         
-                        AddingServiceServiceTypeSelector(selectedTokenType: $presenter.selectedTokenType)
+                        if presenter.advancedShown {
+                            VStack {
+                                AddingServiceSmallTitleView(text: T.Tokens.additionalInfo)
+                                    .padding(.top, 24)
+                                    .padding(.bottom, 10)
+                                TextField("", text: $additionalInfo)
+                                    .onChange(of: additionalInfo) { newValue in
+                                        additionalInfoError = presenter.validateAdditionalInfo(newValue).error
+                                    }
+                                    .textInputAutocapitalization(.never)
+                                    .keyboardType(.alphabet)
+                                    .autocorrectionDisabled(true)
+                                    .submitLabel(.done)
+                                    .onSubmit {
+                                        presenter.handleAddService()
+                                    }
+                                    .padding(.bottom, 5)
+                                AddingServiceTextFieldLineView()
+                            }
+                            .frame(maxWidth: .infinity)
+                             
+                            if let additionalInfoError {
+                                AddingServiceErrorTextView(text: additionalInfoError)
+                            }
+                            
+                            AddServiceAdvancedWarningView()
+                            
+                            AddingServiceServiceTypeSelector(selectedTokenType: $presenter.selectedTokenType)
+                            
+                            if presenter.selectedTokenType == .totp {
+                                Text("TOTP")
+                                    .padding(.bottom, 1000)
+                            } else if presenter.selectedTokenType == .hotp {
+                                Text("HOTP")
+                            }
+                        }
+                    }
+                    
+                    VStack {
+                        AddingServiceDividerView()
+                            .padding(.bottom, 10)
+                        AddingServiceAddServiceButton(action: {
+                            presenter.handleAddService()
+                        }, isEnabled: $presenter.isAddServiceEnabled)
+                        .padding(.horizontal, 40)
+                        .padding(.top, 10)
                         
-                        if presenter.selectedTokenType == .totp {
-                            Text("TOTP")
-                        } else if presenter.selectedTokenType == .hotp {
-                            Text("HOTP")
+                        AddingServiceLinkButton(text: T.Tokens.addManualHelpCta) {
+                            presenter.handleHelp()
                         }
                     }
                 }
+                .observeHeight(onChange: { contentHeight in
+                    changeHeight(contentHeight)
+                })
+                .onTapGesture {
+                    dismissKeyboard()
+                }
+                .padding(.horizontal, Theme.Metrics.doubleMargin)
             }
-            
-            AddingServiceDividerView()
-                .padding(.bottom, 10)
-            AddingServiceAddServiceButton(action: {
-                presenter.handleAddService()
-            }, isEnabled: $presenter.isAddServiceEnabled)
-            .padding(.horizontal, 40)
-            
-            AddingServiceLinkButton(text: T.Tokens.addManualHelpCta) {
-                presenter.handleHelp()
+            .onAppear {
+                DispatchQueue.main.async {
+                    focusedField = .serviceName
+                }
             }
         }
-        .padding(.horizontal, Theme.Metrics.doubleMargin)
-        .observeHeight(onChange: { height in
-            changeHeight(height)
-        })
+    }
+    
+    func dismissKeyboard() {
+        guard let window = UIApplication.shared.connectedScenes
+            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
+              let keyWindow = window.windows.first(where: { $0.isKeyWindow })
+        else { return }
+        keyWindow.endEditing(true)
     }
 }

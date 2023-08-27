@@ -120,10 +120,6 @@ extension ServiceDefinitionDatabaseImpl: ServiceDefinitionDatabase {
                 }
             }
             
-            if service.name == "Facebook" {
-                 
-            }
-            
             return service.tags?.contains(where: { $0.contains(query) }) ?? false
         })
     }

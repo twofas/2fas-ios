@@ -93,7 +93,7 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     }
     
     func showRevealButton() {
-        guard let menu else {
+        guard menu != nil else {
             isMenuPositionPending = true
             return
         }

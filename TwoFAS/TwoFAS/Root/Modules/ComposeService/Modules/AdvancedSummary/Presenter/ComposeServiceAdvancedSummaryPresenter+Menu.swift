@@ -22,11 +22,6 @@ import Foundation
 struct ComposeServiceAdvancedSummaryMenuSection: TableViewSection {
     let title: String
     var cells: [ComposeServiceAdvancedSummaryMenuCell]
-    
-    init(title: String, cells: [ComposeServiceAdvancedSummaryMenuCell]) {
-        self.title = title
-        self.cells = cells
-    }
 }
 
 struct ComposeServiceAdvancedSummaryMenuCell: Hashable {

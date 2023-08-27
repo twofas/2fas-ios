@@ -42,6 +42,7 @@ final class TokensPresenter {
     private let flowController: TokensPlainFlowControlling
     
     var isMainOnlyCategory: Bool { interactor.isMainOnlyCategory }
+    var hasUnreadNews: Bool { interactor.hasUnreadNews }
     
     var listStyle: ListStyle {
         interactor.currentListStyle
@@ -86,6 +87,9 @@ extension TokensPresenter {
         Log("TokensPresenter - viewWillAppear")
         interactor.sync()
         appActiveActions()
+        interactor.fetchNews { [weak self] in
+            self?.updateAddNewsIcon()
+        }
     }
     
     func handleAppDidBecomeActive() {
@@ -412,6 +416,14 @@ extension TokensPresenter {
         focusOnService = serviceData
         reloadData()
     }
+    
+    func handleShowNotifications() {
+        flowController.toNotifications()
+    }
+    
+    func handleRefreshNewsStatus() {
+        updateAddNewsIcon()
+    }
 }
 
 private extension TokensPresenter {
@@ -494,7 +506,7 @@ private extension TokensPresenter {
         }()
         
         if interactor.hasServices {
-            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: false))
+            updateAddNewsIcon()
             view?.showList()
             
             if Set<CategoryData>(currentServices) != Set<CategoryData>(newServices) || changeRequriesTokenRefresh {
@@ -515,7 +527,7 @@ private extension TokensPresenter {
             if !isSearching && currentState == .edit {
                 setCurrentState(.normal)
             }
-            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: !isSearching))
+            updateAddNewsIcon()
             interactor.stopCounters()
             updateEditStateButton()
 
@@ -528,6 +540,14 @@ private extension TokensPresenter {
         }
                 
         changeRequriesTokenRefresh = false
+    }
+    
+    func updateAddNewsIcon() {
+        if interactor.hasServices {
+            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: false))
+        } else {
+            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: !isSearching))
+        }
     }
     
     func mapButtonStateFor(_ currentState: State, isFirst: Bool) -> TokensViewControllerAddState {

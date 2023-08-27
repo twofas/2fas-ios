@@ -164,5 +164,3 @@ extension MainSplitFlowController: SettingsFlowControllerParent {
         }        
     }
 }
-
-extension MainSplitFlowController: NewsPlainFlowControllerParent {}

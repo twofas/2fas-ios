@@ -51,9 +51,11 @@ protocol TokensPlainFlowControlling: AnyObject {
     func toShouldRenameService(currentName: String, secret: String)
     // MARK: Sort
     func toShowSortTypes(selectedSortOption: SortType, callback: @escaping (SortType) -> Void)
+    // MARK: News
+    func toNotifications()
 }
 
-final class TokensPlainFlowController: FlowController {
+final class TokensPlainFlowController: FlowController, TokensNavigationFlowControllerParent {
     private weak var parent: TokensPlainFlowControllerParent?
     private weak var mainSplitViewController: MainSplitViewController?
     private var galleryViewController: UIViewController?
@@ -278,6 +280,11 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         }
         alertController.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel, handler: { _ in }))
         mainSplitViewController.present(alertController, animated: true)
+    }
+    
+    // MARK: - Notifications
+    func toNotifications() {
+        NewsNavigationFlowController.present(on: viewController, parent: self)
     }
 }
 
@@ -537,5 +544,12 @@ extension TokensPlainFlowController: BrowserExtensionPairingNavigationFlowContro
 extension TokensPlainFlowController: AddingServiceTokenFlowControllerParent {
     func addingServiceTokenClose(_ serviceData: ServiceData) {
         viewController.presenter.handleFocusOnService(serviceData)
+    }
+}
+
+extension TokensPlainFlowController: NewsNavigationFlowControllerParent {
+    func newsClose() {
+        viewController.presenter.handleRefreshNewsStatus()
+        dismiss()
     }
 }

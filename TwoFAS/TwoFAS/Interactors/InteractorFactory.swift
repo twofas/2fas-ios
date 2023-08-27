@@ -507,7 +507,8 @@ extension InteractorFactory {
             cameraPermissionInteractor: cameraPermissionInteractor(),
             linkInteractor: linkInteractor(),
             widgetsInteractor: widgetsInteractor(),
-            newCodeInteractor: newCodeInteractor()
+            newCodeInteractor: newCodeInteractor(),
+            newsInteractor: newsInteractor()
         )
     }
     
@@ -525,7 +526,6 @@ extension InteractorFactory {
     func mainSplitModuleInteractor() -> MainSplitModuleInteracting {
         MainSplitModuleInteractor(
             viewPathInteractor: viewPathInteractor(),
-            newsInteractor: newsInteractor(),
             linkInteractor: linkInteractor(),
             appearanceInteractor: appearanceInteractor()
         )

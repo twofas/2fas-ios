@@ -76,6 +76,9 @@ protocol TokensModuleInteracting: AnyObject {
     func addStoredCode()
     func renameService(newName: String, secret: Secret)
     func cancelRenaming(secret: Secret)
+    // MARK: News
+    var hasUnreadNews: Bool { get }
+    func fetchNews(completion: @escaping () -> Void)
 }
 
 final class TokensModuleInteractor {
@@ -97,6 +100,7 @@ final class TokensModuleInteractor {
     private let linkInteractor: LinkInteracting
     private let widgetsInteractor: WidgetsInteracting
     private let newCodeInteractor: NewCodeInteracting
+    private let newsInteractor: NewsInteracting
     
     private(set) var categoryData: [CategoryData] = []
     
@@ -115,7 +119,8 @@ final class TokensModuleInteractor {
         cameraPermissionInteractor: CameraPermissionInteracting,
         linkInteractor: LinkInteracting,
         widgetsInteractor: WidgetsInteracting,
-        newCodeInteractor: NewCodeInteracting
+        newCodeInteractor: NewCodeInteracting,
+        newsInteractor: NewsInteracting
     ) {
         self.appearanceInteractor = appearanceInteractor
         self.serviceDefinitionsInteractor = serviceDefinitionsInteractor
@@ -130,6 +135,7 @@ final class TokensModuleInteractor {
         self.linkInteractor = linkInteractor
         self.widgetsInteractor = widgetsInteractor
         self.newCodeInteractor = newCodeInteractor
+        self.newsInteractor = newsInteractor
         
         setupLinkInteractor()
     }
@@ -388,6 +394,15 @@ extension TokensModuleInteractor: TokensModuleInteracting {
         }
         
         return snapshot
+    }
+    
+    // MARK: - News
+    var hasUnreadNews: Bool {
+        newsInteractor.hasUnreadNews
+    }
+    
+    func fetchNews(completion: @escaping () -> Void) {
+        newsInteractor.fetchList(completion: completion)
     }
 }
 

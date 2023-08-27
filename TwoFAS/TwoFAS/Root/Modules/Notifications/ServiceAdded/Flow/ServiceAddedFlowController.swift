@@ -24,13 +24,13 @@ import Common
 protocol ServiceAddedFlowControllerParent: AnyObject {
     func serviceAddedEditService(_ serviceData: ServiceData)
     func serviceAddedEditIcon(_ serviceData: ServiceData)
-    func serviceAddedClose()
+    func serviceAddedClose(_ serviceData: ServiceData)
 }
 
 protocol ServiceAddedFlowControlling: AnyObject {
     func toEditService(_ serviceData: ServiceData)
     func toEditIcon(_ serviceData: ServiceData)
-    func toClose()
+    func toClose(_ serviceData: ServiceData)
 }
 
 final class ServiceAddedFlowController: FlowController {
@@ -77,8 +77,8 @@ extension ServiceAddedFlowController: ServiceAddedFlowControlling {
         parent?.serviceAddedEditIcon(serviceData)
     }
     
-    func toClose() {
-        parent?.serviceAddedClose()
+    func toClose(_ serviceData: ServiceData) {
+        parent?.serviceAddedClose(serviceData)
     }
 }
 

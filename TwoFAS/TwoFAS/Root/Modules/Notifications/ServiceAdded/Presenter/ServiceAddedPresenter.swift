@@ -58,7 +58,7 @@ extension ServiceAddedPresenter {
     
     func handleClose() {
         interactor.clear()
-        flowController.toClose()
+        flowController.toClose(interactor.serviceData)
     }
     
     func handleCopy() {

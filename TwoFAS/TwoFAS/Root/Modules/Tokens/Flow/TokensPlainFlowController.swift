@@ -453,7 +453,9 @@ extension TokensPlainFlowController: ServiceAddedFlowControllerParent {
         }
     }
     
-    func serviceAddedClose() {
-        dismiss()
+    func serviceAddedClose(_ serviceData: ServiceData) {
+        dismiss { [weak self] in
+            self?.viewController.presenter.handleFocusOnService(serviceData)
+        }
     }
 }

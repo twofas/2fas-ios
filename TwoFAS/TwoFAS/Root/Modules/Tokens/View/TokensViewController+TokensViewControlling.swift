@@ -20,7 +20,7 @@
 import UIKit
 
 protocol TokensViewControlling: AnyObject {
-    func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>)
+    func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>, scrollTo: IndexPath?)
         
     func showList()
     func showEmptyScreen()
@@ -46,13 +46,16 @@ protocol TokensViewControlling: AnyObject {
 
 extension TokensViewController: TokensViewControlling {
     // MARK: - Data managment
-    func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>) {
+    func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>, scrollTo: IndexPath?) {
         if tokensView.hasActiveDrag || tokensView.hasActiveDrop {
             tokensView.cancelInteractiveMovement()
         }
         dataSource.apply(newSnapshot, animatingDifferences: !tokensView.hasActiveDrag, completion: nil)
         // no need to call reload other than seconds/consumer update
         tokensView.reloadData()
+        if let scrollTo {
+            tokensView.scrollToItem(at: scrollTo, at: .top, animated: true)
+        }
     }
     
     // MARK: - Empty screen or list

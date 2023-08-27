@@ -49,6 +49,7 @@ protocol TokensModuleInteracting: AnyObject {
     func setSortType(_ sortType: SortType)
     func createSection(with name: String)
     func toggleCollapseSection(_ section: TokensSection)
+    func openSection(_ sectionOffset: Int)
     func moveDown(_ section: TokensSection)
     func moveUp(_ section: TokensSection)
     func rename(_ section: TokensSection, with title: String)
@@ -268,6 +269,15 @@ extension TokensModuleInteractor: TokensModuleInteracting {
             sectionInteractor.setSectionZeroIsCollapsed(toggleValue)
         }
     }
+    
+    func openSection(_ sectionOffset: Int) {
+        guard let category = categoryData[safe: sectionOffset] else { return }
+        if let sectionData = category.section {
+            sectionInteractor.collapse(sectionData, isCollapsed: false)
+        } else {
+            sectionInteractor.setSectionZeroIsCollapsed(false)
+        }
+    }
 
     func moveDown(_ section: TokensSection) {
         guard let sectionData = section.sectionData else { return }
@@ -399,13 +409,16 @@ private extension TokensModuleInteractor {
         ] in
             var dict = dict
             let gridCells = category.services
+            let isCollapsed: Bool = {
+                category.section?.isCollapsed ?? (
+                    sectionInteractor.isSectionZeroCollapsed && !isMainOnlyCategory
+                )
+            }()
             let gridSection = TokensSection(
                 title: category.section?.title,
                 sectionID: category.section?.sectionID,
                 sectionData: category.section,
-                isCollapsed: category.section?.isCollapsed ?? (
-                    sectionInteractor.isSectionZeroCollapsed && !isMainOnlyCategory
-                ),
+                isCollapsed: isCollapsed,
                 elementCount: gridCells.count,
                 isSearching: isSearching,
                 position: sectionPosition(for: startIndex, currentIndex: currentIndex, totalIndex: totalIndex)

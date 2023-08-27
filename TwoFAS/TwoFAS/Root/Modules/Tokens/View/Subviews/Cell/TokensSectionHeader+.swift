@@ -35,6 +35,7 @@ extension TokensSectionHeader {
             let img = UIImageView(image: UIImage(systemName: "chevron.up", withConfiguration: config))
             img.tintColor = Theme.Colors.inactiveInverted
             img.adjustsImageSizeForAccessibilityContentSizeCategory = true
+            img.contentMode = .center
             return img
         }()
         private let expand: UIImageView = {
@@ -42,6 +43,7 @@ extension TokensSectionHeader {
             let img = UIImageView(image: UIImage(systemName: "chevron.down", withConfiguration: config))
             img.tintColor = Theme.Colors.inactiveInverted
             img.adjustsImageSizeForAccessibilityContentSizeCategory = true
+            img.contentMode = .center
             return img
         }()
         

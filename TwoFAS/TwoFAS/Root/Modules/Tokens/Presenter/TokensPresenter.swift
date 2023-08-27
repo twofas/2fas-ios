@@ -33,6 +33,7 @@ final class TokensPresenter {
     private var isSearching = false
     private var changeRequriesTokenRefresh = false
     private var serviceWasCreated: ServiceData?
+    private var focusOnService: ServiceData?
     
     weak var view: TokensViewControlling?
     
@@ -394,6 +395,11 @@ extension TokensPresenter {
     func handleUnlockTOTP(for consumer: TokenTimerConsumer) {
         interactor.unlockTOTPConsumer(consumer)
     }
+    
+    func handleFocusOnService(_ serviceData: ServiceData) {
+        focusOnService = serviceData
+        reloadData()
+    }
 }
 
 private extension TokensPresenter {
@@ -466,6 +472,15 @@ private extension TokensPresenter {
         interactor.fetchData(phrase: searchPhrase)
         let newServices = interactor.categoryData
         
+        let newServiceIndexPath: IndexPath? = {
+            if let focusOnService {
+                let indexPath = newServices.indexPath(of: focusOnService)
+                self.focusOnService = nil
+                return indexPath
+            }
+            return nil
+        }()
+        
         if interactor.hasServices {
             view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: false))
             view?.showList()
@@ -475,8 +490,15 @@ private extension TokensPresenter {
             }
             updateEditStateButton()
 
-            let snapshot = interactor.createSnapshot(state: currentState.transform, isSearching: isSearching)
-            view?.reloadData(newSnapshot: snapshot)
+            if let newServiceIndexPath {
+                interactor.openSection(newServiceIndexPath.section)
+            }
+
+            let snapshot = interactor.createSnapshot(
+                state: currentState.transform,
+                isSearching: isSearching
+            )
+            view?.reloadData(newSnapshot: snapshot, scrollTo: newServiceIndexPath)
         } else {
             if !isSearching && currentState == .edit {
                 setCurrentState(.normal)
@@ -490,7 +512,7 @@ private extension TokensPresenter {
             } else {
                 view?.showEmptyScreen()
             }
-            view?.reloadData(newSnapshot: interactor.emptySnapshot)
+            view?.reloadData(newSnapshot: interactor.emptySnapshot, scrollTo: nil)
         }
                 
         changeRequriesTokenRefresh = false

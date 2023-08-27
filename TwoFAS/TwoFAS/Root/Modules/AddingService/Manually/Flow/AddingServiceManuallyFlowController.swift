@@ -20,7 +20,9 @@
 import UIKit
 import Common
 
-protocol AddingServiceManuallyFlowControllerParent: AnyObject {}
+protocol AddingServiceManuallyFlowControllerParent: AnyObject {
+    func addingServiceManuallyToClose(_ serviceData: ServiceData)
+}
 
 protocol AddingServiceManuallyFlowControlling: AnyObject {
     func toToken(_ serviceData: ServiceData)
@@ -64,4 +66,7 @@ extension AddingServiceManuallyFlowController: AddingServiceManuallyFlowControll
 }
 
 extension AddingServiceManuallyFlowController: AddingServiceTokenFlowControllerParent {
+    func addingServiceTokenClose(_ serviceData: ServiceData) {
+        parent?.addingServiceManuallyToClose(serviceData)
+    }
 }

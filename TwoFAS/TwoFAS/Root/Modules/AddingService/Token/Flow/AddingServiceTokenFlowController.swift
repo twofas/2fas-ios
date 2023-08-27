@@ -20,9 +20,13 @@
 import UIKit
 import Common
 
-protocol AddingServiceTokenFlowControllerParent: AnyObject {}
+protocol AddingServiceTokenFlowControllerParent: AnyObject {
+    func addingServiceTokenClose(_ serviceData: ServiceData)
+}
 
-protocol AddingServiceTokenFlowControlling: AnyObject {}
+protocol AddingServiceTokenFlowControlling: AnyObject {
+    func toClose(_ serviceData: ServiceData)
+}
 
 final class AddingServiceTokenFlowController: FlowController {
     private weak var parent: AddingServiceTokenFlowControllerParent?
@@ -82,4 +86,8 @@ final class AddingServiceTokenFlowController: FlowController {
     }
 }
 
-extension AddingServiceTokenFlowController: AddingServiceTokenFlowControlling {}
+extension AddingServiceTokenFlowController: AddingServiceTokenFlowControlling {
+    func toClose(_ serviceData: ServiceData) {
+        parent?.addingServiceTokenClose(serviceData)
+    }
+}

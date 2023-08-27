@@ -29,6 +29,7 @@ protocol AddingServiceFlowControllerParent: AnyObject {
     func addingServiceToSendLogs(auditID: UUID)
     func addingServiceToPushPermissions(for extensionID: Common.ExtensionID)
     func addingServiceToTwoFASWebExtensionPairing(for extensionID: Common.ExtensionID)
+    func addingServiceClose(_ serviceData: ServiceData)
 }
 
 protocol AddingServiceFlowControlling: AnyObject {
@@ -57,6 +58,9 @@ final class AddingServiceFlowController: FlowController {
 }
 
 extension AddingServiceFlowController: AddingServiceManuallyFlowControllerParent {
+    func addingServiceManuallyToClose(_ serviceData: ServiceData) {
+        parent?.addingServiceClose(serviceData)
+    }
 }
 
 extension AddingServiceFlowController {
@@ -107,4 +111,8 @@ extension AddingServiceFlowController: AddingServiceMainFlowControllerParent {
     }
 }
 
-extension AddingServiceFlowController: AddingServiceTokenFlowControllerParent {}
+extension AddingServiceFlowController: AddingServiceTokenFlowControllerParent {
+    func addingServiceTokenClose(_ serviceData: ServiceData) {
+        parent?.addingServiceClose(serviceData)
+    }
+}

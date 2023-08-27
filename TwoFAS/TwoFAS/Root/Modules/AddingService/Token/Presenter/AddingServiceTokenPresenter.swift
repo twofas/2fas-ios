@@ -83,6 +83,10 @@ extension AddingServiceTokenPresenter {
         interactor.copyToken(token)
     }
     
+    func handleViewDidDissaper() {
+        flowController.toClose(interactor.serviceData)
+    }
+    
     // MARK: - TOTP
     
     func handleTOTPInital(progress: Int, period: Int, token: TokenValue, willChangeSoon: Bool) {

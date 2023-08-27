@@ -22,5 +22,4 @@ import Foundation
 enum MainContent: Int {
     case main = 0
     case settings = 1
-    case news = 2
 }

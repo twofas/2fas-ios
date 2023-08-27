@@ -37,26 +37,22 @@ final class MainTabFlowController: FlowController {
     static func insertAsCompact(
         into split: UISplitViewController,
         parent: MainTabFlowControllerParent
-    ) -> (tokensNavi: UINavigationController, newsNavi: UINavigationController) {
+    ) -> UINavigationController {
         let view = MainTabViewController()
         let flowController = MainTabFlowController(viewController: view)
         flowController.parent = parent
-        
-        let interactor = InteractorFactory.shared.mainTabModuleInteractor()
-        
+                
         let presenter = MainTabPresenter(
-            flowController: flowController,
-            interactor: interactor
+            flowController: flowController
         )
         view.presenter = presenter
         presenter.view = view
 
         let tokensNavi = TokensNavigationFlowController.showAsEmptyTab(in: view, parent: flowController)
-        let newsNavi = NewsNavigationFlowController.showAsEmptyTab(in: view, parent: flowController)
     
         split.setViewController(view, for: .compact)
         
-        return (tokensNavi: tokensNavi, newsNavi: newsNavi)
+        return tokensNavi
     }
 }
 
@@ -88,5 +84,4 @@ extension MainTabFlowController: SettingsFlowControllerParent {
         // not needed
     }
 }
-extension MainTabFlowController: NewsPlainFlowControllerParent {}
 extension MainTabFlowController: TokensNavigationFlowControllerParent {}

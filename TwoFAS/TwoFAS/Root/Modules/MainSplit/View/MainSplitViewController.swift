@@ -23,7 +23,6 @@ import Common
 protocol MainSplitViewControlling: AnyObject {
     func updateTabBarPath(_ viewPath: ViewPath)
     func updateMenuPath(_ viewPath: ViewPath)
-    func updateNewsBadge()
     func notifyTokensVisible()
 }
 
@@ -40,10 +39,8 @@ final class MainSplitViewController: UIViewController {
     
     var tokensViewController: TokensViewController?
     var settingsViewController: SettingsViewController?
-    var newsViewController: NewsViewController?
     
     var tokensTabNavi: UINavigationController?
-    var newsTabNavi: UINavigationController?
     
     var isCollapsed: Bool { split.isCollapsed }
     var isInitialConfigRead = false
@@ -193,11 +190,6 @@ extension MainSplitViewController: MainSplitViewControlling {
     
     func updateMenuPath(_ viewPath: ViewPath) {
         menu?.presenter.handleChangeViewPath(viewPath)
-    }
-    
-    func updateNewsBadge() {
-        tabBar?.presenter.handleUpdateNewsBadge()
-        menu?.presenter.handleUpdateNewsBadge()
     }
     
     func notifyTokensVisible() {

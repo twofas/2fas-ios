@@ -531,14 +531,6 @@ extension InteractorFactory {
         )
     }
     
-    func mainMenuModuleInteractor() -> MainMenuModuleInteracting {
-        MainMenuModuleInteractor(newsInteractor: newsInteractor())
-    }
-    
-    func mainTabModuleInteractor() -> MainTabModuleInteracting {
-        MainTabModuleInteractor(newsInteractor: newsInteractor())
-    }
-    
     func appearanceModuleInteractor() -> AppearanceModuleInteracting {
         AppearanceModuleInteractor(appearanceInteractor: appearanceInteractor())
     }

@@ -51,9 +51,7 @@ final class AddingServiceFlowController: FlowController {
         view.presenter = presenter
         presenter.view = view
         
-        viewController.present(view, animated: true) {
-            AddingServiceManuallyFlowController.embed(in: view, parent: flowController)
-        }
+        viewController.present(view, animated: true)
     }
 }
 
@@ -103,16 +101,10 @@ extension AddingServiceFlowController: AddingServiceMainFlowControllerParent {
     }
     
     func mainToToken(serviceData: ServiceData) {
-        AddingServiceTokenFlowController.embed(in: viewController, parent: self, serviceData: serviceData)
+        parent?.addingServiceClose(serviceData)
     }
         
     func mainToAddManually() {
-        // TODO: Embed manuall
-    }
-}
-
-extension AddingServiceFlowController: AddingServiceTokenFlowControllerParent {
-    func addingServiceTokenClose(_ serviceData: ServiceData) {
-        parent?.addingServiceClose(serviceData)
+        AddingServiceManuallyFlowController.embed(in: viewController, parent: self)
     }
 }

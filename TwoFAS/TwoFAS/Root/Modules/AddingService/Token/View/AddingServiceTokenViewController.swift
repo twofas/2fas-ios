@@ -57,12 +57,6 @@ final class AddingServiceTokenViewController: UIViewController, AddingServiceTok
         presenter.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        presenter.viewWillAppear()
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -71,6 +65,6 @@ final class AddingServiceTokenViewController: UIViewController, AddingServiceTok
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        presenter.handleViewDidDissaper()
+        presenter.handleViewDidDisapper()
     }
 }

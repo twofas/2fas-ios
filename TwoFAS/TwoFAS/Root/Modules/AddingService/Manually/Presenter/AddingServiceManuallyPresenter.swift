@@ -66,7 +66,7 @@ extension AddingServiceManuallyPresenter {
             counter: initialCounter,
             tokenType: selectedTokenType
         ) else { return }
-        flowController.toToken(serviceData)
+        flowController.toClose(serviceData)
     }
     
     func handleHelp() {

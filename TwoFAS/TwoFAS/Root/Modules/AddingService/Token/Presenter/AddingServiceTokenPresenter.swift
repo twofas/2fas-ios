@@ -64,10 +64,7 @@ final class AddingServiceTokenPresenter: ObservableObject {
 extension AddingServiceTokenPresenter {
     func viewDidLoad() {
         interactor.tokenConsumer = view?.totpAdapter
-        interactor.counterConsumer = view?.hotpAdapter        
-    }
-    
-    func viewWillAppear() {
+        interactor.counterConsumer = view?.hotpAdapter
         interactor.start()
     }
     
@@ -83,7 +80,7 @@ extension AddingServiceTokenPresenter {
         interactor.copyToken(token)
     }
     
-    func handleViewDidDissaper() {
+    func handleViewDidDisapper() {
         flowController.toClose(interactor.serviceData)
     }
     

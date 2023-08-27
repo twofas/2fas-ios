@@ -121,7 +121,6 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
         
         FirstCodeAddedStatsController.markStats() // TODO: Move to MainRepository and proper interactor
-        // TMP: Remove!
         AddingServiceTokenFlowController.present(on: mainSplitViewController, parent: self, serviceData: serviceData)
     }
     
@@ -289,8 +288,13 @@ extension TokensPlainFlowController {
 private extension TokensPlainFlowController {
     func dismiss(actions: Set<TokensExternalAction> = [.finishedFlow], completion: Callback? = nil) {
         mainSplitViewController?.dismiss(animated: true) { [weak self] in
-            completion?()
-            self?.viewController.presenter.handleExternalAction(actions)
+            if actions.contains(.refreshImmidiately) {
+                self?.viewController.presenter.handleExternalAction(actions)
+                completion?()
+            } else {
+                completion?()
+                self?.viewController.presenter.handleExternalAction(actions)
+            }
         }
     }
     
@@ -410,7 +414,9 @@ extension TokensPlainFlowController: AddingServiceFlowControllerParent {
     }
     
     func addingServiceClose(_ serviceData: ServiceData) {
-        viewController.presenter.handleFocusOnService(serviceData)
+        dismiss(actions: [.newData, .refreshImmidiately, .sync]) { [weak self] in
+            self?.toServiceWasCreated(serviceData)
+        }
     }
     
     func addingServiceToGallery() {
@@ -528,7 +534,6 @@ extension TokensPlainFlowController: BrowserExtensionPairingNavigationFlowContro
 	}
 }
 
-// TMP: Remove!
 extension TokensPlainFlowController: AddingServiceTokenFlowControllerParent {
     func addingServiceTokenClose(_ serviceData: ServiceData) {
         viewController.presenter.handleFocusOnService(serviceData)

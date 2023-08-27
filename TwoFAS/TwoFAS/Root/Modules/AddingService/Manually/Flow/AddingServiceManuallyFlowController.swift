@@ -25,7 +25,7 @@ protocol AddingServiceManuallyFlowControllerParent: AnyObject {
 }
 
 protocol AddingServiceManuallyFlowControlling: AnyObject {
-    func toToken(_ serviceData: ServiceData)
+    func toClose(_ serviceData: ServiceData)
     func toInitialCounterInput()
     func toHelp()
 }
@@ -65,9 +65,8 @@ extension AddingServiceManuallyFlowController {
 }
 
 extension AddingServiceManuallyFlowController: AddingServiceManuallyFlowControlling {
-    func toToken(_ serviceData: ServiceData) {
-        guard let container else { return }
-        AddingServiceTokenFlowController.embed(in: container, parent: self, serviceData: serviceData)
+    func toClose(_ serviceData: ServiceData) {
+        parent?.addingServiceManuallyToClose(serviceData)
     }
     
     func toInitialCounterInput() {
@@ -92,11 +91,5 @@ extension AddingServiceManuallyFlowController: AddingServiceManuallyFlowControll
     
     func toHelp() {
         UIApplication.shared.open(URL(string: "https://support.2fas.com")!)
-    }
-}
-
-extension AddingServiceManuallyFlowController: AddingServiceTokenFlowControllerParent {
-    func addingServiceTokenClose(_ serviceData: ServiceData) {
-        parent?.addingServiceManuallyToClose(serviceData)
     }
 }

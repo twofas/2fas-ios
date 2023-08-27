@@ -21,6 +21,7 @@ import Foundation
 import Common
 import Token
 import Storage
+import CodeSupport
 
 enum TokensModuleInteractorState {
     case normal
@@ -68,6 +69,7 @@ protocol TokensModuleInteracting: AnyObject {
         state: TokensModuleInteractorState, isSearching: Bool
     ) -> NSDiffableDataSourceSnapshot<TokensSection, TokenCell>
     func checkCameraPermission(completion: @escaping (Bool) -> Void)
+    func addCodes(_ codes: [Code])
     // MARK: Links
     func handleURLIfNecessary()
     func clearStoredCode()
@@ -94,6 +96,7 @@ final class TokensModuleInteractor {
     private let cameraPermissionInteractor: CameraPermissionInteracting
     private let linkInteractor: LinkInteracting
     private let widgetsInteractor: WidgetsInteracting
+    private let newCodeInteractor: NewCodeInteracting
     
     private(set) var categoryData: [CategoryData] = []
     
@@ -111,7 +114,8 @@ final class TokensModuleInteractor {
         cloudBackupInteractor: CloudBackupStateInteracting,
         cameraPermissionInteractor: CameraPermissionInteracting,
         linkInteractor: LinkInteracting,
-        widgetsInteractor: WidgetsInteracting
+        widgetsInteractor: WidgetsInteracting,
+        newCodeInteractor: NewCodeInteracting
     ) {
         self.appearanceInteractor = appearanceInteractor
         self.serviceDefinitionsInteractor = serviceDefinitionsInteractor
@@ -125,6 +129,7 @@ final class TokensModuleInteractor {
         self.cameraPermissionInteractor = cameraPermissionInteractor
         self.linkInteractor = linkInteractor
         self.widgetsInteractor = widgetsInteractor
+        self.newCodeInteractor = newCodeInteractor
         
         setupLinkInteractor()
     }
@@ -240,6 +245,10 @@ extension TokensModuleInteractor: TokensModuleInteracting {
         }
     }
     
+    func addCodes(_ codes: [Code]) {
+        newCodeInteractor.addCodes(codes)
+    }
+    
     // MARK: - Sort type
     
     var isSortingEnabled: Bool {
@@ -339,7 +348,9 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     func fetchData(phrase: String?) {
         if let p = phrase, !p.isEmpty {
-            let ids = serviceDefinitionsInteractor.findServicesByTagOrIssuer(p).map({ $0.serviceTypeID })
+            let ids = serviceDefinitionsInteractor
+                .findServicesByTagOrIssuer(p, exactMatch: false)
+                .map({ $0.serviceTypeID })
             categoryData = sectionInteractor.findServices(for: p, sort: sortInteractor.currentSort, ids: ids)
         } else {
             categoryData = sectionInteractor.listAll(sort: sortInteractor.currentSort)

@@ -22,6 +22,7 @@ import Common
 
 enum TokensExternalAction: Hashable {
     case newData
+    case refreshImmidiately
     case addedService(serviceData: ServiceData)
     case continuesFlow
     case finishedFlow

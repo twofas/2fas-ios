@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class RootViewController: ContainerViewController {
     override func viewDidLoad() {

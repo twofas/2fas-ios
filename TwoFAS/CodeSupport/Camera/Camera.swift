@@ -38,6 +38,11 @@ public final class Camera {
         scanner.setScanningRect(scanningRegion)
     }
     
+    public func updateScanningRegion(_ scanningRegion: CGRect) {
+        Log("Camera - updateScanningRegion \(scanningRegion)", module: .camera)
+        scanner.setScanningRect(scanningRegion)
+    }
+    
     public func startScanning() {
         Log("Camera - startScanning", module: .camera)
         camera.startPreview()

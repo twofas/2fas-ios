@@ -24,6 +24,9 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 internal enum Asset {
   internal static let aboutLogo = ImageAsset(name: "AboutLogo")
   internal static let addCategory = ImageAsset(name: "AddCategory")
+  internal static let addServiceIconPlaceholder = ImageAsset(name: "AddServiceIconPlaceholder")
+  internal static let imageIcon = ImageAsset(name: "imageIcon")
+  internal static let keybordIcon = ImageAsset(name: "keybordIcon")
   internal static let alertIcon = ImageAsset(name: "AlertIcon")
   internal static let authRequestQuestion = ImageAsset(name: "AuthRequestQuestion")
   internal static let deleteSettingsIcon = ImageAsset(name: "DeleteSettingsIcon")
@@ -93,6 +96,8 @@ internal enum Asset {
   internal static let permissionsPushNotifications = ImageAsset(name: "PermissionsPushNotifications")
   internal static let radioDeselected = ImageAsset(name: "RadioDeselected")
   internal static let radioSelected = ImageAsset(name: "RadioSelected")
+  internal static let radioSelectionDeselected = ImageAsset(name: "RadioSelectionDeselected")
+  internal static let radioSelectionSelected = ImageAsset(name: "RadioSelectionSelected")
   internal static let refreshTokenCounter = ImageAsset(name: "RefreshTokenCounter")
   internal static let requestProvider = ImageAsset(name: "RequestProvider")
   internal static let requestSocial = ImageAsset(name: "RequestSocial")

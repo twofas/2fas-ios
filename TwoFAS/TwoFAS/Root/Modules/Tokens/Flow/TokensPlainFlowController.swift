@@ -19,6 +19,8 @@
 
 import UIKit
 import Common
+import CodeSupport
+import SwiftUI
 
 protocol TokensPlainFlowControllerParent: AnyObject {
     func tokensSwitchToTokensTab()
@@ -27,7 +29,7 @@ protocol TokensPlainFlowControllerParent: AnyObject {
 
 protocol TokensPlainFlowControlling: AnyObject {
     // MARK: Service
-    func toShowSelectAddingMethod(isCameraAvailable: Bool)
+    func toAddService()
     func toDeleteService(serviceData: ServiceData)
     func toShowEditingService(with serviceData: ServiceData, freshlyAdded: Bool, gotoIconEdit: Bool)
     func toServiceWasCreated(_ serviceData: ServiceData)
@@ -94,40 +96,9 @@ final class TokensPlainFlowController: FlowController {
 extension TokensPlainFlowController: TokensPlainFlowControlling {
     // MARK: - Service
     
-    func toShowSelectAddingMethod(isCameraAvailable: Bool) {
+    func toAddService() {
         guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
-        
-        let qrCode = UIAlertAction(title: T.Commons.scanQrCode, style: .default) { [weak self] _ in
-            if isCameraAvailable {
-                self?.toShowCamera()
-            } else {
-                self?.toCameraNotAvailable()
-            }
-        }
-        let gallery = UIAlertAction(title: T.Tokens.selectFromGallery, style: .default) { [weak self] _ in
-            self?.toShowGallery()
-        }
-        let manually = UIAlertAction(title: T.Commons.enterCodeManually, style: .default) { [weak self] _ in
-            self?.toShowAddingServiceManually()
-        }
-        
-        let cancel = UIAlertAction(title: T.Commons.cancel, style: .cancel, handler: nil)
-        
-        let controller = UIAlertController(title: T.Tokens.chooseMethod, message: nil, preferredStyle: .actionSheet)
-        
-        controller.addAction(qrCode)
-        if !isCameraAvailable {
-            controller.addAction(gallery)
-        }
-        controller.addAction(manually)
-        controller.addAction(cancel)
-        
-        if let popover = controller.popoverPresentationController, let item = viewController.addButton {
-            popover.barButtonItem = item
-            popover.permittedArrowDirections = .up
-        }
-        
-        mainSplitViewController.present(controller, animated: true, completion: nil)
+        AddingServiceFlowController.present(on: mainSplitViewController, parent: self)
     }
     
     func toDeleteService(serviceData: ServiceData) {
@@ -150,18 +121,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
         
         FirstCodeAddedStatsController.markStats() // TODO: Move to MainRepository and proper interactor
-        ServiceAddedFlowController.present(serviceData: serviceData, on: mainSplitViewController, parent: self)
-    }
-    
-    func toShowAddingServiceManually() {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
-        ComposeServiceNavigationFlowController.present(
-            on: mainSplitViewController,
-            parent: self,
-            serviceData: nil,
-            gotoIconEdit: false,
-            freshlyAdded: false
-        )
+        AddingServiceTokenFlowController.present(on: mainSplitViewController, parent: self, serviceData: serviceData)
     }
     
     // MARK: - Section
@@ -184,6 +144,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
             message: T.Tokens.groupName,
             actionName: T.Commons.add,
             defaultText: "",
+            inputConfiguration: .name,
             action: { newName in
                 callback(newName.trim())
             },
@@ -202,6 +163,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
             message: T.Tokens.groupName,
             actionName: T.Commons.rename,
             defaultText: name,
+            inputConfiguration: .name,
             action: { newName in
                 callback(newName.trim())
             },
@@ -282,6 +244,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
             message: nil,
             actionName: T.Commons.rename,
             defaultText: currentName,
+            inputConfiguration: .name,
             action: { [weak self] newName in
                 self?.viewController.presenter.handleRenameService(newName: newName, secret: secret)
             }, cancel: { [weak self] in
@@ -325,8 +288,13 @@ extension TokensPlainFlowController {
 private extension TokensPlainFlowController {
     func dismiss(actions: Set<TokensExternalAction> = [.finishedFlow], completion: Callback? = nil) {
         mainSplitViewController?.dismiss(animated: true) { [weak self] in
-            completion?()
-            self?.viewController.presenter.handleExternalAction(actions)
+            if actions.contains(.refreshImmidiately) {
+                self?.viewController.presenter.handleExternalAction(actions)
+                completion?()
+            } else {
+                completion?()
+                self?.viewController.presenter.handleExternalAction(actions)
+            }
         }
     }
     
@@ -340,7 +308,7 @@ extension TokensPlainFlowController: CameraScannerNavigationFlowControllerParent
     func cameraScannerDidFinish() {
         dismiss(actions: [.finishedFlow, .newData, .sync])
     }
-
+    
     func cameraScannerServiceWasCreated(serviceData: ServiceData) {
         parent?.tokensSwitchToTokensTab()
         dismiss(actions: [.finishedFlow, .addedService(serviceData: serviceData), .sync])
@@ -440,22 +408,134 @@ extension TokensPlainFlowController: UploadLogsNavigationFlowControllerParent {
     }
 }
 
-extension TokensPlainFlowController: ServiceAddedFlowControllerParent {
-    func serviceAddedEditService(_ serviceData: ServiceData) {
-        dismiss(actions: [.continuesFlow]) { [weak self] in
-            self?.toShowEditingService(with: serviceData, freshlyAdded: true)
+extension TokensPlainFlowController: AddingServiceFlowControllerParent {
+    func addingServiceDismiss() {
+        dismiss()
+    }
+    
+    func addingServiceClose(_ serviceData: ServiceData) {
+        dismiss(actions: [.newData, .refreshImmidiately, .sync]) { [weak self] in
+            self?.toServiceWasCreated(serviceData)
         }
     }
     
-    func serviceAddedEditIcon(_ serviceData: ServiceData) {
+    func addingServiceToGallery() {
         dismiss(actions: [.continuesFlow]) { [weak self] in
-            self?.toShowEditingService(with: serviceData, freshlyAdded: true, gotoIconEdit: true)
+            self?.toShowGallery()
         }
     }
     
-    func serviceAddedClose(_ serviceData: ServiceData) {
-        dismiss { [weak self] in
-            self?.viewController.presenter.handleFocusOnService(serviceData)
+    func addingServiceToGoogleAuthSummary(importable: Int, total: Int, codes: [Code]) {
+        dismiss(actions: [.continuesFlow]) { [weak self] in
+            self?.showGoogleAuthSummary(importable: importable, total: total, codes: codes)
         }
+    }
+    
+    func addingServiceToLastPassSummary(importable: Int, total: Int, codes: [Code]) {
+        dismiss(actions: [.continuesFlow]) { [weak self] in
+            self?.showLastPassSummary(importable: importable, total: total, codes: codes)
+        }
+    }
+    
+    func addingServiceToSendLogs(auditID: UUID) {
+        dismiss(actions: [.continuesFlow]) { [weak self] in
+            self?.toSendLogs(auditID: auditID)
+        }
+    }
+    
+    func addingServiceToPushPermissions(for extensionID: ExtensionID) {
+        dismiss(actions: [.continuesFlow]) { [weak self] in
+            self?.showPushPermission(for: extensionID)
+        }
+    }
+    
+    func addingServiceToTwoFASWebExtensionPairing(for extensionID: ExtensionID) {
+        dismiss(actions: [.continuesFlow]) { [weak self] in
+            self?.showWebPairing(for: extensionID)
+        }
+    }
+}
+
+private extension TokensPlainFlowController {
+    func showGoogleAuthSummary(importable: Int, total: Int, codes: [Code]) {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        
+        let google = CameraGoogleAuth(
+            importedCount: importable,
+            totalCount: total,
+            action: { [weak self] in
+                if importable == 0 {
+                    self?.dismiss()
+                } else {
+                    self?.viewController.presenter.handleGoogleAuthImport(codes)
+                    self?.dismiss()
+                }
+            }, cancel: { [weak self] in
+                self?.dismiss()
+            })
+
+        let vc = UIHostingController(rootView: google)
+        vc.view.backgroundColor = .clear
+        vc.configureAsModal()
+        mainSplitViewController.present(vc, animated: true, completion: nil)
+    }
+    
+    func showLastPassSummary(importable: Int, total: Int, codes: [Code]) {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        
+        let lastPass = CameraLastPass(
+            importedCount: importable,
+            totalCount: total,
+            action: { [weak self] in
+                if importable == 0 {
+                    self?.dismiss()
+                } else {
+                    self?.viewController.presenter.handleLastPassImport(codes)
+                    self?.dismiss()
+                }
+            }, cancel: { [weak self] in
+                self?.dismiss()
+            })
+        
+        let vc = UIHostingController(rootView: lastPass)
+        vc.view.backgroundColor = .clear
+        vc.configureAsModal()
+        mainSplitViewController.present(vc, animated: true, completion: nil)
+    }
+    
+    func showPushPermission(for extensionID: ExtensionID) {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        PushNotificationPermissionNavigationFlowController.show(
+            on: mainSplitViewController,
+            parent: self,
+            extensionID: extensionID
+        )
+    }
+    
+    func showWebPairing(for extensionID: ExtensionID) {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        BrowserExtensionPairingNavigationFlowController.show(
+            on: mainSplitViewController,
+            parent: self,
+            extensionID: extensionID
+        )
+    }
+}
+
+extension TokensPlainFlowController: PushNotificationPermissionNavigationFlowControllerParent {
+    func pushNotificationsClose() {
+        dismiss()
+    }
+}
+
+extension TokensPlainFlowController: BrowserExtensionPairingNavigationFlowControllerParent {
+    func browserExtensionPairingClose() {
+        dismiss()
+	}
+}
+
+extension TokensPlainFlowController: AddingServiceTokenFlowControllerParent {
+    func addingServiceTokenClose(_ serviceData: ServiceData) {
+        viewController.presenter.handleFocusOnService(serviceData)
     }
 }

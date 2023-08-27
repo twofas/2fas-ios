@@ -18,29 +18,33 @@
 //
 
 import Foundation
+import Common
 
 final class PushNotificationPermissionPresenter {
-    private let flowController: PushNotificationPermissionFlowControlling
+    private let flowController: PushNotificationPermissionPlainFlowControlling
     private let interactor: PushNotificationPermissionModuleInteracting
+    let extensionID: ExtensionID?
     
     init(
-        flowController: PushNotificationPermissionFlowControlling,
-        interactor: PushNotificationPermissionModuleInteracting
+        flowController: PushNotificationPermissionPlainFlowControlling,
+        interactor: PushNotificationPermissionModuleInteracting,
+        extensionID: ExtensionID?
     ) {
         self.flowController = flowController
         self.interactor = interactor
+        self.extensionID = extensionID
     }
 }
 
 extension PushNotificationPermissionPresenter {
     func handleCancel() {
         interactor.deny()
-        flowController.toFinish()
+        flowController.close(extensionID: extensionID)
     }
     
     func handleAction() {
         interactor.ask { [weak self] in
-            self?.flowController.toFinish()
+            self?.flowController.close(extensionID: self?.extensionID)
         }
     }
 }

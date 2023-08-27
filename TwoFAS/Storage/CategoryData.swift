@@ -38,7 +38,7 @@ public extension Array where Element == CategoryData {
     
     func indexPath(of serviceData: ServiceData) -> IndexPath? {
         for (section, category) in self.enumerated() {
-            if let row = category.services.firstIndex(of: serviceData) {
+            if let row = category.services.firstIndex(where: { $0.secret == serviceData.secret }) {
                 return IndexPath(row: row, section: section)
             }
         }

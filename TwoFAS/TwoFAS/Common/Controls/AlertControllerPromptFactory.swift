@@ -20,11 +20,16 @@
 import UIKit
 
 enum AlertControllerPromptFactory {
+    enum InputConfiguration {
+        case name
+        case intNumber
+    }
     static func create(
         title: String,
         message: String?,
         actionName: String,
         defaultText: String?,
+        inputConfiguration: InputConfiguration,
         action: @escaping (String) -> Void,
         cancel: Callback?,
         verify: ((String) -> Bool)?
@@ -43,8 +48,11 @@ enum AlertControllerPromptFactory {
         alert.verify = verify
         alert.addAction(cancelAction, type: .cancel)
         alert.addAction(textAction, type: .textAction)
-        alert.configureTextField(defaultText: defaultText)
-
+        switch inputConfiguration {
+        case .name: alert.configureTextFieldName(defaultText: defaultText)
+        case .intNumber: alert.configureTextFieldIntNumber(defaultText: defaultText)
+        }
+        
         return alert
     }
 }
@@ -68,11 +76,22 @@ final class AlertControllerPrompt: UIAlertController {
         }
     }
     
-    func configureTextField(defaultText: String?) {
+    func configureTextFieldName(defaultText: String?) {
         addTextField { [weak self] tx in
             tx.text = defaultText
             tx.autocapitalizationType = .words
             tx.selectedTextRange = tx.textRange(from: tx.beginningOfDocument, to: tx.endOfDocument)
+            tx.addTarget(self, action: #selector(self?.textChanged(sender:)), for: .editingChanged)
+        }
+        
+        textAction?.isEnabled = !(defaultText == nil || defaultText?.isEmpty == true)
+    }
+    
+    func configureTextFieldIntNumber(defaultText: String?) {
+        addTextField { [weak self] tx in
+            tx.placeholder = defaultText
+            tx.autocapitalizationType = .none
+            tx.keyboardType = .numberPad
             tx.addTarget(self, action: #selector(self?.textChanged(sender:)), for: .editingChanged)
         }
         

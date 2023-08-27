@@ -493,15 +493,6 @@ extension InteractorFactory {
         UploadLogsModuleInteractor(logUploadingInteractor: logUploadingInteractor(), passedUUID: auditID)
     }
     
-    func serviceAddedModuleInteractor(serviceData: ServiceData) -> ServiceAddedModuleInteracting {
-        ServiceAddedModuleInteractor(
-            notificationsInteractor: notificationInteractor(),
-            tokenInteractor: tokenInteractor(),
-            serviceDefinitionInteractor: serviceDefinitionInteractor(),
-            serviceData: serviceData
-        )
-    }
-    
     func tokensModuleInteractor() -> TokensModuleInteracting {
         TokensModuleInteractor(
             appearanceInteractor: appearanceInteractor(),
@@ -515,7 +506,8 @@ extension InteractorFactory {
             cloudBackupInteractor: cloudBackupStateInteractor(listenerID: ""),
             cameraPermissionInteractor: cameraPermissionInteractor(),
             linkInteractor: linkInteractor(),
-            widgetsInteractor: widgetsInteractor()
+            widgetsInteractor: widgetsInteractor(),
+            newCodeInteractor: newCodeInteractor()
         )
     }
     
@@ -549,5 +541,31 @@ extension InteractorFactory {
     
     func appearanceModuleInteractor() -> AppearanceModuleInteracting {
         AppearanceModuleInteractor(appearanceInteractor: appearanceInteractor())
+    }
+    
+    func addingServiceMainModuleInteractor() -> AddingServiceMainModuleInteracting {
+        AddingServiceMainModuleInteractor(
+            cameraPermissionInteractor: cameraPermissionInteractor(),
+            newCodeInteractor: newCodeInteractor(),
+            pushNotificationPermission: pushNotificationRegistrationInteractor(),
+            notificationInteractor: notificationInteractor()
+        )
+    }
+    
+    func addingServiceTokenModuleInteractor(serviceData: ServiceData) -> AddingServiceTokenModuleInteracting {
+        AddingServiceTokenModuleInteractor(
+            notificationsInteractor: notificationInteractor(),
+            tokenInteractor: tokenInteractor(),
+            serviceDefinitionInteractor: serviceDefinitionInteractor(),
+            serviceData: serviceData
+        )
+    }
+    
+    func addingServiceManuallyModuleInteractor() -> AddingServiceManuallyModuleInteracting {
+        AddingServiceManuallyModuleInteractor(
+            serviceDatabase: serviceDefinitionInteractor(),
+            serviceListingInteractor: serviceListingInteractor(),
+            serviceModifyInteractor: serviceModifyInteractor()
+        )
     }
 }

@@ -17,32 +17,18 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
 import SwiftUI
-import Common
-import Token
 
-protocol AddingServiceManuallyViewControlling: AnyObject {}
+struct AddingServiceAdvancedSectionDividerView: View {
+    var body: some View {
+        Divider()
+            .frame(height: 1)
+            .overlay(Color(Theme.Colors.Line.separator))
+    }
+}
 
-final class AddingServiceManuallyViewController: UIViewController, AddingServiceManuallyViewControlling {
-    var heightChange: ((CGFloat) -> Void)?
-    var presenter: AddingServiceManuallyPresenter!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let token = AddingServiceManuallyView(
-            presenter: presenter,
-            changeHeight: { [weak self] height in
-                self?.heightChange?(height)
-        })
-        
-        let vc = UIHostingController(rootView: token)
-        vc.willMove(toParent: self)
-        addChild(vc)
-        view.addSubview(vc.view)
-        vc.view.pinToParent()
-        vc.view.backgroundColor = Theme.Colors.Fill.System.second
-        vc.didMove(toParent: self)        
+struct AddingServiceAdvancedSectionDividerView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddingServiceAdvancedSectionDividerView()
     }
 }

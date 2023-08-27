@@ -145,6 +145,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
             message: T.Tokens.groupName,
             actionName: T.Commons.add,
             defaultText: "",
+            inputConfiguration: .name,
             action: { newName in
                 callback(newName.trim())
             },
@@ -163,6 +164,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
             message: T.Tokens.groupName,
             actionName: T.Commons.rename,
             defaultText: name,
+            inputConfiguration: .name,
             action: { newName in
                 callback(newName.trim())
             },
@@ -243,6 +245,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
             message: nil,
             actionName: T.Commons.rename,
             defaultText: currentName,
+            inputConfiguration: .name,
             action: { [weak self] newName in
                 self?.viewController.presenter.handleRenameService(newName: newName, secret: secret)
             }, cancel: { [weak self] in

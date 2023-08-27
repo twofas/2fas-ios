@@ -27,12 +27,18 @@ final class AddingServiceManuallyPresenter: ObservableObject {
     private var isCorrectSecret = false
     private var isCorrectAdditionalInfo = true
     
+    private var iconTypeID: IconTypeID?
+    
     @Published var serviceName: String = ""
     @Published var serviceIcon: UIImage?
     @Published var secret: String = ""
     @Published var advancedShown = false
     @Published var additionalInfo: String = ""
     @Published var selectedTokenType: TokenType = .totp
+    @Published var selectedAlgorithm: Algorithm = .defaultValue
+    @Published var selectedRefreshTime: Period = .defaultValue
+    @Published var selectedDigits: Digits = .defaultValue
+    @Published var initialCounter: Int = 0
     
     weak var view: AddingServiceManuallyViewControlling?
     
@@ -46,20 +52,25 @@ final class AddingServiceManuallyPresenter: ObservableObject {
 }
 
 extension AddingServiceManuallyPresenter {
-    func viewDidLoad() {
-    }
-    
-    func viewWillAppear() {
-    }
-    
-    func viewWillDisappear() {
-    }
-    
     func handleAddService() {
-        // serviceName.trim() !!!
+        validateAddService()
+        guard isAddServiceEnabled else { return }
+        guard let serviceData = interactor.addService(
+            name: serviceName.trim(),
+            secret: secret,
+            additionalInfo: additionalInfo,
+            tokenPeriod: selectedRefreshTime,
+            tokenLength: selectedDigits,
+            iconTypeID: iconTypeID,
+            algorithm: selectedAlgorithm,
+            counter: initialCounter,
+            tokenType: selectedTokenType
+        ) else { return }
+        flowController.toToken(serviceData)
     }
     
     func handleHelp() {
+        flowController.toHelp()
     }
 }
 
@@ -181,8 +192,29 @@ extension AddingServiceManuallyPresenter {
     }
     
     func checkForServiceIcon() {
-        interactor.checkForServiceIcon(using: serviceName) { [weak self] img in
+        interactor.checkForServiceIcon(using: serviceName) { [weak self] img, iconTypeID in
             self?.serviceIcon = img
+            self?.iconTypeID = iconTypeID
         }
+    }
+    
+    func handleAlgorithmSelection(_ algorithm: Algorithm) {
+        self.selectedAlgorithm = algorithm
+    }
+    
+    func handleRefreshTimeSelection(_ time: Period) {
+        self.selectedRefreshTime = time
+    }
+    
+    func handleDigitsSelection(_ digits: Digits) {
+        self.selectedDigits = digits
+    }
+    
+    func handleShowInitialCounterInput() {
+        flowController.toInitialCounterInput()
+    }
+    
+    func handleInitialCounter(_ counter: Int) {
+        self.initialCounter = counter
     }
 }

@@ -296,6 +296,7 @@
 		C241D44C278B9E0E00D7C604 /* NetworkStack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C241D445278B9E0E00D7C604 /* NetworkStack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C241D452278B9E2D00D7C604 /* NetworkStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C241D450278B9E2D00D7C604 /* NetworkStack.swift */; };
 		C241D453278B9E2D00D7C604 /* AppVersionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C241D451278B9E2D00D7C604 /* AppVersionHandler.swift */; };
+		C242B4D12A9BD950005CC1BC /* AddingServiceAdvancedSectionDividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C242B4D02A9BD950005CC1BC /* AddingServiceAdvancedSectionDividerView.swift */; };
 		C2432FD426D2BBA7004AD9F7 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2932EF21FFE94A900FBD4D0 /* Common.framework */; };
 		C24336E8299ECEC700BF35B1 /* NewsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24336E7299ECEC700BF35B1 /* NewsInteractor.swift */; };
 		C24336EB299ED7CE00BF35B1 /* MainMenuModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24336EA299ED7CE00BF35B1 /* MainMenuModuleInteractor.swift */; };
@@ -1581,6 +1582,7 @@
 		C241D447278B9E0E00D7C604 /* NetworkStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkStack.h; sourceTree = "<group>"; };
 		C241D450278B9E2D00D7C604 /* NetworkStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStack.swift; sourceTree = "<group>"; };
 		C241D451278B9E2D00D7C604 /* AppVersionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersionHandler.swift; sourceTree = "<group>"; };
+		C242B4D02A9BD950005CC1BC /* AddingServiceAdvancedSectionDividerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceAdvancedSectionDividerView.swift; sourceTree = "<group>"; };
 		C24336E7299ECEC700BF35B1 /* NewsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsInteractor.swift; sourceTree = "<group>"; };
 		C24336EA299ED7CE00BF35B1 /* MainMenuModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuModuleInteractor.swift; sourceTree = "<group>"; };
 		C24336EC299ED95A00BF35B1 /* MainTabModuleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabModuleInteractor.swift; sourceTree = "<group>"; };
@@ -3345,6 +3347,7 @@
 				C2F7FE0A2A8ABC2F004B2C95 /* AddingServiceAddServiceButton.swift */,
 				C2F7FE0C2A8AC10F004B2C95 /* AddingServiceLinkButton.swift */,
 				C2F7FE0E2A8AC2FA004B2C95 /* AddingServiceDividerView.swift */,
+				C242B4D02A9BD950005CC1BC /* AddingServiceAdvancedSectionDividerView.swift */,
 				C234433D2A8C09E700005F33 /* AddingServiceTextFieldLineView.swift */,
 				C23443392A8C021100005F33 /* AddingServiceErrorTextView.swift */,
 				C234433F2A8C12C200005F33 /* AddingServiceServiceIconView.swift */,
@@ -8167,6 +8170,7 @@
 				C22D9E1124681EE000AAE6EE /* MainCointainerNavigationButtonGenerator.swift in Sources */,
 				C2B1208F29D76BD10020281E /* AppearancePresenter+Menu.swift in Sources */,
 				C2A7945127F9016D00E5C641 /* BrowserExtensionEditNameViewController.swift in Sources */,
+				C242B4D12A9BD950005CC1BC /* AddingServiceAdvancedSectionDividerView.swift in Sources */,
 				C21B3A1427AF0BC9005C603B /* ColorPickerFlowController.swift in Sources */,
 				C2B39E5929F5BD7800EC31F6 /* TokensCategory.swift in Sources */,
 				C26BCE01281010A000CA6A9A /* SelectServiceModuleInteractor.swift in Sources */,

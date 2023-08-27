@@ -200,6 +200,7 @@ extension CameraScannerFlowController: CameraScannerFlowControlling {
             message: nil,
             actionName: T.Commons.rename,
             defaultText: currentName,
+            inputConfiguration: .name,
             action: { [weak self] newName in
                 self?.viewController.presenter.handleRename(newName: newName, secret: secret)
             }, cancel: { [weak self] in

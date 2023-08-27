@@ -26,6 +26,8 @@ protocol AddingServiceManuallyFlowControllerParent: AnyObject {
 
 protocol AddingServiceManuallyFlowControlling: AnyObject {
     func toToken(_ serviceData: ServiceData)
+    func toInitialCounterInput()
+    func toHelp()
 }
 
 final class AddingServiceManuallyFlowController: FlowController {
@@ -58,10 +60,38 @@ final class AddingServiceManuallyFlowController: FlowController {
     }
 }
 
+extension AddingServiceManuallyFlowController {
+    var viewController: AddingServiceManuallyViewController { _viewController as! AddingServiceManuallyViewController }
+}
+
 extension AddingServiceManuallyFlowController: AddingServiceManuallyFlowControlling {
     func toToken(_ serviceData: ServiceData) {
         guard let container else { return }
         AddingServiceTokenFlowController.embed(in: container, parent: self, serviceData: serviceData)
+    }
+    
+    func toInitialCounterInput() {
+        let alert = AlertControllerPromptFactory.create(
+            title: T.Tokens.initialCounter,
+            message: nil,
+            actionName: T.Commons.set,
+            defaultText: "0",
+            inputConfiguration: .intNumber,
+            action: { [weak self] value in
+                let int = Int(value) ?? 0
+                self?.viewController.presenter.handleInitialCounter(int)
+            },
+            cancel: nil,
+            verify: { value in
+                guard let int = Int(value) else { return false }
+                return int >= 0
+            })
+        
+        viewController.present(alert, animated: true, completion: nil)
+    }
+    
+    func toHelp() {
+        UIApplication.shared.open(URL(string: "https://support.2fas.com")!)
     }
 }
 

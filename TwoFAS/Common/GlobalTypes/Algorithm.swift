@@ -19,7 +19,9 @@
 
 import Foundation
 
-public enum Algorithm: String, Equatable, CaseIterable {
+public enum Algorithm: String, Equatable, CaseIterable, Identifiable {
+    public var id: Self { self }
+    
     case MD5
     case SHA1
     case SHA224

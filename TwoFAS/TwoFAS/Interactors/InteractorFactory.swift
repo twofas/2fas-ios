@@ -564,7 +564,8 @@ extension InteractorFactory {
     func addingServiceManuallyModuleInteractor() -> AddingServiceManuallyModuleInteracting {
         AddingServiceManuallyModuleInteractor(
             serviceDatabase: serviceDefinitionInteractor(),
-            serviceListingInteractor: serviceListingInteractor()
+            serviceListingInteractor: serviceListingInteractor(),
+            serviceModifyInteractor: serviceModifyInteractor()
         )
     }
 }

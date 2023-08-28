@@ -31,38 +31,28 @@ protocol MainSplitModuleInteracting: AnyObject {
     var isMenuLandscapeCollapsed: Bool { get }
     func handleLandscapeMenuCollapsed(_ isCollapsed: Bool)
     
-    var hasUnreadNews: Bool { get }
     var hasStoredURL: Bool { get }
-    func markNewsAsRead()
-    func fetchNews(completion: @escaping () -> Void)
 }
 
 final class MainSplitModuleInteractor {
     private var settingsPath: ViewPath.Settings?
     
     private let viewPathInteractor: ViewPathIteracting
-    private let newsInteractor: NewsInteracting
     private let linkInteractor: LinkInteracting
     private let appearanceInteractor: AppearanceInteracting
     
     init(
         viewPathInteractor: ViewPathIteracting,
-        newsInteractor: NewsInteracting,
         linkInteractor: LinkInteracting,
         appearanceInteractor: AppearanceInteracting
     ) {
         self.viewPathInteractor = viewPathInteractor
-        self.newsInteractor = newsInteractor
         self.linkInteractor = linkInteractor
         self.appearanceInteractor = appearanceInteractor
     }
 }
 
 extension MainSplitModuleInteractor: MainSplitModuleInteracting {
-    var hasUnreadNews: Bool {
-        newsInteractor.hasUnreadNews
-    }
-    
     var hasStoredURL: Bool {
         linkInteractor.hasStoredURL
     }
@@ -81,14 +71,6 @@ extension MainSplitModuleInteractor: MainSplitModuleInteracting {
     
     func saveCurrentSettingsPath(_ settingsPath: ViewPath.Settings?) {
         self.settingsPath = settingsPath
-    }
-    
-    func markNewsAsRead() {
-        newsInteractor.clearHasUnreadNews()
-    }
-    
-    func fetchNews(completion: @escaping () -> Void) {
-        newsInteractor.fetchList(completion: completion)
     }
     
     var isMenuPortraitOverlayCollapsed: Bool {

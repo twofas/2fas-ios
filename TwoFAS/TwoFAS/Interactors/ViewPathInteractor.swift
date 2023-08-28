@@ -33,7 +33,6 @@ enum ViewPath: Equatable, Codable {
     
     case main
     case settings(option: Settings?)
-    case news
 }
 
 protocol ViewPathIteracting: AnyObject {

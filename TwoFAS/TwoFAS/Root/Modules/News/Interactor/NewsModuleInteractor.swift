@@ -26,6 +26,7 @@ protocol NewsModuleInteracting: AnyObject {
     func localList() -> [ListNewsEntry]
     func fetchList(completion: @escaping ([ListNewsEntry]) -> Void)
     func markAsRead(newsEntry: ListNewsEntry)
+    func markAllAsRead()
 }
 
 final class NewsModuleInteractor {
@@ -54,5 +55,9 @@ extension NewsModuleInteractor: NewsModuleInteracting {
     
     func markAsRead(newsEntry: ListNewsEntry) {
         newsInteractor.markAsRead(newsEntry: newsEntry)
+    }
+    
+    func markAllAsRead() {
+        newsInteractor.clearHasUnreadNews()
     }
 }

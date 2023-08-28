@@ -22,14 +22,12 @@ import UIKit
 protocol MainMenuFlowControllerParent: AnyObject {
     func mainMenuToMain()
     func mainMenuToSettings()
-    func mainMenuToNews()
     func mainMenuIsReady()
 }
 
 protocol MainMenuFlowControlling: AnyObject {
     func toMain()
     func toSettings()
-    func toNews()
     func toMenuIsReady()
 }
 
@@ -43,11 +41,9 @@ final class MainMenuFlowController: FlowController {
         let view = MainMenuViewController()
         let flowController = MainMenuFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.mainMenuModuleInteractor()
         
         let presenter = MainMenuPresenter(
-            flowController: flowController,
-            interactor: interactor
+            flowController: flowController
         )
         view.presenter = presenter
         presenter.view = view
@@ -67,10 +63,6 @@ extension MainMenuFlowController: MainMenuFlowControlling {
     
     func toSettings() {
         parent?.mainMenuToSettings()
-    }
-    
-    func toNews() {
-        parent?.mainMenuToNews()
     }
     
     func toMenuIsReady() {

@@ -19,26 +19,23 @@
 
 import UIKit
 
-protocol NewsPlainFlowControllerParent: AnyObject {}
+protocol NewsPlainFlowControllerParent: AnyObject {
+    func newsClose()
+}
 
 protocol NewsPlainFlowControlling: AnyObject {
     func openWeb(with url: URL)
+    func toClose()
 }
 
 final class NewsPlainFlowController: FlowController {
     private weak var parent: NewsPlainFlowControllerParent?
     private weak var navigationController: UINavigationController?
-
-    static func showAsTab(
-        viewController: NewsViewController,
-        in navigationController: UINavigationController
-    ) {
-        navigationController.setViewControllers([viewController], animated: false)
-    }
     
-    static func setup(
+    static func showAsRoot(
+        in navigationController: UINavigationController,
         parent: NewsPlainFlowControllerParent
-    ) -> NewsViewController {
+    ) {
         let view = NewsViewController()
         let flowController = NewsPlainFlowController(viewController: view)
         flowController.parent = parent
@@ -50,14 +47,7 @@ final class NewsPlainFlowController: FlowController {
         presenter.view = view
         view.presenter = presenter
         
-        return view
-    }
-    
-    static func showAsRoot(
-        viewController: NewsViewController,
-        in navigationController: ContentNavigationController
-    ) {
-        navigationController.setRootViewController(viewController)
+        navigationController.setViewControllers([view], animated: false)
     }
 }
 
@@ -68,5 +58,9 @@ extension NewsPlainFlowController {
 extension NewsPlainFlowController: NewsPlainFlowControlling {
     func openWeb(with url: URL) {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    func toClose() {
+        parent?.newsClose()
     }
 }

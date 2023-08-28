@@ -28,11 +28,9 @@ final class MainMenuPresenter {
     private var viewPathToHandleAfterLoad: ViewPath?
     
     private let flowController: MainMenuFlowControlling
-    let interactor: MainMenuModuleInteracting
     
-    init(flowController: MainMenuFlowControlling, interactor: MainMenuModuleInteracting) {
+    init(flowController: MainMenuFlowControlling) {
         self.flowController = flowController
-        self.interactor = interactor
     }
 }
 
@@ -55,8 +53,6 @@ extension MainMenuPresenter {
             flowController.toMain()
         case MainContent.settings.rawValue:
             flowController.toSettings()
-        case MainContent.news.rawValue:
-            flowController.toNews()
         default:
             Log("MainMenuPresenter: Can't change to \(indexPath)", severity: .error)
         }
@@ -71,7 +67,6 @@ extension MainMenuPresenter {
             switch viewPath {
             case .main: return IndexPath(row: 0, section: 0)
             case .settings: return IndexPath(row: 1, section: 0)
-            case .news: return IndexPath(row: 2, section: 0)
             }
         }()
         handleSelection(at: indexPath)

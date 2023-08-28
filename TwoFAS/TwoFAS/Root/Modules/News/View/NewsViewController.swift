@@ -79,8 +79,18 @@ final class NewsViewController: UIViewController {
         emptyScreen.isHidden = true
         
         title = T.Commons.notifications
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: T.Commons.close,
+            style: .plain,
+            target: self,
+            action: #selector(close)
+        )
         presenter.viewDidLoad()
+    }
+    
+    @objc
+    func close() {
+        presenter.close()
     }
     
     func scrollToTop() {

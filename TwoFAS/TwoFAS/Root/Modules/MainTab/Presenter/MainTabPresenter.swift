@@ -24,12 +24,10 @@ final class MainTabPresenter {
     
     private var previousSelectedViewPath: ViewPath?
     private let flowController: MainTabFlowControlling
-    private let interactor: MainTabModuleInteracting
     private var isViewLoaded = false
     
-    init(flowController: MainTabFlowControlling, interactor: MainTabModuleInteracting) {
+    init(flowController: MainTabFlowControlling) {
         self.flowController = flowController
-        self.interactor = interactor
     }
 }
 
@@ -50,8 +48,6 @@ extension MainTabPresenter {
             case .settings:
                 view?.setSettingsView(nil)
                 previousSelectedViewPath = .settings(option: nil)
-            case .news:
-                view?.scrollToNewsTop()
             }
         }
     }
@@ -64,21 +60,12 @@ extension MainTabPresenter {
             flowController.tokensSwitchToTokensTab()
         case .settings(let option):
             view?.setSettingsView(option)
-        default: break
         }
         previousSelectedViewPath = viewPath
     }
     
     func handleSettingsChangedViewPath(_ viewPath: ViewPath.Settings?) {
         previousSelectedViewPath = .settings(option: viewPath)
-    }
-    
-    func handleUpdateNewsBadge() {
-        if interactor.hasUnreadNews {
-            view?.showNewsBadge()
-        } else {
-            view?.hideNewsBadge()
-        }
     }
     
     func resetViewPath() {

@@ -507,7 +507,8 @@ extension InteractorFactory {
             cameraPermissionInteractor: cameraPermissionInteractor(),
             linkInteractor: linkInteractor(),
             widgetsInteractor: widgetsInteractor(),
-            newCodeInteractor: newCodeInteractor()
+            newCodeInteractor: newCodeInteractor(),
+            newsInteractor: newsInteractor()
         )
     }
     
@@ -518,25 +519,17 @@ extension InteractorFactory {
             cloudBackupStateInteractor: cloudBackupStateInteractor(listenerID: ""),
             fileInteractor: fileInteractor(),
             newVersionInteractor: newVersionInteractor(),
-            networkStatusInteractor: networkStatusInteractor()
+            networkStatusInteractor: networkStatusInteractor(),
+            appInfoInteractor: appInfoInteractor()
         )
     }
     
     func mainSplitModuleInteractor() -> MainSplitModuleInteracting {
         MainSplitModuleInteractor(
             viewPathInteractor: viewPathInteractor(),
-            newsInteractor: newsInteractor(),
             linkInteractor: linkInteractor(),
             appearanceInteractor: appearanceInteractor()
         )
-    }
-    
-    func mainMenuModuleInteractor() -> MainMenuModuleInteracting {
-        MainMenuModuleInteractor(newsInteractor: newsInteractor())
-    }
-    
-    func mainTabModuleInteractor() -> MainTabModuleInteracting {
-        MainTabModuleInteractor(newsInteractor: newsInteractor())
     }
     
     func appearanceModuleInteractor() -> AppearanceModuleInteracting {

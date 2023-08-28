@@ -46,8 +46,6 @@ final class MainSplitFlowController: FlowController {
             .setup(mainSplitViewController: view, parent: flowController)
         view.settingsViewController = SettingsFlowController
             .setup(parent: flowController)
-        view.newsViewController = NewsPlainFlowController
-            .setup(parent: flowController)
         
         let interactor = InteractorFactory.shared.mainSplitModuleInteractor()
 
@@ -74,32 +72,26 @@ extension MainSplitFlowController: MainSplitFlowControlling {
     func toInitialConfiguration() {
         let navi = MainTabFlowController.insertAsCompact(into: viewController.split, parent: self)
         MainMenuFlowController.showAsRoot(in: viewController.navigationNavi, parent: self)
-        viewController.tokensTabNavi = navi.tokensNavi
-        viewController.newsTabNavi = navi.newsNavi
+        viewController.tokensTabNavi = navi
     }
     
     func toCompact() {
         guard
             let tokensNavi = viewController.tokensTabNavi,
-            let newsNavi = viewController.newsTabNavi,
             let tokensViewController = viewController.tokensViewController,
-            let settingsViewController = viewController.settingsViewController,
-            let newsViewController = viewController.newsViewController
+            let settingsViewController = viewController.settingsViewController
         else { return }
         TokensPlainFlowController.showAsTab(viewController: tokensViewController, in: tokensNavi)
-        NewsPlainFlowController.showAsTab(viewController: newsViewController, in: newsNavi)
         viewController.tabBar?.presenter.resetViewPath()
-        viewController.tabBar?.setViewControllers([tokensNavi, settingsViewController, newsNavi], animated: false)
+        viewController.tabBar?.setViewControllers([tokensNavi, settingsViewController], animated: false)
     }
     
     func toExpanded() {
         guard
-            let tokensNavi = viewController.tokensTabNavi,
-            let newsNavi = viewController.newsTabNavi
+            let tokensNavi = viewController.tokensTabNavi
         else { return }
         tokensNavi.setViewControllers([], animated: false)
-        newsNavi.setViewControllers([], animated: false)
-        viewController.tabBar?.setViewControllers([tokensNavi, newsNavi], animated: false)
+        viewController.tabBar?.setViewControllers([tokensNavi], animated: false)
     }
 }
 
@@ -146,14 +138,6 @@ extension MainSplitFlowController: MainMenuFlowControllerParent {
         )
     }
     
-    func mainMenuToNews() {
-        guard let news = viewController.newsViewController else { return }
-        viewController.presenter.handlePathWasUpdated(to: .news)
-        guard viewController.contentNavi.viewControllers.first != news else { return }
-        
-        NewsPlainFlowController.showAsRoot(viewController: news, in: viewController.contentNavi)
-    }
-    
     func mainMenuIsReady() {
         viewController.presenter.handleRestoreNavigation()
     }
@@ -180,5 +164,3 @@ extension MainSplitFlowController: SettingsFlowControllerParent {
         }        
     }
 }
-
-extension MainSplitFlowController: NewsPlainFlowControllerParent {}

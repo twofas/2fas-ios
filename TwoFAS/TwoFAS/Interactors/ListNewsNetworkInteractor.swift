@@ -37,9 +37,6 @@ final class ListNewsNetworkInteractor {
     private let calendar = Calendar.current
     private let mainRepository: MainRepository
     
-    // Temporary change 3 -> 24 months, take first 10
-    private let monthsAgo: Int = 24 // 3
-    
     init(mainRepository: MainRepository) {
         self.mainRepository = mainRepository
     }
@@ -56,7 +53,8 @@ extension ListNewsNetworkInteractor: ListNewsNetworkInteracting {
 
     func fetchNews(completion: @escaping (Result<[ListNewsEntry], ListNewsError>) -> Void) {
         Log("ListNewsNetworkInteractor - fetchNews", module: .interactor)
-        mainRepository.listAllNews(publishedAfter: dateFormatter.string(from: date3MonthsAgo)) { [weak self] result in
+        let installDate = mainRepository.dateOfFirstRun ?? Date.now
+        mainRepository.listAllNews(publishedAfter: dateFormatter.string(from: installDate)) { [weak self] result in
             switch result {
             case .success(let list):
                 Log("ListNewsNetworkInteractor - fetchNews. Success", module: .interactor)
@@ -76,13 +74,6 @@ extension ListNewsNetworkInteractor: ListNewsNetworkInteracting {
 }
 
 private extension ListNewsNetworkInteractor {
-    var date3MonthsAgo: Date {
-        let currentDate = Date()
-        var months = DateComponents()
-        months.month = -monthsAgo
-        return calendar.date(byAdding: months, to: currentDate) ?? Date()
-    }
-    
     func parsedList(_ list: [ListNews.NewsEntry]) -> [ListNewsEntry] {
         list.compactMap { entry in
             guard let icon = ListNewsEntry.Icon(rawValue: entry.icon),

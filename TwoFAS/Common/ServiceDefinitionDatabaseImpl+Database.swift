@@ -1568,14 +1568,6 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "3A70FCC1-A406-4212-BD0C-440DBE6AE824")!
             ),
             .init(
-                serviceTypeID: UUID(uuidString: "19D66171-A705-419B-BFAE-68FA91483130")!,
-                name: "Call of Duty Mobile",
-                issuer: nil,
-                tags: nil,
-                matchingRules: nil,
-                iconTypeID: UUID(uuidString: "3FB39B5B-027D-45EC-AC61-A59841CC8282")!
-            ),
-            .init(
                 serviceTypeID: UUID(uuidString: "1A433D91-F6CC-4347-B4EB-29E98BD193BA")!,
                 name: "Campaign Monitor",
                 issuer: nil,
@@ -5150,8 +5142,8 @@ final class ServiceDefinitionDatabaseGenerated {
                 name: "Mail.com",
                 issuer: ["Mail.com"],
                 tags: nil,
-                matchingRules: [.init(field: .issuer, text: "Mail.com", matcher: .contains, ignoreCase: true),
-.init(field: .label, text: "Mail.com", matcher: .contains, ignoreCase: true)],
+                matchingRules: [.init(field: .issuer, text: "Mail.com", matcher: .startsWith, ignoreCase: true),
+.init(field: .label, text: "Mail.com", matcher: .startsWith, ignoreCase: true)],
                 iconTypeID: UUID(uuidString: "814849A3-C6DA-49AC-B53B-D64C3BA80D92")!
             ),
             .init(
@@ -6356,8 +6348,7 @@ final class ServiceDefinitionDatabaseGenerated {
                 name: "Outlook",
                 issuer: nil,
                 tags: nil,
-                matchingRules: [.init(field: .issuer, text: "Outlook.com", matcher: .contains, ignoreCase: true),
-.init(field: .label, text: "Outlook.com", matcher: .contains, ignoreCase: true)],
+                matchingRules: [.init(field: .issuer, text: "Outlook.com", matcher: .contains, ignoreCase: true)],
                 iconTypeID: UUID(uuidString: "775511EC-6424-401E-AF3D-5AF729E575A7")!
             ),
             .init(

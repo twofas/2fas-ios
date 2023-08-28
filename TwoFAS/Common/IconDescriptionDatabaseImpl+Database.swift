@@ -730,10 +730,6 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Call of Duty"
             ),
             .init(
-                iconTypeID: IconTypeID(uuidString: "3FB39B5B-027D-45EC-AC61-A59841CC8282")!,
-                name: "Call of Duty Mobile"
-            ),
-            .init(
                 iconTypeID: IconTypeID(uuidString: "682AEA05-0544-473D-A5C2-9B4764348C2D")!,
                 name: "Campaign Monitor"
             ),

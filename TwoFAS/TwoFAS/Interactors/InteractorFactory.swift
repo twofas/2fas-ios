@@ -519,7 +519,8 @@ extension InteractorFactory {
             cloudBackupStateInteractor: cloudBackupStateInteractor(listenerID: ""),
             fileInteractor: fileInteractor(),
             newVersionInteractor: newVersionInteractor(),
-            networkStatusInteractor: networkStatusInteractor()
+            networkStatusInteractor: networkStatusInteractor(),
+            appInfoInteractor: appInfoInteractor()
         )
     }
     

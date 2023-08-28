@@ -90,4 +90,7 @@ protocol UserDefaultsRepository: AnyObject {
     
     var isMainMenuLandscapeCollapsed: Bool { get }
     func setIsMainMenuLandscapeCollapsed(_ isCollapsed: Bool)
+    
+    var dateOfFirstRun: Date? { get }
+    func saveDateOfFirstRun(_ date: Date)
 }

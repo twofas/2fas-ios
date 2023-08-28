@@ -209,6 +209,8 @@ protocol MainRepository: AnyObject {
     // MARK: - App info
     var appVersion: String? { get }
     var appBundleIdentifier: String? { get }
+    var dateOfFirstRun: Date? { get }
+    func saveDateOfFirstRun(_ date: Date)
     
     // MARK: - New Version
     var newVersionCounter: Int { get }

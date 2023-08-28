@@ -27,4 +27,12 @@ extension MainRepositoryImpl {
     var appBundleIdentifier: String? {
         Bundle.main.bundleIdentifier
     }
+    
+    func saveDateOfFirstRun(_ date: Date) {
+        userDefaultsRepository.saveDateOfFirstRun(date)
+    }
+    
+    var dateOfFirstRun: Date? {
+        userDefaultsRepository.dateOfFirstRun
+    }
 }

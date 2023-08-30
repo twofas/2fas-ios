@@ -247,7 +247,7 @@ private extension TokensSectionHeader {
     }
     
     func setTitle(_ title: String) {
-        titleLabel.text = title.uppercased()
+        titleLabel.text = title
     }
     
     func menu() -> UIMenu {

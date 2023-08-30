@@ -93,7 +93,8 @@ extension AddingServiceManuallyModuleInteractor: AddingServiceManuallyModuleInte
             algorithm: algorithm ?? .defaultValue,
             counter: counter,
             tokenType: tokenType ?? .defaultValue,
-            source: .manual
+            source: .manual,
+            sectionID: nil
         )
         return serviceModifyInteractor.service(for: secret)
     }

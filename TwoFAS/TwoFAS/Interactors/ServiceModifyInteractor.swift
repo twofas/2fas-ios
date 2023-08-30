@@ -42,25 +42,6 @@ protocol ServiceModifyInteracting: AnyObject {
         algorithm: Algorithm,
         counter: Int?,
         tokenType: TokenType,
-        source: ServiceSource
-    )
-    func addService(
-        name: String,
-        secret: String,
-        serviceTypeID: ServiceTypeID?,
-        additionalInfo: String?,
-        rawIssuer: String?,
-        otpAuth: String?,
-        tokenPeriod: Period?,
-        tokenLength: Digits,
-        badgeColor: TintColor?,
-        iconType: IconType,
-        iconTypeID: IconTypeID,
-        labelColor: TintColor,
-        labelTitle: String,
-        algorithm: Algorithm,
-        counter: Int?,
-        tokenType: TokenType,
         source: ServiceSource,
         sectionID: SectionID?
     )
@@ -110,51 +91,16 @@ extension ServiceModifyInteractor: ServiceModifyInteracting {
         algorithm: Algorithm,
         counter: Int?,
         tokenType: TokenType,
-        source: ServiceSource
-    ) {
-        Log("ServiceModifyInteractor - adding service", module: .interactor)
-        mainRepository.addService(
-            name: name,
-            secret: secret,
-            serviceTypeID: serviceTypeID,
-            additionalInfo: additionalInfo,
-            rawIssuer: rawIssuer,
-            otpAuth: otpAuth,
-            tokenPeriod: tokenPeriod,
-            tokenLength: tokenLength,
-            badgeColor: badgeColor,
-            iconType: iconType,
-            iconTypeID: iconTypeID,
-            labelColor: labelColor,
-            labelTitle: labelTitle,
-            algorithm: algorithm,
-            counter: counter,
-            tokenType: tokenType,
-            source: source
-        )
-    }
-    
-    func addService(
-        name: String,
-        secret: String,
-        serviceTypeID: ServiceTypeID?,
-        additionalInfo: String?,
-        rawIssuer: String?,
-        otpAuth: String?,
-        tokenPeriod: Period?,
-        tokenLength: Digits,
-        badgeColor: TintColor?,
-        iconType: IconType,
-        iconTypeID: IconTypeID,
-        labelColor: TintColor,
-        labelTitle: String,
-        algorithm: Algorithm,
-        counter: Int?,
-        tokenType: TokenType,
         source: ServiceSource,
         sectionID: SectionID?
     ) {
-        Log("ServiceModifyInteractor - adding service with sectionID", module: .interactor)
+        Log("ServiceModifyInteractor - adding service", module: .interactor)
+        if serviceExists(for: secret) == .trashed {
+            guard let serviceForDeletition = mainRepository.trashedService(for: secret) else {
+                return
+            }
+            mainRepository.deleteService(serviceForDeletition)
+        }
         mainRepository.addService(
             name: name,
             secret: secret,

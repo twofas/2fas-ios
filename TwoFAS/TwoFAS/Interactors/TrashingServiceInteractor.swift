@@ -72,8 +72,7 @@ extension TrashingServiceInteractor: TrashingServiceInteracting {
     
     func deleteService(for secret: Secret) {
         Log("TrashingServiceInteractor - deleteService for secret", module: .interactor)
-        let services = mainRepository.listAllExistingServices()
-        guard let serviceData = services.first(where: { $0.secret == secret }) else { return }
+        guard let serviceData = mainRepository.trashedService(for: secret) else { return }
         mainRepository.deleteService(serviceData)
         removeAuthRequests(for: secret)
     }

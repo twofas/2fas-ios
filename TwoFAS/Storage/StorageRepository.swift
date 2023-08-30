@@ -26,6 +26,7 @@ public protocol StorageRepository: AnyObject {
     func untrashService(_ serviceData: ServiceData) -> (added: String?, modified: [String])
     func listTrashedServices() -> [ServiceData]
     func serviceExists(for secret: String) -> ServiceExistenceStatus
+    func trashedService(for secret: String) -> ServiceData?
     func addService(
         name: String,
         secret: String,

@@ -136,6 +136,7 @@ protocol MainRepository: AnyObject {
     func listAllExistingServices() -> [ServiceData]
     func listAllNotTrashed() -> [ServiceData]
     func serviceExists(for secret: String) -> ServiceExistenceStatus
+    func trashedService(for secret: String) -> ServiceData?
     func addService(
         name: String,
         secret: String,

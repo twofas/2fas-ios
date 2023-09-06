@@ -52,6 +52,7 @@ internal enum Asset {
   internal static let deleteSmallIcon = ImageAsset(name: "DeleteSmallIcon")
   internal static let dragDropToken = ImageAsset(name: "DragDropToken")
   internal static let dragHandles = ImageAsset(name: "DragHandles")
+  internal static let emptyNotifications = ImageAsset(name: "EmptyNotifications")
   internal static let emptyScreenBackground = ImageAsset(name: "EmptyScreenBackground")
   internal static let emptyScreenIcon = ImageAsset(name: "EmptyScreenIcon")
   internal static let emptyScreenSearch = ImageAsset(name: "EmptyScreenSearch")

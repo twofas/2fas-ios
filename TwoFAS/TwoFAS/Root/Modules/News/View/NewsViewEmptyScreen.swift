@@ -24,12 +24,21 @@ final class NewsViewEmptyScreen: UIView {
        let label = UILabel()
         label.text = T.Notifications.noNotifications
         label.font = UIFont.preferredFont(forTextStyle: .headline)
-        label.textColor = Theme.Colors.Text.inactive
+        label.textColor = Theme.Colors.Text.main
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
         return label
     }()
+    
+    private let image: UIImageView = {
+        let img = Asset.emptyNotifications.image
+        let imgView = UIImageView(image: img)
+        imgView.contentMode = .center
+        return imgView
+    }()
+    
+    private let container = UIView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,11 +53,24 @@ final class NewsViewEmptyScreen: UIView {
     private func commonInit() {
         backgroundColor = Theme.Colors.Table.background
         
-        addSubview(text, with: [
-            text.centerXAnchor.constraint(equalTo: centerXAnchor),
-            text.centerYAnchor.constraint(equalTo: centerYAnchor),
-            text.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Theme.Metrics.standardMargin),
-            text.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Theme.Metrics.standardMargin)
+        addSubview(container, with: [
+            container.centerXAnchor.constraint(equalTo: centerXAnchor),
+            container.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -Theme.Metrics.doubleSpacing),
+            container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Theme.Metrics.standardMargin),
+            container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Theme.Metrics.standardMargin)
+        ])
+        
+        container.addSubview(image, with: [
+            image.topAnchor.constraint(equalTo: container.topAnchor),
+            image.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            image.trailingAnchor.constraint(equalTo: container.trailingAnchor)
+        ])
+        
+        container.addSubview(text, with: [
+            text.topAnchor.constraint(equalTo: image.bottomAnchor, constant: Theme.Metrics.doubleSpacing),
+            text.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            text.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            text.bottomAnchor.constraint(equalTo: container.bottomAnchor)
         ])
     }
 }

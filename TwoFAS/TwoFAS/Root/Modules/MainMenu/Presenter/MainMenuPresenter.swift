@@ -46,7 +46,6 @@ extension MainMenuPresenter {
     }
     
     func handleSelection(at indexPath: IndexPath) {
-        guard selectedIndexPath != indexPath else { return }
         selectedIndexPath = indexPath
         switch indexPath.row {
         case MainContent.main.rawValue:

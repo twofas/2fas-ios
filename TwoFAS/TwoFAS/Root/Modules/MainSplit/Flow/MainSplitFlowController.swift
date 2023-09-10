@@ -77,21 +77,21 @@ extension MainSplitFlowController: MainSplitFlowControlling {
     
     func toCompact() {
         guard
-            let tokensNavi = viewController.tokensTabNavi,
+            let tokensTabNavi = viewController.tokensTabNavi,
             let tokensViewController = viewController.tokensViewController,
             let settingsViewController = viewController.settingsViewController
         else { return }
-        TokensPlainFlowController.showAsTab(viewController: tokensViewController, in: tokensNavi)
+        TokensPlainFlowController.showAsTab(viewController: tokensViewController, in: tokensTabNavi)
         viewController.tabBar?.presenter.resetViewPath()
-        viewController.tabBar?.setViewControllers([tokensNavi, settingsViewController], animated: false)
+        viewController.tabBar?.setViewControllers([tokensTabNavi, settingsViewController], animated: false)
     }
     
     func toExpanded() {
         guard
-            let tokensNavi = viewController.tokensTabNavi
+            let tokensTabNavi = viewController.tokensTabNavi
         else { return }
-        tokensNavi.setViewControllers([], animated: false)
-        viewController.tabBar?.setViewControllers([tokensNavi], animated: false)
+        tokensTabNavi.setViewControllers([], animated: false)
+        viewController.tabBar?.setViewControllers([tokensTabNavi], animated: false)
     }
 }
 

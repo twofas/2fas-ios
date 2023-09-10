@@ -190,6 +190,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Alchemer"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "3D835D08-84B1-48E7-9D9D-C09E7DB84396")!,
+                name: "AlgoLightHouse"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "F40B252A-106C-4353-A4DA-5D861DC657DD")!,
                 name: "Algolia"
             ),
@@ -1864,6 +1868,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "7DB360BB-425B-49C5-AA23-C0CDB2129A77")!,
                 name: "Home Assistant"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "FEFA154A-3CF5-4FCF-9A97-6337EE3F8560")!,
+                name: "Homebridge"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "F27D50A0-5B21-40EA-8B59-A1CA1DAAE30F")!,
@@ -4560,6 +4568,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "0F97B5F0-62C7-4DE2-8B74-5E9ABC62C860")!,
                 name: "Wiki.js"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "1ADF879B-CFFE-4807-B63B-49CFC0D2192D")!,
+                name: "Wikimedia"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "2897C31F-95E3-470B-A5E9-E2BFB1BA5D40")!,

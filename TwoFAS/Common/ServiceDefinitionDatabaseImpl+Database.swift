@@ -400,6 +400,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "E9812A04-3AB7-4039-9207-33E52FC5C92B")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "3E25094F-08C0-4932-9DCD-633BF8AD137E")!,
+                name: "AlgoLightHouse",
+                issuer: ["AlgoLightHouse"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "3D835D08-84B1-48E7-9D9D-C09E7DB84396")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "8E426C3B-4AD0-4ED7-8520-CC0BB4120BB1")!,
                 name: "Algolia",
                 issuer: nil,
@@ -1348,7 +1356,7 @@ final class ServiceDefinitionDatabaseGenerated {
             .init(
                 serviceTypeID: UUID(uuidString: "7D012425-7019-4320-90A5-38963E4A022E")!,
                 name: "Brave",
-                issuer: ["Brave+Rewards", "Brave Rewards"],
+                issuer: ["Brave+Rewards", "Brave Rewards", "Brave Community", "Brave+Community"],
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "E4E7DA2F-3D8B-4686-8C2C-FD94A23864AD")!
@@ -4030,6 +4038,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 tags: nil,
                 matchingRules: nil,
                 iconTypeID: UUID(uuidString: "7DB360BB-425B-49C5-AA23-C0CDB2129A77")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "CEC49110-F206-4E01-83BD-A4F89013DDFE")!,
+                name: "Homebridge",
+                issuer: ["Homebridge"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "FEFA154A-3CF5-4FCF-9A97-6337EE3F8560")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "49D3AED6-6EF9-4E9B-A9DB-95E767145274")!,
@@ -9880,6 +9896,15 @@ final class ServiceDefinitionDatabaseGenerated {
                 matchingRules: [.init(field: .label, text: "wikijs", matcher: .contains, ignoreCase: true),
 .init(field: .label, text: "wiki.js", matcher: .contains, ignoreCase: true)],
                 iconTypeID: UUID(uuidString: "0F97B5F0-62C7-4DE2-8B74-5E9ABC62C860")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "976F6EE4-C29C-4E58-93B0-AEF7AD73D426")!,
+                name: "Wikimedia",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .label, text: "Wikimedia", matcher: .contains, ignoreCase: true),
+.init(field: .issuer, text: "Wikimedia", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "1ADF879B-CFFE-4807-B63B-49CFC0D2192D")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "E4EFFD58-8E12-4E34-BB70-7E9D3008AEDE")!,

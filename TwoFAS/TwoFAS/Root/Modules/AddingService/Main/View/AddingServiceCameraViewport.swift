@@ -26,8 +26,11 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
         
     var didRegisterError: (String) -> Void
     var didFoundCode: (CodeType) -> Void
+    @Binding var cameraFreeze: Bool
     
     final class Coordinator {
+        private weak var camera: CameraScanningView?
+        
         private let feedbackGenerator = UINotificationFeedbackGenerator()
         private let notificationCenter = NotificationCenter.default
         
@@ -80,6 +83,12 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
     
     func updateUIView(_ uiView: CameraScanningView, context: Context) {
         uiView.updateOrientation()
+        
+        if cameraFreeze {
+            uiView.freeze()
+        } else {
+            uiView.unfreeze()
+        }
     }
     
     func dismantleUIView(_ uiView: CameraScanningView, coordinator: Coordinator) {
@@ -136,6 +145,14 @@ final class CameraScanningView: UIView {
         camera = nil
     }
     
+    func unfreeze() {
+        camera?.unfreeze()
+    }
+    
+    func freeze() {
+        camera?.freeze()
+    }
+    
     func updateOrientation() {
         camera?.updateOrientation()
     }
@@ -144,7 +161,6 @@ final class CameraScanningView: UIView {
 extension CameraScanningView: CameraDelegate {
     func didStartScanning() {}
     func didFoundCode(_ code: CodeType) {
-        camera?.freeze()
         codeFound?(code)
     }
 }

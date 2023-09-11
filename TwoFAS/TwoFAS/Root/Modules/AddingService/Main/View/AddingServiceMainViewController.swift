@@ -102,7 +102,7 @@ private struct AddingServiceMain: View {
                         self.errorReason = errorReason
                     }, didFoundCode: { codeType in
                         presenter.handleFoundCode(codeType: codeType)
-                    })
+                    }, cameraFreeze: $presenter.freezeCamera)
                 }
             }
             .frame(height: AddingServiceMetrics.cameraActiveAreaHeight)

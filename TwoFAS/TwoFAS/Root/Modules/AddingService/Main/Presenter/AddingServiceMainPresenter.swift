@@ -24,8 +24,8 @@ import Common
 final class AddingServiceMainPresenter: ObservableObject {
     weak var view: AddingServiceMainViewControlling?
     
-    private var lockScanning = false
-    
+    @Published var freezeCamera = false
+        
     private let flowController: AddingServiceMainFlowControlling
     private let interactor: AddingServiceMainModuleInteracting
     
@@ -40,8 +40,8 @@ final class AddingServiceMainPresenter: ObservableObject {
 
 extension AddingServiceMainPresenter {
     func handleFoundCode(codeType: CodeType) {
-        guard !lockScanning else { return }
-        lockScanning = true
+        guard !freezeCamera else { return }
+        freezeCamera = true
         
         switch codeType {
         case .service(let code):
@@ -126,8 +126,7 @@ extension AddingServiceMainPresenter {
     }
     
     func handleResumeCamera() {
-        // TODO: Add
-        lockScanning = false
+        freezeCamera = false
     }
 }
 

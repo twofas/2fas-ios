@@ -232,7 +232,8 @@ private extension InteractorFactory {
     func importFromFileInteractor() -> ImportFromFileInteracting {
         ImportFromFileInteractor(
             mainRepository: MainRepositoryImpl.shared,
-            serviceDefinitionInteractor: serviceDefinitionInteractor()
+            serviceDefinitionInteractor: serviceDefinitionInteractor(),
+            modifyInteractor: serviceModifyInteractor()
         )
     }
 }

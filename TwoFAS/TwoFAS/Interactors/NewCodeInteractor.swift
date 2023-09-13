@@ -208,7 +208,7 @@ private extension NewCodeInteractor {
     }
     
     private func createUnknownName() -> String {
-        T.Commons.service + " " + String(interactorModify.obtainNextUnknownCodeCounter())
+        interactorModify.createNameForUnknownService()
     }
     
     private func serviceAndValue(from name: String?) -> (service: String?, value: String?)? {

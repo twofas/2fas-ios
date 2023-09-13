@@ -82,10 +82,16 @@ final class ImportFromFileInteractor {
     private let mainRepository: MainRepository
     private let jsonDecoder = JSONDecoder()
     private let serviceDefinitionInteractor: ServiceDefinitionInteracting
+    private let modifyInteractor: ServiceModifyInteracting
     
-    init(mainRepository: MainRepository, serviceDefinitionInteractor: ServiceDefinitionInteracting) {
+    init(
+        mainRepository: MainRepository,
+        serviceDefinitionInteractor: ServiceDefinitionInteracting,
+        modifyInteractor: ServiceModifyInteracting
+    ) {
         self.mainRepository = mainRepository
         self.serviceDefinitionInteractor = serviceDefinitionInteractor
+        self.modifyInteractor = modifyInteractor
     }
 }
 
@@ -465,16 +471,23 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 let algo = Algorithm(rawValue: acc.algorithm.uppercased()),
                 let counter = Int(acc.counter),
                 let rawTimer = Int(acc.timer),
-                let period = Period(rawValue: rawTimer),
-                acc.secret.isValidSecret()
+                let period = Period(rawValue: rawTimer)
             else { return nil }
                         
             let secret = acc.secret.sanitazeSecret()
             guard secret.isValidSecret() else { return nil }
             
+            let name: String = {
+                let name = acc.issuer.sanitazeName()
+                if name.isEmpty {
+                    return modifyInteractor.createNameForUnknownService()
+                }
+                return name
+            }()
+            
             let serviceDef = serviceDefinitionInteractor.findService(using: acc.issuer)
             return ServiceData(
-                name: acc.issuer.sanitazeName(),
+                name: name,
                 secret: secret,
                 serviceTypeID: serviceDef?.serviceTypeID,
                 additionalInfo: acc.account.sanitizeInfo(),

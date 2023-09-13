@@ -77,7 +77,7 @@ protocol ServiceModifyInteracting: AnyObject {
     func renameService(_ serviceData: ServiceData, newName: String)
     func service(for secret: String) -> ServiceData?
     func incrementCounter(for secret: Secret)
-    func obtainNextUnknownCodeCounter() -> Int
+    func createNameForUnknownService() -> String
 }
 
 final class ServiceModifyInteractor {
@@ -226,7 +226,7 @@ extension ServiceModifyInteractor: ServiceModifyInteracting {
         mainRepository.incrementCounter(for: secret)
     }
     
-    func obtainNextUnknownCodeCounter() -> Int {
-        mainRepository.obtainNextUnknownCodeCounter()
+    func createNameForUnknownService() -> String {
+        T.Commons.service + " " + String(mainRepository.obtainNextUnknownCodeCounter())
     }
 }

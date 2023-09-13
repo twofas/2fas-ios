@@ -84,6 +84,7 @@ public extension String {
     
     func sanitazeName() -> String {
         replacingOccurrences(of: "\\", with: "")
+            .trim()
     }
     
     func sanitazeSecret() -> String {

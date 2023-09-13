@@ -72,7 +72,7 @@ open class ToastView: UIView {
         switch UIDevice.current.userInterfaceIdiom {
         // specific values
         case .phone: return 30
-        case .pad: return 60
+        case .pad, .vision: return 60
         case .tv: return 90
         case .carPlay: return 30
         #if compiler(>=5.3)
@@ -89,7 +89,7 @@ open class ToastView: UIView {
         switch UIDevice.current.userInterfaceIdiom {
         // specific values
         case .phone: return 20
-        case .pad: return 40
+        case .pad, .vision: return 40
         case .tv: return 60
         case .carPlay: return 20
         #if compiler(>=5.3)
@@ -158,7 +158,7 @@ open class ToastView: UIView {
             switch UIDevice.current.userInterfaceIdiom {
             // specific values
             case .phone: return .systemFont(ofSize: 12)
-            case .pad: return .systemFont(ofSize: 16)
+            case .pad, .vision: return .systemFont(ofSize: 16)
             case .tv: return .systemFont(ofSize: 20)
             case .carPlay: return .systemFont(ofSize: 12)
             #if compiler(>=5.3)

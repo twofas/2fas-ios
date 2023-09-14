@@ -479,6 +479,7 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
             
             let name: String = {
                 let name = acc.issuer.sanitazeName()
+                    .replacingOccurrences(of: "+", with: " ")
                 if name.isEmpty {
                     return modifyInteractor.createNameForUnknownService()
                 }

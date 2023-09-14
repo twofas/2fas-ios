@@ -19,11 +19,13 @@
 
 import Foundation
 
-enum ExternalImportService {
-    case aegis
-    case raivo
-    case lastPass
-    case googleAuth
-    case twofas
-    case andOTP
+struct AndOTPData: Decodable {
+    let secret: String
+    let issuer: String?
+    let label: String?
+    let digits: Int?
+    let type: String?
+    let algorithm: String?
+    let period: Int?
+    let counter: Int?
 }

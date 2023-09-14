@@ -181,6 +181,7 @@
 		C228603226697250005E88E3 /* TokensSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C228603126697250005E88E3 /* TokensSection.swift */; };
 		C2286034266972B5005E88E3 /* TokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2286033266972B5005E88E3 /* TokenCell.swift */; };
 		C2290334276BA78C0005C8F2 /* AppLockStateInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2290333276BA78C0005C8F2 /* AppLockStateInteractor.swift */; };
+		C229403E2AB3A50700D55B58 /* AndOTPData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C229403D2AB3A50700D55B58 /* AndOTPData.swift */; };
 		C22A866A287F60BD009A43FE /* MainRepositoryImpl+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22A8669287F60BD009A43FE /* MainRepositoryImpl+Notifications.swift */; };
 		C22C1399267682B4001AA5F1 /* CategoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22C1398267682B4001AA5F1 /* CategoryData.swift */; };
 		C22C139B267684DC001AA5F1 /* CategoryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22C139A267684DC001AA5F1 /* CategoryHandler.swift */; };
@@ -1474,6 +1475,7 @@
 		C228603126697250005E88E3 /* TokensSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensSection.swift; sourceTree = "<group>"; };
 		C2286033266972B5005E88E3 /* TokenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCell.swift; sourceTree = "<group>"; };
 		C2290333276BA78C0005C8F2 /* AppLockStateInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockStateInteractor.swift; sourceTree = "<group>"; };
+		C229403D2AB3A50700D55B58 /* AndOTPData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AndOTPData.swift; sourceTree = "<group>"; };
 		C22A82E829EDCC5E00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C22A82E929EDCC5F00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C22A82EA29EDCC5F00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3869,6 +3871,7 @@
 				C25859372802E75A002DC749 /* PushNotificationState.swift */,
 				C2069C9028C2922A00321E44 /* AEGISData.swift */,
 				C27A31C929C8EEE40094679F /* LastPassData.swift */,
+				C229403D2AB3A50700D55B58 /* AndOTPData.swift */,
 				C27A31CB29C90B110094679F /* RaivoData.swift */,
 			);
 			path = DataTypes;
@@ -7715,6 +7718,7 @@
 				C2A4C8352A10F13800AFD67C /* TokensTOTPCell.swift in Sources */,
 				C2117181276CE54900042D28 /* VerifyPINFlowController.swift in Sources */,
 				C29FEFF92756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift in Sources */,
+				C229403E2AB3A50700D55B58 /* AndOTPData.swift in Sources */,
 				C2D3B0F628EE0F1C00D2F991 /* MainRepositoryImpl+ServiceDefinition.swift in Sources */,
 				C2C1DDE227CAD2DF002C7867 /* ComposeServiceAdvancedEditTokenTypeCell.swift in Sources */,
 				C2959627267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift in Sources */,

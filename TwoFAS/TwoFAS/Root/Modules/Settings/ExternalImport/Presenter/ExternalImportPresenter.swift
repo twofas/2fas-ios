@@ -48,6 +48,8 @@ final class ExternalImportPresenter {
             flowController.toLastPass()
         case .googleAuth:
             flowController.toGoogleAuth()
+        case .andOTP:
+            flowController.toAndOTP()
         }
     }
     

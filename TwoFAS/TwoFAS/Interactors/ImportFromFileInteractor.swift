@@ -41,6 +41,7 @@ enum ImportFromFileParsing {
     case aegis(AEGISParseResult)
     case lastPass(LastPassResult)
     case raivo([RaivoData])
+    case andOTP([AndOTPData])
 }
 
 enum ImportFromFileTwoFASCheck {
@@ -76,6 +77,7 @@ protocol ImportFromFileInteracting: AnyObject {
     func parseAEGIS(_ data: AEGISData) -> [ServiceData]
     func parseLastPass(_ data: LastPassData) -> [ServiceData]
     func parseRaivo(_ data: [RaivoData]) -> [ServiceData]
+    func parseAndOTP(_ data: [AndOTPData]) -> [ServiceData]
 }
 
 final class ImportFromFileInteractor {
@@ -129,6 +131,10 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
         
         if let raivo = try? jsonDecoder.decode([RaivoData].self, from: data) {
             return .raivo(raivo)
+        }
+        
+        if let andOTP = try? jsonDecoder.decode([AndOTPData].self, from: data) {
+            return .andOTP(andOTP)
         }
         
         do {
@@ -502,6 +508,67 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 iconTypeID: serviceDef?.iconTypeID ?? .default,
                 labelColor: .lightBlue,
                 labelTitle: acc.issuer.twoLetters,
+                algorithm: algo,
+                isTrashed: false,
+                trashingDate: nil,
+                counter: counter,
+                tokenType: kind,
+                source: .link,
+                otpAuth: nil,
+                order: nil,
+                sectionID: nil
+            )
+        }
+    }
+    
+    func parseAndOTP(_ data: [AndOTPData]) -> [ServiceData] {
+        Log("ImportFromFileInteractor - parseAndOTP", module: .interactor)
+        
+        let date = Date()
+        
+        return data.compactMap { acc -> ServiceData? in
+            let secret = acc.secret.sanitazeSecret()
+            
+            guard secret.isValidSecret() else { return nil }
+            
+            let issuer = acc.issuer
+            let additionalInfo = acc.label?.sanitizeInfo()
+            let digits = Digits.create(acc.digits)
+            let kind = TokenType.create(acc.type?.uppercased())
+            let algo = Algorithm.create(acc.algorithm?.uppercased())
+            let counter = acc.counter ?? 0
+            let period = Period.create(acc.period)
+            
+            let name: String = {
+                if let name = issuer?.sanitazeName()
+                    .replacingOccurrences(of: "+", with: " "), !name.isEmpty {
+                    return name
+                }
+                return modifyInteractor.createNameForUnknownService()
+            }()
+            
+            let serviceDefinition: ServiceDefinition? = {
+                if let issuer {
+                    return serviceDefinitionInteractor.findService(using: issuer)
+                }
+                return nil
+            }()
+
+            return ServiceData(
+                name: name,
+                secret: secret,
+                serviceTypeID: serviceDefinition?.serviceTypeID,
+                additionalInfo: additionalInfo,
+                rawIssuer: issuer,
+                modifiedAt: date,
+                createdAt: date,
+                tokenPeriod: period,
+                tokenLength: digits,
+                badgeColor: nil,
+                iconType: .brand,
+                iconTypeID: serviceDefinition?.iconTypeID ?? .default,
+                labelColor: .lightBlue,
+                labelTitle: name.twoLetters,
                 algorithm: algo,
                 isTrashed: false,
                 trashingDate: nil,

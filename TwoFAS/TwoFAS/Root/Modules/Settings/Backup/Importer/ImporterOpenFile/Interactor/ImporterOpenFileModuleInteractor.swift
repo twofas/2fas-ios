@@ -36,6 +36,7 @@ protocol ImporterOpenFileModuleInteracting: AnyObject {
     func parseLastPass(_ data: LastPassData) -> [ServiceData]
     func parseRaivo(_ data: [RaivoData]) -> [ServiceData]
     func parseAndOTP(_ data: [AndOTPData]) -> [ServiceData]
+    func parseAuthenticatorPro(_ data: [Code]) -> [ServiceData]
 }
 
 final class ImporterOpenFileModuleInteractor {
@@ -92,5 +93,9 @@ extension ImporterOpenFileModuleInteractor: ImporterOpenFileModuleInteracting {
     
     func parseAndOTP(_ data: [AndOTPData]) -> [ServiceData] {
         importInteractor.parseAndOTP(data)
+    }
+    
+    func parseAuthenticatorPro(_ data: [Code]) -> [ServiceData] {
+        importInteractor.parseAuthenticatorPro(data)
     }
 }

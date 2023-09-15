@@ -33,7 +33,7 @@ final class ExternalImportInstructionsPresenter {
 extension ExternalImportInstructionsPresenter {
     var hasSecondaryAction: Bool {
         switch service {
-        case .aegis, .raivo, .andOTP, .twofas: return false
+        case .aegis, .raivo, .andOTP, .twofas, .authenticatorPro: return false
         case .googleAuth, .lastPass: return true
         }
     }
@@ -45,6 +45,7 @@ extension ExternalImportInstructionsPresenter {
         case .andOTP: return Asset.externalImportAndOTP.swiftUIImage
         case .lastPass: return Asset.externalImportLastPass.swiftUIImage
         case .googleAuth: return Asset.externalImportGoogleAuth.swiftUIImage
+        case .authenticatorPro: return Asset.externalImportAuthenticatorPro.swiftUIImage
         case .twofas: return Asset.externalImportGoogleAuth.swiftUIImage // Not used here
         }
     }
@@ -56,6 +57,7 @@ extension ExternalImportInstructionsPresenter {
         case .lastPass: return T.Externalimport.infoLastpassTitle
         case .googleAuth: return T.Externalimport.infoGoogleAuthenticatorTitle
         case .andOTP: return T.Externalimport.infoAndotpTitle
+        case .authenticatorPro: return T.Externalimport.authenticatorproTitle
         case .twofas: return T.Commons._2fasToolbar // Not used here
         }
     }
@@ -67,6 +69,7 @@ extension ExternalImportInstructionsPresenter {
         case .lastPass: return T.Externalimport.lastpassMsg
         case .googleAuth: return T.Introduction.googleAuthenticatorImportProcess
         case .andOTP: return T.Externalimport.andotpMsg
+        case .authenticatorPro: return T.Externalimport.authenticatorproMsg
         case .twofas: return ""  // Not used here
         }
     }
@@ -74,6 +77,7 @@ extension ExternalImportInstructionsPresenter {
     var actionName: String {
         switch service {
         case .aegis, .raivo, .lastPass, .andOTP: return  T.Externalimport.chooseJsonCta
+        case .authenticatorPro: return T.Externalimport.chooseTxtCta
         case .googleAuth: return T.Commons.scanQrCode
         case .twofas: return "" // Not used here
         }
@@ -81,7 +85,7 @@ extension ExternalImportInstructionsPresenter {
     
     var secondaryActionName: String? {
         switch service {
-        case .aegis, .raivo, .twofas, .andOTP: return nil
+        case .aegis, .raivo, .twofas, .andOTP, .authenticatorPro: return nil
         case .lastPass: return T.Commons.scanQrCode
         case .googleAuth: return T.Introduction.chooseQrCode
         }
@@ -91,7 +95,7 @@ extension ExternalImportInstructionsPresenter {
     
     func handleAction() {
         switch service {
-        case .aegis, .raivo, .lastPass, .twofas, .andOTP: flowController.toOpenFile()
+        case .aegis, .raivo, .lastPass, .twofas, .andOTP, .authenticatorPro: flowController.toOpenFile()
         case .googleAuth: flowController.toCamera()
         }
     }
@@ -102,7 +106,7 @@ extension ExternalImportInstructionsPresenter {
     
     func handleSecondaryAction() {
         switch service {
-        case .aegis, .raivo, .twofas, .andOTP: break
+        case .aegis, .raivo, .twofas, .andOTP, .authenticatorPro: break
         case .lastPass: flowController.toCamera()
         case .googleAuth: flowController.toGallery()
         }

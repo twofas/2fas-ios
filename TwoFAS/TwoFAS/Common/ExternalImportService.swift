@@ -26,4 +26,5 @@ enum ExternalImportService {
     case googleAuth
     case twofas
     case andOTP
+    case authenticatorPro
 }

@@ -465,6 +465,7 @@
 		C278122927FA462000F31453 /* MainRepositoryImpl+RSAEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278122827FA462000F31453 /* MainRepositoryImpl+RSAEncryption.swift */; };
 		C278122B27FA49AA00F31453 /* WebExtensionLocalDeviceNameInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278122A27FA49AA00F31453 /* WebExtensionLocalDeviceNameInteractor.swift */; };
 		C278122D27FA4B5A00F31453 /* MainRepositoryImpl+DeviceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278122C27FA4B5A00F31453 /* MainRepositoryImpl+DeviceName.swift */; };
+		C27829602AB4C546006224CC /* ImportFromFileInteractor+Parsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278295F2AB4C546006224CC /* ImportFromFileInteractor+Parsers.swift */; };
 		C2787C3D28FB536000E6C989 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2AB25CC28DF96A1001CF6B3 /* Icons.xcassets */; };
 		C2787C3F28FB613000E6C989 /* TwoFas6-TwoFas7.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C2787C3E28FB613000E6C989 /* TwoFas6-TwoFas7.xcmappingmodel */; };
 		C2794BA32774A90600301F1A /* Digits.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2794BA22774A90600301F1A /* Digits.swift */; };
@@ -1771,6 +1772,7 @@
 		C278122827FA462000F31453 /* MainRepositoryImpl+RSAEncryption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+RSAEncryption.swift"; sourceTree = "<group>"; };
 		C278122A27FA49AA00F31453 /* WebExtensionLocalDeviceNameInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebExtensionLocalDeviceNameInteractor.swift; sourceTree = "<group>"; };
 		C278122C27FA4B5A00F31453 /* MainRepositoryImpl+DeviceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+DeviceName.swift"; sourceTree = "<group>"; };
+		C278295F2AB4C546006224CC /* ImportFromFileInteractor+Parsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImportFromFileInteractor+Parsers.swift"; sourceTree = "<group>"; };
 		C2787C3E28FB613000E6C989 /* TwoFas6-TwoFas7.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = "TwoFas6-TwoFas7.xcmappingmodel"; sourceTree = "<group>"; };
 		C2794BA22774A90600301F1A /* Digits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Digits.swift; sourceTree = "<group>"; };
 		C2794BA42774AA6200301F1A /* TokenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenType.swift; sourceTree = "<group>"; };
@@ -2916,6 +2918,7 @@
 				C21111F4274ABDDA00CA7C78 /* InteractorFactory.swift */,
 				C27BE51A275D7DDE0090CA12 /* CloudBackupStateInteractor.swift */,
 				C240485B276549C00076376E /* ImportFromFileInteractor.swift */,
+				C278295F2AB4C546006224CC /* ImportFromFileInteractor+Parsers.swift */,
 				C2290333276BA78C0005C8F2 /* AppLockStateInteractor.swift */,
 				C249772D277F3D6100DC872C /* TrashingServiceInteractor.swift */,
 				C249772F277F3EFB00DC872C /* ServiceModifyInteractor.swift */,
@@ -7863,6 +7866,7 @@
 				C27A549927F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift in Sources */,
 				C2147CE6205D7B790001D011 /* PINPadKeyboard.swift in Sources */,
 				C25C318D2881BC5A002C9044 /* NotificationInteractor.swift in Sources */,
+				C27829602AB4C546006224CC /* ImportFromFileInteractor+Parsers.swift in Sources */,
 				C2D6731E25DB2C5D004BD697 /* Toast.swift in Sources */,
 				C284991F27CC2C6D0092098D /* ComposeServiceCounterPresenter+Menu.swift in Sources */,
 				C2B077A6292A75CA0074517F /* UploadLogsFlowController.swift in Sources */,

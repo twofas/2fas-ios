@@ -32,6 +32,7 @@ struct ExternalImportCell: Hashable {
         case lastPass
         case googleAuth
         case andOTP
+        case authenticatorPro
     }
     
     let icon: UIImage
@@ -69,6 +70,11 @@ extension ExternalImportPresenter {
                         icon: Asset.externalImportIconAndOTP.image,
                         title: T.externalimportAndotp,
                         action: .andOTP
+                    ),
+                    .init(
+                        icon: Asset.externalImportIconAuthenticatorPro.image,
+                        title: T.Externalimport.authenticatorpro,
+                        action: .authenticatorPro
                     )
                 ],
                 footer: T.externalimportDescription

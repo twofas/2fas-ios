@@ -50,6 +50,8 @@ final class ExternalImportPresenter {
             flowController.toGoogleAuth()
         case .andOTP:
             flowController.toAndOTP()
+        case .authenticatorPro:
+            flowController.toAuthenticatorPro()
         }
     }
     

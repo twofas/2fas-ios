@@ -44,6 +44,7 @@ final class ImporterPreimportSummaryPresenter {
         case .raivo: return Asset.externalImportRavio.image
         case .lastPass: return Asset.externalImportLastPass.image
         case .andOTP: return Asset.externalImportAndOTP.image
+        case .authenticatorPro: return Asset.externalImportAuthenticatorPro.image
         case .googleAuth, .twofas: return nil
         }
     }
@@ -54,6 +55,7 @@ final class ImporterPreimportSummaryPresenter {
         case .raivo: return T.Externalimport.raivoTitle
         case .lastPass: return T.Externalimport.lastpassTitle
         case .andOTP: return T.Externalimport.andotpTitle
+        case .authenticatorPro: return T.Externalimport.authenticatorproTitle
         case .googleAuth, .twofas: return T.Backup.importBackupFile
         }
     }
@@ -64,6 +66,7 @@ final class ImporterPreimportSummaryPresenter {
         case .raivo: return T.Externalimport.raivoSuccessMsg
         case .lastPass: return T.Externalimport.lastpassSuccessMsg
         case .andOTP: return T.Externalimport.andotpSuccessMsg
+        case .authenticatorPro: return T.Externalimport.authenticatorproSuccessMsg
         case .googleAuth, .twofas: return T.Backup.importOtherDevices
         }
     }

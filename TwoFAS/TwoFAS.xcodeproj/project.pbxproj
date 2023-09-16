@@ -830,6 +830,7 @@
 		C2CE0E1327934579007DB667 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = C2CE0E1227934579007DB667 /* SwiftProtobuf */; };
 		C2CE0E162793471E007DB667 /* GoogleAuth.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CE0E152793471E007DB667 /* GoogleAuth.pb.swift */; };
 		C2CE84A12814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CE84A02814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift */; };
+		C2CF16A52AB6506F00E2D7FF /* LabelShapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CF16A42AB6506F00E2D7FF /* LabelShapes.swift */; };
 		C2CF23FE23623DE000B759DD /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = C2CF23FD23623DE000B759DD /* KeychainAccess */; };
 		C2CFFCDD2007FDD600600AC6 /* CircleProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CFFCDC2007FDD600600AC6 /* CircleProgress.swift */; };
 		C2D010732A7921B400C0BEE3 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D010722A7921B400C0BEE3 /* ModalViewController.swift */; };
@@ -2144,6 +2145,7 @@
 		C2CD687225FEC94400EFEFCF /* FormLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormLine.swift; path = TwoFAS/Common/Controls/FormLine.swift; sourceTree = SOURCE_ROOT; };
 		C2CE0E152793471E007DB667 /* GoogleAuth.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAuth.pb.swift; sourceTree = "<group>"; };
 		C2CE84A02814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionTableViewHeader.swift; sourceTree = "<group>"; };
+		C2CF16A42AB6506F00E2D7FF /* LabelShapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelShapes.swift; sourceTree = "<group>"; };
 		C2CFFCDC2007FDD600600AC6 /* CircleProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgress.swift; sourceTree = "<group>"; };
 		C2CFFCDE2008006600600AC6 /* RefreshTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTimer.swift; sourceTree = "<group>"; };
 		C2D010722A7921B400C0BEE3 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
@@ -5048,6 +5050,7 @@
 				C2727D522781FE3F00B8FA03 /* ServiceIconDefinition.swift */,
 				C2B90F0C281EFD03004B8AEC /* ThemeColor.xcassets */,
 				C2B90F14281F1498004B8AEC /* ThemeMetrics.swift */,
+				C2CF16A42AB6506F00E2D7FF /* LabelShapes.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -8372,6 +8375,7 @@
 				C2B90F12281EFF75004B8AEC /* SpinnerDisplaying.swift in Sources */,
 				C24FE2DD2945473C0006EFF0 /* Notifications+.swift in Sources */,
 				C2B90F13281EFF79004B8AEC /* SpinnerBackground.swift in Sources */,
+				C2CF16A52AB6506F00E2D7FF /* LabelShapes.swift in Sources */,
 				C2DBE59B243A512E00E96242 /* RefreshTimer.swift in Sources */,
 				C208101D2794A5940035E339 /* Data+.swift in Sources */,
 				C20810192794A2AC0035E339 /* MF_Base32Additions.m in Sources */,

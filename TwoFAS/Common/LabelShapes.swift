@@ -19,26 +19,21 @@
 
 import UIKit
 
-public protocol ServiceIconDefinition {
-    var serviceTypeID: ServiceTypeID? { get }
-    var iconType: IconType { get }
-    var iconTypeID: IconTypeID { get }
-    var labelTitle: String { get }
-    var labelColor: TintColor { get }
-    var icon: UIImage { get }
-}
-
-public extension ServiceIconDefinition {
-    var icon: UIImage {
-        switch iconType {
-        case .brand:
-            return ServiceIcon.for(iconTypeID: iconTypeID)
-        case .label:
-            return LabelImageRenderer.render(
-                with: labelTitle,
-                tintColor: labelColor,
-                style: UITraitCollection.current.userInterfaceStyle
-            )
-        }
+public enum LabelShapes {
+    public static func generate(for size: CGSize) -> (backgroundCircle: UIBezierPath, upperRect: UIBezierPath) {
+        let width = size.width / 62.0
+        let height = size.height / 62.0
+        let backgroundCircle = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let upperRect = UIBezierPath(
+            roundedRect: CGRect(
+                x: width * 8,
+                y: height * 17,
+                width: width * 46,
+                height: height * 29
+            ),
+            cornerRadius: 14
+        )
+        
+        return (backgroundCircle: backgroundCircle, upperRect: upperRect)
     }
 }

@@ -113,10 +113,21 @@ class LimitedTextField: UITextField, UITextFieldDelegate {
             } else {
                 return string.isBackspace
             }
-        case .key, .label:
+        case .key:
             let s = string.uppercased()
             
             if (s.isASCIILetter || s.isNumber) && shouldUppercase {
+                text = (text ?? "") + s
+                sendActions(for: .editingChanged)
+                textDidChange(newString: (text ?? ""))
+                return false
+            } else {
+                return string.isBackspace
+            }
+        case .label:
+            let s = string.uppercased()
+            
+            if s.isValidLabel {
                 text = (text ?? "") + s
                 sendActions(for: .editingChanged)
                 textDidChange(newString: (text ?? ""))
@@ -191,7 +202,7 @@ class LimitedTextField: UITextField, UITextFieldDelegate {
             autocapitalizationType = .allCharacters
             canPaste = false
             shouldUppercase = true
-            keyboardType = .asciiCapable
+            keyboardType = .default
         case .password:
             autocapitalizationType = .none
             canPaste = true

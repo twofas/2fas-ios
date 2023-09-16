@@ -247,6 +247,7 @@
 		C2379D0B26B6DE4B0010C6B1 /* WidgetServiceHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D07ED326A43FD200AF8E7B /* WidgetServiceHandlerType.swift */; };
 		C2379D0C26B6DE660010C6B1 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2932EF21FFE94A900FBD4D0 /* Common.framework */; };
 		C2379D1026B6DF720010C6B1 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE31269E274700506ACF /* IntentsUI.framework */; };
+		C238C70E2AB63E2900E519C6 /* Character+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C238C70D2AB63E2900E519C6 /* Character+.swift */; };
 		C239DE9026CC5366002301E2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C239DE8F26CC5366002301E2 /* Localizable.strings */; };
 		C23B33F12A48DF6A0014B804 /* ImporterOpenFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */; };
 		C23B5D6628F229CC00FC6364 /* ServiceMatchRules+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B5D6528F229CC00FC6364 /* ServiceMatchRules+.swift */; };
@@ -1540,6 +1541,7 @@
 		C23666851FB2644900989ACA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C236C3EE2A1CC105002A2129 /* ListStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStyle.swift; sourceTree = "<group>"; };
 		C23721A02804C07600DE335D /* CameraScannerNavigationFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraScannerNavigationFlowController.swift; sourceTree = "<group>"; };
+		C238C70D2AB63E2900E519C6 /* Character+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+.swift"; sourceTree = "<group>"; };
 		C239DE8F26CC5366002301E2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileViewController.swift; sourceTree = "<group>"; };
 		C23B5D6528F229CC00FC6364 /* ServiceMatchRules+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceMatchRules+.swift"; sourceTree = "<group>"; };
@@ -6333,6 +6335,7 @@
 				C2633F1E265B045F0034B836 /* UIApplication.swift */,
 				C2959626267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift */,
 				C25371A1281DCF56005FB118 /* UINavigationController+.swift */,
+				C238C70D2AB63E2900E519C6 /* Character+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -7697,6 +7700,7 @@
 				C2AB92E127668DE700698382 /* ShareActivityController.swift in Sources */,
 				C2AC22062766152C00271402 /* ExporterMainScreenViewController.swift in Sources */,
 				C23FD50A2814635400E4E9C5 /* ComposeServiceWebExtensionFlowController.swift in Sources */,
+				C238C70E2AB63E2900E519C6 /* Character+.swift in Sources */,
 				C249AF66278A40FE005F9D80 /* UserDefaultsRepositoryImpl.swift in Sources */,
 				C26618A026126A8200ED52CB /* LabelComposeViewController.swift in Sources */,
 				C2B1209529D773770020281E /* AppearanceFlowController.swift in Sources */,

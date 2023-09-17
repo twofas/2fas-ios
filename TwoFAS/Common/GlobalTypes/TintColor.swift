@@ -42,11 +42,15 @@ public extension TintColor {
             self = value
             return
         }
-        self = .lightBlue
+        self = Self.random
     }
     
     static var labelList: [TintColor] {
         TintColor.allCases.filter { $0 != .default }
+    }
+    
+    static var random: TintColor {
+        labelList.randomElement() ?? .lightBlue
     }
     
     static var badgeList: [TintColor] {

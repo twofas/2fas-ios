@@ -49,6 +49,9 @@ extension CodeEntry.EntryData {
             info: "My secured account",
             code: "127 924",
             icon: #imageLiteral(resourceName: "TwoFASMainService"),
+            iconType: .brand,
+            labelTitle: "2F",
+            labelColor: .red,
             serviceTypeID: UUID(),
             countdownTo: nil
         )

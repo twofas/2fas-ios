@@ -36,8 +36,7 @@ public extension ServiceIconDefinition {
         case .label:
             return LabelImageRenderer.render(
                 with: labelTitle,
-                tintColor: labelColor,
-                style: UITraitCollection.current.userInterfaceStyle
+                tintColor: labelColor
             )
         }
     }

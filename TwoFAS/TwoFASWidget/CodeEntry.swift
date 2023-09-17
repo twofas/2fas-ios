@@ -43,11 +43,20 @@ struct CodeEntry: TimelineEntry {
     }
     
     struct EntryData: Identifiable, Hashable {
+        enum IconType: Identifiable, Hashable {
+            var id: Self { self }
+            
+            case brand
+            case label
+        }
         let id: String
         let name: String
         let info: String?
         let code: String
         let icon: UIImage
+        let iconType: IconType
+        let labelTitle: String
+        let labelColor: TintColor
         let serviceTypeID: ServiceTypeID?
         let countdownTo: Date?
     }

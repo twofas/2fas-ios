@@ -46,14 +46,13 @@ public enum LabelImageRenderer {
     public static func render(
         with title: String,
         tintColor: TintColor,
-        style: UIUserInterfaceStyle,
         variant: Variant = .standard
     ) -> UIImage {
         let size = CGSize(width: variant.size, height: variant.size)
         let frame = CGRect(origin: .zero, size: size)
         let paths = LabelShapes.generate(for: size)
-        let rectColor: UIColor = style == .dark ? UIColor.black : UIColor.white
-        let textColor: UIColor = style == .dark ? UIColor.white : UIColor.black
+        let rectColor = ThemeColor.labelTextBackground
+        let textColor = ThemeColor.labelText
         let renderer = UIGraphicsImageRenderer(bounds: frame)
         return renderer.image { _ in
             tintColor.color.setFill()

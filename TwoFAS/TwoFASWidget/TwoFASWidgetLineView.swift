@@ -22,6 +22,8 @@ import SwiftUI
 import Common
 
 struct TwoFASWidgetLineView: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     private let spacing: CGFloat = 10
     
     let entries: [CodeEntry.Entry]
@@ -60,11 +62,7 @@ struct TwoFASWidgetLineView: View {
                     let tokenVO = (entryData.code.components(separatedBy: "")).joined(separator: " ")
                     
                     Group {
-                        Image(uiImage: entryData.icon)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .aspectRatio(contentMode: .fit)
-                            .accessibility(label: Text("widget_service_icon"))
+                        IconRenderer(entry: entry)
                             .redacted(reason: reason)
                         VStack(alignment: .leading, spacing: 3) {
                             Text(entryData.name)

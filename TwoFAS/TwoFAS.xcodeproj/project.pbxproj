@@ -334,6 +334,14 @@
 		C24D8B3C29BE41CA00C3E11E /* ContentNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24D8B3B29BE41CA00C3E11E /* ContentNavigationController.swift */; };
 		C24DFB2127D1770D00F3EACC /* CounterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24DFB2027D1770D00F3EACC /* CounterState.swift */; };
 		C24DFB2527D1778100F3EACC /* CounterHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24DFB2427D1778100F3EACC /* CounterHandler.swift */; };
+		C24E3E642AB8F15A008A7158 /* facebook.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E5C2AB8F158008A7158 /* facebook.json */; };
+		C24E3E652AB8F15A008A7158 /* rockstar_games.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E5D2AB8F159008A7158 /* rockstar_games.json */; };
+		C24E3E662AB8F15A008A7158 /* universal.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E5E2AB8F159008A7158 /* universal.json */; };
+		C24E3E672AB8F15A008A7158 /* twitter.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E5F2AB8F159008A7158 /* twitter.json */; };
+		C24E3E682AB8F15A008A7158 /* epic_games.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E602AB8F159008A7158 /* epic_games.json */; };
+		C24E3E692AB8F15A008A7158 /* discord.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E612AB8F159008A7158 /* discord.json */; };
+		C24E3E6A2AB8F15A008A7158 /* amazon.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E622AB8F15A008A7158 /* amazon.json */; };
+		C24E3E6B2AB8F15A008A7158 /* linkedin.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E632AB8F15A008A7158 /* linkedin.json */; };
 		C24EECEC268772B600C6ABAA /* RecordType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECEB268772B600C6ABAA /* RecordType.swift */; };
 		C24EECF12687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECEF2687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift */; };
 		C24EECF22687772800C6ABAA /* SectionCacheEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF02687772800C6ABAA /* SectionCacheEntity+CoreDataProperties.swift */; };
@@ -1623,6 +1631,14 @@
 		C24D8B3B29BE41CA00C3E11E /* ContentNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentNavigationController.swift; sourceTree = "<group>"; };
 		C24DFB2027D1770D00F3EACC /* CounterState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterState.swift; sourceTree = "<group>"; };
 		C24DFB2427D1778100F3EACC /* CounterHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterHandler.swift; sourceTree = "<group>"; };
+		C24E3E5C2AB8F158008A7158 /* facebook.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = facebook.json; sourceTree = "<group>"; };
+		C24E3E5D2AB8F159008A7158 /* rockstar_games.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = rockstar_games.json; sourceTree = "<group>"; };
+		C24E3E5E2AB8F159008A7158 /* universal.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = universal.json; sourceTree = "<group>"; };
+		C24E3E5F2AB8F159008A7158 /* twitter.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = twitter.json; sourceTree = "<group>"; };
+		C24E3E602AB8F159008A7158 /* epic_games.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = epic_games.json; sourceTree = "<group>"; };
+		C24E3E612AB8F159008A7158 /* discord.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = discord.json; sourceTree = "<group>"; };
+		C24E3E622AB8F15A008A7158 /* amazon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amazon.json; sourceTree = "<group>"; };
+		C24E3E632AB8F15A008A7158 /* linkedin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = linkedin.json; sourceTree = "<group>"; };
 		C24EECEB268772B600C6ABAA /* RecordType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordType.swift; sourceTree = "<group>"; };
 		C24EECEF2687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionCacheEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C24EECF02687772800C6ABAA /* SectionCacheEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionCacheEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -4188,6 +4204,21 @@
 			path = Counter;
 			sourceTree = "<group>";
 		};
+		C24E3E5B2AB8F13A008A7158 /* Guides */ = {
+			isa = PBXGroup;
+			children = (
+				C24E3E622AB8F15A008A7158 /* amazon.json */,
+				C24E3E612AB8F159008A7158 /* discord.json */,
+				C24E3E602AB8F159008A7158 /* epic_games.json */,
+				C24E3E5C2AB8F158008A7158 /* facebook.json */,
+				C24E3E632AB8F15A008A7158 /* linkedin.json */,
+				C24E3E5D2AB8F159008A7158 /* rockstar_games.json */,
+				C24E3E5F2AB8F159008A7158 /* twitter.json */,
+				C24E3E5E2AB8F159008A7158 /* universal.json */,
+			);
+			path = Guides;
+			sourceTree = "<group>";
+		};
 		C24EECED2687757100C6ABAA /* Log */ = {
 			isa = PBXGroup;
 			children = (
@@ -5799,6 +5830,7 @@
 		C2BDC6BF1FC1ABF600967D0E /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				C24E3E5B2AB8F13A008A7158 /* Guides */,
 				C2D17FF3291BB5D90072EBFD /* Generated */,
 				C2F8702A262C7A900032DB1F /* FileIcons */,
 				C2CB5D1125DB1B7E00A362A9 /* External */,
@@ -7336,12 +7368,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				C230DB8C274710E5005E7060 /* icon_64.png in Resources */,
+				C24E3E692AB8F15A008A7158 /* discord.json in Resources */,
 				C225E612241CFCD10041C238 /* InfoPlist.strings in Resources */,
 				C23666841FB2644900989ACA /* LaunchScreen.storyboard in Resources */,
+				C24E3E652AB8F15A008A7158 /* rockstar_games.json in Resources */,
+				C24E3E682AB8F15A008A7158 /* epic_games.json in Resources */,
 				C2355B4B2221D33300BA001D /* GoogleService-Info.plist in Resources */,
+				C24E3E6A2AB8F15A008A7158 /* amazon.json in Resources */,
 				C225E615241CFCE90041C238 /* Localizable.strings in Resources */,
+				C24E3E6B2AB8F15A008A7158 /* linkedin.json in Resources */,
 				C23666811FB2644900989ACA /* Assets.xcassets in Resources */,
+				C24E3E662AB8F15A008A7158 /* universal.json in Resources */,
+				C24E3E672AB8F15A008A7158 /* twitter.json in Resources */,
 				C2D291DC2955FC9E0084FE1E /* Settings.bundle in Resources */,
+				C24E3E642AB8F15A008A7158 /* facebook.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

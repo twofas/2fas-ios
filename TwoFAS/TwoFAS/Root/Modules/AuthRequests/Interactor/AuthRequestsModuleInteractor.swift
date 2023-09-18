@@ -29,6 +29,7 @@ protocol AuthRequestsModuleInteracting: AnyObject {
     func handleAuth(
         _ req: AuthRequestsModuleInteractorKind,
         selectedSecret: String?,
+        save: Bool,
         completion: @escaping (Result<Void, AuthRequestsModuleInteractorError>) -> Void
     )
     func skip(tokenRequestID: String)
@@ -125,6 +126,7 @@ extension AuthRequestsModuleInteractor: AuthRequestsModuleInteracting {
     func handleAuth(
         _ req: AuthRequestsModuleInteractorKind,
         selectedSecret: String?,
+        save: Bool,
         completion: @escaping (Result<Void, AuthRequestsModuleInteractorError>) -> Void
     ) {
         Log("AuthRequestsModuleInteractor - handleAuth", module: .moduleInteractor)
@@ -152,6 +154,7 @@ extension AuthRequestsModuleInteractor: AuthRequestsModuleInteracting {
                 secret: selectedSecret,
                 domain: auth.domain,
                 extensionID: auth.extensionID,
+                save: save,
                 completion: completion
             )
         default: break
@@ -278,11 +281,14 @@ private extension AuthRequestsModuleInteractor {
         secret: String,
         domain: String,
         extensionID: ExtensionID,
+        save: Bool,
         completion: @escaping (Result<Void, AuthRequestsModuleInteractorError>) -> Void
     ) {
         Log("AuthRequestsModuleInteractor - authorizeManually", module: .moduleInteractor)
         
-        webExtensionAuthInteractor.saveAuthPairing(for: domain, extensionID: extensionID, secret: secret)
+        if save {
+            webExtensionAuthInteractor.saveAuthPairing(for: domain, extensionID: extensionID, secret: secret)
+        }
         
         guard let token = tokenGeneratorInteractor.generateToken(for: secret) else {
             completion(.failure(.tokenError))

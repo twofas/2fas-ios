@@ -831,7 +831,6 @@
 		C2CE84A12814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CE84A02814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift */; };
 		C2CF23FE23623DE000B759DD /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = C2CF23FD23623DE000B759DD /* KeychainAccess */; };
 		C2CFFCDD2007FDD600600AC6 /* CircleProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CFFCDC2007FDD600600AC6 /* CircleProgress.swift */; };
-		C2D010732A7921B400C0BEE3 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D010722A7921B400C0BEE3 /* ModalViewController.swift */; };
 		C2D07ED726A45BBD00AF8E7B /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C2D07EDC26A45BC700AF8E7B /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
 		C2D07EE126A45BD700AF8E7B /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2932EF21FFE94A900FBD4D0 /* Common.framework */; };
@@ -2144,7 +2143,6 @@
 		C2CE84A02814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionTableViewHeader.swift; sourceTree = "<group>"; };
 		C2CFFCDC2007FDD600600AC6 /* CircleProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgress.swift; sourceTree = "<group>"; };
 		C2CFFCDE2008006600600AC6 /* RefreshTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTimer.swift; sourceTree = "<group>"; };
-		C2D010722A7921B400C0BEE3 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
 		C2D07ED326A43FD200AF8E7B /* WidgetServiceHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetServiceHandlerType.swift; sourceTree = "<group>"; };
 		C2D07EE726A468D000AF8E7B /* LabelImageRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelImageRenderer.swift; sourceTree = "<group>"; };
 		C2D07EE926A475F400AF8E7B /* CodeEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEntry.swift; sourceTree = "<group>"; };
@@ -5791,7 +5789,6 @@
 				C2BDC6C01FC1AC0A00967D0E /* RootViewController.swift */,
 				C2BDC6C11FC1AC0A00967D0E /* RootCoordinator.swift */,
 				C2C66F8C1FE0683000AD5A1C /* Modules */,
-				C2D010722A7921B400C0BEE3 /* ModalViewController.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -7584,7 +7581,6 @@
 				C2B39C7027A5882D00D3B579 /* SelectFromGalleryFlowController.swift in Sources */,
 				C2A70684276D39A800885D79 /* NewPINViewController.swift in Sources */,
 				C277C32C245C3FD6009214F3 /* MainContainerViewController.swift in Sources */,
-				C2D010732A7921B400C0BEE3 /* ModalViewController.swift in Sources */,
 				C2D4196621F39B2400DFDB2B /* CameraView.swift in Sources */,
 				C2F5F9E928611DEF00F778E1 /* BrowserExtensionPairingAlreadyPairedView.swift in Sources */,
 				C20E60F928188AA500AB002E /* PushNotificationPermissionViewController.swift in Sources */,

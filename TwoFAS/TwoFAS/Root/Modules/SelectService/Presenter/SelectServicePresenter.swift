@@ -28,6 +28,7 @@ final class SelectServicePresenter {
     
     var browserName: String { interactor.browserName(for: authRequest.extensionID) }
     var domain: String { authRequest.domain }
+    private(set) var saveSwitchValue = false
     
     private var query: String?
     private var lastList: [SelectServiceSection]?
@@ -67,11 +68,15 @@ extension SelectServicePresenter {
             let serviceData = category.cells[safe: indexPath.row]?.serviceData
         else { return }
 
-        flowController.toServiceSelection(with: serviceData, authRequest: authRequest)
+        flowController.toServiceSelection(with: serviceData, authRequest: authRequest, save: saveSwitchValue)
     }
     
     func handleCancel() {
         flowController.toCancel(for: authRequest.tokenRequestID)
+    }
+    
+    func handleSwitchAction(isOn: Bool) {
+        saveSwitchValue = isOn
     }
 }
 

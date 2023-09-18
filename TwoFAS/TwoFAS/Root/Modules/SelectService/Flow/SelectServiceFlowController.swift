@@ -21,12 +21,12 @@ import Foundation
 import Common
 
 protocol SelectServiceFlowControllerParent: AnyObject {
-    func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth)
+    func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool)
     func serviceSelectionCancelled(for tokenRequestID: String)
 }
 
 protocol SelectServiceFlowControlling: AnyObject {
-    func toServiceSelection(with serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth)
+    func toServiceSelection(with serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool)
     func toCancel(for tokenRequestID: String)
 }
 
@@ -55,8 +55,8 @@ final class SelectServiceFlowController: FlowController {
 }
 
 extension SelectServiceFlowController: SelectServiceFlowControlling {
-    func toServiceSelection(with serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth) {
-        parent?.serviceSelectionDidSelect(serviceData, authRequest: authRequest)
+    func toServiceSelection(with serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool) {
+        parent?.serviceSelectionDidSelect(serviceData, authRequest: authRequest, save: save)
     }
     
     func toCancel(for tokenRequestID: String) {

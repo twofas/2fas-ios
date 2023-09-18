@@ -21,7 +21,7 @@ import UIKit
 import Common
 
 protocol SelectServiceNavigationFlowControllerParent: AnyObject {
-    func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth)
+    func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool)
     func serviceSelectionCancelled(for tokenRequestID: String)
 }
 
@@ -52,8 +52,8 @@ final class SelectServiceNavigationFlowController: NavigationFlowController {
 }
 
 extension SelectServiceNavigationFlowController: SelectServiceFlowControllerParent {
-    func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth) {
-        parent?.serviceSelectionDidSelect(serviceData, authRequest: authRequest)
+    func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool) {
+        parent?.serviceSelectionDidSelect(serviceData, authRequest: authRequest, save: save)
     }
     
     func serviceSelectionCancelled(for tokenRequestID: String) {

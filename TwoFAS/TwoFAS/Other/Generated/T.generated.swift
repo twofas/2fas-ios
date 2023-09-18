@@ -516,6 +516,8 @@ internal enum T {
     internal static let resultErrorBrowserPaired = T.tr("Localizable", "browser__result_error_browser_paired", fallback: "Your 2FAS app is already paired with this browser.")
     /// Scan the QR code again
     internal static let resultErrorCta = T.tr("Localizable", "browser__result_error_cta", fallback: "Scan the QR code again")
+    /// Save my choice
+    internal static let saveChoice = T.tr("Localizable", "browser__save_choice", fallback: "Save my choice")
     /// The scanned QR code has an unsupported format. Please try again.
     internal static let scanErrorDialogMsgInvalidCode = T.tr("Localizable", "browser__scan_error_dialog_msg_invalid_code", fallback: "The scanned QR code has an unsupported format. Please try again.")
     /// Unknown error when scanning QR code. Please try again.
@@ -794,6 +796,14 @@ internal enum T {
     internal static let verifying = T.tr("Localizable", "fingerprint__verifying", fallback: "Verifying…")
   }
   internal enum Guides {
+    /// 2FAS guide
+    internal static let guideInitTitle = T.tr("Localizable", "guides__guide_init_title", fallback: "2FAS guide")
+    /// 2FAS for %@
+    internal static func guideTitle(_ p1: Any) -> String {
+      return T.tr("Localizable", "guides__guide_title", String(describing: p1), fallback: "2FAS for %@")
+    }
+    /// Universal 2FA Guide
+    internal static let guideUniversalTitle = T.tr("Localizable", "guides__guide_universal_title", fallback: "Universal 2FA Guide")
     /// Select service to pair with the 2FAS app
     internal static let selectDescription = T.tr("Localizable", "guides__select_description", fallback: "Select service to pair with the 2FAS app")
     /// Do you want to provide 2FA guides for your service?
@@ -1147,8 +1157,8 @@ internal enum T {
     internal static let reddit = T.tr("Localizable", "social__reddit", fallback: "Reddit")
     /// Social media links
     internal static let socialMedia = T.tr("Localizable", "social__social_media", fallback: "Social media links")
-    /// Twitter
-    internal static let twitter = T.tr("Localizable", "social__twitter", fallback: "Twitter")
+    /// X (formerly Twitter)
+    internal static let twitter = T.tr("Localizable", "social__twitter", fallback: "X (formerly Twitter)")
     /// YouTube
     internal static let youtube = T.tr("Localizable", "social__youtube", fallback: "YouTube")
   }

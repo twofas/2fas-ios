@@ -354,6 +354,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Awin"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "3A4351AF-846D-4C0C-88D9-C084688BA401")!,
+                name: "Azusa Pacific University"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "2415E851-D60B-42E2-8C3E-5E173F141329")!,
                 name: "BGL Corporate Solutions"
             ),
@@ -1738,6 +1742,10 @@ final class IconDescriptionDatabaseGenerated {
                 name: "Greenhost"
             ),
             .init(
+                iconTypeID: IconTypeID(uuidString: "7A863A30-A3DC-4E46-9771-CD7AD5A4FC81")!,
+                name: "Grist"
+            ),
+            .init(
                 iconTypeID: IconTypeID(uuidString: "650DB4D2-DC14-4F5B-896D-134AAFDEDB23")!,
                 name: "Groups.io"
             ),
@@ -2272,6 +2280,10 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "FCDC5AD7-184B-4332-8E15-53315D459519")!,
                 name: "Leaseweb"
+            ),
+            .init(
+                iconTypeID: IconTypeID(uuidString: "670DCFC9-9984-46E5-9E4C-0BFE3FF538F6")!,
+                name: "Legal & General"
             ),
             .init(
                 iconTypeID: IconTypeID(uuidString: "A7262F92-F8F6-46E4-B0D8-E0A11B4C251E")!,

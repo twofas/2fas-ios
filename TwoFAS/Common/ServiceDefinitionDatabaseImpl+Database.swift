@@ -751,6 +751,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "9DECECD7-D941-4EAA-8B9E-DE7A4C46993C")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "6D4ECB97-C1B7-4520-AC11-85D3D748F3B3")!,
+                name: "Azusa Pacific University",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .label, text: "APU", matcher: .startsWith, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "3A4351AF-846D-4C0C-88D9-C084688BA401")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "77967BDD-6EDC-4CD7-961F-ACD8A1DD276A")!,
                 name: "BGL Corporate Solutions",
                 issuer: nil,
@@ -3757,6 +3765,14 @@ final class ServiceDefinitionDatabaseGenerated {
                 iconTypeID: UUID(uuidString: "8510864A-B571-4414-9248-F76BCEDE8C0C")!
             ),
             .init(
+                serviceTypeID: UUID(uuidString: "1E95B431-48B1-469A-B961-0F97D22967AF")!,
+                name: "Grist",
+                issuer: ["Grist"],
+                tags: nil,
+                matchingRules: nil,
+                iconTypeID: UUID(uuidString: "7A863A30-A3DC-4E46-9771-CD7AD5A4FC81")!
+            ),
+            .init(
                 serviceTypeID: UUID(uuidString: "CBE525D2-EDC9-4C35-A2B0-3966B997FAA0")!,
                 name: "Groups.io",
                 issuer: nil,
@@ -4911,6 +4927,17 @@ final class ServiceDefinitionDatabaseGenerated {
                 matchingRules: [.init(field: .issuer, text: "Leaseweb", matcher: .contains, ignoreCase: true),
 .init(field: .label, text: "Leaseweb", matcher: .contains, ignoreCase: true)],
                 iconTypeID: UUID(uuidString: "FCDC5AD7-184B-4332-8E15-53315D459519")!
+            ),
+            .init(
+                serviceTypeID: UUID(uuidString: "03A9AA26-6B0D-48A9-BAC8-D068D52B0171")!,
+                name: "Legal & General",
+                issuer: nil,
+                tags: nil,
+                matchingRules: [.init(field: .issuer, text: "Legal & General", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "Legal & General", matcher: .contains, ignoreCase: true),
+.init(field: .label, text: "Legal+&+General", matcher: .contains, ignoreCase: true),
+.init(field: .issuer, text: "Legal+&+General", matcher: .contains, ignoreCase: true)],
+                iconTypeID: UUID(uuidString: "670DCFC9-9984-46E5-9E4C-0BFE3FF538F6")!
             ),
             .init(
                 serviceTypeID: UUID(uuidString: "7000B3FC-B371-4348-BAEA-9FC1DA426F9D")!,

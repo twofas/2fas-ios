@@ -26,6 +26,7 @@ struct AddingServiceTokenView: View {
     
     @ObservedObject var presenter: AddingServiceTokenPresenter
     let changeHeight: (CGFloat) -> Void
+    let dismiss: () -> Void
     
     private let animation = Animation
         .linear(duration: 1)
@@ -34,7 +35,13 @@ struct AddingServiceTokenView: View {
     var body: some View {
         VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
             VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-                AddingServiceTitleView(text: T.Tokens.addSuccessTitle)
+                VStack(spacing: 0) {
+                    AddingServiceCloseButtonView {
+                        dismiss()
+                    }
+                    AddingServiceTitleView(text: T.Tokens.addSuccessTitle)
+                }
+                .frame(maxWidth: .infinity)
                 AddingServiceTextContentView(text: T.Tokens.addSuccessDescription)
                 AddingServiceLargeSpacing()
                 
@@ -99,16 +106,16 @@ struct AddingServiceTokenView: View {
                 .frame(maxWidth: .infinity)
                 .overlay(
                     RoundedRectangle(cornerRadius: Theme.Metrics.modalCornerRadius)
-                        .stroke(Color(Theme.Colors.Line.separator), lineWidth: 1)
+                        .stroke(Color(Theme.Colors.Line.selectionBorder), lineWidth: 1)
                 )
             }
-            .padding(.horizontal, Theme.Metrics.doubleMargin * 3.0 / 4.0)
+            .padding(.horizontal, Theme.Metrics.doubleMargin)
             
             AddingServiceLargeSpacing()
             
             AddingServiceFullWidthButtonWithImage(
                 text: T.Tokens.copyToken,
-                icon: Asset.keybordIcon.swiftUIImage
+                icon: Asset.copyIcon.swiftUIImage
             ) {
                 presenter.handleCopyCode()
             }

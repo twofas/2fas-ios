@@ -23,7 +23,7 @@ struct AddingServiceTextFieldLineView: View {
     var body: some View {
         Divider()
             .frame(height: 1)
-            .overlay(Color(Theme.Colors.Line.primaryLine))
+            .overlay(Color(Theme.Colors.Line.active))
     }
 }
 

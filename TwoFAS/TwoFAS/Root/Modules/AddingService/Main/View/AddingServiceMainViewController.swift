@@ -40,15 +40,16 @@ final class AddingServiceMainViewController: UIViewController {
             cameraUnavailable: cameraUnavailable,
             changeHeight: { [weak self] height in
                 self?.heightChange?(height)
-            }, presenter: presenter
-        )
+            }, presenter: presenter) { [weak self] in
+                self?.presentingViewController?.dismiss(animated: true)
+            }
         
         let vc = UIHostingController(rootView: main)
         vc.willMove(toParent: self)
         addChild(vc)
         view.addSubview(vc.view)
         vc.view.pinToParent()
-        vc.view.backgroundColor = Theme.Colors.Fill.System.second
+        vc.view.backgroundColor = Theme.Colors.Fill.System.third
         vc.didMove(toParent: self)
     }
 }
@@ -60,17 +61,20 @@ private struct AddingServiceMain: View {
     
     let cameraUnavailable: Bool
     let changeHeight: (CGFloat) -> Void
+    let dismiss: () -> Void
     
     @ObservedObject var presenter: AddingServiceMainPresenter
     
     init(
         cameraUnavailable: Bool,
         changeHeight: @escaping (CGFloat) -> Void,
-        presenter: AddingServiceMainPresenter
+        presenter: AddingServiceMainPresenter,
+        dismiss: @escaping () -> Void
     ) {
         self.cameraUnavailable = cameraUnavailable
         self.changeHeight = changeHeight
         self.presenter = presenter
+        self.dismiss = dismiss
         
         if cameraUnavailable {
             errorReason = T.Tokens.cameraIsUnavailableAppPermission
@@ -79,7 +83,14 @@ private struct AddingServiceMain: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-            AddingServiceTitleView(text: T.Tokens.addManualTitle)
+            VStack(spacing: 0) {
+                AddingServiceCloseButtonView {
+                    dismiss()
+                }
+                AddingServiceTitleView(text: T.Tokens.addManualTitle)
+            }
+            .frame(maxWidth: .infinity)
+
             AddingServiceTextContentView(text: T.Tokens.addDescription)
             AddingServiceLargeSpacing()
             

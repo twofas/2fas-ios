@@ -19,17 +19,31 @@
 
 import SwiftUI
 
-struct AddingServiceDividerView: View {
+struct AddingServiceCloseButtonView: View {
+    let action: () -> Void
+    
     var body: some View {
-        Divider()
-            .frame(height: 1)
-            .overlay(Color(Theme.Colors.Line.secondarySeparator))
-            .padding(.horizontal, -Theme.Metrics.doubleMargin)
+        HStack {
+            Spacer()
+            Button {
+                action()
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(
+                        Color(Theme.Colors.CloseButton.foreground),
+                        Color(Theme.Colors.CloseButton.background)
+                    )
+                       .font(.system(size: 22))
+                       .frame(alignment: .trailing)
+            }
+            .frame(alignment: .trailing)
+        }.frame(maxWidth: .infinity)
     }
 }
 
-struct AddingServiceDividerView_Previews: PreviewProvider {
+struct AddingServiceCloseButtonView_Previews: PreviewProvider {
     static var previews: some View {
-        AddingServiceDividerView()
+        AddingServiceCloseButtonView(action: {})
     }
 }

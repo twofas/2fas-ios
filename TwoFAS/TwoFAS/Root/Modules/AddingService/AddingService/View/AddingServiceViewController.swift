@@ -33,12 +33,12 @@ final class AddingServiceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Theme.Colors.Fill.System.second
+        view.backgroundColor = Theme.Colors.Fill.System.third
         
         presenter?.viewDidLoad()
         
         if let sheet = sheetPresentationController {
-            sheet.prefersGrabberVisible = true
+            sheet.prefersGrabberVisible = false
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             sheet.prefersEdgeAttachedInCompactHeight = true
             sheet.preferredCornerRadius = Theme.Metrics.modalCornerRadius
@@ -93,7 +93,7 @@ private extension AddingServiceViewController {
         newVC.willMove(toParent: self)
         addChild(newVC)
         view.addSubview(newVC.view)
-        newVC.view.backgroundColor = Theme.Colors.Fill.System.second
+        newVC.view.backgroundColor = Theme.Colors.Fill.System.third
         newVC.view.pinToParent(with: .init(
             top: top,
             left: 0,

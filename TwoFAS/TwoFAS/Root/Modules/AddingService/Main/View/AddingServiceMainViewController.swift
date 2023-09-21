@@ -127,10 +127,10 @@ private struct AddingServiceMain: View {
             
             AddingServiceLargeSpacing()
             
-            AddingServiceTitleView(text: T.Tokens.addOtherMethods, alignToLeading: true)
+            AddingServiceTitleView(text: T.Tokens.otherMethodsHeader, alignToLeading: true)
             
             AddingServiceFullWidthButtonWithImage(
-                text: T.Tokens.fabAddmanually,
+                text: T.Tokens.addEnterManual,
                 icon: Asset.keybordIcon.swiftUIImage
             ) {
                 presenter.handleToAddManually()

@@ -108,6 +108,10 @@ enum Theme {
             static let secondaryLine = ThemeColor.divider
             static let theme = ThemeColor.theme
             static let separator = ThemeColor.tableSeparator
+            static let systemSeparator = UIColor.separator
+            static let secondarySeparator = ThemeColor.secondarySeparator
+            static let active = ThemeColor.activeLine
+            static let selectionBorder = ThemeColor.selectionBorder
         }
         
         enum Grid {
@@ -122,6 +126,11 @@ enum Theme {
             static let background = ThemeColor.settingsCellBackground
             static let iconBorder = ThemeColor.tertiary
             static let separator = ThemeColor.tableSeparator
+        }
+        
+        enum CloseButton {
+            static let background = ThemeColor.buttonCloseBackground
+            static let foreground = ThemeColor.buttonCloseForeground
         }
 
         enum Fill {

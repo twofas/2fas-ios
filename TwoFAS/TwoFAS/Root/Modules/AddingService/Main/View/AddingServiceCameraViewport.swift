@@ -24,7 +24,7 @@ import AVFoundation
 struct AddingServiceCameraViewport: UIViewRepresentable {
     private let height = AddingServiceMetrics.cameraActiveAreaHeight
         
-    var didRegisterError: (String) -> Void
+    var didRegisterError: (String?) -> Void
     var didFoundCode: (CodeType) -> Void
     @Binding var cameraFreeze: Bool
     
@@ -45,6 +45,12 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
                 name: NSNotification.Name.AVCaptureSessionWasInterrupted,
                 object: nil
             )
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(resumeCamera),
+                name: UIApplication.didBecomeActiveNotification,
+                object: nil
+            )
         }
         
         func dismantle() {
@@ -60,7 +66,7 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
                 return
             }
 
-            let errorReason = {
+            let errorReason: String? = {
                 switch reason {
                 case .videoDeviceInUseByAnotherClient:
                     return T.Camera.cameraUsedByOtherAppTitle
@@ -68,10 +74,18 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
                     return T.Camera.cameraUnavailableTitle
                 case .videoDeviceNotAvailableWithMultipleForegroundApps:
                     return T.Camera.cantInitializeCameraSplitView
+                case .videoDeviceNotAvailableInBackground:
+                    camera?.stop()
+                    return nil
                 default: return T.Camera.cantInitializeCameraGeneral
                 }
             }()
             parent.didRegisterError(errorReason)
+        }
+        
+        @objc
+        private func resumeCamera() {
+            camera?.start()
         }
     }
     
@@ -136,6 +150,15 @@ final class CameraScanningView: UIView {
         super.layoutSubviews()
 
         camera?.updateScanningRegion(.init(origin: .zero, size: frame.size))
+    }
+    
+    func stop() {
+        camera?.freeze()
+        camera?.stopScanning()
+    }
+    
+    func start() {
+        camera?.startScanning()
     }
     
     func dismantle() {

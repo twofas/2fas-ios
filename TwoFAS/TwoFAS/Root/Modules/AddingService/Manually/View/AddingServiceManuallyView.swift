@@ -23,6 +23,7 @@ import Common
 struct AddingServiceManuallyView: View {
     @ObservedObject var presenter: AddingServiceManuallyPresenter
     let changeHeight: (CGFloat) -> Void
+    let dismiss: () -> Void
     
     @FocusState private var focusedField: Field?
     private enum Field: Int, Hashable {
@@ -41,8 +42,15 @@ struct AddingServiceManuallyView: View {
     
     var body: some View {
         VStack {
-            AddingServiceTitleView(text: T.Tokens.addManualTitle)
-            
+            VStack(spacing: 0) {
+                AddingServiceCloseButtonView {
+                    dismiss()
+                }
+                AddingServiceTitleView(text: T.Tokens.addManualTitle)
+            }
+            .padding(.horizontal, Theme.Metrics.doubleMargin)
+            .frame(maxWidth: .infinity)
+
             ScrollView(.vertical) {
                 Group {
                     AddingServiceTextContentView(text: T.Tokens.addManualDescription)
@@ -174,7 +182,7 @@ struct AddingServiceManuallyView: View {
         }
         .overlay(
             RoundedRectangle(cornerRadius: Theme.Metrics.modalCornerRadius)
-                .strokeBorder(Color(Theme.Colors.Line.separator), lineWidth: 2)
+                .strokeBorder(Color(Theme.Colors.Line.selectionBorder), lineWidth: 1)
         )
         .padding(.bottom, Theme.Metrics.doubleMargin)
     }

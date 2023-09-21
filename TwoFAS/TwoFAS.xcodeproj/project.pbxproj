@@ -22,6 +22,7 @@
 		C2035AF1245DE59700C482D2 /* MainContainerTextStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2035AF0245DE59700C482D2 /* MainContainerTextStyling.swift */; };
 		C2035AF3245DE60D00C482D2 /* MainContainerButtonStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2035AF2245DE60C00C482D2 /* MainContainerButtonStyling.swift */; };
 		C2035D412938129000B94834 /* Mock.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2035D3F2938129000B94834 /* Mock.generated.swift */; };
+		C20418622ABB969300874654 /* AddingServiceCloseButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20418612ABB969300874654 /* AddingServiceCloseButtonView.swift */; };
 		C2044D83224EC6A8003940AA /* FCM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2044D82224EC6A8003940AA /* FCM.swift */; };
 		C2044D85224ECF1B003940AA /* FCMHandlerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2044D84224ECF1B003940AA /* FCMHandlerProtocol.swift */; };
 		C204FAEE21F4A0850041E2F4 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C204FAED21F4A0850041E2F4 /* CGFloat+Extensions.swift */; };
@@ -1308,6 +1309,7 @@
 		C2035AF0245DE59700C482D2 /* MainContainerTextStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerTextStyling.swift; sourceTree = "<group>"; };
 		C2035AF2245DE60C00C482D2 /* MainContainerButtonStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerButtonStyling.swift; sourceTree = "<group>"; };
 		C2035D3F2938129000B94834 /* Mock.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mock.generated.swift; sourceTree = "<group>"; };
+		C20418612ABB969300874654 /* AddingServiceCloseButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceCloseButtonView.swift; sourceTree = "<group>"; };
 		C2044D82224EC6A8003940AA /* FCM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCM.swift; sourceTree = "<group>"; };
 		C2044D84224ECF1B003940AA /* FCMHandlerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMHandlerProtocol.swift; sourceTree = "<group>"; };
 		C204FAED21F4A0850041E2F4 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
@@ -3354,6 +3356,7 @@
 				C2F4D9382A8D33FA00608F63 /* AddServiceAdvancedWarningView.swift */,
 				C2F4D93A2A8D470100608F63 /* AddingServiceServiceTypeButton.swift */,
 				C2F4D93C2A8D549000608F63 /* AddingServiceServiceTypeSelector.swift */,
+				C20418612ABB969300874654 /* AddingServiceCloseButtonView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -7761,6 +7764,7 @@
 				C2B077A4292A75810074517F /* UploadLogsModuleInteractor.swift in Sources */,
 				C29803C4245F01600066DFE0 /* CenteringScrollView.swift in Sources */,
 				C2B077BC292A8FA80074517F /* UploadLogsSuccessViewController.swift in Sources */,
+				C20418622ABB969300874654 /* AddingServiceCloseButtonView.swift in Sources */,
 				C240484A2765218C0076376E /* WidgetWarningPresenter.swift in Sources */,
 				C2F5F9E328611D6200F778E1 /* BrowserExtensionPairingAlreadyPairedFlowController.swift in Sources */,
 				C28356232897098300421882 /* SelectFromGalleryAdvice.swift in Sources */,

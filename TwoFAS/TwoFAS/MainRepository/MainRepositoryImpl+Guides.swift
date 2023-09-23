@@ -20,7 +20,7 @@
 import Foundation
 
 extension MainRepositoryImpl {
-    func listGuides() -> [ServiceGuide] {
+    func listAllGuides() -> [ServiceGuide] {
         ServiceGuide.allCases
     }
     

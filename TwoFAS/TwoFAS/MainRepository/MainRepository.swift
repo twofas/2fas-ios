@@ -438,6 +438,6 @@ protocol MainRepository: AnyObject {
     func viewPath() -> (viewPath: ViewPath, savedAt: Date)?
     
     // MARK: - Guides
-    func listGuides() -> [ServiceGuide]
+    func listAllGuides() -> [ServiceGuide]
     func loadGuideData(for serviceGuide: ServiceGuide) -> ServiceGuideDescription?
 }

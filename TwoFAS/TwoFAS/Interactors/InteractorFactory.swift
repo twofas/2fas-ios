@@ -226,6 +226,13 @@ final class InteractorFactory {
             mainRepository: MainRepositoryImpl.shared
         )
     }
+    
+    func guideInteractor() -> GuideInteracting {
+        GuideInteractor(
+            mainRepository: MainRepositoryImpl.shared,
+            serviceDefinitionInteractor: serviceDefinitionInteractor()
+        )
+    }
 }
 
 private extension InteractorFactory {

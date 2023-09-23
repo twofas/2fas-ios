@@ -244,6 +244,7 @@
 		C23721A12804C07600DE335D /* CameraScannerNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23721A02804C07600DE335D /* CameraScannerNavigationFlowController.swift */; };
 		C237368E2ABF536200792054 /* MainRepositoryImpl+Guides.swift in Sources */ = {isa = PBXBuildFile; fileRef = C237368D2ABF536200792054 /* MainRepositoryImpl+Guides.swift */; };
 		C23736902ABF5E2C00792054 /* Guides.swift in Sources */ = {isa = PBXBuildFile; fileRef = C237368F2ABF5E2C00792054 /* Guides.swift */; };
+		C23736922ABF5EC500792054 /* GuideInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23736912ABF5EC500792054 /* GuideInteractor.swift */; };
 		C2379D0326B6D6C30010C6B1 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C2379D0726B6D6CC0010C6B1 /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
 		C2379D0B26B6DE4B0010C6B1 /* WidgetServiceHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D07ED326A43FD200AF8E7B /* WidgetServiceHandlerType.swift */; };
@@ -1552,6 +1553,7 @@
 		C23721A02804C07600DE335D /* CameraScannerNavigationFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraScannerNavigationFlowController.swift; sourceTree = "<group>"; };
 		C237368D2ABF536200792054 /* MainRepositoryImpl+Guides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Guides.swift"; sourceTree = "<group>"; };
 		C237368F2ABF5E2C00792054 /* Guides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Guides.swift; sourceTree = "<group>"; };
+		C23736912ABF5EC500792054 /* GuideInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideInteractor.swift; sourceTree = "<group>"; };
 		C239DE8F26CC5366002301E2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileViewController.swift; sourceTree = "<group>"; };
 		C23B5D6528F229CC00FC6364 /* ServiceMatchRules+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceMatchRules+.swift"; sourceTree = "<group>"; };
@@ -2973,6 +2975,7 @@
 				C2A2255B293BFE1E00B76115 /* TokenInteractor.swift */,
 				C24336E7299ECEC700BF35B1 /* NewsInteractor.swift */,
 				C27CDA7829A2A55100DC7C98 /* NetworkStatusInteractor.swift */,
+				C23736912ABF5EC500792054 /* GuideInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -7957,6 +7960,7 @@
 				C263F45A29900DED009B0837 /* MainMenuModels.swift in Sources */,
 				C2AB92BD27662E4C00698382 /* ExporterPasswordProtectionModuleInteractor.swift in Sources */,
 				C21B1B292A8820BE0021CAF1 /* HOTPAdapter.swift in Sources */,
+				C23736922ABF5EC500792054 /* GuideInteractor.swift in Sources */,
 				C274BDBE2769409700EE28BC /* AppSecurityFlowController.swift in Sources */,
 				C2D44E6A275C14790043F5D6 /* MainRepository.swift in Sources */,
 				C2FE362A2517FF8D00035643 /* VoiceOver.swift in Sources */,

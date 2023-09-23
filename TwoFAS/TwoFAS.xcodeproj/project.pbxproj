@@ -242,6 +242,8 @@
 		C23666841FB2644900989ACA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C23666821FB2644900989ACA /* LaunchScreen.storyboard */; };
 		C236C3EF2A1CC105002A2129 /* ListStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C236C3EE2A1CC105002A2129 /* ListStyle.swift */; };
 		C23721A12804C07600DE335D /* CameraScannerNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23721A02804C07600DE335D /* CameraScannerNavigationFlowController.swift */; };
+		C237368E2ABF536200792054 /* MainRepositoryImpl+Guides.swift in Sources */ = {isa = PBXBuildFile; fileRef = C237368D2ABF536200792054 /* MainRepositoryImpl+Guides.swift */; };
+		C23736902ABF5E2C00792054 /* Guides.swift in Sources */ = {isa = PBXBuildFile; fileRef = C237368F2ABF5E2C00792054 /* Guides.swift */; };
 		C2379D0326B6D6C30010C6B1 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C2379D0726B6D6CC0010C6B1 /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
 		C2379D0B26B6DE4B0010C6B1 /* WidgetServiceHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D07ED326A43FD200AF8E7B /* WidgetServiceHandlerType.swift */; };
@@ -1548,6 +1550,8 @@
 		C23666851FB2644900989ACA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C236C3EE2A1CC105002A2129 /* ListStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStyle.swift; sourceTree = "<group>"; };
 		C23721A02804C07600DE335D /* CameraScannerNavigationFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraScannerNavigationFlowController.swift; sourceTree = "<group>"; };
+		C237368D2ABF536200792054 /* MainRepositoryImpl+Guides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Guides.swift"; sourceTree = "<group>"; };
+		C237368F2ABF5E2C00792054 /* Guides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Guides.swift; sourceTree = "<group>"; };
 		C239DE8F26CC5366002301E2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileViewController.swift; sourceTree = "<group>"; };
 		C23B5D6528F229CC00FC6364 /* ServiceMatchRules+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceMatchRules+.swift"; sourceTree = "<group>"; };
@@ -3886,6 +3890,7 @@
 				C2069C9028C2922A00321E44 /* AEGISData.swift */,
 				C27A31C929C8EEE40094679F /* LastPassData.swift */,
 				C27A31CB29C90B110094679F /* RaivoData.swift */,
+				C237368F2ABF5E2C00792054 /* Guides.swift */,
 			);
 			path = DataTypes;
 			sourceTree = "<group>";
@@ -6280,6 +6285,7 @@
 				C2D3B0F728EE115200D2F991 /* MainRepositoryImpl+Icons.swift */,
 				C27A1EAB2912797200702DB9 /* MainRepositoryImpl+Camera.swift */,
 				C2B077A7292A809A0074517F /* MainRepositoryImpl+Logs.swift */,
+				C237368D2ABF536200792054 /* MainRepositoryImpl+Guides.swift */,
 				C249AF62278A40FE005F9D80 /* UserDefaults */,
 				C2DF245F29859F9700762A26 /* MainRepository+ViewPath.swift */,
 			);
@@ -7910,6 +7916,7 @@
 				C2FA3E85280B54080097ED71 /* TokenGeneratorInteractor.swift in Sources */,
 				C26BCE03281013A700CA6A9A /* SelectServiceFlowController.swift in Sources */,
 				C21B40DC28C520E400348E04 /* ImporterOpenFileError.swift in Sources */,
+				C23736902ABF5E2C00792054 /* Guides.swift in Sources */,
 				C278122927FA462000F31453 /* MainRepositoryImpl+RSAEncryption.swift in Sources */,
 				C278122D27FA4B5A00F31453 /* MainRepositoryImpl+DeviceName.swift in Sources */,
 				C2BD85E6264068C00087D087 /* IntroductionPage1View.swift in Sources */,
@@ -8157,6 +8164,7 @@
 				C219CDBB278E270F00CBBF09 /* SettingsEventController.swift in Sources */,
 				C284991127CC0FC70092098D /* ComposeServiceAlgorithmPresenter.swift in Sources */,
 				C2F6BB0326488290002A9747 /* IntroductionNaviContainer.swift in Sources */,
+				C237368E2ABF536200792054 /* MainRepositoryImpl+Guides.swift in Sources */,
 				C2CC0A4829D0C9FC00677A7B /* ExternalImportInstructionsViewController.swift in Sources */,
 				C2404848276520F90076376E /* WidgetWarningViewController.swift in Sources */,
 				C2C93FBD2604005E00E10981 /* MainContainerToggleWithLabel.swift in Sources */,

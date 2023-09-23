@@ -436,4 +436,8 @@ protocol MainRepository: AnyObject {
     func clearViewPath()
     func saveViewPath(_ path: ViewPath)
     func viewPath() -> (viewPath: ViewPath, savedAt: Date)?
+    
+    // MARK: - Guides
+    func listGuides() -> [ServiceGuide]
+    func loadGuideData(for serviceGuide: ServiceGuide) -> ServiceGuideDescription?
 }

@@ -26,13 +26,13 @@ struct GuideSelectorView: View {
     let presenter: GuideSelectorPresenter
     
     var body: some View {
-            ScrollView(.vertical) {
-                VStack(spacing: Theme.Metrics.standardSpacing) {
-                    Text(T.Guides.selectDescription)
-                        .font(.footnote)
-                        .textCase(.uppercase)
-                        .foregroundStyle(Color(Theme.Colors.inactiveInverted))
-                        .padding(.vertical, Theme.Metrics.doubleMargin)
+        ScrollView(.vertical) {
+            VStack(spacing: Theme.Metrics.standardSpacing) {
+                Text(T.Guides.selectDescription)
+                    .font(.footnote)
+                    .textCase(.uppercase)
+                    .foregroundStyle(Color(Theme.Colors.inactiveInverted))
+                    .padding(.vertical, Theme.Metrics.doubleMargin)
                 LazyVGrid(columns: columns, spacing: Theme.Metrics.doubleMargin) {
                     ForEach(presenter.guides.chunked(into: 2), id: \.self) { values in
                         if let first = values.first {
@@ -45,6 +45,25 @@ struct GuideSelectorView: View {
                 }
             }
         }
+        VStack(alignment: .center) {
+            Text(verbatim: T.Guides.selectProvideGuide)
+                .font(.footnote)
+                .foregroundStyle(Color(Theme.Colors.Line.active))
+                .padding(.vertical, Theme.Metrics.doubleMargin)
+            Link(destination: URL(string: "https://2fas.com/your-2fa-guide/")!) {
+                HStack(spacing: Theme.Metrics.halfSpacing) {
+                    Text(verbatim: T.Guides.selectProvideGuideCta)
+                        .font(.body)
+                        .fontWeight(.medium)
+                        .foregroundStyle(Color(Theme.Colors.Text.theme))
+                    Asset.externalLinkIcon.swiftUIImage
+                        .foregroundStyle(Color(Theme.Colors.Text.theme))
+                }
+            }
+        }
+        .padding(.bottom, Theme.Metrics.doubleMargin)
+        .frame(maxWidth: .infinity)
+        .background(Color(Theme.Colors.Fill.notification))
     }
     
     @ViewBuilder
@@ -68,7 +87,3 @@ struct GuideSelectorView: View {
         }
     }
 }
-
-//#Preview {
-//    GuideSelectorView()
-//}

@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 struct GuideDescription: Identifiable, Hashable {
     static func == (lhs: GuideDescription, rhs: GuideDescription) -> Bool {
@@ -84,9 +85,9 @@ extension GuideInteractor: GuideInteracting {
 private extension GuideInteractor {
     func parseGuide(_ guide: ServiceGuideDescription) -> GuideDescription? {
         let serviceName = guide.serviceName
-        guard let serviceIconTypeID = serviceDefinitionInteractor
+        guard let iconTypeID = serviceDefinitionInteractor
             .serviceDefinition(using: guide.serviceId)?.iconTypeID else { return nil }
-        let serviceIcon = serviceDefinitionInteractor.iconTypeID(for: serviceIconTypeID)
+        let serviceIcon = ServiceIcon.for(iconTypeID: iconTypeID)
         let header = guide.flow.header
         let menuTitle = guide.flow.menu.title
         let menuPositions: [GuideDescription.MenuPosition] = guide.flow.menu.items.map({ item in
@@ -146,43 +147,3 @@ private extension ServiceGuideDescription.CTA? {
         }
     }
 }
-
-//struct ServiceGuideDescription: Decodable {
-//    enum Action: String, Decodable {
-//        case manually = "open_manually"
-//        case scanner = "open_scanner"
-//    }
-//    
-//    struct CTA: Decodable {
-//        let name: String
-//        let action: Action
-//        let data: String?
-//    }
-//    
-//    struct Step: Decodable {
-//        let image: ServiceGuideImage
-//        let content: String
-//        let cta: CTA?
-//    }
-//    
-//    struct Item: Decodable {
-//        let name: String
-//        let steps: [Step]
-//    }
-//    
-//    struct Menu: Decodable {
-//        let title: String
-//        let items: [Item]
-//    }
-//    
-//    struct Flow: Decodable {
-//        let header: String
-//        let menu: Menu
-//      //menu.title
-        // menu.items
-//    }
-//    
-//    let serviceName: String
-//    let serviceId: UUID
-//    let flow: Flow
-//}

@@ -61,7 +61,7 @@ struct GuideSelectorView: View {
         .background {
             let size = CGSize(width: Theme.Metrics.modalCornerRadius, height: Theme.Metrics.modalCornerRadius)
             RoundedRectangle(cornerSize: size)
-                .stroke(Color(Theme.Colors.Line.selectionBorder), lineWidth: 1)
+                .stroke(Color(Theme.Colors.Line.secondarySeparator), lineWidth: 1)
         }
         .onTapGesture {
             presenter.handleShowGuideMenu(guide)

@@ -245,6 +245,12 @@
 		C237368E2ABF536200792054 /* MainRepositoryImpl+Guides.swift in Sources */ = {isa = PBXBuildFile; fileRef = C237368D2ABF536200792054 /* MainRepositoryImpl+Guides.swift */; };
 		C23736902ABF5E2C00792054 /* Guides.swift in Sources */ = {isa = PBXBuildFile; fileRef = C237368F2ABF5E2C00792054 /* Guides.swift */; };
 		C23736922ABF5EC500792054 /* GuideInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23736912ABF5EC500792054 /* GuideInteractor.swift */; };
+		C237369A2AC08E4800792054 /* GuideSelectorFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23736992AC08E4800792054 /* GuideSelectorFlowController.swift */; };
+		C237369C2AC0990900792054 /* GuideSelectorNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C237369B2AC0990900792054 /* GuideSelectorNavigationFlowController.swift */; };
+		C237369E2AC09ABE00792054 /* GuideSelectorModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C237369D2AC09ABE00792054 /* GuideSelectorModuleInteractor.swift */; };
+		C23736A02AC09AF100792054 /* GuideSelectorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C237369F2AC09AF100792054 /* GuideSelectorPresenter.swift */; };
+		C23736A22AC09D0E00792054 /* GuideSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23736A12AC09D0E00792054 /* GuideSelectorViewController.swift */; };
+		C23736A42AC09DB200792054 /* GuideSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23736A32AC09DB200792054 /* GuideSelectorView.swift */; };
 		C2379D0326B6D6C30010C6B1 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C2379D0726B6D6CC0010C6B1 /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
 		C2379D0B26B6DE4B0010C6B1 /* WidgetServiceHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D07ED326A43FD200AF8E7B /* WidgetServiceHandlerType.swift */; };
@@ -1554,6 +1560,12 @@
 		C237368D2ABF536200792054 /* MainRepositoryImpl+Guides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Guides.swift"; sourceTree = "<group>"; };
 		C237368F2ABF5E2C00792054 /* Guides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Guides.swift; sourceTree = "<group>"; };
 		C23736912ABF5EC500792054 /* GuideInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideInteractor.swift; sourceTree = "<group>"; };
+		C23736992AC08E4800792054 /* GuideSelectorFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorFlowController.swift; sourceTree = "<group>"; };
+		C237369B2AC0990900792054 /* GuideSelectorNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorNavigationFlowController.swift; sourceTree = "<group>"; };
+		C237369D2AC09ABE00792054 /* GuideSelectorModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorModuleInteractor.swift; sourceTree = "<group>"; };
+		C237369F2AC09AF100792054 /* GuideSelectorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorPresenter.swift; sourceTree = "<group>"; };
+		C23736A12AC09D0E00792054 /* GuideSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorViewController.swift; sourceTree = "<group>"; };
+		C23736A32AC09DB200792054 /* GuideSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorView.swift; sourceTree = "<group>"; };
 		C239DE8F26CC5366002301E2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileViewController.swift; sourceTree = "<group>"; };
 		C23B5D6528F229CC00FC6364 /* ServiceMatchRules+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceMatchRules+.swift"; sourceTree = "<group>"; };
@@ -2631,6 +2643,7 @@
 				C20E2DEE2A7C4A4900DB64BB /* AddingService */,
 				C20E2DF82A7C4D7700DB64BB /* Main */,
 				C20E2E012A7C519A00DB64BB /* Token */,
+				C23736932AC08DE100792054 /* Guide */,
 				C2F7FDFB2A8AB021004B2C95 /* Manually */,
 			);
 			path = AddingService;
@@ -3744,6 +3757,59 @@
 				C2BDC6BF1FC1ABF600967D0E /* Other */,
 			);
 			path = TwoFAS;
+			sourceTree = "<group>";
+		};
+		C23736932AC08DE100792054 /* Guide */ = {
+			isa = PBXGroup;
+			children = (
+				C23736942AC08DF600792054 /* Selector */,
+			);
+			path = Guide;
+			sourceTree = "<group>";
+		};
+		C23736942AC08DF600792054 /* Selector */ = {
+			isa = PBXGroup;
+			children = (
+				C23736982AC08E1700792054 /* Flow */,
+				C23736972AC08E0A00792054 /* Interactor */,
+				C23736962AC08E0400792054 /* Presenter */,
+				C23736952AC08E0000792054 /* View */,
+			);
+			path = Selector;
+			sourceTree = "<group>";
+		};
+		C23736952AC08E0000792054 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C23736A12AC09D0E00792054 /* GuideSelectorViewController.swift */,
+				C23736A32AC09DB200792054 /* GuideSelectorView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C23736962AC08E0400792054 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C237369F2AC09AF100792054 /* GuideSelectorPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C23736972AC08E0A00792054 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				C237369D2AC09ABE00792054 /* GuideSelectorModuleInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		C23736982AC08E1700792054 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				C237369B2AC0990900792054 /* GuideSelectorNavigationFlowController.swift */,
+				C23736992AC08E4800792054 /* GuideSelectorFlowController.swift */,
+			);
+			path = Flow;
 			sourceTree = "<group>";
 		};
 		C23FD50828144A4B00E4E9C5 /* WebExtension */ = {
@@ -7651,6 +7717,7 @@
 				C2A7945727F9019D00E5C641 /* BrowserExtensionEditNameFlowController.swift in Sources */,
 				C2698B722986F6E800EBC179 /* UITabBarController+addTab.swift in Sources */,
 				C284AF7927601BCF00FEE810 /* BackupDeleteFlowController.swift in Sources */,
+				C23736A22AC09D0E00792054 /* GuideSelectorViewController.swift in Sources */,
 				C2BDC6C31FC1AC0A00967D0E /* RootViewController.swift in Sources */,
 				C2147CDD205D7B630001D011 /* PINPadViewModel.swift in Sources */,
 				C2BD85E02640308C0087D087 /* IntroductionPageView.swift in Sources */,
@@ -7964,6 +8031,7 @@
 				C274BDBE2769409700EE28BC /* AppSecurityFlowController.swift in Sources */,
 				C2D44E6A275C14790043F5D6 /* MainRepository.swift in Sources */,
 				C2FE362A2517FF8D00035643 /* VoiceOver.swift in Sources */,
+				C237369A2AC08E4800792054 /* GuideSelectorFlowController.swift in Sources */,
 				C2830D82293D53CA00B3DDAF /* TokensMoveItem.swift in Sources */,
 				C2A4C8392A1153A200AFD67C /* TokensTokenView.swift in Sources */,
 				C26BCE072810287500CA6A9A /* SelectServiceTableViewHeader.swift in Sources */,
@@ -7976,6 +8044,7 @@
 				C2BD82B2236619E800FBD69A /* BackupAreaWarningView.swift in Sources */,
 				C2AC220C276618AD00271402 /* ExporterMainScreenFlowController.swift in Sources */,
 				C240186F2618685500800DBF /* IconSelectorViewController.swift in Sources */,
+				C237369E2AC09ABE00792054 /* GuideSelectorModuleInteractor.swift in Sources */,
 				C2A4C83B2A11736200AFD67C /* TokensCircleProgress.swift in Sources */,
 				C21EB2EE2A7FC55800FA8AA1 /* AddingServiceMetrics.swift in Sources */,
 				C2F51F0127DAB37200A67C73 /* BrowserExtensionPairingAnimationView.swift in Sources */,
@@ -8090,6 +8159,7 @@
 				C23666771FB2644900989ACA /* AppDelegate.swift in Sources */,
 				C2FA3E83280AF5210097ED71 /* ServiceListingInteractor.swift in Sources */,
 				C21E0B3E2299F2190063EE7C /* UIDevice+.swift in Sources */,
+				C23736A02AC09AF100792054 /* GuideSelectorPresenter.swift in Sources */,
 				C2D44E73275C1FE90043F5D6 /* MainRepositoryImpl+Tokens.swift in Sources */,
 				C240189C26187BEE00800DBF /* IconSelectorHeaderReusableView.swift in Sources */,
 				C27C03C127F4FF010020DB5E /* BrowserExtensionMainPresenter.swift in Sources */,
@@ -8111,6 +8181,7 @@
 				C25860B428246DC9009AE54F /* NewsModuleInteractor.swift in Sources */,
 				C2ACF9DF20A8A30E003E0987 /* ServiceMigrationController.swift in Sources */,
 				C2625F9028BB85B100D84C5C /* AboutModuleInteractor.swift in Sources */,
+				C23736A42AC09DB200792054 /* GuideSelectorView.swift in Sources */,
 				C2404846276520A80076376E /* WidgetWarningModuleInteractor.swift in Sources */,
 				C2404889276573420076376E /* ImporterPreimportSummaryModuleInteractor.swift in Sources */,
 				C235A011298FD97D008F4FD0 /* MainSplitViewController.swift in Sources */,
@@ -8159,6 +8230,7 @@
 				C274BDC2276941FB00EE28BC /* AppSecurityPresenter.swift in Sources */,
 				C2FB8A6E277F98BF0066DDE2 /* TrashServiceInteractor.swift in Sources */,
 				C21247F627B70D340044D9F2 /* LabelComposePresenter.swift in Sources */,
+				C237369C2AC0990900792054 /* GuideSelectorNavigationFlowController.swift in Sources */,
 				C2997AA92454D767006D5943 /* SelectPINLengthController.swift in Sources */,
 				C2323C50276B530D00038B76 /* AppLockPresenter.swift in Sources */,
 				C2CC80D627B99AF700294CF2 /* ComposeServicePresenter+Menu.swift in Sources */,

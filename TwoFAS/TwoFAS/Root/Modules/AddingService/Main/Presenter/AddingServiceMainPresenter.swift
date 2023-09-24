@@ -103,6 +103,10 @@ extension AddingServiceMainPresenter {
         flowController.toAddManually()
     }
     
+    func handleToGuides() {
+        flowController.toGuides()
+    }
+    
     func handleToAppSettings() {
         flowController.toAppSettings()
     }

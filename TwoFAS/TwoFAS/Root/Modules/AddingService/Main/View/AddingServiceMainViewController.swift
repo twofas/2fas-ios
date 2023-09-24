@@ -142,6 +142,13 @@ private struct AddingServiceMain: View {
             ) {
                 presenter.handleToGallery()
             }
+            
+            AddingServiceFullWidthButtonWithImage(
+                text: T.Tokens.addWithGuide,
+                icon: Asset.guidesIcon.swiftUIImage
+            ) {
+                presenter.handleToGuides()
+            }
         }
         .padding(.horizontal, Theme.Metrics.doubleMargin)
         .observeHeight(onChange: { height in

@@ -568,4 +568,10 @@ extension InteractorFactory {
             serviceModifyInteractor: serviceModifyInteractor()
         )
     }
+    
+    func guideSelectorModuleInteractor() -> GuideSelectorModuleInteracting {
+        GuideSelectorModuleInteractor(
+            guideInteractor: guideInteractor()
+        )
+    }
 }

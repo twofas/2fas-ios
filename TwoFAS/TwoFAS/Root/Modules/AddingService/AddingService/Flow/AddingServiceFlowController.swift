@@ -30,6 +30,7 @@ protocol AddingServiceFlowControllerParent: AnyObject {
     func addingServiceToPushPermissions(for extensionID: Common.ExtensionID)
     func addingServiceToTwoFASWebExtensionPairing(for extensionID: Common.ExtensionID)
     func addingServiceClose(_ serviceData: ServiceData)
+    func addingServiceToGuides()
 }
 
 protocol AddingServiceFlowControlling: AnyObject {
@@ -106,5 +107,9 @@ extension AddingServiceFlowController: AddingServiceMainFlowControllerParent {
         
     func mainToAddManually() {
         AddingServiceManuallyFlowController.embed(in: viewController, parent: self)
+    }
+    
+    func mainToGuides() {
+        parent?.addingServiceToGuides()
     }
 }

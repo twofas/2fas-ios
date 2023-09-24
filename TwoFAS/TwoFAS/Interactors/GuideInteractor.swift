@@ -19,7 +19,15 @@
 
 import UIKit
 
-struct GuideDescription {
+struct GuideDescription: Identifiable, Hashable {
+    static func == (lhs: GuideDescription, rhs: GuideDescription) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
     struct Page {
         enum CTA {
             case manually(title: String, data: String?)
@@ -42,6 +50,7 @@ struct GuideDescription {
     let header: String
     let menuTitle: String
     let menuPositions: [MenuPosition]
+    let id: UUID
 }
 
 protocol GuideInteracting: AnyObject {
@@ -98,7 +107,8 @@ private extension GuideInteractor {
             serviceIcon: serviceIcon,
             header: header,
             menuTitle: menuTitle,
-            menuPositions: menuPositions
+            menuPositions: menuPositions,
+            id: guide.serviceId
         )
     }
 }

@@ -38,7 +38,7 @@ protocol SectionInteracting: AnyObject {
     func delete(_ sectionData: SectionData)
     func rename(_ sectionData: SectionData, newTitle: String)
     
-    func findServices(for phrase: String, sort: SortType, tags: [ServiceTypeID]) -> [CategoryData]
+    func findServices(for phrase: String, sort: SortType, ids: [ServiceTypeID]) -> [CategoryData]
     func move(service: ServiceData, from oldIndex: Int, to newIndex: Int, newSection: SectionData?)
     func listAll(sort: SortType) -> [CategoryData]
 }
@@ -108,8 +108,8 @@ extension SectionInteractor: SectionInteracting {
         mainRepository.renameSection(sectionData, newTitle: newTitle)
     }
     
-    func findServices(for phrase: String, sort: SortType, tags: [ServiceTypeID]) -> [CategoryData] {
-        mainRepository.listAllServicesWithingCategories(for: phrase, sorting: sort, tags: tags)
+    func findServices(for phrase: String, sort: SortType, ids: [ServiceTypeID]) -> [CategoryData] {
+        mainRepository.listAllServicesWithingCategories(for: phrase, sorting: sort, ids: ids)
     }
     
     func move(service: ServiceData, from oldIndex: Int, to newIndex: Int, newSection: SectionData?) {
@@ -117,6 +117,6 @@ extension SectionInteractor: SectionInteracting {
     }
     
     func listAll(sort: SortType) -> [CategoryData] {
-        mainRepository.listAllServicesWithingCategories(for: nil, sorting: sort, tags: [])
+        mainRepository.listAllServicesWithingCategories(for: nil, sorting: sort, ids: [])
     }
 }

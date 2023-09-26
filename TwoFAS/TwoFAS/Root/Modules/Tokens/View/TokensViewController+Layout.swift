@@ -164,7 +164,7 @@ extension TokensViewController {
             let availableWidth = enviroment.container.effectiveContentSize.width
             var columns = Int(availableWidth / minimumCellWidth)
             let layoutMultiplier: CGFloat = {
-                guard presenter.listStyle == .default else { return 1.25 }
+                guard presenter.listStyle == .default else { return 1.0 }
                 return enviroment.traitCollection.preferredContentSizeCategory.layoutMultiplier
             }()
             if columns > 1 && layoutMultiplier != 1.0 {
@@ -183,13 +183,13 @@ extension TokensViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
+            widthDimension: .fractionalWidth(1.0 / CGFloat(itemsInRow)),
             heightDimension: cellHeight()
         )
         
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
-            subitem: item,
+            repeatingSubitem: item,
             count: itemsInRow
         )
         

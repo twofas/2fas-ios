@@ -115,6 +115,8 @@ internal enum T {
   internal static let exportBackupTitle = T.tr("Localizable", "export_backup_title", fallback: "Your backup file is ready for export")
   /// Aegis
   internal static let externalimportAegis = T.tr("Localizable", "externalimport_aegis", fallback: "Aegis")
+  /// andOTP
+  internal static let externalimportAndotp = T.tr("Localizable", "externalimport_andotp", fallback: "andOTP")
   /// You can import your tokens to 2FAS from different apps. Choose an app from the list and follow the instructions.
   internal static let externalimportDescription = T.tr("Localizable", "externalimport_description", fallback: "You can import your tokens to 2FAS from different apps. Choose an app from the list and follow the instructions.")
   /// Google Authenticator
@@ -219,8 +221,8 @@ internal enum T {
   internal static let pastDurationMonthsPlural4 = T.tr("Localizable", "past_duration_months-plural-4", fallback: "")
   /// 
   internal static let pastDurationMonthsPlural5 = T.tr("Localizable", "past_duration_months-plural-5", fallback: "")
-  /// moments ago
-  internal static let pastDurationSeconds = T.tr("Localizable", "past_duration_seconds", fallback: "moments ago")
+  /// moment ago
+  internal static let pastDurationSeconds = T.tr("Localizable", "past_duration_seconds", fallback: "moment ago")
   /// moments ago
   internal static let pastDurationSecondsPlural = T.tr("Localizable", "past_duration_seconds-plural", fallback: "moments ago")
   /// 
@@ -516,6 +518,8 @@ internal enum T {
     internal static let resultErrorBrowserPaired = T.tr("Localizable", "browser__result_error_browser_paired", fallback: "Your 2FAS app is already paired with this browser.")
     /// Scan the QR code again
     internal static let resultErrorCta = T.tr("Localizable", "browser__result_error_cta", fallback: "Scan the QR code again")
+    /// Save my choice
+    internal static let saveChoice = T.tr("Localizable", "browser__save_choice", fallback: "Save my choice")
     /// The scanned QR code has an unsupported format. Please try again.
     internal static let scanErrorDialogMsgInvalidCode = T.tr("Localizable", "browser__scan_error_dialog_msg_invalid_code", fallback: "The scanned QR code has an unsupported format. Please try again.")
     /// Unknown error when scanning QR code. Please try again.
@@ -540,6 +544,8 @@ internal enum T {
     internal static let cantInitializeCameraSplitView = T.tr("Localizable", "camera__cant_initialize_camera_split_view", fallback: "Can't initialize camera in Split View mode. Open app in full screen and try again")
   }
   internal enum Color {
+    /// Brown
+    internal static let brown = T.tr("Localizable", "color__brown", fallback: "Brown")
     /// Green
     internal static let green = T.tr("Localizable", "color__green", fallback: "Green")
     /// Indigo
@@ -550,6 +556,8 @@ internal enum T {
     internal static let neutral = T.tr("Localizable", "color__neutral", fallback: "Neutral")
     /// Orange
     internal static let orange = T.tr("Localizable", "color__orange", fallback: "Orange")
+    /// Pink
+    internal static let pink = T.tr("Localizable", "color__pink", fallback: "Pink")
     /// Purple
     internal static let purple = T.tr("Localizable", "color__purple", fallback: "Purple")
     /// Red
@@ -644,6 +652,10 @@ internal enum T {
     internal static func textLongTitle(_ p1: Int) -> String {
       return T.tr("Localizable", "commons__text_long_title", p1, fallback: "The provided text is too long (max. %d chars)")
     }
+    /// The provided text is too short (min. %d chars)
+    internal static func textShortTitle(_ p1: Int) -> String {
+      return T.tr("Localizable", "commons__text_short_title", p1, fallback: "The provided text is too short (min. %d chars)")
+    }
     /// Tokens
     internal static let tokens = T.tr("Localizable", "commons__tokens", fallback: "Tokens")
     /// Try again
@@ -732,6 +744,12 @@ internal enum T {
     internal static let aegisSuccessMsg = T.tr("Localizable", "externalimport__aegis_success_msg", fallback: "This JSON file allows importing tokens from Aegis.")
     /// Importing 2FA tokens from Aegis app
     internal static let aegisTitle = T.tr("Localizable", "externalimport__aegis_title", fallback: "Importing 2FA tokens from Aegis app")
+    /// Export your accounts from andOTP to an unencrypted JSON file and upload it using the "Choose JSON file" button. Remember to remove the file after a successful import.
+    internal static let andotpMsg = T.tr("Localizable", "externalimport__andotp_msg", fallback: "Export your accounts from andOTP to an unencrypted JSON file and upload it using the \"Choose JSON file\" button. Remember to remove the file after a successful import.")
+    /// This JSON file allows importing tokens from andOTP.
+    internal static let andotpSuccessMsg = T.tr("Localizable", "externalimport__andotp_success_msg", fallback: "This JSON file allows importing tokens from andOTP.")
+    /// Importing 2FA tokens from andOTP app
+    internal static let andotpTitle = T.tr("Localizable", "externalimport__andotp_title", fallback: "Importing 2FA tokens from andOTP app")
     /// Authenticator Pro
     internal static let authenticatorpro = T.tr("Localizable", "externalimport__authenticatorpro", fallback: "Authenticator Pro")
     /// Export your accounts from Authenticator Pro to an unencrypted text file and upload it using the "Choose text file" button. Remember to remove the file after a successful import.
@@ -750,6 +768,8 @@ internal enum T {
     internal static let gaTitle = T.tr("Localizable", "externalimport__ga_title", fallback: "Importing 2FA tokens from Google Authenticator app")
     /// Import tokens from Aegis
     internal static let infoAegisTitle = T.tr("Localizable", "externalimport__info_aegis_title", fallback: "Import tokens from Aegis")
+    /// Import tokens from andOTP
+    internal static let infoAndotpTitle = T.tr("Localizable", "externalimport__info_andotp_title", fallback: "Import tokens from andOTP")
     /// Import tokens from Authenticator Pro
     internal static let infoAuthenticatorproTitle = T.tr("Localizable", "externalimport__info_authenticatorpro_title", fallback: "Import tokens from Authenticator Pro")
     /// Import tokens from Google Authenticator
@@ -784,6 +804,24 @@ internal enum T {
     internal static let usePinTitle = T.tr("Localizable", "fingerprint__use_pin_title", fallback: "Use PIN this time")
     /// Verifying…
     internal static let verifying = T.tr("Localizable", "fingerprint__verifying", fallback: "Verifying…")
+  }
+  internal enum Guides {
+    /// 2FAS guide
+    internal static let guideInitTitle = T.tr("Localizable", "guides__guide_init_title", fallback: "2FAS guide")
+    /// 2FAS for %@
+    internal static func guideTitle(_ p1: Any) -> String {
+      return T.tr("Localizable", "guides__guide_title", String(describing: p1), fallback: "2FAS for %@")
+    }
+    /// Universal 2FA Guide
+    internal static let guideUniversalTitle = T.tr("Localizable", "guides__guide_universal_title", fallback: "Universal 2FA Guide")
+    /// Select service to pair with the 2FAS app
+    internal static let selectDescription = T.tr("Localizable", "guides__select_description", fallback: "Select service to pair with the 2FAS app")
+    /// Do you want to provide 2FA guides for your service?
+    internal static let selectProvideGuide = T.tr("Localizable", "guides__select_provide_guide", fallback: "Do you want to provide 2FA guides for your service?")
+    /// Apply now
+    internal static let selectProvideGuideCta = T.tr("Localizable", "guides__select_provide_guide_cta", fallback: "Apply now")
+    /// Browse services
+    internal static let selectTitle = T.tr("Localizable", "guides__select_title", fallback: "Browse services")
   }
   internal enum Introduction {
     /// Choose QR code
@@ -1129,8 +1167,8 @@ internal enum T {
     internal static let reddit = T.tr("Localizable", "social__reddit", fallback: "Reddit")
     /// Social media links
     internal static let socialMedia = T.tr("Localizable", "social__social_media", fallback: "Social media links")
-    /// Twitter
-    internal static let twitter = T.tr("Localizable", "social__twitter", fallback: "Twitter")
+    /// X (formerly Twitter)
+    internal static let twitter = T.tr("Localizable", "social__twitter", fallback: "X (formerly Twitter)")
     /// YouTube
     internal static let youtube = T.tr("Localizable", "social__youtube", fallback: "YouTube")
   }
@@ -1149,6 +1187,8 @@ internal enum T {
     internal static let addManualAdvanced = T.tr("Localizable", "tokens__add_manual_advanced", fallback: "Advanced token settings")
     /// Changing default token settings is not recommended. Do so only when your 2FA provider requires it and when you have clear instructions.
     internal static let addManualAdvancedDescription = T.tr("Localizable", "tokens__add_manual_advanced_description", fallback: "Changing default token settings is not recommended. Do so only when your 2FA provider requires it and when you have clear instructions.")
+    /// is not recommended
+    internal static let addManualAdvancedDescriptionHighlight = T.tr("Localizable", "tokens__add_manual_advanced_description_highlight", fallback: "is not recommended")
     /// Type in the service name and secret key.
     internal static let addManualDescription = T.tr("Localizable", "tokens__add_manual_description", fallback: "Type in the service name and secret key.")
     /// Add service
@@ -1175,6 +1215,8 @@ internal enum T {
     internal static let addSuccessTitle = T.tr("Localizable", "tokens__add_success_title", fallback: "Almost done!")
     /// Pair the service with 2FAS
     internal static let addTitle = T.tr("Localizable", "tokens__add_title", fallback: "Pair the service with 2FAS")
+    /// Guide me
+    internal static let addWithGuide = T.tr("Localizable", "tokens__add_with_guide", fallback: "Guide me")
     /// What service do you want to add?
     internal static let addingServiceQuestionTitle = T.tr("Localizable", "tokens__adding_service_question_title", fallback: "What service do you want to add?")
     /// Additional info
@@ -1197,6 +1239,10 @@ internal enum T {
     internal static let brandIcon = T.tr("Localizable", "tokens__brand_icon", fallback: "Brand icon")
     /// Camera is unavailable
     internal static let cameraIsUnavailable = T.tr("Localizable", "tokens__camera_is_unavailable", fallback: "Camera is unavailable")
+    /// Camera is unavailable. Check apps' access permission in System Settings
+    internal static let cameraIsUnavailableAppPermission = T.tr("Localizable", "tokens__camera_is_unavailable_app_permission", fallback: "Camera is unavailable. Check apps' access permission in System Settings")
+    /// System Settings
+    internal static let cameraIsUnavailableAppPermissionUnderline = T.tr("Localizable", "tokens__camera_is_unavailable_app_permission_underline", fallback: "System Settings")
     /// CAUTION
     internal static let caution = T.tr("Localizable", "tokens__caution", fallback: "CAUTION")
     /// Change brand icon
@@ -1300,6 +1346,8 @@ internal enum T {
     internal static let orderMenuOptionUser = T.tr("Localizable", "tokens__order_menu_option_user", fallback: "Request icon as a user")
     /// Select the request method
     internal static let orderMenuTitle = T.tr("Localizable", "tokens__order_menu_title", fallback: "Select the request method")
+    /// Other methods?
+    internal static let otherMethodsHeader = T.tr("Localizable", "tokens__other_methods_header", fallback: "Other methods?")
     /// OTP Authentication
     internal static let otpAuthentication = T.tr("Localizable", "tokens__otp_authentication", fallback: "OTP Authentication")
     /// Personalization

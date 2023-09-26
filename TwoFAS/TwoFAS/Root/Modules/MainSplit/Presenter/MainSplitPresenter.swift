@@ -22,6 +22,14 @@ import Foundation
 final class MainSplitPresenter {
     weak var view: MainSplitViewControlling?
     
+    var isMenuPortraitOverlayCollapsed: Bool {
+        interactor.isMenuPortraitOverlayCollapsed
+    }
+    
+    var isMenuLandscapeCollapsed: Bool {
+        interactor.isMenuLandscapeCollapsed
+    }
+    
     private let flowController: MainSplitFlowControlling
     private let interactor: MainSplitModuleInteracting
         
@@ -46,9 +54,6 @@ extension MainSplitPresenter {
     
     func viewWillAppear() {
         handleRestoreNavigation()
-        interactor.fetchNews { [weak self] in
-            self?.updateNewsBadge()
-        }
     }
     
     func didBecomeActive() {
@@ -96,6 +101,14 @@ extension MainSplitPresenter {
         }
         return nil
     }
+    
+    func handlePortraitMenuOverlayCollapsed(_ isCollapsed: Bool) {
+        interactor.handlePortraitMenuOverlayCollapsed(isCollapsed)
+    }
+    
+    func handleLandscapeMenuCollapsed(_ isCollapsed: Bool) {
+        interactor.handleLandscapeMenuCollapsed(isCollapsed)
+    }
 }
 
 private extension MainSplitPresenter {
@@ -127,23 +140,9 @@ private extension MainSplitPresenter {
     }
     
     func savePath(path: ViewPath) {
-        checkNewsBadgeMark(oldPath: interactor.restoreViewPath(), newPath: path)
-
         interactor.setViewPath(path)
         if case ViewPath.settings(let option) = path {
             interactor.saveCurrentSettingsPath(option)
         }
-    }
-    
-    func checkNewsBadgeMark(oldPath: ViewPath?, newPath: ViewPath) {
-        guard interactor.hasUnreadNews else { return }
-        if oldPath != nil && oldPath == .news && newPath != .news {
-            interactor.markNewsAsRead()
-            updateNewsBadge()
-        }
-    }
-    
-    func updateNewsBadge() {
-        view?.updateNewsBadge()
     }
 }

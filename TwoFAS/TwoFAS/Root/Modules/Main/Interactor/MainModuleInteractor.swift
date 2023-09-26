@@ -39,6 +39,7 @@ final class MainModuleInteractor {
     private let fileInteractor: FileInteracting
     private let newVersionInteractor: NewVersionInteracting
     private let networkStatusInteractor: NetworkStatusInteracting
+    private let appInfoInteractor: AppInfoInteracting
     
     init(
         logUploadingInteractor: LogUploadingInteracting,
@@ -46,13 +47,15 @@ final class MainModuleInteractor {
         cloudBackupStateInteractor: CloudBackupStateInteracting,
         fileInteractor: FileInteracting,
         newVersionInteractor: NewVersionInteracting,
-        networkStatusInteractor: NetworkStatusInteracting
+        networkStatusInteractor: NetworkStatusInteracting,
+        appInfoInteractor: AppInfoInteracting
     ) {
         self.logUploadingInteractor = logUploadingInteractor
         self.cloudBackupStateInteractor = cloudBackupStateInteractor
         self.fileInteractor = fileInteractor
         self.newVersionInteractor = newVersionInteractor
         self.networkStatusInteractor = networkStatusInteractor
+        self.appInfoInteractor = appInfoInteractor
 
         cloudBackupStateInteractor.secretSyncError = { [weak self] in self?.secretSyncError?($0) }
     }
@@ -62,6 +65,7 @@ extension MainModuleInteractor: MainModuleInteracting {
     func initialize() {
         networkStatusInteractor.installListeners()
         DebugLog(logUploadingInteractor.summarize())
+        appInfoInteractor.markDateOfFirstRunIfNeeded()
     }
     
     func checkForImport() -> URL? {

@@ -101,9 +101,9 @@ public final class ServiceHandler {
     func listAllServicesWithinSections(
         phrase: String?,
         sort: SortType,
-        tags: [ServiceTypeID]
+        ids: [ServiceTypeID]
     ) -> ServicesWithinSections {
-        ServiceEntity.listItems(on: coreDataStack.context, phrase: phrase, sort: sort, tags: tags)
+        ServiceEntity.listItems(on: coreDataStack.context, phrase: phrase, sort: sort, ids: ids)
             .groupByCategory.mapValues { $0.toServiceData() }
     }
     

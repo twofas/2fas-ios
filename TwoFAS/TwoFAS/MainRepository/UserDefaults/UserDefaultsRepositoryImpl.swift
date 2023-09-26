@@ -48,6 +48,9 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case activeSearchEnabled
         case selectedListStyle
         case tokensHidden
+        case mainMenuPortraitCollapsed
+        case mainMenuLandscapeCollapsed
+        case dateOfFirstRun
     }
     private let userDefaults = UserDefaults()
     private let sharedDefaults = UserDefaults(suiteName: Config.suiteName)!
@@ -232,6 +235,36 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
     
     func setTokensHidden(_ hidden: Bool) {
         userDefaults.set(hidden, forKey: Keys.tokensHidden.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    var isMainMenuPortraitCollapsed: Bool {
+        userDefaults.bool(forKey: Keys.mainMenuPortraitCollapsed.rawValue)
+    }
+    
+    func setIsMainMenuPortraitCollapsed(_ isCollapsed: Bool) {
+        userDefaults.set(isCollapsed, forKey: Keys.mainMenuPortraitCollapsed.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    var isMainMenuLandscapeCollapsed: Bool {
+        userDefaults.bool(forKey: Keys.mainMenuLandscapeCollapsed.rawValue)
+    }
+    
+    func setIsMainMenuLandscapeCollapsed(_ isCollapsed: Bool) {
+        userDefaults.set(isCollapsed, forKey: Keys.mainMenuLandscapeCollapsed.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    var dateOfFirstRun: Date? {
+        guard userDefaults.object(forKey: Keys.dateOfFirstRun.rawValue) != nil else { return nil }
+        let value = userDefaults.double(forKey: Keys.dateOfFirstRun.rawValue)
+        let date = Date(timeIntervalSince1970: value)
+        return date
+    }
+    
+    func saveDateOfFirstRun(_ date: Date) {
+        userDefaults.set(date.timeIntervalSince1970, forKey: Keys.dateOfFirstRun.rawValue)
         userDefaults.synchronize()
     }
     

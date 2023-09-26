@@ -26,7 +26,7 @@ public struct LogEntry: Hashable {
     public let module: LogModule
     public let severity: LogSeverity
         
-    init(content: String, timestamp: Date, module: LogModule, severity: LogSeverity) {
+    public init(content: String, timestamp: Date, module: LogModule, severity: LogSeverity) {
         self.content = content
         self.timestamp = timestamp
         self.module = module

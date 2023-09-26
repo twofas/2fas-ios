@@ -20,7 +20,7 @@
 import UIKit
 
 protocol TokensViewControlling: AnyObject {
-    func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>)
+    func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>, scrollTo: IndexPath?)
         
     func showList()
     func showEmptyScreen()
@@ -46,13 +46,16 @@ protocol TokensViewControlling: AnyObject {
 
 extension TokensViewController: TokensViewControlling {
     // MARK: - Data managment
-    func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>) {
+    func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>, scrollTo: IndexPath?) {
         if tokensView.hasActiveDrag || tokensView.hasActiveDrop {
             tokensView.cancelInteractiveMovement()
         }
         dataSource.apply(newSnapshot, animatingDifferences: !tokensView.hasActiveDrag, completion: nil)
         // no need to call reload other than seconds/consumer update
         tokensView.reloadData()
+        if let scrollTo {
+            tokensView.scrollToItem(at: scrollTo, at: .top, animated: true)
+        }
     }
     
     // MARK: - Empty screen or list
@@ -117,27 +120,43 @@ extension TokensViewController: TokensViewControlling {
     
     // MARK: - Navibar icons
     func updateAddIcon(using state: TokensViewControllerAddState) {
+        func createNewsIcon() -> UIBarButtonItem {
+            let img: UIImage = {
+                presenter.hasUnreadNews ? Asset.navibarNewsIconBadge.image : Asset.navibarNewsIcon.image
+            }()
+            img.withTintColor(Theme.Colors.Icon.theme)
+            let button = UIBarButtonItem(
+                image: img,
+                style: .plain,
+                target: self,
+                action: #selector(showNotifications)
+            )
+            button.accessibilityLabel = T.Commons.notifications
+            return button
+        }
+        
+        func createAddButton(image: UIImage) -> UIBarButtonItem {
+            let buttonAdd = UIBarButtonItem(
+                image: image,
+                style: .plain,
+                target: self,
+                action: #selector(addServiceAction)
+            )
+            buttonAdd.accessibilityLabel = T.Voiceover.addService
+            return buttonAdd
+        }
+            
         switch state {
         case .firstTime:
-            let button = UIBarButtonItem(
-                image: Asset.naviIconAddFirst.image,
-                style: .plain,
-                target: self,
-                action: #selector(addServiceAction)
-            )
-            button.accessibilityLabel = T.Voiceover.addService
-            navigationItem.rightBarButtonItems = nil
-            navigationItem.rightBarButtonItem = button
+            navigationItem.rightBarButtonItems = [
+                createAddButton(image: Asset.naviIconAddFirst.image),
+                createNewsIcon()
+            ]
         case .normal:
-            let button = UIBarButtonItem(
-                image: Asset.naviIconAdd.image,
-                style: .plain,
-                target: self,
-                action: #selector(addServiceAction)
-            )
-            button.accessibilityLabel = T.Voiceover.addService
-            navigationItem.rightBarButtonItems = nil
-            navigationItem.rightBarButtonItem = button
+            navigationItem.rightBarButtonItems = [
+                createAddButton(image: Asset.naviIconAdd.image),
+                createNewsIcon()
+            ]
         case .none:
             let buttonSection = UIBarButtonItem(
                 image: Asset.addCategory.image,
@@ -192,6 +211,11 @@ extension TokensViewController: TokensViewControlling {
             let cell = snapshot.itemIdentifiers(inSection: section)[safe: indexPath.row]
         else { return nil }
         return cell
+    }
+    
+    @objc
+    func showNotifications() {
+        presenter.handleShowNotifications()
     }
     
     // MARK: - Bars

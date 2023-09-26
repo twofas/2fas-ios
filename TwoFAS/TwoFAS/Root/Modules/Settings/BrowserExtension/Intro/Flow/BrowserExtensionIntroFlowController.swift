@@ -112,7 +112,7 @@ extension BrowserExtensionIntroFlowController: BrowserExtensionIntroFlowControll
     func toPushNotifications() {
         Log("Presenting Push Notification Permissions")
         guard let navigationController else { return }
-        PushNotificationPermissionFlowController.push(on: navigationController, parent: self)
+        PushNotificationPermissionPlainFlowController.push(on: navigationController, parent: self, extensionID: nil)
     }
     
     func toCamera() {
@@ -129,8 +129,8 @@ extension BrowserExtensionIntroFlowController: BrowserExtensionIntroFlowControll
     }
 }
 
-extension BrowserExtensionIntroFlowController: PushNotificationPermissionFlowControllerParent {
-    func pushNotificationsDidEnd() {
+extension BrowserExtensionIntroFlowController: PushNotificationPermissionPlainFlowControllerParent {
+    func pushNotificationsClose(extensionID: ExtensionID?) {
         navigationController?.popToRootViewController(animated: true)
         viewController.presenter.handlePushNotificationClosed()
     }

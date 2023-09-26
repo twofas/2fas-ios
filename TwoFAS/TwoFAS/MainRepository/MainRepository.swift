@@ -82,6 +82,11 @@ protocol MainRepository: AnyObject {
     func setTokensHidden(_ hidden: Bool)
     // MARK: Animation
     var shouldAnimate: Bool { get }
+    // MARK: Main menu
+    var isMainMenuPortraitCollapsed: Bool { get }
+    func setIsMainMenuPortraitCollapsed(_ isCollapsed: Bool)
+    var isMainMenuLandscapeCollapsed: Bool { get }
+    func setIsMainMenuLandscapeCollapsed(_ isCollapsed: Bool)
     
     // MARK: - Tokens
     func token(
@@ -188,7 +193,7 @@ protocol MainRepository: AnyObject {
     func listAllServicesWithingCategories(
         for phrase: String?,
         sorting: SortType,
-        tags: [ServiceTypeID]
+        ids: [ServiceTypeID]
     ) -> [CategoryData]
     func countServices() -> Int
     func obtainNextUnknownCodeCounter() -> Int
@@ -204,6 +209,8 @@ protocol MainRepository: AnyObject {
     // MARK: - App info
     var appVersion: String? { get }
     var appBundleIdentifier: String? { get }
+    var dateOfFirstRun: Date? { get }
+    func saveDateOfFirstRun(_ date: Date)
     
     // MARK: - New Version
     var newVersionCounter: Int { get }
@@ -403,6 +410,7 @@ protocol MainRepository: AnyObject {
     func findLegacyService(using string: String) -> ServiceTypeID?
     func findLegacyIcon(using string: String) -> IconTypeID?
     func findServices(byTag searchText: String) -> [ServiceDefinition]
+    func findServicesByTagOrIssuer(_ searchText: String, exactMatch: Bool) -> [ServiceDefinition]
     func findServices(domain searchText: String) -> [ServiceDefinition]
     
     // MARK: - Icons

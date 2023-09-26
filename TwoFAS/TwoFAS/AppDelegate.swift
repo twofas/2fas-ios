@@ -30,6 +30,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        guard !ProcessInfo.isSwiftUIPreview else { return true }
+        
         rootCoordinator = RootCoordinator()
         
         window = UIWindow(frame: UIScreen.main.bounds)

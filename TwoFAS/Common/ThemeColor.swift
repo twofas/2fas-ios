@@ -47,5 +47,10 @@ public enum ThemeColor {
     public static let cameraOverlay = UIColor(white: 0, alpha: 0.67)
     public static let uuidInputBackground = UIColor(named: "UUIDInputBackground", in: bundle, compatibleWith: nil)!
     public static let uuidInputText = UIColor(named: "UUIDInputText", in: bundle, compatibleWith: nil)!
+    public static let buttonCloseBackground = UIColor(named: "ColorButtonCloseBackground", in: bundle, compatibleWith: nil)!
+    public static let buttonCloseForeground = UIColor(named: "ColorButtonCloseForeground", in: bundle, compatibleWith: nil)!
+    public static let activeLine = UIColor(named: "ColorActiveLine", in: bundle, compatibleWith: nil)!
+    public static let secondarySeparator = UIColor(named: "ColorSecondarySeparator", in: bundle, compatibleWith: nil)!
+    public static let selectionBorder = UIColor(named: "ColorSelectionBorder", in: bundle, compatibleWith: nil)!
 }
 // swiftlint:enable all

@@ -234,9 +234,9 @@ final class ServiceEntity: NSManagedObject {
         on context: NSManagedObjectContext,
         phrase: String?,
         sort: SortType,
-        tags: [ServiceTypeID]
+        ids: [ServiceTypeID]
     ) -> [ServiceEntity] {
-        listItemsWithOptions(on: context, options: .filterByPhrase(phrase, sortBy: sort, trashed: .no, tags: tags))
+        listItemsWithOptions(on: context, options: .filterByPhrase(phrase, sortBy: sort, trashed: .no, ids: ids))
     }
     
     @nonobjc static func listAllExisting(on context: NSManagedObjectContext) -> [ServiceEntity] {

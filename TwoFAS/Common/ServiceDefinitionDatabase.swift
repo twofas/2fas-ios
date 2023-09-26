@@ -26,6 +26,7 @@ public protocol ServiceDefinitionDatabase: AnyObject {
     
     func findService(using issuer: String) -> ServiceDefinition?
     func findServices(byTag searchText: String) -> [ServiceDefinition]
+    func findServicesByTagOrIssuer(_ searchText: String, exactMatch: Bool) -> [ServiceDefinition]
     func findServices(domain searchText: String) -> [ServiceDefinition]
     
     func findLegacyService(using string: String) -> ServiceTypeID?
@@ -68,7 +69,7 @@ extension ServiceDefinitionDatabaseImpl: ServiceDefinitionDatabase {
     }
     
     public func findService(using issuer: String) -> ServiceDefinition? {
-        // TODO: Duplicated from New Code interactor - remove when migration is propery set up
+        // TODO: Duplicated from New Code interactor - remove when migration is properly set up
         let definitions = listAll()
         for def in definitions {
             if let issuerList = def.issuer {
@@ -96,6 +97,53 @@ extension ServiceDefinitionDatabaseImpl: ServiceDefinitionDatabase {
         return definitions.filter({ service in
             guard let tags = service.tags else { return false }
             return tags.contains(where: { $0.contains(query) })
+        })
+    }
+    
+    public func findServicesByTagOrIssuer(_ searchText: String, exactMatch: Bool) -> [ServiceDefinition] {
+        let query = searchText.uppercased()
+        let definitions = listAll()
+        return definitions.filter({ service in
+            let name = service.name.uppercased()
+            if exactMatch {
+                if name == query {
+                    return true
+                }
+            } else {
+                if name.contains(query) {
+                    return true
+                }
+            }
+            
+            if let issuerList = service.issuer {
+                for issuer in issuerList {
+                    if exactMatch {
+                        if issuer.uppercased() == query {
+                            return true
+                        }
+                    } else {
+                        if issuer.uppercased().contains(query) {
+                            return true
+                        }
+                    }
+                }
+            }
+            
+            if let issuerRules = service.matchingRules?.filter({ $0.field == .issuer }), !issuerRules.isEmpty {
+                for rule in issuerRules {
+                    if rule.isMatching(for: query) {
+                        return true
+                    }
+                }
+            }
+            
+            return service.tags?.contains(where: {
+                if exactMatch {
+                    return $0.uppercased() == query
+                } else {
+                    return $0.uppercased().contains(query)
+                }
+            }) ?? false
         })
     }
     

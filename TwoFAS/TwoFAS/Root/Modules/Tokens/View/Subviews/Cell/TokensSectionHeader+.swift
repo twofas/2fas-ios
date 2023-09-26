@@ -27,26 +27,24 @@ extension TokensSectionHeader {
             case expaned
             case invisible
         }
-        var userChangedCollapse: Callback?
         
         private var state: State = .invisible
         
-        private let collapse: UIButton = {
-            let b = UIButton()
+        private let collapse: UIImageView = {
             let config = UIImage.SymbolConfiguration(textStyle: .body)
-            b.setImage(UIImage(systemName: "chevron.up", withConfiguration: config), for: .normal)
-            b.imageView?.tintColor = Theme.Colors.inactiveInverted
-            b.adjustsImageSizeForAccessibilityContentSizeCategory = true
-            b.setPreferredSymbolConfiguration(config, forImageIn: .normal)
-            return b
+            let img = UIImageView(image: UIImage(systemName: "chevron.up", withConfiguration: config))
+            img.tintColor = Theme.Colors.inactiveInverted
+            img.adjustsImageSizeForAccessibilityContentSizeCategory = true
+            img.contentMode = .center
+            return img
         }()
-        private let expand: UIButton = {
-            let b = UIButton()
+        private let expand: UIImageView = {
             let config = UIImage.SymbolConfiguration(textStyle: .body)
-            b.setImage(UIImage(systemName: "chevron.down", withConfiguration: config), for: .normal)
-            b.imageView?.tintColor = Theme.Colors.inactiveInverted
-            b.adjustsImageSizeForAccessibilityContentSizeCategory = true
-            return b
+            let img = UIImageView(image: UIImage(systemName: "chevron.down", withConfiguration: config))
+            img.tintColor = Theme.Colors.inactiveInverted
+            img.adjustsImageSizeForAccessibilityContentSizeCategory = true
+            img.contentMode = .center
+            return img
         }()
         
         override init(frame: CGRect) {
@@ -62,11 +60,9 @@ extension TokensSectionHeader {
         private func commonInit() {
             addSubview(collapse)
             collapse.pinToParent()
-            collapse.addTarget(self, action: #selector(collapseAction), for: .touchUpInside)
             
             addSubview(expand)
             expand.pinToParent()
-            expand.addTarget(self, action: #selector(collapseAction), for: .touchUpInside)
             
             setState(.invisible)
         }
@@ -89,11 +85,6 @@ extension TokensSectionHeader {
         
         var isActive: Bool {
             state != .invisible
-        }
-        
-        @objc
-        private func collapseAction() {
-            userChangedCollapse?()
         }
     }
     

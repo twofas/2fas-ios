@@ -25,7 +25,7 @@ protocol ServiceListingInteracting: AnyObject {
     var count: Int { get }
     var hasServices: Bool { get }
     func listAll() -> [ServiceData]
-    func listAllWithingCategories(for phrase: String?, sorting: SortType, tags: [ServiceTypeID]) -> [CategoryData]
+    func listAllWithingCategories(for phrase: String?, sorting: SortType, ids: [ServiceTypeID]) -> [CategoryData]
     func service(for secret: String) -> ServiceData?
 }
 
@@ -54,7 +54,7 @@ extension ServiceListingInteractor: ServiceListingInteracting {
         mainRepository.service(for: secret)
     }
     
-    func listAllWithingCategories(for phrase: String?, sorting: SortType, tags: [ServiceTypeID]) -> [CategoryData] {
-        mainRepository.listAllServicesWithingCategories(for: phrase, sorting: sorting, tags: tags)
+    func listAllWithingCategories(for phrase: String?, sorting: SortType, ids: [ServiceTypeID]) -> [CategoryData] {
+        mainRepository.listAllServicesWithingCategories(for: phrase, sorting: sorting, ids: ids)
     }
 }

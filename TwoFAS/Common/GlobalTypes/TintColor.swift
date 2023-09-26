@@ -19,7 +19,7 @@
 
 import Foundation
 
-public enum TintColor: String, Equatable, CaseIterable {
+public enum TintColor: String, Hashable, CaseIterable {
     case `default`
     case lightBlue
     case indigo

@@ -22,6 +22,9 @@ import Common
 
 protocol NotificationInteracting: AnyObject {
     func copyWithSuccess(title: String, value: String, accessibilityTitle: String?)
+    func error()
+    func warning()
+    func success()
 }
 
 final class NotificationInteractor {
@@ -41,5 +44,17 @@ extension NotificationInteractor: NotificationInteracting {
             mainRepository.say(text: accessibilityTitle)
         }
         mainRepository.notificationSuccess(title: title, completion: nil)
+    }
+    
+    func error() {
+        mainRepository.wobbleError()
+    }
+    
+    func warning() {
+        mainRepository.wobbleWarning()
+    }
+    
+    func success() {
+        mainRepository.wobbleSuccess()
     }
 }

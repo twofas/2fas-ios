@@ -48,6 +48,12 @@ protocol AppearanceInteracting: AnyObject {
     
     // MARK: - Animation
     var shouldAnimate: Bool { get }
+    
+    // MARK: - Main menu
+    var isPortraitMainMenuCollapsed: Bool { get }
+    func setIsMenuPortraitCollapsed(_ isCollapsed: Bool)
+    var isMenuLandscapeCollapsed: Bool { get }
+    func setIsMenuLandscapeCollapsed(_ isCollapsed: Bool)
 }
 
 final class AppearanceInteractor {
@@ -134,5 +140,22 @@ extension AppearanceInteractor: AppearanceInteracting {
     // MARK: - Animation
     var shouldAnimate: Bool {
         mainRepository.shouldAnimate
+    }
+    
+    // MARK: - Main menu
+    var isPortraitMainMenuCollapsed: Bool {
+        mainRepository.isMainMenuPortraitCollapsed
+    }
+    
+    func setIsMenuPortraitCollapsed(_ isCollapsed: Bool) {
+        mainRepository.setIsMainMenuPortraitCollapsed(isCollapsed)
+    }
+    
+    var isMenuLandscapeCollapsed: Bool {
+        mainRepository.isMainMenuLandscapeCollapsed
+    }
+    
+    func setIsMenuLandscapeCollapsed(_ isCollapsed: Bool) {
+        mainRepository.setIsMainMenuLandscapeCollapsed(isCollapsed)
     }
 }

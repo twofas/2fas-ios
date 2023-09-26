@@ -23,11 +23,6 @@ import Common
 struct ComposeServiceWebExtensionMenuSection: TableViewSection {
     let title: String
     var cells: [ComposeServiceWebExtensionMenuCell]
-    
-    init(title: String, cells: [ComposeServiceWebExtensionMenuCell]) {
-        self.title = title
-        self.cells = cells
-    }
 }
 
 struct ComposeServiceWebExtensionMenuCell: Hashable {

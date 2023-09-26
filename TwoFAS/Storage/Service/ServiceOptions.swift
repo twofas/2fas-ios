@@ -27,7 +27,7 @@ public enum ServiceOptions {
         case all // default
     }
     
-    case filterByPhrase(String?, sortBy: SortType, trashed: TrashOptions, tags: [ServiceTypeID])
+    case filterByPhrase(String?, sortBy: SortType, trashed: TrashOptions, ids: [ServiceTypeID])
     case findExistingBySecret(String)
     case findNotTrashedBySecret(String)
     case includeServices([String])
@@ -44,19 +44,19 @@ extension ServiceOptions {
         var andPredicates: [NSPredicate] = []
         
         switch self {
-        case .filterByPhrase(let phrase, _, let trashed, let tags):
+        case .filterByPhrase(let phrase, _, let trashed, let ids):
             if let phrase, !phrase.isEmpty {
-                if tags.isEmpty {
+                if ids.isEmpty {
                     andPredicates.append(Predicate.findByPhrase(phrase))
                 } else {
                     andPredicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: [
                         Predicate.findByPhrase(phrase),
-                        Predicate.findByTags(tags)
+                        Predicate.findByServiceTypes(ids)
                     ]))
                 }
             } else {
-                if !tags.isEmpty {
-                    andPredicates.append(Predicate.findByTags(tags))
+                if !ids.isEmpty {
+                    andPredicates.append(Predicate.findByServiceTypes(ids))
                 }
             }
             if let trashPredicate = trashed.predicate {
@@ -178,8 +178,8 @@ enum Predicate {
         NSPredicate(format: "(name contains[c] %@) OR (additionalInfo contains[c] %@)", phrase, phrase)
     }
     
-    static func findByTags(_ tags: [ServiceTypeID]) -> NSPredicate {
-        NSPredicate(format: "serviceTypeID in %@", tags)
+    static func findByServiceTypes(_ ids: [ServiceTypeID]) -> NSPredicate {
+        NSPredicate(format: "serviceTypeID in %@", ids)
     }
     
     static func findBySection(_ section: SectionID?) -> NSPredicate {

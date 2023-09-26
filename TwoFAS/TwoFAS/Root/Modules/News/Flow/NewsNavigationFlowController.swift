@@ -18,32 +18,34 @@
 //
 
 import UIKit
+import Common
 
-protocol NewsNavigationFlowControllerParent: AnyObject {}
+protocol NewsNavigationFlowControllerParent: AnyObject {
+    func newsClose()
+}
 
 final class NewsNavigationFlowController: NavigationFlowController {
-    private weak var parent: TokensNavigationFlowControllerParent?
+    private weak var parent: NewsNavigationFlowControllerParent?
     
-    static func showAsEmptyTab(
-        in tabBarController: UITabBarController,
-        parent: TokensNavigationFlowControllerParent
-    ) -> UINavigationController {
+    static func present(
+        on viewController: UIViewController,
+        parent: NewsNavigationFlowControllerParent
+    ) {
         let flowController = NewsNavigationFlowController()
         flowController.parent = parent
         
         let naviController = CommonNavigationControllerFlow(flowController: flowController)
-        naviController.tabBarItem = UITabBarItem(
-            title: T.Commons.notifications,
-            image: Asset.tabBarIconNotificationsInactive.image
-                .withRenderingMode(.alwaysTemplate),
-            selectedImage: Asset.tabBarIconNotificationsActive.image
-                .withRenderingMode(.alwaysTemplate)
-        )
-        
         flowController.navigationController = naviController
         
-        tabBarController.addTab(naviController)
-        
-        return naviController
+        NewsPlainFlowController.showAsRoot(in: naviController, parent: flowController)
+
+        naviController.configureAsLargeModal()
+        viewController.present(naviController, animated: true)
+    }
+}
+
+extension NewsNavigationFlowController: NewsPlainFlowControllerParent {
+    func newsClose() {
+        parent?.newsClose()
     }
 }

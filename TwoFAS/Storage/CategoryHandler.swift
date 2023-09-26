@@ -30,11 +30,11 @@ public final class CategoryHandler {
     }
     
     public func listAll(sort: SortType) -> [CategoryData] {
-        services(for: nil, sort: sort, tags: [])
+        services(for: nil, sort: sort, ids: [])
     }
     
-    public func findServices(for phrase: String, sort: SortType, tags: [ServiceTypeID]) -> [CategoryData] {
-        services(for: phrase, sort: sort, tags: tags)
+    public func findServices(for phrase: String, sort: SortType, ids: [ServiceTypeID]) -> [CategoryData] {
+        services(for: phrase, sort: sort, ids: ids)
     }
     
     public func move(service: ServiceData, from oldIndex: Int, to newIndex: Int, newSection: SectionData?) {
@@ -75,9 +75,9 @@ public final class CategoryHandler {
         sectionHandler.delete(section)
     }
     
-    private func services(for phrase: String?, sort: SortType, tags: [ServiceTypeID]) -> [CategoryData] {
+    private func services(for phrase: String?, sort: SortType, ids: [ServiceTypeID]) -> [CategoryData] {
         let allSections = sectionHandler.listAll()
-        let allServices = serviceHandler.listAllServicesWithinSections(phrase: phrase, sort: sort, tags: tags)
+        let allServices = serviceHandler.listAllServicesWithinSections(phrase: phrase, sort: sort, ids: ids)
         
         var result: [CategoryData] = []
         

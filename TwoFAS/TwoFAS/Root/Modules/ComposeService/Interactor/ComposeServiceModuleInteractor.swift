@@ -218,7 +218,12 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
     }
     
     func setAdditionalInfo(_ newAdditionalInfo: String?) {
-        additionalInfo = newAdditionalInfo
+        additionalInfo = {
+            if let newAdditionalInfo, !newAdditionalInfo.isEmpty {
+                return newAdditionalInfo
+            }
+            return nil
+        }()
         validate()
     }
     

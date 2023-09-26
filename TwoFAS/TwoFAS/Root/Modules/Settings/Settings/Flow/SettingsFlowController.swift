@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 protocol SettingsFlowControllerParent: AnyObject {
     func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
@@ -224,8 +225,8 @@ extension SettingsFlowController: BackupMenuFlowControllerParent {
     }
 }
 
-extension SettingsFlowController: PushNotificationPermissionFlowControllerParent {
-    func pushNotificationsDidEnd() {}
+extension SettingsFlowController: PushNotificationPermissionPlainFlowControllerParent {
+    func pushNotificationsClose(extensionID: ExtensionID?) {}
 }
 
 extension SettingsFlowController: AppSecurityFlowControllerParent {

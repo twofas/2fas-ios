@@ -36,6 +36,7 @@ final class ContentNavigationController: CommonNavigationController {
         
     func setRootViewController(_ vc: UIViewController) {
         setViewControllers([vc], animated: false)
+        
         if shouldHide {
             if !navigationBar.isHidden {
                 setNavigationBarHidden(true, animated: false)
@@ -46,7 +47,7 @@ final class ContentNavigationController: CommonNavigationController {
             }
         }
     }
-        
+
     deinit {
         navigationBarObserver = nil
     }

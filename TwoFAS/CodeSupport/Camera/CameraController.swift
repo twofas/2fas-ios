@@ -115,9 +115,11 @@ final class CameraController {
         guard !isRunning else { return }
         Log("CameraController - startPreview. Starting!", module: .camera)
         updateOrientation()
-        DispatchQueue.main.async {
+        DispatchQueue.global(qos: .userInitiated).async {
             self.captureSession?.startRunning()
-            self.delegate?.cameraStartedPreview()
+            DispatchQueue.main.async {
+                self.delegate?.cameraStartedPreview()
+            }
         }
     }
     

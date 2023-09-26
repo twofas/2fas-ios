@@ -22,6 +22,7 @@ import Foundation
 public enum ServiceRules {
     public static let labelMaxLength = 2
     public static let serviceNameMaxLength = 50
+    public static let serviceNameMinLength = 1
     public static let privateKeyMaxLength = 512
     public static let privateKeyRegex = "^[a-zA-Z2-7]*$"
     public static let privateKeyAllowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz234567"
@@ -32,6 +33,10 @@ public enum ServiceRules {
     
     public static func isPrivateKeyTooShort(privateKey: String) -> Bool {
         privateKey.count < minKeyLength
+    }
+    
+    public static func isPrivateKeyTooLong(privateKey: String) -> Bool {
+        privateKey.count > privateKeyMaxLength
     }
     
     public static func isPrivateKeyValid(privateKey: String) -> Bool {

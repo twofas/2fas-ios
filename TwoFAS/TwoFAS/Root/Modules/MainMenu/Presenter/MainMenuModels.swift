@@ -60,14 +60,6 @@ extension MainMenuPresenter {
                     isSelected: selectedIndexPath?.row == 2,
                     section: nil,
                     hasBadge: false
-                ),
-                MainMenuCell(
-                    icon: Asset.tabBarIconNotificationsInactive.image,
-                    selectedIcon: Asset.tabBarIconNotificationsActive.image,
-                    title: T.Commons.notifications,
-                    isSelected: selectedIndexPath?.row == 3,
-                    section: nil,
-                    hasBadge: interactor.hasUnreadNews
                 )
             ])
         ]

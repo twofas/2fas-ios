@@ -25,20 +25,24 @@ final class MainMenuPresenter {
     
     private(set) var selectedIndexPath: IndexPath?
     private var isViewLoaded = false
-    private let flowController: MainMenuFlowControlling
-    let interactor: MainMenuModuleInteracting
+    private var viewPathToHandleAfterLoad: ViewPath?
     
-    init(flowController: MainMenuFlowControlling, interactor: MainMenuModuleInteracting) {
+    private let flowController: MainMenuFlowControlling
+    
+    init(flowController: MainMenuFlowControlling) {
         self.flowController = flowController
-        self.interactor = interactor
     }
 }
 
 extension MainMenuPresenter {
-    func viewWillAppear() {
+    func viewDidLoad() {
         isViewLoaded = true
         refresh()
         flowController.toMenuIsReady()
+        if let viewPathToHandleAfterLoad {
+            handleChangeViewPath(viewPathToHandleAfterLoad)
+            self.viewPathToHandleAfterLoad = nil
+        }
     }
     
     func handleSelection(at indexPath: IndexPath) {
@@ -48,20 +52,20 @@ extension MainMenuPresenter {
             flowController.toMain()
         case MainContent.settings.rawValue:
             flowController.toSettings()
-        case MainContent.news.rawValue:
-            flowController.toNews()
         default:
             Log("MainMenuPresenter: Can't change to \(indexPath)", severity: .error)
         }
     }
     
     func handleChangeViewPath(_ viewPath: ViewPath) {
-        guard isViewLoaded else { return }
+        guard isViewLoaded else {
+            viewPathToHandleAfterLoad = viewPath
+            return
+        }
         let indexPath = {
             switch viewPath {
             case .main: return IndexPath(row: 0, section: 0)
             case .settings: return IndexPath(row: 1, section: 0)
-            case .news: return IndexPath(row: 2, section: 0)
             }
         }()
         handleSelection(at: indexPath)

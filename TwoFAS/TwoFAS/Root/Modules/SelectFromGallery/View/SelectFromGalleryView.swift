@@ -34,6 +34,7 @@ final class SelectFromGalleryViewController: UIViewController {
     
     func createImagePicker() -> UIViewController {
         let imageSelector = PHPickerViewController(configuration: imagePickerConfiguration)
+        imageSelector.view.tintColor = Theme.Colors.Fill.theme
         imageSelector.delegate = self
         return imageSelector
     }

@@ -88,7 +88,7 @@ final class CodeParser {
               Algorithm.verifyIfPresent(algorithm) else { return nil }
         
         return Code(
-            issuer: issuer?.value,
+            issuer: issuer?.value.replacingOccurrences(of: "+", with: " "),
             label: label,
             secret: secret,
             period: Period.create(period),

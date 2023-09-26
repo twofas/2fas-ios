@@ -19,7 +19,9 @@
 
 import Foundation
 
-public enum Period: Int, CaseIterable, Equatable {
+public enum Period: Int, CaseIterable, Equatable, Identifiable {
+    public var id: Self { self }
+    
     case period30 = 30
     case period60 = 60
     case period90 = 90

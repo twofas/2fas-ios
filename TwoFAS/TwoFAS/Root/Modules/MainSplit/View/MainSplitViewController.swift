@@ -23,7 +23,6 @@ import Common
 protocol MainSplitViewControlling: AnyObject {
     func updateTabBarPath(_ viewPath: ViewPath)
     func updateMenuPath(_ viewPath: ViewPath)
-    func updateNewsBadge()
     func notifyTokensVisible()
 }
 
@@ -40,15 +39,12 @@ final class MainSplitViewController: UIViewController {
     
     var tokensViewController: TokensViewController?
     var settingsViewController: SettingsViewController?
-    var newsViewController: NewsViewController?
     
     var tokensTabNavi: UINavigationController?
-    var newsTabNavi: UINavigationController?
     
     var isCollapsed: Bool { split.isCollapsed }
     var isInitialConfigRead = false
     
-    private var menuOverlayCollapsed = false
     private var changingState = false
     private var menu: MainMenuViewController? {
         navigationNavi.viewControllers.first as? MainMenuViewController
@@ -60,9 +56,9 @@ final class MainSplitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        presenter.viewDidLoad()
-        
         setupSplit()
+        presenter.viewDidLoad()
+        menu?.loadViewIfNeeded()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -157,18 +153,24 @@ final class MainSplitViewController: UIViewController {
     
     private func updateDisplayMode() {
         if UIApplication.isLandscape {
-            guard split.preferredDisplayMode != .oneBesideSecondary else { return }
-            split.preferredDisplayMode = .oneBesideSecondary
             split.preferredSplitBehavior = .tile
+            
+            if presenter.isMenuLandscapeCollapsed {
+                guard split.preferredDisplayMode != .secondaryOnly else { return }
+                split.preferredDisplayMode = .secondaryOnly
+            } else {
+                guard split.preferredDisplayMode != .oneBesideSecondary else { return }
+                split.preferredDisplayMode = .oneBesideSecondary
+            }
         } else {
+            split.preferredSplitBehavior = .overlay
+            
             guard
                 split.preferredDisplayMode != .oneOverSecondary &&
                 split.preferredDisplayMode != .secondaryOnly
             else { return }
-
-            split.preferredSplitBehavior = .overlay
             
-            if menuOverlayCollapsed {
+            if presenter.isMenuPortraitOverlayCollapsed {
                 split.preferredDisplayMode = .secondaryOnly
             } else {
                 split.preferredDisplayMode = .oneOverSecondary
@@ -188,11 +190,6 @@ extension MainSplitViewController: MainSplitViewControlling {
     
     func updateMenuPath(_ viewPath: ViewPath) {
         menu?.presenter.handleChangeViewPath(viewPath)
-    }
-    
-    func updateNewsBadge() {
-        tabBar?.presenter.handleUpdateNewsBadge()
-        menu?.presenter.handleUpdateNewsBadge()
     }
     
     func notifyTokensVisible() {
@@ -237,11 +234,19 @@ extension MainSplitViewController: UISplitViewControllerDelegate {
             settingsViewController?.hideRevealButton()
         }
         
+        if UIApplication.isLandscape {
+            if displayMode == .secondaryOnly {
+                presenter.handleLandscapeMenuCollapsed(true)
+            } else if displayMode == .oneBesideSecondary {
+                presenter.handleLandscapeMenuCollapsed(false)
+            }
+        }
+        
         guard !UIApplication.isLandscape else { return }
         if svc.displayMode == .oneOverSecondary && displayMode == .secondaryOnly {
-            menuOverlayCollapsed = true
+            presenter.handlePortraitMenuOverlayCollapsed(true)
         } else if svc.displayMode == .secondaryOnly && displayMode == .oneOverSecondary {
-            menuOverlayCollapsed = false
+            presenter.handlePortraitMenuOverlayCollapsed(false)
         }
     }
 }

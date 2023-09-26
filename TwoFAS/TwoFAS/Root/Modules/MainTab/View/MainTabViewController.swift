@@ -23,9 +23,6 @@ protocol MainTabViewControlling: AnyObject {
     func setView(_ viewPath: ViewPath)
     func scrollToTokensTop()
     func setSettingsView(_ settingsViewPath: ViewPath.Settings?)
-    func scrollToNewsTop()
-    func showNewsBadge()
-    func hideNewsBadge()
 }
 
 final class MainTabViewController: UITabBarController {
@@ -38,11 +35,6 @@ final class MainTabViewController: UITabBarController {
     
     private var settingsVC: SettingsViewController? {
         viewControllers?[safe: ViewPath.settings(option: nil).index] as? SettingsViewController
-    }
-    
-    private var newsVC: NewsViewController? {
-        (viewControllers?[safe: ViewPath.news.index] as? UINavigationController)?
-            .viewControllers.first as? NewsViewController
     }
     
     override func viewDidLoad() {
@@ -127,10 +119,8 @@ extension MainTabViewController: UITabBarControllerDelegate {
         let viewPath: ViewPath = {
             if selectedIndex == 0 {
                 return .main
-            } else if selectedIndex == 1 {
-                return .settings(option: settingsVC?.currentView)
             }
-            return .news
+            return .settings(option: settingsVC?.currentView)
         }()
         presenter.handleDidSelectViewPath(viewPath)
     }
@@ -151,18 +141,6 @@ extension MainTabViewController: MainTabViewControlling {
             self.settingsVC?.navigateToView(settingsViewPath)
         }
     }
-    
-    func scrollToNewsTop() {
-        newsVC?.scrollToTop()
-    }
-    
-    func showNewsBadge() {
-        newsVC?.navigationController?.tabBarItem.badgeValue = "●"
-    }
-    
-    func hideNewsBadge() {
-        newsVC?.navigationController?.tabBarItem.badgeValue = nil
-    }
 }
 
 private extension ViewPath {
@@ -170,7 +148,6 @@ private extension ViewPath {
         switch self {
         case .main: return 0
         case .settings: return 1
-        case .news: return 2
         }
     }
 }

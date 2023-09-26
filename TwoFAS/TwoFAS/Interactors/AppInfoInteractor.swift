@@ -21,6 +21,8 @@ import Foundation
 
 protocol AppInfoInteracting: AnyObject {
     var currentAppVersion: String { get }
+    var dateOfFirstRun: Date { get }
+    func markDateOfFirstRunIfNeeded()
 }
 
 final class AppInfoInteractor {
@@ -34,5 +36,14 @@ final class AppInfoInteractor {
 extension AppInfoInteractor: AppInfoInteracting {
     var currentAppVersion: String {
         mainRepository.currentAppVersion
+    }
+    
+    var dateOfFirstRun: Date {
+        mainRepository.dateOfFirstRun ?? Date.now
+    }
+    
+    func markDateOfFirstRunIfNeeded() {
+        guard mainRepository.dateOfFirstRun == nil else { return }
+        mainRepository.saveDateOfFirstRun(Date.now)
     }
 }

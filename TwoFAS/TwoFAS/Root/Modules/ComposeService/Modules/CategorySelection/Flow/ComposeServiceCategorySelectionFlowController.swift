@@ -70,6 +70,7 @@ extension ComposeServiceCategorySelectionFlowController: ComposeServiceCategoryS
             message: T.Tokens.groupName,
             actionName: T.Commons.add,
             defaultText: "",
+            inputConfiguration: .name,
             action: { [weak self] title in
                 self?.viewController.presenter.handleSectionAdded(with: title.trim())
         },

@@ -58,6 +58,11 @@ final class NewsPresenter {
         AppEventLog(.articleRead(entry.newsID))
         flowController.openWeb(with: link)
     }
+    
+    func close() {
+        interactor.markAllAsRead()
+        flowController.toClose()
+    }
 }
 
 private extension NewsPresenter {

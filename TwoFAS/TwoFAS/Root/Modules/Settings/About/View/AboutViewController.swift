@@ -60,8 +60,6 @@ final class AboutViewController: UIViewController {
         navigationItem.backButtonDisplayMode = .minimal
         
         setupFooter()
-        
-        tableView.separatorInset = .zero
     }
     
     private func setupTableViewLayout() {

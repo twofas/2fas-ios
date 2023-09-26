@@ -21,6 +21,7 @@ import Foundation
 import Common
 import Token
 import Storage
+import CodeSupport
 
 final class TokensPresenter {
     enum State {
@@ -33,6 +34,7 @@ final class TokensPresenter {
     private var isSearching = false
     private var changeRequriesTokenRefresh = false
     private var serviceWasCreated: ServiceData?
+    private var focusOnService: ServiceData?
     
     weak var view: TokensViewControlling?
     
@@ -40,6 +42,7 @@ final class TokensPresenter {
     private let flowController: TokensPlainFlowControlling
     
     var isMainOnlyCategory: Bool { interactor.isMainOnlyCategory }
+    var hasUnreadNews: Bool { interactor.hasUnreadNews }
     
     var listStyle: ListStyle {
         interactor.currentListStyle
@@ -84,6 +87,9 @@ extension TokensPresenter {
         Log("TokensPresenter - viewWillAppear")
         interactor.sync()
         appActiveActions()
+        interactor.fetchNews { [weak self] in
+            self?.updateAddNewsIcon()
+        }
     }
     
     func handleAppDidBecomeActive() {
@@ -164,6 +170,20 @@ extension TokensPresenter {
     
     func handleServicesWereUpdated(modified: [Secret]?, deleted: [Secret]?) {
         interactor.servicesWereUpdated()
+        handleNewData()
+    }
+    
+    func handleGoogleAuthImport(_ codes: [Code]) {
+        guard !codes.isEmpty else { return }
+        AppEventLog(.importGoogleAuth)
+        interactor.addCodes(codes)
+        handleNewData()
+    }
+
+    func handleLastPassImport(_ codes: [Code]) {
+        guard !codes.isEmpty else { return }
+        AppEventLog(.importLastPass)
+        interactor.addCodes(codes)
         handleNewData()
     }
     
@@ -347,11 +367,8 @@ extension TokensPresenter {
     // MARK: - Services
     
     func handleAddService() {
-        Log("TokensPresenter - handleAddService")
-        interactor.checkCameraPermission { [weak self] permission in
-            Log("TokensPresenter - handleAddService - toShowSelectAddingMethod")
-            self?.flowController.toShowSelectAddingMethod(isCameraAvailable: permission)
-        }
+        Log("TokensPresenter - handleAddService - toAddService")
+        flowController.toAddService()
     }
     
     func handleEditService(_ serviceData: ServiceData) {
@@ -393,6 +410,19 @@ extension TokensPresenter {
     
     func handleUnlockTOTP(for consumer: TokenTimerConsumer) {
         interactor.unlockTOTPConsumer(consumer)
+    }
+    
+    func handleFocusOnService(_ serviceData: ServiceData) {
+        focusOnService = serviceData
+        reloadData()
+    }
+    
+    func handleShowNotifications() {
+        flowController.toNotifications()
+    }
+    
+    func handleRefreshNewsStatus() {
+        updateAddNewsIcon()
     }
 }
 
@@ -466,8 +496,17 @@ private extension TokensPresenter {
         interactor.fetchData(phrase: searchPhrase)
         let newServices = interactor.categoryData
         
+        let newServiceIndexPath: IndexPath? = {
+            if let focusOnService {
+                let indexPath = newServices.indexPath(of: focusOnService)
+                self.focusOnService = nil
+                return indexPath
+            }
+            return nil
+        }()
+        
         if interactor.hasServices {
-            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: false))
+            updateAddNewsIcon()
             view?.showList()
             
             if Set<CategoryData>(currentServices) != Set<CategoryData>(newServices) || changeRequriesTokenRefresh {
@@ -475,13 +514,20 @@ private extension TokensPresenter {
             }
             updateEditStateButton()
 
-            let snapshot = interactor.createSnapshot(state: currentState.transform, isSearching: isSearching)
-            view?.reloadData(newSnapshot: snapshot)
+            if let newServiceIndexPath {
+                interactor.openSection(newServiceIndexPath.section)
+            }
+
+            let snapshot = interactor.createSnapshot(
+                state: currentState.transform,
+                isSearching: isSearching
+            )
+            view?.reloadData(newSnapshot: snapshot, scrollTo: newServiceIndexPath)
         } else {
             if !isSearching && currentState == .edit {
                 setCurrentState(.normal)
             }
-            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: !isSearching))
+            updateAddNewsIcon()
             interactor.stopCounters()
             updateEditStateButton()
 
@@ -490,10 +536,18 @@ private extension TokensPresenter {
             } else {
                 view?.showEmptyScreen()
             }
-            view?.reloadData(newSnapshot: interactor.emptySnapshot)
+            view?.reloadData(newSnapshot: interactor.emptySnapshot, scrollTo: nil)
         }
                 
         changeRequriesTokenRefresh = false
+    }
+    
+    func updateAddNewsIcon() {
+        if interactor.hasServices {
+            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: false))
+        } else {
+            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: !isSearching))
+        }
     }
     
     func mapButtonStateFor(_ currentState: State, isFirst: Bool) -> TokensViewControllerAddState {

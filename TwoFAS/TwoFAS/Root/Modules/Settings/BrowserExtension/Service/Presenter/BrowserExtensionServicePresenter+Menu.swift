@@ -21,10 +21,6 @@ import Foundation
 
 struct BrowserExtensionServiceMenuSection: TableViewSection {
     var cells: [BrowserExtensionServiceMenuCell]
-    
-    init(cells: [BrowserExtensionServiceMenuCell]) {
-        self.cells = cells
-    }
 }
 
 struct BrowserExtensionServiceMenuCell: Hashable {

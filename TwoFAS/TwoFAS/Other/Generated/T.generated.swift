@@ -219,8 +219,8 @@ internal enum T {
   internal static let pastDurationMonthsPlural4 = T.tr("Localizable", "past_duration_months-plural-4", fallback: "")
   /// 
   internal static let pastDurationMonthsPlural5 = T.tr("Localizable", "past_duration_months-plural-5", fallback: "")
-  /// moments ago
-  internal static let pastDurationSeconds = T.tr("Localizable", "past_duration_seconds", fallback: "moments ago")
+  /// moment ago
+  internal static let pastDurationSeconds = T.tr("Localizable", "past_duration_seconds", fallback: "moment ago")
   /// moments ago
   internal static let pastDurationSecondsPlural = T.tr("Localizable", "past_duration_seconds-plural", fallback: "moments ago")
   /// 
@@ -540,6 +540,8 @@ internal enum T {
     internal static let cantInitializeCameraSplitView = T.tr("Localizable", "camera__cant_initialize_camera_split_view", fallback: "Can't initialize camera in Split View mode. Open app in full screen and try again")
   }
   internal enum Color {
+    /// Brown
+    internal static let brown = T.tr("Localizable", "color__brown", fallback: "Brown")
     /// Green
     internal static let green = T.tr("Localizable", "color__green", fallback: "Green")
     /// Indigo
@@ -550,6 +552,8 @@ internal enum T {
     internal static let neutral = T.tr("Localizable", "color__neutral", fallback: "Neutral")
     /// Orange
     internal static let orange = T.tr("Localizable", "color__orange", fallback: "Orange")
+    /// Pink
+    internal static let pink = T.tr("Localizable", "color__pink", fallback: "Pink")
     /// Purple
     internal static let purple = T.tr("Localizable", "color__purple", fallback: "Purple")
     /// Red
@@ -643,6 +647,10 @@ internal enum T {
     /// The provided text is too long (max. %d chars)
     internal static func textLongTitle(_ p1: Int) -> String {
       return T.tr("Localizable", "commons__text_long_title", p1, fallback: "The provided text is too long (max. %d chars)")
+    }
+    /// The provided text is too short (min. %d chars)
+    internal static func textShortTitle(_ p1: Int) -> String {
+      return T.tr("Localizable", "commons__text_short_title", p1, fallback: "The provided text is too short (min. %d chars)")
     }
     /// Tokens
     internal static let tokens = T.tr("Localizable", "commons__tokens", fallback: "Tokens")
@@ -784,6 +792,16 @@ internal enum T {
     internal static let usePinTitle = T.tr("Localizable", "fingerprint__use_pin_title", fallback: "Use PIN this time")
     /// Verifying…
     internal static let verifying = T.tr("Localizable", "fingerprint__verifying", fallback: "Verifying…")
+  }
+  internal enum Guides {
+    /// Select service to pair with the 2FAS app
+    internal static let selectDescription = T.tr("Localizable", "guides__select_description", fallback: "Select service to pair with the 2FAS app")
+    /// Do you want to provide 2FA guides for your service?
+    internal static let selectProvideGuide = T.tr("Localizable", "guides__select_provide_guide", fallback: "Do you want to provide 2FA guides for your service?")
+    /// Apply now
+    internal static let selectProvideGuideCta = T.tr("Localizable", "guides__select_provide_guide_cta", fallback: "Apply now")
+    /// Browse services
+    internal static let selectTitle = T.tr("Localizable", "guides__select_title", fallback: "Browse services")
   }
   internal enum Introduction {
     /// Choose QR code
@@ -1149,6 +1167,8 @@ internal enum T {
     internal static let addManualAdvanced = T.tr("Localizable", "tokens__add_manual_advanced", fallback: "Advanced token settings")
     /// Changing default token settings is not recommended. Do so only when your 2FA provider requires it and when you have clear instructions.
     internal static let addManualAdvancedDescription = T.tr("Localizable", "tokens__add_manual_advanced_description", fallback: "Changing default token settings is not recommended. Do so only when your 2FA provider requires it and when you have clear instructions.")
+    /// is not recommended
+    internal static let addManualAdvancedDescriptionHighlight = T.tr("Localizable", "tokens__add_manual_advanced_description_highlight", fallback: "is not recommended")
     /// Type in the service name and secret key.
     internal static let addManualDescription = T.tr("Localizable", "tokens__add_manual_description", fallback: "Type in the service name and secret key.")
     /// Add service
@@ -1175,6 +1195,8 @@ internal enum T {
     internal static let addSuccessTitle = T.tr("Localizable", "tokens__add_success_title", fallback: "Almost done!")
     /// Pair the service with 2FAS
     internal static let addTitle = T.tr("Localizable", "tokens__add_title", fallback: "Pair the service with 2FAS")
+    /// Guide me
+    internal static let addWithGuide = T.tr("Localizable", "tokens__add_with_guide", fallback: "Guide me")
     /// What service do you want to add?
     internal static let addingServiceQuestionTitle = T.tr("Localizable", "tokens__adding_service_question_title", fallback: "What service do you want to add?")
     /// Additional info
@@ -1197,6 +1219,10 @@ internal enum T {
     internal static let brandIcon = T.tr("Localizable", "tokens__brand_icon", fallback: "Brand icon")
     /// Camera is unavailable
     internal static let cameraIsUnavailable = T.tr("Localizable", "tokens__camera_is_unavailable", fallback: "Camera is unavailable")
+    /// Camera is unavailable. Check apps' access permission in System Settings
+    internal static let cameraIsUnavailableAppPermission = T.tr("Localizable", "tokens__camera_is_unavailable_app_permission", fallback: "Camera is unavailable. Check apps' access permission in System Settings")
+    /// System Settings
+    internal static let cameraIsUnavailableAppPermissionUnderline = T.tr("Localizable", "tokens__camera_is_unavailable_app_permission_underline", fallback: "System Settings")
     /// CAUTION
     internal static let caution = T.tr("Localizable", "tokens__caution", fallback: "CAUTION")
     /// Change brand icon
@@ -1300,6 +1326,8 @@ internal enum T {
     internal static let orderMenuOptionUser = T.tr("Localizable", "tokens__order_menu_option_user", fallback: "Request icon as a user")
     /// Select the request method
     internal static let orderMenuTitle = T.tr("Localizable", "tokens__order_menu_title", fallback: "Select the request method")
+    /// Other methods?
+    internal static let otherMethodsHeader = T.tr("Localizable", "tokens__other_methods_header", fallback: "Other methods?")
     /// OTP Authentication
     internal static let otpAuthentication = T.tr("Localizable", "tokens__otp_authentication", fallback: "OTP Authentication")
     /// Personalization

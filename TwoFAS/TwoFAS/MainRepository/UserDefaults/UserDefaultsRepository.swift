@@ -84,4 +84,13 @@ protocol UserDefaultsRepository: AnyObject {
 
     var areTokensHidden: Bool { get }
     func setTokensHidden(_ hidden: Bool)
+    
+    var isMainMenuPortraitCollapsed: Bool { get }
+    func setIsMainMenuPortraitCollapsed(_ isCollapsed: Bool)
+    
+    var isMainMenuLandscapeCollapsed: Bool { get }
+    func setIsMainMenuLandscapeCollapsed(_ isCollapsed: Bool)
+    
+    var dateOfFirstRun: Date? { get }
+    func saveDateOfFirstRun(_ date: Date)
 }

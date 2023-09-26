@@ -21,6 +21,7 @@ import Foundation
 import Common
 import Token
 import Storage
+import CodeSupport
 
 enum TokensModuleInteractorState {
     case normal
@@ -49,6 +50,7 @@ protocol TokensModuleInteracting: AnyObject {
     func setSortType(_ sortType: SortType)
     func createSection(with name: String)
     func toggleCollapseSection(_ section: TokensSection)
+    func openSection(_ sectionOffset: Int)
     func moveDown(_ section: TokensSection)
     func moveUp(_ section: TokensSection)
     func rename(_ section: TokensSection, with title: String)
@@ -67,12 +69,16 @@ protocol TokensModuleInteracting: AnyObject {
         state: TokensModuleInteractorState, isSearching: Bool
     ) -> NSDiffableDataSourceSnapshot<TokensSection, TokenCell>
     func checkCameraPermission(completion: @escaping (Bool) -> Void)
+    func addCodes(_ codes: [Code])
     // MARK: Links
     func handleURLIfNecessary()
     func clearStoredCode()
     func addStoredCode()
     func renameService(newName: String, secret: Secret)
     func cancelRenaming(secret: Secret)
+    // MARK: News
+    var hasUnreadNews: Bool { get }
+    func fetchNews(completion: @escaping () -> Void)
 }
 
 final class TokensModuleInteractor {
@@ -93,6 +99,8 @@ final class TokensModuleInteractor {
     private let cameraPermissionInteractor: CameraPermissionInteracting
     private let linkInteractor: LinkInteracting
     private let widgetsInteractor: WidgetsInteracting
+    private let newCodeInteractor: NewCodeInteracting
+    private let newsInteractor: NewsInteracting
     
     private(set) var categoryData: [CategoryData] = []
     
@@ -110,7 +118,9 @@ final class TokensModuleInteractor {
         cloudBackupInteractor: CloudBackupStateInteracting,
         cameraPermissionInteractor: CameraPermissionInteracting,
         linkInteractor: LinkInteracting,
-        widgetsInteractor: WidgetsInteracting
+        widgetsInteractor: WidgetsInteracting,
+        newCodeInteractor: NewCodeInteracting,
+        newsInteractor: NewsInteracting
     ) {
         self.appearanceInteractor = appearanceInteractor
         self.serviceDefinitionsInteractor = serviceDefinitionsInteractor
@@ -124,6 +134,8 @@ final class TokensModuleInteractor {
         self.cameraPermissionInteractor = cameraPermissionInteractor
         self.linkInteractor = linkInteractor
         self.widgetsInteractor = widgetsInteractor
+        self.newCodeInteractor = newCodeInteractor
+        self.newsInteractor = newsInteractor
         
         setupLinkInteractor()
     }
@@ -239,6 +251,10 @@ extension TokensModuleInteractor: TokensModuleInteracting {
         }
     }
     
+    func addCodes(_ codes: [Code]) {
+        newCodeInteractor.addCodes(codes)
+    }
+    
     // MARK: - Sort type
     
     var isSortingEnabled: Bool {
@@ -266,6 +282,15 @@ extension TokensModuleInteractor: TokensModuleInteracting {
             sectionInteractor.collapse(sectionData, isCollapsed: toggleValue)
         } else {
             sectionInteractor.setSectionZeroIsCollapsed(toggleValue)
+        }
+    }
+    
+    func openSection(_ sectionOffset: Int) {
+        guard let category = categoryData[safe: sectionOffset] else { return }
+        if let sectionData = category.section {
+            sectionInteractor.collapse(sectionData, isCollapsed: false)
+        } else {
+            sectionInteractor.setSectionZeroIsCollapsed(false)
         }
     }
 
@@ -329,12 +354,13 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     func fetchData(phrase: String?) {
         if let p = phrase, !p.isEmpty {
-            let tags = serviceDefinitionsInteractor.findServices(byTag: p).map({ $0.serviceTypeID })
-            categoryData = sectionInteractor.findServices(for: p, sort: sortInteractor.currentSort, tags: tags)
+            let ids = serviceDefinitionsInteractor
+                .findServicesByTagOrIssuer(p, exactMatch: false)
+                .map({ $0.serviceTypeID })
+            categoryData = sectionInteractor.findServices(for: p, sort: sortInteractor.currentSort, ids: ids)
         } else {
             categoryData = sectionInteractor.listAll(sort: sortInteractor.currentSort)
         }
-        return
     }
     
     func reloadTokens() {
@@ -369,6 +395,15 @@ extension TokensModuleInteractor: TokensModuleInteracting {
         
         return snapshot
     }
+    
+    // MARK: - News
+    var hasUnreadNews: Bool {
+        newsInteractor.hasUnreadNews
+    }
+    
+    func fetchNews(completion: @escaping () -> Void) {
+        newsInteractor.fetchList(completion: completion)
+    }
 }
 
 private extension TokensModuleInteractor {
@@ -400,13 +435,16 @@ private extension TokensModuleInteractor {
         ] in
             var dict = dict
             let gridCells = category.services
+            let isCollapsed: Bool = {
+                category.section?.isCollapsed ?? (
+                    sectionInteractor.isSectionZeroCollapsed && !isMainOnlyCategory
+                )
+            }()
             let gridSection = TokensSection(
                 title: category.section?.title,
                 sectionID: category.section?.sectionID,
                 sectionData: category.section,
-                isCollapsed: category.section?.isCollapsed ?? (
-                    sectionInteractor.isSectionZeroCollapsed && !isMainOnlyCategory
-                ),
+                isCollapsed: isCollapsed,
                 elementCount: gridCells.count,
                 isSearching: isSearching,
                 position: sectionPosition(for: startIndex, currentIndex: currentIndex, totalIndex: totalIndex)

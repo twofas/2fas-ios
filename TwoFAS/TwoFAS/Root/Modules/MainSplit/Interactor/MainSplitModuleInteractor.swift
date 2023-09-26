@@ -26,35 +26,33 @@ protocol MainSplitModuleInteracting: AnyObject {
     func restoreViewPath() -> ViewPath?
     func setViewPath(_ viewPath: ViewPath)
     
-    var hasUnreadNews: Bool { get }
+    var isMenuPortraitOverlayCollapsed: Bool { get }
+    func handlePortraitMenuOverlayCollapsed(_ isCollapsed: Bool)
+    var isMenuLandscapeCollapsed: Bool { get }
+    func handleLandscapeMenuCollapsed(_ isCollapsed: Bool)
+    
     var hasStoredURL: Bool { get }
-    func markNewsAsRead()
-    func fetchNews(completion: @escaping () -> Void)
 }
 
 final class MainSplitModuleInteractor {
     private var settingsPath: ViewPath.Settings?
     
     private let viewPathInteractor: ViewPathIteracting
-    private let newsInteractor: NewsInteracting
     private let linkInteractor: LinkInteracting
+    private let appearanceInteractor: AppearanceInteracting
     
     init(
         viewPathInteractor: ViewPathIteracting,
-        newsInteractor: NewsInteracting,
-        linkInteractor: LinkInteracting
+        linkInteractor: LinkInteracting,
+        appearanceInteractor: AppearanceInteracting
     ) {
         self.viewPathInteractor = viewPathInteractor
-        self.newsInteractor = newsInteractor
         self.linkInteractor = linkInteractor
+        self.appearanceInteractor = appearanceInteractor
     }
 }
 
 extension MainSplitModuleInteractor: MainSplitModuleInteracting {
-    var hasUnreadNews: Bool {
-        newsInteractor.hasUnreadNews
-    }
-    
     var hasStoredURL: Bool {
         linkInteractor.hasStoredURL
     }
@@ -75,11 +73,19 @@ extension MainSplitModuleInteractor: MainSplitModuleInteracting {
         self.settingsPath = settingsPath
     }
     
-    func markNewsAsRead() {
-        newsInteractor.clearHasUnreadNews()
+    var isMenuPortraitOverlayCollapsed: Bool {
+        appearanceInteractor.isPortraitMainMenuCollapsed
     }
     
-    func fetchNews(completion: @escaping () -> Void) {
-        newsInteractor.fetchList(completion: completion)
+    func handlePortraitMenuOverlayCollapsed(_ isCollapsed: Bool) {
+        appearanceInteractor.setIsMenuPortraitCollapsed(isCollapsed)
+    }
+    
+    var isMenuLandscapeCollapsed: Bool {
+        appearanceInteractor.isMenuLandscapeCollapsed
+    }
+    
+    func handleLandscapeMenuCollapsed(_ isCollapsed: Bool) {
+        appearanceInteractor.setIsMenuLandscapeCollapsed(isCollapsed)
     }
 }

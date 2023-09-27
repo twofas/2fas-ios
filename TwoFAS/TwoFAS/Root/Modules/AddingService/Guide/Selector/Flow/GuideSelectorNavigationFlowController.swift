@@ -49,10 +49,16 @@ final class GuideSelectorNavigationFlowController: NavigationFlowController {
 
 extension GuideSelectorNavigationFlowController: GuideSelectorFlowControllerParent {
     func guideSelectorToGuideMenu(_ guide: GuideDescription) {
-        
+        GuideMenuFlowController.push(on: navigationController, parent: self, guide: guide)
     }
     
     func guideSelectorClose() {
         parent?.closeGuideSelector()
+    }
+}
+
+extension GuideSelectorNavigationFlowController: GuideMenuFlowControllerParent {
+    func guideMenuToMenuPosition(_ menu: GuideDescription.MenuPosition) {
+        print(menu.title)
     }
 }

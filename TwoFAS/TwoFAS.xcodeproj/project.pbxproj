@@ -936,6 +936,10 @@
 		C2EA566F28569A5E00026BFE /* AskForAuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA566E28569A5E00026BFE /* AskForAuthPresenter.swift */; };
 		C2EA567128569ADD00026BFE /* AskForAuthFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA567028569ADD00026BFE /* AskForAuthFlowController.swift */; };
 		C2EA56732856A49800026BFE /* LastNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA56722856A49800026BFE /* LastNotification.swift */; };
+		C2EBDFFC2AC44750008FD744 /* GuideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBDFFB2AC44750008FD744 /* GuideMenuViewController.swift */; };
+		C2EBDFFE2AC4476D008FD744 /* GuideMenuPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBDFFD2AC4476D008FD744 /* GuideMenuPresenter.swift */; };
+		C2EBE0022AC44787008FD744 /* GuideMenuFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBE0012AC44787008FD744 /* GuideMenuFlowController.swift */; };
+		C2EBE0042AC44DC3008FD744 /* GuideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBE0032AC44DC3008FD744 /* GuideMenuView.swift */; };
 		C2EC83DE21E69B4800DF5C49 /* ViewTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EC83DD21E69B4800DF5C49 /* ViewTheme.swift */; };
 		C2EE37AA291D2B9800CAB85C /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EE37A9291D2B9800CAB85C /* Assets.swift */; };
 		C2EF21D725630C9D0075743D /* CloudAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF21D625630C9D0075743D /* CloudAvailability.swift */; };
@@ -2259,6 +2263,10 @@
 		C2EA566E28569A5E00026BFE /* AskForAuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskForAuthPresenter.swift; sourceTree = "<group>"; };
 		C2EA567028569ADD00026BFE /* AskForAuthFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskForAuthFlowController.swift; sourceTree = "<group>"; };
 		C2EA56722856A49800026BFE /* LastNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastNotification.swift; sourceTree = "<group>"; };
+		C2EBDFFB2AC44750008FD744 /* GuideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideMenuViewController.swift; sourceTree = "<group>"; };
+		C2EBDFFD2AC4476D008FD744 /* GuideMenuPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideMenuPresenter.swift; sourceTree = "<group>"; };
+		C2EBE0012AC44787008FD744 /* GuideMenuFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideMenuFlowController.swift; sourceTree = "<group>"; };
+		C2EBE0032AC44DC3008FD744 /* GuideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideMenuView.swift; sourceTree = "<group>"; };
 		C2EC83DD21E69B4800DF5C49 /* ViewTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTheme.swift; sourceTree = "<group>"; };
 		C2EE37A9291D2B9800CAB85C /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		C2EF21D625630C9D0075743D /* CloudAvailability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudAvailability.swift; sourceTree = "<group>"; };
@@ -3763,6 +3771,7 @@
 			isa = PBXGroup;
 			children = (
 				C23736942AC08DF600792054 /* Selector */,
+				C2EBDFF52AC44604008FD744 /* Menu */,
 			);
 			path = Guide;
 			sourceTree = "<group>";
@@ -6623,6 +6632,41 @@
 			path = Flow;
 			sourceTree = "<group>";
 		};
+		C2EBDFF52AC44604008FD744 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				C2EBDFFA2AC44710008FD744 /* Flow */,
+				C2EBDFF82AC44703008FD744 /* Presenter */,
+				C2EBDFF72AC446DE008FD744 /* View */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		C2EBDFF72AC446DE008FD744 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C2EBDFFB2AC44750008FD744 /* GuideMenuViewController.swift */,
+				C2EBE0032AC44DC3008FD744 /* GuideMenuView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C2EBDFF82AC44703008FD744 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C2EBDFFD2AC4476D008FD744 /* GuideMenuPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C2EBDFFA2AC44710008FD744 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				C2EBE0012AC44787008FD744 /* GuideMenuFlowController.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
 		C2EC83DC21E69B2A00DF5C49 /* Theming */ = {
 			isa = PBXGroup;
 			children = (
@@ -7765,6 +7809,7 @@
 				C2AB92CF27665ACC00698382 /* ExporterPINFlowController.swift in Sources */,
 				C2ABF3C92002A01A003F2CBA /* CommonNavigationControlller.swift in Sources */,
 				C2B077A1292A75320074517F /* UploadLogsPresenter.swift in Sources */,
+				C2EBE0022AC44787008FD744 /* GuideMenuFlowController.swift in Sources */,
 				C240486B27655BD70076376E /* ImporterOpenFilePresenter.swift in Sources */,
 				C2B950F329258C0E00F1C069 /* LogUploadingInteractor.swift in Sources */,
 				C284991D27CC28930092098D /* ComposeServiceCounterViewController.swift in Sources */,
@@ -7874,6 +7919,7 @@
 				C20935DD29214FA7000F5AA7 /* IconInteractor.swift in Sources */,
 				C2633EFD265A7D090034B836 /* TokenLabel.swift in Sources */,
 				C2D44E6D275C14A70043F5D6 /* MainRepositoryImpl.swift in Sources */,
+				C2EBE0042AC44DC3008FD744 /* GuideMenuView.swift in Sources */,
 				C29646DC257421D2007FD35F /* ActiveEditingProtocol.swift in Sources */,
 				C2117187276CEB8100042D28 /* VerifyPINViewController.swift in Sources */,
 				C2FA6C472401DF9400A1F320 /* AlertControllerDismissFlow.swift in Sources */,
@@ -8098,6 +8144,7 @@
 				C24590FA280F54400079C21C /* SelectServiceModels.swift in Sources */,
 				C274BDC42769425900EE28BC /* AppSecurityPresenter+Menu.swift in Sources */,
 				C2069C9128C2922A00321E44 /* AEGISData.swift in Sources */,
+				C2EBDFFE2AC4476D008FD744 /* GuideMenuPresenter.swift in Sources */,
 				C27C03BD27F4FA980020DB5E /* BrowserExtensionMainFlowController.swift in Sources */,
 				C20CD53E2A1D013200A7F324 /* TokensTOTPCellType.swift in Sources */,
 				C2404855276529FF0076376E /* MainRepositoryImpl+Export.swift in Sources */,
@@ -8315,6 +8362,7 @@
 				C2D44E6F275C19220043F5D6 /* MainRepositoryImpl+Security.swift in Sources */,
 				C296D4D42A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift in Sources */,
 				C2C66F951FE068CC00AD5A1C /* TokensViewController.swift in Sources */,
+				C2EBDFFC2AC44750008FD744 /* GuideMenuViewController.swift in Sources */,
 				C240487C27656DB40076376E /* ImporterFileErrorFlowController.swift in Sources */,
 				C2A74FD72610D3A8007E5AB3 /* TintColor.swift in Sources */,
 				C2CC0A3A29D0580B00677A7B /* ExternalImportViewController.swift in Sources */,

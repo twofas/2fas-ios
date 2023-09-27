@@ -41,7 +41,16 @@ struct GuideDescription: Identifiable, Hashable {
         let cta: CTA
     }
     
-    struct MenuPosition {
+    struct MenuPosition: Identifiable, Hashable {
+        static func == (lhs: GuideDescription.MenuPosition, rhs: GuideDescription.MenuPosition) -> Bool {
+            lhs.title == rhs.title
+        }
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(title)
+        }
+        
+        var id: String { title }
         let title: String
         let pages: [Page]
     }

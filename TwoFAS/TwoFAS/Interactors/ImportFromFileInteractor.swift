@@ -299,7 +299,7 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 }()
                 let labelColor: TintColor = {
                     guard let colorString = icon?.label?.backgroundColor,
-                          let tintColor = TintColor.fromImportString(colorString) else { return .lightBlue }
+                          let tintColor = TintColor.fromImportString(colorString) else { return .random }
                     return tintColor
                 }()
                 let labelTitle: String = {
@@ -382,6 +382,13 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
             guard secret.isValidSecret() else { return nil }
             
             let serviceDef = serviceDefinitionInteractor.findService(using: entry.issuer)
+            let iconTypeID = serviceDef?.iconTypeID
+            let iconType: IconType = {
+                if iconTypeID == nil {
+                    return .label
+                }
+                return .brand
+            }()
             return ServiceData(
                 name: entry.name.sanitazeName(),
                 secret: secret,
@@ -393,9 +400,9 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 tokenPeriod: period,
                 tokenLength: digits,
                 badgeColor: nil,
-                iconType: .brand,
-                iconTypeID: serviceDef?.iconTypeID ?? .default,
-                labelColor: .lightBlue,
+                iconType: iconType,
+                iconTypeID: iconTypeID ?? .default,
+                labelColor: .random,
                 labelTitle: entry.name.twoLetters,
                 algorithm: entry.info.algo.toAlgoritm,
                 isTrashed: false,
@@ -424,6 +431,13 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
             let algo = Algorithm(rawValue: acc.algorithm.uppercased())
             
             let serviceDef = serviceDefinitionInteractor.findService(using: acc.issuerName)
+            let iconTypeID = serviceDef?.iconTypeID
+            let iconType: IconType = {
+                if iconTypeID == nil {
+                    return .label
+                }
+                return .brand
+            }()
             return ServiceData(
                 name: acc.userName.sanitazeName(),
                 secret: secret,
@@ -435,9 +449,9 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 tokenPeriod: period,
                 tokenLength: digits,
                 badgeColor: nil,
-                iconType: .brand,
-                iconTypeID: serviceDef?.iconTypeID ?? .default,
-                labelColor: .lightBlue,
+                iconType: iconType,
+                iconTypeID: iconTypeID ?? .default,
+                labelColor: .random,
                 labelTitle: acc.userName.twoLetters,
                 algorithm: algo ?? .defaultValue,
                 isTrashed: false,
@@ -473,6 +487,13 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
             guard secret.isValidSecret() else { return nil }
             
             let serviceDef = serviceDefinitionInteractor.findService(using: acc.issuer)
+            let iconTypeID = serviceDef?.iconTypeID
+            let iconType: IconType = {
+                if iconTypeID == nil {
+                    return .label
+                }
+                return .brand
+            }()
             return ServiceData(
                 name: acc.issuer.sanitazeName(),
                 secret: secret,
@@ -484,9 +505,9 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 tokenPeriod: period,
                 tokenLength: digits,
                 badgeColor: nil,
-                iconType: .brand,
-                iconTypeID: serviceDef?.iconTypeID ?? .default,
-                labelColor: .lightBlue,
+                iconType: iconType,
+                iconTypeID: iconTypeID ?? .default,
+                labelColor: .random,
                 labelTitle: acc.issuer.twoLetters,
                 algorithm: algo,
                 isTrashed: false,

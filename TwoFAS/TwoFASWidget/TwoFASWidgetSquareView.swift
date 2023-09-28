@@ -22,6 +22,8 @@ import SwiftUI
 import Common
 
 struct TwoFASWidgetSquareView: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     private let spacing: CGFloat = 8
     
     let entry: CodeEntry.Entry
@@ -48,12 +50,8 @@ struct TwoFASWidgetSquareView: View {
         VStack(alignment: .leading, spacing: nil) {
             Spacer()
             HStack(alignment: .center, spacing: nil) {
-                Image(uiImage: entryData.icon)
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .aspectRatio(contentMode: .fit)
+                IconRenderer(entry: entry)
                     .redacted(reason: reason)
-                    .accessibility(label: Text("widget_service_icon"))
                 Spacer()
                 counterText(for: entryData.countdownTo)
                     .multilineTextAlignment(.trailing)

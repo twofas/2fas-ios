@@ -22,6 +22,8 @@ import SwiftUI
 import Common
 
 struct TwoFASWidgetLineViewGrid: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     private let spacing: CGFloat = 8
     private let minSize: CGFloat = 170
     

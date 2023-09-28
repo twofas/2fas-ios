@@ -40,30 +40,53 @@ public enum LabelImageRenderer {
     }
     private static let size: CGFloat = 40
     private static let textSize: CGFloat = 13
+    private static let textOffsetY: CGFloat = -1
+    private static let textOffsetHeight: CGFloat = 2
     
-    public static func render(with title: String, color: TintColor, variant: Variant = .standard) -> UIImage {
-        let frame = CGRect(origin: .zero, size: CGSize(width: variant.size, height: variant.size))
+    public static func render(
+        with title: String,
+        tintColor: TintColor,
+        variant: Variant = .standard
+    ) -> UIImage {
+        let size = CGSize(width: variant.size, height: variant.size)
+        let frame = CGRect(origin: .zero, size: size)
+        let paths = LabelShapes.generate(for: size)
+        let rectColor = ThemeColor.labelTextBackground
+        let textColor = ThemeColor.labelText
         let renderer = UIGraphicsImageRenderer(bounds: frame)
-        return renderer.image { ctx in
-            color.color.setFill()
-            ctx.cgContext.fillEllipse(in: frame)
-            UIColor.white.setFill()
-            attributedText(for: title, textSize: variant.textSize)
+        return renderer.image { _ in
+            tintColor.color.setFill()
+            paths.backgroundCircle.fill()
+            
+            rectColor.setFill()
+            paths.upperRect.fill()
+            
+            attributedText(for: title, textSize: variant.textSize, textColor: textColor)
                 .draw(
-                    with: CGRect(x: 0, y: variant.textSize, width: variant.size, height: variant.textSize),
+                    with: CGRect(
+                        x: 0,
+                        y: variant.textSize + textOffsetY,
+                        width: variant.size,
+                        height: variant.textSize + textOffsetHeight
+                    ),
                     options: .usesLineFragmentOrigin,
                     context: nil
                 )
         }
     }
     
-    private static func attributedText(for title: String, textSize: CGFloat) -> NSAttributedString {
+    private static func attributedText(
+        for title: String,
+        textSize: CGFloat,
+        textColor: UIColor
+    ) -> NSAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         
         let attrs: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: textSize, weight: .bold),
-            .paragraphStyle: paragraphStyle
+            .paragraphStyle: paragraphStyle,
+            .foregroundColor: textColor
         ]
         
         return NSAttributedString(string: title, attributes: attrs)

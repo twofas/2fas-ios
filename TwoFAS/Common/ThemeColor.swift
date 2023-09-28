@@ -48,9 +48,11 @@ public enum ThemeColor {
     public static let uuidInputBackground = UIColor(named: "UUIDInputBackground", in: bundle, compatibleWith: nil)!
     public static let uuidInputText = UIColor(named: "UUIDInputText", in: bundle, compatibleWith: nil)!
     public static let buttonCloseBackground = UIColor(named: "ColorButtonCloseBackground", in: bundle, compatibleWith: nil)!
+    public static let labelText = UIColor(named: "ColorLabelText", in: bundle, compatibleWith: nil)!
     public static let buttonCloseForeground = UIColor(named: "ColorButtonCloseForeground", in: bundle, compatibleWith: nil)!
     public static let activeLine = UIColor(named: "ColorActiveLine", in: bundle, compatibleWith: nil)!
     public static let secondarySeparator = UIColor(named: "ColorSecondarySeparator", in: bundle, compatibleWith: nil)!
     public static let selectionBorder = UIColor(named: "ColorSelectionBorder", in: bundle, compatibleWith: nil)!
+    public static let labelTextBackground = UIColor(named: "ColorLabelTextBackground", in: bundle, compatibleWith: nil)!
 }
 // swiftlint:enable all

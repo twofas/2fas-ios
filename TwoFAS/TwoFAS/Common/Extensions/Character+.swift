@@ -17,27 +17,8 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
+import Foundation
 
-public protocol ServiceIconDefinition {
-    var serviceTypeID: ServiceTypeID? { get }
-    var iconType: IconType { get }
-    var iconTypeID: IconTypeID { get }
-    var labelTitle: String { get }
-    var labelColor: TintColor { get }
-    var icon: UIImage { get }
-}
-
-public extension ServiceIconDefinition {
-    var icon: UIImage {
-        switch iconType {
-        case .brand:
-            return ServiceIcon.for(iconTypeID: iconTypeID)
-        case .label:
-            return LabelImageRenderer.render(
-                with: labelTitle,
-                tintColor: labelColor
-            )
-        }
-    }
+extension Character {
+    var isEmoji: Bool { unicodeScalars.first?.properties.isEmoji == true }
 }

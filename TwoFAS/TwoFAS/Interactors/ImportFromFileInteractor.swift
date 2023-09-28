@@ -164,7 +164,6 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
         }
     }
     
-    
     func countNewServices(_ services: [ServiceData]) -> Int {
         let value = mainRepository.countNewServices(from: services)
         Log("ImportFromFileInteractor - countNewServices: \(value)", module: .interactor)

@@ -22,148 +22,7 @@ import Common
 import Protection
 import CodeSupport
 
-enum ImportFromFileError: Error {
-    case cantReadFile(reason: String?)
-}
-
-enum ImportFromFileParsing {
-    enum AEGISParseResult {
-        case error
-        case encrypted
-        case newerVersion
-        case success(AEGISData)
-    }
-    enum LastPassResult {
-        case newerVersion
-        case success(LastPassData)
-    }
-    case twoFAS(ExchangeDataFormat)
-    case aegis(AEGISParseResult)
-    case lastPass(LastPassResult)
-    case raivo([RaivoData])
-    case andOTP([AndOTPData])
-    case authenticatorPro([Code])
-}
-
-enum ImportFromFileTwoFASCheck {
-    case newerSchema
-    case encrypted
-    case unencrypted
-}
-
-enum ImportFromFileAEGISParse {
-    case newerSchema
-    case encrypted
-    case error
-    case success([ServiceData])
-}
-
-enum ImportFromFileTwoFASDecrypt {
-    case success(ExchangeDataServices)
-    case wrongPassword
-    case cantReadFile
-}
-
-enum ImportFromFileAuthenticatorPro {
-    case success([Code])
-    case cantReadFile
-}
-
-protocol ImportFromFileInteracting: AnyObject {
-    func openFile(_ url: URL, completion: @escaping (Result<Data, ImportFromFileError>) -> Void)
-    func parseContent(_ data: Data) -> ImportFromFileParsing?
-    //
-    func checkTwoFAS(_ data: ExchangeDataFormat) -> ImportFromFileTwoFASCheck
-    func decryptTwoFAS(_ data: ExchangeDataFormat, password: String) -> ImportFromFileTwoFASDecrypt
-    func parseSectionsTwoFAS(_ data: ExchangeDataFormat) -> [CommonSectionData]
-    func parseTwoFASServices(with services: ExchangeDataServices, sections: [CommonSectionData]) -> [ServiceData]
-    //
-    func countNewServices(_ services: [ServiceData]) -> Int
-    func importServices(_ services: [ServiceData], sections: [CommonSectionData]) -> Int
-    func parseAEGIS(_ data: AEGISData) -> [ServiceData]
-    func parseLastPass(_ data: LastPassData) -> [ServiceData]
-    func parseRaivo(_ data: [RaivoData]) -> [ServiceData]
-    func parseAndOTP(_ data: [AndOTPData]) -> [ServiceData]
-    func parseAuthenticatorPro(_ data: [Code]) -> [ServiceData]
-}
-
-final class ImportFromFileInteractor {
-    private let mainRepository: MainRepository
-    private let jsonDecoder = JSONDecoder()
-    private let serviceDefinitionInteractor: ServiceDefinitionInteracting
-    private let modifyInteractor: ServiceModifyInteracting
-    
-    init(
-        mainRepository: MainRepository,
-        serviceDefinitionInteractor: ServiceDefinitionInteracting,
-        modifyInteractor: ServiceModifyInteracting
-    ) {
-        self.mainRepository = mainRepository
-        self.serviceDefinitionInteractor = serviceDefinitionInteractor
-        self.modifyInteractor = modifyInteractor
-    }
-}
-
-extension ImportFromFileInteractor: ImportFromFileInteracting {
-    func openFile(_ url: URL, completion: @escaping (Result<Data, ImportFromFileError>) -> Void) {
-        Log("ImportFromFileInteractor - open file, url: \(url)", module: .interactor)
-        mainRepository.openFile(url: url) { result in
-            switch result {
-            case .success(let data): completion(.success(data))
-            case .failure(let error):
-                switch error {
-                case .cantReadFile(let reason): completion(.failure(.cantReadFile(reason: reason)))
-                }
-            }
-        }
-    }
-    
-    func parseContent(_ data: Data) -> ImportFromFileParsing? {
-        Log("ImportFromFileInteractor - parseContent", module: .interactor)
-        if let services = try? jsonDecoder.decode(ExchangeData2.self, from: data),
-           services.schemaVersion == ExchangeConsts.schemaVersionV3 {
-            return .twoFAS(.twoFASV3(services))
-        }
-        
-        if let services = try? jsonDecoder.decode(ExchangeData.self, from: data) {
-            return .twoFAS(.twoFAS(services))
-        }
-
-        if let lastPass = try? jsonDecoder.decode(LastPassData.self, from: data) {
-            guard lastPass.version == LastPassData.supportedVersion else {
-                return .lastPass(.newerVersion)
-            }
-            return .lastPass(.success(lastPass))
-        }
-        
-        if let raivo = try? jsonDecoder.decode([RaivoData].self, from: data) {
-            return .raivo(raivo)
-        }
-        
-        if let andOTP = try? jsonDecoder.decode([AndOTPData].self, from: data) {
-            return .andOTP(andOTP)
-        }
-        
-        let authenticatorPro = importFromAuthenticatorProFileFormat(data)
-        if case ImportFromFileAuthenticatorPro.success(let list) = authenticatorPro {
-            return .authenticatorPro(list)
-        }
-        
-        do {
-            let services = try jsonDecoder.decode(AEGISData.self, from: data)
-            return .aegis(.success(services))
-        } catch {
-            guard let error = error as? AEGISDataParseError else {
-                return nil
-            }
-            switch error {
-            case .encrypted: return .aegis(.encrypted)
-            case .newerVersion: return .aegis(.newerVersion)
-            case .error: return .aegis(.error)
-            }
-        }
-    }
-    
+extension ImportFromFileInteractor {
     // MARK: 2FAS Parsing
     
     func checkTwoFAS(_ data: ExchangeDataFormat) -> ImportFromFileTwoFASCheck {
@@ -323,7 +182,7 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 }()
                 let labelColor: TintColor = {
                     guard let colorString = icon?.label?.backgroundColor,
-                          let tintColor = TintColor.fromImportString(colorString) else { return .random }
+                          let tintColor = TintColor.fromImportString(colorString) else { return .lightBlue }
                     return tintColor
                 }()
                 let labelTitle: String = {
@@ -375,22 +234,10 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
             }
     }
     
-    // MARK: -
-    
-    func countNewServices(_ services: [ServiceData]) -> Int {
-        let value = mainRepository.countNewServices(from: services)
-        Log("ImportFromFileInteractor - countNewServices: \(value)", module: .interactor)
-        return value
-    }
-    
-    func importServices(_ services: [ServiceData], sections: [CommonSectionData]) -> Int {
-        mainRepository.importServices(services, sections: sections)
-    }
-    
     func parseAEGIS(_ data: AEGISData) -> [ServiceData] {
         Log("ImportFromFileInteractor - parseAEGIS", module: .interactor)
         let date = Date()
-        return data.db.entries.compactMap { entry in
+        return data.db.entries.compactMap { entry -> ServiceData? in
             guard let digits = Digits(rawValue: entry.info.digits),
                   entry.info.secret.isValidSecret()
             else { return nil }
@@ -406,13 +253,6 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
             guard secret.isValidSecret() else { return nil }
             
             let serviceDef = serviceDefinitionInteractor.findService(using: entry.issuer)
-            let iconTypeID = serviceDef?.iconTypeID
-            let iconType: IconType = {
-                if iconTypeID == nil {
-                    return .label
-                }
-                return .brand
-            }()
             return ServiceData(
                 name: entry.name.sanitazeName(),
                 secret: secret,
@@ -424,9 +264,9 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 tokenPeriod: period,
                 tokenLength: digits,
                 badgeColor: nil,
-                iconType: iconType,
-                iconTypeID: iconTypeID ?? .default,
-                labelColor: .random,
+                iconType: .brand,
+                iconTypeID: serviceDef?.iconTypeID ?? .default,
+                labelColor: .lightBlue,
                 labelTitle: entry.name.twoLetters,
                 algorithm: entry.info.algo.toAlgoritm,
                 isTrashed: false,
@@ -455,13 +295,6 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
             let algo = Algorithm(rawValue: acc.algorithm.uppercased())
             
             let serviceDef = serviceDefinitionInteractor.findService(using: acc.issuerName)
-            let iconTypeID = serviceDef?.iconTypeID
-            let iconType: IconType = {
-                if iconTypeID == nil {
-                    return .label
-                }
-                return .brand
-            }()
             return ServiceData(
                 name: acc.userName.sanitazeName(),
                 secret: secret,
@@ -473,9 +306,9 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 tokenPeriod: period,
                 tokenLength: digits,
                 badgeColor: nil,
-                iconType: iconType,
-                iconTypeID: iconTypeID ?? .default,
-                labelColor: .random,
+                iconType: .brand,
+                iconTypeID: serviceDef?.iconTypeID ?? .default,
+                labelColor: .lightBlue,
                 labelTitle: acc.userName.twoLetters,
                 algorithm: algo ?? .defaultValue,
                 isTrashed: false,
@@ -519,13 +352,6 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
             }()
             
             let serviceDef = serviceDefinitionInteractor.findService(using: acc.issuer)
-            let iconTypeID = serviceDef?.iconTypeID
-            let iconType: IconType = {
-                if iconTypeID == nil {
-                    return .label
-                }
-                return .brand
-            }()
             return ServiceData(
                 name: name,
                 secret: secret,
@@ -537,10 +363,145 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 tokenPeriod: period,
                 tokenLength: digits,
                 badgeColor: nil,
-                iconType: iconType,
-                iconTypeID: iconTypeID ?? .default,
-                labelColor: .random,
+                iconType: .brand,
+                iconTypeID: serviceDef?.iconTypeID ?? .default,
+                labelColor: .lightBlue,
                 labelTitle: acc.issuer.twoLetters,
+                algorithm: algo,
+                isTrashed: false,
+                trashingDate: nil,
+                counter: counter,
+                tokenType: kind,
+                source: .link,
+                otpAuth: nil,
+                order: nil,
+                sectionID: nil
+            )
+        }
+    }
+    
+    func parseAndOTP(_ data: [AndOTPData]) -> [ServiceData] {
+        Log("ImportFromFileInteractor - parseAndOTP", module: .interactor)
+        
+        let date = Date()
+        
+        return data.compactMap { acc -> ServiceData? in
+            let secret = acc.secret.sanitazeSecret()
+            
+            guard secret.isValidSecret() else { return nil }
+            
+            let issuer = acc.issuer
+            let additionalInfo = acc.label?.sanitizeInfo()
+            let digits = Digits.create(acc.digits)
+            let kind = TokenType.create(acc.type?.uppercased())
+            let algo = Algorithm.create(acc.algorithm?.uppercased())
+            let counter = acc.counter ?? 0
+            let period = Period.create(acc.period)
+            
+            let name: String = {
+                if let name = issuer?.sanitazeName()
+                    .replacingOccurrences(of: "+", with: " "), !name.isEmpty {
+                    return name
+                }
+                return modifyInteractor.createNameForUnknownService()
+            }()
+            
+            let serviceDefinition: ServiceDefinition? = {
+                if let issuer {
+                    return serviceDefinitionInteractor.findService(using: issuer)
+                }
+                return nil
+            }()
+
+            return ServiceData(
+                name: name,
+                secret: secret,
+                serviceTypeID: serviceDefinition?.serviceTypeID,
+                additionalInfo: additionalInfo,
+                rawIssuer: issuer,
+                modifiedAt: date,
+                createdAt: date,
+                tokenPeriod: period,
+                tokenLength: digits,
+                badgeColor: nil,
+                iconType: .brand,
+                iconTypeID: serviceDefinition?.iconTypeID ?? .default,
+                labelColor: .lightBlue,
+                labelTitle: name.twoLetters,
+                algorithm: algo,
+                isTrashed: false,
+                trashingDate: nil,
+                counter: counter,
+                tokenType: kind,
+                source: .link,
+                otpAuth: nil,
+                order: nil,
+                sectionID: nil
+            )
+        }
+    }
+    
+    func importFromAuthenticatorProFileFormat(_ data: Data) -> ImportFromFileAuthenticatorPro {
+        guard let string = String(data: data, encoding: .utf8) else { return .cantReadFile }
+        let lines = string.split(separator: "\n")
+            .map({ String($0) })
+            .compactMap({ URL(string: $0) })
+            .filter({ $0.scheme == "otpauth" })
+        
+        let codes = lines.compactMap({ Code.parseURL($0) })
+        guard !codes.isEmpty else { return .cantReadFile }
+        
+        return .success(codes)
+    }
+    
+    func parseAuthenticatorPro(_ data: [Code]) -> [ServiceData] {
+        Log("ImportFromFileInteractor - AutenticatorPro", module: .interactor)
+        
+        let date = Date()
+        
+        return data.compactMap { code -> ServiceData? in
+            let secret = code.secret.sanitazeSecret()
+            
+            guard secret.isValidSecret() else { return nil }
+            
+            let issuer = code.issuer
+            let additionalInfo = code.label?.sanitizeInfo()
+            let digits = code.digits ?? .defaultValue
+            let kind = code.tokenType
+            let algo = code.algorithm ?? .defaultValue
+            let counter = code.counter ?? 0
+            let period = code.period ?? .defaultValue
+            
+            let name: String = {
+                if let name = issuer?.sanitazeName()
+                    .replacingOccurrences(of: "+", with: " "), !name.isEmpty {
+                    return name
+                }
+                return modifyInteractor.createNameForUnknownService()
+            }()
+            
+            let serviceDefinition: ServiceDefinition? = {
+                if let issuer {
+                    return serviceDefinitionInteractor.findService(using: issuer)
+                }
+                return nil
+            }()
+
+            return ServiceData(
+                name: name,
+                secret: secret,
+                serviceTypeID: serviceDefinition?.serviceTypeID,
+                additionalInfo: additionalInfo,
+                rawIssuer: issuer,
+                modifiedAt: date,
+                createdAt: date,
+                tokenPeriod: period,
+                tokenLength: digits,
+                badgeColor: nil,
+                iconType: .brand,
+                iconTypeID: serviceDefinition?.iconTypeID ?? .default,
+                labelColor: .lightBlue,
+                labelTitle: name.twoLetters,
                 algorithm: algo,
                 isTrashed: false,
                 trashingDate: nil,

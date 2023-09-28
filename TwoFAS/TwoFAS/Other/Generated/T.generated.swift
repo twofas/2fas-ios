@@ -115,6 +115,8 @@ internal enum T {
   internal static let exportBackupTitle = T.tr("Localizable", "export_backup_title", fallback: "Your backup file is ready for export")
   /// Aegis
   internal static let externalimportAegis = T.tr("Localizable", "externalimport_aegis", fallback: "Aegis")
+  /// andOTP
+  internal static let externalimportAndotp = T.tr("Localizable", "externalimport_andotp", fallback: "andOTP")
   /// You can import your tokens to 2FAS from different apps. Choose an app from the list and follow the instructions.
   internal static let externalimportDescription = T.tr("Localizable", "externalimport_description", fallback: "You can import your tokens to 2FAS from different apps. Choose an app from the list and follow the instructions.")
   /// Google Authenticator
@@ -742,6 +744,12 @@ internal enum T {
     internal static let aegisSuccessMsg = T.tr("Localizable", "externalimport__aegis_success_msg", fallback: "This JSON file allows importing tokens from Aegis.")
     /// Importing 2FA tokens from Aegis app
     internal static let aegisTitle = T.tr("Localizable", "externalimport__aegis_title", fallback: "Importing 2FA tokens from Aegis app")
+    /// Export your accounts from andOTP to an unencrypted JSON file and upload it using the "Choose JSON file" button. Remember to remove the file after a successful import.
+    internal static let andotpMsg = T.tr("Localizable", "externalimport__andotp_msg", fallback: "Export your accounts from andOTP to an unencrypted JSON file and upload it using the \"Choose JSON file\" button. Remember to remove the file after a successful import.")
+    /// This JSON file allows importing tokens from andOTP.
+    internal static let andotpSuccessMsg = T.tr("Localizable", "externalimport__andotp_success_msg", fallback: "This JSON file allows importing tokens from andOTP.")
+    /// Importing 2FA tokens from andOTP app
+    internal static let andotpTitle = T.tr("Localizable", "externalimport__andotp_title", fallback: "Importing 2FA tokens from andOTP app")
     /// Authenticator Pro
     internal static let authenticatorpro = T.tr("Localizable", "externalimport__authenticatorpro", fallback: "Authenticator Pro")
     /// Export your accounts from Authenticator Pro to an unencrypted text file and upload it using the "Choose text file" button. Remember to remove the file after a successful import.
@@ -760,6 +768,8 @@ internal enum T {
     internal static let gaTitle = T.tr("Localizable", "externalimport__ga_title", fallback: "Importing 2FA tokens from Google Authenticator app")
     /// Import tokens from Aegis
     internal static let infoAegisTitle = T.tr("Localizable", "externalimport__info_aegis_title", fallback: "Import tokens from Aegis")
+    /// Import tokens from andOTP
+    internal static let infoAndotpTitle = T.tr("Localizable", "externalimport__info_andotp_title", fallback: "Import tokens from andOTP")
     /// Import tokens from Authenticator Pro
     internal static let infoAuthenticatorproTitle = T.tr("Localizable", "externalimport__info_authenticatorpro_title", fallback: "Import tokens from Authenticator Pro")
     /// Import tokens from Google Authenticator

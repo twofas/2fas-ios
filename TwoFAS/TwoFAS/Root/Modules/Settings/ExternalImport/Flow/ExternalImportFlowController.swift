@@ -27,6 +27,8 @@ protocol ExternalImportFlowControlling: AnyObject {
     func toRaivo()
     func toLastPass()
     func toGoogleAuth()
+    func toAndOTP()
+    func toAuthenticatorPro()
 }
 
 final class ExternalImportFlowController: FlowController {
@@ -108,6 +110,26 @@ extension ExternalImportFlowController: ExternalImportFlowControlling {
             in: navigationController,
             parent: self,
             service: .googleAuth
+        )
+    }
+    
+    func toAndOTP() {
+        guard let navigationController else { return }
+        navigationController.setNavigationBarHidden(true, animated: true)
+        ExternalImportInstructionsFlowController.push(
+            in: navigationController,
+            parent: self,
+            service: .andOTP
+        )
+    }
+    
+    func toAuthenticatorPro() {
+        guard let navigationController else { return }
+        navigationController.setNavigationBarHidden(true, animated: true)
+        ExternalImportInstructionsFlowController.push(
+            in: navigationController,
+            parent: self,
+            service: .authenticatorPro
         )
     }
 }

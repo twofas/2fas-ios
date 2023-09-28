@@ -95,6 +95,32 @@ private extension ImporterOpenFilePresenter {
                     externalImportService: .raivo
                 )
             }
+        case .andOTP(let andOTPData):
+            let parseResult = interactor.parseAndOTP(andOTPData)
+            if parseResult.isEmpty {
+                flowController.toFileIsEmpty()
+            } else {
+                flowController.toPreimportSummary(
+                    countNew: interactor.countNewServices(parseResult),
+                    countTotal: parseResult.count,
+                    sections: [],
+                    services: parseResult,
+                    externalImportService: .andOTP
+                )
+            }
+        case .authenticatorPro(let data):
+            let parseResult = interactor.parseAuthenticatorPro(data)
+            if parseResult.isEmpty {
+                flowController.toFileIsEmpty()
+            } else {
+                flowController.toPreimportSummary(
+                    countNew: interactor.countNewServices(parseResult),
+                    countTotal: parseResult.count,
+                    sections: [],
+                    services: parseResult,
+                    externalImportService: .authenticatorPro
+                )
+            }
         case .aegis(let result):
             switch result {
             case .error, .encrypted, .newerVersion:

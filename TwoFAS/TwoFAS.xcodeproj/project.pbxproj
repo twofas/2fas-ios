@@ -181,6 +181,7 @@
 		C228603226697250005E88E3 /* TokensSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C228603126697250005E88E3 /* TokensSection.swift */; };
 		C2286034266972B5005E88E3 /* TokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2286033266972B5005E88E3 /* TokenCell.swift */; };
 		C2290334276BA78C0005C8F2 /* AppLockStateInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2290333276BA78C0005C8F2 /* AppLockStateInteractor.swift */; };
+		C229403E2AB3A50700D55B58 /* AndOTPData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C229403D2AB3A50700D55B58 /* AndOTPData.swift */; };
 		C22A866A287F60BD009A43FE /* MainRepositoryImpl+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22A8669287F60BD009A43FE /* MainRepositoryImpl+Notifications.swift */; };
 		C22C1399267682B4001AA5F1 /* CategoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22C1398267682B4001AA5F1 /* CategoryData.swift */; };
 		C22C139B267684DC001AA5F1 /* CategoryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22C139A267684DC001AA5F1 /* CategoryHandler.swift */; };
@@ -465,6 +466,7 @@
 		C278122927FA462000F31453 /* MainRepositoryImpl+RSAEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278122827FA462000F31453 /* MainRepositoryImpl+RSAEncryption.swift */; };
 		C278122B27FA49AA00F31453 /* WebExtensionLocalDeviceNameInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278122A27FA49AA00F31453 /* WebExtensionLocalDeviceNameInteractor.swift */; };
 		C278122D27FA4B5A00F31453 /* MainRepositoryImpl+DeviceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278122C27FA4B5A00F31453 /* MainRepositoryImpl+DeviceName.swift */; };
+		C27829602AB4C546006224CC /* ImportFromFileInteractor+Parsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278295F2AB4C546006224CC /* ImportFromFileInteractor+Parsers.swift */; };
 		C2787C3D28FB536000E6C989 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2AB25CC28DF96A1001CF6B3 /* Icons.xcassets */; };
 		C2787C3F28FB613000E6C989 /* TwoFas6-TwoFas7.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C2787C3E28FB613000E6C989 /* TwoFas6-TwoFas7.xcmappingmodel */; };
 		C2794BA32774A90600301F1A /* Digits.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2794BA22774A90600301F1A /* Digits.swift */; };
@@ -1476,6 +1478,7 @@
 		C228603126697250005E88E3 /* TokensSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensSection.swift; sourceTree = "<group>"; };
 		C2286033266972B5005E88E3 /* TokenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCell.swift; sourceTree = "<group>"; };
 		C2290333276BA78C0005C8F2 /* AppLockStateInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockStateInteractor.swift; sourceTree = "<group>"; };
+		C229403D2AB3A50700D55B58 /* AndOTPData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AndOTPData.swift; sourceTree = "<group>"; };
 		C22A82E829EDCC5E00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C22A82E929EDCC5F00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C22A82EA29EDCC5F00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1772,6 +1775,7 @@
 		C278122827FA462000F31453 /* MainRepositoryImpl+RSAEncryption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+RSAEncryption.swift"; sourceTree = "<group>"; };
 		C278122A27FA49AA00F31453 /* WebExtensionLocalDeviceNameInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebExtensionLocalDeviceNameInteractor.swift; sourceTree = "<group>"; };
 		C278122C27FA4B5A00F31453 /* MainRepositoryImpl+DeviceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+DeviceName.swift"; sourceTree = "<group>"; };
+		C278295F2AB4C546006224CC /* ImportFromFileInteractor+Parsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImportFromFileInteractor+Parsers.swift"; sourceTree = "<group>"; };
 		C2787C3E28FB613000E6C989 /* TwoFas6-TwoFas7.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = "TwoFas6-TwoFas7.xcmappingmodel"; sourceTree = "<group>"; };
 		C2794BA22774A90600301F1A /* Digits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Digits.swift; sourceTree = "<group>"; };
 		C2794BA42774AA6200301F1A /* TokenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenType.swift; sourceTree = "<group>"; };
@@ -2918,6 +2922,7 @@
 				C21111F4274ABDDA00CA7C78 /* InteractorFactory.swift */,
 				C27BE51A275D7DDE0090CA12 /* CloudBackupStateInteractor.swift */,
 				C240485B276549C00076376E /* ImportFromFileInteractor.swift */,
+				C278295F2AB4C546006224CC /* ImportFromFileInteractor+Parsers.swift */,
 				C2290333276BA78C0005C8F2 /* AppLockStateInteractor.swift */,
 				C249772D277F3D6100DC872C /* TrashingServiceInteractor.swift */,
 				C249772F277F3EFB00DC872C /* ServiceModifyInteractor.swift */,
@@ -3873,6 +3878,7 @@
 				C25859372802E75A002DC749 /* PushNotificationState.swift */,
 				C2069C9028C2922A00321E44 /* AEGISData.swift */,
 				C27A31C929C8EEE40094679F /* LastPassData.swift */,
+				C229403D2AB3A50700D55B58 /* AndOTPData.swift */,
 				C27A31CB29C90B110094679F /* RaivoData.swift */,
 			);
 			path = DataTypes;
@@ -7721,6 +7727,7 @@
 				C2A4C8352A10F13800AFD67C /* TokensTOTPCell.swift in Sources */,
 				C2117181276CE54900042D28 /* VerifyPINFlowController.swift in Sources */,
 				C29FEFF92756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift in Sources */,
+				C229403E2AB3A50700D55B58 /* AndOTPData.swift in Sources */,
 				C2D3B0F628EE0F1C00D2F991 /* MainRepositoryImpl+ServiceDefinition.swift in Sources */,
 				C2C1DDE227CAD2DF002C7867 /* ComposeServiceAdvancedEditTokenTypeCell.swift in Sources */,
 				C2959627267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift in Sources */,
@@ -7865,6 +7872,7 @@
 				C27A549927F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift in Sources */,
 				C2147CE6205D7B790001D011 /* PINPadKeyboard.swift in Sources */,
 				C25C318D2881BC5A002C9044 /* NotificationInteractor.swift in Sources */,
+				C27829602AB4C546006224CC /* ImportFromFileInteractor+Parsers.swift in Sources */,
 				C2D6731E25DB2C5D004BD697 /* Toast.swift in Sources */,
 				C284991F27CC2C6D0092098D /* ComposeServiceCounterPresenter+Menu.swift in Sources */,
 				C2B077A6292A75CA0074517F /* UploadLogsFlowController.swift in Sources */,

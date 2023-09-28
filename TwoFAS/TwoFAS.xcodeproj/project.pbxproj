@@ -9151,7 +9151,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 5.0.0;
+				MARKETING_VERSION = 5.1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
@@ -9192,7 +9192,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 5.0.0;
+				MARKETING_VERSION = 5.1.0;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"-ObjC",

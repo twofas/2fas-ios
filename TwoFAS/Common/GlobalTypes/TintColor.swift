@@ -17,7 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 
 public enum TintColor: String, Hashable, CaseIterable {
     case `default`

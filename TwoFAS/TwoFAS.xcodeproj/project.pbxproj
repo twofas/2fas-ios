@@ -1570,7 +1570,6 @@
 		C23666851FB2644900989ACA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C236C3EE2A1CC105002A2129 /* ListStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStyle.swift; sourceTree = "<group>"; };
 		C23721A02804C07600DE335D /* CameraScannerNavigationFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraScannerNavigationFlowController.swift; sourceTree = "<group>"; };
-		C238C70D2AB63E2900E519C6 /* Character+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+.swift"; sourceTree = "<group>"; };
 		C237368D2ABF536200792054 /* MainRepositoryImpl+Guides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Guides.swift"; sourceTree = "<group>"; };
 		C237368F2ABF5E2C00792054 /* Guides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Guides.swift; sourceTree = "<group>"; };
 		C23736912ABF5EC500792054 /* GuideInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideInteractor.swift; sourceTree = "<group>"; };
@@ -1580,6 +1579,7 @@
 		C237369F2AC09AF100792054 /* GuideSelectorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorPresenter.swift; sourceTree = "<group>"; };
 		C23736A12AC09D0E00792054 /* GuideSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorViewController.swift; sourceTree = "<group>"; };
 		C23736A32AC09DB200792054 /* GuideSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorView.swift; sourceTree = "<group>"; };
+		C238C70D2AB63E2900E519C6 /* Character+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Character+.swift"; sourceTree = "<group>"; };
 		C239DE8F26CC5366002301E2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileViewController.swift; sourceTree = "<group>"; };
 		C23B5D6528F229CC00FC6364 /* ServiceMatchRules+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceMatchRules+.swift"; sourceTree = "<group>"; };
@@ -9356,6 +9356,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(EMBEDDED_CONTENT_CONTAINS_SWIFT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = TwoFAS/Other/TwoFAS.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -9398,6 +9399,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(EMBEDDED_CONTENT_CONTAINS_SWIFT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = TwoFAS/Other/TwoFAS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -9742,6 +9744,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -9782,6 +9785,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;

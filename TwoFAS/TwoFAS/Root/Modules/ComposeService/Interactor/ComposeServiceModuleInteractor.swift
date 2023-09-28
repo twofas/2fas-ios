@@ -262,48 +262,26 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
         } else {
             guard let serviceName, let privateKey, !serviceExists(for: privateKey) else { return }
             
-            if sectionState.isDifferent {
-                modifyInteractor.addService(
-                    name: serviceName,
-                    secret: privateKey,
-                    serviceTypeID: nil,
-                    additionalInfo: additionalInfo,
-                    rawIssuer: nil,
-                    otpAuth: nil,
-                    tokenPeriod: period ?? .defaultValue,
-                    tokenLength: digits,
-                    badgeColor: badgeColor,
-                    iconType: iconType,
-                    iconTypeID: iconTypeID,
-                    labelColor: labelColor,
-                    labelTitle: labelTitle,
-                    algorithm: algorithm,
-                    counter: counter,
-                    tokenType: tokenType,
-                    source: .manual,
-                    sectionID: sectionID
-                )
-            } else {
-                modifyInteractor.addService(
-                    name: serviceName,
-                    secret: privateKey,
-                    serviceTypeID: nil,
-                    additionalInfo: additionalInfo,
-                    rawIssuer: nil,
-                    otpAuth: nil,
-                    tokenPeriod: period ?? .defaultValue,
-                    tokenLength: digits,
-                    badgeColor: badgeColor,
-                    iconType: iconType,
-                    iconTypeID: iconTypeID,
-                    labelColor: labelColor,
-                    labelTitle: labelTitle,
-                    algorithm: algorithm,
-                    counter: counter,
-                    tokenType: tokenType,
-                    source: .manual
-                )
-            }
+            modifyInteractor.addService(
+                name: serviceName,
+                secret: privateKey,
+                serviceTypeID: nil,
+                additionalInfo: additionalInfo,
+                rawIssuer: nil,
+                otpAuth: nil,
+                tokenPeriod: period ?? .defaultValue,
+                tokenLength: digits,
+                badgeColor: badgeColor,
+                iconType: iconType,
+                iconTypeID: iconTypeID,
+                labelColor: labelColor,
+                labelTitle: labelTitle,
+                algorithm: algorithm,
+                counter: counter,
+                tokenType: tokenType,
+                source: .manual,
+                sectionID: sectionID
+            )
             
             logSave()
             

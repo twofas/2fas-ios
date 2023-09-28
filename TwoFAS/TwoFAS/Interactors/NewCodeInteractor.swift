@@ -159,7 +159,8 @@ private extension NewCodeInteractor {
             algorithm: code.algorithm ?? .defaultValue,
             counter: code.counter,
             tokenType: code.tokenType,
-            source: .link
+            source: .link,
+            sectionID: nil
         )
         
         return shouldAskForName

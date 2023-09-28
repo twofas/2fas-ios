@@ -47,6 +47,10 @@ extension MainRepositoryImpl {
         storageRepository.serviceExists(for: secret)
     }
     
+    func trashedService(for secret: String) -> ServiceData? {
+        storageRepository.trashedService(for: secret)
+    }
+    
     func addService(
         name: String,
         secret: String,

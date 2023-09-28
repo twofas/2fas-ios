@@ -21,14 +21,16 @@ import Foundation
 
 public enum TintColor: String, Hashable, CaseIterable {
     case `default`
-    case lightBlue
-    case indigo
-    case purple
-    case turquoise
-    case green
     case red
     case orange
     case yellow
+    case green
+    case turquoise
+    case lightBlue
+    case indigo
+    case pink
+    case purple
+    case brown
 }
 
 public extension TintColor {
@@ -78,6 +80,8 @@ public extension TintColor {
         case "Red": return .red
         case "Orange": return .orange
         case "Yellow": return .yellow
+        case "Pink": return .pink
+        case "Brown": return .brown
         default:
             return nil
         }
@@ -99,6 +103,8 @@ public extension TintColor {
         case .red: return "Red"
         case .orange: return "Orange"
         case .yellow: return "Yellow"
+        case .pink: return "Pink"
+        case .brown: return "Brown"
         }
     }
     
@@ -114,6 +120,8 @@ public extension TintColor {
         case .red: return UIColor(named: "redColor", in: bundle, compatibleWith: nil)!
         case .orange: return UIColor(named: "orangeColor", in: bundle, compatibleWith: nil)!
         case .yellow: return UIColor(named: "yellowColor", in: bundle, compatibleWith: nil)!
+        case .pink: return UIColor(named: "pinkColor", in: bundle, compatibleWith: nil)!
+        case .brown: return UIColor(named: "brownColor", in: bundle, compatibleWith: nil)!
         }
     }
 }

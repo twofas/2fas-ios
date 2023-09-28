@@ -154,9 +154,9 @@ extension MainFlowController: AuthRequestsFlowControllerParent {
 }
 
 extension MainFlowController: SelectServiceNavigationFlowControllerParent {
-    func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth) {
+    func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool) {
         viewController.dismiss(animated: true) { [weak self] in
-            self?.authRequestsFlowController?.didSelectService(serviceData, auth: authRequest)
+            self?.authRequestsFlowController?.didSelectService(serviceData, auth: authRequest, save: save)
         }
     }
     

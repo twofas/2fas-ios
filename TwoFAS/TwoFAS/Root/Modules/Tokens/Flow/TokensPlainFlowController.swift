@@ -461,6 +461,12 @@ extension TokensPlainFlowController: AddingServiceFlowControllerParent {
             self?.showWebPairing(for: extensionID)
         }
     }
+    
+    func addingServiceToGuides() {
+        dismiss(actions: [.continuesFlow]) { [weak self] in
+            self?.showGuides()
+        }
+    }
 }
 
 private extension TokensPlainFlowController {
@@ -527,6 +533,14 @@ private extension TokensPlainFlowController {
             extensionID: extensionID
         )
     }
+    
+    func showGuides() {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        GuideSelectorNavigationFlowController.show(
+            on: mainSplitViewController,
+            parent: self
+        )
+    }
 }
 
 extension TokensPlainFlowController: PushNotificationPermissionNavigationFlowControllerParent {
@@ -551,5 +565,25 @@ extension TokensPlainFlowController: NewsNavigationFlowControllerParent {
     func newsClose() {
         viewController.presenter.handleRefreshNewsStatus()
         dismiss()
+    }
+}
+
+extension TokensPlainFlowController: GuideSelectorNavigationFlowControllerParent {
+    func guideToAddManually(with data: String?) {
+        guard let mainSplitViewController else { return }
+        dismiss(actions: [.continuesFlow]) { [weak self] in
+            guard let self else { return }
+            AddingServiceFlowController.present(on: mainSplitViewController, parent: self, target: .manuall(data: data))
+        }
+    }
+    
+    func guideToCodeScanner() {
+        dismiss(actions: [.continuesFlow]) { [weak self] in
+            self?.toAddService()
+        }
+    }
+    
+    func closeGuideSelector() {
+        dismiss(actions: [.finishedFlow])
     }
 }

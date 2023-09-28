@@ -70,6 +70,7 @@ enum Theme {
             static let empty = ThemeColor.background
             static let light = ThemeColor.light
             static let inverted = ThemeColor.quaternary
+            static let pageIndicator = ThemeColor.pageIndicator
         }
         
         enum Form {

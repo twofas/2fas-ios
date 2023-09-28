@@ -31,6 +31,6 @@ final class AddingServicePresenter {
 
 extension AddingServicePresenter {
     func viewDidLoad() {
-        flowController.toMain()
+        flowController.toInitialController()
     }
 }

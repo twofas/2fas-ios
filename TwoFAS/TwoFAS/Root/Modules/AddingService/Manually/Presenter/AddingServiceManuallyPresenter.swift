@@ -44,14 +44,24 @@ final class AddingServiceManuallyPresenter: ObservableObject {
     
     private let flowController: AddingServiceManuallyFlowControlling
     private let interactor: AddingServiceManuallyModuleInteracting
+    private let providedName: String?
     
-    init(flowController: AddingServiceManuallyFlowControlling, interactor: AddingServiceManuallyModuleInteracting) {
+    init(
+        flowController: AddingServiceManuallyFlowControlling,
+        interactor: AddingServiceManuallyModuleInteracting,
+        providedName: String?
+    ) {
         self.flowController = flowController
         self.interactor = interactor
+        self.providedName = providedName
     }
 }
 
 extension AddingServiceManuallyPresenter {
+    func viewDidLoad() {
+        serviceName = providedName ?? ""
+    }
+    
     func handleAddService() {
         validateAddService()
         guard isAddServiceEnabled else { return }

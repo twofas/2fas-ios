@@ -30,22 +30,30 @@ protocol AddingServiceFlowControllerParent: AnyObject {
     func addingServiceToPushPermissions(for extensionID: Common.ExtensionID)
     func addingServiceToTwoFASWebExtensionPairing(for extensionID: Common.ExtensionID)
     func addingServiceClose(_ serviceData: ServiceData)
+    func addingServiceToGuides()
 }
 
 protocol AddingServiceFlowControlling: AnyObject {
-    func toMain()
+    func toInitialController()
 }
 
 final class AddingServiceFlowController: FlowController {
+    enum Target {
+        case main
+        case manuall(data: String?)
+    }
     private weak var parent: AddingServiceFlowControllerParent?
+    private var target: Target? = .main
     
     static func present(
         on viewController: UIViewController,
-        parent: AddingServiceFlowControllerParent
+        parent: AddingServiceFlowControllerParent,
+        target: Target? = .main
     ) {
         let view = AddingServiceViewController()
         let flowController = AddingServiceFlowController(viewController: view)
         flowController.parent = parent
+        flowController.target = target
         
         let presenter = AddingServicePresenter(flowController: flowController)
         view.presenter = presenter
@@ -66,8 +74,11 @@ extension AddingServiceFlowController {
 }
 
 extension AddingServiceFlowController: AddingServiceFlowControlling {
-    func toMain() {
-        AddingServiceMainFlowController.embed(in: viewController, parent: self)
+    func toInitialController() {
+        switch target {
+        case .main, .none: AddingServiceMainFlowController.embed(in: viewController, parent: self)
+        case .manuall(let data): AddingServiceManuallyFlowController.embed(in: viewController, parent: self, name: data)
+        }
     }
 }
 
@@ -105,6 +116,10 @@ extension AddingServiceFlowController: AddingServiceMainFlowControllerParent {
     }
         
     func mainToAddManually() {
-        AddingServiceManuallyFlowController.embed(in: viewController, parent: self)
+        AddingServiceManuallyFlowController.embed(in: viewController, parent: self, name: nil)
+    }
+    
+    func mainToGuides() {
+        parent?.addingServiceToGuides()
     }
 }

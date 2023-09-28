@@ -226,6 +226,13 @@ final class InteractorFactory {
             mainRepository: MainRepositoryImpl.shared
         )
     }
+    
+    func guideInteractor() -> GuideInteracting {
+        GuideInteractor(
+            mainRepository: MainRepositoryImpl.shared,
+            serviceDefinitionInteractor: serviceDefinitionInteractor()
+        )
+    }
 }
 
 private extension InteractorFactory {
@@ -560,6 +567,12 @@ extension InteractorFactory {
             serviceDatabase: serviceDefinitionInteractor(),
             serviceListingInteractor: serviceListingInteractor(),
             serviceModifyInteractor: serviceModifyInteractor()
+        )
+    }
+    
+    func guideSelectorModuleInteractor() -> GuideSelectorModuleInteracting {
+        GuideSelectorModuleInteractor(
+            guideInteractor: guideInteractor()
         )
     }
 }

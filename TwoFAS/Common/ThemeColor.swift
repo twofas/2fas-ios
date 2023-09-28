@@ -54,5 +54,6 @@ public enum ThemeColor {
     public static let secondarySeparator = UIColor(named: "ColorSecondarySeparator", in: bundle, compatibleWith: nil)!
     public static let selectionBorder = UIColor(named: "ColorSelectionBorder", in: bundle, compatibleWith: nil)!
     public static let labelTextBackground = UIColor(named: "ColorLabelTextBackground", in: bundle, compatibleWith: nil)!
+    public static let pageIndicator = UIColor(named: "ColorPageIndicator", in: bundle, compatibleWith: nil)!
 }
 // swiftlint:enable all

@@ -156,6 +156,7 @@ internal enum Asset {
   internal static let trashEmptyIcon = ImageAsset(name: "TrashEmptyIcon")
   internal static let widgetWarningIcon = ImageAsset(name: "WidgetWarningIcon")
   internal static let shadowLine = ImageAsset(name: "ShadowLine")
+  internal static let smallQRCodeIcon = ImageAsset(name: "SmallQRCodeIcon")
   internal static let socialDiscord = ImageAsset(name: "social_discord")
   internal static let socialFacebook = ImageAsset(name: "social_facebook")
   internal static let socialGithub = ImageAsset(name: "social_github")

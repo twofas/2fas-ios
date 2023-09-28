@@ -17,36 +17,34 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
+import Foundation
+
+
 import UIKit
 import SwiftUI
-import Common
-import Token
 
-protocol AddingServiceManuallyViewControlling: AnyObject {}
-
-final class AddingServiceManuallyViewController: UIViewController, AddingServiceManuallyViewControlling {
-    var heightChange: ((CGFloat) -> Void)?
-    var presenter: AddingServiceManuallyPresenter!
+final class GuidePageViewController: UIViewController {
+    var presenter: GuidePagePresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let manually = AddingServiceManuallyView(
-            presenter: presenter,
-            changeHeight: { [weak self] height in
-                self?.heightChange?(height)
-            }) { [weak self] in
-                self?.presentingViewController?.dismiss(animated: true)
-            }
+        navigationItem.title = T.Guides.guideTitle(presenter.serviceName)
+        navigationItem.backButtonDisplayMode = .minimal
+        view.backgroundColor = Theme.Colors.Fill.System.third
         
-        let vc = UIHostingController(rootView: manually)
+        let page = GuidePageView(presenter: presenter)
+        
+        let vc = UIHostingController(rootView: page)
         vc.willMove(toParent: self)
         addChild(vc)
-        view.addSubview(vc.view)
-        vc.view.pinToParent()
+        view.addSubview(vc.view, with: [
+            vc.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            vc.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            vc.view.topAnchor.constraint(equalTo: view.topAnchor),
+            vc.view.bottomAnchor.constraint(equalTo: view.safeBottomAnchor)
+        ])
         vc.view.backgroundColor = Theme.Colors.Fill.System.third
         vc.didMove(toParent: self)
-        
-        presenter.viewDidLoad()
     }
 }

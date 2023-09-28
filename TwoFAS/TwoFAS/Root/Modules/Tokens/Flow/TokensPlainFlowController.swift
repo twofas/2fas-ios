@@ -569,9 +569,21 @@ extension TokensPlainFlowController: NewsNavigationFlowControllerParent {
 }
 
 extension TokensPlainFlowController: GuideSelectorNavigationFlowControllerParent {
-    func closeGuideSelector() {
+    func guideToAddManually(with data: String?) {
+        guard let mainSplitViewController else { return }
+        dismiss(actions: [.continuesFlow]) { [weak self] in
+            guard let self else { return }
+            AddingServiceFlowController.present(on: mainSplitViewController, parent: self, target: .manuall(data: data))
+        }
+    }
+    
+    func guideToCodeScanner() {
         dismiss(actions: [.continuesFlow]) { [weak self] in
             self?.toAddService()
         }
+    }
+    
+    func closeGuideSelector() {
+        dismiss(actions: [.finishedFlow])
     }
 }

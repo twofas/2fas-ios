@@ -52,6 +52,7 @@ struct GuideDescription: Identifiable, Hashable {
         
         var id: String { title }
         let title: String
+        let serviceName: String
         let pages: [Page]
     }
     
@@ -102,6 +103,7 @@ private extension GuideInteractor {
         let menuPositions: [GuideDescription.MenuPosition] = guide.flow.menu.items.map({ item in
             GuideDescription.MenuPosition(
                 title: item.name,
+                serviceName: serviceName,
                 pages: item.steps.map({ step in
                     GuideDescription.Page(
                         image: step.image.icon,

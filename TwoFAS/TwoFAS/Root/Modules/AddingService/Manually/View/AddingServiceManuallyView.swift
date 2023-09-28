@@ -247,6 +247,9 @@ struct AddingServiceManuallyView: View {
                         focusedField = .secret
                     }
                     .padding(.bottom, 5)
+                    .onAppear {
+                        serviceName = presenter.serviceName
+                    }
                 AddingServiceTextFieldLineView()
             }
             .frame(maxWidth: .infinity)

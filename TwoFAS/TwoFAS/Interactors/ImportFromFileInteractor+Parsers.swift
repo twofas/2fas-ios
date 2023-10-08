@@ -387,7 +387,7 @@ extension ImportFromFileInteractor {
                 iconType: iconType,
                 iconTypeID: iconTypeID ?? .default,
                 labelColor: .random,
-                labelTitle: acc.issuer.twoLetters,
+                labelTitle: name.twoLetters,
                 algorithm: algo,
                 isTrashed: false,
                 trashingDate: nil,

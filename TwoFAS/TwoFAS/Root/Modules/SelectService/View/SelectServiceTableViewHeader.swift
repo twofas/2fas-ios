@@ -35,7 +35,7 @@ final class SelectServiceTableViewHeader: UIView {
     
     private let saveLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: .caption2)
+        label.font = UIFont.preferredFont(forTextStyle: .caption1)
         label.textColor = UIColor.label
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping

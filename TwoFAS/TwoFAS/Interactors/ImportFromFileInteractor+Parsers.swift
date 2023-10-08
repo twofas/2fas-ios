@@ -413,9 +413,23 @@ extension ImportFromFileInteractor {
             
             let issuer = acc.issuer
             let additionalInfo = acc.label?.sanitizeInfo()
-            let digits = Digits.create(acc.digits)
+            
+            guard let digits: Digits = {
+                if let digits = acc.digits {
+                    return Digits(rawValue: digits)
+                }
+                return .defaultValue
+            }() else { return nil }
+
             let kind = TokenType.create(acc.type?.uppercased())
-            let algo = Algorithm.create(acc.algorithm?.uppercased())
+            
+            guard let algo: Algorithm = {
+                if let algo = acc.algorithm?.uppercased() {
+                    return Algorithm(rawValue: algo)
+                }
+                return .defaultValue
+            }() else { return nil }
+            
             let counter = acc.counter ?? 0
             let period = Period.create(acc.period)
             

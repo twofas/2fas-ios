@@ -74,11 +74,23 @@ final class ColorGridSelector: UIView {
                 buttons.insert(UIView(), at: 2)
             }
             
+            buttons.forEach { v in
+                v.translatesAutoresizingMaskIntoConstraints = false
+            }
+            
             let sv = UIStackView(arrangedSubviews: buttons)
             sv.axis = .horizontal
             sv.alignment = .center
             sv.distribution = .equalSpacing
             sv.spacing = Theme.Metrics.doubleMargin * 2
+            
+            NSLayoutConstraint.activate([
+                buttons[0].widthAnchor.constraint(equalTo: buttons[1].widthAnchor),
+                buttons[1].widthAnchor.constraint(equalTo: buttons[2].widthAnchor),
+                buttons[0].heightAnchor.constraint(equalTo: buttons[1].heightAnchor),
+                buttons[1].heightAnchor.constraint(equalTo: buttons[2].heightAnchor)
+            ])
+            
             return sv
         }
         mainStack.addArrangedSubviews(colorsChunked)

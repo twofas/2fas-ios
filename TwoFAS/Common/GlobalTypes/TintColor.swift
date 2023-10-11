@@ -17,18 +17,20 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 
 public enum TintColor: String, Hashable, CaseIterable {
     case `default`
-    case lightBlue
-    case indigo
-    case purple
-    case turquoise
-    case green
     case red
     case orange
     case yellow
+    case green
+    case turquoise
+    case lightBlue
+    case indigo
+    case pink
+    case purple
+    case brown
 }
 
 public extension TintColor {
@@ -42,11 +44,15 @@ public extension TintColor {
             self = value
             return
         }
-        self = .lightBlue
+        self = Self.random
     }
     
     static var labelList: [TintColor] {
         TintColor.allCases.filter { $0 != .default }
+    }
+    
+    static var random: TintColor {
+        labelList.randomElement() ?? .lightBlue
     }
     
     static var badgeList: [TintColor] {
@@ -74,6 +80,8 @@ public extension TintColor {
         case "Red": return .red
         case "Orange": return .orange
         case "Yellow": return .yellow
+        case "Pink": return .pink
+        case "Brown": return .brown
         default:
             return nil
         }
@@ -95,21 +103,25 @@ public extension TintColor {
         case .red: return "Red"
         case .orange: return "Orange"
         case .yellow: return "Yellow"
+        case .pink: return "Pink"
+        case .brown: return "Brown"
         }
     }
     
     var color: UIColor {
         let bundle = Bundle(for: CoreDataStack.self)
         switch self {
-        case .`default`: return UIColor(named: "defaultColor", in: bundle, compatibleWith: nil)!
-        case .lightBlue: return UIColor(named: "lightBlueColor", in: bundle, compatibleWith: nil)!
-        case .indigo: return UIColor(named: "indigoColor", in: bundle, compatibleWith: nil)!
-        case .purple: return UIColor(named: "purpleColor", in: bundle, compatibleWith: nil)!
-        case .turquoise: return UIColor(named: "turquoiseColor", in: bundle, compatibleWith: nil)!
-        case .green: return UIColor(named: "greenColor", in: bundle, compatibleWith: nil)!
-        case .red: return UIColor(named: "redColor", in: bundle, compatibleWith: nil)!
-        case .orange: return UIColor(named: "orangeColor", in: bundle, compatibleWith: nil)!
-        case .yellow: return UIColor(named: "yellowColor", in: bundle, compatibleWith: nil)!
+        case .`default`: return UIColor(named: "tintDefaultColor", in: bundle, compatibleWith: nil)!
+        case .lightBlue: return UIColor(named: "tintLightBlueColor", in: bundle, compatibleWith: nil)!
+        case .indigo: return UIColor(named: "tintIndigoColor", in: bundle, compatibleWith: nil)!
+        case .purple: return UIColor(named: "tintPurpleColor", in: bundle, compatibleWith: nil)!
+        case .turquoise: return UIColor(named: "tintTurquoiseColor", in: bundle, compatibleWith: nil)!
+        case .green: return UIColor(named: "tintGreenColor", in: bundle, compatibleWith: nil)!
+        case .red: return UIColor(named: "tintRedColor", in: bundle, compatibleWith: nil)!
+        case .orange: return UIColor(named: "tintOrangeColor", in: bundle, compatibleWith: nil)!
+        case .yellow: return UIColor(named: "tintYellowColor", in: bundle, compatibleWith: nil)!
+        case .pink: return UIColor(named: "tintPinkColor", in: bundle, compatibleWith: nil)!
+        case .brown: return UIColor(named: "tintBrownColor", in: bundle, compatibleWith: nil)!
         }
     }
 }

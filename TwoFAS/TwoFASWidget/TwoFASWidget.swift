@@ -24,6 +24,7 @@ import Intents
 struct TwoFASWidgetEntryView: View {
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
+    @Environment(\.colorScheme) var colorScheme
     
     @ViewBuilder
     var body: some View {

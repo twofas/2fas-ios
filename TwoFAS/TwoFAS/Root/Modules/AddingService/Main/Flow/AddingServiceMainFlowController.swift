@@ -31,6 +31,7 @@ protocol AddingServiceMainFlowControllerParent: AnyObject {
     func mainToSendLogs(auditID: UUID)
     func mainToPushPermissions(for extensionID: ExtensionID)
     func mainToTwoFASWebExtensionPairing(for extensionID: ExtensionID)
+    func mainToGuides()
 }
 
 protocol AddingServiceMainFlowControlling: AnyObject {
@@ -38,6 +39,7 @@ protocol AddingServiceMainFlowControlling: AnyObject {
     func close()
     func toAddManually()
     func toAppSettings()
+    func toGuides()
     
     func toGeneralError()
     func toDuplicatedCode(usedIn: String)
@@ -96,6 +98,10 @@ extension AddingServiceMainFlowController: AddingServiceMainFlowControlling {
     func toAppSettings() {
         parent?.mainDismiss()
         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+    }
+    
+    func toGuides() {
+        parent?.mainToGuides()
     }
     
     func toGeneralError() {

@@ -35,6 +35,8 @@ protocol ImporterOpenFileModuleInteracting: AnyObject {
     func parseAEGIS(_ data: AEGISData) -> [ServiceData]
     func parseLastPass(_ data: LastPassData) -> [ServiceData]
     func parseRaivo(_ data: [RaivoData]) -> [ServiceData]
+    func parseAndOTP(_ data: [AndOTPData]) -> [ServiceData]
+    func parseAuthenticatorPro(_ data: [Code]) -> [ServiceData]
 }
 
 final class ImporterOpenFileModuleInteractor {
@@ -87,5 +89,13 @@ extension ImporterOpenFileModuleInteractor: ImporterOpenFileModuleInteracting {
     
     func parseRaivo(_ data: [RaivoData]) -> [ServiceData] {
         importInteractor.parseRaivo(data)
+    }
+    
+    func parseAndOTP(_ data: [AndOTPData]) -> [ServiceData] {
+        importInteractor.parseAndOTP(data)
+    }
+    
+    func parseAuthenticatorPro(_ data: [Code]) -> [ServiceData] {
+        importInteractor.parseAuthenticatorPro(data)
     }
 }

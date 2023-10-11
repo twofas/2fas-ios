@@ -36,7 +36,7 @@ protocol AuthRequestsFlowControlling: AnyObject {
 protocol AuthRequestsFlowControllerChild: AnyObject {
     func refresh()
     func didCancelServiceSelection(for tokenRequestID: String)
-    func didSelectService(_ serviceData: ServiceData, auth: WebExtensionAwaitingAuth)
+    func didSelectService(_ serviceData: ServiceData, auth: WebExtensionAwaitingAuth, save: Bool)
     func authorizeFromApp(for tokenRequestID: String)
     func authorize(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest)
     func skip(for tokenRequestID: String)
@@ -100,8 +100,8 @@ extension AuthRequestsFlowController: AuthRequestsFlowControllerChild {
         presenter?.handleSkip(for: tokenRequestID)
     }
     
-    func didSelectService(_ serviceData: ServiceData, auth: WebExtensionAwaitingAuth) {
-        presenter?.handleServiceSelection(serviceData, auth: auth)
+    func didSelectService(_ serviceData: ServiceData, auth: WebExtensionAwaitingAuth, save: Bool) {
+        presenter?.handleServiceSelection(serviceData, auth: auth, save: save)
     }
     
     func authorizeFromApp(for tokenRequestID: String) {

@@ -76,6 +76,12 @@ extension AddingServiceManuallyModuleInteractor: AddingServiceManuallyModuleInte
         counter: Int?,
         tokenType: TokenType?
     ) -> ServiceData? {
+        let iconType: IconType = {
+            if iconTypeID != nil {
+                return .brand
+            }
+            return .label
+        }()
         serviceModifyInteractor.addService(
             name: name,
             secret: secret,
@@ -85,15 +91,16 @@ extension AddingServiceManuallyModuleInteractor: AddingServiceManuallyModuleInte
             otpAuth: nil,
             tokenPeriod: tokenPeriod ?? .defaultValue,
             tokenLength: tokenLength ?? .defaultValue,
-            badgeColor: nil,
-            iconType: .brand,
+            badgeColor: .default,
+            iconType: iconType,
             iconTypeID: iconTypeID ?? .default,
-            labelColor: .default,
+            labelColor: .random,
             labelTitle: name.twoLetters,
             algorithm: algorithm ?? .defaultValue,
             counter: counter,
             tokenType: tokenType ?? .defaultValue,
-            source: .manual
+            source: .manual,
+            sectionID: nil
         )
         return serviceModifyInteractor.service(for: secret)
     }

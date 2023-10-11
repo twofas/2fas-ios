@@ -75,7 +75,7 @@ private extension ImporterOpenFilePresenter {
                 } else {
                     flowController.toPreimportSummary(
                         countNew: interactor.countNewServices(parseResult),
-                        countTotal: parseResult.count,
+                        countTotal: lastPassData.accounts.count,
                         sections: [],
                         services: parseResult,
                         externalImportService: .lastPass
@@ -89,10 +89,36 @@ private extension ImporterOpenFilePresenter {
             } else {
                 flowController.toPreimportSummary(
                     countNew: interactor.countNewServices(parseResult),
-                    countTotal: parseResult.count,
+                    countTotal: raivoData.count,
                     sections: [],
                     services: parseResult,
                     externalImportService: .raivo
+                )
+            }
+        case .andOTP(let andOTPData):
+            let parseResult = interactor.parseAndOTP(andOTPData)
+            if parseResult.isEmpty {
+                flowController.toFileIsEmpty()
+            } else {
+                flowController.toPreimportSummary(
+                    countNew: interactor.countNewServices(parseResult),
+                    countTotal: andOTPData.count,
+                    sections: [],
+                    services: parseResult,
+                    externalImportService: .andOTP
+                )
+            }
+        case .authenticatorPro(let data):
+            let parseResult = interactor.parseAuthenticatorPro(data)
+            if parseResult.isEmpty {
+                flowController.toFileIsEmpty()
+            } else {
+                flowController.toPreimportSummary(
+                    countNew: interactor.countNewServices(parseResult),
+                    countTotal: data.count,
+                    sections: [],
+                    services: parseResult,
+                    externalImportService: .authenticatorPro
                 )
             }
         case .aegis(let result):
@@ -106,7 +132,7 @@ private extension ImporterOpenFilePresenter {
                 } else {
                     flowController.toPreimportSummary(
                         countNew: interactor.countNewServices(parseResult),
-                        countTotal: parseResult.count,
+                        countTotal: AEGISData.db.entries.count,
                         sections: [],
                         services: parseResult,
                         externalImportService: .aegis

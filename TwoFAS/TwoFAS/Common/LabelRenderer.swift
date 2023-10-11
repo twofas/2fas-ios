@@ -29,7 +29,7 @@ final class LabelRenderer: UIView {
     private let circle = Circle()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Theme.Colors.Text.light
+        label.textColor = Theme.Colors.Text.main
         label.font = Theme.Fonts.iconLabel
         label.numberOfLines = 1
         label.textAlignment = .center
@@ -77,7 +77,7 @@ final class LabelRenderer: UIView {
     }
     
     func setColor(_ color: TintColor, animated: Bool) {
-        circle.setColor(color.color, animated: animated)
+        circle.setColor(color.color, rectColor: Theme.Colors.Text.onBackground, animated: animated)
         
         accessibilityColor = color.localizedName
         updateAccessibility()
@@ -127,11 +127,28 @@ private final class Circle: UIView {
     private var color: UIColor = .white
     
     override class var layerClass: AnyClass { CAShapeLayer.self }
-    private var shapeLayer: CAShapeLayer { self.layer as! CAShapeLayer }
+    private var shapeLayer = CAShapeLayer()
+    private var rectLayer = CAShapeLayer()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        layer.addSublayer(shapeLayer)
+        layer.addSublayer(rectLayer)
+    }
     
     override func layoutSubviews() {
-        let path = UIBezierPath(ovalIn: CGRect(origin: .zero, size: CGSize(width: dimension, height: dimension)))
-        shapeLayer.path = path.cgPath
+        let paths = LabelShapes.generate(for: CGSize(width: dimension, height: dimension))
+        shapeLayer.path = paths.backgroundCircle.cgPath
+        rectLayer.path = paths.upperRect.cgPath
         
         super.layoutSubviews()
     }
@@ -141,8 +158,9 @@ private final class Circle: UIView {
         layoutIfNeeded()
     }
     
-    func setColor(_ color: UIColor, animated: Bool) {
+    func setColor(_ color: UIColor, rectColor: UIColor, animated: Bool) {
         self.color = color
+        rectLayer.fillColor = rectColor.cgColor
         
         if animated {
             let animation = CABasicAnimation(keyPath: animKey)

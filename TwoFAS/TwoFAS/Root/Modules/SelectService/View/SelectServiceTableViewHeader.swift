@@ -21,6 +21,8 @@ import UIKit
 import Common
 
 final class SelectServiceTableViewHeader: UIView {
+    var saveAction: ((Bool) -> Void)?
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .caption1)
@@ -30,6 +32,19 @@ final class SelectServiceTableViewHeader: UIView {
         label.textAlignment = .center
         return label
     }()
+    
+    private let saveLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .caption1)
+        label.textColor = UIColor.label
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.textAlignment = .left
+        label.text = T.Browser.saveChoice
+        return label
+    }()
+    
+    private let saveSwitch = UISwitch()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,8 +62,24 @@ final class SelectServiceTableViewHeader: UIView {
         addSubview(titleLabel, with: [
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: margin),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin)
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: margin)
+        ])
+        
+        saveSwitch.addTarget(self, action: #selector(saveSwitchAction), for: .valueChanged)
+        
+        saveLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
+        
+        addSubview(saveLabel, with: [
+            saveLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 3 * margin),
+            saveLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
+            saveLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin)
+        ])
+        
+        addSubview(saveSwitch, with: [
+            saveSwitch.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 3 * margin),
+            saveSwitch.leadingAnchor.constraint(equalTo: saveLabel.trailingAnchor, constant: margin),
+            saveSwitch.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin),
+            saveSwitch.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin)
         ])
     }
     
@@ -65,5 +96,14 @@ final class SelectServiceTableViewHeader: UIView {
         let secondPartTxt = NSMutableAttributedString(attributedString: txt)
         secondPartTxt.decorate(textToDecorate: domain, attributes: bold)
         titleLabel.attributedText = secondPartTxt
+    }
+    
+    func setSaveSwitch(isOn: Bool) {
+        saveSwitch.isOn = isOn
+    }
+    
+    @objc
+    private func saveSwitchAction() {
+        saveAction?(saveSwitch.isOn)
     }
 }

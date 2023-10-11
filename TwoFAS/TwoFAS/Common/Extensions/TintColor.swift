@@ -32,6 +32,8 @@ extension TintColor {
         case .red: return T.Color.red
         case .orange: return T.Color.orange
         case .yellow: return T.Color.yellow
+        case .pink: return T.Color.pink
+        case .brown: return T.Color.brown
         }
     }
 }

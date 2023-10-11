@@ -38,6 +38,7 @@ final class NotificationInteractor {
 extension NotificationInteractor: NotificationInteracting {
     func copyWithSuccess(title: String, value: String, accessibilityTitle: String?) {
         Log("NotificationInteractor - copy with success", module: .interactor)
+        let value = value.removeWhitespaces()
         mainRepository.copy(value)
         mainRepository.wobbleSuccess()
         if let accessibilityTitle {

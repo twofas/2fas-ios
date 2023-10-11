@@ -36,7 +36,8 @@ final class AddingServiceManuallyFlowController: FlowController {
     
     static func embed(
         in viewController: UIViewController & AddingServiceViewControlling,
-        parent: AddingServiceManuallyFlowControllerParent
+        parent: AddingServiceManuallyFlowControllerParent,
+        name: String?
     ) {
         let view = AddingServiceManuallyViewController()
         let flowController = AddingServiceManuallyFlowController(viewController: view)
@@ -51,7 +52,8 @@ final class AddingServiceManuallyFlowController: FlowController {
         
         let presenter = AddingServiceManuallyPresenter(
             flowController: flowController,
-            interactor: interactor
+            interactor: interactor,
+            providedName: name
         )
         view.presenter = presenter
         presenter.view = view

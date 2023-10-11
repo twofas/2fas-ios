@@ -50,6 +50,11 @@ extension String {
             partialResult = partialResult && String(char).rangeOfCharacter(from: charset) != nil
         }
     }
+    var isValidLabel: Bool {
+        guard !self.isEmpty else { return false }
+        let char = Character(self)
+        return char.isASCII || char.isLetter || char.isNumber || char.isSymbol || char.isEmoji
+    }
     
     var isBackspace: Bool { strcmp(self.cString(using: .utf8), "\\b") == -92 }
     

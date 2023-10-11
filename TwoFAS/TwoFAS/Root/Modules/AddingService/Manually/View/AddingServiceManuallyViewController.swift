@@ -45,6 +45,8 @@ final class AddingServiceManuallyViewController: UIViewController, AddingService
         view.addSubview(vc.view)
         vc.view.pinToParent()
         vc.view.backgroundColor = Theme.Colors.Fill.System.third
-        vc.didMove(toParent: self)        
+        vc.didMove(toParent: self)
+        
+        presenter.viewDidLoad()
     }
 }

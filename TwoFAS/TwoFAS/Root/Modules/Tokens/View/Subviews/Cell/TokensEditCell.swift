@@ -77,7 +77,7 @@ final class TokensEditCell: UICollectionViewCell {
         canBeDragged: Bool
     ) {
         serviceNameLabel.setText(name)
-        if let additionalInfo {
+        if let additionalInfo, !additionalInfo.isEmpty {
             additionalInfoLabel.setText(additionalInfo)
             additionalInfoLabel.isHidden = false
             bottomNameConstraint?.isActive = false

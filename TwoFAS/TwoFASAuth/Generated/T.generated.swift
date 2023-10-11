@@ -1175,10 +1175,10 @@ internal enum T {
   internal enum Tokens {
     /// Point your camera at the screen to capture the QR code.
     internal static let addDescription = T.tr("Localizable", "tokens__add_description", fallback: "Point your camera at the screen to capture the QR code.")
-    /// Enter secret key
-    internal static let addEnterManual = T.tr("Localizable", "tokens__add_enter_manual", fallback: "Enter secret key")
-    /// Upload an image with the QR code
-    internal static let addFromGallery = T.tr("Localizable", "tokens__add_from_gallery", fallback: "Upload an image with the QR code")
+    /// Enter secret key manually
+    internal static let addEnterManual = T.tr("Localizable", "tokens__add_enter_manual", fallback: "Enter secret key manually")
+    /// Upload screen with QR code
+    internal static let addFromGallery = T.tr("Localizable", "tokens__add_from_gallery", fallback: "Upload screen with QR code")
     /// Add group
     internal static let addGroup = T.tr("Localizable", "tokens__add_group", fallback: "Add group")
     /// Additional info

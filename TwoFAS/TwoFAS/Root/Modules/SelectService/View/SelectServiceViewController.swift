@@ -78,6 +78,8 @@ final class SelectServiceViewController: UIViewController {
         }
         tableViewAdapter.delegatee.sizeForFooter = { _, _ in 0 }
         tableView.tableHeaderView = tableHeaderView
+        tableHeaderView.setSaveSwitch(isOn: presenter.saveSwitchValue)
+        tableHeaderView.saveAction = { [weak self] isOn in self?.presenter.handleSwitchAction(isOn: isOn) }
         
         view.backgroundColor = Theme.Colors.Fill.System.second
         
@@ -167,10 +169,11 @@ final class SelectServiceViewController: UIViewController {
     private func sizeHeaderToFit() {
         guard let headerView = tableView.tableHeaderView else { return }
         guard presenter.showTableViewHeader else {
+            headerView.isHidden = true
             headerView.frame = CGRect(origin: .zero, size: .zero)
             return
         }
-        
+        headerView.isHidden = false
         let newHeight = headerView.systemLayoutSizeFitting(
             CGSize(width: tableView.frame.width, height: .greatestFiniteMagnitude),
             withHorizontalFittingPriority: .required,

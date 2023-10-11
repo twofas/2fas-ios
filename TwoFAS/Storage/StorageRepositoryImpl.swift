@@ -115,6 +115,11 @@ final class StorageRepositoryImpl: StorageRepository {
         return .yes
     }
     
+    func trashedService(for secret: String) -> ServiceData? {
+        ServiceEntity.getService(on: context, encryptedSecret: secret.encrypt())?
+            .toServiceData()
+    }
+    
     func listAllNotTrashed() -> [ServiceData] {
         ServiceEntity
             .listAllNotTrashed(on: context)

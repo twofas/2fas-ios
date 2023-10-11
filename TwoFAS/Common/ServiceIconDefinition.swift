@@ -34,7 +34,10 @@ public extension ServiceIconDefinition {
         case .brand:
             return ServiceIcon.for(iconTypeID: iconTypeID)
         case .label:
-            return LabelImageRenderer.render(with: labelTitle, color: labelColor)
+            return LabelImageRenderer.render(
+                with: labelTitle,
+                tintColor: labelColor
+            )
         }
     }
 }

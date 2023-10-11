@@ -136,6 +136,7 @@ protocol MainRepository: AnyObject {
     func listAllExistingServices() -> [ServiceData]
     func listAllNotTrashed() -> [ServiceData]
     func serviceExists(for secret: String) -> ServiceExistenceStatus
+    func trashedService(for secret: String) -> ServiceData?
     func addService(
         name: String,
         secret: String,
@@ -436,4 +437,8 @@ protocol MainRepository: AnyObject {
     func clearViewPath()
     func saveViewPath(_ path: ViewPath)
     func viewPath() -> (viewPath: ViewPath, savedAt: Date)?
+    
+    // MARK: - Guides
+    func listAllGuides() -> [ServiceGuide]
+    func loadGuideData(for serviceGuide: ServiceGuide) -> ServiceGuideDescription?
 }

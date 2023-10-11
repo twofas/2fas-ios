@@ -134,6 +134,14 @@ private extension NewCodeInteractor {
         
         Log("NewCodeInteractor - adding service. Should ask for name: \(shouldAskForName)", module: .interactor)
         
+        let iconTypeID = serviceDefinition?.iconTypeID
+        let iconType: IconType = {
+            if iconTypeID == nil {
+                return .label
+            }
+            return .brand
+        }()
+        
         interactorModify.addService(
             name: codeName,
             secret: code.secret,
@@ -144,14 +152,15 @@ private extension NewCodeInteractor {
             tokenPeriod: code.period,
             tokenLength: code.digits ?? .defaultValue,
             badgeColor: nil,
-            iconType: .brand,
-            iconTypeID: serviceDefinition?.iconTypeID ?? .default,
-            labelColor: .lightBlue,
+            iconType: iconType,
+            iconTypeID: iconTypeID ?? .default,
+            labelColor: .random,
             labelTitle: codeName.twoLetters,
             algorithm: code.algorithm ?? .defaultValue,
             counter: code.counter,
             tokenType: code.tokenType,
-            source: .link
+            source: .link,
+            sectionID: nil
         )
         
         return shouldAskForName
@@ -208,7 +217,7 @@ private extension NewCodeInteractor {
     }
     
     private func createUnknownName() -> String {
-        T.Commons.service + " " + String(interactorModify.obtainNextUnknownCodeCounter())
+        interactorModify.createNameForUnknownService()
     }
     
     private func serviceAndValue(from name: String?) -> (service: String?, value: String?)? {

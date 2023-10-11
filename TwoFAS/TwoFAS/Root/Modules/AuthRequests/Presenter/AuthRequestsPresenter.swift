@@ -56,7 +56,11 @@ extension AuthRequestsPresenter {
         case .expired:
             flowController?.toAuthorizationFailure(reason: T.Browser.requestExpired)
         case .automatically(let auth, let pair):
-            interactor.handleAuth(.automatically(auth: auth, pair: pair), selectedSecret: nil) { [weak self] result in
+            interactor.handleAuth(
+                .automatically(auth: auth, pair: pair),
+                selectedSecret: nil,
+                save: false
+            ) { [weak self] result in
                 switch result {
                 case .success: self?.flowController?.toAuthorizationSuccess()
                 case .failure(let error):
@@ -66,8 +70,12 @@ extension AuthRequestsPresenter {
         }
     }
     
-    func handleServiceSelection(_ serviceData: ServiceData, auth: WebExtensionAwaitingAuth) {
-        interactor.handleAuth(.pairWithService(auth: auth), selectedSecret: serviceData.secret) { [weak self] result in
+    func handleServiceSelection(_ serviceData: ServiceData, auth: WebExtensionAwaitingAuth, save: Bool) {
+        interactor.handleAuth(
+            .pairWithService(auth: auth),
+            selectedSecret: serviceData.secret,
+            save: save
+        ) { [weak self] result in
             switch result {
             case .success: self?.flowController?.toAuthorizationSuccess()
             case .failure(let error): self?.flowController?.toAuthorizationFailure(reason: error.localizedDescription)
@@ -81,7 +89,11 @@ extension AuthRequestsPresenter {
     }
     
     func handleUserAuthorized(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest) {
-        interactor.handleAuth(.askForAuth(auth: auth, pair: pair), selectedSecret: nil) { [weak self] result in
+        interactor.handleAuth(
+            .askForAuth(auth: auth, pair: pair),
+            selectedSecret: nil,
+            save: false
+        ) { [weak self] result in
             switch result {
             case .success: self?.flowController?.toAuthorizationSuccess()
             case .failure(let error): self?.flowController?.toAuthorizationFailure(reason: error.localizedDescription)

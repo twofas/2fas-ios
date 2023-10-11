@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "twitter.pdf",
+      "filename" : "2FAS_Social_Twitter.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "twitter 1.pdf",
+      "filename" : "2FAS_Social_Twitter_dark.pdf",
       "idiom" : "universal"
     }
   ],

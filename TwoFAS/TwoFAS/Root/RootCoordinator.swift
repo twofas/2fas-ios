@@ -23,6 +23,7 @@ import Protection
 import PushNotifications
 import CodeSupport
 import Common
+import CommonUIKit
 import Token
 import Sync
 import TimeVerification
@@ -111,7 +112,7 @@ final class RootCoordinator: Coordinator {
         _ = MainRepositoryImpl(
             service: service,
             pushNotifications: pushNotifications,
-            cameraPermissions: CodeSupport.cameraPermissions,
+            cameraPermissions: CameraPermissions(),
             security: security,
             protectionModule: protection,
             storage: storage,

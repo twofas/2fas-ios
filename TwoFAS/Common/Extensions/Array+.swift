@@ -18,27 +18,6 @@
 //
 
 import Foundation
-import CoreData
-
-public extension NSPersistentContainer {
-    @nonobjc convenience init(name: String, bundle: Bundle) {
-        
-        guard let modelURL = bundle.url(forResource: name, withExtension: "momd"),
-            let mom = NSManagedObjectModel(contentsOf: modelURL)
-            else {
-                Log("Unable to located Core Data model", module: .storage)
-                fatalError("Unable to located Core Data model")
-            }
-        
-        self.init(name: name, managedObjectModel: mom)
-    }
-}
-
-public extension NSManagedObject {
-    @nonobjc func delete() {
-        managedObjectContext?.delete(self)
-    }
-}
 
 public extension Array {
     mutating func rearrange(from: Int, to: Int) {

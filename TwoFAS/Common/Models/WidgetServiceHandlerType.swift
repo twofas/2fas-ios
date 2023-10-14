@@ -76,5 +76,3 @@ public protocol WidgetServiceHandlerType: AnyObject {
     func hasServices() -> Bool
     func listServices(with ids: [ServiceID]) -> [WidgetService]
 }
-
-extension WidgetService: ServiceIconDefinition {}

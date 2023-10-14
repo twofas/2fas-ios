@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 public protocol ServiceIconDefinition {
     var serviceTypeID: ServiceTypeID? { get }

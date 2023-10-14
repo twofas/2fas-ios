@@ -24,12 +24,6 @@ public struct IconDescription {
     public let name: String
 }
 
-public extension IconDescription {
-    var icon: UIImage {
-        ServiceIcon.for(iconTypeID: iconTypeID)
-    }
-}
-
 public struct IconDescriptionGroup {
     public let title: String
     public let icons: [IconDescription]

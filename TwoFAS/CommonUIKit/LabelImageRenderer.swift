@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 public enum LabelImageRenderer {
     public enum Variant {

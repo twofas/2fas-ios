@@ -23,6 +23,7 @@ import UIKit
 import Storage
 import Protection
 import Common
+import CommonUIKit
 
 final class IntentHandler: INExtension, SelectServiceIntentHandling {
     private let domain = "2FAS_Widget"

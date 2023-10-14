@@ -21,6 +21,7 @@ import UIKit
 import UserNotifications
 import UserNotificationsUI
 import Common
+import CommonUIKit
 
 protocol NotificationViewControlling: SpinnerDisplaying, AnyObject {
     func displayQuestion(domain: String, extensionName: String)

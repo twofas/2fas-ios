@@ -129,8 +129,6 @@ public struct ServiceData: Hashable {
     }
 }
 
-extension ServiceData: ServiceIconDefinition {}
-
 public extension ServiceData {
     var debugServiceType: String {
         if source == .manual {

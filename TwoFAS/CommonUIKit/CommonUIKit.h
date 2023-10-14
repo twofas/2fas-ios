@@ -17,22 +17,14 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+#import <Foundation/Foundation.h>
 
-@inlinable
-public func transform<T, V>(_ value: T?, to oper: (T) -> V?, defaultValue: V? = nil) -> V? {
-    if let value {
-        return oper(value)
-    } else if let defaultValue {
-        return defaultValue
-    }
-    return nil
-}
+//! Project version number for CommonUIKit.
+FOUNDATION_EXPORT double CommonUIKitVersionNumber;
 
-@inlinable
-public func transform<T, V>(_ value: T?, to oper: (T) -> V?, defaultValue: V) -> V {
-    if let value, let operValue = oper(value) {
-        return operValue
-    }
-    return defaultValue
-}
+//! Project version string for CommonUIKit.
+FOUNDATION_EXPORT const unsigned char CommonUIKitVersionString[];
+
+// In this header, you should import all the public headers of your framework using statements like #import <CommonUIKit/PublicHeader.h>
+
+

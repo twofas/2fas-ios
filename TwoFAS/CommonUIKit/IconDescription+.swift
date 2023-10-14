@@ -18,22 +18,10 @@
 //
 
 import UIKit
-import CommonUIKit
 import Common
 
-extension MainRepositoryImpl {
-    func iconTypeID(for serviceTypeID: ServiceTypeID?) -> UIImage {
-        guard let serviceTypeID, let serviceDef = serviceDefinitionDatabase.service(using: serviceTypeID) else {
-            return ServiceIcon.for(iconTypeID: IconTypeID.default)
-        }
-        return ServiceIcon.for(iconTypeID: serviceDef.iconTypeID)
-    }
-    
-    func iconName(for iconTypeID: IconTypeID) -> String? {
-        iconDatabase.name(for: iconTypeID)
-    }
-    
-    func grouppedList() -> [IconDescriptionGroup] {
-        iconDatabase.grouppedList()
+public extension IconDescription {
+    var icon: UIImage {
+        ServiceIcon.for(iconTypeID: iconTypeID)
     }
 }

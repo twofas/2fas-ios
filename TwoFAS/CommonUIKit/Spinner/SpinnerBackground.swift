@@ -18,24 +18,37 @@
 //
 
 import UIKit
+import Common
 
-// swiftlint:disable convenience_type
-public final class ServiceIcon {
-    public static var log: ((String) -> Void)?
-        
-    public static func `for`(iconTypeID: IconTypeID) -> UIImage {
-        if let img = UIImage(named: iconTypeID.uuidString, in: Bundle(for: Self.self), with: nil) {
-            return img
-        } else {
-            Log("Can't find icon for iconTypeID \(iconTypeID.uuidString)")
-            log?(iconTypeID.uuidString)
-            assertionFailure("Can't find icon for service \(iconTypeID.uuidString)")
-            return UIImage(named: IconTypeID.default.uuidString, in: Bundle(for: Self.self), with: nil)!
-        }
+final class SpinnerBackground: UIView {
+    private var isAnimating = false
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
     }
     
-    public static func present(for iconTypeID: IconTypeID) -> Bool {
-        UIImage(named: iconTypeID.uuidString, in: Bundle(for: Self.self), with: nil) != nil
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        backgroundColor = ThemeColor.overlay
+        alpha = 0
+        isUserInteractionEnabled = false
+        isAccessibilityElement = false
+    }
+    
+    func startAnimating() {
+        guard !isAnimating else { return }
+        isAnimating = true
+        alpha = 0
+        UIView.animate(
+            withDuration: ThemeMetrics.animationTime,
+            delay: 0,
+            options: .curveEaseInOut,
+            animations: { self.alpha = 1 },
+            completion: { _ in self.isAnimating = false }
+        )
     }
 }
-// swiftlint:enable convenience_type

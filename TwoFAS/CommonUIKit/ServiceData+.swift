@@ -17,8 +17,6 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import Common
 
-public enum CodeSupport {
-    public static let cameraPermissions = CameraPermissions()
-}
+extension ServiceData: ServiceIconDefinition {}

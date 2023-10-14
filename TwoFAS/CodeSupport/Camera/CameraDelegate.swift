@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import CodeSupport
 
 public protocol CameraDelegate: AnyObject {
     func didStartScanning()

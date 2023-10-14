@@ -58,9 +58,3 @@ extension ServiceDefinition {
         return value
     }
 }
-
-public extension ServiceDefinition {
-    var icon: UIImage {
-        ServiceIcon.for(iconTypeID: iconTypeID)
-    }
-}

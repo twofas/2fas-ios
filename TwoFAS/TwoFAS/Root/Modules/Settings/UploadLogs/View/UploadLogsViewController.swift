@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import CommonUIKit
 
 protocol UploadLogsViewControlling: AnyObject, SpinnerDisplaying {
     func setCode(_ code: UUID)

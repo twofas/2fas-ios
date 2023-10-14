@@ -17,23 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import CommonUIKit
+import Foundation
 import Common
 
-extension MainRepositoryImpl {
-    func iconTypeID(for serviceTypeID: ServiceTypeID?) -> UIImage {
-        guard let serviceTypeID, let serviceDef = serviceDefinitionDatabase.service(using: serviceTypeID) else {
-            return ServiceIcon.for(iconTypeID: IconTypeID.default)
-        }
-        return ServiceIcon.for(iconTypeID: serviceDef.iconTypeID)
-    }
-    
-    func iconName(for iconTypeID: IconTypeID) -> String? {
-        iconDatabase.name(for: iconTypeID)
-    }
-    
-    func grouppedList() -> [IconDescriptionGroup] {
-        iconDatabase.grouppedList()
-    }
-}
+extension WidgetService: ServiceIconDefinition {}

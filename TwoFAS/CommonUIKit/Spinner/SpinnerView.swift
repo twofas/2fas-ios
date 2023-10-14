@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 public enum SpinnerViewLocalizations {
     public static var voiceOverSpinner: String?

@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import CodeSupport
 
 extension MainRepositoryImpl {
     func shouldHandleURL(_ url: URL) -> Bool {

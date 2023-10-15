@@ -20,7 +20,6 @@
 import Foundation
 import Common
 import Protection
-import CodeSupport
 
 public enum ImportFromFileError: Error {
     case cantReadFile(reason: String?)

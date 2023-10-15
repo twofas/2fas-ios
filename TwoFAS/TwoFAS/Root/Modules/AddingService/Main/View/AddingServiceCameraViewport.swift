@@ -18,7 +18,7 @@
 //
 
 import SwiftUI
-import CodeSupport
+import Data
 import AVFoundation
 
 struct AddingServiceCameraViewport: UIViewRepresentable {

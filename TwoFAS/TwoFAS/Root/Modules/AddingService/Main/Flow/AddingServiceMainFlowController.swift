@@ -19,7 +19,7 @@
 
 import UIKit
 import Common
-import CodeSupport
+import Data
 
 protocol AddingServiceMainFlowControllerParent: AnyObject {
     func mainDismiss()

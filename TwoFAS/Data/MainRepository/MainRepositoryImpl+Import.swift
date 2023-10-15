@@ -20,7 +20,6 @@
 import Foundation
 import Storage
 import Common
-import CodeSupport
 
 enum OpenError: Error {
     case cantReadFile(reason: String?)

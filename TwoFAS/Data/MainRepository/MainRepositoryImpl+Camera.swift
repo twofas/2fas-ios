@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import CodeSupport
 
 public enum CameraPermissionState {
     case unknown

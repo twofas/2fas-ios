@@ -21,7 +21,6 @@ import Foundation
 import Storage
 import Protection
 import PushNotifications
-import CodeSupport
 import Common
 import Token
 import Sync

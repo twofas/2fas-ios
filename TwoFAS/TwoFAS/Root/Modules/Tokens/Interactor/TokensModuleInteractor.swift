@@ -22,7 +22,6 @@ import Common
 import CommonUIKit
 import Token
 import Storage
-import CodeSupport
 import Data
 
 enum TokensModuleInteractorState {

@@ -19,7 +19,7 @@
 
 import UIKit
 import SwiftUI
-import CodeSupport
+import Data
 
 protocol AddingServiceMainViewControlling: AnyObject {}
 

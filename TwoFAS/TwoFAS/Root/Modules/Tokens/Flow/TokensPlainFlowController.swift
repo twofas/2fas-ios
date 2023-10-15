@@ -19,7 +19,7 @@
 
 import UIKit
 import Common
-import CodeSupport
+import Data
 import SwiftUI
 
 protocol TokensPlainFlowControllerParent: AnyObject {

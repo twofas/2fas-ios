@@ -18,7 +18,6 @@
 //
 
 import UIKit
-import CodeSupport
 import Common
 
 public protocol CameraPermissionInteracting: AnyObject, PermissionsStateChildDataControllerProtocol {

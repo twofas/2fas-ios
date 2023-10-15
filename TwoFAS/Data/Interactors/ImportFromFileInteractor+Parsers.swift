@@ -20,7 +20,6 @@
 import Foundation
 import Common
 import Protection
-import CodeSupport
 
 extension ImportFromFileInteractor {
     // MARK: 2FAS Parsing

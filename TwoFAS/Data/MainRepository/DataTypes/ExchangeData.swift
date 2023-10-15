@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import CodeSupport
 
 public struct ExchangeData: Codable {
     public struct Service: Codable {

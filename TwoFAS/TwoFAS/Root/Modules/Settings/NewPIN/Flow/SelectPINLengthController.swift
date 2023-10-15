@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 enum SelectPINLengthController {
     static func make(in view: UIView, completion: @escaping (PINType) -> Void) -> AlertController {

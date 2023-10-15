@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Data
 
 protocol NewsModuleInteracting: AnyObject {
     var hasUnreadNews: Bool { get }

@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 protocol SettingsFlowControllerParent: AnyObject {
     func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
@@ -57,7 +58,7 @@ final class SettingsFlowController: FlowController {
         let view = SettingsViewController()
         let flowController = SettingsFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.settingsModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.settingsModuleInteractor()
         let presenter = SettingsPresenter(
             flowController: flowController,
             interactor: interactor

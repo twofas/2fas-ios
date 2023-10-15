@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 final class SettingsViewFooter: UIView {
     let height: CGFloat = 80

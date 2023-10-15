@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 protocol ImporterEnterPasswordFlowControllerParent: AnyObject {
     func hidePasswordImport()
@@ -61,7 +62,7 @@ final class ImporterEnterPasswordFlowController: FlowController {
         let view = ImporterEnterPasswordViewController()
         let flowController = ImporterEnterPasswordFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.importerEnterPasswordModuleInteractor(
+        let interactor = ModuleInteractorFactory.shared.importerEnterPasswordModuleInteractor(
             data: data
         )
         let presenter = ImporterEnterPasswordPresenter(

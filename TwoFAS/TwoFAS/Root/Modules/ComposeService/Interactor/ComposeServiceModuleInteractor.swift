@@ -22,6 +22,7 @@ import Common
 import Storage
 import CodeSupport
 import Token
+import Data
 
 enum ComposeServiceModuleInteractorActionType {
     case new
@@ -316,8 +317,7 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
         guard let privateKey else { return }
         notificationsInteractor.copyWithSuccess(
             title: T.Notifications.serviceKeyCopied,
-            value: privateKey,
-            accessibilityTitle: T.Notifications.serviceKeyCopied
+            value: privateKey
         )
     }
     

@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Data
 
 protocol ImporterEnterPasswordModuleInteracting: AnyObject {
     func openFile(with password: String) -> ImportFromFileTwoFASDecrypt

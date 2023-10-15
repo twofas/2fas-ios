@@ -18,6 +18,8 @@
 //
 
 import Foundation
+import Common
+import Data
 
 protocol PushNotificationPermissionModuleInteracting: AnyObject {
     func deny()

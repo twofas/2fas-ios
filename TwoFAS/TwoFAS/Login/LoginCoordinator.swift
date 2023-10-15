@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 final class LoginCoordinator: Coordinator, LoginCoordinatorDelegate {
     weak var loginCoordinatorDelegate: LoginCoordinatorDelegate?
@@ -40,19 +41,20 @@ final class LoginCoordinator: Coordinator, LoginCoordinatorDelegate {
     }
     
     override func start() {
-        let appLockStateInteractor = AppLockStateInteractor(mainRepository: MainRepositoryImpl.shared)
-        let viewModel = LoginViewModel(
-            security: security,
-            resetApp: { [weak self] in self?.presentResetAppViewController() },
-            leftButtonDescription: leftButtonDescription,
-            appLockStateInteractor: appLockStateInteractor
-        )
-        viewModel.coordinatorDelegate = self
-        
-        let login = LoginViewController()
-        login.viewModel = viewModel
-        
-        rootViewController.present(login, immediately: showImmediately, animationType: .alpha)        
+        // TODO: Implement new login
+//        let appLockStateInteractor = AppLockStateInteractor(mainRepository: MainRepositoryImpl.shared)
+//        let viewModel = LoginViewModel(
+//            security: security,
+//            resetApp: { [weak self] in self?.presentResetAppViewController() },
+//            leftButtonDescription: leftButtonDescription,
+//            appLockStateInteractor: appLockStateInteractor
+//        )
+//        viewModel.coordinatorDelegate = self
+//        
+//        let login = LoginViewController()
+//        login.viewModel = viewModel
+//        
+//        rootViewController.present(login, immediately: showImmediately, animationType: .alpha)        
     }
     
     func authorized() {

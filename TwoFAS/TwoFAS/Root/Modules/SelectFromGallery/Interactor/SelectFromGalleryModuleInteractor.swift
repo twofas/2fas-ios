@@ -21,6 +21,7 @@ import UIKit
 import Common
 import CodeSupport
 import Storage
+import Data
 
 enum SelectFromGalleryModuleInteractorScanResult {
     case noCodes

@@ -42,6 +42,9 @@ protocol TokensViewControlling: AnyObject {
     func disableBounce()
     
     func showKeyboard()
+    
+    func copyToken()
+    func copyNextToken()
 }
 
 extension TokensViewController: TokensViewControlling {
@@ -254,6 +257,18 @@ extension TokensViewController: TokensViewControlling {
     
     func disableBounce() {
         tokensView.alwaysBounceVertical = false
+    }
+
+    // MARK: - Notifications
+    
+    func copyToken() {
+        VoiceOver.say(T.Notifications.tokenCopied)
+        HUDNotification.presentSuccess(title: T.Notifications.tokenCopied)
+    }
+    
+    func copyNextToken() {
+        VoiceOver.say(T.Notifications.nextTokenCopied)
+        HUDNotification.presentSuccess(title: T.Notifications.nextTokenCopied)
     }
 }
 

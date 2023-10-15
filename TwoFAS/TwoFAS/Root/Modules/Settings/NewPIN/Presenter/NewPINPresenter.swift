@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 final class NewPINPresenter: PINKeyboardPresenter {
     weak var view: NewPINViewControlling?

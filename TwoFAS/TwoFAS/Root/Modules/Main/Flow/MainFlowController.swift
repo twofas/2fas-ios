@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 protocol MainFlowControllerParent: AnyObject {}
 
@@ -51,7 +52,7 @@ final class MainFlowController: FlowController {
         let flowController = MainFlowController(viewController: view)
         flowController.parent = parent
         flowController.authRequestsFlowController = AuthRequestsFlowController.create(parent: flowController)
-        let interactor = InteractorFactory.shared.mainModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.mainModuleInteractor()
         let presenter = MainPresenter(
             flowController: flowController,
             interactor: interactor

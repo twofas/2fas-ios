@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Data
 
 final class AskForAuthPresenter {
     private let flowController: AskForAuthFlowControlling

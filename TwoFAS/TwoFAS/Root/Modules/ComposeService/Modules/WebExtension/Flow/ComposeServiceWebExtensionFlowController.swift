@@ -41,7 +41,7 @@ final class ComposeServiceWebExtensionFlowController: FlowController {
         let flowController = ComposeServiceWebExtensionFlowController(viewController: view)
         flowController.parent = parent
         
-        let interactor = InteractorFactory.shared.composeServiceWebExtensionModuleInteractor(secret: secret)
+        let interactor = ModuleInteractorFactory.shared.composeServiceWebExtensionModuleInteractor(secret: secret)
         let presenter = ComposeServiceWebExtensionPresenter(
             flowController: flowController,
             interactor: interactor

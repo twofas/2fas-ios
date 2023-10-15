@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 protocol AppSecurityFlowControllerParent: AnyObject {
     func appSecurityChaged()
@@ -51,7 +52,7 @@ final class AppSecurityFlowController: FlowController {
         let flowController = AppSecurityFlowController(viewController: view)
         flowController.parent = parent
         flowController.navigationController = navigationController
-        let interactor = InteractorFactory.shared.appSecurityModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.appSecurityModuleInteractor()
         let presenter = AppSecurityPresenter(
             flowController: flowController,
             interactor: interactor
@@ -70,7 +71,7 @@ final class AppSecurityFlowController: FlowController {
         let flowController = AppSecurityFlowController(viewController: view)
         flowController.parent = parent
         flowController.navigationController = navigationController
-        let interactor = InteractorFactory.shared.appSecurityModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.appSecurityModuleInteractor()
         let presenter = AppSecurityPresenter(
             flowController: flowController,
             interactor: interactor

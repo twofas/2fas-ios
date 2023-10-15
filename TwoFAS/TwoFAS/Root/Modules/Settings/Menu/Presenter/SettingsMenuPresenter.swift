@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 final class SettingsMenuPresenter {
     weak var view: SettingsMenuViewControlling?

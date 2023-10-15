@@ -134,6 +134,7 @@ extension ComposeServicePresenter {
                 flowController.toLogin()
             } else {
                 interactor.copySecret()
+                view?.copySecret()
             }
         } else {
             flowController.toSetPIN()

@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 protocol GuideSelectorNavigationFlowControllerParent: AnyObject {
     func closeGuideSelector()

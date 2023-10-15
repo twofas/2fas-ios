@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class IntroductionContainerView: UIView {
     private let minimalSpacing: CGFloat = Theme.Metrics.doubleMargin

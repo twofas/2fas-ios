@@ -20,6 +20,7 @@
 import Foundation
 import Common
 import CodeSupport
+import Data
 
 protocol ImporterOpenFileModuleInteracting: AnyObject {
     var url: URL? { get }

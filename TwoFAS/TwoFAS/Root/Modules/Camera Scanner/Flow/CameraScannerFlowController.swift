@@ -58,7 +58,7 @@ final class CameraScannerFlowController: FlowController {
         let flowController = CameraScannerFlowController(viewController: view)
         flowController.parent = parent
         
-        let interactor = InteractorFactory.shared.cameraScannerModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.cameraScannerModuleInteractor()
         let presenter = CameraScannerPresenter(
             flowController: flowController,
             interactor: interactor
@@ -79,7 +79,7 @@ final class CameraScannerFlowController: FlowController {
         let flowController = CameraScannerFlowController(viewController: view)
         flowController.parent = parent
         
-        let interactor = InteractorFactory.shared.cameraScannerModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.cameraScannerModuleInteractor()
         let presenter = CameraScannerPresenter(
             flowController: flowController,
             interactor: interactor

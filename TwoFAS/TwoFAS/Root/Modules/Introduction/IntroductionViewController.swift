@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class IntroductionViewController: UIViewController {
     private let doubleMargin = Theme.Metrics.doubleMargin

@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Data
 
 final class IconSelectorPresenter {
     weak var view: IconSelectorViewControlling?

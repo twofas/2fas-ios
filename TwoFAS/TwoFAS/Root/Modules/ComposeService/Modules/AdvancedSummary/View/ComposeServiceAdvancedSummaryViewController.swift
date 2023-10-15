@@ -21,6 +21,7 @@ import UIKit
 
 protocol ComposeServiceAdvancedSummaryViewControlling: AnyObject {
     func reload(with data: ComposeServiceAdvancedSummaryMenuSection)
+    func copySuccess()
 }
 
 final class ComposeServiceAdvancedSummaryViewController: UIViewController {
@@ -120,6 +121,11 @@ extension ComposeServiceAdvancedSummaryViewController: ComposeServiceAdvancedSum
         >()
         snapshot.appendSection(data)
         tableViewAdapter.apply(snapshot: snapshot)
+    }
+    
+    func copySuccess() {
+        VoiceOver.say(T.Notifications.counterCopied)
+        HUDNotification.presentSuccess(title: T.Notifications.counterCopied)
     }
 }
 

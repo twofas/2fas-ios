@@ -20,6 +20,7 @@
 import Foundation
 import CodeSupport
 import Common
+import Data
 
 protocol CameraScannerModuleInteracting: AnyObject {
     var serviceWasCreated: ((ServiceData) -> Void)? { get set }

@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 protocol AppSecurityModuleInteracting: AnyObject {
     var isPINSet: Bool { get }

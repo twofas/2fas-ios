@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 protocol GuideMenuFlowControllerParent: AnyObject {
     func guideMenuToMenuPosition(_ menu: GuideDescription.MenuPosition)

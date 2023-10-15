@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 class IntroductionPageView: UIView {
     private let width: CGFloat = Theme.Metrics.pageWidth

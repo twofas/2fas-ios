@@ -48,7 +48,7 @@ final class AddingServiceManuallyFlowController: FlowController {
             viewController?.updateHeight(height)
         }
         
-        let interactor = InteractorFactory.shared.addingServiceManuallyModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.addingServiceManuallyModuleInteractor()
         
         let presenter = AddingServiceManuallyPresenter(
             flowController: flowController,

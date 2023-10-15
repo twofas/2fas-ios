@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 protocol MainSplitFlowControllerParent: AnyObject {
     func navigationSwitchedToTokens()
@@ -47,7 +48,7 @@ final class MainSplitFlowController: FlowController {
         view.settingsViewController = SettingsFlowController
             .setup(parent: flowController)
         
-        let interactor = InteractorFactory.shared.mainSplitModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.mainSplitModuleInteractor()
 
         let presenter = MainSplitPresenter(
             flowController: flowController,

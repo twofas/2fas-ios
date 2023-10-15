@@ -19,9 +19,11 @@
 
 import Foundation
 import Common
+import CommonUIKit
 import Token
 import Storage
 import CodeSupport
+import Data
 
 enum TokensModuleInteractorState {
     case normal
@@ -56,7 +58,7 @@ protocol TokensModuleInteracting: AnyObject {
     func rename(_ section: TokensSection, with title: String)
     func delete(_ section: TokensSection)
     func moveService(_ service: ServiceData, from old: IndexPath, to new: IndexPath, newSection: SectionData?)
-    func copyToken(from serviceData: ServiceData)
+    func copyToken(from serviceData: ServiceData) -> TokensModuleInteractor.TokenValueType?
     func copyTokenValue(from serviceData: ServiceData) -> String?
     func registerTOTP(_ consumer: TokenTimerConsumer)
     func removeTOTP(_ consumer: TokenTimerConsumer)
@@ -82,6 +84,10 @@ protocol TokensModuleInteracting: AnyObject {
 }
 
 final class TokensModuleInteractor {
+    enum TokenValueType {
+        case current
+        case next
+    }
     private enum TokenTimeType {
         case current(TokenValue)
         case next(TokenValue)
@@ -231,13 +237,15 @@ extension TokensModuleInteractor: TokensModuleInteracting {
         tokenInteractor.lockAllConsumers()
     }
     
-    func copyToken(from serviceData: ServiceData) {
-        guard let token = tokenTypeForService(serviceData) else { return }
+    func copyToken(from serviceData: ServiceData) -> TokenValueType? {
+        guard let token = tokenTypeForService(serviceData) else { return nil }
         switch token {
         case .current(let tokenValue):
             copyToken(tokenValue)
+            return .current
         case .next(let tokenValue):
             copyNextToken(tokenValue)
+            return .next
         }
     }
     
@@ -407,7 +415,7 @@ extension TokensModuleInteractor: TokensModuleInteracting {
 }
 
 private extension TokensModuleInteractor {
-    func setupLinkInteractor() {
+    private func setupLinkInteractor() {
         linkInteractor.showCodeAlreadyExists = { [weak self] in self?.linkAction?(.codeAlreadyExists) }
         linkInteractor.showShouldAddCode = { [weak self] in self?.linkAction?(.shouldAddCode(descriptionText: $0)) }
         linkInteractor.showSendLogs = { [weak self] in self?.linkAction?(.sendLogs(auditID: $0)) }
@@ -418,7 +426,7 @@ private extension TokensModuleInteractor {
         linkInteractor.serviceWasCreated = { [weak self] in self?.linkAction?(.serviceWasCreaded(serviceData: $0)) }
     }
     
-    func createNormalSnapshot(isSearching: Bool) -> NSDiffableDataSourceSnapshot<TokensSection, TokenCell> {
+    private func createNormalSnapshot(isSearching: Bool) -> NSDiffableDataSourceSnapshot<TokensSection, TokenCell> {
         var snapshot = NSDiffableDataSourceSnapshot<TokensSection, TokenCell>()
         var sections: [TokensSection] = []
         
@@ -467,7 +475,7 @@ private extension TokensModuleInteractor {
         return snapshot
     }
 
-    func createEditSnapshot(isSearching: Bool) -> NSDiffableDataSourceSnapshot<TokensSection, TokenCell> {
+    private func createEditSnapshot(isSearching: Bool) -> NSDiffableDataSourceSnapshot<TokensSection, TokenCell> {
         var snapshot = NSDiffableDataSourceSnapshot<TokensSection, TokenCell>()
         
         var startIndex: Int = 0
@@ -524,7 +532,7 @@ private extension TokensModuleInteractor {
         return snapshot
     }
 
-    func createCell(with serviceData: ServiceData) -> TokenCell {
+    private func createCell(with serviceData: ServiceData) -> TokenCell {
         let cellType: TokenCell.CellType = {
             switch serviceData.tokenType {
             case .totp: return .serviceTOTP
@@ -545,7 +553,7 @@ private extension TokensModuleInteractor {
         )
     }
 
-    func createEmptyCell() -> TokenCell {
+    private func createEmptyCell() -> TokenCell {
         .init(
             name: "",
             secret: UUID().uuidString,
@@ -560,7 +568,7 @@ private extension TokensModuleInteractor {
         )
     }
     
-    func sectionPosition(for startIndex: Int, currentIndex: Int, totalIndex: Int) -> TokensSection.Position {
+    private func sectionPosition(for startIndex: Int, currentIndex: Int, totalIndex: Int) -> TokensSection.Position {
         if startIndex > currentIndex || totalIndex < 2 {
             return .notUsed
         }
@@ -587,19 +595,17 @@ private extension TokensModuleInteractor {
         return .current(token)
     }
 
-    func copyToken(_ token: String) {
+    private func copyToken(_ token: String) {
         notificationsInteractor.copyWithSuccess(
             title: T.Notifications.tokenCopied,
-            value: token,
-            accessibilityTitle: T.Notifications.tokenCopied
+            value: token
         )
     }
     
-    func copyNextToken(_ token: String) {
+    private func copyNextToken(_ token: String) {
         notificationsInteractor.copyWithSuccess(
             title: T.Notifications.nextTokenCopied,
-            value: token,
-            accessibilityTitle: T.Notifications.nextTokenCopied
+            value: token
         )
     }
 }

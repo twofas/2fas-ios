@@ -19,8 +19,9 @@
 
 import Foundation
 import Common
+import Data
 
-protocol DeleteServiceInteracting: AnyObject {
+public protocol DeleteServiceInteracting: AnyObject {
     func deleteService(_ serviceData: ServiceData)
 }
 

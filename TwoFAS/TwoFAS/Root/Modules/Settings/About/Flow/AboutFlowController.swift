@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 protocol AboutFlowControllerParent: AnyObject {}
 
@@ -41,7 +42,7 @@ final class AboutFlowController: FlowController {
     ) {
         let view = AboutViewController()
         let flowController = AboutFlowController(viewController: view)
-        let interactor = InteractorFactory.shared.aboutModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.aboutModuleInteractor()
         flowController.parent = parent
         let presenter = AboutPresenter(
             flowController: flowController,
@@ -59,7 +60,7 @@ final class AboutFlowController: FlowController {
     ) {
         let view = AboutViewController()
         let flowController = AboutFlowController(viewController: view)
-        let interactor = InteractorFactory.shared.aboutModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.aboutModuleInteractor()
         flowController.parent = parent
         let presenter = AboutPresenter(
             flowController: flowController,

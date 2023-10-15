@@ -20,7 +20,7 @@
 import Foundation
 import Common
 import CodeSupport
-import Storage
+import Data
 
 final class CameraScannerPresenter {
     weak var view: CameraScannerViewControlling?

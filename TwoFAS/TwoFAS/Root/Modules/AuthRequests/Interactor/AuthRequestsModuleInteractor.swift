@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Data
 
 protocol AuthRequestsModuleInteracting: AnyObject {
     var noAwaitingRequests: Callback? { get set }

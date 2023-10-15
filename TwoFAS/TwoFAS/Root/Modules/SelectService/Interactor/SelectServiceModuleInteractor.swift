@@ -20,6 +20,7 @@
 import Foundation
 import Storage
 import Common
+import Data
 
 protocol SelectServiceModuleInteracting: AnyObject {
     func listServices(filter: String?, for domain: String) -> [SelectServiceSection]

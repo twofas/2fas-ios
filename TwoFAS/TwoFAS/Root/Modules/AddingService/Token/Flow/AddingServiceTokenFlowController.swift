@@ -44,7 +44,7 @@ final class AddingServiceTokenFlowController: FlowController {
             viewController?.updateHeight(height)
         }
         
-        let interactor = InteractorFactory.shared.addingServiceTokenModuleInteractor(serviceData: serviceData)
+        let interactor = ModuleInteractorFactory.shared.addingServiceTokenModuleInteractor(serviceData: serviceData)
         
         let presenter = AddingServiceTokenPresenter(
             flowController: flowController,
@@ -71,7 +71,7 @@ final class AddingServiceTokenFlowController: FlowController {
             containerView?.updateHeight(height)
         }
         
-        let interactor = InteractorFactory.shared.addingServiceTokenModuleInteractor(serviceData: serviceData)
+        let interactor = ModuleInteractorFactory.shared.addingServiceTokenModuleInteractor(serviceData: serviceData)
         
         let presenter = AddingServiceTokenPresenter(
             flowController: flowController,

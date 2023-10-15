@@ -20,6 +20,7 @@
 import Foundation
 import Common
 import Token
+import Data
 
 protocol AddingServiceTokenModuleInteracting: AnyObject {
     var tokenConsumer: TokenTimerConsumer? { get set }
@@ -74,8 +75,7 @@ extension AddingServiceTokenModuleInteractor: AddingServiceTokenModuleInteractin
     func copyToken(_ token: String) {
         notificationsInteractor.copyWithSuccess(
             title: T.Notifications.tokenCopied,
-            value: token,
-            accessibilityTitle: T.Notifications.tokenCopied
+            value: token
         )
     }
     

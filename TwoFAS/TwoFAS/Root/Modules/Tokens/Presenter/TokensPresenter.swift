@@ -22,6 +22,7 @@ import Common
 import Token
 import Storage
 import CodeSupport
+import Data
 
 final class TokensPresenter {
     enum State {
@@ -385,7 +386,14 @@ extension TokensPresenter {
     
     func handleCopyToken(from serviceData: ServiceData) {
         Log("TokensPresenter - handleCopyToken")
-        interactor.copyToken(from: serviceData)
+        
+        switch interactor.copyToken(from: serviceData) {
+        case .current:
+            view?.copyToken()
+        case .next:
+            view?.copyNextToken()
+        default: break
+        }
     }
     
     // MARK: - Timer and Counter support

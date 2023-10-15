@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 protocol NewPINFlowControllerParent: AnyObject {
     func hideNewPIN()
@@ -58,7 +59,7 @@ final class NewPINFlowController: FlowController {
         flowController.parent = parent
         flowController.action = .create
         flowController.step = .first(pinType: pinType)
-        let interactor = InteractorFactory.shared.newPINModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.newPINModuleInteractor()
         interactor.selectedPINType = pinType
         
         let presenter = NewPINPresenter(
@@ -100,7 +101,7 @@ final class NewPINFlowController: FlowController {
             selectedPINType = pinType
         }
         
-        let interactor = InteractorFactory.shared.newPINModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.newPINModuleInteractor()
         interactor.selectedPIN = selectedPIN
         interactor.selectedPINType = selectedPINType
         

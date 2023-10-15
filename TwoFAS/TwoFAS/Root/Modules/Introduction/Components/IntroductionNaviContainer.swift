@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 extension IntroductionViewController {
     final class NaviContainer: UIView {

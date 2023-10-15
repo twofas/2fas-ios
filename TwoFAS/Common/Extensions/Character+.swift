@@ -19,6 +19,7 @@
 
 import Foundation
 
-extension Character {
+public extension Character {
     var isPadding: Bool { self == "=" }
+    var isEmoji: Bool { unicodeScalars.first?.properties.isEmoji == true }
 }

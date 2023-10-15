@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 protocol GuidePageFlowControllerParent: AnyObject {
     func guidePageToPage(pageNumber: Int, in menu: GuideDescription.MenuPosition)

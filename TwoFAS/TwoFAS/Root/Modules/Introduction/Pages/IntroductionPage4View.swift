@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 final class IntroductionPage4View: IntroductionPageView {
     private let image: UIImageView = {

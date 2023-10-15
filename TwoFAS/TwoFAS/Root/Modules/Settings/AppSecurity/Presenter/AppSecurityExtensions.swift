@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 extension AppLockAttempts {
     var localized: String {

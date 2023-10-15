@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 enum LoadingContentButtonState {
     case inactive

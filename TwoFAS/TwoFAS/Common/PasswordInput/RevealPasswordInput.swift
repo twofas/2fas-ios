@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class RevealPasswordInput: UIView {
     enum Order {

@@ -26,6 +26,7 @@ public typealias IconTypeName = String
 public typealias ServiceTypeID = UUID
 public typealias IconTypeID = UUID
 public typealias SectionID = UUID
+public typealias DeviceName = String
 
 public typealias Secret = String
 public typealias TokenValue = String
@@ -37,3 +38,5 @@ public extension IconTypeID {
 public extension TokenValue {
     static let empty = "000000"
 }
+
+public typealias Callback = () -> Void

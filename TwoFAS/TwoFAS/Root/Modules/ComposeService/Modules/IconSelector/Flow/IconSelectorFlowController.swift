@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 protocol IconSelectorFlowControllerParent: AnyObject {
     func iconSelectorDidSelect(iconTypeID: IconTypeID)
@@ -45,7 +46,7 @@ final class IconSelectorFlowController: FlowController {
         let flowController = IconSelectorFlowController(viewController: view)
         flowController.parent = parent
         
-        let interactor = InteractorFactory.shared.iconSelectorModuleInteractor(
+        let interactor = ModuleInteractorFactory.shared.iconSelectorModuleInteractor(
             defaultIcon: defaultIcon,
             selectedIcon: selectedIcon
         )

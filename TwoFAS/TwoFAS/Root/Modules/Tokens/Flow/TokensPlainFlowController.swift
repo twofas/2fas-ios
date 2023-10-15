@@ -78,7 +78,7 @@ final class TokensPlainFlowController: FlowController, TokensNavigationFlowContr
         let flowController = TokensPlainFlowController(viewController: view)
         flowController.parent = parent
         flowController.mainSplitViewController = mainSplitViewController
-        let interactor = InteractorFactory.shared.tokensModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.tokensModuleInteractor()
         let presenter = TokensPresenter(
             flowController: flowController,
             interactor: interactor

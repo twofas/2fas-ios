@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 protocol MainSplitModuleInteracting: AnyObject {
     func currentSettingsPath() -> ViewPath.Settings?

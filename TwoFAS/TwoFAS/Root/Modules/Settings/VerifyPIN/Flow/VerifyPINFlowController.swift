@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 protocol VerifyPINFlowControllerParent: AnyObject {
     func hideVerifyPIN()
@@ -48,7 +49,7 @@ final class VerifyPINFlowController: FlowController {
         let flowController = VerifyPINFlowController(viewController: view)
         flowController.parent = parent
         flowController.action = action
-        let interactor = InteractorFactory.shared.verifyPINModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.verifyPINModuleInteractor()
         let presenter = VerifyPINPresenter(
             flowController: flowController,
             interactor: interactor
@@ -68,7 +69,7 @@ final class VerifyPINFlowController: FlowController {
         let flowController = VerifyPINFlowController(viewController: view)
         flowController.parent = parent
         flowController.action = action
-        let interactor = InteractorFactory.shared.verifyPINModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.verifyPINModuleInteractor()
         let presenter = VerifyPINPresenter(
             flowController: flowController,
             interactor: interactor

@@ -60,7 +60,7 @@ final class SelectFromGalleryFlowController: FlowController {
         let flowController = SelectFromGalleryFlowController(viewController: view)
         flowController.parent = parent
         
-        let interactor = InteractorFactory.shared.selectFromGalleryModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.selectFromGalleryModuleInteractor()
         let presenter = SelectFromGalleryPresenter(
             flowController: flowController,
             interactor: interactor

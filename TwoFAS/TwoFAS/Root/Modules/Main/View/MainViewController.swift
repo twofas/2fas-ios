@@ -18,6 +18,8 @@
 //
 
 import UIKit
+import Common
+import Data
 
 protocol MainViewControlling: AnyObject {
     func navigateToViewPath(_ viewPath: ViewPath)

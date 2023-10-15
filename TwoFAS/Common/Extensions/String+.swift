@@ -36,6 +36,10 @@ public extension String {
     }
     // swiftlint:enable no_magic_numbers
     
+    func removeWhitespaces() -> String {
+        components(separatedBy: .whitespacesAndNewlines).joined()
+    }
+    
     // swiftlint:disable no_magic_numbers
     func isASCII() -> Bool {
         guard count > 0 else { return false }
@@ -127,7 +131,12 @@ public extension String {
     }
     
     var twoLetters: String {
-        guard count > 1 else { return String(first ?? Character("")).uppercased()  }
+        guard self.count > 1 else {
+            if self.count == 1 {
+                return String(self.first ?? Character("")).uppercased()
+            }
+            return ""
+        }
         return self[0...1].uppercased()
     }
     
@@ -160,5 +169,54 @@ public extension String {
         }
         
         return cutStr
+    }
+    
+    func isEmailValid() -> Bool {
+        let emailRegEx = "(?:[a-zA-Z0-9!#$%\\&‘*+/=?\\^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%\\&'*+/=?\\^_`{|}" +
+        "~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\" +
+        "x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-" +
+        "z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5" +
+        "]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-" +
+        "9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21" +
+        "-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
+        
+        let emailTest = NSPredicate(format: "SELF MATCHES[c] %@", emailRegEx)
+        return emailTest.evaluate(with: self)
+    }
+    
+    var isASCIILetter: Bool {
+        uppercased().rangeOfCharacter(from: CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZ")) != nil
+    }
+    var isNumber: Bool { self.rangeOfCharacter(from: CharacterSet(charactersIn: "0123456789")) != nil }
+    var isUUIDCharacter: Bool {
+        let charset = CharacterSet(charactersIn: "0123456789abcdefABCDEF")
+        return reduce(into: true) { partialResult, char in
+            partialResult = partialResult && String(char).rangeOfCharacter(from: charset) != nil
+        }
+    }
+    var isValidLabel: Bool {
+        guard !self.isEmpty else { return false }
+        let char = Character(self)
+        return char.isASCII || char.isLetter || char.isNumber || char.isSymbol || char.isEmoji
+    }
+    
+    var isBackspace: Bool { strcmp(self.cString(using: .utf8), "\\b") == -92 }
+    
+    static func random(length: Int = 20) -> String {
+        let base = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        var randomString: String = ""
+        
+        // swiftlint:disable legacy_random
+        for _ in 0..<length {
+            let randomValue = arc4random_uniform(UInt32(base.count))
+            randomString += "\(base[base.index(base.startIndex, offsetBy: Int(randomValue))])"
+        }
+        // swiftlint:enable legacy_random
+        return randomString
+    }
+    
+    func matches(_ regex: String) -> Bool {
+        let wholeRange = self.startIndex..<self.endIndex
+        return range(of: regex, options: .regularExpression, range: nil, locale: nil) == wholeRange
     }
 }

@@ -25,6 +25,7 @@ import Token
 protocol AddingServiceTokenViewControlling: AnyObject {
     var totpAdapter: TOTPAdapter { get }
     var hotpAdapter: HOTPAdapter { get }
+    func tokenCopied()
 }
 
 final class AddingServiceTokenViewController: UIViewController, AddingServiceTokenViewControlling {
@@ -68,5 +69,10 @@ final class AddingServiceTokenViewController: UIViewController, AddingServiceTok
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         presenter.handleViewDidDisapper()
+    }
+    
+    func tokenCopied() {
+        VoiceOver.say(T.Notifications.tokenCopied)
+        HUDNotification.presentSuccess(title: T.Notifications.tokenCopied)
     }
 }

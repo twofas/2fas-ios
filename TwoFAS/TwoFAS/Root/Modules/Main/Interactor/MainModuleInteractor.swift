@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 protocol MainModuleInteracting: AnyObject {
     var secretSyncError: ((String) -> Void)? { get set }

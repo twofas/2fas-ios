@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 protocol AddingServiceManuallyModuleInteracting: AnyObject {
     func checkForServiceIcon(using str: String, callback: @escaping (UIImage?, IconTypeID?) -> Void)

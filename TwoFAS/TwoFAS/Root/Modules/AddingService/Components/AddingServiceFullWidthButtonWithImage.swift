@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct AddingServiceFullWidthButtonWithImage: View {
     private let minHeight: CGFloat = 57

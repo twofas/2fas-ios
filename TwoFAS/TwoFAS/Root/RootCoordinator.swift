@@ -18,15 +18,9 @@
 //
 
 import UIKit
-import Storage
-import Protection
-import PushNotifications
-import CodeSupport
 import Common
 import CommonUIKit
-import Token
-import Sync
-import TimeVerification
+import Data
 
 final class RootCoordinator: Coordinator {
     private enum State {
@@ -35,26 +29,8 @@ final class RootCoordinator: Coordinator {
         case intro
         case main
     }
-    
-    private let service: ServiceHandler
-    private let initialStateDataController = PermissionsStateDataController()
-    private let pushNotifications: PushNotifications
-    private let security: SecurityProtocol
-    private let protection: Protection
-    private let storage: Storage
-    private let timerHandler: TimerHandler
-    private let timeVerificationController: TimeVerificationController
-    private let sync: CloudHandlerType
-    private let categoryHandler: CategoryHandler
-    private let sectionHandler: SectionHandler
-    
-    private var pushNotificationRegistrationInteractor: PushNotificationRegistrationInteracting?
-    private var fileInteractor: FileInteracting?
-    private var registerDeviceInteractor: RegisterDeviceInteracting?
-    private var linkInteractor: LinkInteracting?
-    private var cameraPermissionInteractor: CameraPermissionInteracting?
-        
     let rootViewController: RootViewController
+    let mainRepository: MainRepositoryInitialization
     
     private var currentState = State.initial {
         didSet {
@@ -63,90 +39,22 @@ final class RootCoordinator: Coordinator {
     }
     
     override init() {
-        ServiceIcon.log = { AppEventLog(.missingIcon($0)) }
-        protection = Protection()
-        
-        EncryptionHolder.initialize(with: protection.localKeyEncryption)
-        
-        storage = Storage(readOnly: false) { error in
-            DebugLog(error)
-        }
-        
-        LogStorage.setStorage(storage.log)
-                
-        pushNotifications = PushNotifications(app: UIApplication.shared)
-        
-        let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
-        
-        SyncInstance.initialize(commonSectionHandler: storage.section, commonServiceHandler: storage.service) {
-            DebugLog("Sync: \($0)")
-        }
-        SyncInstance.migrateStoreIfNeeded()
-        serviceMigration.migrateIfNeeded()
-                        
-        service = storage.service
-        categoryHandler = storage.category
-        sectionHandler = storage.section
-        
-        security = Security(biometric: protection.biometricAuth, codeStorage: protection.codeStorage)
-                        
-        timeVerificationController = TimeVerificationController()
-                
-        timerHandler = TokenHandler.timer
-        
-        sync = SyncInstance.getCloudHandler()
-                
-        Theme.applyAppearance()
-        SpinnerViewLocalizations.voiceOverSpinner = T.Voiceover.spinner
-        
         rootViewController = RootViewController()
+        mainRepository = MainRepositoryInitialization(serviceNameTranslation: T.Commons.service)
         
         super.init()
         
-        storage.addUserPresentableError { [weak self] error in
+        mainRepository.storageError = { [weak self] error in
             let alert = AlertControllerDismissFlow(title: T.Commons.error, message: error, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
             self?.rootViewController.present(alert, animated: false, completion: nil)
         }
-        
-        _ = MainRepositoryImpl(
-            service: service,
-            pushNotifications: pushNotifications,
-            cameraPermissions: CameraPermissions(),
-            security: security,
-            protectionModule: protection,
-            storage: storage,
-            timerHandler: timerHandler,
-            counterHandler: TokenHandler.counter,
-            timeVerificationController: timeVerificationController,
-            sync: sync,
-            categoryHandler: categoryHandler,
-            sectionHandler: sectionHandler,
-            cloudHandler: sync,
-            logDataChange: SyncInstance.logDataChange
-        )
-        
-        timeVerificationController.offsetUpdated = { [weak self] in
-            self?.timerHandler.setOffset(offset: $0)
-            self?.sync.setTimeOffset($0)
-            MainRepositoryImpl.shared.reloadWidgets()
+        mainRepository.presentLogin = { [weak self] immediately in
+            self?.presentLogin(immediately: immediately)
         }
-        
-        fileInteractor = InteractorFactory.shared.fileInteractor()
-        
-        let pushInteractor = InteractorFactory.shared.pushNotificationRegistrationInteractor()
-        pushNotificationRegistrationInteractor = pushInteractor
 
-        let camera = CameraPermissionInteractor(mainRepository: MainRepositoryImpl.shared)
-        cameraPermissionInteractor = camera
-        
-        initialStateDataController.set(children: [pushInteractor, camera])
-        initialStateDataController.initialize()
-        
-        registerDeviceInteractor = InteractorFactory.shared.registerDeviceInteractor()
-        registerDeviceInteractor?.initialize()
-        
-        linkInteractor = InteractorFactory.shared.linkInteractor()
+        SpinnerViewLocalizations.voiceOverSpinner = T.Voiceover.spinner
+        Theme.applyAppearance()
     }
     
     // MARK: - handling app delegates
@@ -154,14 +62,12 @@ final class RootCoordinator: Coordinator {
     func applicationWillResignActive() {
         Log("App: applicationWillResignActive")
         ToastNotification.hideAll()
-        storage.save()
-        guard !security.isAuthenticatingUsingBiometric else { return }
+        mainRepository.applicationWillResignActive()
     }
     
     func applicationWillEnterForeground() {
         Log("App: applicationWillEnterForeground")
-        security.applicationWillEnterForeground()
-        initialStateDataController.initialize()
+        mainRepository.applicationWillEnterForeground()
         handleViewFlow()
     }
     
@@ -172,31 +78,28 @@ final class RootCoordinator: Coordinator {
     
     func applicationDidBecomeActive() {
         Log("App: applicationDidBecomeActive")
-        sync.synchronize()
-        timeVerificationController.startVerification()
-        security.applicationDidBecomeActive()
+        mainRepository.applicationDidBecomeActive()
         RatingController.uiIsVisible()
     }
     
     func applicationWillTerminate() {
         Log("App: applicationWillTerminate")
-        storage.save()
+        mainRepository.applicationWillTerminate()
     }
     
     func shouldHandleURL(url: URL) -> Bool {
         Log("App: shouldHandleURL")
-        return (linkInteractor?.shouldHandleURL(url: url) == true) ||
-        (fileInteractor?.shouldHandleURL(url: url) == true)
+        return mainRepository.shouldHandleURL(url: url)
     }
     
     func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {
         Log("App: didRegisterForRemoteNotifications")
-        pushNotifications.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
+        mainRepository.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
     }
     
     func didFailToRegisterForRemoteNotifications(with error: Error) {
         Log("App: didFailToRegisterForRemoteNotifications")
-        pushNotifications.didFailToRegisterForRemoteNotifications(with: error)
+        mainRepository.didFailToRegisterForRemoteNotifications(with: error)
     }
     
     func didReceiveRemoteNotification(
@@ -204,7 +107,7 @@ final class RootCoordinator: Coordinator {
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     ) {
         Log("App: didReceiveRemoteNotification")
-        SyncInstance.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
+        mainRepository.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
     }
     
     override func start() {
@@ -218,9 +121,9 @@ final class RootCoordinator: Coordinator {
         
         Log("RootCoordinator: Changing state for: \(currentState)")
         
-        if !MainRepositoryImpl.shared.introductionWasShown() {
+        if !mainRepository.introductionWasShown {
             presentIntroduction()
-        } else if security.isAuthenticationRequired {
+        } else if mainRepository.security.isAuthenticationRequired {
             presentLogin(immediately: coldRun)
         } else {
             presentMain(immediately: coldRun)
@@ -235,6 +138,9 @@ final class RootCoordinator: Coordinator {
         Log("Presenting Introduction")
         let navigationController = CommonNavigationController()
         let intro = IntroductionCoordinator()
+        intro.markAsShownAction = { [weak self] in
+            self?.mainRepository.markAsShown()
+        }
         
         let adapter = PreviousToCurrentCoordinatorAdapter(
             navigationController: navigationController,
@@ -262,7 +168,7 @@ final class RootCoordinator: Coordinator {
         UIApplication.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
         
         let loginCoordinator = LoginCoordinator(
-            security: security,
+            security: mainRepository.security,
             leftButtonDescription: nil,
             rootViewController: rootViewController,
             showImmediately: immediately
@@ -273,11 +179,7 @@ final class RootCoordinator: Coordinator {
     }
     
     private func lockApplicationIfNeeded() {
-        security.lockApplication()
-        
-        if security.isAuthenticationRequired {
-            presentLogin(immediately: true)
-        }
+        mainRepository.lockApplicationIfNeeded()
     }
     
     private func changeState(_ newState: State) {

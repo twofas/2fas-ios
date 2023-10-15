@@ -37,7 +37,7 @@ final class AppLockFlowController: FlowController {
         let view = AppLockViewController()
         let flowController = AppLockFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.appLockModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.appLockModuleInteractor()
         let presenter = AppLockPresenter(
             flowController: flowController,
             interactor: interactor

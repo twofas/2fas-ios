@@ -39,7 +39,7 @@ final class NewsPlainFlowController: FlowController {
         let view = NewsViewController()
         let flowController = NewsPlainFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.newsModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.newsModuleInteractor()
         let presenter = NewsPresenter(
             flowController: flowController,
             interactor: interactor

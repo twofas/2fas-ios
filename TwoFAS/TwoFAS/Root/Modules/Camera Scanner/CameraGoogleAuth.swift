@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct CameraGoogleAuth: View {
     private let paddingHorizontal: CGFloat = 3 * Theme.Metrics.standardSpacing

@@ -44,7 +44,7 @@ final class ComposeServiceAdvancedEditFlowController: FlowController {
         let flowController = ComposeServiceAdvancedEditFlowController(viewController: view)
         flowController.parent = parent
         
-        let interactor = InteractorFactory.shared.composeServiceAdvancedEditModuleInteractor(settings: settings)
+        let interactor = ModuleInteractorFactory.shared.composeServiceAdvancedEditModuleInteractor(settings: settings)
         let presenter = ComposeServiceAdvancedEditPresenter(
             flowController: flowController,
             interactor: interactor

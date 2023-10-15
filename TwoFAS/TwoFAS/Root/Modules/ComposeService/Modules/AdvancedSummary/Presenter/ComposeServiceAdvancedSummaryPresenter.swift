@@ -44,6 +44,7 @@ extension ComposeServiceAdvancedSummaryPresenter {
         guard let cell = menu.cells[safe: indexPath.row] else { return }
         if cell.copyValue {
             interactor.copyCounter()
+            view?.copySuccess()
         }
     }
 }

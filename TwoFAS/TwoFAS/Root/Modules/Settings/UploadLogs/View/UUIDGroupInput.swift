@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class UUIDGroupInput: UIView {
     // 8 4 4 4 12    0-9, a-f

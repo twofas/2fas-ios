@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 protocol MainSplitViewControlling: AnyObject {
     func updateTabBarPath(_ viewPath: ViewPath)

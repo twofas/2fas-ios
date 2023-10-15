@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 // swiftlint:disable discouraged_optional_boolean
 struct MainContainerBarConfiguration: MainContainerBarConfigurable {

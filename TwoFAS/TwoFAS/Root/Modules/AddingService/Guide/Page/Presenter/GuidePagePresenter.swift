@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 final class GuidePagePresenter: ObservableObject {
     var totalPages: Int {
@@ -25,7 +26,7 @@ final class GuidePagePresenter: ObservableObject {
     }
 
     var image: UIImage {
-        currentPage.image
+        currentPage.image.icon
     }
     
     var buttonTitle: String {

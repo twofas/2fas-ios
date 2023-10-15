@@ -18,8 +18,12 @@
 //
 
 import UIKit
+import Data
+import Common
 
 final class IntroductionCoordinator: BaseCoordinator {
+    var markAsShownAction: Callback?
+    
     override func start() {
         let vm = IntroductionViewModel()
         let vc = IntroductionViewController()
@@ -32,7 +36,6 @@ final class IntroductionCoordinator: BaseCoordinator {
     }
     
     private func markAsShown() {
-        MainRepositoryImpl.shared.setIntroductionAsShown()
-        MainRepositoryImpl.shared.enableCloudBackup()
+        markAsShownAction?()
     }
 }

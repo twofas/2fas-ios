@@ -20,7 +20,7 @@
 import UIKit
 import SwiftUI
 import Common
-import Token
+import Data
 
 protocol AddingServiceManuallyViewControlling: AnyObject {}
 

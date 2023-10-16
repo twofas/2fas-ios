@@ -18,7 +18,7 @@
 //
 
 import UIKit
-import Token
+import Data
 
 extension TokensViewController {
     func getCell(

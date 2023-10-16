@@ -274,7 +274,6 @@
 		C24471D125F51F760024B4C5 /* ComposeServiceFormError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24471D025F51F760024B4C5 /* ComposeServiceFormError.swift */; };
 		C244EF11268674650040A58F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C244EF10268674650040A58F /* Extensions.swift */; };
 		C244EF14268685BC0040A58F /* Sync2-Sync3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C244EF13268685BC0040A58F /* Sync2-Sync3.xcmappingmodel */; };
-		C244F9DB2275E62B009992D3 /* TokenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C244F9DA2275E62B009992D3 /* TokenState.swift */; };
 		C245702228A04BAB008E99F4 /* GridViewGAImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C245702128A04BAB008E99F4 /* GridViewGAImportViewController.swift */; };
 		C245702428A04CBA008E99F4 /* GridViewGAImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C245702328A04CBA008E99F4 /* GridViewGAImportPresenter.swift */; };
 		C245702628A04DF6008E99F4 /* GridViewGAImportFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C245702528A04DF6008E99F4 /* GridViewGAImportFlowController.swift */; };
@@ -296,8 +295,6 @@
 		C24D1C30253C744F0029D27D /* Sync.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C24D1C1A253C744E0029D27D /* Sync.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C24D8B3A29BDEED200C3E11E /* NewsNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24D8B3929BDEED200C3E11E /* NewsNavigationFlowController.swift */; };
 		C24D8B3C29BE41CA00C3E11E /* ContentNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24D8B3B29BE41CA00C3E11E /* ContentNavigationController.swift */; };
-		C24DFB2127D1770D00F3EACC /* CounterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24DFB2027D1770D00F3EACC /* CounterState.swift */; };
-		C24DFB2527D1778100F3EACC /* CounterHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24DFB2427D1778100F3EACC /* CounterHandler.swift */; };
 		C24E3E642AB8F15A008A7158 /* facebook.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E5C2AB8F158008A7158 /* facebook.json */; };
 		C24E3E652AB8F15A008A7158 /* rockstar_games.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E5D2AB8F159008A7158 /* rockstar_games.json */; };
 		C24E3E662AB8F15A008A7158 /* universal.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E5E2AB8F159008A7158 /* universal.json */; };
@@ -394,12 +391,6 @@
 		C26BCE03281013A700CA6A9A /* SelectServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE02281013A700CA6A9A /* SelectServiceFlowController.swift */; };
 		C26BCE0528101E2D00CA6A9A /* SelectServiceNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE0428101E2D00CA6A9A /* SelectServiceNavigationFlowController.swift */; };
 		C26BCE072810287500CA6A9A /* SelectServiceTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE062810287500CA6A9A /* SelectServiceTableViewHeader.swift */; };
-		C26D146F2263C5B500599101 /* Token.h in Headers */ = {isa = PBXBuildFile; fileRef = C26D146D2263C5B500599101 /* Token.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C26D14722263C5B500599101 /* Token.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C26D146B2263C5B400599101 /* Token.framework */; };
-		C26D14732263C5B500599101 /* Token.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C26D146B2263C5B400599101 /* Token.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C26D14782263C6F900599101 /* TokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC67A1FBE264B00967D0E /* TokenGenerator.swift */; };
-		C26D14792263C73100599101 /* TokenHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D14642263A45100599101 /* TokenHandler.swift */; };
-		C26D147D2263D4D900599101 /* TimerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D147C2263D4D900599101 /* TimerHandler.swift */; };
 		C26D1AC52600041400D3D868 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D1AC42600041400D3D868 /* UIImage+.swift */; };
 		C26D4F542A856F590025E5BA /* AddingServiceTokenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D4F532A856F590025E5BA /* AddingServiceTokenPresenter.swift */; };
 		C270365C293E9DDC00659CBF /* TokensModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C270365B293E9DDC00659CBF /* TokensModuleInteractor.swift */; };
@@ -414,6 +405,20 @@
 		C274BDC2276941FB00EE28BC /* AppSecurityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C274BDC1276941FB00EE28BC /* AppSecurityPresenter.swift */; };
 		C274BDC42769425900EE28BC /* AppSecurityPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C274BDC32769425900EE28BC /* AppSecurityPresenter+Menu.swift */; };
 		C274BDC62769428700EE28BC /* AppSecurityModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C274BDC52769428700EE28BC /* AppSecurityModels.swift */; };
+		C274C76B2ADD3C9C00B8AAC1 /* TokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC67A1FBE264B00967D0E /* TokenGenerator.swift */; };
+		C274C76C2ADD3C9C00B8AAC1 /* TokenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C244F9DA2275E62B009992D3 /* TokenState.swift */; };
+		C274C76D2ADD3C9C00B8AAC1 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DBC890226FA92200EF6CF4 /* Date+.swift */; };
+		C274C76E2ADD3C9C00B8AAC1 /* TimerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D147C2263D4D900599101 /* TimerHandler.swift */; };
+		C274C76F2ADD3C9C00B8AAC1 /* TokenHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D14642263A45100599101 /* TokenHandler.swift */; };
+		C274C7702ADD3CA500B8AAC1 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D672F625DB2BD3004BD697 /* Token.swift */; };
+		C274C7712ADD3CA500B8AAC1 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D672F425DB2BD2004BD697 /* Crypto.swift */; };
+		C274C7722ADD3CA500B8AAC1 /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D672F325DB2BD2004BD697 /* Generator.swift */; };
+		C274C7732ADD3CB000B8AAC1 /* CounterHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24DFB2427D1778100F3EACC /* CounterHandler.swift */; };
+		C274C7742ADD3CB000B8AAC1 /* CounterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24DFB2027D1770D00F3EACC /* CounterState.swift */; };
+		C274C7762ADD3DF900B8AAC1 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C274C7752ADD3DF900B8AAC1 /* FirebaseMessaging */; };
+		C274C7782ADD3E1700B8AAC1 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C274C7772ADD3E1700B8AAC1 /* FirebaseMessaging */; };
+		C274C77A2ADD3E2C00B8AAC1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C274C7792ADD3E2C00B8AAC1 /* FirebaseCrashlytics */; };
+		C274C77C2ADD3E3500B8AAC1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C274C77B2ADD3E3500B8AAC1 /* FirebaseCrashlytics */; };
 		C277C32C245C3FD6009214F3 /* MainContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C277C32B245C3FD6009214F3 /* MainContainerViewController.swift */; };
 		C278121C27F9F3E600F31453 /* ExportPublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278121B27F9F3E600F31453 /* ExportPublicKey.swift */; };
 		C278121F27F9F4C000F31453 /* SwCrypt in Frameworks */ = {isa = PBXBuildFile; productRef = C278121E27F9F4C000F31453 /* SwCrypt */; };
@@ -687,7 +692,6 @@
 		C2B90F00281EDEA5004B8AEC /* NotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B90EFF281EDEA5004B8AEC /* NotificationInteractor.swift */; };
 		C2B90F02281EE901004B8AEC /* NotificationViewError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B90F01281EE901004B8AEC /* NotificationViewError.swift */; };
 		C2B90F03281EEDC5004B8AEC /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; platformFilter = ios; };
-		C2B90F07281EEDC5004B8AEC /* Token.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C26D146B2263C5B400599101 /* Token.framework */; platformFilter = ios; };
 		C2B90F0D281EFD03004B8AEC /* ThemeColor.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2B90F0C281EFD03004B8AEC /* ThemeColor.xcassets */; };
 		C2B90F10281EFD2F004B8AEC /* ThemeColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B90F0E281EFD2B004B8AEC /* ThemeColor.swift */; };
 		C2B90F15281F1498004B8AEC /* ThemeMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B90F14281F1498004B8AEC /* ThemeMetrics.swift */; };
@@ -771,7 +775,6 @@
 		C2D07EE126A45BD700AF8E7B /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2932EF21FFE94A900FBD4D0 /* Common.framework */; };
 		C2D07EE626A45C0400AF8E7B /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE31269E274700506ACF /* IntentsUI.framework */; };
 		C2D07EEB26A47B8100AF8E7B /* CodeEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D07EE926A475F400AF8E7B /* CodeEntry.swift */; };
-		C2D07EEC26A49EBC00AF8E7B /* Token.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C26D146B2263C5B400599101 /* Token.framework */; };
 		C2D291DC2955FC9E0084FE1E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C2D291DB2955FC9E0084FE1E /* Settings.bundle */; };
 		C2D39DDD28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDB28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift */; };
 		C2D39DDE28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDC28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift */; };
@@ -785,9 +788,6 @@
 		C2D61E4225602F5000C5BE3A /* LogEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E3025602F4100C5BE3A /* LogEntity+CoreDataProperties.swift */; };
 		C2D61E522560393000C5BE3A /* LogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E512560393000C5BE3A /* LogHandler.swift */; };
 		C2D61E7225604F1D00C5BE3A /* CommonServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E7125604F1D00C5BE3A /* CommonServiceHandler.swift */; };
-		C2D672F725DB2BD3004BD697 /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D672F325DB2BD2004BD697 /* Generator.swift */; };
-		C2D672F825DB2BD3004BD697 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D672F425DB2BD2004BD697 /* Crypto.swift */; };
-		C2D672FA25DB2BD3004BD697 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D672F625DB2BD3004BD697 /* Token.swift */; };
 		C2D6731A25DB2C5D004BD697 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6731525DB2C5C004BD697 /* ToastView.swift */; };
 		C2D6731B25DB2C5D004BD697 /* KeyboardObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6731625DB2C5C004BD697 /* KeyboardObserver.swift */; };
 		C2D6731C25DB2C5D004BD697 /* ToastWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6731725DB2C5C004BD697 /* ToastWindow.swift */; };
@@ -796,9 +796,7 @@
 		C2D75D37297D51B60002531E /* iCloudIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D75D36297D51B60002531E /* iCloudIdentifier.swift */; };
 		C2D958CE276F9F9700B5A6BD /* Algorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D958CD276F9F9700B5A6BD /* Algorithm.swift */; };
 		C2DB8E5D21F8FE33002F124B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2DB8E5C21F8FE33002F124B /* Assets.xcassets */; };
-		C2DBC891226FA92200EF6CF4 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DBC890226FA92200EF6CF4 /* Date+.swift */; };
 		C2DBE59B243A512E00E96242 /* RefreshTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CFFCDE2008006600600AC6 /* RefreshTimer.swift */; };
-		C2DBE59C243A513A00E96242 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2932EF21FFE94A900FBD4D0 /* Common.framework */; platformFilter = ios; };
 		C2DDEB1F289ED4A300011712 /* IntroductionDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DDEB1E289ED4A300011712 /* IntroductionDots.swift */; };
 		C2DDEB25289F3D5200011712 /* TokensViewEmptyListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */; };
 		C2DEC7A326767B28006DB1E6 /* SectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DEC7A226767B28006DB1E6 /* SectionHandler.swift */; };
@@ -851,7 +849,6 @@
 		C2E7C3A42ADB21B400478D89 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; platformFilter = ios; };
 		C2E7C3A82ADB21B400478D89 /* Sync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24D1C1A253C744E0029D27D /* Sync.framework */; platformFilter = ios; };
 		C2E7C3AC2ADB21B400478D89 /* TimeVerification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C29626D62370BD7F00C133BC /* TimeVerification.framework */; platformFilter = ios; };
-		C2E7C3B02ADB21B400478D89 /* Token.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C26D146B2263C5B400599101 /* Token.framework */; platformFilter = ios; };
 		C2E7C3BB2ADB2B9C00478D89 /* MainRepositoryImpl+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2872DDB27A6BAAE000F5AE9 /* MainRepositoryImpl+Sort.swift */; };
 		C2E7C3BC2ADB2B9C00478D89 /* MainRepositoryImpl+Guides.swift in Sources */ = {isa = PBXBuildFile; fileRef = C237368D2ABF536200792054 /* MainRepositoryImpl+Guides.swift */; };
 		C2E7C3BD2ADB2B9C00478D89 /* MainRepositoryImpl+Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = C233BD212801CB2600A9CFF2 /* MainRepositoryImpl+Network.swift */; };
@@ -1142,13 +1139,6 @@
 			remoteGlobalIDString = C29626D52370BD7F00C133BC;
 			remoteInfo = TimeVerification;
 		};
-		C26D14702263C5B500599101 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C236666B1FB2644900989ACA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C26D146A2263C5B400599101;
-			remoteInfo = Token;
-		};
 		C28633D71FFABD2200C8F4B4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C236666B1FB2644900989ACA /* Project object */;
@@ -1205,13 +1195,6 @@
 			remoteGlobalIDString = C2147CB4205D78600001D011;
 			remoteInfo = Protection;
 		};
-		C2B90F09281EEDC5004B8AEC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C236666B1FB2644900989ACA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C26D146A2263C5B400599101;
-			remoteInfo = Token;
-		};
 		C2C3AE1B269E224B00506ACF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C236666B1FB2644900989ACA /* Project object */;
@@ -1241,20 +1224,6 @@
 			remoteInfo = Protection;
 		};
 		C2D07EE326A45BD700AF8E7B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C236666B1FB2644900989ACA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C2932EF11FFE94A900FBD4D0;
-			remoteInfo = Common;
-		};
-		C2D07EEE26A49EBC00AF8E7B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C236666B1FB2644900989ACA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C26D146A2263C5B400599101;
-			remoteInfo = Token;
-		};
-		C2DBE59E243A513A00E96242 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C236666B1FB2644900989ACA /* Project object */;
 			proxyType = 1;
@@ -1331,13 +1300,6 @@
 			remoteGlobalIDString = C29626D52370BD7F00C133BC;
 			remoteInfo = TimeVerification;
 		};
-		C2E7C3B22ADB21B400478D89 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C236666B1FB2644900989ACA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C26D146A2263C5B400599101;
-			remoteInfo = Token;
-		};
 		C2EF3FBB255824590006735E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C236666B1FB2644900989ACA /* Project object */;
@@ -1375,7 +1337,6 @@
 				C2E7C35C2ADB02FE00478D89 /* CommonUIKit.framework in Embed Frameworks */,
 				C29626DE2370BD7F00C133BC /* TimeVerification.framework in Embed Frameworks */,
 				C2147CBD205D78600001D011 /* Protection.framework in Embed Frameworks */,
-				C26D14732263C5B500599101 /* Token.framework in Embed Frameworks */,
 				C21F05C21FC761450038E28F /* PushNotifications.framework in Embed Frameworks */,
 				C24D1C30253C744F0029D27D /* Sync.framework in Embed Frameworks */,
 			);
@@ -1393,16 +1354,6 @@
 				C28633D91FFABD2200C8F4B4 /* TwoFASAuth.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C2D756A525D9DEC1002F38E3 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -1872,9 +1823,6 @@
 		C26BCE062810287500CA6A9A /* SelectServiceTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServiceTableViewHeader.swift; sourceTree = "<group>"; };
 		C26BCE082810306300CA6A9A /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		C26D14642263A45100599101 /* TokenHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenHandler.swift; sourceTree = "<group>"; };
-		C26D146B2263C5B400599101 /* Token.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Token.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C26D146D2263C5B500599101 /* Token.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
-		C26D146E2263C5B500599101 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C26D147C2263D4D900599101 /* TimerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerHandler.swift; sourceTree = "<group>"; };
 		C26D1AC42600041400D3D868 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		C26D4F532A856F590025E5BA /* AddingServiceTokenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceTokenPresenter.swift; sourceTree = "<group>"; };
@@ -2504,7 +2452,6 @@
 				C2E7C3882ADB19F300478D89 /* Data.framework in Frameworks */,
 				C24D1C2F253C744F0029D27D /* Sync.framework in Frameworks */,
 				C2147CBC205D78600001D011 /* Protection.framework in Frameworks */,
-				C26D14722263C5B500599101 /* Token.framework in Frameworks */,
 				C21F05C11FC761450038E28F /* PushNotifications.framework in Frameworks */,
 				C2E7C35B2ADB02FE00478D89 /* CommonUIKit.framework in Frameworks */,
 				C2AE5F772ADC8A1500AED670 /* NetworkStack.framework in Frameworks */,
@@ -2528,24 +2475,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C26D14682263C5B400599101 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C2DBE59C243A513A00E96242 /* Common.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C28633C81FFABD2200C8F4B4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C274C7762ADD3DF900B8AAC1 /* FirebaseMessaging in Frameworks */,
 				C2B90EF1281EC622004B8AEC /* NetworkStack.framework in Frameworks */,
 				C2932F001FFE959B00FBD4D0 /* Common.framework in Frameworks */,
 				C264AE6826D2DF4200AE61E7 /* TimeVerification.framework in Frameworks */,
 				C2B90F03281EEDC5004B8AEC /* Protection.framework in Frameworks */,
-				C2B90F07281EEDC5004B8AEC /* Token.framework in Frameworks */,
 				C28633E11FFAC6B600C8F4B4 /* Storage.framework in Frameworks */,
+				C274C77C2ADD3E3500B8AAC1 /* FirebaseCrashlytics in Frameworks */,
 				C28633CF1FFABD2200C8F4B4 /* UserNotificationsUI.framework in Frameworks */,
 				C28633CD1FFABD2200C8F4B4 /* UserNotifications.framework in Frameworks */,
 			);
@@ -2578,12 +2518,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C274C7782ADD3E1700B8AAC1 /* FirebaseMessaging in Frameworks */,
 				C264AE6326D2DF3A00AE61E7 /* TimeVerification.framework in Frameworks */,
-				C2D07EEC26A49EBC00AF8E7B /* Token.framework in Frameworks */,
 				C2C3AE11269E224A00506ACF /* SwiftUI.framework in Frameworks */,
 				C2379D0326B6D6C30010C6B1 /* Storage.framework in Frameworks */,
 				C2379D0C26B6DE660010C6B1 /* Common.framework in Frameworks */,
 				C2C3AE0F269E224A00506ACF /* WidgetKit.framework in Frameworks */,
+				C274C77A2ADD3E2C00B8AAC1 /* FirebaseCrashlytics in Frameworks */,
 				C2379D1026B6DF720010C6B1 /* IntentsUI.framework in Frameworks */,
 				C2379D0726B6D6CC0010C6B1 /* Protection.framework in Frameworks */,
 			);
@@ -2618,7 +2559,6 @@
 				C2AE5F6A2ADC847200AED670 /* CommonUIKit.framework in Frameworks */,
 				C2E7C3A82ADB21B400478D89 /* Sync.framework in Frameworks */,
 				C2AE5F722ADC880B00AED670 /* DeviceKit in Frameworks */,
-				C2E7C3B02ADB21B400478D89 /* Token.framework in Frameworks */,
 				C2E7C3942ADB21B400478D89 /* Common.framework in Frameworks */,
 				C2E7C3A42ADB21B400478D89 /* Storage.framework in Frameworks */,
 				C2E7C3A02ADB21B400478D89 /* PushNotifications.framework in Frameworks */,
@@ -3832,7 +3772,6 @@
 				C23666751FB2644900989ACA /* TwoFAS */,
 				C2E7C3832ADB19F300478D89 /* Data */,
 				C200E49B1FB3911B00D7C748 /* Storage */,
-				C26D146C2263C5B500599101 /* Token */,
 				C21F05BB1FC761450038E28F /* PushNotifications */,
 				C28633D01FFABD2200C8F4B4 /* TwoFASAuth */,
 				C2932EF31FFE94A900FBD4D0 /* Common */,
@@ -3860,7 +3799,6 @@
 				C2932EF21FFE94A900FBD4D0 /* Common.framework */,
 				C2147CB5205D78600001D011 /* Protection.framework */,
 				C2ACF9E420A8A918003E0987 /* TwoFASTests.xctest */,
-				C26D146B2263C5B400599101 /* Token.framework */,
 				C29626D62370BD7F00C133BC /* TimeVerification.framework */,
 				C2FA85792426BB7300AACFC9 /* ProtectionTests.xctest */,
 				C24D1C1A253C744E0029D27D /* Sync.framework */,
@@ -4828,22 +4766,6 @@
 				C26BCE02281013A700CA6A9A /* SelectServiceFlowController.swift */,
 			);
 			path = Flow;
-			sourceTree = "<group>";
-		};
-		C26D146C2263C5B500599101 /* Token */ = {
-			isa = PBXGroup;
-			children = (
-				C24DFB1D27D176EE00F3EACC /* Counter */,
-				C2CB5D5525DB236300A362A9 /* External */,
-				C26D14642263A45100599101 /* TokenHandler.swift */,
-				C26D147C2263D4D900599101 /* TimerHandler.swift */,
-				C244F9DA2275E62B009992D3 /* TokenState.swift */,
-				C2BDC67A1FBE264B00967D0E /* TokenGenerator.swift */,
-				C2DBC890226FA92200EF6CF4 /* Date+.swift */,
-				C26D146E2263C5B500599101 /* Info.plist */,
-				C26D146D2263C5B500599101 /* Token.h */,
-			);
-			path = Token;
 			sourceTree = "<group>";
 		};
 		C274BDB827693FFD00EE28BC /* AppSecurity */ = {
@@ -6785,6 +6707,13 @@
 		C2E7C3832ADB19F300478D89 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				C24DFB1D27D176EE00F3EACC /* Counter */,
+				C2CB5D5525DB236300A362A9 /* External */,
+				C26D14642263A45100599101 /* TokenHandler.swift */,
+				C26D147C2263D4D900599101 /* TimerHandler.swift */,
+				C244F9DA2275E62B009992D3 /* TokenState.swift */,
+				C2BDC67A1FBE264B00967D0E /* TokenGenerator.swift */,
+				C2DBC890226FA92200EF6CF4 /* Date+.swift */,
 				C2AE5F7B2ADC8AF800AED670 /* CodeSupport */,
 				C2147CE7205D7FB50001D011 /* Security */,
 				C2B25665200FED7400C86667 /* ServiceMigration */,
@@ -7188,14 +7117,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C26D14662263C5B400599101 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C26D146F2263C5B500599101 /* Token.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C2932EEF1FFE94A900FBD4D0 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -7316,7 +7237,6 @@
 				C21F05C01FC761450038E28F /* PBXTargetDependency */,
 				C28633D81FFABD2200C8F4B4 /* PBXTargetDependency */,
 				C2147CBB205D78600001D011 /* PBXTargetDependency */,
-				C26D14712263C5B500599101 /* PBXTargetDependency */,
 				C29626DC2370BD7F00C133BC /* PBXTargetDependency */,
 				C24D1C2E253C744F0029D27D /* PBXTargetDependency */,
 				C2C3AE1C269E224B00506ACF /* PBXTargetDependency */,
@@ -7371,26 +7291,6 @@
 			productReference = C24D1C1A253C744E0029D27D /* Sync.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C26D146A2263C5B400599101 /* Token */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C26D14742263C5B500599101 /* Build configuration list for PBXNativeTarget "Token" */;
-			buildPhases = (
-				C26D14662263C5B400599101 /* Headers */,
-				C26D14672263C5B400599101 /* Sources */,
-				C26D14682263C5B400599101 /* Frameworks */,
-				C26D14692263C5B400599101 /* Resources */,
-				C2D756A525D9DEC1002F38E3 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C2DBE59F243A513A00E96242 /* PBXTargetDependency */,
-			);
-			name = Token;
-			productName = Token;
-			productReference = C26D146B2263C5B400599101 /* Token.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		C28633CA1FFABD2200C8F4B4 /* TwoFASAuth */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C28633DC1FFABD2200C8F4B4 /* Build configuration list for PBXNativeTarget "TwoFASAuth" */;
@@ -7405,9 +7305,12 @@
 				C264AE6B26D2DF4200AE61E7 /* PBXTargetDependency */,
 				C2B90EF4281EC622004B8AEC /* PBXTargetDependency */,
 				C2B90F06281EEDC5004B8AEC /* PBXTargetDependency */,
-				C2B90F0A281EEDC5004B8AEC /* PBXTargetDependency */,
 			);
 			name = TwoFASAuth;
+			packageProductDependencies = (
+				C274C7752ADD3DF900B8AAC1 /* FirebaseMessaging */,
+				C274C77B2ADD3E3500B8AAC1 /* FirebaseCrashlytics */,
+			);
 			productName = TwoFASAuth;
 			productReference = C28633CB1FFABD2200C8F4B4 /* TwoFASAuth.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -7481,13 +7384,16 @@
 			buildRules = (
 			);
 			dependencies = (
-				C2D07EEF26A49EBC00AF8E7B /* PBXTargetDependency */,
 				C2379D0626B6D6C30010C6B1 /* PBXTargetDependency */,
 				C2379D0A26B6D6CC0010C6B1 /* PBXTargetDependency */,
 				C2379D0F26B6DE660010C6B1 /* PBXTargetDependency */,
 				C264AE6626D2DF3A00AE61E7 /* PBXTargetDependency */,
 			);
 			name = TwoFASWidgetExtension;
+			packageProductDependencies = (
+				C274C7772ADD3E1700B8AAC1 /* FirebaseMessaging */,
+				C274C7792ADD3E2C00B8AAC1 /* FirebaseCrashlytics */,
+			);
 			productName = TwoFASWidgetExtension;
 			productReference = C2C3AE0D269E224A00506ACF /* TwoFASWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -7553,7 +7459,6 @@
 				C2E7C3A72ADB21B400478D89 /* PBXTargetDependency */,
 				C2E7C3AB2ADB21B400478D89 /* PBXTargetDependency */,
 				C2E7C3AF2ADB21B400478D89 /* PBXTargetDependency */,
-				C2E7C3B32ADB21B400478D89 /* PBXTargetDependency */,
 				C2AE5F6D2ADC847200AED670 /* PBXTargetDependency */,
 			);
 			name = Data;
@@ -7636,11 +7541,6 @@
 						CreatedOnToolsVersion = 12.1;
 						LastSwiftMigration = 1210;
 					};
-					C26D146A2263C5B400599101 = {
-						CreatedOnToolsVersion = 10.2;
-						LastSwiftMigration = 1240;
-						ProvisioningStyle = Automatic;
-					};
 					C28633CA1FFABD2200C8F4B4 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1020;
@@ -7714,7 +7614,6 @@
 				C2CE0E1127934579007DB667 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */,
 				C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				C23C8919294B862D0071E6CB /* XCRemoteSwiftPackageReference "Dynamic" */,
 			);
 			productRefGroup = C23666741FB2644900989ACA /* Products */;
 			projectDirPath = "";
@@ -7727,7 +7626,6 @@
 				C2932EF11FFE94A900FBD4D0 /* Common */,
 				C2E7C3542ADB02FE00478D89 /* CommonUIKit */,
 				C2147CB4205D78600001D011 /* Protection */,
-				C26D146A2263C5B400599101 /* Token */,
 				C29626D52370BD7F00C133BC /* TimeVerification */,
 				C24D1C19253C744E0029D27D /* Sync */,
 				C241D444278B9E0E00D7C604 /* NetworkStack */,
@@ -7792,13 +7690,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C24D1C18253C744E0029D27D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C26D14692263C5B400599101 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -8649,23 +8540,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C26D14672263C5B400599101 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C2D672F725DB2BD3004BD697 /* Generator.swift in Sources */,
-				C26D14792263C73100599101 /* TokenHandler.swift in Sources */,
-				C2D672F825DB2BD3004BD697 /* Crypto.swift in Sources */,
-				C244F9DB2275E62B009992D3 /* TokenState.swift in Sources */,
-				C2DBC891226FA92200EF6CF4 /* Date+.swift in Sources */,
-				C24DFB2127D1770D00F3EACC /* CounterState.swift in Sources */,
-				C26D147D2263D4D900599101 /* TimerHandler.swift in Sources */,
-				C2D672FA25DB2BD3004BD697 /* Token.swift in Sources */,
-				C26D14782263C6F900599101 /* TokenGenerator.swift in Sources */,
-				C24DFB2527D1778100F3EACC /* CounterHandler.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C28633C71FFABD2200C8F4B4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -8816,10 +8690,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C274C76D2ADD3C9C00B8AAC1 /* Date+.swift in Sources */,
 				C2E7C3E42ADB2BB400478D89 /* ListNewsNetworkInteractor.swift in Sources */,
 				C2E7C3C42ADB2B9C00478D89 /* MainRepository.swift in Sources */,
 				C2E7C3EE2ADB2BB400478D89 /* FileInteractor.swift in Sources */,
 				C2AE5F5F2ADC370F00AED670 /* ShortDateTimeFormatter.swift in Sources */,
+				C274C76F2ADD3C9C00B8AAC1 /* TokenHandler.swift in Sources */,
 				C2E7C4172ADB2BE500478D89 /* AEGISData.swift in Sources */,
 				C2E7C3E72ADB2BB400478D89 /* ServiceDefinitionInteractor.swift in Sources */,
 				C2E7C3BB2ADB2B9C00478D89 /* MainRepositoryImpl+Sort.swift in Sources */,
@@ -8831,6 +8707,7 @@
 				C2E7C3C82ADB2B9C00478D89 /* MainRepositoryImpl+DeviceName.swift in Sources */,
 				C2E7C3E22ADB2BB400478D89 /* InteractorFactory.swift in Sources */,
 				C2E7C3E92ADB2BB400478D89 /* AdvancedAlertInteractor.swift in Sources */,
+				C274C7722ADD3CA500B8AAC1 /* Generator.swift in Sources */,
 				C2E7C3F52ADB2BB400478D89 /* ExportToFileInteractor.swift in Sources */,
 				C2E7C3E82ADB2BB400478D89 /* SectionInteractor.swift in Sources */,
 				C2E7C4162ADB2BE500478D89 /* PushNotificationState.swift in Sources */,
@@ -8863,6 +8740,7 @@
 				C2E7C3BC2ADB2B9C00478D89 /* MainRepositoryImpl+Guides.swift in Sources */,
 				C2E7C3C62ADB2B9C00478D89 /* MainRepositoryImpl+Cloud.swift in Sources */,
 				C2E7C3F02ADB2BB400478D89 /* TimerInteractor.swift in Sources */,
+				C274C7742ADD3CB000B8AAC1 /* CounterState.swift in Sources */,
 				C2E7C3D12ADB2B9C00478D89 /* MainRepositoryImpl+NewAppVersion.swift in Sources */,
 				C2E7C3E32ADB2BB400478D89 /* NewCodeInteractor.swift in Sources */,
 				C2E7C3CF2ADB2B9C00478D89 /* MainRepositoryImpl+ServiceDefinition.swift in Sources */,
@@ -8876,11 +8754,13 @@
 				C2E7C3F72ADB2BB400478D89 /* IconInteractor.swift in Sources */,
 				C2E7C4122ADB2BE500478D89 /* ExchangeData2.swift in Sources */,
 				C2AE5F812ADC8B0D00AED670 /* Code+TwoFASWebExtension.swift in Sources */,
+				C274C7732ADD3CB000B8AAC1 /* CounterHandler.swift in Sources */,
 				C2E7C3F12ADB2BB400478D89 /* AppLockStateInteractor.swift in Sources */,
 				C2E7C40D2ADB2BE500478D89 /* Guides.swift in Sources */,
 				C2E7C3F92ADB2BB400478D89 /* GuideInteractor.swift in Sources */,
 				C2E7C3DF2ADB2BB400478D89 /* WebExtensionDeviceNameInteractor.swift in Sources */,
 				C2E7C40C2ADB2BE500478D89 /* AndOTPData.swift in Sources */,
+				C274C76E2ADD3C9C00B8AAC1 /* TimerHandler.swift in Sources */,
 				C2E7C3EF2ADB2BB400478D89 /* NetworkStatusInteractor.swift in Sources */,
 				C2E7C40E2ADB2BE500478D89 /* LastPassData.swift in Sources */,
 				C2E7C3FC2ADB2BB400478D89 /* ListNewsStorageInteractor.swift in Sources */,
@@ -8906,6 +8786,7 @@
 				C2E7C4152ADB2BE500478D89 /* ExchangeData.swift in Sources */,
 				C2E7C3F32ADB2BB400478D89 /* ViewPathInteractor.swift in Sources */,
 				C2E7C3FB2ADB2BB400478D89 /* ServiceListingInteractor.swift in Sources */,
+				C274C76B2ADD3C9C00B8AAC1 /* TokenGenerator.swift in Sources */,
 				C2E7C3E12ADB2BB400478D89 /* SortInteractor.swift in Sources */,
 				C2E7C3ED2ADB2BB400478D89 /* WebExtensionLocalDeviceNameInteractor.swift in Sources */,
 				C2E7C3EA2ADB2BB400478D89 /* CloudBackupStateInteractor.swift in Sources */,
@@ -8923,11 +8804,14 @@
 				C2E7C4092ADB2BE500478D89 /* ExchangeDataFormat.swift in Sources */,
 				C2E7C3FA2ADB2BB400478D89 /* WebExtensionRemoteDeviceNameInteractor.swift in Sources */,
 				C2E7C4132ADB2BE500478D89 /* AppLock.swift in Sources */,
+				C274C7702ADD3CA500B8AAC1 /* Token.swift in Sources */,
 				C2E7C3E62ADB2BB400478D89 /* NewVersionInteractor.swift in Sources */,
+				C274C76C2ADD3C9C00B8AAC1 /* TokenState.swift in Sources */,
 				C2E7C3F22ADB2BB400478D89 /* WidgetsInteractor.swift in Sources */,
 				C2E7C3C92ADB2B9C00478D89 /* MainRepositoryImpl+Import.swift in Sources */,
 				C2E7C3D72ADB2B9C00478D89 /* MainRepositoryImpl+Services.swift in Sources */,
 				C2AE5F7C2ADC8B0D00AED670 /* GoogleAuth.pb.swift in Sources */,
+				C274C7712ADD3CA500B8AAC1 /* Crypto.swift in Sources */,
 				C2E7C4002ADB2BB400478D89 /* PushNotificationRegistrationInteractor.swift in Sources */,
 				C2E7C3CD2ADB2B9C00478D89 /* MainRepositoryImpl+Extensions.swift in Sources */,
 			);
@@ -9016,11 +8900,6 @@
 			target = C29626D52370BD7F00C133BC /* TimeVerification */;
 			targetProxy = C264AE6A26D2DF4200AE61E7 /* PBXContainerItemProxy */;
 		};
-		C26D14712263C5B500599101 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C26D146A2263C5B400599101 /* Token */;
-			targetProxy = C26D14702263C5B500599101 /* PBXContainerItemProxy */;
-		};
 		C28633D81FFABD2200C8F4B4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C28633CA1FFABD2200C8F4B4 /* TwoFASAuth */;
@@ -9064,12 +8943,6 @@
 			target = C2147CB4205D78600001D011 /* Protection */;
 			targetProxy = C2B90F05281EEDC5004B8AEC /* PBXContainerItemProxy */;
 		};
-		C2B90F0A281EEDC5004B8AEC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			platformFilter = ios;
-			target = C26D146A2263C5B400599101 /* Token */;
-			targetProxy = C2B90F09281EEDC5004B8AEC /* PBXContainerItemProxy */;
-		};
 		C2C3AE1C269E224B00506ACF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C2C3AE0C269E224A00506ACF /* TwoFASWidgetExtension */;
@@ -9094,17 +8967,6 @@
 			isa = PBXTargetDependency;
 			target = C2932EF11FFE94A900FBD4D0 /* Common */;
 			targetProxy = C2D07EE326A45BD700AF8E7B /* PBXContainerItemProxy */;
-		};
-		C2D07EEF26A49EBC00AF8E7B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C26D146A2263C5B400599101 /* Token */;
-			targetProxy = C2D07EEE26A49EBC00AF8E7B /* PBXContainerItemProxy */;
-		};
-		C2DBE59F243A513A00E96242 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			platformFilter = ios;
-			target = C2932EF11FFE94A900FBD4D0 /* Common */;
-			targetProxy = C2DBE59E243A513A00E96242 /* PBXContainerItemProxy */;
 		};
 		C2E7C35A2ADB02FE00478D89 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9162,12 +9024,6 @@
 			platformFilter = ios;
 			target = C29626D52370BD7F00C133BC /* TimeVerification */;
 			targetProxy = C2E7C3AE2ADB21B400478D89 /* PBXContainerItemProxy */;
-		};
-		C2E7C3B32ADB21B400478D89 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			platformFilter = ios;
-			target = C26D146A2263C5B400599101 /* Token */;
-			targetProxy = C2E7C3B22ADB21B400478D89 /* PBXContainerItemProxy */;
 		};
 		C2EF3FBC255824590006735E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9898,88 +9754,6 @@
 			};
 			name = Release;
 		};
-		C26D14752263C5B500599101 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "";
-				INFOPLIST_FILE = Token/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Token;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		C26D14762263C5B500599101 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "";
-				INFOPLIST_FILE = Token/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Token;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		C28633DA1FFABD2200C8F4B4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -10478,6 +10252,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
+				MERGEABLE_LIBRARY = YES;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -10524,6 +10299,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
+				MERGEABLE_LIBRARY = YES;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
@@ -10661,15 +10437,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C26D14742263C5B500599101 /* Build configuration list for PBXNativeTarget "Token" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C26D14752263C5B500599101 /* Debug */,
-				C26D14762263C5B500599101 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		C28633DC1FFABD2200C8F4B4 /* Build configuration list for PBXNativeTarget "TwoFASAuth" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -10754,14 +10521,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C23C8919294B862D0071E6CB /* XCRemoteSwiftPackageReference "Dynamic" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mhdhejazi/Dynamic";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		C23EBF012651227900FA9E81 /* XCRemoteSwiftPackageReference "DeviceKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devicekit/DeviceKit.git";
@@ -10806,8 +10565,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
-				kind = exactVersion;
-				version = 9.1.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.16.0;
 			};
 		};
 		C2CE0E1127934579007DB667 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
@@ -10825,6 +10584,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C23EBF102651276800FA9E81 /* XCRemoteSwiftPackageReference "Kronos" */;
 			productName = Kronos;
+		};
+		C274C7752ADD3DF900B8AAC1 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		C274C7772ADD3E1700B8AAC1 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		C274C7792ADD3E2C00B8AAC1 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		C274C77B2ADD3E3500B8AAC1 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 		C278121E27F9F4C000F31453 /* SwCrypt */ = {
 			isa = XCSwiftPackageProductDependency;

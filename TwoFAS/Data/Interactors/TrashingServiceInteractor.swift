@@ -19,7 +19,6 @@
 
 import Foundation
 import Common
-import Token
 
 public protocol TrashingServiceInteracting: AnyObject {
     func trashService(_ serviceData: ServiceData)

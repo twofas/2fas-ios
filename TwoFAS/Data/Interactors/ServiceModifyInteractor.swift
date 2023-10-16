@@ -20,7 +20,6 @@
 import Foundation
 import Common
 import Storage
-import Token
 
 public protocol ServiceModifyInteracting: AnyObject {
     func serviceExists(for secret: String) -> ServiceExistenceStatus

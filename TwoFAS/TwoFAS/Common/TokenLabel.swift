@@ -18,7 +18,7 @@
 //
 
 import UIKit
-import Token
+import Data
 import Common
 
 final class TokenLabel: UILabel {

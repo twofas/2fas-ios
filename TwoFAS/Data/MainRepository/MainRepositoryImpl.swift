@@ -22,7 +22,6 @@ import Storage
 import Protection
 import PushNotifications
 import Common
-import Token
 import Sync
 import NetworkStack
 import TimeVerification

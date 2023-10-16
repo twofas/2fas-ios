@@ -20,7 +20,6 @@
 import Foundation
 import Common
 import CommonUIKit
-import Token
 import Storage
 import Data
 

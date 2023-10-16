@@ -22,7 +22,6 @@ import Storage
 import Protection
 import Common
 import CommonUIKit
-import Token
 import Sync
 import TimeVerification
 import PushNotifications

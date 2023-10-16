@@ -19,7 +19,6 @@
 
 import Foundation
 import Common
-import Token
 import Data
 
 protocol AddingServiceTokenModuleInteracting: AnyObject {

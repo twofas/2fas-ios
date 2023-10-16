@@ -20,7 +20,6 @@
 import Foundation
 import Common
 import Storage
-import Token
 import Data
 
 enum ComposeServiceModuleInteractorActionType {

@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Token
 import Common
 
 public protocol TokenInteracting: AnyObject {

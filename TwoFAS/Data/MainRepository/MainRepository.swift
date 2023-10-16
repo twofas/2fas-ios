@@ -20,7 +20,6 @@
 import Foundation
 import Storage
 import Common
-import Token
 import NetworkStack
 import PushNotifications
 

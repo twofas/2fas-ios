@@ -20,7 +20,6 @@
 import Foundation
 import Common
 import Storage
-import Token
 
 public final class InteractorFactory {
     public static let shared = InteractorFactory()

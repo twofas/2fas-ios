@@ -20,7 +20,7 @@
 import Foundation
 
 // swiftlint:disable all
-final class LegacyExchangeDatabase {
+public final class LegacyExchangeDatabase {
     private struct ExchangeEntry {
         let externalString: String
         // type assigned while importing files
@@ -30,7 +30,7 @@ final class LegacyExchangeDatabase {
     }
     
     private let entries: [ExchangeEntry]
-    init() {
+    public init() {
         entries = [
             ExchangeEntry(externalString: "Amazon", importType: .amazon, exportTypes: [.amazon]),
             ExchangeEntry(externalString: "Tibia", importType: .tibia, exportTypes: [.tibia]),
@@ -272,7 +272,7 @@ final class LegacyExchangeDatabase {
         ]
     }
     
-    func importType(for externalString: String?) -> ServiceType? {
+    public func importType(for externalString: String?) -> ServiceType? {
         guard
             let str = externalString, let entry = entries.first(where: { $0.externalString == str } )
         else { return nil }
@@ -280,7 +280,7 @@ final class LegacyExchangeDatabase {
         return entry.importType
     }
     
-    func looselyCheckImportType(for externalString: String?) -> ServiceType? {
+    public func looselyCheckImportType(for externalString: String?) -> ServiceType? {
         guard let str = externalString?.lowercased(),
               let entry = entries.first(where: { $0.externalString.lowercased() == str } )
         else { return nil }

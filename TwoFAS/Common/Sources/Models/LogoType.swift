@@ -17,14 +17,9 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-#import <UIKit/UIKit.h>
+import UIKit
 
-//! Project version number for Common.
-FOUNDATION_EXPORT double CommonVersionNumber;
-
-//! Project version string for Common.
-FOUNDATION_EXPORT const unsigned char CommonVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <Common/PublicHeader.h>
-
-#import "MF_Base32Additions.h"
+public enum LogoType: Hashable {
+    case image(UIImage)
+    case label(String, TintColor)
+}

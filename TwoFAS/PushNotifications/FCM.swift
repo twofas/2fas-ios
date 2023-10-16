@@ -18,9 +18,9 @@
 //
 
 import Foundation
-import Firebase
-import FirebaseCrashlytics
-import FirebaseMessaging
+@_implementationOnly import Firebase
+@_implementationOnly import FirebaseCrashlytics
+@_implementationOnly import FirebaseMessaging
 
 final class FCM: NSObject, MessagingDelegate, FCMHandlerProtocol {
     var didInitialize: (() -> Void)?

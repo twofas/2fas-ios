@@ -100,7 +100,7 @@ public extension String {
     }
     
     func dataFromBase32String() -> Data? {
-        MF_Base32Codec.data(fromBase32String: self)
+        self.base32DecodedData
     }
     
     subscript(_ i: Int) -> String {

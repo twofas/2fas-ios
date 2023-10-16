@@ -18,10 +18,12 @@
 //
 
 import Foundation
+import Common
 
 // swiftlint:disable all
 final class IconDescriptionDatabaseGenerated {
-    lazy var icons: [IconDescription] = {[            .init(
+    lazy var icons: [IconDescription] = {[
+        .init(
                 iconTypeID: IconTypeID(uuidString: "66FC163C-D717-4C18-8277-CFC30291CD5F")!,
                 name: "101domain"
             ),
@@ -4900,5 +4902,6 @@ final class IconDescriptionDatabaseGenerated {
             .init(
                 iconTypeID: IconTypeID(uuidString: "5A9DBC0C-ED8C-445E-A5E1-1F55D21C6A33")!,
                 name: "Пачка"
-            )]}()
+            )
+    ]}()
 }

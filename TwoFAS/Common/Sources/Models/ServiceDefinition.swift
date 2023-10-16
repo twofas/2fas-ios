@@ -38,6 +38,13 @@ public struct ServiceMatchRules: Hashable {
     public let text: String
     public let matcher: Matcher
     public let ignoreCase: Bool
+    
+    public init(field: Field, text: String, matcher: Matcher, ignoreCase: Bool) {
+        self.field = field
+        self.text = text
+        self.matcher = matcher
+        self.ignoreCase = ignoreCase
+    }
 }
 
 public struct ServiceDefinition: Hashable {
@@ -47,14 +54,34 @@ public struct ServiceDefinition: Hashable {
     public let tags: [String]?
     public let matchingRules: [ServiceMatchRules]?
     public let iconTypeID: IconTypeID
+    
+    public init(
+        serviceTypeID: ServiceTypeID,
+        name: String,
+        issuer: [String]?,
+        tags: [String]?,
+        matchingRules: [ServiceMatchRules]?,
+        iconTypeID: IconTypeID
+    ) {
+        self.serviceTypeID = serviceTypeID
+        self.name = name
+        self.issuer = issuer
+        self.tags = tags
+        self.matchingRules = matchingRules
+        self.iconTypeID = iconTypeID
+    }
 }
 
-extension ServiceDefinition {
+public extension ServiceDefinition {
     var searchQuery: String {
         var value = name.lowercased()
         tags?.forEach({ tag in
             value += tag.lowercased()
         })
         return value
+    }
+    
+    static var defaultLabelTitleTwoLetters: String {
+        "UN"
     }
 }

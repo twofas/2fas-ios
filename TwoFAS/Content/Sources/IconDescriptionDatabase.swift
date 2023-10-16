@@ -18,21 +18,7 @@
 //
 
 import UIKit
-
-public struct IconDescription {
-    public let iconTypeID: IconTypeID
-    public let name: String
-}
-
-public struct IconDescriptionGroup {
-    public let title: String
-    public let icons: [IconDescription]
-    
-    public init(title: String, icons: [IconDescription]) {
-        self.title = title
-        self.icons = icons
-    }
-}
+import Common
 
 public protocol IconDescriptionDatabase: AnyObject {
     func name(for iconTypeID: IconTypeID) -> String?

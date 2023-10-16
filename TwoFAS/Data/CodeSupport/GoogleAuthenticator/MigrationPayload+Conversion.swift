@@ -22,7 +22,7 @@ import Common
 import CryptoKit
 
 extension MigrationPayload.OtpParameters {
-    var secretValue: String? { secret.base32String() }
+    var secretValue: String? { secret.base32EncodedString }
     
     var algorithmValue: Algorithm? {
         switch algorithm {

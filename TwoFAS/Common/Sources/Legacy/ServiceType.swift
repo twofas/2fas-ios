@@ -19,7 +19,7 @@
 
 import Foundation
 
-enum ServiceType: String, Equatable, CaseIterable {
+public enum ServiceType: String, Equatable, CaseIterable {
     case amazon
     case tibia
     case vk

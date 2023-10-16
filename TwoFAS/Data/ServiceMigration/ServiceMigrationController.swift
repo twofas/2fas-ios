@@ -20,6 +20,7 @@
 import Foundation
 import Storage
 import Common
+import Content
 
 // Migrate to interactor when main architecture will be refactored
 final class ServiceMigrationController {

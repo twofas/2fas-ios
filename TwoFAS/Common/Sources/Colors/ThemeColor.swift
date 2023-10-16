@@ -17,11 +17,11 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 
 // swiftlint:disable all
 public enum ThemeColor {
-    private static let bundle = Bundle(for: CoreDataStack.self)
+    private static let bundle = Bundle.module
     public static let backgroundLight = UIColor.white
     public static let light = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.00)
     public static let dark = UIColor(red: 0.14, green: 0.12, blue: 0.13, alpha: 1.00)

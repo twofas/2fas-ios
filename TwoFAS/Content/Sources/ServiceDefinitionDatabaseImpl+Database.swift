@@ -18,10 +18,12 @@
 //
 
 import UIKit
+import Common
 
 // swiftlint:disable all
 final class ServiceDefinitionDatabaseGenerated {
-    lazy var services: [ServiceDefinition] = {[            .init(
+    lazy var services: [ServiceDefinition] = {[       
+        .init(
                 serviceTypeID: UUID(uuidString: "B36BBB0F-DC99-4F9F-B934-74C68AA0EB3A")!,
                 name: "101domain",
                 issuer: nil,
@@ -10608,6 +10610,7 @@ final class ServiceDefinitionDatabaseGenerated {
                 matchingRules: [.init(field: .issuer, text: "Пачка", matcher: .contains, ignoreCase: true),
 .init(field: .label, text: "Пачка", matcher: .contains, ignoreCase: true)],
                 iconTypeID: UUID(uuidString: "5A9DBC0C-ED8C-445E-A5E1-1F55D21C6A33")!
-            )]}()
+            )
+    ]}()
 }
 // swiftlint:enable all

@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 public protocol ServiceDefinitionDatabase: AnyObject {
     func listAll() -> [ServiceDefinition]

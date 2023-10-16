@@ -20,16 +20,16 @@
 import Foundation
 
 // swiftlint:disable all
-protocol LegacyServiceDatabase: AnyObject {
+public protocol LegacyServiceDatabase: AnyObject {
     func serviceTypeID(for serviceType: ServiceType) -> ServiceTypeID?
 }
 
-final class LegacyServiceDatabaseImpl {
-    init() {}
+public final class LegacyServiceDatabaseImpl {
+    public init() {}
 }
 
 extension LegacyServiceDatabaseImpl: LegacyServiceDatabase {
-    func serviceTypeID(for serviceType: ServiceType) -> ServiceTypeID? {
+    public func serviceTypeID(for serviceType: ServiceType) -> ServiceTypeID? {
         switch serviceType {
             case .amazon: return UUID(uuidString: "D50D085C-87A1-4C03-80AA-D2384971C6F3")
             case .tibia: return UUID(uuidString: "0642640D-52F8-4D2A-BA7F-B2E98DCC4760")

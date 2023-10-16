@@ -379,7 +379,6 @@
 		C274BDC62769428700EE28BC /* AppSecurityModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C274BDC52769428700EE28BC /* AppSecurityModels.swift */; };
 		C274C76B2ADD3C9C00B8AAC1 /* TokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC67A1FBE264B00967D0E /* TokenGenerator.swift */; };
 		C274C76C2ADD3C9C00B8AAC1 /* TokenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C244F9DA2275E62B009992D3 /* TokenState.swift */; };
-		C274C76D2ADD3C9C00B8AAC1 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DBC890226FA92200EF6CF4 /* Date+.swift */; };
 		C274C76E2ADD3C9C00B8AAC1 /* TimerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D147C2263D4D900599101 /* TimerHandler.swift */; };
 		C274C76F2ADD3C9C00B8AAC1 /* TokenHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D14642263A45100599101 /* TokenHandler.swift */; };
 		C274C7702ADD3CA500B8AAC1 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D672F625DB2BD3004BD697 /* Token.swift */; };
@@ -2132,7 +2131,6 @@
 		C2D75D36297D51B60002531E /* iCloudIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudIdentifier.swift; sourceTree = "<group>"; };
 		C2D958CF276FABE500B5A6BD /* TwoFAS5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS5.xcdatamodel; sourceTree = "<group>"; };
 		C2DB8E5C21F8FE33002F124B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C2DBC890226FA92200EF6CF4 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		C2DDEB1E289ED4A300011712 /* IntroductionDots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionDots.swift; sourceTree = "<group>"; };
 		C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensViewEmptyListScreen.swift; sourceTree = "<group>"; };
 		C2DEC7A226767B28006DB1E6 /* SectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHandler.swift; sourceTree = "<group>"; };
@@ -3054,6 +3052,7 @@
 		C2147CE7205D7FB50001D011 /* Security */ = {
 			isa = PBXGroup;
 			children = (
+				C2147CE9205D7FC90001D011 /* SecurityProtocol.swift */,
 				C2147CE8205D7FC90001D011 /* Security.swift */,
 			);
 			path = Security;
@@ -3644,8 +3643,8 @@
 		C23666751FB2644900989ACA /* TwoFAS */ = {
 			isa = PBXGroup;
 			children = (
-				C2E7C38D2ADB1A2000478D89 /* Interactors */,
 				C23666761FB2644900989ACA /* AppDelegate.swift */,
+				C2E7C38D2ADB1A2000478D89 /* Interactors */,
 				C2BDC6BE1FC1A87400967D0E /* Root */,
 				C257FD161FDC69B600CF6898 /* DataControllers */,
 				C2147CEE205D8C620001D011 /* Login */,
@@ -4309,6 +4308,7 @@
 		C257FD191FDC69DB00CF6898 /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
+				C28ECE971FEDBCD8000EBB9D /* CameraPermissions.swift */,
 				C2B563F41FD895460011CAAA /* PermissionsStateDataController.swift */,
 				C257FD061FD9F6F300CF6898 /* PermissionsStateDataControllerProtocol.swift */,
 			);
@@ -5036,6 +5036,33 @@
 				C296D1ED28B2D52C001F026D /* UserIconInfoFlowController.swift */,
 			);
 			path = Flow;
+			sourceTree = "<group>";
+		};
+		C297DF1B2ADD6D65004C272C /* Token */ = {
+			isa = PBXGroup;
+			children = (
+				C26D14642263A45100599101 /* TokenHandler.swift */,
+				C26D147C2263D4D900599101 /* TimerHandler.swift */,
+				C244F9DA2275E62B009992D3 /* TokenState.swift */,
+				C2BDC67A1FBE264B00967D0E /* TokenGenerator.swift */,
+			);
+			path = Token;
+			sourceTree = "<group>";
+		};
+		C297DF1C2ADD6E24004C272C /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				C2AA9D102088C124001B14FF /* Notifications.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		C297DF1D2ADD6E47004C272C /* DateFormatter */ = {
+			isa = PBXGroup;
+			children = (
+				C2B077D0292AA0A00074517F /* ShortDateTimeFormatter.swift */,
+			);
+			path = DateFormatter;
 			sourceTree = "<group>";
 		};
 		C29803BE245EE0420066DFE0 /* Styling */ = {
@@ -6414,21 +6441,15 @@
 		C2E7C3832ADB19F300478D89 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				C297DF1D2ADD6E47004C272C /* DateFormatter */,
+				C297DF1C2ADD6E24004C272C /* Notifications */,
+				C297DF1B2ADD6D65004C272C /* Token */,
 				C24DFB1D27D176EE00F3EACC /* Counter */,
 				C2CB5D5525DB236300A362A9 /* External */,
-				C26D14642263A45100599101 /* TokenHandler.swift */,
-				C26D147C2263D4D900599101 /* TimerHandler.swift */,
-				C244F9DA2275E62B009992D3 /* TokenState.swift */,
-				C2BDC67A1FBE264B00967D0E /* TokenGenerator.swift */,
-				C2DBC890226FA92200EF6CF4 /* Date+.swift */,
 				C2AE5F7B2ADC8AF800AED670 /* CodeSupport */,
 				C2147CE7205D7FB50001D011 /* Security */,
 				C2B25665200FED7400C86667 /* ServiceMigration */,
-				C2B077D0292AA0A00074517F /* ShortDateTimeFormatter.swift */,
 				C257FD191FDC69DB00CF6898 /* Permissions */,
-				C2147CE9205D7FC90001D011 /* SecurityProtocol.swift */,
-				C2AA9D102088C124001B14FF /* Notifications.swift */,
-				C28ECE971FEDBCD8000EBB9D /* CameraPermissions.swift */,
 				C27A1EAF291279E400702DB9 /* Analytics */,
 				C21111F3274ABDB300CA7C78 /* Interactors */,
 				C2D44E6B275C14840043F5D6 /* MainRepository */,
@@ -8311,7 +8332,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C274C76D2ADD3C9C00B8AAC1 /* Date+.swift in Sources */,
 				C2E7C3E42ADB2BB400478D89 /* ListNewsNetworkInteractor.swift in Sources */,
 				C2E7C3C42ADB2B9C00478D89 /* MainRepository.swift in Sources */,
 				C2E7C3EE2ADB2BB400478D89 /* FileInteractor.swift in Sources */,
@@ -8737,7 +8757,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -8777,7 +8797,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Storage;
@@ -8816,7 +8836,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -8857,7 +8877,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Protection;
@@ -8896,7 +8916,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -8941,7 +8961,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				OTHER_LDFLAGS = (
@@ -9200,7 +9220,7 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -9246,7 +9266,7 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				MTL_FAST_MATH = YES;
@@ -9286,7 +9306,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -9327,7 +9347,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_FAST_MATH = YES;
@@ -9464,7 +9484,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -9506,7 +9526,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_FAST_MATH = YES;
@@ -9719,7 +9739,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -9766,7 +9786,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
@@ -9811,7 +9831,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -9858,7 +9878,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				MERGEABLE_LIBRARY = YES;
+				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;

@@ -20,6 +20,15 @@
 import Foundation
 
 public extension Date {
+    func secondsTillNextChange(with period: Int) -> Int {
+        period - (seconds % period)
+    }
+        
+    var seconds: Int {
+        let calendar = Calendar.current
+        return calendar.component(.second, from: self)
+    }
+    
     func minutes(to date: Date) -> Int {
         let secondsSelf = self.timeIntervalSince1970
         let secondsDate = date.timeIntervalSince1970

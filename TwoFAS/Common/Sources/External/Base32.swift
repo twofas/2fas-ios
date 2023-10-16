@@ -44,6 +44,8 @@ public func base32HexEncode(_ data: Data) -> String {
 }
 
 public func base32DecodeToData(_ string: String) -> Data? {
+    let string = string
+        .prepareSecretForParsing()
     return base32decode(string, alphabetDecodeTable).flatMap(Data.init(_:))
 }
 

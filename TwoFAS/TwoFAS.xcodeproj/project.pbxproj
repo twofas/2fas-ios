@@ -480,6 +480,8 @@
 		C296D4D22A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D4D12A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift */; };
 		C296D4D42A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D4D32A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift */; };
 		C29787DE27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29787DD27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift */; };
+		C297DF1F2ADD7AC8004C272C /* Content in Frameworks */ = {isa = PBXBuildFile; productRef = C297DF1E2ADD7AC8004C272C /* Content */; };
+		C297DF202ADD7AC8004C272C /* Content in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C297DF1E2ADD7AC8004C272C /* Content */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C29803C0245EE05C0066DFE0 /* MainContainerElementsStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29803BF245EE05C0066DFE0 /* MainContainerElementsStyling.swift */; };
 		C29803C2245EEB470066DFE0 /* MainContainerGenerators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29803C1245EEB470066DFE0 /* MainContainerGenerators.swift */; };
 		C29803C4245F01600066DFE0 /* CenteringScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29803C3245F01600066DFE0 /* CenteringScrollView.swift */; };
@@ -1246,6 +1248,17 @@
 				C28633D91FFABD2200C8F4B4 /* TwoFASAuth.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C297DF212ADD7AC8004C272C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C297DF202ADD7AC8004C272C /* Content in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2FA91612ADD58F200F1D29F /* Embed Frameworks */ = {
@@ -2393,6 +2406,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C297DF1F2ADD7AC8004C272C /* Content in Frameworks */,
 				C2AE5F632ADC395800AED670 /* PKHUD in Frameworks */,
 				C2C5BD3A2ADD4CFB00CD92DA /* Common in Frameworks */,
 			);
@@ -7144,6 +7158,7 @@
 				C2E7C3512ADB02FE00478D89 /* Sources */,
 				C2E7C3522ADB02FE00478D89 /* Frameworks */,
 				C2E7C3532ADB02FE00478D89 /* Resources */,
+				C297DF212ADD7AC8004C272C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -7153,6 +7168,7 @@
 			packageProductDependencies = (
 				C2AE5F622ADC395800AED670 /* PKHUD */,
 				C2C5BD392ADD4CFB00CD92DA /* Common */,
+				C297DF1E2ADD7AC8004C272C /* Content */,
 			);
 			productName = CommonUIKit;
 			productReference = C2E7C3552ADB02FE00478D89 /* CommonUIKit.framework */;
@@ -10190,6 +10206,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */;
 			productName = SwCrypt;
+		};
+		C297DF1E2ADD7AC8004C272C /* Content */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2C5BD322ADD4CC800CD92DA /* XCLocalSwiftPackageReference "Content" */;
+			productName = Content;
 		};
 		C2AE5F622ADC395800AED670 /* PKHUD */ = {
 			isa = XCSwiftPackageProductDependency;

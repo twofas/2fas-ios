@@ -109,7 +109,7 @@ public extension TintColor {
     }
     
     var color: UIColor {
-        let bundle = Bundle(for: CoreDataStack.self)
+        let bundle = Bundle.module
         switch self {
         case .`default`: return UIColor(named: "tintDefaultColor", in: bundle, compatibleWith: nil)!
         case .lightBlue: return UIColor(named: "tintLightBlueColor", in: bundle, compatibleWith: nil)!

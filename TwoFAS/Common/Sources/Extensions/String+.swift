@@ -74,10 +74,12 @@ public extension String {
     
     func isValidSecret() -> Bool {
         let maxLength = ServiceRules.privateKeyMaxLength
+        let numbers = ["2", "3", "4", "5", "6", "7"]
         guard count >= ServiceRules.minKeyLength && count <= maxLength else { return false }
         let chars = Array(self)
         for char in chars {
-            if char.isASCII && (char.isLetter || char.isNumber || char.isPadding) {
+            if char.isASCII
+                && (char.isLetter || char.isPadding || (char.isNumber && numbers.contains(String(char)))) {
                 // valid
             } else {
                 return false
@@ -97,6 +99,18 @@ public extension String {
             .replacingOccurrences(of: "\\", with: "")
             .replacingOccurrences(of: "-", with: "")
             .uppercased()
+    }
+    
+    func prepareSecretForParsing() -> String {
+        let list = [" ", "\\", "-", "0", "1", "8", "9"]
+        return self.compactMap { char -> String? in
+            let symbol = String(char)
+            if list.contains(symbol) {
+                return nil
+            }
+            return symbol
+        }
+        .joined()
     }
     
     func dataFromBase32String() -> Data? {

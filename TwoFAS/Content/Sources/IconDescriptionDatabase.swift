@@ -28,6 +28,9 @@ public protocol IconDescriptionDatabase: AnyObject {
 }
 
 public final class IconDescriptionDatabaseImpl {
+    public static var bundle: Bundle {
+        Bundle.module
+    }
     private let database = IconDescriptionDatabaseGenerated()
     public init() {}
 }

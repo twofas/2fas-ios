@@ -19,13 +19,18 @@
 
 import UIKit
 import Common
+import Content
 
 // swiftlint:disable convenience_type
 public final class ServiceIcon {
     public static var log: ((String) -> Void)?
         
     public static func `for`(iconTypeID: IconTypeID) -> UIImage {
-        if let img = UIImage(named: iconTypeID.uuidString, in: Bundle(for: Self.self), with: nil) {
+        if let img = UIImage(
+            named: iconTypeID.uuidString,
+            in: Content.IconDescriptionDatabaseImpl.bundle,
+            with: nil
+        ) {
             return img
         } else {
             Log("Can't find icon for iconTypeID \(iconTypeID.uuidString)")

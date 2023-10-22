@@ -267,11 +267,11 @@ extension TokensPresenter {
         return dragItem
     }
     
-    func handleStartDrag() {
+    func handleDragSessionWillBegin() {
         view?.lockBars()
     }
     
-    func handleDropSessionDidEnd() {
+    func handleDragSessionDidEnd() {
         view?.unlockBars()
     }
     
@@ -309,7 +309,7 @@ extension TokensPresenter {
             newSection: newSection
         )
         
-        handleDropSessionDidEnd()
+        handleDragSessionDidEnd()
         
         reloadData()
     }

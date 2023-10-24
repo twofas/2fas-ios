@@ -23,16 +23,16 @@ import Common
 // swiftlint:disable all
 final class ServiceDefinitionDatabaseGenerated {
     lazy var services: [ServiceDefinition] = {
-        ServiceDefinitionDatabaseImpl+Database0.services +
-        ServiceDefinitionDatabaseImpl+Database1.services +
-        ServiceDefinitionDatabaseImpl+Database2.services +
-        ServiceDefinitionDatabaseImpl+Database3.services +
-        ServiceDefinitionDatabaseImpl+Database4.services +
-        ServiceDefinitionDatabaseImpl+Database5.services +
-        ServiceDefinitionDatabaseImpl+Database6.services +
-        ServiceDefinitionDatabaseImpl+Database7.services +
-        ServiceDefinitionDatabaseImpl+Database8.services +
-        ServiceDefinitionDatabaseImpl+Database9.services
+        ServiceDefinitionDatabaseGenerated0.services +
+        ServiceDefinitionDatabaseGenerated1.services +
+        ServiceDefinitionDatabaseGenerated2.services +
+        ServiceDefinitionDatabaseGenerated3.services +
+        ServiceDefinitionDatabaseGenerated4.services +
+        ServiceDefinitionDatabaseGenerated5.services +
+        ServiceDefinitionDatabaseGenerated6.services +
+        ServiceDefinitionDatabaseGenerated7.services +
+        ServiceDefinitionDatabaseGenerated8.services +
+        ServiceDefinitionDatabaseGenerated9.services
     }()
 }
 // swiftlint:enable all

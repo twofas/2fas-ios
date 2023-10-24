@@ -1,0 +1,51 @@
+{
+  "images": [  {
+    "filename": "E1F5907E-B856-4E39-A4F4-4E6AEA7CFBE4@1x.png",
+    "idiom": "universal",
+    "scale": "1x"
+  },
+  {
+    "filename": "E1F5907E-B856-4E39-A4F4-4E6AEA7CFBE4@2x.png",
+    "idiom": "universal",
+    "scale": "2x"
+  },
+  {
+    "filename": "E1F5907E-B856-4E39-A4F4-4E6AEA7CFBE4@3x.png",
+    "idiom": "universal",
+    "scale": "3x"
+  },
+  {    "appearances": [
+        {
+            "appearance": "luminosity",
+            "value": "dark"
+        }
+    ],
+    "filename": "E1F5907E-B856-4E39-A4F4-4E6AEA7CFBE4_dark@1x.png",
+    "idiom": "universal",
+    "scale": "1x"
+  },
+  {    "appearances": [
+        {
+            "appearance": "luminosity",
+            "value": "dark"
+        }
+    ],
+    "filename": "E1F5907E-B856-4E39-A4F4-4E6AEA7CFBE4_dark@2x.png",
+    "idiom": "universal",
+    "scale": "2x"
+  },
+  {    "appearances": [
+        {
+            "appearance": "luminosity",
+            "value": "dark"
+        }
+    ],
+    "filename": "E1F5907E-B856-4E39-A4F4-4E6AEA7CFBE4_dark@3x.png",
+    "idiom": "universal",
+    "scale": "3x"
+  }],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}

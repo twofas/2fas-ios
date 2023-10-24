@@ -23,15 +23,15 @@ import Common
 // swiftlint:disable all
 final class IconDescriptionDatabaseGenerated {
     lazy var icons: [IconDescription] = {
-        IconDescriptionDatabaseImpl+Database0.icons +
-        IconDescriptionDatabaseImpl+Database1.icons +
-        IconDescriptionDatabaseImpl+Database2.icons +
-        IconDescriptionDatabaseImpl+Database3.icons +
-        IconDescriptionDatabaseImpl+Database4.icons +
-        IconDescriptionDatabaseImpl+Database5.icons +
-        IconDescriptionDatabaseImpl+Database6.icons +
-        IconDescriptionDatabaseImpl+Database7.icons +
-        IconDescriptionDatabaseImpl+Database8.icons +
-        IconDescriptionDatabaseImpl+Database9.icons
+        IconDescriptionDatabaseGenerated0.icons +
+        IconDescriptionDatabaseGenerated1.icons +
+        IconDescriptionDatabaseGenerated2.icons +
+        IconDescriptionDatabaseGenerated3.icons +
+        IconDescriptionDatabaseGenerated4.icons +
+        IconDescriptionDatabaseGenerated5.icons +
+        IconDescriptionDatabaseGenerated6.icons +
+        IconDescriptionDatabaseGenerated7.icons +
+        IconDescriptionDatabaseGenerated8.icons +
+        IconDescriptionDatabaseGenerated9.icons
     }()
 }

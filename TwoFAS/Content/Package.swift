@@ -23,7 +23,7 @@ let package = Package(
             ],
             path: ".",
             sources: ["Sources"],
-            resources: [.process("Assets")]
+            resources: [.copy("Assets/Assets.car")]
         )
     ]
 )

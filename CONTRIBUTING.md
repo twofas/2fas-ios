@@ -20,13 +20,15 @@ We welcome meaningful code contributions to the 2FAS for iOS project. If you are
 1. Fork this repository to your own GitHub account
 2. Clone the repository to your local machine
 3. Copy example Keys.swift from TwoFAS/opensource folder to TwoFAS/Protection (override the encrypted file)
-4. Create a new branch for your changes (e.g. `feature/new-login-screen`)
-4. Make your changes
-5. Check them using swiftlint (there should be no warnings from swiftlint or compiler)
-6. Check if Unit Tests are passing
-7. Commit them to your branch
-8. Push your branch to your fork on GitHub
-9. Open a pull request from your branch to the `develop` branch of this repository. Remember to resolve any merge conflicts
+4. Copy IconDescriptionDatabaseImpl+Database.swift and ServiceDefinitionDatabaseImpl+Database.swift from TwoFAS/opensource to TwoFAS/Content/Sources (override files)
+5. Copy Assets.car from TwoFAS/opensource to TwoFAS/Content/Assets (override the file)
+6. Create a new branch for your changes (e.g. `feature/new-login-screen`)
+7. Make your changes
+8. Check them using swiftlint (there should be no warnings from swiftlint or compiler)
+9. Check if Unit Tests are passing
+10. Commit them to your branch
+11. Push your branch to your fork on GitHub
+12. Open a pull request from your branch to the `develop` branch of this repository. Remember to resolve any merge conflicts
 
 Please make sure your pull request includes the following:
 

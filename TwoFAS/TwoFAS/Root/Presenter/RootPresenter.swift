@@ -19,10 +19,11 @@
 
 import UIKit
 import Common
-import CommonUIKit
 import Data
 
-final class RootCoordinator: Coordinator {
+final class RootPresenter {
+    var view: RootViewControlling?
+    
     private enum State {
         case initial
         case login
@@ -31,6 +32,9 @@ final class RootCoordinator: Coordinator {
     }
     let rootViewController: RootViewController
     let mainRepository: MainRepositoryInitialization
+    private let flowController: RootFlowControlling
+    
+    private let interactor: RootModuleInteracting
     
     private var currentState = State.initial {
         didSet {
@@ -45,23 +49,20 @@ final class RootCoordinator: Coordinator {
         super.init()
         
         mainRepository.storageError = { [weak self] error in
-            let alert = AlertControllerDismissFlow(title: T.Commons.error, message: error, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
-            self?.rootViewController.present(alert, animated: false, completion: nil)
+            self?.flowController.toStorageError(error: error)
         }
         mainRepository.presentLogin = { [weak self] immediately in
             self?.presentLogin(immediately: immediately)
         }
 
-        SpinnerViewLocalizations.voiceOverSpinner = T.Voiceover.spinner
-        Theme.applyAppearance()
+        
     }
     
     // MARK: - handling app delegates
     
     func applicationWillResignActive() {
         Log("App: applicationWillResignActive")
-        ToastNotification.hideAll()
+        view?.hideAllNotifications()
         mainRepository.applicationWillResignActive()
     }
     
@@ -79,7 +80,7 @@ final class RootCoordinator: Coordinator {
     func applicationDidBecomeActive() {
         Log("App: applicationDidBecomeActive")
         mainRepository.applicationDidBecomeActive()
-        RatingController.uiIsVisible()
+        view?.rateApp()
     }
     
     func applicationWillTerminate() {
@@ -110,8 +111,16 @@ final class RootCoordinator: Coordinator {
         mainRepository.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
     }
     
-    override func start() {
+    func start() {
         handleViewFlow()
+    }
+    
+    func handleIntroMarkAsShown() {
+        interactor.markIntroAsShown()
+    }
+    
+    func handleIntroHasFinished() {
+        
     }
     
     // MARK: - RootCoordinatorDelegate methods
@@ -136,63 +145,34 @@ final class RootCoordinator: Coordinator {
         guard currentState != .intro else { return }
         changeState(.intro)
         Log("Presenting Introduction")
-        let navigationController = CommonNavigationController()
-        let intro = IntroductionCoordinator()
-        intro.markAsShownAction = { [weak self] in
-            self?.mainRepository.markAsShown()
-        }
-        
-        let adapter = PreviousToCurrentCoordinatorAdapter(
-            navigationController: navigationController,
-            coordinator: intro
-        )
-        adapter.parentCoordinatorDelegate = self
-        addChild(adapter)
-        
-        rootViewController.present(navigationController, immediately: false, animationType: .alpha)
-        intro.start()
+        flowController.toIntro()
     }
     
     private func presentMain(immediately: Bool) {
         guard currentState != .main else { return }
         let immediately = !(currentState == .login || currentState == .intro)
         changeState(.main)
-        
-        MainFlowController.showAsRoot(in: rootViewController, parent: self, immediately: immediately)
+        Log("Presenting Main")
+        flowController.toMain(immediately: immediately)
     }
     
     private func presentLogin(immediately: Bool) {
         guard currentState != .login else { return }
         changeState(.login)
         
-        UIApplication.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
-        
-        let loginCoordinator = LoginCoordinator(
-            security: mainRepository.security,
-            leftButtonDescription: nil,
-            rootViewController: rootViewController,
-            showImmediately: immediately
-        )
-        loginCoordinator.parentCoordinatorDelegate = self
-        addChild(loginCoordinator)
-        loginCoordinator.start()
+        view?.dismissAllViewControllers()
+
+        Log("Presenting Login")
+        flowController.toLogin()
     }
     
     private func lockApplicationIfNeeded() {
-        mainRepository.lockApplicationIfNeeded()
+        interactor.lockApplicationIfNeeded()
     }
     
     private func changeState(_ newState: State) {
         currentState = newState
-        removeAllChildCoordinators()
-    }
-    
-    // MARK: Callbacks from CoordinatorDelegate
-    
-    override func didFinish() {
-        removeAllChildCoordinators()
-        handleViewFlow()
     }
 }
 
-extension RootCoordinator: MainFlowControllerParent {}
+

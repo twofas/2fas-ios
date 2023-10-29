@@ -18,12 +18,22 @@
 //
 
 import UIKit
-import SwiftUI
+import CommonUIKit
+
+protocol RootViewControlling: AnyObject {
+    func dismissAllViewControllers()
+    func hideAllNotifications()
+    func rateApp()
+}
 
 final class RootViewController: ContainerViewController {
+    var presenter: RootPresenter!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Theme.Colors.Fill.background
+        SpinnerViewLocalizations.voiceOverSpinner = T.Voiceover.spinner
+        Theme.applyAppearance()
     }
     
     override var shouldAutorotate: Bool { UIDevice.isiPad }
@@ -31,5 +41,19 @@ final class RootViewController: ContainerViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         NotificationCenter.default.post(Notification(name: Notification.Name.orientationSizeWillChange))
+    }
+}
+
+extension RootViewController: RootViewControlling {
+    func dismissAllViewControllers() {
+        UIApplication.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    func hideAllNotifications() {
+        ToastNotification.hideAll()
+    }
+    
+    func rateApp() {
+        RatingController.uiIsVisible()
     }
 }

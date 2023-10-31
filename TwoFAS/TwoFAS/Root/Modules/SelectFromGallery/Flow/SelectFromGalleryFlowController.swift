@@ -25,6 +25,7 @@ import Storage
 
 protocol SelectFromGalleryFlowControllerParent: AnyObject {
     func galleryDidFinish()
+    func galleryDidImport(count: Int)
     func galleryDidCancel()
     func galleryServiceWasCreated(serviceData: ServiceData)
     func galleryToSendLogs(auditID: UUID)
@@ -36,7 +37,7 @@ protocol SelectFromGalleryFlowControlling: AnyObject {
     func toSelectCode(from codes: [Code])
     func toDuplicatedCode(usedIn: String)
     func toDidAddCode(serviceData: ServiceData)
-    func toDidImport()
+    func toDidImport(count: Int)
     func toAppStore()
     func toCancel()
     func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
@@ -148,8 +149,8 @@ extension SelectFromGalleryFlowController: SelectFromGalleryFlowControlling {
         parentViewController?.present(vc, animated: true, completion: nil)
     }
     
-    func toDidImport() {
-        parent?.galleryDidFinish()
+    func toDidImport(count: Int) {
+        parent?.galleryDidImport(count: count)
     }
     
     func toAppStore() {

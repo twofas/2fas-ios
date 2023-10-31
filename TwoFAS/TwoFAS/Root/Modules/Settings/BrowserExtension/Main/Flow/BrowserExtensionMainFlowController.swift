@@ -130,7 +130,13 @@ extension BrowserExtensionMainFlowController: CameraScannerNavigationFlowControl
         dismiss()
     }
     
-    func cameraScannerServiceWasCreated(serviceData: ServiceData) {}
+    func cameraScannerDidImport(count: Int) {
+        // not implemented
+    }
+    
+    func cameraScannerServiceWasCreated(serviceData: ServiceData) {
+        // not implemented
+    }
 }
 
 extension BrowserExtensionMainFlowController: BrowserExtensionEditNameFlowControllerParent {

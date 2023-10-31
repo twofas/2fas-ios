@@ -166,6 +166,11 @@ extension ExternalImportFlowController: ExternalImportInstructionsFlowController
 
 extension ExternalImportFlowController: CameraScannerFlowControllerParent {
     func cameraScannerDidFinish() { end() }
+    func cameraScannerDidImport(count: Int) {
+        navigationController?.dismiss(animated: true) { [weak self] in
+            self?.showSummary(count: count)
+        }
+    }
     func cameraScannerServiceWasCreated(serviceData: ServiceData) { end() }
 }
 
@@ -174,6 +179,12 @@ extension ExternalImportFlowController: SelectFromGalleryFlowControllerParent {
     func galleryDidCancel() { endGallery() }
     func galleryServiceWasCreated(serviceData: ServiceData) { endGallery() }
     func galleryToSendLogs(auditID: UUID) { endGallery() }
+    func galleryDidImport(count: Int) {
+        navigationController?.dismiss(animated: true) { [weak self] in
+            self?.galleryViewController = nil
+            self?.showSummary(count: count)
+        }
+    }
 }
 
 extension ExternalImportFlowController: ImporterOpenFileHeadlessFlowControllerParent {
@@ -192,5 +203,15 @@ private extension ExternalImportFlowController {
     
     func end() {
         navigationController?.dismiss(animated: true)
+    }
+    
+    func showSummary(count: Int) {
+        let alert = AlertControllerDismissFlow(
+            title: T.Backup.importCompletedSuccessfuly,
+            message: T.Backup.servicesImportedCount(count),
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
+        navigationController?.present(alert, animated: true)
     }
 }

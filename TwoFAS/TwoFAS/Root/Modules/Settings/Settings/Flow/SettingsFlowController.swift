@@ -106,17 +106,15 @@ extension SettingsFlowController: SettingsFlowControlling {
             var vcs = viewController.navigationNavi.viewControllers
             vcs += viewController.contentNavi.viewControllers
             viewController.navigationNavi.setViewControllers(vcs, animated: false)
+            viewController.contentNavi.setViewControllers([], animated: false)
         }
     }
     
     func toExpandedView() {
         navigationMenu?.toExpanded()
-        
         if let vcs = viewController.navigationNavi.popToRootViewController(animated: false), !vcs.isEmpty {
             vcs.forEach({ $0.willMove(toParent: viewController.contentNavi) })
-            DispatchQueue.main.async {
-                self.viewController.contentNavi.setViewControllers(vcs, animated: false)
-            }
+            viewController.contentNavi.setViewControllers(vcs, animated: false)
         } else {
             navigationMenu?.toSelectedModule()
         }

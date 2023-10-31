@@ -61,13 +61,13 @@ extension SelectFromGalleryPresenter {
     func handleGoogleAuthImport(_ codes: [Code]) {
         guard !codes.isEmpty else { return }
         interactor.addSelectedCodes(codes)
-        flowController.toDidImport()
+        flowController.toDidImport(count: codes.count)
     }
     
     func handleLastPassImport(_ codes: [Code]) {
         guard !codes.isEmpty else { return }
         interactor.addSelectedCodes(codes)
-        flowController.toDidImport()
+        flowController.toDidImport(count: codes.count)
     }
     
     func handleSelectedCode(_ code: Code) {

@@ -178,6 +178,7 @@ extension TokensPresenter {
         AppEventLog(.importGoogleAuth)
         interactor.addCodes(codes)
         handleNewData()
+        flowController.toShowSummmary(count: codes.count)
     }
 
     func handleLastPassImport(_ codes: [Code]) {
@@ -185,6 +186,7 @@ extension TokensPresenter {
         AppEventLog(.importLastPass)
         interactor.addCodes(codes)
         handleNewData()
+        flowController.toShowSummmary(count: codes.count)
     }
     
     // MARK: - Actions
@@ -267,11 +269,11 @@ extension TokensPresenter {
         return dragItem
     }
     
-    func handleStartDrag() {
+    func handleDragSessionWillBegin() {
         view?.lockBars()
     }
     
-    func handleDropSessionDidEnd() {
+    func handleDragSessionDidEnd() {
         view?.unlockBars()
     }
     
@@ -309,7 +311,7 @@ extension TokensPresenter {
             newSection: newSection
         )
         
-        handleDropSessionDidEnd()
+        handleDragSessionDidEnd()
         
         reloadData()
     }

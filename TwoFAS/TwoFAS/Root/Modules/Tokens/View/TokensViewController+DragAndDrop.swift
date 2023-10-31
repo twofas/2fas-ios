@@ -37,7 +37,7 @@ extension TokensViewController: UICollectionViewDragDelegate {
             return []
         }
 
-        Log("Preparing drag & drop")
+        Log("Preparing drag & drop - checking drag item")
         
         guard let dragItem = presenter.handleDragItem(for: serviceData) else { return [] }
         
@@ -49,8 +49,18 @@ extension TokensViewController: UICollectionViewDragDelegate {
             }
         }
         Log("Preparing drag & drop - have the dragItem")
-        presenter.handleStartDrag()
+        
         return [dragItem]
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, dragSessionWillBegin session: UIDragSession) {
+        Log("DragSessionWillBegin")
+        presenter.handleDragSessionWillBegin()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, dragSessionDidEnd session: UIDragSession) {
+        Log("DragSessionDidEnd")
+        presenter.handleDragSessionDidEnd()
     }
 }
 
@@ -109,6 +119,6 @@ extension TokensViewController: UICollectionViewDropDelegate {
     
     func collectionView(_ collectionView: UICollectionView, dropSessionDidEnd session: UIDropSession) {
         Log("Drop session did end")
-        presenter.handleDropSessionDidEnd()
+        presenter.handleDragSessionDidEnd()
     }
 }

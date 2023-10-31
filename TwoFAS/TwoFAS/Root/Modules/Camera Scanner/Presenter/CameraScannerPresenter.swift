@@ -62,14 +62,14 @@ extension CameraScannerPresenter {
         guard !codes.isEmpty else { return }
         AppEventLog(.importGoogleAuth)
         interactor.addCodes(codes)
-        flowController.toFinish()
+        flowController.toImportSummary(count: codes.count)
     }
     
     func handleLastPassImport(_ codes: [Code]) {
         guard !codes.isEmpty else { return }
         AppEventLog(.importLastPass)
         interactor.addCodes(codes)
-        flowController.toFinish()
+        flowController.toImportSummary(count: codes.count)
     }
     
     func handleDidFound(_ codeType: CodeType) {

@@ -25,6 +25,7 @@ import Storage
 
 protocol CameraScannerFlowControllerParent: AnyObject {
     func cameraScannerDidFinish()
+    func cameraScannerDidImport(count: Int)
     func cameraScannerServiceWasCreated(serviceData: ServiceData)
 }
 
@@ -34,6 +35,7 @@ protocol CameraScannerFlowControlling: AnyObject {
     func toAppStore()
     func toGallery()
     func toFinish()
+    func toImportSummary(count: Int)
     func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
     func toLastPassSummary(importable: Int, total: Int, codes: [Code])
     func toCameraError(_ error: String)
@@ -130,6 +132,10 @@ extension CameraScannerFlowController: CameraScannerFlowControlling {
     
     func toFinish() {
         parent?.cameraScannerDidFinish()
+    }
+    
+    func toImportSummary(count: Int) {
+        parent?.cameraScannerDidImport(count: count)
     }
     
     func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code]) {
@@ -242,6 +248,11 @@ extension CameraScannerFlowController: PushNotificationPermissionPlainFlowContro
 }
 
 extension CameraScannerFlowController: SelectFromGalleryFlowControllerParent {
+    func galleryDidImport(count: Int) {
+        parent?.cameraScannerDidImport(count: count)
+        galleryViewController = nil
+    }
+    
     func galleryServiceWasCreated(serviceData: ServiceData) {
         parent?.cameraScannerServiceWasCreated(serviceData: serviceData)
         galleryViewController = nil

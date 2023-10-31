@@ -53,6 +53,8 @@ protocol TokensPlainFlowControlling: AnyObject {
     func toShowSortTypes(selectedSortOption: SortType, callback: @escaping (SortType) -> Void)
     // MARK: News
     func toNotifications()
+    // MARK: Import
+    func toShowSummmary(count: Int)
 }
 
 final class TokensPlainFlowController: FlowController, TokensNavigationFlowControllerParent {
@@ -286,6 +288,13 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     func toNotifications() {
         NewsNavigationFlowController.present(on: viewController, parent: self)
     }
+    
+    // MARK: - Import
+    func toShowSummmary(count: Int) {
+        dismiss(actions: [.finishedFlow, .newData, .sync]) { [weak self] in
+            self?.showSummary(count: count)
+        }
+    }
 }
 
 extension TokensPlainFlowController {
@@ -312,6 +321,12 @@ private extension TokensPlainFlowController {
 }
 
 extension TokensPlainFlowController: CameraScannerNavigationFlowControllerParent {
+    func cameraScannerDidImport(count: Int) {
+        dismiss(actions: [.finishedFlow, .newData, .sync]) { [weak self] in
+            self?.showSummary(count: count)
+        }
+    }
+    
     func cameraScannerDidFinish() {
         dismiss(actions: [.finishedFlow, .newData, .sync])
     }
@@ -323,6 +338,13 @@ extension TokensPlainFlowController: CameraScannerNavigationFlowControllerParent
 }
 
 extension TokensPlainFlowController: SelectFromGalleryFlowControllerParent {
+    func galleryDidImport(count: Int) {
+        dismiss(actions: [.finishedFlow, .newData, .sync]) { [weak self] in
+            self?.galleryViewController = nil
+            self?.showSummary(count: count)
+        }
+    }
+    
     func galleryServiceWasCreated(serviceData: ServiceData) {
         parent?.tokensSwitchToTokensTab()
         dismiss(actions: [.finishedFlow, .addedService(serviceData: serviceData), .sync]) { [weak self] in
@@ -481,12 +503,11 @@ private extension TokensPlainFlowController {
                     self?.dismiss()
                 } else {
                     self?.viewController.presenter.handleGoogleAuthImport(codes)
-                    self?.dismiss()
                 }
             }, cancel: { [weak self] in
                 self?.dismiss()
             })
-
+        
         let vc = UIHostingController(rootView: google)
         vc.view.backgroundColor = .clear
         vc.configureAsModal()
@@ -504,7 +525,6 @@ private extension TokensPlainFlowController {
                     self?.dismiss()
                 } else {
                     self?.viewController.presenter.handleLastPassImport(codes)
-                    self?.dismiss()
                 }
             }, cancel: { [weak self] in
                 self?.dismiss()
@@ -541,6 +561,17 @@ private extension TokensPlainFlowController {
             parent: self
         )
     }
+    
+    func showSummary(count: Int) {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        let alert = AlertControllerDismissFlow(
+            title: T.Backup.importCompletedSuccessfuly,
+            message: T.Backup.servicesImportedCount(count),
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
+        mainSplitViewController.present(alert, animated: true)
+    }
 }
 
 extension TokensPlainFlowController: PushNotificationPermissionNavigationFlowControllerParent {
@@ -552,7 +583,7 @@ extension TokensPlainFlowController: PushNotificationPermissionNavigationFlowCon
 extension TokensPlainFlowController: BrowserExtensionPairingNavigationFlowControllerParent {
     func browserExtensionPairingClose() {
         dismiss()
-	}
+    }
 }
 
 extension TokensPlainFlowController: AddingServiceTokenFlowControllerParent {

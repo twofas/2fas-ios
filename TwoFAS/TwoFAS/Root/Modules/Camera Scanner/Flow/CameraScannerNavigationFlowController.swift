@@ -25,6 +25,7 @@ import Storage
 
 protocol CameraScannerNavigationFlowControllerParent: AnyObject {
     func cameraScannerDidFinish()
+    func cameraScannerDidImport(count: Int)
     func cameraScannerServiceWasCreated(serviceData: ServiceData)
 }
 
@@ -53,6 +54,10 @@ final class CameraScannerNavigationFlowController: NavigationFlowController {
 extension CameraScannerNavigationFlowController: CameraScannerFlowControllerParent {
     func cameraScannerDidFinish() {
         parent?.cameraScannerDidFinish()
+    }
+    
+    func cameraScannerDidImport(count: Int) {
+        parent?.cameraScannerDidImport(count: count)
     }
     
     func cameraScannerServiceWasCreated(serviceData: ServiceData) {

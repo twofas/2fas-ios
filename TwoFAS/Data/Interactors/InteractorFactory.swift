@@ -24,6 +24,14 @@ import Storage
 public final class InteractorFactory {
     public static let shared = InteractorFactory()
     
+    public func rootInteractor() -> RootInteracting {
+        RootInteractor(
+            mainRepository: MainRepositoryImpl.shared,
+            camera: cameraPermissionInteractor(),
+            push: pushNotificationRegistrationInteractor()
+        )
+    }
+    
     public func trashingServiceInteractor() -> TrashingServiceInteracting {
         TrashingServiceInteractor(
             mainRepository: MainRepositoryImpl.shared,

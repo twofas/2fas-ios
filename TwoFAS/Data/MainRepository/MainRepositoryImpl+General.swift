@@ -39,4 +39,12 @@ extension MainRepositoryImpl {
     var isCrashlyticsDisabled: Bool {
         userDefaultsRepository.isCrashlyticsDisabled
     }
+    
+    func initialPermissionStateSetChildren(_ children: [PermissionsStateChildDataControllerProtocol]) {
+        initialPermissionStateDataController.set(children: children)
+    }
+    
+    func initialPermissionStateInitialize() {
+        initialPermissionStateDataController.initialize()
+    }
 }

@@ -17,7 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 import Sync
 
 public enum CloudState: Equatable {
@@ -46,10 +46,10 @@ public enum CloudState: Equatable {
 extension MainRepositoryImpl {
     var secretSyncError: ((String) -> Void)? {
         get {
-            sync.secretSyncError
+            cloudHandler.secretSyncError
         }
         set {
-            sync.secretSyncError = newValue
+            cloudHandler.secretSyncError = newValue
         }
     }
     var isCloudBackupConnected: Bool { cloudHandler.isConnected }
@@ -81,6 +81,13 @@ extension MainRepositoryImpl {
     
     func synchronizeBackup() {
         cloudHandler.synchronize()
+    }
+    
+    func syncDidReceiveRemoteNotification(
+        userInfo: [AnyHashable: Any],
+        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+    ) {
+        SyncInstance.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
     }
 }
 

@@ -30,32 +30,27 @@ final class RootPresenter {
         case intro
         case main
     }
-    let rootViewController: RootViewController
-    let mainRepository: MainRepositoryInitialization
-    private let flowController: RootFlowControlling
-    
-    private let interactor: RootModuleInteracting
     
     private var currentState = State.initial {
         didSet {
             Log("RootCoordinator: new currentState: \(currentState)")
         }
     }
+
+    private let flowController: RootFlowControlling
+    private let interactor: RootModuleInteracting
     
-    override init() {
-        rootViewController = RootViewController()
-        mainRepository = MainRepositoryInitialization(serviceNameTranslation: T.Commons.service)
-        
-        super.init()
-        
-        mainRepository.storageError = { [weak self] error in
+    init(flowController: RootFlowControlling, interactor: RootModuleInteracting) {
+        self.flowController = flowController
+        self.interactor = interactor
+    }
+    
+    func initialize() {
+        interactor.initializeApp()
+        interactor.storageError = { [weak self] error in
             self?.flowController.toStorageError(error: error)
         }
-        mainRepository.presentLogin = { [weak self] immediately in
-            self?.presentLogin(immediately: immediately)
-        }
-
-        
+        handleViewFlow()
     }
     
     // MARK: - handling app delegates
@@ -63,44 +58,47 @@ final class RootPresenter {
     func applicationWillResignActive() {
         Log("App: applicationWillResignActive")
         view?.hideAllNotifications()
-        mainRepository.applicationWillResignActive()
+        // TODO: Hide all views
+        interactor.applicationWillResignActive()
     }
     
     func applicationWillEnterForeground() {
         Log("App: applicationWillEnterForeground")
-        mainRepository.applicationWillEnterForeground()
+        interactor.applicationWillEnterForeground()
         handleViewFlow()
     }
     
     func applicationDidEnterBackground() {
         Log("App: applicationDidEnterBackground")
-        lockApplicationIfNeeded()
+        interactor.lockApplicationIfNeeded { [weak self] in
+            self?.presentLogin(immediately: true)
+        }
     }
     
     func applicationDidBecomeActive() {
         Log("App: applicationDidBecomeActive")
-        mainRepository.applicationDidBecomeActive()
+        interactor.applicationDidBecomeActive()
         view?.rateApp()
     }
     
     func applicationWillTerminate() {
         Log("App: applicationWillTerminate")
-        mainRepository.applicationWillTerminate()
+        interactor.applicationWillTerminate()
     }
     
     func shouldHandleURL(url: URL) -> Bool {
         Log("App: shouldHandleURL")
-        return mainRepository.shouldHandleURL(url: url)
+        return interactor.shouldHandleURL(url: url)
     }
     
     func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {
         Log("App: didRegisterForRemoteNotifications")
-        mainRepository.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
+        interactor.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
     }
     
     func didFailToRegisterForRemoteNotifications(with error: Error) {
         Log("App: didFailToRegisterForRemoteNotifications")
-        mainRepository.didFailToRegisterForRemoteNotifications(with: error)
+        interactor.didFailToRegisterForRemoteNotifications(with: error)
     }
     
     func didReceiveRemoteNotification(
@@ -108,11 +106,7 @@ final class RootPresenter {
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     ) {
         Log("App: didReceiveRemoteNotification")
-        mainRepository.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
-    }
-    
-    func start() {
-        handleViewFlow()
+        interactor.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
     }
     
     func handleIntroMarkAsShown() {
@@ -120,7 +114,7 @@ final class RootPresenter {
     }
     
     func handleIntroHasFinished() {
-        
+        handleViewFlow()
     }
     
     // MARK: - RootCoordinatorDelegate methods
@@ -130,9 +124,9 @@ final class RootPresenter {
         
         Log("RootCoordinator: Changing state for: \(currentState)")
         
-        if !mainRepository.introductionWasShown {
+        if !interactor.introductionWasShown {
             presentIntroduction()
-        } else if mainRepository.security.isAuthenticationRequired {
+        } else if interactor.isAuthenticationRequired {
             presentLogin(immediately: coldRun)
         } else {
             presentMain(immediately: coldRun)
@@ -166,13 +160,7 @@ final class RootPresenter {
         flowController.toLogin()
     }
     
-    private func lockApplicationIfNeeded() {
-        interactor.lockApplicationIfNeeded()
-    }
-    
     private func changeState(_ newState: State) {
         currentState = newState
     }
 }
-
-

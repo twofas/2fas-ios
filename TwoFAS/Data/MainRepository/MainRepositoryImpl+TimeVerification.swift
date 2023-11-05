@@ -18,30 +18,9 @@
 //
 
 import Foundation
-import Common
 
 extension MainRepositoryImpl {
-    var notificationState: PushNotificationState {
-        _notificationState
-    }
-    
-    func setNotificationState(_ state: PushNotificationState) {
-        _notificationState = state
-    }
-    
-    func lastSavedNotification() -> LastSavedNotification? {
-        pushNotifications.lastNotification
-    }
-    
-    func clearLastSavedNotification() {
-        pushNotifications.clearLastNotification()
-    }
-    
-    func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {
-        pushNotifications.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
-    }
-    
-    func didFailToRegisterForRemoteNotifications(with error: Error) {
-        pushNotifications.didFailToRegisterForRemoteNotifications(with: error)
+    func timeVerificationStart() {
+        timeVerificationController.startVerification()
     }
 }

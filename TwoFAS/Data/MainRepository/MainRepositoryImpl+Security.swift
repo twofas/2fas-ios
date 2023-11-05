@@ -112,6 +112,23 @@ extension MainRepositoryImpl {
     func clearAllUserDefaults() {
         userDefaultsRepository.clearAll()
     }
+    
+    // MARK: - Other
+    func securityApplicationDidBecomeActive() {
+        security.applicationDidBecomeActive()
+    }
+    
+    func securityApplicationWillEnterForeground() {
+        security.applicationWillEnterForeground()
+    }
+    
+    func securityLockApplication() {
+        security.lockApplication()
+    }
+    
+    var securityIsAuthenticationRequired: Bool {
+        security.isAuthenticationRequired
+    }
 }
 
 private extension PINType {

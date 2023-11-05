@@ -18,30 +18,11 @@
 //
 
 import Foundation
-import Common
 
-extension MainRepositoryImpl {
-    var notificationState: PushNotificationState {
-        _notificationState
-    }
+public enum DataExternalTranslations {
+    public static private(set) var serviceNameTranslation: String = ""
     
-    func setNotificationState(_ state: PushNotificationState) {
-        _notificationState = state
-    }
-    
-    func lastSavedNotification() -> LastSavedNotification? {
-        pushNotifications.lastNotification
-    }
-    
-    func clearLastSavedNotification() {
-        pushNotifications.clearLastNotification()
-    }
-    
-    func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {
-        pushNotifications.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
-    }
-    
-    func didFailToRegisterForRemoteNotifications(with error: Error) {
-        pushNotifications.didFailToRegisterForRemoteNotifications(with: error)
+    public static func setTranslations(serviceNameTranslation: String) {
+        Self.serviceNameTranslation = serviceNameTranslation
     }
 }

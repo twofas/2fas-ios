@@ -22,6 +22,10 @@ import Storage
 import Common
 
 extension MainRepositoryImpl {
+    func saveStorage() {
+        storage.save()
+    }
+    
     func trashService(_ serviceData: ServiceData) {
         let result = storageRepository.trashService(serviceData)
         logDataChange.logServiceDeleted(with: result.deleted)

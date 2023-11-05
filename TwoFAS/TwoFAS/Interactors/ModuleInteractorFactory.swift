@@ -24,6 +24,15 @@ import Common
 final class ModuleInteractorFactory {
     static let shared = ModuleInteractorFactory()
     
+    func rootModuleInteractor() -> RootModuleInteracting {
+        RootModuleInteractor(
+            rootInteractor: InteractorFactory.shared.rootInteractor(),
+            linkInteractor: InteractorFactory.shared.linkInteractor(),
+            fileInteractor: InteractorFactory.shared.fileInteractor(),
+            registerDeviceInteractor: InteractorFactory.shared.registerDeviceInteractor()
+        )
+    }
+    
     func settingsModuleInteractor() -> SettingsModuleInteracting {
         SettingsModuleInteractor()
     }

@@ -19,6 +19,8 @@
 
 import UIKit
 
+protocol RootFlowControllerParent: AnyObject {}
+
 protocol RootFlowControlling: AnyObject {
     func toIntro()
     func toMain(immediately: Bool)
@@ -28,24 +30,48 @@ protocol RootFlowControlling: AnyObject {
 }
 
 final class RootFlowController: FlowController {
+    private weak var parent: RootFlowControllerParent?
     
+    static func setAsRoot(
+        in window: UIWindow?,
+        parent: RootFlowControllerParent
+    ) -> RootViewController {
+        let view = RootViewController()
+        let flowController = RootFlowController(viewController: view)
+        flowController.parent = parent
+        
+        let interactor = ModuleInteractorFactory.shared.rootModuleInteractor()
+        let presenter = RootPresenter(
+            flowController: flowController,
+            interactor: interactor
+        )
+        view.presenter = presenter
+        presenter.view = view
+        
+        window?.rootViewController = view
+        
+        return view
+    }
+}
+
+extension RootFlowController {
     var viewController: RootViewController {
         _viewController as! RootViewController
     }
 }
 
 extension RootFlowController: RootFlowControlling {
-    func toIntro(){
+    func toIntro() {
         let navigationController = CommonNavigationController()
         let intro = IntroductionCoordinator()
         intro.markAsShownAction = { [weak self] in
             self?.viewController.presenter.handleIntroMarkAsShown()
         }
         
-        let adapter = PreviousToCurrentCoordinatorAdapter(
-            navigationController: navigationController,
-            coordinator: intro
-        )
+//        let adapter = PreviousToCurrentCoordinatorAdapter(
+//            navigationController: navigationController,
+//            coordinator: intro
+//        )
         
         viewController.present(navigationController, immediately: false, animationType: .alpha)
         intro.start()
@@ -56,19 +82,18 @@ extension RootFlowController: RootFlowControlling {
     }
     
     func toLogin() {
-//        let loginCoordinator = LoginCoordinator(
-//            security: mainRepository.security,
-//            leftButtonDescription: nil,
-//            rootViewController: rootViewController,
-//            showImmediately: immediately
-//        )
-//        loginCoordinator.parentCoordinatorDelegate = self
-//        addChild(loginCoordinator)
-//        loginCoordinator.start()
+        //        let loginCoordinator = LoginCoordinator(
+        //            security: mainRepository.security,
+        //            leftButtonDescription: nil,
+        //            rootViewController: rootViewController,
+        //            showImmediately: immediately
+        //        )
+        //        loginCoordinator.parentCoordinatorDelegate = self
+        //        addChild(loginCoordinator)
+        //        loginCoordinator.start()
     }
     
     func toAppLock() {
-        
     }
     
     func toStorageError(error: String) {

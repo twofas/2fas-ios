@@ -43,6 +43,11 @@ protocol MainRepository: AnyObject {
     func validatePIN(_ PIN: String) -> Bool
     func savePIN(_ PIN: String, typeOfPIN: PINType)
     
+    func securityApplicationWillEnterForeground()
+    func securityApplicationDidBecomeActive()
+    func securityLockApplication()
+    var securityIsAuthenticationRequired: Bool { get }
+    
     // MARK: App lock
     var appLockAttempts: AppLockAttempts? { get }
     func setAppLockAttempts(_ value: AppLockAttempts)
@@ -104,6 +109,9 @@ protocol MainRepository: AnyObject {
     func setCrashlyticsDisabled(_ disabled: Bool)
     var isCrashlyticsDisabled: Bool { get }
     
+    func initialPermissionStateSetChildren(_ children: [PermissionsStateChildDataControllerProtocol])
+    func initialPermissionStateInitialize()
+    
     // MARK: - Services
     var hasServices: Bool { get }
     
@@ -117,6 +125,10 @@ protocol MainRepository: AnyObject {
     func disableCloudBackup()
     func clearBackup()
     func synchronizeBackup()
+    func syncDidReceiveRemoteNotification(
+        userInfo: [AnyHashable: Any],
+        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+    )
     
     // MARK: - Import
     var fileURL: URL? { get set }
@@ -128,6 +140,9 @@ protocol MainRepository: AnyObject {
     func export(with password: String?, finished: @escaping (URL?) -> Void)
     
     // MARK: - Storage
+    var storageError: ((String) -> Void)? { get set }
+    
+    func saveStorage()
     func trashService(_ serviceData: ServiceData)
     func untrashService(_ serviceData: ServiceData)
     func listTrashedServices() -> [ServiceData]
@@ -384,6 +399,8 @@ protocol MainRepository: AnyObject {
     // MARK: - Push Notifications
     func lastSavedNotification() -> LastSavedNotification?
     func clearLastSavedNotification()
+    func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data)
+    func didFailToRegisterForRemoteNotifications(with error: Error)
     
     // MARK: - Categories/Sections
     func listAllSections() -> [SectionData]
@@ -439,4 +456,7 @@ protocol MainRepository: AnyObject {
     
     // MARK: - Data injections
     var serviceNameTranslation: String { get }
+    
+    // MARK: - Time Verification
+    func timeVerificationStart()
 }

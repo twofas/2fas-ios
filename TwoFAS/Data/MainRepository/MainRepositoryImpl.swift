@@ -26,6 +26,7 @@ import Sync
 import NetworkStack
 import TimeVerification
 import Content
+import CommonUIKit
 
 final class MainRepositoryImpl: MainRepository {
     let service: ServiceHandler
@@ -37,7 +38,6 @@ final class MainRepositoryImpl: MainRepository {
     let timerHandler: TimerHandler
     let counterHandler: CounterHandler
     let timeVerificationController: TimeVerificationController
-    let sync: CloudHandlerType
     let categoryHandler: CategoryHandler
     let sectionHandler: SectionHandler
     let cloudHandler: CloudHandlerType
@@ -49,6 +49,7 @@ final class MainRepositoryImpl: MainRepository {
     let iconDatabase: IconDescriptionDatabase = IconDescriptionDatabaseImpl()
     let serviceDefinitionDatabase: ServiceDefinitionDatabase = ServiceDefinitionDatabaseImpl()
     let iconDescriptionDatabase: IconDescriptionDatabase = IconDescriptionDatabaseImpl()
+    let initialPermissionStateDataController = PermissionsStateDataController()
     
     let serviceNameTranslation: String
     
@@ -65,7 +66,14 @@ final class MainRepositoryImpl: MainRepository {
     
     var ignoredTokenRequestIDsList: [String] = []
     
-    static var shared: MainRepository { _shared }
+    static var shared: MainRepository {
+        if _shared == nil {
+            MainRepositoryImpl.create(
+                serviceNameTranslation: DataExternalTranslations.serviceNameTranslation
+            )
+        }
+        return _shared
+    }
     
     var storedURL: URL?
     var fileURL: URL?
@@ -73,14 +81,51 @@ final class MainRepositoryImpl: MainRepository {
     var lastFetchedNewsTimestamp: Date?
     var isFetchingNewsFlag = false
     var newsCompletions: [() -> Void] = []
+    var storageError: ((String) -> Void)?
     
     // Cached values for higher pefrormance
     var cachedSortType: SortType?
     var cachedSortTypeInitialized = false
     var _notificationState: PushNotificationState = .unknown
     
+    static func create(serviceNameTranslation: String) {
+        ServiceIcon.log = { AppEventLog(.missingIcon($0)) }
+        let protection = Protection()
+        
+        EncryptionHolder.initialize(with: protection.localKeyEncryption)
+        
+        let storage = Storage(readOnly: false) { error in
+            DebugLog(error)
+        }
+        
+        LogStorage.setStorage(storage.log)
+        
+        let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
+        
+        SyncInstance.initialize(commonSectionHandler: storage.section, commonServiceHandler: storage.service) {
+            DebugLog("Sync: \($0)")
+        }
+        SyncInstance.migrateStoreIfNeeded()
+        serviceMigration.migrateIfNeeded()
+        
+        let security = Security(biometric: protection.biometricAuth, codeStorage: protection.codeStorage)
+                                                                
+        _ = MainRepositoryImpl(
+            pushNotifications: PushNotifications(app: UIApplication.shared),
+            cameraPermissions: CameraPermissions(),
+            security: security,
+            protectionModule: protection,
+            storage: storage,
+            timerHandler: TokenHandler.timer,
+            counterHandler: TokenHandler.counter,
+            timeVerificationController: TimeVerificationController(),
+            cloudHandler: SyncInstance.getCloudHandler(),
+            logDataChange: SyncInstance.logDataChange,
+            serviceNameTranslation: serviceNameTranslation
+        )
+    }
+    
     init(
-        service: ServiceHandler,
         pushNotifications: PushNotifications,
         cameraPermissions: CameraPermissions,
         security: SecurityProtocol,
@@ -89,14 +134,11 @@ final class MainRepositoryImpl: MainRepository {
         timerHandler: TimerHandler,
         counterHandler: CounterHandler,
         timeVerificationController: TimeVerificationController,
-        sync: CloudHandlerType,
-        categoryHandler: CategoryHandler,
-        sectionHandler: SectionHandler,
         cloudHandler: CloudHandlerType,
         logDataChange: LogDataChange,
         serviceNameTranslation: String
     ) {
-        self.service = service
+        self.service = storage.service
         self.pushNotifications = pushNotifications
         self.cameraPermissions = cameraPermissions
         self.security = security
@@ -105,9 +147,8 @@ final class MainRepositoryImpl: MainRepository {
         self.timerHandler = timerHandler
         self.counterHandler = counterHandler
         self.timeVerificationController = timeVerificationController
-        self.sync = sync
-        self.categoryHandler = categoryHandler
-        self.sectionHandler = sectionHandler
+        self.categoryHandler = storage.category
+        self.sectionHandler = storage.section
         self.cloudHandler = cloudHandler
         self.extensionsStorage = protectionModule.extensionsStorage
         self.userDefaultsRepository = UserDefaultsRepositoryImpl()
@@ -119,5 +160,15 @@ final class MainRepositoryImpl: MainRepository {
         
         security.interactor = AppLockStateInteractor(mainRepository: self)
         MainRepositoryImpl._shared = self
+        
+        timeVerificationController.offsetUpdated = { [weak self] in
+            self?.timerHandler.setOffset(offset: $0)
+            self?.cloudHandler.setTimeOffset($0)
+            self?.reloadWidgets()
+        }
+
+        storage.addUserPresentableError { [weak self] error in
+            self?.storageError?(error)
+        }
     }
 }

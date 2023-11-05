@@ -18,9 +18,8 @@
 //
 
 import UIKit
-import Data
 
-protocol RootModuleInteracting: AnyObject {
+public protocol RootInteracting: AnyObject {
     var introductionWasShown: Bool { get }
     var isAuthenticationRequired: Bool { get }
     var storageError: ((String) -> Void)? { get set }
@@ -33,8 +32,6 @@ protocol RootModuleInteracting: AnyObject {
     
     func markIntroAsShown()
     func lockApplicationIfNeeded(presentLoginImmediately: @escaping () -> Void)
-    
-    func shouldHandleURL(url: URL) -> Bool
 
     func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data)
     func didFailToRegisterForRemoteNotifications(with error: Error)
@@ -44,87 +41,88 @@ protocol RootModuleInteracting: AnyObject {
     )
 }
 
-final class RootModuleInteractor {
+final class RootInteractor {
     var storageError: ((String) -> Void)?
     
-    private let rootInteractor: RootInteracting
-    private let linkInteractor: LinkInteracting
-    private let fileInteractor: FileInteracting
-    private let registerDeviceInteractor: RegisterDeviceInteracting
+    private let mainRepository: MainRepository
+    private let camera: CameraPermissionInteracting
+    private let push: PushNotificationRegistrationInteracting
     
     init(
-        rootInteractor: RootInteracting,
-        linkInteractor: LinkInteracting,
-        fileInteractor: FileInteracting,
-        registerDeviceInteractor: RegisterDeviceInteracting
+        mainRepository: MainRepository,
+        camera: CameraPermissionInteracting,
+        push: PushNotificationRegistrationInteracting
     ) {
-        self.rootInteractor = rootInteractor
-        self.linkInteractor = linkInteractor
-        self.fileInteractor = fileInteractor
-        self.registerDeviceInteractor = registerDeviceInteractor
+        self.mainRepository = mainRepository
+        self.camera = camera
+        self.push = push
         
-        rootInteractor.storageError = { [weak self] error in
+        mainRepository.storageError = { [weak self] error in
             self?.storageError?(error)
         }
     }
 }
 
-extension RootModuleInteractor: RootModuleInteracting {
+extension RootInteractor: RootInteracting {
     var introductionWasShown: Bool {
-        rootInteractor.introductionWasShown
+        mainRepository.introductionWasShown()
     }
     
     var isAuthenticationRequired: Bool {
-        rootInteractor.isAuthenticationRequired
+        mainRepository.securityIsAuthenticationRequired
     }
     
     func initializeApp() {
-        rootInteractor.initializeApp()
-        registerDeviceInteractor.initialize()
+        mainRepository.initialPermissionStateSetChildren([
+            camera, push
+        ])
+        mainRepository.initialPermissionStateInitialize()
     }
     
     func markIntroAsShown() {
-        rootInteractor.markIntroAsShown()
+        mainRepository.setIntroductionAsShown()
+        mainRepository.enableCloudBackup()
     }
     
     func lockApplicationIfNeeded(presentLoginImmediately: @escaping () -> Void) {
-        rootInteractor.lockApplicationIfNeeded(
-            presentLoginImmediately: presentLoginImmediately
-        )
+        mainRepository.securityLockApplication()
+        
+        if mainRepository.securityIsAuthenticationRequired {
+            presentLoginImmediately()
+        }
     }
     
     func applicationWillResignActive() {
-        rootInteractor.applicationWillResignActive()
+        mainRepository.saveStorage()
     }
     
     func applicationWillEnterForeground() {
-        rootInteractor.applicationWillEnterForeground()
-    }
-    
-    func applicationWillTerminate() {
-        rootInteractor.applicationWillTerminate()
+        mainRepository.securityApplicationWillEnterForeground()
+        mainRepository.initialPermissionStateInitialize()
     }
     
     func applicationDidBecomeActive() {
-        rootInteractor.applicationDidBecomeActive()
-    }
-    
-    func shouldHandleURL(url: URL) -> Bool {
-        linkInteractor.shouldHandleURL(url: url) || fileInteractor.shouldHandleURL(url: url)
+        mainRepository.synchronizeBackup()
+        mainRepository.timeVerificationStart()
+        mainRepository.securityApplicationDidBecomeActive()
     }
     
     func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {
-        rootInteractor.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
+        mainRepository.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
     }
     
     func didFailToRegisterForRemoteNotifications(with error: Error) {
-        rootInteractor.didFailToRegisterForRemoteNotifications(with: error)
+        mainRepository.didFailToRegisterForRemoteNotifications(with: error)
     }
     
     func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     ) {
-        rootInteractor.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
+        mainRepository.syncDidReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
+    }
+    
+    func applicationWillTerminate() {
+        mainRepository.saveStorage()
     }
 }

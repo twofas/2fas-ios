@@ -21,8 +21,8 @@ import UIKit
 import Common
 import Data
 
-final class PINPadViewModel {   
-    weak var delegate: PINPadViewControllerProtocol?
+final class LoginPresenter {
+    weak var view: LoginViewControlling?
     
     var cancel: Callback?
     var resetAction: Callback?

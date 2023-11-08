@@ -19,8 +19,14 @@
 
 import UIKit
 
-final class PINPadViewController: UIViewController, PINPadViewControllerProtocol {
-    var viewModel: PINPadViewModel!
+protocol LoginViewControlling: AnyObject {
+    func userWasAuthenticated()
+    func lockUI()
+    func unlockUI()
+}
+
+final class LoginViewController: UIViewController {
+    var presenter: LoginPresenter!
     
     private let verticalMargin: CGFloat = 30
     private let buttonsBottomMargin: CGFloat = 10
@@ -35,9 +41,7 @@ final class PINPadViewController: UIViewController, PINPadViewControllerProtocol
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        viewModel.delegate = self
-        
+                
         view.backgroundColor = Theme.Colors.Fill.background
         
         prepareDescriptionLabel()
@@ -87,12 +91,12 @@ final class PINPadViewController: UIViewController, PINPadViewControllerProtocol
         deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
         
         PINPad.numberButtonAction = numberButtonPressed(number:)
-        viewModel.viewDidLoad()
+        presenter.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.viewWillAppear()
+        presenter.viewWillAppear()
     }
     
     // MARK: - Public API

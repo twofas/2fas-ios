@@ -20,54 +20,58 @@
 import UIKit
 import Data
 
-final class LoginCoordinator: Coordinator, LoginCoordinatorDelegate {
-    weak var loginCoordinatorDelegate: LoginCoordinatorDelegate?
+protocol LoginFlowControllerParent: AnyObject {
+    func closeLogin()
+}
+
+protocol LoginFlowControlling: AnyObject {
+    func toClose()
+    func toAppReset()
+}
+
+final class LoginFlowController: FlowController {
+    private weak var parent: LoginFlowControllerParent?
     
-    private let security: SecurityProtocol
-    private let leftButtonDescription: String?
-    private let rootViewController: ContainerViewController
-    private let showImmediately: Bool
-    
-    init(
-        security: SecurityProtocol,
-        leftButtonDescription: String? = nil,
-        rootViewController: ContainerViewController,
-        showImmediately: Bool
+    static func insertAsChild(
+        into viewController: UIViewController,
+        parent: LoginFlowControllerParent,
+        animated: Bool
     ) {
-        self.security = security
-        self.leftButtonDescription = leftButtonDescription
-        self.rootViewController = rootViewController
-        self.showImmediately = showImmediately
-    }
-    
-    override func start() {
-        // TODO: Implement new login
-//        let appLockStateInteractor = AppLockStateInteractor(mainRepository: MainRepositoryImpl.shared)
-//        let viewModel = LoginViewModel(
-//            security: security,
-//            resetApp: { [weak self] in self?.presentResetAppViewController() },
-//            leftButtonDescription: leftButtonDescription,
-//            appLockStateInteractor: appLockStateInteractor
+//        let view = LoginViewController()
+//        let flowController = VerifyPINFlowController(viewController: view)
+//        flowController.parent = parent
+//        let interactor = ModuleInteractorFactory.shared.loginModuleInteractor()
+//        let presenter = LoginPresenter(
+//            flowController: flowController,
+//            interactor: interactor
 //        )
-//        viewModel.coordinatorDelegate = self
-//        
-//        let login = LoginViewController()
-//        login.viewModel = viewModel
-//        
-//        rootViewController.present(login, immediately: showImmediately, animationType: .alpha)        
+//        view.presenter = presenter
+//        presenter.view = view
+//
+//        view.willMove(toParent: viewController)
+//        viewController.addChild(view)
+//        viewController.view.addSubview(view.view)
+//        view.view.pinToParent()
+//        view.didMove(toParent: viewController)
+//        if animated {
+//            view.view.alpha = 0
+//            UIView.animate(withDuration: Theme.Animations.Timing.quick) {
+//                view.view.alpha = 1
+//            }
+//        }
     }
     
-    func authorized() {
-        parentCoordinatorDelegate?.didFinish()
-        loginCoordinatorDelegate?.authorized()
+    var viewController: LoginViewController {
+        _viewController as! LoginViewController
+    }
+}
+
+extension LoginFlowController: LoginFlowControlling {
+    func toClose() {
+        parent?.closeLogin()
     }
     
-    func cancelled() {
-        parentCoordinatorDelegate?.didFinish()
-        loginCoordinatorDelegate?.cancelled()
-    }
-    
-    private func presentResetAppViewController() {
+    func toAppReset() {
         let contentMiddle = MainContainerMiddleContentGenerator(placement: .centerHorizontallyLimitWidth, elements: [
             .image(name: "ResetShield", size: CGSize(width: 100, height: 100)),
             .extraSpacing,
@@ -83,7 +87,7 @@ final class LoginCoordinator: Coordinator, LoginCoordinatorDelegate {
         let contentBottom = MainContainerBottomContentGenerator(elements: [
             .extraSpacing(),
             .filledButton(text: T.Commons.dismiss, callback: { [weak self] in
-                self?.dismissResetScreen()
+                self?.viewController.dismiss(animated: true)
             })
         ])
         
@@ -98,10 +102,20 @@ final class LoginCoordinator: Coordinator, LoginCoordinatorDelegate {
         let vc = MainContainerViewController()
         vc.configure(with: config)
         vc.isModalInPresentation = true
-        rootViewController.present(vc, animated: true, completion: nil)
-    }
-    
-    private func dismissResetScreen() {
-        rootViewController.dismiss(animated: true, completion: nil)
+        viewController.present(vc, animated: true, completion: nil)
     }
 }
+
+//        let appLockStateInteractor = AppLockStateInteractor(mainRepository: MainRepositoryImpl.shared)
+//        let viewModel = LoginViewModel(
+//            security: security,
+//            resetApp: { [weak self] in self?.presentResetAppViewController() },
+//            leftButtonDescription: leftButtonDescription,
+//            appLockStateInteractor: appLockStateInteractor
+//        )
+//        viewModel.coordinatorDelegate = self
+//
+//        let login = LoginViewController()
+//        login.viewModel = viewModel
+//
+//        rootViewController.present(login, immediately: showImmediately, animationType: .alpha)    

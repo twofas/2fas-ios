@@ -36,32 +36,50 @@ final class LoginFlowController: FlowController {
     
     static func insertAsChild(
         into viewController: UIViewController,
-        parent: LoginFlowControllerParent,
-        loginType: LoginType,
-        animated: Bool
+        parent: LoginFlowControllerParent
+    ) -> UIViewController {
+        let view = LoginViewController()
+        let flowController = LoginFlowController(viewController: view)
+        flowController.parent = parent
+        let interactor = ModuleInteractorFactory.shared.loginModuleInteractor()
+        let presenter = LoginPresenter(
+            loginType: .login,
+            flowController: flowController,
+            interactor: interactor
+        )
+        presenter.view = view
+        view.presenter = presenter
+        
+        view.modalPresentationStyle = .fullScreen
+        view.isModalInPresentation = true
+        view.definesPresentationContext = true
+        
+        view.willMove(toParent: nil)
+        viewController.addChild(view)
+        view.view.pinToParent()
+        view.didMove(toParent: nil)
+        
+        return view
+    }
+    
+    static func present(
+        on viewController: UIViewController,
+        parent: LoginFlowControllerParent
     ) {
-//        let view = LoginViewController()
-//        let flowController = VerifyPINFlowController(viewController: view)
-//        flowController.parent = parent
-//        let interactor = ModuleInteractorFactory.shared.loginModuleInteractor()
-//        let presenter = LoginPresenter(
-//            flowController: flowController,
-//            interactor: interactor
-//        )
-//        view.presenter = presenter
-//        presenter.view = view
-//
-//        view.willMove(toParent: viewController)
-//        viewController.addChild(view)
-//        viewController.view.addSubview(view.view)
-//        view.view.pinToParent()
-//        view.didMove(toParent: viewController)
-//        if animated {
-//            view.view.alpha = 0
-//            UIView.animate(withDuration: Theme.Animations.Timing.quick) {
-//                view.view.alpha = 1
-//            }
-//        }
+        let view = LoginViewController()
+        let flowController = LoginFlowController(viewController: view)
+        flowController.parent = parent
+        let interactor = ModuleInteractorFactory.shared.loginModuleInteractor()
+        let presenter = LoginPresenter(
+            loginType: .verify,
+            flowController: flowController,
+            interactor: interactor
+        )
+        presenter.view = view
+        view.presenter = presenter
+        view.configureAsModal()
+        
+        viewController.present(view, animated: true, completion: nil)
     }
     
     var viewController: LoginViewController {

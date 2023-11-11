@@ -238,4 +238,8 @@ public final class InteractorFactory {
             modifyInteractor: serviceModifyInteractor()
         )
     }
+    
+    public func loginInteractor() -> LoginInteracting {
+        LoginInteractor(security: MainRepositoryImpl.shared.security)
+    }
 }

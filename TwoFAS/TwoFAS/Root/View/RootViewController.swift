@@ -21,7 +21,6 @@ import UIKit
 import CommonUIKit
 
 protocol RootViewControlling: AnyObject {
-    func dismissAllViewControllers()
     func hideAllNotifications()
     func rateApp()
 }
@@ -45,10 +44,6 @@ final class RootViewController: ContainerViewController {
 }
 
 extension RootViewController: RootViewControlling {
-    func dismissAllViewControllers() {
-        UIApplication.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
-    }
-    
     func hideAllNotifications() {
         ToastNotification.hideAll()
     }

@@ -33,7 +33,7 @@ final class RootPresenter {
     
     private var currentState = State.initial {
         didSet {
-            Log("RootCoordinator: new currentState: \(currentState)")
+            Log("RootPresenter: new currentState: \(currentState)")
         }
     }
 
@@ -117,12 +117,16 @@ final class RootPresenter {
         handleViewFlow()
     }
     
+    func handleUserWasLoggedIn() {
+        handleViewFlow()
+    }
+    
     // MARK: - RootCoordinatorDelegate methods
     
     func handleViewFlow() {
         let coldRun = (currentState == .initial)
         
-        Log("RootCoordinator: Changing state for: \(currentState)")
+        Log("RootPresenter: Changing state for: \(currentState)")
         
         if !interactor.introductionWasShown {
             presentIntroduction()
@@ -154,8 +158,6 @@ final class RootPresenter {
         guard currentState != .login else { return }
         changeState(.login)
         
-        view?.dismissAllViewControllers()
-
         Log("Presenting Login")
         flowController.toLogin()
     }

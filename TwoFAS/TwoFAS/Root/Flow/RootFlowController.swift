@@ -31,6 +31,8 @@ protocol RootFlowControlling: AnyObject {
 
 final class RootFlowController: FlowController {
     private weak var parent: RootFlowControllerParent?
+    private weak var loginViewController: UIViewController?
+    private weak var window: UIWindow?
     
     static func setAsRoot(
         in window: UIWindow?,
@@ -39,6 +41,7 @@ final class RootFlowController: FlowController {
         let view = RootViewController()
         let flowController = RootFlowController(viewController: view)
         flowController.parent = parent
+        flowController.window = window
         
         let interactor = ModuleInteractorFactory.shared.rootModuleInteractor()
         let presenter = RootPresenter(
@@ -82,18 +85,14 @@ extension RootFlowController: RootFlowControlling {
     }
     
     func toLogin() {
-        //        let loginCoordinator = LoginCoordinator(
-        //            security: mainRepository.security,
-        //            leftButtonDescription: nil,
-        //            rootViewController: rootViewController,
-        //            showImmediately: immediately
-        //        )
-        //        loginCoordinator.parentCoordinatorDelegate = self
-        //        addChild(loginCoordinator)
-        //        loginCoordinator.start()
+        loginViewController = LoginFlowController.insertAsChild(
+            into: viewController,
+            parent: self
+        )
     }
     
     func toAppLock() {
+        
     }
     
     func toStorageError(error: String) {
@@ -110,3 +109,23 @@ extension RootFlowController { // TODO: Remove when Intro moved to proper arch
 }
 
 extension RootFlowController: MainFlowControllerParent {}
+
+extension RootFlowController: LoginFlowControllerParent {
+    func loginClose() {
+        removeLogin()
+    }
+    
+    func loginLoggedIn() {
+        removeLogin()
+        viewController.presenter.handleUserWasLoggedIn()
+    }
+    
+    private func removeLogin() {
+        viewController.dismiss(animated: false)
+//        loginViewController?.willMove(toParent: nil)
+//        loginViewController?.view.removeFromSuperview()
+//        loginViewController?.removeFromParent()
+//        loginViewController?.didMove(toParent: nil)
+        loginViewController = nil
+    }
+}

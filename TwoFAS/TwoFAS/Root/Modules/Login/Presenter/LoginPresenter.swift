@@ -76,7 +76,7 @@ final class LoginPresenter {
             self?.updateState()
         }
         
-        interactor.correctPIN = { [weak self] in
+        interactor.userWasAuthenticated = { [weak self] in
             self?.flowController.toLoggedIn()
         }
     }

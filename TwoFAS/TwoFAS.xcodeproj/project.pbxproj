@@ -718,6 +718,7 @@
 		C2C93FBD2604005E00E10981 /* MainContainerToggleWithLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C93FBC2604005E00E10981 /* MainContainerToggleWithLabel.swift */; };
 		C2CA2B7D258699DA009FB700 /* FirstCodeAddedStatsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CA2B7C258699DA009FB700 /* FirstCodeAddedStatsController.swift */; };
 		C2CACFBE2AFEC905001E0F8E /* LoginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CACFBD2AFEC905001E0F8E /* LoginType.swift */; };
+		C2CACFC02AFFB7F7001E0F8E /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CACFBF2AFFB7F7001E0F8E /* LoginInteractor.swift */; };
 		C2CB5D3A25DB1C9300A362A9 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CB5D3925DB1C9300A362A9 /* Orientation.swift */; };
 		C2CC0A3A29D0580B00677A7B /* ExternalImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3929D0580B00677A7B /* ExternalImportViewController.swift */; };
 		C2CC0A3C29D05DC900677A7B /* ExternalImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3B29D05DC900677A7B /* ExternalImportPresenter.swift */; };
@@ -2102,6 +2103,7 @@
 		C2C93FBC2604005E00E10981 /* MainContainerToggleWithLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerToggleWithLabel.swift; sourceTree = "<group>"; };
 		C2CA2B7C258699DA009FB700 /* FirstCodeAddedStatsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstCodeAddedStatsController.swift; sourceTree = "<group>"; };
 		C2CACFBD2AFEC905001E0F8E /* LoginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginType.swift; sourceTree = "<group>"; };
+		C2CACFBF2AFFB7F7001E0F8E /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
 		C2CB5D3925DB1C9300A362A9 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
 		C2CC0A3929D0580B00677A7B /* ExternalImportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportViewController.swift; sourceTree = "<group>"; };
 		C2CC0A3B29D05DC900677A7B /* ExternalImportPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportPresenter.swift; sourceTree = "<group>"; };
@@ -2974,6 +2976,7 @@
 				C27CDA7829A2A55100DC7C98 /* NetworkStatusInteractor.swift */,
 				C23736912ABF5EC500792054 /* GuideInteractor.swift */,
 				C212ACDD2AF6F929001C8665 /* RootInteractor.swift */,
+				C2CACFBF2AFFB7F7001E0F8E /* LoginInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -3723,8 +3726,6 @@
 				C2E7C38D2ADB1A2000478D89 /* Interactors */,
 				C2BDC6BE1FC1A87400967D0E /* Root */,
 				C257FD161FDC69B600CF6898 /* DataControllers */,
-				C2147CEE205D8C620001D011 /* Login */,
-				C2147CCC205D7B430001D011 /* PINPad */,
 				C2BDC6CD1FC1CBB700967D0E /* Common */,
 				C2BDC6BF1FC1ABF600967D0E /* Other */,
 			);
@@ -5868,6 +5869,7 @@
 		C2BDC6CD1FC1CBB700967D0E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C2147CCC205D7B430001D011 /* PINPad */,
 				C2D50B5325C719EC00CBB959 /* Camera */,
 				C2C1513E294E6AAF00F8B511 /* DEPRECATED */,
 				C21675C32808C71000D43EDD /* DateFormatters */,
@@ -6111,6 +6113,7 @@
 		C2C66F8C1FE0683000AD5A1C /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				C2147CEE205D8C620001D011 /* Login */,
 				C20E2DED2A7C4A3D00DB64BB /* AddingService */,
 				C2D75D38297DA07B0002531E /* Main */,
 				C235A00B298FD8BF008F4FD0 /* MainSplit */,
@@ -8508,6 +8511,7 @@
 				C2E7C3C42ADB2B9C00478D89 /* MainRepository.swift in Sources */,
 				C2E7C3EE2ADB2BB400478D89 /* FileInteractor.swift in Sources */,
 				C2AE5F5F2ADC370F00AED670 /* ShortDateTimeFormatter.swift in Sources */,
+				C2CACFC02AFFB7F7001E0F8E /* LoginInteractor.swift in Sources */,
 				C274C76F2ADD3C9C00B8AAC1 /* TokenHandler.swift in Sources */,
 				C2E7C4172ADB2BE500478D89 /* AEGISData.swift in Sources */,
 				C2E7C3E72ADB2BB400478D89 /* ServiceDefinitionInteractor.swift in Sources */,

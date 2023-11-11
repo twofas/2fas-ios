@@ -98,7 +98,7 @@ extension LoginViewController: LoginViewControlling {
         }
         
         if let buttonTitle = leftButtonTitle {
-            decorateButtonText(withButton: leftButton, text: title)
+            decorateButtonText(withButton: leftButton, text: buttonTitle)
             showCloseButton()
         }
         

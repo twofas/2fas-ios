@@ -92,21 +92,7 @@ extension ComposeServiceFlowController: ComposeServiceFlowControlling {
     }
     
     func toLogin() {
-        // TODO: Implement new lock state
-//        let appLockStateInteractor = AppLockStateInteractor(mainRepository: MainRepositoryImpl.shared)
-//        let viewModel = LoginViewModel(
-//            security: MainRepositoryImpl.shared.security,
-//            leftButtonDescription: T.Commons.cancel,
-//            appLockStateInteractor: appLockStateInteractor
-//        )
-//        viewModel.coordinatorDelegate = self
-//        
-//        let vc = LoginViewController()
-//        vc.viewModel = viewModel
-//        
-//        vc.configureAsModal()
-//        
-//        viewController.present(vc, animated: true, completion: nil)
+        LoginFlowController.present(on: viewController, parent: self)
     }
     
     func toSetPIN() {
@@ -213,13 +199,13 @@ extension ComposeServiceFlowController: TrashServiceFlowControllerParent {
     }
 }
 
-extension ComposeServiceFlowController: LoginCoordinatorDelegate {
-    func authorized() {
-        viewController.presenter.handleAuthorized()
+extension ComposeServiceFlowController: LoginFlowControllerParent {
+    func loginClose() {
         dismiss()
     }
     
-    func cancelled() {
+    func loginLoggedIn() {
+        viewController.presenter.handleAuthorized()
         dismiss()
     }
 }

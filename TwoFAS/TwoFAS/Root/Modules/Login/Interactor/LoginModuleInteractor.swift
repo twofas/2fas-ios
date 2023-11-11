@@ -21,11 +21,6 @@ import UIKit
 import Common
 import Data
 
-protocol LoginCoordinatorDelegate: AnyObject {
-    func authorized()
-    func cancelled()
-}
-
 protocol LoginModuleInteracting: AnyObject {
     var isLocked: Bool { get }
     var isAfterWrongPIN: Bool { get }
@@ -35,7 +30,7 @@ protocol LoginModuleInteracting: AnyObject {
     func checkBio()
     
     var updateState: Callback? { get set }
-    var correctPIN: Callback? { get set }
+    var userWasAuthenticated: Callback? { get set }
     
     var codeLength: Int { get }
     var hasInput: Bool { get }
@@ -48,7 +43,7 @@ protocol LoginModuleInteracting: AnyObject {
 
 final class LoginModuleInteractor {
     var updateState: Callback?
-    var correctPIN: Callback?
+    var userWasAuthenticated: Callback?
     
     private var numbers: [Int] = []
     private(set) var isLocked = false
@@ -57,43 +52,46 @@ final class LoginModuleInteractor {
     private let textChangeTime: Int = 3
     
     private let timer = CountdownTimer()
-    //    private let appLockStateInteractor: AppLockStateInteracting
-
-    fileprivate let security: SecurityProtocol
+    
+    private let loginInteractor: LoginInteracting
+    private let appLockStateInteractor: AppLockStateInteracting
 
     init(
-        security: SecurityProtocol,
-        resetApp: Callback? = nil,
-        leftButtonDescription: String? = nil,
+        loginInteractor: LoginInteracting,
         appLockStateInteractor: AppLockStateInteracting
     ) {
-        self.security = security
-        //        self.appLockStateInteractor = appLockStateInteractor
+        self.loginInteractor = loginInteractor
+        self.appLockStateInteractor = appLockStateInteractor
                 
         timer.timerFinished = { [weak self] in
             DispatchQueue.main.async {
                 self?.timerFinished()
             }
         }
+        
+        loginInteractor.bioAuth = { [weak self] in self?.checkBio() }
+        loginInteractor.lock = { [weak self] in self?.lock() }
+        loginInteractor.unlock = { [weak self] in self?.unlock() }
+        loginInteractor.userWasAuthenticated = { [weak self] in self?.userWasAuthenticated?() }
     }
     
     func checkState() {
-        isLocked = !security.canAuthorize
+        isLocked = loginInteractor.isLocked
     }
     
     func checkBio() {
-        guard security.canAuthorize && UIApplication.shared.applicationState != .background else { return }
-        security.authenticateUsingBioAuthIfPossible(reason: T.Security.confirmYouAreDeviceOwner)
+        guard !loginInteractor.isLocked && UIApplication.shared.applicationState != .background else { return }
+        loginInteractor.authenticateUsingBioAuthIfPossible(reason: T.Security.confirmYouAreDeviceOwner)
     }
 }
 
 extension LoginModuleInteractor: LoginModuleInteracting {
     var lockTime: Int? {
-        nil //appLockStateInteractor.appLockRemainingSeconds
+        appLockStateInteractor.appLockRemainingSeconds
     }
     
     var codeLength: Int {
-        0 // interactor -> security.currentCodeType.intValue
+        loginInteractor.codeLength
     }
     
     var hasInput: Bool {
@@ -127,16 +125,16 @@ private extension LoginModuleInteractor {
     
     func verify() {
         let code = PIN.create(with: numbers)
-        let codeIsCorrect = security.verifyPIN(code)
+        let codeIsCorrect = loginInteractor.verifyPIN(code)
         if codeIsCorrect {
-            security.authSuccessfully()
-            correctPIN?()
+            loginInteractor.authSuccessfully()
+            userWasAuthenticated?()
         } else {
             clear()
             isAfterWrongPIN = true
             timer.start(with: textChangeTime)
             updateState?()
-            security.authFailed()
+            loginInteractor.authFailed()
         }
     }
     
@@ -160,27 +158,3 @@ private extension LoginModuleInteractor {
         updateState?()
     }
 }
-
-//extension LoginViewModel: SecurityDelegate {
-//    func securityBioAuthSuccess() {
-//        security.authSuccessfully()
-//        delegate?.userWasAuthenticated()
-//    }
-//    
-//    func securityBioAuthFailure() {
-//        // use code instead. Do nothing
-//    }
-//    
-//    func securityLockUI() {
-//        delegate?.lockUI()
-//    }
-//    
-//    func securityUnlockUI() {
-//        delegate?.unlockUI()
-//    }
-//    
-//    func retryBioAuthIfNecessary() {
-//        guard security.canAuthorize else { return }
-//        bioAuth()
-//    }
-//}

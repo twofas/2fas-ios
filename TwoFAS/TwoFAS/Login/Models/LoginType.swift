@@ -19,7 +19,7 @@
 
 import Foundation
 
-protocol LoginCoordinatorDelegate: AnyObject {
-    func authorized()
-    func cancelled()
+enum LoginType {
+    case login
+    case verify
 }

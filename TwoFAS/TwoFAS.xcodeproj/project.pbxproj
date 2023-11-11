@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C2000F4D217C87970020CA0B /* LoginCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2000F4C217C87970020CA0B /* LoginCoordinatorDelegate.swift */; };
 		C200E49E1FB3911B00D7C748 /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = C200E49C1FB3911B00D7C748 /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C200E4A11FB3911B00D7C748 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C200E4A21FB3911B00D7C748 /* Storage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -82,17 +81,13 @@
 		C2147CC8205D787A0001D011 /* CodeStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CC3205D78790001D011 /* CodeStorage.swift */; };
 		C2147CC9205D787A0001D011 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CC4205D78790001D011 /* Extensions.swift */; };
 		C2147CCA205D787A0001D011 /* BiometricAuthDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CC5205D78790001D011 /* BiometricAuthDelegate.swift */; };
-		C2147CD0205D7B520001D011 /* PINPadViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CCD205D7B510001D011 /* PINPadViewControllerProtocol.swift */; };
 		C2147CD1205D7B520001D011 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CCE205D7B510001D011 /* LoginViewController.swift */; };
-		C2147CD9205D7B630001D011 /* PINPadVerifyPINDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CD4205D7B620001D011 /* PINPadVerifyPINDataModel.swift */; };
 		C2147CDA205D7B630001D011 /* PINPadCodeDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CD5205D7B630001D011 /* PINPadCodeDots.swift */; };
-		C2147CDB205D7B630001D011 /* PINPadDataModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CD6205D7B630001D011 /* PINPadDataModelProtocol.swift */; };
 		C2147CDD205D7B630001D011 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CD8205D7B630001D011 /* LoginPresenter.swift */; };
-		C2147CE3205D7B790001D011 /* PINPadScreenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CDF205D7B780001D011 /* PINPadScreenData.swift */; };
 		C2147CE4205D7B790001D011 /* PINPadCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CE0205D7B780001D011 /* PINPadCircleView.swift */; };
 		C2147CE5205D7B790001D011 /* PINPadKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CE1205D7B780001D011 /* PINPadKey.swift */; };
 		C2147CE6205D7B790001D011 /* PINPadKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CE2205D7B780001D011 /* PINPadKeyboard.swift */; };
-		C2147CF2205D8C6C0001D011 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CEF205D8C6B0001D011 /* LoginViewModel.swift */; };
+		C2147CF2205D8C6C0001D011 /* LoginModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CEF205D8C6B0001D011 /* LoginModuleInteractor.swift */; };
 		C2153BC21FE9ABA6005FD297 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2153BBE1FE9ABA6005FD297 /* CameraViewController.swift */; };
 		C2153BC31FE9ABA6005FD297 /* CameraViewModelProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2153BBF1FE9ABA6005FD297 /* CameraViewModelProtocols.swift */; };
 		C2153BC51FE9B2BF005FD297 /* CameraActiveArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2153BC41FE9B2BF005FD297 /* CameraActiveArea.swift */; };
@@ -722,6 +717,7 @@
 		C2C93FA12603F87100E10981 /* MainContainerDecoratedVerticalContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C93FA02603F87100E10981 /* MainContainerDecoratedVerticalContainer.swift */; };
 		C2C93FBD2604005E00E10981 /* MainContainerToggleWithLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C93FBC2604005E00E10981 /* MainContainerToggleWithLabel.swift */; };
 		C2CA2B7D258699DA009FB700 /* FirstCodeAddedStatsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CA2B7C258699DA009FB700 /* FirstCodeAddedStatsController.swift */; };
+		C2CACFBE2AFEC905001E0F8E /* LoginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CACFBD2AFEC905001E0F8E /* LoginType.swift */; };
 		C2CB5D3A25DB1C9300A362A9 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CB5D3925DB1C9300A362A9 /* Orientation.swift */; };
 		C2CC0A3A29D0580B00677A7B /* ExternalImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3929D0580B00677A7B /* ExternalImportViewController.swift */; };
 		C2CC0A3C29D05DC900677A7B /* ExternalImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3B29D05DC900677A7B /* ExternalImportPresenter.swift */; };
@@ -1303,7 +1299,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C2000F4C217C87970020CA0B /* LoginCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		C200E49A1FB3911B00D7C748 /* Storage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Storage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C200E49C1FB3911B00D7C748 /* Storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
 		C200E49D1FB3911B00D7C748 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1396,19 +1391,15 @@
 		C2147CC3205D78790001D011 /* CodeStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeStorage.swift; sourceTree = "<group>"; };
 		C2147CC4205D78790001D011 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C2147CC5205D78790001D011 /* BiometricAuthDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricAuthDelegate.swift; sourceTree = "<group>"; };
-		C2147CCD205D7B510001D011 /* PINPadViewControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINPadViewControllerProtocol.swift; sourceTree = "<group>"; };
 		C2147CCE205D7B510001D011 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		C2147CD4205D7B620001D011 /* PINPadVerifyPINDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINPadVerifyPINDataModel.swift; sourceTree = "<group>"; };
 		C2147CD5205D7B630001D011 /* PINPadCodeDots.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINPadCodeDots.swift; sourceTree = "<group>"; };
-		C2147CD6205D7B630001D011 /* PINPadDataModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINPadDataModelProtocol.swift; sourceTree = "<group>"; };
 		C2147CD8205D7B630001D011 /* LoginPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
-		C2147CDF205D7B780001D011 /* PINPadScreenData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINPadScreenData.swift; sourceTree = "<group>"; };
 		C2147CE0205D7B780001D011 /* PINPadCircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINPadCircleView.swift; sourceTree = "<group>"; };
 		C2147CE1205D7B780001D011 /* PINPadKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINPadKey.swift; sourceTree = "<group>"; };
 		C2147CE2205D7B780001D011 /* PINPadKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINPadKeyboard.swift; sourceTree = "<group>"; };
 		C2147CE8205D7FC90001D011 /* Security.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Security.swift; sourceTree = "<group>"; };
 		C2147CE9205D7FC90001D011 /* SecurityProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityProtocol.swift; sourceTree = "<group>"; };
-		C2147CEF205D8C6B0001D011 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		C2147CEF205D8C6B0001D011 /* LoginModuleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModuleInteractor.swift; sourceTree = "<group>"; };
 		C2153BBE1FE9ABA6005FD297 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		C2153BBF1FE9ABA6005FD297 /* CameraViewModelProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewModelProtocols.swift; sourceTree = "<group>"; };
 		C2153BC41FE9B2BF005FD297 /* CameraActiveArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraActiveArea.swift; sourceTree = "<group>"; };
@@ -2110,6 +2101,7 @@
 		C2C93FA02603F87100E10981 /* MainContainerDecoratedVerticalContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerDecoratedVerticalContainer.swift; sourceTree = "<group>"; };
 		C2C93FBC2604005E00E10981 /* MainContainerToggleWithLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerToggleWithLabel.swift; sourceTree = "<group>"; };
 		C2CA2B7C258699DA009FB700 /* FirstCodeAddedStatsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstCodeAddedStatsController.swift; sourceTree = "<group>"; };
+		C2CACFBD2AFEC905001E0F8E /* LoginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginType.swift; sourceTree = "<group>"; };
 		C2CB5D3925DB1C9300A362A9 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
 		C2CC0A3929D0580B00677A7B /* ExternalImportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportViewController.swift; sourceTree = "<group>"; };
 		C2CC0A3B29D05DC900677A7B /* ExternalImportPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportPresenter.swift; sourceTree = "<group>"; };
@@ -2570,6 +2562,7 @@
 		C20629F92AF98611003BFC21 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
+				C2147CEF205D8C6B0001D011 /* LoginModuleInteractor.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -3112,7 +3105,6 @@
 		C2147CCC205D7B430001D011 /* PINPad */ = {
 			isa = PBXGroup;
 			children = (
-				C2AB92C027664A6200698382 /* DEPRECATED */,
 				C2147CDE205D7B6C0001D011 /* KeyboardSubviews */,
 				C2AB92BE2766342900698382 /* PINKeyboardViewController.swift */,
 				C2AB92C127664B9200698382 /* PINKeyboardPresenter.swift */,
@@ -3143,12 +3135,11 @@
 		C2147CEE205D8C620001D011 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				C2CACFBC2AFEC8EB001E0F8E /* Models */,
 				C20629FA2AF98617003BFC21 /* Flow */,
 				C20629F92AF98611003BFC21 /* Interactor */,
 				C20629F82AF9860A003BFC21 /* Presenter */,
 				C20629F72AF98373003BFC21 /* View */,
-				C2147CEF205D8C6B0001D011 /* LoginViewModel.swift */,
-				C2000F4C217C87970020CA0B /* LoginCoordinatorDelegate.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -5314,17 +5305,6 @@
 			path = Flow;
 			sourceTree = "<group>";
 		};
-		C2AB92C027664A6200698382 /* DEPRECATED */ = {
-			isa = PBXGroup;
-			children = (
-				C2147CD6205D7B630001D011 /* PINPadDataModelProtocol.swift */,
-				C2147CD4205D7B620001D011 /* PINPadVerifyPINDataModel.swift */,
-				C2147CCD205D7B510001D011 /* PINPadViewControllerProtocol.swift */,
-				C2147CDF205D7B780001D011 /* PINPadScreenData.swift */,
-			);
-			path = DEPRECATED;
-			sourceTree = "<group>";
-		};
 		C2AB92C3276651C000698382 /* ExporterPIN */ = {
 			isa = PBXGroup;
 			children = (
@@ -6148,6 +6128,14 @@
 				C2E5482821831244001AD1A5 /* TrashService */,
 			);
 			path = Modules;
+			sourceTree = "<group>";
+		};
+		C2CACFBC2AFEC8EB001E0F8E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C2CACFBD2AFEC905001E0F8E /* LoginType.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		C2CB5D1125DB1B7E00A362A9 /* External */ = {
@@ -7782,7 +7770,6 @@
 				C2F4D9392A8D33FA00608F63 /* AddServiceAdvancedWarningView.swift in Sources */,
 				C26764B02872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift in Sources */,
 				C28633AD1FF57C8600C8F4B4 /* Types.swift in Sources */,
-				C2000F4D217C87970020CA0B /* LoginCoordinatorDelegate.swift in Sources */,
 				C2ABA1CC24B24B7F008426D1 /* TokensViewController+ContextMenu.swift in Sources */,
 				C2A70682276D390500885D79 /* NewPINPresenter.swift in Sources */,
 				C2E948AD23B666BD003BDCC1 /* UnderscoredInput.swift in Sources */,
@@ -7895,7 +7882,7 @@
 				C25B221627C181690052AAC4 /* ComposeServiceInputCellKind.swift in Sources */,
 				C2A7946027F9071F00E5C641 /* BrowserExtensionServicePresenter.swift in Sources */,
 				C267315A299AC9C40031DE09 /* LargeNavigationController.swift in Sources */,
-				C2147CF2205D8C6C0001D011 /* LoginViewModel.swift in Sources */,
+				C2147CF2205D8C6C0001D011 /* LoginModuleInteractor.swift in Sources */,
 				C2AB92E127668DE700698382 /* ShareActivityController.swift in Sources */,
 				C2AC22062766152C00271402 /* ExporterMainScreenViewController.swift in Sources */,
 				C23FD50A2814635400E4E9C5 /* ComposeServiceWebExtensionFlowController.swift in Sources */,
@@ -7970,7 +7957,6 @@
 				C2FC422123AA902700320ABE /* PresentableType.swift in Sources */,
 				C21A9E9C27CC0F6200FE4CC4 /* ComposeServiceAlgorithmViewController.swift in Sources */,
 				C20E2DFE2A7C4DE000DB64BB /* AddingServiceMainFlowController.swift in Sources */,
-				C2147CD9205D7B630001D011 /* PINPadVerifyPINDataModel.swift in Sources */,
 				C2CC80D827B99B0600294CF2 /* ComposeServicePresenter.swift in Sources */,
 				C2727D55278207D000B8FA03 /* TrashViewEmptyScreen.swift in Sources */,
 				C23B899D27C2B4950028FE34 /* ComposeServiceBadgeColorView.swift in Sources */,
@@ -8123,7 +8109,6 @@
 				C2625F8E28BB858600D84C5C /* AboutPresenter.swift in Sources */,
 				C207324929F724AB00FB294E /* TokensAdditionalInfo.swift in Sources */,
 				C2EC83DE21E69B4800DF5C49 /* ViewTheme.swift in Sources */,
-				C2147CD0205D7B520001D011 /* PINPadViewControllerProtocol.swift in Sources */,
 				C240484C276522320076376E /* WidgetWarningFlowController.swift in Sources */,
 				C2625F8C28BB853D00D84C5C /* AboutViewController.swift in Sources */,
 				C2B5BF572946169D00E5092D /* TokensLinkAction.swift in Sources */,
@@ -8144,7 +8129,6 @@
 				C2BD85DC26402A910087D087 /* IntroductionContainerView.swift in Sources */,
 				C2DDEB25289F3D5200011712 /* TokensViewEmptyListScreen.swift in Sources */,
 				C26D4F542A856F590025E5BA /* AddingServiceTokenPresenter.swift in Sources */,
-				C2147CDB205D7B630001D011 /* PINPadDataModelProtocol.swift in Sources */,
 				C2C02244297F224700D596A8 /* MainModuleInteractor.swift in Sources */,
 				C24590FA280F54400079C21C /* SelectServiceModels.swift in Sources */,
 				C274BDC42769425900EE28BC /* AppSecurityPresenter+Menu.swift in Sources */,
@@ -8232,7 +8216,6 @@
 				C2EA567128569ADD00026BFE /* AskForAuthFlowController.swift in Sources */,
 				C2AE5F542ADC1A0D00AED670 /* PINType+.swift in Sources */,
 				C20E2E0B2A7C52AA00DB64BB /* AddingServiceMainPresenter.swift in Sources */,
-				C2147CE3205D7B790001D011 /* PINPadScreenData.swift in Sources */,
 				C2A74FF52610DDF5007E5AB3 /* Array+.swift in Sources */,
 				C2CC0A3C29D05DC900677A7B /* ExternalImportPresenter.swift in Sources */,
 				C2FF3EEC27B1CF0100642FA4 /* IconSelectorModels.swift in Sources */,
@@ -8286,6 +8269,7 @@
 				C29626B8236F80A200C133BC /* Animate.swift in Sources */,
 				C21A9E8427CBF75E00FE4CC4 /* ComposeServiceNumberOfDigitsPresenter.swift in Sources */,
 				C2830D7E293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegate.swift in Sources */,
+				C2CACFBE2AFEC905001E0F8E /* LoginType.swift in Sources */,
 				C2B077C2292A920B0074517F /* UploadLogsFailurePresenter.swift in Sources */,
 				C20E578F292976DA002B215B /* UUIDInputField.swift in Sources */,
 				C21851422A1AC77900A8352A /* TokensHOTPCompactCell.swift in Sources */,

@@ -21,11 +21,13 @@ import UIKit
 import Data
 
 protocol LoginFlowControllerParent: AnyObject {
-    func closeLogin()
+    func loginClose()
+    func loginLoggedIn()
 }
 
 protocol LoginFlowControlling: AnyObject {
     func toClose()
+    func toLoggedIn()
     func toAppReset()
 }
 
@@ -35,6 +37,7 @@ final class LoginFlowController: FlowController {
     static func insertAsChild(
         into viewController: UIViewController,
         parent: LoginFlowControllerParent,
+        loginType: LoginType,
         animated: Bool
     ) {
 //        let view = LoginViewController()
@@ -68,7 +71,11 @@ final class LoginFlowController: FlowController {
 
 extension LoginFlowController: LoginFlowControlling {
     func toClose() {
-        parent?.closeLogin()
+        parent?.loginClose()
+    }
+    
+    func toLoggedIn() {
+        parent?.loginLoggedIn()
     }
     
     func toAppReset() {
@@ -105,17 +112,3 @@ extension LoginFlowController: LoginFlowControlling {
         viewController.present(vc, animated: true, completion: nil)
     }
 }
-
-//        let appLockStateInteractor = AppLockStateInteractor(mainRepository: MainRepositoryImpl.shared)
-//        let viewModel = LoginViewModel(
-//            security: security,
-//            resetApp: { [weak self] in self?.presentResetAppViewController() },
-//            leftButtonDescription: leftButtonDescription,
-//            appLockStateInteractor: appLockStateInteractor
-//        )
-//        viewModel.coordinatorDelegate = self
-//
-//        let login = LoginViewController()
-//        login.viewModel = viewModel
-//
-//        rootViewController.present(login, immediately: showImmediately, animationType: .alpha)    

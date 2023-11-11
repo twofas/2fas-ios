@@ -41,7 +41,7 @@ class PINKeyboardPresenter {
     }()
     
     var passcode: String {
-        numbers.concateToPostionString()
+        numbers.concateToPositionString()
     }
     
     init() {

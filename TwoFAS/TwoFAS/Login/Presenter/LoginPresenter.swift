@@ -30,145 +30,130 @@ final class LoginPresenter {
     private let twoMinutes = 120
     private let minute = 60
     
-    private var numbers: [Int] = []
     private var isLocked = false
-
-    private let dataModel: PINPadDataModelProtocol
     
-    private let timer = CountdownTimer()
-    private let appLockStateInteractor: AppLockStateInteracting
-
-    private let textChangeTime: Int = 3
-    
-    init(dataModel: PINPadDataModelProtocol, appLockStateInteractor: AppLockStateInteracting) {
-        self.dataModel = dataModel
-        self.appLockStateInteractor = appLockStateInteractor
-        
-        dataModel.invalidInput = { [weak self] in self?.invalidInput() }
-        timer.timerFinished = { [weak self] in
-            DispatchQueue.main.async {
-                self?.prepareScreenWithNormalData()
-                VoiceOver.say(dataModel.screenTitle)
-            }
+    private var screenTitle: String {
+        switch loginType {
+        case .verify: T.Security.enterCurrentPin
+        case .login: T.Security.enterPin
         }
     }
     
-    // MARK: PINPadViewControllerProtocol implementation
-    
-    func leftButtonPressed() {       
-        cancel?()
+    private var leftButtonTitle: String? {
+        switch loginType {
+        case .login: nil
+        case .verify: T.Commons.cancel
+        }
     }
     
-    func deleteButtonPressed() {    
-        deleteNumber()
+    private var showReset: Bool {
+        switch loginType {
+        case .login: true
+        case .verify: false
+        }
     }
     
-    func numberButtonPressed(number: Int) {       
-        insertNumber(number)
+    private var lockTimeMessage: String {
+        if let lockTime = interactor.lockTime {
+            if lockTime < twoMinutes {
+                return T.Security.tooManyAttemptsError2
+            }
+            return T.Security.tooManyAttemptsTryAgainAfter("\(lockTime / minute)")
+        }
+        return T.Security.tooManyAttemptsError
     }
+    
+    private let loginType: LoginType
+    private let flowController: LoginFlowControlling
+    private let interactor: LoginModuleInteracting
+    
+    init(loginType: LoginType, flowController: LoginFlowControlling, interactor: LoginModuleInteracting) {
+        self.loginType = loginType
+        self.flowController = flowController
+        self.interactor = interactor
+        
+        interactor.updateState = { [weak self] in
+            self?.updateState()
+        }
+        
+        interactor.correctPIN = { [weak self] in
+            self?.flowController.toLoggedIn()
+        }
+    }
+    
+    // MARK: - User actions
+    
+    func onClose() {
+        flowController.toClose()
+    }
+    
+    func onDelete() {
+        interactor.deleteNumber()
+        updateState()
+    }
+    
+    func onReset() {
+        interactor.reset()
+        updateState()
+        flowController.toAppReset()
+    }
+    
+    func onNumberInput(_ number: Int) {
+        interactor.addNumber(number)
+        updateState()
+    }
+    
+    // MARK: - VC Flow
     
     func viewDidLoad() {
-        delegate?.setDots(number: dataModel.codeLength)
+        view?.setDots(number: interactor.codeLength)
     }
     
-    func viewWillAppear() {       
-        guard !isLocked else { return }
-        
-        prepareInitialState()
+    func viewWillAppear() {
+        interactor.checkState()
+        updateState()
     }
     
-    func lock() {       
-        isLocked = true
-        let lockTimeMessage: String = {
-            if let lockTime = appLockStateInteractor.appLockRemainingSeconds {
-                if lockTime < twoMinutes {
-                    return T.Security.tooManyAttemptsError2
-                }
-                return T.Security.tooManyAttemptsTryAgainAfter("\(lockTime / minute)")
-            }
-            return  T.Security.tooManyAttemptsError
-        }()
-        numbers = []
-        delegate?.emptyDots()
-        delegate?.lock(withMessage: lockTimeMessage)
-        delegate?.hideLeftButton()
-        delegate?.hideRightButton()
+    func viewDidAppear() {
+        interactor.checkBio()
     }
-    
-    func unlock() {       
-        isLocked = false
-        delegate?.unlock()
-        prepareInitialState()
-    }
-    
-    func reset() {
-        resetAction?()
-    }
-    
-    // MARK: - Private methods
-    
-    private func prepareInitialState() {       
-        numbers = []
-        delegate?.emptyDots()
-        delegate?.hideLeftButton()
-        delegate?.hideRightButton()
-        
-        if resetAction != nil {
-            delegate?.showReset()
-        }
-        prepareScreenWithNormalData()
-    }
-    
-    private func deleteNumber() {       
-        _ = numbers.popLast()
-        delegate?.fillDots(count: numbers.count)
-        if numbers.isEmpty {
-            delegate?.hideRightButton()
-        }
-    }
-    
-    private func insertNumber(_ number: Int) {       
-        if numbers.isEmpty {
-            delegate?.showDeleteButton()
+}
+
+private extension LoginPresenter {
+    func updateState() {
+        if interactor.isLocked {
+            view?.emptyDots()
+            view?.hideNavigation()
+            view?.lock(with: lockTimeMessage)
+            return
         }
         
-        numbers.append(number)
+        view?.unlock()
         
-        delegate?.fillDots(count: numbers.count)
-        
-        if numbers.count == dataModel.codeLength {
-            dataModel.PINGathered(numbers: self.numbers)
+        if interactor.inputCount > 0 {
+            view?.showDeleteButton()
+            view?.fillDots(count: interactor.inputCount)
+        } else {
+            view?.hideDeleteButton()
+            view?.emptyDots()
         }
-    }
-    
-    private func invalidInput() {
-        guard !isLocked else { return }
-        numbers = []
-        delegate?.hideRightButton()
-        delegate?.emptyDots()
-        delegate?.shakeDots()
-        prepareScreenWithError()
-    }
-    
-    private func prepareScreenWithNormalData() {
-        guard !isLocked else { return }
-        let screenData = PINPadScreenData(
-            screenTitle: dataModel.screenTitle,
-            buttonTitle: dataModel.leftButton,
-            titleType: .normal
+        
+        if interactor.isAfterWrongPIN {
+            view?.shakeDots()
+            view?.prepareScreen(
+                with: T.Security.incorrectPIN,
+                isError: true,
+                showReset: showReset,
+                leftButtonTitle: leftButtonTitle
+            )
+            return
+        }
+        
+        view?.prepareScreen(
+            with: screenTitle,
+            isError: false,
+            showReset: showReset,
+            leftButtonTitle: leftButtonTitle
         )
-        delegate?.prepareScreen(withScreenData: screenData)
-    }
-    
-    private func prepareScreenWithError() {
-        let screenData = PINPadScreenData(
-            screenTitle: T.Security.incorrectPIN,
-            buttonTitle: dataModel.leftButton,
-            titleType: .error
-        )
-        VoiceOver.say(T.Security.incorrectPIN)
-        delegate?.prepareScreen(withScreenData: screenData)
-        
-        timer.start(with: textChangeTime)
     }
 }

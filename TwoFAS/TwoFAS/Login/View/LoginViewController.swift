@@ -20,9 +20,20 @@
 import UIKit
 
 protocol LoginViewControlling: AnyObject {
-    func userWasAuthenticated()
-    func lockUI()
-    func unlockUI()
+    func prepareScreen(with title: String, isError: Bool, showReset: Bool, leftButtonTitle: String?)
+    
+    func setDots(number: Int)
+    func fillDots(count: Int)
+    func emptyDots()
+    func shakeDots()
+    
+    func showDeleteButton()
+    func hideDeleteButton()
+    
+    func hideNavigation()
+    
+    func lock(with message: String)
+    func unlock()
 }
 
 final class LoginViewController: UIViewController {
@@ -41,27 +52,124 @@ final class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         view.backgroundColor = Theme.Colors.Fill.background
         
         prepareDescriptionLabel()
-        
-        let views = [titleLabel, dots, PINPad, leftButton, deleteButton]
-        UIView.prepareViewsForAutoLayout(withViews: views, superview: view)
         
         let image = Asset.deleteCodeButton.image
             .withRenderingMode(.alwaysTemplate)
         deleteButton.setImage(image, for: .normal)
         deleteButton.tintColor = Theme.Colors.Controls.inactive
+        deleteButton.accessibilityLabel = T.Voiceover.deleteButton
+        
+        setupLayout(imageWidth: image.size.width)
+        
+        leftButton.addTarget(self, action: #selector(leftButtonPressed), for: .touchUpInside)
+        deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
+        
+        PINPad.numberButtonAction = { [weak self] number in
+            self?.numberButtonPressed(number: number)
+        }
+        
+        presenter.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter.viewWillAppear()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presenter.viewDidAppear()
+    }
+}
+
+extension LoginViewController: LoginViewControlling {
+    func prepareScreen(with title: String, isError: Bool, showReset: Bool, leftButtonTitle: String?) {
+        titleLabel.text = title
+        VoiceOver.say(title)
+        
+        if isError {
+            titleLabel.textColor = Theme.Colors.Text.theme
+        } else {
+            titleLabel.textColor = Theme.Colors.Text.main
+        }
+        
+        if let buttonTitle = leftButtonTitle {
+            decorateButtonText(withButton: leftButton, text: title)
+            showCloseButton()
+        }
+        
+        if showReset {
+            showResetButton()
+        }
+    }
+    
+    func setDots(number: Int) {
+        dots.setDots(number: number)
+    }
+    
+    func fillDots(count: Int) {
+        dots.fillDots(count: count, animated: true)
+    }
+    
+    func emptyDots() {
+        dots.emptyDots(animated: true)
+    }
+    
+    func shakeDots() {
+        dots.shake()
+    }
+    
+    func showDeleteButton() {
+        deleteButton.isHidden = false
+    }
+    
+    func hideDeleteButton() {
+        deleteButton.isHidden = true
+    }
+    
+    func lock(with message: String) {
+        dots.alpha = Theme.Alpha.disabledElement
+        PINPad.isUserInteractionEnabled = false
+        PINPad.alpha = Theme.Alpha.disabledElement
+        titleLabel.text = message
+        VoiceOver.say(message)
+    }
+    
+    func unlock() {
+        dots.alpha = 1
+        PINPad.isUserInteractionEnabled = true
+        PINPad.alpha = 1
+    }
+    
+    func hideNavigation() {
+        hideCloseButton()
+        hideDeleteButton()
+    }
+}
+
+private extension LoginViewController {
+    func showCloseButton() {
+        leftButton.isHidden = false
+    }
+    
+    func hideCloseButton() {
+        leftButton.isHidden = true
+    }
+    
+    func setupLayout(imageWidth: CGFloat) {
+        let views = [titleLabel, dots, PINPad, leftButton, deleteButton]
+        UIView.prepareViewsForAutoLayout(withViews: views, superview: view)
         
         let keySize = Theme.Metrics.PINButtonDimensionLarge
-        let deleteButtonOffset = round((keySize - image.size.width) / 2.0)
+        let deleteButtonOffset = round((keySize - imageWidth) / 2.0)
         
         let topGuide = UILayoutGuide()
         let bottomGuide = UILayoutGuide()
-        
-        deleteButton.accessibilityLabel = T.Voiceover.deleteButton
-        
+                
         view.addLayoutGuide(topGuide)
         view.addLayoutGuide(bottomGuide)
         
@@ -86,123 +194,9 @@ final class LoginViewController: UIViewController {
             bottomGuide.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             bottomGuide.widthAnchor.constraint(equalToConstant: 10)
         ])
-        
-        leftButton.addTarget(self, action: #selector(leftButtonPressed), for: .touchUpInside)
-        deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
-        
-        PINPad.numberButtonAction = numberButtonPressed(number:)
-        presenter.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        presenter.viewWillAppear()
-    }
-    
-    // MARK: - Public API
-    
-    func prepareScreen(withScreenData data: PINPadScreenData) {
-        titleLabel.text = data.screenTitle
-        
-        switch data.titleType {
-        case .normal:
-            titleLabel.textColor = Theme.Colors.Text.main
-        case .error:
-            titleLabel.textColor = Theme.Colors.Text.theme
-        }
-        
-        titleLabel.accessibilityLabel = data.screenTitle
-        
-        if let title = data.buttonTitle {
-            decorateButtonText(withButton: leftButton, text: title)
-            showLeftButton()
-        }
-    }
-    
-    func setDots(number: Int) {
-        dots.setDots(number: number)
-    }
-    
-    func fillDots(count: Int) {
-        dots.fillDots(count: count, animated: true)
-    }
-    
-    func emptyDots() {
-        dots.emptyDots(animated: true)
-    }
-    
-    func shakeDots() {
-        dots.shake()
-    }
-    
-    func showLeftButton() {
-        leftButton.isHidden = false
-    }
-    
-    func hideLeftButton() {
-        leftButton.isHidden = true
-    }
-    
-    func showDeleteButton() {
-        deleteButton.isHidden = false
-    }
-    
-    func hideRightButton() {
-        deleteButton.isHidden = true
-    }
-    
-    func lock(withMessage message: String) {
-        dots.alpha = Theme.Alpha.disabledElement
-        PINPad.isUserInteractionEnabled = false
-        PINPad.alpha = Theme.Alpha.disabledElement
-        titleLabel.text = message
-    }
-    
-    func unlock() {
-        dots.alpha = 1
-        PINPad.isUserInteractionEnabled = true
-        PINPad.alpha = 1
-    }
-    
-    func showReset() {
-        var buttonConfiguration = UIButton.Configuration.borderless()
-        buttonConfiguration.imagePadding = Theme.Metrics.doubleSpacing
-        buttonConfiguration.image = Asset.infoIcon.image
-        buttonConfiguration.baseForegroundColor = Theme.Colors.Controls.active
-        buttonConfiguration.imagePlacement = .trailing
-        var title = AttributedString(T.Restore.howToRestore)
-        var container = AttributeContainer()
-        container.font = Theme.Fonts.Text.content
-        title.setAttributes(container)
-        buttonConfiguration.attributedTitle = title
-        buttonConfiguration.titleAlignment = .center
-        
-        let resetButton = UIButton(configuration: buttonConfiguration)
-        resetButton.configurationUpdateHandler = { button in
-          var config = button.configuration
-          config?.baseForegroundColor = button.isHighlighted ?
-            Theme.Colors.Controls.active :
-            Theme.Colors.Controls.highlighed
-          button.configuration = config
-        }
-        view.addSubview(resetButton, with: [
-            resetButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            resetButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -Theme.Metrics.doubleMargin),
-            resetButton.leadingAnchor.constraint(
-                equalTo: view.safeLeadingAnchor,
-                constant: Theme.Metrics.standardMargin
-            ),
-            resetButton.trailingAnchor.constraint(
-                equalTo: view.safeTrailingAnchor,
-                constant: -Theme.Metrics.standardMargin
-            )
-        ])
-        resetButton.addTarget(self, action: #selector(resetAction), for: .touchUpInside)
-    }
-    
-    // MARK: - Private
-    
-    private func prepareDescriptionLabel() {
+    func prepareDescriptionLabel() {
         titleLabel.numberOfLines = 0
         titleLabel.lineBreakMode = .byWordWrapping
         titleLabel.allowsDefaultTighteningForTruncation = true
@@ -211,7 +205,7 @@ final class LoginViewController: UIViewController {
         titleLabel.textColor = Theme.Colors.Text.main
     }
     
-    private func decorateButtonText(withButton button: UIButton, text: String) {
+    func decorateButtonText(withButton button: UIButton, text: String) {
         let basicAttributes = [
             NSAttributedString.Key.font: Theme.Fonts.Controls.title,
             NSAttributedString.Key.foregroundColor: Theme.Colors.Text.subtitle
@@ -230,22 +224,61 @@ final class LoginViewController: UIViewController {
         button.setAttributedTitle(attributedStringOver, for: .highlighted)
     }
     
-    @objc private func leftButtonPressed() {
+    @objc
+    func leftButtonPressed() {
         actionFeedback.impactOccurred()
-        viewModel.leftButtonPressed()
+        presenter.onClose()
     }
     
-    @objc private func deleteButtonPressed() {
+    @objc
+    func deleteButtonPressed() {
         actionFeedback.impactOccurred()
-        viewModel.deleteButtonPressed()
+        presenter.onDelete()
     }
     
-    @objc private func resetAction() {
-        viewModel.reset()
+    @objc
+    func resetAction() {
+        presenter.onReset()
     }
     
-    private func numberButtonPressed(number: Int) {
+    func numberButtonPressed(number: Int) {
         numberFeedback.impactOccurred()
-        viewModel.numberButtonPressed(number: number)
+        presenter.onNumberInput(number)
+    }
+    
+    func showResetButton() {
+        var buttonConfiguration = UIButton.Configuration.borderless()
+        buttonConfiguration.imagePadding = Theme.Metrics.doubleSpacing
+        buttonConfiguration.image = Asset.infoIcon.image
+        buttonConfiguration.baseForegroundColor = Theme.Colors.Controls.active
+        buttonConfiguration.imagePlacement = .trailing
+        var title = AttributedString(T.Restore.howToRestore)
+        var container = AttributeContainer()
+        container.font = Theme.Fonts.Text.content
+        title.setAttributes(container)
+        buttonConfiguration.attributedTitle = title
+        buttonConfiguration.titleAlignment = .center
+        
+        let resetButton = UIButton(configuration: buttonConfiguration)
+        resetButton.configurationUpdateHandler = { button in
+            var config = button.configuration
+            config?.baseForegroundColor = button.isHighlighted ?
+            Theme.Colors.Controls.active :
+            Theme.Colors.Controls.highlighed
+            button.configuration = config
+        }
+        view.addSubview(resetButton, with: [
+            resetButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            resetButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -Theme.Metrics.doubleMargin),
+            resetButton.leadingAnchor.constraint(
+                equalTo: view.safeLeadingAnchor,
+                constant: Theme.Metrics.standardMargin
+            ),
+            resetButton.trailingAnchor.constraint(
+                equalTo: view.safeTrailingAnchor,
+                constant: -Theme.Metrics.standardMargin
+            )
+        ])
+        resetButton.addTarget(self, action: #selector(resetAction), for: .touchUpInside)
     }
 }

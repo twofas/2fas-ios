@@ -37,6 +37,11 @@ final class RootPresenter {
         }
     }
 
+    private var isCoverActive = false
+    
+    private var viewWillAppearEvent: Callback?
+    private var viewDidAppearEvent: Callback?
+    
     private let flowController: RootFlowControlling
     private let interactor: RootModuleInteracting
     
@@ -58,26 +63,33 @@ final class RootPresenter {
     func applicationWillResignActive() {
         Log("App: applicationWillResignActive")
         view?.hideAllNotifications()
-        // TODO: Hide all views
         interactor.applicationWillResignActive()
+        
+        installCover()
+    }
+    
+    func applicationDidEnterBackground() {
+        Log("App: applicationDidEnterBackground")
+        
+        interactor.lockApplicationIfNeeded { [weak self] in
+            self?.removeCover()
+            self?.presentLogin(immediately: true)
+        }
+        viewWillAppearEvent?()
     }
     
     func applicationWillEnterForeground() {
         Log("App: applicationWillEnterForeground")
         interactor.applicationWillEnterForeground()
+        removeCover()
         handleViewFlow()
-    }
-    
-    func applicationDidEnterBackground() {
-        Log("App: applicationDidEnterBackground")
-        interactor.lockApplicationIfNeeded { [weak self] in
-            self?.presentLogin(immediately: true)
-        }
     }
     
     func applicationDidBecomeActive() {
         Log("App: applicationDidBecomeActive")
         interactor.applicationDidBecomeActive()
+        removeCover()
+        viewDidAppearEvent?()
         view?.rateApp()
     }
     
@@ -118,6 +130,8 @@ final class RootPresenter {
     }
     
     func handleUserWasLoggedIn() {
+        viewWillAppearEvent = nil
+        viewDidAppearEvent = nil
         handleViewFlow()
     }
     
@@ -139,6 +153,19 @@ final class RootPresenter {
     
     // MARK: - Private methods
     
+    private func installCover() {
+        guard currentState != .login else { return }
+        isCoverActive = true
+        flowController.toCover()
+    }
+    
+    private func removeCover() {
+        guard isCoverActive else { return }
+        isCoverActive = false
+        guard  currentState != .login else { return }
+        flowController.toRemoveCover()
+    }
+    
     private func presentIntroduction() {
         guard currentState != .intro else { return }
         changeState(.intro)
@@ -159,7 +186,10 @@ final class RootPresenter {
         changeState(.login)
         
         Log("Presenting Login")
-        flowController.toLogin()
+        flowController.toLogin { [weak self] viewWillAppearEvent, viewDidAppearEvent in
+            self?.viewWillAppearEvent = viewWillAppearEvent
+            self?.viewDidAppearEvent = viewDidAppearEvent
+        }
     }
     
     private func changeState(_ newState: State) {

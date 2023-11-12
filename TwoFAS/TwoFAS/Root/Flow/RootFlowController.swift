@@ -18,20 +18,22 @@
 //
 
 import UIKit
+import Common
 
 protocol RootFlowControllerParent: AnyObject {}
 
 protocol RootFlowControlling: AnyObject {
     func toIntro()
+    func toCover()
     func toMain(immediately: Bool)
-    func toLogin()
-    func toAppLock()
+    func toLogin(events: @escaping (@escaping Callback, @escaping Callback) -> Void)
     func toStorageError(error: String)
+    func toRemoveCover()
 }
 
 final class RootFlowController: FlowController {
     private weak var parent: RootFlowControllerParent?
-    private weak var loginViewController: UIViewController?
+    private weak var coverView: UIView?
     private weak var window: UIWindow?
     
     static func setAsRoot(
@@ -80,19 +82,29 @@ extension RootFlowController: RootFlowControlling {
         intro.start()
     }
     
+    func toCover() {
+        let view = UIView()
+        view.backgroundColor = .red
+        coverView = view
+        window?.addSubview(view)
+        view.pinToParent()
+    }
+    
     func toMain(immediately: Bool) {
         MainFlowController.showAsRoot(in: viewController, parent: self, immediately: immediately)
     }
     
-    func toLogin() {
-        loginViewController = LoginFlowController.insertAsChild(
-            into: viewController,
+    func toLogin(events: @escaping (@escaping Callback, @escaping Callback) -> Void) {
+        guard let window else { return }
+        if coverView != nil {
+            removeCover()
+        }
+        let cover = LoginFlowController.setAsCover(
+            in: window,
             parent: self
         )
-    }
-    
-    func toAppLock() {
-        
+        coverView = cover.view
+        events(cover.viewWillAppear, cover.viewDidAppear)
     }
     
     func toStorageError(error: String) {
@@ -100,11 +112,20 @@ extension RootFlowController: RootFlowControlling {
         alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
         viewController.present(alert, animated: false, completion: nil)
     }
+    
+    func toRemoveCover() {
+        removeCover()
+    }
 }
 
 extension RootFlowController { // TODO: Remove when Intro moved to proper arch
     func didFinish() {
         viewController.presenter.handleIntroHasFinished()
+    }
+    
+    func removeCover() {
+        coverView?.removeFromSuperview()
+        coverView = nil
     }
 }
 
@@ -121,11 +142,6 @@ extension RootFlowController: LoginFlowControllerParent {
     }
     
     private func removeLogin() {
-        viewController.dismiss(animated: false)
-//        loginViewController?.willMove(toParent: nil)
-//        loginViewController?.view.removeFromSuperview()
-//        loginViewController?.removeFromParent()
-//        loginViewController?.didMove(toParent: nil)
-        loginViewController = nil
+        removeCover()
     }
 }

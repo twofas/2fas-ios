@@ -81,7 +81,7 @@
 		C2147CC8205D787A0001D011 /* CodeStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CC3205D78790001D011 /* CodeStorage.swift */; };
 		C2147CC9205D787A0001D011 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CC4205D78790001D011 /* Extensions.swift */; };
 		C2147CCA205D787A0001D011 /* BiometricAuthDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CC5205D78790001D011 /* BiometricAuthDelegate.swift */; };
-		C2147CD1205D7B520001D011 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CCE205D7B510001D011 /* LoginViewController.swift */; };
+		C2147CD1205D7B520001D011 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CCE205D7B510001D011 /* LoginView.swift */; };
 		C2147CDA205D7B630001D011 /* PINPadCodeDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CD5205D7B630001D011 /* PINPadCodeDots.swift */; };
 		C2147CDD205D7B630001D011 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CD8205D7B630001D011 /* LoginPresenter.swift */; };
 		C2147CE4205D7B790001D011 /* PINPadCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CE0205D7B780001D011 /* PINPadCircleView.swift */; };
@@ -1392,7 +1392,7 @@
 		C2147CC3205D78790001D011 /* CodeStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeStorage.swift; sourceTree = "<group>"; };
 		C2147CC4205D78790001D011 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C2147CC5205D78790001D011 /* BiometricAuthDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricAuthDelegate.swift; sourceTree = "<group>"; };
-		C2147CCE205D7B510001D011 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		C2147CCE205D7B510001D011 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C2147CD5205D7B630001D011 /* PINPadCodeDots.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINPadCodeDots.swift; sourceTree = "<group>"; };
 		C2147CD8205D7B630001D011 /* LoginPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		C2147CE0205D7B780001D011 /* PINPadCircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINPadCircleView.swift; sourceTree = "<group>"; };
@@ -2548,7 +2548,7 @@
 		C20629F72AF98373003BFC21 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C2147CCE205D7B510001D011 /* LoginViewController.swift */,
+				C2147CCE205D7B510001D011 /* LoginView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -7878,7 +7878,7 @@
 				C2557A9923F5E96200E713EF /* Separator.swift in Sources */,
 				C2E2C81427B0702300F04B70 /* CollectionViewAdapter.swift in Sources */,
 				C2C02242297F222100D596A8 /* MainPresenter.swift in Sources */,
-				C2147CD1205D7B520001D011 /* LoginViewController.swift in Sources */,
+				C2147CD1205D7B520001D011 /* LoginView.swift in Sources */,
 				C2DDEB1F289ED4A300011712 /* IntroductionDots.swift in Sources */,
 				C20CD53C2A1CF03F00A7F324 /* TokensViewController+Layout.swift in Sources */,
 				C26654292725D6EA00DC3A3C /* PasswordTextField.swift in Sources */,

@@ -19,6 +19,7 @@
 
 import UIKit
 import Data
+import Common
 
 protocol LoginFlowControllerParent: AnyObject {
     func loginClose()
@@ -34,12 +35,12 @@ protocol LoginFlowControlling: AnyObject {
 final class LoginFlowController: FlowController {
     private weak var parent: LoginFlowControllerParent?
     
-    static func insertAsChild(
-        into viewController: UIViewController,
+    static func setAsCover(
+        in window: UIWindow,
         parent: LoginFlowControllerParent
-    ) -> UIViewController {
-        let view = LoginViewController()
-        let flowController = LoginFlowController(viewController: view)
+    ) -> (view: UIView, viewWillAppear: Callback, viewDidAppear: Callback) {
+        let view = LoginView()
+        let flowController = LoginFlowController(viewController: UIViewController())
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.loginModuleInteractor()
         let presenter = LoginPresenter(
@@ -50,40 +51,38 @@ final class LoginFlowController: FlowController {
         presenter.view = view
         view.presenter = presenter
         
-        view.modalPresentationStyle = .fullScreen
-        view.isModalInPresentation = true
-        view.definesPresentationContext = true
+        window.addSubview(view)
+        view.pinToParent()
         
-        view.willMove(toParent: nil)
-        viewController.addChild(view)
-        view.view.pinToParent()
-        view.didMove(toParent: nil)
+        let viewWillAppear: Callback = { [weak view] in
+            view?.presenter.viewWillAppear()
+        }
         
-        return view
+        let viewDidAppear: Callback = { [weak view] in
+            view?.presenter.viewDidAppear()
+        }
+        
+        return (view: view, viewWillAppear: viewWillAppear, viewDidAppear: viewDidAppear)
     }
     
     static func present(
         on viewController: UIViewController,
         parent: LoginFlowControllerParent
     ) {
-        let view = LoginViewController()
-        let flowController = LoginFlowController(viewController: view)
-        flowController.parent = parent
-        let interactor = ModuleInteractorFactory.shared.loginModuleInteractor()
-        let presenter = LoginPresenter(
-            loginType: .verify,
-            flowController: flowController,
-            interactor: interactor
-        )
-        presenter.view = view
-        view.presenter = presenter
-        view.configureAsModal()
-        
-        viewController.present(view, animated: true, completion: nil)
-    }
-    
-    var viewController: LoginViewController {
-        _viewController as! LoginViewController
+//        let view = LoginViewController()
+//        let flowController = LoginFlowController(viewController: view)
+//        flowController.parent = parent
+//        let interactor = ModuleInteractorFactory.shared.loginModuleInteractor()
+//        let presenter = LoginPresenter(
+//            loginType: .verify,
+//            flowController: flowController,
+//            interactor: interactor
+//        )
+//        presenter.view = view
+//        view.presenter = presenter
+//        view.configureAsModal()
+//        
+//        viewController.present(view, animated: true, completion: nil)
     }
 }
 
@@ -97,36 +96,36 @@ extension LoginFlowController: LoginFlowControlling {
     }
     
     func toAppReset() {
-        let contentMiddle = MainContainerMiddleContentGenerator(placement: .centerHorizontallyLimitWidth, elements: [
-            .image(name: "ResetShield", size: CGSize(width: 100, height: 100)),
-            .extraSpacing,
-            .text(text: T.Restore.applicationRestoration, style: MainContainerTextStyling.title),
-            .text(text: T.Restore.resetPinTitle, style: MainContainerTextStyling.content),
-            .extraSpacing,
-            .image(name: "WarningIconLarge", size: CGSize(width: 100, height: 100)),
-            .extraSpacing,
-            .text(text: T.Restore.backupAdvice, style: MainContainerTextStyling.content),
-            .text(text: T.Restore.backupTitle, style: MainContainerTextStyling.content)
-        ])
-        
-        let contentBottom = MainContainerBottomContentGenerator(elements: [
-            .extraSpacing(),
-            .filledButton(text: T.Commons.dismiss, callback: { [weak self] in
-                self?.viewController.dismiss(animated: true)
-            })
-        ])
-        
-        let config = MainContainerViewController.Configuration(
-            barConfiguration: MainContainerBarConfiguration.empty,
-            contentTop: nil,
-            contentMiddle: contentMiddle,
-            contentBottom: contentBottom,
-            generalConfiguration: nil
-        )
-        
-        let vc = MainContainerViewController()
-        vc.configure(with: config)
-        vc.isModalInPresentation = true
-        viewController.present(vc, animated: true, completion: nil)
+//        let contentMiddle = MainContainerMiddleContentGenerator(placement: .centerHorizontallyLimitWidth, elements: [
+//            .image(name: "ResetShield", size: CGSize(width: 100, height: 100)),
+//            .extraSpacing,
+//            .text(text: T.Restore.applicationRestoration, style: MainContainerTextStyling.title),
+//            .text(text: T.Restore.resetPinTitle, style: MainContainerTextStyling.content),
+//            .extraSpacing,
+//            .image(name: "WarningIconLarge", size: CGSize(width: 100, height: 100)),
+//            .extraSpacing,
+//            .text(text: T.Restore.backupAdvice, style: MainContainerTextStyling.content),
+//            .text(text: T.Restore.backupTitle, style: MainContainerTextStyling.content)
+//        ])
+//        
+//        let contentBottom = MainContainerBottomContentGenerator(elements: [
+//            .extraSpacing(),
+//            .filledButton(text: T.Commons.dismiss, callback: { [weak self] in
+//                self?.viewController.dismiss(animated: true)
+//            })
+//        ])
+//        
+//        let config = MainContainerViewController.Configuration(
+//            barConfiguration: MainContainerBarConfiguration.empty,
+//            contentTop: nil,
+//            contentMiddle: contentMiddle,
+//            contentBottom: contentBottom,
+//            generalConfiguration: nil
+//        )
+//        
+//        let vc = MainContainerViewController()
+//        vc.configure(with: config)
+//        vc.isModalInPresentation = true
+//        viewController.present(vc, animated: true, completion: nil)
     }
 }

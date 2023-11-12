@@ -36,8 +36,12 @@ protocol LoginViewControlling: AnyObject {
     func unlock()
 }
 
-final class LoginViewController: UIViewController {
-    var presenter: LoginPresenter!
+final class LoginView: UIView {
+    var presenter: LoginPresenter! {
+        didSet {
+            presenter.viewDidLoad()
+        }
+    }
     
     private let verticalMargin: CGFloat = 30
     private let buttonsBottomMargin: CGFloat = 10
@@ -50,10 +54,18 @@ final class LoginViewController: UIViewController {
     private let numberFeedback = UIImpactFeedbackGenerator(style: .medium)
     private let actionFeedback = UIImpactFeedbackGenerator(style: .heavy)
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = Theme.Colors.Fill.background
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    func commonInit() {
+        backgroundColor = Theme.Colors.Fill.background
         
         prepareDescriptionLabel()
         
@@ -71,22 +83,45 @@ final class LoginViewController: UIViewController {
         PINPad.numberButtonAction = { [weak self] number in
             self?.numberButtonPressed(number: number)
         }
-        
-        presenter.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        presenter.viewWillAppear()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        presenter.viewDidAppear()
-    }
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        
+//        view.backgroundColor = Theme.Colors.Fill.background
+//        
+//        prepareDescriptionLabel()
+//        
+//        let image = Asset.deleteCodeButton.image
+//            .withRenderingMode(.alwaysTemplate)
+//        deleteButton.setImage(image, for: .normal)
+//        deleteButton.tintColor = Theme.Colors.Controls.inactive
+//        deleteButton.accessibilityLabel = T.Voiceover.deleteButton
+//        
+//        setupLayout(imageWidth: image.size.width)
+//        
+//        leftButton.addTarget(self, action: #selector(leftButtonPressed), for: .touchUpInside)
+//        deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
+//        
+//        PINPad.numberButtonAction = { [weak self] number in
+//            self?.numberButtonPressed(number: number)
+//        }
+//        
+//        presenter.viewDidLoad()
+//    }
+//    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        presenter.viewWillAppear()
+//    }
+//    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        presenter.viewDidAppear()
+//    }
 }
 
-extension LoginViewController: LoginViewControlling {
+extension LoginView: LoginViewControlling {
     func prepareScreen(with title: String, isError: Bool, showReset: Bool, leftButtonTitle: String?) {
         titleLabel.text = title
         VoiceOver.say(title)
@@ -151,7 +186,7 @@ extension LoginViewController: LoginViewControlling {
     }
 }
 
-private extension LoginViewController {
+private extension LoginView {
     func showCloseButton() {
         leftButton.isHidden = false
     }
@@ -162,7 +197,7 @@ private extension LoginViewController {
     
     func setupLayout(imageWidth: CGFloat) {
         let views = [titleLabel, dots, PINPad, leftButton, deleteButton]
-        UIView.prepareViewsForAutoLayout(withViews: views, superview: view)
+        UIView.prepareViewsForAutoLayout(withViews: views, superview: self)
         
         let keySize = Theme.Metrics.PINButtonDimensionLarge
         let deleteButtonOffset = round((keySize - imageWidth) / 2.0)
@@ -170,28 +205,28 @@ private extension LoginViewController {
         let topGuide = UILayoutGuide()
         let bottomGuide = UILayoutGuide()
                 
-        view.addLayoutGuide(topGuide)
-        view.addLayoutGuide(bottomGuide)
+        addLayoutGuide(topGuide)
+        addLayoutGuide(bottomGuide)
         
         NSLayoutConstraint.activate([
-            topGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            topGuide.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             titleLabel.topAnchor.constraint(equalTo: topGuide.bottomAnchor),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             titleLabel.widthAnchor.constraint(equalTo: PINPad.widthAnchor),
             dots.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: verticalMargin),
-            dots.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            dots.centerXAnchor.constraint(equalTo: centerXAnchor),
             PINPad.topAnchor.constraint(equalTo: dots.bottomAnchor, constant: verticalMargin),
-            PINPad.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            PINPad.centerXAnchor.constraint(equalTo: centerXAnchor),
             bottomGuide.topAnchor.constraint(equalTo: PINPad.bottomAnchor),
-            view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: bottomGuide.bottomAnchor),
+            safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: bottomGuide.bottomAnchor),
             leftButton.bottomAnchor.constraint(equalTo: PINPad.bottomAnchor, constant: -keySize / 4.0),
             leftButton.trailingAnchor.constraint(equalTo: PINPad.leadingAnchor, constant: keySize),
             deleteButton.bottomAnchor.constraint(equalTo: PINPad.bottomAnchor, constant: -deleteButtonOffset),
             deleteButton.trailingAnchor.constraint(equalTo: PINPad.trailingAnchor, constant: -deleteButtonOffset),
             bottomGuide.heightAnchor.constraint(equalTo: topGuide.heightAnchor),
-            topGuide.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            topGuide.centerXAnchor.constraint(equalTo: centerXAnchor),
             topGuide.widthAnchor.constraint(equalToConstant: 10),
-            bottomGuide.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            bottomGuide.centerXAnchor.constraint(equalTo: centerXAnchor),
             bottomGuide.widthAnchor.constraint(equalToConstant: 10)
         ])
     }
@@ -267,15 +302,15 @@ private extension LoginViewController {
             Theme.Colors.Controls.highlighed
             button.configuration = config
         }
-        view.addSubview(resetButton, with: [
-            resetButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            resetButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -Theme.Metrics.doubleMargin),
+        addSubview(resetButton, with: [
+            resetButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            resetButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -Theme.Metrics.doubleMargin),
             resetButton.leadingAnchor.constraint(
-                equalTo: view.safeLeadingAnchor,
+                equalTo: safeLeadingAnchor,
                 constant: Theme.Metrics.standardMargin
             ),
             resetButton.trailingAnchor.constraint(
-                equalTo: view.safeTrailingAnchor,
+                equalTo: safeTrailingAnchor,
                 constant: -Theme.Metrics.standardMargin
             )
         ])

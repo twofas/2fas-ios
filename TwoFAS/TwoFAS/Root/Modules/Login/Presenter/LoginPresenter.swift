@@ -115,6 +115,8 @@ final class LoginPresenter {
     }
     
     func viewDidAppear() {
+        interactor.checkState()
+        updateState()
         interactor.checkBio()
     }
 }

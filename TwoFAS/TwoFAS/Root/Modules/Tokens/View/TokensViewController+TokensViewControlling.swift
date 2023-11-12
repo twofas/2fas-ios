@@ -37,6 +37,7 @@ protocol TokensViewControlling: AnyObject {
     
     func addSearchBar()
     func removeSearchBar()
+    func stopSearch()
     
     func enableBounce()
     func disableBounce()
@@ -245,8 +246,13 @@ extension TokensViewController: TokensViewControlling {
     func removeSearchBar() {
         guard searchBarAdded else { return }
         searchBarAdded = false
+        navigationItem.searchController?.isActive = false
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.searchController = nil
+    }
+    
+    func stopSearch() {
+        searchController.isActive = false
     }
     
     // MARK: - Bounce

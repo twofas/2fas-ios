@@ -65,6 +65,7 @@ final class RootPresenter {
         view?.hideAllNotifications()
         interactor.applicationWillResignActive()
         
+        interactor.lockScreenActive()
         installCover()
     }
     
@@ -80,6 +81,7 @@ final class RootPresenter {
     
     func applicationWillEnterForeground() {
         Log("App: applicationWillEnterForeground")
+        lockScreenIsInactive()
         interactor.applicationWillEnterForeground()
         removeCover()
         handleViewFlow()
@@ -87,8 +89,9 @@ final class RootPresenter {
     
     func applicationDidBecomeActive() {
         Log("App: applicationDidBecomeActive")
+        lockScreenIsInactive()
         interactor.applicationDidBecomeActive()
-        removeCover()
+        removeCover(animated: true)
         viewDidAppearEvent?()
         view?.rateApp()
     }
@@ -132,6 +135,7 @@ final class RootPresenter {
     func handleUserWasLoggedIn() {
         viewWillAppearEvent = nil
         viewDidAppearEvent = nil
+        interactor.lockScreenInactive()
         handleViewFlow()
     }
     
@@ -153,17 +157,24 @@ final class RootPresenter {
     
     // MARK: - Private methods
     
+    private func lockScreenIsInactive() {
+        if currentState == .main {
+            interactor.lockScreenInactive()
+        }
+    }
+    
     private func installCover() {
         guard currentState != .login else { return }
+        flowController.toDismissKeyboard()
         isCoverActive = true
         flowController.toCover()
     }
     
-    private func removeCover() {
+    private func removeCover(animated: Bool = false) {
         guard isCoverActive else { return }
         isCoverActive = false
         guard  currentState != .login else { return }
-        flowController.toRemoveCover()
+        flowController.toRemoveCover(animated: animated)
     }
     
     private func presentIntroduction() {
@@ -185,6 +196,7 @@ final class RootPresenter {
         guard currentState != .login else { return }
         changeState(.login)
         
+        interactor.lockScreenActive()
         Log("Presenting Login")
         flowController.toLogin { [weak self] viewWillAppearEvent, viewDidAppearEvent in
             self?.viewWillAppearEvent = viewWillAppearEvent

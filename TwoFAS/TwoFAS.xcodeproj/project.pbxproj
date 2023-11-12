@@ -719,6 +719,8 @@
 		C2CA2B7D258699DA009FB700 /* FirstCodeAddedStatsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CA2B7C258699DA009FB700 /* FirstCodeAddedStatsController.swift */; };
 		C2CACFBE2AFEC905001E0F8E /* LoginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CACFBD2AFEC905001E0F8E /* LoginType.swift */; };
 		C2CACFC02AFFB7F7001E0F8E /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CACFBF2AFFB7F7001E0F8E /* LoginInteractor.swift */; };
+		C2CACFC22B015725001E0F8E /* AppStateInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CACFC12B015725001E0F8E /* AppStateInteractor.swift */; };
+		C2CACFC42B015847001E0F8E /* MainRepositoryImpl+LockScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CACFC32B015847001E0F8E /* MainRepositoryImpl+LockScreen.swift */; };
 		C2CB5D3A25DB1C9300A362A9 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CB5D3925DB1C9300A362A9 /* Orientation.swift */; };
 		C2CC0A3A29D0580B00677A7B /* ExternalImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3929D0580B00677A7B /* ExternalImportViewController.swift */; };
 		C2CC0A3C29D05DC900677A7B /* ExternalImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3B29D05DC900677A7B /* ExternalImportPresenter.swift */; };
@@ -2104,6 +2106,8 @@
 		C2CA2B7C258699DA009FB700 /* FirstCodeAddedStatsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstCodeAddedStatsController.swift; sourceTree = "<group>"; };
 		C2CACFBD2AFEC905001E0F8E /* LoginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginType.swift; sourceTree = "<group>"; };
 		C2CACFBF2AFFB7F7001E0F8E /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
+		C2CACFC12B015725001E0F8E /* AppStateInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateInteractor.swift; sourceTree = "<group>"; };
+		C2CACFC32B015847001E0F8E /* MainRepositoryImpl+LockScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+LockScreen.swift"; sourceTree = "<group>"; };
 		C2CB5D3925DB1C9300A362A9 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
 		C2CC0A3929D0580B00677A7B /* ExternalImportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportViewController.swift; sourceTree = "<group>"; };
 		C2CC0A3B29D05DC900677A7B /* ExternalImportPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportPresenter.swift; sourceTree = "<group>"; };
@@ -2977,6 +2981,7 @@
 				C23736912ABF5EC500792054 /* GuideInteractor.swift */,
 				C212ACDD2AF6F929001C8665 /* RootInteractor.swift */,
 				C2CACFBF2AFFB7F7001E0F8E /* LoginInteractor.swift */,
+				C2CACFC12B015725001E0F8E /* AppStateInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -6345,6 +6350,7 @@
 				C237368D2ABF536200792054 /* MainRepositoryImpl+Guides.swift */,
 				C2DF245F29859F9700762A26 /* MainRepositoryImpl+ViewPath.swift */,
 				C2A026B22AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift */,
+				C2CACFC32B015847001E0F8E /* MainRepositoryImpl+LockScreen.swift */,
 				C249AF62278A40FE005F9D80 /* UserDefaults */,
 			);
 			path = MainRepository;
@@ -8560,6 +8566,7 @@
 				C274C7742ADD3CB000B8AAC1 /* CounterState.swift in Sources */,
 				C2E7C3D12ADB2B9C00478D89 /* MainRepositoryImpl+NewAppVersion.swift in Sources */,
 				C2E7C3E32ADB2BB400478D89 /* NewCodeInteractor.swift in Sources */,
+				C2CACFC42B015847001E0F8E /* MainRepositoryImpl+LockScreen.swift in Sources */,
 				C2E7C3CF2ADB2B9C00478D89 /* MainRepositoryImpl+ServiceDefinition.swift in Sources */,
 				C2E7C3D92ADB2B9C00478D89 /* MainRepositoryImpl+General.swift in Sources */,
 				C2E7C3DA2ADB2BA600478D89 /* MainRepositoryImpl+ViewPath.swift in Sources */,
@@ -8616,6 +8623,7 @@
 				C2E7C3D02ADB2B9C00478D89 /* MainRepositoryImpl+Security.swift in Sources */,
 				C2AE5F832ADC8B0D00AED670 /* Code.swift in Sources */,
 				C2E7C3FF2ADB2BB400478D89 /* NewsInteractor.swift in Sources */,
+				C2CACFC22B015725001E0F8E /* AppStateInteractor.swift in Sources */,
 				C2AE5F692ADC5D9D00AED670 /* Security.swift in Sources */,
 				C2E7C3DD2ADB2BB400478D89 /* RegisterDeviceInteractor.swift in Sources */,
 				C2E7C40F2ADB2BE500478D89 /* PINType.swift in Sources */,

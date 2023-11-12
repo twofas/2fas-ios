@@ -61,6 +61,10 @@ extension MainSplitPresenter {
         handleMainVisible()
     }
     
+    func handleLockScreenIsInactive() {
+        handleMainVisible()
+    }
+    
     func handleCollapse() {
         guard calledKind != Kind.collapsed else { return }
         calledKind = .collapsed
@@ -125,9 +129,8 @@ private extension MainSplitPresenter {
     }
     
     func handleMainVisible() {
-        if restoredPath == .main {
-            view?.notifyTokensVisible()
-        }
+        guard restoredPath == .main, !interactor.isLockScreenActive else { return }
+        view?.notifyTokensVisible()
     }
     
     func updateNavigation(to path: ViewPath) {

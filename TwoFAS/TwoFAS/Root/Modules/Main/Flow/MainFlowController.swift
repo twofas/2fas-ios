@@ -44,10 +44,10 @@ final class MainFlowController: FlowController {
     private var importer: ImporterOpenFileHeadlessFlowController?
     
     static func showAsRoot(
-        in viewController: ContainerViewController, // TODO: Change to plain VC
+        in viewController: UIViewController,
         parent: MainFlowControllerParent,
         immediately: Bool
-    ) {
+    ) -> MainViewController {
         let view = MainViewController()
         let flowController = MainFlowController(viewController: view)
         flowController.parent = parent
@@ -60,13 +60,12 @@ final class MainFlowController: FlowController {
         view.presenter = presenter
         presenter.view = view
 
-        viewController.present(view, immediately: immediately, animationType: .alpha)
+        viewController.addChild(view)
+        viewController.view.addSubview(view.view)
+        view.view.pinToParent()
+        view.didMove(toParent: viewController)
         
-        // TODO: Make it a child of root VC
-//        viewController.addChild(view)
-//        viewController.view.addSubview(view.view)
-//        view.view.pinToParent()
-//        view.didMove(toParent: viewController)
+        return view
     }
 }
 

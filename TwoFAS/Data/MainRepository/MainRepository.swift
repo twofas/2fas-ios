@@ -226,6 +226,11 @@ protocol MainRepository: AnyObject {
     var dateOfFirstRun: Date? { get }
     func saveDateOfFirstRun(_ date: Date)
     
+    // MARK: - Lock Screen
+    var isLockScreenActive: Bool { get }
+    func lockScreenActive()
+    func lockScreenInactive()
+    
     // MARK: - New Version
     var newVersionCounter: Int { get }
     func setNewVersionCounter(_ counter: Int)

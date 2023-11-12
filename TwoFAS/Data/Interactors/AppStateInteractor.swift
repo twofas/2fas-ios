@@ -19,12 +19,31 @@
 
 import Foundation
 
-public extension Notification.Name {
-    static let switchToSetupPIN = Notification.Name("switchToSetupPIN")
-    static let switchToBrowserExtension = Notification.Name("switchToBrowserExtension")
-    static let orientationSizeWillChange = Notification.Name("orientationSizeWillChange")
-    static let tokensScreenIsVisible = Notification.Name("tokensScreenIsVisible")
-    static let fileAwaitsOpening = Notification.Name("fileAwaitsOpening")
-    static let lockScreenIsInactive = Notification.Name("lockScreenIsInactive")
-    static let lockScreenIsActive = Notification.Name("lockScreenIsActive")
+public protocol AppStateInteracting: AnyObject {
+    var isLockScreenActive: Bool { get }
+    
+    func lockScreenActive()
+    func lockScreenInactive()
+}
+
+final class AppStateInteractor {
+    private let mainRepository: MainRepository
+    
+    init(mainRepository: MainRepository) {
+        self.mainRepository = mainRepository
+    }
+}
+
+extension AppStateInteractor: AppStateInteracting {
+    var isLockScreenActive: Bool {
+        mainRepository.isLockScreenActive
+    }
+    
+    func lockScreenActive() {
+        mainRepository.lockScreenActive()
+    }
+    
+    func lockScreenInactive() {
+        mainRepository.lockScreenInactive()
+    }
 }

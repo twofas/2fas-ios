@@ -29,7 +29,6 @@ protocol LoginFlowControllerParent: AnyObject {
 protocol LoginFlowControlling: AnyObject {
     func toClose()
     func toLoggedIn()
-    func toAppReset()
 }
 
 final class LoginFlowController: FlowController {
@@ -93,39 +92,5 @@ extension LoginFlowController: LoginFlowControlling {
     
     func toLoggedIn() {
         parent?.loginLoggedIn()
-    }
-    
-    func toAppReset() {
-//        let contentMiddle = MainContainerMiddleContentGenerator(placement: .centerHorizontallyLimitWidth, elements: [
-//            .image(name: "ResetShield", size: CGSize(width: 100, height: 100)),
-//            .extraSpacing,
-//            .text(text: T.Restore.applicationRestoration, style: MainContainerTextStyling.title),
-//            .text(text: T.Restore.resetPinTitle, style: MainContainerTextStyling.content),
-//            .extraSpacing,
-//            .image(name: "WarningIconLarge", size: CGSize(width: 100, height: 100)),
-//            .extraSpacing,
-//            .text(text: T.Restore.backupAdvice, style: MainContainerTextStyling.content),
-//            .text(text: T.Restore.backupTitle, style: MainContainerTextStyling.content)
-//        ])
-//        
-//        let contentBottom = MainContainerBottomContentGenerator(elements: [
-//            .extraSpacing(),
-//            .filledButton(text: T.Commons.dismiss, callback: { [weak self] in
-//                self?.viewController.dismiss(animated: true)
-//            })
-//        ])
-//        
-//        let config = MainContainerViewController.Configuration(
-//            barConfiguration: MainContainerBarConfiguration.empty,
-//            contentTop: nil,
-//            contentMiddle: contentMiddle,
-//            contentBottom: contentBottom,
-//            generalConfiguration: nil
-//        )
-//        
-//        let vc = MainContainerViewController()
-//        vc.configure(with: config)
-//        vc.isModalInPresentation = true
-//        viewController.present(vc, animated: true, completion: nil)
     }
 }

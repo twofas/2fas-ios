@@ -29,7 +29,8 @@ final class ModuleInteractorFactory {
             rootInteractor: InteractorFactory.shared.rootInteractor(),
             linkInteractor: InteractorFactory.shared.linkInteractor(),
             fileInteractor: InteractorFactory.shared.fileInteractor(),
-            registerDeviceInteractor: InteractorFactory.shared.registerDeviceInteractor()
+            registerDeviceInteractor: InteractorFactory.shared.registerDeviceInteractor(),
+            appStateInteractor: InteractorFactory.shared.appStateInteractor()
         )
     }
     
@@ -334,7 +335,8 @@ final class ModuleInteractorFactory {
         MainSplitModuleInteractor(
             viewPathInteractor: InteractorFactory.shared.viewPathInteractor(),
             linkInteractor: InteractorFactory.shared.linkInteractor(),
-            appearanceInteractor: InteractorFactory.shared.appearanceInteractor()
+            appearanceInteractor: InteractorFactory.shared.appearanceInteractor(),
+            appStateInteractor: InteractorFactory.shared.appStateInteractor()
         )
     }
     

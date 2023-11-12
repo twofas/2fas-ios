@@ -95,7 +95,7 @@ final class LoginPresenter {
     func onReset() {
         interactor.reset()
         updateState()
-        flowController.toAppReset()
+        view.showAppReset()
     }
     
     func onNumberInput(_ number: Int) {

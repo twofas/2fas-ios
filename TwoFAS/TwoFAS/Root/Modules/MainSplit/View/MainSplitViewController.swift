@@ -82,6 +82,12 @@ final class MainSplitViewController: UIViewController {
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(lockScreenIsInactive),
+            name: .lockScreenIsInactive,
+            object: nil
+        )
         setInitialTrait()
         updateDisplayMode()
         presenter.viewWillAppear()
@@ -99,6 +105,10 @@ final class MainSplitViewController: UIViewController {
     
     @objc func didBecomeActive() {
         presenter.didBecomeActive()
+    }
+    
+    @objc func lockScreenIsInactive() {
+        presenter.handleLockScreenIsInactive()
     }
     
     private func setupSplit() {

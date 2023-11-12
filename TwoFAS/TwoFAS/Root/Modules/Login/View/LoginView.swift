@@ -34,6 +34,8 @@ protocol LoginViewControlling: AnyObject {
     
     func lock(with message: String)
     func unlock()
+    
+    func showAppReset()
 }
 
 final class LoginView: UIView {
@@ -84,41 +86,6 @@ final class LoginView: UIView {
             self?.numberButtonPressed(number: number)
         }
     }
-    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        view.backgroundColor = Theme.Colors.Fill.background
-//        
-//        prepareDescriptionLabel()
-//        
-//        let image = Asset.deleteCodeButton.image
-//            .withRenderingMode(.alwaysTemplate)
-//        deleteButton.setImage(image, for: .normal)
-//        deleteButton.tintColor = Theme.Colors.Controls.inactive
-//        deleteButton.accessibilityLabel = T.Voiceover.deleteButton
-//        
-//        setupLayout(imageWidth: image.size.width)
-//        
-//        leftButton.addTarget(self, action: #selector(leftButtonPressed), for: .touchUpInside)
-//        deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
-//        
-//        PINPad.numberButtonAction = { [weak self] number in
-//            self?.numberButtonPressed(number: number)
-//        }
-//        
-//        presenter.viewDidLoad()
-//    }
-//    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        presenter.viewWillAppear()
-//    }
-//    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        presenter.viewDidAppear()
-//    }
 }
 
 extension LoginView: LoginViewControlling {
@@ -183,6 +150,39 @@ extension LoginView: LoginViewControlling {
     func hideNavigation() {
         hideCloseButton()
         hideDeleteButton()
+    }
+    
+    func showAppReset() {
+        let contentMiddle = MainContainerMiddleContentGenerator(placement: .centerHorizontallyLimitWidth, elements: [
+            .image(name: "ResetShield", size: CGSize(width: 100, height: 100)),
+            .extraSpacing,
+            .text(text: T.Restore.applicationRestoration, style: MainContainerTextStyling.title),
+            .text(text: T.Restore.resetPinTitle, style: MainContainerTextStyling.content),
+            .extraSpacing,
+            .image(name: "WarningIconLarge", size: CGSize(width: 100, height: 100)),
+            .extraSpacing,
+            .text(text: T.Restore.backupAdvice, style: MainContainerTextStyling.content),
+            .text(text: T.Restore.backupTitle, style: MainContainerTextStyling.content)
+        ])
+
+        let contentBottom = MainContainerBottomContentGenerator(elements: [
+            .extraSpacing(),
+            .filledButton(text: T.Commons.dismiss, callback: { [weak self] in
+                self?.viewController.dismiss(animated: true)
+            })
+        ])
+
+        let config = MainContainerViewController.Configuration(
+            barConfiguration: MainContainerBarConfiguration.empty,
+            contentTop: nil,
+            contentMiddle: contentMiddle,
+            contentBottom: contentBottom,
+            generalConfiguration: nil
+        )
+
+        let vc = MainContainerViewController()
+        vc.configure(with: config)
+        viewController.present(vc, animated: true, completion: nil)
     }
 }
 

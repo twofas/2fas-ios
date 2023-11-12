@@ -242,4 +242,8 @@ public final class InteractorFactory {
     public func loginInteractor() -> LoginInteracting {
         LoginInteractor(security: MainRepositoryImpl.shared.security)
     }
+    
+    public func appStateInteractor() -> AppStateInteracting {
+        AppStateInteractor(mainRepository: MainRepositoryImpl.shared)
+    }
 }

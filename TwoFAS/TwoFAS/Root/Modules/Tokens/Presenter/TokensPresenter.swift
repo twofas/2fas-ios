@@ -99,6 +99,10 @@ extension TokensPresenter {
     func handleAppBecomesInactive() {
         Log("TokensPresenter - handleAppBecomesInactive")
         interactor.stopCounters()
+        view?.stopSearch()
+        if isSearching {
+            handleClearSearchPhrase()
+        }
     }
     
     // MARK: - External Actions

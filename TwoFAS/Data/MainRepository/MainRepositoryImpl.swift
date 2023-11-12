@@ -52,6 +52,7 @@ final class MainRepositoryImpl: MainRepository {
     let initialPermissionStateDataController = PermissionsStateDataController()
     
     let serviceNameTranslation: String
+    let notificationCenter = NotificationCenter.default
     
     private static var _shared: MainRepositoryImpl!
     
@@ -82,6 +83,8 @@ final class MainRepositoryImpl: MainRepository {
     var isFetchingNewsFlag = false
     var newsCompletions: [() -> Void] = []
     var storageError: ((String) -> Void)?
+    
+    var _isLockScreenActive = false
     
     // Cached values for higher pefrormance
     var cachedSortType: SortType?

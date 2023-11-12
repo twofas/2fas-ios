@@ -28,13 +28,16 @@ protocol RootFlowControlling: AnyObject {
     func toMain(immediately: Bool)
     func toLogin(events: @escaping (@escaping Callback, @escaping Callback) -> Void)
     func toStorageError(error: String)
-    func toRemoveCover()
+    func toRemoveCover(animated: Bool)
+    func toDismissKeyboard()
 }
 
 final class RootFlowController: FlowController {
     private weak var parent: RootFlowControllerParent?
     private weak var coverView: UIView?
     private weak var window: UIWindow?
+    
+    private var mainViewController: MainViewController?
     
     static func setAsRoot(
         in window: UIWindow?,
@@ -83,15 +86,17 @@ extension RootFlowController: RootFlowControlling {
     }
     
     func toCover() {
-        let view = UIView()
-        view.backgroundColor = .red
+        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
+        guard let view = vc.view else { return }
         coverView = view
         window?.addSubview(view)
         view.pinToParent()
     }
     
     func toMain(immediately: Bool) {
-        MainFlowController.showAsRoot(in: viewController, parent: self, immediately: immediately)
+        guard mainViewController == nil else { return }
+        mainViewController = MainFlowController.showAsRoot(in: viewController, parent: self, immediately: immediately)
     }
     
     func toLogin(events: @escaping (@escaping Callback, @escaping Callback) -> Void) {
@@ -113,8 +118,20 @@ extension RootFlowController: RootFlowControlling {
         viewController.present(alert, animated: false, completion: nil)
     }
     
-    func toRemoveCover() {
-        removeCover()
+    func toRemoveCover(animated: Bool) {
+        guard animated else {
+            removeCover()
+            return
+        }
+        UIView.animate(withDuration: Theme.Animations.Timing.quick, delay: 0, options: [.curveEaseInOut]) {
+            self.coverView?.alpha = 0
+        } completion: { _ in
+            self.removeCover()
+        }
+    }
+    
+    func toDismissKeyboard() {
+        window?.endEditing(true)
     }
 }
 

@@ -42,6 +42,9 @@ protocol RootModuleInteracting: AnyObject {
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     )
+    
+    func lockScreenActive()
+    func lockScreenInactive()
 }
 
 final class RootModuleInteractor {
@@ -51,17 +54,20 @@ final class RootModuleInteractor {
     private let linkInteractor: LinkInteracting
     private let fileInteractor: FileInteracting
     private let registerDeviceInteractor: RegisterDeviceInteracting
+    private let appStateInteractor: AppStateInteracting
     
     init(
         rootInteractor: RootInteracting,
         linkInteractor: LinkInteracting,
         fileInteractor: FileInteracting,
-        registerDeviceInteractor: RegisterDeviceInteracting
+        registerDeviceInteractor: RegisterDeviceInteracting,
+        appStateInteractor: AppStateInteracting
     ) {
         self.rootInteractor = rootInteractor
         self.linkInteractor = linkInteractor
         self.fileInteractor = fileInteractor
         self.registerDeviceInteractor = registerDeviceInteractor
+        self.appStateInteractor = appStateInteractor
         
         rootInteractor.storageError = { [weak self] error in
             self?.storageError?(error)
@@ -126,5 +132,13 @@ extension RootModuleInteractor: RootModuleInteracting {
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     ) {
         rootInteractor.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
+    }
+    
+    func lockScreenActive() {
+        appStateInteractor.lockScreenActive()
+    }
+    
+    func lockScreenInactive() {
+        appStateInteractor.lockScreenInactive()
     }
 }

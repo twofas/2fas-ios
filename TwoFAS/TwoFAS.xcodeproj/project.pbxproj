@@ -173,6 +173,7 @@
 		C233870627810C2E00F8DBC3 /* TrashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C233870527810C2E00F8DBC3 /* TrashViewController.swift */; };
 		C233870827810D1A00F8DBC3 /* TrashModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C233870727810D1A00F8DBC3 /* TrashModels.swift */; };
 		C233870A2781113800F8DBC3 /* TrashViewController+TableCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23387092781113800F8DBC3 /* TrashViewController+TableCellHandling.swift */; };
+		C233DCAD2B04285E008E41D8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C233DCAC2B04285E008E41D8 /* LoginViewController.swift */; };
 		C2340CB227BC4C6500746676 /* ComposeServiceViewController+TableCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2340CB127BC4C6500746676 /* ComposeServiceViewController+TableCellHandling.swift */; };
 		C234433A2A8C021100005F33 /* AddingServiceErrorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23443392A8C021100005F33 /* AddingServiceErrorTextView.swift */; };
 		C234433C2A8C087600005F33 /* AddingServiceRequriedTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234433B2A8C087600005F33 /* AddingServiceRequriedTitleView.swift */; };
@@ -1512,6 +1513,7 @@
 		C233BD242801D6F900A9CFF2 /* WebExtensionDeviceNameInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebExtensionDeviceNameInteractor.swift; sourceTree = "<group>"; };
 		C233BD262801D97F00A9CFF2 /* RegisterDeviceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterDeviceInteractor.swift; sourceTree = "<group>"; };
 		C233BD282801E5A200A9CFF2 /* PushNotificationRegistrationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationRegistrationInteractor.swift; sourceTree = "<group>"; };
+		C233DCAC2B04285E008E41D8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C2340CB127BC4C6500746676 /* ComposeServiceViewController+TableCellHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComposeServiceViewController+TableCellHandling.swift"; sourceTree = "<group>"; };
 		C23443392A8C021100005F33 /* AddingServiceErrorTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceErrorTextView.swift; sourceTree = "<group>"; };
 		C234433B2A8C087600005F33 /* AddingServiceRequriedTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceRequriedTitleView.swift; sourceTree = "<group>"; };
@@ -2553,6 +2555,7 @@
 			isa = PBXGroup;
 			children = (
 				C2147CCE205D7B510001D011 /* LoginView.swift */,
+				C233DCAC2B04285E008E41D8 /* LoginViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -7870,6 +7873,7 @@
 				C2B1209129D76FA60020281E /* AppearanceModuleInteractor.swift in Sources */,
 				C2E7C3482ADB021500478D89 /* CameraPreview.swift in Sources */,
 				C2D44E68275C10850043F5D6 /* SettingsMenuTableView.swift in Sources */,
+				C233DCAD2B04285E008E41D8 /* LoginViewController.swift in Sources */,
 				C2A74FE62610D510007E5AB3 /* ColorGridSelector.swift in Sources */,
 				C25C661428BADAB0008EC66A /* AboutFlowController.swift in Sources */,
 				C20E60FB2818971300AB002E /* PushNotificationPermissionPresenter.swift in Sources */,

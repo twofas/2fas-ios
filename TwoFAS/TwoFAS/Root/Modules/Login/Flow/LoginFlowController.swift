@@ -68,20 +68,19 @@ final class LoginFlowController: FlowController {
         on viewController: UIViewController,
         parent: LoginFlowControllerParent
     ) {
-//        let view = LoginViewController()
-//        let flowController = LoginFlowController(viewController: view)
-//        flowController.parent = parent
-//        let interactor = ModuleInteractorFactory.shared.loginModuleInteractor()
-//        let presenter = LoginPresenter(
-//            loginType: .verify,
-//            flowController: flowController,
-//            interactor: interactor
-//        )
-//        presenter.view = view
-//        view.presenter = presenter
-//        view.configureAsModal()
-//        
-//        viewController.present(view, animated: true, completion: nil)
+        let view = LoginViewController()
+        let flowController = LoginFlowController(viewController: view)
+        flowController.parent = parent
+        let interactor = ModuleInteractorFactory.shared.loginModuleInteractor()
+        let presenter = LoginPresenter(
+            loginType: .verify,
+            flowController: flowController,
+            interactor: interactor
+        )
+        view.presenter = presenter
+        view.configureAsModal()
+        
+        viewController.present(view, animated: true, completion: nil)
     }
 }
 

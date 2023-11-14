@@ -44,7 +44,7 @@ final class LoginView: UIView {
             presenter.viewDidLoad()
         }
     }
-    
+    private let duration = 2 * Theme.Animations.Timing.quick
     private let verticalMargin: CGFloat = 30
     private let buttonsBottomMargin: CGFloat = 10
     
@@ -55,6 +55,9 @@ final class LoginView: UIView {
     private let deleteButton = UIButton()
     private let numberFeedback = UIImpactFeedbackGenerator(style: .medium)
     private let actionFeedback = UIImpactFeedbackGenerator(style: .heavy)
+    
+    private var appReset: UIView?
+    private var appResetTop: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -164,14 +167,14 @@ extension LoginView: LoginViewControlling {
             .text(text: T.Restore.backupAdvice, style: MainContainerTextStyling.content),
             .text(text: T.Restore.backupTitle, style: MainContainerTextStyling.content)
         ])
-
+        
         let contentBottom = MainContainerBottomContentGenerator(elements: [
             .extraSpacing(),
             .filledButton(text: T.Commons.dismiss, callback: { [weak self] in
-                self?.viewController.dismiss(animated: true)
+                self?.dismissAppReset()
             })
         ])
-
+        
         let config = MainContainerViewController.Configuration(
             barConfiguration: MainContainerBarConfiguration.empty,
             contentTop: nil,
@@ -179,14 +182,54 @@ extension LoginView: LoginViewControlling {
             contentBottom: contentBottom,
             generalConfiguration: nil
         )
-
+        
         let vc = MainContainerViewController()
         vc.configure(with: config)
-        viewController.present(vc, animated: true, completion: nil)
+        
+        guard let view = vc.view else { return }
+        appReset = view
+        
+        let currentHeight = frame.size.height
+        
+        addSubview(view, with: [
+            view.leadingAnchor.constraint(equalTo: leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: trailingAnchor),
+            view.heightAnchor.constraint(equalTo: heightAnchor)
+        ])
+        
+        let top = view.topAnchor.constraint(equalTo: topAnchor, constant: currentHeight)
+        appResetTop = top
+        
+        NSLayoutConstraint.activate([
+            top
+        ])
+        
+        layoutIfNeeded()
+
+        UIView.animate(withDuration: duration, delay: 0, options: [.curveEaseInOut]) {
+            top.constant = 0
+            self.layoutIfNeeded()
+        }
     }
 }
 
 private extension LoginView {
+    func dismissAppReset() {
+        guard let appReset, let appResetTop else { return }
+        
+        let currentHeight = frame.size.height
+        layoutIfNeeded()
+
+        UIView.animate(withDuration: duration, delay: 0, options: [.curveEaseInOut]) {
+            appResetTop.constant = currentHeight
+            self.layoutIfNeeded()
+        } completion: { _ in
+            appReset.removeFromSuperview()
+            self.appResetTop = nil
+            self.appReset = nil
+        }
+    }
+    
     func showCloseButton() {
         leftButton.isHidden = false
     }

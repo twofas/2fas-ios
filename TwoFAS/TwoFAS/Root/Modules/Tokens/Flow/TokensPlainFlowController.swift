@@ -105,6 +105,15 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         AddingServiceFlowController.present(on: mainSplitViewController, parent: self)
     }
     
+    func toAddServiceManually(_ name: String?) {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        AddingServiceManuallyNavigationFlowController.present(
+            on: mainSplitViewController,
+            parent: self,
+            name: name
+        )
+    }
+    
     func toDeleteService(serviceData: ServiceData) {
         guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
         TrashServiceFlowController.present(on: mainSplitViewController, parent: self, serviceData: serviceData)
@@ -361,6 +370,7 @@ extension TokensPlainFlowController: SelectFromGalleryFlowControllerParent {
     func galleryDidCancel() {
         dismiss { [weak self] in
             self?.galleryViewController = nil
+            self?.toAddService()
         }
     }
     
@@ -454,12 +464,7 @@ extension TokensPlainFlowController: AddingServiceManuallyNavigationFlowControll
 extension TokensPlainFlowController: AddingServiceFlowControllerParent {
     func addingServiceToManual(_ name: String?) {
         dismiss(actions: [.continuesFlow]) { [weak self] in
-            guard let self else { return }
-            AddingServiceManuallyNavigationFlowController.present(
-                on: viewController,
-                parent: self,
-                name: name
-            )
+            self?.toAddServiceManually(name)
         }
     }
     
@@ -625,11 +630,9 @@ extension TokensPlainFlowController: NewsNavigationFlowControllerParent {
 }
 
 extension TokensPlainFlowController: GuideSelectorNavigationFlowControllerParent {
-    func guideToAddManually(with data: String?) {
-        guard let mainSplitViewController else { return }
+    func guideToAddManually(with name: String?) {
         dismiss(actions: [.continuesFlow]) { [weak self] in
-            guard let self else { return }
-            AddingServiceFlowController.present(on: mainSplitViewController, parent: self, target: .manuall(data: data))
+            self?.toAddServiceManually(name)
         }
     }
     

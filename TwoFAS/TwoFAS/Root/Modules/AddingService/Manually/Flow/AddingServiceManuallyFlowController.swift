@@ -22,31 +22,26 @@ import Common
 
 protocol AddingServiceManuallyFlowControllerParent: AnyObject {
     func addingServiceManuallyToClose(_ serviceData: ServiceData)
+    func addingServiceManuallyToCancel()
 }
 
 protocol AddingServiceManuallyFlowControlling: AnyObject {
     func toClose(_ serviceData: ServiceData)
+    func toClose()
     func toInitialCounterInput()
-    func toHelp()
 }
 
 final class AddingServiceManuallyFlowController: FlowController {
     private weak var parent: AddingServiceManuallyFlowControllerParent?
-    private weak var container: (UIViewController & AddingServiceViewControlling)?
     
-    static func embed(
-        in viewController: UIViewController & AddingServiceViewControlling,
+    static func showAsRoot(
+        in navigationController: UINavigationController,
         parent: AddingServiceManuallyFlowControllerParent,
         name: String?
     ) {
         let view = AddingServiceManuallyViewController()
         let flowController = AddingServiceManuallyFlowController(viewController: view)
         flowController.parent = parent
-        flowController.container = viewController
-        
-        view.heightChange = { [weak viewController] height in
-            viewController?.updateHeight(height)
-        }
         
         let interactor = ModuleInteractorFactory.shared.addingServiceManuallyModuleInteractor()
         
@@ -57,8 +52,8 @@ final class AddingServiceManuallyFlowController: FlowController {
         )
         view.presenter = presenter
         presenter.view = view
-        
-        viewController.embedViewController(view)
+                
+        navigationController.setViewControllers([view], animated: true)
     }
 }
 
@@ -69,6 +64,10 @@ extension AddingServiceManuallyFlowController {
 extension AddingServiceManuallyFlowController: AddingServiceManuallyFlowControlling {
     func toClose(_ serviceData: ServiceData) {
         parent?.addingServiceManuallyToClose(serviceData)
+    }
+    
+    func toClose() {
+        parent?.addingServiceManuallyToCancel()
     }
     
     func toInitialCounterInput() {
@@ -89,9 +88,5 @@ extension AddingServiceManuallyFlowController: AddingServiceManuallyFlowControll
             })
         
         viewController.present(alert, animated: true, completion: nil)
-    }
-    
-    func toHelp() {
-        UIApplication.shared.open(URL(string: "https://support.2fas.com")!)
     }
 }

@@ -22,6 +22,7 @@ import Common
 import Data
 
 protocol AddingServiceFlowControllerParent: AnyObject {
+    func addingServiceToManual(_ name: String?)
     func addingServiceDismiss()
     func addingServiceToGallery()
     func addingServiceToGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
@@ -29,7 +30,7 @@ protocol AddingServiceFlowControllerParent: AnyObject {
     func addingServiceToSendLogs(auditID: UUID)
     func addingServiceToPushPermissions(for extensionID: Common.ExtensionID)
     func addingServiceToTwoFASWebExtensionPairing(for extensionID: Common.ExtensionID)
-    func addingServiceClose(_ serviceData: ServiceData)
+    func addingServiceToToken(_ serviceData: ServiceData)
     func addingServiceToGuides()
 }
 
@@ -63,12 +64,6 @@ final class AddingServiceFlowController: FlowController {
     }
 }
 
-extension AddingServiceFlowController: AddingServiceManuallyFlowControllerParent {
-    func addingServiceManuallyToClose(_ serviceData: ServiceData) {
-        parent?.addingServiceClose(serviceData)
-    }
-}
-
 extension AddingServiceFlowController {
     var viewController: AddingServiceViewController { _viewController as! AddingServiceViewController }
 }
@@ -77,7 +72,7 @@ extension AddingServiceFlowController: AddingServiceFlowControlling {
     func toInitialController() {
         switch target {
         case .main, .none: AddingServiceMainFlowController.embed(in: viewController, parent: self)
-        case .manuall(let data): AddingServiceManuallyFlowController.embed(in: viewController, parent: self, name: data)
+        case .manuall(let name): parent?.addingServiceToManual(name)
         }
     }
 }
@@ -112,11 +107,11 @@ extension AddingServiceFlowController: AddingServiceMainFlowControllerParent {
     }
     
     func mainToToken(serviceData: ServiceData) {
-        parent?.addingServiceClose(serviceData)
+        parent?.addingServiceToToken(serviceData)
     }
         
     func mainToAddManually() {
-        AddingServiceManuallyFlowController.embed(in: viewController, parent: self, name: nil)
+        parent?.addingServiceToManual(nil)
     }
     
     func mainToGuides() {

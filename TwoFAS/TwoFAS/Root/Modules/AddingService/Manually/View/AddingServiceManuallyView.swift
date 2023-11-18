@@ -22,8 +22,6 @@ import Common
 
 struct AddingServiceManuallyView: View {
     @ObservedObject var presenter: AddingServiceManuallyPresenter
-    let changeHeight: (CGFloat) -> Void
-    let dismiss: () -> Void
     
     @FocusState private var focusedField: Field?
     private enum Field: Int, Hashable {
@@ -41,52 +39,37 @@ struct AddingServiceManuallyView: View {
     @State private var additionalInfoError: String?
     
     var body: some View {
-        VStack {
-            VStack(spacing: 0) {
-                AddingServiceCloseButtonView {
-                    dismiss()
+        ScrollView(.vertical) {
+            Group {
+                AddingServiceTextContentView(text: T.Tokens.addManualDescription)
+                    .padding(.vertical, 24)
+                
+                VStack(spacing: 10) {
+                    serviceNameBuilder()
+                    serviceKeyBuilder()
+                    
+                    revealAdvancedBuilder()
+                    
+                    if presenter.advancedShown {
+                        additionalInfoBuilder()
+                        
+                        AddServiceAdvancedWarningView()
+                        
+                        AddingServiceServiceTypeSelector(selectedTokenType: $presenter.selectedTokenType)
+                            .padding(.vertical, Theme.Metrics.doubleMargin)
+                        
+                        advancedParametersBuilder()
+                    }
                 }
-                AddingServiceTitleView(text: T.Tokens.addManualTitle)
+            }
+            .onTapGesture {
+                dismissKeyboard()
             }
             .padding(.horizontal, Theme.Metrics.doubleMargin)
-            .frame(maxWidth: .infinity)
-
-            ScrollView(.vertical) {
-                Group {
-                    AddingServiceTextContentView(text: T.Tokens.addManualDescription)
-                        .padding(.bottom, 24)
-                    
-                    VStack(spacing: 10) {
-                        serviceNameBuilder()
-                        serviceKeyBuilder()
-                        
-                        revealAdvancedBuilder()
-                        
-                        if presenter.advancedShown {
-                            additionalInfoBuilder()
-                            
-                            AddServiceAdvancedWarningView()
-                            
-                            AddingServiceServiceTypeSelector(selectedTokenType: $presenter.selectedTokenType)
-                                .padding(.vertical, Theme.Metrics.doubleMargin)
-                            
-                            advancedParametersBuilder()
-                        }
-                    }
-                    footerBuilder()
-                }
-                .observeHeight(onChange: { contentHeight in
-                    changeHeight(contentHeight)
-                })
-                .onTapGesture {
-                    dismissKeyboard()
-                }
-                .padding(.horizontal, Theme.Metrics.doubleMargin)
-            }
-            .onAppear {
-                DispatchQueue.main.async {
-                    focusedField = .serviceName
-                }
+        }
+        .onAppear {
+            DispatchQueue.main.async {
+                focusedField = .serviceName
             }
         }
     }
@@ -289,24 +272,6 @@ struct AddingServiceManuallyView: View {
         
         if let secretError {
             AddingServiceErrorTextView(text: secretError)
-        }
-    }
-    
-    @ViewBuilder
-    func footerBuilder() -> some View {
-        VStack {
-            AddingServiceDividerView()
-                .padding(.bottom, 10)
-            AddingServiceAddServiceButton(action: {
-                presenter.handleAddService()
-            }, isEnabled: $presenter.isAddServiceEnabled)
-            .padding(.horizontal, 40)
-            .padding(.top, 10)
-            
-            AddingServiceLinkButton(text: T.Tokens.addManualHelpCta) {
-                presenter.handleHelp()
-            }
-            .padding(.top, 10)
         }
     }
     

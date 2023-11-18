@@ -25,19 +25,27 @@ import Data
 protocol AddingServiceManuallyViewControlling: AnyObject {}
 
 final class AddingServiceManuallyViewController: UIViewController, AddingServiceManuallyViewControlling {
-    var heightChange: ((CGFloat) -> Void)?
     var presenter: AddingServiceManuallyPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: T.Commons.cancel,
+            style: .plain,
+            target: self,
+            action: #selector(cancelAction)
+        )
         
-        let manually = AddingServiceManuallyView(
-            presenter: presenter,
-            changeHeight: { [weak self] height in
-                self?.heightChange?(height)
-            }) { [weak self] in
-                self?.presentingViewController?.dismiss(animated: true)
-            }
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: T.Commons.pair,
+            style: .plain,
+            target: self,
+            action: #selector(pairAction)
+        )
+        navigationItem.title = T.Tokens.addManualTitle
+        
+        let manually = AddingServiceManuallyView(presenter: presenter)
         
         let vc = UIHostingController(rootView: manually)
         vc.willMove(toParent: self)
@@ -48,5 +56,15 @@ final class AddingServiceManuallyViewController: UIViewController, AddingService
         vc.didMove(toParent: self)
         
         presenter.viewDidLoad()
+    }
+    
+    @objc
+    private func cancelAction() {
+        presenter.handleCancel()
+    }
+    
+    @objc
+    private func pairAction() {
+        presenter.handlePair()
     }
 }

@@ -78,10 +78,6 @@ extension AddingServiceManuallyPresenter {
         ) else { return }
         flowController.toClose(serviceData)
     }
-    
-    func handleHelp() {
-        flowController.toHelp()
-    }
 }
 
 extension AddingServiceManuallyPresenter {
@@ -226,5 +222,13 @@ extension AddingServiceManuallyPresenter {
     
     func handleInitialCounter(_ counter: Int) {
         self.initialCounter = counter
+    }
+    
+    func handleCancel() {
+        flowController.toClose()
+    }
+    
+    func handlePair() {
+        handleAddService()
     }
 }

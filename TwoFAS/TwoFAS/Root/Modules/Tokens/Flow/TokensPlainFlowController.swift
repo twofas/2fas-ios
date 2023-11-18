@@ -437,15 +437,34 @@ extension TokensPlainFlowController: UploadLogsNavigationFlowControllerParent {
     }
 }
 
-extension TokensPlainFlowController: AddingServiceFlowControllerParent {
-    func addingServiceDismiss() {
-        dismiss()
-    }
-    
-    func addingServiceClose(_ serviceData: ServiceData) {
+extension TokensPlainFlowController: AddingServiceManuallyNavigationFlowControllerParent {
+    func addingServiceManuallyToClose(_ serviceData: ServiceData) {
         dismiss(actions: [.newData, .refreshImmidiately, .sync]) { [weak self] in
             self?.toServiceWasCreated(serviceData)
         }
+    }
+    
+    func addingServiceManuallyToCancel() {
+        dismiss(actions: [.continuesFlow]) { [weak self] in
+            self?.toAddService()
+        }
+    }
+}
+
+extension TokensPlainFlowController: AddingServiceFlowControllerParent {
+    func addingServiceToManual(_ name: String?) {
+        dismiss(actions: [.continuesFlow]) { [weak self] in
+            guard let self else { return }
+            AddingServiceManuallyNavigationFlowController.present(
+                on: viewController,
+                parent: self,
+                name: name
+            )
+        }
+    }
+    
+    func addingServiceDismiss() {
+        dismiss()
     }
     
     func addingServiceToGallery() {
@@ -487,6 +506,12 @@ extension TokensPlainFlowController: AddingServiceFlowControllerParent {
     func addingServiceToGuides() {
         dismiss(actions: [.continuesFlow]) { [weak self] in
             self?.showGuides()
+        }
+    }
+    
+    func addingServiceToToken(_ serviceData: ServiceData) {
+        dismiss(actions: [.newData, .refreshImmidiately, .sync]) { [weak self] in
+            self?.toServiceWasCreated(serviceData)
         }
     }
 }

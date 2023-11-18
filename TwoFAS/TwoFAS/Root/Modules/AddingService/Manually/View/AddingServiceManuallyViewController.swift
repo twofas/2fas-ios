@@ -25,6 +25,13 @@ import Data
 protocol AddingServiceManuallyViewControlling: AnyObject {}
 
 final class AddingServiceManuallyViewController: UIViewController, AddingServiceManuallyViewControlling {
+    private lazy var pairButton = UIBarButtonItem(
+        title: T.Commons.pair,
+        style: .plain,
+        target: self,
+        action: #selector(pairAction)
+    )
+    
     var presenter: AddingServiceManuallyPresenter!
     
     override func viewDidLoad() {
@@ -37,15 +44,13 @@ final class AddingServiceManuallyViewController: UIViewController, AddingService
             action: #selector(cancelAction)
         )
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: T.Commons.pair,
-            style: .plain,
-            target: self,
-            action: #selector(pairAction)
-        )
+        navigationItem.rightBarButtonItem = pairButton
         navigationItem.title = T.Tokens.addManualTitle
+        navigationItem.backButtonDisplayMode = .minimal
         
-        let manually = AddingServiceManuallyView(presenter: presenter)
+        let manually = AddingServiceManuallyView(presenter: presenter) { [weak self] enable in
+            self?.pairButton.isEnabled = enable
+        }
         
         let vc = UIHostingController(rootView: manually)
         vc.willMove(toParent: self)

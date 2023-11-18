@@ -22,6 +22,7 @@ import Common
 
 struct AddingServiceManuallyView: View {
     @ObservedObject var presenter: AddingServiceManuallyPresenter
+    var enableSave: (Bool) -> Void
     
     @FocusState private var focusedField: Field?
     private enum Field: Int, Hashable {
@@ -69,9 +70,17 @@ struct AddingServiceManuallyView: View {
         }
         .onAppear {
             DispatchQueue.main.async {
-                focusedField = .serviceName
+                switch presenter.keyboardInitialFocus {
+                case .noFocus: break
+                case .name: focusedField = .serviceName
+                case .secret: focusedField = .secret
+                }
+                presenter.viewDidAppear()
             }
         }
+        .onReceive(presenter.$isAddServiceEnabled, perform: { _ in
+            enableSave(presenter.isAddServiceEnabled)
+        })
     }
     
     @ViewBuilder
@@ -105,62 +114,50 @@ struct AddingServiceManuallyView: View {
     func advancedParametersBuilder() -> some View {
         VStack(alignment: .leading, spacing: 0) {
             if presenter.selectedTokenType == .totp {
-                Menu(content: {
-                    ForEach(Algorithm.allCases) { algo in
-                        Button("\(algo.rawValue)", action: { presenter.handleAlgorithmSelection(algo) })
-                    }
-                }, label: {
+                Button {
+                    presenter.handleSelectAlgorithm()
+                } label: {
                     advancedMenuPositionBuilder(
                         title: T.Tokens.algorithm,
                         value: presenter.selectedAlgorithm.rawValue
                     )
-                })
+                }
                 AddingServiceAdvancedSectionDividerView()
-                Menu(content: {
-                    ForEach(Period.allCases) { period in
-                        Button(
-                            T.Tokens.second(period.rawValue),
-                            action: { presenter.handleRefreshTimeSelection(period) }
-                        )
-                    }
-                }, label: {
+                Button {
+                    presenter.handleSelectRefreshTime()
+                } label: {
                     advancedMenuPositionBuilder(
                         title: T.Tokens.refreshTime,
                         value: T.Tokens.second(presenter.selectedRefreshTime.rawValue)
                     )
-                })
+                }
                 AddingServiceAdvancedSectionDividerView()
-                Menu(content: {
-                    ForEach(Digits.allCases) { digit in
-                        Button("\(digit.rawValue)", action: { presenter.handleDigitsSelection(digit) })
-                    }
-                }, label: {
+                Button {
+                    presenter.handleSelectDigits()
+                } label: {
                     advancedMenuPositionBuilder(
                         title: T.Tokens.numberOfDigits,
                         value: "\(presenter.selectedDigits.rawValue)"
                     )
-                })
+                }
             } else if presenter.selectedTokenType == .hotp {
                 Button {
                     presenter.handleShowInitialCounterInput()
                 } label: {
                     advancedMenuPositionBuilder(
                         title: T.Tokens.initialCounter,
-                        value: "\(presenter.initialCounter)",
-                        systemName: "number"
+                        value: "\(presenter.initialCounter)"
                     )
                 }
                 AddingServiceAdvancedSectionDividerView()
-                Menu(content: {
-                    ForEach(Digits.allCases) { digit in
-                        Button("\(digit.rawValue)", action: { presenter.handleDigitsSelection(digit) })
-                    }
-                }, label: {
+                Button {
+                    presenter.handleSelectDigits()
+                } label: {
                     advancedMenuPositionBuilder(
                         title: T.Tokens.numberOfDigits,
                         value: "\(presenter.selectedDigits.rawValue)"
                     )
-                })
+                }
             }
         }
         .overlay(
@@ -189,7 +186,7 @@ struct AddingServiceManuallyView: View {
     func advancedMenuPositionBuilder(
         title: String,
         value: String,
-        systemName: String = "chevron.up.chevron.down"
+        systemName: String = "chevron.right"
     ) -> some View {
         HStack {
             Text(title)
@@ -206,6 +203,7 @@ struct AddingServiceManuallyView: View {
                 .font(.body)
                 .foregroundColor(Color(Theme.Colors.Text.inactive))
                 .frame(alignment: .trailing)
+                .padding(.leading, Theme.Metrics.halfSpacing)
         }
         .padding(.horizontal, Theme.Metrics.standardSpacing)
         .padding(.vertical, Theme.Metrics.doubleSpacing)

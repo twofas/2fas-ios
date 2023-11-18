@@ -27,7 +27,7 @@ protocol AddingServiceManuallyViewControlling: AnyObject {}
 final class AddingServiceManuallyViewController: UIViewController, AddingServiceManuallyViewControlling {
     private lazy var pairButton = UIBarButtonItem(
         title: T.Commons.pair,
-        style: .plain,
+        style: .done,
         target: self,
         action: #selector(pairAction)
     )
@@ -39,7 +39,7 @@ final class AddingServiceManuallyViewController: UIViewController, AddingService
     
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: T.Commons.cancel,
-            style: .plain,
+            style: .done,
             target: self,
             action: #selector(cancelAction)
         )

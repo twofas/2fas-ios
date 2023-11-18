@@ -23,7 +23,7 @@ struct AddingServiceAdvancedSectionDividerView: View {
     var body: some View {
         Divider()
             .frame(height: 1)
-            .overlay(Color(Theme.Colors.Line.secondaryLine))
+            .overlay(Color(Theme.Colors.Line.secondaryDivider))
     }
 }
 

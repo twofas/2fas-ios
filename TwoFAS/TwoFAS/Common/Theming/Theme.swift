@@ -113,6 +113,7 @@ enum Theme {
             static let secondarySeparator = ThemeColor.secondarySeparator
             static let active = ThemeColor.activeLine
             static let selectionBorder = ThemeColor.selectionBorder
+            static let secondaryDivider = ThemeColor.secondaryDivider
         }
         
         enum Grid {

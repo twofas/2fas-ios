@@ -32,7 +32,7 @@ final class GuideSelectorViewController: UIViewController {
         navigationItem.title = T.Guides.selectTitle
         navigationItem.backButtonDisplayMode = .minimal
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: image,
+            title: T.Commons.close,
             style: .done,
             target: self,
             action: #selector(closeAction)

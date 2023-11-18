@@ -20,15 +20,15 @@
 import UIKit
 import Data
 
-final class GuidePagePresenter: ObservableObject {
+final class GuidePagesPresenter: ObservableObject {
     var totalPages: Int {
-        menu.pages.count
-    }
-
-    var image: UIImage {
-        currentPage.image.icon
+        content.pages.count
     }
     
+    var pages: [GuideDescription.Page] {
+        content.pages
+    }
+
     var buttonTitle: String {
         switch buttonType {
         case .manually(let title, _): return title
@@ -38,7 +38,7 @@ final class GuidePagePresenter: ObservableObject {
     }
     
     var serviceName: String {
-        menu.serviceName
+        content.serviceName
     }
     
     var buttonIcon: UIImage? {
@@ -47,29 +47,18 @@ final class GuidePagePresenter: ObservableObject {
         default: return nil
         }
     }
-    
-    var content: AttributedString {
-        var str = currentPage.content
-        str.foregroundColor = Theme.Colors.Text.main
-        return str
-    }
-    
+        
     private var buttonType: GuideDescription.Page.CTA {
-        currentPage.cta
+        content.pages[currentPage].cta
     }
     
-    private var currentPage: GuideDescription.Page {
-        menu.pages[pageNumber]
-    }
+    private let flowController: GuidePagesFlowControlling
+    private let content: GuideDescription.MenuPosition
+    @Published var currentPage: Int = 0
     
-    private let flowController: GuidePageFlowControlling
-    private let menu: GuideDescription.MenuPosition
-    let pageNumber: Int
-    
-    init(flowController: GuidePageFlowControlling, menu: GuideDescription.MenuPosition, pageNumber: Int) {
+    init(flowController: GuidePagesFlowControlling, content: GuideDescription.MenuPosition) {
         self.flowController = flowController
-        self.menu = menu
-        self.pageNumber = pageNumber
+        self.content = content
     }
     
     func handleAction() {
@@ -79,9 +68,13 @@ final class GuidePagePresenter: ObservableObject {
         case .scanner:
             flowController.toCodeScanner()
         case .next:
-            let nextPageNumber = pageNumber + 1
+            let nextPageNumber = currentPage + 1
             guard nextPageNumber < totalPages else { return }
-            flowController.toPage(pageNumber: nextPageNumber, in: menu)
+            currentPage = nextPageNumber
         }
+    }
+    
+    func handleGoBack() {
+        flowController.toMenu()
     }
 }

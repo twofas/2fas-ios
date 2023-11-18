@@ -255,10 +255,10 @@
 		C24590F8280F52620079C21C /* SelectServicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24590F7280F52620079C21C /* SelectServicePresenter.swift */; };
 		C24590FA280F54400079C21C /* SelectServiceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24590F9280F54400079C21C /* SelectServiceModels.swift */; };
 		C24590FC280F54B30079C21C /* SelectServiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24590FB280F54B30079C21C /* SelectServiceTableViewCell.swift */; };
-		C248B14D2AC4C01600E6B897 /* GuidePageFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B14C2AC4C01600E6B897 /* GuidePageFlowController.swift */; };
-		C248B14F2AC4C31300E6B897 /* GuidePagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B14E2AC4C31300E6B897 /* GuidePagePresenter.swift */; };
-		C248B1512AC4C6BE00E6B897 /* GuidePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B1502AC4C6BE00E6B897 /* GuidePageViewController.swift */; };
-		C248B1532AC4C77100E6B897 /* GuidePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B1522AC4C77100E6B897 /* GuidePageView.swift */; };
+		C248B14D2AC4C01600E6B897 /* GuidePagesFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B14C2AC4C01600E6B897 /* GuidePagesFlowController.swift */; };
+		C248B14F2AC4C31300E6B897 /* GuidePagesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B14E2AC4C31300E6B897 /* GuidePagesPresenter.swift */; };
+		C248B1512AC4C6BE00E6B897 /* GuidePagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B1502AC4C6BE00E6B897 /* GuidePagesViewController.swift */; };
+		C248B1532AC4C77100E6B897 /* GuidePagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B1522AC4C77100E6B897 /* GuidePagesView.swift */; };
 		C249773A277F618A00DC872C /* TrashServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2497739277F618A00DC872C /* TrashServiceFlowController.swift */; };
 		C249773C277F62B100DC872C /* TrashServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249773B277F62B100DC872C /* TrashServiceViewController.swift */; };
 		C24AEDC0291BD11A005F59CB /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24AEDBF291BD119005F59CB /* T.generated.swift */; };
@@ -1602,10 +1602,10 @@
 		C24590F7280F52620079C21C /* SelectServicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServicePresenter.swift; sourceTree = "<group>"; };
 		C24590F9280F54400079C21C /* SelectServiceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServiceModels.swift; sourceTree = "<group>"; };
 		C24590FB280F54B30079C21C /* SelectServiceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectServiceTableViewCell.swift; sourceTree = "<group>"; };
-		C248B14C2AC4C01600E6B897 /* GuidePageFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePageFlowController.swift; sourceTree = "<group>"; };
-		C248B14E2AC4C31300E6B897 /* GuidePagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagePresenter.swift; sourceTree = "<group>"; };
-		C248B1502AC4C6BE00E6B897 /* GuidePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePageViewController.swift; sourceTree = "<group>"; };
-		C248B1522AC4C77100E6B897 /* GuidePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePageView.swift; sourceTree = "<group>"; };
+		C248B14C2AC4C01600E6B897 /* GuidePagesFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesFlowController.swift; sourceTree = "<group>"; };
+		C248B14E2AC4C31300E6B897 /* GuidePagesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesPresenter.swift; sourceTree = "<group>"; };
+		C248B1502AC4C6BE00E6B897 /* GuidePagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesViewController.swift; sourceTree = "<group>"; };
+		C248B1522AC4C77100E6B897 /* GuidePagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesView.swift; sourceTree = "<group>"; };
 		C249772D277F3D6100DC872C /* TrashingServiceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashingServiceInteractor.swift; sourceTree = "<group>"; };
 		C249772F277F3EFB00DC872C /* ServiceModifyInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModifyInteractor.swift; sourceTree = "<group>"; };
 		C2497739277F618A00DC872C /* TrashServiceFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashServiceFlowController.swift; sourceTree = "<group>"; };
@@ -3741,7 +3741,7 @@
 			children = (
 				C23736942AC08DF600792054 /* Selector */,
 				C2EBDFF52AC44604008FD744 /* Menu */,
-				C248B1482AC4B4D300E6B897 /* Page */,
+				C248B1482AC4B4D300E6B897 /* Pages */,
 			);
 			path = Guide;
 			sourceTree = "<group>";
@@ -4186,21 +4186,21 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
-		C248B1482AC4B4D300E6B897 /* Page */ = {
+		C248B1482AC4B4D300E6B897 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
 				C248B14B2AC4BFFA00E6B897 /* Flow */,
 				C248B14A2AC4BFEF00E6B897 /* Presenter */,
 				C248B1492AC4BFEA00E6B897 /* View */,
 			);
-			path = Page;
+			path = Pages;
 			sourceTree = "<group>";
 		};
 		C248B1492AC4BFEA00E6B897 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C248B1502AC4C6BE00E6B897 /* GuidePageViewController.swift */,
-				C248B1522AC4C77100E6B897 /* GuidePageView.swift */,
+				C248B1502AC4C6BE00E6B897 /* GuidePagesViewController.swift */,
+				C248B1522AC4C77100E6B897 /* GuidePagesView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4208,7 +4208,7 @@
 		C248B14A2AC4BFEF00E6B897 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				C248B14E2AC4C31300E6B897 /* GuidePagePresenter.swift */,
+				C248B14E2AC4C31300E6B897 /* GuidePagesPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -4216,7 +4216,7 @@
 		C248B14B2AC4BFFA00E6B897 /* Flow */ = {
 			isa = PBXGroup;
 			children = (
-				C248B14C2AC4C01600E6B897 /* GuidePageFlowController.swift */,
+				C248B14C2AC4C01600E6B897 /* GuidePagesFlowController.swift */,
 			);
 			path = Flow;
 			sourceTree = "<group>";
@@ -7986,7 +7986,7 @@
 				C21247F427B7062F0044D9F2 /* LabelComposeColorSelector.swift in Sources */,
 				C2B39C7527A58F0E00D3B579 /* SelectFromGalleryPresenter.swift in Sources */,
 				C20E578C29297593002B215B /* UploadLogsViewController.swift in Sources */,
-				C248B14F2AC4C31300E6B897 /* GuidePagePresenter.swift in Sources */,
+				C248B14F2AC4C31300E6B897 /* GuidePagesPresenter.swift in Sources */,
 				C21111EC274ABA5700CA7C78 /* SettingsViewControlling.swift in Sources */,
 				C2FAE12528C7346900F2446F /* AEGISParseResultErrorStrings.swift in Sources */,
 				C21A9E8D27CC0A2300FE4CC4 /* ComposeServiceRefreshTimeFlowController.swift in Sources */,
@@ -8066,7 +8066,7 @@
 				C24D8B3C29BE41CA00C3E11E /* ContentNavigationController.swift in Sources */,
 				C287D4FF276A9B5C0001B272 /* AppSecurityViewController.swift in Sources */,
 				C2AD653127F258B3008997DB /* BrowserExtensionFailureFlowController.swift in Sources */,
-				C248B14D2AC4C01600E6B897 /* GuidePageFlowController.swift in Sources */,
+				C248B14D2AC4C01600E6B897 /* GuidePagesFlowController.swift in Sources */,
 				C240188D2618740200800DBF /* IconSelectorCollectionViewCell.swift in Sources */,
 				C284991327CC0FD40092098D /* ComposeServiceAlgorithmFlowController.swift in Sources */,
 				C21A9E8227CBF55500FE4CC4 /* ComposeServiceNumberOfDigitsFlowController.swift in Sources */,
@@ -8195,7 +8195,7 @@
 				C2625F9228BBB87700D84C5C /* AboutModels.swift in Sources */,
 				C299B7D2236DE78700224F51 /* StackView+.swift in Sources */,
 				C2698B6E2986C03600EBC179 /* MainTabPresenter.swift in Sources */,
-				C248B1532AC4C77100E6B897 /* GuidePageView.swift in Sources */,
+				C248B1532AC4C77100E6B897 /* GuidePagesView.swift in Sources */,
 				C23FD5102814648C00E4E9C5 /* ComposeServiceWebExtensionModuleInteractor.swift in Sources */,
 				C23666771FB2644900989ACA /* AppDelegate.swift in Sources */,
 				C21E0B3E2299F2190063EE7C /* UIDevice+.swift in Sources */,
@@ -8326,7 +8326,7 @@
 				C2F51EFF27DAAD9900A67C73 /* BrowserExtensionPairingFailureView.swift in Sources */,
 				C20E60FF28189E8800AB002E /* PushNotificationPermissionPlainFlowController.swift in Sources */,
 				C2C56D4427C98316003B4C43 /* ComposeServiceAdvancedSummaryPresenter+Menu.swift in Sources */,
-				C248B1512AC4C6BE00E6B897 /* GuidePageViewController.swift in Sources */,
+				C248B1512AC4C6BE00E6B897 /* GuidePagesViewController.swift in Sources */,
 				C2323C56276B575D00038B76 /* AppLockPresenter+Menu.swift in Sources */,
 				C2AE5F652ADC3A4200AED670 /* VoiceOver.swift in Sources */,
 				C296D4D42A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift in Sources */,

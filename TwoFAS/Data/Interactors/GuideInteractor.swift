@@ -30,13 +30,17 @@ public struct GuideDescription: Identifiable, Hashable {
         hasher.combine(id)
     }
     
-    public struct Page {
+    public struct Page: Identifiable {
+        public var id: Int {
+            pageNumber
+        }
         public enum CTA {
             case manually(title: String, data: String?)
             case scanner(title: String)
             case next
         }
         
+        public let pageNumber: Int
         public let image: ServiceGuideImage
         public let content: AttributedString
         public let cta: CTA
@@ -105,8 +109,9 @@ private extension GuideInteractor {
             GuideDescription.MenuPosition(
                 title: item.name,
                 serviceName: serviceName,
-                pages: item.steps.map({ step in
+                pages: item.steps.enumerated().map({ index, step in
                     GuideDescription.Page(
+                        pageNumber: index,
                         image: step.image,
                         content: (try? AttributedString(markdown: step.content)) ?? AttributedString(step.content),
                         cta: step.cta.pageCta

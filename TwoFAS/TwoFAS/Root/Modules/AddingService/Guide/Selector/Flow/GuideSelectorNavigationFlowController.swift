@@ -61,21 +61,21 @@ extension GuideSelectorNavigationFlowController: GuideSelectorFlowControllerPare
 }
 
 extension GuideSelectorNavigationFlowController: GuideMenuFlowControllerParent {
-    func guideMenuToMenuPosition(_ menu: GuideDescription.MenuPosition) {
-        GuidePageFlowController.push(on: navigationController, parent: self, menu: menu, pageNumber: 0)
+    func guideMenuToMenuPosition(_ content: GuideDescription.MenuPosition) {
+        GuidePagesFlowController.push(on: navigationController, parent: self, content: content)
     }
 }
 
-extension GuideSelectorNavigationFlowController: GuidePageFlowControllerParent {
-    func guidePageToPage(pageNumber: Int, in menu: GuideDescription.MenuPosition) {
-        GuidePageFlowController.push(on: navigationController, parent: self, menu: menu, pageNumber: pageNumber)
-    }
-    
+extension GuideSelectorNavigationFlowController: GuidePagesFlowControllerParent {
     func guidePageToAddManually(with data: String?) {
         parent?.guideToAddManually(with: data)
     }
     
     func guidePageToCodeScanner() {
         parent?.guideToCodeScanner()
+    }
+    
+    func guideToMenu() {
+        navigationController?.popViewController(animated: true)
     }
 }

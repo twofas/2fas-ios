@@ -21,35 +21,33 @@ import UIKit
 import Common
 import Data
 
-protocol GuidePageFlowControllerParent: AnyObject {
-    func guidePageToPage(pageNumber: Int, in menu: GuideDescription.MenuPosition)
+protocol GuidePagesFlowControllerParent: AnyObject {
     func guidePageToAddManually(with data: String?)
     func guidePageToCodeScanner()
+    func guideToMenu()
 }
 
-protocol GuidePageFlowControlling: AnyObject {
-    func toPage(pageNumber: Int, in menu: GuideDescription.MenuPosition)
+protocol GuidePagesFlowControlling: AnyObject {
     func toAddManually(with data: String?)
     func toCodeScanner()
+    func toMenu()
 }
 
-final class GuidePageFlowController: FlowController {
-    private weak var parent: GuidePageFlowControllerParent?
+final class GuidePagesFlowController: FlowController {
+    private weak var parent: GuidePagesFlowControllerParent?
     
     static func push(
         on navigationController: UINavigationController,
-        parent: GuidePageFlowControllerParent,
-        menu: GuideDescription.MenuPosition,
-        pageNumber: Int
+        parent: GuidePagesFlowControllerParent,
+        content: GuideDescription.MenuPosition
     ) {
-        let view = GuidePageViewController()
-        let flowController = GuidePageFlowController(viewController: view)
+        let view = GuidePagesViewController()
+        let flowController = GuidePagesFlowController(viewController: view)
         flowController.parent = parent
         
-        let presenter = GuidePagePresenter(
+        let presenter = GuidePagesPresenter(
             flowController: flowController,
-            menu: menu,
-            pageNumber: pageNumber
+            content: content
         )
         view.presenter = presenter
         
@@ -57,16 +55,16 @@ final class GuidePageFlowController: FlowController {
     }
 }
 
-extension GuidePageFlowController: GuidePageFlowControlling {
-    func toPage(pageNumber: Int, in menu: GuideDescription.MenuPosition) {
-        parent?.guidePageToPage(pageNumber: pageNumber, in: menu)
-    }
-    
+extension GuidePagesFlowController: GuidePagesFlowControlling {
     func toAddManually(with data: String?) {
         parent?.guidePageToAddManually(with: data)
     }
     
     func toCodeScanner() {
         parent?.guidePageToCodeScanner()
+    }
+    
+    func toMenu() {
+        parent?.guideToMenu()
     }
 }

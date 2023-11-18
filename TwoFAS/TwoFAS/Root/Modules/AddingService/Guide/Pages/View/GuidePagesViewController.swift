@@ -22,19 +22,27 @@ import Foundation
 import UIKit
 import SwiftUI
 
-final class GuidePageViewController: UIViewController {
-    var presenter: GuidePagePresenter!
+final class GuidePagesViewController: UIViewController {
+    var presenter: GuidePagesPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let image = UIImage(systemName: "chevron.backward")?
+            .withTintColor(Theme.Colors.Text.theme, renderingMode: .alwaysOriginal)
+        
         navigationItem.title = T.Guides.guideTitle(presenter.serviceName)
-        navigationItem.backButtonDisplayMode = .minimal
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: image,
+            style: .done,
+            target: self,
+            action: #selector(goBack)
+        )
         view.backgroundColor = Theme.Colors.Fill.System.third
         
-        let page = GuidePageView(presenter: presenter)
+        let pages = GuidePagesView(presenter: presenter)
         
-        let vc = UIHostingController(rootView: page)
+        let vc = UIHostingController(rootView: pages)
         vc.willMove(toParent: self)
         addChild(vc)
         view.addSubview(vc.view, with: [
@@ -45,5 +53,10 @@ final class GuidePageViewController: UIViewController {
         ])
         vc.view.backgroundColor = Theme.Colors.Fill.System.third
         vc.didMove(toParent: self)
+    }
+    
+    @objc
+    private func goBack() {
+        presenter.handleGoBack()
     }
 }

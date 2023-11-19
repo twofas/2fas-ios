@@ -34,7 +34,6 @@ final class IntroductionViewController: UIViewController {
     private let backButton = CustomBackButton()
     
     private var mainButtonAdditionalAction: Callback?
-    private var bottomAnchor: NSLayoutConstraint?
     
     var presenter: IntroductionPresenter!
     
@@ -69,12 +68,6 @@ final class IntroductionViewController: UIViewController {
             mainActionButton.heightAnchor.constraint(equalToConstant: Theme.Metrics.buttonHeight)
         ])
         
-        let bottomAnchor = mainActionButton
-            .bottomAnchor
-            .constraint(equalTo: view.safeBottomAnchor, constant: -2 * singleMargin - Theme.Metrics.buttonHeight)
-        self.bottomAnchor = bottomAnchor
-        bottomAnchor.isActive = true
-        
         view.addSubview(additionalActionButton, with: [
             additionalActionButton.topAnchor.constraint(equalTo: mainActionButton.bottomAnchor, constant: singleMargin),
             additionalActionButton.leadingAnchor.constraint(
@@ -101,7 +94,6 @@ final class IntroductionViewController: UIViewController {
         additionalActionButton.apply(MainContainerButtonStyling.textOnly.value)
         additionalActionButton.alpha = 0
         additionalActionButton.action = { [weak self] in self?.additionalActionButtonAction() }
-        additionalActionButton.isHidden = true
         
         scrollView.didChangePage = { [weak self] in
             self?.presenter.handleDidMoveToPage($0)
@@ -149,20 +141,12 @@ extension IntroductionViewController: IntroductionViewControlling {
         
         if let additionalButtonTitle = scrollView.container.additionalButtonTitle(for: num) {
             additionalActionButton.update(title: additionalButtonTitle)
-            additionalActionButton.alpha = 0
-            additionalActionButton.isHidden = false
             UIView.animate(withDuration: IntroductionCommons.shortAnimationTiming) {
                 self.additionalActionButton.alpha = 1
-            } completion: { _ in
-                self.bottomAnchor?.isActive = false
             }
         } else {
-            additionalActionButton.alpha = 1
             UIView.animate(withDuration: IntroductionCommons.shortAnimationTiming) {
                 self.additionalActionButton.alpha = 0
-            } completion: { _ in
-                self.additionalActionButton.isHidden = true
-                self.bottomAnchor?.isActive = true
             }
         }
         

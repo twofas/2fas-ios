@@ -325,6 +325,7 @@
 		C25C91CF2B08E84800E58729 /* AddingServiceManuallyNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C91CE2B08E84800E58729 /* AddingServiceManuallyNavigationFlowController.swift */; };
 		C25C91D52B0A632500E58729 /* IntroductionNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C91D42B0A632500E58729 /* IntroductionNavigationFlowController.swift */; };
 		C25C91D72B0A6DE600E58729 /* IntroductionModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C91D62B0A6DE600E58729 /* IntroductionModuleInteractor.swift */; };
+		C25C91DA2B0A75B100E58729 /* IntroductionCloudInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C91D92B0A75B100E58729 /* IntroductionCloudInfoViewController.swift */; };
 		C25D5E782A64908200CA359B /* CameraLastPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25D5E772A64908200CA359B /* CameraLastPass.swift */; };
 		C25E898E2663DF9700A60CE5 /* TokensSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E898D2663DF9700A60CE5 /* TokensSectionHeader.swift */; };
 		C25E89902663F11900A60CE5 /* SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E898F2663F11900A60CE5 /* SectionData.swift */; };
@@ -1683,6 +1684,7 @@
 		C25C91CE2B08E84800E58729 /* AddingServiceManuallyNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceManuallyNavigationFlowController.swift; sourceTree = "<group>"; };
 		C25C91D42B0A632500E58729 /* IntroductionNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionNavigationFlowController.swift; sourceTree = "<group>"; };
 		C25C91D62B0A6DE600E58729 /* IntroductionModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionModuleInteractor.swift; sourceTree = "<group>"; };
+		C25C91D92B0A75B100E58729 /* IntroductionCloudInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionCloudInfoViewController.swift; sourceTree = "<group>"; };
 		C25D5E752A64863000CA359B /* Code+LastPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Code+LastPass.swift"; sourceTree = "<group>"; };
 		C25D5E772A64908200CA359B /* CameraLastPass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraLastPass.swift; sourceTree = "<group>"; };
 		C25E898D2663DF9700A60CE5 /* TokensSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensSectionHeader.swift; sourceTree = "<group>"; };
@@ -4544,6 +4546,7 @@
 		C25C91D22B0A4FDA00E58729 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C25C91D82B0A759700E58729 /* CloudInfo */,
 				C2BD85E326403EE80087D087 /* IntroductionViewController.swift */,
 				C2F6BAFF264869B7002A9747 /* IntroductionCommons.swift */,
 				C2F6BB012648826F002A9747 /* Components */,
@@ -4558,6 +4561,14 @@
 				C25C91D62B0A6DE600E58729 /* IntroductionModuleInteractor.swift */,
 			);
 			path = Interactor;
+			sourceTree = "<group>";
+		};
+		C25C91D82B0A759700E58729 /* CloudInfo */ = {
+			isa = PBXGroup;
+			children = (
+				C25C91D92B0A75B100E58729 /* IntroductionCloudInfoViewController.swift */,
+			);
+			path = CloudInfo;
 			sourceTree = "<group>";
 		};
 		C25E8996266402C500A60CE5 /* Section */ = {
@@ -7996,6 +8007,7 @@
 				C240485E27654C5F0076376E /* ImporterEnterPasswordFlowController.swift in Sources */,
 				C2A7944D27F795E900E5C641 /* BrowserExtensionPairedService.swift in Sources */,
 				C287D4FB276A92460001B272 /* AppSecurityExtensions.swift in Sources */,
+				C25C91DA2B0A75B100E58729 /* IntroductionCloudInfoViewController.swift in Sources */,
 				C2CC0A4C29D0D4FC00677A7B /* ExternalImportService.swift in Sources */,
 				C244718825F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift in Sources */,
 				C2D587362650549700D9C4BD /* IntroductionPage4View.swift in Sources */,

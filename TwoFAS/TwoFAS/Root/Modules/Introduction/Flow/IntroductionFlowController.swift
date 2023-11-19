@@ -61,7 +61,13 @@ extension IntroductionFlowController: IntroductionFlowControlling {
     }
     
     func toCloudInfo() {
-        print("SHOW")
+        let vc = IntroductionCloudInfoViewController()
+        vc.close = { [weak self] in
+            self?._viewController.dismiss(animated: true)
+        }
+        vc.configureAsModal()
+        
+        _viewController.present(vc, animated: true)
     }
     
     func toTOS() {

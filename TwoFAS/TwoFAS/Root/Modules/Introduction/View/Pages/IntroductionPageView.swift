@@ -86,6 +86,8 @@ class IntroductionPageView: UIView {
     var mainButtonAdditionalAction: Callback?
     var showSkip: Bool { true }
     var showBack: Bool { true }
+
+    var additionalButtonTitle: String? { nil }
     
     override var intrinsicContentSize: CGSize { CGSize(width: width, height: UIView.noIntrinsicMetric) }
 }

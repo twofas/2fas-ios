@@ -70,19 +70,7 @@ extension RootFlowController {
 
 extension RootFlowController: RootFlowControlling {
     func toIntro() {
-        let navigationController = CommonNavigationController()
-        let intro = IntroductionCoordinator()
-        intro.markAsShownAction = { [weak self] in
-            self?.viewController.presenter.handleIntroMarkAsShown()
-        }
-        
-//        let adapter = PreviousToCurrentCoordinatorAdapter(
-//            navigationController: navigationController,
-//            coordinator: intro
-//        )
-        
-        viewController.present(navigationController, immediately: false, animationType: .alpha)
-        intro.start()
+        IntroductionNavigationFlowController.embedAsRoot(in: viewController, parent: self)
     }
     
     func toCover() {
@@ -123,7 +111,7 @@ extension RootFlowController: RootFlowControlling {
             removeCover()
             return
         }
-        UIView.animate(withDuration: Theme.Animations.Timing.quick, delay: 0, options: [.curveEaseInOut]) {
+        UIView.animate(withDuration: Theme.Animations.Timing.quick, delay: 0, options: .curveEaseInOut) {
             self.coverView?.alpha = 0
         } completion: { _ in
             self.removeCover()
@@ -135,18 +123,26 @@ extension RootFlowController: RootFlowControlling {
     }
 }
 
-extension RootFlowController { // TODO: Remove when Intro moved to proper arch
-    func didFinish() {
-        viewController.presenter.handleIntroHasFinished()
+extension RootFlowController: IntroductionNavigationFlowControllerParent {
+    func introductionHasFinished (introViewController: UIViewController) {
+        UIView.animate(withDuration: Theme.Animations.Timing.quick, delay: 0, options: .curveEaseInOut) {
+            introViewController.view.alpha = 0
+        } completion: { _ in
+            introViewController.willMove(toParent: nil)
+            introViewController.removeFromParent()
+            introViewController.view.removeFromSuperview()
+            introViewController.didMove(toParent: nil)
+            self.viewController.presenter.handleIntroHasFinished()
+        }
     }
-    
+}
+
+extension RootFlowController: MainFlowControllerParent {
     func removeCover() {
         coverView?.removeFromSuperview()
         coverView = nil
     }
 }
-
-extension RootFlowController: MainFlowControllerParent {}
 
 extension RootFlowController: LoginFlowControllerParent {
     func loginClose() {
@@ -159,6 +155,6 @@ extension RootFlowController: LoginFlowControllerParent {
     }
     
     private func removeLogin() {
-        removeCover()
+        toRemoveCover(animated: true)
     }
 }

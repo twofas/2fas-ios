@@ -31,7 +31,6 @@ protocol RootModuleInteracting: AnyObject {
     func applicationDidBecomeActive()
     func applicationWillTerminate()
     
-    func markIntroAsShown()
     func lockApplicationIfNeeded(presentLoginImmediately: @escaping () -> Void)
     
     func shouldHandleURL(url: URL) -> Bool
@@ -87,10 +86,6 @@ extension RootModuleInteractor: RootModuleInteracting {
     func initializeApp() {
         rootInteractor.initializeApp()
         registerDeviceInteractor.initialize()
-    }
-    
-    func markIntroAsShown() {
-        rootInteractor.markIntroAsShown()
     }
     
     func lockApplicationIfNeeded(presentLoginImmediately: @escaping () -> Void) {

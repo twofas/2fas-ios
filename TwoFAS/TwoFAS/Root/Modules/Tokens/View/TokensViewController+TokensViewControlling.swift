@@ -88,6 +88,7 @@ extension TokensViewController: TokensViewControlling {
     func showEmptyScreen() {
         removeSearchBar()
         VoiceOver.say(T.Voiceover.useAddServiceButtonTitle)
+        guard emptyListScreenView.isHidden else { return }
         emptyListScreenView.alpha = 0
         emptyListScreenView.isHidden = false
         UIView.animate(withDuration: Theme.Animations.Timing.show, animations: {

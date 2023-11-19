@@ -59,11 +59,18 @@ final class MainFlowController: FlowController {
         )
         view.presenter = presenter
         presenter.view = view
-
+        
         viewController.addChild(view)
         viewController.view.addSubview(view.view)
         view.view.pinToParent()
         view.didMove(toParent: viewController)
+        
+        if !immediately {
+            view.view.alpha = 0
+            UIView.animate(withDuration: Theme.Animations.Timing.quick, delay: 0, options: .curveEaseInOut) {
+                view.view.alpha = 1
+            }
+        }
         
         return view
     }

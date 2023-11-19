@@ -382,4 +382,8 @@ final class ModuleInteractorFactory {
             appLockStateInteractor: InteractorFactory.shared.appLockStateInteractor()
         )
     }
+    
+    func introductionModuleInteractor() -> IntroductionModuleInteracting {
+        IntroductionModuleInteractor(rootInteractor: InteractorFactory.shared.rootInteractor())
+    }
 }

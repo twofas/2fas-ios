@@ -124,10 +124,6 @@ final class RootPresenter {
         interactor.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
     }
     
-    func handleIntroMarkAsShown() {
-        interactor.markIntroAsShown()
-    }
-    
     func handleIntroHasFinished() {
         handleViewFlow()
     }

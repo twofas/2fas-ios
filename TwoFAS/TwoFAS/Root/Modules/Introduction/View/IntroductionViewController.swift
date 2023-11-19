@@ -20,23 +20,27 @@
 import UIKit
 import Common
 
+protocol IntroductionViewControlling: AnyObject {
+    func moveToPage(_ num: Int)
+}
+
 final class IntroductionViewController: UIViewController {
     private let doubleMargin = Theme.Metrics.doubleMargin
     private let singleMargin = Theme.Metrics.standardMargin
     private let naviContainer = NaviContainer()
     private let mainActionButton = LoadingContentButton()
+    private let additionalActionButton = LoadingContentButton()
     private let scrollView = IntroductionScrollView()
     private let backButton = CustomBackButton()
     
     private var mainButtonAdditionalAction: Callback?
+    private var bottomAnchor: NSLayoutConstraint?
     
-    var viewModel: IntroductionViewModel!
+    var presenter: IntroductionPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        viewModel.delegate = self
-        
+                
         view.backgroundColor = Theme.Colors.Fill.background
         
         view.addSubview(scrollView, with: [
@@ -62,19 +66,45 @@ final class IntroductionViewController: UIViewController {
                 constant: -2 * doubleMargin
             ),
             mainActionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            mainActionButton.heightAnchor.constraint(equalToConstant: Theme.Metrics.buttonHeight),
-            mainActionButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -singleMargin)
+            mainActionButton.heightAnchor.constraint(equalToConstant: Theme.Metrics.buttonHeight)
+        ])
+        
+        let bottomAnchor = mainActionButton
+            .bottomAnchor
+            .constraint(equalTo: view.safeBottomAnchor, constant: -2 * singleMargin - Theme.Metrics.buttonHeight)
+        self.bottomAnchor = bottomAnchor
+        bottomAnchor.isActive = true
+        
+        view.addSubview(additionalActionButton, with: [
+            additionalActionButton.topAnchor.constraint(equalTo: mainActionButton.bottomAnchor, constant: singleMargin),
+            additionalActionButton.leadingAnchor.constraint(
+                greaterThanOrEqualTo: view.leadingAnchor,
+                constant: 2 * doubleMargin
+            ),
+            additionalActionButton.trailingAnchor.constraint(
+                lessThanOrEqualTo: view.trailingAnchor,
+                constant: -2 * doubleMargin
+            ),
+            additionalActionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            additionalActionButton.heightAnchor.constraint(equalToConstant: Theme.Metrics.buttonHeight),
+            additionalActionButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -singleMargin)
         ])
         
         naviContainer.alpha = 1
         naviContainer.configure(pagesNum: IntroductionCommons.pageCount)
-        naviContainer.openTOS = { [weak self] in self?.viewModel.tosPressed() }
+        naviContainer.openTOS = { [weak self] in self?.presenter.handleTOSPressed() }
+        
         mainActionButton.apply(MainContainerButtonStyling.filledInDecoratedContainerLightText.value)
         mainActionButton.alpha = 1
         mainActionButton.action = { [weak self] in self?.mainActionButtonAction() }
         
+        additionalActionButton.apply(MainContainerButtonStyling.textOnly.value)
+        additionalActionButton.alpha = 0
+        additionalActionButton.action = { [weak self] in self?.additionalActionButtonAction() }
+        additionalActionButton.isHidden = true
+        
         scrollView.didChangePage = { [weak self] in
-            self?.viewModel.didMoveToPage($0)
+            self?.presenter.handleDidMoveToPage($0)
             self?.didChangePage($0)
         }
         
@@ -84,34 +114,58 @@ final class IntroductionViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        viewModel.didAppear()
+        presenter.viewDidAppear()
     }
     
     @objc
     private func skipAction() {
-        viewModel.skipPressed()
+        presenter.handleSkipPressed()
     }
     
     @objc
     private func prevAction() {
-        viewModel.previousButtonPressed()
+        presenter.handlePreviousButtonPressed()
     }
     
     private func mainActionButtonAction() {
         mainButtonAdditionalAction?()
-        viewModel.actionButtonPressed()
+        presenter.handleButtonPressed()
+    }
+    
+    private func additionalActionButtonAction() {
+        presenter.handleAdditionalButtonPressed()
     }
 }
 
-extension IntroductionViewController: IntroductionViewModelDelegate {
+extension IntroductionViewController: IntroductionViewControlling {
     func moveToPage(_ num: Int) {
         scrollView.moveToPage(num: num)
         didChangePage(num)
     }
     
-    func didChangePage(_ num: Int) {
+    private func didChangePage(_ num: Int) {
         mainActionButton.update(title: scrollView.container.mainButtonTitle(for: num))
         mainButtonAdditionalAction = scrollView.container.mainButtonAdditionalAction(for: num)
+        
+        if let additionalButtonTitle = scrollView.container.additionalButtonTitle(for: num) {
+            additionalActionButton.update(title: additionalButtonTitle)
+            additionalActionButton.alpha = 0
+            additionalActionButton.isHidden = false
+            UIView.animate(withDuration: IntroductionCommons.shortAnimationTiming) {
+                self.additionalActionButton.alpha = 1
+            } completion: { _ in
+                self.bottomAnchor?.isActive = false
+            }
+        } else {
+            additionalActionButton.alpha = 1
+            UIView.animate(withDuration: IntroductionCommons.shortAnimationTiming) {
+                self.additionalActionButton.alpha = 0
+            } completion: { _ in
+                self.additionalActionButton.isHidden = true
+                self.bottomAnchor?.isActive = true
+            }
+        }
+        
         naviContainer.navigateToPage(num)
         if scrollView.container.showSkip(for: num) {
             navigationItem.rightBarButtonItem = UIBarButtonItem(

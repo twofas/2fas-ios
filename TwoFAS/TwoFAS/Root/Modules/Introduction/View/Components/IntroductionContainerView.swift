@@ -92,4 +92,8 @@ final class IntroductionContainerView: UIView {
     func showBack(for num: Int) -> Bool {
         pages[num].showBack
     }
+    
+    func additionalButtonTitle(for num: Int) -> String? {
+        pages[num].additionalButtonTitle
+    }
 }

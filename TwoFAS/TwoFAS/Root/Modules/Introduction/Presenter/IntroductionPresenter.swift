@@ -20,48 +20,65 @@
 import UIKit
 import Common
 
-protocol IntroductionViewModelDelegate: AnyObject {
-    func moveToPage(_ num: Int)
-}
-
-final class IntroductionViewModel {
-    weak var delegate: IntroductionViewModelDelegate?
-    var didFinish: Callback?
+final class IntroductionPresenter {
+    weak var view: IntroductionViewControlling?
+    
+    private let flowController: IntroductionFlowControlling
+    private let interactor: IntroductionModuleInteracting
+    
+    init(
+        flowController: IntroductionFlowControlling,
+        interactor: IntroductionModuleInteracting
+    ) {
+        self.flowController = flowController
+        self.interactor = interactor
+    }
     
     private var currentPage: Int = 0
     
-    func didAppear() {
-        delegate?.moveToPage(0)
+    func viewDidAppear() {
+        view?.moveToPage(0)
     }
     
-    func actionButtonPressed() {
+    func handleButtonPressed() {
         let next = currentPage + 1
         if next < IntroductionCommons.pageCount {
             currentPage = next
-            delegate?.moveToPage(next)
+            view?.moveToPage(next)
             return
         }
         
-        didFinish?()
+        close()
     }
     
-    func didMoveToPage(_ page: Int) {
+    func handleAdditionalButtonPressed() {
+        flowController.toCloudInfo()
+    }
+    
+    func handleDidMoveToPage(_ page: Int) {
         currentPage = page
     }
     
-    func tosPressed() {
-        UIApplication.shared.open(Config.tosURL, completionHandler: nil)
+    func handleTOSPressed() {
+        flowController.toTOS()
     }
     
-    func previousButtonPressed() {
+    func handlePreviousButtonPressed() {
         let prev = currentPage - 1
         if prev >= 0 {
             currentPage = prev
-            delegate?.moveToPage(prev)
+            view?.moveToPage(prev)
         }
     }
     
-    func skipPressed() {
-        didFinish?()
+    func handleSkipPressed() {
+        close()
+    }
+}
+
+private extension IntroductionPresenter {
+    func close() {
+        interactor.markIntroAsShown()
+        flowController.toClose()
     }
 }

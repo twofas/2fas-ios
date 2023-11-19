@@ -17,25 +17,23 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
+import Foundation
 import Data
-import Common
 
-final class IntroductionCoordinator: BaseCoordinator {
-    var markAsShownAction: Callback?
+protocol IntroductionModuleInteracting: AnyObject {
+    func markIntroAsShown()
+}
+
+final class IntroductionModuleInteractor {
+    private let rootInteractor: RootInteracting
     
-    override func start() {
-        let vm = IntroductionViewModel()
-        let vc = IntroductionViewController()
-        vc.viewModel = vm
-        vm.didFinish = { [weak self] in
-            self?.markAsShown()
-            self?.didFinish()
-        }
-        router.push(vc, animated: false)
+    init(rootInteractor: RootInteracting) {
+        self.rootInteractor = rootInteractor
     }
-    
-    private func markAsShown() {
-        markAsShownAction?()
+}
+
+extension IntroductionModuleInteractor: IntroductionModuleInteracting {
+    func markIntroAsShown() {
+        rootInteractor.markIntroAsShown()
     }
 }

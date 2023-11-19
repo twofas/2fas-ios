@@ -67,4 +67,5 @@ final class IntroductionPage4View: IntroductionPageView {
     
     override var mainButtonTitle: String { T.Introduction.title }
     override var showSkip: Bool { false }
+    override var additionalButtonTitle: String? { T.Introduction.backupIcloudCta }
 }

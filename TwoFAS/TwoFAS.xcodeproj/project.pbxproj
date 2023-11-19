@@ -1685,6 +1685,9 @@
 		C25C91D42B0A632500E58729 /* IntroductionNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionNavigationFlowController.swift; sourceTree = "<group>"; };
 		C25C91D62B0A6DE600E58729 /* IntroductionModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionModuleInteractor.swift; sourceTree = "<group>"; };
 		C25C91D92B0A75B100E58729 /* IntroductionCloudInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionCloudInfoViewController.swift; sourceTree = "<group>"; };
+		C25C91DB2B0AB84E00E58729 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C25C91DC2B0AB84E00E58729 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C25C91DD2B0AB85300E58729 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C25D5E752A64863000CA359B /* Code+LastPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Code+LastPass.swift"; sourceTree = "<group>"; };
 		C25D5E772A64908200CA359B /* CameraLastPass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraLastPass.swift; sourceTree = "<group>"; };
 		C25E898D2663DF9700A60CE5 /* TokensSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensSectionHeader.swift; sourceTree = "<group>"; };
@@ -7522,6 +7525,7 @@
 				"pt-BR",
 				id,
 				nl,
+				tr,
 			);
 			mainGroup = C236666A1FB2644900989ACA;
 			packageReferences = (
@@ -8897,6 +8901,7 @@
 				C2671C8B2A51C5A60002C4BB /* pt-BR */,
 				C28418112A65E57100E0F700 /* id */,
 				C22294E12A9F5B4400DB7965 /* nl */,
+				C25C91DC2B0AB84E00E58729 /* tr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -8915,6 +8920,7 @@
 				C2671C8A2A51C5A60002C4BB /* pt-BR */,
 				C28418102A65E57100E0F700 /* id */,
 				C22294E02A9F5B4300DB7965 /* nl */,
+				C25C91DB2B0AB84E00E58729 /* tr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8960,6 +8966,7 @@
 				C2671C8C2A51C5A70002C4BB /* pt-BR */,
 				C28418122A65E57200E0F700 /* id */,
 				C22294E22A9F5B4400DB7965 /* nl */,
+				C25C91DD2B0AB85300E58729 /* tr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

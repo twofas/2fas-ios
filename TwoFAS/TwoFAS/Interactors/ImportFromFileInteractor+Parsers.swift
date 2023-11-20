@@ -70,8 +70,8 @@ extension ImportFromFileInteractor {
         switch services {
         case .twoFAS(let servicesList):
             return parseTwoFASServicesV12(with: servicesList, sections: sections)
-        case .twoFASV3(let servicesList):
-            return parseTwoFASServicesV3(with: servicesList, sections: sections)
+        case .twoFASV34(let servicesList):
+            return parseTwoFASServicesV34(with: servicesList, sections: sections)
         }
     }
     
@@ -151,8 +151,8 @@ extension ImportFromFileInteractor {
             }
     }
     
-    func parseTwoFASServicesV3(with services: [ExchangeData2.Service], sections: [CommonSectionData]) -> [ServiceData] {
-        Log("Parsing 2FAS Backup File V3", module: .interactor)
+    func parseTwoFASServicesV34(with services: [ExchangeData2.Service], sections: [CommonSectionData]) -> [ServiceData] {
+        Log("Parsing 2FAS Backup File V3/V4", module: .interactor)
         let date = Date()
         return services
             .sorted { $0.order.position < $1.order.position }
@@ -203,6 +203,13 @@ extension ImportFromFileInteractor {
                     return secID
                 }()
                 
+                if item.otp.tokenType?.uppercased() == "STEAM" {
+                    // TODO: Add support for Steam
+                    return nil
+                }
+                
+                let tokenType = TokenType.create(item.otp.tokenType)
+                
                 let secret = item.secret.sanitazeSecret()
                 guard secret.isValidSecret() else { return nil }
                 
@@ -225,7 +232,7 @@ extension ImportFromFileInteractor {
                     isTrashed: false,
                     trashingDate: nil,
                     counter: item.otp.counter,
-                    tokenType: TokenType.create(item.otp.tokenType),
+                    tokenType: tokenType,
                     source: .link,
                     otpAuth: otpAuth,
                     order: item.order.position,

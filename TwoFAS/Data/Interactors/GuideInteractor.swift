@@ -113,7 +113,11 @@ private extension GuideInteractor {
                     GuideDescription.Page(
                         pageNumber: index,
                         image: step.image,
-                        content: (try? AttributedString(markdown: step.content)) ?? AttributedString(step.content),
+                        content: (try? AttributedString(
+                            markdown: step.content,
+                            options: AttributedString.MarkdownParsingOptions(
+                                interpretedSyntax: .inlineOnlyPreservingWhitespace
+                        ))) ?? AttributedString(step.content),
                         cta: step.cta.pageCta
                     )
                 })

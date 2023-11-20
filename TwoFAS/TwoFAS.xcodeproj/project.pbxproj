@@ -486,7 +486,6 @@
 		C296D4D42A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D4D32A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift */; };
 		C29787DE27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29787DD27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift */; };
 		C297DF1F2ADD7AC8004C272C /* Content in Frameworks */ = {isa = PBXBuildFile; productRef = C297DF1E2ADD7AC8004C272C /* Content */; };
-		C297DF202ADD7AC8004C272C /* Content in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C297DF1E2ADD7AC8004C272C /* Content */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C29803C0245EE05C0066DFE0 /* MainContainerElementsStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29803BF245EE05C0066DFE0 /* MainContainerElementsStyling.swift */; };
 		C29803C2245EEB470066DFE0 /* MainContainerGenerators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29803C1245EEB470066DFE0 /* MainContainerGenerators.swift */; };
 		C29803C4245F01600066DFE0 /* CenteringScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29803C3245F01600066DFE0 /* CenteringScrollView.swift */; };
@@ -1292,7 +1291,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C297DF202ADD7AC8004C272C /* Content in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1685,9 +1683,6 @@
 		C25C91D42B0A632500E58729 /* IntroductionNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionNavigationFlowController.swift; sourceTree = "<group>"; };
 		C25C91D62B0A6DE600E58729 /* IntroductionModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionModuleInteractor.swift; sourceTree = "<group>"; };
 		C25C91D92B0A75B100E58729 /* IntroductionCloudInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionCloudInfoViewController.swift; sourceTree = "<group>"; };
-		C25C91DB2B0AB84E00E58729 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		C25C91DC2B0AB84E00E58729 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C25C91DD2B0AB85300E58729 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C25D5E752A64863000CA359B /* Code+LastPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Code+LastPass.swift"; sourceTree = "<group>"; };
 		C25D5E772A64908200CA359B /* CameraLastPass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraLastPass.swift; sourceTree = "<group>"; };
 		C25E898D2663DF9700A60CE5 /* TokensSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensSectionHeader.swift; sourceTree = "<group>"; };
@@ -1829,6 +1824,10 @@
 		C27E6FB928FCA73400AC9FD1 /* ItemHandlerMigrationProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemHandlerMigrationProxy.swift; sourceTree = "<group>"; };
 		C27FBA471FBA239600D424D8 /* ServiceEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C27FBA4B1FBA23DD00D424D8 /* ServiceEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C281909C2B0B84910042BB7D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
+		C281909D2B0B84910042BB7D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C281909E2B0B84910042BB7D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C281909F2B0B84910042BB7D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C2823B1526F3E84F00583586 /* RevealPasswordInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealPasswordInput.swift; sourceTree = "<group>"; };
 		C2830D79293D440900B3DDAF /* TokensPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensPresenter.swift; sourceTree = "<group>"; };
 		C2830D7B293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+CommonSearchDataSourceSearchable.swift"; sourceTree = "<group>"; };
@@ -8901,7 +8900,7 @@
 				C2671C8B2A51C5A60002C4BB /* pt-BR */,
 				C28418112A65E57100E0F700 /* id */,
 				C22294E12A9F5B4400DB7965 /* nl */,
-				C25C91DC2B0AB84E00E58729 /* tr */,
+				C281909E2B0B84910042BB7D /* tr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -8920,7 +8919,7 @@
 				C2671C8A2A51C5A60002C4BB /* pt-BR */,
 				C28418102A65E57100E0F700 /* id */,
 				C22294E02A9F5B4300DB7965 /* nl */,
-				C25C91DB2B0AB84E00E58729 /* tr */,
+				C281909D2B0B84910042BB7D /* tr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8948,6 +8947,7 @@
 				C2671C892A51C5A60002C4BB /* pt-BR */,
 				C284180F2A65E57000E0F700 /* id */,
 				C22294DF2A9F5B4300DB7965 /* nl */,
+				C281909C2B0B84910042BB7D /* tr */,
 			);
 			name = TwoFASWidget.intentdefinition;
 			sourceTree = "<group>";
@@ -8966,7 +8966,7 @@
 				C2671C8C2A51C5A70002C4BB /* pt-BR */,
 				C28418122A65E57200E0F700 /* id */,
 				C22294E22A9F5B4400DB7965 /* nl */,
-				C25C91DD2B0AB85300E58729 /* tr */,
+				C281909F2B0B84910042BB7D /* tr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

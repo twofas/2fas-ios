@@ -67,6 +67,7 @@ private struct Page: View {
             Image(uiImage: icon)
             Text(attrString(with: description))
                 .font(.body)
+                .multilineTextAlignment(.center)
                 .foregroundStyle(Color(Theme.Colors.Text.main))
                 .frame(maxWidth: Theme.Metrics.componentWidth)
                 .padding(2 * Theme.Metrics.doubleMargin)

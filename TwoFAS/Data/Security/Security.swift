@@ -28,8 +28,11 @@ final class Security: SecurityProtocol {
     private let codeStorage: CodeStorage
     private let biometric: BiometricAuth
 
+    private let bioLimit: Int = 3
+    
     private var isUserLoggedIn = false
     private var authCount: Int = 0
+    private var bioAuthCount: Int = 0
     private var timer: Timer?
     private var appInBackground = false
 
@@ -47,12 +50,14 @@ final class Security: SecurityProtocol {
     
     func authSuccessfully() {
         isUserLoggedIn = true
-        authCount = 0
+        clearAuth()
+        clearBio()
     }
     
     func authFailed() {
         authCount += 1
         if authCount == interactor?.appLockAttempts.value {
+            lockBio()
             interactor?.lockApp()
             delegate?.securityLockUI()
         }
@@ -72,8 +77,7 @@ final class Security: SecurityProtocol {
     }
     
     var isPINAuthEnabled: Bool {
-        let isAuthReq = codeStorage.isSet
-        return isAuthReq
+        codeStorage.isSet
     }
     
     func disablePINAuth() {
@@ -89,13 +93,11 @@ final class Security: SecurityProtocol {
     }
     
     var isBioAuthAvailable: Bool {
-        let isAvail = biometric.isAvailable
-        return isAvail
+        biometric.isAvailable
     }
     
     var isBioAuthEnabled: Bool {
-        let isEnabled = biometric.isEnabled
-        return isEnabled
+        biometric.isEnabled
     }
     
     func authenticateUsingBioAuthIfPossible(reason: String) {
@@ -103,6 +105,10 @@ final class Security: SecurityProtocol {
             !appInBackground && isBioAuthEnabled && isBioAuthAvailable && !isAuthenticatingUsingBiometric
         else { return }
         
+        bioAuthCount += 1
+        if bioAuthCount >= bioLimit {
+            return
+        }
         isAuthenticatingUsingBiometric = true
         biometric.authenticate(reason: reason)
     }
@@ -113,7 +119,7 @@ final class Security: SecurityProtocol {
         if interactor?.isAppLocked == true {
             delegate?.securityLockUI()
         } else {
-            delegate?.securityUnlockUI()
+            unlock()
         }
         delegate?.retryBioAuthIfNecessary()
     }
@@ -146,7 +152,7 @@ final class Security: SecurityProtocol {
             if self.interactor?.isAppLocked == false {
                 timer.invalidate()
                 self.timer = nil
-                self.delegate?.securityUnlockUI()
+                self.unlock()
             }
         })
     }
@@ -159,16 +165,41 @@ final class Security: SecurityProtocol {
     private func timerFinished() {
         clearTimer()
     }
+    
+    private func unlock() {
+        delegate?.securityUnlockUI()
+        clearBio()
+        clearAuth()
+    }
+    
+    private func clearBio() {
+        bioAuthCount = 0
+    }
+    
+    private func clearAuth() {
+        authCount = 0
+    }
+    
+    private func lockBio() {
+        bioAuthCount = bioLimit
+    }
 }
 
 extension Security: BiometricAuthDelegate {
     func bioAuthSuccess() {
         isAuthenticatingUsingBiometric = false
         delegate?.securityBioAuthSuccess()
+        clearBio()
+        clearAuth()
     }
     
     func bioAuthFailed() {
         isAuthenticatingUsingBiometric = false
         delegate?.securityBioAuthFailure()
+    }
+    
+    func bioAuthUserCancelled() {
+        isAuthenticatingUsingBiometric = false
+        lockBio()
     }
 }

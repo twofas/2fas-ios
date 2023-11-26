@@ -31,7 +31,7 @@ protocol CameraScannerFlowControllerParent: AnyObject {
 
 protocol CameraScannerFlowControlling: AnyObject {
     func toGeneralError()
-    func toDuplicatedCode(usedIn: String)
+    func toDuplicatedCode(forceAdd: @escaping Callback)
     func toAppStore()
     func toGallery()
     func toFinish()
@@ -102,8 +102,9 @@ extension CameraScannerFlowController: CameraScannerFlowControlling {
         viewController.present(vc, animated: true, completion: nil)
     }
     
-    func toDuplicatedCode(usedIn: String) {
-        let errorView = CameraError.duplicatedCode(usedIn: usedIn).view(with: { [weak self] in
+    func toDuplicatedCode(forceAdd: @escaping Callback) {
+        let errorView = CameraError.duplicatedCode.view(with: { [weak self] in
+            forceAdd()
             self?.dismissModal()
         }, cancel: nil)
         let vc = UIHostingController(rootView: errorView)

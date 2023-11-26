@@ -147,10 +147,12 @@ private extension SelectFromGalleryPresenter {
     func handleService(_ code: Code) {
         Log("SelectFromGalleryPresenter: Found code: \(code)")
         if interactor.codeExists(code) {
-            flowController.toDuplicatedCode(usedIn: interactor.codeUsedIn(code))
+            flowController.toDuplicatedCode { [weak self] in
+                self?.interactor.addSelectedCode(code, force: true)
+            }
             return
         }
-        interactor.addSelectedCode(code)
+        interactor.addSelectedCode(code, force: false)
     }
     
     func handleShouldRename(currentName: String, secret: String) {

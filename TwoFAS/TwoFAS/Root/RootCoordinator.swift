@@ -153,6 +153,7 @@ final class RootCoordinator: Coordinator {
     func applicationWillResignActive() {
         Log("App: applicationWillResignActive")
         ToastNotification.hideAll()
+        hideContentAndShowSplashScreen()
         storage.save()
         guard !security.isAuthenticatingUsingBiometric else { return }
     }
@@ -175,6 +176,7 @@ final class RootCoordinator: Coordinator {
         timeVerificationController.startVerification()
         security.applicationDidBecomeActive()
         RatingController.uiIsVisible()
+        showContentAndHideSplashScreen()
     }
     
     func applicationWillTerminate() {
@@ -278,6 +280,48 @@ final class RootCoordinator: Coordinator {
             presentLogin(immediately: true)
         }
     }
+    
+    private func hideContentAndShowSplashScreen() {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else {
+            return
+        }
+        window.backgroundColor = ThemeColor.backgroundLight
+        
+        rootViewController.view.isHidden = true
+
+        let splashImageView = UIImageView(image: Asset.introductionLogo.image)
+        splashImageView.contentMode = .scaleAspectFit
+        splashImageView.tag = 100
+        
+        splashImageView.translatesAutoresizingMaskIntoConstraints = false
+        window.addSubview(splashImageView)
+
+        NSLayoutConstraint.activate([
+            splashImageView.centerXAnchor.constraint(equalTo: window.centerXAnchor),
+            splashImageView.centerYAnchor.constraint(equalTo: window.centerYAnchor)
+        ])
+
+        splashImageView.alpha = 0.0
+        UIView.animate(withDuration: 0.5) {
+            splashImageView.alpha = 1.0
+        }
+    }
+    
+    private func showContentAndHideSplashScreen() {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else {
+            return
+        }
+        
+        rootViewController.view.isHidden = false
+
+        if let splashImageView = window.viewWithTag(100) {
+            splashImageView.removeFromSuperview()
+        }
+    }
+
+
     
     private func changeState(_ newState: State) {
         currentState = newState

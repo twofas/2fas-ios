@@ -22,12 +22,12 @@ import Common
 
 enum ExchangeDataFormat {
     case twoFAS(ExchangeData)
-    case twoFASV3(ExchangeData2)
+    case twoFASV34(ExchangeData2)
 }
 
 enum ExchangeDataServices {
     case twoFAS([ExchangeData.Service])
-    case twoFASV3([ExchangeData2.Service])
+    case twoFASV34([ExchangeData2.Service])
 }
 
 extension ExchangeDataFormat {
@@ -35,7 +35,7 @@ extension ExchangeDataFormat {
         switch self {
         case .twoFAS(let exchangeData):
             return exchangeData.schemaVersion
-        case .twoFASV3(let exchangeData):
+        case .twoFASV34(let exchangeData):
             return exchangeData.schemaVersion
         }
     }
@@ -44,7 +44,7 @@ extension ExchangeDataFormat {
         switch self {
         case .twoFAS(let exchangeData):
             return exchangeData.servicesEncrypted != nil && exchangeData.reference != nil
-        case .twoFASV3(let exchangeData):
+        case .twoFASV34(let exchangeData):
             return exchangeData.servicesEncrypted != nil && exchangeData.reference != nil
         }
     }
@@ -53,7 +53,7 @@ extension ExchangeDataFormat {
         switch self {
         case .twoFAS(let exchangeData):
             return exchangeData.reference
-        case .twoFASV3(let exchangeData):
+        case .twoFASV34(let exchangeData):
             return exchangeData.reference
         }
     }
@@ -62,7 +62,7 @@ extension ExchangeDataFormat {
         switch self {
         case .twoFAS(let exchangeData):
             return exchangeData.servicesEncrypted
-        case .twoFASV3(let exchangeData):
+        case .twoFASV34(let exchangeData):
             return exchangeData.servicesEncrypted
         }
     }
@@ -71,8 +71,8 @@ extension ExchangeDataFormat {
         switch self {
         case .twoFAS(let exchangeData):
             return .twoFAS(exchangeData.services)
-        case .twoFASV3(let exchangeData2):
-            return .twoFASV3(exchangeData2.services)
+        case .twoFASV34(let exchangeData2):
+            return .twoFASV34(exchangeData2.services)
         }
     }
     
@@ -83,11 +83,11 @@ extension ExchangeDataFormat {
                 return nil
             }
             return .twoFAS(services)
-        case .twoFASV3:
+        case .twoFASV34:
             guard let services = try? jsonDecoder.decode([ExchangeData2.Service].self, from: data) else {
                 return nil
             }
-            return .twoFASV3(services)
+            return .twoFASV34(services)
         }
     }
     
@@ -105,7 +105,7 @@ extension ExchangeDataFormat {
                         isCollapsed: !item.isExpanded
                     )
                 }) ?? []
-        case .twoFASV3(let exchangeData):
+        case .twoFASV34(let exchangeData):
             return exchangeData.groups?
                 .compactMap({ item in
                     guard let id = UUID(uuidString: item.id) else { return nil }

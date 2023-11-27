@@ -121,8 +121,9 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
     func parseContent(_ data: Data) -> ImportFromFileParsing? {
         Log("ImportFromFileInteractor - parseContent", module: .interactor)
         if let services = try? jsonDecoder.decode(ExchangeData2.self, from: data),
-           services.schemaVersion == ExchangeConsts.schemaVersionV3 {
-            return .twoFAS(.twoFASV3(services))
+           services.schemaVersion == ExchangeConsts.schemaVersionV3 ||
+            services.schemaVersion == ExchangeConsts.schemaVersionV4 {
+            return .twoFAS(.twoFASV34(services))
         }
         
         if let services = try? jsonDecoder.decode(ExchangeData.self, from: data) {

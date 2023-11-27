@@ -35,8 +35,12 @@ public final class ServiceIcon {
         } else {
             Log("Can't find icon for iconTypeID \(iconTypeID.uuidString)")
             log?(iconTypeID.uuidString)
-            assertionFailure("Can't find icon for service \(iconTypeID.uuidString)")
-            return UIImage(named: IconTypeID.default.uuidString, in: Bundle(for: Self.self), with: nil)!
+            // assert(false, "Can't find icon for service \(iconTypeID.uuidString)")
+            return UIImage(
+                named: IconTypeID.default.uuidString,
+                in: Content.IconDescriptionDatabaseImpl.bundle,
+                with: nil
+            )!
         }
     }
     

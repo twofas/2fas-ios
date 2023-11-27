@@ -86,6 +86,7 @@ final class IntroductionScrollView: UIView {
 
 extension IntroductionScrollView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard UIApplication.isActive else { return }
         let pageWidth = scrollView.frame.size.width
         let pageNum = Int(round(scrollView.contentOffset.x / pageWidth))
         guard pageNum != previousPage else { return }

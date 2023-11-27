@@ -150,7 +150,10 @@ extension ImportFromFileInteractor {
             }
     }
     
-    func parseTwoFASServicesV34(with services: [ExchangeData2.Service], sections: [CommonSectionData]) -> [ServiceData] {
+    func parseTwoFASServicesV34(
+        with services: [ExchangeData2.Service],
+        sections: [CommonSectionData]
+    ) -> [ServiceData] {
         Log("Parsing 2FAS Backup File V3/V4", module: .interactor)
         let date = Date()
         return services

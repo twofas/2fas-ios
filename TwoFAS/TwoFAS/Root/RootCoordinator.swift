@@ -288,6 +288,11 @@ final class RootCoordinator: Coordinator {
         }
         window.backgroundColor = ThemeColor.backgroundLight
         
+        let isDarkMode = window.rootViewController?.traitCollection.userInterfaceStyle == .dark
+        
+        let splashBackgroundColor = isDarkMode ? ThemeColor.dark : ThemeColor.backgroundLight
+            window.backgroundColor = splashBackgroundColor
+        
         rootViewController.view.isHidden = true
 
         let splashImageView = UIImageView(image: Asset.introductionLogo.image)

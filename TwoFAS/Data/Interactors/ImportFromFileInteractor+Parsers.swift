@@ -205,7 +205,7 @@ extension ImportFromFileInteractor {
                     return secID
                 }()
                 
-                if item.otp.tokenType?.uppercased() == "STEAM" {
+                if item.otp.tokenType?.uppercased() == "STEAM" || item.otp.digits == 5 {
                     // TODO: Add support for Steam
                     return nil
                 }

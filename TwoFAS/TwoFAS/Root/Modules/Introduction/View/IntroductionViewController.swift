@@ -33,6 +33,8 @@ final class IntroductionViewController: UIViewController {
     private let scrollView = IntroductionScrollView()
     private let backButton = CustomBackButton()
     
+    private let notificationCenter = NotificationCenter.default
+    
     private var mainButtonAdditionalAction: Callback?
     
     var presenter: IntroductionPresenter!
@@ -101,6 +103,13 @@ final class IntroductionViewController: UIViewController {
         }
         
         backButton.addTarget(self, action: #selector(prevAction), for: .touchUpInside)
+        
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(refresh),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -119,6 +128,11 @@ final class IntroductionViewController: UIViewController {
         presenter.handlePreviousButtonPressed()
     }
     
+    @objc
+    private func refresh() {
+        presenter.handleRefresh()
+    }
+    
     private func mainActionButtonAction() {
         mainButtonAdditionalAction?()
         presenter.handleButtonPressed()
@@ -126,6 +140,10 @@ final class IntroductionViewController: UIViewController {
     
     private func additionalActionButtonAction() {
         presenter.handleAdditionalButtonPressed()
+    }
+    
+    deinit {
+        notificationCenter.removeObserver(self)
     }
 }
 

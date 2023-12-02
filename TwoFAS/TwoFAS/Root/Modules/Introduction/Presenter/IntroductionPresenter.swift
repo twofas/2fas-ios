@@ -37,7 +37,7 @@ final class IntroductionPresenter {
     private var currentPage: Int = 0
     
     func viewDidAppear() {
-        view?.moveToPage(0)
+        view?.moveToPage(currentPage)
     }
     
     func handleButtonPressed() {
@@ -73,6 +73,10 @@ final class IntroductionPresenter {
     
     func handleSkipPressed() {
         close()
+    }
+    
+    func handleRefresh() {
+        view?.moveToPage(currentPage)
     }
 }
 

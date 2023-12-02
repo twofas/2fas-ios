@@ -56,6 +56,8 @@ final class LoginView: UIView {
     private let numberFeedback = UIImpactFeedbackGenerator(style: .medium)
     private let actionFeedback = UIImpactFeedbackGenerator(style: .heavy)
     
+    private var resetButton: UIButton?
+    
     private var appReset: UIView?
     private var appResetTop: NSLayoutConstraint?
     
@@ -325,6 +327,7 @@ private extension LoginView {
     }
     
     func showResetButton() {
+        guard resetButton == nil else { return }
         var buttonConfiguration = UIButton.Configuration.borderless()
         buttonConfiguration.imagePadding = Theme.Metrics.doubleSpacing
         buttonConfiguration.image = Asset.infoIcon.image
@@ -358,5 +361,6 @@ private extension LoginView {
             )
         ])
         resetButton.addTarget(self, action: #selector(resetAction), for: .touchUpInside)
+        self.resetButton = resetButton
     }
 }

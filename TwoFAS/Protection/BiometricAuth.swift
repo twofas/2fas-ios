@@ -119,7 +119,8 @@ public final class BiometricAuth {
                     } else if let code = (evalPolicyError as? LAError)?.code,
                             code == LAError.userCancel
                             || code == LAError.appCancel
-                            || code == LAError.systemCancel {
+                            || code == LAError.systemCancel
+                            || code == LAError.userFallback {
                         self.delegate?.bioAuthUserCancelled()
                         Log("BioAuthCancelled")
                     } else {

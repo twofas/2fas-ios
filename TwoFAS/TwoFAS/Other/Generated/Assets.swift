@@ -90,6 +90,7 @@ internal enum Asset {
   internal static let guideRetype = ImageAsset(name: "guide_retype")
   internal static let guideSecretKey = ImageAsset(name: "guide_secret_key")
   internal static let guideWebAccount1 = ImageAsset(name: "guide_web_account_1")
+  internal static let guideWebAccount2 = ImageAsset(name: "guide_web_account_2")
   internal static let guideWebButton = ImageAsset(name: "guide_web_button")
   internal static let guideWebMenu = ImageAsset(name: "guide_web_menu")
   internal static let guideWebPhone = ImageAsset(name: "guide_web_phone")

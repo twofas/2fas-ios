@@ -492,6 +492,10 @@
 		C2997AA92454D767006D5943 /* SelectPINLengthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2997AA82454D767006D5943 /* SelectPINLengthController.swift */; };
 		C299B7D2236DE78700224F51 /* StackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C299B7D1236DE78700224F51 /* StackView+.swift */; };
 		C29B2B7929982E4900EDE75B /* MainSplitModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B2B7829982E4900EDE75B /* MainSplitModuleInteractor.swift */; };
+		C29B9ADA2B1E859D00255A2C /* google.json in Resources */ = {isa = PBXBuildFile; fileRef = C29B9AD62B1E859D00255A2C /* google.json */; };
+		C29B9ADB2B1E859D00255A2C /* paypal.json in Resources */ = {isa = PBXBuildFile; fileRef = C29B9AD72B1E859D00255A2C /* paypal.json */; };
+		C29B9ADC2B1E859D00255A2C /* reddit.json in Resources */ = {isa = PBXBuildFile; fileRef = C29B9AD82B1E859D00255A2C /* reddit.json */; };
+		C29B9ADD2B1E859D00255A2C /* instagram.json in Resources */ = {isa = PBXBuildFile; fileRef = C29B9AD92B1E859D00255A2C /* instagram.json */; };
 		C29FEFF92756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FEFF82756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift */; };
 		C29FEFFB2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FEFFA2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift */; };
 		C2A026B32AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A026B22AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift */; };
@@ -1901,6 +1905,10 @@
 		C2997AA82454D767006D5943 /* SelectPINLengthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPINLengthController.swift; sourceTree = "<group>"; };
 		C299B7D1236DE78700224F51 /* StackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView+.swift"; sourceTree = "<group>"; };
 		C29B2B7829982E4900EDE75B /* MainSplitModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitModuleInteractor.swift; sourceTree = "<group>"; };
+		C29B9AD62B1E859D00255A2C /* google.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = google.json; sourceTree = "<group>"; };
+		C29B9AD72B1E859D00255A2C /* paypal.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = paypal.json; sourceTree = "<group>"; };
+		C29B9AD82B1E859D00255A2C /* reddit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = reddit.json; sourceTree = "<group>"; };
+		C29B9AD92B1E859D00255A2C /* instagram.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = instagram.json; sourceTree = "<group>"; };
 		C29DD5801FE84514007ECEEE /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		C29DD5831FE84575007ECEEE /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C29DD5841FE84575007ECEEE /* Code.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Code.swift; sourceTree = "<group>"; };
@@ -4288,6 +4296,10 @@
 		C24E3E5B2AB8F13A008A7158 /* Guides */ = {
 			isa = PBXGroup;
 			children = (
+				C29B9AD62B1E859D00255A2C /* google.json */,
+				C29B9AD92B1E859D00255A2C /* instagram.json */,
+				C29B9AD72B1E859D00255A2C /* paypal.json */,
+				C29B9AD82B1E859D00255A2C /* reddit.json */,
 				C24E3E622AB8F15A008A7158 /* amazon.json */,
 				C24E3E612AB8F159008A7158 /* discord.json */,
 				C24E3E602AB8F159008A7158 /* epic_games.json */,
@@ -7584,20 +7596,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C29B9ADA2B1E859D00255A2C /* google.json in Resources */,
 				C230DB8C274710E5005E7060 /* icon_64.png in Resources */,
 				C24E3E692AB8F15A008A7158 /* discord.json in Resources */,
 				C225E612241CFCD10041C238 /* InfoPlist.strings in Resources */,
 				C23666841FB2644900989ACA /* LaunchScreen.storyboard in Resources */,
+				C29B9ADD2B1E859D00255A2C /* instagram.json in Resources */,
 				C24E3E652AB8F15A008A7158 /* rockstar_games.json in Resources */,
 				C24E3E682AB8F15A008A7158 /* epic_games.json in Resources */,
 				C2355B4B2221D33300BA001D /* GoogleService-Info.plist in Resources */,
 				C24E3E6A2AB8F15A008A7158 /* amazon.json in Resources */,
 				C225E615241CFCE90041C238 /* Localizable.strings in Resources */,
 				C24E3E6B2AB8F15A008A7158 /* linkedin.json in Resources */,
+				C29B9ADC2B1E859D00255A2C /* reddit.json in Resources */,
 				C23666811FB2644900989ACA /* Assets.xcassets in Resources */,
 				C24E3E662AB8F15A008A7158 /* universal.json in Resources */,
 				C24E3E672AB8F15A008A7158 /* twitter.json in Resources */,
 				C2D291DC2955FC9E0084FE1E /* Settings.bundle in Resources */,
+				C29B9ADB2B1E859D00255A2C /* paypal.json in Resources */,
 				C24E3E642AB8F15A008A7158 /* facebook.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -107,43 +107,6 @@ extension SettingsMenuPresenter {
                 )
             ]
         )
-        
-        let exteralLinkImage = Asset.externalLinkIcon.image
-            .withRenderingMode(.alwaysTemplate)
-            .withTintColor(Theme.Colors.Icon.theme)
-        let donateLabel = {
-            let label = UILabel()
-            label.textColor = Theme.Colors.Text.theme
-            label.text = T.Settings.itMatters
-            label.minimumScaleFactor = 0.3
-            label.adjustsFontSizeToFitWidth = true
-            label.numberOfLines = 1
-            label.allowsDefaultTighteningForTruncation = true
-            label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
-            label.baselineAdjustment = .alignBaselines
-            return label
-        }()
-        let customView = {
-            let img = UIImageView(image: exteralLinkImage)
-            img.tintColor = Theme.Colors.Icon.theme
-            img.contentMode = .right
-            let view = UIView()
-            view.addSubview(donateLabel, with: [
-                donateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                donateLabel.topAnchor.constraint(equalTo: view.topAnchor),
-                donateLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
-            view.addSubview(img, with: [
-                img.leadingAnchor.constraint(
-                    equalTo: donateLabel.trailingAnchor,
-                    constant: Theme.Metrics.standardMargin
-                ),
-                img.topAnchor.constraint(equalTo: view.topAnchor),
-                img.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                img.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            ])
-            return view
-        }()
                 
         let info = SettingsMenuSection(
             title: T.Commons.info,
@@ -163,7 +126,7 @@ extension SettingsMenuPresenter {
                 .init(
                     icon: Asset.settingsDonate.image,
                     title: T.Settings.donateTwofas,
-                    accessory: .customView(customView),
+                    accessory: .donate,
                     action: .navigation(navigatesTo: .donate)
                 )
             ],

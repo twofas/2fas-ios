@@ -119,6 +119,7 @@ private struct PagingViewController: UIViewControllerRepresentable {
         pageController.dataSource = context.coordinator
         pageController.delegate = context.coordinator
         pageController.view.backgroundColor = Theme.Colors.Fill.System.third
+        pageController.edgesForExtendedLayout = []
 
         return pageController
     }
@@ -184,8 +185,7 @@ private struct PagingViewController: UIViewControllerRepresentable {
             previousViewControllers: [UIViewController],
             transitionCompleted completed: Bool
         ) {
-            if /*completed,*/
-               let visibleViewController = pageController.viewControllers?.first,
+            if let visibleViewController = pageController.viewControllers?.first,
                let index = controllers.firstIndex(of: visibleViewController) {
                 parent.currentPage = index
             }

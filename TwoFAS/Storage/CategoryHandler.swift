@@ -138,7 +138,8 @@ private extension Collection where Element == ServiceEntity {
                 serviceInfo: service.additionalInfo,
                 period: Period.create(service.tokenPeriod?.intValue),
                 digits: Digits.create(service.tokenLength.intValue),
-                algorithm: Algorithm.create(service.algorithm)
+                algorithm: Algorithm.create(service.algorithm),
+                tokenType: TokenType.create(service.tokenType)
             )
         }
     }

@@ -190,6 +190,7 @@ private extension AEGISData.Entry.EntryType {
         switch self {
         case .hotp: return .hotp
         case .totp: return .totp
+        case .steam: return .steam
         }
     }
 }

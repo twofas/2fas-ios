@@ -205,11 +205,6 @@ extension ImportFromFileInteractor {
                     return secID
                 }()
                 
-                if item.otp.tokenType?.uppercased() == "STEAM" || item.otp.digits == 5 {
-                    // TODO: Add support for Steam
-                    return nil
-                }
-                
                 let tokenType = TokenType.create(item.otp.tokenType)
                 
                 let secret = item.secret.sanitazeSecret()
@@ -628,6 +623,7 @@ private extension AEGISData.Entry.EntryType {
         switch self {
         case .hotp: return .hotp
         case .totp: return .totp
+        case .steam: return .steam
         }
     }
 }

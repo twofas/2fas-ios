@@ -27,6 +27,8 @@ extension TokensViewController {
         item: TokenCell
     ) -> UICollectionViewCell? {
         switch item.cellType {
+        case .serviceSteam:
+            fallthrough
         case .serviceTOTP:
             if collectionView.isEditing {
                 return getEditCell(for: collectionView, indexPath: indexPath, item: item)

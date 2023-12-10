@@ -85,6 +85,8 @@ extension AddingServiceTokenModuleInteractor: AddingServiceTokenModuleInteractin
     
     func start() {
         switch serviceTokenType {
+        case .steam:
+            fallthrough
         case .totp:
             guard let tokenConsumer else { return }
             tokenInteractor.startTimer(tokenConsumer)
@@ -97,6 +99,8 @@ extension AddingServiceTokenModuleInteractor: AddingServiceTokenModuleInteractin
     
     func clear() {
         switch serviceTokenType {
+        case .steam:
+            fallthrough
         case .totp:
             guard let tokenConsumer else { return }
             tokenInteractor.stopTimer(tokenConsumer)

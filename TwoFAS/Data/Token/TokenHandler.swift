@@ -24,13 +24,15 @@ public struct TimedSecret {
     public let secret: Secret
     public let period: Period
     public let digits: Digits
+    public let tokenType: TokenType
     public let algorithm: Common.Algorithm
     
-    public init(secret: Secret, period: Period, digits: Digits, algorithm: Common.Algorithm) {
+    public init(secret: Secret, period: Period, digits: Digits, algorithm: Common.Algorithm, tokenType: TokenType) {
         self.secret = secret
         self.period = period
         self.digits = digits
         self.algorithm = algorithm
+        self.tokenType = tokenType
     }
 }
 
@@ -58,13 +60,14 @@ public enum TokenHandler {
         counter: Int,
         tokenType: TokenType
     ) -> TokenValue {
-        if tokenType == .totp {
+        if tokenType == .totp || tokenType == .steam {
             return TokenGenerator.generateTOTP(
                 secret: secret,
                 time: time,
                 period: period,
                 digits: digits,
-                algoritm: algorithm
+                algoritm: algorithm,
+                tokenType: tokenType
             )
         }
         return TokenGenerator.generateHOTP(secret: secret, counter: counter, digits: digits, algoritm: algorithm)

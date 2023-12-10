@@ -107,6 +107,7 @@ final class ComposeServiceAdvancedEditTokenTypeCell: UITableViewCell {
     func setSelectedTokenType(_ selectedTokenType: TokenType) {
         self.tokenType = selectedTokenType
         switch tokenType {
+        case .steam: fallthrough
         case .totp: switchToTOTP()
         case .hotp: switchToHOTP()
         }

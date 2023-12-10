@@ -43,6 +43,7 @@ public struct WidgetService {
     public let period: Period
     public let digits: Digits
     public let algorithm: Algorithm
+    public let tokenType: TokenType
     
     public init(
         serviceID: ServiceID,
@@ -55,7 +56,8 @@ public struct WidgetService {
         serviceInfo: String?,
         period: Period,
         digits: Digits,
-        algorithm: Algorithm
+        algorithm: Algorithm,
+        tokenType: TokenType
     ) {
         self.serviceID = serviceID
         self.serviceName = serviceName
@@ -68,6 +70,7 @@ public struct WidgetService {
         self.period = period
         self.digits = digits
         self.algorithm = algorithm
+        self.tokenType = tokenType
     }
 }
 

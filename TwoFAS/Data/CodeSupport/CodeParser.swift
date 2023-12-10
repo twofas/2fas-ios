@@ -33,15 +33,18 @@ final class CodeParser {
             .replacingOccurrences(of: "[", with: "%5B")
             .replacingOccurrences(of: "]", with: "%5D")
         
-        // Verify if code is of TOTP type
         guard let components = NSURLComponents(string: codeStr) else { return nil }
-        guard let scheme = components.scheme, scheme == "otpauth", let tokenType = components.host else { return nil }
-                
+        guard let scheme = components.scheme, scheme == "otpauth" else { return nil }
         guard let query = components.queryItems else { return nil }
         
         let label = components.path?.trimmingCharacters(in: .init(charactersIn: "/"))
         let items = queryItems(query: query)
         
+        // Verify if code is of TOTP type
+        // Encoder key is used by KeePassXC for Steam keys
+        guard let tokenType = items.find(forType: .other("encoder", ""))?.value ?? components.host else { return nil }
+        
+        // Locate and validate secret
         guard let secret = items.find(forType: .secret(""))?
             .value
             .sanitazeSecret(),

@@ -78,6 +78,9 @@ final class LoginPresenter {
         
         interactor.userWasAuthenticated = { [weak self] in
             self?.flowController.toLoggedIn()
+            if loginType == .login {
+                self?.view?.userLoggedIn()
+            }
         }
     }
     

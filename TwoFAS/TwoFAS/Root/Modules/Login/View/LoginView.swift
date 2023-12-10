@@ -36,6 +36,8 @@ protocol LoginViewControlling: AnyObject {
     func unlock()
     
     func showAppReset()
+    
+    func userLoggedIn()
 }
 
 final class LoginView: UIView {
@@ -213,6 +215,10 @@ extension LoginView: LoginViewControlling {
             top.constant = 0
             self.layoutIfNeeded()
         }
+    }
+    
+    func userLoggedIn() {
+        NotificationCenter.default.post(name: .userLoggedIn, object: nil)
     }
 }
 

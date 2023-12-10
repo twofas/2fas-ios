@@ -666,7 +666,6 @@
 		C2BDC6D51FC1CBE100967D0E /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC6CF1FC1CBE000967D0E /* Theme.swift */; };
 		C2BDC6D61FC1CBE100967D0E /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC6D01FC1CBE000967D0E /* UIView+Extensions.swift */; };
 		C2BDC6D91FC1CBE100967D0E /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC6D31FC1CBE000967D0E /* String+Extensions.swift */; };
-		C2BDC6DD1FC1CEDC00967D0E /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC6DC1FC1CEDC00967D0E /* ContainerViewController.swift */; };
 		C2BDC6FD1FC4BC8A00967D0E /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC6FC1FC4BC8A00967D0E /* UIViewController+Extensions.swift */; };
 		C2BDF4532868B39800D46FA4 /* StorageRepositoryImpl+CategoriesSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDF4512868B39000D46FA4 /* StorageRepositoryImpl+CategoriesSections.swift */; };
 		C2BE80582811DF03009CBC4A /* AuthRequestsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BE80572811DF03009CBC4A /* AuthRequestsPresenter.swift */; };
@@ -2063,7 +2062,6 @@
 		C2BDC6CF1FC1CBE000967D0E /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		C2BDC6D01FC1CBE000967D0E /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		C2BDC6D31FC1CBE000967D0E /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
-		C2BDC6DC1FC1CEDC00967D0E /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		C2BDC6DE1FC1F66F00967D0E /* TwoFAS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFAS.entitlements; sourceTree = "<group>"; };
 		C2BDC6FC1FC4BC8A00967D0E /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		C2BDF4512868B39000D46FA4 /* StorageRepositoryImpl+CategoriesSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StorageRepositoryImpl+CategoriesSections.swift"; sourceTree = "<group>"; };
@@ -5995,7 +5993,6 @@
 		C2C1513E294E6AAF00F8B511 /* DEPRECATED */ = {
 			isa = PBXGroup;
 			children = (
-				C2BDC6DC1FC1CEDC00967D0E /* ContainerViewController.swift */,
 				C2EC83DD21E69B4800DF5C49 /* ViewTheme.swift */,
 				C277C32A245C3FB8009214F3 /* Container */,
 			);
@@ -7865,7 +7862,6 @@
 				C2E7C3462ADB021500478D89 /* Camera.swift in Sources */,
 				C2698B702986CA3C00EBC179 /* MainTabFlowController.swift in Sources */,
 				C2014E0427BEED630046B75C /* ComposeServiceInputCell.swift in Sources */,
-				C2BDC6DD1FC1CEDC00967D0E /* ContainerViewController.swift in Sources */,
 				C2FDEE63279CC37E002CAB9E /* CameraScannerFlowController.swift in Sources */,
 				C2E3D55927D94ECB0050AF48 /* BrowserExtensionIntroView.swift in Sources */,
 				C2AD653727F26139008997DB /* BrowserExtensionPairingSuccessFlowController.swift in Sources */,

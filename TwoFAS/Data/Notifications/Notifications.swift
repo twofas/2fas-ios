@@ -27,4 +27,5 @@ public extension Notification.Name {
     static let fileAwaitsOpening = Notification.Name("fileAwaitsOpening")
     static let lockScreenIsInactive = Notification.Name("lockScreenIsInactive")
     static let lockScreenIsActive = Notification.Name("lockScreenIsActive")
+    static let userLoggedIn = Notification.Name("userLoggedIn")
 }

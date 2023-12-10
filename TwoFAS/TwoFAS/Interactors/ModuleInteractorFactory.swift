@@ -327,7 +327,8 @@ final class ModuleInteractorFactory {
             fileInteractor: InteractorFactory.shared.fileInteractor(),
             newVersionInteractor: InteractorFactory.shared.newVersionInteractor(),
             networkStatusInteractor: InteractorFactory.shared.networkStatusInteractor(),
-            appInfoInteractor: InteractorFactory.shared.appInfoInteractor()
+            appInfoInteractor: InteractorFactory.shared.appInfoInteractor(),
+            rootInteractor: InteractorFactory.shared.rootInteractor()
         )
     }
     

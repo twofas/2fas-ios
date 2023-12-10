@@ -17,7 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 
 final class MainPresenter {
     weak var view: MainViewControlling?
@@ -25,7 +25,7 @@ final class MainPresenter {
     private let flowController: MainFlowControlling
     private let interactor: MainModuleInteracting
     
-    private var authRequestsFetched = false
+    private var handlingViewIsVisible = false
     private var appVersionFetched = false
     
     init(flowController: MainFlowControlling, interactor: MainModuleInteracting) {
@@ -39,25 +39,8 @@ final class MainPresenter {
         flowController.toSetupSplit()
     }
     
-    func viewDidAppear() {
-        if let url = interactor.checkForImport() {
-            flowController.toOpenFileImport(url: url)
-            interactor.clearImportedFileURL()
-        } else if !appVersionFetched {
-            appVersionFetched = true
-            
-            interactor.checkForNewAppVersion { [weak self] url in
-                guard let url else {
-                    self?.handleAuthRequest()
-                    return
-                }
-                self?.flowController.toShowNewVersionAlert(for: url) { [weak self] in
-                    self?.interactor.skipAppVersion()
-                }
-            }
-        } else if !authRequestsFetched {
-            handleAuthRequest()
-        }
+    func viewWillAppear() {
+       viewIsVisible()
     }
 
     func handleSwitchToSetupPIN() {
@@ -81,23 +64,55 @@ final class MainPresenter {
     }
     
     func handleRefreshAuthList() {
+        guard !interactor.isAppLocked else { return }
         flowController.toAuthRequestFetch()
     }
     
     func handleAuthorize(for tokenRequestID: String) {
+        guard !interactor.isAppLocked else { return }
         flowController.toAuthorize(for: tokenRequestID)
     }
     
     func handleOpenFile() {
-        guard let url = interactor.checkForImport() else { return }
+        guard !interactor.isAppLocked, let url = interactor.checkForImport() else { return }
         flowController.toOpenFileImport(url: url)
         interactor.clearImportedFileURL()
+    }
+    
+    func handleViewIsVisible() {
+        viewIsVisible()
     }
 }
 
 private extension MainPresenter {
+    func viewIsVisible() {
+        guard !interactor.isAppLocked && !handlingViewIsVisible else { return }
+        handlingViewIsVisible = true
+        if let url = interactor.checkForImport() {
+            flowController.toOpenFileImport(url: url)
+            interactor.clearImportedFileURL()
+            handlingViewIsVisible = false
+        } else if !appVersionFetched {
+            appVersionFetched = true
+            
+            interactor.checkForNewAppVersion { [weak self] url in
+                guard let url else {
+                    self?.handleAuthRequest()
+                    self?.handlingViewIsVisible = false
+                    return
+                }
+                self?.flowController.toShowNewVersionAlert(for: url) { [weak self] in
+                    self?.interactor.skipAppVersion()
+                }
+                self?.handlingViewIsVisible = false
+            }
+        } else {
+            handleAuthRequest()
+            handlingViewIsVisible = false
+        }
+    }
+    
     func handleAuthRequest() {
-        authRequestsFetched = true
         flowController.toAuthRequestFetch()
     }
 }

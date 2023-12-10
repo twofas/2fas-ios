@@ -25,7 +25,7 @@ protocol RootViewControlling: AnyObject {
     func rateApp()
 }
 
-final class RootViewController: ContainerViewController {
+final class RootViewController: UIViewController {
     var presenter: RootPresenter!
     
     override func viewDidLoad() {

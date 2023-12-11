@@ -1491,8 +1491,6 @@ internal enum T {
     internal static let sortByManual = T.tr("Localizable", "tokens__sort_by_manual", fallback: "Manual")
     /// Z - A
     internal static let sortByZToA = T.tr("Localizable", "tokens__sort_by_z_to_a", fallback: "Z - A")
-    /// Steam®
-    internal static let steam = T.tr("Localizable", "tokens__steam", fallback: "Steam®")
     /// This code is incorrect or not supported. Try again.
     internal static let thisQrCodeIsInavlid = T.tr("Localizable", "tokens__this_qr_code_is_inavlid", fallback: "This code is incorrect or not supported. Try again.")
     /// You won't be able to restore this token anymore.

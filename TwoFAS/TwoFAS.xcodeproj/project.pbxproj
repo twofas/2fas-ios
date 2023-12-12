@@ -2478,6 +2478,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8B4BFFB52B285ABA00A2D57A /* TokenTest */ = {
+			isa = PBXGroup;
+			children = (
+				8B4BFFB32B284B0700A2D57A /* TotpTests.swift */,
+			);
+			path = TokenTest;
+			sourceTree = "<group>";
+		};
 		C200E46A1FB38E6200D7C748 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -3683,6 +3691,7 @@
 				C2ACF9E520A8A918003E0987 /* TwoFASTests */,
 				C2E7C3832ADB19F300478D89 /* Data */,
 				C200E49B1FB3911B00D7C748 /* Storage */,
+				8B4BFFB52B285ABA00A2D57A /* TokenTest */,
 				C21F05BB1FC761450038E28F /* PushNotifications */,
 				C28633D01FFABD2200C8F4B4 /* TwoFASAuth */,
 				C2E7C3562ADB02FE00478D89 /* CommonUIKit */,
@@ -5522,7 +5531,6 @@
 				C2726DAC214D731B00F17977 /* DateTests.swift */,
 				C2726DAE214D8DCD00F17977 /* RatingControllerTests.swift */,
 				C2ACF9E820A8A918003E0987 /* Info.plist */,
-				8B4BFFB32B284B0700A2D57A /* TotpTests.swift */,
 			);
 			path = TwoFASTests;
 			sourceTree = "<group>";

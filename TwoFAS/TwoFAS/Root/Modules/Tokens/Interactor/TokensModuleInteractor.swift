@@ -361,7 +361,7 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     func fetchData(phrase: String?) {
         if let p = phrase, !p.isEmpty {
             let ids = serviceDefinitionsInteractor
-                .findServicesByTagOrIssuer(p, exactMatch: false)
+                .findServicesByTagOrIssuer(p, exactMatch: false, useTags: true)
                 .map({ $0.serviceTypeID })
             categoryData = sectionInteractor.findServices(for: p, sort: sortInteractor.currentSort, ids: ids)
         } else {

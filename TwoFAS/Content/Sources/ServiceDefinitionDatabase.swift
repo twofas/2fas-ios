@@ -27,7 +27,11 @@ public protocol ServiceDefinitionDatabase: AnyObject {
     
     func findService(using issuer: String) -> ServiceDefinition?
     func findServices(byTag searchText: String) -> [ServiceDefinition]
-    func findServicesByTagOrIssuer(_ searchText: String, exactMatch: Bool) -> [ServiceDefinition]
+    func findServicesByTagOrIssuer(
+        _ searchText: String,
+        exactMatch: Bool,
+        useTags: Bool
+    ) -> [ServiceDefinition]
     func findServices(domain searchText: String) -> [ServiceDefinition]
     
     func findLegacyService(using string: String) -> ServiceTypeID?
@@ -101,7 +105,11 @@ extension ServiceDefinitionDatabaseImpl: ServiceDefinitionDatabase {
         })
     }
     
-    public func findServicesByTagOrIssuer(_ searchText: String, exactMatch: Bool) -> [ServiceDefinition] {
+    public func findServicesByTagOrIssuer(
+        _ searchText: String,
+        exactMatch: Bool,
+        useTags: Bool
+    ) -> [ServiceDefinition] {
         let query = searchText.uppercased()
         let definitions = listAll()
         return definitions.filter({ service in
@@ -138,13 +146,16 @@ extension ServiceDefinitionDatabaseImpl: ServiceDefinitionDatabase {
                 }
             }
             
-            return service.tags?.contains(where: {
-                if exactMatch {
-                    return $0.uppercased() == query
-                } else {
-                    return $0.uppercased().contains(query)
-                }
-            }) ?? false
+            if useTags {
+                return service.tags?.contains(where: {
+                    if exactMatch {
+                        return $0.uppercased() == query
+                    } else {
+                        return $0.uppercased().contains(query)
+                    }
+                }) ?? false
+            }
+            return false
         })
     }
     

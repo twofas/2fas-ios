@@ -24,6 +24,7 @@ struct AddingServiceAdvancedSectionDividerView: View {
         Divider()
             .frame(height: 1)
             .overlay(Color(Theme.Colors.Line.secondaryDivider))
+            .accessibilityHidden(true)
     }
 }
 

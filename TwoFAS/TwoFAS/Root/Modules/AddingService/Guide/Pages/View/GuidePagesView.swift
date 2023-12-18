@@ -45,6 +45,7 @@ struct GuidePagesView: View {
                         HStack {
                             Image(uiImage: buttonIcon)
                                 .tint(.white)
+                                .accessibilityHidden(true)
                             Text(verbatim: presenter.buttonTitle)
                         }
                     } else {
@@ -65,6 +66,7 @@ private struct Page: View {
     var body: some View {
         VStack(alignment: .center, spacing: 3 * Theme.Metrics.doubleMargin) {
             Image(uiImage: icon)
+                .accessibilityHidden(true)
             Text(attrString(with: description))
                 .font(.body)
                 .multilineTextAlignment(.center)
@@ -99,6 +101,8 @@ private struct PageIndicator: View {
         HStack(alignment: .center, spacing: Theme.Metrics.halfSpacing) {
             ForEach(0 ..< totalPages, id: \.self) {
                 Circle()
+                    .accessibilityLabel(T.Commons.pageOfPageTitle($0 + 1, totalPages))
+                    .accessibilityAddTraits(pageNumber == $0 ? .isSelected : .isStaticText)
                     .foregroundColor(
                         pageNumber == $0 ? Color(Theme.Colors.Fill.theme) : Color(Theme.Colors.Controls.pageIndicator)
                     )

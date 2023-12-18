@@ -26,9 +26,11 @@ struct GuideMenuView: View {
         VStack {
             VStack(alignment: .center, spacing: 2 * Theme.Metrics.doubleMargin) {
                 Image(uiImage: presenter.serviceIcon)
+                    .accessibilityHidden(true)
                 Text(verbatim: presenter.serviceName)
                     .font(Font(Theme.Fonts.Text.title))
                     .foregroundStyle(Color(Theme.Colors.Text.main))
+                    .accessibilityAddTraits(.isHeader)
                 Text(verbatim: presenter.header)
                     .font(.body)
                     .multilineTextAlignment(.center)
@@ -48,6 +50,7 @@ struct GuideMenuView: View {
                     .foregroundStyle(Color(Theme.Colors.inactiveInverted))
                     .padding(.horizontal, Theme.Metrics.doubleMargin)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .accessibilityAddTraits(.isHeader)
                 AddingServiceDividerView()
                 VStack {
                     ForEach(presenter.menuPositions, id: \.self) { menuPosition in
@@ -67,6 +70,7 @@ struct GuideMenuView: View {
                                         .font(.system(size: 18))
                                         .padding(.trailing, Theme.Metrics.doubleMargin)
                                         .frame(alignment: .trailing)
+                                        .accessibilityHidden(true)
                                 }
                                 AddingServiceDividerView()
                             }

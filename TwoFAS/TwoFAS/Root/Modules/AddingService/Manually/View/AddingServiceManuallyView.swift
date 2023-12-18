@@ -44,6 +44,7 @@ struct AddingServiceManuallyView: View {
             Group {
                 AddingServiceTextContentView(text: T.Tokens.addManualDescription)
                     .padding(.vertical, 24)
+                    .accessibilityAddTraits(.isHeader)
                 
                 VStack(spacing: 10) {
                     serviceNameBuilder()
@@ -89,6 +90,7 @@ struct AddingServiceManuallyView: View {
             AddingServiceSmallTitleView(text: T.Tokens.additionalInfo)
                 .padding(.top, 24)
                 .padding(.bottom, 10)
+                .accessibilityHidden(true)
             TextField("", text: $additionalInfo)
                 .onChange(of: additionalInfo) { newValue in
                     additionalInfoError = presenter.validateAdditionalInfo(newValue).error
@@ -101,6 +103,7 @@ struct AddingServiceManuallyView: View {
                     presenter.handleAddService()
                 }
                 .padding(.bottom, 5)
+                .accessibilityLabel(T.Tokens.additionalInfo)
             AddingServiceTextFieldLineView()
         }
         .frame(maxWidth: .infinity)
@@ -180,6 +183,7 @@ struct AddingServiceManuallyView: View {
             }
         }
         .padding(.top, 24)
+        .accessibilityAddTraits(.isButton)
     }
     
     @ViewBuilder
@@ -199,14 +203,17 @@ struct AddingServiceManuallyView: View {
                 .font(.body)
                 .foregroundColor(Color(Theme.Colors.Text.inactive))
                 .frame(alignment: .trailing)
+            
             Image(systemName: systemName)
                 .font(.body)
                 .foregroundColor(Color(Theme.Colors.Text.inactive))
                 .frame(alignment: .trailing)
                 .padding(.leading, Theme.Metrics.halfSpacing)
+                .accessibilityHidden(true)
         }
         .padding(.horizontal, Theme.Metrics.standardSpacing)
         .padding(.vertical, Theme.Metrics.doubleSpacing)
+        .accessibilityAddTraits(.isButton)
     }
     
     @ViewBuilder
@@ -215,6 +222,7 @@ struct AddingServiceManuallyView: View {
             VStack {
                 AddingServiceSmallTitleView(text: T.Tokens.addManualServiceName)
                     .padding(.bottom, 10)
+                    .accessibilityHidden(true)
                 TextField("", text: $serviceName)
                     .onChange(of: serviceName) { newValue in
                         serviceNameError = presenter.validateServiceName(newValue.trim()).error
@@ -231,10 +239,12 @@ struct AddingServiceManuallyView: View {
                     .onAppear {
                         serviceName = presenter.serviceName
                     }
+                    .accessibilityLabel(T.Tokens.addManualServiceName)
                 AddingServiceTextFieldLineView()
             }
             .frame(maxWidth: .infinity)
             AddingServiceServiceIconView(serviceImage: $presenter.serviceIcon)
+                .accessibilityHidden(true)
         }
         if let serviceNameError {
             AddingServiceErrorTextView(text: serviceNameError)
@@ -247,6 +257,7 @@ struct AddingServiceManuallyView: View {
             AddingServiceSmallTitleView(text: T.Tokens.addManualServiceKey)
                 .padding(.top, 24)
                 .padding(.bottom, 10)
+                .accessibilityHidden(true)
             TextField("", text: $secret)
                 .onChange(of: secret) { newValue in
                     let trimmed = newValue.removeWhitespaces()
@@ -264,6 +275,7 @@ struct AddingServiceManuallyView: View {
                     presenter.handleAddService()
                 }
                 .padding(.bottom, 5)
+                .accessibilityLabel(T.Tokens.addManualServiceKey)
             AddingServiceTextFieldLineView()
         }
         .frame(maxWidth: .infinity)

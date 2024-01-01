@@ -98,25 +98,32 @@ public final class BiometricAuth {
             localizedReason: reason,
             reply: { [weak self] (success: Bool, evalPolicyError: Error?) -> Void in
                 
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                
-                if success {
-                    let currentFingerprint = BiometryFingerprintStorage.fingerprint
-                    let newFingerprint = self.context.evaluatedPolicyDomainState
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
                     
-                    guard currentFingerprint == nil || currentFingerprint == newFingerprint else {
-                        self.disable()
-                        self.delegate?.bioAuthFailed()
-                        return
-                    }
-                    if let newFingerprint, currentFingerprint == nil {
-                        BiometryFingerprintStorage.save(fingerprint: newFingerprint)
-                    }
-                    
-                    self.delegate?.bioAuthSuccess()
-                    Log("BioAuthSuccess")
-                } else {
+                    if success {
+                        let currentFingerprint = BiometryFingerprintStorage.fingerprint
+                        let newFingerprint = self.context.evaluatedPolicyDomainState
+                        
+                        guard currentFingerprint == nil || currentFingerprint == newFingerprint else {
+                            self.disable()
+                            self.delegate?.bioAuthFailed()
+                            return
+                        }
+                        if let newFingerprint, currentFingerprint == nil {
+                            BiometryFingerprintStorage.save(fingerprint: newFingerprint)
+                        }
+                        
+                        self.delegate?.bioAuthSuccess()
+                        Log("BioAuthSuccess")
+                    } else if let code = (evalPolicyError as? LAError)?.code,
+                            code == LAError.userCancel
+                            || code == LAError.appCancel
+                            || code == LAError.systemCancel
+                            || code == LAError.userFallback {
+                        self.delegate?.bioAuthUserCancelled()
+                        Log("BioAuthCancelled")
+                    } else {
                     guard let err = evalPolicyError as NSError? else {
                         assertionFailure("Unsupported conversion")
                         return

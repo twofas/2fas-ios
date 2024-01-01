@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 final class TokensViewController: UIViewController {
     var presenter: TokensPresenter!

@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 protocol UploadLogsModuleInteracting: AnyObject {
     var passedUUID: UUID? { get }

@@ -17,8 +17,9 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 import Common
+import Data
 
 protocol SelectServiceFlowControllerParent: AnyObject {
     func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool)
@@ -41,7 +42,7 @@ final class SelectServiceFlowController: FlowController {
         let view = SelectServiceViewController()
         let flowController = SelectServiceFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.selectServiceModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.selectServiceModuleInteractor()
         let presenter = SelectServicePresenter(
             flowController: flowController,
             interactor: interactor,

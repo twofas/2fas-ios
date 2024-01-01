@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class TableViewDelegatee<Section, Cell>: NSObject, UITableViewDelegate
 where Section: TableViewSection, Section.Cell == Cell {

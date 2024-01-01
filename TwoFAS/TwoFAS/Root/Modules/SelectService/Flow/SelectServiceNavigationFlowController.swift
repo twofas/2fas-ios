@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 protocol SelectServiceNavigationFlowControllerParent: AnyObject {
     func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool)

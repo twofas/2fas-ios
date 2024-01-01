@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class PasswordTextField: LimitedTextField {
     typealias TextDidChange = (String) -> Void

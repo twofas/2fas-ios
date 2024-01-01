@@ -20,6 +20,7 @@
 import Foundation
 import Common
 import Storage
+import Data
 
 protocol ComposeServiceCategorySelectionModuleInteracting: AnyObject {
     var selectedSection: SectionID? { get }

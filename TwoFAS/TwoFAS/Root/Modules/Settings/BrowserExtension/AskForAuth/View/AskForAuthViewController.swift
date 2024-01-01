@@ -19,6 +19,7 @@
 
 import SwiftUI
 import UIKit
+import Common
 
 final class AskForAuthViewController: UIViewController {
     var presenter: AskForAuthPresenter!

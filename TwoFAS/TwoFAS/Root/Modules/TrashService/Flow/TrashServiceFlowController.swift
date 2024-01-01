@@ -42,7 +42,7 @@ final class TrashServiceFlowController: FlowController {
         let flowController = TrashServiceFlowController(viewController: view)
         flowController.parent = parent
         
-        let interactor = InteractorFactory.shared.trashServiceInteractor()
+        let interactor = ModuleInteractorFactory.shared.trashServiceInteractor()
         let presenter = TrashServicePresenter(
             flowController: flowController,
             interactor: interactor

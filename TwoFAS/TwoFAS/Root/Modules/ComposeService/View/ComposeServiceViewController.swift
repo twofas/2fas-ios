@@ -27,6 +27,7 @@ protocol ComposeServiceViewControlling: AnyObject {
     func endEditing()
     func reloadPrivateKeyError(with data: [ComposeServiceSection])
     func revealCode(_ privateKey: String)
+    func copySecret()
 }
 
 final class ComposeServiceViewController: UIViewController {
@@ -216,6 +217,11 @@ extension ComposeServiceViewController: ComposeServiceViewControlling {
         guard let (cell, _) = findCell(for: .privateKey),
         let privateKeyCell = cell as? ComposeServicePrivateKeyCell else { return }
         privateKeyCell.setRevealState(state: .copy(privateKey))
+    }
+    
+    func copySecret() {
+        VoiceOver.say(T.Notifications.serviceKeyCopied)
+        HUDNotification.presentSuccess(title: T.Notifications.serviceKeyCopied)
     }
     
     private func findCell(for kind: ComposeServiceInputKind) -> (cell: UITableViewCell, indexPath: IndexPath)? {

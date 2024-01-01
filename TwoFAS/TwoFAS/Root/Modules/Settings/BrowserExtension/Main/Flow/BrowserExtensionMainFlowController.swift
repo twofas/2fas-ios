@@ -43,7 +43,7 @@ final class BrowserExtensionMainFlowController: FlowController {
         let view = BrowserExtensionMainViewController()
         let flowController = BrowserExtensionMainFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.browserExtensionMainModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.browserExtensionMainModuleInteractor()
         let presenter = BrowserExtensionMainPresenter(
             flowController: flowController,
             interactor: interactor
@@ -61,7 +61,7 @@ final class BrowserExtensionMainFlowController: FlowController {
         let view = BrowserExtensionMainViewController()
         let flowController = BrowserExtensionMainFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.browserExtensionMainModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.browserExtensionMainModuleInteractor()
         let presenter = BrowserExtensionMainPresenter(
             flowController: flowController,
             interactor: interactor

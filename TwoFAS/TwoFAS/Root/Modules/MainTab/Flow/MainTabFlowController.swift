@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 protocol MainTabFlowControllerParent: AnyObject {
     func tabNavigatedToViewPath(_ viewPath: ViewPath)

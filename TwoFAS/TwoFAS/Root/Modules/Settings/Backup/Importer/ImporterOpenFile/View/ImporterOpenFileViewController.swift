@@ -19,6 +19,7 @@
 
 import UIKit
 import UniformTypeIdentifiers
+import Common
 
 final class ImporterOpenFileViewController: UIDocumentPickerViewController {
     var handleCantReadFile: Callback?

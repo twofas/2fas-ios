@@ -20,6 +20,7 @@
 import Foundation
 import Storage
 import Common
+import Data
 
 final class AuthRequestsPresenter {
     weak var flowController: AuthRequestsFlowControlling?

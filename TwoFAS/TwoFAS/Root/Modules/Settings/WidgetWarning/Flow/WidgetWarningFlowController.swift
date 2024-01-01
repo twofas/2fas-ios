@@ -39,7 +39,7 @@ final class WidgetWarningFlowController: FlowController {
         let view = WidgetWarningViewController()
         let flowController = WidgetWarningFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.widgetWarningModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.widgetWarningModuleInteractor()
         let presenter = WidgetWarningPresenter(
             flowController: flowController,
             interactor: interactor

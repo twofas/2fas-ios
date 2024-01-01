@@ -18,7 +18,7 @@
 //
 
 import UIKit
-import CodeSupport
+import Data
 
 protocol CameraViewControllerActivity {
     func overlayOnTop()

@@ -78,6 +78,7 @@ extension AddingServiceTokenPresenter {
     
     func handleCopyCode() {
         interactor.copyToken(token)
+        view?.tokenCopied()
     }
     
     func handleViewDidDisapper() {

@@ -20,24 +20,37 @@
 import UIKit
 import SwiftUI
 import Common
-import Token
+import Data
 
 protocol AddingServiceManuallyViewControlling: AnyObject {}
 
 final class AddingServiceManuallyViewController: UIViewController, AddingServiceManuallyViewControlling {
-    var heightChange: ((CGFloat) -> Void)?
+    private lazy var pairButton = UIBarButtonItem(
+        title: T.Commons.pair,
+        style: .done,
+        target: self,
+        action: #selector(pairAction)
+    )
+    
     var presenter: AddingServiceManuallyPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: T.Commons.cancel,
+            style: .done,
+            target: self,
+            action: #selector(cancelAction)
+        )
         
-        let manually = AddingServiceManuallyView(
-            presenter: presenter,
-            changeHeight: { [weak self] height in
-                self?.heightChange?(height)
-            }) { [weak self] in
-                self?.presentingViewController?.dismiss(animated: true)
-            }
+        navigationItem.rightBarButtonItem = pairButton
+        navigationItem.title = T.Tokens.addManualTitle
+        navigationItem.backButtonDisplayMode = .minimal
+        
+        let manually = AddingServiceManuallyView(presenter: presenter) { [weak self] enable in
+            self?.pairButton.isEnabled = enable
+        }
         
         let vc = UIHostingController(rootView: manually)
         vc.willMove(toParent: self)
@@ -48,5 +61,15 @@ final class AddingServiceManuallyViewController: UIViewController, AddingService
         vc.didMove(toParent: self)
         
         presenter.viewDidLoad()
+    }
+    
+    @objc
+    private func cancelAction() {
+        presenter.handleCancel()
+    }
+    
+    @objc
+    private func pairAction() {
+        presenter.handlePair()
     }
 }

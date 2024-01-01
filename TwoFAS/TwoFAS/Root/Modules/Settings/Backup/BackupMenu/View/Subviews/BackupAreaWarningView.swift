@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class BackupAreaWarningView: UIView {
     private let iconWidth: CGFloat = 18

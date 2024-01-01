@@ -37,7 +37,9 @@ final class ComposeServiceAdvancedSummaryFlowController: FlowController {
         let flowController = ComposeServiceAdvancedSummaryFlowController(viewController: view)
         flowController.parent = parent
         
-        let interactor = InteractorFactory.shared.composeServiceAdvancedSummaryModuleInteractor(settings: settings)
+        let interactor = ModuleInteractorFactory
+            .shared
+            .composeServiceAdvancedSummaryModuleInteractor(settings: settings)
         let presenter = ComposeServiceAdvancedSummaryPresenter(
             flowController: flowController,
             interactor: interactor

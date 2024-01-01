@@ -46,6 +46,7 @@ internal enum Asset {
   internal static let pairingOval3 = ImageAsset(name: "PairingOval3")
   internal static let pairingOval4 = ImageAsset(name: "PairingOval4")
   internal static let pairingSuccessful = ImageAsset(name: "PairingSuccessful")
+  internal static let cloudBackup = ImageAsset(name: "CloudBackup")
   internal static let copyIcon = ImageAsset(name: "CopyIcon")
   internal static let deleteCodeButton = ImageAsset(name: "DeleteCodeButton")
   internal static let deleteForeverIcon = ImageAsset(name: "DeleteForeverIcon")

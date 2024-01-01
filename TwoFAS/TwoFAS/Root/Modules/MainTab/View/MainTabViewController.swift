@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 protocol MainTabViewControlling: AnyObject {
     func setView(_ viewPath: ViewPath)

@@ -37,11 +37,15 @@ protocol TokensViewControlling: AnyObject {
     
     func addSearchBar()
     func removeSearchBar()
+    func stopSearch()
     
     func enableBounce()
     func disableBounce()
     
     func showKeyboard()
+    
+    func copyToken()
+    func copyNextToken()
 }
 
 extension TokensViewController: TokensViewControlling {
@@ -84,6 +88,7 @@ extension TokensViewController: TokensViewControlling {
     func showEmptyScreen() {
         removeSearchBar()
         VoiceOver.say(T.Voiceover.useAddServiceButtonTitle)
+        guard emptyListScreenView.isHidden else { return }
         emptyListScreenView.alpha = 0
         emptyListScreenView.isHidden = false
         UIView.animate(withDuration: Theme.Animations.Timing.show, animations: {
@@ -242,8 +247,13 @@ extension TokensViewController: TokensViewControlling {
     func removeSearchBar() {
         guard searchBarAdded else { return }
         searchBarAdded = false
+        navigationItem.searchController?.isActive = false
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.searchController = nil
+    }
+    
+    func stopSearch() {
+        searchController.isActive = false
     }
     
     // MARK: - Bounce
@@ -254,6 +264,18 @@ extension TokensViewController: TokensViewControlling {
     
     func disableBounce() {
         tokensView.alwaysBounceVertical = false
+    }
+
+    // MARK: - Notifications
+    
+    func copyToken() {
+        VoiceOver.say(T.Notifications.tokenCopied)
+        HUDNotification.presentSuccess(title: T.Notifications.tokenCopied)
+    }
+    
+    func copyNextToken() {
+        VoiceOver.say(T.Notifications.nextTokenCopied)
+        HUDNotification.presentSuccess(title: T.Notifications.nextTokenCopied)
     }
 }
 

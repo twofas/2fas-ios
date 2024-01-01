@@ -22,4 +22,5 @@ import Foundation
 public protocol BiometricAuthDelegate: AnyObject {
     func bioAuthSuccess()
     func bioAuthFailed()
+    func bioAuthUserCancelled()
 }

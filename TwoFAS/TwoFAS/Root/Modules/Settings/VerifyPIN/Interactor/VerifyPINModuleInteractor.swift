@@ -18,6 +18,8 @@
 //
 
 import Foundation
+import Common
+import Data
 
 protocol VerifyPINModuleInteracting: AnyObject {
     var unlock: Callback? { get set }

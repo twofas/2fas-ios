@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Data
 
 protocol AppearanceModuleInteracting: AnyObject {
     var isActiveSearchEnabled: Bool { get }

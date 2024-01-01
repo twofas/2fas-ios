@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class TokensViewEmptyListScreen: UIView {
     var pairNewService: Callback?

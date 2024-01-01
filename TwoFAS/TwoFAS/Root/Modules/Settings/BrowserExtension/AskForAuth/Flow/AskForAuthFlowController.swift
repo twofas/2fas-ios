@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 protocol AskForAuthFlowControllerParent: AnyObject {
     func askForAuthAllow(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest)

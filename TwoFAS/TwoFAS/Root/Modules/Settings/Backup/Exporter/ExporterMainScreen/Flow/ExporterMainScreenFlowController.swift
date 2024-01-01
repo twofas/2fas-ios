@@ -42,7 +42,7 @@ final class ExporterMainScreenFlowController: FlowController {
         let view = ExporterMainScreenViewController()
         let flowController = ExporterMainScreenFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.exporterMainScreenModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.exporterMainScreenModuleInteractor()
         let presenter = ExporterMainScreenPresenter(
             flowController: flowController,
             interactor: interactor

@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class MainContainerViewController: UIViewController {
     private let spacing: CGFloat = Theme.Metrics.doubleMargin

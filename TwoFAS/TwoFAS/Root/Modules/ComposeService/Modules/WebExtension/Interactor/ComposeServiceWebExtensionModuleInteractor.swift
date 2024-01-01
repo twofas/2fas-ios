@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Data
 
 struct ComposeServiceWebExtensionModuleInteractorData {
     let extensionName: String

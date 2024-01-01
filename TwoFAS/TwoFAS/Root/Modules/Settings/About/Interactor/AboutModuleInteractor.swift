@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 protocol AboutModuleInteracting: AnyObject {
     var currentAppVersion: String { get }

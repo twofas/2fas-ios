@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 enum FirstCodeAddedStatsController {
     private static let key = "com.2fas.RememberNoticeDataController"

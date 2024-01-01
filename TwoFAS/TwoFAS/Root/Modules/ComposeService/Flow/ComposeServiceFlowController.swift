@@ -21,6 +21,7 @@ import UIKit
 import Storage
 import Common
 import SwiftUI
+import Data
 
 protocol ComposeServiceFlowControllerParent: AnyObject {
     func composeServiceDidFinish()
@@ -62,7 +63,7 @@ final class ComposeServiceFlowController: FlowController {
         let flowController = ComposeServiceFlowController(viewController: view)
         flowController.parent = parent
         
-        let interactor = InteractorFactory.shared.composeServiceModuleInteractor(secret: serviceData?.secret)
+        let interactor = ModuleInteractorFactory.shared.composeServiceModuleInteractor(secret: serviceData?.secret)
         let presenter = ComposeServicePresenter(
             flowController: flowController,
             interactor: interactor,
@@ -91,20 +92,7 @@ extension ComposeServiceFlowController: ComposeServiceFlowControlling {
     }
     
     func toLogin() {
-        let appLockStateInteractor = AppLockStateInteractor(mainRepository: MainRepositoryImpl.shared)
-        let viewModel = LoginViewModel(
-            security: MainRepositoryImpl.shared.security,
-            leftButtonDescription: T.Commons.cancel,
-            appLockStateInteractor: appLockStateInteractor
-        )
-        viewModel.coordinatorDelegate = self
-        
-        let vc = LoginViewController()
-        vc.viewModel = viewModel
-        
-        vc.configureAsModal()
-        
-        viewController.present(vc, animated: true, completion: nil)
+        LoginFlowController.present(on: viewController, parent: self)
     }
     
     func toSetPIN() {
@@ -211,13 +199,13 @@ extension ComposeServiceFlowController: TrashServiceFlowControllerParent {
     }
 }
 
-extension ComposeServiceFlowController: LoginCoordinatorDelegate {
-    func authorized() {
-        viewController.presenter.handleAuthorized()
+extension ComposeServiceFlowController: LoginFlowControllerParent {
+    func loginClose() {
         dismiss()
     }
     
-    func cancelled() {
+    func loginLoggedIn() {
+        viewController.presenter.handleAuthorized()
         dismiss()
     }
 }

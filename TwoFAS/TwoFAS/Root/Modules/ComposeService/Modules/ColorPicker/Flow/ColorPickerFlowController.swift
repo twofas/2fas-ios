@@ -44,7 +44,7 @@ final class ColorPickerFlowController: FlowController {
         flowController.parent = parent
         flowController.parentViewController = viewController
         
-        let interactor = InteractorFactory.shared.colorPickerModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.colorPickerModuleInteractor()
         let presenter = ColorPickerPresenter(
             flowController: flowController,
             interactor: interactor

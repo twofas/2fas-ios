@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class MainContainerActionButton: UIButton {
     private var fixedHeight: CGFloat?

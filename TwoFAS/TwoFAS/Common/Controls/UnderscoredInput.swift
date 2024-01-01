@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 protocol UnderscoredInputType: AnyObject {
     

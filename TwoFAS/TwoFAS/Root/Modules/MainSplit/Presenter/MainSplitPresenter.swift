@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 final class MainSplitPresenter {
     weak var view: MainSplitViewControlling?
@@ -57,6 +58,10 @@ extension MainSplitPresenter {
     }
     
     func didBecomeActive() {
+        handleMainVisible()
+    }
+    
+    func handleLockScreenIsInactive() {
         handleMainVisible()
     }
     
@@ -124,9 +129,8 @@ private extension MainSplitPresenter {
     }
     
     func handleMainVisible() {
-        if restoredPath == .main {
-            view?.notifyTokensVisible()
-        }
+        guard restoredPath == .main, !interactor.isLockScreenActive else { return }
+        view?.notifyTokensVisible()
     }
     
     func updateNavigation(to path: ViewPath) {

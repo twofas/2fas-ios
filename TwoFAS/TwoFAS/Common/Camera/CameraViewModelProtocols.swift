@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 protocol CameraViewModelType: AnyObject {
     var delegate: CameraViewModelDelegate? { get set }

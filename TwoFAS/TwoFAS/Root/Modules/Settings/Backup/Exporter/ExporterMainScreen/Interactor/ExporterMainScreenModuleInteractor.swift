@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 protocol ExporterMainScreenModuleInteracting: AnyObject {
     var isPINSet: Bool { get }

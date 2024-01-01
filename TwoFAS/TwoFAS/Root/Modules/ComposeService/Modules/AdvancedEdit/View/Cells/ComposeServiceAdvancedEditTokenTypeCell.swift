@@ -18,7 +18,7 @@
 //
 
 import UIKit
-import CodeSupport
+import Data
 import Common
 
 final class ComposeServiceAdvancedEditTokenTypeCell: UITableViewCell {

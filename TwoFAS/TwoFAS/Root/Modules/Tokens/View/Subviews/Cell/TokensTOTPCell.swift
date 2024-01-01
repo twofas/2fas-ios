@@ -19,7 +19,7 @@
 
 import UIKit
 import Common
-import Token
+import Data
 
 final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTPCellType {
     static let reuseIdentifier = "TokensTOTPCell"

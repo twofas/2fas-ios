@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 protocol ExporterPasswordProtectionModuleInteracting: AnyObject {
     var isPINSet: Bool { get }

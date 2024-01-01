@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 final class GuideMenuPresenter: ObservableObject {
     var serviceIcon: UIImage {

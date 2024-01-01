@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Data
 
 protocol IconSelectorModuleInteracting: AnyObject {
     var hasIcons: Bool { get }

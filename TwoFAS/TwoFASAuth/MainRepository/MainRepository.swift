@@ -19,10 +19,9 @@
 
 import Foundation
 import Common
+import Data
 import NetworkStack
-import Protection
-import Token
-import Storage
+import TimeVerification
 
 protocol MainRepository: AnyObject {
     // MARK: - DeviceID

@@ -22,8 +22,7 @@ import Common
 
 struct AddingServiceManuallyView: View {
     @ObservedObject var presenter: AddingServiceManuallyPresenter
-    let changeHeight: (CGFloat) -> Void
-    let dismiss: () -> Void
+    var enableSave: (Bool) -> Void
     
     @FocusState private var focusedField: Field?
     private enum Field: Int, Hashable {
@@ -41,54 +40,47 @@ struct AddingServiceManuallyView: View {
     @State private var additionalInfoError: String?
     
     var body: some View {
-        VStack {
-            VStack(spacing: 0) {
-                AddingServiceCloseButtonView {
-                    dismiss()
+        ScrollView(.vertical) {
+            Group {
+                AddingServiceTextContentView(text: T.Tokens.addManualDescription)
+                    .padding(.vertical, 24)
+                
+                VStack(spacing: 10) {
+                    serviceNameBuilder()
+                    serviceKeyBuilder()
+                    
+                    revealAdvancedBuilder()
+                    
+                    if presenter.advancedShown {
+                        additionalInfoBuilder()
+                        
+                        AddServiceAdvancedWarningView()
+                        
+                        AddingServiceServiceTypeSelector(selectedTokenType: $presenter.selectedTokenType)
+                            .padding(.vertical, Theme.Metrics.doubleMargin)
+                        
+                        advancedParametersBuilder()
+                    }
                 }
-                AddingServiceTitleView(text: T.Tokens.addManualTitle)
+            }
+            .onTapGesture {
+                dismissKeyboard()
             }
             .padding(.horizontal, Theme.Metrics.doubleMargin)
-            .frame(maxWidth: .infinity)
-
-            ScrollView(.vertical) {
-                Group {
-                    AddingServiceTextContentView(text: T.Tokens.addManualDescription)
-                        .padding(.bottom, 24)
-                    
-                    VStack(spacing: 10) {
-                        serviceNameBuilder()
-                        serviceKeyBuilder()
-                        
-                        revealAdvancedBuilder()
-                        
-                        if presenter.advancedShown {
-                            additionalInfoBuilder()
-                            
-                            AddServiceAdvancedWarningView()
-                            
-                            AddingServiceServiceTypeSelector(selectedTokenType: $presenter.selectedTokenType)
-                                .padding(.vertical, Theme.Metrics.doubleMargin)
-                            
-                            advancedParametersBuilder()
-                        }
-                    }
-                    footerBuilder()
+        }
+        .onAppear {
+            DispatchQueue.main.async {
+                switch presenter.keyboardInitialFocus {
+                case .noFocus: break
+                case .name: focusedField = .serviceName
+                case .secret: focusedField = .secret
                 }
-                .observeHeight(onChange: { contentHeight in
-                    changeHeight(contentHeight)
-                })
-                .onTapGesture {
-                    dismissKeyboard()
-                }
-                .padding(.horizontal, Theme.Metrics.doubleMargin)
-            }
-            .onAppear {
-                DispatchQueue.main.async {
-                    focusedField = .serviceName
-                }
+                presenter.viewDidAppear()
             }
         }
+        .onReceive(presenter.$isAddServiceEnabled, perform: { _ in
+            enableSave(presenter.isAddServiceEnabled)
+        })
     }
     
     @ViewBuilder
@@ -122,62 +114,50 @@ struct AddingServiceManuallyView: View {
     func advancedParametersBuilder() -> some View {
         VStack(alignment: .leading, spacing: 0) {
             if presenter.selectedTokenType == .totp {
-                Menu(content: {
-                    ForEach(Algorithm.allCases) { algo in
-                        Button("\(algo.rawValue)", action: { presenter.handleAlgorithmSelection(algo) })
-                    }
-                }, label: {
+                Button {
+                    presenter.handleSelectAlgorithm()
+                } label: {
                     advancedMenuPositionBuilder(
                         title: T.Tokens.algorithm,
                         value: presenter.selectedAlgorithm.rawValue
                     )
-                })
+                }
                 AddingServiceAdvancedSectionDividerView()
-                Menu(content: {
-                    ForEach(Period.allCases) { period in
-                        Button(
-                            T.Tokens.second(period.rawValue),
-                            action: { presenter.handleRefreshTimeSelection(period) }
-                        )
-                    }
-                }, label: {
+                Button {
+                    presenter.handleSelectRefreshTime()
+                } label: {
                     advancedMenuPositionBuilder(
                         title: T.Tokens.refreshTime,
                         value: T.Tokens.second(presenter.selectedRefreshTime.rawValue)
                     )
-                })
+                }
                 AddingServiceAdvancedSectionDividerView()
-                Menu(content: {
-                    ForEach(Digits.allCases) { digit in
-                        Button("\(digit.rawValue)", action: { presenter.handleDigitsSelection(digit) })
-                    }
-                }, label: {
+                Button {
+                    presenter.handleSelectDigits()
+                } label: {
                     advancedMenuPositionBuilder(
                         title: T.Tokens.numberOfDigits,
                         value: "\(presenter.selectedDigits.rawValue)"
                     )
-                })
+                }
             } else if presenter.selectedTokenType == .hotp {
                 Button {
                     presenter.handleShowInitialCounterInput()
                 } label: {
                     advancedMenuPositionBuilder(
                         title: T.Tokens.initialCounter,
-                        value: "\(presenter.initialCounter)",
-                        systemName: "number"
+                        value: "\(presenter.initialCounter)"
                     )
                 }
                 AddingServiceAdvancedSectionDividerView()
-                Menu(content: {
-                    ForEach(Digits.allCases) { digit in
-                        Button("\(digit.rawValue)", action: { presenter.handleDigitsSelection(digit) })
-                    }
-                }, label: {
+                Button {
+                    presenter.handleSelectDigits()
+                } label: {
                     advancedMenuPositionBuilder(
                         title: T.Tokens.numberOfDigits,
                         value: "\(presenter.selectedDigits.rawValue)"
                     )
-                })
+                }
             }
         }
         .overlay(
@@ -206,7 +186,7 @@ struct AddingServiceManuallyView: View {
     func advancedMenuPositionBuilder(
         title: String,
         value: String,
-        systemName: String = "chevron.up.chevron.down"
+        systemName: String = "chevron.right"
     ) -> some View {
         HStack {
             Text(title)
@@ -223,6 +203,7 @@ struct AddingServiceManuallyView: View {
                 .font(.body)
                 .foregroundColor(Color(Theme.Colors.Text.inactive))
                 .frame(alignment: .trailing)
+                .padding(.leading, Theme.Metrics.halfSpacing)
         }
         .padding(.horizontal, Theme.Metrics.standardSpacing)
         .padding(.vertical, Theme.Metrics.doubleSpacing)
@@ -289,24 +270,6 @@ struct AddingServiceManuallyView: View {
         
         if let secretError {
             AddingServiceErrorTextView(text: secretError)
-        }
-    }
-    
-    @ViewBuilder
-    func footerBuilder() -> some View {
-        VStack {
-            AddingServiceDividerView()
-                .padding(.bottom, 10)
-            AddingServiceAddServiceButton(action: {
-                presenter.handleAddService()
-            }, isEnabled: $presenter.isAddServiceEnabled)
-            .padding(.horizontal, 40)
-            .padding(.top, 10)
-            
-            AddingServiceLinkButton(text: T.Tokens.addManualHelpCta) {
-                presenter.handleHelp()
-            }
-            .padding(.top, 10)
         }
     }
     

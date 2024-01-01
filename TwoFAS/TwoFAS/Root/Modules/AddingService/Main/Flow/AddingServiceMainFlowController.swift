@@ -19,7 +19,7 @@
 
 import UIKit
 import Common
-import CodeSupport
+import Data
 
 protocol AddingServiceMainFlowControllerParent: AnyObject {
     func mainDismiss()
@@ -64,7 +64,7 @@ final class AddingServiceMainFlowController: FlowController {
         let flowController = AddingServiceMainFlowController(viewController: view)
         flowController.parent = parent
         
-        let interactor = InteractorFactory.shared.addingServiceMainModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.addingServiceMainModuleInteractor()
         
         view.heightChange = { [weak viewController] height in
             viewController?.updateHeight(height)

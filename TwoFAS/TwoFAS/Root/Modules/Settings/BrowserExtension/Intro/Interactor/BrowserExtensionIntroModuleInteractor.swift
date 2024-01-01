@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 protocol BrowserExtensionIntroModuleInteracting: AnyObject {
     var isFromScanning: Bool { get }

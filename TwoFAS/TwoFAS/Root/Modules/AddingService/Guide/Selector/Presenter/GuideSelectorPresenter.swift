@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 final class GuideSelectorPresenter: ObservableObject {
     @Published var guides: [GuideDescription] = []

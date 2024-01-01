@@ -35,4 +35,12 @@ extension UIApplication {
     static var isLandscape: Bool {
         keyWindow?.windowScene?.interfaceOrientation.isLandscape ?? false
     }
+    
+    static var isActive: Bool {
+        switch UIApplication.shared.applicationState {
+        case .active: true
+        case .background, .inactive: false
+        @unknown default: false
+        }
+    }
 }

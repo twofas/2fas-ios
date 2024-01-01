@@ -19,6 +19,7 @@
 
 import UIKit
 import PKHUD
+import Common
 
 final class NotificationIcon: UIView, PKHUDAnimating {
     enum Kind {

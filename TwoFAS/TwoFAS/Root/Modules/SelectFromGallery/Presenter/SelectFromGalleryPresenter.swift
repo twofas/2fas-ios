@@ -19,9 +19,9 @@
 
 import Foundation
 import UIKit
-import CodeSupport
 import Common
 import Storage
+import Data
 
 final class SelectFromGalleryPresenter {
     private let flowController: SelectFromGalleryFlowControlling

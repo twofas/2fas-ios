@@ -40,7 +40,9 @@ final class ComposeServiceCategorySelectionFlowController: FlowController {
     ) {
         let view = ComposeServiceCategorySelectionViewController()
         let flowController = ComposeServiceCategorySelectionFlowController(viewController: view)
-        let interactor = InteractorFactory.shared.composeServiceCategorySelectionModuleInteractor(with: selectedSection)
+        let interactor = ModuleInteractorFactory
+            .shared
+            .composeServiceCategorySelectionModuleInteractor(with: selectedSection)
         flowController.parent = parent
         let presenter = ComposeServiceCategorySelectionPresenter(
             flowController: flowController,

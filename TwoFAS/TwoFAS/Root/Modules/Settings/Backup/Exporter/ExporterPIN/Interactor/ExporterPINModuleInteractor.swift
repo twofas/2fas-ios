@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 protocol ExporterPINModuleInteracting: AnyObject {
     var currentCodeLength: Int { get }

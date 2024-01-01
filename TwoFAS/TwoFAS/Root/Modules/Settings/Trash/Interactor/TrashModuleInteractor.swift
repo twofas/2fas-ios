@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Data
 
 protocol TrashModuleInteracting: AnyObject {
     func listTrashedServices() -> [ServiceData]

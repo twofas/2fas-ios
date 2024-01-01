@@ -21,6 +21,7 @@ import Foundation
 import AVFoundation
 import UIKit.UIView
 import Common
+import Data
 
 final class CameraOutputQRScanner: NSObject {
     private var metadataOutput: AVCaptureMetadataOutput?

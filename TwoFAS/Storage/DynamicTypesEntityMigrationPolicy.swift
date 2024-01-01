@@ -20,6 +20,7 @@
 import Foundation
 import CoreData
 import Common
+import Content
 
 @objc(DynamicTypesEntityMigrationPolicy)
 final class DynamicTypesEntityMigrationPolicy: NSEntityMigrationPolicy {
@@ -152,7 +153,7 @@ final class DynamicTypesEntityMigrationPolicy: NSEntityMigrationPolicy {
             }
             if let serviceTypeID,
                let serviceDef = serviceDefinitionDatabase.service(using: serviceTypeID) {
-                return serviceDef.labelTitleTwoLetters
+                return serviceDef.name.twoLetters
             }
             return ServiceDefinition.defaultLabelTitleTwoLetters
         }()

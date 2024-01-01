@@ -356,6 +356,10 @@ internal enum T {
     internal static let importFile = T.tr("Localizable", "backup__import_file", fallback: "Import file")
     /// You can import exported files on other devices with the 2FAS application
     internal static let importFileTitle = T.tr("Localizable", "backup__import_file_title", fallback: "You can import exported files on other devices with the 2FAS application")
+    /// The backup file you're attempting to import is not supported in this application version. The application only supports backup format versions up to %d, while the file you're importing is version %d.
+    internal static func importInvalidVersion(_ p1: Int, _ p2: Int) -> String {
+      return T.tr("Localizable", "backup__import_invalid_version", p1, p2, fallback: "The backup file you're attempting to import is not supported in this application version. The application only supports backup format versions up to %d, while the file you're importing is version %d.")
+    }
     /// You're going to import a backup file containing
     internal static let importOtherDevices = T.tr("Localizable", "backup__import_other_devices", fallback: "You're going to import a backup file containing")
     /// Incorrect character. Use only letter A-Z, a-z, digits and special characters: -_/!#$%&+*~@?=^.,'(){}[]:;<>|
@@ -628,6 +632,8 @@ internal enum T {
     internal static func pageOfPageTitle(_ p1: Int, _ p2: Int) -> String {
       return T.tr("Localizable", "commons__page_of_page_title", p1, p2, fallback: "%d of %d")
     }
+    /// Pair
+    internal static let pair = T.tr("Localizable", "commons__pair", fallback: "Pair")
     /// Proceed
     internal static let proceed = T.tr("Localizable", "commons__proceed", fallback: "Proceed")
     /// Rename
@@ -824,6 +830,20 @@ internal enum T {
     internal static let selectTitle = T.tr("Localizable", "guides__select_title", fallback: "Browse services")
   }
   internal enum Introduction {
+    /// In the next step, you'll be asked to choose your Google Drive account, where the 2FA tokens will be stored safely.
+    internal static let backupDescription = T.tr("Localizable", "introduction__backup_description", fallback: "In the next step, you'll be asked to choose your Google Drive account, where the 2FA tokens will be stored safely.")
+    /// Learn more about backup
+    internal static let backupIcloudCta = T.tr("Localizable", "introduction__backup_icloud_cta", fallback: "Learn more about backup")
+    /// 2FAS uses iCloud for secure backup and sync of your 2FA tokens. The *encrypted* backup data is stored in iCloud, accessible *only by the 2FAS app*. Additionally, this feature aids with token *recovery and syncing* across iOS devices.
+    /// 
+    /// It's enabled by default and can disabled at any time in the app's backup settings.
+    internal static let backupIcloudDescription = T.tr("Localizable", "introduction__backup_icloud_description", fallback: "2FAS uses iCloud for secure backup and sync of your 2FA tokens. The *encrypted* backup data is stored in iCloud, accessible *only by the 2FAS app*. Additionally, this feature aids with token *recovery and syncing* across iOS devices.\n\nIt's enabled by default and can disabled at any time in the app's backup settings.")
+    /// Secure sync and backup
+    internal static let backupIcloudTitle = T.tr("Localizable", "introduction__backup_icloud_title", fallback: "Secure sync and backup")
+    /// Google Drive sync turned on successfully!
+    internal static let backupSuccess = T.tr("Localizable", "introduction__backup_success", fallback: "Google Drive sync turned on successfully!")
+    /// I'll take the risk, no backup
+    internal static let backupTakeRiskCta = T.tr("Localizable", "introduction__backup_take_risk_cta", fallback: "I'll take the risk, no backup")
     /// Choose QR code
     internal static let chooseQrCode = T.tr("Localizable", "introduction__choose_qr_code", fallback: "Choose QR code")
     /// Pair your online service account with 2FAS or import your tokens
@@ -836,8 +856,8 @@ internal enum T {
     internal static let importExternalApp = T.tr("Localizable", "introduction__import_external_app", fallback: "Import from external app")
     /// Import from Google Authenticator
     internal static let importGoogleAuthenticator = T.tr("Localizable", "introduction__import_google_authenticator", fallback: "Import from Google Authenticator")
-    /// Your phone has just become a private and secured key to your online services thanks to the 2FAS app - trusted by over 3 million users worldwide.
-    internal static let page1Content = T.tr("Localizable", "introduction__page_1_content", fallback: "Your phone has just become a private and secured key to your online services thanks to the 2FAS app - trusted by over 3 million users worldwide.")
+    /// Your phone has just become a private and secured key to your online services thanks to the 2FAS app - trusted by over 6 million users worldwide.
+    internal static let page1Content = T.tr("Localizable", "introduction__page_1_content", fallback: "Your phone has just become a private and secured key to your online services thanks to the 2FAS app - trusted by over 6 million users worldwide.")
     /// You are awesome!
     internal static let page1Title = T.tr("Localizable", "introduction__page_1_title", fallback: "You are awesome!")
     /// Pair 2FAS with your online services. Activate two-factor security in seconds with your QR code.
@@ -1175,10 +1195,10 @@ internal enum T {
   internal enum Tokens {
     /// Point your camera at the screen to capture the QR code.
     internal static let addDescription = T.tr("Localizable", "tokens__add_description", fallback: "Point your camera at the screen to capture the QR code.")
-    /// Enter secret key manually
-    internal static let addEnterManual = T.tr("Localizable", "tokens__add_enter_manual", fallback: "Enter secret key manually")
-    /// Upload screen with QR code
-    internal static let addFromGallery = T.tr("Localizable", "tokens__add_from_gallery", fallback: "Upload screen with QR code")
+    /// Enter the secret key manually
+    internal static let addEnterManual = T.tr("Localizable", "tokens__add_enter_manual", fallback: "Enter the secret key manually")
+    /// Upload screenshot with the QR code
+    internal static let addFromGallery = T.tr("Localizable", "tokens__add_from_gallery", fallback: "Upload screenshot with the QR code")
     /// Add group
     internal static let addGroup = T.tr("Localizable", "tokens__add_group", fallback: "Add group")
     /// Additional info
@@ -1199,10 +1219,10 @@ internal enum T {
     internal static let addManualOther = T.tr("Localizable", "tokens__add_manual_other", fallback: "Other settings")
     /// (optional)
     internal static let addManualOtherOptional = T.tr("Localizable", "tokens__add_manual_other_optional", fallback: "(optional)")
-    /// Secret Key (required)
-    internal static let addManualServiceKey = T.tr("Localizable", "tokens__add_manual_service_key", fallback: "Secret Key (required)")
-    /// Service name (required)
-    internal static let addManualServiceName = T.tr("Localizable", "tokens__add_manual_service_name", fallback: "Service name (required)")
+    /// Secret Key
+    internal static let addManualServiceKey = T.tr("Localizable", "tokens__add_manual_service_key", fallback: "Secret Key")
+    /// Service name
+    internal static let addManualServiceName = T.tr("Localizable", "tokens__add_manual_service_name", fallback: "Service name")
     /// Pair the service with 2FAS
     internal static let addManualTitle = T.tr("Localizable", "tokens__add_manual_title", fallback: "Pair the service with 2FAS")
     /// Other methods

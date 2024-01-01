@@ -17,8 +17,8 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
 import UIKit
+import Data
 
 final class NewsPresenter {
     weak var view: NewsViewControlling?

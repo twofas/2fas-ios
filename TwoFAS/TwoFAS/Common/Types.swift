@@ -18,13 +18,10 @@
 //
 
 import Foundation
+import Common
 
-typealias Callback = () -> Void
 enum AlertType {
     case add(codeTitle: String)
 }
 
 typealias ActionDecide = (type: AlertType, positive: Callback, negative: Callback)
-
-typealias GCMToken = String
-typealias DeviceName = String

@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 protocol MainSplitModuleInteracting: AnyObject {
     func currentSettingsPath() -> ViewPath.Settings?
@@ -32,6 +33,7 @@ protocol MainSplitModuleInteracting: AnyObject {
     func handleLandscapeMenuCollapsed(_ isCollapsed: Bool)
     
     var hasStoredURL: Bool { get }
+    var isLockScreenActive: Bool { get }
 }
 
 final class MainSplitModuleInteractor {
@@ -40,21 +42,28 @@ final class MainSplitModuleInteractor {
     private let viewPathInteractor: ViewPathIteracting
     private let linkInteractor: LinkInteracting
     private let appearanceInteractor: AppearanceInteracting
+    private let appStateInteractor: AppStateInteracting
     
     init(
         viewPathInteractor: ViewPathIteracting,
         linkInteractor: LinkInteracting,
-        appearanceInteractor: AppearanceInteracting
+        appearanceInteractor: AppearanceInteracting,
+        appStateInteractor: AppStateInteracting
     ) {
         self.viewPathInteractor = viewPathInteractor
         self.linkInteractor = linkInteractor
         self.appearanceInteractor = appearanceInteractor
+        self.appStateInteractor = appStateInteractor
     }
 }
 
 extension MainSplitModuleInteractor: MainSplitModuleInteracting {
     var hasStoredURL: Bool {
         linkInteractor.hasStoredURL
+    }
+    
+    var isLockScreenActive: Bool {
+        appStateInteractor.isLockScreenActive
     }
     
     func restoreViewPath() -> ViewPath? {

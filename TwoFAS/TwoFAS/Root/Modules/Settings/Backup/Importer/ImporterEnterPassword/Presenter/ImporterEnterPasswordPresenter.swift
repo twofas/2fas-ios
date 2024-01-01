@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 final class ImporterEnterPasswordPresenter {
     weak var view: ImporterEnterPasswordViewControling?

@@ -20,6 +20,7 @@
 import UIKit
 import Common
 import UniformTypeIdentifiers
+import Data
 
 protocol ImporterOpenFileHeadlessFlowControllerParent: AnyObject {
     func importerClose()
@@ -54,7 +55,7 @@ final class ImporterOpenFileHeadlessFlowController: FlowController {
     ) -> ImporterOpenFileHeadlessFlowController {
         let flowController = ImporterOpenFileHeadlessFlowController(viewController: viewController)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.importerOpenFileModuleInteractor(url: url)
+        let interactor = ModuleInteractorFactory.shared.importerOpenFileModuleInteractor(url: url)
         let presenter = ImporterOpenFilePresenter(
             flowController: flowController,
             interactor: interactor

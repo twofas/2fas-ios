@@ -48,7 +48,7 @@ final class ImporterPreimportSummaryFlowController: FlowController {
         let view = ImporterPreimportSummaryViewController()
         let flowController = ImporterPreimportSummaryFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.importerPreimportSummaryModuleInteractor(
+        let interactor = ModuleInteractorFactory.shared.importerPreimportSummaryModuleInteractor(
             countNew: countNew,
             countTotal: countTotal,
             sections: sections,

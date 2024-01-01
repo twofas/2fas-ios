@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 final class SettingsViewController: UIViewController, ContentNavigationControllerHideNavibar {
     var presenter: SettingsPresenter!

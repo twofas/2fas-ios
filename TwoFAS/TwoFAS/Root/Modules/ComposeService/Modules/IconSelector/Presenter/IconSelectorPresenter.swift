@@ -17,8 +17,9 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 import Common
+import Data
 
 final class IconSelectorPresenter {
     weak var view: IconSelectorViewControlling?

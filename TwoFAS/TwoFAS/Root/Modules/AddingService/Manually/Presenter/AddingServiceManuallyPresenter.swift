@@ -17,11 +17,28 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 import Common
 
 final class AddingServiceManuallyPresenter: ObservableObject {
+    enum KeyboardInitialFocus {
+        case noFocus
+        case name
+        case secret
+    }
     @Published var isAddServiceEnabled = false
+    
+    var keyboardInitialFocus: KeyboardInitialFocus {
+        if isFirstAppear {
+            if providedName != nil {
+                return .secret
+            }
+            return .name
+        }
+        return .noFocus
+    }
+    
+    private var isFirstAppear = true
     
     private var isCorrectServiceName = false
     private var isCorrectSecret = false
@@ -77,10 +94,6 @@ extension AddingServiceManuallyPresenter {
             tokenType: selectedTokenType
         ) else { return }
         flowController.toClose(serviceData)
-    }
-    
-    func handleHelp() {
-        flowController.toHelp()
     }
 }
 
@@ -208,6 +221,39 @@ extension AddingServiceManuallyPresenter {
         }
     }
     
+    func handleCancel() {
+        flowController.toClose()
+    }
+    
+    func handlePair() {
+        guard isAddServiceEnabled else { return }
+        handleAddService()
+    }
+    
+    func viewDidAppear() {
+        isFirstAppear = false
+    }
+    
+    // MARK: - To external input
+    
+    func handleSelectAlgorithm() {
+        flowController.toAlgorithmSelection(selectedOption: selectedAlgorithm)
+    }
+    
+    func handleSelectRefreshTime() {
+        flowController.toRefreshTimeSelection(selectedOption: selectedRefreshTime)
+    }
+    
+    func handleSelectDigits() {
+        flowController.toDigitsSelection(selectedOption: selectedDigits)
+    }
+    
+    func handleShowInitialCounterInput() {
+        flowController.toInitialCounterInput(currentValue: initialCounter)
+    }
+    
+    // MARK: - From External input
+    
     func handleAlgorithmSelection(_ algorithm: Algorithm) {
         self.selectedAlgorithm = algorithm
     }
@@ -219,11 +265,7 @@ extension AddingServiceManuallyPresenter {
     func handleDigitsSelection(_ digits: Digits) {
         self.selectedDigits = digits
     }
-    
-    func handleShowInitialCounterInput() {
-        flowController.toInitialCounterInput()
-    }
-    
+
     func handleInitialCounter(_ counter: Int) {
         self.initialCounter = counter
     }

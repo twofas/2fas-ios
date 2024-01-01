@@ -19,7 +19,7 @@
 
 import UIKit
 import Common
-import CodeSupport
+import Data
 import SwiftUI
 
 protocol TokensPlainFlowControllerParent: AnyObject {
@@ -78,7 +78,7 @@ final class TokensPlainFlowController: FlowController, TokensNavigationFlowContr
         let flowController = TokensPlainFlowController(viewController: view)
         flowController.parent = parent
         flowController.mainSplitViewController = mainSplitViewController
-        let interactor = InteractorFactory.shared.tokensModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.tokensModuleInteractor()
         let presenter = TokensPresenter(
             flowController: flowController,
             interactor: interactor
@@ -103,6 +103,15 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     func toAddService() {
         guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
         AddingServiceFlowController.present(on: mainSplitViewController, parent: self)
+    }
+    
+    func toAddServiceManually(_ name: String?) {
+        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        AddingServiceManuallyNavigationFlowController.present(
+            on: mainSplitViewController,
+            parent: self,
+            name: name
+        )
     }
     
     func toDeleteService(serviceData: ServiceData) {
@@ -361,6 +370,7 @@ extension TokensPlainFlowController: SelectFromGalleryFlowControllerParent {
     func galleryDidCancel() {
         dismiss { [weak self] in
             self?.galleryViewController = nil
+            self?.toAddService()
         }
     }
     
@@ -437,15 +447,29 @@ extension TokensPlainFlowController: UploadLogsNavigationFlowControllerParent {
     }
 }
 
-extension TokensPlainFlowController: AddingServiceFlowControllerParent {
-    func addingServiceDismiss() {
-        dismiss()
-    }
-    
-    func addingServiceClose(_ serviceData: ServiceData) {
+extension TokensPlainFlowController: AddingServiceManuallyNavigationFlowControllerParent {
+    func addingServiceManuallyToClose(_ serviceData: ServiceData) {
         dismiss(actions: [.newData, .refreshImmidiately, .sync]) { [weak self] in
             self?.toServiceWasCreated(serviceData)
         }
+    }
+    
+    func addingServiceManuallyToCancel() {
+        dismiss(actions: [.continuesFlow]) { [weak self] in
+            self?.toAddService()
+        }
+    }
+}
+
+extension TokensPlainFlowController: AddingServiceFlowControllerParent {
+    func addingServiceToManual(_ name: String?) {
+        dismiss(actions: [.continuesFlow]) { [weak self] in
+            self?.toAddServiceManually(name)
+        }
+    }
+    
+    func addingServiceDismiss() {
+        dismiss()
     }
     
     func addingServiceToGallery() {
@@ -487,6 +511,12 @@ extension TokensPlainFlowController: AddingServiceFlowControllerParent {
     func addingServiceToGuides() {
         dismiss(actions: [.continuesFlow]) { [weak self] in
             self?.showGuides()
+        }
+    }
+    
+    func addingServiceToToken(_ serviceData: ServiceData) {
+        dismiss(actions: [.newData, .refreshImmidiately, .sync]) { [weak self] in
+            self?.toServiceWasCreated(serviceData)
         }
     }
 }
@@ -600,11 +630,9 @@ extension TokensPlainFlowController: NewsNavigationFlowControllerParent {
 }
 
 extension TokensPlainFlowController: GuideSelectorNavigationFlowControllerParent {
-    func guideToAddManually(with data: String?) {
-        guard let mainSplitViewController else { return }
+    func guideToAddManually(with name: String?) {
         dismiss(actions: [.continuesFlow]) { [weak self] in
-            guard let self else { return }
-            AddingServiceFlowController.present(on: mainSplitViewController, parent: self, target: .manuall(data: data))
+            self?.toAddServiceManually(name)
         }
     }
     

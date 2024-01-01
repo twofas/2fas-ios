@@ -37,7 +37,7 @@ final class BackupDeleteFlowController: FlowController {
         let view = BackupDeleteViewController()
         let flowController = BackupDeleteFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.backupDeleteModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.backupDeleteModuleInteractor()
         let presenter = BackupDeletePresenter(
             flowController: flowController,
             interactor: interactor

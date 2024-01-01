@@ -18,6 +18,8 @@
 //
 
 import UIKit
+import Common
+import Data
 
 protocol MainViewControlling: AnyObject {
     func navigateToViewPath(_ viewPath: ViewPath)
@@ -42,7 +44,7 @@ final class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presenter.viewDidAppear()
+        presenter.viewWillAppear()
     }
     
     deinit {
@@ -94,6 +96,18 @@ extension MainViewController {
             name: .fileAwaitsOpening,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(tokensVisible),
+            name: .tokensScreenIsVisible,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(tokensVisible),
+            name: .userLoggedIn,
+            object: nil
+        )
     }
 
     @objc
@@ -131,6 +145,11 @@ extension MainViewController {
     @objc
     private func fileAwaitsOpening() {
         presenter.handleOpenFile()
+    }
+    
+    @objc
+    private func tokensVisible() {
+        presenter.handleViewIsVisible()
     }
 }
 

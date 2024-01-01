@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Data
 
 protocol ComposeServiceAdvancedSummaryModuleInteracting: AnyObject {
     var tokenType: TokenType { get }
@@ -66,8 +67,7 @@ extension ComposeServiceAdvancedSummaryModuleInteractor: ComposeServiceAdvancedS
     func copyCounter() {
         notificationInteractor.copyWithSuccess(
             title: T.Notifications.counterCopied,
-            value: String(counter),
-            accessibilityTitle: T.Notifications.counterCopied
+            value: String(counter)
         )
     }
 }

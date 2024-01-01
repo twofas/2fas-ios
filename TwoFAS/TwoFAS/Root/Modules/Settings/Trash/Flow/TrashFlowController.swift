@@ -38,7 +38,7 @@ final class TrashFlowController: FlowController {
         let view = TrashViewController()
         let flowController = TrashFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.trashModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.trashModuleInteractor()
         let presenter = TrashPresenter(
             flowController: flowController,
             interactor: interactor
@@ -56,7 +56,7 @@ final class TrashFlowController: FlowController {
         let view = TrashViewController()
         let flowController = TrashFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.trashModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.trashModuleInteractor()
         let presenter = TrashPresenter(
             flowController: flowController,
             interactor: interactor

@@ -18,6 +18,8 @@
 //
 
 import Foundation
+import Common
+import Data
 
 protocol BackupMenuModuleInteracting: AnyObject {
     func startMonitoring()

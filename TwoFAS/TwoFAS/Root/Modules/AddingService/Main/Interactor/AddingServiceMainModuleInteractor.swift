@@ -18,8 +18,8 @@
 //
 
 import Foundation
-import CodeSupport
 import Common
+import Data
 
 protocol AddingServiceMainModuleInteracting: AnyObject {
     func checkCameraPermission(completion: @escaping (Bool) -> Void)

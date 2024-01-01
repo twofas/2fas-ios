@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class ComposeServiceFormReveal: UIView {
     private let privateKey: UILabel = {

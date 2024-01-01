@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 protocol UserIconInfoFlowControllerParent: AnyObject {}
 

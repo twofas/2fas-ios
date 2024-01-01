@@ -28,7 +28,7 @@ extension Array {
 }
 
 extension Array where Element == Int {
-    func concateToPostionString() -> String {
+    func concateToPositionString() -> String {
         self.map { String($0) }.reduce("", +)
     }
 }

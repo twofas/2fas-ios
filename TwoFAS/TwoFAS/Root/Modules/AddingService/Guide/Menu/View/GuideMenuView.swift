@@ -33,6 +33,7 @@ struct GuideMenuView: View {
                     .font(.body)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(Color(Theme.Colors.Text.main))
+                    .frame(maxWidth: Theme.Metrics.componentWidth, alignment: .center)
             }
             .padding(2 * Theme.Metrics.doubleMargin)
             .padding(.top, 4 * Theme.Metrics.doubleMargin)

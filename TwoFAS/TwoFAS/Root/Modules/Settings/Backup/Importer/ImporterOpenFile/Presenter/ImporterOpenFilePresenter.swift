@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 final class ImporterOpenFilePresenter {
     private let flowController: ImporterOpenFileHeadlessFlowControlling

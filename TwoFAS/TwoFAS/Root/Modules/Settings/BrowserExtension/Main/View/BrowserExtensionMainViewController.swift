@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import CommonUIKit
 
 protocol BrowserExtensionMainViewControlling: AnyObject, SpinnerDisplaying {
     func reload(with data: [BrowserExtensionMainMenuSection])

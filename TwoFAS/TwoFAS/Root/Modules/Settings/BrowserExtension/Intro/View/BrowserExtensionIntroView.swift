@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct BrowserExtensionIntroView: View {
     private let spacing: CGFloat = Theme.Metrics.doubleSpacing

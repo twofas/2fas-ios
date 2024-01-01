@@ -39,7 +39,7 @@ final class PushNotificationPermissionPlainFlowController: FlowController {
         let view = PushNotificationPermissionViewController()
         let flowController = PushNotificationPermissionPlainFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.pushNotificationPermissionModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.pushNotificationPermissionModuleInteractor()
         let presenter = PushNotificationPermissionPresenter(
             flowController: flowController,
             interactor: interactor,
@@ -58,7 +58,7 @@ final class PushNotificationPermissionPlainFlowController: FlowController {
         let view = PushNotificationPermissionViewController()
         let flowController = PushNotificationPermissionPlainFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.pushNotificationPermissionModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.pushNotificationPermissionModuleInteractor()
         let presenter = PushNotificationPermissionPresenter(
             flowController: flowController,
             interactor: interactor,

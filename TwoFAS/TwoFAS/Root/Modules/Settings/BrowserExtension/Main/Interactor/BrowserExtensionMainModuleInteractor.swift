@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Data
 
 protocol BrowserExtensionMainModuleInteracting: AnyObject {
     var deviceNickname: String { get }

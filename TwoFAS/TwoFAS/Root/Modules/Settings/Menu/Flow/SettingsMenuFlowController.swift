@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 protocol SettingsMenuFlowControllerChild: AnyObject {
     func toCollapsed()
@@ -71,7 +72,7 @@ final class SettingsMenuFlowController: FlowController {
         let view = SettingsMenuViewController()
         let flowController = SettingsMenuFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.settingsMenuModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.settingsMenuModuleInteractor()
         let presenter = SettingsMenuPresenter(
             flowController: flowController,
             interactor: interactor

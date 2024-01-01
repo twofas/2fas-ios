@@ -19,7 +19,7 @@
 
 import UIKit
 import Common
-import Token
+import Data
 
 final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHOTPCellType {
     static let reuseIdentifier = "TokensHOTPCell"

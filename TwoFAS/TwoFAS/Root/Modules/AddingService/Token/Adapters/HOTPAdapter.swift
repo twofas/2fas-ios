@@ -19,7 +19,7 @@
 
 import Foundation
 import Common
-import Token
+import Data
 
 final class HOTPAdapter: NSObject, TokenCounterConsumer {
     var didTapRefreshCounter: ((Common.Secret) -> Void)? // not used here

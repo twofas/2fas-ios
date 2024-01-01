@@ -19,6 +19,7 @@
 
 import UIKit
 import PKHUD
+import Common
 
 enum HUDNotification {
     static func presentSuccess(title: String, completion: Callback? = nil) {

@@ -19,7 +19,7 @@
 
 import Foundation
 import Common
-import Token
+import Data
 
 final class TOTPAdapter: NSObject, TokenTimerConsumer {
     var didTapUnlock: ((TokenTimerConsumer) -> Void)? // not used

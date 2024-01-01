@@ -19,6 +19,7 @@
 
 import SwiftUI
 import UIKit
+import Common
 
 final class ExternalImportInstructionsViewController: UIViewController {
     var presenter: ExternalImportInstructionsPresenter!

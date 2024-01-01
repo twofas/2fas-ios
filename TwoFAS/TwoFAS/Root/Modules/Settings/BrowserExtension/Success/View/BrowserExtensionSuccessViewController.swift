@@ -19,6 +19,7 @@
 
 import UIKit
 import SwiftUI
+import Common
 
 final class BrowserExtensionSuccessViewController: UIViewController {
     var presenter: BrowserExtensionSuccessPresenter!

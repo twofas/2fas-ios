@@ -18,7 +18,7 @@
 //
 
 import UIKit
-import Token
+import Data
 
 extension TokensViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

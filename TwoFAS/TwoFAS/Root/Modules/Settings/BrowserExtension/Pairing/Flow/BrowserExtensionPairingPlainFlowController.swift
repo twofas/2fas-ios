@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 protocol BrowserExtensionPairingPlainFlowControllerParent: AnyObject {
     func pairingSuccess()
@@ -43,7 +44,9 @@ final class BrowserExtensionPairingPlainFlowController: FlowController {
         let view = BrowserExtensionPairingViewController()
         let flowController = BrowserExtensionPairingPlainFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.browserExtensionPairingModuleInteractor(extensionID: extensionID)
+        let interactor = ModuleInteractorFactory
+            .shared
+            .browserExtensionPairingModuleInteractor(extensionID: extensionID)
         let presenter = BrowserExtensionPairingPresenter(
             flowController: flowController,
             interactor: interactor
@@ -61,7 +64,9 @@ final class BrowserExtensionPairingPlainFlowController: FlowController {
         let view = BrowserExtensionPairingViewController()
         let flowController = BrowserExtensionPairingPlainFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.browserExtensionPairingModuleInteractor(extensionID: extensionID)
+        let interactor = ModuleInteractorFactory
+            .shared
+            .browserExtensionPairingModuleInteractor(extensionID: extensionID)
         let presenter = BrowserExtensionPairingPresenter(
             flowController: flowController,
             interactor: interactor

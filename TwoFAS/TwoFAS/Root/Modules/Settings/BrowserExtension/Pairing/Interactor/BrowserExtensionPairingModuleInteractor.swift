@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Data
 
 protocol BrowserExtensionPairingModuleInteracting: AnyObject {
     func startPairing(completion: @escaping (Result<Void, PairingWebExtensionError>) -> Void)

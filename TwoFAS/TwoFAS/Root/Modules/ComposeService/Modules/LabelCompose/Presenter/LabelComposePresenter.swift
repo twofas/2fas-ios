@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Data
 
 final class LabelComposePresenter {
     weak var view: LabelComposeViewControlling?

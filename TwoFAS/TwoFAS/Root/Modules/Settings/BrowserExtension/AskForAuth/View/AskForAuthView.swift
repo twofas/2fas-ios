@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct AskForAuthView: View {
     private let spacing: CGFloat = Theme.Metrics.doubleSpacing

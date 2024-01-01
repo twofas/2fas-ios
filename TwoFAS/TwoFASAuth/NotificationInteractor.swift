@@ -19,9 +19,7 @@
 
 import Foundation
 import Common
-import Storage
-import Token
-import NetworkStack
+import Data
 
 enum NotificationError: Error {
     case noServicesExists

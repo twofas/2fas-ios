@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 final class UserIconInfoPresenter {
     private let flowController: UserIconInfoFlowControlling

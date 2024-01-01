@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 protocol GuideSelectorFlowControllerParent: AnyObject {
     func guideSelectorToGuideMenu(_ guide: GuideDescription)
@@ -41,7 +42,7 @@ final class GuideSelectorFlowController: FlowController {
         let flowController = GuideSelectorFlowController(viewController: view)
         flowController.parent = parent
         
-        let interactor = InteractorFactory.shared.guideSelectorModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.guideSelectorModuleInteractor()
         
         let presenter = GuideSelectorPresenter(
             flowController: flowController,

@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Data
 
 struct GuideSelectorView: View {
     private static let itemWidth: CGFloat = 148

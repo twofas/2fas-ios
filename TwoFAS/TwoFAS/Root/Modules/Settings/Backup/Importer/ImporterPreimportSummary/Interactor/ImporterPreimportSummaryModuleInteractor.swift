@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Data
 
 protocol ImporterPreimportSummaryModuleInteracting: AnyObject {
     var countNew: Int { get }

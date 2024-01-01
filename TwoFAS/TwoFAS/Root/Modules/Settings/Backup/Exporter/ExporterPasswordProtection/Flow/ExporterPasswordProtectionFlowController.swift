@@ -43,7 +43,7 @@ final class ExporterPasswordProtectionFlowController: FlowController {
         let view = ExporterPasswordProtectionViewController()
         let flowController = ExporterPasswordProtectionFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.exporterPasswordProtectionModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.exporterPasswordProtectionModuleInteractor()
         let presenter = ExporterPasswordProtectionPresenter(
             flowController: flowController,
             interactor: interactor

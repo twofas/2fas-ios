@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 final class MainTabPresenter {
     weak var view: MainTabViewControlling?

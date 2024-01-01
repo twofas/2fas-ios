@@ -36,7 +36,7 @@ final class AppearanceFlowController: FlowController {
         let flowController = AppearanceFlowController(viewController: view)
         flowController.parent = parent
         flowController.navigationController = navigationController
-        let interactor = InteractorFactory.shared.appearanceModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.appearanceModuleInteractor()
         let presenter = AppearancePresenter(
             flowController: flowController,
             interactor: interactor
@@ -55,7 +55,7 @@ final class AppearanceFlowController: FlowController {
         let flowController = AppearanceFlowController(viewController: view)
         flowController.parent = parent
         flowController.navigationController = navigationController
-        let interactor = InteractorFactory.shared.appearanceModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.appearanceModuleInteractor()
         let presenter = AppearancePresenter(
             flowController: flowController,
             interactor: interactor

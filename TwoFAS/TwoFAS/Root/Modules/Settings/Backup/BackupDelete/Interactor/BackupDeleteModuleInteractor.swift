@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 protocol BackupDeleteModuleInteracting: AnyObject {
     func deleteBackup()

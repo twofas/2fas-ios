@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 protocol MainFlowControllerParent: AnyObject {}
 
@@ -43,29 +44,35 @@ final class MainFlowController: FlowController {
     private var importer: ImporterOpenFileHeadlessFlowController?
     
     static func showAsRoot(
-        in viewController: ContainerViewController, // TODO: Change to plain VC
+        in viewController: UIViewController,
         parent: MainFlowControllerParent,
         immediately: Bool
-    ) {
+    ) -> MainViewController {
         let view = MainViewController()
         let flowController = MainFlowController(viewController: view)
         flowController.parent = parent
         flowController.authRequestsFlowController = AuthRequestsFlowController.create(parent: flowController)
-        let interactor = InteractorFactory.shared.mainModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.mainModuleInteractor()
         let presenter = MainPresenter(
             flowController: flowController,
             interactor: interactor
         )
         view.presenter = presenter
         presenter.view = view
-
-        viewController.present(view, immediately: immediately, animationType: .alpha)
         
-        // TODO: Make it a child of root VC
-//        viewController.addChild(view)
-//        viewController.view.addSubview(view.view)
-//        view.view.pinToParent()
-//        view.didMove(toParent: viewController)
+        viewController.addChild(view)
+        viewController.view.addSubview(view.view)
+        view.view.pinToParent()
+        view.didMove(toParent: viewController)
+        
+        if !immediately {
+            view.view.alpha = 0
+            UIView.animate(withDuration: Theme.Animations.Timing.quick, delay: 0, options: .curveEaseInOut) {
+                view.view.alpha = 1
+            }
+        }
+        
+        return view
     }
 }
 

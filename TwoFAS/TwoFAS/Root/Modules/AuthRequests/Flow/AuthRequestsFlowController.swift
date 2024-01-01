@@ -20,6 +20,7 @@
 import Foundation
 import Storage
 import Common
+import Data
 
 protocol AuthRequestsFlowControllerParent: AnyObject {
     func authRequestShowServiceSelection(auth: WebExtensionAwaitingAuth)
@@ -52,7 +53,7 @@ final class AuthRequestsFlowController {
     ) -> AuthRequestsFlowControllerChild {
         let flowController = AuthRequestsFlowController()
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.authRequestsModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.authRequestsModuleInteractor()
         let presenter = AuthRequestsPresenter(
             interactor: interactor
         )

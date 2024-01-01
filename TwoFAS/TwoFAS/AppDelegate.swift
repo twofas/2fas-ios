@@ -20,11 +20,12 @@
 import UIKit
 import FirebaseMessaging
 import Common
+import Data
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    private var rootCoordinator: RootCoordinator?
+    private var rootViewController: RootViewController?
     
     func application(
         _ application: UIApplication,
@@ -32,13 +33,16 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         guard !ProcessInfo.isSwiftUIPreview else { return true }
         
-        rootCoordinator = RootCoordinator()
+        DataExternalTranslations.setTranslations(serviceNameTranslation: T.Commons.service)
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = rootCoordinator!.rootViewController
+        rootViewController = RootFlowController.setAsRoot(
+            in: window,
+            parent: self
+        )
         window?.makeKeyAndVisible()
         
-        rootCoordinator?.start()
+        rootViewController?.presenter.initialize()
         
         return true
     }
@@ -48,38 +52,37 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         open url: URL,
         options: [UIApplication.OpenURLOptionsKey: Any] = [:]
     ) -> Bool {
-        guard let rootCoordinator else { return false }
-        return rootCoordinator.shouldHandleURL(url: url)
+        rootViewController?.presenter.shouldHandleURL(url: url) == true
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        rootCoordinator?.applicationWillResignActive()
+        rootViewController?.presenter.applicationWillResignActive()
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        rootCoordinator?.applicationDidEnterBackground()
+        rootViewController?.presenter.applicationDidEnterBackground()
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-        rootCoordinator?.applicationWillEnterForeground()
+        rootViewController?.presenter.applicationWillEnterForeground()
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        rootCoordinator?.applicationDidBecomeActive()
+        rootViewController?.presenter.applicationDidBecomeActive()
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        rootCoordinator?.applicationWillTerminate()
+        rootViewController?.presenter.applicationWillTerminate()
     }
     
     // MARK: - Push Notifications
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        rootCoordinator?.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
+        rootViewController?.presenter.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        rootCoordinator?.didFailToRegisterForRemoteNotifications(with: error)
+        rootViewController?.presenter.didFailToRegisterForRemoteNotifications(with: error)
     }
     
     func application(
@@ -87,6 +90,11 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didReceiveRemoteNotification userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     ) {
-        rootCoordinator?.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
+        rootViewController?.presenter.didReceiveRemoteNotification(
+            userInfo: userInfo,
+            fetchCompletionHandler: completionHandler
+        )
     }
 }
+
+extension AppDelegate: RootFlowControllerParent {}

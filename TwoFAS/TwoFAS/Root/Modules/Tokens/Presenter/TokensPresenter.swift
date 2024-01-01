@@ -19,9 +19,8 @@
 
 import Foundation
 import Common
-import Token
 import Storage
-import CodeSupport
+import Data
 
 final class TokensPresenter {
     enum State {
@@ -100,6 +99,10 @@ extension TokensPresenter {
     func handleAppBecomesInactive() {
         Log("TokensPresenter - handleAppBecomesInactive")
         interactor.stopCounters()
+        view?.stopSearch()
+        if isSearching {
+            handleClearSearchPhrase()
+        }
     }
     
     // MARK: - External Actions
@@ -385,7 +388,14 @@ extension TokensPresenter {
     
     func handleCopyToken(from serviceData: ServiceData) {
         Log("TokensPresenter - handleCopyToken")
-        interactor.copyToken(from: serviceData)
+        
+        switch interactor.copyToken(from: serviceData) {
+        case .current:
+            view?.copyToken()
+        case .next:
+            view?.copyNextToken()
+        default: break
+        }
     }
     
     // MARK: - Timer and Counter support

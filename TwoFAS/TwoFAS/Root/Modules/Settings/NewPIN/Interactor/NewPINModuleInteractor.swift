@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 protocol NewPINModuleInteracting: AnyObject {
     var selectedPIN: String? { get set }

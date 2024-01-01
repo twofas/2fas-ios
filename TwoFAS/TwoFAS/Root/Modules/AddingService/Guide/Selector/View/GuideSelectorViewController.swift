@@ -26,13 +26,10 @@ final class GuideSelectorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let image = UIImage(systemName: "chevron.backward")?
-            .withTintColor(Theme.Colors.Text.theme, renderingMode: .alwaysOriginal)
-        
         navigationItem.title = T.Guides.selectTitle
         navigationItem.backButtonDisplayMode = .minimal
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: image,
+            title: T.Commons.close,
             style: .done,
             target: self,
             action: #selector(closeAction)

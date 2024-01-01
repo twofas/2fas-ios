@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 extension ImportFromFileParsing.AEGISParseResult {
     var localizedDescription: String? {

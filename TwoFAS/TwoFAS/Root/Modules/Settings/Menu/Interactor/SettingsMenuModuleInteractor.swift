@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 protocol SettingsMenuModuleInteracting: AnyObject {
     var isSecurityEnabled: Bool { get }

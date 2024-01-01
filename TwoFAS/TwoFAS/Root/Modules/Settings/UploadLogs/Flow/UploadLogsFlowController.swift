@@ -40,7 +40,7 @@ final class UploadLogsFlowController: FlowController {
     ) {
         let view = UploadLogsViewController()
         let flowController = UploadLogsFlowController(viewController: view)
-        let interactor = InteractorFactory.shared.uploadLogsModuleInteractor(auditID: auditID)
+        let interactor = ModuleInteractorFactory.shared.uploadLogsModuleInteractor(auditID: auditID)
         flowController.parent = parent
         flowController.navigationController = navigationController
         let presenter = UploadLogsPresenter(

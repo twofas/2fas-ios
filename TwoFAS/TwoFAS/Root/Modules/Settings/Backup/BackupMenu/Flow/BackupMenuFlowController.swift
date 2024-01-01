@@ -42,7 +42,7 @@ final class BackupMenuFlowController: FlowController {
         let view = BackupMenuViewController()
         let flowController = BackupMenuFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.backupMenuModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.backupMenuModuleInteractor()
         let presenter = BackupMenuPresenter(
             flowController: flowController,
             interactor: interactor
@@ -60,7 +60,7 @@ final class BackupMenuFlowController: FlowController {
         let view = BackupMenuViewController()
         let flowController = BackupMenuFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.backupMenuModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.backupMenuModuleInteractor()
         let presenter = BackupMenuPresenter(
             flowController: flowController,
             interactor: interactor

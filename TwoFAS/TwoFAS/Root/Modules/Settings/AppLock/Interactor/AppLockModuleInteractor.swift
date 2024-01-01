@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Data
 
 protocol AppLockModuleInteracting: AnyObject {
     var selectedAttempts: AppLockAttempts { get }

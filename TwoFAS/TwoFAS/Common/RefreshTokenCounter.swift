@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class RefreshTokenCounter: UIView {
     var didAnimate: Callback?

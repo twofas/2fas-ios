@@ -42,7 +42,7 @@ final class ExporterPINFlowController: FlowController {
         let view = ExporterPINViewController()
         let flowController = ExporterPINFlowController(viewController: view)
         flowController.parent = parent
-        let interactor = InteractorFactory.shared.exporterPINModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.exporterPINModuleInteractor()
         let presenter = ExporterPINPresenter(
             flowController: flowController,
             interactor: interactor,

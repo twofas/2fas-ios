@@ -20,6 +20,7 @@
 import Foundation
 import CloudKit
 import Common
+import Content
 
 final class ItemHandlerMigrationProxy {
     var newerVersion: (() -> Void)?
@@ -207,7 +208,7 @@ private extension ItemHandlerMigrationProxy {
             }
             if let serviceTypeID,
                let serviceDef = serviceDefinitionDatabase.service(using: serviceTypeID) {
-                return serviceDef.labelTitleTwoLetters
+                return serviceDef.name.twoLetters
             }
             return ServiceDefinition.defaultLabelTitleTwoLetters
         }()

@@ -17,7 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 import Common
 
 protocol DeleteServiceFlowControllerParent: AnyObject {
@@ -42,7 +42,7 @@ final class DeleteServiceFlowController: FlowController {
         let flowController = DeleteServiceFlowController(viewController: view)
         flowController.parent = parent
         
-        let interactor = InteractorFactory.shared.deleteServiceInteractor()
+        let interactor = ModuleInteractorFactory.shared.deleteServiceInteractor()
         let presenter = DeleteServicePresenter(
             flowController: flowController,
             interactor: interactor

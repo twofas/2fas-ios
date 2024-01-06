@@ -471,6 +471,7 @@
 		C28B38C927CD784D00BD4A96 /* RefreshTokenCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28B38C827CD784D00BD4A96 /* RefreshTokenCounter.swift */; };
 		C28B9120268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C28B911F268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel */; };
 		C28C441724A67B7000534B30 /* CommonSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28C441624A67B7000534B30 /* CommonSearchBar.swift */; };
+		C28CA5592B4768E700ACB527 /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E7C3822ADB19F300478D89 /* Data.framework */; };
 		C2959627267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2959626267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift */; };
 		C295962B267F79190086DEB1 /* TokensSectionHeader+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C295962A267F79190086DEB1 /* TokensSectionHeader+.swift */; };
 		C29626B8236F80A200C133BC /* Animate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29626B7236F80A200C133BC /* Animate.swift */; };
@@ -697,9 +698,8 @@
 		C2C56D4427C98316003B4C43 /* ComposeServiceAdvancedSummaryPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C56D4327C98316003B4C43 /* ComposeServiceAdvancedSummaryPresenter+Menu.swift */; };
 		C2C56D4627C98AA3003B4C43 /* ComposeServiceAdvancedSummaryModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C56D4527C98AA3003B4C43 /* ComposeServiceAdvancedSummaryModuleInteractor.swift */; };
 		C2C56D4A27C99314003B4C43 /* ComposeServiceAdvancedSummaryFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C56D4927C99314003B4C43 /* ComposeServiceAdvancedSummaryFlowController.swift */; };
-		C2C5BD252ADD489B00CD92DA /* Content in Frameworks */ = {isa = PBXBuildFile; productRef = C2C5BD242ADD489B00CD92DA /* Content */; };
 		C2C5BD312ADD4CB800CD92DA /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = C2C5BD302ADD4CB800CD92DA /* Common */; };
-		C2C5BD342ADD4CC800CD92DA /* Content in Frameworks */ = {isa = PBXBuildFile; productRef = C2C5BD332ADD4CC800CD92DA /* Content */; };
+		C2C5BD342ADD4CC800CD92DA /* Content in Frameworks */ = {isa = PBXBuildFile; productRef = C2C5BD332ADD4CC800CD92DA /* Content */; settings = {ATTRIBUTES = (Required, ); }; };
 		C2C5BD362ADD4CE100CD92DA /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = C2C5BD352ADD4CE100CD92DA /* Common */; };
 		C2C5BD382ADD4CF000CD92DA /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = C2C5BD372ADD4CF000CD92DA /* Common */; };
 		C2C5BD3A2ADD4CFB00CD92DA /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = C2C5BD392ADD4CFB00CD92DA /* Common */; };
@@ -965,7 +965,6 @@
 		C2FA6C472401DF9400A1F320 /* AlertControllerDismissFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA6C462401DF9400A1F320 /* AlertControllerDismissFlow.swift */; };
 		C2FA857E2426BB7300AACFC9 /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; platformFilter = ios; };
 		C2FA915D2ADD58F200F1D29F /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E7C3822ADB19F300478D89 /* Data.framework */; };
-		C2FA91622ADD58FD00F1D29F /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E7C3822ADB19F300478D89 /* Data.framework */; };
 		C2FA91682ADD5A3300F1D29F /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = C2FA91672ADD5A3300F1D29F /* Common */; };
 		C2FA916A2ADD5A9600F1D29F /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = C2FA91692ADD5A9600F1D29F /* Common */; };
 		C2FA916C2ADD5AD500F1D29F /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = C2FA916B2ADD5AD500F1D29F /* Common */; };
@@ -1092,6 +1091,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = C28633CA1FFABD2200C8F4B4;
 			remoteInfo = TwoFASAuth;
+		};
+		C28CA55B2B4768E700ACB527 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C236666B1FB2644900989ACA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2E7C3812ADB19F300478D89;
+			remoteInfo = Data;
 		};
 		C29626DB2370BD7F00C133BC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1234,13 +1240,6 @@
 			remoteInfo = TwoFAS;
 		};
 		C2FA915F2ADD58F200F1D29F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C236666B1FB2644900989ACA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C2E7C3812ADB19F300478D89;
-			remoteInfo = Data;
-		};
-		C2FA91642ADD58FD00F1D29F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C236666B1FB2644900989ACA /* Project object */;
 			proxyType = 1;
@@ -2405,6 +2404,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C28CA5592B4768E700ACB527 /* Data.framework in Frameworks */,
 				C274C7782ADD3E1700B8AAC1 /* FirebaseMessaging in Frameworks */,
 				C264AE6326D2DF3A00AE61E7 /* TimeVerification.framework in Frameworks */,
 				C2C3AE11269E224A00506ACF /* SwiftUI.framework in Frameworks */,
@@ -2413,7 +2413,6 @@
 				C251EDED2AE87284007722F2 /* Base32.framework in Frameworks */,
 				C2FA916C2ADD5AD500F1D29F /* Common in Frameworks */,
 				C274C77A2ADD3E2C00B8AAC1 /* FirebaseCrashlytics in Frameworks */,
-				C2FA91622ADD58FD00F1D29F /* Data.framework in Frameworks */,
 				C2379D1026B6DF720010C6B1 /* IntentsUI.framework in Frameworks */,
 				C2379D0726B6D6CC0010C6B1 /* Protection.framework in Frameworks */,
 			);
@@ -2454,7 +2453,6 @@
 				C2C5BD342ADD4CC800CD92DA /* Content in Frameworks */,
 				C2E7C3A02ADB21B400478D89 /* PushNotifications.framework in Frameworks */,
 				C2E7C3982ADB21B400478D89 /* NetworkStack.framework in Frameworks */,
-				C2C5BD252ADD489B00CD92DA /* Content in Frameworks */,
 				C251EDE82AE8721B007722F2 /* Base32.framework in Frameworks */,
 				C2E7C39C2ADB21B400478D89 /* Protection.framework in Frameworks */,
 				C2AE5F882ADC8B2300AED670 /* SwiftProtobuf in Frameworks */,
@@ -7223,6 +7221,7 @@
 				C28633C71FFABD2200C8F4B4 /* Sources */,
 				C28633C81FFABD2200C8F4B4 /* Frameworks */,
 				C28633C91FFABD2200C8F4B4 /* Resources */,
+				C28CA5952B47709100ACB527 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -7290,6 +7289,7 @@
 				C2C3AE09269E224A00506ACF /* Sources */,
 				C2C3AE0A269E224A00506ACF /* Frameworks */,
 				C2C3AE0B269E224A00506ACF /* Resources */,
+				C28CA5942B47700C00ACB527 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -7297,8 +7297,8 @@
 				C2379D0626B6D6C30010C6B1 /* PBXTargetDependency */,
 				C2379D0A26B6D6CC0010C6B1 /* PBXTargetDependency */,
 				C264AE6626D2DF3A00AE61E7 /* PBXTargetDependency */,
-				C2FA91652ADD58FD00F1D29F /* PBXTargetDependency */,
 				C251EDF02AE87284007722F2 /* PBXTargetDependency */,
+				C28CA55C2B4768E700ACB527 /* PBXTargetDependency */,
 			);
 			name = TwoFASWidgetExtension;
 			packageProductDependencies = (
@@ -7317,6 +7317,7 @@
 				C2C3AE21269E274700506ACF /* Sources */,
 				C2C3AE22269E274700506ACF /* Frameworks */,
 				C2C3AE23269E274700506ACF /* Resources */,
+				C28CA5962B47709C00ACB527 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -7381,7 +7382,6 @@
 			packageProductDependencies = (
 				C2AE5F712ADC880B00AED670 /* DeviceKit */,
 				C2AE5F872ADC8B2300AED670 /* SwiftProtobuf */,
-				C2C5BD242ADD489B00CD92DA /* Content */,
 				C2C5BD302ADD4CB800CD92DA /* Common */,
 				C2C5BD332ADD4CC800CD92DA /* Content */,
 			);
@@ -7416,7 +7416,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1510;
 				ORGANIZATIONNAME = "Two Factor Authentication Service, Inc.";
 				TargetAttributes = {
 					C200E4991FB3911B00D7C748 = {
@@ -7705,6 +7705,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		C28CA5942B47700C00ACB527 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nif [[ -d \"Content_Content.bundle\" ]]; then \n    rm -fr Content_Content.bundle\nfi\nif [[ -d \"Common_Common.bundle\" ]]; then \n    rm -fr Common_Common.bundle\nfi\nif [[ -d \"PKHUD_PKHUD.bundle\" ]]; then \n    rm -fr PKHUD_PKHUD.bundle\nfi\n";
+		};
+		C28CA5952B47709100ACB527 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nif [[ -d \"Content_Content.bundle\" ]]; then \n    rm -fr Content_Content.bundle\nfi\nif [[ -d \"Common_Common.bundle\" ]]; then \n    rm -fr Common_Common.bundle\nfi\nif [[ -d \"PKHUD_PKHUD.bundle\" ]]; then \n    rm -fr PKHUD_PKHUD.bundle\nfi\n";
+		};
+		C28CA5962B47709C00ACB527 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncd \"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nif [[ -d \"Content_Content.bundle\" ]]; then \n    rm -fr Content_Content.bundle\nfi\nif [[ -d \"Common_Common.bundle\" ]]; then \n    rm -fr Common_Common.bundle\nfi\nif [[ -d \"PKHUD_PKHUD.bundle\" ]]; then \n    rm -fr PKHUD_PKHUD.bundle\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -8758,6 +8812,11 @@
 			target = C28633CA1FFABD2200C8F4B4 /* TwoFASAuth */;
 			targetProxy = C28633D71FFABD2200C8F4B4 /* PBXContainerItemProxy */;
 		};
+		C28CA55C2B4768E700ACB527 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C2E7C3812ADB19F300478D89 /* Data */;
+			targetProxy = C28CA55B2B4768E700ACB527 /* PBXContainerItemProxy */;
+		};
 		C29626DC2370BD7F00C133BC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C29626D52370BD7F00C133BC /* TimeVerification */;
@@ -8874,11 +8933,6 @@
 			target = C2E7C3812ADB19F300478D89 /* Data */;
 			targetProxy = C2FA915F2ADD58F200F1D29F /* PBXContainerItemProxy */;
 		};
-		C2FA91652ADD58FD00F1D29F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C2E7C3812ADB19F300478D89 /* Data */;
-			targetProxy = C2FA91642ADD58FD00F1D29F /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -8993,6 +9047,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Storage/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9033,6 +9088,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Storage/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9072,6 +9128,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Protection/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9113,6 +9170,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Protection/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9152,6 +9210,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = PushNotifications/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9197,6 +9256,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = PushNotifications/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9367,6 +9427,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFAS/Other/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9410,6 +9471,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFAS/Other/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9454,7 +9516,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9500,7 +9562,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9542,6 +9604,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Sync/Other/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9583,6 +9646,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Sync/Other/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9612,7 +9676,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -9624,7 +9688,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9656,7 +9720,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -9668,7 +9732,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9706,6 +9770,7 @@
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFASAuth/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9718,6 +9783,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -9735,6 +9803,7 @@
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFASAuth/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9747,6 +9816,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -9768,6 +9840,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = TimeVerification/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9810,6 +9883,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = TimeVerification/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -9843,6 +9917,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = TwoFASTests/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9868,6 +9943,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = TwoFASTests/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9898,6 +9974,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = TwoFASWidget/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9911,6 +9988,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -9929,6 +10009,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = TwoFASWidget/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9941,6 +10022,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -9957,6 +10041,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = TwoFASServiceIntent/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9970,6 +10055,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASServiceIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -9986,6 +10074,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = TwoFASServiceIntent/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9998,6 +10087,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASServiceIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -10008,7 +10100,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -10020,7 +10112,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -10055,7 +10147,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -10067,7 +10159,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -10100,7 +10192,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -10112,7 +10204,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -10147,7 +10239,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -10159,7 +10251,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -10196,6 +10288,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = ProtectionTests/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10223,6 +10316,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = ProtectionTests/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10525,10 +10619,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
-		};
-		C2C5BD242ADD489B00CD92DA /* Content */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Content;
 		};
 		C2C5BD302ADD4CB800CD92DA /* Common */ = {
 			isa = XCSwiftPackageProductDependency;

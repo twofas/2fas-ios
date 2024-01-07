@@ -85,6 +85,10 @@ extension AddingServiceTokenPresenter {
         flowController.toClose(interactor.serviceData)
     }
     
+    func handleAppBecomeActive() {
+        interactor.start()
+    }
+    
     // MARK: - TOTP
     
     func handleTOTPInital(progress: Int, period: Int, token: TokenValue, willChangeSoon: Bool) {

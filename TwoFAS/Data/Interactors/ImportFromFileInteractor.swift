@@ -130,9 +130,6 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
         }
 
         if let lastPass = try? jsonDecoder.decode(LastPassData.self, from: data) {
-            guard lastPass.version == LastPassData.supportedVersion else {
-                return .lastPass(.newerVersion)
-            }
             return .lastPass(.success(lastPass))
         }
         

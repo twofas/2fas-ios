@@ -96,6 +96,11 @@ extension TokensPresenter {
         appActiveActions()
     }
     
+    func handleAppUnlocked() {
+        Log("TokensPresenter - handleAppUnlocked")
+        appActiveActions()
+    }
+    
     func handleAppBecomesInactive() {
         Log("TokensPresenter - handleAppBecomesInactive")
         interactor.stopCounters()
@@ -126,6 +131,7 @@ extension TokensPresenter {
         case .shouldRename(let currentName, let secret):
             flowController.toShouldRenameService(currentName: currentName, secret: secret)
         case .serviceWasCreaded(let serviceData):
+            reloadData()
             flowController.toServiceWasCreated(serviceData)
         }
     }
@@ -444,6 +450,8 @@ private extension TokensPresenter {
         changeDragAndDropIfNecessary(enable: false)
         changeRequriesTokenRefresh = true
         reloadData()
+        
+        guard !interactor.isAppLocked else { return }
         interactor.handleURLIfNecessary()
     }
     

@@ -227,6 +227,7 @@ final class ModuleInteractorFactory {
     func browserExtensionPairingModuleInteractor(extensionID: ExtensionID) -> BrowserExtensionPairingModuleInteracting {
         BrowserExtensionPairingModuleInteractor(
             webPairing: InteractorFactory.shared.pairingWebExtensionInteractor(),
+            registerDeviceInteractor: InteractorFactory.shared.registerDeviceInteractor(),
             extensionID: extensionID
         )
     }

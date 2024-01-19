@@ -32,6 +32,7 @@ struct AddingServiceFullWidthButtonWithImage: View {
             .frame(height: 1)
             .overlay(Color(Theme.Colors.Line.secondarySeparator))
             .padding(.horizontal, -Theme.Metrics.doubleMargin)
+            .accessibilityHidden(true)
         
         Button {
             action()

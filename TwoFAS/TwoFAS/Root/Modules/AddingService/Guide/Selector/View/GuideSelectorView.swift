@@ -34,6 +34,7 @@ struct GuideSelectorView: View {
                     .textCase(.uppercase)
                     .foregroundStyle(Color(Theme.Colors.inactiveInverted))
                     .padding(.vertical, Theme.Metrics.doubleMargin)
+                    .accessibilityAddTraits(.isHeader)
                 LazyVGrid(columns: columns, spacing: Theme.Metrics.doubleMargin) {
                     ForEach(presenter.guides.chunked(into: 2), id: \.self) { values in
                         if let first = values.first {
@@ -51,6 +52,7 @@ struct GuideSelectorView: View {
                 .font(.footnote)
                 .foregroundStyle(Color(Theme.Colors.Line.active))
                 .padding(.vertical, Theme.Metrics.doubleMargin)
+                .accessibilityAddTraits(.isHeader)
             Link(destination: URL(string: "https://2fas.com/your-2fa-guide/")!) {
                 HStack(spacing: Theme.Metrics.halfSpacing) {
                     Text(verbatim: T.Guides.selectProvideGuideCta)
@@ -71,11 +73,13 @@ struct GuideSelectorView: View {
     private func serviceGuide(_ guide: GuideDescription) -> some View {
         VStack(alignment: .center, spacing: Theme.Metrics.mediumMargin) {
             Image(uiImage: guide.serviceIcon)
+                .accessibilityHidden(true)
             Text(verbatim: guide.serviceName)
                 .foregroundStyle(Color(Theme.Colors.Text.main))
                 .font(.footnote)
                 .padding(.horizontal, Theme.Metrics.doubleMargin)
         }
+        .accessibilityAddTraits(.isButton)
         .padding(.vertical, Theme.Metrics.doubleMargin)
         .frame(width: Self.itemWidth, height: Self.itemHeight)
         .background {

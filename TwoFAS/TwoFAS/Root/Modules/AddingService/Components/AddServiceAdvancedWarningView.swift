@@ -24,6 +24,7 @@ struct AddServiceAdvancedWarningView: View {
         AddingServiceTextContentView(text: T.Tokens.addManualAdvanced, alignToLeading: true)
             .padding(.top, 24)
             .padding(.bottom, 10)
+            .accessibilityAddTraits(.isHeader)
         let attributedString: AttributedString = {
             var result = AttributedString(T.Tokens.addManualAdvancedDescription)
             result.foregroundColor = Color(Theme.Colors.Text.inactive)

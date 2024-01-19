@@ -112,7 +112,7 @@ extension LinkInteractor: LinkInteracting {
             Log("LinkInteractor - addStoredCode - no code", module: .interactor)
             return
         }
-        interactorNew.addCode(code)
+        interactorNew.addCode(code, force: false)
         reloadDataAndRefresh?()
         Log("LinkInteractor - addStoredCode. Adding", module: .interactor)
         clearStoredCode()

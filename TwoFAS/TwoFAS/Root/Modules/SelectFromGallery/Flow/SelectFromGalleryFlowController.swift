@@ -35,7 +35,7 @@ protocol SelectFromGalleryFlowControlling: AnyObject {
     func toNoCodesFound()
     func toErrorWhileScanning()
     func toSelectCode(from codes: [Code])
-    func toDuplicatedCode(usedIn: String)
+    func toDuplicatedCode(forceAdd: @escaping Callback)
     func toDidAddCode(serviceData: ServiceData)
     func toDidImport(count: Int)
     func toAppStore()
@@ -128,9 +128,10 @@ extension SelectFromGalleryFlowController: SelectFromGalleryFlowControlling {
         ac.show(animated: true, completion: nil)
     }
     
-    func toDuplicatedCode(usedIn: String) {
-        let errorView = CameraError.duplicatedCode(usedIn: usedIn).view { [weak self] in
-            self?.dismissModalAndTryAgain()
+    func toDuplicatedCode(forceAdd: @escaping Callback) {
+        let errorView = CameraError.duplicatedCode.view { [weak self] in
+            forceAdd()
+            self?.dismissModal()
         } cancel: { [weak self] in
             self?.dismissModal()
         }

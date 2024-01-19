@@ -26,7 +26,7 @@ protocol CameraScannerModuleInteracting: AnyObject {
     var shouldRename: ((String, String) -> Void)? { get set }
     var wasUserAskedAboutPush: Bool { get }
     
-    func addCode(_ code: Code)
+    func addCode(_ code: Code, force: Bool)
     func codeExists(_ code: Code) -> Bool
     func filterImportableCodes(_ codes: [Code]) -> [Code] 
     func addCodes(_ codes: [Code])
@@ -55,8 +55,8 @@ extension CameraScannerModuleInteractor: CameraScannerModuleInteracting {
         pushNotificationPermission.wasUserAsked
     }
     
-    func addCode(_ code: Code) {
-        newCodeInteractor.addCode(code)
+    func addCode(_ code: Code, force: Bool) {
+        newCodeInteractor.addCode(code, force: force)
     }
     
     func codeExists(_ code: Code) -> Bool {

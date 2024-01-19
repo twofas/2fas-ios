@@ -42,7 +42,7 @@ protocol AddingServiceMainFlowControlling: AnyObject {
     func toGuides()
     
     func toGeneralError()
-    func toDuplicatedCode(usedIn: String)
+    func toDuplicatedCode(forceAdd: @escaping Callback)
     func toAppStore()
     func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
     func toLastPassSummary(importable: Int, total: Int, codes: [Code])
@@ -114,13 +114,20 @@ extension AddingServiceMainFlowController: AddingServiceMainFlowControlling {
         viewController.present(alert, animated: true, completion: nil)
     }
     
-    func toDuplicatedCode(usedIn: String) {
-        let alert = UIAlertController.makeSimple(
-            with: T.Tokens.duplicatedPrivateKey,
-            message: T.Tokens.serviceKeyAlreadyUsedTitle(usedIn),
-            buttonTitle: T.Commons.ok,
-            finished: { [weak self] in self?.viewController.presenter.handleResumeCamera() }
+    func toDuplicatedCode(forceAdd: @escaping Callback) {
+        let alert = UIAlertController(
+            title: T.Commons.warning,
+            message: T.Tokens.serviceAlreadyExists,
+            preferredStyle: .alert
         )
+        alert.addAction(UIAlertAction(title: T.Commons.yes, style: .destructive, handler: { [weak self] _ in
+            forceAdd()
+            self?.viewController.presenter.handleResumeCamera()
+        }))
+        alert.addAction(UIAlertAction(title: T.Commons.no, style: .cancel, handler: { [weak self] _ in
+            self?.viewController.presenter.handleResumeCamera()
+        }))
+
         viewController.present(alert, animated: true, completion: nil)
     }
     

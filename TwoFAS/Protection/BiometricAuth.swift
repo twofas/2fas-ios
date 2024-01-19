@@ -24,7 +24,7 @@ import Common
 public final class BiometricAuth {
     public weak var delegate: BiometricAuthDelegate?
     
-    private let context = LAContext()
+    private var context = LAContext()
     private let storage: LocalEncryptedStorage
     
     init(storage: LocalEncryptedStorage) {
@@ -115,6 +115,7 @@ public final class BiometricAuth {
                         }
                         
                         self.delegate?.bioAuthSuccess()
+                        context = LAContext()
                         Log("BioAuthSuccess")
                     } else if let code = (evalPolicyError as? LAError)?.code,
                             code == LAError.userCancel

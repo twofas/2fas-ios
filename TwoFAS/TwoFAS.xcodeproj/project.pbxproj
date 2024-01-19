@@ -1439,6 +1439,10 @@
 		C21B40DB28C520E400348E04 /* ImporterOpenFileError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileError.swift; sourceTree = "<group>"; };
 		C21BC51C25B3660E00B15F99 /* ExchangeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeData.swift; sourceTree = "<group>"; };
 		C21BC54C25B37C8900B15F99 /* ExchangeConsts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeConsts.swift; sourceTree = "<group>"; };
+		C21BF26A2B5B340100915507 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TwoFASWidget.strings"; sourceTree = "<group>"; };
+		C21BF26B2B5B340100915507 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		C21BF26C2B5B340100915507 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		C21BF26D2B5B340100915507 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C21C38A11FE30E62000EC252 /* LimitedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedTextField.swift; sourceTree = "<group>"; };
 		C21E0B3D2299F2190063EE7C /* UIDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
 		C21EB2ED2A7FC55800FA8AA1 /* AddingServiceMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceMetrics.swift; sourceTree = "<group>"; };
@@ -7534,6 +7538,7 @@
 				id,
 				nl,
 				tr,
+				"zh-Hans",
 			);
 			mainGroup = C236666A1FB2644900989ACA;
 			packageReferences = (
@@ -8967,6 +8972,7 @@
 				C28418112A65E57100E0F700 /* id */,
 				C22294E12A9F5B4400DB7965 /* nl */,
 				C281909E2B0B84910042BB7D /* tr */,
+				C21BF26C2B5B340100915507 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -8986,6 +8992,7 @@
 				C28418102A65E57100E0F700 /* id */,
 				C22294E02A9F5B4300DB7965 /* nl */,
 				C281909D2B0B84910042BB7D /* tr */,
+				C21BF26B2B5B340100915507 /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -9014,6 +9021,7 @@
 				C284180F2A65E57000E0F700 /* id */,
 				C22294DF2A9F5B4300DB7965 /* nl */,
 				C281909C2B0B84910042BB7D /* tr */,
+				C21BF26A2B5B340100915507 /* zh-Hans */,
 			);
 			name = TwoFASWidget.intentdefinition;
 			sourceTree = "<group>";
@@ -9033,6 +9041,7 @@
 				C28418122A65E57200E0F700 /* id */,
 				C22294E22A9F5B4400DB7965 /* nl */,
 				C281909F2B0B84910042BB7D /* tr */,
+				C21BF26D2B5B340100915507 /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

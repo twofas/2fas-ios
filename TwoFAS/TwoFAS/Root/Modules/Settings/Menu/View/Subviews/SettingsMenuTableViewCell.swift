@@ -65,6 +65,7 @@ final class SettingsMenuTableViewCell: UITableViewCell {
         label.allowsDefaultTighteningForTruncation = true
         label.adjustsFontSizeToFitWidth = true
         label.setContentHuggingPriority(.defaultHigh + 2, for: .horizontal)
+        label.accessibilityTraits = .staticText
         return label
     }()
     
@@ -124,6 +125,7 @@ final class SettingsMenuTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(infoLabelContainer)
         stackView.addArrangedSubview(customViewContainer)
+        accessibilityTraits = .button
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

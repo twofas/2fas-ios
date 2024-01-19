@@ -24,5 +24,7 @@ public protocol FCMHandlerProtocol: AnyObject {
     
     var FCMTokenObtained: FCMTokenObtainedCompletion? { get set }
     
-    func initialize(enableCrashlytics: Bool)
+    func initializeFCM()
+    func enableFCM()
+    func enableCrashlytics(_ enable: Bool)
 }

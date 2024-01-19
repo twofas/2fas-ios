@@ -22,7 +22,7 @@ import Foundation
 public protocol NetworkStackRepository {
     func registerDevice(
         for name: String,
-        gcmToken: String,
+        gcmToken: String?,
         completion: @escaping (Result<RegisterDevice.ResultData, NetworkError>) -> Void
     )
     func pairWithWebExtension(

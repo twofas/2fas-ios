@@ -305,7 +305,7 @@ protocol MainRepository: AnyObject {
     
     func registerDevice(
         for name: String,
-        gcmToken: GCMToken,
+        gcmToken: GCMToken?,
         completion: @escaping (Result<RegisterDevice.ResultData, NetworkError>) -> Void
     )
     func pairWithWebExtension(

@@ -345,4 +345,9 @@ extension TokensViewController {
         guard !modalPresent else { return }
         presenter.handleTokensScreenIsVisible()
     }
+    
+    @objc
+    func userLoggedIn() {
+        presenter.handleAppUnlocked()
+    }
 }

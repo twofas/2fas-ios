@@ -42,6 +42,7 @@ protocol TokensModuleInteracting: AnyObject {
     var isActiveSearchEnabled: Bool { get }
     var currentListStyle: ListStyle { get }
     var shouldAnimate: Bool { get }
+    var isAppLocked: Bool { get }
     
     func servicesWereUpdated()
     func sync()
@@ -86,6 +87,9 @@ final class TokensModuleInteractor {
         case current
         case next
     }
+    var isAppLocked: Bool {
+        rootInteractor.isAuthenticationRequired
+    }
     private enum TokenTimeType {
         case current(TokenValue)
         case next(TokenValue)
@@ -105,6 +109,7 @@ final class TokensModuleInteractor {
     private let widgetsInteractor: WidgetsInteracting
     private let newCodeInteractor: NewCodeInteracting
     private let newsInteractor: NewsInteracting
+    private let rootInteractor: RootInteracting
     
     private(set) var categoryData: [CategoryData] = []
     
@@ -124,7 +129,8 @@ final class TokensModuleInteractor {
         linkInteractor: LinkInteracting,
         widgetsInteractor: WidgetsInteracting,
         newCodeInteractor: NewCodeInteracting,
-        newsInteractor: NewsInteracting
+        newsInteractor: NewsInteracting,
+        rootInteractor: RootInteracting
     ) {
         self.appearanceInteractor = appearanceInteractor
         self.serviceDefinitionsInteractor = serviceDefinitionsInteractor
@@ -140,6 +146,7 @@ final class TokensModuleInteractor {
         self.widgetsInteractor = widgetsInteractor
         self.newCodeInteractor = newCodeInteractor
         self.newsInteractor = newsInteractor
+        self.rootInteractor = rootInteractor
         
         setupLinkInteractor()
     }

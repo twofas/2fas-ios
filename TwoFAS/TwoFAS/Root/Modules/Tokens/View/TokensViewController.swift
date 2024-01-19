@@ -189,5 +189,11 @@ private extension TokensViewController {
             name: .tokensScreenIsVisible,
             object: nil
         )
+        center.addObserver(
+            self,
+            selector: #selector(userLoggedIn),
+            name: .userLoggedIn,
+            object: nil
+        )
     }
 }

@@ -315,7 +315,8 @@ final class ModuleInteractorFactory {
             linkInteractor: InteractorFactory.shared.linkInteractor(),
             widgetsInteractor: InteractorFactory.shared.widgetsInteractor(),
             newCodeInteractor: InteractorFactory.shared.newCodeInteractor(),
-            newsInteractor: InteractorFactory.shared.newsInteractor()
+            newsInteractor: InteractorFactory.shared.newsInteractor(),
+            rootInteractor: InteractorFactory.shared.rootInteractor()
         )
     }
     

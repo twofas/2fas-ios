@@ -245,6 +245,14 @@ internal enum T {
   internal static let pastDurationWeeksPlural4 = T.tr("Localizable", "past_duration_weeks-plural-4", fallback: "")
   /// 
   internal static let pastDurationWeeksPlural5 = T.tr("Localizable", "past_duration_weeks-plural-5", fallback: "")
+  /// Enable 2FAS Backup & Sync to ensure you never get locked out, even if you lose your phone - your peace of mind in one tap! 🔐📱
+  internal static let periodicNotificationBackup = T.tr("Localizable", "periodic_notification_backup", fallback: "Enable 2FAS Backup & Sync to ensure you never get locked out, even if you lose your phone - your peace of mind in one tap! 🔐📱")
+  /// Speed up your logins with the 2FAS Browser Extension! 🚀 Download now for a faster, more convenient authentication. 🌐✨
+  internal static let periodicNotificationBrowserExtension = T.tr("Localizable", "periodic_notification_browser_extension", fallback: "Speed up your logins with the 2FAS Browser Extension! 🚀 Download now for a faster, more convenient authentication. 🌐✨")
+  /// We're grateful for your support of 2FAS! 🌟 If you find our app helpful, consider making a donation to help us keep your digital world secure. Every bit helps! 🙏💙
+  internal static let periodicNotificationDonate = T.tr("Localizable", "periodic_notification_donate", fallback: "We're grateful for your support of 2FAS! 🌟 If you find our app helpful, consider making a donation to help us keep your digital world secure. Every bit helps! 🙏💙")
+  /// Glad you're with us at 2FAS! 🌟 Take a moment to discover helpful Tips & Tricks 🛠️ in the app for enhanced security 🔒.
+  internal static let periodicNotificationTips = T.tr("Localizable", "periodic_notification_tips", fallback: "Glad you're with us at 2FAS! 🌟 Take a moment to discover helpful Tips & Tricks 🛠️ in the app for enhanced security 🔒.")
   /// PIN does not match! Please try again.
   internal static let securityErrorNoMatch = T.tr("Localizable", "security_error_no_match", fallback: "PIN does not match! Please try again.")
   /// Developer Options
@@ -1491,6 +1499,8 @@ internal enum T {
     internal static let sortByManual = T.tr("Localizable", "tokens__sort_by_manual", fallback: "Manual")
     /// Z - A
     internal static let sortByZToA = T.tr("Localizable", "tokens__sort_by_z_to_a", fallback: "Z - A")
+    /// STEAM
+    internal static let steam = T.tr("Localizable", "tokens__steam", fallback: "STEAM")
     /// This code is incorrect or not supported. Try again.
     internal static let thisQrCodeIsInavlid = T.tr("Localizable", "tokens__this_qr_code_is_inavlid", fallback: "This code is incorrect or not supported. Try again.")
     /// You won't be able to restore this token anymore.

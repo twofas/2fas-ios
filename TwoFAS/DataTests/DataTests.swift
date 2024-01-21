@@ -1,7 +1,7 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
-//  Contributed by Cory Sanin. All rights reserved.
+//  Copyright © 2024 Two Factor Authentication Service, Inc.
+//  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -19,10 +19,10 @@
 
 import Foundation
 import XCTest
-@testable import Token
+@testable import Data
 import Common
 
-final class TotpTests: XCTestCase {
+final class TOTPTests: XCTestCase {
     private let totpSecret8Bytes = "VQ6WL2PLUD5FI"
     private let totpSecret16Bytes = "44PZQ72RCU6LAJOKJT5XQHGVRQ"
     
@@ -30,7 +30,7 @@ final class TotpTests: XCTestCase {
         XCTAssertEqual(
             TokenHandler.generateToken(
                 secret: totpSecret8Bytes,
-                time: Date.init(timeIntervalSince1970: 1234567890), // in seconds
+                time: Date(timeIntervalSince1970: 1234567890), // in seconds
                 digits: .digits6,
                 period: .period30,
                 algorithm: .SHA1,
@@ -42,7 +42,7 @@ final class TotpTests: XCTestCase {
         XCTAssertEqual(
             TokenHandler.generateToken(
                 secret: totpSecret8Bytes,
-                time: Date.init(timeIntervalSince1970: 1234567899),
+                time: Date(timeIntervalSince1970: 1234567899),
                 digits: .digits6,
                 period: .period30,
                 algorithm: .SHA1,
@@ -54,7 +54,7 @@ final class TotpTests: XCTestCase {
         XCTAssertEqual(
             TokenHandler.generateToken(
                 secret: totpSecret8Bytes,
-                time: Date.init(timeIntervalSince1970: 821941200),
+                time: Date(timeIntervalSince1970: 821941200),
                 digits: .digits6,
                 period: .period30,
                 algorithm: .SHA1,
@@ -69,7 +69,7 @@ final class TotpTests: XCTestCase {
         XCTAssertEqual(
             TokenHandler.generateToken(
                 secret: totpSecret8Bytes,
-                time: Date.init(timeIntervalSince1970: 1702184400),
+                time: Date(timeIntervalSince1970: 1702184400),
                 digits: .digits7,
                 period: .period60,
                 algorithm: .SHA224,
@@ -84,7 +84,7 @@ final class TotpTests: XCTestCase {
         XCTAssertEqual(
             TokenHandler.generateToken(
                 secret: totpSecret8Bytes,
-                time: Date.init(timeIntervalSince1970: 1702184400),
+                time: Date(timeIntervalSince1970: 1702184400),
                 digits: .digits8,
                 period: .period90,
                 algorithm: .SHA256,
@@ -99,7 +99,7 @@ final class TotpTests: XCTestCase {
         XCTAssertEqual(
             TokenHandler.generateToken(
                 secret: totpSecret8Bytes,
-                time: Date.init(timeIntervalSince1970: 821941200),
+                time: Date(timeIntervalSince1970: 821941200),
                 digits: .digits5,
                 period: .period30,
                 algorithm: .SHA384,
@@ -114,7 +114,7 @@ final class TotpTests: XCTestCase {
         XCTAssertEqual(
             TokenHandler.generateToken(
                 secret: totpSecret8Bytes,
-                time: Date.init(timeIntervalSince1970: 821941200),
+                time: Date(timeIntervalSince1970: 821941200),
                 digits: .digits6,
                 period: .period30,
                 algorithm: .SHA512,
@@ -129,7 +129,7 @@ final class TotpTests: XCTestCase {
         XCTAssertEqual(
             TokenHandler.generateToken(
                 secret: totpSecret16Bytes,
-                time: Date.init(timeIntervalSince1970: 821941200),
+                time: Date(timeIntervalSince1970: 821941200),
                 digits: .digits8,
                 period: .period30,
                 algorithm: .MD5,
@@ -144,7 +144,7 @@ final class TotpTests: XCTestCase {
         XCTAssertEqual(
             TokenHandler.generateToken(
                 secret: totpSecret16Bytes,
-                time: Date.init(timeIntervalSince1970: 1234567890), // in seconds
+                time: Date(timeIntervalSince1970: 1234567890), // in seconds
                 digits: .digits5,
                 period: .period30,
                 algorithm: .SHA1,
@@ -156,7 +156,7 @@ final class TotpTests: XCTestCase {
         XCTAssertEqual(
             TokenHandler.generateToken(
                 secret: totpSecret16Bytes,
-                time: Date.init(timeIntervalSince1970: 1234567899),
+                time: Date(timeIntervalSince1970: 1234567899),
                 digits: .digits5,
                 period: .period30,
                 algorithm: .SHA1,
@@ -168,7 +168,7 @@ final class TotpTests: XCTestCase {
         XCTAssertEqual(
             TokenHandler.generateToken(
                 secret: totpSecret16Bytes,
-                time: Date.init(timeIntervalSince1970: 821941200),
+                time: Date(timeIntervalSince1970: 821941200),
                 digits: .digits5,
                 period: .period30,
                 algorithm: .SHA1,

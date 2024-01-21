@@ -76,13 +76,13 @@ final class AddingServiceManuallyPresenter: ObservableObject {
 
 extension AddingServiceManuallyPresenter {
     var algorithm: Algorithm {
-        return selectedTokenType == TokenType.steam ? Algorithm.SHA1 : selectedAlgorithm
+        selectedTokenType == TokenType.steam ? Algorithm.SHA1 : selectedAlgorithm
     }
     var tokenPeriod: Period {
-        return selectedTokenType == TokenType.steam ? Period.period30 : selectedRefreshTime
+        selectedTokenType == TokenType.steam ? Period.period30 : selectedRefreshTime
     }
     var tokenLength: Digits {
-        return selectedTokenType == TokenType.steam ? Digits.digits5 : selectedDigits
+        selectedTokenType == TokenType.steam ? Digits.digits5 : selectedDigits
     }
     
     func viewDidLoad() {

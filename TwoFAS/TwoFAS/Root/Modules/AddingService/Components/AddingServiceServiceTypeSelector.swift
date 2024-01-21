@@ -36,7 +36,7 @@ struct AddingServiceServiceTypeSelector: View {
     }
 
     private func createServiceTypeButton(type: TokenType) -> some View {
-        return AddingServiceServiceTypeButton(
+        AddingServiceServiceTypeButton(
             tokenType: type,
             action: { tokenType in selectedTokenType = tokenType
             }, isSelected: Binding(get: {

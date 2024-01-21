@@ -131,7 +131,7 @@ struct AddingServiceTokenView: View {
     }
     
     private func totpTokenView() -> some View {
-        return ZStack(alignment: .center) {
+        ZStack(alignment: .center) {
             AddingServiceTOTPTimerView(
                 text: $presenter.time,
                 willChangeSoon: $presenter.willChangeSoon

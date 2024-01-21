@@ -36,7 +36,7 @@ final class FCM: NSObject, MessagingDelegate, FCMHandlerProtocol {
     
     func enableCrashlytics(_ enable: Bool) {
     #if !DEBUG
-        Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(enableCrashlytics)
+        Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(enable)
     #endif
     }
     

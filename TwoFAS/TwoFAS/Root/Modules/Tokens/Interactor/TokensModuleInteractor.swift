@@ -378,14 +378,16 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     func reloadTokens() {
         let allServices = categoryData.allServices
-        let totp = allServices.filter { $0.tokenType == .totp }
+        let totp = allServices.filter { $0.tokenType == .totp || $0.tokenType == .steam }
         let hotp = allServices.filter { $0.tokenType == .hotp }
         tokenInteractor.start(timedSecrets: totp.map {
             TimedSecret(
                 secret: $0.secret,
                 period: $0.tokenPeriod ?? .defaultValue,
                 digits: $0.tokenLength,
-                algorithm: $0.algorithm)
+                algorithm: $0.algorithm,
+                tokenType: $0.tokenType
+            )
         }, counterSecrets: hotp.map {
             CounterSecret(
                 secret: $0.secret,
@@ -541,6 +543,7 @@ private extension TokensModuleInteractor {
         let cellType: TokenCell.CellType = {
             switch serviceData.tokenType {
             case .totp: return .serviceTOTP
+            case .steam: return .serviceSteam
             case .hotp: return .serviceHOTP
             }
         }()

@@ -30,6 +30,8 @@ enum QueryItemsType: Equatable {
             (.algorithm(_), .algorithm(_)),
             (.counter(_), .counter(_)):
             return true
+        case (.other(let klhs, _), .other(let krhs, _)):
+            return klhs == krhs
         default:
             return false
         }

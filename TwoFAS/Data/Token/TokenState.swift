@@ -25,6 +25,7 @@ final class TokenState {
     private let period: Period
     private let digits: Digits
     private let algorithm: Algorithm
+    private let tokenType: TokenType
     
     private var counter: Int
     private(set) var willChangeSoon = false
@@ -32,11 +33,12 @@ final class TokenState {
     private(set) var nextToken: TokenValue = ""
     private var consumers: [Weak] = []
     
-    init(secret: Secret, period: Period, digits: Digits, algorithm: Algorithm) {
+    init(secret: Secret, period: Period, digits: Digits, algorithm: Algorithm, tokenType: TokenType) {
         self.secret = secret
         self.period = period
         self.digits = digits
         self.algorithm = algorithm
+        self.tokenType = tokenType
         counter = period.rawValue
     }
     
@@ -118,7 +120,8 @@ final class TokenState {
             time: currentTime,
             period: period,
             digits: digits,
-            algoritm: algorithm
+            algoritm: algorithm,
+            tokenType: tokenType
         )
         let nextChange = currentTime.secondsTillNextChange(with: period.rawValue)
         nextToken = TokenGenerator.generateTOTP(
@@ -126,7 +129,8 @@ final class TokenState {
             time: currentTime + Double(nextChange) + 1.0,
             period: period,
             digits: digits,
-            algoritm: algorithm
+            algoritm: algorithm,
+            tokenType: tokenType
         )
     }
     

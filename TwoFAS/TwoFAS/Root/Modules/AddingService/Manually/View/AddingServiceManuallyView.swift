@@ -60,7 +60,9 @@ struct AddingServiceManuallyView: View {
                         AddingServiceServiceTypeSelector(selectedTokenType: $presenter.selectedTokenType)
                             .padding(.vertical, Theme.Metrics.doubleMargin)
                         
-                        advancedParametersBuilder()
+                        if presenter.selectedTokenType != .steam {
+                            advancedParametersBuilder()
+                        }
                     }
                 }
             }
@@ -116,7 +118,8 @@ struct AddingServiceManuallyView: View {
     @ViewBuilder
     func advancedParametersBuilder() -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            if presenter.selectedTokenType == .totp {
+            switch presenter.selectedTokenType {
+            case .totp:
                 Button {
                     presenter.handleSelectAlgorithm()
                 } label: {
@@ -143,7 +146,9 @@ struct AddingServiceManuallyView: View {
                         value: "\(presenter.selectedDigits.rawValue)"
                     )
                 }
-            } else if presenter.selectedTokenType == .hotp {
+            case .steam:
+                EmptyView()
+            case .hotp:
                 Button {
                     presenter.handleShowInitialCounterInput()
                 } label: {

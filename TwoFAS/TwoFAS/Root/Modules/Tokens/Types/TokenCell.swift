@@ -25,6 +25,7 @@ struct TokenCell: Hashable {
     enum CellType: Equatable {
         case serviceTOTP
         case serviceHOTP
+        case serviceSteam
         case placeholder
     }
     let name: String

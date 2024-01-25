@@ -109,7 +109,7 @@ public extension TintColor {
     }
     
     var color: UIColor {
-        let bundle = Bundle.module
+        let bundle = Bundle(for: CountdownTimer.self)
         switch self {
         case .`default`: return UIColor(named: "tintDefaultColor", in: bundle, compatibleWith: nil)!
         case .lightBlue: return UIColor(named: "tintLightBlueColor", in: bundle, compatibleWith: nil)!

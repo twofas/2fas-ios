@@ -124,7 +124,11 @@ extension TokensPresenter {
     func handleLinkAction(_ linkAction: TokensLinkAction) {
         Log("TokensPresenter - handleLinkAction")
         switch linkAction {
-        case .codeAlreadyExists: flowController.toCodeAlreadyExists()
+        case .codeAlreadyExists: flowController.toDuplicatedCode { [weak self] in
+            self?.handleAddStoredCode()
+        } cancel: { [weak self] in
+            self?.handleClearStoredCode()
+        }
         case .shouldAddCode(let descriptionText): flowController.toShowShouldAddCode(with: descriptionText)
         case .sendLogs(let auditID): flowController.toSendLogs(auditID: auditID)
         case .newData: handleNewData()

@@ -140,7 +140,6 @@ private extension LinkInteractor {
         guard !interactorNew.codeExists(code) else {
             Log("LinkInteractor - handleCodeIfNecessary - already exists", module: .interactor)
             showCodeAlreadyExists?()
-            mainRepository.clearStoredURL()
             return
         }
         

@@ -129,9 +129,8 @@ extension SelectFromGalleryFlowController: SelectFromGalleryFlowControlling {
     }
     
     func toDuplicatedCode(forceAdd: @escaping Callback) {
-        let errorView = CameraError.duplicatedCode.view { [weak self] in
+        let errorView = CameraError.duplicatedCode.view {
             forceAdd()
-            self?.dismissModal()
         } cancel: { [weak self] in
             self?.dismissModal()
         }
@@ -147,7 +146,14 @@ extension SelectFromGalleryFlowController: SelectFromGalleryFlowControlling {
         }
         let vc = UIHostingController(rootView: advice)
         vc.configureAsPhoneFullscreenModal()
-        parentViewController?.present(vc, animated: true, completion: nil)
+        
+        if parentViewController?.presentedViewController != nil {
+            dismiss { [weak self] in
+                self?.parentViewController?.present(vc, animated: true, completion: nil)
+            }
+        } else {
+            parentViewController?.present(vc, animated: true, completion: nil)
+        }
     }
     
     func toDidImport(count: Int) {
@@ -242,6 +248,12 @@ private extension SelectFromGalleryFlowController {
     func dismissModalAndTryAgain() {
         parentViewController?.dismiss(animated: true) { [weak self] in
             self?.presentPicker()
+        }
+    }
+    
+    func dismiss(completion: @escaping Callback) {
+        parentViewController?.dismiss(animated: true) {
+            completion()
         }
     }
     

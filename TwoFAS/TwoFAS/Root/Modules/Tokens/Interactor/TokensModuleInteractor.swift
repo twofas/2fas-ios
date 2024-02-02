@@ -577,7 +577,7 @@ private extension TokensModuleInteractor {
     }
     
     private func sectionPosition(for startIndex: Int, currentIndex: Int, totalIndex: Int) -> TokensSection.Position {
-        if startIndex > currentIndex || totalIndex < 2 {
+        if startIndex > currentIndex || totalIndex < 1 {
             return .notUsed
         }
         if startIndex == currentIndex {

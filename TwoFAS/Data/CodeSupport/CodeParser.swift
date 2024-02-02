@@ -22,16 +22,7 @@ import Common
 
 final class CodeParser {
     func parse(codeStr: String) -> Code? {
-        // Replace all spaces with proper URL Encoding
-        let codeStr = codeStr.trimmingCharacters(in: .whitespacesAndNewlines)
-            .replacingOccurrences(of: " ", with: "%20")
-            .replacingOccurrences(of: "&amp;", with: "%26")
-            .replacingOccurrences(of: "&lt;", with: "%3C")
-            .replacingOccurrences(of: "&gt;", with: "%3E")
-            .replacingOccurrences(of: "&quot;", with: "%22")
-            .replacingOccurrences(of: "&apos;", with: "%27")
-            .replacingOccurrences(of: "[", with: "%5B")
-            .replacingOccurrences(of: "]", with: "%5D")
+        guard let codeStr = handleEncodedCharacters(for: codeStr), !codeStr.isEmpty else { return nil }
         
         guard let components = NSURLComponents(string: codeStr) else { return nil }
         guard let scheme = components.scheme, scheme == "otpauth" else { return nil }
@@ -113,5 +104,41 @@ final class CodeParser {
         }
         
         return values
+    }
+    
+    private func handleEncodedCharacters(for str: String) -> String? {
+        let parts = str.split(separator: "?")
+        
+        guard parts.count < 3 else { return nil }
+        
+        var completeValue = ""
+        
+        if let first = parts.first {
+            completeValue += replaceEncodedCharacters(for: String(first))
+        }
+        
+        if let second = parts.last {
+            completeValue += "?\(removeEncodedCharacters(for: String(second)))"
+        }
+        
+        return completeValue
+    }
+    
+    private func replaceEncodedCharacters(for str: String) -> String {
+        str.trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: " ", with: "%20")
+            .replacingOccurrences(of: "&amp;", with: "%26")
+            .replacingOccurrences(of: "&lt;", with: "%3C")
+            .replacingOccurrences(of: "&gt;", with: "%3E")
+            .replacingOccurrences(of: "&quot;", with: "%22")
+            .replacingOccurrences(of: "&apos;", with: "%27")
+            .replacingOccurrences(of: "[", with: "%5B")
+            .replacingOccurrences(of: "]", with: "%5D")
+    }
+    
+    private func removeEncodedCharacters(for str: String) -> String {
+        str.trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: " ", with: "%20")
+            .replacingOccurrences(of: "&amp;", with: "&")
     }
  }

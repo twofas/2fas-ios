@@ -57,7 +57,10 @@ extension TokensViewController: TokensViewControlling {
         dataSource.apply(newSnapshot, animatingDifferences: !tokensView.hasActiveDrag, completion: nil)
         // no need to call reload other than seconds/consumer update
         tokensView.reloadData()
-        if let scrollTo {
+        
+        if let scrollTo,
+            tokensView.numberOfSections > scrollTo.section &&
+            tokensView.numberOfItems(inSection: scrollTo.section) > scrollTo.row  {
             tokensView.scrollToItem(at: scrollTo, at: .top, animated: true)
         }
     }

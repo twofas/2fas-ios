@@ -523,7 +523,12 @@ extension ImportFromFileInteractor {
             })
         guard !codes.isEmpty else { return .cantReadFile }
         
-        return .success(codes)
+        let codesSteam = codes.map({
+            var code = $0
+            return code.transformIfSteam()
+        })
+        
+        return .success(codesSteam)
     }
     
     func parseAuthenticatorPro(_ data: [Code]) -> [ServiceData] {
@@ -625,5 +630,24 @@ private extension AEGISData.Entry.EntryType {
         case .totp: return .totp
         case .steam: return .steam
         }
+    }
+}
+
+private extension Code {
+    mutating func transformIfSteam() -> Self {
+        if issuer == "Steam" {
+            return Self(
+                issuer: issuer,
+                label: label,
+                secret: secret,
+                period: .period30,
+                digits: .digits5,
+                algorithm: .SHA1,
+                tokenType: .steam,
+                counter: nil,
+                otpAuth: otpAuth
+            )
+        }
+        return self
     }
 }

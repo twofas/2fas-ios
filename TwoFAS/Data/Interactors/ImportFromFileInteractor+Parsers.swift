@@ -325,10 +325,10 @@ extension ImportFromFileInteractor {
                     return .brand
                 }()
                 return ServiceData(
-                    name: acc.userName.sanitazeName(),
+                    name: serviceDef?.name ?? acc.issuerName,
                     secret: secret,
                     serviceTypeID: serviceDef?.serviceTypeID,
-                    additionalInfo: nil,
+                    additionalInfo: acc.userName.sanitazeName(),
                     rawIssuer: acc.issuerName,
                     modifiedAt: acc.creationTimestamp,
                     createdAt: acc.creationTimestamp,

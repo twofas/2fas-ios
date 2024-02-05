@@ -106,6 +106,7 @@ final class TokenState {
             period: period.rawValue,
             currentToken: currentToken,
             nextToken: nextToken,
+            tokenType: tokenType,
             willChangeSoon: willChangeSoon
         ))
     }
@@ -145,6 +146,7 @@ final class TokenState {
                     isPlanned: plannedUpdate,
                     currentToken: currentToken,
                     nextToken: nextToken,
+                    tokenType: tokenType,
                     willChangeSoon: willChangeSoon
                 ))
             }

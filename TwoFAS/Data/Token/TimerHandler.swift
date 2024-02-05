@@ -27,6 +27,7 @@ public enum TokenTimerInitialConsumerState {
         period: Int,
         currentToken: TokenValue,
         nextToken: TokenValue,
+        tokenType: TokenType,
         willChangeSoon: Bool
     )
 }
@@ -38,6 +39,7 @@ public enum TokenTimerUpdateConsumerState {
         isPlanned: Bool,
         currentToken: TokenValue,
         nextToken: TokenValue,
+        tokenType: TokenType,
         willChangeSoon: Bool
     )
 }

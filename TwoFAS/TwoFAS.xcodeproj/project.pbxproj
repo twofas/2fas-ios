@@ -338,7 +338,6 @@
 		C2625F9228BBB87700D84C5C /* AboutModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F9128BBB87700D84C5C /* AboutModels.swift */; };
 		C2625F9428BBC01900D84C5C /* AboutPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F9328BBC01900D84C5C /* AboutPresenter+Menu.swift */; };
 		C2625F9628BBC86B00D84C5C /* AboutFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F9528BBC86B00D84C5C /* AboutFooter.swift */; };
-		C2633EFD265A7D090034B836 /* TokenLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2633EFC265A7D090034B836 /* TokenLabel.swift */; };
 		C2633F1F265B045F0034B836 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2633F1E265B045F0034B836 /* UIApplication.swift */; };
 		C263F45A29900DED009B0837 /* MainMenuModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263F45929900DED009B0837 /* MainMenuModels.swift */; };
 		C263F45E29901C4F009B0837 /* MainSplitFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263F45D29901C4F009B0837 /* MainSplitFlowController.swift */; };
@@ -1902,7 +1901,6 @@
 		C262E83629E9AA96008D148E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C262E83729E9AA97008D148E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C262E83829E9AA97008D148E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		C2633EFC265A7D090034B836 /* TokenLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenLabel.swift; sourceTree = "<group>"; };
 		C2633F1E265B045F0034B836 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		C263F45929900DED009B0837 /* MainMenuModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuModels.swift; sourceTree = "<group>"; };
 		C263F45D29901C4F009B0837 /* MainSplitFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitFlowController.swift; sourceTree = "<group>"; };
@@ -6249,7 +6247,6 @@
 				C2CB5D3925DB1C9300A362A9 /* Orientation.swift */,
 				C24018AA26188E2800800DBF /* RingMask.swift */,
 				C2DFE5BC264C851700F828C0 /* CircleView.swift */,
-				C2633EFC265A7D090034B836 /* TokenLabel.swift */,
 				C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */,
 				C2CC0A4B29D0D4FC00677A7B /* ExternalImportService.swift */,
 				C20E2DE42A7C27A500DB64BB /* GlobalState.swift */,
@@ -8599,7 +8596,6 @@
 				C2B077C8292A938D0074517F /* UploadLogsModuleInteractorError+.swift in Sources */,
 				C24D8B3A29BDEED200C3E11E /* NewsNavigationFlowController.swift in Sources */,
 				C2B39E5029F5841700EC31F6 /* TokensEditCell.swift in Sources */,
-				C2633EFD265A7D090034B836 /* TokenLabel.swift in Sources */,
 				C2EBE0042AC44DC3008FD744 /* GuideMenuView.swift in Sources */,
 				C29646DC257421D2007FD35F /* ActiveEditingProtocol.swift in Sources */,
 				C2117187276CEB8100042D28 /* VerifyPINViewController.swift in Sources */,

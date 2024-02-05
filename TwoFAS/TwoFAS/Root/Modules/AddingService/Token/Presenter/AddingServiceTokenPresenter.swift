@@ -91,18 +91,18 @@ extension AddingServiceTokenPresenter {
     
     // MARK: - TOTP
     
-    func handleTOTPInital(progress: Int, period: Int, token: TokenValue, willChangeSoon: Bool) {
+    func handleTOTPInital(progress: Int, period: Int, token: TokenValue, tokenType: TokenType, willChangeSoon: Bool) {
         self.progress = progress
         self.period = period
-        self.token = token.formattedValue
+        self.token = token.formattedValue(for: tokenType)
         self.willChangeSoon = willChangeSoon
         updateTime(progress)
         updatePart(progress)
     }
     
-    func handleTOTPUpdate(progress: Int, token: TokenValue, willChangeSoon: Bool) {
+    func handleTOTPUpdate(progress: Int, token: TokenValue, tokenType: TokenType, willChangeSoon: Bool) {
         self.progress = progress
-        self.token = token.formattedValue
+        self.token = token.formattedValue(for: tokenType)
         self.willChangeSoon = willChangeSoon
         updateTime(progress)
         updatePart(progress)
@@ -112,7 +112,7 @@ extension AddingServiceTokenPresenter {
     
     func handleHOTP(isRefreshLocked: Bool, token: TokenValue) {
         self.refreshTokenLocked = isRefreshLocked
-        self.token = token.formattedValue
+        self.token = token.formattedValue(for: .hotp)
     }
 }
 

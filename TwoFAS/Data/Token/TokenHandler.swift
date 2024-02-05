@@ -78,7 +78,11 @@ public enum TokenHandler {
 }
 
 public extension TokenValue {
-    var formattedValue: String {
+    func formattedValue(for type: TokenType) -> String {
+        guard type == .hotp || type == .totp else {
+            return self
+        }
+        
         let divider: Int
         if self.count.isMultiple(of: 2) {
             divider = Int(count / 2)

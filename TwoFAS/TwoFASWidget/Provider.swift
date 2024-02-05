@@ -176,7 +176,7 @@ struct Provider: IntentTimelineProvider {
                     id: entryDescription.identifier,
                     name: entryDescription.title,
                     info: entryDescription.subtitle,
-                    code: token.formattedValue,
+                    code: token.formattedValue(for: entryDescription.tokenType),
                     icon: entryDescription.icon,
                     iconType: {
                         switch entryDescription.iconType {

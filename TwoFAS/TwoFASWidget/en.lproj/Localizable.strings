@@ -21,9 +21,14 @@
  
 */
 
+"widget_select_service" = "Select Service";
 "widget_placeholder" = "Placeholder";
 "widget_size_not_supported" = "This size is not supported yet";
 "widget_settings_description" = "Select which Services you would like to display on the Widget. If no Services are available make sure that you've enabled Widgets in app Settings section";
 "widget_service_icon" = "Service icon";
 "widget_service_name %@" = "Service name: %@";
 "widget_token %@" = "Token: %@";
+"widget_not_enabled" = "Widget functionality is not enabled in 2FAS Settings section";
+"widget_not_enabled_no_services" = "Widget functionality is not enabled in 2FAS Settings section and there are no services in the app available for selection";
+"widget_no_services" = "There are no services in the app available for selection";
+"widget_select_service_intent_description" = "Select Service you want to show on your 2FAS Widget";

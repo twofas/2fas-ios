@@ -233,6 +233,11 @@
 		C2404885276572060076376E /* ImporterPreimportSummaryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404884276572060076376E /* ImporterPreimportSummaryPresenter.swift */; };
 		C24048872765723C0076376E /* ImporterPreimportSummaryFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24048862765723C0076376E /* ImporterPreimportSummaryFlowController.swift */; };
 		C2404889276573420076376E /* ImporterPreimportSummaryModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404888276573420076376E /* ImporterPreimportSummaryModuleInteractor.swift */; };
+		C2404F782B72E61B00EBD8DC /* ServiceAppEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404F752B72E4AB00EBD8DC /* ServiceAppEntity.swift */; };
+		C2404F792B72E61B00EBD8DC /* SelectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404F742B72E4AB00EBD8DC /* SelectService.swift */; };
+		C2404F7C2B72E8D000EBD8DC /* AppIntentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404F7A2B72E89100EBD8DC /* AppIntentProvider.swift */; };
+		C2404F7E2B72FC6000EBD8DC /* SelectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404F742B72E4AB00EBD8DC /* SelectService.swift */; };
+		C2404F7F2B72FC6400EBD8DC /* ServiceAppEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404F752B72E4AB00EBD8DC /* ServiceAppEntity.swift */; };
 		C240FB4027FCD2F900D9E630 /* NetworkCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240FB3F27FCD2F900D9E630 /* NetworkCall.swift */; };
 		C241D448278B9E0E00D7C604 /* NetworkStack.h in Headers */ = {isa = PBXBuildFile; fileRef = C241D447278B9E0E00D7C604 /* NetworkStack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C241D452278B9E2D00D7C604 /* NetworkStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C241D450278B9E2D00D7C604 /* NetworkStack.swift */; };
@@ -1768,6 +1773,9 @@
 		C2404884276572060076376E /* ImporterPreimportSummaryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterPreimportSummaryPresenter.swift; sourceTree = "<group>"; };
 		C24048862765723C0076376E /* ImporterPreimportSummaryFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterPreimportSummaryFlowController.swift; sourceTree = "<group>"; };
 		C2404888276573420076376E /* ImporterPreimportSummaryModuleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImporterPreimportSummaryModuleInteractor.swift; sourceTree = "<group>"; };
+		C2404F742B72E4AB00EBD8DC /* SelectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectService.swift; sourceTree = "<group>"; };
+		C2404F752B72E4AB00EBD8DC /* ServiceAppEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAppEntity.swift; sourceTree = "<group>"; };
+		C2404F7A2B72E89100EBD8DC /* AppIntentProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIntentProvider.swift; sourceTree = "<group>"; };
 		C240FB3F27FCD2F900D9E630 /* NetworkCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCall.swift; sourceTree = "<group>"; };
 		C241D445278B9E0E00D7C604 /* NetworkStack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NetworkStack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C241D447278B9E0E00D7C604 /* NetworkStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkStack.h; sourceTree = "<group>"; };
@@ -4686,6 +4694,17 @@
 			path = Base32;
 			sourceTree = "<group>";
 		};
+		C25228ED2B72E44C00F40C86 /* AppIntent */ = {
+			isa = PBXGroup;
+			children = (
+				C2404F742B72E4AB00EBD8DC /* SelectService.swift */,
+				C2404F752B72E4AB00EBD8DC /* ServiceAppEntity.swift */,
+				C2404F7A2B72E89100EBD8DC /* AppIntentProvider.swift */,
+			);
+			name = AppIntent;
+			path = TwoFASWidget/AppIntent;
+			sourceTree = SOURCE_ROOT;
+		};
 		C252B38A2981D44500C2074D /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -6369,6 +6388,7 @@
 		C2C3AE12269E224A00506ACF /* TwoFASWidget */ = {
 			isa = PBXGroup;
 			children = (
+				C25228ED2B72E44C00F40C86 /* AppIntent */,
 				C2C3AE13269E224A00506ACF /* TwoFASWidget.swift */,
 				C2A7B99226B706B000055738 /* TwoFASWidget.intentdefinition */,
 				C2D07EE926A475F400AF8E7B /* CodeEntry.swift */,
@@ -8504,6 +8524,7 @@
 				C21247F827B70D420044D9F2 /* LabelComposeFlowController.swift in Sources */,
 				C2E2C81127B03E7300F04B70 /* SearchResultEmptyView.swift in Sources */,
 				C29B2B7929982E4900EDE75B /* MainSplitModuleInteractor.swift in Sources */,
+				C2404F7F2B72FC6400EBD8DC /* ServiceAppEntity.swift in Sources */,
 				C2147CE4205D7B790001D011 /* PINPadCircleView.swift in Sources */,
 				C2AB92CF27665ACC00698382 /* ExporterPINFlowController.swift in Sources */,
 				C2ABF3C92002A01A003F2CBA /* CommonNavigationControlller.swift in Sources */,
@@ -8706,6 +8727,7 @@
 				C2BE805B2811DF3D009CBC4A /* AuthRequestsFlowController.swift in Sources */,
 				C23B899527C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift in Sources */,
 				C2BD85E22640394B0087D087 /* IntroductionScrollView.swift in Sources */,
+				C2404F7E2B72FC6000EBD8DC /* SelectService.swift in Sources */,
 				C2FCB29028258B3A00AF8A37 /* NewsPlainFlowController.swift in Sources */,
 				C21B1B312A882A920021CAF1 /* AddingServiceTOTPTimerView.swift in Sources */,
 				C27BE517275D6ACC0090CA12 /* BackupMenuModuleInteractor.swift in Sources */,
@@ -9125,7 +9147,10 @@
 				C29787DE27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift in Sources */,
 				C2C3AE14269E224A00506ACF /* TwoFASWidget.swift in Sources */,
 				C2D07EEB26A47B8100AF8E7B /* CodeEntry.swift in Sources */,
+				C2404F782B72E61B00EBD8DC /* ServiceAppEntity.swift in Sources */,
 				C2A57C5A26ACAB2800D3B344 /* Extensions.swift in Sources */,
+				C2404F7C2B72E8D000EBD8DC /* AppIntentProvider.swift in Sources */,
+				C2404F792B72E61B00EBD8DC /* SelectService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

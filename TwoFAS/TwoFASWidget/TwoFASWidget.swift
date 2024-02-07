@@ -64,13 +64,27 @@ struct TwoFASWidget: Widget {
     }()
     
     var body: some WidgetConfiguration {
-        IntentConfiguration(kind: kind, intent: SelectServiceIntent.self, provider: Provider()) { entry in
-            TwoFASWidgetEntryView(entry: entry)
+        makeWidgetConfiguration()
+            .configurationDisplayName("2FAS")
+            .description("widget_settings_description")
+            .supportedFamilies(supportedFamilies)
+            .contentMarginsDisabled()
+    }
+    
+    private func makeWidgetConfiguration() -> some WidgetConfiguration {
+        if #available(iOS 17.0, macOS 14.0, watchOS 10.0, *) {
+            return AppIntentConfiguration(
+                kind: kind,
+                intent: SelectService.self,
+                provider: AppIntentProvider()
+            ) { entry in
+                TwoFASWidgetEntryView(entry: entry)
+            }
+        } else {
+            return IntentConfiguration(kind: kind, intent: SelectServiceIntent.self, provider: Provider()) { entry in
+                TwoFASWidgetEntryView(entry: entry)
+            }
         }
-        .configurationDisplayName("2FAS")
-        .description("widget_settings_description")
-        .supportedFamilies(supportedFamilies)
-        .contentMarginsDisabled()
     }
 }
 

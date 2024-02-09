@@ -252,7 +252,6 @@ final class ModuleInteractorFactory {
     func authRequestsModuleInteractor() -> AuthRequestsModuleInteracting {
         AuthRequestsModuleInteractor(
             webExtensionAuthInteractor: InteractorFactory.shared.webExtensionAuthInteractor(),
-            serviceListingInteractor: InteractorFactory.shared.serviceListingInteractor(),
             tokenGeneratorInteractor: InteractorFactory.shared.tokenGeneratorInteractor(),
             pairingWebExtensionInteractor: InteractorFactory.shared.pairingWebExtensionInteractor(),
             webExtensionEncryptionInteractor: InteractorFactory.shared.webExtensionEncryptionInteractor(),

@@ -61,7 +61,6 @@ final class AuthRequestsModuleInteractor {
     var awaitingRequests: Callback?
     
     private let webExtensionAuthInteractor: WebExtensionAuthInteracting
-    private let serviceListingInteractor: ServiceListingInteracting
     private let tokenGeneratorInteractor: TokenGeneratorInteracting
     private let pairingWebExtensionInteractor: PairingWebExtensionInteracting
     private let webExtensionEncryptionInteractor: WebExtensionEncryptionInteracting
@@ -72,14 +71,12 @@ final class AuthRequestsModuleInteractor {
     
     init(
         webExtensionAuthInteractor: WebExtensionAuthInteracting,
-        serviceListingInteractor: ServiceListingInteracting,
         tokenGeneratorInteractor: TokenGeneratorInteracting,
         pairingWebExtensionInteractor: PairingWebExtensionInteracting,
         webExtensionEncryptionInteractor: WebExtensionEncryptionInteracting,
         pushNotificationInteractor: PushNotificationInteracting
     ) {
         self.webExtensionAuthInteractor = webExtensionAuthInteractor
-        self.serviceListingInteractor = serviceListingInteractor
         self.tokenGeneratorInteractor = tokenGeneratorInteractor
         self.pairingWebExtensionInteractor = pairingWebExtensionInteractor
         self.webExtensionEncryptionInteractor = webExtensionEncryptionInteractor

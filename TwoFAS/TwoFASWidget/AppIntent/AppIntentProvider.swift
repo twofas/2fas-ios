@@ -90,7 +90,7 @@ struct AppIntentProvider: AppIntentTimelineProvider {
                    let widgetService = currentServices.first(where: { $0.serviceID == service.secret }) {
                     let icon = widgetService.icon
                     let entryDescription = EntryDescription(
-                        identifier: service.secret,
+                        identifier: "\(service.secret)\(UUID().uuidString)",
                         secret: service.secret,
                         title: widgetService.serviceName,
                         subtitle: widgetService.serviceInfo,

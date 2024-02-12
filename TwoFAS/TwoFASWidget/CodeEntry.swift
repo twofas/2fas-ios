@@ -49,6 +49,14 @@ struct CodeEntry: TimelineEntry {
             case brand
             case label
         }
+        struct RawEntryData: Identifiable, Hashable {
+            var id: String { secret }
+            let secret: String
+            let period: Int
+            let digits: Int
+            let algorithm: String
+            let tokenType: String
+        }
         let id: String
         let name: String
         let info: String?
@@ -59,5 +67,6 @@ struct CodeEntry: TimelineEntry {
         let labelColor: TintColor
         let serviceTypeID: ServiceTypeID?
         let countdownTo: Date?
+        let rawEntry: RawEntryData?
     }
 }

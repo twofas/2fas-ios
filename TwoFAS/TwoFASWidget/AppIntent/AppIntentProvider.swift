@@ -178,7 +178,14 @@ struct AppIntentProvider: AppIntentTimelineProvider {
                     labelTitle: entryDescription.labelTitle,
                     labelColor: entryDescription.labelColor,
                     serviceTypeID: entryDescription.serviceTypeID,
-                    countdownTo: countdownTo
+                    countdownTo: countdownTo,
+                    rawEntry: .init(
+                        secret: entryDescription.secret,
+                        period: entryDescription.period.rawValue,
+                        digits: entryDescription.digits.rawValue,
+                        algorithm: entryDescription.algorithm.rawValue,
+                        tokenType: entryDescription.tokenType.rawValue
+                    )
                 )
                 return .init(kind: .singleEntry, data: entryData)
             }

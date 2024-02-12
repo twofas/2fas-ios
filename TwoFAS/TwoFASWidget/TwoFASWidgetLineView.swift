@@ -41,7 +41,7 @@ struct TwoFASWidgetLineView: View {
             spacing: 2 * spacing,
             pinnedViews: [],
             content: {
-                ForEach(entries) { entry in
+                ForEach(entries, id: \.self) { entry in
                     let entryData = entry.data
                     let kind = entry.kind
                     
@@ -61,44 +61,48 @@ struct TwoFASWidgetLineView: View {
                     
                     let tokenVO = (entryData.code.components(separatedBy: "")).joined(separator: " ")
                     
-                    Group {
-                        IconRenderer(entry: entry)
-                            .redacted(reason: reason)
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text(entryData.name)
-                                .font(.caption2)
-                                .multilineTextAlignment(.leading)
+                    CopyIntentButton(rawEntry: entryData.rawEntry) {
+                        Group {
+                            IconRenderer(entry: entry)
                                 .redacted(reason: reason)
-                                .lineLimit(1)
-                                .accessibility(label: Text("widget_service_name \(entryData.name)"))
-                            let info = entryData.info ?? ""
-                            Text(info)
-                                .lineLimit(1)
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(entryData.name)
+                                    .font(.caption2)
+                                    .multilineTextAlignment(.leading)
+                                    .redacted(reason: reason)
+                                    .lineLimit(1)
+                                    .accessibility(label: Text("widget_service_name \(entryData.name)"))
+                                let info = entryData.info ?? ""
+                                Text(info)
+                                    .lineLimit(1)
+                                    .multilineTextAlignment(.leading)
+                                    .font(.caption2)
+                                    .foregroundColor(.gray)
+                                    .redacted(reason: reason)
+                            }.frame(
+                                minWidth: 0,
+                                maxWidth: .infinity,
+                                minHeight: 0,
+                                maxHeight: .infinity,
+                                alignment: .topLeading
+                            )
+                            Text(entryData.code)
+                                .font(Font.system(.title).weight(.light).monospacedDigit())
                                 .multilineTextAlignment(.leading)
-                                .font(.caption2)
-                                .foregroundColor(.gray)
+                                .minimumScaleFactor(0.2)
+                                .lineLimit(1)
+                                .redacted(reason: codeReason)
+                                .accessibility(label: Text("widget_token \(tokenVO)"))
+                                .contentTransition(.numericText())
+                            counterText(for: entryData.countdownTo)
+                                .multilineTextAlignment(.trailing)
+                                .font(Font.body.monospacedDigit())
+                                .contentTransition(.numericText(countsDown: true))
+                                .lineLimit(1)
                                 .redacted(reason: reason)
-                        }.frame(
-                            minWidth: 0,
-                            maxWidth: .infinity,
-                            minHeight: 0,
-                            maxHeight: .infinity,
-                            alignment: .topLeading
-                        )
-                        Text(entryData.code)
-                            .font(Font.system(.title).weight(.light).monospacedDigit())
-                            .multilineTextAlignment(.leading)
-                            .minimumScaleFactor(0.2)
-                            .lineLimit(1)
-                            .redacted(reason: codeReason)
-                            .accessibility(label: Text("widget_token \(tokenVO)"))
-                        counterText(for: entryData.countdownTo)
-                            .multilineTextAlignment(.trailing)
-                            .font(Font.body.monospacedDigit())
-                            .lineLimit(1)
-                            .redacted(reason: reason)
+                        }
+                        .accessibility(hidden: codeReason == .codePlaceholder)
                     }
-                    .accessibility(hidden: codeReason == .codePlaceholder)
                 }
             })
         .addWidgetContentMargins(standard: spacing)

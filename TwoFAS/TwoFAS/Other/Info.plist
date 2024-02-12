@@ -103,6 +103,14 @@
 	<false/>
 	<key>GOOGLE_ANALYTICS_REGISTRATION_WITH_AD_NETWORK_ENABLED</key>
 	<false/>
+	<key>INIntentsRestrictedWhileLocked</key>
+	<array>
+		<string>SelectServiceIntent</string>
+	</array>
+	<key>INIntentsRestrictedWhileProtectedDataUnavailable</key>
+	<array>
+		<string>SelectServiceIntent</string>
+	</array>
 	<key>INIntentsSupported</key>
 	<array>
 		<string>SelectServiceIntent</string>

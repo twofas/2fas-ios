@@ -53,7 +53,8 @@ extension CodeEntry.EntryData {
             labelTitle: "2F",
             labelColor: .red,
             serviceTypeID: UUID(),
-            countdownTo: nil
+            countdownTo: nil,
+            rawEntry: nil
         )
     }
 }

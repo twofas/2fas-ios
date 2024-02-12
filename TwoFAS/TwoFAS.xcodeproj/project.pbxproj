@@ -262,6 +262,9 @@
 		C248B1512AC4C6BE00E6B897 /* GuidePagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B1502AC4C6BE00E6B897 /* GuidePagesViewController.swift */; };
 		C248B1532AC4C77100E6B897 /* GuidePagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B1522AC4C77100E6B897 /* GuidePagesView.swift */; };
 		C248DDA82B794A69004712E3 /* WidgetContentMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDA72B794A69004712E3 /* WidgetContentMargins.swift */; };
+		C248DDAC2B7998DA004712E3 /* CopyTokenAppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */; };
+		C248DDAD2B799BB8004712E3 /* CopyTokenAppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */; };
+		C248DDAF2B799CD3004712E3 /* CopyIntentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDAE2B799CD3004712E3 /* CopyIntentButton.swift */; };
 		C249773A277F618A00DC872C /* TrashServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2497739277F618A00DC872C /* TrashServiceFlowController.swift */; };
 		C249773C277F62B100DC872C /* TrashServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249773B277F62B100DC872C /* TrashServiceViewController.swift */; };
 		C24AEDC0291BD11A005F59CB /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24AEDBF291BD119005F59CB /* T.generated.swift */; };
@@ -1798,6 +1801,8 @@
 		C248B1502AC4C6BE00E6B897 /* GuidePagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesViewController.swift; sourceTree = "<group>"; };
 		C248B1522AC4C77100E6B897 /* GuidePagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesView.swift; sourceTree = "<group>"; };
 		C248DDA72B794A69004712E3 /* WidgetContentMargins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetContentMargins.swift; sourceTree = "<group>"; };
+		C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyTokenAppIntent.swift; sourceTree = "<group>"; };
+		C248DDAE2B799CD3004712E3 /* CopyIntentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyIntentButton.swift; sourceTree = "<group>"; };
 		C249772D277F3D6100DC872C /* TrashingServiceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashingServiceInteractor.swift; sourceTree = "<group>"; };
 		C249772F277F3EFB00DC872C /* ServiceModifyInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModifyInteractor.swift; sourceTree = "<group>"; };
 		C2497739277F618A00DC872C /* TrashServiceFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashServiceFlowController.swift; sourceTree = "<group>"; };
@@ -6388,6 +6393,8 @@
 				C2A7B99226B706B000055738 /* TwoFASWidget.intentdefinition */,
 				C2D07EE926A475F400AF8E7B /* CodeEntry.swift */,
 				C254D11B26ACB71B005FEBD4 /* TwoFASWidgetSquareView.swift */,
+				C248DDAE2B799CD3004712E3 /* CopyIntentButton.swift */,
+				C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */,
 				C29787DD27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift */,
 				C254D11D26ACB73D005FEBD4 /* TwoFASWidgetLineView.swift */,
 				C28AB9322B76970D009E3601 /* TwoFASWidgetLogo.swift */,
@@ -8649,6 +8656,7 @@
 				C25BDA0A27B59DB700514161 /* IconSelectorViewController+CollectionViewCellHandling.swift in Sources */,
 				C2BDC6D61FC1CBE100967D0E /* UIView+Extensions.swift in Sources */,
 				C2AB92BB27662CC800698382 /* ExporterPasswordProtectionFlowController.swift in Sources */,
+				C248DDAD2B799BB8004712E3 /* CopyTokenAppIntent.swift in Sources */,
 				C240487827656AB50076376E /* ImporterFileErrorViewController.swift in Sources */,
 				C2FCB28C2825819000AF8A37 /* NewsViewController.swift in Sources */,
 				C20E2E002A7C4EF200DB64BB /* AddingServiceMainViewController.swift in Sources */,
@@ -9134,8 +9142,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C248DDAF2B799CD3004712E3 /* CopyIntentButton.swift in Sources */,
 				C254D11E26ACB73D005FEBD4 /* TwoFASWidgetLineView.swift in Sources */,
 				C2C32A312AB7198C00DDB944 /* IconRenderer.swift in Sources */,
+				C248DDAC2B7998DA004712E3 /* CopyTokenAppIntent.swift in Sources */,
 				C2A7B98F26B706B000055738 /* TwoFASWidget.intentdefinition in Sources */,
 				C254D12226ACB7D8005FEBD4 /* CodeRedaction.swift in Sources */,
 				C254D12026ACB777005FEBD4 /* Provider.swift in Sources */,

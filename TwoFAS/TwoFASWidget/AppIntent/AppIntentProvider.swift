@@ -63,13 +63,11 @@ struct AppIntentProvider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> CodeEntry {
         CodeEntry.placeholder(with: context.family.servicesCount)
     }
-        
-    @available(iOSApplicationExtension 17.0, *)
+    
     func snapshot(for configuration: SelectService, in context: Context) async -> CodeEntry {
         CodeEntry.snapshot(with: context.family.servicesCount)
     }
     
-    @available(iOSApplicationExtension 17.0, *)
     func timeline(for configuration: SelectService, in context: Context) async -> Timeline<CodeEntry> {
         let slots = context.family.servicesCount
         

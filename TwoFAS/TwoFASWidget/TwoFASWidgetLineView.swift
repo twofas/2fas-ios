@@ -97,9 +97,11 @@ struct TwoFASWidgetLineView: View {
                             .font(Font.body.monospacedDigit())
                             .lineLimit(1)
                             .redacted(reason: reason)
-                    }.accessibility(hidden: codeReason == .codePlaceholder)
+                    }
+                    .accessibility(hidden: codeReason == .codePlaceholder)
                 }
-            }).padding(spacing)
+            })
+        .addWidgetContentMargins(standard: spacing)
     }
     
     private func counterText(for date: Date?) -> Text {

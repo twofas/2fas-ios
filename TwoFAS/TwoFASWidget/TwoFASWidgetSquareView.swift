@@ -22,16 +22,25 @@ import SwiftUI
 import Common
 
 struct TwoFASWidgetSquareView: View {
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.redactionReasons) private var redactionReasons
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.widgetRenderingMode) private var widgetRenderingMode
     
     private let spacing: CGFloat = 8
     
-    let entry: CodeEntry.Entry
+    let entry: CodeEntry.Entry?
+    
+    private var entryValue: CodeEntry.Entry {
+        if let entry {
+            return entry
+        }
+        return .placeholder()
+    }
     
     @ViewBuilder
     var body: some View {
-        let entryData = entry.data
-        let kind = entry.kind
+        let entryData = entryValue.data
+        let kind = entryValue.kind
         
         let reason: RedactionReasons = {
             switch kind {
@@ -46,27 +55,28 @@ struct TwoFASWidgetSquareView: View {
             default: return .noPlaceholder
             }
         }()
-        
-        VStack(alignment: .leading, spacing: nil) {
-            Spacer()
-            HStack(alignment: .center, spacing: nil) {
-                IconRenderer(entry: entry)
-                    .redacted(reason: reason)
+        if showLogo() {
+            image()
+        } else {
+            VStack(alignment: .leading, spacing: nil) {
                 Spacer()
-                counterText(for: entryData.countdownTo)
-                    .multilineTextAlignment(.trailing)
-                    .font(Font.body.monospacedDigit())
-                    .lineLimit(1)
-                    .redacted(reason: reason)
-            }
-            Spacer(minLength: spacing * 3)
-            VStack(alignment: .leading, spacing: 3) {
-                Text(entryData.name)
-                    .font(.caption)
-                    .multilineTextAlignment(.leading)
-                    .redacted(reason: reason)
-                    .accessibility(label: Text("widget_service_name \(entryData.name)"))
-                GeometryReader { _ in
+                HStack(alignment: .center, spacing: nil) {
+                    IconRenderer(entry: entryValue)
+                        .redacted(reason: reason)
+                    Spacer()
+                    counterText(for: entryData.countdownTo)
+                        .multilineTextAlignment(.trailing)
+                        .font(Font.body.monospacedDigit())
+                        .lineLimit(1)
+                        .redacted(reason: reason)
+                }
+                Spacer(minLength: spacing * 3)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(entryData.name)
+                        .font(.caption)
+                        .multilineTextAlignment(.leading)
+                        .redacted(reason: reason)
+                        .accessibility(label: Text("widget_service_name \(entryData.name)"))
                     let tokenVO = (entryData.code.components(separatedBy: "")).joined(separator: " ")
                     Text(entryData.code)
                         .font(Font.system(.title).weight(.light).monospacedDigit())
@@ -74,17 +84,41 @@ struct TwoFASWidgetSquareView: View {
                         .minimumScaleFactor(0.2)
                         .redacted(reason: codeReason)
                         .accessibility(label: Text("widget_token \(tokenVO)"))
+                    let info = entryData.info ?? ""
+                    Text(info)
+                        .lineLimit(1)
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                        .redacted(reason: reason)
                 }
-                let info = entryData.info ?? ""
-                Text(info)
-                    .lineLimit(1)
-                    .font(.caption)
-                    .foregroundColor(.gray)
-                    .redacted(reason: reason)
+                Spacer()
             }
-            Spacer()
-        }.padding(spacing)
+            .addWidgetContentMargins(standard: spacing)
             .accessibility(hidden: codeReason == .codePlaceholder)
+        }
+    }
+    
+    @ViewBuilder
+    func image() -> some View {
+        Image("LogoWidgetMono")
+            .resizable()
+            .renderingMode(.template)
+            .scaledToFit()
+            .frame(width: 40, height: 40, alignment: .center)
+            .widgetAccentable()
+            .opacity(0.4)
+            .unredacted()
+            .addWidgetContentMargins()
+    }
+    
+    func showLogo() -> Bool {
+        if #available(iOS 17.0, *) {
+            if redactionReasons.contains(.invalidated) {
+                return true
+            }
+        }
+
+        return false
     }
     
     private func counterText(for date: Date?) -> Text {

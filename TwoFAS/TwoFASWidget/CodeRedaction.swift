@@ -43,13 +43,14 @@ struct CodePlaceholder: ViewModifier {
                         }
                     }
                 }
+                    .padding(.leading, 12)
             )
     }
     
     private func placeholder() -> some View {
         RoundedRectangle(cornerRadius: 5)
             .fill(Color(UIColor.systemGray4))
-            .frame(width: 12, height: 26, alignment: .center)
+            .frame(width: 12, height: 26, alignment: .leading)
     }
 }
 

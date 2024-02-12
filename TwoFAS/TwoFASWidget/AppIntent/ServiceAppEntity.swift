@@ -19,10 +19,10 @@
 
 import Foundation
 import AppIntents
-@preconcurrency import Storage
+import Storage
 @preconcurrency import Protection
 @preconcurrency import Common
-@preconcurrency import CommonUIKit
+import CommonUIKit
 
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 struct ServiceAppEntity: AppEntity {
@@ -43,10 +43,6 @@ struct ServiceAppEntity: AppEntity {
             EncryptionHolder.initialize(with: Protection().localKeyEncryption)
             return Storage(readOnly: true, logError: nil).widgetService
         }()
-        
-        func defaultResult() async -> ServiceAppEntity? {
-            nil
-        }
         
         func entities(for identifiers: [String]) async throws -> [ServiceAppEntity] {
             SelectedItems.list = identifiers
@@ -142,6 +138,6 @@ enum SelectServiceError: Error, CustomLocalizedStringResourceConvertible {
     }
 }
 
-final class SelectedItems {
+enum SelectedItems {
     static var list: [String] = []
 }

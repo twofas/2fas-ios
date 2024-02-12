@@ -27,14 +27,23 @@ struct SelectService: AppIntent, WidgetConfigurationIntent, CustomIntentMigrated
     static var title = LocalizedStringResource("widget_select_service")
     static var description = IntentDescription(LocalizedStringResource("widget_select_service_intent_description"))
     
-    @Parameter(title: "Service", size: [.systemSmall: 1, .systemMedium: 3, .systemLarge: 6, .systemExtraLarge: 12])
+    @Parameter(
+        title: "Service",
+        size: [
+        .systemSmall: 1,
+        .systemMedium: 3,
+        .systemLarge: 6,
+        .systemExtraLarge: 12,
+        .accessoryCircular: 1,
+        .accessoryRectangular: 1,
+        .accessoryInline: 1
+        ]
+    )
     var service: [ServiceAppEntity]
 
-    static var parameterSummary: some ParameterSummary {
-        Summary()
+    init() {
+        self.service = [.init(id: "Test", displayString: "Test", secret: "Test")]
     }
-
-    func perform() async throws -> some IntentResult {
-        .result()
-    }
+    
+    static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
 }

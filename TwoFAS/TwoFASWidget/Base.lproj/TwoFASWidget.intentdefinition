@@ -84,7 +84,7 @@
 						</dict>
 						<dict>
 							<key>INIntentParameterArraySizeSize</key>
-							<integer>2</integer>
+							<integer>1</integer>
 							<key>INIntentParameterArraySizeSizeClass</key>
 							<string>AccessoryRectangular</string>
 						</dict>

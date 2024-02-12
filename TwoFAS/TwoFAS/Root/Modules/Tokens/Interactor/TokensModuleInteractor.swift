@@ -592,7 +592,7 @@ private extension TokensModuleInteractor {
     private func tokenTypeForService(_ serviceData: ServiceData) -> TokenTimeType? {
         let secret = serviceData.secret
         
-        if serviceData.tokenType == .totp {
+        if serviceData.tokenType == .totp || serviceData.tokenType == .steam {
             guard let token = tokenInteractor.TOTPToken(for: secret) else { return nil }
             if appearanceInteractor.isNextTokenEnabled && token.willChangeSoon {
                 return .next(token.next)

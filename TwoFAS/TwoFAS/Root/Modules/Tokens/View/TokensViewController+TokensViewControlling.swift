@@ -60,7 +60,7 @@ extension TokensViewController: TokensViewControlling {
         
         if let scrollTo,
             tokensView.numberOfSections > scrollTo.section &&
-            tokensView.numberOfItems(inSection: scrollTo.section) > scrollTo.row  {
+            tokensView.numberOfItems(inSection: scrollTo.section) > scrollTo.row {
             tokensView.scrollToItem(at: scrollTo, at: .top, animated: true)
         }
     }

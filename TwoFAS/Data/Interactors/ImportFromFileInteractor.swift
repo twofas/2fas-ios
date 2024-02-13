@@ -130,9 +130,6 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
         }
 
         if let lastPass = try? jsonDecoder.decode(LastPassData.self, from: data) {
-            guard lastPass.version == LastPassData.supportedVersion else {
-                return .lastPass(.newerVersion)
-            }
             return .lastPass(.success(lastPass))
         }
         
@@ -190,6 +187,7 @@ private extension AEGISData.Entry.EntryType {
         switch self {
         case .hotp: return .hotp
         case .totp: return .totp
+        case .steam: return .steam
         }
     }
 }

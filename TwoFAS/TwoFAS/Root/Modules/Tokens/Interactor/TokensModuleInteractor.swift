@@ -42,6 +42,7 @@ protocol TokensModuleInteracting: AnyObject {
     var isActiveSearchEnabled: Bool { get }
     var currentListStyle: ListStyle { get }
     var shouldAnimate: Bool { get }
+    var isAppLocked: Bool { get }
     
     func servicesWereUpdated()
     func sync()
@@ -86,6 +87,9 @@ final class TokensModuleInteractor {
         case current
         case next
     }
+    var isAppLocked: Bool {
+        rootInteractor.isAuthenticationRequired
+    }
     private enum TokenTimeType {
         case current(TokenValue)
         case next(TokenValue)
@@ -105,6 +109,7 @@ final class TokensModuleInteractor {
     private let widgetsInteractor: WidgetsInteracting
     private let newCodeInteractor: NewCodeInteracting
     private let newsInteractor: NewsInteracting
+    private let rootInteractor: RootInteracting
     
     private(set) var categoryData: [CategoryData] = []
     
@@ -124,7 +129,8 @@ final class TokensModuleInteractor {
         linkInteractor: LinkInteracting,
         widgetsInteractor: WidgetsInteracting,
         newCodeInteractor: NewCodeInteracting,
-        newsInteractor: NewsInteracting
+        newsInteractor: NewsInteracting,
+        rootInteractor: RootInteracting
     ) {
         self.appearanceInteractor = appearanceInteractor
         self.serviceDefinitionsInteractor = serviceDefinitionsInteractor
@@ -140,6 +146,7 @@ final class TokensModuleInteractor {
         self.widgetsInteractor = widgetsInteractor
         self.newCodeInteractor = newCodeInteractor
         self.newsInteractor = newsInteractor
+        self.rootInteractor = rootInteractor
         
         setupLinkInteractor()
     }
@@ -361,7 +368,7 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     func fetchData(phrase: String?) {
         if let p = phrase, !p.isEmpty {
             let ids = serviceDefinitionsInteractor
-                .findServicesByTagOrIssuer(p, exactMatch: false)
+                .findServicesByTagOrIssuer(p, exactMatch: false, useTags: true)
                 .map({ $0.serviceTypeID })
             categoryData = sectionInteractor.findServices(for: p, sort: sortInteractor.currentSort, ids: ids)
         } else {
@@ -371,14 +378,16 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     func reloadTokens() {
         let allServices = categoryData.allServices
-        let totp = allServices.filter { $0.tokenType == .totp }
+        let totp = allServices.filter { $0.tokenType == .totp || $0.tokenType == .steam }
         let hotp = allServices.filter { $0.tokenType == .hotp }
         tokenInteractor.start(timedSecrets: totp.map {
             TimedSecret(
                 secret: $0.secret,
                 period: $0.tokenPeriod ?? .defaultValue,
                 digits: $0.tokenLength,
-                algorithm: $0.algorithm)
+                algorithm: $0.algorithm,
+                tokenType: $0.tokenType
+            )
         }, counterSecrets: hotp.map {
             CounterSecret(
                 secret: $0.secret,
@@ -534,6 +543,7 @@ private extension TokensModuleInteractor {
         let cellType: TokenCell.CellType = {
             switch serviceData.tokenType {
             case .totp: return .serviceTOTP
+            case .steam: return .serviceSteam
             case .hotp: return .serviceHOTP
             }
         }()
@@ -567,7 +577,7 @@ private extension TokensModuleInteractor {
     }
     
     private func sectionPosition(for startIndex: Int, currentIndex: Int, totalIndex: Int) -> TokensSection.Position {
-        if startIndex > currentIndex || totalIndex < 2 {
+        if startIndex > currentIndex || totalIndex < 1 {
             return .notUsed
         }
         if startIndex == currentIndex {
@@ -582,7 +592,7 @@ private extension TokensModuleInteractor {
     private func tokenTypeForService(_ serviceData: ServiceData) -> TokenTimeType? {
         let secret = serviceData.secret
         
-        if serviceData.tokenType == .totp {
+        if serviceData.tokenType == .totp || serviceData.tokenType == .steam {
             guard let token = tokenInteractor.TOTPToken(for: secret) else { return nil }
             if appearanceInteractor.isNextTokenEnabled && token.willChangeSoon {
                 return .next(token.next)

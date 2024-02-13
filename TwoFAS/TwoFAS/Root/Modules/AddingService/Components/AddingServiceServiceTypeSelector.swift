@@ -26,23 +26,22 @@ struct AddingServiceServiceTypeSelector: View {
     var body: some View {
         Group {
             HStack {
-                AddingServiceServiceTypeButton(
-                    tokenType: .totp,
-                    action: { tokenType in selectedTokenType = tokenType
-                    }, isSelected: Binding(get: {
-                        selectedTokenType == .totp
-                    }, set: { _ in selectedTokenType = .totp }))
-                
-                AddingServiceServiceTypeButton(
-                    tokenType: .hotp,
-                    action: { tokenType in selectedTokenType = tokenType
-                    }, isSelected: Binding(get: {
-                        selectedTokenType == .hotp
-                    }, set: { _ in selectedTokenType = .hotp }))
+                createServiceTypeButton(type: .totp)
+                createServiceTypeButton(type: .steam)
+                createServiceTypeButton(type: .hotp)
             }
             .frame(alignment: .center)
         }
         .frame(maxWidth: .infinity)
+    }
+
+    private func createServiceTypeButton(type: TokenType) -> some View {
+        AddingServiceServiceTypeButton(
+            tokenType: type,
+            action: { tokenType in selectedTokenType = tokenType
+            }, isSelected: Binding(get: {
+                selectedTokenType == type
+            }, set: { _ in selectedTokenType = type }))
     }
 }
 

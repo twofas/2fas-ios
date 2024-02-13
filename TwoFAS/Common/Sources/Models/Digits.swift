@@ -22,6 +22,7 @@ import Foundation
 public enum Digits: Int, CaseIterable, Equatable, Identifiable {
     public var id: Self { self }
     
+    case digits5 = 5
     case digits6 = 6
     case digits7 = 7
     case digits8 = 8

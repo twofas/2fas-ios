@@ -39,6 +39,9 @@ struct Generator: Equatable {
 
     /// The number of digits in the password.
     let digits: Int
+    
+    /// The TokenType
+    let tokenType: TokenType
 
     /// Initializes a new password generator with the given parameters.
     ///
@@ -49,15 +52,21 @@ struct Generator: Equatable {
     ///
     /// - returns: A new password generator with the given parameters, or `nil` if the parameters
     ///            are invalid.
-    init?(factor: Factor, secret: Data, algorithm: Algorithm, digits: Int) {
-        try? self.init(_factor: factor, secret: secret, algorithm: algorithm, digits: digits)
+    init?(factor: Factor, secret: Data, algorithm: Algorithm, tokenType: TokenType, digits: Int) {
+        try? self.init(_factor: factor, secret: secret, algorithm: algorithm, digits: digits, tokenType: tokenType)
     }
 
     // Eventually, this throwing initializer will replace the failable initializer above. For now, the failable
     // initializer remains to maintain a consistent API. Since two different initializers cannot overload the
     // same initializer signature with both throwing an failable versions, this new initializer is currently prefixed
     // with an underscore and marked as internal.
-    internal init(_factor factor: Factor, secret: Data, algorithm: Algorithm, digits: Int) throws {
+    internal init(
+        _factor factor: Factor,
+        secret: Data,
+        algorithm: Algorithm,
+        digits: Int,
+        tokenType: TokenType
+    ) throws {
         try Generator.validateFactor(factor)
         try Generator.validateDigits(digits)
 
@@ -65,6 +74,7 @@ struct Generator: Equatable {
         self.secret = secret
         self.algorithm = algorithm
         self.digits = digits
+        self.tokenType = tokenType
     }
 
     // MARK: Password Generation
@@ -100,11 +110,30 @@ struct Generator: Equatable {
         truncatedHash = UInt32(bigEndian: truncatedHash)
         // Discard the most significant bit
         truncatedHash &= 0x7fffffff
-        // Constrain to the right number of digits
-        truncatedHash = truncatedHash % UInt32(pow(10, Float(digits)))
 
-        // Pad the string representation with zeros, if necessary
-        return String(truncatedHash).padded(with: "0", toLength: digits)
+        return convertHashToString(truncatedHash: truncatedHash)
+    }
+
+    private func convertHashToString(truncatedHash: UInt32) -> String {
+        switch tokenType {
+        case .steam:
+            let alphabet: String = "23456789BCDFGHJKMNPQRTVWXY"
+            var code: UInt32 = truncatedHash % UInt32(pow(Float(alphabet.count), Float(digits)))
+            var retval: String = ""
+
+            for _ in 1...digits {
+                retval.append(alphabet[Int(code % UInt32(alphabet.count))])
+                code /= UInt32(alphabet.count)
+            }
+
+            return retval
+        default:
+            // Constrain to the right number of digits
+            let code = truncatedHash % UInt32(pow(10, Float(digits)))
+
+            // Pad the string representation with zeros, if necessary
+            return String(code).padded(with: "0", toLength: digits)
+        }
     }
 
     // MARK: Update
@@ -123,7 +152,8 @@ struct Generator: Equatable {
                 _factor: .counter(counterValue + 1),
                 secret: secret,
                 algorithm: algorithm,
-                digits: digits
+                digits: digits,
+                tokenType: tokenType
             )
         case .timer:
             // A timer-based generator does not need to be updated.
@@ -187,8 +217,8 @@ private extension Generator {
 
     static func validateDigits(_ digits: Int) throws {
         // https://tools.ietf.org/html/rfc4226#section-5.3 states "Implementations MUST extract a
-        // 6-digit code at a minimum and possibly 7 and 8-digit codes."
-        let acceptableDigits = 6...8
+        // 5-digit code at a minimum and possibly 7 and 8-digit codes."
+        let acceptableDigits = 5...8
         guard acceptableDigits.contains(digits) else {
             throw Error.invalidDigits
         }

@@ -96,6 +96,11 @@ extension TokensPresenter {
         appActiveActions()
     }
     
+    func handleAppUnlocked() {
+        Log("TokensPresenter - handleAppUnlocked")
+        appActiveActions()
+    }
+    
     func handleAppBecomesInactive() {
         Log("TokensPresenter - handleAppBecomesInactive")
         interactor.stopCounters()
@@ -119,13 +124,18 @@ extension TokensPresenter {
     func handleLinkAction(_ linkAction: TokensLinkAction) {
         Log("TokensPresenter - handleLinkAction")
         switch linkAction {
-        case .codeAlreadyExists: flowController.toCodeAlreadyExists()
+        case .codeAlreadyExists: flowController.toDuplicatedCode { [weak self] in
+            self?.handleAddStoredCode()
+        } cancel: { [weak self] in
+            self?.handleClearStoredCode()
+        }
         case .shouldAddCode(let descriptionText): flowController.toShowShouldAddCode(with: descriptionText)
         case .sendLogs(let auditID): flowController.toSendLogs(auditID: auditID)
         case .newData: handleNewData()
         case .shouldRename(let currentName, let secret):
             flowController.toShouldRenameService(currentName: currentName, secret: secret)
         case .serviceWasCreaded(let serviceData):
+            reloadData()
             flowController.toServiceWasCreated(serviceData)
         }
     }
@@ -444,6 +454,8 @@ private extension TokensPresenter {
         changeDragAndDropIfNecessary(enable: false)
         changeRequriesTokenRefresh = true
         reloadData()
+        
+        guard !interactor.isAppLocked else { return }
         interactor.handleURLIfNecessary()
     }
     

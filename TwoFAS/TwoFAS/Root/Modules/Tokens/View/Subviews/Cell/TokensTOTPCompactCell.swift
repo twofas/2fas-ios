@@ -153,7 +153,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             hideToken()
             circularProgress.isHidden = true
             revealButton.isHidden = false
-        case .unlocked(let progress, let period, let currentToken, let nextToken, let willChangeSoon):
+        case .unlocked(let progress, let period, let currentToken, let nextToken, let tokenType, let willChangeSoon):
             let wasLocked = isLocked && shouldAnimate && !willChangeSoon
             isLocked = false
             
@@ -161,8 +161,8 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             revealButton.isHidden = true
             circularProgress.setPeriod(period)
             circularProgress.setProgress(progress, animated: false)
-            tokenLabel.setToken(currentToken, animated: wasLocked)
-            nextTokenLabel.set(nextToken: nextToken)
+            tokenLabel.setToken(currentToken, tokenType: tokenType, animated: wasLocked)
+            nextTokenLabel.set(nextToken: nextToken, tokenType: tokenType)
             showToken()
             shouldMark(willChangeSoon: willChangeSoon, isPlanned: false)
         }
@@ -180,17 +180,17 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             hideToken()
             circularProgress.isHidden = true
             revealButton.isHidden = false
-        case .unlocked(let progress, let isPlanned, let currentToken, let nextToken, let willChangeSoon):
+        case .unlocked(let progress, let isPlanned, let currentToken, let nextToken, let tokenType, let willChangeSoon):
             let blockAnimation = isLocked && willChangeSoon
             isLocked = false
             
             circularProgress.isHidden = false
             revealButton.isHidden = true
             circularProgress.setProgress(progress, animated: isPlanned)
-            tokenLabel.setToken(currentToken, animated: !isPlanned && !blockAnimation)
+            tokenLabel.setToken(currentToken, tokenType: tokenType, animated: !isPlanned && !blockAnimation)
             showToken()
             shouldMark(willChangeSoon: willChangeSoon, isPlanned: isPlanned && !blockAnimation)
-            nextTokenLabel.set(nextToken: nextToken)
+            nextTokenLabel.set(nextToken: nextToken, tokenType: tokenType)
         }
         updateAccessibility()
     }

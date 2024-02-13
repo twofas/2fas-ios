@@ -97,24 +97,10 @@ struct AddingServiceTokenView: View {
                 AddingServiceTokenValueView(text: $presenter.token, willChangeSoon: $presenter.willChangeSoon)
                 
                 switch presenter.serviceTokenType {
+                case .steam:
+                    totpTokenView()
                 case .totp:
-                    ZStack(alignment: .center) {
-                        AddingServiceTOTPTimerView(
-                            text: $presenter.time,
-                            willChangeSoon: $presenter.willChangeSoon
-                        )
-                        
-                        Circle()
-                            .trim(from: 0, to: $animationProgress.animation(animation).wrappedValue)
-                            .stroke(Color(presenter.willChangeSoon ? ThemeColor.theme : ThemeColor.primary),
-                                    style: StrokeStyle(
-                                        lineWidth: 1,
-                                        lineCap: .round
-                                    ))
-                            .rotationEffect(.degrees(-90))
-                            .padding(0.5)
-                            .frame(width: 30, height: 30)
-                    }
+                    totpTokenView()
                 case .hotp:
                     Button {
                             withAnimation(
@@ -142,5 +128,25 @@ struct AddingServiceTokenView: View {
             RoundedRectangle(cornerRadius: Theme.Metrics.modalCornerRadius)
                 .stroke(Color(Theme.Colors.Line.selectionBorder), lineWidth: 1)
         )
+    }
+    
+    private func totpTokenView() -> some View {
+        ZStack(alignment: .center) {
+            AddingServiceTOTPTimerView(
+                text: $presenter.time,
+                willChangeSoon: $presenter.willChangeSoon
+            )
+            
+            Circle()
+                .trim(from: 0, to: $animationProgress.animation(animation).wrappedValue)
+                .stroke(Color(presenter.willChangeSoon ? ThemeColor.theme : ThemeColor.primary),
+                        style: StrokeStyle(
+                            lineWidth: 1,
+                            lineCap: .round
+                        ))
+                .rotationEffect(.degrees(-90))
+                .padding(0.5)
+                .frame(width: 30, height: 30)
+        }
     }
 }

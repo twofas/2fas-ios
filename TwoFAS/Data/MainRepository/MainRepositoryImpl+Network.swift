@@ -41,7 +41,7 @@ extension MainRepositoryImpl {
     
     func registerDevice(
         for name: String,
-        gcmToken: String,
+        gcmToken: String?,
         completion: @escaping (Result<RegisterDevice.ResultData, NetworkError>) -> Void
     ) {
         networkStack.network.registerDevice(for: name, gcmToken: gcmToken, completion: completion)

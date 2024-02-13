@@ -98,6 +98,7 @@ extension MainSplitFlowController: MainSplitFlowControlling {
             }
             return 1
         }()
+        viewController.settingsViewController?.hideRevealButton()
         viewController.contentNavi.setViewControllers([], animated: false)
     }
     

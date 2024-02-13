@@ -32,6 +32,7 @@ extension ServiceGuideImage {
         case .account: Asset.guideAccount.image
         case .retype: Asset.guideRetype.image
         case .webAccount1: Asset.guideWebAccount1.image
+        case .webAccount2: Asset.guideWebAccount2.image
         case .webPhone: Asset.guideWebPhone.image
         case .phoneQR: Asset.guidePhoneQr.image
         case .webButton: Asset.guideWebButton.image

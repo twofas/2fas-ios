@@ -58,6 +58,13 @@ final class AddingServiceTokenViewController: UIViewController, AddingServiceTok
         hotpAdapter.configure(presenter: presenter)
         
         presenter.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(notificationAppDidBecomeActive),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -74,5 +81,10 @@ final class AddingServiceTokenViewController: UIViewController, AddingServiceTok
     func tokenCopied() {
         VoiceOver.say(T.Notifications.tokenCopied)
         HUDNotification.presentSuccess(title: T.Notifications.tokenCopied)
+    }
+    
+    @objc
+    private func notificationAppDidBecomeActive() {
+        presenter.handleAppBecomeActive()
     }
 }

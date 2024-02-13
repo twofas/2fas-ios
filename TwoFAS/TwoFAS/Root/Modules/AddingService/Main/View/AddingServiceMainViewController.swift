@@ -87,11 +87,16 @@ private struct AddingServiceMain: View {
                 AddingServiceCloseButtonView {
                     dismiss()
                 }
+                .accessibilityAddTraits(.isButton)
                 AddingServiceTitleView(text: T.Tokens.addManualTitle)
+                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityHeading(.h1)
             }
             .frame(maxWidth: .infinity)
 
             AddingServiceTextContentView(text: T.Tokens.addDescription)
+                .accessibilityAddTraits(.isSummaryElement)
+                .accessibilityHeading(.h2)
             AddingServiceLargeSpacing()
             
             Group {
@@ -128,6 +133,7 @@ private struct AddingServiceMain: View {
             AddingServiceLargeSpacing()
             
             AddingServiceTitleView(text: T.Tokens.otherMethodsHeader, alignToLeading: true)
+                .accessibilityAddTraits(.isHeader)
             
             AddingServiceFullWidthButtonWithImage(
                 text: T.Tokens.addEnterManual,
@@ -135,6 +141,7 @@ private struct AddingServiceMain: View {
             ) {
                 presenter.handleToAddManually()
             }
+            .accessibilityAddTraits(.isButton)
             
             AddingServiceFullWidthButtonWithImage(
                 text: T.Tokens.addFromGallery,
@@ -142,6 +149,7 @@ private struct AddingServiceMain: View {
             ) {
                 presenter.handleToGallery()
             }
+            .accessibilityAddTraits(.isButton)
             
             AddingServiceFullWidthButtonWithImage(
                 text: T.Tokens.addWithGuide,
@@ -149,6 +157,7 @@ private struct AddingServiceMain: View {
             ) {
                 presenter.handleToGuides()
             }
+            .accessibilityAddTraits(.isButton)
         }
         .padding(.horizontal, Theme.Metrics.doubleMargin)
         .observeHeight(onChange: { height in

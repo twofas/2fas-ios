@@ -138,7 +138,10 @@ final class CounterState {
         guard isUnlocked else {
             return .locked
         }
-        return .unlocked(isRefreshLocked: isRefreshCounterLocked, currentToken: currentToken ?? "")
+        return .unlocked(
+            isRefreshLocked: isRefreshCounterLocked,
+            currentToken: currentToken ?? ""
+        )
     }
 }
 

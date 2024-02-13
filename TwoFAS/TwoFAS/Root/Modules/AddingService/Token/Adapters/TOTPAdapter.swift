@@ -37,11 +37,12 @@ final class TOTPAdapter: NSObject, TokenTimerConsumer {
         switch state {
         case .locked:
             break // not supported here
-        case .unlocked(let progress, let period, let currentToken, _, let willChangeSoon):
+        case .unlocked(let progress, let period, let currentToken, _, let tokenType, let willChangeSoon):
             presenter?.handleTOTPInital(
                 progress: progress,
                 period: period,
                 token: currentToken,
+                tokenType: tokenType,
                 willChangeSoon: willChangeSoon
             )
         }
@@ -51,10 +52,11 @@ final class TOTPAdapter: NSObject, TokenTimerConsumer {
         switch state {
         case .locked:
             break // not supported here
-        case .unlocked(let progress, _, let currentToken, _, let willChangeSoon):
+        case .unlocked(let progress, _, let currentToken, _, let tokenType, let willChangeSoon):
             presenter?.handleTOTPUpdate(
                 progress: progress,
                 token: currentToken,
+                tokenType: tokenType,
                 willChangeSoon: willChangeSoon
             )
         }

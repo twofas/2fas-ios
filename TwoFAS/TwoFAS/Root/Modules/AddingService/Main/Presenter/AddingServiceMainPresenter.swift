@@ -50,10 +50,12 @@ extension AddingServiceMainPresenter {
                 guard let description = interactor.serviceDescription(for: code) else { return }
                 Log("CameraScannerPresenter: Found code: \(code) which is a duplicate of: \(description)")
                 interactor.warning()
-                flowController.toDuplicatedCode(usedIn: description)
+                flowController.toDuplicatedCode { [weak self] in
+                    self?.interactor.addCode(code, force: true)
+                }
             } else {
                 Log("CameraScannerPresenter: Adding unique code: \(code)")
-                interactor.addCode(code)
+                interactor.addCode(code, force: false)
             }
         case .googleAuth(let codes):
             let importableCodes = interactor.filterImportableCodes(codes)

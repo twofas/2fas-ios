@@ -27,6 +27,7 @@ public enum TokenTimerInitialConsumerState {
         period: Int,
         currentToken: TokenValue,
         nextToken: TokenValue,
+        tokenType: TokenType,
         willChangeSoon: Bool
     )
 }
@@ -38,6 +39,7 @@ public enum TokenTimerUpdateConsumerState {
         isPlanned: Bool,
         currentToken: TokenValue,
         nextToken: TokenValue,
+        tokenType: TokenType,
         willChangeSoon: Bool
     )
 }
@@ -131,7 +133,13 @@ public final class TimerHandler: TimerHandlerStart & TimerHandlerTokens & TimerH
         timedSecret.forEach { ts in
             if !currentSecrets.contains(ts.secret) {
                 currentTokens.append(
-                    TokenState(secret: ts.secret, period: ts.period, digits: ts.digits, algorithm: ts.algorithm)
+                    TokenState(
+                        secret: ts.secret,
+                        period: ts.period,
+                        digits: ts.digits,
+                        algorithm: ts.algorithm,
+                        tokenType: ts.tokenType
+                    )
                 )
             }
         }

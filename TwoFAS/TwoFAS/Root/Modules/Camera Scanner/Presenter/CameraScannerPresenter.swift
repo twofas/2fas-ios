@@ -83,11 +83,13 @@ extension CameraScannerPresenter {
                 Log("CameraScannerPresenter: Found code: \(code) which is a duplicate of: \(description)")
                 view?.enableOverlay()
                 view?.feedback()
-                flowController.toDuplicatedCode(usedIn: description)
+                flowController.toDuplicatedCode { [weak self] in
+                    self?.interactor.addCode(code, force: true)
+                }
             } else {
                 Log("CameraScannerPresenter: Adding unique code: \(code)")
                 view?.freezeCamera()
-                interactor.addCode(code)
+                interactor.addCode(code, force: false)
             }
         case .googleAuth(let codes):
             view?.enableOverlay()

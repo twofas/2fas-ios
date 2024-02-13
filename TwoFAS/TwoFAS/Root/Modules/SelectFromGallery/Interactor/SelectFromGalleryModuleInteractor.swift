@@ -33,7 +33,7 @@ protocol SelectFromGalleryModuleInteracting: AnyObject {
     var shouldRename: ((String, String) -> Void)? { get set }
     
     func scanImage(_ image: UIImage, completion: @escaping(SelectFromGalleryModuleInteractorScanResult) -> Void)
-    func addSelectedCode(_ code: Code)
+    func addSelectedCode(_ code: Code, force: Bool)
     func addSelectedCodes(_ codes: [Code])
     func codeExists(_ code: Code) -> Bool
     func codeUsedIn(_ code: Code) -> String
@@ -100,9 +100,9 @@ extension SelectFromGalleryModuleInteractor: SelectFromGalleryModuleInteracting 
         completion(.codeTypes(codeTypes: codes))
     }
     
-    func addSelectedCode(_ code: Code) {
+    func addSelectedCode(_ code: Code, force: Bool) {
         Log("Selected code: \(code)", module: .camera)
-        newCodeInteractor.addCode(code)
+        newCodeInteractor.addCode(code, force: force)
     }
     
     func addSelectedCodes(_ codes: [Code]) {

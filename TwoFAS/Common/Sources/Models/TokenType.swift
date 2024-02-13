@@ -22,8 +22,7 @@ import Foundation
 public enum TokenType: String, CaseIterable, Equatable {
     case totp = "TOTP"
     case hotp = "HOTP"
-    // TODO: Add support for Steam
-    // case steam = "STEAM"
+    case steam = "STEAM"
     
     public static var defaultValue: Self {
         .totp

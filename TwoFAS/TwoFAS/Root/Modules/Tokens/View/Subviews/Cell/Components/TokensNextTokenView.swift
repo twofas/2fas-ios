@@ -90,11 +90,11 @@ final class TokensNextTokenView: UIView {
         nextTokenLabel.isAccessibilityElement = false
     }
     
-    func set(nextToken: TokenValue) {
+    func set(nextToken: TokenValue, tokenType: TokenType) {
         guard currentState != .animating, currentValue != nextToken else { return }
         currentValue = nextToken
 
-        nextTokenLabel.text = nextToken.formattedValue
+        nextTokenLabel.text = nextToken.formattedValue(for: tokenType)
         let tokenVO = (nextToken.components(separatedBy: "")).joined(separator: " ")
         accessibilityValue = T.Tokens.nextToken(tokenVO)
         

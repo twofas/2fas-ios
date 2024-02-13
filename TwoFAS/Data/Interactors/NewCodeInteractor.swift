@@ -28,7 +28,7 @@ public protocol NewCodeInteracting: AnyObject {
     var serviceWasCreated: ((ServiceData) -> Void)? { get set }
     var shouldRename: ((String, String) -> Void)? { get set }
     
-    func addCode(_ code: Code)
+    func addCode(_ code: Code, force: Bool)
     func addCodes(_ codes: [Code])
     func codeExists(_ code: Code) -> Bool
     func filterImportableCodes(_ codes: [Code]) -> [Code]
@@ -61,8 +61,8 @@ final class NewCodeInteractor {
 }
 
 extension NewCodeInteractor: NewCodeInteracting {
-    func addCode(_ code: Code) {
-        let shouldAskForName = addCodeAskForName(code)
+    func addCode(_ code: Code, force: Bool) {
+        let shouldAskForName = addCodeAskForName(code, force: force)
                 
         if shouldAskForName {
             handleAskForName(for: code.secret)
@@ -82,7 +82,7 @@ extension NewCodeInteractor: NewCodeInteracting {
     
     func addCodes(_ codes: [Code]) {
         codes.forEach {
-            _ = addCodeAskForName($0)
+            _ = addCodeAskForName($0, force: false)
         }
     }
     
@@ -102,12 +102,17 @@ extension NewCodeInteractor: NewCodeInteracting {
 }
 
 private extension NewCodeInteractor {
-    private func addCodeAskForName(_ code: Code) -> Bool {
+    private func addCodeAskForName(_ code: Code, force: Bool) -> Bool {
         Log("NewCodeInteractor - addCode", module: .interactor)
         switch interactorModify.serviceExists(for: code.secret) {
         case .yes:
             Log("NewCodeInteractor - service already exists", module: .interactor)
-            return false
+            if force {
+                Log("NewCodeInteractor - force adding", module: .interactor)
+                interactorTrashed.deleteService(for: code.secret)
+            } else {
+                return false
+            }
         case .trashed:
             Log("NewCodeInteractor - service is in trash. Deleting", module: .interactor)
             interactorTrashed.deleteService(for: code.secret)

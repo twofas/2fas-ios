@@ -28,22 +28,29 @@ struct TwoFASWidgetEntryView: View {
     
     @ViewBuilder
     var body: some View {
-        switch family {
-        case .systemSmall:
-            if let first = entry.entries.first {
-                TwoFASWidgetSquareView(entry: first)
-            } else {
+        Group {
+            switch family {
+            case .systemSmall:
+                if let first = entry.entries.first {
+                    TwoFASWidgetSquareView(entry: first)
+                } else {
+                    Text("widget_size_not_supported")
+                }
+            case .systemMedium:
+                TwoFASWidgetLineView(entries: entry.entries)
+            case .systemLarge:
+                TwoFASWidgetLineView(entries: entry.entries)
+            case .systemExtraLarge:
+                TwoFASWidgetLineViewGrid(entries: entry.entries)
+            default:
                 Text("widget_size_not_supported")
             }
-        case .systemMedium:
-            TwoFASWidgetLineView(entries: entry.entries)
-        case .systemLarge:
-            TwoFASWidgetLineView(entries: entry.entries)
-        case .systemExtraLarge:
-            TwoFASWidgetLineViewGrid(entries: entry.entries)
-        default:
-            Text("widget_size_not_supported")
         }
+        .widgetBackground(backgroundView: backgroundView)
+    }
+    
+    private var backgroundView: some View {
+        Color.widgetBackground
     }
 }
 
@@ -63,6 +70,7 @@ struct TwoFASWidget: Widget {
         .configurationDisplayName("2FAS")
         .description("widget_settings_description")
         .supportedFamilies(supportedFamilies)
+        .contentMarginsDisabled()
     }
 }
 
@@ -70,5 +78,17 @@ struct TwoFASWidget_Previews: PreviewProvider {
     static var previews: some View {
         TwoFASWidgetEntryView(entry: CodeEntry.snapshot(with: WidgetFamily.systemLarge.servicesCount))
             .previewContext(WidgetPreviewContext(family: .systemLarge))
+    }
+}
+
+extension View {
+    func widgetBackground(backgroundView: some View) -> some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            return containerBackground(for: .widget) {
+                backgroundView
+            }
+        } else {
+            return background(backgroundView)
+        }
     }
 }

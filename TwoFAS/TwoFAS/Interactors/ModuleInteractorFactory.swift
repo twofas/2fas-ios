@@ -227,6 +227,7 @@ final class ModuleInteractorFactory {
     func browserExtensionPairingModuleInteractor(extensionID: ExtensionID) -> BrowserExtensionPairingModuleInteracting {
         BrowserExtensionPairingModuleInteractor(
             webPairing: InteractorFactory.shared.pairingWebExtensionInteractor(),
+            registerDeviceInteractor: InteractorFactory.shared.registerDeviceInteractor(),
             extensionID: extensionID
         )
     }
@@ -315,7 +316,8 @@ final class ModuleInteractorFactory {
             linkInteractor: InteractorFactory.shared.linkInteractor(),
             widgetsInteractor: InteractorFactory.shared.widgetsInteractor(),
             newCodeInteractor: InteractorFactory.shared.newCodeInteractor(),
-            newsInteractor: InteractorFactory.shared.newsInteractor()
+            newsInteractor: InteractorFactory.shared.newsInteractor(),
+            rootInteractor: InteractorFactory.shared.rootInteractor()
         )
     }
     

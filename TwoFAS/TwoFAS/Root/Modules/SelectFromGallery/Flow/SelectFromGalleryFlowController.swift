@@ -35,7 +35,7 @@ protocol SelectFromGalleryFlowControlling: AnyObject {
     func toNoCodesFound()
     func toErrorWhileScanning()
     func toSelectCode(from codes: [Code])
-    func toDuplicatedCode(usedIn: String)
+    func toDuplicatedCode(forceAdd: @escaping Callback)
     func toDidAddCode(serviceData: ServiceData)
     func toDidImport(count: Int)
     func toAppStore()
@@ -128,9 +128,9 @@ extension SelectFromGalleryFlowController: SelectFromGalleryFlowControlling {
         ac.show(animated: true, completion: nil)
     }
     
-    func toDuplicatedCode(usedIn: String) {
-        let errorView = CameraError.duplicatedCode(usedIn: usedIn).view { [weak self] in
-            self?.dismissModalAndTryAgain()
+    func toDuplicatedCode(forceAdd: @escaping Callback) {
+        let errorView = CameraError.duplicatedCode.view {
+            forceAdd()
         } cancel: { [weak self] in
             self?.dismissModal()
         }
@@ -146,7 +146,14 @@ extension SelectFromGalleryFlowController: SelectFromGalleryFlowControlling {
         }
         let vc = UIHostingController(rootView: advice)
         vc.configureAsPhoneFullscreenModal()
-        parentViewController?.present(vc, animated: true, completion: nil)
+        
+        if parentViewController?.presentedViewController != nil {
+            dismiss { [weak self] in
+                self?.parentViewController?.present(vc, animated: true, completion: nil)
+            }
+        } else {
+            parentViewController?.present(vc, animated: true, completion: nil)
+        }
     }
     
     func toDidImport(count: Int) {
@@ -241,6 +248,12 @@ private extension SelectFromGalleryFlowController {
     func dismissModalAndTryAgain() {
         parentViewController?.dismiss(animated: true) { [weak self] in
             self?.presentPicker()
+        }
+    }
+    
+    func dismiss(completion: @escaping Callback) {
+        parentViewController?.dismiss(animated: true) {
+            completion()
         }
     }
     

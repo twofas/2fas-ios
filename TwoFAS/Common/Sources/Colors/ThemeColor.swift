@@ -21,7 +21,7 @@ import UIKit
 
 // swiftlint:disable all
 public enum ThemeColor {
-    private static let bundle = Bundle.module
+    private static let bundle = Bundle(for: CountdownTimer.self)
     public static let backgroundLight = UIColor.white
     public static let light = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.00)
     public static let dark = UIColor(red: 0.14, green: 0.12, blue: 0.13, alpha: 1.00)

@@ -45,7 +45,7 @@ protocol TokensPlainFlowControlling: AnyObject {
     func toShowGallery()
     func toHelp()
     // MARK: Link actions
-    func toCodeAlreadyExists()
+    func toDuplicatedCode(forceAdd: @escaping Callback, cancel: @escaping Callback)
     func toShowShouldAddCode(with descriptionText: String?)
     func toSendLogs(auditID: UUID)
     func toShouldRenameService(currentName: String, secret: String)
@@ -224,10 +224,22 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     }
     
     // MARK: - Link actions
-    
-    func toCodeAlreadyExists() {
+    func toDuplicatedCode(forceAdd: @escaping Callback, cancel: @escaping Callback) {
         guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
-        let alert = UIAlertController.makeSimple(with: T.Commons.info, message: T.Notifications.tokenAlreadyAdded)
+        
+        let alert = UIAlertController(
+            title: T.Commons.warning,
+            message: T.Tokens.serviceAlreadyExists,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: T.Commons.yes, style: .destructive, handler: { [weak self] _ in
+            self?.parent?.tokensSwitchToTokensTab()
+            forceAdd()
+        }))
+        alert.addAction(UIAlertAction(title: T.Commons.no, style: .cancel, handler: { _ in
+            cancel()
+        }))
+
         mainSplitViewController.present(alert, animated: true)
     }
     
@@ -358,6 +370,7 @@ extension TokensPlainFlowController: SelectFromGalleryFlowControllerParent {
         parent?.tokensSwitchToTokensTab()
         dismiss(actions: [.finishedFlow, .addedService(serviceData: serviceData), .sync]) { [weak self] in
             self?.galleryViewController = nil
+            self?.toServiceWasCreated(serviceData)
         }
     }
     

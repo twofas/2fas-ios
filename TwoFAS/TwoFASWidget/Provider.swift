@@ -43,6 +43,7 @@ struct Provider: IntentTimelineProvider {
         let digits: Digits
         let period: Period
         let algorithm: Algorithm
+        let tokenType: TokenType
         let iconType: IconType
         let labelTitle: String
         let labelColor: TintColor
@@ -105,6 +106,7 @@ struct Provider: IntentTimelineProvider {
                         digits: widgetService.digits,
                         period: widgetService.period,
                         algorithm: widgetService.algorithm,
+                        tokenType: widgetService.tokenType,
                         iconType: widgetService.iconType,
                         labelTitle: widgetService.labelTitle,
                         labelColor: widgetService.labelColor
@@ -167,13 +169,14 @@ struct Provider: IntentTimelineProvider {
                     time: tokenDate,
                     period: entryDescription.period,
                     digits: entryDescription.digits,
-                    algoritm: entryDescription.algorithm
+                    algoritm: entryDescription.algorithm,
+                    tokenType: entryDescription.tokenType
                 )
                 let entryData = CodeEntry.EntryData(
                     id: entryDescription.identifier,
                     name: entryDescription.title,
                     info: entryDescription.subtitle,
-                    code: token.formattedValue,
+                    code: token.formattedValue(for: entryDescription.tokenType),
                     icon: entryDescription.icon,
                     iconType: {
                         switch entryDescription.iconType {

@@ -27,7 +27,8 @@ public enum TokenGenerator {
         time: Date? = nil,
         period: Period,
         digits: Digits,
-        algoritm: Algorithm
+        algoritm: Algorithm,
+        tokenType: TokenType
     ) -> TokenValue {
         guard let secretData = secret.dataFromBase32String(),
             !secretData.isEmpty else {
@@ -39,6 +40,7 @@ public enum TokenGenerator {
             factor: .timer(period: TimeInterval(period.rawValue)),
             secret: secretData,
             algorithm: algoritm,
+            tokenType: tokenType,
             digits: digits.rawValue) else {
                 Log("Invalid generator parameters")
                 return ""
@@ -64,6 +66,7 @@ public enum TokenGenerator {
             factor: .counter(Int64(counter)),
             secret: secretData,
             algorithm: algoritm,
+            tokenType: TokenType.hotp,
             digits: digits.rawValue) else {
                 Log("Invalid generator parameters")
                 return ""

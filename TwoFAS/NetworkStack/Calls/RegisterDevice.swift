@@ -27,7 +27,7 @@ public enum RegisterDevice {
     
     struct RequestData: Encodable {
         let name: String
-        let fcm_token: String
+        let fcm_token: String?
         let platform: String
     }
     

@@ -125,7 +125,7 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
             
         case .unlocked(let isRefreshLocked, let currentToken):
             isActive = !isRefreshLocked
-            tokenLabel.setToken(currentToken, animated: false)
+            tokenLabel.setToken(currentToken, tokenType: .hotp, animated: false)
             if isRefreshLocked {
                 refreshCounter.lock()
             } else {
@@ -143,7 +143,7 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
             
         case .unlocked(let isRefreshLocked, let currentToken):
             isActive = !isRefreshLocked
-            tokenLabel.setToken(currentToken, animated: shouldAnimate)
+            tokenLabel.setToken(currentToken, tokenType: .hotp, animated: shouldAnimate)
             if isRefreshLocked {
                 refreshCounter.lock()
             } else {

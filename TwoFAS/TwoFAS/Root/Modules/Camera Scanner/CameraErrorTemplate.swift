@@ -32,6 +32,8 @@ struct CameraErrorTemplate: View {
     let imageSize: CGSize
     let action: Callback
     let cancel: Callback?
+    let actionTitle: String?
+    let cancelTitle: String?
     
     var body: some View {
         Group {
@@ -57,14 +59,26 @@ struct CameraErrorTemplate: View {
                     Button {
                         action()
                     } label: {
-                        Text(T.Tokens.tryAgain)
+                        let title: String = {
+                            if let actionTitle {
+                                return actionTitle
+                            }
+                            return T.Tokens.tryAgain
+                        }()
+                        Text(title)
                             .frame(minWidth: 0, maxWidth: .infinity)
                     }
                     .buttonStyle(RoundedFilledButtonStyle())
                     Button {
                         cancel?()
                     } label: {
-                        Text(T.Commons.cancel)
+                        let title: String = {
+                            if let cancelTitle {
+                                return cancelTitle
+                            }
+                            return T.Commons.cancel
+                        }()
+                        Text(title)
                             .frame(minWidth: 0, maxWidth: .infinity)
                     }
                     .buttonStyle(LinkButtonStyle())
@@ -87,20 +101,22 @@ struct CameraErrorTemplate: View {
 }
 
 enum CameraError {
-    case duplicatedCode(usedIn: String)
+    case duplicatedCode
     case generalEror
     case appStore
     
     func view(with action: @escaping Callback, cancel: Callback?) -> some View {
         switch self {
-        case .duplicatedCode(let usedIn):
+        case .duplicatedCode:
             return CameraErrorTemplate(
-                title: T.Tokens.duplicatedPrivateKey,
-                subtitle: T.Tokens.serviceKeyAlreadyUsedTitle(usedIn),
+                title: T.Commons.warning,
+                subtitle: T.Tokens.serviceAlreadyExists,
                 image: Asset.scanErrorDuplicateError.image,
                 imageSize: .init(width: 154, height: 64),
                 action: action,
-                cancel: cancel
+                cancel: cancel,
+                actionTitle: T.Commons.yes,
+                cancelTitle: T.Commons.no
             )
         case .generalEror:
             return CameraErrorTemplate(
@@ -109,7 +125,9 @@ enum CameraError {
                 image: Asset.scanErrorGeneralError.image,
                 imageSize: .init(width: 87, height: 85),
                 action: action,
-                cancel: cancel
+                cancel: cancel,
+                actionTitle: nil,
+                cancelTitle: nil
             )
         case .appStore:
             return CameraErrorTemplate(
@@ -118,7 +136,9 @@ enum CameraError {
                 image: Asset.scanErrorAppStore.image,
                 imageSize: .init(width: 73, height: 64),
                 action: action,
-                cancel: cancel
+                cancel: cancel,
+                actionTitle: nil,
+                cancelTitle: nil
             )
         }
     }
@@ -128,7 +148,7 @@ struct CameraErrorTemplate_Previews: PreviewProvider {
     static var previews: some View {
         CameraError.appStore.view(with: { print("App store") }, cancel: nil)
         CameraError.generalEror.view(with: { print("General error") }, cancel: nil)
-        CameraError.duplicatedCode(usedIn: "Microsoft")
+        CameraError.duplicatedCode
             .view(
                 with: { print("Duplicated code") },
                 cancel: {}

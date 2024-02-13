@@ -87,6 +87,7 @@ public struct AEGISData: Decodable {
         public enum EntryType: String, Decodable {
             case totp
             case hotp
+            case steam
         }
         
         public struct Info: Decodable {

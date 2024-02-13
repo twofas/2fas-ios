@@ -103,7 +103,12 @@ public final class CounterHandler: CounterHandlerStart & CounterHandlerTokens & 
         counterSecrets.forEach { ts in
             if !currentSecrets.contains(ts.secret) {
                 currentTokens.append(
-                    CounterState(secret: ts.secret, counter: ts.counter, digits: ts.digits, algorithm: ts.algorithm)
+                    CounterState(
+                        secret: ts.secret,
+                        counter: ts.counter,
+                        digits: ts.digits,
+                        algorithm: ts.algorithm
+                    )
                 )
             }
         }

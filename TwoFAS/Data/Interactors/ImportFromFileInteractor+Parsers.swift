@@ -205,11 +205,6 @@ extension ImportFromFileInteractor {
                     return secID
                 }()
                 
-                if item.otp.tokenType?.uppercased() == "STEAM" || item.otp.digits == 5 {
-                    // TODO: Add support for Steam
-                    return nil
-                }
-                
                 let tokenType = TokenType.create(item.otp.tokenType)
                 
                 let secret = item.secret.sanitazeSecret()
@@ -330,10 +325,10 @@ extension ImportFromFileInteractor {
                     return .brand
                 }()
                 return ServiceData(
-                    name: acc.userName.sanitazeName(),
+                    name: serviceDef?.name ?? acc.issuerName,
                     secret: secret,
                     serviceTypeID: serviceDef?.serviceTypeID,
-                    additionalInfo: nil,
+                    additionalInfo: acc.userName.sanitazeName(),
                     rawIssuer: acc.issuerName,
                     modifiedAt: acc.creationTimestamp,
                     createdAt: acc.creationTimestamp,
@@ -528,7 +523,12 @@ extension ImportFromFileInteractor {
             })
         guard !codes.isEmpty else { return .cantReadFile }
         
-        return .success(codes)
+        let codesSteam = codes.map({
+            var code = $0
+            return code.transformIfSteam()
+        })
+        
+        return .success(codesSteam)
     }
     
     func parseAuthenticatorPro(_ data: [Code]) -> [ServiceData] {
@@ -628,6 +628,26 @@ private extension AEGISData.Entry.EntryType {
         switch self {
         case .hotp: return .hotp
         case .totp: return .totp
+        case .steam: return .steam
         }
+    }
+}
+
+private extension Code {
+    mutating func transformIfSteam() -> Self {
+        if issuer == "Steam" {
+            return Self(
+                issuer: issuer,
+                label: label,
+                secret: secret,
+                period: .period30,
+                digits: .digits5,
+                algorithm: .SHA1,
+                tokenType: .steam,
+                counter: nil,
+                otpAuth: otpAuth
+            )
+        }
+        return self
     }
 }

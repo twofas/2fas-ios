@@ -36,7 +36,7 @@ public final class NetworkStackRepositoryImpl {
 extension NetworkStackRepositoryImpl: NetworkStackRepository {
     public func registerDevice(
         for name: String,
-        gcmToken: String,
+        gcmToken: String?,
         completion: @escaping (Result<RegisterDevice.ResultData, NetworkError>) -> Void
     ) {
         let req = RegisterDevice.Request()

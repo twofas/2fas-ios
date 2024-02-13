@@ -28,6 +28,10 @@ enum ServiceGuide: CaseIterable {
     case rockstarGames
     case twitter
     case universal
+    case google
+    case instagram
+    case paypal
+    case reddit
     
     var fileName: String {
         switch self {
@@ -39,6 +43,10 @@ enum ServiceGuide: CaseIterable {
         case .rockstarGames: "rockstar_games"
         case .twitter: "twitter"
         case .universal: "universal"
+        case .google: "google"
+        case .instagram: "instagram"
+        case .paypal: "paypal"
+        case .reddit: "reddit"
         }
     }
 }
@@ -53,6 +61,7 @@ public enum ServiceGuideImage: String, Decodable {
     case account = "account"
     case retype = "retype"
     case webAccount1 = "web_account_1"
+    case webAccount2 = "web_account_2"
     case webPhone = "web_phone"
     case phoneQR = "phone_qr"
     case webButton = "web_button"

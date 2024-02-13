@@ -38,6 +38,7 @@ struct SettingsMenuCell: Hashable {
         case customView(UIView)
         case external
         case warning
+        case donate
     }
     enum Action: Hashable {
         case navigation(navigatesTo: SettingsNavigationModule)

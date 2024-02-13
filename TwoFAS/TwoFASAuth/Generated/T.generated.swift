@@ -245,6 +245,14 @@ internal enum T {
   internal static let pastDurationWeeksPlural4 = T.tr("Localizable", "past_duration_weeks-plural-4", fallback: "")
   /// 
   internal static let pastDurationWeeksPlural5 = T.tr("Localizable", "past_duration_weeks-plural-5", fallback: "")
+  /// Enable 2FAS Backup & Sync to ensure you never get locked out, even if you lose your phone - your peace of mind in one tap! 🔐📱
+  internal static let periodicNotificationBackup = T.tr("Localizable", "periodic_notification_backup", fallback: "Enable 2FAS Backup & Sync to ensure you never get locked out, even if you lose your phone - your peace of mind in one tap! 🔐📱")
+  /// Speed up your logins with the 2FAS Browser Extension! 🚀 Download now for a faster, more convenient authentication. 🌐✨
+  internal static let periodicNotificationBrowserExtension = T.tr("Localizable", "periodic_notification_browser_extension", fallback: "Speed up your logins with the 2FAS Browser Extension! 🚀 Download now for a faster, more convenient authentication. 🌐✨")
+  /// We're grateful for your support of 2FAS! 🌟 If you find our app helpful, consider making a donation to help us keep your digital world secure. Every bit helps! 🙏💙
+  internal static let periodicNotificationDonate = T.tr("Localizable", "periodic_notification_donate", fallback: "We're grateful for your support of 2FAS! 🌟 If you find our app helpful, consider making a donation to help us keep your digital world secure. Every bit helps! 🙏💙")
+  /// Glad you're with us at 2FAS! 🌟 Take a moment to discover helpful Tips & Tricks 🛠️ in the app for enhanced security 🔒.
+  internal static let periodicNotificationTips = T.tr("Localizable", "periodic_notification_tips", fallback: "Glad you're with us at 2FAS! 🌟 Take a moment to discover helpful Tips & Tricks 🛠️ in the app for enhanced security 🔒.")
   /// PIN does not match! Please try again.
   internal static let securityErrorNoMatch = T.tr("Localizable", "security_error_no_match", fallback: "PIN does not match! Please try again.")
   /// Developer Options
@@ -310,6 +318,10 @@ internal enum T {
     internal static let encryptedFilesNotSupported = T.tr("Localizable", "backup__encrypted_files_not_supported", fallback: "This file is encrypted. We support only unencrypted files")
     /// Type in password
     internal static let enterPasswordDialogTitle = T.tr("Localizable", "backup__enter_password_dialog_title", fallback: "Type in password")
+    /// It looks like your Google Drive backup file is password-protected. Type in the correct password to proceed. If you’d like to wipe your Google Drive backup file,
+    internal static let enterPasswordGoogleDriveMsg1 = T.tr("Localizable", "backup__enter_password_google_drive_msg1", fallback: "It looks like your Google Drive backup file is password-protected. Type in the correct password to proceed. If you’d like to wipe your Google Drive backup file,")
+    /// tap here to see how
+    internal static let enterPasswordGoogleDriveMsg2 = T.tr("Localizable", "backup__enter_password_google_drive_msg2", fallback: "tap here to see how")
     /// Type in a password for this backup file to proceed with the import process
     internal static let enterPasswordTitle = T.tr("Localizable", "backup__enter_password_title", fallback: "Type in a password for this backup file to proceed with the import process")
     /// Error while exporting the file
@@ -834,10 +846,10 @@ internal enum T {
     internal static let backupDescription = T.tr("Localizable", "introduction__backup_description", fallback: "In the next step, you'll be asked to choose your Google Drive account, where the 2FA tokens will be stored safely.")
     /// Learn more about backup
     internal static let backupIcloudCta = T.tr("Localizable", "introduction__backup_icloud_cta", fallback: "Learn more about backup")
-    /// 2FAS uses iCloud for secure backup and sync of your 2FA tokens. The *encrypted* backup data is stored in iCloud, accessible *only by the 2FAS app*. Additionally, this feature aids with token *recovery and syncing* across iOS devices.
+    /// 2FAS uses iCloud for secure backup and sync of your 2FA tokens. The **encrypted** backup data is stored in iCloud, accessible **only by the 2FAS app**. Additionally, this feature aids with token **recovery and syncing** across iOS devices.
     /// 
     /// It's enabled by default and can disabled at any time in the app's backup settings.
-    internal static let backupIcloudDescription = T.tr("Localizable", "introduction__backup_icloud_description", fallback: "2FAS uses iCloud for secure backup and sync of your 2FA tokens. The *encrypted* backup data is stored in iCloud, accessible *only by the 2FAS app*. Additionally, this feature aids with token *recovery and syncing* across iOS devices.\n\nIt's enabled by default and can disabled at any time in the app's backup settings.")
+    internal static let backupIcloudDescription = T.tr("Localizable", "introduction__backup_icloud_description", fallback: "2FAS uses iCloud for secure backup and sync of your 2FA tokens. The **encrypted** backup data is stored in iCloud, accessible **only by the 2FAS app**. Additionally, this feature aids with token **recovery and syncing** across iOS devices.\n\nIt's enabled by default and can disabled at any time in the app's backup settings.")
     /// Secure sync and backup
     internal static let backupIcloudTitle = T.tr("Localizable", "introduction__backup_icloud_title", fallback: "Secure sync and backup")
     /// Google Drive sync turned on successfully!
@@ -1048,6 +1060,11 @@ internal enum T {
     /// Select the maximum number of unsuccessful attempts to enter the passcode before locking the application (lockout time can be changed below).
     /// 
     internal static let howManyAttemptsFooter = T.tr("Localizable", "settings__how_many_attempts_footer", fallback: "Select the maximum number of unsuccessful attempts to enter the passcode before locking the application (lockout time can be changed below).\n")
+    /// Your support allows us to develop new features and
+    /// improvements. Thank you!
+    internal static let infoFooter = T.tr("Localizable", "settings__info_footer", fallback: "Your support allows us to develop new features and\nimprovements. Thank you!")
+    /// It matters
+    internal static let itMatters = T.tr("Localizable", "settings__it_matters", fallback: "It matters")
     /// Knowledge
     internal static let knowledge = T.tr("Localizable", "settings__knowledge", fallback: "Knowledge")
     /// Max failed attempts
@@ -1060,6 +1077,8 @@ internal enum T {
     internal static let listStyleOptionDefault = T.tr("Localizable", "settings__list_style_option_default", fallback: "Default")
     /// Mail services are not available
     internal static let mailServicesNotAvailable = T.tr("Localizable", "settings__mail_services_not_available", fallback: "Mail services are not available")
+    /// Manage tokens
+    internal static let manageTokens = T.tr("Localizable", "settings__manage_tokens", fallback: "Manage tokens")
     /// No limit
     internal static let noLimit = T.tr("Localizable", "settings__no_limit", fallback: "No limit")
     /// Biometric Lock
@@ -1083,6 +1102,8 @@ internal enum T {
     internal static let pin6Digits = T.tr("Localizable", "settings__pin_6_digits", fallback: "6-digits code")
     /// PIN code
     internal static let pinCode = T.tr("Localizable", "settings__pin_code", fallback: "PIN code")
+    /// Preferences
+    internal static let preferences = T.tr("Localizable", "settings__preferences", fallback: "Preferences")
     /// Privacy Policy
     internal static let privacyPolicy = T.tr("Localizable", "settings__privacy_policy", fallback: "Privacy Policy")
     /// Problem
@@ -1157,6 +1178,8 @@ internal enum T {
     internal static let trash = T.tr("Localizable", "settings__trash", fallback: "Trash")
     /// Trash is Empty
     internal static let trashIsEmpty = T.tr("Localizable", "settings__trash_is_empty", fallback: "Trash is Empty")
+    /// Retrieve from trash
+    internal static let trashOption = T.tr("Localizable", "settings__trash_option", fallback: "Retrieve from trash")
     /// Turn on the PIN code and Face ID authorization to prevent unauthorized access to your tokens on this device.
     internal static let turnPinCodeToEnableFaceid = T.tr("Localizable", "settings__turn_pin_code_to_enable_faceid", fallback: "Turn on the PIN code and Face ID authorization to prevent unauthorized access to your tokens on this device.")
     /// Turn on the PIN code and Touch ID authorization to prevent unauthorized access to your tokens on this device.
@@ -1476,6 +1499,8 @@ internal enum T {
     internal static let sortByManual = T.tr("Localizable", "tokens__sort_by_manual", fallback: "Manual")
     /// Z - A
     internal static let sortByZToA = T.tr("Localizable", "tokens__sort_by_z_to_a", fallback: "Z - A")
+    /// STEAM
+    internal static let steam = T.tr("Localizable", "tokens__steam", fallback: "STEAM")
     /// This code is incorrect or not supported. Try again.
     internal static let thisQrCodeIsInavlid = T.tr("Localizable", "tokens__this_qr_code_is_inavlid", fallback: "This code is incorrect or not supported. Try again.")
     /// You won't be able to restore this token anymore.

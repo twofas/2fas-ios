@@ -51,7 +51,7 @@ extension ComposeServiceAdvancedSummaryPresenter {
             )
         )
         
-        if interactor.tokenType == .totp {
+        if interactor.tokenType == .totp || interactor.tokenType == .steam {
             cells.append(
                 .init(
                     title: T.Tokens.refreshTime,

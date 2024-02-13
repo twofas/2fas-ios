@@ -112,7 +112,7 @@ extension LinkInteractor: LinkInteracting {
             Log("LinkInteractor - addStoredCode - no code", module: .interactor)
             return
         }
-        interactorNew.addCode(code)
+        interactorNew.addCode(code, force: false)
         reloadDataAndRefresh?()
         Log("LinkInteractor - addStoredCode. Adding", module: .interactor)
         clearStoredCode()
@@ -140,7 +140,6 @@ private extension LinkInteractor {
         guard !interactorNew.codeExists(code) else {
             Log("LinkInteractor - handleCodeIfNecessary - already exists", module: .interactor)
             showCodeAlreadyExists?()
-            mainRepository.clearStoredURL()
             return
         }
         

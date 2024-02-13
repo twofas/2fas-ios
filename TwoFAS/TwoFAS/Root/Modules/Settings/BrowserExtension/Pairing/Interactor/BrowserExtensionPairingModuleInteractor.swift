@@ -27,16 +27,30 @@ protocol BrowserExtensionPairingModuleInteracting: AnyObject {
 
 final class BrowserExtensionPairingModuleInteractor {
     private let webPairing: PairingWebExtensionInteracting
+    private let registerDeviceInteractor: RegisterDeviceInteracting
     private let extensionID: ExtensionID
     
-    init(webPairing: PairingWebExtensionInteracting, extensionID: ExtensionID) {
+    init(
+        webPairing: PairingWebExtensionInteracting,
+        registerDeviceInteractor: RegisterDeviceInteracting,
+        extensionID: ExtensionID
+    ) {
         self.webPairing = webPairing
+        self.registerDeviceInteractor = registerDeviceInteractor
         self.extensionID = extensionID
     }
 }
 
 extension BrowserExtensionPairingModuleInteractor: BrowserExtensionPairingModuleInteracting {
     func startPairing(completion: @escaping (Result<Void, PairingWebExtensionError>) -> Void) {
-        webPairing.pair(with: extensionID, completion: completion)
+        registerDeviceInteractor.registerDevice { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success:
+                webPairing.pair(with: extensionID, completion: completion)
+            case .failure:
+                completion(.failure(.notRegistered))
+            }
+        }
     }
 }

@@ -42,6 +42,7 @@ struct AddingServiceServiceTypeButton: View {
     var text: String {
         switch tokenType {
         case .totp: return T.Tokens.totp
+        case .steam: return T.Tokens.steam
         case .hotp: return T.Tokens.hotp
         }
     }

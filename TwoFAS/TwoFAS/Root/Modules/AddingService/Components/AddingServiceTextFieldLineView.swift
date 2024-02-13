@@ -24,6 +24,7 @@ struct AddingServiceTextFieldLineView: View {
         Divider()
             .frame(height: 1)
             .overlay(Color(Theme.Colors.Line.active))
+            .accessibilityHidden(true)
     }
 }
 

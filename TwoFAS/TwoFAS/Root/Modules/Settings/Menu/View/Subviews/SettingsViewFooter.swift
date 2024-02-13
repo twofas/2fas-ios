@@ -31,24 +31,28 @@ final class SettingsViewFooter: UIView {
     private var discordButton: UIButton = {
         let button = UIButton()
         button.setImage(Asset.socialLargeDiscord.image, for: .normal)
+        button.accessibilityLabel = T.Social.discord
         return button
     }()
     
     private var youtubeButton: UIButton = {
         let button = UIButton()
         button.setImage(Asset.socialLargeYoutube.image, for: .normal)
+        button.accessibilityLabel = T.Social.youtube
         return button
     }()
     
     private var twitterButton: UIButton = {
         let button = UIButton()
         button.setImage(Asset.socialLargeTwitter.image, for: .normal)
+        button.accessibilityLabel = T.Social.twitter
         return button
     }()
     
     private var githubButton: UIButton = {
         let button = UIButton()
         button.setImage(Asset.socialLargeGithub.image, for: .normal)
+        button.accessibilityLabel = T.Social.github
         return button
     }()
     

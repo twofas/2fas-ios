@@ -200,6 +200,7 @@ final class ServiceEntity: NSManagedObject {
         }
         
         var servicesFromCurrent = listItemsInSection(on: context, sectionID: currentSectionID)
+        guard servicesFromCurrent[safe: currentIndex] != nil else { return [] }
         let serviceToMove = servicesFromCurrent.remove(at: currentIndex)
         updateOrder(of: servicesFromCurrent)
         

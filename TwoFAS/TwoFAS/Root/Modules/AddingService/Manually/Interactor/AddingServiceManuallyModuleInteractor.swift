@@ -55,7 +55,11 @@ final class AddingServiceManuallyModuleInteractor {
 
 extension AddingServiceManuallyModuleInteractor: AddingServiceManuallyModuleInteracting {
     func checkForServiceIcon(using str: String, callback: @escaping (UIImage?, IconTypeID?) -> Void) {
-        guard let service = serviceDatabase.findServicesByTagOrIssuer(str, exactMatch: true).first else {
+        guard let service = serviceDatabase.findServicesByTagOrIssuer(
+            str,
+            exactMatch: true,
+            useTags: false
+        ).first else {
             callback(nil, nil)
             return
         }

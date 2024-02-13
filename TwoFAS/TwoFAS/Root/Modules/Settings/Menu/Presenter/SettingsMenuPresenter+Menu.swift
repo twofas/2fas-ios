@@ -58,107 +58,81 @@ extension SettingsMenuPresenter {
             ]
         )
         
-        let exteralLinkImage = Asset.externalLinkIcon.image
-            .withRenderingMode(.alwaysTemplate)
-            .withTintColor(Theme.Colors.Icon.theme)
-        let customView = UIImageView(image: exteralLinkImage)
-        customView.tintColor = Theme.Colors.Icon.theme
-        customView.contentMode = .right
-        let donate = SettingsMenuSection(
-            title: T.Settings.donations,
+        let browerExtension = SettingsMenuSection(
+            title: T.Browser.browserExtension,
             cells: [
                 .init(
-                    icon: Asset.settingsDonate.image,
-                    title: T.Settings.donateTwofas,
-                    accessory: .customView(customView),
-                    action: .navigation(navigatesTo: .donate)
+                    icon: Asset.settingsBrowserExtension.image,
+                    title: T.Browser.browserExtensionSettings,
+                    info: securityDescription,
+                    accessory: .arrow,
+                    action: .navigation(navigatesTo: .browserExtension)
                 )
             ]
         )
         
         let areWidgetsOn = interactor.areWidgetsEnabled
-        var advancedCells: [SettingsMenuCell] = []
-        advancedCells.append(.init(
-            icon: Asset.settingsBrowserExtension.image,
-            title: T.Browser.browserExtension,
-            accessory: .arrow,
-            action: .navigation(navigatesTo: .browserExtension)
-        ))
-        advancedCells.append(.init(
-            icon: Asset.settingsWidget.image,
-            title: T.Settings.widgets,
-            accessory: .toggle(kind: .widgets, isOn: areWidgetsOn)
-        ))
-        
-        let advancedWidgets = SettingsMenuSection(
-            title: T.Settings.advanced,
-            cells: advancedCells,
-            footer: T.Settings.displaySelectedServices
-        )
-        
-        let appearance = SettingsMenuSection(
-            title: nil,
+        let preferences = SettingsMenuSection(
+            title: T.Settings.preferences,
             cells: [
                 .init(
                     icon: Asset.settingsAppearance.image,
                     title: T.Settings.appearance,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .appearance)
+                ),
+                .init(
+                    icon: Asset.settingsWidget.image,
+                    title: T.Settings.widgets,
+                    accessory: .toggle(kind: .widgets, isOn: areWidgetsOn)
                 )
             ],
-            footer: nil
+            footer: T.Settings.displaySelectedServices
         )
         
-        let externalImport = SettingsMenuSection(
-            title: T.Backup.import,
+        let manageTokens = SettingsMenuSection(
+            title: T.Settings.manageTokens,
             cells: [
                 .init(
                     icon: Asset.settingsExternalImport.image,
                     title: T.Settings.externalImport,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .externalImport)
-                )
-            ],
-            footer: nil
-        )
-        
-        let trash = SettingsMenuSection(
-            title: nil,
-            cells: [
+                ),
                 .init(
                     icon: Asset.settingsTrash.image,
-                    title: T.Settings.trash,
+                    title: T.Settings.trashOption,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .trash)
                 )
-            ],
-            footer: nil
+            ]
         )
-        
-        let knowledge = SettingsMenuSection(
-            title: T.Settings.knowledge,
+                
+        let info = SettingsMenuSection(
+            title: T.Commons.info,
             cells: [
                 .init(
                     icon: Asset.settingsFAQ.image,
                     title: T.Settings.support,
                     accessory: .external,
                     action: .navigation(navigatesTo: .faq)
-                )
-            ]
-        )
-        
-        let about = SettingsMenuSection(
-            title: nil,
-            cells: [
+                ),
                 .init(
                     icon: Asset.settingsInfo.image,
                     title: T.Settings.about,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .about)
+                ),
+                .init(
+                    icon: Asset.settingsDonate.image,
+                    title: T.Settings.donateTwofas,
+                    accessory: .donate,
+                    action: .navigation(navigatesTo: .donate)
                 )
-            ]
+            ],
+            footer: T.Settings.infoFooter
         )
-        
+
         var menu: [SettingsMenuSection] = []
         if interactor.hasSSLNetworkError && interactor.hasActiveBrowserExtension {
             menu.append(networkSSLError)
@@ -167,13 +141,10 @@ extension SettingsMenuPresenter {
         menu.append(contentsOf: [
             backup,
             security,
-            donate,
-            advancedWidgets,
-            externalImport,
-            appearance,
-            trash,
-            knowledge,
-            about
+            browerExtension,
+            preferences,
+            manageTokens,
+            info
         ])
         return menu
     }

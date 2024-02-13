@@ -97,9 +97,9 @@ final class TokensTokenView: UIView {
         tokenLabel.clearMarking()
     }
     
-    func setToken(_ token: TokenValue, animated: Bool) {
+    func setToken(_ token: TokenValue, tokenType: TokenType, animated: Bool) {
         guard previousToken != token || isMasked else { return }
-        let formattedToken = token.formattedValue
+        let formattedToken = token.formattedValue(for: tokenType)
         spacingLabel.text = formattedToken
         currentText = formattedToken
         if isMasked {

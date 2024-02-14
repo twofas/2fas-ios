@@ -56,7 +56,7 @@ struct CopyTokenIntent: AppIntent {
         self.tokenType = tokenType
     }
     
-    //@MainActor
+    @MainActor
     func perform() async throws -> some IntentResult {
         generator.generate(
             secret: $secret.wrappedValue,
@@ -66,10 +66,14 @@ struct CopyTokenIntent: AppIntent {
             tokenType: tokenType
         )
         let token = generator.token
-        UIPasteboard.general.string = token.removeWhitespaces()
+        let defaults = UserDefaults(suiteName: Config.suiteName)!
+        defaults.set(token, forKey: Config.exchangeTokenKey)
+        defaults.synchronize()
         
         return .result()
     }
+    
+    static var openAppWhenRun = true
 }
 
 @available(iOSApplicationExtension, unavailable)

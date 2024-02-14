@@ -23,7 +23,7 @@ struct CopyIntentButton<Content>: View where Content: View {
     private let appIntent: CopyTokenIntent?
     private let content: () -> Content
     
-    init(rawEntry: CodeEntry.EntryData.RawEntryData?, content: @escaping () -> Content) {
+    init(rawEntry: CodeEntry.EntryData.RawEntryData?, @ViewBuilder content: @escaping () -> Content) {
         if let rawEntry {
             self.appIntent = CopyTokenIntent(
                 secret: rawEntry.secret,
@@ -38,6 +38,7 @@ struct CopyIntentButton<Content>: View where Content: View {
         self.content = content
     }
     
+    @ViewBuilder
     var body: some View {
         if #available(iOS 17.0, *) {
             if let appIntent {

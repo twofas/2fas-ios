@@ -27,7 +27,7 @@ struct IconRenderer: View {
         Group {
             switch entry.data.iconType {
             case .brand:
-                Image(uiImage: entry.data.icon)
+                Image(uiImage: entry.data.icon.image)
                     .resizable()
             case .label:
                 ZStack(alignment: .center) {

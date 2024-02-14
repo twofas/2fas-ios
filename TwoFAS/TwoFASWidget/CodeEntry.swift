@@ -25,14 +25,14 @@ struct CodeEntry: TimelineEntry {
     let date: Date
     let entries: [Entry]
     
-    enum Kind: String, Identifiable {
+    enum Kind: String, Identifiable, Encodable {
         case singleEntry
         case placeholder
         
         var id: String { self.rawValue }
     }
     
-    struct Entry: Identifiable, Hashable {
+    struct Entry: Identifiable, Hashable, Encodable {
         static func == (lhs: CodeEntry.Entry, rhs: CodeEntry.Entry) -> Bool {
             lhs.kind == rhs.kind && lhs.data == rhs.data
         }
@@ -42,14 +42,14 @@ struct CodeEntry: TimelineEntry {
         var id: String { data.id }
     }
     
-    struct EntryData: Identifiable, Hashable {
-        enum IconType: Identifiable, Hashable {
+    struct EntryData: Identifiable, Hashable, Encodable {
+        enum IconType: Identifiable, Hashable, Encodable {
             var id: Self { self }
             
             case brand
             case label
         }
-        struct RawEntryData: Identifiable, Hashable {
+        struct RawEntryData: Identifiable, Hashable, Encodable {
             var id: String { secret }
             let secret: String
             let period: Int
@@ -61,7 +61,7 @@ struct CodeEntry: TimelineEntry {
         let name: String
         let info: String?
         let code: String
-        let icon: UIImage
+        let icon: CodableImage
         let iconType: IconType
         let labelTitle: String
         let labelColor: TintColor

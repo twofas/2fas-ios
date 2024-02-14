@@ -60,48 +60,53 @@ struct TwoFASWidgetLineView: View {
                     }()
                     
                     let tokenVO = (entryData.code.components(separatedBy: "")).joined(separator: " ")
-                    
-                    CopyIntentButton(rawEntry: entryData.rawEntry) {
-                        Group {
-                            IconRenderer(entry: entry)
-                                .redacted(reason: reason)
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text(entryData.name)
-                                    .font(.caption2)
-                                    .multilineTextAlignment(.leading)
-                                    .redacted(reason: reason)
-                                    .lineLimit(1)
-                                    .accessibility(label: Text("widget_service_name \(entryData.name)"))
-                                let info = entryData.info ?? ""
-                                Text(info)
-                                    .lineLimit(1)
-                                    .multilineTextAlignment(.leading)
-                                    .font(.caption2)
-                                    .foregroundColor(.gray)
-                                    .redacted(reason: reason)
-                            }.frame(
-                                minWidth: 0,
-                                maxWidth: .infinity,
-                                minHeight: 0,
-                                maxHeight: .infinity,
-                                alignment: .topLeading
-                            )
-                            Text(entryData.code)
-                                .font(Font.system(.title).weight(.light).monospacedDigit())
+
+                    Group {
+                        IconRenderer(entry: entry)
+                            .redacted(reason: reason)
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(entryData.name)
+                                .font(.caption2)
                                 .multilineTextAlignment(.leading)
-                                .minimumScaleFactor(0.2)
-                                .lineLimit(1)
-                                .redacted(reason: codeReason)
-                                .accessibility(label: Text("widget_token \(tokenVO)"))
-                                .contentTransition(.numericText())
-                            counterText(for: entryData.countdownTo)
-                                .multilineTextAlignment(.trailing)
-                                .font(Font.body.monospacedDigit())
-                                .contentTransition(.numericText(countsDown: true))
-                                .lineLimit(1)
                                 .redacted(reason: reason)
+                                .lineLimit(1)
+                                .accessibility(label: Text("widget_service_name \(entryData.name)"))
+                            let info = entryData.info ?? ""
+                            Text(info)
+                                .lineLimit(1)
+                                .multilineTextAlignment(.leading)
+                                .font(.caption2)
+                                .foregroundColor(.gray)
+                                .redacted(reason: reason)
+                        }.frame(
+                            minWidth: 0,
+                            maxWidth: .infinity,
+                            minHeight: 0,
+                            maxHeight: .infinity,
+                            alignment: .topLeading
+                        )
+                        Text(entryData.code)
+                            .font(Font.system(.title).weight(.light).monospacedDigit())
+                            .multilineTextAlignment(.leading)
+                            .minimumScaleFactor(0.2)
+                            .lineLimit(1)
+                            .redacted(reason: codeReason)
+                            .accessibility(label: Text("widget_token \(tokenVO)"))
+                            .contentTransition(.numericText())
+                        counterText(for: entryData.countdownTo)
+                            .multilineTextAlignment(.trailing)
+                            .font(Font.body.monospacedDigit())
+                            .contentTransition(.numericText(countsDown: true))
+                            .lineLimit(1)
+                            .redacted(reason: reason)
+                    }
+                    .accessibility(hidden: codeReason == .codePlaceholder)
+                    .overlay {
+                        CopyIntentButton(rawEntry: entryData.rawEntry) {
+                            Rectangle()
+                                .foregroundStyle(Color.clear)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
                         }
-                        .accessibility(hidden: codeReason == .codePlaceholder)
                     }
                 }
             })

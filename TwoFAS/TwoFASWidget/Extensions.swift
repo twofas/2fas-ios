@@ -48,7 +48,7 @@ extension CodeEntry.EntryData {
             name: "2FAS",
             info: "My secured account",
             code: "127 924",
-            icon: #imageLiteral(resourceName: "TwoFASMainService"),
+            icon: CodableImage(image: #imageLiteral(resourceName: "TwoFASMainService")),
             iconType: .brand,
             labelTitle: "2F",
             labelColor: .red,
@@ -82,6 +82,46 @@ extension WidgetFamily {
         case .accessoryInline: return 1
         case .accessoryRectangular: return 1
         default: return 1
+        }
+    }
+}
+
+struct CodableImage: Codable, Hashable, Identifiable {
+    var id: Int {
+        imageInstance?.hash ?? 0
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(imageInstance?.hash ?? 0)
+    }
+    
+    private let imageInstance: UIImage?
+    
+    var image: UIImage {
+        imageInstance ?? UIImage()
+    }
+
+    init(image: UIImage) {
+        self.imageInstance = image
+    }
+
+    enum CodingKeys: CodingKey {
+        case data
+        case scale
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let scale = try container.decode(CGFloat.self, forKey: .scale)
+        let data = try container.decode(Data.self, forKey: .data)
+        self.imageInstance = UIImage(data: data, scale: scale)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        if let image = self.imageInstance {
+            try container.encode(image.pngData(), forKey: .data)
+            try container.encode(image.scale, forKey: .scale)
         }
     }
 }

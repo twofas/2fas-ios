@@ -69,13 +69,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         rootViewController?.presenter.applicationDidBecomeActive()
-        
-        let defaults = UserDefaults(suiteName: Config.suiteName)!
-        if let key = defaults.string(forKey: Config.exchangeTokenKey) {
-            rootViewController?.present(AlertController.makeSimple(with: "Key: \(key)", message: "The key! \(key)"), animated: true)
-            defaults.set(nil, forKey: Config.exchangeTokenKey)
-            defaults.synchronize()
-        }
     }
     
     func applicationWillTerminate(_ application: UIApplication) {

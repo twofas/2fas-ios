@@ -90,7 +90,10 @@ final class RootPresenter {
     func applicationDidBecomeActive() {
         Log("App: applicationDidBecomeActive")
         lockScreenIsInactive()
-        interactor.applicationDidBecomeActive()
+        interactor.applicationDidBecomeActive { [weak self] in
+            Log("App: Token copied")
+            self?.view?.tokenCopied()
+        }
         removeCover(animated: true)
         viewDidAppearEvent?()
         view?.rateApp()

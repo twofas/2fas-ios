@@ -604,17 +604,11 @@ private extension TokensModuleInteractor {
     }
 
     private func copyToken(_ token: String) {
-        notificationsInteractor.copyWithSuccess(
-            title: T.Notifications.tokenCopied,
-            value: token
-        )
+        notificationsInteractor.copyWithSuccess(value: token)
     }
     
     private func copyNextToken(_ token: String) {
-        notificationsInteractor.copyWithSuccess(
-            title: T.Notifications.nextTokenCopied,
-            value: token
-        )
+        notificationsInteractor.copyWithSuccess(value: token)
     }
 }
 

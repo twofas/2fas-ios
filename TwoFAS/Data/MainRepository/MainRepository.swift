@@ -66,6 +66,10 @@ protocol MainRepository: AnyObject {
     func disableWidgets()
     func markWidgetEnablingWarningAsShown()
     func reloadWidgets()
+    // MARK: Exchange Token
+    var exchangeToken: String? { get }
+    func setExchangeToken(_ key: String)
+    func clearExchangeToken()
     
     // MARK: - Appearance
     

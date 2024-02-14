@@ -72,10 +72,7 @@ extension AddingServiceTokenModuleInteractor: AddingServiceTokenModuleInteractin
     var serviceTokenType: TokenType { serviceData.tokenType }
     
     func copyToken(_ token: String) {
-        notificationsInteractor.copyWithSuccess(
-            title: T.Notifications.tokenCopied,
-            value: token
-        )
+        notificationsInteractor.copyWithSuccess(value: token)
     }
     
     func refresh() {

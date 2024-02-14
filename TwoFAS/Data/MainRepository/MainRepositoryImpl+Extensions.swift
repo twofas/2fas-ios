@@ -49,4 +49,17 @@ extension MainRepositoryImpl {
     func reloadWidgets() {
         WidgetCenter.shared.reloadAllTimelines()
     }
+    
+    // MARK: Exchange Token
+    var exchangeToken: String? {
+        userDefaultsRepository.exchangeToken
+    }
+    
+    func setExchangeToken(_ key: String) {
+        userDefaultsRepository.setExchangeToken(key)
+    }
+    
+    func clearExchangeToken() {
+        userDefaultsRepository.clearExchangeToken()
+    }
 }

@@ -318,6 +318,20 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         userDefaults.synchronize()
     }
     
+    var exchangeToken: String? {
+        sharedDefaults.string(forKey: Config.exchangeTokenKey)
+    }
+    
+    func setExchangeToken(_ key: String) {
+        sharedDefaults.set(key, forKey: Config.exchangeTokenKey)
+        sharedDefaults.synchronize()
+    }
+    
+    func clearExchangeToken() {
+        sharedDefaults.set(nil, forKey: Config.exchangeTokenKey)
+        sharedDefaults.synchronize()
+    }
+    
     // MARK: - Clear all
     
     func clearAll() {

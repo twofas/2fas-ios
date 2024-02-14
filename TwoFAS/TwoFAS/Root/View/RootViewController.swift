@@ -23,6 +23,7 @@ import CommonUIKit
 protocol RootViewControlling: AnyObject {
     func hideAllNotifications()
     func rateApp()
+    func tokenCopied()
 }
 
 final class RootViewController: UIViewController {
@@ -50,5 +51,10 @@ extension RootViewController: RootViewControlling {
     
     func rateApp() {
         RatingController.uiIsVisible()
+    }
+    
+    func tokenCopied() {
+        VoiceOver.say(T.Notifications.tokenCopied)
+        HUDNotification.presentSuccess(title: T.Notifications.tokenCopied)
     }
 }

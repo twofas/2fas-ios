@@ -38,13 +38,6 @@ struct ServiceAppEntity: AppEntity {
     var secret: String
     
     struct ServiceAppEntityQuery: EntityQuery {
-//        @IntentParameterDependency<SelectService>(
-//            \.$service
-//        )
-//        var selectedServices
-        
-        //selectedServices?.service.map({ $0.secret } as? [ServiceID] ?? []
-        
         private let protection = Protection()
         private var serviceHandler: WidgetServiceHandlerType = {
             EncryptionHolder.initialize(with: Protection().localKeyEncryption)

@@ -30,7 +30,9 @@ final class ModuleInteractorFactory {
             linkInteractor: InteractorFactory.shared.linkInteractor(),
             fileInteractor: InteractorFactory.shared.fileInteractor(),
             registerDeviceInteractor: InteractorFactory.shared.registerDeviceInteractor(),
-            appStateInteractor: InteractorFactory.shared.appStateInteractor()
+            appStateInteractor: InteractorFactory.shared.appStateInteractor(),
+            notificationInteractor: InteractorFactory.shared.notificationInteractor(),
+            widgetsInteractor: InteractorFactory.shared.widgetsInteractor()
         )
     }
     

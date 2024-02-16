@@ -110,24 +110,16 @@ struct AppIntentProvider: AppIntentTimelineProvider {
         }()
         
         let calendar = Calendar.current
-        let halfMinute: Int = 30
+        let smallestIncrement: Int = 10
         
         let currentDate = Date()
         let correctedDate = currentDate + Double(TimeOffsetStorage.offset ?? 0)
         let seconds = calendar.component(.second, from: correctedDate)
         let offset: Int = {
-            if seconds < halfMinute {
-                return halfMinute - seconds
-            }
-            return (2 * halfMinute) - seconds
+            let rest = seconds % smallestIncrement
+            return smallestIncrement - rest
         }()
-        let upTo: Int = {
-            if slots < 9 {
-                // one hour of 30s
-                return 122 // 2 + 120 -> current (e.g. :17), next in :00 or :30 and next is normal :00 or :30
-            }
-            return 62
-        }()
+        let upTo = 3//31
         
         for i in 0 ..< upTo {
             let currentOffset: Int = {
@@ -136,7 +128,7 @@ struct AppIntentProvider: AppIntentTimelineProvider {
                 } else if i == 1 {
                     return offset
                 }
-                return offset + halfMinute * (i - 1)
+                return offset + smallestIncrement * (i - 1)
             }()
             let entryDate = calendar.date(byAdding: .second, value: currentOffset, to: currentDate)!
             let tokenDate = calendar.date(byAdding: .second, value: currentOffset, to: correctedDate)!
@@ -148,10 +140,15 @@ struct AppIntentProvider: AppIntentTimelineProvider {
                     let period = entryDescription.period.rawValue
                     let currentSeconds: Int = calendar.component(.second, from: tokenDate)
                     if currentSeconds >= period {
-                        return 2 * period - currentSeconds
+                        let times = (currentSeconds / period) + 1
+                        return times * period - currentSeconds
                     }
                     return period - currentSeconds
                 }()
+                
+                if entryDescription.period.rawValue == 10 {
+                    print(">>> \(calendar.component(.second, from: tokenDate)), \(secondsToNewOne)")
+                }
                 
                 let countdownTo = calendar.date(byAdding: .second, value: secondsToNewOne, to: entryDate)!
                 
@@ -195,5 +192,11 @@ struct AppIntentProvider: AppIntentTimelineProvider {
         }
         
         return Timeline(entries: entries, policy: .atEnd)
+    }
+}
+
+extension Period {
+    var isShort: Bool {
+        return rawValue < 30
     }
 }

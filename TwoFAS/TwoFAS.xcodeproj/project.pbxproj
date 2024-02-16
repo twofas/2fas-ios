@@ -194,6 +194,7 @@
 		C2379D0326B6D6C30010C6B1 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C2379D0726B6D6CC0010C6B1 /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
 		C2379D1026B6DF720010C6B1 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE31269E274700506ACF /* IntentsUI.framework */; };
+		C23827692B7D3BE1005DD234 /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E7C3822ADB19F300478D89 /* Data.framework */; };
 		C239DE9026CC5366002301E2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C239DE8F26CC5366002301E2 /* Localizable.strings */; };
 		C23B33F12A48DF6A0014B804 /* ImporterOpenFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */; };
 		C23B899527C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B899427C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift */; };
@@ -1122,6 +1123,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = C2147CB4205D78600001D011;
 			remoteInfo = Protection;
+		};
+		C238276B2B7D3BE1005DD234 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C236666B1FB2644900989ACA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2E7C3812ADB19F300478D89;
+			remoteInfo = Data;
 		};
 		C24D1C2D253C744F0029D27D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2698,6 +2706,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C23827692B7D3BE1005DD234 /* Data.framework in Frameworks */,
 				C274C7782ADD3E1700B8AAC1 /* FirebaseMessaging in Frameworks */,
 				C264AE6326D2DF3A00AE61E7 /* TimeVerification.framework in Frameworks */,
 				C2C3AE11269E224A00506ACF /* SwiftUI.framework in Frameworks */,
@@ -7851,6 +7860,7 @@
 				C264AE6626D2DF3A00AE61E7 /* PBXTargetDependency */,
 				C251EDF02AE87284007722F2 /* PBXTargetDependency */,
 				C2E53BCC2B62DFFD008E1E70 /* PBXTargetDependency */,
+				C238276C2B7D3BE1005DD234 /* PBXTargetDependency */,
 			);
 			name = TwoFASWidgetExtension;
 			packageProductDependencies = (
@@ -9461,6 +9471,11 @@
 			isa = PBXTargetDependency;
 			target = C2147CB4205D78600001D011 /* Protection */;
 			targetProxy = C2379D0926B6D6CC0010C6B1 /* PBXContainerItemProxy */;
+		};
+		C238276C2B7D3BE1005DD234 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C2E7C3812ADB19F300478D89 /* Data */;
+			targetProxy = C238276B2B7D3BE1005DD234 /* PBXContainerItemProxy */;
 		};
 		C24D1C2E253C744F0029D27D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

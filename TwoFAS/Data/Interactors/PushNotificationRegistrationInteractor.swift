@@ -18,7 +18,7 @@
 //
 
 import Foundation
-import PushNotifications
+@_implementationOnly import PushNotifications
 import Common
 
 public protocol PushNotificationRegistrationInteracting: PermissionsStateChildDataControllerProtocol {

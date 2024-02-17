@@ -55,9 +55,8 @@ struct AppIntentProvider: AppIntentTimelineProvider {
     private let serviceHandler: WidgetServiceHandlerType
     
     init() {
-        protection = Protection()
-        EncryptionHolder.initialize(with: protection.localKeyEncryption)
-        serviceHandler = Storage(readOnly: true, logError: nil).widgetService
+        protection = AccessManager.protection
+        serviceHandler = AccessManager.serviceHandler
     }
     
     func placeholder(in context: Context) -> CodeEntry {
@@ -119,7 +118,7 @@ struct AppIntentProvider: AppIntentTimelineProvider {
             let rest = seconds % smallestIncrement
             return smallestIncrement - rest
         }()
-        let upTo = 3//31
+        let upTo = 256
         
         for i in 0 ..< upTo {
             let currentOffset: Int = {
@@ -145,10 +144,6 @@ struct AppIntentProvider: AppIntentTimelineProvider {
                     }
                     return period - currentSeconds
                 }()
-                
-                if entryDescription.period.rawValue == 10 {
-                    print(">>> \(calendar.component(.second, from: tokenDate)), \(secondsToNewOne)")
-                }
                 
                 let countdownTo = calendar.date(byAdding: .second, value: secondsToNewOne, to: entryDate)!
                 
@@ -197,6 +192,6 @@ struct AppIntentProvider: AppIntentTimelineProvider {
 
 extension Period {
     var isShort: Bool {
-        return rawValue < 30
+        rawValue < 30
     }
 }

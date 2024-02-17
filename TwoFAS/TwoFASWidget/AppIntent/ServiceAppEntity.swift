@@ -19,8 +19,6 @@
 
 import Foundation
 import AppIntents
-import Storage
-@preconcurrency import Protection
 @preconcurrency import Common
 import CommonUIKit
 
@@ -28,25 +26,13 @@ import CommonUIKit
 struct ServiceAppEntity: AppEntity {
     static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Service")
     
-    private let protection = Protection()
-    private var serviceHandler: WidgetServiceHandlerType = {
-        EncryptionHolder.initialize(with: Protection().localKeyEncryption)
-        return Storage(readOnly: true, logError: nil).widgetService
-    }()
-    
     @Property(title: "Secret")
     var secret: String
     
     struct ServiceAppEntityQuery: EntityQuery {
-        private let protection = Protection()
-        private var serviceHandler: WidgetServiceHandlerType = {
-            EncryptionHolder.initialize(with: Protection().localKeyEncryption)
-            return Storage(readOnly: true, logError: nil).widgetService
-        }()
-        
         func entities(for identifiers: [String]) async throws -> [ServiceAppEntity] {
             SelectedItems.list = identifiers
-            return serviceHandler.listAll(search: nil, exclude: [])
+            return AccessManager.serviceHandler.listAll(search: nil, exclude: [])
                 .flatMap({ $0.services })
                 .filter({ identifiers.contains($0.serviceID) })
                 .map({ service in
@@ -59,7 +45,10 @@ struct ServiceAppEntity: AppEntity {
         }
         
         func suggestedEntities() async throws -> ItemCollection<ServiceAppEntity> {
-            switch (serviceHandler.hasServices(), protection.extensionsStorage.areWidgetsEnabled) {
+            switch (
+                AccessManager.serviceHandler.hasServices(),
+                AccessManager.protection.extensionsStorage.areWidgetsEnabled
+            ) {
             case (false, false):
                 throw SelectServiceError.errorNotEnabledNoServices
             case (true, false):
@@ -69,7 +58,7 @@ struct ServiceAppEntity: AppEntity {
             default: break
             }
             
-            let all: [WidgetCategory] = serviceHandler.listAll(search: nil, exclude: [])
+            let all: [WidgetCategory] = AccessManager.serviceHandler.listAll(search: nil, exclude: [])
             let sections = all.map({ category -> ItemSection<ServiceAppEntity> in
                 let services: [Item] = category.services
                     .filter({ !SelectedItems.list.contains($0.serviceID) })

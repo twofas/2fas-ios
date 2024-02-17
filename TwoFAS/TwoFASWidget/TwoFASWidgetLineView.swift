@@ -30,17 +30,8 @@ struct TwoFASWidgetLineView: View {
     
     @ViewBuilder
     var body: some View {
-        LazyVGrid(
-            columns: [
-                GridItem(.fixed(24)),
-                GridItem(.flexible()),
-                GridItem(.fixed(100)),
-                GridItem(.fixed(40))
-            ],
-            alignment: .center,
-            spacing: 2 * spacing,
-            pinnedViews: [],
-            content: {
+        
+        
                 ForEach(entries, id: \.self) { entry in
                     let entryData = entry.data
                     let kind = entry.kind
@@ -59,11 +50,26 @@ struct TwoFASWidgetLineView: View {
                         }
                     }()
                     
-                    let tokenVO = (entryData.code.components(separatedBy: "")).joined(separator: " ")
-
-                    Group {
-                        IconRenderer(entry: entry)
-                            .redacted(reason: reason)
+                    generateLine(entry: entry, entryData: entryData, reason: reason, codeReason: codeReason)
+                    .accessibility(hidden: codeReason == .codePlaceholder)
+                    .overlay {
+                        CopyIntentButton(rawEntry: entryData.rawEntry) {
+                            Rectangle()
+                                .foregroundStyle(Color.clear)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }
+                    }
+                }
+        .addWidgetContentMargins(standard: spacing)
+    }
+    
+    @ViewBuilder
+    private func generateLine(entry: CodeEntry.Entry, entryData: CodeEntry.EntryData, reason: RedactionReasons, codeReason: RedactionReason) -> some View {
+        let tokenVO = (entryData.code.components(separatedBy: "")).joined(separator: " ")
+        HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
+            IconRenderer(entry: entry)
+                .frame(width: 24)
+                .redacted(reason: reason)
                         VStack(alignment: .leading, spacing: 3) {
                             Text(entryData.name)
                                 .font(.caption2)
@@ -85,7 +91,7 @@ struct TwoFASWidgetLineView: View {
                             maxHeight: .infinity,
                             alignment: .topLeading
                         )
-                        Text(entryData.code)
+            Text(verbatim: entryData.code)
                             .font(Font.system(.title).weight(.light).monospacedDigit())
                             .multilineTextAlignment(.leading)
                             .minimumScaleFactor(0.2)
@@ -93,24 +99,15 @@ struct TwoFASWidgetLineView: View {
                             .redacted(reason: codeReason)
                             .accessibility(label: Text("widget_token \(tokenVO)"))
                             .contentTransition(.numericText())
-                        counterText(for: entryData.countdownTo)
-                            .multilineTextAlignment(.trailing)
-                            .font(Font.body.monospacedDigit())
-                            .contentTransition(.numericText(countsDown: true))
-                            .lineLimit(1)
-                            .redacted(reason: reason)
-                    }
-                    .accessibility(hidden: codeReason == .codePlaceholder)
-                    .overlay {
-                        CopyIntentButton(rawEntry: entryData.rawEntry) {
-                            Rectangle()
-                                .foregroundStyle(Color.clear)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        }
-                    }
-                }
-            })
-        .addWidgetContentMargins(standard: spacing)
+                            .frame(width: 100)
+            counterText(for: entryData.countdownTo)
+                .multilineTextAlignment(.trailing)
+                .font(Font.body.monospacedDigit())
+                .contentTransition(.numericText(countsDown: true))
+                .lineLimit(1)
+                .redacted(reason: reason)
+                .frame(width: 40)
+        }
     }
     
     private func counterText(for date: Date?) -> Text {

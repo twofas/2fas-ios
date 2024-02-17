@@ -337,6 +337,8 @@
 		C25C91D72B0A6DE600E58729 /* IntroductionModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C91D62B0A6DE600E58729 /* IntroductionModuleInteractor.swift */; };
 		C25C91DA2B0A75B100E58729 /* IntroductionCloudInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C91D92B0A75B100E58729 /* IntroductionCloudInfoViewController.swift */; };
 		C25D5E782A64908200CA359B /* CameraLastPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25D5E772A64908200CA359B /* CameraLastPass.swift */; };
+		C25DCB2E2B8030B200871035 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25DCB2D2B8030B200871035 /* AccessManager.swift */; };
+		C25DCB2F2B80318C00871035 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25DCB2D2B8030B200871035 /* AccessManager.swift */; };
 		C25E898E2663DF9700A60CE5 /* TokensSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E898D2663DF9700A60CE5 /* TokensSectionHeader.swift */; };
 		C25E89902663F11900A60CE5 /* SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E898F2663F11900A60CE5 /* SectionData.swift */; };
 		C25E8994266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E8992266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift */; };
@@ -401,8 +403,6 @@
 		C274C7732ADD3CB000B8AAC1 /* CounterHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24DFB2427D1778100F3EACC /* CounterHandler.swift */; };
 		C274C7742ADD3CB000B8AAC1 /* CounterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24DFB2027D1770D00F3EACC /* CounterState.swift */; };
 		C274C7762ADD3DF900B8AAC1 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C274C7752ADD3DF900B8AAC1 /* FirebaseMessaging */; };
-		C274C7782ADD3E1700B8AAC1 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C274C7772ADD3E1700B8AAC1 /* FirebaseMessaging */; };
-		C274C77A2ADD3E2C00B8AAC1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C274C7792ADD3E2C00B8AAC1 /* FirebaseCrashlytics */; };
 		C274C77C2ADD3E3500B8AAC1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C274C77B2ADD3E3500B8AAC1 /* FirebaseCrashlytics */; };
 		C277C32C245C3FD6009214F3 /* MainContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C277C32B245C3FD6009214F3 /* MainContainerViewController.swift */; };
 		C278121C27F9F3E600F31453 /* ExportPublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278121B27F9F3E600F31453 /* ExportPublicKey.swift */; };
@@ -1897,6 +1897,7 @@
 		C25C91D92B0A75B100E58729 /* IntroductionCloudInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionCloudInfoViewController.swift; sourceTree = "<group>"; };
 		C25D5E752A64863000CA359B /* Code+LastPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Code+LastPass.swift"; sourceTree = "<group>"; };
 		C25D5E772A64908200CA359B /* CameraLastPass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraLastPass.swift; sourceTree = "<group>"; };
+		C25DCB2D2B8030B200871035 /* AccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessManager.swift; sourceTree = "<group>"; };
 		C25E898D2663DF9700A60CE5 /* TokensSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensSectionHeader.swift; sourceTree = "<group>"; };
 		C25E898F2663F11900A60CE5 /* SectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionData.swift; sourceTree = "<group>"; };
 		C25E89912664021900A60CE5 /* TwoFAS4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS4.xcdatamodel; sourceTree = "<group>"; };
@@ -2707,14 +2708,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C23827692B7D3BE1005DD234 /* Data.framework in Frameworks */,
-				C274C7782ADD3E1700B8AAC1 /* FirebaseMessaging in Frameworks */,
 				C264AE6326D2DF3A00AE61E7 /* TimeVerification.framework in Frameworks */,
 				C2C3AE11269E224A00506ACF /* SwiftUI.framework in Frameworks */,
 				C2379D0326B6D6C30010C6B1 /* Storage.framework in Frameworks */,
 				C2E53BC92B62DFFD008E1E70 /* Content.framework in Frameworks */,
 				C2C3AE0F269E224A00506ACF /* WidgetKit.framework in Frameworks */,
 				C251EDED2AE87284007722F2 /* Base32.framework in Frameworks */,
-				C274C77A2ADD3E2C00B8AAC1 /* FirebaseCrashlytics in Frameworks */,
 				C2379D1026B6DF720010C6B1 /* IntentsUI.framework in Frameworks */,
 				C2379D0726B6D6CC0010C6B1 /* Protection.framework in Frameworks */,
 			);
@@ -6415,6 +6414,7 @@
 				C254D12126ACB7D8005FEBD4 /* CodeRedaction.swift */,
 				C2A7B99926B7077400055738 /* Localizable.strings */,
 				C2C32A302AB7198C00DDB944 /* IconRenderer.swift */,
+				C25DCB2D2B8030B200871035 /* AccessManager.swift */,
 			);
 			path = TwoFASWidget;
 			sourceTree = "<group>";
@@ -7864,8 +7864,6 @@
 			);
 			name = TwoFASWidgetExtension;
 			packageProductDependencies = (
-				C274C7772ADD3E1700B8AAC1 /* FirebaseMessaging */,
-				C274C7792ADD3E2C00B8AAC1 /* FirebaseCrashlytics */,
 			);
 			productName = TwoFASWidgetExtension;
 			productReference = C2C3AE0D269E224A00506ACF /* TwoFASWidgetExtension.appex */;
@@ -8490,6 +8488,7 @@
 				C2CC0A3E29D0603000677A7B /* ExternalImportPresenter+Menu.swift in Sources */,
 				C25371A2281DCF56005FB118 /* UINavigationController+.swift in Sources */,
 				C27D5443275D478E001E9ABF /* BackupMenuViewControlling.swift in Sources */,
+				C25DCB2F2B80318C00871035 /* AccessManager.swift in Sources */,
 				C27A54AC27F0FCC600321D2B /* BrowserExtensionPairingPresenter.swift in Sources */,
 				C2A7945527F9019000E5C641 /* BrowserExtensionEditNamePresenter.swift in Sources */,
 				C2CFFCDD2007FDD600600AC6 /* CircleProgress.swift in Sources */,
@@ -9161,6 +9160,7 @@
 				C254D12026ACB777005FEBD4 /* Provider.swift in Sources */,
 				C254D11C26ACB71B005FEBD4 /* TwoFASWidgetSquareView.swift in Sources */,
 				C29787DE27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift in Sources */,
+				C25DCB2E2B8030B200871035 /* AccessManager.swift in Sources */,
 				C2C3AE14269E224A00506ACF /* TwoFASWidget.swift in Sources */,
 				C2D07EEB26A47B8100AF8E7B /* CodeEntry.swift in Sources */,
 				C248DDA82B794A69004712E3 /* WidgetContentMargins.swift in Sources */,
@@ -11663,16 +11663,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
-		};
-		C274C7772ADD3E1700B8AAC1 /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
-		};
-		C274C7792ADD3E2C00B8AAC1 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
 		};
 		C274C77B2ADD3E3500B8AAC1 /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;

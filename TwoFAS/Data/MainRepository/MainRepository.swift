@@ -21,7 +21,7 @@ import Foundation
 import Storage
 import Common
 import NetworkStack
-import PushNotifications
+@_implementationOnly import PushNotifications
 
 typealias CloudStateListenerID = String
 typealias CloudStateListener = (CloudState) -> Void

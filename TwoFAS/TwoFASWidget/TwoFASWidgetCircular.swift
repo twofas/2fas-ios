@@ -21,7 +21,7 @@ import WidgetKit
 import SwiftUI
 import Common
 
-struct TwoFASWidgetLogo: View {
+struct TwoFASWidgetCircular: View {
     @Environment(\.redactionReasons) private var reasons
     let entry: CodeEntry.Entry?
     
@@ -35,11 +35,14 @@ struct TwoFASWidgetLogo: View {
                 if kind == .placeholder {
                     image()
                 } else {
-                    HStack(spacing: 0) {
-                        image()
-                        Spacer()
-                        code(entryData.code)
-                    }
+                    code(entryData.code)
+                        .overlay {
+                            CopyIntentButton(rawEntry: entryData.rawEntry) {
+                                Rectangle()
+                                    .foregroundStyle(Color.clear)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            }
+                        }
                 }
             } else {
                 image()
@@ -64,10 +67,15 @@ struct TwoFASWidgetLogo: View {
     @ViewBuilder
     func code(_ code: String) -> some View {
         Text(code)
-            .font(Font.system(.title).weight(.medium).monospacedDigit())
+            .font(
+                Font.system(.title)
+                    .weight(.medium)
+                    .monospacedDigit()
+            )
             .multilineTextAlignment(.center)
+            .lineLimit(2)
+            .fixedSize(horizontal: false, vertical: true)
             .minimumScaleFactor(0.1)
-            .lineLimit(1)
             .frame(alignment: .center)
     }
     

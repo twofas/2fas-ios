@@ -37,10 +37,12 @@ struct TwoFASWidgetEntryView: View {
                 TwoFASWidgetLineView(entries: entry.entries)
             case .systemExtraLarge:
                 TwoFASWidgetLineViewGrid(entries: entry.entries)
-            case .accessoryCircular, .accessoryInline:
-                TwoFASWidgetLogo(entry: entry.entries.first)
+            case .accessoryCircular:
+                TwoFASWidgetCircular(entry: entry.entries.first)
             case .accessoryRectangular:
-                TwoFASWidgetLogo(entry: entry.entries.first)
+                TwoFASWidgetRectangular(entry: entry.entries.first)
+            case .accessoryInline:
+                TwoFASWidgetInline(entry: entry.entries.first)
             default:
                 Text("widget_size_not_supported")
             }

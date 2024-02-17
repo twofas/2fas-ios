@@ -84,6 +84,7 @@ struct Provider: IntentTimelineProvider {
         
         let selectedServices = configuration.service ?? []
         let currentServices = serviceHandler.listServices(with: selectedServices.compactMap { $0.secret })
+            .filter({ $0.period != .period10 })
         
         var entries: [CodeEntry] = []
         

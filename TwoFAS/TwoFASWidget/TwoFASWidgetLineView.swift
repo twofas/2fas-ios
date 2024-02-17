@@ -30,76 +30,79 @@ struct TwoFASWidgetLineView: View {
     
     @ViewBuilder
     var body: some View {
-        
-        
-                ForEach(entries, id: \.self) { entry in
-                    let entryData = entry.data
-                    let kind = entry.kind
-                    
-                    let reason: RedactionReasons = {
-                        switch kind {
-                        case .placeholder: return .placeholder
-                        default: return []
-                        }
-                    }()
-                    
-                    let codeReason: RedactionReason = {
-                        switch kind {
-                        case .placeholder: return .codePlaceholder
-                        default: return .noPlaceholder
-                        }
-                    }()
-                    
-                    generateLine(entry: entry, entryData: entryData, reason: reason, codeReason: codeReason)
-                    .accessibility(hidden: codeReason == .codePlaceholder)
-                    .overlay {
-                        CopyIntentButton(rawEntry: entryData.rawEntry) {
-                            Rectangle()
-                                .foregroundStyle(Color.clear)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        }
+        ForEach(entries, id: \.self) { entry in
+            let entryData = entry.data
+            let kind = entry.kind
+            
+            let reason: RedactionReasons = {
+                switch kind {
+                case .placeholder: return .placeholder
+                default: return []
+                }
+            }()
+            
+            let codeReason: RedactionReason = {
+                switch kind {
+                case .placeholder: return .codePlaceholder
+                default: return .noPlaceholder
+                }
+            }()
+            
+            generateLine(entry: entry, entryData: entryData, reason: reason, codeReason: codeReason)
+                .accessibility(hidden: codeReason == .codePlaceholder)
+                .overlay {
+                    CopyIntentButton(rawEntry: entryData.rawEntry) {
+                        Rectangle()
+                            .foregroundStyle(Color.clear)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                 }
+        }
         .addWidgetContentMargins(standard: spacing)
     }
     
     @ViewBuilder
-    private func generateLine(entry: CodeEntry.Entry, entryData: CodeEntry.EntryData, reason: RedactionReasons, codeReason: RedactionReason) -> some View {
+    private func generateLine(
+        entry: CodeEntry.Entry,
+        entryData: CodeEntry.EntryData,
+        reason: RedactionReasons,
+        codeReason: RedactionReason
+    ) -> some View {
         let tokenVO = (entryData.code.components(separatedBy: "")).joined(separator: " ")
         HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
             IconRenderer(entry: entry)
                 .frame(width: 24)
                 .redacted(reason: reason)
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text(entryData.name)
-                                .font(.caption2)
-                                .multilineTextAlignment(.leading)
-                                .redacted(reason: reason)
-                                .lineLimit(1)
-                                .accessibility(label: Text("widget_service_name \(entryData.name)"))
-                            let info = entryData.info ?? ""
-                            Text(info)
-                                .lineLimit(1)
-                                .multilineTextAlignment(.leading)
-                                .font(.caption2)
-                                .foregroundColor(.gray)
-                                .redacted(reason: reason)
-                        }.frame(
-                            minWidth: 0,
-                            maxWidth: .infinity,
-                            minHeight: 0,
-                            maxHeight: .infinity,
-                            alignment: .topLeading
-                        )
+            VStack(alignment: .leading, spacing: 3) {
+                Text(entryData.name)
+                    .font(.caption2)
+                    .multilineTextAlignment(.leading)
+                    .redacted(reason: reason)
+                    .lineLimit(1)
+                    .accessibility(label: Text("widget_service_name \(entryData.name)"))
+                let info = entryData.info ?? ""
+                Text(info)
+                    .lineLimit(1)
+                    .multilineTextAlignment(.leading)
+                    .font(.caption2)
+                    .foregroundColor(.gray)
+                    .redacted(reason: reason)
+            }.frame(
+                minWidth: 0,
+                maxWidth: .infinity,
+                minHeight: 0,
+                maxHeight: .infinity,
+                alignment: .topLeading
+            )
             Text(verbatim: entryData.code)
-                            .font(Font.system(.title).weight(.light).monospacedDigit())
-                            .multilineTextAlignment(.leading)
-                            .minimumScaleFactor(0.2)
-                            .lineLimit(1)
-                            .redacted(reason: codeReason)
-                            .accessibility(label: Text("widget_token \(tokenVO)"))
-                            .contentTransition(.numericText())
-                            .frame(width: 100)
+                .font(Font.system(.title).weight(.light).monospacedDigit())
+                .multilineTextAlignment(.leading)
+                .minimumScaleFactor(0.2)
+                .lineLimit(1)
+                .redacted(reason: codeReason)
+                .accessibility(label: Text("widget_token \(tokenVO)"))
+                .contentTransition(.numericText())
+                .frame(width: 100)
             counterText(for: entryData.countdownTo)
                 .multilineTextAlignment(.trailing)
                 .font(Font.body.monospacedDigit())

@@ -118,7 +118,14 @@ struct AppIntentProvider: AppIntentTimelineProvider {
             let rest = seconds % smallestIncrement
             return smallestIncrement - rest
         }()
-        let upTo = 256
+        let divider: Int = {
+            let value = services.count / 2
+            if value == 0 {
+                return 1
+            }
+            return value
+        }()
+        let upTo = 256 / divider
         
         for i in 0 ..< upTo {
             let currentOffset: Int = {

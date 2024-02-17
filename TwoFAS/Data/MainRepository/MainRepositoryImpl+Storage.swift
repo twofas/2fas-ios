@@ -76,7 +76,7 @@ extension MainRepositoryImpl {
         let result = storageRepository
             .addService(
                 name: name,
-                secret: secret,
+                secret: secret.uppercased(),
                 serviceTypeID: serviceTypeID,
                 additionalInfo: additionalInfo,
                 rawIssuer: rawIssuer,
@@ -121,7 +121,7 @@ extension MainRepositoryImpl {
         let result = storageRepository
             .addService(
                 name: name,
-                secret: secret,
+                secret: secret.uppercased(),
                 serviceTypeID: serviceTypeID,
                 additionalInfo: additionalInfo,
                 rawIssuer: rawIssuer,

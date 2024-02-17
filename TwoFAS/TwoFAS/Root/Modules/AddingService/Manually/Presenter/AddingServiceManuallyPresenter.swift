@@ -109,8 +109,7 @@ extension AddingServiceManuallyPresenter {
 
 extension AddingServiceManuallyPresenter {
     func validateAddService() {
-        isAddServiceEnabled = isCorrectServiceName &&
-        isCorrectSecret &&
+        isAddServiceEnabled = isCorrectServiceName && isCorrectSecret &&
         ((advancedShown && isCorrectAdditionalInfo) || (!advancedShown))
     }
     
@@ -187,7 +186,7 @@ extension AddingServiceManuallyPresenter {
             self.secret = ""
         } else {
             isCorrectSecret = true
-            self.secret = secret
+            self.secret = secret.uppercased()
             value = .correct
         }
         

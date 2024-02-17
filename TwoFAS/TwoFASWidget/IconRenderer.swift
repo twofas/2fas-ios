@@ -47,6 +47,6 @@ struct IconRenderer: View {
         }
         .frame(width: 24, height: 24)
         .aspectRatio(contentMode: .fit)
-        .accessibility(label: Text("widget_service_icon"))
+        .accessibility(label: Text("widget__service_icon"))
     }
 }

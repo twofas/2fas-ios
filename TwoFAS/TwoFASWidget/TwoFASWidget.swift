@@ -44,7 +44,7 @@ struct TwoFASWidgetEntryView: View {
             case .accessoryInline:
                 TwoFASWidgetInline(entry: entry.entries.first)
             default:
-                Text("widget_size_not_supported")
+                Text("widget__size_not_supported")
             }
         }
         .widgetBackground(backgroundView: backgroundView)
@@ -81,7 +81,7 @@ struct TwoFASWidget: Widget {
     var body: some WidgetConfiguration {
         makeWidgetConfiguration()
             .configurationDisplayName("2FAS")
-            .description("widget_settings_description")
+            .description("widget__settings_description")
             .supportedFamilies(supportedFamilies)
             .widgetNotInStandBy()
     }

@@ -79,7 +79,9 @@ struct TwoFASWidgetLineView: View {
                     .multilineTextAlignment(.leading)
                     .redacted(reason: reason)
                     .lineLimit(1)
-                    .accessibility(label: Text("widget_service_name \(entryData.name)"))
+                    .accessibility(label:
+                                    Text(verbatim: "\(String(localized: "tokens__service_name")) \(entryData.name)")
+                    )
                 let info = entryData.info ?? ""
                 Text(info)
                     .lineLimit(1)
@@ -100,7 +102,7 @@ struct TwoFASWidgetLineView: View {
                 .minimumScaleFactor(0.2)
                 .lineLimit(1)
                 .redacted(reason: codeReason)
-                .accessibility(label: Text("widget_token \(tokenVO)"))
+                .accessibility(label: Text("\(String(localized: "widget__token")) \(tokenVO)"))
                 .contentTransition(.numericText())
                 .frame(width: 100)
             counterText(for: entryData.countdownTo)

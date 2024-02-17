@@ -26,7 +26,7 @@ import Common
 import Data
 
 struct CopyTokenIntent: AppIntent {
-    static var title: LocalizedStringResource = "Copy Token"
+    static var title = LocalizedStringResource("widget__token")
     
     @Parameter(title: "Secret")
     var secret: String

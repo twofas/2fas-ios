@@ -46,7 +46,7 @@ extension CodeEntry.EntryData {
         return .init(
             id: theID,
             name: "2FAS",
-            info: "My secured account",
+            info: String(localized: "widget__my_secured_account"),
             code: "127 924",
             icon: CodableImage(image: #imageLiteral(resourceName: "TwoFASMainService")),
             iconType: .brand,

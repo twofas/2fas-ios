@@ -24,8 +24,8 @@ import AppIntents
 struct SelectService: AppIntent, WidgetConfigurationIntent, CustomIntentMigratedAppIntent {
     static let intentClassName = "SelectServiceIntent"
 
-    static var title = LocalizedStringResource("widget_select_service")
-    static var description = IntentDescription(LocalizedStringResource("widget_select_service_intent_description"))
+    static var title = LocalizedStringResource("tokens__select_service")
+    static var description = IntentDescription(LocalizedStringResource("widget__settings_description"))
     
     @Parameter(
         title: "Service",

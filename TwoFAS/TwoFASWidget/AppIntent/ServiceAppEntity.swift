@@ -91,11 +91,11 @@ struct ServiceAppEntity: AppEntity {
                     if let categoryName = category.categoryName {
                         return LocalizedStringResource(stringLiteral: categoryName)
                     }
-                    return LocalizedStringResource(stringLiteral: "Main category") // TODO: Add proper string
+                    return LocalizedStringResource("tokens__my_tokens")
                 }()
                 return ItemSection(categoryName, items: services)
             })
-            return ItemCollection(promptLabel: LocalizedStringResource("widget_select_service"), sections: sections)
+            return ItemCollection(promptLabel: LocalizedStringResource("widget__select_service"), sections: sections)
         }
     }
     static var defaultQuery = ServiceAppEntityQuery()
@@ -120,9 +120,9 @@ enum SelectServiceError: Error, CustomLocalizedStringResourceConvertible {
     
     var localizedStringResource: LocalizedStringResource {
         switch self {
-        case .errorNotEnabled: LocalizedStringResource("widget_not_enabled")
-        case .errorNotEnabledNoServices: LocalizedStringResource("widget_not_enabled_no_services")
-        case .errorNoServices: LocalizedStringResource("widget_no_services")
+        case .errorNotEnabled: LocalizedStringResource("widget__not_enabled")
+        case .errorNotEnabledNoServices: LocalizedStringResource("widget__not_enabled_no_services")
+        case .errorNoServices: LocalizedStringResource("widget__no_services")
         }
     }
 }

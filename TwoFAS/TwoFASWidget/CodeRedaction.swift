@@ -31,7 +31,7 @@ struct CodePlaceholder: ViewModifier {
     @ViewBuilder
     func body(content: Content) -> some View {
         content
-            .accessibility(label: Text("widget_placeholder"))
+            .accessibility(label: Text("widget__placeholder"))
             .accessibility(hidden: true)
             .opacity(0)
             .overlay(

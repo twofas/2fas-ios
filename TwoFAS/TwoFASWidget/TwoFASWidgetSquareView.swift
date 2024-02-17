@@ -78,14 +78,16 @@ struct TwoFASWidgetSquareView: View {
                             .font(.caption)
                             .multilineTextAlignment(.leading)
                             .redacted(reason: reason)
-                            .accessibility(label: Text("widget_service_name \(entryData.name)"))
+                            .accessibility(label:
+                                            Text(verbatim: "\(String(localized: "tokens__service_name")) \(entryData.name)")
+                            )
                         let tokenVO = (entryData.code.components(separatedBy: "")).joined(separator: " ")
                         Text(entryData.code)
                             .font(Font.system(.title).weight(.light).monospacedDigit())
                             .multilineTextAlignment(.leading)
                             .minimumScaleFactor(0.2)
                             .redacted(reason: codeReason)
-                            .accessibility(label: Text("widget_token \(tokenVO)"))
+                            .accessibility(label: Text("\(String(localized: "widget__token")) \(tokenVO)"))
                             .contentTransition(.numericText())
                         let info = entryData.info ?? ""
                         Text(info)

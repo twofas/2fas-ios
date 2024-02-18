@@ -78,8 +78,9 @@ struct TwoFASWidgetSquareView: View {
                             .font(.caption)
                             .multilineTextAlignment(.leading)
                             .redacted(reason: reason)
-                            .accessibility(label:
-                                            Text(verbatim: "\(String(localized: "tokens__service_name")) \(entryData.name)")
+                            .accessibility(
+                                label:
+                                    Text(verbatim: "\(String(localized: "tokens__service_name")) \(entryData.name)")
                             )
                         let tokenVO = (entryData.code.components(separatedBy: "")).joined(separator: " ")
                         Text(entryData.code)

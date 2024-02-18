@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Frame.pdf",
+      "filename" : "2fas_be.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "2fas_be-2.pdf",
       "idiom" : "universal"
     }
   ],

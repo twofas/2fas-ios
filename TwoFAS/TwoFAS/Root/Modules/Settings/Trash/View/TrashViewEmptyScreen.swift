@@ -20,11 +20,7 @@
 import UIKit
 
 final class TrashViewEmptyScreen: UIView {
-    private let icon: UIImageView = {
-        let image = UIImageView(image: Asset.trashEmptyIcon.image)
-        image.tintColor = Theme.Colors.inactiveInverted
-        return image
-    }()
+    private let icon = UIImageView(image: Asset.trashEmptyIcon.image)
     
     private let text: UILabel = {
        let label = UILabel()

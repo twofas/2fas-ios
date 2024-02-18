@@ -41,7 +41,7 @@ final class BackupDeleteViewController: UIViewController {
         let spacing: CGFloat = 15
         let contentTop = MainContainerTopContentGenerator(placement: .centerHorizontallyLimitWidth, elements: [
             .view(view: spacer0),
-            .image(name: "backupDeleted", size: CGSize(width: 150, height: 138)),
+            .image(name: "backupDeleted", size: CGSize(width: 280, height: 200)),
             .extraSpacing,
             .text(text: T.Backup.delete2fasBackup, style: MainContainerTextStyling.titleLight)
         ])

@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "importBackup.pdf",
+      "filename" : "2fas_import.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "2fas_import-2.pdf",
       "idiom" : "universal"
     }
   ],

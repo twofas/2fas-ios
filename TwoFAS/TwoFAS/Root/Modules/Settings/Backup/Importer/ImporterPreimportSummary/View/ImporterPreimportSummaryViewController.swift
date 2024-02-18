@@ -50,7 +50,7 @@ final class ImporterPreimportSummaryViewController: UIViewController {
                 if let icon = presenter.additionalIcon {
                     return .view(view: createImportImage(with: icon))
                 }
-                return .image(name: "importBackup", size: CGSize(width: 116, height: 94))
+                return .image(name: "importBackup", size: CGSize(width: 280, height: 200))
             }(),
             .extraSpacing,
             .text(text: presenter.title, style: MainContainerTextStyling.title),

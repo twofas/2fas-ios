@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "BackupDisabled.pdf",
+      "filename" : "2fas_backup_failed.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "2fas_backup_failed-2.pdf",
       "idiom" : "universal"
     }
   ],

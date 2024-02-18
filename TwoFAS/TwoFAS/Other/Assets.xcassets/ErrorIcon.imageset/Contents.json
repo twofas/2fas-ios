@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Frame.pdf",
+      "filename" : "error.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "error-2.pdf",
       "idiom" : "universal"
     }
   ],

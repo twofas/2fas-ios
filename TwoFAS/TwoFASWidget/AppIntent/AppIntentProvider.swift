@@ -54,6 +54,7 @@ struct AppIntentProvider: AppIntentTimelineProvider {
     private let protection: Protection
     private let serviceHandler: WidgetServiceHandlerType
     
+    @MainActor
     init() {
         protection = AccessManager.protection
         serviceHandler = AccessManager.serviceHandler
@@ -67,6 +68,7 @@ struct AppIntentProvider: AppIntentTimelineProvider {
         CodeEntry.snapshot(with: context.family.servicesCount)
     }
     
+    @MainActor
     func timeline(for configuration: SelectService, in context: Context) async -> Timeline<CodeEntry> {
         let slots = context.family.servicesCount
         

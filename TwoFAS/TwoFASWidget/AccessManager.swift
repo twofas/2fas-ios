@@ -23,10 +23,12 @@ import Protection
 import Common
 
 enum AccessManager {
+    @MainActor
     static var serviceHandler: WidgetServiceHandlerType = {
         EncryptionHolder.initialize(with: protection.localKeyEncryption)
         return Storage(readOnly: true, logError: nil).widgetService
     }()
+    @MainActor
     static var protection: Protection = {
         Protection()
     }()

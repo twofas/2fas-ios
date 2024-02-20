@@ -30,6 +30,7 @@ struct ServiceAppEntity: AppEntity {
     var secret: String
     
     struct ServiceAppEntityQuery: EntityQuery {
+        @MainActor
         func entities(for identifiers: [String]) async throws -> [ServiceAppEntity] {
             SelectedItems.list = identifiers
             return AccessManager.serviceHandler.listAll(search: nil, exclude: [])
@@ -44,6 +45,7 @@ struct ServiceAppEntity: AppEntity {
                 })
         }
         
+        @MainActor
         func suggestedEntities() async throws -> ItemCollection<ServiceAppEntity> {
             switch (
                 AccessManager.serviceHandler.hasServices(),

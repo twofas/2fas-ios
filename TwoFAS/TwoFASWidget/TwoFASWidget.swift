@@ -78,6 +78,7 @@ struct TwoFASWidget: Widget {
         }
     }()
     
+    @MainActor
     var body: some WidgetConfiguration {
         makeWidgetConfiguration()
             .configurationDisplayName("2FAS")
@@ -86,6 +87,7 @@ struct TwoFASWidget: Widget {
             .widgetNotInStandBy()
     }
     
+    @MainActor
     private func makeWidgetConfiguration() -> some WidgetConfiguration {
         if #available(iOS 17.0, macOS 14.0, watchOS 10.0, *) {
             return AppIntentConfiguration(

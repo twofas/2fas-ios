@@ -89,7 +89,7 @@ extension AddingServiceManuallyModuleInteractor: AddingServiceManuallyModuleInte
         }()
         serviceModifyInteractor.addService(
             name: name,
-            secret: secret,
+            secret: secret.uppercased(),
             serviceTypeID: nil,
             additionalInfo: additionalInfo,
             rawIssuer: nil,

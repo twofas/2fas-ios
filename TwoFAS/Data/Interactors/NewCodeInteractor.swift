@@ -148,7 +148,7 @@ private extension NewCodeInteractor {
         
         interactorModify.addService(
             name: codeName,
-            secret: code.secret,
+            secret: code.secret.uppercased(),
             serviceTypeID: serviceDefinition?.serviceTypeID,
             additionalInfo: additionalInfoValue?.sanitizeInfo(),
             rawIssuer: code.issuer,

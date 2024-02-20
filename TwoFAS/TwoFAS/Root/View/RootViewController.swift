@@ -19,6 +19,7 @@
 
 import UIKit
 import CommonUIKit
+import Common
 
 protocol RootViewControlling: AnyObject {
     func hideAllNotifications()
@@ -54,7 +55,17 @@ extension RootViewController: RootViewControlling {
     }
     
     func tokenCopied() {
-        VoiceOver.say(T.Notifications.tokenCopied)
-        HUDNotification.presentSuccess(title: T.Notifications.tokenCopied)
+        func flashNotification() {
+            VoiceOver.say(T.Notifications.tokenCopied)
+            HUDNotification.presentSuccess(title: T.Notifications.tokenCopied)
+        }
+        
+        if UIApplication.keyWindow != nil {
+            flashNotification()
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                flashNotification()
+            }
+        }
     }
 }

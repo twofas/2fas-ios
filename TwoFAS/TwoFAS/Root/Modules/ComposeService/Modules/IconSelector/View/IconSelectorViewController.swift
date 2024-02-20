@@ -117,6 +117,13 @@ final class IconSelectorViewController: UIViewController {
         view.addSubview(emptyView)
         emptyView.pinToParent()
         emptyView.isHidden = true
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(dismissKeyboard),
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -133,6 +140,15 @@ final class IconSelectorViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         stopSafeAreaKeyboardAdjustment()
+    }
+    
+    @objc
+    private func dismissKeyboard() {
+        searchController.searchBar.resignFirstResponder()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 

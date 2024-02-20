@@ -57,14 +57,19 @@ extension SettingsMenuPresenter {
                 )
             ]
         )
-        
+        let browerExtensionDescription: String = {
+            if interactor.hasActiveBrowserExtension {
+                return T.Commons.on
+            }
+            return T.Commons.off
+        }()
         let browerExtension = SettingsMenuSection(
             title: T.Browser.browserExtension,
             cells: [
                 .init(
                     icon: Asset.settingsBrowserExtension.image,
                     title: T.Browser.browserExtensionSettings,
-                    info: securityDescription,
+                    info: browerExtensionDescription,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .browserExtension)
                 )

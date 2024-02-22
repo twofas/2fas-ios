@@ -97,7 +97,10 @@ struct ServiceAppEntity: AppEntity {
                 }()
                 return ItemSection(categoryName, items: services)
             })
-            return ItemCollection(promptLabel: LocalizedStringResource("widget__select_service"), sections: sections)
+            return ItemCollection(
+                promptLabel: LocalizedStringResource("widget__select_service_intent_description"),
+                sections: sections
+            )
         }
     }
     static var defaultQuery = ServiceAppEntityQuery()

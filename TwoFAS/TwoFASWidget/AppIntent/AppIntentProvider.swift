@@ -51,14 +51,6 @@ struct AppIntentProvider: AppIntentTimelineProvider {
         let labelTitle: String
         let labelColor: TintColor
     }
-    private let protection: Protection
-    private let serviceHandler: WidgetServiceHandlerType
-    
-    @MainActor
-    init() {
-        protection = AccessManager.protection
-        serviceHandler = AccessManager.serviceHandler
-    }
     
     func placeholder(in context: Context) -> CodeEntry {
         CodeEntry.placeholder(with: context.family.servicesCount)
@@ -70,6 +62,9 @@ struct AppIntentProvider: AppIntentTimelineProvider {
     
     @MainActor
     func timeline(for configuration: SelectService, in context: Context) async -> Timeline<CodeEntry> {
+        let protection = AccessManager.protection
+        let serviceHandler = AccessManager.serviceHandler
+        
         let slots = context.family.servicesCount
         
         guard protection.extensionsStorage.areWidgetsEnabled else {

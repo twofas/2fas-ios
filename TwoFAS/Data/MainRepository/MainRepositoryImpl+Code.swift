@@ -48,4 +48,11 @@ extension MainRepositoryImpl {
         guard let url = storedURL else { return nil }
         return Code.parse(with: url.absoluteString)
     }
+    
+    func clearHasIncorrectCode() {
+        hasIncorrectCode = false
+    }
+    func saveHasIncorrectCode() {
+        hasIncorrectCode = true
+    }
 }

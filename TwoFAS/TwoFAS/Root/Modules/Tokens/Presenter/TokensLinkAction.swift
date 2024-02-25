@@ -25,6 +25,7 @@ enum TokensLinkAction {
     case shouldAddCode(descriptionText: String?)
     case sendLogs(auditID: UUID)
     case newData
+    case incorrectCode
     case shouldRename(currentName: String, secret: Secret)
     case serviceWasCreaded(serviceData: ServiceData)
 }

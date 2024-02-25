@@ -254,6 +254,9 @@ protocol MainRepository: AnyObject {
     func clearStoredURL()
     func codeFromStoredURL() -> Code?
     func codeTypeFromStoredURL() -> CodeType?
+    var hasIncorrectCode: Bool { get }
+    func clearHasIncorrectCode()
+    func saveHasIncorrectCode()
     
     // MARK: - Old controllers
     var security: SecurityProtocol { get }

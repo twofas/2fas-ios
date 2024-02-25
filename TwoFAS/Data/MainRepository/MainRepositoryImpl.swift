@@ -77,6 +77,7 @@ final class MainRepositoryImpl: MainRepository {
     }
     
     var storedURL: URL?
+    var hasIncorrectCode: Bool
     var fileURL: URL?
     var sslNetworkError = false
     var lastFetchedNewsTimestamp: Date?
@@ -160,7 +161,7 @@ final class MainRepositoryImpl: MainRepository {
         
         storageRepository = storage.storageRepository
         timeVerificationController.log = { value in Log(value, module: .counter) }
-        
+        hasIncorrectCode = false
         security.interactor = AppLockStateInteractor(mainRepository: self)
         MainRepositoryImpl._shared = self
         

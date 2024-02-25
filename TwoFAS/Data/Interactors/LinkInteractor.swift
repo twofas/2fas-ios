@@ -23,6 +23,7 @@ import Common
 public protocol LinkInteracting: AnyObject {
     var hasStoredURL: Bool { get }
     var showCodeAlreadyExists: Callback? { get set }
+    var showIncorrectCode: Callback? { get set }
     var showShouldAddCode: ((String?) -> Void)? { get set }
     var showSendLogs: ((UUID) -> Void)? { get set }
     var reloadDataAndRefresh: Callback? { get set }
@@ -43,6 +44,7 @@ final class LinkInteractor {
     private let interactorNew: NewCodeInteracting
     
     var showCodeAlreadyExists: Callback?
+    var showIncorrectCode: Callback?
     var showShouldAddCode: ((String?) -> Void)?
     var showSendLogs: ((UUID) -> Void)?
     var reloadDataAndRefresh: Callback?
@@ -68,6 +70,7 @@ extension LinkInteractor: LinkInteracting {
         Log("URL: \(url)", module: .interactor, save: false)
         
         guard mainRepository.shouldHandleURL(url) else {
+            mainRepository.saveHasIncorrectCode()
             Log("LinkInteractor - shouldHandleURL - won't handle", module: .interactor)
             return false
         }
@@ -80,6 +83,11 @@ extension LinkInteractor: LinkInteracting {
         Log("LinkInteractor - handleCodeIfNecessary", module: .interactor)
         guard hasStoredURL else {
             Log("LinkInteractor - handleCodeIfNecessary - no url", module: .interactor)
+            if mainRepository.hasIncorrectCode {
+                Log("LinkInteractor - hasIncorrectCode", module: .interactor)
+                mainRepository.clearHasIncorrectCode()
+                showIncorrectCode?()
+            }
             return
         }
         
@@ -101,6 +109,7 @@ extension LinkInteractor: LinkInteracting {
         default:
             Log("LinkInteractor - handleCodeIfNecessary - not supported type - exiting", module: .interactor)
             mainRepository.clearStoredURL()
+            showIncorrectCode?()
             return
         }
     }

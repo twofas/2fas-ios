@@ -41,7 +41,7 @@ struct AppIntentProvider: AppIntentTimelineProvider {
         let secret: String
         let title: String
         let subtitle: String?
-        let icon: UIImage
+        let iconTypeID: IconTypeID
         let serviceTypeID: ServiceTypeID?
         let digits: Digits
         let period: Period
@@ -82,13 +82,12 @@ struct AppIntentProvider: AppIntentTimelineProvider {
             for i in 0..<slots {
                 if let service = list[safe: i],
                    let widgetService = currentServices.first(where: { $0.serviceID == service.secret }) {
-                    let icon = widgetService.icon
                     let entryDescription = EntryDescription(
                         identifier: "\(service.secret)\(UUID().uuidString)",
                         secret: service.secret,
                         title: widgetService.serviceName,
                         subtitle: widgetService.serviceInfo,
-                        icon: icon,
+                        iconTypeID: widgetService.iconTypeID,
                         serviceTypeID: widgetService.serviceTypeID,
                         digits: widgetService.digits,
                         period: widgetService.period,
@@ -116,6 +115,9 @@ struct AppIntentProvider: AppIntentTimelineProvider {
             return smallestIncrement - rest
         }()
         let divider: Int = {
+            if services.count > 3 {
+                return 27
+            }
             let value = services.count / 2
             if value == 0 {
                 return 1
@@ -164,7 +166,6 @@ struct AppIntentProvider: AppIntentTimelineProvider {
                     name: entryDescription.title,
                     info: entryDescription.subtitle,
                     code: token.formattedValue(for: entryDescription.tokenType),
-                    icon: CodableImage(image: entryDescription.icon),
                     iconType: {
                         switch entryDescription.iconType {
                         case .brand: return .brand
@@ -173,6 +174,7 @@ struct AppIntentProvider: AppIntentTimelineProvider {
                     }(),
                     labelTitle: entryDescription.labelTitle,
                     labelColor: entryDescription.labelColor,
+                    iconTypeID: entryDescription.iconTypeID,
                     serviceTypeID: entryDescription.serviceTypeID,
                     countdownTo: countdownTo,
                     rawEntry: .init(

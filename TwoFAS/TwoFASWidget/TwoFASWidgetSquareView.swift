@@ -78,17 +78,11 @@ struct TwoFASWidgetSquareView: View {
                             .font(.caption)
                             .multilineTextAlignment(.leading)
                             .redacted(reason: reason)
-                            .accessibility(
-                                label:
-                                    Text(verbatim: "\(String(localized: "tokens__service_name")) \(entryData.name)")
-                            )
-                        let tokenVO = (entryData.code.components(separatedBy: "")).joined(separator: " ")
                         Text(entryData.code)
                             .font(Font.system(.title).weight(.light).monospacedDigit())
                             .multilineTextAlignment(.leading)
                             .minimumScaleFactor(0.2)
                             .redacted(reason: codeReason)
-                            .accessibility(label: Text("\(String(localized: "widget__token")) \(tokenVO)"))
                             .contentTransition(.numericText())
                         let info = entryData.info ?? ""
                         Text(info)
@@ -128,10 +122,12 @@ struct TwoFASWidgetSquareView: View {
         return false
     }
     
-    private func counterText(for date: Date?) -> Text {
+    @ViewBuilder
+    private func counterText(for date: Date?) -> some View {
         if let countdownTo = date {
-            return Text(countdownTo, style: .timer)
+            Text(countdownTo, style: .timer)
+        } else {
+            Text("0:00")
         }
-        return Text("0:00")
     }
 }

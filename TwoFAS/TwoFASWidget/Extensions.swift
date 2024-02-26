@@ -20,6 +20,7 @@
 import WidgetKit
 import SwiftUI
 import Intents
+import Common
 
 extension CodeEntry {
     static func placeholder(with serviceCount: Int) -> CodeEntry {
@@ -41,33 +42,20 @@ extension CodeEntry.Entry {
 
 extension CodeEntry.EntryData {
     static func createSnapshot() -> Self {
-        // swiftlint:disable discouraged_object_literal
         let theID = UUID().uuidString
         return .init(
             id: theID,
             name: "2FAS",
             info: String(localized: "widget__my_secured_account"),
             code: "127 924",
-            icon: CodableImage(image: #imageLiteral(resourceName: "TwoFASMainService")),
             iconType: .brand,
             labelTitle: "2F",
             labelColor: .red,
-            serviceTypeID: UUID(),
+            iconTypeID: IconTypeID.default,
+            serviceTypeID: nil,
             countdownTo: nil,
             rawEntry: nil
         )
-    }
-}
-
-// -
-
-extension UIImage {
-    static func icon(from file: INFile?) -> UIImage {
-        if let data = file?.data, let image = UIImage(data: data) {
-            return image
-        }
-        // swiftlint:disable discouraged_object_literal
-        return #imageLiteral(resourceName: "TwoFASMainService")
     }
 }
 

@@ -38,7 +38,7 @@ struct Provider: IntentTimelineProvider {
         let secret: String
         let title: String
         let subtitle: String?
-        let icon: UIImage
+        let iconTypeID: IconTypeID
         let serviceTypeID: ServiceTypeID?
         let digits: Digits
         let period: Period
@@ -96,13 +96,12 @@ struct Provider: IntentTimelineProvider {
                    let identifier = service.identifier,
                    let secret = service.secret,
                    let widgetService = currentServices.first(where: { $0.serviceID == secret }) {
-                    let icon = widgetService.icon
                     let entryDescription = EntryDescription(
                         identifier: identifier,
                         secret: secret,
                         title: widgetService.serviceName,
                         subtitle: widgetService.serviceInfo,
-                        icon: icon,
+                        iconTypeID: widgetService.iconTypeID,
                         serviceTypeID: widgetService.serviceTypeID,
                         digits: widgetService.digits,
                         period: widgetService.period,
@@ -178,7 +177,6 @@ struct Provider: IntentTimelineProvider {
                     name: entryDescription.title,
                     info: entryDescription.subtitle,
                     code: token.formattedValue(for: entryDescription.tokenType),
-                    icon: CodableImage(image: entryDescription.icon),
                     iconType: {
                         switch entryDescription.iconType {
                         case .brand: return .brand
@@ -187,6 +185,7 @@ struct Provider: IntentTimelineProvider {
                     }(),
                     labelTitle: entryDescription.labelTitle,
                     labelColor: entryDescription.labelColor,
+                    iconTypeID: entryDescription.iconTypeID,
                     serviceTypeID: entryDescription.serviceTypeID,
                     countdownTo: countdownTo,
                     rawEntry: .init(

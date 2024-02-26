@@ -20,8 +20,9 @@
 import WidgetKit
 import UIKit
 import Common
+import CommonUIKit
 
-struct CodeEntry: TimelineEntry {
+struct CodeEntry: TimelineEntry, Encodable {
     let date: Date
     let entries: [Entry]
     
@@ -61,10 +62,10 @@ struct CodeEntry: TimelineEntry {
         let name: String
         let info: String?
         let code: String
-        let icon: CodableImage
         let iconType: IconType
         let labelTitle: String
         let labelColor: TintColor
+        let iconTypeID: IconTypeID
         let serviceTypeID: ServiceTypeID?
         let countdownTo: Date?
         let rawEntry: RawEntryData?

@@ -48,7 +48,12 @@ struct TwoFASWidgetLineView: View {
                 }
             }()
             
-            generateLine(entry: entry, entryData: entryData, reason: reason, codeReason: codeReason)
+            generateLine(
+                entry: entry,
+                entryData: entryData,
+                reason: reason,
+                codeReason: codeReason
+            )
                 .accessibility(hidden: codeReason == .codePlaceholder)
                 .overlay {
                     CopyIntentButton(rawEntry: entryData.rawEntry) {
@@ -68,7 +73,6 @@ struct TwoFASWidgetLineView: View {
         reason: RedactionReasons,
         codeReason: RedactionReason
     ) -> some View {
-        let tokenVO = (entryData.code.components(separatedBy: "")).joined(separator: " ")
         HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
             IconRenderer(entry: entry)
                 .frame(width: 24)
@@ -79,9 +83,6 @@ struct TwoFASWidgetLineView: View {
                     .multilineTextAlignment(.leading)
                     .redacted(reason: reason)
                     .lineLimit(1)
-                    .accessibility(label:
-                                    Text(verbatim: "\(String(localized: "tokens__service_name")) \(entryData.name)")
-                    )
                 let info = entryData.info ?? ""
                 Text(info)
                     .lineLimit(1)
@@ -102,7 +103,6 @@ struct TwoFASWidgetLineView: View {
                 .minimumScaleFactor(0.2)
                 .lineLimit(1)
                 .redacted(reason: codeReason)
-                .accessibility(label: Text("\(String(localized: "widget__token")) \(tokenVO)"))
                 .contentTransition(.numericText())
                 .frame(width: 100)
             counterText(for: entryData.countdownTo)
@@ -115,10 +115,12 @@ struct TwoFASWidgetLineView: View {
         }
     }
     
-    private func counterText(for date: Date?) -> Text {
+    @ViewBuilder
+    private func counterText(for date: Date?) -> some View {
         if let countdownTo = date {
-            return Text(countdownTo, style: .timer)
+            Text(countdownTo, style: .timer)
+        } else {
+            Text("0:00")
         }
-        return Text("0:00")
     }
 }

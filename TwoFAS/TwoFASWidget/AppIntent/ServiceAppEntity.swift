@@ -47,19 +47,13 @@ struct ServiceAppEntity: AppEntity {
         
         @MainActor
         func suggestedEntities() async throws -> ItemCollection<ServiceAppEntity> {
-            switch (
-                AccessManager.serviceHandler.hasServices(),
-                AccessManager.protection.extensionsStorage.areWidgetsEnabled
-            ) {
-            case (false, false):
-                throw SelectServiceError.errorNotEnabledNoServices
-            case (true, false):
+            guard AccessManager.protection.extensionsStorage.areWidgetsEnabled else {
                 throw SelectServiceError.errorNotEnabled
-            case (false, true):
-                throw SelectServiceError.errorNoServices
-            default: break
             }
-            
+            guard AccessManager.serviceHandler.hasServices() else {
+                throw SelectServiceError.errorNoServices
+            }
+                        
             let all: [WidgetCategory] = AccessManager.serviceHandler.listAll(search: nil, exclude: [])
             let sections = all.map({ category -> ItemSection<ServiceAppEntity> in
                 let services: [Item] = category.services

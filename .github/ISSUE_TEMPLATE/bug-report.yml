@@ -8,7 +8,7 @@ body:
       value: |
         Before creating a bug report, please keep the following in mind:
 
-        - Do not submit a duplicate bug report. You can review existing bug reports [here](https://github.com/twofas/2fas-android/labels/Bug).
+        - Do not submit a duplicate bug report. You can review existing bug reports [here](https://github.com/twofas/2fas-ios/labels/Feature).
         - Security vulnerabilities should be reported to security@2fas.com.
   - type: dropdown
     attributes:

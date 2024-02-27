@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Before creating a feature request, please ensure that it is not a duplicate of an existing feature request. You can review existing feature requests [here](https://github.com/twofas/2fas-android/labels/Feature).
+        Before creating a feature request, please ensure that it is not a duplicate of an existing feature request. You can review existing feature requests [here](https://github.com/twofas/2fas-ios/labels/Feature).
   - type: textarea
     attributes:
       label: Feature description

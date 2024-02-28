@@ -114,11 +114,12 @@ struct AppIntentProvider: AppIntentTimelineProvider {
             let rest = seconds % smallestIncrement
             return smallestIncrement - rest
         }()
+        let slotsCount = context.family.servicesCount
         let divider: Int = {
-            if services.count > 3 {
+            if slotsCount > 3 {
                 return 27
             }
-            let value = services.count / 2
+            let value = slotsCount / 2
             if value == 0 {
                 return 1
             }

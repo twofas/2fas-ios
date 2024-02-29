@@ -19,15 +19,17 @@
 
 import SwiftUI
 import Common
+import CommonUIKit
 
 struct IconRenderer: View {
     let entry: CodeEntry.Entry
     
+    @ViewBuilder
     var body: some View {
         Group {
             switch entry.data.iconType {
             case .brand:
-                Image(uiImage: entry.data.icon)
+                Image(uiImage: ServiceIcon.for(iconTypeID: entry.data.iconTypeID))
                     .resizable()
             case .label:
                 ZStack(alignment: .center) {
@@ -47,6 +49,5 @@ struct IconRenderer: View {
         }
         .frame(width: 24, height: 24)
         .aspectRatio(contentMode: .fit)
-        .accessibility(label: Text("widget_service_icon"))
     }
 }

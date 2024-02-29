@@ -60,7 +60,7 @@ final class ImporterFileErrorViewController: UIViewController {
         }()
         
         var elements: [MainContainerContentGenerator.Element] = [
-            .image(name: "fileError", size: CGSize(width: 116, height: 102)),
+            .image(name: "fileError", size: CGSize(width: 280, height: 200)),
             .extraSpacing,
             .text(text: title, style: MainContainerTextStyling.title),
             .extraSpacing,

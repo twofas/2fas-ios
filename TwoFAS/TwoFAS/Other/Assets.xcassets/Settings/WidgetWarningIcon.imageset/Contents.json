@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "WidgetWarningIcon.pdf",
+      "filename" : "eye.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "eye-2.pdf",
       "idiom" : "universal"
     }
   ],

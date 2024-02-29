@@ -42,7 +42,7 @@ final class ExporterMainScreenViewController: UIViewController {
         )
         
         let contentMiddle = MainContainerMiddleContentGenerator(placement: .centerHorizontallyLimitWidth, elements: [
-            .image(name: "exportBackup", size: CGSize(width: 160, height: 130)),
+            .image(name: "exportBackup", size: CGSize(width: 280, height: 200)),
             .extraSpacing,
             .text(text: T.Backup.exportToBackupFile, style: MainContainerTextStyling.title),
             .extraSpacing,

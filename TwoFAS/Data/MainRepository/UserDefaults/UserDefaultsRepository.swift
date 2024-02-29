@@ -93,4 +93,8 @@ protocol UserDefaultsRepository: AnyObject {
     
     var dateOfFirstRun: Date? { get }
     func saveDateOfFirstRun(_ date: Date)
+    
+    var exchangeToken: String? { get }
+    func setExchangeToken(_ key: String)
+    func clearExchangeToken()
 }

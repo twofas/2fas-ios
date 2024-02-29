@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "PairingFailed.pdf",
+      "filename" : "be_pairing_error.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "be_pairing_error-2.pdf",
       "idiom" : "universal"
     }
   ],

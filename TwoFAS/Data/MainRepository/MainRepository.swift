@@ -21,7 +21,7 @@ import Foundation
 import Storage
 import Common
 import NetworkStack
-import PushNotifications
+@_implementationOnly import PushNotifications
 
 typealias CloudStateListenerID = String
 typealias CloudStateListener = (CloudState) -> Void
@@ -66,6 +66,10 @@ protocol MainRepository: AnyObject {
     func disableWidgets()
     func markWidgetEnablingWarningAsShown()
     func reloadWidgets()
+    // MARK: Exchange Token
+    var exchangeToken: String? { get }
+    func setExchangeToken(_ key: String)
+    func clearExchangeToken()
     
     // MARK: - Appearance
     
@@ -250,6 +254,9 @@ protocol MainRepository: AnyObject {
     func clearStoredURL()
     func codeFromStoredURL() -> Code?
     func codeTypeFromStoredURL() -> CodeType?
+    var hasIncorrectCode: Bool { get }
+    func clearHasIncorrectCode()
+    func saveHasIncorrectCode()
     
     // MARK: - Old controllers
     var security: SecurityProtocol { get }

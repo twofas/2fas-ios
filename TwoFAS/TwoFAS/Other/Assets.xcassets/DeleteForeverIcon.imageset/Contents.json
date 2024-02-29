@@ -1,7 +1,29 @@
 {
   "images" : [
     {
-      "filename" : "no trash.pdf",
+      "alignment-insets" : {
+        "bottom" : 0,
+        "left" : 10,
+        "right" : -10,
+        "top" : 0
+      },
+      "filename" : "delete_confirm.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "alignment-insets" : {
+        "bottom" : 0,
+        "left" : 10,
+        "right" : -10,
+        "top" : 0
+      },
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "delete_confirm-2.pdf",
       "idiom" : "universal"
     }
   ],

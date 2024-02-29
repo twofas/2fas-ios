@@ -20,6 +20,7 @@
 import WidgetKit
 import SwiftUI
 import Intents
+import Common
 
 extension CodeEntry {
     static func placeholder(with serviceCount: Int) -> CodeEntry {
@@ -41,32 +42,20 @@ extension CodeEntry.Entry {
 
 extension CodeEntry.EntryData {
     static func createSnapshot() -> Self {
-        // swiftlint:disable discouraged_object_literal
         let theID = UUID().uuidString
         return .init(
             id: theID,
             name: "2FAS",
-            info: "My secured account",
+            info: String(localized: "widget__my_secured_account"),
             code: "127 924",
-            icon: #imageLiteral(resourceName: "TwoFASMainService"),
             iconType: .brand,
             labelTitle: "2F",
             labelColor: .red,
-            serviceTypeID: UUID(),
-            countdownTo: nil
+            iconTypeID: IconTypeID.default,
+            serviceTypeID: nil,
+            countdownTo: nil,
+            rawEntry: nil
         )
-    }
-}
-
-// -
-
-extension UIImage {
-    static func icon(from file: INFile?) -> UIImage {
-        if let data = file?.data, let image = UIImage(data: data) {
-            return image
-        }
-        // swiftlint:disable discouraged_object_literal
-        return #imageLiteral(resourceName: "TwoFASMainService")
     }
 }
 
@@ -77,7 +66,50 @@ extension WidgetFamily {
         case .systemMedium: return 3
         case .systemLarge: return 6
         case .systemExtraLarge: return 12
+        case .accessoryCircular: return 1
+        case .accessoryInline: return 1
+        case .accessoryRectangular: return 1
         default: return 1
+        }
+    }
+}
+
+struct CodableImage: Codable, Hashable, Identifiable {
+    var id: Int {
+        imageInstance?.hash ?? 0
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(imageInstance?.hash ?? 0)
+    }
+    
+    private let imageInstance: UIImage?
+    
+    var image: UIImage {
+        imageInstance ?? UIImage()
+    }
+
+    init(image: UIImage) {
+        self.imageInstance = image
+    }
+
+    enum CodingKeys: CodingKey {
+        case data
+        case scale
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let scale = try container.decode(CGFloat.self, forKey: .scale)
+        let data = try container.decode(Data.self, forKey: .data)
+        self.imageInstance = UIImage(data: data, scale: scale)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        if let image = self.imageInstance {
+            try container.encode(image.pngData(), forKey: .data)
+            try container.encode(image.scale, forKey: .scale)
         }
     }
 }

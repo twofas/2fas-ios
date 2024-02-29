@@ -65,9 +65,6 @@ extension ComposeServiceAdvancedSummaryModuleInteractor: ComposeServiceAdvancedS
     }
     
     func copyCounter() {
-        notificationInteractor.copyWithSuccess(
-            title: T.Notifications.counterCopied,
-            value: String(counter)
-        )
+        notificationInteractor.copyWithSuccess(value: String(counter))
     }
 }

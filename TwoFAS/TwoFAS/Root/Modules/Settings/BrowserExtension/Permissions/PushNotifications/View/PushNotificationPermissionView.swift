@@ -33,6 +33,7 @@ struct PushNotificationPermissionView: View {
                 Image(uiImage: image)
                     .renderingMode(.original)
                     .frame(width: image.size.width, height: image.size.height)
+                    .padding(.leading, 25)
             }
             .frame(maxHeight: .infinity, alignment: .center)
             

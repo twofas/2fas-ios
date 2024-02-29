@@ -134,6 +134,8 @@ extension TokensPresenter {
         case .newData: handleNewData()
         case .shouldRename(let currentName, let secret):
             flowController.toShouldRenameService(currentName: currentName, secret: secret)
+        case .incorrectCode:
+            flowController.toIncorrectCode()
         case .serviceWasCreaded(let serviceData):
             reloadData()
             flowController.toServiceWasCreated(serviceData)

@@ -24,17 +24,18 @@ struct AdvancedAlert: View {
     private let spacing: CGFloat = Theme.Metrics.doubleSpacing
     
     private let alertImage = Asset.alertIcon.image
+    private let alertSize = CGSize(width: 140, height: 100)
     
     let action: Callback
     let cancel: Callback
     
     var body: some View {
         VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-            HStack(spacing: spacing) {
+            Group {
                 Image(uiImage: alertImage)
-                    .renderingMode(.template)
-                    .foregroundColor(.red)
-                    .frame(width: alertImage.size.width, height: alertImage.size.height)
+                    .resizable()
+                    .renderingMode(.original)
+                    .frame(width: alertSize.width, height: alertSize.height)
             }
             .frame(maxHeight: .infinity, alignment: .center)
             

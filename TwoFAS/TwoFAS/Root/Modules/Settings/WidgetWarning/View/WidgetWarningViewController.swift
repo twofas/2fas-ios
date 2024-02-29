@@ -35,7 +35,7 @@ final class WidgetWarningViewController: UIViewController {
     
     private func generate() -> UIViewController {
         let contentMiddle = MainContainerMiddleContentGenerator(placement: .centerLimitWidth, elements: [
-            .image(name: "WidgetWarningIcon", size: CGSize(width: 155, height: 85)),
+            .image(name: "WidgetWarningIcon", size: CGSize(width: 280, height: 200)),
             .extraSpacing,
             .text(text: "\(T.Commons.warning.uppercased())!", style: MainContainerTextStyling.title),
             .extraSpacing,

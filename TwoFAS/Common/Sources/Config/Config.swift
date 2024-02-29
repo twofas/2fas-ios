@@ -25,6 +25,8 @@ public enum Config {
         
     public static let suiteName = "group.twofas.com"
     
+    public static let exchangeTokenKey = "exchangeTokenKey"
+    
     public enum API {
         public static let baseURL = URL(string: "https://api2.2fas.com")!
     }

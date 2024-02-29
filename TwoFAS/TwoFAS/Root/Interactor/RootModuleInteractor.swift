@@ -19,6 +19,7 @@
 
 import UIKit
 import Data
+import Common
 
 protocol RootModuleInteracting: AnyObject {
     var introductionWasShown: Bool { get }
@@ -28,7 +29,7 @@ protocol RootModuleInteracting: AnyObject {
     func initializeApp()
     func applicationWillResignActive()
     func applicationWillEnterForeground()
-    func applicationDidBecomeActive()
+    func applicationDidBecomeActive(didCopyToken: @escaping Callback)
     func applicationWillTerminate()
     
     func lockApplicationIfNeeded(presentLoginImmediately: @escaping () -> Void)
@@ -54,19 +55,25 @@ final class RootModuleInteractor {
     private let fileInteractor: FileInteracting
     private let registerDeviceInteractor: RegisterDeviceInteracting
     private let appStateInteractor: AppStateInteracting
+    private let notificationInteractor: NotificationInteracting
+    private let widgetsInteractor: WidgetsInteracting
     
     init(
         rootInteractor: RootInteracting,
         linkInteractor: LinkInteracting,
         fileInteractor: FileInteracting,
         registerDeviceInteractor: RegisterDeviceInteracting,
-        appStateInteractor: AppStateInteracting
+        appStateInteractor: AppStateInteracting,
+        notificationInteractor: NotificationInteracting,
+        widgetsInteractor: WidgetsInteracting
     ) {
         self.rootInteractor = rootInteractor
         self.linkInteractor = linkInteractor
         self.fileInteractor = fileInteractor
         self.registerDeviceInteractor = registerDeviceInteractor
         self.appStateInteractor = appStateInteractor
+        self.notificationInteractor = notificationInteractor
+        self.widgetsInteractor = widgetsInteractor
         
         rootInteractor.storageError = { [weak self] error in
             self?.storageError?(error)
@@ -106,7 +113,12 @@ extension RootModuleInteractor: RootModuleInteracting {
         rootInteractor.applicationWillTerminate()
     }
     
-    func applicationDidBecomeActive() {
+    func applicationDidBecomeActive(didCopyToken: @escaping Callback) {
+        if let token = widgetsInteractor.exchangeToken {
+            notificationInteractor.copyWithSuccess(value: token)
+            widgetsInteractor.clearExchangeToken()
+            didCopyToken()
+        }
         rootInteractor.applicationDidBecomeActive()
     }
     

@@ -1060,9 +1060,8 @@ internal enum T {
     /// Select the maximum number of unsuccessful attempts to enter the passcode before locking the application (lockout time can be changed below).
     /// 
     internal static let howManyAttemptsFooter = T.tr("Localizable", "settings__how_many_attempts_footer", fallback: "Select the maximum number of unsuccessful attempts to enter the passcode before locking the application (lockout time can be changed below).\n")
-    /// Your support allows us to develop new features and
-    /// improvements. Thank you!
-    internal static let infoFooter = T.tr("Localizable", "settings__info_footer", fallback: "Your support allows us to develop new features and\nimprovements. Thank you!")
+    /// Your support allows us to develop new features and improvements. Thank you!
+    internal static let infoFooter = T.tr("Localizable", "settings__info_footer", fallback: "Your support allows us to develop new features and improvements. Thank you!")
     /// It matters
     internal static let itMatters = T.tr("Localizable", "settings__it_matters", fallback: "It matters")
     /// Knowledge

@@ -29,6 +29,11 @@ public protocol WidgetsInteracting: AnyObject {
     func disable()
     
     func reload()
+    
+    // MARK: Exchange Token
+    var exchangeToken: String? { get }
+    func setExchangeToken(_ key: String)
+    func clearExchangeToken()
 }
 
 final class WidgetsInteractor {
@@ -65,5 +70,18 @@ extension WidgetsInteractor: WidgetsInteracting {
     
     func reload() {
         mainRepository.reloadWidgets()
+    }
+    
+    // MARK: Exchange Token
+    var exchangeToken: String? {
+        mainRepository.exchangeToken
+    }
+    
+    func setExchangeToken(_ key: String) {
+        mainRepository.setExchangeToken(key)
+    }
+    
+    func clearExchangeToken() {
+        mainRepository.clearExchangeToken()
     }
 }

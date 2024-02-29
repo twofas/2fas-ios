@@ -30,7 +30,9 @@ final class ModuleInteractorFactory {
             linkInteractor: InteractorFactory.shared.linkInteractor(),
             fileInteractor: InteractorFactory.shared.fileInteractor(),
             registerDeviceInteractor: InteractorFactory.shared.registerDeviceInteractor(),
-            appStateInteractor: InteractorFactory.shared.appStateInteractor()
+            appStateInteractor: InteractorFactory.shared.appStateInteractor(),
+            notificationInteractor: InteractorFactory.shared.notificationInteractor(),
+            widgetsInteractor: InteractorFactory.shared.widgetsInteractor()
         )
     }
     
@@ -252,7 +254,6 @@ final class ModuleInteractorFactory {
     func authRequestsModuleInteractor() -> AuthRequestsModuleInteracting {
         AuthRequestsModuleInteractor(
             webExtensionAuthInteractor: InteractorFactory.shared.webExtensionAuthInteractor(),
-            serviceListingInteractor: InteractorFactory.shared.serviceListingInteractor(),
             tokenGeneratorInteractor: InteractorFactory.shared.tokenGeneratorInteractor(),
             pairingWebExtensionInteractor: InteractorFactory.shared.pairingWebExtensionInteractor(),
             webExtensionEncryptionInteractor: InteractorFactory.shared.webExtensionEncryptionInteractor(),

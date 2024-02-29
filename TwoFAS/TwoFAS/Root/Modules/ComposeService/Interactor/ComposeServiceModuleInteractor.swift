@@ -313,10 +313,7 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
     
     func copySecret() {
         guard let privateKey else { return }
-        notificationsInteractor.copyWithSuccess(
-            title: T.Notifications.serviceKeyCopied,
-            value: privateKey
-        )
+        notificationsInteractor.copyWithSuccess(value: privateKey)
     }
     
     func initialize() {

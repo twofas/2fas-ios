@@ -24,7 +24,7 @@ import Common
 public final class BiometricAuth {
     public weak var delegate: BiometricAuthDelegate?
     
-    private var context = LAContext()
+    private lazy var context = LAContext()
     private let storage: LocalEncryptedStorage
     
     init(storage: LocalEncryptedStorage) {

@@ -24,71 +24,110 @@ import Intents
 struct TwoFASWidgetEntryView: View {
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
-    @Environment(\.colorScheme) var colorScheme
-    
+
     @ViewBuilder
     var body: some View {
         Group {
             switch family {
             case .systemSmall:
-                if let first = entry.entries.first {
-                    TwoFASWidgetSquareView(entry: first)
-                } else {
-                    Text("widget_size_not_supported")
-                }
+                TwoFASWidgetSquareView(entry: entry.entries.first)
             case .systemMedium:
                 TwoFASWidgetLineView(entries: entry.entries)
             case .systemLarge:
                 TwoFASWidgetLineView(entries: entry.entries)
             case .systemExtraLarge:
                 TwoFASWidgetLineViewGrid(entries: entry.entries)
+            case .accessoryCircular:
+                TwoFASWidgetCircular(entry: entry.entries.first)
+            case .accessoryRectangular:
+                TwoFASWidgetRectangular(entry: entry.entries.first)
+            case .accessoryInline:
+                TwoFASWidgetInline(entry: entry.entries.first)
             default:
-                Text("widget_size_not_supported")
+                Text("widget__size_not_supported")
             }
         }
         .widgetBackground(backgroundView: backgroundView)
     }
     
     private var backgroundView: some View {
-        Color.widgetBackground
+        Color.clear
     }
 }
 
 //
 @main
 struct TwoFASWidget: Widget {
+    @Environment(\.widgetFamily) var family
+    
     let kind: String = "TwoFASWidget"
     
     var supportedFamilies: [WidgetFamily] = {
-        [.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge]
+        if #available(iOS 17.0, macOS 14.0, watchOS 10.0, *) {
+            [
+                .systemSmall,
+                .systemMedium,
+                .systemLarge,
+                .systemExtraLarge,
+                .accessoryCircular,
+                .accessoryRectangular,
+                .accessoryInline
+            ]
+        } else {
+            [.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge]
+        }
     }()
     
+    @MainActor
     var body: some WidgetConfiguration {
-        IntentConfiguration(kind: kind, intent: SelectServiceIntent.self, provider: Provider()) { entry in
-            TwoFASWidgetEntryView(entry: entry)
+        makeWidgetConfiguration()
+            .configurationDisplayName("2FAS")
+            .description("widget__settings_description")
+            .supportedFamilies(supportedFamilies)
+            .widgetNotInStandBy()
+    }
+    
+    @MainActor
+    private func makeWidgetConfiguration() -> some WidgetConfiguration {
+        if #available(iOS 17.0, macOS 14.0, watchOS 10.0, *) {
+            return AppIntentConfiguration(
+                kind: kind,
+                intent: SelectService.self,
+                provider: AppIntentProvider()
+            ) { entry in
+                TwoFASWidgetEntryView(entry: entry)
+            }
+        } else {
+            return IntentConfiguration(kind: kind, intent: SelectServiceIntent.self, provider: Provider()) { entry in
+                TwoFASWidgetEntryView(entry: entry)
+            }
         }
-        .configurationDisplayName("2FAS")
-        .description("widget_settings_description")
-        .supportedFamilies(supportedFamilies)
-        .contentMarginsDisabled()
     }
 }
 
 struct TwoFASWidget_Previews: PreviewProvider {
     static var previews: some View {
-        TwoFASWidgetEntryView(entry: CodeEntry.snapshot(with: WidgetFamily.systemLarge.servicesCount))
-            .previewContext(WidgetPreviewContext(family: .systemLarge))
+        TwoFASWidgetEntryView(entry: CodeEntry.snapshot(with: WidgetFamily.accessoryRectangular.servicesCount))
+            .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
     }
 }
 
 extension View {
     func widgetBackground(backgroundView: some View) -> some View {
         if #available(iOSApplicationExtension 17.0, *) {
-            return containerBackground(for: .widget) {
-                backgroundView
-            }
+            return containerBackground(for: .widget) {}
         } else {
             return background(backgroundView)
+        }
+    }
+}
+
+extension WidgetConfiguration {
+    func widgetNotInStandBy() -> some WidgetConfiguration {
+        if #available(iOSApplicationExtension 17.0, *) {
+            return self.disfavoredLocations([.standBy, .iPhoneWidgetsOnMac], for: [.systemSmall, .systemMedium])
+        } else {
+            return self
         }
     }
 }

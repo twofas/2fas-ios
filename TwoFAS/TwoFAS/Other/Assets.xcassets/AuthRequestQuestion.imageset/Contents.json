@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "AuthRequestQuestion.pdf",
+      "filename" : "be_pairing.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "be_pairing-2.pdf",
       "idiom" : "universal"
     }
   ],

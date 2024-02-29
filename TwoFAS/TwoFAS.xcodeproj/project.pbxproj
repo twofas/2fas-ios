@@ -194,6 +194,7 @@
 		C2379D0326B6D6C30010C6B1 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C2379D0726B6D6CC0010C6B1 /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
 		C2379D1026B6DF720010C6B1 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE31269E274700506ACF /* IntentsUI.framework */; };
+		C23827692B7D3BE1005DD234 /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E7C3822ADB19F300478D89 /* Data.framework */; };
 		C239DE9026CC5366002301E2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C239DE8F26CC5366002301E2 /* Localizable.strings */; };
 		C23B33F12A48DF6A0014B804 /* ImporterOpenFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */; };
 		C23B899527C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B899427C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift */; };
@@ -233,6 +234,11 @@
 		C2404885276572060076376E /* ImporterPreimportSummaryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404884276572060076376E /* ImporterPreimportSummaryPresenter.swift */; };
 		C24048872765723C0076376E /* ImporterPreimportSummaryFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24048862765723C0076376E /* ImporterPreimportSummaryFlowController.swift */; };
 		C2404889276573420076376E /* ImporterPreimportSummaryModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404888276573420076376E /* ImporterPreimportSummaryModuleInteractor.swift */; };
+		C2404F782B72E61B00EBD8DC /* ServiceAppEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404F752B72E4AB00EBD8DC /* ServiceAppEntity.swift */; };
+		C2404F792B72E61B00EBD8DC /* SelectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404F742B72E4AB00EBD8DC /* SelectService.swift */; };
+		C2404F7C2B72E8D000EBD8DC /* AppIntentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404F7A2B72E89100EBD8DC /* AppIntentProvider.swift */; };
+		C2404F7E2B72FC6000EBD8DC /* SelectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404F742B72E4AB00EBD8DC /* SelectService.swift */; };
+		C2404F7F2B72FC6400EBD8DC /* ServiceAppEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404F752B72E4AB00EBD8DC /* ServiceAppEntity.swift */; };
 		C240FB4027FCD2F900D9E630 /* NetworkCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240FB3F27FCD2F900D9E630 /* NetworkCall.swift */; };
 		C241D448278B9E0E00D7C604 /* NetworkStack.h in Headers */ = {isa = PBXBuildFile; fileRef = C241D447278B9E0E00D7C604 /* NetworkStack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C241D452278B9E2D00D7C604 /* NetworkStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C241D450278B9E2D00D7C604 /* NetworkStack.swift */; };
@@ -256,6 +262,10 @@
 		C248B14F2AC4C31300E6B897 /* GuidePagesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B14E2AC4C31300E6B897 /* GuidePagesPresenter.swift */; };
 		C248B1512AC4C6BE00E6B897 /* GuidePagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B1502AC4C6BE00E6B897 /* GuidePagesViewController.swift */; };
 		C248B1532AC4C77100E6B897 /* GuidePagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B1522AC4C77100E6B897 /* GuidePagesView.swift */; };
+		C248DDA82B794A69004712E3 /* WidgetContentMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDA72B794A69004712E3 /* WidgetContentMargins.swift */; };
+		C248DDAC2B7998DA004712E3 /* CopyTokenAppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */; };
+		C248DDAD2B799BB8004712E3 /* CopyTokenAppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */; };
+		C248DDAF2B799CD3004712E3 /* CopyIntentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDAE2B799CD3004712E3 /* CopyIntentButton.swift */; };
 		C249773A277F618A00DC872C /* TrashServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2497739277F618A00DC872C /* TrashServiceFlowController.swift */; };
 		C249773C277F62B100DC872C /* TrashServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249773B277F62B100DC872C /* TrashServiceViewController.swift */; };
 		C24AEDC0291BD11A005F59CB /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24AEDBF291BD119005F59CB /* T.generated.swift */; };
@@ -327,6 +337,8 @@
 		C25C91D72B0A6DE600E58729 /* IntroductionModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C91D62B0A6DE600E58729 /* IntroductionModuleInteractor.swift */; };
 		C25C91DA2B0A75B100E58729 /* IntroductionCloudInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C91D92B0A75B100E58729 /* IntroductionCloudInfoViewController.swift */; };
 		C25D5E782A64908200CA359B /* CameraLastPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25D5E772A64908200CA359B /* CameraLastPass.swift */; };
+		C25DCB2E2B8030B200871035 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25DCB2D2B8030B200871035 /* AccessManager.swift */; };
+		C25DCB2F2B80318C00871035 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25DCB2D2B8030B200871035 /* AccessManager.swift */; };
 		C25E898E2663DF9700A60CE5 /* TokensSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E898D2663DF9700A60CE5 /* TokensSectionHeader.swift */; };
 		C25E89902663F11900A60CE5 /* SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E898F2663F11900A60CE5 /* SectionData.swift */; };
 		C25E8994266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E8992266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift */; };
@@ -391,8 +403,6 @@
 		C274C7732ADD3CB000B8AAC1 /* CounterHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24DFB2427D1778100F3EACC /* CounterHandler.swift */; };
 		C274C7742ADD3CB000B8AAC1 /* CounterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24DFB2027D1770D00F3EACC /* CounterState.swift */; };
 		C274C7762ADD3DF900B8AAC1 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C274C7752ADD3DF900B8AAC1 /* FirebaseMessaging */; };
-		C274C7782ADD3E1700B8AAC1 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C274C7772ADD3E1700B8AAC1 /* FirebaseMessaging */; };
-		C274C77A2ADD3E2C00B8AAC1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C274C7792ADD3E2C00B8AAC1 /* FirebaseCrashlytics */; };
 		C274C77C2ADD3E3500B8AAC1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C274C77B2ADD3E3500B8AAC1 /* FirebaseCrashlytics */; };
 		C277C32C245C3FD6009214F3 /* MainContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C277C32B245C3FD6009214F3 /* MainContainerViewController.swift */; };
 		C278121C27F9F3E600F31453 /* ExportPublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278121B27F9F3E600F31453 /* ExportPublicKey.swift */; };
@@ -467,10 +477,10 @@
 		C2872DE027A6EFB0000F5AE9 /* ServiceOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2872DDF27A6EFB0000F5AE9 /* ServiceOptions.swift */; };
 		C287D4FB276A92460001B272 /* AppSecurityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C287D4FA276A92460001B272 /* AppSecurityExtensions.swift */; };
 		C287D4FF276A9B5C0001B272 /* AppSecurityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C287D4FE276A9B5C0001B272 /* AppSecurityViewController.swift */; };
+		C28AB9332B76970D009E3601 /* TwoFASWidgetRectangular.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28AB9322B76970D009E3601 /* TwoFASWidgetRectangular.swift */; };
 		C28B38C927CD784D00BD4A96 /* RefreshTokenCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28B38C827CD784D00BD4A96 /* RefreshTokenCounter.swift */; };
 		C28B9120268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C28B911F268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel */; };
 		C28C441724A67B7000534B30 /* CommonSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28C441624A67B7000534B30 /* CommonSearchBar.swift */; };
-		C28CA5592B4768E700ACB527 /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E7C3822ADB19F300478D89 /* Data.framework */; };
 		C2959627267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2959626267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift */; };
 		C295962B267F79190086DEB1 /* TokensSectionHeader+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C295962A267F79190086DEB1 /* TokensSectionHeader+.swift */; };
 		C29626B8236F80A200C133BC /* Animate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29626B7236F80A200C133BC /* Animate.swift */; };
@@ -530,7 +540,6 @@
 		C2A7B98E26B706B000055738 /* TwoFASWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C2A7B99226B706B000055738 /* TwoFASWidget.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
 		C2A7B98F26B706B000055738 /* TwoFASWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C2A7B99226B706B000055738 /* TwoFASWidget.intentdefinition */; settings = {ATTRIBUTES = (codegen, ); }; };
 		C2A7B99026B706B000055738 /* TwoFASWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C2A7B99226B706B000055738 /* TwoFASWidget.intentdefinition */; settings = {ATTRIBUTES = (codegen, ); }; };
-		C2A7B99726B7077400055738 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2A7B99926B7077400055738 /* Localizable.strings */; };
 		C2A8584027FB8CC900CBD9ED /* NetworkRequestFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A8583F27FB8CC900CBD9ED /* NetworkRequestFormat.swift */; };
 		C2A8584227FB8D6400CBD9ED /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A8584127FB8D6400CBD9ED /* HTTPMethod.swift */; };
 		C2A8584427FB8F4D00CBD9ED /* HTTPResponseStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A8584327FB8F4D00CBD9ED /* HTTPResponseStatus.swift */; };
@@ -655,6 +664,9 @@
 		C2B950F62925977700F1C069 /* UploadLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B950F52925977700F1C069 /* UploadLogs.swift */; };
 		C2B950F929259ADA00F1C069 /* NSMutableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B950F829259ADA00F1C069 /* NSMutableData.swift */; };
 		C2B950FC29259B1800F1C069 /* NetworkMultipartRequestFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B950FB29259B1800F1C069 /* NetworkMultipartRequestFormat.swift */; };
+		C2BBD1D42B8113A9009A91FB /* TwoFASWidgetInline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD1D22B81127C009A91FB /* TwoFASWidgetInline.swift */; };
+		C2BBD1D72B812117009A91FB /* TwoFASWidgetCircular.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD1D52B8120F4009A91FB /* TwoFASWidgetCircular.swift */; };
+		C2BBD2382B8130B0009A91FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2BBD2332B81308C009A91FB /* Localizable.strings */; };
 		C2BD82B2236619E800FBD69A /* BackupAreaWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD82B1236619E800FBD69A /* BackupAreaWarningView.swift */; };
 		C2BD85DA2640290E0087D087 /* IntroductionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD85D92640290E0087D087 /* IntroductionFlowController.swift */; };
 		C2BD85DC26402A910087D087 /* IntroductionContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD85DB26402A910087D087 /* IntroductionContainerView.swift */; };
@@ -1114,6 +1126,13 @@
 			remoteGlobalIDString = C2147CB4205D78600001D011;
 			remoteInfo = Protection;
 		};
+		C238276B2B7D3BE1005DD234 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C236666B1FB2644900989ACA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2E7C3812ADB19F300478D89;
+			remoteInfo = Data;
+		};
 		C24D1C2D253C744F0029D27D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C236666B1FB2644900989ACA /* Project object */;
@@ -1176,13 +1195,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = C28633CA1FFABD2200C8F4B4;
 			remoteInfo = TwoFASAuth;
-		};
-		C28CA55B2B4768E700ACB527 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C236666B1FB2644900989ACA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C2E7C3812ADB19F300478D89;
-			remoteInfo = Data;
 		};
 		C29626DB2370BD7F00C133BC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1632,7 +1644,6 @@
 		C21BF26A2B5B340100915507 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TwoFASWidget.strings"; sourceTree = "<group>"; };
 		C21BF26B2B5B340100915507 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C21BF26C2B5B340100915507 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		C21BF26D2B5B340100915507 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C21C38A11FE30E62000EC252 /* LimitedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedTextField.swift; sourceTree = "<group>"; };
 		C21E0B3D2299F2190063EE7C /* UIDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
 		C21EB2ED2A7FC55800FA8AA1 /* AddingServiceMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceMetrics.swift; sourceTree = "<group>"; };
@@ -1648,7 +1659,6 @@
 		C22294DF2A9F5B4300DB7965 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C22294E02A9F5B4300DB7965 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C22294E12A9F5B4400DB7965 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C22294E22A9F5B4400DB7965 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C223E7B02A8428EE007E2546 /* AddingServiceTokenModuleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceTokenModuleInteractor.swift; sourceTree = "<group>"; };
 		C2248BB02277935200AC231C /* GridViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewState.swift; sourceTree = "<group>"; };
 		C225E613241CFCD10041C238 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1661,7 +1671,6 @@
 		C22A82E829EDCC5E00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C22A82E929EDCC5F00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C22A82EA29EDCC5F00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C22A82EB29EDCC5F00CCF6B1 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C22A8669287F60BD009A43FE /* MainRepositoryImpl+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Notifications.swift"; sourceTree = "<group>"; };
 		C22C1398267682B4001AA5F1 /* CategoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryData.swift; sourceTree = "<group>"; };
 		C22C139A267684DC001AA5F1 /* CategoryHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHandler.swift; sourceTree = "<group>"; };
@@ -1768,6 +1777,9 @@
 		C2404884276572060076376E /* ImporterPreimportSummaryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterPreimportSummaryPresenter.swift; sourceTree = "<group>"; };
 		C24048862765723C0076376E /* ImporterPreimportSummaryFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterPreimportSummaryFlowController.swift; sourceTree = "<group>"; };
 		C2404888276573420076376E /* ImporterPreimportSummaryModuleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImporterPreimportSummaryModuleInteractor.swift; sourceTree = "<group>"; };
+		C2404F742B72E4AB00EBD8DC /* SelectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectService.swift; sourceTree = "<group>"; };
+		C2404F752B72E4AB00EBD8DC /* ServiceAppEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAppEntity.swift; sourceTree = "<group>"; };
+		C2404F7A2B72E89100EBD8DC /* AppIntentProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIntentProvider.swift; sourceTree = "<group>"; };
 		C240FB3F27FCD2F900D9E630 /* NetworkCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCall.swift; sourceTree = "<group>"; };
 		C241D445278B9E0E00D7C604 /* NetworkStack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NetworkStack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C241D447278B9E0E00D7C604 /* NetworkStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkStack.h; sourceTree = "<group>"; };
@@ -1795,6 +1807,9 @@
 		C248B14E2AC4C31300E6B897 /* GuidePagesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesPresenter.swift; sourceTree = "<group>"; };
 		C248B1502AC4C6BE00E6B897 /* GuidePagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesViewController.swift; sourceTree = "<group>"; };
 		C248B1522AC4C77100E6B897 /* GuidePagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesView.swift; sourceTree = "<group>"; };
+		C248DDA72B794A69004712E3 /* WidgetContentMargins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetContentMargins.swift; sourceTree = "<group>"; };
+		C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyTokenAppIntent.swift; sourceTree = "<group>"; };
+		C248DDAE2B799CD3004712E3 /* CopyIntentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyIntentButton.swift; sourceTree = "<group>"; };
 		C249772D277F3D6100DC872C /* TrashingServiceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashingServiceInteractor.swift; sourceTree = "<group>"; };
 		C249772F277F3EFB00DC872C /* ServiceModifyInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModifyInteractor.swift; sourceTree = "<group>"; };
 		C2497739277F618A00DC872C /* TrashServiceFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashServiceFlowController.swift; sourceTree = "<group>"; };
@@ -1881,6 +1896,7 @@
 		C25C91D92B0A75B100E58729 /* IntroductionCloudInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionCloudInfoViewController.swift; sourceTree = "<group>"; };
 		C25D5E752A64863000CA359B /* Code+LastPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Code+LastPass.swift"; sourceTree = "<group>"; };
 		C25D5E772A64908200CA359B /* CameraLastPass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraLastPass.swift; sourceTree = "<group>"; };
+		C25DCB2D2B8030B200871035 /* AccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessManager.swift; sourceTree = "<group>"; };
 		C25E898D2663DF9700A60CE5 /* TokensSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensSectionHeader.swift; sourceTree = "<group>"; };
 		C25E898F2663F11900A60CE5 /* SectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionData.swift; sourceTree = "<group>"; };
 		C25E89912664021900A60CE5 /* TwoFAS4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS4.xcdatamodel; sourceTree = "<group>"; };
@@ -1890,7 +1906,6 @@
 		C261A1212A12BECC00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C261A1222A12BECC00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C261A1232A12BECD00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C261A1242A12BECD00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C2625F8B28BB853D00D84C5C /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		C2625F8D28BB858600D84C5C /* AboutPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPresenter.swift; sourceTree = "<group>"; };
 		C2625F8F28BB85B100D84C5C /* AboutModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutModuleInteractor.swift; sourceTree = "<group>"; };
@@ -1900,7 +1915,6 @@
 		C262E83529E9AA96008D148E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C262E83629E9AA96008D148E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C262E83729E9AA97008D148E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C262E83829E9AA97008D148E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C2633F1E265B045F0034B836 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		C263F45929900DED009B0837 /* MainMenuModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuModels.swift; sourceTree = "<group>"; };
 		C263F45D29901C4F009B0837 /* MainSplitFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitFlowController.swift; sourceTree = "<group>"; };
@@ -1909,14 +1923,12 @@
 		C263F46C299060FC009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C263F46D299060FC009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C263F46E299060FD009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C263F46F299060FD009B0837 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C266189F26126A8200ED52CB /* LabelComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelComposeViewController.swift; sourceTree = "<group>"; };
 		C26654282725D6EA00DC3A3C /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileRules.swift; sourceTree = "<group>"; };
 		C2671C892A51C5A60002C4BB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/TwoFASWidget.strings"; sourceTree = "<group>"; };
 		C2671C8A2A51C5A60002C4BB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C2671C8B2A51C5A60002C4BB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		C2671C8C2A51C5A70002C4BB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C2673159299AC9C40031DE09 /* LargeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeNavigationController.swift; sourceTree = "<group>"; };
 		C2673BE423D4765200A2CBA8 /* TokenStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorageType.swift; sourceTree = "<group>"; };
 		C26764AB287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceCategorySelectionFlowController.swift; sourceTree = "<group>"; };
@@ -1943,7 +1955,6 @@
 		C26DE43A29C7B9ED003D0804 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C26DE43B29C7B9ED003D0804 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C26DE43C29C7B9EE003D0804 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C26DE43D29C7B9EE003D0804 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C270365B293E9DDC00659CBF /* TokensModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensModuleInteractor.swift; sourceTree = "<group>"; };
 		C2712217288D607D002F2018 /* ProtectionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectionInteractor.swift; sourceTree = "<group>"; };
 		C271B64727BAE67500D0D743 /* ComposeServiceModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceModuleInteractor.swift; sourceTree = "<group>"; };
@@ -2022,7 +2033,6 @@
 		C281909C2B0B84910042BB7D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C281909D2B0B84910042BB7D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C281909E2B0B84910042BB7D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C281909F2B0B84910042BB7D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C2823B1526F3E84F00583586 /* RevealPasswordInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealPasswordInput.swift; sourceTree = "<group>"; };
 		C2830D79293D440900B3DDAF /* TokensPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensPresenter.swift; sourceTree = "<group>"; };
 		C2830D7B293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+CommonSearchDataSourceSearchable.swift"; sourceTree = "<group>"; };
@@ -2033,7 +2043,6 @@
 		C284180F2A65E57000E0F700 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C28418102A65E57100E0F700 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C28418112A65E57100E0F700 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C28418122A65E57200E0F700 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C284991027CC0FC70092098D /* ComposeServiceAlgorithmPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAlgorithmPresenter.swift; sourceTree = "<group>"; };
 		C284991227CC0FD40092098D /* ComposeServiceAlgorithmFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAlgorithmFlowController.swift; sourceTree = "<group>"; };
 		C284991827CC28650092098D /* ComposeServiceCounterFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceCounterFlowController.swift; sourceTree = "<group>"; };
@@ -2068,6 +2077,7 @@
 		C287D4FA276A92460001B272 /* AppSecurityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecurityExtensions.swift; sourceTree = "<group>"; };
 		C287D4FC276A98FE0001B272 /* BiometryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometryType.swift; sourceTree = "<group>"; };
 		C287D4FE276A9B5C0001B272 /* AppSecurityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecurityViewController.swift; sourceTree = "<group>"; };
+		C28AB9322B76970D009E3601 /* TwoFASWidgetRectangular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetRectangular.swift; sourceTree = "<group>"; };
 		C28B38C827CD784D00BD4A96 /* RefreshTokenCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenCounter.swift; sourceTree = "<group>"; };
 		C28B911F268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = "TwoFas3-TwoFas4.xcmappingmodel"; sourceTree = "<group>"; };
 		C28C441624A67B7000534B30 /* CommonSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSearchBar.swift; sourceTree = "<group>"; };
@@ -2143,7 +2153,6 @@
 		C2A7946327F9073400E5C641 /* BrowserExtensionServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserExtensionServiceViewController.swift; sourceTree = "<group>"; };
 		C2A7ABF1286328E60085CFEF /* SyncTokenHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncTokenHandler.swift; sourceTree = "<group>"; };
 		C2A7B99126B706B000055738 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/TwoFASWidget.intentdefinition; sourceTree = "<group>"; };
-		C2A7B99826B7077400055738 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C2A8583F27FB8CC900CBD9ED /* NetworkRequestFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequestFormat.swift; sourceTree = "<group>"; };
 		C2A8584127FB8D6400CBD9ED /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		C2A8584327FB8F4D00CBD9ED /* HTTPResponseStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPResponseStatus.swift; sourceTree = "<group>"; };
@@ -2247,6 +2256,33 @@
 		C2B950F52925977700F1C069 /* UploadLogs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadLogs.swift; sourceTree = "<group>"; };
 		C2B950F829259ADA00F1C069 /* NSMutableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableData.swift; sourceTree = "<group>"; };
 		C2B950FB29259B1800F1C069 /* NetworkMultipartRequestFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMultipartRequestFormat.swift; sourceTree = "<group>"; };
+		C2BBD1D22B81127C009A91FB /* TwoFASWidgetInline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetInline.swift; sourceTree = "<group>"; };
+		C2BBD1D52B8120F4009A91FB /* TwoFASWidgetCircular.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetCircular.swift; sourceTree = "<group>"; };
+		C2BBD2342B81308C009A91FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = TwoFAS/Other/en.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD2362B813099009A91FB /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = TwoFAS/Other/id.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD2372B8130AA009A91FB /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = TwoFAS/Other/tr.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD2392B8130CB009A91FB /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = TwoFAS/Other/pl.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD23A2B8130D6009A91FB /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = TwoFAS/Other/uk.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD23B2B8130DD009A91FB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "TwoFAS/Other/pt-BR.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
+		C2BBD23C2B8130E7009A91FB /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = TwoFAS/Other/nl.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD23D2B8130EE009A91FB /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = TwoFAS/Other/it.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD23E2B8130F6009A91FB /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "TwoFAS/Other/pt-PT.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
+		C2BBD23F2B8130FC009A91FB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = TwoFAS/Other/de.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD2402B813103009A91FB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = TwoFAS/Other/es.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD2412B81310A009A91FB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = TwoFAS/Other/fr.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD2422B81311F009A91FB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "TwoFAS/Other/zh-Hans.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
+		C2BBD2432B813153009A91FB /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = TwoFAS/Other/id.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD2442B813153009A91FB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "TwoFAS/Other/zh-Hans.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
+		C2BBD2452B813153009A91FB /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = TwoFAS/Other/tr.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD2462B813161009A91FB /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = TwoFAS/Other/nl.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD2472B813161009A91FB /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = TwoFAS/Other/it.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD2482B813161009A91FB /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "TwoFAS/Other/pt-PT.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
+		C2BBD2492B813161009A91FB /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = TwoFAS/Other/fr.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD24A2B813161009A91FB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "TwoFAS/Other/pt-BR.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
+		C2BBD24B2B813161009A91FB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = TwoFAS/Other/es.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD24C2B813162009A91FB /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = TwoFAS/Other/uk.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD24D2B813162009A91FB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = TwoFAS/Other/de.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BBD24E2B813162009A91FB /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = TwoFAS/Other/pl.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C2BD82B1236619E800FBD69A /* BackupAreaWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupAreaWarningView.swift; sourceTree = "<group>"; };
 		C2BD85D92640290E0087D087 /* IntroductionFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionFlowController.swift; sourceTree = "<group>"; };
 		C2BD85DB26402A910087D087 /* IntroductionContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionContainerView.swift; sourceTree = "<group>"; };
@@ -2511,7 +2547,6 @@
 		C2F2E0132A24AB5800E81225 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C2F2E0142A24AB5900E81225 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C2F2E0152A24AB5B00E81225 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C2F2E0162A24AB5D00E81225 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C2F3393F214AB53F0072FE80 /* RatingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingController.swift; sourceTree = "<group>"; };
 		C2F4D9362A8D24EE00608F63 /* AddingServiceAdvancedRevealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceAdvancedRevealView.swift; sourceTree = "<group>"; };
 		C2F4D9382A8D33FA00608F63 /* AddServiceAdvancedWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddServiceAdvancedWarningView.swift; sourceTree = "<group>"; };
@@ -2566,7 +2601,6 @@
 		C2FDC8B329B5379A00623145 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/TwoFASWidget.strings"; sourceTree = "<group>"; };
 		C2FDC8B429B5379A00623145 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C2FDC8B529B5379B00623145 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		C2FDC8B629B5379B00623145 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C2FDEE53279C8F39002CAB9E /* CameraGoogleAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraGoogleAuth.swift; sourceTree = "<group>"; };
 		C2FDEE56279C8FF8002CAB9E /* SwiftUIButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIButtons.swift; sourceTree = "<group>"; };
 		C2FDEE5C279CC271002CAB9E /* CameraScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScannerViewController.swift; sourceTree = "<group>"; };
@@ -2689,15 +2723,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C28CA5592B4768E700ACB527 /* Data.framework in Frameworks */,
-				C274C7782ADD3E1700B8AAC1 /* FirebaseMessaging in Frameworks */,
+				C23827692B7D3BE1005DD234 /* Data.framework in Frameworks */,
 				C264AE6326D2DF3A00AE61E7 /* TimeVerification.framework in Frameworks */,
 				C2C3AE11269E224A00506ACF /* SwiftUI.framework in Frameworks */,
 				C2379D0326B6D6C30010C6B1 /* Storage.framework in Frameworks */,
 				C2E53BC92B62DFFD008E1E70 /* Content.framework in Frameworks */,
 				C2C3AE0F269E224A00506ACF /* WidgetKit.framework in Frameworks */,
 				C251EDED2AE87284007722F2 /* Base32.framework in Frameworks */,
-				C274C77A2ADD3E2C00B8AAC1 /* FirebaseCrashlytics in Frameworks */,
 				C2379D1026B6DF720010C6B1 /* IntentsUI.framework in Frameworks */,
 				C2379D0726B6D6CC0010C6B1 /* Protection.framework in Frameworks */,
 			);
@@ -4686,6 +4718,17 @@
 			path = Base32;
 			sourceTree = "<group>";
 		};
+		C25228ED2B72E44C00F40C86 /* AppIntent */ = {
+			isa = PBXGroup;
+			children = (
+				C2404F742B72E4AB00EBD8DC /* SelectService.swift */,
+				C2404F752B72E4AB00EBD8DC /* ServiceAppEntity.swift */,
+				C2404F7A2B72E89100EBD8DC /* AppIntentProvider.swift */,
+			);
+			name = AppIntent;
+			path = TwoFASWidget/AppIntent;
+			sourceTree = SOURCE_ROOT;
+		};
 		C252B38A2981D44500C2074D /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -6369,19 +6412,27 @@
 		C2C3AE12269E224A00506ACF /* TwoFASWidget */ = {
 			isa = PBXGroup;
 			children = (
+				C2BBD2332B81308C009A91FB /* Localizable.strings */,
+				C25228ED2B72E44C00F40C86 /* AppIntent */,
 				C2C3AE13269E224A00506ACF /* TwoFASWidget.swift */,
 				C2A7B99226B706B000055738 /* TwoFASWidget.intentdefinition */,
 				C2D07EE926A475F400AF8E7B /* CodeEntry.swift */,
 				C254D11B26ACB71B005FEBD4 /* TwoFASWidgetSquareView.swift */,
+				C248DDAE2B799CD3004712E3 /* CopyIntentButton.swift */,
+				C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */,
 				C29787DD27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift */,
 				C254D11D26ACB73D005FEBD4 /* TwoFASWidgetLineView.swift */,
+				C28AB9322B76970D009E3601 /* TwoFASWidgetRectangular.swift */,
+				C2BBD1D22B81127C009A91FB /* TwoFASWidgetInline.swift */,
+				C2BBD1D52B8120F4009A91FB /* TwoFASWidgetCircular.swift */,
 				C254D11F26ACB777005FEBD4 /* Provider.swift */,
 				C2A57C5826ACAAD000D3B344 /* Extensions.swift */,
+				C248DDA72B794A69004712E3 /* WidgetContentMargins.swift */,
 				C2C3AE16269E224B00506ACF /* Assets.xcassets */,
 				C2C3AE18269E224B00506ACF /* Info.plist */,
 				C254D12126ACB7D8005FEBD4 /* CodeRedaction.swift */,
-				C2A7B99926B7077400055738 /* Localizable.strings */,
 				C2C32A302AB7198C00DDB944 /* IconRenderer.swift */,
+				C25DCB2D2B8030B200871035 /* AccessManager.swift */,
 			);
 			path = TwoFASWidget;
 			sourceTree = "<group>";
@@ -7826,13 +7877,11 @@
 				C2379D0A26B6D6CC0010C6B1 /* PBXTargetDependency */,
 				C264AE6626D2DF3A00AE61E7 /* PBXTargetDependency */,
 				C251EDF02AE87284007722F2 /* PBXTargetDependency */,
-				C28CA55C2B4768E700ACB527 /* PBXTargetDependency */,
 				C2E53BCC2B62DFFD008E1E70 /* PBXTargetDependency */,
+				C238276C2B7D3BE1005DD234 /* PBXTargetDependency */,
 			);
 			name = TwoFASWidgetExtension;
 			packageProductDependencies = (
-				C274C7772ADD3E1700B8AAC1 /* FirebaseMessaging */,
-				C274C7792ADD3E2C00B8AAC1 /* FirebaseCrashlytics */,
 			);
 			productName = TwoFASWidgetExtension;
 			productReference = C2C3AE0D269E224A00506ACF /* TwoFASWidgetExtension.appex */;
@@ -7996,7 +8045,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1530;
 				ORGANIZATIONNAME = "Two Factor Authentication Service, Inc.";
 				TargetAttributes = {
 					C200E4991FB3911B00D7C748 = {
@@ -8246,7 +8295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2C3AE17269E224B00506ACF /* Assets.xcassets in Resources */,
-				C2A7B99726B7077400055738 /* Localizable.strings in Resources */,
+				C2BBD2382B8130B0009A91FB /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8457,6 +8506,7 @@
 				C2CC0A3E29D0603000677A7B /* ExternalImportPresenter+Menu.swift in Sources */,
 				C25371A2281DCF56005FB118 /* UINavigationController+.swift in Sources */,
 				C27D5443275D478E001E9ABF /* BackupMenuViewControlling.swift in Sources */,
+				C25DCB2F2B80318C00871035 /* AccessManager.swift in Sources */,
 				C27A54AC27F0FCC600321D2B /* BrowserExtensionPairingPresenter.swift in Sources */,
 				C2A7945527F9019000E5C641 /* BrowserExtensionEditNamePresenter.swift in Sources */,
 				C2CFFCDD2007FDD600600AC6 /* CircleProgress.swift in Sources */,
@@ -8504,6 +8554,7 @@
 				C21247F827B70D420044D9F2 /* LabelComposeFlowController.swift in Sources */,
 				C2E2C81127B03E7300F04B70 /* SearchResultEmptyView.swift in Sources */,
 				C29B2B7929982E4900EDE75B /* MainSplitModuleInteractor.swift in Sources */,
+				C2404F7F2B72FC6400EBD8DC /* ServiceAppEntity.swift in Sources */,
 				C2147CE4205D7B790001D011 /* PINPadCircleView.swift in Sources */,
 				C2AB92CF27665ACC00698382 /* ExporterPINFlowController.swift in Sources */,
 				C2ABF3C92002A01A003F2CBA /* CommonNavigationControlller.swift in Sources */,
@@ -8632,6 +8683,7 @@
 				C25BDA0A27B59DB700514161 /* IconSelectorViewController+CollectionViewCellHandling.swift in Sources */,
 				C2BDC6D61FC1CBE100967D0E /* UIView+Extensions.swift in Sources */,
 				C2AB92BB27662CC800698382 /* ExporterPasswordProtectionFlowController.swift in Sources */,
+				C248DDAD2B799BB8004712E3 /* CopyTokenAppIntent.swift in Sources */,
 				C240487827656AB50076376E /* ImporterFileErrorViewController.swift in Sources */,
 				C2FCB28C2825819000AF8A37 /* NewsViewController.swift in Sources */,
 				C20E2E002A7C4EF200DB64BB /* AddingServiceMainViewController.swift in Sources */,
@@ -8706,6 +8758,7 @@
 				C2BE805B2811DF3D009CBC4A /* AuthRequestsFlowController.swift in Sources */,
 				C23B899527C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift in Sources */,
 				C2BD85E22640394B0087D087 /* IntroductionScrollView.swift in Sources */,
+				C2404F7E2B72FC6000EBD8DC /* SelectService.swift in Sources */,
 				C2FCB29028258B3A00AF8A37 /* NewsPlainFlowController.swift in Sources */,
 				C21B1B312A882A920021CAF1 /* AddingServiceTOTPTimerView.swift in Sources */,
 				C27BE517275D6ACC0090CA12 /* BackupMenuModuleInteractor.swift in Sources */,
@@ -9116,16 +9169,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C248DDAF2B799CD3004712E3 /* CopyIntentButton.swift in Sources */,
+				C2BBD1D42B8113A9009A91FB /* TwoFASWidgetInline.swift in Sources */,
 				C254D11E26ACB73D005FEBD4 /* TwoFASWidgetLineView.swift in Sources */,
 				C2C32A312AB7198C00DDB944 /* IconRenderer.swift in Sources */,
+				C248DDAC2B7998DA004712E3 /* CopyTokenAppIntent.swift in Sources */,
 				C2A7B98F26B706B000055738 /* TwoFASWidget.intentdefinition in Sources */,
+				C2BBD1D72B812117009A91FB /* TwoFASWidgetCircular.swift in Sources */,
 				C254D12226ACB7D8005FEBD4 /* CodeRedaction.swift in Sources */,
 				C254D12026ACB777005FEBD4 /* Provider.swift in Sources */,
 				C254D11C26ACB71B005FEBD4 /* TwoFASWidgetSquareView.swift in Sources */,
 				C29787DE27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift in Sources */,
+				C25DCB2E2B8030B200871035 /* AccessManager.swift in Sources */,
 				C2C3AE14269E224A00506ACF /* TwoFASWidget.swift in Sources */,
 				C2D07EEB26A47B8100AF8E7B /* CodeEntry.swift in Sources */,
+				C248DDA82B794A69004712E3 /* WidgetContentMargins.swift in Sources */,
+				C2404F782B72E61B00EBD8DC /* ServiceAppEntity.swift in Sources */,
+				C28AB9332B76970D009E3601 /* TwoFASWidgetRectangular.swift in Sources */,
 				C2A57C5A26ACAB2800D3B344 /* Extensions.swift in Sources */,
+				C2404F7C2B72E8D000EBD8DC /* AppIntentProvider.swift in Sources */,
+				C2404F792B72E61B00EBD8DC /* SelectService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9429,6 +9492,11 @@
 			target = C2147CB4205D78600001D011 /* Protection */;
 			targetProxy = C2379D0926B6D6CC0010C6B1 /* PBXContainerItemProxy */;
 		};
+		C238276C2B7D3BE1005DD234 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C2E7C3812ADB19F300478D89 /* Data */;
+			targetProxy = C238276B2B7D3BE1005DD234 /* PBXContainerItemProxy */;
+		};
 		C24D1C2E253C744F0029D27D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C24D1C19253C744E0029D27D /* Sync */;
@@ -9473,11 +9541,6 @@
 			isa = PBXTargetDependency;
 			target = C28633CA1FFABD2200C8F4B4 /* TwoFASAuth */;
 			targetProxy = C28633D71FFABD2200C8F4B4 /* PBXContainerItemProxy */;
-		};
-		C28CA55C2B4768E700ACB527 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C2E7C3812ADB19F300478D89 /* Data */;
-			targetProxy = C28CA55B2B4768E700ACB527 /* PBXContainerItemProxy */;
 		};
 		C29626DC2370BD7F00C133BC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9753,22 +9816,22 @@
 			name = TwoFASWidget.intentdefinition;
 			sourceTree = "<group>";
 		};
-		C2A7B99926B7077400055738 /* Localizable.strings */ = {
+		C2BBD2332B81308C009A91FB /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C2A7B99826B7077400055738 /* en */,
-				C263F46F299060FD009B0837 /* de */,
-				C2FDC8B629B5379B00623145 /* pt-PT */,
-				C26DE43D29C7B9EE003D0804 /* fr */,
-				C262E83829E9AA97008D148E /* es */,
-				C22A82EB29EDCC5F00CCF6B1 /* uk */,
-				C261A1242A12BECD00A1519F /* it */,
-				C2F2E0162A24AB5D00E81225 /* pl */,
-				C2671C8C2A51C5A70002C4BB /* pt-BR */,
-				C28418122A65E57200E0F700 /* id */,
-				C22294E22A9F5B4400DB7965 /* nl */,
-				C281909F2B0B84910042BB7D /* tr */,
-				C21BF26D2B5B340100915507 /* zh-Hans */,
+				C2BBD2342B81308C009A91FB /* en */,
+				C2BBD2362B813099009A91FB /* id */,
+				C2BBD2372B8130AA009A91FB /* tr */,
+				C2BBD2392B8130CB009A91FB /* pl */,
+				C2BBD23A2B8130D6009A91FB /* uk */,
+				C2BBD23B2B8130DD009A91FB /* pt-BR */,
+				C2BBD23C2B8130E7009A91FB /* nl */,
+				C2BBD23D2B8130EE009A91FB /* it */,
+				C2BBD23E2B8130F6009A91FB /* pt-PT */,
+				C2BBD23F2B8130FC009A91FB /* de */,
+				C2BBD2402B813103009A91FB /* es */,
+				C2BBD2412B81310A009A91FB /* fr */,
+				C2BBD2422B81311F009A91FB /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -9777,6 +9840,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				C2E3CBF529210320006A1522 /* en */,
+				C2BBD2432B813153009A91FB /* id */,
+				C2BBD2442B813153009A91FB /* zh-Hans */,
+				C2BBD2452B813153009A91FB /* tr */,
+				C2BBD2462B813161009A91FB /* nl */,
+				C2BBD2472B813161009A91FB /* it */,
+				C2BBD2482B813161009A91FB /* pt-PT */,
+				C2BBD2492B813161009A91FB /* fr */,
+				C2BBD24A2B813161009A91FB /* pt-BR */,
+				C2BBD24B2B813161009A91FB /* es */,
+				C2BBD24C2B813162009A91FB /* uk */,
+				C2BBD24D2B813162009A91FB /* de */,
+				C2BBD24E2B813162009A91FB /* pl */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -9807,7 +9882,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -9850,7 +9925,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -9892,7 +9967,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -9936,7 +10011,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -9978,7 +10053,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -10026,7 +10101,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -10198,7 +10273,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGED_BINARY_TYPE = manual;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				OTHER_LDFLAGS = (
@@ -10243,7 +10318,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGED_BINARY_TYPE = manual;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
@@ -10290,7 +10365,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
@@ -10337,7 +10412,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
@@ -10380,7 +10455,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -10424,7 +10499,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -10469,7 +10544,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -10514,7 +10589,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
@@ -10551,7 +10626,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGED_BINARY_TYPE = manual;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASAuth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -10585,7 +10660,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGED_BINARY_TYPE = manual;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASAuth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -10624,7 +10699,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -10669,7 +10744,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -10705,7 +10780,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -10734,7 +10809,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -10767,7 +10842,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGED_BINARY_TYPE = manual;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -10803,7 +10878,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGED_BINARY_TYPE = manual;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASWidget;
@@ -10836,7 +10911,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGED_BINARY_TYPE = manual;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -10870,7 +10945,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGED_BINARY_TYPE = manual;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASServiceIntent;
@@ -10898,7 +10973,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.DataTests;
@@ -10927,7 +11002,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.DataTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -10946,7 +11021,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -10967,7 +11042,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -10993,7 +11068,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -11014,7 +11089,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
@@ -11038,7 +11113,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -11059,7 +11134,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -11085,7 +11160,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -11106,7 +11181,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
@@ -11151,7 +11226,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -11199,7 +11274,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -11245,7 +11320,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -11293,7 +11368,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -11330,7 +11405,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.ProtectionTests;
@@ -11361,7 +11436,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 5.3.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.ProtectionTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -11620,16 +11695,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
-		};
-		C274C7772ADD3E1700B8AAC1 /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
-		};
-		C274C7792ADD3E2C00B8AAC1 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
 		};
 		C274C77B2ADD3E3500B8AAC1 /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -246,6 +246,7 @@ private extension ComposeServicePresenter {
             return
         }
         
+        // TODO: Remove advanced warning - only editing now
         flowController.toAdvancedWarning()
     }
     

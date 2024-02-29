@@ -32,7 +32,7 @@ final class GuideSelectorPresenter: ObservableObject {
     }
     
     func viewDidLoad() {
-        guides = interactor.listAll()
+        guides = interactor.listAll().sorted(by: { $0.serviceName < $1.serviceName })
     }
     
     func handleClose() {

@@ -9,11 +9,11 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>88xZPY</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>22D49</string>
+	<string>23C71</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
-	<string>14C18</string>
+	<string>15C500b</string>
 	<key>INIntentDefinitionToolsVersion</key>
-	<string>14.2</string>
+	<string>15.2</string>
 	<key>INIntents</key>
 	<array>
 		<dict>
@@ -84,7 +84,7 @@
 						</dict>
 						<dict>
 							<key>INIntentParameterArraySizeSize</key>
-							<integer>2</integer>
+							<integer>1</integer>
 							<key>INIntentParameterArraySizeSizeClass</key>
 							<string>AccessoryRectangular</string>
 						</dict>

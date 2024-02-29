@@ -19,7 +19,7 @@
 
 import UIKit
 
-public enum TintColor: String, Hashable, CaseIterable {
+public enum TintColor: String, Hashable, CaseIterable, Codable {
     case `default`
     case red
     case orange

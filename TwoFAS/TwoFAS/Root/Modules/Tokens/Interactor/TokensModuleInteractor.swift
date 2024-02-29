@@ -424,6 +424,7 @@ extension TokensModuleInteractor: TokensModuleInteracting {
 private extension TokensModuleInteractor {
     private func setupLinkInteractor() {
         linkInteractor.showCodeAlreadyExists = { [weak self] in self?.linkAction?(.codeAlreadyExists) }
+        linkInteractor.showIncorrectCode = { [weak self] in self?.linkAction?(.incorrectCode) }
         linkInteractor.showShouldAddCode = { [weak self] in self?.linkAction?(.shouldAddCode(descriptionText: $0)) }
         linkInteractor.showSendLogs = { [weak self] in self?.linkAction?(.sendLogs(auditID: $0)) }
         linkInteractor.reloadDataAndRefresh = { [weak self] in self?.linkAction?(.newData) }
@@ -604,17 +605,11 @@ private extension TokensModuleInteractor {
     }
 
     private func copyToken(_ token: String) {
-        notificationsInteractor.copyWithSuccess(
-            title: T.Notifications.tokenCopied,
-            value: token
-        )
+        notificationsInteractor.copyWithSuccess(value: token)
     }
     
     private func copyNextToken(_ token: String) {
-        notificationsInteractor.copyWithSuccess(
-            title: T.Notifications.nextTokenCopied,
-            value: token
-        )
+        notificationsInteractor.copyWithSuccess(value: token)
     }
 }
 

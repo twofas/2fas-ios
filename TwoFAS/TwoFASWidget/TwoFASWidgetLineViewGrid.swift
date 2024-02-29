@@ -46,6 +46,6 @@ struct TwoFASWidgetLineViewGrid: View {
                 TwoFASWidgetLineView(entries: firstHalf)
                 TwoFASWidgetLineView(entries: secondHalf)
             })
-        .padding(spacing)
+        .addWidgetContentMargins(standard: spacing)
     }
 }

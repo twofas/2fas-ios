@@ -50,7 +50,7 @@ final class TrashPresenter {
     
     func handleRestoration(at indexPath: IndexPath) {
         let list = interactor.listTrashedServices()
-        let serviceData = list[indexPath.row]
+        guard let serviceData = list[safe: indexPath.row] else { return }
         interactor.restoreService(serviceData)
         reload()
     }

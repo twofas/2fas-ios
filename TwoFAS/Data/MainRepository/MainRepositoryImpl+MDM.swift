@@ -27,4 +27,8 @@ extension MainRepositoryImpl {
     var mdmIsBiometryBlocked: Bool {
         mdmRepository.isBiometryBlocked
     }
+    
+    var mdmIsBrowserExtensionBlocked: Bool {
+        mdmRepository.isBrowserExtensionBlocked
+    }
 }

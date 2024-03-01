@@ -22,4 +22,5 @@ import Foundation
 protocol MDMRepository: AnyObject {
     var isBackupBlocked: Bool { get }
     var isBiometryBlocked: Bool { get }
+    var isBrowserExtensionBlocked: Bool { get }
 }

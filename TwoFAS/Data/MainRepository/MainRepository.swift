@@ -475,4 +475,5 @@ protocol MainRepository: AnyObject {
     // MARK: - MDM options
     var mdmIsBackupBlocked: Bool { get }
     var mdmIsBiometryBlocked: Bool { get }
+    var mdmIsBrowserExtensionBlocked: Bool { get }
 }

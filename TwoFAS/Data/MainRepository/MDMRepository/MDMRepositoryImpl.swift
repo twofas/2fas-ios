@@ -19,6 +19,10 @@
 
 import Foundation
 
+//option that passcode is required
+//preset lockout settings
+//toggle/hide browser extension
+
 final class MDMRepositoryImpl {
     private let mdmKey = "com.apple.configuration.managed"
     private let userDefaults = UserDefaults.standard
@@ -28,10 +32,12 @@ final class MDMRepositoryImpl {
     private enum SettingsKeys: String {
         case isBackupBlocked = "blockBackup"
         case isBiometryBlocked = "blockBiometry"
+        case isBrowserExtensionBlocked = "blockBrowserExtension"
     }
     
     private let isBackupBlockedDefaultValue = false
     private let isBiometryBlockedDefaultValue = false
+    private let isBrowserExtensionBlockedDefaultValue = false
     
     init() {
         reload()
@@ -45,7 +51,7 @@ final class MDMRepositoryImpl {
 extension MDMRepositoryImpl: MDMRepository {
     var isBackupBlocked: Bool {
         guard let value = settings[SettingsKeys.isBackupBlocked.rawValue] as? Bool else {
-            return isSyncBlockedDefaultValue
+            return isBackupBlockedDefaultValue
         }
         return value
     }
@@ -53,6 +59,13 @@ extension MDMRepositoryImpl: MDMRepository {
     var isBiometryBlocked: Bool {
         guard let value = settings[SettingsKeys.isBiometryBlocked.rawValue] as? Bool else {
             return isBiometryBlockedDefaultValue
+        }
+        return value
+    }
+    
+    var isBrowserExtensionBlocked: Bool {
+        guard let value = settings[SettingsKeys.isBrowserExtensionBlocked.rawValue] as? Bool else {
+            return isBrowserExtensionBlockedDefaultValue
         }
         return value
     }

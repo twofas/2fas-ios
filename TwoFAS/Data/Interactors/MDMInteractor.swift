@@ -22,6 +22,7 @@ import Foundation
 public protocol MDMInteracting: AnyObject {
     var isBackupBlocked: Bool { get }
     var isBiometryBlocked: Bool { get }
+    var isBrowserExtensionBlocked: Bool { get }
     
     func apply()
 }
@@ -41,6 +42,10 @@ extension MDMInteractor: MDMInteracting {
     
     var isBiometryBlocked: Bool {
         mainRepository.mdmIsBiometryBlocked
+    }
+    
+    var isBrowserExtensionBlocked: Bool {
+        mainRepository.mdmIsBrowserExtensionBlocked
     }
     
     func apply() {

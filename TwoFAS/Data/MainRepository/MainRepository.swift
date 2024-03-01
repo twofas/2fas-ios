@@ -471,4 +471,8 @@ protocol MainRepository: AnyObject {
     
     // MARK: - Time Verification
     func timeVerificationStart()
+    
+    // MARK: - MDM options
+    var mdmIsBackupBlocked: Bool { get }
+    var mdmIsBiometryBlocked: Bool { get }
 }

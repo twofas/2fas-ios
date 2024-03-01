@@ -53,6 +53,7 @@ extension AppSecurityPresenter {
         let isBiometryEnabled = interactor.isBiometryEnabled
         
         let biometry: AppSecurityMenuSection? = {
+            guard interactor.isBiometryAllowed else { return nil }
             let section = AppSecurityMenuSection(title: T.Settings.biometricAuthentication, cells: [
                 AppSecurityMenuCell(
                     title: biometryType.localized,

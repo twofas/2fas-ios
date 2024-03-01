@@ -246,4 +246,8 @@ public final class InteractorFactory {
     public func appStateInteractor() -> AppStateInteracting {
         AppStateInteractor(mainRepository: MainRepositoryImpl.shared)
     }
+    
+    public func mdmInteractor() -> MDMInteracting {
+        MDMInteractor(mainRepository: MainRepositoryImpl.shared)
+    }
 }

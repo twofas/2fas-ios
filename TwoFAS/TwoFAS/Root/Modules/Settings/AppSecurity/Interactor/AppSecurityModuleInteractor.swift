@@ -25,6 +25,7 @@ protocol AppSecurityModuleInteracting: AnyObject {
     var limitOfTrials: AppLockAttempts { get }
     var biometryType: BiometryType { get }
     var isBiometryEnabled: Bool { get }
+    var isBiometryAllowed: Bool { get }
     var currentPINType: PINType { get }
     
     func toggleBiometry()
@@ -39,12 +40,18 @@ protocol AppSecurityModuleInteracting: AnyObject {
 final class AppSecurityModuleInteractor {
     private let protectionInteractor: ProtectionInteracting
     private let appLockStateInteractor: AppLockStateInteracting
+    private let mdmInteractor: MDMInteracting
     
     private var isAuthorized = false
     
-    init(protectionInteractor: ProtectionInteracting, appLockStateInteractor: AppLockStateInteracting) {
+    init(
+        protectionInteractor: ProtectionInteracting,
+        appLockStateInteractor: AppLockStateInteracting,
+        mdmInteractor: MDMInteracting
+    ) {
         self.protectionInteractor = protectionInteractor
         self.appLockStateInteractor = appLockStateInteractor
+        self.mdmInteractor = mdmInteractor
     }
 }
 
@@ -53,6 +60,7 @@ extension AppSecurityModuleInteractor: AppSecurityModuleInteracting {
     var limitOfTrials: AppLockAttempts { appLockStateInteractor.appLockAttempts }
     var biometryType: BiometryType { protectionInteractor.biometryType }
     var isBiometryEnabled: Bool { protectionInteractor.isBiometryEnabled }
+    var isBiometryAllowed: Bool { !mdmInteractor.isBiometryBlocked }
     var currentPINType: PINType { protectionInteractor.pinType ?? .digits4 }
     
     func toggleBiometry() {

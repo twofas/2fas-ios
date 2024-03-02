@@ -29,9 +29,11 @@ public protocol MDMInteracting: AnyObject {
 
 final class MDMInteractor {
     private let mainRepository: MainRepository
+    private let pairingInteractor: PairingWebExtensionInteracting
     
-    init(mainRepository: MainRepository) {
+    init(mainRepository: MainRepository, pairingInteractor: PairingWebExtensionInteracting) {
         self.mainRepository = mainRepository
+        self.pairingInteractor = pairingInteractor
     }
 }
 
@@ -49,12 +51,16 @@ extension MDMInteractor: MDMInteracting {
     }
     
     func apply() {
-        if isBackupBlocked, mainRepository.isCloudBackupConnected {
+        if isBackupBlocked && mainRepository.isCloudBackupConnected {
             mainRepository.clearBackup()
         }
         
-        if mainRepository.isBiometryEnabled {
+        if isBiometryBlocked && mainRepository.isBiometryEnabled {
             mainRepository.disableBiometry()
+        }
+        
+        if isBrowserExtensionBlocked && pairingInteractor.hasActiveBrowserExtension {
+            pairingInteractor.disableExtension(completion: { _ in })
         }
     }
 }

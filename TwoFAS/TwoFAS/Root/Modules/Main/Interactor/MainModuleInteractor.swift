@@ -23,6 +23,7 @@ import Data
 protocol MainModuleInteracting: AnyObject {
     var secretSyncError: ((String) -> Void)? { get set }
     var isAppLocked: Bool { get }
+    var isBrowserExtensionAllowed: Bool { get }
     
     func initialize()
     func checkForImport() -> URL?
@@ -40,6 +41,10 @@ final class MainModuleInteractor {
         rootInteractor.isAuthenticationRequired
     }
     
+    var isBrowserExtensionAllowed: Bool {
+        !mdmInteractor.isBrowserExtensionBlocked
+    }
+    
     private let logUploadingInteractor: LogUploadingInteracting
     private let cloudBackupStateInteractor: CloudBackupStateInteracting
     private let fileInteractor: FileInteracting
@@ -47,6 +52,7 @@ final class MainModuleInteractor {
     private let networkStatusInteractor: NetworkStatusInteracting
     private let appInfoInteractor: AppInfoInteracting
     private let rootInteractor: RootInteracting
+    private let mdmInteractor: MDMInteracting
     
     init(
         logUploadingInteractor: LogUploadingInteracting,
@@ -56,7 +62,8 @@ final class MainModuleInteractor {
         newVersionInteractor: NewVersionInteracting,
         networkStatusInteractor: NetworkStatusInteracting,
         appInfoInteractor: AppInfoInteracting,
-        rootInteractor: RootInteracting
+        rootInteractor: RootInteracting,
+        mdmInteractor: MDMInteracting
     ) {
         self.logUploadingInteractor = logUploadingInteractor
         self.cloudBackupStateInteractor = cloudBackupStateInteractor
@@ -65,6 +72,7 @@ final class MainModuleInteractor {
         self.networkStatusInteractor = networkStatusInteractor
         self.appInfoInteractor = appInfoInteractor
         self.rootInteractor = rootInteractor
+        self.mdmInteractor = mdmInteractor
 
         cloudBackupStateInteractor.secretSyncError = { [weak self] in self?.secretSyncError?($0) }
     }

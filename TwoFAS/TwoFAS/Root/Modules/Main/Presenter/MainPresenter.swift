@@ -65,11 +65,11 @@ final class MainPresenter {
     
     func handleRefreshAuthList() {
         guard !interactor.isAppLocked else { return }
-        flowController.toAuthRequestFetch()
+        handleAuthRequest()
     }
     
     func handleAuthorize(for tokenRequestID: String) {
-        guard !interactor.isAppLocked else { return }
+        guard !interactor.isAppLocked && interactor.isBrowserExtensionAllowed else { return }
         flowController.toAuthorize(for: tokenRequestID)
     }
     
@@ -113,6 +113,8 @@ private extension MainPresenter {
     }
     
     func handleAuthRequest() {
-        flowController.toAuthRequestFetch()
+        if interactor.isBrowserExtensionAllowed {
+            flowController.toAuthRequestFetch()
+        }
     }
 }

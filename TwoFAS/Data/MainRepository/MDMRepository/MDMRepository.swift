@@ -23,4 +23,7 @@ protocol MDMRepository: AnyObject {
     var isBackupBlocked: Bool { get }
     var isBiometryBlocked: Bool { get }
     var isBrowserExtensionBlocked: Bool { get }
+    var lockoutAttepts: AppLockAttempts? { get }
+    var lockoutBlockTime: AppLockBlockTime? { get }
+    var isPasscodeRequried: Bool { get }
 }

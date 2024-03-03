@@ -248,6 +248,9 @@ public final class InteractorFactory {
     }
     
     public func mdmInteractor() -> MDMInteracting {
-        MDMInteractor(mainRepository: MainRepositoryImpl.shared)
+        MDMInteractor(
+            mainRepository: MainRepositoryImpl.shared,
+            pairingInteractor: pairingWebExtensionInteractor()
+        )
     }
 }

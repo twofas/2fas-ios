@@ -31,4 +31,16 @@ extension MainRepositoryImpl {
     var mdmIsBrowserExtensionBlocked: Bool {
         mdmRepository.isBrowserExtensionBlocked
     }
+    
+    var mdmLockoutAttepts: AppLockAttempts? {
+        mdmRepository.lockoutAttepts
+    }
+    
+    var mdmLockoutBlockTime: AppLockBlockTime? {
+        mdmRepository.lockoutBlockTime
+    }
+    
+    var mdmIsPasscodeRequried: Bool {
+        mdmRepository.isPasscodeRequried
+    }
 }

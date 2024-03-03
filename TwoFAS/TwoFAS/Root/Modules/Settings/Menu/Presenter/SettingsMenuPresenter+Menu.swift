@@ -145,7 +145,7 @@ extension SettingsMenuPresenter {
         
         menu.append(contentsOf: [
             backup,
-            security,
+            security
         ])
         
         if interactor.isBrowserExtensionAllowed {

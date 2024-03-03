@@ -671,6 +671,7 @@
 		C2BBD1D42B8113A9009A91FB /* TwoFASWidgetInline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD1D22B81127C009A91FB /* TwoFASWidgetInline.swift */; };
 		C2BBD1D72B812117009A91FB /* TwoFASWidgetCircular.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD1D52B8120F4009A91FB /* TwoFASWidgetCircular.swift */; };
 		C2BBD2382B8130B0009A91FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2BBD2332B81308C009A91FB /* Localizable.strings */; };
+		C2BC3FC92B94E70F004C4BA0 /* NewPINNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BC3FC82B94E70F004C4BA0 /* NewPINNavigationFlowController.swift */; };
 		C2BD82B2236619E800FBD69A /* BackupAreaWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD82B1236619E800FBD69A /* BackupAreaWarningView.swift */; };
 		C2BD85DA2640290E0087D087 /* IntroductionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD85D92640290E0087D087 /* IntroductionFlowController.swift */; };
 		C2BD85DC26402A910087D087 /* IntroductionContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD85DB26402A910087D087 /* IntroductionContainerView.swift */; };
@@ -2291,6 +2292,7 @@
 		C2BBD24C2B813162009A91FB /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = TwoFAS/Other/uk.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C2BBD24D2B813162009A91FB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = TwoFAS/Other/de.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C2BBD24E2B813162009A91FB /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = TwoFAS/Other/pl.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BC3FC82B94E70F004C4BA0 /* NewPINNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPINNavigationFlowController.swift; sourceTree = "<group>"; };
 		C2BD82B1236619E800FBD69A /* BackupAreaWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupAreaWarningView.swift; sourceTree = "<group>"; };
 		C2BD85D92640290E0087D087 /* IntroductionFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionFlowController.swift; sourceTree = "<group>"; };
 		C2BD85DB26402A910087D087 /* IntroductionContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionContainerView.swift; sourceTree = "<group>"; };
@@ -5647,6 +5649,7 @@
 		C2A7067C276D1A5F00885D79 /* Flow */ = {
 			isa = PBXGroup;
 			children = (
+				C2BC3FC82B94E70F004C4BA0 /* NewPINNavigationFlowController.swift */,
 				C2A7067D276D1A7500885D79 /* NewPINFlowController.swift */,
 				C2997AA82454D767006D5943 /* SelectPINLengthController.swift */,
 			);
@@ -9024,6 +9027,7 @@
 				C2B1208F29D76BD10020281E /* AppearancePresenter+Menu.swift in Sources */,
 				C2A7945127F9016D00E5C641 /* BrowserExtensionEditNameViewController.swift in Sources */,
 				C242B4D12A9BD950005CC1BC /* AddingServiceAdvancedSectionDividerView.swift in Sources */,
+				C2BC3FC92B94E70F004C4BA0 /* NewPINNavigationFlowController.swift in Sources */,
 				C21B3A1427AF0BC9005C603B /* ColorPickerFlowController.swift in Sources */,
 				C2B39E5929F5BD7800EC31F6 /* TokensCategory.swift in Sources */,
 				C26BCE01281010A000CA6A9A /* SelectServiceModuleInteractor.swift in Sources */,

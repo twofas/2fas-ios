@@ -27,7 +27,11 @@ extension AppLockPresenter {
             title: T.Settings.tooManyAttemptsHeader,
             cells:
                 AppLockAttempts.allCases.map {
-                    AppLockMenuCell(title: $0.localized, checkmark: selectedAttempt == $0)
+                    AppLockMenuCell(
+                        title: $0.localized,
+                        checkmark: selectedAttempt == $0,
+                        disabled: interactor.isLockoutAttemptsChangeBlocked
+                    )
                 },
             footer: T.Settings.howManyAttemptsFooter
         )
@@ -37,7 +41,11 @@ extension AppLockPresenter {
             title: T.Settings.blockFor,
             cells:
                 AppLockBlockTime.allCases.map {
-                    AppLockMenuCell(title: $0.localized, checkmark: selectedBlockTime == $0)
+                    AppLockMenuCell(
+                        title: $0.localized,
+                        checkmark: selectedBlockTime == $0,
+                        disabled: interactor.isLockoutBlockTimeChangeBlocked
+                    )
                 }
         )
         var menu: [AppLockMenuSection] = [

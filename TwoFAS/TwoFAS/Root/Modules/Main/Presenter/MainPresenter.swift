@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Data
 
 final class MainPresenter {
     weak var view: MainViewControlling?
@@ -82,13 +83,20 @@ final class MainPresenter {
     func handleViewIsVisible() {
         viewIsVisible()
     }
+    
+    func handleSavePIN(_ PIN: String, pinType: PINType) {
+        interactor.savePIN(PIN, ofType: pinType)
+    }
 }
 
 private extension MainPresenter {
     func viewIsVisible() {
         guard !interactor.isAppLocked && !handlingViewIsVisible else { return }
         handlingViewIsVisible = true
-        if let url = interactor.checkForImport() {
+        interactor.applyMDMRules()
+        if interactor.shouldSetPasscode {
+            flowController.toSetPIN()
+        } else if let url = interactor.checkForImport() {
             flowController.toOpenFileImport(url: url)
             interactor.clearImportedFileURL()
             handlingViewIsVisible = false

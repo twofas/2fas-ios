@@ -23,9 +23,10 @@ import Data
 extension AppSecurityPresenter {
     func buildMenu() -> [AppSecurityMenuSection] {
         let isPINset = interactor.isPINSet
+        
         let PINcell = AppSecurityMenuCell(
             title: T.Settings.pinCode,
-            accessory: .toggle(toggle: .init(kind: .PIN, isOn: isPINset))
+            accessory: .toggle(toggle: .init(kind: .PIN, isOn: isPINset, isBlocked: interactor.isPasscodeRequried))
         )
         
         guard isPINset else {
@@ -57,7 +58,7 @@ extension AppSecurityPresenter {
             let section = AppSecurityMenuSection(title: T.Settings.biometricAuthentication, cells: [
                 AppSecurityMenuCell(
                     title: biometryType.localized,
-                    accessory: .toggle(toggle: .init(kind: .biometry, isOn: isBiometryEnabled))
+                    accessory: .toggle(toggle: .init(kind: .biometry, isOn: isBiometryEnabled, isBlocked: false))
                 )
             ])
             switch biometryType {

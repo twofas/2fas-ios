@@ -37,6 +37,12 @@ final class NewPINPresenter: PINKeyboardPresenter {
         codeLength = interactor.pinType.digits
     }
     
+    func viewDidLoad() {
+        if !interactor.lockNavigation {
+            view?.showCancelButton()
+        }
+    }
+    
     override func viewWillAppear() {
         super.viewWillAppear()
         

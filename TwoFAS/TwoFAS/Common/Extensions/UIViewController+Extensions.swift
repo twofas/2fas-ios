@@ -50,6 +50,12 @@ extension UIViewController {
         definesPresentationContext = true
     }
     
+    func configureAsFullscreenModal() {
+        modalPresentationStyle = .fullScreen
+        isModalInPresentation = true
+        definesPresentationContext = true
+    }
+    
     func setCustomLeftBackButton() {
         navigationItem.leftBarButtonItem = createCustomLeftBackButton()
     }

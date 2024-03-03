@@ -24,10 +24,14 @@ protocol MainModuleInteracting: AnyObject {
     var secretSyncError: ((String) -> Void)? { get set }
     var isAppLocked: Bool { get }
     var isBrowserExtensionAllowed: Bool { get }
+    var shouldSetPasscode: Bool { get }
     
+    func applyMDMRules()
     func initialize()
     func checkForImport() -> URL?
     func clearImportedFileURL()
+    
+    func savePIN(_ PIN: String, ofType pinType: PINType)
     
     // MARK: - New app version
     func checkForNewAppVersion(completion: @escaping (URL?) -> Void)
@@ -45,6 +49,10 @@ final class MainModuleInteractor {
         !mdmInteractor.isBrowserExtensionBlocked
     }
     
+    var shouldSetPasscode: Bool {
+        mdmInteractor.shouldSetPasscode
+    }
+    
     private let logUploadingInteractor: LogUploadingInteracting
     private let cloudBackupStateInteractor: CloudBackupStateInteracting
     private let fileInteractor: FileInteracting
@@ -53,6 +61,7 @@ final class MainModuleInteractor {
     private let appInfoInteractor: AppInfoInteracting
     private let rootInteractor: RootInteracting
     private let mdmInteractor: MDMInteracting
+    private let protectionInteractor: ProtectionInteracting
     
     init(
         logUploadingInteractor: LogUploadingInteracting,
@@ -63,7 +72,8 @@ final class MainModuleInteractor {
         networkStatusInteractor: NetworkStatusInteracting,
         appInfoInteractor: AppInfoInteracting,
         rootInteractor: RootInteracting,
-        mdmInteractor: MDMInteracting
+        mdmInteractor: MDMInteracting,
+        protectionInteractor: ProtectionInteracting
     ) {
         self.logUploadingInteractor = logUploadingInteractor
         self.cloudBackupStateInteractor = cloudBackupStateInteractor
@@ -73,6 +83,7 @@ final class MainModuleInteractor {
         self.appInfoInteractor = appInfoInteractor
         self.rootInteractor = rootInteractor
         self.mdmInteractor = mdmInteractor
+        self.protectionInteractor = protectionInteractor
 
         cloudBackupStateInteractor.secretSyncError = { [weak self] in self?.secretSyncError?($0) }
     }
@@ -91,6 +102,14 @@ extension MainModuleInteractor: MainModuleInteracting {
     
     func clearImportedFileURL() {
         fileInteractor.markAsHandled()
+    }
+    
+    func applyMDMRules() {
+        mdmInteractor.apply()
+    }
+    
+    func savePIN(_ PIN: String, ofType pinType: PINType) {
+        protectionInteractor.savePIN(PIN, typeOfPIN: pinType)
     }
     
     // MARK: - New app version

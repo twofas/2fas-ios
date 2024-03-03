@@ -27,6 +27,7 @@ protocol AppSecurityModuleInteracting: AnyObject {
     var isBiometryEnabled: Bool { get }
     var isBiometryAllowed: Bool { get }
     var currentPINType: PINType { get }
+    var isPasscodeRequried: Bool { get }
     
     func toggleBiometry()
     
@@ -62,6 +63,7 @@ extension AppSecurityModuleInteractor: AppSecurityModuleInteracting {
     var isBiometryEnabled: Bool { protectionInteractor.isBiometryEnabled }
     var isBiometryAllowed: Bool { !mdmInteractor.isBiometryBlocked }
     var currentPINType: PINType { protectionInteractor.pinType ?? .digits4 }
+    var isPasscodeRequried: Bool { mdmInteractor.isPasscodeRequried }
     
     func toggleBiometry() {
         guard protectionInteractor.isBiometryAvailable else { return }

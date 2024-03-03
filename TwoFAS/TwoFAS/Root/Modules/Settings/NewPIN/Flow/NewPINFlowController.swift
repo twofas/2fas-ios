@@ -22,7 +22,7 @@ import Data
 
 protocol NewPINFlowControllerParent: AnyObject {
     func hideNewPIN()
-    func pingGathered(
+    func pinGathered(
         with PIN: String,
         pinType: PINType,
         action: NewPINFlowController.Action,
@@ -52,14 +52,15 @@ final class NewPINFlowController: FlowController {
     static func setRoot(
         in navigationController: UINavigationController,
         parent: NewPINFlowControllerParent,
-        pinType: PINType
+        pinType: PINType,
+        lockNavigation: Bool
     ) {
         let view = NewPINViewController()
         let flowController = NewPINFlowController(viewController: view)
         flowController.parent = parent
         flowController.action = .create
         flowController.step = .first(pinType: pinType)
-        let interactor = ModuleInteractorFactory.shared.newPINModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.newPINModuleInteractor(lockNavigation: lockNavigation)
         interactor.selectedPINType = pinType
         
         let presenter = NewPINPresenter(
@@ -80,7 +81,8 @@ final class NewPINFlowController: FlowController {
         on navigationController: UINavigationController,
         parent: NewPINFlowControllerParent,
         action: Action,
-        step: Step
+        step: Step,
+        lockNavigation: Bool
     ) {
         let view = NewPINViewController()
         let flowController = NewPINFlowController(viewController: view)
@@ -101,7 +103,7 @@ final class NewPINFlowController: FlowController {
             selectedPINType = pinType
         }
         
-        let interactor = ModuleInteractorFactory.shared.newPINModuleInteractor()
+        let interactor = ModuleInteractorFactory.shared.newPINModuleInteractor(lockNavigation: lockNavigation)
         interactor.selectedPIN = selectedPIN
         interactor.selectedPINType = selectedPINType
         
@@ -130,7 +132,7 @@ extension NewPINFlowController: NewPINFlowControlling {
     
     func toPINGathered(with PIN: String, pinType: PINType) {
         guard let action, let step else { return }
-        parent?.pingGathered(with: PIN, pinType: pinType, action: action, step: step)
+        parent?.pinGathered(with: PIN, pinType: pinType, action: action, step: step)
     }
     
     func toChangePINType() {

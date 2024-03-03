@@ -19,10 +19,6 @@
 
 import Foundation
 
-//option that passcode is required
-//preset lockout settings
-//toggle/hide browser extension
-
 final class MDMRepositoryImpl {
     private let mdmKey = "com.apple.configuration.managed"
     private let userDefaults = UserDefaults.standard
@@ -33,11 +29,15 @@ final class MDMRepositoryImpl {
         case isBackupBlocked = "blockBackup"
         case isBiometryBlocked = "blockBiometry"
         case isBrowserExtensionBlocked = "blockBrowserExtension"
+        case lockoutAttempts = "lockoutAttempts"
+        case lockoutBlockTime = "lockoutBlockTime"
+        case isPasscodeRequried = "requirePasscode"
     }
     
     private let isBackupBlockedDefaultValue = false
     private let isBiometryBlockedDefaultValue = false
     private let isBrowserExtensionBlockedDefaultValue = false
+    private let isPasscodeRequriedDefaultValue = false
     
     init() {
         reload()
@@ -66,6 +66,38 @@ extension MDMRepositoryImpl: MDMRepository {
     var isBrowserExtensionBlocked: Bool {
         guard let value = settings[SettingsKeys.isBrowserExtensionBlocked.rawValue] as? Bool else {
             return isBrowserExtensionBlockedDefaultValue
+        }
+        return value
+    }
+    
+    var lockoutAttepts: AppLockAttempts? {
+        guard let value = settings[SettingsKeys.lockoutAttempts.rawValue] as? Int else {
+            return nil
+        }
+        switch value {
+        case 0: return .noLimit
+        case 3: return .try3
+        case 5: return .try5
+        case 10: return .try10
+        default: return nil
+        }
+    }
+    
+    var lockoutBlockTime: AppLockBlockTime? {
+        guard let value = settings[SettingsKeys.lockoutBlockTime.rawValue] as? Int else {
+            return nil
+        }
+        switch value {
+        case 3: return .min3
+        case 5: return .min5
+        case 10: return .min10
+        default: return nil
+        }
+    }
+    
+    var isPasscodeRequried: Bool {
+        guard let value = settings[SettingsKeys.isPasscodeRequried.rawValue] as? Bool else {
+            return isPasscodeRequriedDefaultValue
         }
         return value
     }

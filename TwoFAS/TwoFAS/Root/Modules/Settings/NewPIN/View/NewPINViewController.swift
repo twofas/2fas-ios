@@ -21,6 +21,7 @@ import UIKit
 
 protocol NewPINViewControlling: AnyObject {
     func setTitle(_ title: String)
+    func showCancelButton()
 }
 
 final class NewPINViewController: PINKeyboardViewController {
@@ -28,13 +29,8 @@ final class NewPINViewController: PINKeyboardViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: T.Commons.cancel,
-            style: .plain,
-            target: self,
-            action: #selector(cancelAction)
-        )
+        navigationItem.backButtonDisplayMode = .minimal
+        presenter.viewDidLoad()
     }
     
     override func deleteButtonTap() {
@@ -68,5 +64,14 @@ final class NewPINViewController: PINKeyboardViewController {
 extension NewPINViewController: NewPINViewControlling {
     func setTitle(_ title: String) {
         self.title = title
+    }
+    
+    func showCancelButton() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: T.Commons.cancel,
+            style: .plain,
+            target: self,
+            action: #selector(cancelAction)
+        )
     }
 }

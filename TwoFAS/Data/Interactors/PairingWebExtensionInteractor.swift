@@ -27,6 +27,7 @@ public enum PairingWebExtensionError: Error {
     case noPublicKey
     case serverError
     case noInternet
+    case blocked
 }
 
 public enum UnparingWebExtensionError: Error {
@@ -82,6 +83,11 @@ extension PairingWebExtensionInteractor: PairingWebExtensionInteracting {
     
     func pair(with extensionID: ExtensionID, completion: @escaping (Result<Void, PairingWebExtensionError>) -> Void) {
         Log("PairingWebExtensionInteractor - pair. extensionID: \(extensionID)", module: .interactor)
+        guard !mainRepository.mdmIsBrowserExtensionBlocked else {
+            Log("PairingWebExtensionInteractor - pair. Error: blocked!", module: .interactor)
+            completion(.failure(.blocked))
+            return
+        }
         guard !mainRepository.listAllPairedExtensions().map({ $0.extensionID }).contains(extensionID) else {
             Log("PairingWebExtensionInteractor - failure. Already paired", module: .interactor)
             completion(.failure(.alreadyPaired))

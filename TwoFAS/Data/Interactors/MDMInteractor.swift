@@ -23,6 +23,10 @@ public protocol MDMInteracting: AnyObject {
     var isBackupBlocked: Bool { get }
     var isBiometryBlocked: Bool { get }
     var isBrowserExtensionBlocked: Bool { get }
+    var isLockoutAttemptsChangeBlocked: Bool { get }
+    var isLockoutBlockTimeChangeBlocked: Bool { get }
+    var isPasscodeRequried: Bool { get }
+    var shouldSetPasscode: Bool { get }
     
     func apply()
 }
@@ -50,6 +54,22 @@ extension MDMInteractor: MDMInteracting {
         mainRepository.mdmIsBrowserExtensionBlocked
     }
     
+    var isLockoutAttemptsChangeBlocked: Bool {
+        mainRepository.mdmLockoutAttepts != nil
+    }
+    
+    var isLockoutBlockTimeChangeBlocked: Bool {
+        mainRepository.mdmLockoutBlockTime != nil
+    }
+    
+    var isPasscodeRequried: Bool {
+        mainRepository.mdmIsPasscodeRequried
+    }
+    
+    var shouldSetPasscode: Bool {
+        isPasscodeRequried && !mainRepository.isPINSet
+    }
+    
     func apply() {
         if isBackupBlocked && mainRepository.isCloudBackupConnected {
             mainRepository.clearBackup()
@@ -61,6 +81,14 @@ extension MDMInteractor: MDMInteracting {
         
         if isBrowserExtensionBlocked && pairingInteractor.hasActiveBrowserExtension {
             pairingInteractor.disableExtension(completion: { _ in })
+        }
+        
+        if let lockoutAttepts = mainRepository.mdmLockoutAttepts {
+            mainRepository.setAppLockAttempts(lockoutAttepts)
+        }
+        
+        if let blockTime = mainRepository.mdmLockoutBlockTime {
+            mainRepository.setAppLockBlockTime(blockTime)
         }
     }
 }

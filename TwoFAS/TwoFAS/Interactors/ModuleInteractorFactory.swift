@@ -131,7 +131,8 @@ final class ModuleInteractorFactory {
     
     func appLockModuleInteractor() -> AppLockModuleInteracting {
         AppLockModuleInteractor(
-            appLockInteractor: InteractorFactory.shared.appLockStateInteractor()
+            appLockInteractor: InteractorFactory.shared.appLockStateInteractor(),
+            mdmInteractor: InteractorFactory.shared.mdmInteractor()
         )
     }
     
@@ -143,8 +144,8 @@ final class ModuleInteractorFactory {
         )
     }
     
-    func newPINModuleInteractor() -> NewPINModuleInteracting {
-        NewPINModuleInteractor()
+    func newPINModuleInteractor(lockNavigation: Bool) -> NewPINModuleInteracting {
+        NewPINModuleInteractor(lockNavigation: lockNavigation)
     }
     
     func trashModuleInteractor() -> TrashModuleInteracting {
@@ -334,7 +335,9 @@ final class ModuleInteractorFactory {
             newVersionInteractor: InteractorFactory.shared.newVersionInteractor(),
             networkStatusInteractor: InteractorFactory.shared.networkStatusInteractor(),
             appInfoInteractor: InteractorFactory.shared.appInfoInteractor(),
-            rootInteractor: InteractorFactory.shared.rootInteractor()
+            rootInteractor: InteractorFactory.shared.rootInteractor(),
+            mdmInteractor: InteractorFactory.shared.mdmInteractor(),
+            protectionInteractor: InteractorFactory.shared.protectionInteractor()
         )
     }
     

@@ -81,7 +81,9 @@ public final class Camera {
 
 extension Camera: CameraControllerDelegate {
     func cameraDidInitialize() {}
-    func cameraFailedToInitilize(with error: CameraController.CameraError) {}
+    func cameraFailedToInitilize(with error: CameraController.CameraError) {
+        Log("Camera - can't start: \(error)", module: .camera)
+    }
     func cameraStartedPreview() {
         delegate?.didStartScanning()
     }

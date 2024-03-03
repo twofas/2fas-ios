@@ -26,6 +26,10 @@ protocol CameraScannerModuleInteracting: AnyObject {
     var shouldRename: ((String, String) -> Void)? { get set }
     var wasUserAskedAboutPush: Bool { get }
     
+    func isCameraAvailable() -> Bool
+    func isCameraAllowed() -> Bool
+    func registerCamera(callback: @escaping (Bool) -> Void)
+    
     func addCode(_ code: Code, force: Bool)
     func codeExists(_ code: Code) -> Bool
     func filterImportableCodes(_ codes: [Code]) -> [Code] 
@@ -38,19 +42,39 @@ protocol CameraScannerModuleInteracting: AnyObject {
 final class CameraScannerModuleInteractor {
     private let newCodeInteractor: NewCodeInteracting
     private let pushNotificationPermission: PushNotificationRegistrationInteracting
+    private let cameraPermissionInteractor: CameraPermissionInteracting
     
     var serviceWasCreated: ((ServiceData) -> Void)?
     var shouldRename: ((String, String) -> Void)?
     
-    init(newCodeInteractor: NewCodeInteracting, pushNotificationPermission: PushNotificationRegistrationInteracting) {
+    init(
+        newCodeInteractor: NewCodeInteracting,
+        pushNotificationPermission: PushNotificationRegistrationInteracting,
+        cameraPermissionInteractor: CameraPermissionInteracting
+    ) {
         self.newCodeInteractor = newCodeInteractor
         self.pushNotificationPermission = pushNotificationPermission
+        self.cameraPermissionInteractor = cameraPermissionInteractor
         newCodeInteractor.serviceWasCreated = { [weak self] in self?.serviceWasCreated?($0) }
         newCodeInteractor.shouldRename = { [weak self] in self?.shouldRename?($0, $1) }
     }
 }
 
 extension CameraScannerModuleInteractor: CameraScannerModuleInteracting {
+    func isCameraAvailable() -> Bool {
+        cameraPermissionInteractor.isCameraAvailable
+    }
+    
+    func isCameraAllowed() -> Bool {
+        cameraPermissionInteractor.isCameraAllowed
+    }
+    
+    func registerCamera(callback: @escaping (Bool) -> Void) {
+        cameraPermissionInteractor.register { status in
+            callback(status == .granted)
+        }
+    }
+    
     var wasUserAskedAboutPush: Bool {
         pushNotificationPermission.wasUserAsked
     }

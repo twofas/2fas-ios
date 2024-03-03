@@ -161,7 +161,8 @@ final class ModuleInteractorFactory {
     func cameraScannerModuleInteractor() -> CameraScannerModuleInteracting {
         CameraScannerModuleInteractor(
             newCodeInteractor: InteractorFactory.shared.newCodeInteractor(),
-            pushNotificationPermission: InteractorFactory.shared.pushNotificationRegistrationInteractor()
+            pushNotificationPermission: InteractorFactory.shared.pushNotificationRegistrationInteractor(),
+            cameraPermissionInteractor: InteractorFactory.shared.cameraPermissionInteractor()
         )
     }
     

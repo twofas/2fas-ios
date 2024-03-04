@@ -202,7 +202,8 @@ final class ModuleInteractorFactory {
             sectionInteractor: InteractorFactory.shared.sectionInteractor(),
             notificationsInteractor: InteractorFactory.shared.notificationInteractor(),
             serviceDefinitionInteractor: InteractorFactory.shared.serviceDefinitionInteractor(),
-            advancedAlertInteractor: InteractorFactory.shared.advancedAlertInteractor()
+            advancedAlertInteractor: InteractorFactory.shared.advancedAlertInteractor(),
+            mdmInteractor: InteractorFactory.shared.mdmInteractor()
         )
     }
     

@@ -37,6 +37,8 @@ final class ComposeServiceFormReveal: UIView {
         return button
     }()
     
+    private var stack: ComposeServiceFormRow?
+    
     var buttonPressed: Callback?
     
     enum State {
@@ -64,8 +66,14 @@ final class ComposeServiceFormReveal: UIView {
         
         addSubview(stack)
         stack.pinToParent()
+        self.stack = stack
         
         changeState(newState: .masked)
+    }
+    
+    func removeActionButton() {
+        stack?.removeArrangedSubviews()
+        stack?.addArrangedSubview(privateKey)
     }
     
     func changeState(newState: State) {

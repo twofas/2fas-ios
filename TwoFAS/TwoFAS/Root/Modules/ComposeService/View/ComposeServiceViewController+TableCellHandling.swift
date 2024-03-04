@@ -55,8 +55,9 @@ extension ComposeServiceViewController {
             ) as? ComposeServicePrivateKeyCell else { return UITableViewCell() }
             let kind: ComposeServicePrivateKeyKind = {
                 switch config.privateKeyKind {
-                case .empty: return .empty
-                case .hidden: return .hidden
+                case .empty: .empty
+                case .hidden: .hidden
+                case .hiddenNonCopyable: .hiddenNonCopyable
                 }
             }()
             cell.configure(privateKeyKind: kind)

@@ -51,6 +51,7 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case mainMenuPortraitCollapsed
         case mainMenuLandscapeCollapsed
         case dateOfFirstRun
+        case syncSuccessDate
     }
     private let userDefaults = UserDefaults()
     private let sharedDefaults = UserDefaults(suiteName: Config.suiteName)!
@@ -279,6 +280,16 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         userDefaults.bool(forKey: Keys.introductionWasShown.rawValue)
     }
     
+    // MARK: - Sync success
+    
+    var successSyncDate: Date? {
+        userDefaults.object(forKey: Keys.syncSuccessDate.rawValue) as? Date
+    }
+    func saveSuccessSyncDate(_ date: Date?) {
+        userDefaults.set(date, forKey: Keys.syncSuccessDate.rawValue)
+        userDefaults.synchronize()
+    }
+
     // MARK: - View Path
     
     func clearViewPath() {

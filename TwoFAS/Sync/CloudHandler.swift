@@ -85,6 +85,8 @@ final class CloudHandler: CloudHandlerType {
     private let itemHandlerMigrationProxy: ItemHandlerMigrationProxy
     private let cloudKit: CloudKit
     
+    private let notificationCenter = NotificationCenter.default
+    
     private var isClearing = false
     
     private var listeners: [String: CloudHandlerStateListener] = [:]
@@ -313,6 +315,7 @@ final class CloudHandler: CloudHandlerType {
     private func setDisabled() {
         Log("Cloud Handler - Set Disabled", module: .cloudSync)
         ConstStorage.cloudEnabled = false
+        notificationCenter.post(name: .clearSyncCompletedSuccessfuly, object: nil)
     }
     
     private var isEnabled: Bool { ConstStorage.cloudEnabled }
@@ -344,6 +347,8 @@ final class CloudHandler: CloudHandlerType {
         
         if isClearing {
             clearBackup()
+        } else {
+            notificationCenter.post(name: .syncCompletedSuccessfuly, object: nil)
         }
     }
     

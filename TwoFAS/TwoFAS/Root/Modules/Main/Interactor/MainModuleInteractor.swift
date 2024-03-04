@@ -28,6 +28,9 @@ protocol MainModuleInteracting: AnyObject {
     func checkForImport() -> URL?
     func clearImportedFileURL()
     
+    func saveSuccessSync()
+    func clearSavesuccessSync()
+    
     // MARK: - New app version
     func checkForNewAppVersion(completion: @escaping (URL?) -> Void)
     func skipAppVersion()
@@ -83,6 +86,14 @@ extension MainModuleInteractor: MainModuleInteracting {
     
     func clearImportedFileURL() {
         fileInteractor.markAsHandled()
+    }
+    
+    func saveSuccessSync() {
+        cloudBackupStateInteractor.saveSuccessSyncDate()
+    }
+    
+    func clearSavesuccessSync() {
+        cloudBackupStateInteractor.clearSavesuccessSync()
     }
     
     // MARK: - New app version

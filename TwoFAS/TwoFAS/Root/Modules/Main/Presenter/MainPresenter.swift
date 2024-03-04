@@ -82,6 +82,14 @@ final class MainPresenter {
     func handleViewIsVisible() {
         viewIsVisible()
     }
+    
+    func handleSyncCompletedSuccessfuly() {
+        interactor.saveSuccessSync()
+    }
+    
+    func handleClearSyncCompletedSuccessfuly() {
+        interactor.clearSavesuccessSync()
+    }
 }
 
 private extension MainPresenter {

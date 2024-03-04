@@ -62,6 +62,7 @@ final class SyncHandler {
         cloudKit.updatedEntries = { [weak self] entries in self?.updateEntries(entries) }
         cloudKit.fetchFinishedSuccessfuly = { [weak self] in self?.fetchFinishedSuccessfuly() }
         cloudKit.changesSavedSuccessfuly = { [weak self] in self?.changesSavedSuccessfuly() }
+        cloudKit.abortSync = { [weak self] in self?.abortSync() }
         
         cloudKit.resetStack = { [weak self] in
             Log("SyncHandler - resetStack", module: .cloudSync)
@@ -386,5 +387,11 @@ final class SyncHandler {
     private func dateOffsetet(for logEntity: LogEntity) -> Date {
         logEntity.date.addingTimeInterval(TimeInterval(timeOffset))
     }
+    
+    private func abortSync() {
+        isSyncing = false
+        applyingChanges = false
+    }
+    
     // swiftlint:enable line_length
 }

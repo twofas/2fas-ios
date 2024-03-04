@@ -27,6 +27,7 @@ protocol SettingsMenuModuleInteracting: AnyObject {
     var isPushNotificationDetermined: Bool { get }
     var hasSSLNetworkError: Bool { get }
     var hasActiveBrowserExtension: Bool { get }
+    var isBrowserExtensionAllowed: Bool { get }
     
     func enableWidgets()
     func disableWidgets()
@@ -38,19 +39,22 @@ final class SettingsMenuModuleInteractor {
     private let protectionInteractor: ProtectionInteracting
     private let networkStatusInteractor: NetworkStatusInteracting
     private let pairingDeviceInteractor: PairingWebExtensionInteracting
+    private let mdmInteractor: MDMInteracting
     
     init(
         widgetsInteractor: WidgetsInteracting,
         pushNotifications: PushNotificationRegistrationInteracting,
         protectionInteractor: ProtectionInteracting,
         networkStatusInteractor: NetworkStatusInteracting,
-        pairingDeviceInteractor: PairingWebExtensionInteracting
+        pairingDeviceInteractor: PairingWebExtensionInteracting,
+        mdmInteractor: MDMInteracting
     ) {
         self.widgetsInteractor = widgetsInteractor
         self.pushNotifications = pushNotifications
         self.protectionInteractor = protectionInteractor
         self.networkStatusInteractor = networkStatusInteractor
         self.pairingDeviceInteractor = pairingDeviceInteractor
+        self.mdmInteractor = mdmInteractor
     }
 }
 
@@ -60,7 +64,8 @@ extension SettingsMenuModuleInteractor: SettingsMenuModuleInteracting {
     var shouldShowWidgetWarning: Bool { widgetsInteractor.showWarning }
     var isPushNotificationDetermined: Bool { pushNotifications.wasUserAsked }
     var hasSSLNetworkError: Bool { networkStatusInteractor.hasSSLNetworkError }
-    var hasActiveBrowserExtension: Bool { !pairingDeviceInteractor.listAll().isEmpty }
+    var hasActiveBrowserExtension: Bool { pairingDeviceInteractor.hasActiveBrowserExtension }
+    var isBrowserExtensionAllowed: Bool { !mdmInteractor.isBrowserExtensionBlocked }
         
     func enableWidgets() {
         widgetsInteractor.enable()

@@ -83,6 +83,8 @@ protocol ComposeServiceModuleInteracting: AnyObject {
     var actionType: ComposeServiceModuleInteractorActionType { get }
     var privateKeyError: ComposeServiceModuleInteractorPrivateKeyError? { get }
     
+    var isSecretCopyingBlocked: Bool { get }
+    
     var isDataCorrectNotifier: ((Bool) -> Void)? { get set }
     var serviceWasCreated: ((ServiceData) -> Void)? { get set }
     
@@ -138,6 +140,10 @@ final class ComposeServiceModuleInteractor {
     private(set) var digits: Digits = .defaultValue
     private(set) var counter: Int?
     
+    var isSecretCopyingBlocked: Bool {
+        mdmInteractor.isBackupBlocked
+    }
+    
     // MARK: Section
     private var sectionState: ComposeServiceModuleInteractorSectionState = .none
     
@@ -158,6 +164,7 @@ final class ComposeServiceModuleInteractor {
     private let notificationsInteractor: NotificationInteracting
     private let serviceDefinitionInteractor: ServiceDefinitionInteracting
     private let advancedAlertInteractor: AdvancedAlertInteracting
+    private let mdmInteractor: MDMInteracting
     
     private(set) var serviceData: ServiceData?
     
@@ -170,7 +177,8 @@ final class ComposeServiceModuleInteractor {
         sectionInteractor: SectionInteracting,
         notificationsInteractor: NotificationInteracting,
         serviceDefinitionInteractor: ServiceDefinitionInteracting,
-        advancedAlertInteractor: AdvancedAlertInteracting
+        advancedAlertInteractor: AdvancedAlertInteracting,
+        mdmInteractor: MDMInteracting
     ) {
         self.modifyInteractor = modifyInteractor
         self.trashingServiceInteractor = trashingServiceInteractor
@@ -181,6 +189,7 @@ final class ComposeServiceModuleInteractor {
         self.notificationsInteractor = notificationsInteractor
         self.serviceDefinitionInteractor = serviceDefinitionInteractor
         self.advancedAlertInteractor = advancedAlertInteractor
+        self.mdmInteractor = mdmInteractor
         
         updateValues()
     }

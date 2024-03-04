@@ -37,7 +37,7 @@ extension BackupMenuPresenter {
             footer: T.Backup.sectionDescription
         )
         
-        let exportEnabled = interactor.exportEnabled
+        let exportEnabled = interactor.exportEnabled && interactor.isBackupAllowed
         let fileBackup = BackupMenuSection(
             title: T.Backup.fileBackup,
             cells: [
@@ -65,11 +65,14 @@ extension BackupMenuPresenter {
             footer: T.Backup.warningIntroduction
         )
         
-        var menu: [BackupMenuSection] = [
-            cloudBackup,
-            fileBackup
-        ]
+        var menu: [BackupMenuSection] = []
         
+        if interactor.isBackupAllowed {
+            menu.append(cloudBackup)
+        }
+        
+        menu.append(fileBackup)
+                
         if interactor.isCloudBackupConnected {
             menu.append(cloudBackupDeletition)
         }

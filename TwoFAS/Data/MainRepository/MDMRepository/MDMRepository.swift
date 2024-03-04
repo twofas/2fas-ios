@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2024 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -19,14 +19,11 @@
 
 import Foundation
 
-enum ComposeServiceInputKind: String {
-    case serviceName
-    case privateKey
-    case additionalInfo
-}
-
-enum ComposeServicePrivateKeyKind {
-    case empty
-    case hidden
-    case hiddenNonCopyable
+protocol MDMRepository: AnyObject {
+    var isBackupBlocked: Bool { get }
+    var isBiometryBlocked: Bool { get }
+    var isBrowserExtensionBlocked: Bool { get }
+    var lockoutAttepts: AppLockAttempts? { get }
+    var lockoutBlockTime: AppLockBlockTime? { get }
+    var isPasscodeRequried: Bool { get }
 }

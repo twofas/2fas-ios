@@ -35,6 +35,7 @@ struct AppSecurityMenuCell: Hashable {
     struct Toggle: Hashable {
         let kind: ToggleKind
         let isOn: Bool
+        let isBlocked: Bool
     }
     
     // swiftlint:disable discouraged_none_name

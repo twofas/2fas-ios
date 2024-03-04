@@ -471,4 +471,12 @@ protocol MainRepository: AnyObject {
     
     // MARK: - Time Verification
     func timeVerificationStart()
+    
+    // MARK: - MDM options
+    var mdmIsBackupBlocked: Bool { get }
+    var mdmIsBiometryBlocked: Bool { get }
+    var mdmIsBrowserExtensionBlocked: Bool { get }
+    var mdmLockoutAttepts: AppLockAttempts? { get }
+    var mdmLockoutBlockTime: AppLockBlockTime? { get }
+    var mdmIsPasscodeRequried: Bool { get }
 }

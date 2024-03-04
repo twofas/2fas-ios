@@ -50,6 +50,7 @@ final class MainRepositoryImpl: MainRepository {
     let serviceDefinitionDatabase: ServiceDefinitionDatabase = ServiceDefinitionDatabaseImpl()
     let iconDescriptionDatabase: IconDescriptionDatabase = IconDescriptionDatabaseImpl()
     let initialPermissionStateDataController = PermissionsStateDataController()
+    let mdmRepository: MDMRepository = MDMRepositoryImpl()
     
     let serviceNameTranslation: String
     let notificationCenter = NotificationCenter.default

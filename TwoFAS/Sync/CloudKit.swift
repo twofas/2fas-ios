@@ -20,6 +20,7 @@
 import Foundation
 import CloudKit
 import Common
+import UIKit
 
 final class CloudKit {
     typealias DeletedEntries = ([(name: String, type: String)]) -> Void
@@ -37,6 +38,7 @@ final class CloudKit {
     var useriCloudProblem: Callback?
     var userLoggedOut: Callback?
     var resetStack: Callback?
+    var abortSync: Callback?
     
     var fetchFinishedSuccessfuly: Callback?
     var changesSavedSuccessfuly: Callback?
@@ -470,6 +472,15 @@ final class CloudKit {
     private func finishedFetchingZoneChange() {
         Log("CloudKit - finishedFetchingZoneChange", module: .cloudSync)
         zoneUpdated = false
+        
+        if UIApplication.shared.applicationState == .background {
+            abortSync?()
+            syncTokenHandler.prepare()
+            clearRecordChanges()
+            operation?.cancel()
+            operation = nil
+            return
+        }
         
         DispatchQueue.main.async {
             if !self.deletedRecords.isEmpty {

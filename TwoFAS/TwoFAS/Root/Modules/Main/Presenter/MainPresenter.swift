@@ -84,6 +84,14 @@ final class MainPresenter {
         viewIsVisible()
     }
     
+    func handleSyncCompletedSuccessfuly() {
+        interactor.saveSuccessSync()
+    }
+    
+    func handleClearSyncCompletedSuccessfuly() {
+        interactor.clearSavesuccessSync()
+    }
+
     func handleSavePIN(_ PIN: String, pinType: PINType) {
         interactor.savePIN(PIN, ofType: pinType)
     }

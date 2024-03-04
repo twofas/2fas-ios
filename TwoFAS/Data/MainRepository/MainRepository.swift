@@ -122,6 +122,7 @@ protocol MainRepository: AnyObject {
     // MARK: - Cloud
     var secretSyncError: ((String) -> Void)? { get set }
     var isCloudBackupConnected: Bool { get }
+    var successSyncDate: Date? { get }
     var cloudCurrentState: CloudState { get }
     func registerForCloudStateChanges(_ listener: @escaping CloudStateListener, id: CloudStateListenerID)
     func unregisterForCloudStageChanges(with id: CloudStateListenerID)
@@ -133,6 +134,7 @@ protocol MainRepository: AnyObject {
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     )
+    func saveSuccessSyncDate(_ date: Date?)
     
     // MARK: - Import
     var fileURL: URL? { get set }

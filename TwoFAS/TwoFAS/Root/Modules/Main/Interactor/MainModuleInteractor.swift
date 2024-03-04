@@ -32,6 +32,8 @@ protocol MainModuleInteracting: AnyObject {
     func clearImportedFileURL()
     
     func savePIN(_ PIN: String, ofType pinType: PINType)
+    func saveSuccessSync()
+    func clearSavesuccessSync()
     
     // MARK: - New app version
     func checkForNewAppVersion(completion: @escaping (URL?) -> Void)
@@ -110,6 +112,14 @@ extension MainModuleInteractor: MainModuleInteracting {
     
     func savePIN(_ PIN: String, ofType pinType: PINType) {
         protectionInteractor.savePIN(PIN, typeOfPIN: pinType)
+    }
+
+    func saveSuccessSync() {
+        cloudBackupStateInteractor.saveSuccessSyncDate()
+    }
+    
+    func clearSavesuccessSync() {
+        cloudBackupStateInteractor.clearSavesuccessSync()
     }
     
     // MARK: - New app version

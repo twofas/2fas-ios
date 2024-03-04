@@ -21,6 +21,15 @@ import Foundation
 
 extension BackupMenuPresenter {
     func buildMenu() -> [BackupMenuSection] {
+        var footer = T.Backup.sectionDescription
+        let dateStr: String = {
+            if let date = interactor.syncSuccessDate {
+                return dateFormatter.string(from: date)
+            }
+            return "-"
+        }()
+        footer.append("\n\n\(T.backupSettingsSyncTitle): \(dateStr)")
+        
         let cloudBackup = BackupMenuSection(
             title: T.Backup.cloudBackup,
             cells: [
@@ -34,7 +43,7 @@ extension BackupMenuPresenter {
                     )
                 )
             ],
-            footer: T.Backup.sectionDescription
+            footer: footer
         )
         
         let exportEnabled = interactor.exportEnabled && interactor.isBackupAllowed

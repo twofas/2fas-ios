@@ -97,4 +97,7 @@ protocol UserDefaultsRepository: AnyObject {
     var exchangeToken: String? { get }
     func setExchangeToken(_ key: String)
     func clearExchangeToken()
+    
+    var successSyncDate: Date? { get }
+    func saveSuccessSyncDate(_ date: Date?)
 }

@@ -30,6 +30,7 @@ final class MainViewController: UIViewController {
     var presenter: MainPresenter!
     
     private let settingsEventController = SettingsEventController()
+    private let notificationCenter = NotificationCenter.default
         
     var splitView: MainSplitViewController?
     
@@ -48,64 +49,76 @@ final class MainViewController: UIViewController {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        notificationCenter.removeObserver(self)
     }
 }
 
 extension MainViewController {
     private func setupEvents() {
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             self,
             selector: #selector(refreshAuthList),
             name: .pushNotificationRefreshAuthList,
             object: nil
         )
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             self,
             selector: #selector(refreshAuthList),
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             self,
             selector: #selector(clearAuthList),
             name: UIApplication.willResignActiveNotification,
             object: nil
         )
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             self,
             selector: #selector(authorizeFromApp),
             name: .pushNotificationAuthorizeFromApp,
             object: nil
         )
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             self,
             selector: #selector(switchToSetupPIN),
             name: .switchToSetupPIN,
             object: nil
         )
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             self,
             selector: #selector(switchToBrowserExtension),
             name: .switchToBrowserExtension,
             object: nil
         )
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             self,
             selector: #selector(fileAwaitsOpening),
             name: .fileAwaitsOpening,
             object: nil
         )
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             self,
             selector: #selector(tokensVisible),
             name: .tokensScreenIsVisible,
             object: nil
         )
-        NotificationCenter.default.addObserver(
+        notificationCenter.addObserver(
             self,
             selector: #selector(tokensVisible),
             name: .userLoggedIn,
+            object: nil
+        )
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(syncCompletedSuccessfuly),
+            name: .syncCompletedSuccessfuly,
+            object: nil
+        )
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(clearSyncCompletedSuccessfuly),
+            name: .clearSyncCompletedSuccessfuly,
             object: nil
         )
     }
@@ -150,6 +163,16 @@ extension MainViewController {
     @objc
     private func tokensVisible() {
         presenter.handleViewIsVisible()
+    }
+    
+    @objc
+    private func syncCompletedSuccessfuly() {
+        presenter.handleSyncCompletedSuccessfuly()
+    }
+    
+    @objc
+    private func clearSyncCompletedSuccessfuly() {
+        presenter.handleClearSyncCompletedSuccessfuly()
     }
 }
 

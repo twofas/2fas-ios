@@ -35,6 +35,8 @@ protocol BackupMenuModuleInteracting: AnyObject {
     
     func toggleBackup()
     func clearBackup()
+    
+    var syncSuccessDate: Date? { get }
 }
 
 final class BackupMenuModuleInteractor {
@@ -101,6 +103,10 @@ extension BackupMenuModuleInteractor: BackupMenuModuleInteracting {
     
     func clearBackup() {
         cloudBackup.clearBackup()
+    }
+    
+    var syncSuccessDate: Date? {
+        cloudBackup.successSyncDate
     }
 }
 

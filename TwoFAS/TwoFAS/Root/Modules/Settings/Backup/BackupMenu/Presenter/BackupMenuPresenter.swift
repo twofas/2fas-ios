@@ -23,6 +23,12 @@ final class BackupMenuPresenter {
     weak var view: BackupMenuViewControlling?
     
     private let flowController: BackupMenuFlowControlling
+    var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        return dateFormatter
+    }()
     let interactor: BackupMenuModuleInteracting
     
     init(flowController: BackupMenuFlowControlling, interactor: BackupMenuModuleInteracting) {
@@ -30,7 +36,7 @@ final class BackupMenuPresenter {
         self.interactor = interactor
         interactor.reload = { [weak self] in self?.reload() }
     }
-
+    
     func viewWillAppear() {
         interactor.startMonitoring()
         reload()
@@ -72,6 +78,10 @@ final class BackupMenuPresenter {
     }
     
     func handleBecomeActive() {
+        reload()
+    }
+    
+    func handleSyncSuccessDateUpdate() {
         reload()
     }
 }

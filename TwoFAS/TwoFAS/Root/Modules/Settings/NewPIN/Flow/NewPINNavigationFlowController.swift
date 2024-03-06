@@ -44,7 +44,7 @@ final class NewPINNavigationFlowController: NavigationFlowController {
         
         flowController.navigationController = navi
         
-        NewPINFlowController.setRoot(in: navi, parent: flowController, pinType: .digits6, lockNavigation: true)
+        NewPINFlowController.setRoot(in: navi, parent: flowController, pinType: .digits4, lockNavigation: true)
         
         viewController.present(navi, animated: true, completion: nil)
     }

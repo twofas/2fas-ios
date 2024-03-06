@@ -83,6 +83,8 @@ protocol ComposeServiceModuleInteracting: AnyObject {
     var actionType: ComposeServiceModuleInteractorActionType { get }
     var privateKeyError: ComposeServiceModuleInteractorPrivateKeyError? { get }
     
+    var isBrowserExtensionAllowed: Bool { get }
+    
     var isSecretCopyingBlocked: Bool { get }
     
     var isDataCorrectNotifier: ((Bool) -> Void)? { get set }
@@ -218,6 +220,10 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
     
     var iconTypeName: String {
         serviceDefinitionInteractor.name(for: iconTypeID) ?? ""
+    }
+    
+    var isBrowserExtensionAllowed: Bool {
+        !mdmInteractor.isBrowserExtensionBlocked
     }
     
     func setServiceName(_ newServiceName: String?) {

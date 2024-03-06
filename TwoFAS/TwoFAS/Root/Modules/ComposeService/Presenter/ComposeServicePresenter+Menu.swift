@@ -121,7 +121,9 @@ extension ComposeServicePresenter {
         ]
         
         if interactor.actionType == .edit {
-            array.append(webExtension)
+            if interactor.isBrowserExtensionAllowed {
+                array.append(webExtension)
+            }
             array.append(remove)
         }
         

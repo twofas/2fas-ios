@@ -32,7 +32,7 @@ extension MainRepositoryImpl {
         mdmRepository.isBrowserExtensionBlocked
     }
     
-    var mdmLockoutAttepts: AppLockAttempts? {
+    var mdmLockoutAttempts: AppLockAttempts? {
         mdmRepository.lockoutAttepts
     }
     

@@ -473,16 +473,16 @@ final class CloudKit {
         Log("CloudKit - finishedFetchingZoneChange", module: .cloudSync)
         zoneUpdated = false
         
-        if UIApplication.shared.applicationState == .background {
-            abortSync?()
-            syncTokenHandler.prepare()
-            clearRecordChanges()
-            operation?.cancel()
-            operation = nil
-            return
-        }
-        
         DispatchQueue.main.async {
+            if UIApplication.shared.applicationState == .background {
+                self.abortSync?()
+                self.syncTokenHandler.prepare()
+                self.clearRecordChanges()
+                self.operation?.cancel()
+                self.operation = nil
+                return
+            }
+            
             if !self.deletedRecords.isEmpty {
                 Log("CloudKit - deletedRecords not empty", module: .cloudSync)
                 self.deletedEntries?(self.deletedRecords.map { (name: $0.record.recordName, type: $0.type) })

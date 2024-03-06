@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Common
 
 public protocol MDMInteracting: AnyObject {
     var isBackupBlocked: Bool { get }
@@ -34,10 +35,25 @@ public protocol MDMInteracting: AnyObject {
 final class MDMInteractor {
     private let mainRepository: MainRepository
     private let pairingInteractor: PairingWebExtensionInteracting
+    private let cloudBackupStateInteractor: CloudBackupStateInteracting
     
-    init(mainRepository: MainRepository, pairingInteractor: PairingWebExtensionInteracting) {
+    private var syncDetermined = false
+    private var syncDisabled = false
+    
+    init(
+        mainRepository: MainRepository,
+        pairingInteractor: PairingWebExtensionInteracting,
+        cloudBackupStateInteractor: CloudBackupStateInteracting
+    ) {
         self.mainRepository = mainRepository
         self.pairingInteractor = pairingInteractor
+        self.cloudBackupStateInteractor = cloudBackupStateInteractor
+        
+        cloudBackupStateInteractor.stateChanged = { [weak self] in self?.syncStateDetermined() }
+        cloudBackupStateInteractor.startMonitoring()
+        if cloudBackupStateInteractor.isBackupEnabled {
+            syncStateDetermined()
+        }
     }
 }
 
@@ -55,7 +71,7 @@ extension MDMInteractor: MDMInteracting {
     }
     
     var isLockoutAttemptsChangeBlocked: Bool {
-        mainRepository.mdmLockoutAttepts != nil
+        mainRepository.mdmLockoutAttempts != nil
     }
     
     var isLockoutBlockTimeChangeBlocked: Bool {
@@ -71,24 +87,50 @@ extension MDMInteractor: MDMInteracting {
     }
     
     func apply() {
-        if isBackupBlocked && mainRepository.isCloudBackupConnected {
-            mainRepository.clearBackup()
+        if syncDetermined {
+            disableSyncIfNecessary()
         }
         
         if isBiometryBlocked && mainRepository.isBiometryEnabled {
+            Log("MDMInteractor - disabling Biometry", module: .interactor)
             mainRepository.disableBiometry()
         }
         
         if isBrowserExtensionBlocked && pairingInteractor.hasActiveBrowserExtension {
+            Log("MDMInteractor - disabling Browser Extension", module: .interactor)
             pairingInteractor.disableExtension(completion: { _ in })
         }
         
-        if let lockoutAttepts = mainRepository.mdmLockoutAttepts {
-            mainRepository.setAppLockAttempts(lockoutAttepts)
+        if let lockoutAttempts = mainRepository.mdmLockoutAttempts {
+            Log("MDMInteractor - setting Lockout Attemtps", module: .interactor)
+            mainRepository.setAppLockAttempts(lockoutAttempts)
         }
         
         if let blockTime = mainRepository.mdmLockoutBlockTime {
+            Log("MDMInteractor - setting Lockout Block Time", module: .interactor)
             mainRepository.setAppLockBlockTime(blockTime)
+        }
+    }
+}
+
+private extension MDMInteractor {
+    func syncStateDetermined() {
+        guard !syncDetermined else { return }
+        Log("MDMInteractor - syncStateDetermined", module: .interactor)
+        syncDetermined = true
+        cloudBackupStateInteractor.stopMonitoring()
+        disableSyncIfNecessary()
+    }
+    
+    func disableSyncIfNecessary() {
+        Log(
+            "MDMInteractor - disableSyncIfNecessary: Backup enabled: \(cloudBackupStateInteractor.isBackupEnabled)",
+            module: .interactor
+        )
+        if isBackupBlocked && cloudBackupStateInteractor.isBackupEnabled && !syncDisabled {
+            Log("MDMInteractor - disableSyncIfNecessary - Clearing", module: .interactor)
+            syncDisabled = true
+            mainRepository.clearBackup()
         }
     }
 }

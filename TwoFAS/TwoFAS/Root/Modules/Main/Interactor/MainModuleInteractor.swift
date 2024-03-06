@@ -119,7 +119,7 @@ extension MainModuleInteractor: MainModuleInteracting {
     }
     
     func clearSavesuccessSync() {
-        cloudBackupStateInteractor.clearSavesuccessSync()
+        cloudBackupStateInteractor.clearSaveSuccessSync()
     }
     
     // MARK: - New app version

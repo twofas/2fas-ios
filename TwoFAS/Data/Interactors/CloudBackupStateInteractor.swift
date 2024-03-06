@@ -45,7 +45,7 @@ public protocol CloudBackupStateInteracting: AnyObject {
     
     var successSyncDate: Date? { get }
     func saveSuccessSyncDate()
-    func clearSavesuccessSync()
+    func clearSaveSuccessSync()
 }
 
 /// Use one instance per use case
@@ -152,7 +152,7 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
         mainRepository.saveSuccessSyncDate(Date())
     }
     
-    func clearSavesuccessSync() {
+    func clearSaveSuccessSync() {
         Log("CloudBackupStateInteractor - clearSavesuccessSync", module: .interactor)
         mainRepository.saveSuccessSyncDate(nil)
     }

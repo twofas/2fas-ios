@@ -478,7 +478,7 @@ protocol MainRepository: AnyObject {
     var mdmIsBackupBlocked: Bool { get }
     var mdmIsBiometryBlocked: Bool { get }
     var mdmIsBrowserExtensionBlocked: Bool { get }
-    var mdmLockoutAttepts: AppLockAttempts? { get }
+    var mdmLockoutAttempts: AppLockAttempts? { get }
     var mdmLockoutBlockTime: AppLockBlockTime? { get }
     var mdmIsPasscodeRequried: Bool { get }
 }

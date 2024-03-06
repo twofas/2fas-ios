@@ -46,20 +46,25 @@ extension BackupMenuPresenter {
             footer: footer
         )
         
-        let exportEnabled = interactor.exportEnabled && interactor.isBackupAllowed
-        let fileBackup = BackupMenuSection(
-            title: T.Backup.fileBackup,
-            cells: [
-                .init(
-                    title: T.Backup.import,
-                    action: .importFile
-                ),
+        let exportEnabled = interactor.exportEnabled
+        var cells: [BackupMenuCell] = [
+            .init(
+                title: T.Backup.import,
+                action: .importFile
+            )
+        ]
+        if interactor.isBackupAllowed {
+            cells.append(
                 .init(
                     title: T.Backup.export,
                     action: .exportFile,
                     isEnabled: exportEnabled
                 )
-            ],
+            )
+        }
+        let fileBackup = BackupMenuSection(
+            title: T.Backup.fileBackup,
+            cells: cells,
             footer: T.Backup.fileBackupOfflineTitle
         )
         
@@ -82,7 +87,7 @@ extension BackupMenuPresenter {
         
         menu.append(fileBackup)
                 
-        if interactor.isCloudBackupConnected {
+        if interactor.isCloudBackupConnected && interactor.isBackupAllowed {
             menu.append(cloudBackupDeletition)
         }
 

@@ -52,6 +52,11 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case mainMenuLandscapeCollapsed
         case dateOfFirstRun
         case syncSuccessDate
+        case localNotificationPublicationDate
+        case localNotificationPublicationID
+        case localNotificationWasRead
+        case localNotificationCycle
+        case runCount
     }
     private let userDefaults = UserDefaults()
     private let sharedDefaults = UserDefaults(suiteName: Config.suiteName)!
@@ -341,6 +346,53 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
     func clearExchangeToken() {
         sharedDefaults.set(nil, forKey: Config.exchangeTokenKey)
         sharedDefaults.synchronize()
+    }
+    
+    // MARK: - Local Notifications
+    
+    var localNotificationPublicationDate: Date? {
+        userDefaults.object(forKey: Keys.localNotificationPublicationDate.rawValue) as? Date
+    }
+    
+    func saveLocalNotificationPublicationDate(_ date: Date?) {
+        userDefaults.set(date, forKey: Keys.localNotificationPublicationDate.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    var localNotificationPublicationID: String? {
+        userDefaults.string(forKey: Keys.localNotificationPublicationID.rawValue)
+    }
+    
+    func saveLocalNotificationPublicationID(_ ID: String?) {
+        userDefaults.set(ID, forKey: Keys.localNotificationPublicationID.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    var localNotificationWasRead: Bool {
+        userDefaults.bool(forKey: Keys.localNotificationWasRead.rawValue)
+    }
+    
+    func saveLocalNotificationWasRead(_ wasRead: Bool) {
+        userDefaults.set(wasRead, forKey: Keys.localNotificationWasRead.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    var localNotificationCycle: Int {
+        userDefaults.integer(forKey: Keys.localNotificationCycle.rawValue)
+    }
+    
+    func saveLocalNotificationCycle(_ cycle: Int) {
+        userDefaults.set(cycle, forKey: Keys.localNotificationCycle.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    var runCount: Int {
+        userDefaults.integer(forKey: Keys.runCount.rawValue)
+    }
+    
+    func saveRunCount(_ count: Int) {
+        userDefaults.set(count, forKey: Keys.runCount.rawValue)
+        userDefaults.synchronize()
     }
     
     // MARK: - Clear all

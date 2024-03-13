@@ -24,6 +24,7 @@ public extension Notification.Name {
     static let sectionsWereUpdated = Notification.Name("sectionsWereUpdatedNotification")
     static let syncCompletedSuccessfuly = Notification.Name("syncCompletedSuccessfuly")
     static let clearSyncCompletedSuccessfuly = Notification.Name("clearSyncCompletedSuccessfuly")
+    static let localNotificationsHandled = Notification.Name("localNotificationsHandled")
 }
 
 public extension Notification {

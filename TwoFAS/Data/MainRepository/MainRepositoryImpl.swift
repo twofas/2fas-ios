@@ -87,6 +87,7 @@ final class MainRepositoryImpl: MainRepository {
     var storageError: ((String) -> Void)?
     
     var _isLockScreenActive = false
+    var _areLocalNotificationsHandled = false
     
     // Cached values for higher pefrormance
     var cachedSortType: SortType?

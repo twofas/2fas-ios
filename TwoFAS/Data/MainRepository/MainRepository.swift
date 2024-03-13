@@ -481,4 +481,23 @@ protocol MainRepository: AnyObject {
     var mdmLockoutAttempts: AppLockAttempts? { get }
     var mdmLockoutBlockTime: AppLockBlockTime? { get }
     var mdmIsPasscodeRequried: Bool { get }
+    
+    // MARK: - Local Notifications
+    var localNotificationPublicationDate: Date? { get }
+    func saveLocalNotificationPublicationDate(_ date: Date?)
+    
+    var localNotificationPublicationID: String? { get }
+    func saveLocalNotificationPublicationID(_ ID: String?)
+    
+    var localNotificationWasRead: Bool { get }
+    func saveLocalNotificationWasRead(_ wasRead: Bool)
+    
+    var localNotificationCycle: Int { get }
+    func saveLocalNotificationCycle(_ cycle: Int)
+    
+    var runCount: Int { get }
+    func saveRunCount(_ count: Int)
+    
+    var localNotificationsHandled: Bool { get }
+    func markLocalNotificationsAsHandled()
 }

@@ -20,7 +20,7 @@ We welcome meaningful code contributions to the 2FAS for iOS project. If you are
 1. Fork this repository to your own GitHub account
 2. Clone the repository to your local machine
 3. Copy example Keys.swift from TwoFAS/opensource folder to TwoFAS/Protection (override the encrypted file)
-4. Copy IconDescriptionDatabaseImpl+Database.swift and ServiceDefinitionDatabaseImpl+Database.swift from TwoFAS/opensource to TwoFAS/Content/Sources (override files)
+4. Copy IconDescriptionDatabaseImpl+Database.swift and ServiceDefinitionDatabaseImpl+Database.swift from TwoFAS/opensource to TwoFAS/Content/Sources (override files). Remove all files with "*DatabaseImpl+Database[number].swift" in it.
 5. Copy Assets.car from TwoFAS/opensource to TwoFAS/Content/Assets (override the file)
 6. Create a new branch for your changes (e.g. `feature/new-login-screen`)
 7. Make your changes

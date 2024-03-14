@@ -20,56 +20,7 @@
 import UIKit
 import Common
 
-public protocol IconDescriptionDatabase: AnyObject {
-    func name(for iconTypeID: IconTypeID) -> String?
-    func iconDescription(for iconTypeID: IconTypeID) -> IconDescription?
-    func listAll() -> [IconDescription]
-    func grouppedList() -> [IconDescriptionGroup]
-}
-
-public final class IconDescriptionDatabaseImpl {
-    public static var bundle: Bundle {
-        Bundle.module
-    }
-    private let database = IconDescriptionDatabaseGenerated()
-    public init() {}
-}
-
-extension IconDescriptionDatabaseImpl: IconDescriptionDatabase {
-    public func name(for iconTypeID: IconTypeID) -> String? {
-        iconDescription(for: iconTypeID)?.name
-    }
-    
-    public func iconDescription(for iconTypeID: IconTypeID) -> IconDescription? {
-        database.icons.first(where: { $0.iconTypeID == iconTypeID })
-    }
-    
-    public func listAll() -> [IconDescription] {
-        database.icons
-    }
-    
-    public func grouppedList() -> [IconDescriptionGroup] {
-        let all = listAll()
-        
-        let grouped: [IconDescriptionGroup] = Dictionary(grouping: all, by: { def -> String in
-            let first = def.name.first!
-            if first.isNumber {
-                return "0-9"
-            } else {
-                return String(first.uppercased())
-            }
-        })
-            .sorted(by: { $0.key < $1.key })
-            .map { key, icons in
-                let sortedIcons = icons.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
-                return IconDescriptionGroup(title: key, icons: sortedIcons)
-            }
-        
-        return grouped
-    }
-}
-
-private final class IconDescriptionDatabaseGenerated {
+final class IconDescriptionDatabaseGenerated {
     var icons: [IconDescription] {
         []
     }

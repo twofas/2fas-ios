@@ -110,8 +110,11 @@ final class TokensModuleInteractor {
     private let newCodeInteractor: NewCodeInteracting
     private let newsInteractor: NewsInteracting
     private let rootInteractor: RootInteracting
+    private let localNotificationFetchInteractor: LocalNotificationFetchInteracting
     
     private(set) var categoryData: [CategoryData] = []
+    
+    private var hasUnreadLocalNotification = false
     
     var linkAction: ((TokensLinkAction) -> Void)?
     
@@ -130,7 +133,8 @@ final class TokensModuleInteractor {
         widgetsInteractor: WidgetsInteracting,
         newCodeInteractor: NewCodeInteracting,
         newsInteractor: NewsInteracting,
-        rootInteractor: RootInteracting
+        rootInteractor: RootInteracting,
+        localNotificationFetchInteractor: LocalNotificationFetchInteracting
     ) {
         self.appearanceInteractor = appearanceInteractor
         self.serviceDefinitionsInteractor = serviceDefinitionsInteractor
@@ -147,6 +151,7 @@ final class TokensModuleInteractor {
         self.newCodeInteractor = newCodeInteractor
         self.newsInteractor = newsInteractor
         self.rootInteractor = rootInteractor
+        self.localNotificationFetchInteractor = localNotificationFetchInteractor
         
         setupLinkInteractor()
     }
@@ -413,11 +418,25 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     // MARK: - News
     var hasUnreadNews: Bool {
-        newsInteractor.hasUnreadNews
+        newsInteractor.hasUnreadNews || hasUnreadLocalNotification
     }
     
     func fetchNews(completion: @escaping () -> Void) {
-        newsInteractor.fetchList(completion: completion)
+        newsInteractor.fetchList { [weak self] in
+            self?.checkLocalNotifications(completion: completion)
+        }
+    }
+    
+    private func checkLocalNotifications(completion: @escaping () -> Void) {
+        localNotificationFetchInteractor.getNotification { [weak self] notification in
+            guard let notification else {
+                self?.hasUnreadLocalNotification = false
+                completion()
+                return
+            }
+            self?.hasUnreadLocalNotification = !notification.wasRead
+            completion()
+        }
     }
 }
 

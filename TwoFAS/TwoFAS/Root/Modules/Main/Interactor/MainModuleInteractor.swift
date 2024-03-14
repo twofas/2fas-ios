@@ -30,6 +30,7 @@ protocol MainModuleInteracting: AnyObject {
     func initialize()
     func checkForImport() -> URL?
     func clearImportedFileURL()
+    func refreshLocalNotifications()
     
     func savePIN(_ PIN: String, ofType pinType: PINType)
     func saveSuccessSync()

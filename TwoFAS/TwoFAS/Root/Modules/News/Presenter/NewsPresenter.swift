@@ -47,16 +47,27 @@ final class NewsPresenter {
     func viewWillAppear() {
         refreshView()
     }
-        
+    
     func handleRefreshView() {
         refreshView()
     }
     
     func handleSelection(at row: Int) {
-        guard let entry = interactor.localList()[safe: row], let link = entry.link else { return }
-        interactor.markAsRead(newsEntry: entry)
-        AppEventLog(.articleRead(entry.newsID))
-        flowController.openWeb(with: link)
+        interactor.fetchList { [weak self] list in
+            guard let entry = list[safe: row] else { return }
+            self?.interactor.markAsRead(newsEntry: entry)
+            if let type = entry.localNotificationType {
+                AppEventLog(.localNotificationRead(type))
+            } else {
+                AppEventLog(.articleRead(entry.newsID))
+            }
+            
+            if let internalLink = entry.internalLink {
+                self?.flowController.toInternalLink(internalLink)
+            } else if let link = entry.link {
+                self?.flowController.openWeb(with: link)
+            }
+        }
     }
     
     func close() {
@@ -79,25 +90,25 @@ private extension NewsPresenter {
     
     func reload() {
         let now = Date()
-        let cells = interactor
-            .localList()
-            .map { entry in
+        interactor.fetchList { [weak self] news in
+            let cells = news.map { entry in
                 NewsCell(
                     icon: entry.icon.image,
                     title: entry.message ?? entry.link?.absoluteString ?? "",
                     wasRead: entry.wasRead,
-                    publishedAgo: dateFormatter.localizedString(for: entry.publishedAt, relativeTo: now),
+                    publishedAgo: self?.dateFormatter.localizedString(for: entry.publishedAt, relativeTo: now) ?? "",
                     hasURL: entry.link != nil,
                     newsItem: entry
                 )
             }
-        
-        guard viewIsLoaded else { return }
-        
-        if cells.isEmpty {
-            view?.showEmptyScreen()
-        } else {
-            view?.reload(with: NewsSection(cells: cells))
+            
+            guard self?.viewIsLoaded == true else { return }
+            
+            if cells.isEmpty {
+                self?.view?.showEmptyScreen()
+            } else {
+                self?.view?.reload(with: NewsSection(cells: cells))
+            }
         }
     }
 }

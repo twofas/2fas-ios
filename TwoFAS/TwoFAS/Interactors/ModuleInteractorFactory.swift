@@ -282,7 +282,10 @@ final class ModuleInteractorFactory {
     }
     
     func newsModuleInteractor() -> NewsModuleInteracting {
-        NewsModuleInteractor(newsInteractor: InteractorFactory.shared.newsInteractor())
+        NewsModuleInteractor(
+            newsInteractor: InteractorFactory.shared.newsInteractor(),
+            localNotificationFetchInteractor: InteractorFactory.shared.localNotificationFetchInteractor()
+        )
     }
     
     func composeServiceCategorySelectionModuleInteractor(
@@ -324,7 +327,8 @@ final class ModuleInteractorFactory {
             widgetsInteractor: InteractorFactory.shared.widgetsInteractor(),
             newCodeInteractor: InteractorFactory.shared.newCodeInteractor(),
             newsInteractor: InteractorFactory.shared.newsInteractor(),
-            rootInteractor: InteractorFactory.shared.rootInteractor()
+            rootInteractor: InteractorFactory.shared.rootInteractor(),
+            localNotificationFetchInteractor: InteractorFactory.shared.localNotificationFetchInteractor()
         )
     }
     
@@ -339,7 +343,8 @@ final class ModuleInteractorFactory {
             appInfoInteractor: InteractorFactory.shared.appInfoInteractor(),
             rootInteractor: InteractorFactory.shared.rootInteractor(),
             mdmInteractor: InteractorFactory.shared.mdmInteractor(),
-            protectionInteractor: InteractorFactory.shared.protectionInteractor()
+            protectionInteractor: InteractorFactory.shared.protectionInteractor(),
+            localNotificationStateInteractor: InteractorFactory.shared.localNotificationStateInteractor()
         )
     }
     

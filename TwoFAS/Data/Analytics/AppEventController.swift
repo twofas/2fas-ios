@@ -32,6 +32,7 @@ public enum AppEvent {
     case missingIssuer(String)
     case supportedCodeAdded(String)
     case articleRead(String)
+    case localNotificationRead(String)
     case codeDetailsTypeAdded(String)
     case codeDetailsAlgorithmChosen(String)
     case codeDetailsRefreshTimeChosen(String)
@@ -111,6 +112,7 @@ private extension AppEvent {
         case .orderIconAsCompany: return "request_icon_as_company_click"
         case .orderIconDiscord: return "request_icon_discord_click"
         case .orderIconShare: return "request_icon_share_click"
+        case .localNotificationRead: return "local_notification_read"
         }
     }
     
@@ -126,6 +128,7 @@ private extension AppEvent {
         case .codeDetailsRefreshTimeChosen(let string): return [AppEventController.KeyValue: string]
         case .codeDetailsNumberOfDigitsChosen(let string): return [AppEventController.KeyValue: string]
         case .codeDetailsInitialCounterChosen(let string): return [AppEventController.KeyValue: string]
+        case .localNotificationRead(let string): return [AppEventController.KeyValue: string]
         default: return nil
         }
     }

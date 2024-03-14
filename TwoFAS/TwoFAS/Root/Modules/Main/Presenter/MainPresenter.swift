@@ -37,11 +37,16 @@ final class MainPresenter {
     
     func viewDidLoad() {
         interactor.initialize()
+        interactor.refreshLocalNotifications()
         flowController.toSetupSplit()
     }
     
     func viewWillAppear() {
        viewIsVisible()
+    }
+    
+    func handleAppDidBecomeActive() {
+        interactor.refreshLocalNotifications()
     }
 
     func handleSwitchToSetupPIN() {

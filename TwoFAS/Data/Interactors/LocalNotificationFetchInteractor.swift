@@ -42,7 +42,7 @@ public struct LocalNotification: Hashable {
     public let wasRead: Bool
 }
 
-protocol LocalNotificationFetchInteracting: AnyObject {
+public protocol LocalNotificationFetchInteracting: AnyObject {
     func getNotification(completion: @escaping (LocalNotification?) -> Void)
     func markNotificationAsRead()
 }
@@ -64,7 +64,7 @@ final class LocalNotificationFetchInteractor {
     }
 }
 
-extension LocalNotificationFetchInteractor {
+extension LocalNotificationFetchInteractor: LocalNotificationFetchInteracting {
     func getNotification(completion: @escaping (LocalNotification?) -> Void) {
         if mainRepository.localNotificationsHandled {
             fetched = true
@@ -79,7 +79,7 @@ extension LocalNotificationFetchInteractor {
     }
 }
 
-private  extension LocalNotificationFetchInteractor {
+private extension LocalNotificationFetchInteractor {
     @objc
     private func notificationsHandled() {
         guard !fetched else { return }

@@ -33,8 +33,12 @@ final class LocalNotificationStateInteractor {
     
     private let notificationCenter = NotificationCenter.default
     
+    private let cycleDays: Int = 30
+    private let firstNotificationDays: Int = 2
+    
     private var backupStateKnown = false
-    private var activateCalled = false
+    
+    private var lastActivationDate: Date?
     
     private var awaitsBackupStateChange: Callback?
     
@@ -58,14 +62,14 @@ final class LocalNotificationStateInteractor {
             self?.awaitsBackupStateChange = nil
         }
     }
-    
-    private let cycleDays: Int = 30
-    private let firstNotificationDays: Int = 2
-    
-    /// Call on appear
+}
+
+extension LocalNotificationStateInteractor: LocalNotificationStateInteracting {
     func activate() {
-        guard !activateCalled else { return }
-        activateCalled = true
+        if let lastActivationDate {
+            guard lastActivationDate.days(from: .now) >= 1 else { return }
+        }
+        lastActivationDate = .now
         
         if runCount == 0 { // First run
             saveCycle(-2)

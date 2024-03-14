@@ -64,6 +64,7 @@ final class MainModuleInteractor {
     private let rootInteractor: RootInteracting
     private let mdmInteractor: MDMInteracting
     private let protectionInteractor: ProtectionInteracting
+    private let localNotificationStateInteractor: LocalNotificationStateInteracting
     
     init(
         logUploadingInteractor: LogUploadingInteracting,
@@ -75,7 +76,8 @@ final class MainModuleInteractor {
         appInfoInteractor: AppInfoInteracting,
         rootInteractor: RootInteracting,
         mdmInteractor: MDMInteracting,
-        protectionInteractor: ProtectionInteracting
+        protectionInteractor: ProtectionInteracting,
+        localNotificationStateInteractor: LocalNotificationStateInteracting
     ) {
         self.logUploadingInteractor = logUploadingInteractor
         self.cloudBackupStateInteractor = cloudBackupStateInteractor
@@ -86,6 +88,7 @@ final class MainModuleInteractor {
         self.rootInteractor = rootInteractor
         self.mdmInteractor = mdmInteractor
         self.protectionInteractor = protectionInteractor
+        self.localNotificationStateInteractor = localNotificationStateInteractor
 
         cloudBackupStateInteractor.secretSyncError = { [weak self] in self?.secretSyncError?($0) }
     }
@@ -96,6 +99,10 @@ extension MainModuleInteractor: MainModuleInteracting {
         networkStatusInteractor.installListeners()
         DebugLog(logUploadingInteractor.summarize())
         appInfoInteractor.markDateOfFirstRunIfNeeded()
+    }
+    
+    func refreshLocalNotifications() {
+        localNotificationStateInteractor.activate()
     }
     
     func checkForImport() -> URL? {

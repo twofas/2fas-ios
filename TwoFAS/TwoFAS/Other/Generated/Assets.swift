@@ -112,6 +112,7 @@ internal enum Asset {
   internal static let navibarNewsIconBadge = ImageAsset(name: "NavibarNewsIconBadge")
   internal static let notificationFeatures = ImageAsset(name: "NotificationFeatures")
   internal static let notificationNews = ImageAsset(name: "NotificationNews")
+  internal static let notificationTips = ImageAsset(name: "NotificationTips")
   internal static let notificationUpdates = ImageAsset(name: "NotificationUpdates")
   internal static let notificationYoutube = ImageAsset(name: "NotificationYoutube")
   internal static let openGallery = ImageAsset(name: "OpenGallery")

@@ -43,7 +43,7 @@ final class MainPresenter {
     func viewWillAppear() {
        viewIsVisible()
     }
-
+    
     func handleSwitchToSetupPIN() {
         view?.navigateToViewPath(.settings(option: .security))
     }
@@ -54,6 +54,10 @@ final class MainPresenter {
     
     func handleSwitchToExternalImport() {
         view?.navigateToViewPath(.settings(option: .externalImport))
+    }
+    
+    func handleSwitchToBackup() {
+        view?.navigateToViewPath(.settings(option: .backup))
     }
     
     func handleSwitchedToSettings() {

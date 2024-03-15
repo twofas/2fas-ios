@@ -100,4 +100,21 @@ protocol UserDefaultsRepository: AnyObject {
     
     var successSyncDate: Date? { get }
     func saveSuccessSyncDate(_ date: Date?)
+    
+    // MARK: - Local Notifications
+    
+    var localNotificationPublicationDate: Date? { get }
+    func saveLocalNotificationPublicationDate(_ date: Date?)
+    
+    var localNotificationPublicationID: String? { get }
+    func saveLocalNotificationPublicationID(_ ID: String?)
+    
+    var localNotificationWasRead: Bool { get }
+    func saveLocalNotificationWasRead(_ wasRead: Bool)
+    
+    var localNotificationCycle: Int { get }
+    func saveLocalNotificationCycle(_ cycle: Int)
+    
+    var runCount: Int { get }
+    func saveRunCount(_ count: Int)
 }

@@ -207,6 +207,10 @@ extension MainFlowController: MainSplitFlowControllerParent {
     func navigationSwitchedToSettingsExternalImport() {
         viewController.presenter.handleSwitchToExternalImport()
     }
+    
+    func navigationSwitchedToSettingsBackup() {
+        viewController.presenter.handleSwitchToBackup()
+    }
 }
 
 extension MainFlowController: NewPINNavigationFlowControllerParent {

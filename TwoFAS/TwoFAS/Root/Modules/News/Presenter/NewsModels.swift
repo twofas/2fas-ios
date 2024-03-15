@@ -45,6 +45,8 @@ extension ListNewsEntry.Icon {
                 .withRenderingMode(.alwaysTemplate)
         case .youtube: return Asset.notificationYoutube.image
                 .withRenderingMode(.alwaysTemplate)
+        case .tips: return Asset.notificationTips.image
+                .withRenderingMode(.alwaysTemplate)
         }
     }
 }

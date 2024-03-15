@@ -5,6 +5,7 @@ This is an early version of MAC support. We've implemented basic parameters requ
 # Parameters
 
 Provided parameters are optional and should work for new deployments. Those scenarios were also tested on existing deployments, but please note that there could be bugs.
+If you need more parameters and you want to support the project please don't hesitate to contact us.
 ## Block Backup
 ### Key
 `blockBackup`
@@ -13,9 +14,9 @@ Provided parameters are optional and should work for new deployments. Those scen
 ### Value
 `true` to blocked backup, `null` or `false` otherwise.
 ### Description
-Blocks Sync and file Export functionality.
+Blocks Sync, Copy Secret and file Export functionality.
 ### Existing deployment
-iCloud sync is wipe out and disabled.
+iCloud sync, if enabled, is wipe out and disabled.
 
 ## Block Biometry
 ### Key

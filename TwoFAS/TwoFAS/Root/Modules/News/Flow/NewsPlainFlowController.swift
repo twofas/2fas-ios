@@ -22,6 +22,7 @@ import Common
 
 protocol NewsPlainFlowControllerParent: AnyObject {
     func newsClose()
+    func newsToBackup()
 }
 
 protocol NewsPlainFlowControlling: AnyObject {
@@ -69,8 +70,7 @@ extension NewsPlainFlowController: NewsPlainFlowControlling {
     func toInternalLink(_ internalLink: ListNewsEntry.InternalLink) {
         switch internalLink {
         case .backup:
-            print("to backup!")
-            // to backup!
+            parent?.newsToBackup()
         }
     }
 }

@@ -24,6 +24,7 @@ protocol MainSplitFlowControllerParent: AnyObject {
     func navigationSwitchedToTokens()
     func navigationSwitchedToSettings()
     func navigationSwitchedToSettingsExternalImport()
+    func navigationSwitchedToSettingsBackup()
 }
 
 protocol MainSplitFlowControlling: AnyObject {
@@ -174,6 +175,10 @@ extension MainSplitFlowController: TokensPlainFlowControllerParent {
     
     func tokensSwitchToSettingsExternalImport() {
         parent?.navigationSwitchedToSettingsExternalImport()
+    }
+    
+    func tokensSwitchToSettingsBackup() {
+        parent?.navigationSwitchedToSettingsBackup()
     }
 }
 

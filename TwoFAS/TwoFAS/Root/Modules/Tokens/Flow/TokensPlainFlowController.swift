@@ -25,6 +25,7 @@ import SwiftUI
 protocol TokensPlainFlowControllerParent: AnyObject {
     func tokensSwitchToTokensTab()
     func tokensSwitchToSettingsExternalImport()
+    func tokensSwitchToSettingsBackup()
 }
 
 protocol TokensPlainFlowControlling: AnyObject {
@@ -653,6 +654,13 @@ extension TokensPlainFlowController: NewsNavigationFlowControllerParent {
     func newsClose() {
         viewController.presenter.handleRefreshNewsStatus()
         dismiss()
+    }
+    
+    func newsToBackup() {
+        viewController.presenter.handleRefreshNewsStatus()
+        dismiss { [weak self] in
+            self?.parent?.tokensSwitchToSettingsBackup()
+        }
     }
 }
 

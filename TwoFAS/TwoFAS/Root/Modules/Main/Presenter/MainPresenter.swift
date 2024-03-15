@@ -37,7 +37,6 @@ final class MainPresenter {
     
     func viewDidLoad() {
         interactor.initialize()
-        interactor.refreshLocalNotifications()
         flowController.toSetupSplit()
     }
     
@@ -45,10 +44,6 @@ final class MainPresenter {
        viewIsVisible()
     }
     
-    func handleAppDidBecomeActive() {
-        interactor.refreshLocalNotifications()
-    }
-
     func handleSwitchToSetupPIN() {
         view?.navigateToViewPath(.settings(option: .security))
     }
@@ -59,6 +54,10 @@ final class MainPresenter {
     
     func handleSwitchToExternalImport() {
         view?.navigateToViewPath(.settings(option: .externalImport))
+    }
+    
+    func handleSwitchToBackup() {
+        view?.navigateToViewPath(.settings(option: .backup))
     }
     
     func handleSwitchedToSettings() {

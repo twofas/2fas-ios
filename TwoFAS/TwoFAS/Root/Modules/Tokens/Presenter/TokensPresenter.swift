@@ -87,7 +87,7 @@ extension TokensPresenter {
         interactor.sync()
         appActiveActions()
         interactor.fetchNews { [weak self] in
-            self?.updateAddNewsIcon()
+            self?.updateNewsIcon()
         }
     }
     
@@ -446,7 +446,7 @@ extension TokensPresenter {
     }
     
     func handleRefreshNewsStatus() {
-        updateAddNewsIcon()
+        updateNewsIcon()
     }
 }
 
@@ -532,7 +532,7 @@ private extension TokensPresenter {
         }()
         
         if interactor.hasServices {
-            updateAddNewsIcon()
+            updateNewsIcon()
             view?.showList()
             
             if Set<CategoryData>(currentServices) != Set<CategoryData>(newServices) || changeRequriesTokenRefresh {
@@ -553,7 +553,7 @@ private extension TokensPresenter {
             if !isSearching && currentState == .edit {
                 setCurrentState(.normal)
             }
-            updateAddNewsIcon()
+            updateNewsIcon()
             interactor.stopCounters()
             updateEditStateButton()
 
@@ -566,14 +566,6 @@ private extension TokensPresenter {
         }
                 
         changeRequriesTokenRefresh = false
-    }
-    
-    func updateAddNewsIcon() {
-        if interactor.hasServices {
-            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: false))
-        } else {
-            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: !isSearching))
-        }
     }
     
     func mapButtonStateFor(_ currentState: State, isFirst: Bool) -> TokensViewControllerAddState {
@@ -600,6 +592,20 @@ private extension TokensPresenter {
             return .edit
         } else {
             return .none
+        }
+    }
+    
+    func updateNewsIcon() {
+        interactor.fetchNews { [weak self] in
+            self?.updateAddServiceIcon()
+        }
+    }
+    
+    private func updateAddServiceIcon() {
+        if interactor.hasServices {
+            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: false))
+        } else {
+            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: !isSearching))
         }
     }
 }

@@ -63,7 +63,7 @@ extension MainViewController {
         )
         notificationCenter.addObserver(
             self,
-            selector: #selector(appDidBecomeActive),
+            selector: #selector(refreshAuthList),
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
@@ -126,12 +126,6 @@ extension MainViewController {
     @objc
     private func clearAuthList() {
         presenter.handleClearAuthList()
-    }
-    
-    @objc
-    private func appDidBecomeActive() {
-        presenter.handleAppDidBecomeActive()
-        presenter.handleRefreshAuthList()
     }
     
     @objc

@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Common
 
 public struct LocalNotification: Hashable {
     public enum NotificationKind: String, Decodable, Hashable {
@@ -66,16 +67,20 @@ final class LocalNotificationFetchInteractor {
 
 extension LocalNotificationFetchInteractor: LocalNotificationFetchInteracting {
     func getNotification(completion: @escaping (LocalNotification?) -> Void) {
+        Log("Local Notification Fetch - fetching", module: .interactor)
         if mainRepository.localNotificationsHandled {
+            Log("Local Notification Fetch - handled, ready", module: .interactor)
             fetched = true
             completion(currentNotification())
         } else {
+            Log("Local Notification Fetch - awaiting", module: .interactor)
             notificationCallback = completion
         }
     }
     
     func markNotificationAsRead() {
-       setWasRead(true)
+        Log("Local Notification Fetch - mark as read", module: .interactor)
+        setWasRead(true)
     }
 }
 
@@ -84,6 +89,7 @@ private extension LocalNotificationFetchInteractor {
     private func notificationsHandled() {
         guard !fetched else { return }
         fetched = true
+        Log("Local Notification Fetch - handled after awaiting", module: .interactor)
         notificationCallback?(currentNotification())
     }
     
@@ -104,10 +110,16 @@ private extension LocalNotificationFetchInteractor {
     }
     
     func currentNotification() -> LocalNotification? {
-        guard let publishedID, let notificationPublishedDate else { return nil }
+        guard let publishedID, let notificationPublishedDate else {
+            Log("Local Notification Fetch - no notification", module: .interactor)
+            return nil
+        }
+        
+        let kind = LocalNotification.NotificationKind.kindFromCycle(cycle)
+        Log("Local Notification Fetch - we have notification of kind: \(kind)", module: .interactor)
         return LocalNotification(
             id: publishedID,
-            kind: .kindFromCycle(cycle),
+            kind: kind,
             publishedAt: notificationPublishedDate,
             wasRead: wasRead
         )

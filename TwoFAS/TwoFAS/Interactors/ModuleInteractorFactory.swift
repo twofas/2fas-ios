@@ -32,7 +32,8 @@ final class ModuleInteractorFactory {
             registerDeviceInteractor: InteractorFactory.shared.registerDeviceInteractor(),
             appStateInteractor: InteractorFactory.shared.appStateInteractor(),
             notificationInteractor: InteractorFactory.shared.notificationInteractor(),
-            widgetsInteractor: InteractorFactory.shared.widgetsInteractor()
+            widgetsInteractor: InteractorFactory.shared.widgetsInteractor(),
+            localNotificationStateInteractor: InteractorFactory.shared.localNotificationStateInteractor()
         )
     }
     
@@ -343,8 +344,7 @@ final class ModuleInteractorFactory {
             appInfoInteractor: InteractorFactory.shared.appInfoInteractor(),
             rootInteractor: InteractorFactory.shared.rootInteractor(),
             mdmInteractor: InteractorFactory.shared.mdmInteractor(),
-            protectionInteractor: InteractorFactory.shared.protectionInteractor(),
-            localNotificationStateInteractor: InteractorFactory.shared.localNotificationStateInteractor()
+            protectionInteractor: InteractorFactory.shared.protectionInteractor()
         )
     }
     

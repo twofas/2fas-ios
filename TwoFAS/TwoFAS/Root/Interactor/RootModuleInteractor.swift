@@ -44,7 +44,7 @@ protocol RootModuleInteracting: AnyObject {
     )
     
     func lockScreenActive()
-    func lockScreenInactive()
+    func lockScreenInactive()    
 }
 
 final class RootModuleInteractor {
@@ -57,6 +57,7 @@ final class RootModuleInteractor {
     private let appStateInteractor: AppStateInteracting
     private let notificationInteractor: NotificationInteracting
     private let widgetsInteractor: WidgetsInteracting
+    private let localNotificationStateInteractor: LocalNotificationStateInteracting
     
     init(
         rootInteractor: RootInteracting,
@@ -65,7 +66,8 @@ final class RootModuleInteractor {
         registerDeviceInteractor: RegisterDeviceInteracting,
         appStateInteractor: AppStateInteracting,
         notificationInteractor: NotificationInteracting,
-        widgetsInteractor: WidgetsInteracting
+        widgetsInteractor: WidgetsInteracting,
+        localNotificationStateInteractor: LocalNotificationStateInteracting
     ) {
         self.rootInteractor = rootInteractor
         self.linkInteractor = linkInteractor
@@ -74,6 +76,7 @@ final class RootModuleInteractor {
         self.appStateInteractor = appStateInteractor
         self.notificationInteractor = notificationInteractor
         self.widgetsInteractor = widgetsInteractor
+        self.localNotificationStateInteractor = localNotificationStateInteractor
         
         rootInteractor.storageError = { [weak self] error in
             self?.storageError?(error)
@@ -94,7 +97,7 @@ extension RootModuleInteractor: RootModuleInteracting {
         rootInteractor.initializeApp()
         registerDeviceInteractor.initialize()
     }
-    
+
     func lockApplicationIfNeeded(presentLoginImmediately: @escaping () -> Void) {
         rootInteractor.lockApplicationIfNeeded(
             presentLoginImmediately: presentLoginImmediately
@@ -120,6 +123,7 @@ extension RootModuleInteractor: RootModuleInteracting {
             didCopyToken()
         }
         rootInteractor.applicationDidBecomeActive()
+        localNotificationStateInteractor.activate()
     }
     
     func shouldHandleURL(url: URL) -> Bool {

@@ -59,6 +59,7 @@ final class LocalNotificationStateInteractor {
             self?.awaitsBackupStateChange?()
             self?.awaitsBackupStateChange = nil
         }
+        cloudBackup.startMonitoring()
     }
 }
 
@@ -71,6 +72,7 @@ extension LocalNotificationStateInteractor: LocalNotificationStateInteracting {
         
         if runCount >= 2 && cycle == -2 {
             startNotification(-1)
+            return
         }
         
         guard isTimeForNext else {
@@ -82,6 +84,8 @@ extension LocalNotificationStateInteractor: LocalNotificationStateInteracting {
         
         let next = nextCycle()
         
+        Log("Local Notification State - next cycle: \(next)", module: .interactor)
+        
         switch next {
         case 0: canDisplayBackup { [weak self] value in
             if value {
@@ -89,33 +93,35 @@ extension LocalNotificationStateInteractor: LocalNotificationStateInteracting {
             } else {
                 self?.setInactiveNotification(next)
             }
+            self?.markLocalNotificationsAsHandled()
         }
         case 1: if canDisplayBrowserExtension() {
             startNotification(next)
         } else {
             setInactiveNotification(next)
         }
+        markLocalNotificationsAsHandled()
         case 2: if canDisplayDonation() {
             startNotification(3)
         } else {
             setInactiveNotification(next)
         }
+        markLocalNotificationsAsHandled()
         default: break
         }
-        
-        markLocalNotificationsAsHandled()
     }
 }
 
 private extension LocalNotificationStateInteractor {
     func markLocalNotificationsAsHandled() {
+        Log("Local Notification State - notification handled", module: .interactor)
         mainRepository.markLocalNotificationsAsHandled()
         notificationCenter.post(name: .localNotificationsHandled, object: nil)
     }
     
     var isTimeForNext: Bool {
         guard let publicationDate = mainRepository.localNotificationPublicationDate else {
-            return false
+            return true
         }
         let days = publicationDate.days(from: .now)
         return days >= cycleDays
@@ -130,10 +136,12 @@ private extension LocalNotificationStateInteractor {
     }
     
     func saveCycle(_ cycle: Int) {
+        Log("Local Notification State - setting cycle: \(cycle)", module: .interactor)
         mainRepository.saveLocalNotificationCycle(cycle)
     }
     
     func increaseRunCount() {
+        Log("Local Notification State - increaseRunCount", module: .interactor)
         mainRepository.saveRunCount(runCount + 1)
     }
     
@@ -146,12 +154,14 @@ private extension LocalNotificationStateInteractor {
     }
     
     func startNotification(_ cycle: Int) {
+        Log("Local Notification State - start notification for cycle: \(cycle)", module: .interactor)
         saveNotificationPublicationDate()
         saveCycle(cycle)
         setIsPublished(true)
     }
     
     func setInactiveNotification(_ cycle: Int) {
+        Log("Local Notification State - set inactive notification for cycle: \(cycle)", module: .interactor)
         saveNotificationPublicationDate()
         saveCycle(cycle)
         setIsPublished(false)
@@ -162,6 +172,7 @@ private extension LocalNotificationStateInteractor {
     }
     
     func clearNotification() {
+        Log("Local Notification State - clear notifications", module: .interactor)
         setIsPublished(false)
         clearNotificationPublicationDate()
         setWasRead(false)
@@ -210,7 +221,7 @@ private extension LocalNotificationStateInteractor {
     }
     
     func isBackupPossible() -> Bool {
-        !cloudBackup.isBackupEnabled && cloudBackup.isBackupAvailable && hasServices && !mdmInteractor.isBackupBlocked
+        !cloudBackup.isBackupEnabled && hasServices && !mdmInteractor.isBackupBlocked
     }
     
     func canDisplayBrowserExtension() -> Bool {

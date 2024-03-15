@@ -192,7 +192,7 @@ extension CameraScannerFlowController: CameraScannerFlowControlling {
     
     func toCameraNotAvailable() {
         let ac = AlertController.cameraNotAvailable
-        ac.show(animated: true, completion: nil)
+        viewController.present(ac, animated: true)
     }
     
     func toPushPermissions(extensionID: ExtensionID) {

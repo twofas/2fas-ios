@@ -152,7 +152,6 @@ extension CameraScannerPresenter {
     }
     
     func handleCameraNotAvailable() {
-        view?.enableOverlay()
         view?.feedback()
         
         flowController.toCameraNotAvailable()

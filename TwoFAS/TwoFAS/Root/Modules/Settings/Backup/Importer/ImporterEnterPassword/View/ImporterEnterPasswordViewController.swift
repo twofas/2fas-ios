@@ -106,6 +106,7 @@ final class ImporterEnterPasswordViewController: UIViewController {
     
     private func configureInput() {
         input.order = .first
+        input.verifyPassword = false
         
         input.completeAction = { [weak self] in self?.done() }
         input.didResign = { [weak self] in self?.done() }

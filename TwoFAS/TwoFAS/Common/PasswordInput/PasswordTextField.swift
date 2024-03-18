@@ -28,6 +28,7 @@ final class PasswordTextField: LimitedTextField {
     var isActive: Callback?
     var textDidChange: TextDidChange?
     var didResign: Callback?
+    var verifyPassword = true
     
     override func textField(
         _ textField: UITextField,
@@ -43,13 +44,13 @@ final class PasswordTextField: LimitedTextField {
         
         let matches = string.matches(ExportFileRules.regExp) || string.isBackspace
         
-        if !matches {
+        if !matches && verifyPassword {
             notAllowedCharacter?()
         } else {
             textDidChange?(newString as String)
         }
         
-        return matches
+        return matches || !verifyPassword
     }
     
     override func resignFirstResponder() -> Bool {

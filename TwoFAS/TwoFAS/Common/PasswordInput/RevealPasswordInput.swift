@@ -51,6 +51,16 @@ final class RevealPasswordInput: UIView {
         input.text ?? ""
     }
     
+    var verifyPassword: Bool {
+        get {
+            input.verifyPassword
+        }
+        
+        set {
+            input.verifyPassword = newValue
+        }
+    }
+    
     private let lineHeight: CGFloat = 25
     
     private let titleLabel = TitleLabel()

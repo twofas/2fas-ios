@@ -18,7 +18,11 @@
 //
 
 import UIKit
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 public enum CloudCurrentState: Equatable {
     public enum NotAvailableReason: Equatable {
@@ -52,10 +56,12 @@ public protocol CloudHandlerType: AnyObject {
     typealias SecretSyncError = (String) -> Void
     
     func registerForStateChange(_ listener: @escaping CloudHandlerStateListener, with id: String)
+    #if os(iOS)
     func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     )
+    #endif
     func unregisterForStateChange(id: String)
     
     var userToggledState: UserToggledState? { get set }
@@ -211,6 +217,7 @@ final class CloudHandler: CloudHandlerType {
         }
     }
     
+    #if os(iOS)
     func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
@@ -224,6 +231,7 @@ final class CloudHandler: CloudHandlerType {
             return
         }
     }
+    #endif
     
     var isConnected: Bool {
         switch currentState {

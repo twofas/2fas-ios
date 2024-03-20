@@ -18,7 +18,11 @@
 //
 
 import Foundation
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 public final class LocalKeyEncryption: CommonLocalKeyEncryption {
     private let encryption = KeyEncryption(

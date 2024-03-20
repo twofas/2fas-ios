@@ -18,8 +18,12 @@
 //
 
 import Foundation
-import Common
 import CryptoKit
+#if os(iOS)
+import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 enum iCloudIdentifier {
     private static let v2Identifier = "_V2"

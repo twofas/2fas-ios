@@ -18,7 +18,11 @@
 //
 
 import UIKit
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 import CloudKit
 
 final class SyncHandler {
@@ -32,7 +36,9 @@ final class SyncHandler {
     
     private var timeOffset: Int = 0
     
+    #if os(iOS)
     private var fromNotificationCompletionHandler: ((UIBackgroundFetchResult) -> Void)?
+    #endif
     
     typealias OtherError = (NSError) -> Void
     
@@ -91,6 +97,7 @@ final class SyncHandler {
         cloudKit.deleteAllEntries = { [weak self] in self?.itemHandler.purge() }
     }
     
+    #if os(iOS)
     func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
@@ -106,6 +113,7 @@ final class SyncHandler {
         fromNotificationCompletionHandler = completionHandler
         synchronize()
     }
+    #endif
     
     func firstStart() {
         Log("SyncHandler - first start!", module: .cloudSync)
@@ -357,6 +365,7 @@ final class SyncHandler {
             return
         }
         
+        #if os(iOS)
         if let fromNotificationCompletionHandler {
             if didSetNewData {
                 fromNotificationCompletionHandler(.newData)
@@ -365,14 +374,17 @@ final class SyncHandler {
             }
             self.fromNotificationCompletionHandler = nil
         }
+        #endif
         
         finishedSync?()
     }
     
     private func handleNotificationCompletionHandlerError() {
+        #if os(iOS)
         Log("Sync Handler: handleNotificationCompletionHandlerError", module: .cloudSync)
         fromNotificationCompletionHandler?(.failed)
         fromNotificationCompletionHandler = nil
+        #endif
     }
     
     private func resetStack() {

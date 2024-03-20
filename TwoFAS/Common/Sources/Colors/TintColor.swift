@@ -108,6 +108,7 @@ public extension TintColor {
         }
     }
     
+    #if os(iOS)
     var color: UIColor {
         let bundle = Bundle(for: CountdownTimer.self)
         switch self {
@@ -124,4 +125,5 @@ public extension TintColor {
         case .brown: return UIColor(named: "tintBrownColor", in: bundle, compatibleWith: nil)!
         }
     }
+    #endif
 }

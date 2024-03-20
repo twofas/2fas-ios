@@ -18,7 +18,11 @@
 //
 
 import UIKit
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 public protocol ServiceDefinitionDatabase: AnyObject {
     func listAll() -> [ServiceDefinition]

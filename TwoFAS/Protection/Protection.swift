@@ -18,12 +18,16 @@
 //
 
 import Foundation
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 public final class Protection {
     public typealias PIN = String
     
-    public enum CodeType {
+    public enum CodeType: CaseIterable {
         case PIN4
         case PIN6
     }
@@ -32,7 +36,7 @@ public final class Protection {
         let PINvalue: PIN
         let codeType: CodeType
     }
-    
+    #if os(iOS)
     private let encryptedStorage: LocalEncryptedStorage
     
     public let biometricAuth: BiometricAuth
@@ -53,40 +57,15 @@ public final class Protection {
         migrationHandler = MigrationHandler(storage: encryptedStorage)
         migrationHandler.migrateIfNeeded()
     }
+    #elseif os(watchOS)
+//    private let encryptedStorage: LocalEncryptedStorage
+//    public let codeStorage: CodeStorage
+      public let localKeyEncryption: CommonLocalKeyEncryption
+//
+    public init() {
+//        encryptedStorage = LocalEncryptedStorage(defaults: UserDefaults(suiteName: Config.suiteName)!)
+//        codeStorage = CodeStorage(storage: encryptedStorage)
+        localKeyEncryption = LocalKeyEncryption()
+    }
+    #endif
 }
-
-extension Protection.CodeType: RawRepresentable {
-    private enum Keys {
-        static let PIN4 = "PIN4"
-        static let PIN6 = "PIN6"
-    }
-    public typealias RawValue = String
-    
-    public init?(rawValue: String) {
-        if rawValue == Keys.PIN4 {
-            self = .PIN4
-        } else if rawValue == Keys.PIN6 {
-            self = .PIN6
-        } else {
-            return nil
-        }
-    }
-    
-    public var rawValue: String {
-        switch self {
-        case .PIN4: return Keys.PIN4
-        case .PIN6: return Keys.PIN6
-        }
-    }
-}
-
-public extension Protection.CodeType {
-    var intValue: Int {
-        switch self {
-        case .PIN4: return 4
-        case .PIN6: return 6
-        }
-    }
-}
-
-extension Protection.CodeType: CaseIterable {}

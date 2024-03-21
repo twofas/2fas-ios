@@ -18,7 +18,11 @@
 //
 
 import Foundation
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 extension Array where Element: Equatable {
     mutating func move(_ element: Element, to newIndex: Index) {

@@ -19,7 +19,11 @@
 
 import Foundation
 import CoreData
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 extension SectionEntity {
     @nonobjc static func request() -> NSFetchRequest<SectionEntity> {

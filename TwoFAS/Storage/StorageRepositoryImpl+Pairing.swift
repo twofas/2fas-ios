@@ -18,8 +18,12 @@
 //
 
 import Foundation
-import Common
 import CoreData
+#if os(iOS)
+import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 extension StorageRepositoryImpl {
     func createPairing(name: String, extensionID: ExtensionID, publicKey: String) {

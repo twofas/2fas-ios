@@ -21,6 +21,7 @@ import SwiftUI
 import SyncWatch
 import ProtectionWatch
 import CommonWatch
+import StorageWatch
 
 struct ContentView: View {
     @State var syncStstus = "Hello, world!"
@@ -34,12 +35,32 @@ struct ContentView: View {
         .padding()
         .task {
             let protection = Protection()
-            
             EncryptionHolder.initialize(with: protection.localKeyEncryption)
-            SyncInstanceWatch.initialize()
+            
+            let storage = Storage(readOnly: false) { error in
+                // TODO: Add an alert here!
+            }
+            
+            let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
+            serviceMigration.serviceNameTranslation = "Service"//T.Commons.service
+            
+            SyncInstanceWatch.initialize(commonSectionHandler: storage.section, commonServiceHandler: storage.service) { _ in
+                // TODO: Add an alert here!
+            }
+            SyncInstanceWatch.migrateStoreIfNeeded()
+            serviceMigration.migrateIfNeeded()
+            
             let handler = SyncInstanceWatch.getCloudHandler()
             handler.registerForStateChange({ state in
+                print(">>> \(state)")
+                if state == .disabledAvailable {
+                    handler.enable()
+                    handler.synchronize()
+                }
                 syncStstus = "\(state)"
+                if state == .enabled(sync: .synced) {
+                    print(">>>! \(storage.storageRepository.countServicesNotTrashed())")
+                }
             }, with: "listener!")
             handler.enable()
             handler.synchronize()

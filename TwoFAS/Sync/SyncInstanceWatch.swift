@@ -23,13 +23,24 @@ import CommonWatch
 
 public enum SyncInstanceWatch {
     private static var cloudHandler: CloudHandlerType!
+    private static var logDataChangeImpl: LogDataChangeImpl!
     
-    public static func initialize() {
+    public static func initialize(
+        commonSectionHandler: CommonSectionHandler,
+        commonServiceHandler: CommonServiceHandler,
+        errorLog: @escaping (String) -> Void
+    ) {
+        coreDataStack.logError = { errorLog($0) }
+        
         let logHandler = LogHandler(coreDataStack: coreDataStack)
         let sectionHandler = SectionHandler(coreDataStack: coreDataStack)
         let serviceHandler = ServiceHandler(coreDataStack: coreDataStack)
         let infoHandler = InfoHandler()
-        let commonItemHandler = CommonItemHandler()
+        let commonItemHandler = CommonItemHandler(
+            commonSectionHandler: commonSectionHandler,
+            commonServiceHandler: commonServiceHandler,
+            logHandler: logHandler
+        )
         let cloudKit = CloudKit()
         
         let itemHandler = ItemHandler(
@@ -56,42 +67,24 @@ public enum SyncInstanceWatch {
             cloudKit: cloudKit
         )
         
+        logDataChangeImpl = LogDataChangeImpl(logHandler: logHandler)
+    }
+    public static func getCloudHandler() -> CloudHandlerType { cloudHandler }
+
+    public static var logDataChange: LogDataChange {
+        logDataChangeImpl
+    }
+    
+    public static func migrateStoreIfNeeded() {
         coreDataStack.performInBackground { context in
             Log("Migrating if needed. Trigger value \(context.hasChanges)", module: .cloudSync)
         }
     }
-    public static func getCloudHandler() -> CloudHandlerType { cloudHandler }
-
+    
     private static let coreDataStack = CoreDataStack(
         readOnly: false,
         name: "Sync",
         bundle: Bundle(for: SyncHandler.self),
-        migrator: CoreDataMigrator(
-            momdSubdirectory: "Sync",
-            versions: [
-                CoreDataMigrationVersion(rawValue: "Sync"),
-                CoreDataMigrationVersion(rawValue: "Sync2"),
-                CoreDataMigrationVersion(rawValue: "Sync3"),
-                CoreDataMigrationVersion(rawValue: "Sync4"),
-                CoreDataMigrationVersion(rawValue: "Sync5")
-            ]) { _, toVersion in
-                if toVersion.rawValue == "Sync5" {
-                    Log("Migrating to Sync5!", module: .cloudSync)
-                    SyncInstanceWatch.cloudHandler.resetStateBeforeSync()
-                }
-            }
+        migrator: nil
     )
-}
-
-private final class CommonServiceHandlerImpl: CommonServiceHandler {
-    var commonDidDelete: CommonDidDelete?
-    var commonDidModify: CommonDidModify?
-    var commonDidCreate: CommonDidCreate?
-        
-    func setServices(_ servicesservices: [ServiceData]) -> Bool {
-        false
-    }
-    func getAllServices() -> [ServiceData] {
-        []
-    }
 }

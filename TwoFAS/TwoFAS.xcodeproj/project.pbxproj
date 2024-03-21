@@ -73,6 +73,50 @@
 		C21247F827B70D420044D9F2 /* LabelComposeFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21247F727B70D420044D9F2 /* LabelComposeFlowController.swift */; };
 		C21247FB27B7181A0044D9F2 /* ComposeServiceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21247FA27B7181A0044D9F2 /* ComposeServiceModels.swift */; };
 		C212ACDE2AF6F929001C8665 /* RootInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C212ACDD2AF6F929001C8665 /* RootInteractor.swift */; };
+		C213BC192BAC3BD5000794C9 /* CommonItemHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF926878C5C00C6ABAA /* CommonItemHandler.swift */; };
+		C213BC202BAC3C82000794C9 /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = C200E49C1FB3911B00D7C748 /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C213BC232BAC3C82000794C9 /* StorageRepositoryImpl+CategoriesSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDF4512868B39000D46FA4 /* StorageRepositoryImpl+CategoriesSections.swift */; };
+		C213BC242BAC3C82000794C9 /* CategoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22C1398267682B4001AA5F1 /* CategoryData.swift */; };
+		C213BC252BAC3C82000794C9 /* StorageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27ABD30277A450C00AE073B /* StorageRepository.swift */; };
+		C213BC262BAC3C82000794C9 /* StorageRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27ABD32277A453000AE073B /* StorageRepositoryImpl.swift */; };
+		C213BC272BAC3C82000794C9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B3D1A7267E6BEC009E6DE0 /* Extensions.swift */; };
+		C213BC292BAC3C82000794C9 /* StorageRepositoryImpl+AuthRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA3E7C280ADCC90097ED71 /* StorageRepositoryImpl+AuthRequest.swift */; };
+		C213BC2A2BAC3C82000794C9 /* ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200E4AA1FB3913A00D7C748 /* ServiceHandler.swift */; };
+		C213BC2C2BAC3C82000794C9 /* EncryptSecretEntityMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20F00AF256946930026FBB2 /* EncryptSecretEntityMigrationPolicy.swift */; };
+		C213BC2D2BAC3C82000794C9 /* StorageRepositoryImpl+Pairing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C258594E280374F4002DC749 /* StorageRepositoryImpl+Pairing.swift */; };
+		C213BC2E2BAC3C82000794C9 /* StorageRepositoryImpl+News.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DE22823302200E864E9 /* StorageRepositoryImpl+News.swift */; };
+		C213BC2F2BAC3C82000794C9 /* LogEntryEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CF3E127414073004F6A03 /* LogEntryEntity+CoreDataClass.swift */; };
+		C213BC302BAC3C82000794C9 /* PairingEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C258594428034E85002DC749 /* PairingEntity+CoreDataClass.swift */; };
+		C213BC312BAC3C82000794C9 /* AuthRequestEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C258594A28035205002DC749 /* AuthRequestEntity+CoreDataClass.swift */; };
+		C213BC322BAC3C82000794C9 /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CF3E5274143A1004F6A03 /* LogEntry.swift */; };
+		C213BC332BAC3C82000794C9 /* CategoryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22C139A267684DC001AA5F1 /* CategoryHandler.swift */; };
+		C213BC342BAC3C82000794C9 /* SectionEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E8993266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift */; };
+		C213BC352BAC3C82000794C9 /* ServiceOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2872DDF27A6EFB0000F5AE9 /* ServiceOptions.swift */; };
+		C213BC362BAC3C82000794C9 /* AuthRequestFilterOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA3E7A280AD60D0097ED71 /* AuthRequestFilterOptions.swift */; };
+		C213BC372BAC3C82000794C9 /* NewsEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDB28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift */; };
+		C213BC382BAC3C82000794C9 /* ServiceEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27FBA4B1FBA23DD00D424D8 /* ServiceEntity+CoreDataProperties.swift */; };
+		C213BC392BAC3C82000794C9 /* LogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CF3E727416271004F6A03 /* LogHandler.swift */; };
+		C213BC3A2BAC3C82000794C9 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200E4AD1FB3913A00D7C748 /* Storage.swift */; };
+		C213BC3B2BAC3C82000794C9 /* LogStorage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C22CF3DD27413F0F004F6A03 /* LogStorage.xcdatamodeld */; };
+		C213BC3C2BAC3C82000794C9 /* NewsEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDC28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift */; };
+		C213BC3D2BAC3C82000794C9 /* DynamicTypesEntityMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AB25D928E0BF7B001CF6B3 /* DynamicTypesEntityMigrationPolicy.swift */; };
+		C213BC3E2BAC3C82000794C9 /* AuthRequestEntityToPairedAuthRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA3E7E280ADDB40097ED71 /* AuthRequestEntityToPairedAuthRequest.swift */; };
+		C213BC402BAC3C82000794C9 /* ServiceEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27FBA471FBA239600D424D8 /* ServiceEntity+CoreDataClass.swift */; };
+		C213BC412BAC3C82000794C9 /* SectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DEC7A226767B28006DB1E6 /* SectionHandler.swift */; };
+		C213BC422BAC3C82000794C9 /* AuthRequestEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C258594B28035205002DC749 /* AuthRequestEntity+CoreDataProperties.swift */; };
+		C213BC432BAC3C82000794C9 /* SectionEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E8992266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift */; };
+		C213BC442BAC3C82000794C9 /* ServiceEntity+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2872DDD27A6DF48000F5AE9 /* ServiceEntity+Extensions.swift */; };
+		C213BC452BAC3C82000794C9 /* SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E898F2663F11900A60CE5 /* SectionData.swift */; };
+		C213BC462BAC3C82000794C9 /* LogEntryEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CF3E227414073004F6A03 /* LogEntryEntity+CoreDataProperties.swift */; };
+		C213BC472BAC3C82000794C9 /* PairingEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C258594528034E85002DC749 /* PairingEntity+CoreDataProperties.swift */; };
+		C213BC482BAC3C82000794C9 /* ServiceData+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC65C1FBB87C200967D0E /* ServiceData+Extensions.swift */; };
+		C213BC522BAC3C97000794C9 /* CommonWatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C274CA232BAB8B92008E7212 /* CommonWatch.framework */; };
+		C213BC562BAC3C97000794C9 /* ContentWatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C274CA492BAB8BE3008E7212 /* ContentWatch.framework */; };
+		C213BC5B2BAC3DBF000794C9 /* StorageWatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C213BC502BAC3C82000794C9 /* StorageWatch.framework */; };
+		C213BC5C2BAC3DBF000794C9 /* StorageWatch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C213BC502BAC3C82000794C9 /* StorageWatch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C213BC602BAC3FE3000794C9 /* ServiceMigrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ACF9DE20A8A30E003E0987 /* ServiceMigrationController.swift */; };
+		C213BC702BAC5758000794C9 /* TwoFAS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C213BC6E2BAC5758000794C9 /* TwoFAS.xcdatamodeld */; };
+		C213BC732BAC5771000794C9 /* Sync.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C213BC712BAC5771000794C9 /* Sync.xcdatamodeld */; };
 		C2147CB9205D78600001D011 /* Protection.h in Headers */ = {isa = PBXBuildFile; fileRef = C2147CB7205D78600001D011 /* Protection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2147CBC205D78600001D011 /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
 		C2147CBD205D78600001D011 /* Protection.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -419,7 +463,6 @@
 		C274C99E2BAB89C7008E7212 /* CloudKitErrorParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207C11E2559F1CB0053975E /* CloudKitErrorParser.swift */; };
 		C274C99F2BAB89C7008E7212 /* SectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF5268787B400C6ABAA /* SectionHandler.swift */; };
 		C274C9A02BAB89C7008E7212 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F543DC25672E7600611716 /* Types.swift */; };
-		C274C9A12BAB89C7008E7212 /* Sync2-Sync3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C244EF13268685BC0040A58F /* Sync2-Sync3.xcmappingmodel */; };
 		C274C9A22BAB89C7008E7212 /* CloudHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D507B5256477DA00151359 /* CloudHandler.swift */; };
 		C274C9A32BAB89C7008E7212 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C244EF10268674650040A58F /* Extensions.swift */; };
 		C274C9A42BAB89C7008E7212 /* LogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E512560393000C5BE3A /* LogHandler.swift */; };
@@ -432,7 +475,6 @@
 		C274C9AB2BAB89C7008E7212 /* CloudAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF21D625630C9D0075743D /* CloudAvailability.swift */; };
 		C274C9AC2BAB89C7008E7212 /* ServiceCacheEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF402425582AFB0006735E /* ServiceCacheEntity+CoreDataClass.swift */; };
 		C274C9AD2BAB89C7008E7212 /* DynamicTypesEntityMigrationPolicySync.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27E6FAE28FC57FD00AC9FD1 /* DynamicTypesEntityMigrationPolicySync.swift */; };
-		C274C9AF2BAB89C7008E7212 /* Sync.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C2EF401325582A7C0006735E /* Sync.xcdatamodeld */; };
 		C274C9B12BAB89C7008E7212 /* ServiceRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF3F6D25575D730006735E /* ServiceRecord.swift */; };
 		C274C9B22BAB89C7008E7212 /* iCloudIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D75D36297D51B60002531E /* iCloudIdentifier.swift */; };
 		C274C9B32BAB89C7008E7212 /* ServiceCacheEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF402525582AFB0006735E /* ServiceCacheEntity+CoreDataProperties.swift */; };
@@ -441,7 +483,6 @@
 		C274C9B62BAB89C7008E7212 /* SyncHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23BAAF32545A1E9009B1EF8 /* SyncHandler.swift */; };
 		C274C9B72BAB89C7008E7212 /* SectionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF32687837D00C6ABAA /* SectionRecord.swift */; };
 		C274C9B82BAB89C7008E7212 /* LogEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E2F25602F4100C5BE3A /* LogEntity+CoreDataClass.swift */; };
-		C274C9B92BAB89C7008E7212 /* Sync4-Sync5.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C26A5FE2290475EA00A5A620 /* Sync4-Sync5.xcmappingmodel */; };
 		C274C9BA2BAB89C7008E7212 /* InfoRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27E6FB228FC87AD00AC9FD1 /* InfoRecord.swift */; };
 		C274C9BB2BAB89C7008E7212 /* InfoHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C4F64A28FE08EB00285B81 /* InfoHandler.swift */; };
 		C274C9BC2BAB89C7008E7212 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27E6FB528FC8B0000AC9FD1 /* Info.swift */; };
@@ -563,7 +604,6 @@
 		C274CA972BAB8FD8008E7212 /* Protection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CC2205D78790001D011 /* Protection.swift */; };
 		C274CA982BAB91E3008E7212 /* ExchangeFileEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F6AF3F273056010015BC59 /* ExchangeFileEncryption.swift */; };
 		C274CA9B2BAB94B8008E7212 /* SyncInstanceWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C274CA992BAB94B3008E7212 /* SyncInstanceWatch.swift */; };
-		C274CA9F2BAB9749008E7212 /* CommonItemHandlerWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C274CA9C2BAB96FB008E7212 /* CommonItemHandlerWatch.swift */; };
 		C274CAA32BAB9D5E008E7212 /* ItemHandlerMigrationProxyWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C274CAA12BAB9D59008E7212 /* ItemHandlerMigrationProxyWatch.swift */; };
 		C276D1712B9A672C008C9CD4 /* LocalNotificationStateInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C276D1702B9A672C008C9CD4 /* LocalNotificationStateInteractor.swift */; };
 		C277C32C245C3FD6009214F3 /* MainContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C277C32B245C3FD6009214F3 /* MainContainerViewController.swift */; };
@@ -1263,6 +1303,27 @@
 			remoteGlobalIDString = C200E4991FB3911B00D7C748;
 			remoteInfo = Storage;
 		};
+		C213BC542BAC3C97000794C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C236666B1FB2644900989ACA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C274C9E42BAB8B92008E7212;
+			remoteInfo = CommonWatch;
+		};
+		C213BC582BAC3C97000794C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C236666B1FB2644900989ACA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C274CA242BAB8BE3008E7212;
+			remoteInfo = ContentWatch;
+		};
+		C213BC5D2BAC3DBF000794C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C236666B1FB2644900989ACA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C213BC1A2BAC3C82000794C9;
+			remoteInfo = StorageWatch;
+		};
 		C2147CBA205D78600001D011 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C236666B1FB2644900989ACA /* Project object */;
@@ -1742,6 +1803,7 @@
 				C274CA892BAB8CBD008E7212 /* CommonWatch.framework in Embed Frameworks */,
 				C274CA8D2BAB8CC0008E7212 /* ContentWatch.framework in Embed Frameworks */,
 				C274CA912BAB8CC5008E7212 /* ProtectionWatch.framework in Embed Frameworks */,
+				C213BC5C2BAC3DBF000794C9 /* StorageWatch.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1846,6 +1908,9 @@
 		C21247F727B70D420044D9F2 /* LabelComposeFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelComposeFlowController.swift; sourceTree = "<group>"; };
 		C21247FA27B7181A0044D9F2 /* ComposeServiceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceModels.swift; sourceTree = "<group>"; };
 		C212ACDD2AF6F929001C8665 /* RootInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootInteractor.swift; sourceTree = "<group>"; };
+		C213BC502BAC3C82000794C9 /* StorageWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C213BC6F2BAC5758000794C9 /* TwoFAS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS.xcdatamodel; sourceTree = "<group>"; };
+		C213BC722BAC5771000794C9 /* Sync.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sync.xcdatamodel; sourceTree = "<group>"; };
 		C2147CB5205D78600001D011 /* Protection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Protection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2147CB7205D78600001D011 /* Protection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Protection.h; sourceTree = "<group>"; };
 		C2147CB8205D78600001D011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2244,7 +2309,6 @@
 		C274CA7C2BAB8C3F008E7212 /* ProtectionWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProtectionWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C274CA942BAB8F92008E7212 /* Protection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Protection+.swift"; sourceTree = "<group>"; };
 		C274CA992BAB94B3008E7212 /* SyncInstanceWatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncInstanceWatch.swift; sourceTree = "<group>"; };
-		C274CA9C2BAB96FB008E7212 /* CommonItemHandlerWatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonItemHandlerWatch.swift; sourceTree = "<group>"; };
 		C274CAA02BAB98A5008E7212 /* TwoFASWatch Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TwoFASWatch Watch App.entitlements"; sourceTree = "<group>"; };
 		C274CAA12BAB9D59008E7212 /* ItemHandlerMigrationProxyWatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemHandlerMigrationProxyWatch.swift; sourceTree = "<group>"; };
 		C276D1702B9A672C008C9CD4 /* LocalNotificationStateInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationStateInteractor.swift; sourceTree = "<group>"; };
@@ -2904,6 +2968,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C213BC492BAC3C82000794C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C213BC562BAC3C97000794C9 /* ContentWatch.framework in Frameworks */,
+				C213BC522BAC3C97000794C9 /* CommonWatch.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C2147CB1205D78600001D011 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2986,6 +3059,7 @@
 				C274CA882BAB8CBD008E7212 /* CommonWatch.framework in Frameworks */,
 				C274CA8C2BAB8CC0008E7212 /* ContentWatch.framework in Frameworks */,
 				C274CA902BAB8CC5008E7212 /* ProtectionWatch.framework in Frameworks */,
+				C213BC5B2BAC3DBF000794C9 /* StorageWatch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3156,6 +3230,7 @@
 		C200E49B1FB3911B00D7C748 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				C213BC612BAC4777000794C9 /* Watch */,
 				C200E4AD1FB3913A00D7C748 /* Storage.swift */,
 				C27ABD30277A450C00AE073B /* StorageRepository.swift */,
 				C27ABD32277A453000AE073B /* StorageRepositoryImpl.swift */,
@@ -3746,6 +3821,22 @@
 				C2B6D78C260BAFE1005B599E /* LabelCompose */,
 			);
 			path = Modules;
+			sourceTree = "<group>";
+		};
+		C213BC612BAC4777000794C9 /* Watch */ = {
+			isa = PBXGroup;
+			children = (
+				C213BC6E2BAC5758000794C9 /* TwoFAS.xcdatamodeld */,
+			);
+			path = Watch;
+			sourceTree = "<group>";
+		};
+		C213BC652BAC4883000794C9 /* Watch */ = {
+			isa = PBXGroup;
+			children = (
+				C213BC712BAC5771000794C9 /* Sync.xcdatamodeld */,
+			);
+			path = Watch;
 			sourceTree = "<group>";
 		};
 		C2147CB6205D78600001D011 /* Protection */ = {
@@ -4401,6 +4492,7 @@
 				C274CA232BAB8B92008E7212 /* CommonWatch.framework */,
 				C274CA492BAB8BE3008E7212 /* ContentWatch.framework */,
 				C274CA7C2BAB8C3F008E7212 /* ProtectionWatch.framework */,
+				C213BC502BAC3C82000794C9 /* StorageWatch.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4947,6 +5039,7 @@
 		C24D1C1B253C744E0029D27D /* Sync */ = {
 			isa = PBXGroup;
 			children = (
+				C213BC652BAC4883000794C9 /* Watch */,
 				C2F5443425685C2100611716 /* SyncInstance.swift */,
 				C274CA992BAB94B3008E7212 /* SyncInstanceWatch.swift */,
 				C2D507B5256477DA00151359 /* CloudHandler.swift */,
@@ -4955,7 +5048,6 @@
 				C23BAB132545AEF5009B1EF8 /* ConstStorage.swift */,
 				C2EF21D625630C9D0075743D /* CloudAvailability.swift */,
 				C24EECF926878C5C00C6ABAA /* CommonItemHandler.swift */,
-				C274CA9C2BAB96FB008E7212 /* CommonItemHandlerWatch.swift */,
 				C2A7ABF1286328E60085CFEF /* SyncTokenHandler.swift */,
 				C2EFCE0625D05E320031293F /* ClearHandler.swift */,
 				C2C4F64528FDEF6C00285B81 /* Item */,
@@ -7919,6 +8011,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C213BC1F2BAC3C82000794C9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C213BC202BAC3C82000794C9 /* Storage.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C2147CB2205D78600001D011 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -8055,6 +8155,28 @@
 			);
 			productName = Storage;
 			productReference = C200E49A1FB3911B00D7C748 /* Storage.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C213BC1A2BAC3C82000794C9 /* StorageWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C213BC4D2BAC3C82000794C9 /* Build configuration list for PBXNativeTarget "StorageWatch" */;
+			buildPhases = (
+				C213BC1F2BAC3C82000794C9 /* Headers */,
+				C213BC212BAC3C82000794C9 /* Sources */,
+				C213BC492BAC3C82000794C9 /* Frameworks */,
+				C213BC4C2BAC3C82000794C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C213BC552BAC3C97000794C9 /* PBXTargetDependency */,
+				C213BC592BAC3C97000794C9 /* PBXTargetDependency */,
+			);
+			name = StorageWatch;
+			packageProductDependencies = (
+			);
+			productName = Storage;
+			productReference = C213BC502BAC3C82000794C9 /* StorageWatch.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		C2147CB4205D78600001D011 /* Protection */ = {
@@ -8243,6 +8365,7 @@
 				C274CA8B2BAB8CBD008E7212 /* PBXTargetDependency */,
 				C274CA8F2BAB8CC0008E7212 /* PBXTargetDependency */,
 				C274CA932BAB8CC5008E7212 /* PBXTargetDependency */,
+				C213BC5E2BAC3DBF000794C9 /* PBXTargetDependency */,
 			);
 			name = "TwoFASWatch Watch App";
 			productName = "TwoFASWatch Watch App";
@@ -8715,12 +8838,20 @@
 				C274C9E42BAB8B92008E7212 /* CommonWatch */,
 				C274CA242BAB8BE3008E7212 /* ContentWatch */,
 				C274CA582BAB8C3F008E7212 /* ProtectionWatch */,
+				C213BC1A2BAC3C82000794C9 /* StorageWatch */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C200E4981FB3911B00D7C748 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C213BC4C2BAC3C82000794C9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -8981,6 +9112,50 @@
 				C22CF3E427414073004F6A03 /* LogEntryEntity+CoreDataProperties.swift in Sources */,
 				C258594728034E85002DC749 /* PairingEntity+CoreDataProperties.swift in Sources */,
 				C2BDC65D1FBB87C200967D0E /* ServiceData+Extensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C213BC212BAC3C82000794C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C213BC232BAC3C82000794C9 /* StorageRepositoryImpl+CategoriesSections.swift in Sources */,
+				C213BC242BAC3C82000794C9 /* CategoryData.swift in Sources */,
+				C213BC252BAC3C82000794C9 /* StorageRepository.swift in Sources */,
+				C213BC262BAC3C82000794C9 /* StorageRepositoryImpl.swift in Sources */,
+				C213BC272BAC3C82000794C9 /* Extensions.swift in Sources */,
+				C213BC292BAC3C82000794C9 /* StorageRepositoryImpl+AuthRequest.swift in Sources */,
+				C213BC2A2BAC3C82000794C9 /* ServiceHandler.swift in Sources */,
+				C213BC2C2BAC3C82000794C9 /* EncryptSecretEntityMigrationPolicy.swift in Sources */,
+				C213BC2D2BAC3C82000794C9 /* StorageRepositoryImpl+Pairing.swift in Sources */,
+				C213BC2E2BAC3C82000794C9 /* StorageRepositoryImpl+News.swift in Sources */,
+				C213BC2F2BAC3C82000794C9 /* LogEntryEntity+CoreDataClass.swift in Sources */,
+				C213BC302BAC3C82000794C9 /* PairingEntity+CoreDataClass.swift in Sources */,
+				C213BC312BAC3C82000794C9 /* AuthRequestEntity+CoreDataClass.swift in Sources */,
+				C213BC322BAC3C82000794C9 /* LogEntry.swift in Sources */,
+				C213BC332BAC3C82000794C9 /* CategoryHandler.swift in Sources */,
+				C213BC342BAC3C82000794C9 /* SectionEntity+CoreDataProperties.swift in Sources */,
+				C213BC352BAC3C82000794C9 /* ServiceOptions.swift in Sources */,
+				C213BC702BAC5758000794C9 /* TwoFAS.xcdatamodeld in Sources */,
+				C213BC602BAC3FE3000794C9 /* ServiceMigrationController.swift in Sources */,
+				C213BC362BAC3C82000794C9 /* AuthRequestFilterOptions.swift in Sources */,
+				C213BC372BAC3C82000794C9 /* NewsEntity+CoreDataClass.swift in Sources */,
+				C213BC382BAC3C82000794C9 /* ServiceEntity+CoreDataProperties.swift in Sources */,
+				C213BC392BAC3C82000794C9 /* LogHandler.swift in Sources */,
+				C213BC3A2BAC3C82000794C9 /* Storage.swift in Sources */,
+				C213BC3B2BAC3C82000794C9 /* LogStorage.xcdatamodeld in Sources */,
+				C213BC3C2BAC3C82000794C9 /* NewsEntity+CoreDataProperties.swift in Sources */,
+				C213BC3D2BAC3C82000794C9 /* DynamicTypesEntityMigrationPolicy.swift in Sources */,
+				C213BC3E2BAC3C82000794C9 /* AuthRequestEntityToPairedAuthRequest.swift in Sources */,
+				C213BC402BAC3C82000794C9 /* ServiceEntity+CoreDataClass.swift in Sources */,
+				C213BC412BAC3C82000794C9 /* SectionHandler.swift in Sources */,
+				C213BC422BAC3C82000794C9 /* AuthRequestEntity+CoreDataProperties.swift in Sources */,
+				C213BC432BAC3C82000794C9 /* SectionEntity+CoreDataClass.swift in Sources */,
+				C213BC442BAC3C82000794C9 /* ServiceEntity+Extensions.swift in Sources */,
+				C213BC452BAC3C82000794C9 /* SectionData.swift in Sources */,
+				C213BC462BAC3C82000794C9 /* LogEntryEntity+CoreDataProperties.swift in Sources */,
+				C213BC472BAC3C82000794C9 /* PairingEntity+CoreDataProperties.swift in Sources */,
+				C213BC482BAC3C82000794C9 /* ServiceData+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9704,10 +9879,10 @@
 				C274C99C2BAB89C7008E7212 /* ServiceCacheEntity+toServiceData.swift in Sources */,
 				C274C99D2BAB89C7008E7212 /* ConstStorage.swift in Sources */,
 				C274C99E2BAB89C7008E7212 /* CloudKitErrorParser.swift in Sources */,
+				C213BC192BAC3BD5000794C9 /* CommonItemHandler.swift in Sources */,
 				C274CAA32BAB9D5E008E7212 /* ItemHandlerMigrationProxyWatch.swift in Sources */,
 				C274C99F2BAB89C7008E7212 /* SectionHandler.swift in Sources */,
 				C274C9A02BAB89C7008E7212 /* Types.swift in Sources */,
-				C274C9A12BAB89C7008E7212 /* Sync2-Sync3.xcmappingmodel in Sources */,
 				C274C9A22BAB89C7008E7212 /* CloudHandler.swift in Sources */,
 				C274C9A32BAB89C7008E7212 /* Extensions.swift in Sources */,
 				C274C9A42BAB89C7008E7212 /* LogHandler.swift in Sources */,
@@ -9720,7 +9895,6 @@
 				C274C9AB2BAB89C7008E7212 /* CloudAvailability.swift in Sources */,
 				C274C9AC2BAB89C7008E7212 /* ServiceCacheEntity+CoreDataClass.swift in Sources */,
 				C274C9AD2BAB89C7008E7212 /* DynamicTypesEntityMigrationPolicySync.swift in Sources */,
-				C274C9AF2BAB89C7008E7212 /* Sync.xcdatamodeld in Sources */,
 				C274C9B12BAB89C7008E7212 /* ServiceRecord.swift in Sources */,
 				C274C9B22BAB89C7008E7212 /* iCloudIdentifier.swift in Sources */,
 				C274C9B32BAB89C7008E7212 /* ServiceCacheEntity+CoreDataProperties.swift in Sources */,
@@ -9729,10 +9903,9 @@
 				C274C9B62BAB89C7008E7212 /* SyncHandler.swift in Sources */,
 				C274C9B72BAB89C7008E7212 /* SectionRecord.swift in Sources */,
 				C274C9B82BAB89C7008E7212 /* LogEntity+CoreDataClass.swift in Sources */,
-				C274C9B92BAB89C7008E7212 /* Sync4-Sync5.xcmappingmodel in Sources */,
+				C213BC732BAC5771000794C9 /* Sync.xcdatamodeld in Sources */,
 				C274C9BA2BAB89C7008E7212 /* InfoRecord.swift in Sources */,
 				C274C9BB2BAB89C7008E7212 /* InfoHandler.swift in Sources */,
-				C274CA9F2BAB9749008E7212 /* CommonItemHandlerWatch.swift in Sources */,
 				C274C9BC2BAB89C7008E7212 /* Info.swift in Sources */,
 				C274C9BD2BAB89C7008E7212 /* RecordIDGenerator.swift in Sources */,
 				C274CA9B2BAB94B8008E7212 /* SyncInstanceWatch.swift in Sources */,
@@ -10207,6 +10380,21 @@
 			isa = PBXTargetDependency;
 			target = C200E4991FB3911B00D7C748 /* Storage */;
 			targetProxy = C200E49F1FB3911B00D7C748 /* PBXContainerItemProxy */;
+		};
+		C213BC552BAC3C97000794C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C274C9E42BAB8B92008E7212 /* CommonWatch */;
+			targetProxy = C213BC542BAC3C97000794C9 /* PBXContainerItemProxy */;
+		};
+		C213BC592BAC3C97000794C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C274CA242BAB8BE3008E7212 /* ContentWatch */;
+			targetProxy = C213BC582BAC3C97000794C9 /* PBXContainerItemProxy */;
+		};
+		C213BC5E2BAC3DBF000794C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C213BC1A2BAC3C82000794C9 /* StorageWatch */;
+			targetProxy = C213BC5D2BAC3DBF000794C9 /* PBXContainerItemProxy */;
 		};
 		C2147CBB205D78600001D011 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10724,6 +10912,90 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		C213BC4E2BAC3C82000794C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = ZY8UR5ADFW;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 5.3.5;
+				MERGEABLE_LIBRARY = NO;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.StorageWatch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C213BC4F2BAC3C82000794C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = ZY8UR5ADFW;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 5.3.5;
+				MERGEABLE_LIBRARY = NO;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.StorageWatch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -12686,6 +12958,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		C213BC4D2BAC3C82000794C9 /* Build configuration list for PBXNativeTarget "StorageWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C213BC4E2BAC3C82000794C9 /* Debug */,
+				C213BC4F2BAC3C82000794C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C2147CC0205D78600001D011 /* Build configuration list for PBXNativeTarget "Protection" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -13039,6 +13320,28 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
+		C213BC6E2BAC5758000794C9 /* TwoFAS.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C213BC6F2BAC5758000794C9 /* TwoFAS.xcdatamodel */,
+			);
+			currentVersion = C213BC6F2BAC5758000794C9 /* TwoFAS.xcdatamodel */;
+			name = TwoFAS.xcdatamodeld;
+			path = /Users/adocyn/Documents/Projects/2FAS/TwoFAS/Storage/Watch/TwoFAS.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		C213BC712BAC5771000794C9 /* Sync.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C213BC722BAC5771000794C9 /* Sync.xcdatamodel */,
+			);
+			currentVersion = C213BC722BAC5771000794C9 /* Sync.xcdatamodel */;
+			name = Sync.xcdatamodeld;
+			path = /Users/adocyn/Documents/Projects/2FAS/TwoFAS/Sync/Watch/Sync.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		C22CF3DD27413F0F004F6A03 /* LogStorage.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

@@ -72,6 +72,7 @@ extension LocalNotificationStateInteractor: LocalNotificationStateInteracting {
         
         if runCount >= 2 && cycle == -2 {
             startNotification(-1)
+            markLocalNotificationsAsHandled()
             return
         }
         
@@ -107,7 +108,8 @@ extension LocalNotificationStateInteractor: LocalNotificationStateInteracting {
             setInactiveNotification(next)
         }
         markLocalNotificationsAsHandled()
-        default: break
+        default:
+            markLocalNotificationsAsHandled()
         }
     }
 }

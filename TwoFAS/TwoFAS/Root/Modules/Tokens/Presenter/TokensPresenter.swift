@@ -86,9 +86,7 @@ extension TokensPresenter {
         Log("TokensPresenter - viewWillAppear")
         interactor.sync()
         appActiveActions()
-        interactor.fetchNews { [weak self] in
-            self?.updateNewsIcon()
-        }
+        updateNewsIcon()
     }
     
     func handleAppDidBecomeActive() {
@@ -453,6 +451,7 @@ extension TokensPresenter {
 private extension TokensPresenter {
     func appActiveActions() {
         updateEditStateButton()
+        updateNewsIcon()
         changeDragAndDropIfNecessary(enable: false)
         changeRequriesTokenRefresh = true
         reloadData()
@@ -532,7 +531,7 @@ private extension TokensPresenter {
         }()
         
         if interactor.hasServices {
-            updateNewsIcon()
+            updateAddServiceIcon()
             view?.showList()
             
             if Set<CategoryData>(currentServices) != Set<CategoryData>(newServices) || changeRequriesTokenRefresh {
@@ -553,7 +552,7 @@ private extension TokensPresenter {
             if !isSearching && currentState == .edit {
                 setCurrentState(.normal)
             }
-            updateNewsIcon()
+            updateAddServiceIcon()
             interactor.stopCounters()
             updateEditStateButton()
 
@@ -596,6 +595,7 @@ private extension TokensPresenter {
     }
     
     func updateNewsIcon() {
+        updateAddServiceIcon()
         interactor.fetchNews { [weak self] in
             self?.updateAddServiceIcon()
         }

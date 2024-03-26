@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<managedAppConfiguration>
+	<version>1.0.0</version>
+	<bundleId>com.twofas.org</bundleId>
+	<dict>
+		<boolean keyName="blockBackup">
+			<constraints nullable="true">
+            </constraints>
+		</boolean>
+		<boolean keyName="blockBiometry">
+			<constraints nullable="true">
+            </constraints>
+		</boolean>
+		<boolean keyName="blockBrowserExtension">
+			<constraints nullable="true">
+            </constraints>
+		</boolean>
+		<integer keyName="lockoutAttempts">
+			<constraints nullable="true">
+				<values>
+					<value>0</value>
+					<value>3</value>
+					<value>5</value>
+					<value>10</value>
+				</values>
+			</constraints>
+		</integer>
+		<integer keyName="lockoutBlockTime">
+			<constraints nullable="true">
+				<values>
+					<value>3</value>
+					<value>5</value>
+					<value>10</value>
+				</values>
+			</constraints>
+		</integer>
+		<boolean keyName="requirePasscode">
+			<constraints nullable="true">
+            </constraints>
+		</boolean>
+	</dict>
+	<presentation defaultLocale="en-US">
+		<field keyName="blockBackup" type="checkbox">
+			<label>
+				<language value="en-US">Block backup</language>
+			</label>
+			<description>
+				<language value="en-US">Blocks iCloud sync and Export functionality</language>
+			</description>
+		</field>
+		<field keyName="blockBiometry" type="checkbox">
+			<label>
+				<language value="en-US">Block biometry</language>
+			</label>
+			<description>
+				<language value="en-US">Blocks usage of biometry to authenticate</language>
+			</description>
+		</field>
+		<field keyName="blockBrowserExtension" type="checkbox">
+			<label>
+				<language value="en-US">Block Browser Extension</language>
+			</label>
+			<description>
+				<language value="en-US">Blocks usage of Browser Extension</language>
+			</description>
+		</field>
+		<field keyName="lockoutAttempts" type="input">
+			<label>
+				<language value="en-US">Lockout Attempts</language>
+			</label>
+			<description>
+				<language value="en-US">Block app after X login attempts. Valid values: 0 - No limit, 3, 5 and 10 attempts</language>
+			</description>
+		</field>
+		<field keyName="lockoutBlockTime" type="input">
+			<label>
+				<language value="en-US">Lockout Block Time</language>
+			</label>
+			<description>
+				<language value="en-US">Block authentication for X minutes. Valid values are: 3, 5, and 10 (minutes).</language>
+			</description>
+		</field>
+		<field keyName="requirePasscode" type="checkbox">
+			<label>
+				<language value="en-US">Require Passcode</language>
+			</label>
+			<description>
+				<language value="en-US">Require Passcode</language>
+			</description>
+		</field>
+	</presentation>
+</managedAppConfiguration>

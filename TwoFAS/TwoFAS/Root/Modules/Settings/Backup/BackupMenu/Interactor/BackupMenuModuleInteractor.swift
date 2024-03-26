@@ -25,6 +25,7 @@ protocol BackupMenuModuleInteracting: AnyObject {
     func startMonitoring()
     func stopMonitoring()
     
+    var isBackupAllowed: Bool { get }
     var isBackupOn: Bool { get }
     var exportEnabled: Bool { get }
     var isBackupAvailable: Bool { get }
@@ -34,19 +35,31 @@ protocol BackupMenuModuleInteracting: AnyObject {
     
     func toggleBackup()
     func clearBackup()
+    
+    var syncSuccessDate: Date? { get }
 }
 
 final class BackupMenuModuleInteractor {
     private let serviceListingInteractor: ServiceListingInteracting
     private let cloudBackup: CloudBackupStateInteracting
+    private let mdmInteractor: MDMInteracting
     
-    init(serviceListingInteractor: ServiceListingInteracting, cloudBackup: CloudBackupStateInteracting) {
+    init(
+        serviceListingInteractor: ServiceListingInteracting,
+        cloudBackup: CloudBackupStateInteracting,
+        mdmInteractor: MDMInteracting
+    ) {
         self.serviceListingInteractor = serviceListingInteractor
         self.cloudBackup = cloudBackup
+        self.mdmInteractor = mdmInteractor
     }
 }
 
 extension BackupMenuModuleInteractor: BackupMenuModuleInteracting {
+    var isBackupAllowed: Bool {
+        !mdmInteractor.isBackupBlocked
+    }
+    
     var reload: Callback? {
         get {
             cloudBackup.stateChanged
@@ -90,6 +103,10 @@ extension BackupMenuModuleInteractor: BackupMenuModuleInteracting {
     
     func clearBackup() {
         cloudBackup.clearBackup()
+    }
+    
+    var syncSuccessDate: Date? {
+        cloudBackup.successSyncDate
     }
 }
 

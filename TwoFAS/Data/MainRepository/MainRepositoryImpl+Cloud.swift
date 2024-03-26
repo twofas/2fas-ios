@@ -44,6 +44,10 @@ public enum CloudState: Equatable {
 }
 
 extension MainRepositoryImpl {
+    var successSyncDate: Date? {
+        userDefaultsRepository.successSyncDate
+    }
+    
     var secretSyncError: ((String) -> Void)? {
         get {
             cloudHandler.secretSyncError
@@ -88,6 +92,10 @@ extension MainRepositoryImpl {
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     ) {
         SyncInstance.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
+    }
+    
+    func saveSuccessSyncDate(_ date: Date?) {
+        userDefaultsRepository.saveSuccessSyncDate(date)
     }
 }
 

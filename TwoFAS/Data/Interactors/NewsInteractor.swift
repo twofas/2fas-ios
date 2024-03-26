@@ -72,6 +72,7 @@ extension NewsInteractor: NewsInteracting {
         network.fetchNews { [weak self] result in
             switch result {
             case .success(let newList):
+                Log("NewsInteractor: News list fetched, items count: \(newList.count)", module: .moduleInteractor)
                 self?.mainRepository.saveLastNewsFetch(Date())
                 self?.handleFetchedList(newList)
             case .failure:

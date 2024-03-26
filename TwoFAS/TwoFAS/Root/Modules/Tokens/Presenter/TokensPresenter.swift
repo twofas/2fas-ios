@@ -86,9 +86,7 @@ extension TokensPresenter {
         Log("TokensPresenter - viewWillAppear")
         interactor.sync()
         appActiveActions()
-        interactor.fetchNews { [weak self] in
-            self?.updateAddNewsIcon()
-        }
+        updateNewsIcon()
     }
     
     func handleAppDidBecomeActive() {
@@ -446,13 +444,14 @@ extension TokensPresenter {
     }
     
     func handleRefreshNewsStatus() {
-        updateAddNewsIcon()
+        updateNewsIcon()
     }
 }
 
 private extension TokensPresenter {
     func appActiveActions() {
         updateEditStateButton()
+        updateNewsIcon()
         changeDragAndDropIfNecessary(enable: false)
         changeRequriesTokenRefresh = true
         reloadData()
@@ -532,7 +531,7 @@ private extension TokensPresenter {
         }()
         
         if interactor.hasServices {
-            updateAddNewsIcon()
+            updateAddServiceIcon()
             view?.showList()
             
             if Set<CategoryData>(currentServices) != Set<CategoryData>(newServices) || changeRequriesTokenRefresh {
@@ -553,7 +552,7 @@ private extension TokensPresenter {
             if !isSearching && currentState == .edit {
                 setCurrentState(.normal)
             }
-            updateAddNewsIcon()
+            updateAddServiceIcon()
             interactor.stopCounters()
             updateEditStateButton()
 
@@ -566,14 +565,6 @@ private extension TokensPresenter {
         }
                 
         changeRequriesTokenRefresh = false
-    }
-    
-    func updateAddNewsIcon() {
-        if interactor.hasServices {
-            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: false))
-        } else {
-            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: !isSearching))
-        }
     }
     
     func mapButtonStateFor(_ currentState: State, isFirst: Bool) -> TokensViewControllerAddState {
@@ -600,6 +591,21 @@ private extension TokensPresenter {
             return .edit
         } else {
             return .none
+        }
+    }
+    
+    func updateNewsIcon() {
+        updateAddServiceIcon()
+        interactor.fetchNews { [weak self] in
+            self?.updateAddServiceIcon()
+        }
+    }
+    
+    private func updateAddServiceIcon() {
+        if interactor.hasServices {
+            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: false))
+        } else {
+            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: !isSearching))
         }
     }
 }

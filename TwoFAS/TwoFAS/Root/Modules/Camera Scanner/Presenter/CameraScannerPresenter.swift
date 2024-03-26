@@ -39,6 +39,20 @@ final class CameraScannerPresenter {
 }
 
 extension CameraScannerPresenter {
+    func viewDidAppear() {
+        if interactor.isCameraAvailable() {
+            if !interactor.isCameraAllowed() {
+                interactor.registerCamera { [weak self] isGranted in
+                    if !isGranted {
+                        self?.handleCameraNotAvailable()
+                    }
+                }
+            }
+        } else {
+            handleCameraNotAvailable()
+        }
+    }
+    
     func handleOpenGallery() {
         lockScanning = true
         flowController.toGallery()
@@ -135,6 +149,12 @@ extension CameraScannerPresenter {
             view?.feedback()
             flowController.toGeneralError()
         }
+    }
+    
+    func handleCameraNotAvailable() {
+        view?.feedback()
+        
+        flowController.toCameraNotAvailable()
     }
     
     func handleCameraError(_ str: String) {

@@ -75,7 +75,7 @@ extension ListNewsNetworkInteractor: ListNewsNetworkInteracting {
 
 private extension ListNewsNetworkInteractor {
     func parsedList(_ list: [ListNews.NewsEntry]) -> [ListNewsEntry] {
-        list.compactMap { entry in
+        list.compactMap { entry -> ListNewsEntry? in
             guard let icon = ListNewsEntry.Icon(rawValue: entry.icon),
                   let publishedAt = dateFormatter.date(from: entry.publishedAt)
             else { return nil }
@@ -92,7 +92,8 @@ private extension ListNewsNetworkInteractor {
                     guard let createdAt = entry.createdAt else { return nil }
                     return dateFormatter.date(from: createdAt)
                 }(),
-                wasRead: false
+                wasRead: false,
+                internalLink: nil
             )
         }
         .sorted(by: { $0.publishedAt > $1.publishedAt })

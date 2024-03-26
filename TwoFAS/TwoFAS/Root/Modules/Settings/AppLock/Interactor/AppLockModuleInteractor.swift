@@ -21,6 +21,9 @@ import Foundation
 import Data
 
 protocol AppLockModuleInteracting: AnyObject {
+    var isLockoutAttemptsChangeBlocked: Bool { get }
+    var isLockoutBlockTimeChangeBlocked: Bool { get }
+    
     var selectedAttempts: AppLockAttempts { get }
     var selectedBlockTime: AppLockBlockTime { get }
     
@@ -30,15 +33,19 @@ protocol AppLockModuleInteracting: AnyObject {
 
 final class AppLockModuleInteractor {
     private let appLockInteractor: AppLockStateInteracting
+    private let mdmInteractor: MDMInteracting
     
-    init(appLockInteractor: AppLockStateInteracting) {
+    init(appLockInteractor: AppLockStateInteracting, mdmInteractor: MDMInteracting) {
         self.appLockInteractor = appLockInteractor
+        self.mdmInteractor = mdmInteractor
     }
 }
 
 extension AppLockModuleInteractor: AppLockModuleInteracting {
     var selectedAttempts: AppLockAttempts { appLockInteractor.appLockAttempts }
     var selectedBlockTime: AppLockBlockTime { appLockInteractor.appLockBlockTime }
+    var isLockoutAttemptsChangeBlocked: Bool { mdmInteractor.isLockoutAttemptsChangeBlocked }
+    var isLockoutBlockTimeChangeBlocked: Bool { mdmInteractor.isLockoutBlockTimeChangeBlocked }
     
     func setAttempts(_ value: AppLockAttempts) {
         appLockInteractor.setAppLockAttempts(value)

@@ -60,7 +60,7 @@ extension RootViewController: RootViewControlling {
             HUDNotification.presentSuccess(title: T.Notifications.tokenCopied)
         }
         
-        if UIApplication.keyWindow != nil {
+        if UIApplication.keyWindow != nil && view != nil {
             flashNotification()
         } else {
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {

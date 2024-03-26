@@ -132,6 +132,9 @@ extension AppLockViewController {
         cell.update(icon: nil, title: data.title, kind: accessory)
         cell.tintColor = Theme.Colors.Fill.theme
         cell.selectionStyle = .none
+        if data.disabled {
+            cell.disable()
+        }
         
         return cell
     }

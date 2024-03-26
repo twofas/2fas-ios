@@ -37,10 +37,14 @@ final class AppLockPresenter {
         
     func handleSelection(at indexPath: IndexPath) {
         if indexPath.section == 0 {
-            guard let value = AppLockAttempts.allCases[safe: indexPath.row] else { return }
+            guard let value = AppLockAttempts.allCases[
+                safe: indexPath.row
+            ], !interactor.isLockoutAttemptsChangeBlocked else { return }
             interactor.setAttempts(value)
         } else {
-            guard let value = AppLockBlockTime.allCases[safe: indexPath.row] else { return }
+            guard let value = AppLockBlockTime.allCases[
+                safe: indexPath.row
+            ], !interactor.isLockoutBlockTimeChangeBlocked else { return }
             interactor.setBlockTime(value)
         }
         reload()

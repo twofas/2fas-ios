@@ -28,4 +28,5 @@ enum ComposeServiceInputKind: String {
 enum ComposeServicePrivateKeyKind {
     case empty
     case hidden
+    case hiddenNonCopyable
 }

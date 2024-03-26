@@ -18,14 +18,17 @@
 //
 
 import UIKit
+import Common
 
 protocol NewsPlainFlowControllerParent: AnyObject {
     func newsClose()
+    func newsToBackup()
 }
 
 protocol NewsPlainFlowControlling: AnyObject {
     func openWeb(with url: URL)
     func toClose()
+    func toInternalLink(_ internalLink: ListNewsEntry.InternalLink)
 }
 
 final class NewsPlainFlowController: FlowController {
@@ -62,5 +65,12 @@ extension NewsPlainFlowController: NewsPlainFlowControlling {
     
     func toClose() {
         parent?.newsClose()
+    }
+    
+    func toInternalLink(_ internalLink: ListNewsEntry.InternalLink) {
+        switch internalLink {
+        case .backup:
+            parent?.newsToBackup()
+        }
     }
 }

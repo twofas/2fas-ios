@@ -24,7 +24,7 @@ extension SocialChannel {
     var url: URL {
         switch self {
         case .discord:
-            return URL(string: "https://discord.gg/q4cP6qh2g5")!
+            return URL(string: "https://2fas.com/discord")!
         case .youtube:
             return URL(string: "https://www.youtube.com/@2fas")!
         case .twitter:

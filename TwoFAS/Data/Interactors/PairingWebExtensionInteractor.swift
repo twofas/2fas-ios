@@ -27,6 +27,7 @@ public enum PairingWebExtensionError: Error {
     case noPublicKey
     case serverError
     case noInternet
+    case blocked
 }
 
 public enum UnparingWebExtensionError: Error {
@@ -43,6 +44,7 @@ public enum FetchingListError: Error {
 }
 
 public protocol PairingWebExtensionInteracting: AnyObject {
+    var hasActiveBrowserExtension: Bool { get }
     func extensionData(for extensionID: ExtensionID) -> PairedWebExtension?
     func pair(with extensionID: ExtensionID, completion: @escaping (Result<Void, PairingWebExtensionError>) -> Void)
     func listAll() -> [PairedWebExtension]
@@ -51,6 +53,7 @@ public protocol PairingWebExtensionInteracting: AnyObject {
         completion: @escaping (Result<Void, UnparingWebExtensionError>) -> Void
     )
     func fetchList(completion: @escaping (Result<[PairedWebExtension], FetchingListError>) -> Void)
+    func disableExtension(completion: @escaping (Result<Void, UnparingWebExtensionError>) -> Void)
 }
 
 final class PairingWebExtensionInteractor {
@@ -72,12 +75,19 @@ final class PairingWebExtensionInteractor {
 }
 
 extension PairingWebExtensionInteractor: PairingWebExtensionInteracting {
+    var hasActiveBrowserExtension: Bool { !listAll().isEmpty }
+    
     func extensionData(for extensionID: ExtensionID) -> PairedWebExtension? {
         listAll().first { $0.extensionID == extensionID }
     }
     
     func pair(with extensionID: ExtensionID, completion: @escaping (Result<Void, PairingWebExtensionError>) -> Void) {
         Log("PairingWebExtensionInteractor - pair. extensionID: \(extensionID)", module: .interactor)
+        guard !mainRepository.mdmIsBrowserExtensionBlocked else {
+            Log("PairingWebExtensionInteractor - pair. Error: blocked!", module: .interactor)
+            completion(.failure(.blocked))
+            return
+        }
         guard !mainRepository.listAllPairedExtensions().map({ $0.extensionID }).contains(extensionID) else {
             Log("PairingWebExtensionInteractor - failure. Already paired", module: .interactor)
             completion(.failure(.alreadyPaired))
@@ -189,6 +199,51 @@ extension PairingWebExtensionInteractor: PairingWebExtensionInteracting {
                 switch error {
                 case .noInternet: completion(.failure(.noInternet))
                 case .connection: completion(.failure(.serverError))
+                }
+            }
+        }
+    }
+    
+    func disableExtension(completion: @escaping (Result<Void, UnparingWebExtensionError>) -> Void) {
+        Log("PairingWebExtensionInteractor - disableExtension", module: .interactor)
+        guard let deviceID = mainRepository.deviceID else {
+            Log("PairingWebExtensionInteractor - disableExtension. Failure: not registered", module: .interactor)
+            completion(.failure(.notRegistered))
+            return
+        }
+        
+        let extensionIDs = mainRepository.listAllPairedExtensions().map({ $0.extensionID })
+        
+        guard !extensionIDs.isEmpty else {
+            Log("PairingWebExtensionInteractor - disableExtension. Failure: not paired", module: .interactor)
+            completion(.failure(.notPaired))
+            return
+        }
+        
+        var count = extensionIDs.count
+        var errored = false
+        
+        for extensionID in extensionIDs {
+            mainRepository.deletePairing(for: deviceID, extensionID: extensionID) { [weak self] result in
+                switch result {
+                case .success:
+                    Log("PairingWebExtensionInteractor - disableExtension. Success", module: .interactor)
+                    self?.mainRepository.deletePairedExtension(with: extensionID)
+                    self?.mainRepository.removeAuthRequest(for: extensionID)
+
+                    count -= 1
+                    
+                    if count == 0 && !errored {
+                        completion(.success(Void()))
+                    }
+                case .failure(let error):
+                    guard !errored else { return }
+                    Log("PairingWebExtensionInteractor - disableExtension. Error: \(error)", module: .interactor)
+                    errored = true
+                    switch error {
+                    case .noInternet: completion(.failure(.noInternet))
+                    case .connection: completion(.failure(.serverError))
+                    }
                 }
             }
         }

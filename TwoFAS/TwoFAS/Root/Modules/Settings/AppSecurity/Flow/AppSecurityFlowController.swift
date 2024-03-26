@@ -103,13 +103,14 @@ extension AppSecurityFlowController: AppSecurityFlowControlling {
             on: navi,
             parent: self,
             action: newAction,
-            step: .second(PIN: PIN, pinType: typeOfPIN)
+            step: .second(PIN: PIN, pinType: typeOfPIN),
+            lockNavigation: false
         )
     }
     
     func toCreatePIN(pinType: PINType) {
         let navi = navigationControllerForModal()
-        NewPINFlowController.setRoot(in: navi, parent: self, pinType: pinType)
+        NewPINFlowController.setRoot(in: navi, parent: self, pinType: pinType, lockNavigation: false)
         viewController.present(navi, animated: true, completion: nil)
     }
     
@@ -164,7 +165,13 @@ extension AppSecurityFlowController: VerifyPINFlowControllerParent {
             dismiss()
         case .change(let currentPINType):
             guard let navi = viewController.presentedViewController as? UINavigationController else { return }
-            NewPINFlowController.push(on: navi, parent: self, action: .change, step: .first(pinType: currentPINType))
+            NewPINFlowController.push(
+                on: navi,
+                parent: self,
+                action: .change,
+                step: .first(pinType: currentPINType),
+                lockNavigation: false
+            )
         case .authorize:
             viewController.presenter.handleInitialAutorization()
             guard let vc = viewController.children.first(where: { $0 is VerifyPINViewController }) else { return }
@@ -190,7 +197,7 @@ extension AppSecurityFlowController: NewPINFlowControllerParent {
         dismiss()
     }
     
-    func pingGathered(
+    func pinGathered(
         with PIN: String,
         pinType: PINType,
         action: NewPINFlowController.Action,

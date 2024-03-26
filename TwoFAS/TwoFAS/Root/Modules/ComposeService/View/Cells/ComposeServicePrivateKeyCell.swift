@@ -133,6 +133,10 @@ final class ComposeServicePrivateKeyCell: UITableViewCell, ComposeServiceInputCe
         case .hidden:
             privateKeyInput.isHidden = true
             privateKeyReveal.isHidden = false
+        case .hiddenNonCopyable:
+            privateKeyInput.isHidden = true
+            privateKeyReveal.isHidden = false
+            privateKeyReveal.removeActionButton()
         }
     }
     

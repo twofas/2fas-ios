@@ -98,6 +98,12 @@ final class BackupMenuViewController: UIViewController {
             name: .refreshTabContent,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateSyncSuccDate),
+            name: .syncCompletedSuccessfuly,
+            object: nil
+        )
         
         presenter.viewWillAppear()
     }
@@ -111,6 +117,11 @@ final class BackupMenuViewController: UIViewController {
     @objc
     private func shouldRefresh() {
         presenter.handleBecomeActive()
+    }
+    
+    @objc
+    private func updateSyncSuccDate() {
+        presenter.handleSyncSuccessDateUpdate()
     }
     
     private func setupConstraints() {

@@ -32,7 +32,8 @@ final class ModuleInteractorFactory {
             registerDeviceInteractor: InteractorFactory.shared.registerDeviceInteractor(),
             appStateInteractor: InteractorFactory.shared.appStateInteractor(),
             notificationInteractor: InteractorFactory.shared.notificationInteractor(),
-            widgetsInteractor: InteractorFactory.shared.widgetsInteractor()
+            widgetsInteractor: InteractorFactory.shared.widgetsInteractor(),
+            localNotificationStateInteractor: InteractorFactory.shared.localNotificationStateInteractor()
         )
     }
     
@@ -46,14 +47,16 @@ final class ModuleInteractorFactory {
             pushNotifications: InteractorFactory.shared.pushNotificationRegistrationInteractor(),
             protectionInteractor: InteractorFactory.shared.protectionInteractor(),
             networkStatusInteractor: InteractorFactory.shared.networkStatusInteractor(),
-            pairingDeviceInteractor: InteractorFactory.shared.pairingWebExtensionInteractor()
+            pairingDeviceInteractor: InteractorFactory.shared.pairingWebExtensionInteractor(),
+            mdmInteractor: InteractorFactory.shared.mdmInteractor()
         )
     }
     
     func backupMenuModuleInteractor() -> BackupMenuModuleInteracting {
         BackupMenuModuleInteractor(
             serviceListingInteractor: InteractorFactory.shared.serviceListingInteractor(),
-            cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "BackupMenuModuleInteractor")
+            cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "BackupMenuModuleInteractor"),
+            mdmInteractor: InteractorFactory.shared.mdmInteractor()
         )
     }
     
@@ -122,13 +125,15 @@ final class ModuleInteractorFactory {
     func appSecurityModuleInteractor() -> AppSecurityModuleInteracting {
         AppSecurityModuleInteractor(
             protectionInteractor: InteractorFactory.shared.protectionInteractor(),
-            appLockStateInteractor: InteractorFactory.shared.appLockStateInteractor()
+            appLockStateInteractor: InteractorFactory.shared.appLockStateInteractor(),
+            mdmInteractor: InteractorFactory.shared.mdmInteractor()
         )
     }
     
     func appLockModuleInteractor() -> AppLockModuleInteracting {
         AppLockModuleInteractor(
-            appLockInteractor: InteractorFactory.shared.appLockStateInteractor()
+            appLockInteractor: InteractorFactory.shared.appLockStateInteractor(),
+            mdmInteractor: InteractorFactory.shared.mdmInteractor()
         )
     }
     
@@ -140,8 +145,8 @@ final class ModuleInteractorFactory {
         )
     }
     
-    func newPINModuleInteractor() -> NewPINModuleInteracting {
-        NewPINModuleInteractor()
+    func newPINModuleInteractor(lockNavigation: Bool) -> NewPINModuleInteracting {
+        NewPINModuleInteractor(lockNavigation: lockNavigation)
     }
     
     func trashModuleInteractor() -> TrashModuleInteracting {
@@ -161,7 +166,8 @@ final class ModuleInteractorFactory {
     func cameraScannerModuleInteractor() -> CameraScannerModuleInteracting {
         CameraScannerModuleInteractor(
             newCodeInteractor: InteractorFactory.shared.newCodeInteractor(),
-            pushNotificationPermission: InteractorFactory.shared.pushNotificationRegistrationInteractor()
+            pushNotificationPermission: InteractorFactory.shared.pushNotificationRegistrationInteractor(),
+            cameraPermissionInteractor: InteractorFactory.shared.cameraPermissionInteractor()
         )
     }
     
@@ -198,7 +204,8 @@ final class ModuleInteractorFactory {
             sectionInteractor: InteractorFactory.shared.sectionInteractor(),
             notificationsInteractor: InteractorFactory.shared.notificationInteractor(),
             serviceDefinitionInteractor: InteractorFactory.shared.serviceDefinitionInteractor(),
-            advancedAlertInteractor: InteractorFactory.shared.advancedAlertInteractor()
+            advancedAlertInteractor: InteractorFactory.shared.advancedAlertInteractor(),
+            mdmInteractor: InteractorFactory.shared.mdmInteractor()
         )
     }
     
@@ -276,7 +283,10 @@ final class ModuleInteractorFactory {
     }
     
     func newsModuleInteractor() -> NewsModuleInteracting {
-        NewsModuleInteractor(newsInteractor: InteractorFactory.shared.newsInteractor())
+        NewsModuleInteractor(
+            newsInteractor: InteractorFactory.shared.newsInteractor(),
+            localNotificationFetchInteractor: InteractorFactory.shared.localNotificationFetchInteractor()
+        )
     }
     
     func composeServiceCategorySelectionModuleInteractor(
@@ -318,7 +328,8 @@ final class ModuleInteractorFactory {
             widgetsInteractor: InteractorFactory.shared.widgetsInteractor(),
             newCodeInteractor: InteractorFactory.shared.newCodeInteractor(),
             newsInteractor: InteractorFactory.shared.newsInteractor(),
-            rootInteractor: InteractorFactory.shared.rootInteractor()
+            rootInteractor: InteractorFactory.shared.rootInteractor(),
+            localNotificationFetchInteractor: InteractorFactory.shared.localNotificationFetchInteractor()
         )
     }
     
@@ -331,7 +342,9 @@ final class ModuleInteractorFactory {
             newVersionInteractor: InteractorFactory.shared.newVersionInteractor(),
             networkStatusInteractor: InteractorFactory.shared.networkStatusInteractor(),
             appInfoInteractor: InteractorFactory.shared.appInfoInteractor(),
-            rootInteractor: InteractorFactory.shared.rootInteractor()
+            rootInteractor: InteractorFactory.shared.rootInteractor(),
+            mdmInteractor: InteractorFactory.shared.mdmInteractor(),
+            protectionInteractor: InteractorFactory.shared.protectionInteractor()
         )
     }
     

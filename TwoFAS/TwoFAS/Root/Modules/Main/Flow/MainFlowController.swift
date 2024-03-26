@@ -30,6 +30,7 @@ protocol MainFlowControlling: AnyObject {
     func toSecretSyncError(_ serviceName: String)
     func toOpenFileImport(url: URL)
     func toSetupSplit()
+    func toSetPIN()
     
     // MARK: - App update
     func toShowNewVersionAlert(for appStoreURL: URL, skip: @escaping Callback)
@@ -137,6 +138,12 @@ extension MainFlowController: MainFlowControlling {
 
         viewController.present(alertController, animated: true, completion: nil)
     }
+    
+    // MARK: - MDM requriments
+    
+    func toSetPIN() {
+        NewPINNavigationFlowController.present(on: viewController, parent: self)
+    }
 }
 
 extension MainFlowController: ImporterOpenFileHeadlessFlowControllerParent {
@@ -199,5 +206,18 @@ extension MainFlowController: MainSplitFlowControllerParent {
     
     func navigationSwitchedToSettingsExternalImport() {
         viewController.presenter.handleSwitchToExternalImport()
+    }
+    
+    func navigationSwitchedToSettingsBackup() {
+        viewController.presenter.handleSwitchToBackup()
+    }
+}
+
+extension MainFlowController: NewPINNavigationFlowControllerParent {
+    func pinGathered(with PIN: String, pinType: PINType) {
+        viewController.presenter.handleSavePIN(PIN, pinType: pinType)
+        viewController.dismiss(animated: true) { [weak viewController] in
+            viewController?.presenter.handleViewIsVisible()
+        }
     }
 }

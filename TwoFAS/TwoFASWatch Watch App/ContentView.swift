@@ -18,52 +18,120 @@
 //
 
 import SwiftUI
-import SyncWatch
-import ProtectionWatch
-import CommonWatch
-import StorageWatch
+//import SyncWatch
+//import ProtectionWatch
+//import CommonWatch
+//import StorageWatch
+
+struct Service: Identifiable, Hashable {
+    let id: String
+    let name: String
+    let additionalInfo: String?
+}
 
 struct ContentView: View {
-    @State var syncStstus = "Hello, world!"
+    private let list: [Service] = [
+        .init(id: "32423432", name: "First", additionalInfo: nil),
+        .init(id: "4889812312", name: "Second", additionalInfo: "test@test.com"),
+        .init(id: "3242342", name: "First", additionalInfo: nil),
+        .init(id: "488912312", name: "Second", additionalInfo: "test@test.com"),
+        .init(id: "322342", name: "First", additionalInfo: nil),
+        .init(id: "48891212", name: "Second", additionalInfo: "test@test.com")
+    ]
+    
+    @State private var selectedService: Service?
+    @State private var isConfirming = false
+    
+    @State private var textTest: String = ""
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-                Text(syncStstus)
-        }
-        .padding()
-        .task {
-            let protection = Protection()
-            EncryptionHolder.initialize(with: protection.localKeyEncryption)
-            
-            let storage = Storage(readOnly: false) { error in
-                // TODO: Add an alert here!
-            }
-            
-            let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
-            serviceMigration.serviceNameTranslation = "Service"//T.Commons.service
-            
-            SyncInstanceWatch.initialize(commonSectionHandler: storage.section, commonServiceHandler: storage.service) { _ in
-                // TODO: Add an alert here!
-            }
-            SyncInstanceWatch.migrateStoreIfNeeded()
-            serviceMigration.migrateIfNeeded()
-            
-            let handler = SyncInstanceWatch.getCloudHandler()
-            handler.registerForStateChange({ state in
-                print(">>> \(state)")
-                if state == .disabledAvailable {
-                    handler.enable()
-                    handler.synchronize()
+        NavigationSplitView {
+            List(list, selection: $selectedService) { item in
+                Section(header: Text("Important tasks")) {
+                    Button(action: {
+                        selectedService = item
+                    }, label: {
+                        VStack(alignment: .leading) {
+                            Text(item.name)
+                                .font(.callout)
+                                .padding(4)
+                                .foregroundStyle(.primary)
+                            //                                .background(Material.ultraThin, in: RoundedRectangle(cornerRadius: 7))
+                            if let additionalInfo = item.additionalInfo {
+                                Text(additionalInfo)
+                                    .padding(.horizontal, 4)
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }.frame(minHeight: 70)
+                    })
                 }
-                syncStstus = "\(state)"
-                if state == .enabled(sync: .synced) {
-                    print(">>>! \(storage.storageRepository.countServicesNotTrashed())")
+            }
+            .listStyle(.carousel)
+            .navigationTitle("Services")
+            .navigationBarTitleDisplayMode(.automatic)
+            .containerBackground(.red.gradient, for: .navigation)
+            .toolbar {
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button(action: {
+                        isConfirming = true
+                    }, label: {
+                        Label("Settings", systemImage: "gear")
+                    })
                 }
-            }, with: "listener!")
-            handler.enable()
-            handler.synchronize()
+                
+                ToolbarItemGroup(placement: .bottomBar) {
+                    Button(action: {
+                        isConfirming = true
+                    }, label: {
+                        Label("Clear search results", systemImage: "search")
+                    })
+                }
+//                ToolbarItemGroup(placement: .topBarTrailing) {
+//                    NavigationLink {
+//                        Color.blue
+//                    } label: {
+//                        Label("Settings", systemImage: "gear")
+//                    }
+//                }
+            }
+            .fullScreenCover(isPresented: $isConfirming) {
+//            .confirmationDialog("Select value", isPresented: $isConfirming) {
+//                Button(action: {}, label: {
+//                    Text("Action 1")
+//                })
+//                Button(action: {}, label: {
+//                    Text("Action 2")
+//                })
+//                Button(action: {}, label: {
+//                    Text("Action 3")
+//                })
+                
+                
+                VStack {
+                            TextFieldLink {
+                                Image(systemName: "globe")
+                                    .imageScale(.large)
+                                    .foregroundColor(.accentColor)
+                            } onSubmit: { value in
+                                self.textTest = value
+                            }
+                        }
+                        .padding()
+//
+//                TextField("Testowy", text: $textTest)
+//                    .multilineTextAlignment(.center)
+//                    .textInputAutocapitalization(.characters)
+//                    .foregroundColor(.blue)
+//                         .background(.yellow)
+//                         .font(.largeTitle)
+//                         .multilineTextAlignment(.center)
+                
+            }
+        } detail: {
+            if let selectedService {
+                Text("Detail \(selectedService.name)")
+            }
         }
     }
 }
@@ -71,3 +139,36 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+
+//.task {
+//    let protection = Protection()
+//    EncryptionHolder.initialize(with: protection.localKeyEncryption)
+//    
+//    let storage = Storage(readOnly: false) { error in
+//        // TODO: Add an alert here!
+//    }
+//    
+//    let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
+//    serviceMigration.serviceNameTranslation = "Service"//T.Commons.service
+//    
+//    SyncInstanceWatch.initialize(commonSectionHandler: storage.section, commonServiceHandler: storage.service) { _ in
+//        // TODO: Add an alert here!
+//    }
+//    SyncInstanceWatch.migrateStoreIfNeeded()
+//    serviceMigration.migrateIfNeeded()
+//    
+//    let handler = SyncInstanceWatch.getCloudHandler()
+//    handler.registerForStateChange({ state in
+//        print(">>> \(state)")
+//        if state == .disabledAvailable {
+//            handler.enable()
+//            handler.synchronize()
+//        }
+//        syncStstus = "\(state)"
+//        if state == .enabled(sync: .synced) {
+//            print(">>>! \(storage.storageRepository.countServicesNotTrashed())")
+//        }
+//    }, with: "listener!")
+//    handler.enable()
+//    handler.synchronize()
+//}

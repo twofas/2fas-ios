@@ -42,17 +42,6 @@
             testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C28ECEAA1FEEADF2000EBB9D"
-               BuildableName = "CodeSupportTests.xctest"
-               BlueprintName = "CodeSupportTests"
-               ReferencedContainer = "container:TwoFAS.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "C2ACF9E320A8A918003E0987"
                BuildableName = "TwoFASTests.xctest"
                BlueprintName = "TwoFASTests"
@@ -67,17 +56,6 @@
                BlueprintIdentifier = "C2FA85782426BB7300AACFC9"
                BuildableName = "ProtectionTests.xctest"
                BlueprintName = "ProtectionTests"
-               ReferencedContainer = "container:TwoFAS.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C24D1C21253C744F0029D27D"
-               BuildableName = "SyncTests.xctest"
-               BlueprintName = "SyncTests"
                ReferencedContainer = "container:TwoFAS.xcodeproj">
             </BuildableReference>
          </TestableReference>

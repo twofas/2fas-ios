@@ -21,6 +21,15 @@ import Foundation
 
 extension BackupMenuPresenter {
     func buildMenu() -> [BackupMenuSection] {
+        var footer = T.Backup.sectionDescription
+        let dateStr: String = {
+            if let date = interactor.syncSuccessDate {
+                return dateFormatter.string(from: date)
+            }
+            return "-"
+        }()
+        footer.append("\n\n\(T.backupSettingsSyncTitle): \(dateStr)")
+        
         let cloudBackup = BackupMenuSection(
             title: T.Backup.cloudBackup,
             cells: [
@@ -34,23 +43,28 @@ extension BackupMenuPresenter {
                     )
                 )
             ],
-            footer: T.Backup.sectionDescription
+            footer: footer
         )
         
         let exportEnabled = interactor.exportEnabled
-        let fileBackup = BackupMenuSection(
-            title: T.Backup.fileBackup,
-            cells: [
-                .init(
-                    title: T.Backup.import,
-                    action: .importFile
-                ),
+        var cells: [BackupMenuCell] = [
+            .init(
+                title: T.Backup.import,
+                action: .importFile
+            )
+        ]
+        if interactor.isBackupAllowed {
+            cells.append(
                 .init(
                     title: T.Backup.export,
                     action: .exportFile,
                     isEnabled: exportEnabled
                 )
-            ],
+            )
+        }
+        let fileBackup = BackupMenuSection(
+            title: T.Backup.fileBackup,
+            cells: cells,
             footer: T.Backup.fileBackupOfflineTitle
         )
         
@@ -65,12 +79,15 @@ extension BackupMenuPresenter {
             footer: T.Backup.warningIntroduction
         )
         
-        var menu: [BackupMenuSection] = [
-            cloudBackup,
-            fileBackup
-        ]
+        var menu: [BackupMenuSection] = []
         
-        if interactor.isCloudBackupConnected {
+        if interactor.isBackupAllowed {
+            menu.append(cloudBackup)
+        }
+        
+        menu.append(fileBackup)
+                
+        if interactor.isCloudBackupConnected && interactor.isBackupAllowed {
             menu.append(cloudBackupDeletition)
         }
 

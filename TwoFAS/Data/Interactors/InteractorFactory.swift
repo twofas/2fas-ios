@@ -246,4 +246,28 @@ public final class InteractorFactory {
     public func appStateInteractor() -> AppStateInteracting {
         AppStateInteractor(mainRepository: MainRepositoryImpl.shared)
     }
+    
+    public func mdmInteractor() -> MDMInteracting {
+        MDMInteractor(
+            mainRepository: MainRepositoryImpl.shared,
+            pairingInteractor: pairingWebExtensionInteractor(),
+            cloudBackupStateInteractor: cloudBackupStateInteractor(listenerID: "MDMInteractor")
+        )
+    }
+    
+    public func localNotificationStateInteractor() -> LocalNotificationStateInteracting {
+        LocalNotificationStateInteractor(
+            mainRepository: MainRepositoryImpl.shared,
+            serviceListingInteractor: serviceListingInteractor(),
+            cloudBackup: cloudBackupStateInteractor(listenerID: "localNotificationStateInteractor"),
+            pairingDeviceInteractor: pairingWebExtensionInteractor(),
+            mdmInteractor: mdmInteractor()
+        )
+    }
+    
+    public func localNotificationFetchInteractor() -> LocalNotificationFetchInteracting {
+        LocalNotificationFetchInteractor(
+            mainRepository: MainRepositoryImpl.shared
+        )
+    }
 }

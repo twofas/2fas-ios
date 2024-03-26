@@ -85,7 +85,8 @@ private extension StorageRepositoryImpl {
                     message: entity.message,
                     publishedAt: entity.publishedAt,
                     createdAt: entity.createdAt,
-                    wasRead: entity.wasRead
+                    wasRead: entity.wasRead,
+                    internalLink: nil
                 )
             })
     }

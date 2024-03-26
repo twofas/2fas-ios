@@ -142,6 +142,10 @@
 		C2286034266972B5005E88E3 /* TokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2286033266972B5005E88E3 /* TokenCell.swift */; };
 		C22C1399267682B4001AA5F1 /* CategoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22C1398267682B4001AA5F1 /* CategoryData.swift */; };
 		C22C139B267684DC001AA5F1 /* CategoryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22C139A267684DC001AA5F1 /* CategoryHandler.swift */; };
+		C22CD3922B913E94005FE348 /* MDMRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CD3912B913E94005FE348 /* MDMRepository.swift */; };
+		C22CD3942B913EB4005FE348 /* MDMRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CD3932B913EB4005FE348 /* MDMRepositoryImpl.swift */; };
+		C22CD3962B91419B005FE348 /* MainRepositoryImpl+MDM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CD3952B91419B005FE348 /* MainRepositoryImpl+MDM.swift */; };
+		C22CD3982B9142CA005FE348 /* MDMInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CD3972B9142CA005FE348 /* MDMInteractor.swift */; };
 		C22CF3DF27413F0F004F6A03 /* LogStorage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C22CF3DD27413F0F004F6A03 /* LogStorage.xcdatamodeld */; };
 		C22CF3E327414073004F6A03 /* LogEntryEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CF3E127414073004F6A03 /* LogEntryEntity+CoreDataClass.swift */; };
 		C22CF3E427414073004F6A03 /* LogEntryEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CF3E227414073004F6A03 /* LogEntryEntity+CoreDataProperties.swift */; };
@@ -404,6 +408,7 @@
 		C274C7742ADD3CB000B8AAC1 /* CounterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24DFB2027D1770D00F3EACC /* CounterState.swift */; };
 		C274C7762ADD3DF900B8AAC1 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C274C7752ADD3DF900B8AAC1 /* FirebaseMessaging */; };
 		C274C77C2ADD3E3500B8AAC1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C274C77B2ADD3E3500B8AAC1 /* FirebaseCrashlytics */; };
+		C276D1712B9A672C008C9CD4 /* LocalNotificationStateInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C276D1702B9A672C008C9CD4 /* LocalNotificationStateInteractor.swift */; };
 		C277C32C245C3FD6009214F3 /* MainContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C277C32B245C3FD6009214F3 /* MainContainerViewController.swift */; };
 		C278121C27F9F3E600F31453 /* ExportPublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278121B27F9F3E600F31453 /* ExportPublicKey.swift */; };
 		C278121F27F9F4C000F31453 /* SwCrypt in Frameworks */ = {isa = PBXBuildFile; productRef = C278121E27F9F4C000F31453 /* SwCrypt */; };
@@ -667,6 +672,7 @@
 		C2BBD1D42B8113A9009A91FB /* TwoFASWidgetInline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD1D22B81127C009A91FB /* TwoFASWidgetInline.swift */; };
 		C2BBD1D72B812117009A91FB /* TwoFASWidgetCircular.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD1D52B8120F4009A91FB /* TwoFASWidgetCircular.swift */; };
 		C2BBD2382B8130B0009A91FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2BBD2332B81308C009A91FB /* Localizable.strings */; };
+		C2BC3FC92B94E70F004C4BA0 /* NewPINNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BC3FC82B94E70F004C4BA0 /* NewPINNavigationFlowController.swift */; };
 		C2BD82B2236619E800FBD69A /* BackupAreaWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD82B1236619E800FBD69A /* BackupAreaWarningView.swift */; };
 		C2BD85DA2640290E0087D087 /* IntroductionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD85D92640290E0087D087 /* IntroductionFlowController.swift */; };
 		C2BD85DC26402A910087D087 /* IntroductionContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD85DB26402A910087D087 /* IntroductionContainerView.swift */; };
@@ -1019,6 +1025,8 @@
 		C2EA566D285696FE00026BFE /* AskForAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA566C285696FE00026BFE /* AskForAuthViewController.swift */; };
 		C2EA566F28569A5E00026BFE /* AskForAuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA566E28569A5E00026BFE /* AskForAuthPresenter.swift */; };
 		C2EA567128569ADD00026BFE /* AskForAuthFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA567028569ADD00026BFE /* AskForAuthFlowController.swift */; };
+		C2EA6E5C2BA10AFE0034A964 /* LocalNotificationFetchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA6E5B2BA10AFE0034A964 /* LocalNotificationFetchInteractor.swift */; };
+		C2EA6E5E2BA110FA0034A964 /* MainRepositoryImpl+LocalNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA6E5D2BA110FA0034A964 /* MainRepositoryImpl+LocalNotifications.swift */; };
 		C2EBDFFC2AC44750008FD744 /* GuideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBDFFB2AC44750008FD744 /* GuideMenuViewController.swift */; };
 		C2EBDFFE2AC4476D008FD744 /* GuideMenuPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBDFFD2AC4476D008FD744 /* GuideMenuPresenter.swift */; };
 		C2EBE0022AC44787008FD744 /* GuideMenuFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBE0012AC44787008FD744 /* GuideMenuFlowController.swift */; };
@@ -1674,6 +1682,10 @@
 		C22A8669287F60BD009A43FE /* MainRepositoryImpl+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Notifications.swift"; sourceTree = "<group>"; };
 		C22C1398267682B4001AA5F1 /* CategoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryData.swift; sourceTree = "<group>"; };
 		C22C139A267684DC001AA5F1 /* CategoryHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHandler.swift; sourceTree = "<group>"; };
+		C22CD3912B913E94005FE348 /* MDMRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDMRepository.swift; sourceTree = "<group>"; };
+		C22CD3932B913EB4005FE348 /* MDMRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDMRepositoryImpl.swift; sourceTree = "<group>"; };
+		C22CD3952B91419B005FE348 /* MainRepositoryImpl+MDM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+MDM.swift"; sourceTree = "<group>"; };
+		C22CD3972B9142CA005FE348 /* MDMInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDMInteractor.swift; sourceTree = "<group>"; };
 		C22CD79A2630D43F009C0258 /* FileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileInteractor.swift; sourceTree = "<group>"; };
 		C22CF3DE27413F0F004F6A03 /* LogStorage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LogStorage.xcdatamodel; sourceTree = "<group>"; };
 		C22CF3E127414073004F6A03 /* LogEntryEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogEntryEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -1969,6 +1981,7 @@
 		C274BDC1276941FB00EE28BC /* AppSecurityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecurityPresenter.swift; sourceTree = "<group>"; };
 		C274BDC32769425900EE28BC /* AppSecurityPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppSecurityPresenter+Menu.swift"; sourceTree = "<group>"; };
 		C274BDC52769428700EE28BC /* AppSecurityModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecurityModels.swift; sourceTree = "<group>"; };
+		C276D1702B9A672C008C9CD4 /* LocalNotificationStateInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationStateInteractor.swift; sourceTree = "<group>"; };
 		C277C32B245C3FD6009214F3 /* MainContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerViewController.swift; sourceTree = "<group>"; };
 		C278121B27F9F3E600F31453 /* ExportPublicKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPublicKey.swift; sourceTree = "<group>"; };
 		C278122027F9FA9900F31453 /* RSAEncryption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAEncryption.swift; sourceTree = "<group>"; };
@@ -2283,6 +2296,7 @@
 		C2BBD24C2B813162009A91FB /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = TwoFAS/Other/uk.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C2BBD24D2B813162009A91FB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = TwoFAS/Other/de.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C2BBD24E2B813162009A91FB /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = TwoFAS/Other/pl.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C2BC3FC82B94E70F004C4BA0 /* NewPINNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPINNavigationFlowController.swift; sourceTree = "<group>"; };
 		C2BD82B1236619E800FBD69A /* BackupAreaWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupAreaWarningView.swift; sourceTree = "<group>"; };
 		C2BD85D92640290E0087D087 /* IntroductionFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionFlowController.swift; sourceTree = "<group>"; };
 		C2BD85DB26402A910087D087 /* IntroductionContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionContainerView.swift; sourceTree = "<group>"; };
@@ -2529,6 +2543,8 @@
 		C2EA566C285696FE00026BFE /* AskForAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskForAuthViewController.swift; sourceTree = "<group>"; };
 		C2EA566E28569A5E00026BFE /* AskForAuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskForAuthPresenter.swift; sourceTree = "<group>"; };
 		C2EA567028569ADD00026BFE /* AskForAuthFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskForAuthFlowController.swift; sourceTree = "<group>"; };
+		C2EA6E5B2BA10AFE0034A964 /* LocalNotificationFetchInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationFetchInteractor.swift; sourceTree = "<group>"; };
+		C2EA6E5D2BA110FA0034A964 /* MainRepositoryImpl+LocalNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+LocalNotifications.swift"; sourceTree = "<group>"; };
 		C2EBDFFB2AC44750008FD744 /* GuideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideMenuViewController.swift; sourceTree = "<group>"; };
 		C2EBDFFD2AC4476D008FD744 /* GuideMenuPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideMenuPresenter.swift; sourceTree = "<group>"; };
 		C2EBE0012AC44787008FD744 /* GuideMenuFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideMenuFlowController.swift; sourceTree = "<group>"; };
@@ -3316,6 +3332,9 @@
 				C212ACDD2AF6F929001C8665 /* RootInteractor.swift */,
 				C2CACFBF2AFFB7F7001E0F8E /* LoginInteractor.swift */,
 				C2CACFC12B015725001E0F8E /* AppStateInteractor.swift */,
+				C22CD3972B9142CA005FE348 /* MDMInteractor.swift */,
+				C276D1702B9A672C008C9CD4 /* LocalNotificationStateInteractor.swift */,
+				C2EA6E5B2BA10AFE0034A964 /* LocalNotificationFetchInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -3736,6 +3755,15 @@
 				C23B899627C287480028FE34 /* NavigationFlowController.swift */,
 			);
 			path = Architecture;
+			sourceTree = "<group>";
+		};
+		C22CD3902B913E85005FE348 /* MDMRepository */ = {
+			isa = PBXGroup;
+			children = (
+				C22CD3912B913E94005FE348 /* MDMRepository.swift */,
+				C22CD3932B913EB4005FE348 /* MDMRepositoryImpl.swift */,
+			);
+			path = MDMRepository;
 			sourceTree = "<group>";
 		};
 		C22CF3E027414028004F6A03 /* Log */ = {
@@ -5629,6 +5657,7 @@
 		C2A7067C276D1A5F00885D79 /* Flow */ = {
 			isa = PBXGroup;
 			children = (
+				C2BC3FC82B94E70F004C4BA0 /* NewPINNavigationFlowController.swift */,
 				C2A7067D276D1A7500885D79 /* NewPINFlowController.swift */,
 				C2997AA82454D767006D5943 /* SelectPINLengthController.swift */,
 			);
@@ -6710,6 +6739,7 @@
 		C2D44E6B275C14840043F5D6 /* MainRepository */ = {
 			isa = PBXGroup;
 			children = (
+				C22CD3902B913E85005FE348 /* MDMRepository */,
 				C2A026B42AF82FDB00DB2E52 /* DataExternalTranslations.swift */,
 				C240485627652E170076376E /* DataTypes */,
 				C2D44E69275C14790043F5D6 /* MainRepository.swift */,
@@ -6746,7 +6776,9 @@
 				C2DF245F29859F9700762A26 /* MainRepositoryImpl+ViewPath.swift */,
 				C2A026B22AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift */,
 				C2CACFC32B015847001E0F8E /* MainRepositoryImpl+LockScreen.swift */,
+				C2EA6E5D2BA110FA0034A964 /* MainRepositoryImpl+LocalNotifications.swift */,
 				C249AF62278A40FE005F9D80 /* UserDefaults */,
+				C22CD3952B91419B005FE348 /* MainRepositoryImpl+MDM.swift */,
 			);
 			path = MainRepository;
 			sourceTree = "<group>";
@@ -9004,6 +9036,7 @@
 				C2B1208F29D76BD10020281E /* AppearancePresenter+Menu.swift in Sources */,
 				C2A7945127F9016D00E5C641 /* BrowserExtensionEditNameViewController.swift in Sources */,
 				C242B4D12A9BD950005CC1BC /* AddingServiceAdvancedSectionDividerView.swift in Sources */,
+				C2BC3FC92B94E70F004C4BA0 /* NewPINNavigationFlowController.swift in Sources */,
 				C21B3A1427AF0BC9005C603B /* ColorPickerFlowController.swift in Sources */,
 				C2B39E5929F5BD7800EC31F6 /* TokensCategory.swift in Sources */,
 				C26BCE01281010A000CA6A9A /* SelectServiceModuleInteractor.swift in Sources */,
@@ -9338,6 +9371,7 @@
 				C2E7C4052ADB2BB400478D89 /* ImportFromFileInteractor+Parsers.swift in Sources */,
 				C2E7C3E02ADB2BB400478D89 /* ImportFromFileInteractor.swift in Sources */,
 				C2E7C3C82ADB2B9C00478D89 /* MainRepositoryImpl+DeviceName.swift in Sources */,
+				C22CD3982B9142CA005FE348 /* MDMInteractor.swift in Sources */,
 				C2E7C3E22ADB2BB400478D89 /* InteractorFactory.swift in Sources */,
 				C2E7C3E92ADB2BB400478D89 /* AdvancedAlertInteractor.swift in Sources */,
 				C274C7722ADD3CA500B8AAC1 /* Generator.swift in Sources */,
@@ -9354,6 +9388,7 @@
 				C2E7C4042ADB2BB400478D89 /* WebExtensionEncryptionInteractor.swift in Sources */,
 				C2AE5F512ADC199F00AED670 /* AppEventController.swift in Sources */,
 				C2E7C3CE2ADB2B9C00478D89 /* MainRepositoryImpl+Code.swift in Sources */,
+				C2EA6E5C2BA10AFE0034A964 /* LocalNotificationFetchInteractor.swift in Sources */,
 				C2E7C3DC2ADB2BAC00478D89 /* UserDefaultsRepository.swift in Sources */,
 				C2E7C4022ADB2BB400478D89 /* ServiceModifyInteractor.swift in Sources */,
 				C2AE5F552ADC1A4A00AED670 /* SecurityProtocol.swift in Sources */,
@@ -9369,6 +9404,7 @@
 				C2AE5F802ADC8B0D00AED670 /* Code+Support.swift in Sources */,
 				C2E7C3D62ADB2B9C00478D89 /* MainRepositoryImpl+PushNotifications.swift in Sources */,
 				C2E7C40B2ADB2BE500478D89 /* SocialChannel.swift in Sources */,
+				C22CD3962B91419B005FE348 /* MainRepositoryImpl+MDM.swift in Sources */,
 				C2E7C3C32ADB2B9C00478D89 /* MainRepositoryImpl+News.swift in Sources */,
 				C2E7C3BC2ADB2B9C00478D89 /* MainRepositoryImpl+Guides.swift in Sources */,
 				C2E7C3C62ADB2B9C00478D89 /* MainRepositoryImpl+Cloud.swift in Sources */,
@@ -9380,11 +9416,13 @@
 				C2E7C3CF2ADB2B9C00478D89 /* MainRepositoryImpl+ServiceDefinition.swift in Sources */,
 				C2E7C3D92ADB2B9C00478D89 /* MainRepositoryImpl+General.swift in Sources */,
 				C2E7C3DA2ADB2BA600478D89 /* MainRepositoryImpl+ViewPath.swift in Sources */,
+				C2EA6E5E2BA110FA0034A964 /* MainRepositoryImpl+LocalNotifications.swift in Sources */,
 				C2E7C3C72ADB2B9C00478D89 /* MainRepositoryImpl+Camera.swift in Sources */,
 				C2E7C4062ADB2BB400478D89 /* PairingWebExtensionInteractor.swift in Sources */,
 				C2E7C4012ADB2BB400478D89 /* TrashingServiceInteractor.swift in Sources */,
 				C2E7C3D82ADB2B9C00478D89 /* MainRepositoryImpl+Storage.swift in Sources */,
 				C2AE5F7E2ADC8B0D00AED670 /* Extensions.swift in Sources */,
+				C22CD3922B913E94005FE348 /* MDMRepository.swift in Sources */,
 				C2E7C3F72ADB2BB400478D89 /* IconInteractor.swift in Sources */,
 				C2E7C4122ADB2BE500478D89 /* ExchangeData2.swift in Sources */,
 				C2AE5F812ADC8B0D00AED670 /* Code+TwoFASWebExtension.swift in Sources */,
@@ -9419,6 +9457,7 @@
 				C2AE5F522ADC19E600AED670 /* Notifications.swift in Sources */,
 				C2E7C3C22ADB2B9C00478D89 /* MainRepositoryImpl+AdvancedAlertState.swift in Sources */,
 				C2E7C4152ADB2BE500478D89 /* ExchangeData.swift in Sources */,
+				C22CD3942B913EB4005FE348 /* MDMRepositoryImpl.swift in Sources */,
 				C2E7C3F32ADB2BB400478D89 /* ViewPathInteractor.swift in Sources */,
 				C2E7C3FB2ADB2BB400478D89 /* ServiceListingInteractor.swift in Sources */,
 				C2A026B32AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift in Sources */,
@@ -9436,6 +9475,7 @@
 				C2CACFC22B015725001E0F8E /* AppStateInteractor.swift in Sources */,
 				C2AE5F692ADC5D9D00AED670 /* Security.swift in Sources */,
 				C2E7C3DD2ADB2BB400478D89 /* RegisterDeviceInteractor.swift in Sources */,
+				C276D1712B9A672C008C9CD4 /* LocalNotificationStateInteractor.swift in Sources */,
 				C2E7C40F2ADB2BE500478D89 /* PINType.swift in Sources */,
 				C2E7C3CB2ADB2B9C00478D89 /* MainRepositoryImpl+Appearance.swift in Sources */,
 				C2E7C3F62ADB2BB400478D89 /* WebExtensionAuthInteractor.swift in Sources */,
@@ -9882,7 +9922,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -9925,7 +9965,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -9967,7 +10007,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -10011,7 +10051,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -10053,7 +10093,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -10101,7 +10141,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -10273,7 +10313,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGED_BINARY_TYPE = manual;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				OTHER_LDFLAGS = (
@@ -10318,7 +10358,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGED_BINARY_TYPE = manual;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
@@ -10365,7 +10405,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
@@ -10412,7 +10452,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
@@ -10455,7 +10495,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -10499,7 +10539,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -10544,7 +10584,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -10589,7 +10629,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
@@ -10626,7 +10666,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGED_BINARY_TYPE = manual;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASAuth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -10660,7 +10700,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGED_BINARY_TYPE = manual;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASAuth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -10699,7 +10739,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -10744,7 +10784,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -10842,7 +10882,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGED_BINARY_TYPE = manual;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -10878,7 +10918,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGED_BINARY_TYPE = manual;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASWidget;
@@ -10911,7 +10951,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGED_BINARY_TYPE = manual;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -10945,7 +10985,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGED_BINARY_TYPE = manual;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASServiceIntent;
@@ -11042,7 +11082,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -11089,7 +11129,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
@@ -11134,7 +11174,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -11181,7 +11221,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
@@ -11226,7 +11266,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -11274,7 +11314,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -11320,7 +11360,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -11368,7 +11408,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.0;
+				MARKETING_VERSION = 5.3.5;
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";

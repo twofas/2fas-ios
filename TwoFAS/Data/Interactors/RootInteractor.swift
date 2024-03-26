@@ -81,7 +81,9 @@ extension RootInteractor: RootInteracting {
     
     func markIntroAsShown() {
         mainRepository.setIntroductionAsShown()
-        mainRepository.enableCloudBackup()
+        if !mainRepository.mdmIsBackupBlocked {
+            mainRepository.enableCloudBackup()
+        }
     }
     
     func lockApplicationIfNeeded(presentLoginImmediately: @escaping () -> Void) {

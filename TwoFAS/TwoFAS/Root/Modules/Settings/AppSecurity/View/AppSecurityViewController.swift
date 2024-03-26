@@ -151,6 +151,12 @@ extension AppSecurityViewController {
         } else {
             cell.selectionStyle = .none
         }
+        
+        let accessory = data.accessory
+        if case let .toggle(toggle) = accessory, toggle.isBlocked {
+            cell.disable()
+            cell.disableToggle()
+        }
 
         return cell
     }
@@ -194,7 +200,7 @@ extension AppSecurityViewController {
         case .arrow: return .arrow
         case .info(let text): return .infoArrow(text: text)
         case .toggle(let toggle): return .toggle(isEnabled: toggle.isOn) { [weak tableView, weak self] calledCell, _ in
-            guard let indexPath = tableView?.indexPath(for: calledCell) else { return }
+            guard let indexPath = tableView?.indexPath(for: calledCell), !toggle.isBlocked else { return }
             self?.presenter.handleToggle(for: indexPath)
         }
         }

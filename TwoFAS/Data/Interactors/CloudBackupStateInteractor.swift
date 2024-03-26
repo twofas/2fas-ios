@@ -42,6 +42,10 @@ public protocol CloudBackupStateInteracting: AnyObject {
     func clearBackup()
     
     func synchronizeBackup()
+    
+    var successSyncDate: Date? { get }
+    func saveSuccessSyncDate()
+    func clearSaveSuccessSync()
 }
 
 /// Use one instance per use case
@@ -79,6 +83,10 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
     
     var isBackupEnabled: Bool { isEnabled }
     var isBackupAvailable: Bool { isAvailable }
+    
+    var successSyncDate: Date? {
+        mainRepository.successSyncDate
+    }
     
     func startMonitoring() {
         Log("CloudBackupStateInteractor - start monitoring, listenerID: \(listenerID)", module: .interactor)
@@ -137,6 +145,16 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
     func synchronizeBackup() {
         Log("CloudBackupStateInteractor - synchronizeBackup", module: .interactor)
         mainRepository.synchronizeBackup()
+    }
+    
+    func saveSuccessSyncDate() {
+        Log("CloudBackupStateInteractor - saveSuccessSync", module: .interactor)
+        mainRepository.saveSuccessSyncDate(Date())
+    }
+    
+    func clearSaveSuccessSync() {
+        Log("CloudBackupStateInteractor - clearSavesuccessSync", module: .interactor)
+        mainRepository.saveSuccessSyncDate(nil)
     }
 }
 

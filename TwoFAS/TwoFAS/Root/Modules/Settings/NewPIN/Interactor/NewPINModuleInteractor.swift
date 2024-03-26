@@ -24,6 +24,8 @@ protocol NewPINModuleInteracting: AnyObject {
     var selectedPIN: String? { get set }
     var selectedPINType: PINType? { get set }
     
+    var lockNavigation: Bool { get }
+    
     var pinType: PINType { get }
     
     func validatePIN(_ PIN: String) -> Bool
@@ -31,8 +33,15 @@ protocol NewPINModuleInteracting: AnyObject {
 }
 
 final class NewPINModuleInteractor {
+    let lockNavigation: Bool
     var selectedPIN: String?
     var selectedPINType: PINType?
+    
+    init(lockNavigation: Bool, selectedPIN: String? = nil, selectedPINType: PINType? = nil) {
+        self.lockNavigation = lockNavigation
+        self.selectedPIN = selectedPIN
+        self.selectedPINType = selectedPINType
+    }
 }
 
 extension NewPINModuleInteractor: NewPINModuleInteracting {

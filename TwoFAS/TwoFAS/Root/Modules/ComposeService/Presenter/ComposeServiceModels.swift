@@ -53,6 +53,7 @@ struct ComposeServiceSectionCell: Hashable {
         enum PrivateKeyKind: Hashable {
             case empty
             case hidden
+            case hiddenNonCopyable
         }
 
         enum PrivateKeyError: Hashable {

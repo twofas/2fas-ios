@@ -34,6 +34,9 @@ extension ComposeServicePresenter {
         }()
         let privateKeyKind: ComposeServiceSectionCell.PrivateKeyConfig.PrivateKeyKind = {
             if interactor.actionType == .edit {
+                if interactor.isSecretCopyingBlocked {
+                    return .hiddenNonCopyable
+                }
                 return .hidden
             }
             return .empty
@@ -118,7 +121,9 @@ extension ComposeServicePresenter {
         ]
         
         if interactor.actionType == .edit {
-            array.append(webExtension)
+            if interactor.isBrowserExtensionAllowed {
+                array.append(webExtension)
+            }
             array.append(remove)
         }
         

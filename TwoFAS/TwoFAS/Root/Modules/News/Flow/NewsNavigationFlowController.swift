@@ -22,6 +22,7 @@ import Common
 
 protocol NewsNavigationFlowControllerParent: AnyObject {
     func newsClose()
+    func newsToBackup()
 }
 
 final class NewsNavigationFlowController: NavigationFlowController {
@@ -47,5 +48,9 @@ final class NewsNavigationFlowController: NavigationFlowController {
 extension NewsNavigationFlowController: NewsPlainFlowControllerParent {
     func newsClose() {
         parent?.newsClose()
+    }
+    
+    func newsToBackup() {
+        parent?.newsToBackup()
     }
 }

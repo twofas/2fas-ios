@@ -44,6 +44,7 @@ protocol CameraScannerFlowControlling: AnyObject {
     func toPushPermissions(extensionID: ExtensionID)
     func toRename(currentName: String, secret: String)
     func toServiceWasCreated(serviceData: ServiceData)
+    func toCameraNotAvailable()
 }
 
 final class CameraScannerFlowController: FlowController {
@@ -187,6 +188,11 @@ extension CameraScannerFlowController: CameraScannerFlowControlling {
             finished: { [weak self] in self?.toFinish() }
         )
         viewController.present(alert, animated: true, completion: nil)
+    }
+    
+    func toCameraNotAvailable() {
+        let ac = AlertController.cameraNotAvailable
+        viewController.present(ac, animated: true)
     }
     
     func toPushPermissions(extensionID: ExtensionID) {

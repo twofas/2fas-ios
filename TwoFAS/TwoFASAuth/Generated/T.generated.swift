@@ -1589,6 +1589,28 @@ internal enum T {
     /// Use the Add Service button to add a new service
     internal static let useAddServiceButtonTitle = T.tr("Localizable", "voiceover__use_add_service_button_title", fallback: "Use the Add Service button to add a new service")
   }
+  internal enum Widget {
+    /// My secured account
+    internal static let mySecuredAccount = T.tr("Localizable", "widget__my_secured_account", fallback: "My secured account")
+    /// There are no services in the app available for selection
+    internal static let noServices = T.tr("Localizable", "widget__no_services", fallback: "There are no services in the app available for selection")
+    /// Widget functionality is not enabled in 2FAS Settings section
+    internal static let notEnabled = T.tr("Localizable", "widget__not_enabled", fallback: "Widget functionality is not enabled in 2FAS Settings section")
+    /// Widget functionality is not enabled in 2FAS Settings section and there are no services in the app available for selection
+    internal static let notEnabledNoServices = T.tr("Localizable", "widget__not_enabled_no_services", fallback: "Widget functionality is not enabled in 2FAS Settings section and there are no services in the app available for selection")
+    /// Placeholder
+    internal static let placeholder = T.tr("Localizable", "widget__placeholder", fallback: "Placeholder")
+    /// Select Service you want to show on your 2FAS Widget
+    internal static let selectServiceIntentDescription = T.tr("Localizable", "widget__select_service_intent_description", fallback: "Select Service you want to show on your 2FAS Widget")
+    /// Service icon
+    internal static let serviceIcon = T.tr("Localizable", "widget__service_icon", fallback: "Service icon")
+    /// Select which Services you would like to display on the Widget. If no Services are available, make sure that you've enabled Widgets in app Settings section
+    internal static let settingsDescription = T.tr("Localizable", "widget__settings_description", fallback: "Select which Services you would like to display on the Widget. If no Services are available, make sure that you've enabled Widgets in app Settings section")
+    /// This size is not supported yet
+    internal static let sizeNotSupported = T.tr("Localizable", "widget__size_not_supported", fallback: "This size is not supported yet")
+    /// Token
+    internal static let token = T.tr("Localizable", "widget__token", fallback: "Token")
+  }
   internal enum Widgets {
     /// Expires in:
     internal static let expiresIn = T.tr("Localizable", "widgets__expires_in", fallback: "Expires in:")

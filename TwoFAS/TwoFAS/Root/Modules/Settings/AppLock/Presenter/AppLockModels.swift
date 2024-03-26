@@ -34,4 +34,5 @@ struct AppLockMenuSection: TableViewSection {
 struct AppLockMenuCell: Hashable {
     let title: String
     let checkmark: Bool
+    let disabled: Bool
 }

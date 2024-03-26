@@ -25,6 +25,11 @@ public struct ListNewsEntry: Hashable {
         case news
         case features
         case youtube
+        case tips
+    }
+    
+    public enum InternalLink {
+        case backup
     }
     
     public let newsID: String
@@ -34,6 +39,8 @@ public struct ListNewsEntry: Hashable {
     public let publishedAt: Date
     public let createdAt: Date?
     public let wasRead: Bool
+    public let internalLink: InternalLink?
+    public let localNotificationType: String?
     
     public init(
         newsID: String,
@@ -42,7 +49,9 @@ public struct ListNewsEntry: Hashable {
         message: String?,
         publishedAt: Date,
         createdAt: Date?,
-        wasRead: Bool
+        wasRead: Bool,
+        internalLink: InternalLink?,
+        localNotificationType: String? = nil
     ) {
         self.newsID = newsID
         self.icon = icon
@@ -51,5 +60,7 @@ public struct ListNewsEntry: Hashable {
         self.publishedAt = publishedAt
         self.createdAt = createdAt
         self.wasRead = wasRead
+        self.internalLink = internalLink
+        self.localNotificationType = localNotificationType
     }
 }

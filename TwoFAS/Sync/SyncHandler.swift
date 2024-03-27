@@ -36,9 +36,7 @@ final class SyncHandler {
     
     private var timeOffset: Int = 0
     
-    #if os(iOS)
-    private var fromNotificationCompletionHandler: ((UIBackgroundFetchResult) -> Void)?
-    #endif
+    private var fromNotificationCompletionHandler: ((BackgroundFetchResult) -> Void)?
     
     typealias OtherError = (NSError) -> Void
     
@@ -66,7 +64,16 @@ final class SyncHandler {
         
         cloudKit.deletedEntries = { [weak self] entries in self?.deleteEntries(entries) }
         cloudKit.updatedEntries = { [weak self] entries in self?.updateEntries(entries) }
-        cloudKit.fetchFinishedSuccessfuly = { [weak self] in self?.fetchFinishedSuccessfuly() }
+        cloudKit.fetchFinishedSuccessfuly = { [weak self] in
+            #if os(watchOS)
+            Log("SyncHandler - WatchOS doesn't modify iCloud - returning", module: .cloudSync)
+            self?.logHandler.deleteAll()
+            self?.applyingChanges = false
+            self?.syncCompleted()
+            #else
+            self?.fetchFinishedSuccessfuly()
+            #endif
+        }
         cloudKit.changesSavedSuccessfuly = { [weak self] in self?.changesSavedSuccessfuly() }
         cloudKit.abortSync = { [weak self] in self?.abortSync() }
         
@@ -97,10 +104,9 @@ final class SyncHandler {
         cloudKit.deleteAllEntries = { [weak self] in self?.itemHandler.purge() }
     }
     
-    #if os(iOS)
     func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+        fetchCompletionHandler completionHandler: @escaping (BackgroundFetchResult) -> Void
     ) {
         let dict = userInfo as! [String: NSObject]
         guard let notification: CKDatabaseNotification = CKNotification(
@@ -113,7 +119,6 @@ final class SyncHandler {
         fromNotificationCompletionHandler = completionHandler
         synchronize()
     }
-    #endif
     
     func firstStart() {
         Log("SyncHandler - first start!", module: .cloudSync)
@@ -365,7 +370,6 @@ final class SyncHandler {
             return
         }
         
-        #if os(iOS)
         if let fromNotificationCompletionHandler {
             if didSetNewData {
                 fromNotificationCompletionHandler(.newData)
@@ -374,17 +378,14 @@ final class SyncHandler {
             }
             self.fromNotificationCompletionHandler = nil
         }
-        #endif
         
         finishedSync?()
     }
     
     private func handleNotificationCompletionHandlerError() {
-        #if os(iOS)
         Log("Sync Handler: handleNotificationCompletionHandlerError", module: .cloudSync)
         fromNotificationCompletionHandler?(.failed)
         fromNotificationCompletionHandler = nil
-        #endif
     }
     
     private func resetStack() {

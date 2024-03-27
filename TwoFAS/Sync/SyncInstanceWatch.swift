@@ -71,6 +71,13 @@ public enum SyncInstanceWatch {
     }
     public static func getCloudHandler() -> CloudHandlerType { cloudHandler }
 
+    public static func didReceiveRemoteNotification(
+        userInfo: [AnyHashable: Any],
+        fetchCompletionHandler completionHandler: @escaping (BackgroundFetchResult) -> Void
+    ) {
+        cloudHandler.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
+    }
+    
     public static var logDataChange: LogDataChange {
         logDataChangeImpl
     }

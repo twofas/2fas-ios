@@ -24,6 +24,7 @@ import UIKit
 import Common
 #elseif os(watchOS)
 import CommonWatch
+import WatchKit
 #endif
 
 final class CloudKit {
@@ -480,6 +481,16 @@ final class CloudKit {
         DispatchQueue.main.async {
             #if os(iOS)
             if UIApplication.shared.applicationState == .background {
+                self.abortSync?()
+                self.syncTokenHandler.prepare()
+                self.clearRecordChanges()
+                self.operation?.cancel()
+                self.operation = nil
+                return
+            }
+            #elseif os(watchOS)
+            if WKApplication.shared()
+                .applicationState == .background || WKApplication.shared().applicationState == .inactive {
                 self.abortSync?()
                 self.syncTokenHandler.prepare()
                 self.clearRecordChanges()

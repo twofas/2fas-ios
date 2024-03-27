@@ -82,7 +82,6 @@
 		C213BC272BAC3C82000794C9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B3D1A7267E6BEC009E6DE0 /* Extensions.swift */; };
 		C213BC292BAC3C82000794C9 /* StorageRepositoryImpl+AuthRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA3E7C280ADCC90097ED71 /* StorageRepositoryImpl+AuthRequest.swift */; };
 		C213BC2A2BAC3C82000794C9 /* ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200E4AA1FB3913A00D7C748 /* ServiceHandler.swift */; };
-		C213BC2C2BAC3C82000794C9 /* EncryptSecretEntityMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20F00AF256946930026FBB2 /* EncryptSecretEntityMigrationPolicy.swift */; };
 		C213BC2D2BAC3C82000794C9 /* StorageRepositoryImpl+Pairing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C258594E280374F4002DC749 /* StorageRepositoryImpl+Pairing.swift */; };
 		C213BC2E2BAC3C82000794C9 /* StorageRepositoryImpl+News.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DE22823302200E864E9 /* StorageRepositoryImpl+News.swift */; };
 		C213BC2F2BAC3C82000794C9 /* LogEntryEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22CF3E127414073004F6A03 /* LogEntryEntity+CoreDataClass.swift */; };
@@ -99,7 +98,6 @@
 		C213BC3A2BAC3C82000794C9 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200E4AD1FB3913A00D7C748 /* Storage.swift */; };
 		C213BC3B2BAC3C82000794C9 /* LogStorage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C22CF3DD27413F0F004F6A03 /* LogStorage.xcdatamodeld */; };
 		C213BC3C2BAC3C82000794C9 /* NewsEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDC28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift */; };
-		C213BC3D2BAC3C82000794C9 /* DynamicTypesEntityMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AB25D928E0BF7B001CF6B3 /* DynamicTypesEntityMigrationPolicy.swift */; };
 		C213BC3E2BAC3C82000794C9 /* AuthRequestEntityToPairedAuthRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA3E7E280ADDB40097ED71 /* AuthRequestEntityToPairedAuthRequest.swift */; };
 		C213BC402BAC3C82000794C9 /* ServiceEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27FBA471FBA239600D424D8 /* ServiceEntity+CoreDataClass.swift */; };
 		C213BC412BAC3C82000794C9 /* SectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DEC7A226767B28006DB1E6 /* SectionHandler.swift */; };
@@ -9126,7 +9124,6 @@
 				C213BC272BAC3C82000794C9 /* Extensions.swift in Sources */,
 				C213BC292BAC3C82000794C9 /* StorageRepositoryImpl+AuthRequest.swift in Sources */,
 				C213BC2A2BAC3C82000794C9 /* ServiceHandler.swift in Sources */,
-				C213BC2C2BAC3C82000794C9 /* EncryptSecretEntityMigrationPolicy.swift in Sources */,
 				C213BC2D2BAC3C82000794C9 /* StorageRepositoryImpl+Pairing.swift in Sources */,
 				C213BC2E2BAC3C82000794C9 /* StorageRepositoryImpl+News.swift in Sources */,
 				C213BC2F2BAC3C82000794C9 /* LogEntryEntity+CoreDataClass.swift in Sources */,
@@ -9145,7 +9142,6 @@
 				C213BC3A2BAC3C82000794C9 /* Storage.swift in Sources */,
 				C213BC3B2BAC3C82000794C9 /* LogStorage.xcdatamodeld in Sources */,
 				C213BC3C2BAC3C82000794C9 /* NewsEntity+CoreDataProperties.swift in Sources */,
-				C213BC3D2BAC3C82000794C9 /* DynamicTypesEntityMigrationPolicy.swift in Sources */,
 				C213BC3E2BAC3C82000794C9 /* AuthRequestEntityToPairedAuthRequest.swift in Sources */,
 				C213BC402BAC3C82000794C9 /* ServiceEntity+CoreDataClass.swift in Sources */,
 				C213BC412BAC3C82000794C9 /* SectionHandler.swift in Sources */,

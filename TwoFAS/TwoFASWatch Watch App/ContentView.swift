@@ -141,6 +141,11 @@ struct ContentView: View {
 }
 
 //.task {
+// register for background push!
+//optional func didReceiveRemoteNotification(_ userInfo: [AnyHashable : Any]) async -> WKBackgroundFetchResult
+
+// save Storage on going to background!
+
 //    let protection = Protection()
 //    EncryptionHolder.initialize(with: protection.localKeyEncryption)
 //    

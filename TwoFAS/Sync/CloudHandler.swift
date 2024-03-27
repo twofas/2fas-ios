@@ -56,12 +56,10 @@ public protocol CloudHandlerType: AnyObject {
     typealias SecretSyncError = (String) -> Void
     
     func registerForStateChange(_ listener: @escaping CloudHandlerStateListener, with id: String)
-    #if os(iOS)
     func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+        fetchCompletionHandler completionHandler: @escaping (BackgroundFetchResult) -> Void
     )
-    #endif
     func unregisterForStateChange(id: String)
     
     var userToggledState: UserToggledState? { get set }
@@ -217,10 +215,9 @@ final class CloudHandler: CloudHandlerType {
         }
     }
     
-    #if os(iOS)
     func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+        fetchCompletionHandler completionHandler: @escaping (BackgroundFetchResult) -> Void
     ) {
         switch currentState {
         case .enabled:
@@ -231,7 +228,6 @@ final class CloudHandler: CloudHandlerType {
             return
         }
     }
-    #endif
     
     var isConnected: Bool {
         switch currentState {

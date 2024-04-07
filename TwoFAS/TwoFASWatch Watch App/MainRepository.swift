@@ -24,10 +24,6 @@ import CommonWatch
 import StorageWatch
 import ContentWatch
 
-
-// register for background push!
-//optional func didReceiveRemoteNotification(_ userInfo: [AnyHashable : Any]) async -> WKBackgroundFetchResult
-// save Storage on going to background!
 protocol MainRepository: AnyObject {
     func saveStorage()
     func service(for secret: String) -> ServiceData?
@@ -55,10 +51,11 @@ protocol MainRepository: AnyObject {
     var pin: AppPIN? { get }
     func setPIN(_ pin: AppPIN)
     
+    var currentCloudState: CloudState { get }
     func registerForCloudStateChanges(_ listener: @escaping CloudStateListener, id: CloudStateListenerID)
     func unregisterForCloudStageChanges(with id: CloudStateListenerID)
     func enableCloudBackup()
-    func synchronizeBackup()
+    func synchronizeCloudBackup()
     func syncDidReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (BackgroundFetchResult) -> Void
@@ -100,23 +97,6 @@ final class MainRepositoryImpl: MainRepository {
     }
     
     private var favoriteServicesCache: [Secret]?
-        
-    //
-    //    let handler = SyncInstanceWatch.getCloudHandler()
-    //    handler.registerForStateChange({ state in
-    //        print(">>> \(state)")
-    //        if state == .disabledAvailable {
-    //            handler.enable()
-    //            handler.synchronize()
-    //        }
-    //        syncStstus = "\(state)"
-    //        if state == .enabled(sync: .synced) {
-    //            print(">>>! \(storage.storageRepository.countServicesNotTrashed())")
-    //        }
-    //    }, with: "listener!")
-    //    handler.enable()
-    //    handler.synchronize()
-    //}
     
     static func create() {
         let protection = Protection()
@@ -242,6 +222,10 @@ extension MainRepositoryImpl {
 }
 
 extension MainRepositoryImpl {
+    var currentCloudState: CloudState {
+        cloudHandler.currentState.toCloudState
+    }
+    
     func registerForCloudStateChanges(_ listener: @escaping CloudStateListener, id: CloudStateListenerID) {
         cloudHandler.registerForStateChange({ listener($0.toCloudState) }, with: id)
         cloudHandler.checkState()
@@ -255,7 +239,7 @@ extension MainRepositoryImpl {
         cloudHandler.enable()
     }
     
-    func synchronizeBackup() {
+    func synchronizeCloudBackup() {
         cloudHandler.synchronize()
     }
     
@@ -285,6 +269,7 @@ extension MainRepositoryImpl {
         initializeFavoriteServicesCache()
         guard let favoriteServicesCache else { return [] }
         return favoriteServicesCache.compactMap({ storageRepository.findService(for: $0) })
+            .sorted(by: { $0.name < $1.name })
     }
     
     func addFavoriteService(_ secret: Secret) {

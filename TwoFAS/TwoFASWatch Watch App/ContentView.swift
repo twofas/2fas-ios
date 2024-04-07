@@ -23,12 +23,6 @@ import SwiftUI
 //import CommonWatch
 //import StorageWatch
 
-struct Service: Identifiable, Hashable {
-    let id: String
-    let name: String
-    let additionalInfo: String?
-}
-
 struct ContentView: View {
     private let list: [Service] = [
         .init(id: "32423432", name: "First", additionalInfo: nil),
@@ -139,41 +133,3 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
-
-//.task {
-// register for background push!
-//optional func didReceiveRemoteNotification(_ userInfo: [AnyHashable : Any]) async -> WKBackgroundFetchResult
-
-// save Storage on going to background!
-
-//    let protection = Protection()
-//    EncryptionHolder.initialize(with: protection.localKeyEncryption)
-//    
-//    let storage = Storage(readOnly: false) { error in
-//        // TODO: Add an alert here!
-//    }
-//    
-//    let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
-//    serviceMigration.serviceNameTranslation = "Service"//T.Commons.service
-//    
-//    SyncInstanceWatch.initialize(commonSectionHandler: storage.section, commonServiceHandler: storage.service) { _ in
-//        // TODO: Add an alert here!
-//    }
-//    SyncInstanceWatch.migrateStoreIfNeeded()
-//    serviceMigration.migrateIfNeeded()
-//    
-//    let handler = SyncInstanceWatch.getCloudHandler()
-//    handler.registerForStateChange({ state in
-//        print(">>> \(state)")
-//        if state == .disabledAvailable {
-//            handler.enable()
-//            handler.synchronize()
-//        }
-//        syncStstus = "\(state)"
-//        if state == .enabled(sync: .synced) {
-//            print(">>>! \(storage.storageRepository.countServicesNotTrashed())")
-//        }
-//    }, with: "listener!")
-//    handler.enable()
-//    handler.synchronize()
-//}

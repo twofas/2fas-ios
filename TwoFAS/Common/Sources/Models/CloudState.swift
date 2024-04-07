@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2024 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -18,13 +18,26 @@
 //
 
 import Foundation
-import Common
 
-extension PINType {
-    var localized: String {
-        switch self {
-        case .digits4: return T.Settings.pin4Digits
-        case .digits6: return T.Settings.pin6Digits
-        }
+public enum CloudState: Equatable {
+    public enum NotAvailableReason: Equatable {
+        case overQuota
+        case disabledByUser
+        case error(error: NSError?)
+        case useriCloudProblem
+        case other
+        case newerVersion
+        case incorrectService(serviceName: String)
+        case cloudEncrypted
     }
+    
+    public enum Sync: Equatable {
+        case syncing
+        case synced
+    }
+    
+    case unknown
+    case disabledNotAvailable(reason: NotAvailableReason)
+    case disabledAvailable
+    case enabled(sync: Sync)
 }

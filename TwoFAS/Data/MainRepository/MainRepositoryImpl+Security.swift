@@ -19,6 +19,7 @@
 
 import Foundation
 import Protection
+import Common
 
 extension MainRepositoryImpl {
     var isPINSet: Bool {

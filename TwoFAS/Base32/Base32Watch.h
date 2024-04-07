@@ -17,14 +17,14 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
-import Common
+#import <Foundation/Foundation.h>
 
-extension PINType {
-    var localized: String {
-        switch self {
-        case .digits4: return T.Settings.pin4Digits
-        case .digits6: return T.Settings.pin6Digits
-        }
-    }
-}
+//! Project version number for Base32.
+FOUNDATION_EXPORT double Base32VersionNumber;
+
+//! Project version string for Base32.
+FOUNDATION_EXPORT const unsigned char Base32VersionString[];
+
+// In this header, you should import all the public headers of your framework using statements like #import <Base32/PublicHeader.h>
+
+#import "MF_Base32Additions.h"

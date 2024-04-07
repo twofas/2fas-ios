@@ -709,12 +709,32 @@
 		C29FEFFB2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FEFFA2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift */; };
 		C2A026B32AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A026B22AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift */; };
 		C2A026B52AF82FDB00DB2E52 /* DataExternalTranslations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A026B42AF82FDB00DB2E52 /* DataExternalTranslations.swift */; };
+		C2A1B3B42BB6071C00D6B923 /* PINKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A1B3B32BB6071C00D6B923 /* PINKeyboard.swift */; };
+		C2A1B3B52BB6084100D6B923 /* PINType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2117178276CD11900042D28 /* PINType.swift */; };
+		C2A1B3B62BB6084100D6B923 /* PINType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2117178276CD11900042D28 /* PINType.swift */; };
+		C2A1B3B82BB608C900D6B923 /* PINKeyboardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A1B3B72BB608C900D6B923 /* PINKeyboardLayout.swift */; };
 		C2A283352186071200967022 /* AlertControllerPromptFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A283342186071200967022 /* AlertControllerPromptFactory.swift */; };
 		C2A2AF6F23D8EA710059094D /* UIActivityIndicator+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A2AF6E23D8EA710059094D /* UIActivityIndicator+.swift */; };
 		C2A4C8352A10F13800AFD67C /* TokensTOTPCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4C8342A10F13800AFD67C /* TokensTOTPCell.swift */; };
 		C2A4C8372A11141D00AFD67C /* TokensNextTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4C8362A11141D00AFD67C /* TokensNextTokenView.swift */; };
 		C2A4C8392A1153A200AFD67C /* TokensTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4C8382A1153A200AFD67C /* TokensTokenView.swift */; };
 		C2A4C83B2A11736200AFD67C /* TokensCircleProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4C83A2A11736200AFD67C /* TokensCircleProgress.swift */; };
+		C2A4D3152BC097F80001587C /* MainRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4D3142BC097F80001587C /* MainRepositoryImpl.swift */; };
+		C2A4D32C2BC0B0C30001587C /* ServiceIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21AF6A526A237EA00BDAA37 /* ServiceIcon.swift */; };
+		C2A4D32D2BC0B1AD0001587C /* TokenHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D14642263A45100599101 /* TokenHandler.swift */; };
+		C2A4D32E2BC0B1B20001587C /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D672F625DB2BD3004BD697 /* Token.swift */; };
+		C2A4D32F2BC0B1B50001587C /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D672F325DB2BD2004BD697 /* Generator.swift */; };
+		C2A4D3302BC0B1B80001587C /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D672F425DB2BD2004BD697 /* Crypto.swift */; };
+		C2A4D3312BC0B2540001587C /* TokenGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDC67A1FBE264B00967D0E /* TokenGenerator.swift */; };
+		C2A4D3322BC0B2B30001587C /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B2B9AE2AE932BD00AB61FD /* String+.swift */; };
+		C2A4D3382BC0B3D60001587C /* CloudState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4D3372BC0B3D60001587C /* CloudState.swift */; };
+		C2A4D3392BC0B3DC0001587C /* CloudState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4D3372BC0B3D60001587C /* CloudState.swift */; };
+		C2A4D33C2BC0B5ED0001587C /* PINType+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AE5F532ADC1A0D00AED670 /* PINType+.swift */; };
+		C2A4D3402BC0B6B00001587C /* MF_Base32Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = C251EDE02AE871A2007722F2 /* MF_Base32Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C2A4D3422BC0B6B00001587C /* MF_Base32Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = C251EDE12AE871A2007722F2 /* MF_Base32Additions.m */; };
+		C2A4D3492BC0B6C00001587C /* Base32Watch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2A4D3482BC0B6B00001587C /* Base32Watch.framework */; };
+		C2A4D34A2BC0B6C00001587C /* Base32Watch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C2A4D3482BC0B6B00001587C /* Base32Watch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C2A4D34F2BC0B9640001587C /* Base32Watch.h in Headers */ = {isa = PBXBuildFile; fileRef = C2A4D34D2BC0B9620001587C /* Base32Watch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2A57C5A26ACAB2800D3B344 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A57C5826ACAAD000D3B344 /* Extensions.swift */; };
 		C2A6E7041FC7664800C83DCE /* PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A6E7031FC7664800C83DCE /* PushNotifications.swift */; };
 		C2A6E7081FC9D14500C83DCE /* APNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A6E7071FC9D14500C83DCE /* APNS.swift */; };
@@ -780,7 +800,6 @@
 		C2AE5F502ADC0F2E00AED670 /* CameraPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28ECE971FEDBCD8000EBB9D /* CameraPermissions.swift */; };
 		C2AE5F512ADC199F00AED670 /* AppEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB0291279E400702DB9 /* AppEventController.swift */; };
 		C2AE5F522ADC19E600AED670 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AA9D102088C124001B14FF /* Notifications.swift */; };
-		C2AE5F542ADC1A0D00AED670 /* PINType+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AE5F532ADC1A0D00AED670 /* PINType+.swift */; };
 		C2AE5F552ADC1A4A00AED670 /* SecurityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CE9205D7FC90001D011 /* SecurityProtocol.swift */; };
 		C2AE5F582ADC1C5600AED670 /* PermissionsStateDataControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C257FD061FD9F6F300CF6898 /* PermissionsStateDataControllerProtocol.swift */; };
 		C2AE5F592ADC1C5B00AED670 /* PermissionsStateDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B563F41FD895460011CAAA /* PermissionsStateDataController.swift */; };
@@ -947,6 +966,8 @@
 		C2D07EE626A45C0400AF8E7B /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE31269E274700506ACF /* IntentsUI.framework */; };
 		C2D07EEB26A47B8100AF8E7B /* CodeEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D07EE926A475F400AF8E7B /* CodeEntry.swift */; };
 		C2D291DC2955FC9E0084FE1E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C2D291DB2955FC9E0084FE1E /* Settings.bundle */; };
+		C2D2AFF82BB8C8EE00B91435 /* TokensList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D2AFF72BB8C8EE00B91435 /* TokensList.swift */; };
+		C2D2AFFA2BB8C93C00B91435 /* TokensListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D2AFF92BB8C93C00B91435 /* TokensListPresenter.swift */; };
 		C2D39DDD28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDB28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift */; };
 		C2D39DDE28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDC28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift */; };
 		C2D39DE32823302200E864E9 /* StorageRepositoryImpl+News.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DE22823302200E864E9 /* StorageRepositoryImpl+News.swift */; };
@@ -1195,7 +1216,6 @@
 		C2E7C40C2ADB2BE500478D89 /* AndOTPData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C229403D2AB3A50700D55B58 /* AndOTPData.swift */; };
 		C2E7C40D2ADB2BE500478D89 /* Guides.swift in Sources */ = {isa = PBXBuildFile; fileRef = C237368F2ABF5E2C00792054 /* Guides.swift */; };
 		C2E7C40E2ADB2BE500478D89 /* LastPassData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A31C929C8EEE40094679F /* LastPassData.swift */; };
-		C2E7C40F2ADB2BE500478D89 /* PINType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2117178276CD11900042D28 /* PINType.swift */; };
 		C2E7C4102ADB2BE500478D89 /* ExchangeConsts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21BC54C25B37C8900B15F99 /* ExchangeConsts.swift */; };
 		C2E7C4112ADB2BE500478D89 /* RaivoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A31CB29C90B110094679F /* RaivoData.swift */; };
 		C2E7C4122ADB2BE500478D89 /* ExchangeData2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E881D928F35C030053A89D /* ExchangeData2.swift */; };
@@ -1496,6 +1516,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = C29626D52370BD7F00C133BC;
 			remoteInfo = TimeVerification;
+		};
+		C2A4D34B2BC0B6C00001587C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C236666B1FB2644900989ACA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2A4D33D2BC0B6B00001587C;
+			remoteInfo = Base32Watch;
 		};
 		C2ACF9E920A8A918003E0987 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1799,6 +1826,7 @@
 			files = (
 				C274C9E02BAB8B2E008E7212 /* SyncWatch.framework in Embed Frameworks */,
 				C274CA892BAB8CBD008E7212 /* CommonWatch.framework in Embed Frameworks */,
+				C2A4D34A2BC0B6C00001587C /* Base32Watch.framework in Embed Frameworks */,
 				C274CA8D2BAB8CC0008E7212 /* ContentWatch.framework in Embed Frameworks */,
 				C274CA912BAB8CC5008E7212 /* ProtectionWatch.framework in Embed Frameworks */,
 				C213BC5C2BAC3DBF000794C9 /* StorageWatch.framework in Embed Frameworks */,
@@ -2463,6 +2491,8 @@
 		C29FEFFA2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsMenuViewController+TableCellHandling.swift"; sourceTree = "<group>"; };
 		C2A026B22AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+TimeVerification.swift"; sourceTree = "<group>"; };
 		C2A026B42AF82FDB00DB2E52 /* DataExternalTranslations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExternalTranslations.swift; sourceTree = "<group>"; };
+		C2A1B3B32BB6071C00D6B923 /* PINKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINKeyboard.swift; sourceTree = "<group>"; };
+		C2A1B3B72BB608C900D6B923 /* PINKeyboardLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINKeyboardLayout.swift; sourceTree = "<group>"; };
 		C2A2255B293BFE1E00B76115 /* TokenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenInteractor.swift; sourceTree = "<group>"; };
 		C2A283342186071200967022 /* AlertControllerPromptFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControllerPromptFactory.swift; sourceTree = "<group>"; };
 		C2A2AF6E23D8EA710059094D /* UIActivityIndicator+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicator+.swift"; sourceTree = "<group>"; };
@@ -2471,6 +2501,10 @@
 		C2A4C8362A11141D00AFD67C /* TokensNextTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNextTokenView.swift; sourceTree = "<group>"; };
 		C2A4C8382A1153A200AFD67C /* TokensTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTokenView.swift; sourceTree = "<group>"; };
 		C2A4C83A2A11736200AFD67C /* TokensCircleProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCircleProgress.swift; sourceTree = "<group>"; };
+		C2A4D3142BC097F80001587C /* MainRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepositoryImpl.swift; sourceTree = "<group>"; };
+		C2A4D3372BC0B3D60001587C /* CloudState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudState.swift; sourceTree = "<group>"; };
+		C2A4D3482BC0B6B00001587C /* Base32Watch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Base32Watch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2A4D34D2BC0B9620001587C /* Base32Watch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base32Watch.h; sourceTree = "<group>"; };
 		C2A57C5826ACAAD000D3B344 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C2A6E7031FC7664800C83DCE /* PushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotifications.swift; sourceTree = "<group>"; };
 		C2A6E7071FC9D14500C83DCE /* APNS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APNS.swift; sourceTree = "<group>"; };
@@ -2708,6 +2742,8 @@
 		C2D07EE726A468D000AF8E7B /* LabelImageRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelImageRenderer.swift; sourceTree = "<group>"; };
 		C2D07EE926A475F400AF8E7B /* CodeEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEntry.swift; sourceTree = "<group>"; };
 		C2D291DB2955FC9E0084FE1E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		C2D2AFF72BB8C8EE00B91435 /* TokensList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensList.swift; sourceTree = "<group>"; };
+		C2D2AFF92BB8C93C00B91435 /* TokensListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensListPresenter.swift; sourceTree = "<group>"; };
 		C2D39DD92823184500E864E9 /* ListNewsNetworkInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListNewsNetworkInteractor.swift; sourceTree = "<group>"; };
 		C2D39DDB28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C2D39DDC28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -3055,6 +3091,7 @@
 			files = (
 				C274C9DF2BAB8B2E008E7212 /* SyncWatch.framework in Frameworks */,
 				C274CA882BAB8CBD008E7212 /* CommonWatch.framework in Frameworks */,
+				C2A4D3492BC0B6C00001587C /* Base32Watch.framework in Frameworks */,
 				C274CA8C2BAB8CC0008E7212 /* ContentWatch.framework in Frameworks */,
 				C274CA902BAB8CC5008E7212 /* ProtectionWatch.framework in Frameworks */,
 				C213BC5B2BAC3DBF000794C9 /* StorageWatch.framework in Frameworks */,
@@ -3109,6 +3146,13 @@
 			files = (
 				C23EBF122651276800FA9E81 /* Kronos in Frameworks */,
 				C2E53BB52B62DEF3008E1E70 /* Common.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2A4D3432BC0B6B00001587C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4491,6 +4535,7 @@
 				C274CA492BAB8BE3008E7212 /* ContentWatch.framework */,
 				C274CA7C2BAB8C3F008E7212 /* ProtectionWatch.framework */,
 				C213BC502BAC3C82000794C9 /* StorageWatch.framework */,
+				C2A4D3482BC0B6B00001587C /* Base32Watch.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4705,7 +4750,6 @@
 				C27A1EA92912791100702DB9 /* ExternalLinks.swift */,
 				C287D4F8276A90EC0001B272 /* AppLock.swift */,
 				C287D4FC276A98FE0001B272 /* BiometryType.swift */,
-				C2117178276CD11900042D28 /* PINType.swift */,
 				C25859372802E75A002DC749 /* PushNotificationState.swift */,
 				C2069C9028C2922A00321E44 /* AEGISData.swift */,
 				C27A31C929C8EEE40094679F /* LastPassData.swift */,
@@ -5151,6 +5195,7 @@
 			isa = PBXGroup;
 			children = (
 				C251EDD72AE87150007722F2 /* Base32.h */,
+				C2A4D34D2BC0B9620001587C /* Base32Watch.h */,
 				C251EDE02AE871A2007722F2 /* MF_Base32Additions.h */,
 				C251EDE12AE871A2007722F2 /* MF_Base32Additions.m */,
 			);
@@ -5572,11 +5617,15 @@
 		C274C9CE2BAB8ABB008E7212 /* TwoFASWatch Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				C2D2AFF62BB8B8CD00B91435 /* TokensList */,
 				C274CAA02BAB98A5008E7212 /* TwoFASWatch Watch App.entitlements */,
 				C274C9CF2BAB8ABB008E7212 /* TwoFASWatchApp.swift */,
 				C274C9D12BAB8ABB008E7212 /* ContentView.swift */,
 				C274C9D32BAB8ABC008E7212 /* Assets.xcassets */,
 				C274C9D52BAB8ABC008E7212 /* Preview Content */,
+				C2A1B3B32BB6071C00D6B923 /* PINKeyboard.swift */,
+				C2A1B3B72BB608C900D6B923 /* PINKeyboardLayout.swift */,
+				C2A4D3142BC097F80001587C /* MainRepositoryImpl.swift */,
 			);
 			path = "TwoFASWatch Watch App";
 			sourceTree = "<group>";
@@ -7159,6 +7208,15 @@
 			path = Generated;
 			sourceTree = "<group>";
 		};
+		C2D2AFF62BB8B8CD00B91435 /* TokensList */ = {
+			isa = PBXGroup;
+			children = (
+				C2D2AFF72BB8C8EE00B91435 /* TokensList.swift */,
+				C2D2AFF92BB8C93C00B91435 /* TokensListPresenter.swift */,
+			);
+			path = TokensList;
+			sourceTree = "<group>";
+		};
 		C2D39DDF28232A5600E864E9 /* News */ = {
 			isa = PBXGroup;
 			children = (
@@ -7485,6 +7543,7 @@
 				C2E53AE72B62DDAF008E1E70 /* ServiceExistenceStatus.swift */,
 				C2E53AE82B62DDAF008E1E70 /* IconDescriptionGroup.swift */,
 				C2E53AE92B62DDAF008E1E70 /* Period.swift */,
+				C2117178276CD11900042D28 /* PINType.swift */,
 				C2E53AEA2B62DDAF008E1E70 /* IconType.swift */,
 				C2E53AEB2B62DDAF008E1E70 /* CommonSectionData.swift */,
 				C2E53AEC2B62DDAF008E1E70 /* Digits.swift */,
@@ -7503,6 +7562,7 @@
 				C2E53AF92B62DDAF008E1E70 /* SortType.swift */,
 				C2E53AFA2B62DDAF008E1E70 /* LogoType.swift */,
 				C2E53AFB2B62DDAF008E1E70 /* ListNewsEntry.swift */,
+				C2A4D3372BC0B3D60001587C /* CloudState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -8098,6 +8158,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C2A4D33E2BC0B6B00001587C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2A4D34F2BC0B9640001587C /* Base32Watch.h in Headers */,
+				C2A4D3402BC0B6B00001587C /* MF_Base32Additions.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C2E53AC02B62DD6C008E1E70 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -8364,6 +8433,7 @@
 				C274CA8F2BAB8CC0008E7212 /* PBXTargetDependency */,
 				C274CA932BAB8CC5008E7212 /* PBXTargetDependency */,
 				C213BC5E2BAC3DBF000794C9 /* PBXTargetDependency */,
+				C2A4D34C2BC0B6C00001587C /* PBXTargetDependency */,
 			);
 			name = "TwoFASWatch Watch App";
 			productName = "TwoFASWatch Watch App";
@@ -8476,6 +8546,24 @@
 			);
 			productName = TimeVerification;
 			productReference = C29626D62370BD7F00C133BC /* TimeVerification.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C2A4D33D2BC0B6B00001587C /* Base32Watch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2A4D3452BC0B6B00001587C /* Build configuration list for PBXNativeTarget "Base32Watch" */;
+			buildPhases = (
+				C2A4D33E2BC0B6B00001587C /* Headers */,
+				C2A4D3412BC0B6B00001587C /* Sources */,
+				C2A4D3432BC0B6B00001587C /* Frameworks */,
+				C2A4D3442BC0B6B00001587C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Base32Watch;
+			productName = Base32;
+			productReference = C2A4D3482BC0B6B00001587C /* Base32Watch.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		C2ACF9E320A8A918003E0987 /* TwoFASTests */ = {
@@ -8837,6 +8925,7 @@
 				C274CA242BAB8BE3008E7212 /* ContentWatch */,
 				C274CA582BAB8C3F008E7212 /* ProtectionWatch */,
 				C213BC1A2BAC3C82000794C9 /* StorageWatch */,
+				C2A4D33D2BC0B6B00001587C /* Base32Watch */,
 			);
 		};
 /* End PBXProject section */
@@ -8967,6 +9056,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C29626D42370BD7F00C133BC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C2A4D3442BC0B6B00001587C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -9226,6 +9322,7 @@
 				C27A549F27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift in Sources */,
 				C2BDC6FD1FC4BC8A00967D0E /* UIViewController+Extensions.swift in Sources */,
 				C2F7FE072A8AB7D4004B2C95 /* AddingServiceManuallyViewController.swift in Sources */,
+				C2A4D33C2BC0B5ED0001587C /* PINType+.swift in Sources */,
 				C2A70680276D36E100885D79 /* NewPINModuleInteractor.swift in Sources */,
 				C2B39C7027A5882D00D3B579 /* SelectFromGalleryFlowController.swift in Sources */,
 				C2A70684276D39A800885D79 /* NewPINViewController.swift in Sources */,
@@ -9660,7 +9757,6 @@
 				C240486027654E370076376E /* ImporterEnterPasswordModuleInteractor.swift in Sources */,
 				C235A013298FE785008F4FD0 /* MainMenuPresenter.swift in Sources */,
 				C2EA567128569ADD00026BFE /* AskForAuthFlowController.swift in Sources */,
-				C2AE5F542ADC1A0D00AED670 /* PINType+.swift in Sources */,
 				C20E2E0B2A7C52AA00DB64BB /* AddingServiceMainPresenter.swift in Sources */,
 				C2A74FF52610DDF5007E5AB3 /* Array+.swift in Sources */,
 				C2CC0A3C29D05DC900677A7B /* ExternalImportPresenter.swift in Sources */,
@@ -9912,8 +10008,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2A4D3302BC0B1B80001587C /* Crypto.swift in Sources */,
+				C2A4D3152BC097F80001587C /* MainRepositoryImpl.swift in Sources */,
+				C2A4D32E2BC0B1B20001587C /* Token.swift in Sources */,
+				C2D2AFFA2BB8C93C00B91435 /* TokensListPresenter.swift in Sources */,
+				C2A1B3B82BB608C900D6B923 /* PINKeyboardLayout.swift in Sources */,
 				C274C9D22BAB8ABB008E7212 /* ContentView.swift in Sources */,
 				C274C9D02BAB8ABB008E7212 /* TwoFASWatchApp.swift in Sources */,
+				C2A4D32F2BC0B1B50001587C /* Generator.swift in Sources */,
+				C2A1B3B42BB6071C00D6B923 /* PINKeyboard.swift in Sources */,
+				C2A4D32C2BC0B0C30001587C /* ServiceIcon.swift in Sources */,
+				C2A4D3312BC0B2540001587C /* TokenGenerator.swift in Sources */,
+				C2A4D32D2BC0B1AD0001587C /* TokenHandler.swift in Sources */,
+				C2A4D3322BC0B2B30001587C /* String+.swift in Sources */,
+				C2D2AFF82BB8C8EE00B91435 /* TokensList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9926,10 +10034,12 @@
 				C274C9EA2BAB8B92008E7212 /* EncryptionHolder.swift in Sources */,
 				C274C9EB2BAB8B92008E7212 /* CommonSectionHandler.swift in Sources */,
 				C274C9EC2BAB8B92008E7212 /* LegacyServiceDatabase.swift in Sources */,
+				C2A4D3392BC0B3DC0001587C /* CloudState.swift in Sources */,
 				C274C9ED2BAB8B92008E7212 /* CoreDataMigrator.swift in Sources */,
 				C274C9EF2BAB8B92008E7212 /* Log.swift in Sources */,
 				C274C9F02BAB8B92008E7212 /* CountdownTimer.swift in Sources */,
 				C274C9F12BAB8B92008E7212 /* CommonLocalKeyEncryption.swift in Sources */,
+				C2A1B3B62BB6084100D6B923 /* PINType.swift in Sources */,
 				C274C9F22BAB8B92008E7212 /* PairedAuthRequest.swift in Sources */,
 				C274C9F32BAB8B92008E7212 /* IconDescriptionGroup.swift in Sources */,
 				C274C9F42BAB8B92008E7212 /* ListNewsEntry.swift in Sources */,
@@ -10052,6 +10162,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C2A4D3412BC0B6B00001587C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2A4D3422BC0B6B00001587C /* MF_Base32Additions.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C2ACF9E020A8A918003E0987 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -10143,12 +10261,14 @@
 				C2E53B2D2B62DDAF008E1E70 /* LastNotification.swift in Sources */,
 				C2E53B322B62DDAF008E1E70 /* HOTPDefaultValue.swift in Sources */,
 				C2E53B1C2B62DDAF008E1E70 /* CoreDataStack.swift in Sources */,
+				C2A4D3382BC0B3D60001587C /* CloudState.swift in Sources */,
 				C2E53B272B62DDAF008E1E70 /* VersionDecoded.swift in Sources */,
 				C2E53B2A2B62DDAF008E1E70 /* ListStyle.swift in Sources */,
 				C2E53B172B62DDAF008E1E70 /* RefreshTimer.swift in Sources */,
 				C2E53B1B2B62DDAF008E1E70 /* CoreDataMigrationStep.swift in Sources */,
 				C2E53B122B62DDAF008E1E70 /* ThemeMetrics.swift in Sources */,
 				C2E53B112B62DDAF008E1E70 /* Config.swift in Sources */,
+				C2A1B3B52BB6084100D6B923 /* PINType.swift in Sources */,
 				C2E53B1A2B62DDAF008E1E70 /* LegacyExchangeDatabase.swift in Sources */,
 				C2E53B302B62DDAF008E1E70 /* TokenType.swift in Sources */,
 				C2E53B252B62DDAF008E1E70 /* CommonSectionData.swift in Sources */,
@@ -10341,7 +10461,6 @@
 				C2AE5F692ADC5D9D00AED670 /* Security.swift in Sources */,
 				C2E7C3DD2ADB2BB400478D89 /* RegisterDeviceInteractor.swift in Sources */,
 				C276D1712B9A672C008C9CD4 /* LocalNotificationStateInteractor.swift in Sources */,
-				C2E7C40F2ADB2BE500478D89 /* PINType.swift in Sources */,
 				C2E7C3CB2ADB2B9C00478D89 /* MainRepositoryImpl+Appearance.swift in Sources */,
 				C2E7C3F62ADB2BB400478D89 /* WebExtensionAuthInteractor.swift in Sources */,
 				C2E7C4092ADB2BE500478D89 /* ExchangeDataFormat.swift in Sources */,
@@ -10516,6 +10635,11 @@
 			isa = PBXTargetDependency;
 			target = C29626D52370BD7F00C133BC /* TimeVerification */;
 			targetProxy = C29626DB2370BD7F00C133BC /* PBXContainerItemProxy */;
+		};
+		C2A4D34C2BC0B6C00001587C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C2A4D33D2BC0B6B00001587C /* Base32Watch */;
+			targetProxy = C2A4D34B2BC0B6C00001587C /* PBXContainerItemProxy */;
 		};
 		C2ACF9EA20A8A918003E0987 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -12255,6 +12379,99 @@
 			};
 			name = Release;
 		};
+		C2A4D3462BC0B6B00001587C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = ZY8UR5ADFW;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 5.3.5;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRIVATE_HEADERS_FOLDER_PATH = Base32.framework/PrivateHeaders;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Base32Watch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = Base32.framework/Headers;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C2A4D3472BC0B6B00001587C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = ZY8UR5ADFW;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 5.3.5;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				MTL_FAST_MATH = YES;
+				PRIVATE_HEADERS_FOLDER_PATH = Base32.framework/PrivateHeaders;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Base32Watch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = Base32.framework/Headers;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		C2ACF9EC20A8A918003E0987 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -13085,6 +13302,15 @@
 			buildConfigurations = (
 				C29626E02370BD7F00C133BC /* Debug */,
 				C29626E12370BD7F00C133BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C2A4D3452BC0B6B00001587C /* Build configuration list for PBXNativeTarget "Base32Watch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2A4D3462BC0B6B00001587C /* Debug */,
+				C2A4D3472BC0B6B00001587C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

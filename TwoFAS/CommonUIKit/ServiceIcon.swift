@@ -18,8 +18,13 @@
 //
 
 import UIKit
+#if os(iOS)
 import Common
 import Content
+#elseif os(watchOS)
+import CommonWatch
+import ContentWatch
+#endif
 
 // swiftlint:disable convenience_type
 public final class ServiceIcon {
@@ -28,7 +33,7 @@ public final class ServiceIcon {
     public static func `for`(iconTypeID: IconTypeID) -> UIImage {
         if let img = UIImage(
             named: iconTypeID.uuidString,
-            in: Content.IconDescriptionDatabaseImpl.bundle,
+            in: IconDescriptionDatabaseImpl.bundle,
             with: nil
         ) {
             return img
@@ -38,7 +43,7 @@ public final class ServiceIcon {
             // assert(false, "Can't find icon for service \(iconTypeID.uuidString)")
             return UIImage(
                 named: IconTypeID.default.uuidString,
-                in: Content.IconDescriptionDatabaseImpl.bundle,
+                in: IconDescriptionDatabaseImpl.bundle,
                 with: nil
             )!
         }

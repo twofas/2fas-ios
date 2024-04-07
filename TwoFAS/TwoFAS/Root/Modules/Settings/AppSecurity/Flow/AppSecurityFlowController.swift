@@ -19,6 +19,7 @@
 
 import UIKit
 import Data
+import Common
 
 protocol AppSecurityFlowControllerParent: AnyObject {
     func appSecurityChaged()

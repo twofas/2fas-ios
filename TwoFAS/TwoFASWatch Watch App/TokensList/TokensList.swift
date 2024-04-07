@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2024 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -17,14 +17,27 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
-import Common
+import SwiftUI
 
-extension PINType {
-    var localized: String {
-        switch self {
-        case .digits4: return T.Settings.pin4Digits
-        case .digits6: return T.Settings.pin6Digits
+struct TokensList: View {
+    @ObservedObject
+    private var presenter: TokensListPresenter
+    
+//    @State
+//    private var selectedItem: TokenEntry
+    
+    init(presenter: TokensListPresenter) {
+        self.presenter = presenter
+    }
+    
+    var body: some View {
+        List {
+            ForEach(presenter.list, id: \.self) { item in
+                VStack {
+                    Text(item.name)
+                    Text(item.additionalInfo)
+                }
+            }
         }
     }
 }

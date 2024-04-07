@@ -18,7 +18,11 @@
 //
 
 import Foundation
+#if os(iOS)
 import Base32
+#elseif os(watchOS)
+import Base32Watch
+#endif
 
 extension String {
     func dataFromBase32String() -> Data? {

@@ -21,9 +21,23 @@ import SwiftUI
 
 @main
 struct TwoFASWatch_Watch_AppApp: App {
+    @State var isPresented: Bool = false
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            //ContentView()
+            
+            Button("Present!") {
+                       isPresented.toggle()
+                   }
+                   .fullScreenCover(isPresented: $isPresented, content: PINKeyboard.init)
+            
+//            PINKeyboard()
+////                .sheet(item: $presentingModal, content: { id in
+////                    PINKeyboard()
+////                })
+//                .fullScreenCover(item: $test) { id in
+//                    PINKeyboard()
+//                }
         }
     }
 }

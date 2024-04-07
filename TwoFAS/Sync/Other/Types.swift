@@ -33,4 +33,3 @@ public typealias BackgroundFetchResult = UIBackgroundFetchResult
 #elseif os(watchOS)
 public typealias BackgroundFetchResult = WKBackgroundFetchResult
 #endif
-

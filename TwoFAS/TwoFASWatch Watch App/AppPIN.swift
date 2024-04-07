@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2024 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -18,20 +18,9 @@
 //
 
 import Foundation
-#if os(iOS)
-import Common
-#elseif os(watchOS)
 import CommonWatch
-#endif
 
-public final class LocalKeyEncryption: CommonLocalKeyEncryption {
-    private let encryption = KeyEncryption(
-        key: Keys.LocalKeyEncryption.key,
-        alphabet: Keys.LocalKeyEncryption.alphabet
-    )
-    
-    public init() {}
-    
-    public func encrypt(_ str: String) -> String { encryption.encipher(str) }
-    public func decrypt(_ str: String) -> String { encryption.decipher(str) }
+struct AppPIN: Codable {
+    let type: PINType
+    let value: String
 }

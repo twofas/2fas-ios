@@ -28,18 +28,60 @@ import ContentWatch
 // register for background push!
 //optional func didReceiveRemoteNotification(_ userInfo: [AnyHashable : Any]) async -> WKBackgroundFetchResult
 // save Storage on going to background!
+protocol MainRepository: AnyObject {
+    func saveStorage()
+    func service(for secret: String) -> ServiceData?
+    func listAllServicesWithingCategories(
+        for phrase: String?,
+        sorting: SortType,
+        ids: [ServiceTypeID]
+    ) -> [CategoryData]
+    func countServices() -> Int
+    var hasServices: Bool { get }
+    func token(
+        secret: Secret,
+        time: Date?,
+        digits: Digits,
+        period: Period,
+        algorithm: CommonWatch.Algorithm,
+        counter: Int,
+        tokenType: TokenType
+    ) -> TokenValue
 
+    func markIntroductionAsShown()
+    func wasIntroductionShown() -> Bool
+    var sortType: SortType? { get }
+    func setSortType(_ sortType: SortType)
+    var pin: AppPIN? { get }
+    func setPIN(_ pin: AppPIN)
+    
+    func registerForCloudStateChanges(_ listener: @escaping CloudStateListener, id: CloudStateListenerID)
+    func unregisterForCloudStageChanges(with id: CloudStateListenerID)
+    func enableCloudBackup()
+    func synchronizeBackup()
+    func syncDidReceiveRemoteNotification(
+        userInfo: [AnyHashable: Any],
+        fetchCompletionHandler completionHandler: @escaping (BackgroundFetchResult) -> Void
+    )
 
-final class MainRepositoryImpl {
+    func serviceDefinition(using serviceTypeID: ServiceTypeID) -> ServiceDefinition?
+    func iconTypeID(for serviceTypeID: ServiceTypeID?) -> UIImage
+
+    func listFavoriteServices() -> [ServiceData]
+    func addFavoriteService(_ secret: Secret)
+    func removeFavoriteService(_ secret: Secret)
+}
+
+final class MainRepositoryImpl: MainRepository {
     var storageError: ((String) -> Void)?
-
+    
     let service: ServiceHandler
     let protection: Protection
     let storage: Storage
     let categoryHandler: CategoryHandler
     let sectionHandler: SectionHandler
     let cloudHandler: CloudHandlerType
-//    let userDefaultsRepository: UserDefaultsRepository
+    let userDefaultsRepository: UserDefaultsRepository
     let iconDatabase: IconDescriptionDatabase
     let serviceDefinitionDatabase: ServiceDefinitionDatabase
     let iconDescriptionDatabase: IconDescriptionDatabase
@@ -57,8 +99,8 @@ final class MainRepositoryImpl {
         return _shared
     }
     
-    var _isLockScreenActive = false
-
+    private var favoriteServicesCache: [Secret]?
+        
     //
     //    let handler = SyncInstanceWatch.getCloudHandler()
     //    handler.registerForStateChange({ state in
@@ -75,23 +117,23 @@ final class MainRepositoryImpl {
     //    handler.enable()
     //    handler.synchronize()
     //}
-
+    
     static func create() {
         let protection = Protection()
         
         EncryptionHolder.initialize(with: protection.localKeyEncryption)
         
         let storage = Storage(readOnly: false) { Log($0, module: .storage) }
-                
+        
         let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
-        serviceMigration.serviceNameTranslation = "Service"//T.Commons.service
+        serviceMigration.serviceNameTranslation = "Service"// TODO: Add translation T.Commons.service
         
         SyncInstanceWatch.initialize(commonSectionHandler: storage.section, commonServiceHandler: storage.service) {
             Log("Sync: \($0)")
         }
         SyncInstanceWatch.migrateStoreIfNeeded()
         serviceMigration.migrateIfNeeded()
-                                                                        
+        
         _ = MainRepositoryImpl(
             protection: protection,
             storage: storage,
@@ -100,7 +142,7 @@ final class MainRepositoryImpl {
         )
     }
     
-    init(
+    private init(
         protection: Protection,
         storage: Storage,
         cloudHandler: CloudHandlerType,
@@ -118,9 +160,11 @@ final class MainRepositoryImpl {
         serviceDefinitionDatabase = ServiceDefinitionDatabaseImpl()
         iconDescriptionDatabase = IconDescriptionDatabaseImpl()
         
+        userDefaultsRepository = UserDefaultsRepositoryImpl()
+        
         storageRepository = storage.storageRepository
         MainRepositoryImpl._shared = self
-
+        
         storage.addUserPresentableError { [weak self] error in
             self?.storageError?(error)
         }
@@ -169,15 +213,35 @@ extension MainRepositoryImpl {
             tokenType: tokenType
         )
     }
+}
+
+extension MainRepositoryImpl {
+    func markIntroductionAsShown() {
+        userDefaultsRepository.markIntroductionAsShown()
+    }
     
-//    func setIntroductionAsShown() {
-//        userDefaultsRepository.setIntroductionAsShown()
-//    }
-//    
-//    func introductionWasShown() -> Bool {
-//        userDefaultsRepository.introductionWasShown()
-//    }
-//    
+    func wasIntroductionShown() -> Bool {
+        userDefaultsRepository.wasIntroductionShown
+    }
+    
+    var sortType: SortType? {
+        userDefaultsRepository.sortType
+    }
+    
+    func setSortType(_ sortType: SortType) {
+        userDefaultsRepository.setSortType(sortType)
+    }
+    
+    var pin: AppPIN? {
+        userDefaultsRepository.pin
+    }
+    
+    func setPIN(_ pin: AppPIN) {
+        userDefaultsRepository.setPIN(pin)
+    }
+}
+
+extension MainRepositoryImpl {
     func registerForCloudStateChanges(_ listener: @escaping CloudStateListener, id: CloudStateListenerID) {
         cloudHandler.registerForStateChange({ listener($0.toCloudState) }, with: id)
         cloudHandler.checkState()
@@ -201,7 +265,9 @@ extension MainRepositoryImpl {
     ) {
         SyncInstanceWatch.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
     }
-    
+}
+
+extension MainRepositoryImpl {
     func serviceDefinition(using serviceTypeID: ServiceTypeID) -> ServiceDefinition? {
         serviceDefinitionDatabase.service(using: serviceTypeID)
     }
@@ -212,12 +278,41 @@ extension MainRepositoryImpl {
         }
         return ServiceIcon.for(iconTypeID: serviceDef.iconTypeID)
     }
+}
+
+extension MainRepositoryImpl {
+    func listFavoriteServices() -> [ServiceData] {
+        initializeFavoriteServicesCache()
+        guard let favoriteServicesCache else { return [] }
+        return favoriteServicesCache.compactMap({ storageRepository.findService(for: $0) })
+    }
     
-//    var sortType: SortType? {
-//        userDefaultsRepository.sortType
-//    }
-//    
-//    func setSortType(_ sortType: SortType) {
-//        userDefaultsRepository.setSortType(sortType)
-//    }
+    func addFavoriteService(_ secret: Secret) {
+        initializeFavoriteServicesCache()
+        guard favoriteServicesCache?.first(where: { $0 == secret }) == nil else { return }
+        favoriteServicesCache?.append(secret)
+        saveFavoriteServicesCache()
+    }
+    
+    func removeFavoriteService(_ secret: Secret) {
+        initializeFavoriteServicesCache()
+        favoriteServicesCache?.removeAll(where: { $0 == secret })
+        saveFavoriteServicesCache()
+    }
+    
+    private func initializeFavoriteServicesCache() {
+        if favoriteServicesCache != nil {
+            return
+        }
+        let value = userDefaultsRepository.favoriteServices() ?? []
+        favoriteServicesCache = Array(Set(value))
+    }
+    
+    private func saveFavoriteServicesCache() {
+        guard let favoriteServicesCache else {
+            Log("Can't get Favorite Services for saving")
+            return
+        }
+        userDefaultsRepository.setFavoriteServices(favoriteServicesCache)
+    }
 }

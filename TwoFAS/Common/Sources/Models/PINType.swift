@@ -19,7 +19,7 @@
 
 import Foundation
 
-public enum PINType: CaseIterable {
+public enum PINType: CaseIterable, Codable {
     case digits4
     case digits6
 }

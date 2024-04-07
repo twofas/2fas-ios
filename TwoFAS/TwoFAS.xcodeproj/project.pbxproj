@@ -719,7 +719,7 @@
 		C2A4C8372A11141D00AFD67C /* TokensNextTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4C8362A11141D00AFD67C /* TokensNextTokenView.swift */; };
 		C2A4C8392A1153A200AFD67C /* TokensTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4C8382A1153A200AFD67C /* TokensTokenView.swift */; };
 		C2A4C83B2A11736200AFD67C /* TokensCircleProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4C83A2A11736200AFD67C /* TokensCircleProgress.swift */; };
-		C2A4D3152BC097F80001587C /* MainRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4D3142BC097F80001587C /* MainRepositoryImpl.swift */; };
+		C2A4D3152BC097F80001587C /* MainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4D3142BC097F80001587C /* MainRepository.swift */; };
 		C2A4D32C2BC0B0C30001587C /* ServiceIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21AF6A526A237EA00BDAA37 /* ServiceIcon.swift */; };
 		C2A4D32D2BC0B1AD0001587C /* TokenHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D14642263A45100599101 /* TokenHandler.swift */; };
 		C2A4D32E2BC0B1B20001587C /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D672F625DB2BD3004BD697 /* Token.swift */; };
@@ -871,6 +871,8 @@
 		C2B811D5284D1CFE009FD99D /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C2B811D4284D1CFE009FD99D /* FirebaseCrashlytics */; };
 		C2B811D9284D1D2C009FD99D /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = C2B811D8284D1D2C009FD99D /* FirebaseRemoteConfig */; };
 		C2B811DB284D1D62009FD99D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C2B811DA284D1D62009FD99D /* FirebaseMessaging */; };
+		C2B86D222BC3058A00AAAC63 /* UserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B86D212BC3058A00AAAC63 /* UserDefaultsRepository.swift */; };
+		C2B86D242BC3070F00AAAC63 /* AppPIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B86D232BC3070F00AAAC63 /* AppPIN.swift */; };
 		C2B90EEE281EB3CF004B8AEC /* MainRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B90EED281EB3CF004B8AEC /* MainRepositoryImpl.swift */; };
 		C2B90EF0281EB3F8004B8AEC /* MainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B90EEF281EB3F8004B8AEC /* MainRepository.swift */; };
 		C2B90EF1281EC622004B8AEC /* NetworkStack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C241D445278B9E0E00D7C604 /* NetworkStack.framework */; platformFilter = ios; };
@@ -2501,7 +2503,7 @@
 		C2A4C8362A11141D00AFD67C /* TokensNextTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNextTokenView.swift; sourceTree = "<group>"; };
 		C2A4C8382A1153A200AFD67C /* TokensTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTokenView.swift; sourceTree = "<group>"; };
 		C2A4C83A2A11736200AFD67C /* TokensCircleProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCircleProgress.swift; sourceTree = "<group>"; };
-		C2A4D3142BC097F80001587C /* MainRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepositoryImpl.swift; sourceTree = "<group>"; };
+		C2A4D3142BC097F80001587C /* MainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepository.swift; sourceTree = "<group>"; };
 		C2A4D3372BC0B3D60001587C /* CloudState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudState.swift; sourceTree = "<group>"; };
 		C2A4D3482BC0B6B00001587C /* Base32Watch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Base32Watch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2A4D34D2BC0B9620001587C /* Base32Watch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base32Watch.h; sourceTree = "<group>"; };
@@ -2621,6 +2623,8 @@
 		C2B5BF582946616900E5092D /* TokensNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNavigationFlowController.swift; sourceTree = "<group>"; };
 		C2B6D78D260BB024005B599E /* ColorPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerButton.swift; sourceTree = "<group>"; };
 		C2B71D1C23DDEEEE007C5896 /* MainContainerPaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerPaging.swift; sourceTree = "<group>"; };
+		C2B86D212BC3058A00AAAC63 /* UserDefaultsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepository.swift; sourceTree = "<group>"; };
+		C2B86D232BC3070F00AAAC63 /* AppPIN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPIN.swift; sourceTree = "<group>"; };
 		C2B90EED281EB3CF004B8AEC /* MainRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepositoryImpl.swift; sourceTree = "<group>"; };
 		C2B90EEF281EB3F8004B8AEC /* MainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepository.swift; sourceTree = "<group>"; };
 		C2B90EFD281EDE80004B8AEC /* NotificationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPresenter.swift; sourceTree = "<group>"; };
@@ -5625,7 +5629,9 @@
 				C274C9D52BAB8ABC008E7212 /* Preview Content */,
 				C2A1B3B32BB6071C00D6B923 /* PINKeyboard.swift */,
 				C2A1B3B72BB608C900D6B923 /* PINKeyboardLayout.swift */,
-				C2A4D3142BC097F80001587C /* MainRepositoryImpl.swift */,
+				C2A4D3142BC097F80001587C /* MainRepository.swift */,
+				C2B86D212BC3058A00AAAC63 /* UserDefaultsRepository.swift */,
+				C2B86D232BC3070F00AAAC63 /* AppPIN.swift */,
 			);
 			path = "TwoFASWatch Watch App";
 			sourceTree = "<group>";
@@ -10009,7 +10015,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2A4D3302BC0B1B80001587C /* Crypto.swift in Sources */,
-				C2A4D3152BC097F80001587C /* MainRepositoryImpl.swift in Sources */,
+				C2A4D3152BC097F80001587C /* MainRepository.swift in Sources */,
 				C2A4D32E2BC0B1B20001587C /* Token.swift in Sources */,
 				C2D2AFFA2BB8C93C00B91435 /* TokensListPresenter.swift in Sources */,
 				C2A1B3B82BB608C900D6B923 /* PINKeyboardLayout.swift in Sources */,
@@ -10020,8 +10026,10 @@
 				C2A4D32C2BC0B0C30001587C /* ServiceIcon.swift in Sources */,
 				C2A4D3312BC0B2540001587C /* TokenGenerator.swift in Sources */,
 				C2A4D32D2BC0B1AD0001587C /* TokenHandler.swift in Sources */,
+				C2B86D222BC3058A00AAAC63 /* UserDefaultsRepository.swift in Sources */,
 				C2A4D3322BC0B2B30001587C /* String+.swift in Sources */,
 				C2D2AFF82BB8C8EE00B91435 /* TokensList.swift in Sources */,
+				C2B86D242BC3070F00AAAC63 /* AppPIN.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

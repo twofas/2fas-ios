@@ -414,6 +414,9 @@
 		C26764B02872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26764AF2872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift */; };
 		C26764B22872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26764B12872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift */; };
 		C26764B428724A4200D468B2 /* ComposeServiceCategorySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26764B328724A4200D468B2 /* ComposeServiceCategorySelectionViewController.swift */; };
+		C268918A2BC4960600713078 /* ServiceListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26891892BC4960600713078 /* ServiceListPresenter.swift */; };
+		C268918D2BC4962300713078 /* ServiceListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268918C2BC4962300713078 /* ServiceListInteractor.swift */; };
+		C268918F2BC4974800713078 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268918E2BC4974800713078 /* Category.swift */; };
 		C2698B632986860F00EBC179 /* SelectServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B622986860F00EBC179 /* SelectServiceViewController.swift */; };
 		C2698B652986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B642986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift */; };
 		C2698B6C2986B42400EBC179 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B6B2986B42400EBC179 /* MainTabViewController.swift */; };
@@ -882,6 +885,7 @@
 		C2B86D322BC356BA00AAAC63 /* ServiceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B86D312BC356BA00AAAC63 /* ServiceListView.swift */; };
 		C2B86D342BC3571E00AAAC63 /* ServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B86D332BC3571E00AAAC63 /* ServiceView.swift */; };
 		C2B86D362BC3574900AAAC63 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B86D352BC3574900AAAC63 /* SettingsView.swift */; };
+		C2B86D382BC35B8300AAAC63 /* IconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B86D372BC35B8300AAAC63 /* IconRenderer.swift */; };
 		C2B90EEE281EB3CF004B8AEC /* MainRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B90EED281EB3CF004B8AEC /* MainRepositoryImpl.swift */; };
 		C2B90EF0281EB3F8004B8AEC /* MainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B90EEF281EB3F8004B8AEC /* MainRepository.swift */; };
 		C2B90EF1281EC622004B8AEC /* NetworkStack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C241D445278B9E0E00D7C604 /* NetworkStack.framework */; platformFilter = ios; };
@@ -2302,6 +2306,9 @@
 		C26764AF2872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceCategorySelectionPresenter.swift; sourceTree = "<group>"; };
 		C26764B12872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComposeServiceCategorySelectionPresenter+Menu.swift"; sourceTree = "<group>"; };
 		C26764B328724A4200D468B2 /* ComposeServiceCategorySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceCategorySelectionViewController.swift; sourceTree = "<group>"; };
+		C26891892BC4960600713078 /* ServiceListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListPresenter.swift; sourceTree = "<group>"; };
+		C268918C2BC4962300713078 /* ServiceListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListInteractor.swift; sourceTree = "<group>"; };
+		C268918E2BC4974800713078 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		C2698B622986860F00EBC179 /* SelectServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectServiceViewController.swift; sourceTree = "<group>"; };
 		C2698B642986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedEditViewController.swift; sourceTree = "<group>"; };
 		C2698B6B2986B42400EBC179 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
@@ -2643,6 +2650,7 @@
 		C2B86D312BC356BA00AAAC63 /* ServiceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListView.swift; sourceTree = "<group>"; };
 		C2B86D332BC3571E00AAAC63 /* ServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceView.swift; sourceTree = "<group>"; };
 		C2B86D352BC3574900AAAC63 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C2B86D372BC35B8300AAAC63 /* IconRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconRenderer.swift; sourceTree = "<group>"; };
 		C2B90EED281EB3CF004B8AEC /* MainRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepositoryImpl.swift; sourceTree = "<group>"; };
 		C2B90EEF281EB3F8004B8AEC /* MainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepository.swift; sourceTree = "<group>"; };
 		C2B90EFD281EDE80004B8AEC /* NotificationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPresenter.swift; sourceTree = "<group>"; };
@@ -5528,6 +5536,16 @@
 			path = Flow;
 			sourceTree = "<group>";
 		};
+		C268918B2BC4960C00713078 /* ServiceList */ = {
+			isa = PBXGroup;
+			children = (
+				C2B86D312BC356BA00AAAC63 /* ServiceListView.swift */,
+				C26891892BC4960600713078 /* ServiceListPresenter.swift */,
+				C268918C2BC4962300713078 /* ServiceListInteractor.swift */,
+			);
+			path = ServiceList;
+			sourceTree = "<group>";
+		};
 		C2698B662986B3E500EBC179 /* MainTab */ = {
 			isa = PBXGroup;
 			children = (
@@ -5656,9 +5674,11 @@
 				C2B86D272BC32FA300AAAC63 /* InteractorFactory.swift */,
 				C2B86D292BC33D3000AAAC63 /* AppDelegateInteractor.swift */,
 				C2B86D2B2BC3492A00AAAC63 /* Service.swift */,
-				C2B86D312BC356BA00AAAC63 /* ServiceListView.swift */,
+				C268918E2BC4974800713078 /* Category.swift */,
+				C268918B2BC4960C00713078 /* ServiceList */,
 				C2B86D352BC3574900AAAC63 /* SettingsView.swift */,
 				C2B86D332BC3571E00AAAC63 /* ServiceView.swift */,
+				C2B86D372BC35B8300AAAC63 /* IconRenderer.swift */,
 			);
 			path = "TwoFASWatch Watch App";
 			sourceTree = "<group>";
@@ -10047,6 +10067,7 @@
 				C2B86D2A2BC33D3000AAAC63 /* AppDelegateInteractor.swift in Sources */,
 				C2A4D32E2BC0B1B20001587C /* Token.swift in Sources */,
 				C2D2AFFA2BB8C93C00B91435 /* TokensListPresenter.swift in Sources */,
+				C268918A2BC4960600713078 /* ServiceListPresenter.swift in Sources */,
 				C2A1B3B82BB608C900D6B923 /* PINKeyboardLayout.swift in Sources */,
 				C274C9D22BAB8ABB008E7212 /* ContentView.swift in Sources */,
 				C274C9D02BAB8ABB008E7212 /* TwoFASWatchApp.swift in Sources */,
@@ -10054,6 +10075,7 @@
 				C2B86D282BC32FA300AAAC63 /* InteractorFactory.swift in Sources */,
 				C2A4D32F2BC0B1B50001587C /* Generator.swift in Sources */,
 				C2A1B3B42BB6071C00D6B923 /* PINKeyboard.swift in Sources */,
+				C268918D2BC4962300713078 /* ServiceListInteractor.swift in Sources */,
 				C2A4D32C2BC0B0C30001587C /* ServiceIcon.swift in Sources */,
 				C2A4D3312BC0B2540001587C /* TokenGenerator.swift in Sources */,
 				C2A4D32D2BC0B1AD0001587C /* TokenHandler.swift in Sources */,
@@ -10062,7 +10084,9 @@
 				C2A4D3322BC0B2B30001587C /* String+.swift in Sources */,
 				C2D2AFF82BB8C8EE00B91435 /* TokensList.swift in Sources */,
 				C2B86D2C2BC3492A00AAAC63 /* Service.swift in Sources */,
+				C2B86D382BC35B8300AAAC63 /* IconRenderer.swift in Sources */,
 				C2B86D322BC356BA00AAAC63 /* ServiceListView.swift in Sources */,
+				C268918F2BC4974800713078 /* Category.swift in Sources */,
 				C2B86D302BC349AE00AAAC63 /* MainPresenter.swift in Sources */,
 				C2B86D262BC32F9200AAAC63 /* MainInteractor.swift in Sources */,
 				C2B86D242BC3070F00AAAC63 /* AppPIN.swift in Sources */,

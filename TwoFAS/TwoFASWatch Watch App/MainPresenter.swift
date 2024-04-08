@@ -18,6 +18,8 @@
 //
 
 import Foundation
+import CommonWatch
+import SwiftUI
 
 final class MainPresenter: ObservableObject {
     @Published var favoriteList: [Service] = []
@@ -29,7 +31,8 @@ final class MainPresenter: ObservableObject {
     }
     
     func onAppear() {
-        favoriteList = interactor.listFavoriteServices()
-            .map({ Service(id: $0.secret, name: $0.name, additionalInfo: $0.additionalInfo) })
+        favoriteList = interactor
+            .listFavoriteServices()
+            .map { $0.toService() }
     }
 }

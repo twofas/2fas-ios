@@ -67,6 +67,7 @@ final class SyncHandler {
         cloudKit.fetchFinishedSuccessfuly = { [weak self] in
             #if os(watchOS)
             Log("SyncHandler - WatchOS doesn't modify iCloud - returning", module: .cloudSync)
+            self?.itemHandler.commit()
             self?.logHandler.deleteAll()
             self?.applyingChanges = false
             self?.syncCompleted()

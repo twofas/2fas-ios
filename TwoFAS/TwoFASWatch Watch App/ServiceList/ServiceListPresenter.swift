@@ -17,10 +17,21 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import SwiftUI
+import Foundation
 
-struct ServiceListView: View {
-    var body: some View {
-        Text("No Services")
+final class ServiceListPresenter: ObservableObject {
+    @Published var list: [Category] = []
+    
+    private let interactor: ServiceListInteracting
+    
+    init(interactor: ServiceListInteracting) {
+        self.interactor = interactor
+    }
+}
+
+extension ServiceListPresenter {
+    func onAppear() {
+        list = interactor.listAllServices()
+            .toCategories()
     }
 }

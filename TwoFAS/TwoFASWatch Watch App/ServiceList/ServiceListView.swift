@@ -19,16 +19,15 @@
 
 import SwiftUI
 
-struct MainView: View {
-    @ObservedObject var presenter: MainPresenter
-    @State private var selectedService: Service?
+struct ServiceListView: View {
+    @ObservedObject var presenter: ServiceListPresenter
     
     var body: some View {
         NavigationStack {
             List {
-                if !presenter.favoriteList.isEmpty {
-                    Section(header: Text("Favorite Services")) {
-                        ForEach(presenter.favoriteList, id: \.self) { service in
+                ForEach(presenter.list, id: \.self) { category in
+                    Section(header: Text(category.name)) {
+                        ForEach(category.services, id: \.self) { service in
                             NavigationLink(destination: ServiceView(service: service)) {
                                 VStack(alignment: .leading) {
                                     Text(service.name)
@@ -46,34 +45,14 @@ struct MainView: View {
                         }
                     }
                 }
-                Section {
-                    NavigationLink(destination: ServiceListView(
-                        presenter: ServiceListPresenter(
-                            interactor: InteractorFactory.shared.serviceListInteractor()
-                        )
-                    )) {
-                        VStack(alignment: .leading) {
-                            Text("All Services")
-                                .font(.callout)
-                                .padding(4)
-                                .foregroundStyle(.primary)
-                        }
-                    }
-                    
-                    NavigationLink(destination: SettingsView()) {
-                        VStack(alignment: .leading) {
-                            Text("Settings")
-                                .font(.callout)
-                                .padding(4)
-                                .foregroundStyle(.primary)
-                        }
-                    }
-                }
+            }
+            .onAppear {
+                presenter.onAppear()
             }
             .containerBackground(.red.gradient, for: .navigation)
             .listStyle(.carousel)
             .environment(\.defaultMinListRowHeight, 70)
-            .navigationTitle("2FAS")
+            .navigationTitle("Services")
             .navigationBarTitleDisplayMode(.automatic)
             .listItemTint(.clear)
         }

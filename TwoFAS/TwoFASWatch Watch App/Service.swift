@@ -17,10 +17,37 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import SwiftUI
+import CommonWatch
 
 struct Service: Identifiable, Hashable {
     let id: String
     let name: String
     let additionalInfo: String?
+    let iconType: IconType
+    let iconTypeID: IconTypeID
+    let labelColor: Color
+    let labelTitle: String
+    let badgeColor: Color
+}
+
+extension ServiceData {
+    func toService() -> Service {
+        Service(
+            id: secret,
+            name: name,
+            additionalInfo: additionalInfo,
+            iconType: iconType,
+            iconTypeID: iconTypeID,
+            labelColor: Color(labelColor.color),
+            labelTitle: labelTitle,
+            badgeColor: Color(badgeColor?.color ?? TintColor.default.color)
+        )
+    }
+}
+
+extension Array where Element == ServiceData {
+    func toServices() -> [Service] {
+        map { $0.toService() }
+    }
 }

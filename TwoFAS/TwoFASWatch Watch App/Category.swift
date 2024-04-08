@@ -18,17 +18,34 @@
 //
 
 import Foundation
+import StorageWatch
 
-final class InteractorFactory {
-    private init() {}
-    
-    static let shared = InteractorFactory()
-    
-    func mainInteractor() -> MainInteracting {
-        MainInteractor(mainRepository: MainRepositoryImpl.shared)
+struct Category: Identifiable, Hashable {
+    let id: UUID
+    let name: String
+    let services: [Service]
+}
+
+extension CategoryData {
+    func toCategory() -> Category {
+        let id: UUID = {
+            if let section {
+                return section.sectionID
+            }
+            return UUID()
+        }()
+        let name: String = {
+            if let section {
+                return section.title
+            }
+            return "Services" // TODO: Add translation
+        }()
+        return Category(id: id, name: name, services: services.toServices())
     }
-    
-    func serviceListInteractor() -> ServiceListInteracting {
-        ServiceListInteractor(mainRepository: MainRepositoryImpl.shared)
+}
+
+extension Array where Element == CategoryData {
+    func toCategories() -> [Category] {
+        map { $0.toCategory() }
     }
 }

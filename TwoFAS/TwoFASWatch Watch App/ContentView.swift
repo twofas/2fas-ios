@@ -25,12 +25,12 @@ import SwiftUI
 
 struct ContentView: View {
     private let list: [Service] = [
-        .init(id: "32423432", name: "First", additionalInfo: nil),
-        .init(id: "4889812312", name: "Second", additionalInfo: "test@test.com"),
-        .init(id: "3242342", name: "First", additionalInfo: nil),
-        .init(id: "488912312", name: "Second", additionalInfo: "test@test.com"),
-        .init(id: "322342", name: "First", additionalInfo: nil),
-        .init(id: "48891212", name: "Second", additionalInfo: "test@test.com")
+//        .init(id: "32423432", name: "First", additionalInfo: nil),
+//        .init(id: "4889812312", name: "Second", additionalInfo: "test@test.com"),
+//        .init(id: "3242342", name: "First", additionalInfo: nil),
+//        .init(id: "488912312", name: "Second", additionalInfo: "test@test.com"),
+//        .init(id: "322342", name: "First", additionalInfo: nil),
+//        .init(id: "48891212", name: "Second", additionalInfo: "test@test.com")
     ]
     
     @State private var selectedService: Service?

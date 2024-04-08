@@ -18,17 +18,25 @@
 //
 
 import Foundation
+import StorageWatch
 
-final class InteractorFactory {
-    private init() {}
+protocol ServiceListInteracting: AnyObject {
+    var hasServices: Bool { get }
+    func listAllServices() -> [CategoryData]
+}
+
+final class ServiceListInteractor {
+    private let mainRepository: MainRepository
     
-    static let shared = InteractorFactory()
-    
-    func mainInteractor() -> MainInteracting {
-        MainInteractor(mainRepository: MainRepositoryImpl.shared)
+    init(mainRepository: MainRepository) {
+        self.mainRepository = mainRepository
     }
+}
+
+extension ServiceListInteractor: ServiceListInteracting {
+    var hasServices: Bool { mainRepository.hasServices }
     
-    func serviceListInteractor() -> ServiceListInteracting {
-        ServiceListInteractor(mainRepository: MainRepositoryImpl.shared)
+    func listAllServices() -> [CategoryData] {
+        mainRepository.listAllServicesWithingCategories(for: nil, sorting: .manual, ids: [])
     }
 }

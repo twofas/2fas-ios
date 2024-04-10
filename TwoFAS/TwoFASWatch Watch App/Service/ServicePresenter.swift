@@ -17,17 +17,35 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import SwiftUI
+import Foundation
+import CommonWatch
 
-struct TokenEntry: Identifiable, Hashable {
-    var id: String { secret }
-    let name: String
-    let additionalInfo: String
-    let secret: String
-    let labelColor: Color
-    // let icon: UIImage
+final class ServicePresenter: ObservableObject {
+    @Published var name = ""
+    @Published var additionalInfo: String?
+    @Published var service: Service
+    
+    private let interactor: ServiceInteracting
+    
+    init(interactor: ServiceInteracting) {
+        self.interactor = interactor
+        
+        name = interactor.service.name
+        additionalInfo = interactor.service.additionalInfo
+        service = interactor.service
+    }
 }
 
-final class TokensListPresenter: ObservableObject {
-    @Published var list: [TokenEntry] = []
+extension ServicePresenter {
+    func calculateToken(for date: Date) -> TokenValue {
+        interactor.token(for: date)
+    }
+    
+    func timelineEntries() -> [Date] {
+        interactor.timelineEntries(for: Date())
+    }
+    
+    func timeToNextDate(for date: Date) -> Date {
+        interactor.timeToNextDate(for: date)
+    }
 }

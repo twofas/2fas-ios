@@ -31,4 +31,11 @@ final class InteractorFactory {
     func serviceListInteractor() -> ServiceListInteracting {
         ServiceListInteractor(mainRepository: MainRepositoryImpl.shared)
     }
+    
+    func serviceInteractor(service: Service) -> ServiceInteracting {
+        ServiceInteractor(
+            mainRepository: MainRepositoryImpl.shared,
+            service: service
+        )
+    }
 }

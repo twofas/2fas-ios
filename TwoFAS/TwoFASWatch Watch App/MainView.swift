@@ -29,7 +29,12 @@ struct MainView: View {
                 if !presenter.favoriteList.isEmpty {
                     Section(header: Text("Favorite Services")) {
                         ForEach(presenter.favoriteList, id: \.self) { service in
-                            NavigationLink(destination: ServiceView(service: service)) {
+                            NavigationLink(destination: ServiceView(
+                                presenter: ServicePresenter(
+                                    interactor: InteractorFactory.shared.serviceInteractor(service: service)
+                                )
+                            )
+                                ) {
                                 VStack(alignment: .leading) {
                                     Text(service.name)
                                         .font(.callout)

@@ -28,7 +28,13 @@ struct ServiceListView: View {
                 ForEach(presenter.list, id: \.self) { category in
                     Section(header: Text(category.name)) {
                         ForEach(category.services, id: \.self) { service in
-                            NavigationLink(destination: ServiceView(service: service)) {
+                            NavigationLink(
+                                destination: ServiceView(
+                                    presenter: ServicePresenter(
+                                        interactor: InteractorFactory.shared.serviceInteractor(service: service)
+                                    )
+                                )
+                            ) {
                                 VStack(alignment: .leading) {
                                     Text(service.name)
                                         .font(.callout)

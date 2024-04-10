@@ -396,6 +396,8 @@
 		C2625F9228BBB87700D84C5C /* AboutModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F9128BBB87700D84C5C /* AboutModels.swift */; };
 		C2625F9428BBC01900D84C5C /* AboutPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F9328BBC01900D84C5C /* AboutPresenter+Menu.swift */; };
 		C2625F9628BBC86B00D84C5C /* AboutFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F9528BBC86B00D84C5C /* AboutFooter.swift */; };
+		C2627F3A2BC72E96009F93A9 /* ServicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2627F392BC72E96009F93A9 /* ServicePresenter.swift */; };
+		C2627F3C2BC72EA0009F93A9 /* ServiceInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2627F3B2BC72EA0009F93A9 /* ServiceInteractor.swift */; };
 		C2633F1F265B045F0034B836 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2633F1E265B045F0034B836 /* UIApplication.swift */; };
 		C263F45A29900DED009B0837 /* MainMenuModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263F45929900DED009B0837 /* MainMenuModels.swift */; };
 		C263F45E29901C4F009B0837 /* MainSplitFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263F45D29901C4F009B0837 /* MainSplitFlowController.swift */; };
@@ -981,8 +983,6 @@
 		C2D07EE626A45C0400AF8E7B /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE31269E274700506ACF /* IntentsUI.framework */; };
 		C2D07EEB26A47B8100AF8E7B /* CodeEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D07EE926A475F400AF8E7B /* CodeEntry.swift */; };
 		C2D291DC2955FC9E0084FE1E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C2D291DB2955FC9E0084FE1E /* Settings.bundle */; };
-		C2D2AFF82BB8C8EE00B91435 /* TokensList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D2AFF72BB8C8EE00B91435 /* TokensList.swift */; };
-		C2D2AFFA2BB8C93C00B91435 /* TokensListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D2AFF92BB8C93C00B91435 /* TokensListPresenter.swift */; };
 		C2D39DDD28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDB28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift */; };
 		C2D39DDE28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDC28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift */; };
 		C2D39DE32823302200E864E9 /* StorageRepositoryImpl+News.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DE22823302200E864E9 /* StorageRepositoryImpl+News.swift */; };
@@ -2282,6 +2282,8 @@
 		C2625F9128BBB87700D84C5C /* AboutModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutModels.swift; sourceTree = "<group>"; };
 		C2625F9328BBC01900D84C5C /* AboutPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AboutPresenter+Menu.swift"; sourceTree = "<group>"; };
 		C2625F9528BBC86B00D84C5C /* AboutFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutFooter.swift; sourceTree = "<group>"; };
+		C2627F392BC72E96009F93A9 /* ServicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicePresenter.swift; sourceTree = "<group>"; };
+		C2627F3B2BC72EA0009F93A9 /* ServiceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceInteractor.swift; sourceTree = "<group>"; };
 		C262E83529E9AA96008D148E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C262E83629E9AA96008D148E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C262E83729E9AA97008D148E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2772,8 +2774,6 @@
 		C2D07EE726A468D000AF8E7B /* LabelImageRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelImageRenderer.swift; sourceTree = "<group>"; };
 		C2D07EE926A475F400AF8E7B /* CodeEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEntry.swift; sourceTree = "<group>"; };
 		C2D291DB2955FC9E0084FE1E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		C2D2AFF72BB8C8EE00B91435 /* TokensList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensList.swift; sourceTree = "<group>"; };
-		C2D2AFF92BB8C93C00B91435 /* TokensListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensListPresenter.swift; sourceTree = "<group>"; };
 		C2D39DD92823184500E864E9 /* ListNewsNetworkInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListNewsNetworkInteractor.swift; sourceTree = "<group>"; };
 		C2D39DDB28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C2D39DDC28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -5492,6 +5492,16 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
+		C2627F382BC72E19009F93A9 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				C2627F3B2BC72EA0009F93A9 /* ServiceInteractor.swift */,
+				C2627F392BC72E96009F93A9 /* ServicePresenter.swift */,
+				C2B86D332BC3571E00AAAC63 /* ServiceView.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		C26764A628723CFD00D468B2 /* CategorySelection */ = {
 			isa = PBXGroup;
 			children = (
@@ -5657,7 +5667,6 @@
 		C274C9CE2BAB8ABB008E7212 /* TwoFASWatch Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				C2D2AFF62BB8B8CD00B91435 /* TokensList */,
 				C274CAA02BAB98A5008E7212 /* TwoFASWatch Watch App.entitlements */,
 				C274C9CF2BAB8ABB008E7212 /* TwoFASWatchApp.swift */,
 				C274C9D12BAB8ABB008E7212 /* ContentView.swift */,
@@ -5676,8 +5685,8 @@
 				C2B86D2B2BC3492A00AAAC63 /* Service.swift */,
 				C268918E2BC4974800713078 /* Category.swift */,
 				C268918B2BC4960C00713078 /* ServiceList */,
+				C2627F382BC72E19009F93A9 /* Service */,
 				C2B86D352BC3574900AAAC63 /* SettingsView.swift */,
-				C2B86D332BC3571E00AAAC63 /* ServiceView.swift */,
 				C2B86D372BC35B8300AAAC63 /* IconRenderer.swift */,
 			);
 			path = "TwoFASWatch Watch App";
@@ -7259,15 +7268,6 @@
 				C24AEDBF291BD119005F59CB /* T.generated.swift */,
 			);
 			path = Generated;
-			sourceTree = "<group>";
-		};
-		C2D2AFF62BB8B8CD00B91435 /* TokensList */ = {
-			isa = PBXGroup;
-			children = (
-				C2D2AFF72BB8C8EE00B91435 /* TokensList.swift */,
-				C2D2AFF92BB8C93C00B91435 /* TokensListPresenter.swift */,
-			);
-			path = TokensList;
 			sourceTree = "<group>";
 		};
 		C2D39DDF28232A5600E864E9 /* News */ = {
@@ -10066,12 +10066,12 @@
 				C2A4D3152BC097F80001587C /* MainRepository.swift in Sources */,
 				C2B86D2A2BC33D3000AAAC63 /* AppDelegateInteractor.swift in Sources */,
 				C2A4D32E2BC0B1B20001587C /* Token.swift in Sources */,
-				C2D2AFFA2BB8C93C00B91435 /* TokensListPresenter.swift in Sources */,
 				C268918A2BC4960600713078 /* ServiceListPresenter.swift in Sources */,
 				C2A1B3B82BB608C900D6B923 /* PINKeyboardLayout.swift in Sources */,
 				C274C9D22BAB8ABB008E7212 /* ContentView.swift in Sources */,
 				C274C9D02BAB8ABB008E7212 /* TwoFASWatchApp.swift in Sources */,
 				C2B86D362BC3574900AAAC63 /* SettingsView.swift in Sources */,
+				C2627F3A2BC72E96009F93A9 /* ServicePresenter.swift in Sources */,
 				C2B86D282BC32FA300AAAC63 /* InteractorFactory.swift in Sources */,
 				C2A4D32F2BC0B1B50001587C /* Generator.swift in Sources */,
 				C2A1B3B42BB6071C00D6B923 /* PINKeyboard.swift in Sources */,
@@ -10082,7 +10082,6 @@
 				C2B86D222BC3058A00AAAC63 /* UserDefaultsRepository.swift in Sources */,
 				C2B86D342BC3571E00AAAC63 /* ServiceView.swift in Sources */,
 				C2A4D3322BC0B2B30001587C /* String+.swift in Sources */,
-				C2D2AFF82BB8C8EE00B91435 /* TokensList.swift in Sources */,
 				C2B86D2C2BC3492A00AAAC63 /* Service.swift in Sources */,
 				C2B86D382BC35B8300AAAC63 /* IconRenderer.swift in Sources */,
 				C2B86D322BC356BA00AAAC63 /* ServiceListView.swift in Sources */,
@@ -10090,6 +10089,7 @@
 				C2B86D302BC349AE00AAAC63 /* MainPresenter.swift in Sources */,
 				C2B86D262BC32F9200AAAC63 /* MainInteractor.swift in Sources */,
 				C2B86D242BC3070F00AAAC63 /* AppPIN.swift in Sources */,
+				C2627F3C2BC72EA0009F93A9 /* ServiceInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

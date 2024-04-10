@@ -23,40 +23,41 @@ import CommonWatch
 struct ServiceView: View {
     @Environment(\.colorScheme) private var colorScheme
     
+    @ObservedObject
+    var presenter: ServicePresenter
+    
     private let spacing: CGFloat = 8
-    
-    let service: Service
-    
+        
     @ViewBuilder
     var body: some View {
         VStack(alignment: .leading, spacing: nil) {
             Spacer()
-            HStack(alignment: .center, spacing: nil) {
-                IconRenderer(service: service)
-                Spacer()
-                Text("0:00")
-                //counterText(for: service.countdownTo)
-                    .multilineTextAlignment(.trailing)
-                    .font(Font.body.monospacedDigit())
-                    .lineLimit(1)
-                    .contentTransition(.numericText(countsDown: true))
-            }
-            Spacer(minLength: spacing * 3)
-            VStack(alignment: .leading, spacing: 3) {
-                Text(service.name)
-                    .font(.caption)
-                    .multilineTextAlignment(.leading)
-                //Text(service.code)
-                Text("666666")
-                    .font(Font.system(.title).weight(.light).monospacedDigit())
-                    .multilineTextAlignment(.leading)
-                    .minimumScaleFactor(0.2)
-                    .contentTransition(.numericText())
-                if let info = service.additionalInfo {
-                    Text(info)
+            TimelineView(.explicit(presenter.timelineEntries())) { context in
+                HStack(alignment: .center, spacing: nil) {
+                    IconRenderer(service: presenter.service)
+                    Spacer()
+                    counterText(for: presenter.timeToNextDate(for: context.date))
+                        .multilineTextAlignment(.trailing)
+                        .font(Font.body.monospacedDigit())
                         .lineLimit(1)
+                        .contentTransition(.numericText(countsDown: true))
+                }
+                Spacer(minLength: spacing * 3)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(presenter.name)
                         .font(.caption)
-                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.leading)
+                    Text(presenter.calculateToken(for: context.date))
+                        .font(Font.system(.title).weight(.light).monospacedDigit())
+                        .multilineTextAlignment(.leading)
+                        .minimumScaleFactor(0.2)
+                        .contentTransition(.numericText())
+                    if let info = presenter.additionalInfo {
+                        Text(info)
+                            .lineLimit(1)
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
                 }
             }
             Spacer()

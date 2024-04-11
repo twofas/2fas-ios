@@ -17,37 +17,29 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
-import CommonWatch
+import SwiftUI
 
-final class ServicePresenter: ObservableObject {
-    @Published var name = ""
-    @Published var additionalInfo: String?
-    @Published var service: Service
+struct ServiceCellView: View {
+    let service: Service
     
-    private let interactor: ServiceInteracting
-    
-    init(interactor: ServiceInteracting) {
-        self.interactor = interactor
-        
-        interactor.initialize()
-        
-        name = interactor.service.name
-        additionalInfo = interactor.service.additionalInfo
-        service = interactor.service
-    }
-}
-
-extension ServicePresenter {
-    func calculateToken(for date: Date) -> TokenValue {
-        interactor.token(for: date)
-    }
-    
-    func timelineEntries() -> [Date] {
-        interactor.timelineEntries(for: Date())
-    }
-    
-    func timeToNextDate(for date: Date) -> Date {
-        interactor.timeToNextDate(for: date)
+    var body: some View {
+        HStack(alignment: .center, spacing: 8) {
+            Rectangle()
+                .fill(service.badgeColor)
+                .frame(width: 20)
+            IconRenderer(service: service)
+            VStack(alignment: .leading, spacing: 8) {
+                Text(service.name)
+                    .font(.callout)
+                    .padding(4)
+                    .foregroundStyle(.primary)
+                if let additionalInfo = service.additionalInfo {
+                    Text(additionalInfo)
+                        .padding(.horizontal, 4)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
     }
 }

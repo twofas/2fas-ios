@@ -34,19 +34,8 @@ struct MainView: View {
                                     interactor: InteractorFactory.shared.serviceInteractor(service: service)
                                 )
                             )
-                                ) {
-                                VStack(alignment: .leading) {
-                                    Text(service.name)
-                                        .font(.callout)
-                                        .padding(4)
-                                        .foregroundStyle(.primary)
-                                    if let additionalInfo = service.additionalInfo {
-                                        Text(additionalInfo)
-                                            .padding(.horizontal, 4)
-                                            .font(.caption2)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                }
+                            ) {
+                                ServiceCellView(service: service)
                             }
                         }
                     }

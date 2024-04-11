@@ -26,7 +26,10 @@ final class AppDelegateInteractor: NSObject, WKApplicationDelegate {
     
     func applicationDidFinishLaunching() {
         if !WKApplication.shared().isRegisteredForRemoteNotifications {
+            Log("Registering Push Notifications")
             WKApplication.shared().registerForRemoteNotifications()
+        } else {
+            Log("Push Notifications registered")
         }
         mainRepository.registerForCloudStateChanges({ [weak self] state in
             Log("Cloud state changed: \(state)")

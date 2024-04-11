@@ -27,41 +27,67 @@ struct ServiceView: View {
     var presenter: ServicePresenter
     
     private let spacing: CGFloat = 8
-        
+    
     @ViewBuilder
     var body: some View {
-        VStack(alignment: .leading, spacing: nil) {
-            Spacer()
+            //            Spacer()
             TimelineView(.explicit(presenter.timelineEntries())) { context in
-                HStack(alignment: .center, spacing: nil) {
-                    IconRenderer(service: presenter.service)
-                    Spacer()
-                    counterText(for: presenter.timeToNextDate(for: context.date))
-                        .multilineTextAlignment(.trailing)
-                        .font(Font.body.monospacedDigit())
-                        .lineLimit(1)
-                        .contentTransition(.numericText(countsDown: true))
-                }
-                Spacer(minLength: spacing * 3)
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(presenter.name)
-                        .font(.caption)
-                        .multilineTextAlignment(.leading)
-                    Text(presenter.calculateToken(for: context.date))
-                        .font(Font.system(.title).weight(.light).monospacedDigit())
-                        .multilineTextAlignment(.leading)
-                        .minimumScaleFactor(0.2)
-                        .contentTransition(.numericText())
-                    if let info = presenter.additionalInfo {
-                        Text(info)
+                VStack(alignment: .leading, spacing: nil) {
+                    HStack(alignment: .center, spacing: nil) {
+                        IconRenderer(service: presenter.service)
+                        Spacer()
+                        counterText(for: presenter.timeToNextDate(for: context.date))
+                            .multilineTextAlignment(.trailing)
+                            .font(Font.body.monospacedDigit())
                             .lineLimit(1)
-                            .font(.caption)
-                            .foregroundColor(.gray)
+                            .contentTransition(.numericText(countsDown: true))
                     }
+                    //                Spacer(minLength: spacing * 3)
+                    Spacer()
+                    VStack(alignment: .leading, spacing: 3) {
+//                        Text(presenter.name)
+//                            .font(.caption)
+//                            .multilineTextAlignment(.leading)
+//                            .lineLimit(1)
+                        Text(presenter.calculateToken(for: context.date))
+                            .font(Font.system(.title).weight(.light).monospacedDigit())
+                            .multilineTextAlignment(.leading)
+                            .minimumScaleFactor(0.2)
+                            .contentTransition(.numericText())
+                            .foregroundColor(.primary)
+                            .layoutPriority(1)
+//                            .background(Material.ultraThin, in: RoundedRectangle(cornerRadius: 8))
+                        if let info = presenter.additionalInfo {
+                            Text(info)
+                                .lineLimit(1)
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.leading)
+                        }
+                        Spacer()
+                            .frame(maxHeight: .infinity)
+                    }
+                    .frame(alignment: .leading)
+                    .padding(.top, 4)
                 }
-            }
-            Spacer()
         }
+        .navigationTitle {
+            Text(presenter.name)
+                .lineLimit(1)
+        }
+        .toolbar {
+            ToolbarItem(placement: .bottomBar) {
+                Button {
+                    print("Test")
+                } label: {
+                    Image(systemName:"star")
+                }
+                .controlSize(.mini)
+                .background(Color.accentColor, in: Circle())
+            }
+        }
+        .scenePadding()
+//        .background(Color.accentColor.gradient)
     }
     
     @ViewBuilder

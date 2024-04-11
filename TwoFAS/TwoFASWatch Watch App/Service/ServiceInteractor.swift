@@ -59,6 +59,7 @@ extension ServiceInteractor: ServiceInteracting {
             counter: 0,
             tokenType: serviceData.tokenType
         )
+        .formattedValue(for: serviceData.tokenType)
     }
     
     func timeToNextDate(for date: Date) -> Date {

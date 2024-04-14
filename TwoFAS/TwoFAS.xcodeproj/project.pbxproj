@@ -420,6 +420,9 @@
 		C268918A2BC4960600713078 /* ServiceListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26891892BC4960600713078 /* ServiceListPresenter.swift */; };
 		C268918D2BC4962300713078 /* ServiceListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268918C2BC4962300713078 /* ServiceListInteractor.swift */; };
 		C268918F2BC4974800713078 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268918E2BC4974800713078 /* Category.swift */; };
+		C269837B2BCC5D03009B3BE2 /* PINKeyboardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C269837A2BCC5D03009B3BE2 /* PINKeyboardPresenter.swift */; };
+		C26983802BCC718D009B3BE2 /* PINKeyboardInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C269837F2BCC718D009B3BE2 /* PINKeyboardInteractor.swift */; };
+		C26983822BCC8326009B3BE2 /* AppPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26983812BCC8326009B3BE2 /* AppPresenter.swift */; };
 		C2698B632986860F00EBC179 /* SelectServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B622986860F00EBC179 /* SelectServiceViewController.swift */; };
 		C2698B652986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B642986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift */; };
 		C2698B6C2986B42400EBC179 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B6B2986B42400EBC179 /* MainTabViewController.swift */; };
@@ -715,10 +718,9 @@
 		C29FEFFB2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FEFFA2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift */; };
 		C2A026B32AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A026B22AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift */; };
 		C2A026B52AF82FDB00DB2E52 /* DataExternalTranslations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A026B42AF82FDB00DB2E52 /* DataExternalTranslations.swift */; };
-		C2A1B3B42BB6071C00D6B923 /* PINKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A1B3B32BB6071C00D6B923 /* PINKeyboard.swift */; };
+		C2A1B3B42BB6071C00D6B923 /* PINKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A1B3B32BB6071C00D6B923 /* PINKeyboardView.swift */; };
 		C2A1B3B52BB6084100D6B923 /* PINType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2117178276CD11900042D28 /* PINType.swift */; };
 		C2A1B3B62BB6084100D6B923 /* PINType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2117178276CD11900042D28 /* PINType.swift */; };
-		C2A1B3B82BB608C900D6B923 /* PINKeyboardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A1B3B72BB608C900D6B923 /* PINKeyboardLayout.swift */; };
 		C2A283352186071200967022 /* AlertControllerPromptFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A283342186071200967022 /* AlertControllerPromptFactory.swift */; };
 		C2A2AF6F23D8EA710059094D /* UIActivityIndicator+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A2AF6E23D8EA710059094D /* UIActivityIndicator+.swift */; };
 		C2A4C8352A10F13800AFD67C /* TokensTOTPCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4C8342A10F13800AFD67C /* TokensTOTPCell.swift */; };
@@ -2314,6 +2316,9 @@
 		C26891892BC4960600713078 /* ServiceListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListPresenter.swift; sourceTree = "<group>"; };
 		C268918C2BC4962300713078 /* ServiceListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListInteractor.swift; sourceTree = "<group>"; };
 		C268918E2BC4974800713078 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		C269837A2BCC5D03009B3BE2 /* PINKeyboardPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINKeyboardPresenter.swift; sourceTree = "<group>"; };
+		C269837F2BCC718D009B3BE2 /* PINKeyboardInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINKeyboardInteractor.swift; sourceTree = "<group>"; };
+		C26983812BCC8326009B3BE2 /* AppPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPresenter.swift; sourceTree = "<group>"; };
 		C2698B622986860F00EBC179 /* SelectServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectServiceViewController.swift; sourceTree = "<group>"; };
 		C2698B642986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedEditViewController.swift; sourceTree = "<group>"; };
 		C2698B6B2986B42400EBC179 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
@@ -2514,8 +2519,7 @@
 		C29FEFFA2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsMenuViewController+TableCellHandling.swift"; sourceTree = "<group>"; };
 		C2A026B22AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+TimeVerification.swift"; sourceTree = "<group>"; };
 		C2A026B42AF82FDB00DB2E52 /* DataExternalTranslations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExternalTranslations.swift; sourceTree = "<group>"; };
-		C2A1B3B32BB6071C00D6B923 /* PINKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINKeyboard.swift; sourceTree = "<group>"; };
-		C2A1B3B72BB608C900D6B923 /* PINKeyboardLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINKeyboardLayout.swift; sourceTree = "<group>"; };
+		C2A1B3B32BB6071C00D6B923 /* PINKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINKeyboardView.swift; sourceTree = "<group>"; };
 		C2A2255B293BFE1E00B76115 /* TokenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenInteractor.swift; sourceTree = "<group>"; };
 		C2A283342186071200967022 /* AlertControllerPromptFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControllerPromptFactory.swift; sourceTree = "<group>"; };
 		C2A2AF6E23D8EA710059094D /* UIActivityIndicator+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicator+.swift"; sourceTree = "<group>"; };
@@ -5559,6 +5563,35 @@
 			path = ServiceList;
 			sourceTree = "<group>";
 		};
+		C269837C2BCC715C009B3BE2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C2B86D2B2BC3492A00AAAC63 /* Service.swift */,
+				C268918E2BC4974800713078 /* Category.swift */,
+				C2B86D232BC3070F00AAAC63 /* AppPIN.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C269837D2BCC7175009B3BE2 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				C2A4D3142BC097F80001587C /* MainRepository.swift */,
+				C2B86D212BC3058A00AAAC63 /* UserDefaultsRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		C269837E2BCC7180009B3BE2 /* PIN */ = {
+			isa = PBXGroup;
+			children = (
+				C2A1B3B32BB6071C00D6B923 /* PINKeyboardView.swift */,
+				C269837A2BCC5D03009B3BE2 /* PINKeyboardPresenter.swift */,
+				C269837F2BCC718D009B3BE2 /* PINKeyboardInteractor.swift */,
+			);
+			path = PIN;
+			sourceTree = "<group>";
+		};
 		C2698B662986B3E500EBC179 /* MainTab */ = {
 			isa = PBXGroup;
 			children = (
@@ -5670,25 +5703,22 @@
 		C274C9CE2BAB8ABB008E7212 /* TwoFASWatch Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				C269837E2BCC7180009B3BE2 /* PIN */,
+				C269837D2BCC7175009B3BE2 /* Repositories */,
+				C269837C2BCC715C009B3BE2 /* Models */,
 				C260DCC02BC882AD007807CC /* TwoFASWatch-Watch-App-Info.plist */,
 				C274CAA02BAB98A5008E7212 /* TwoFASWatch Watch App.entitlements */,
 				C274C9CF2BAB8ABB008E7212 /* TwoFASWatchApp.swift */,
+				C26983812BCC8326009B3BE2 /* AppPresenter.swift */,
 				C274C9D12BAB8ABB008E7212 /* ContentView.swift */,
 				C2B86D2D2BC3498D00AAAC63 /* MainView.swift */,
 				C2B86D2F2BC349AE00AAAC63 /* MainPresenter.swift */,
 				C274C9D32BAB8ABC008E7212 /* Assets.xcassets */,
 				C274C9D52BAB8ABC008E7212 /* Preview Content */,
-				C2A1B3B32BB6071C00D6B923 /* PINKeyboard.swift */,
-				C2A1B3B72BB608C900D6B923 /* PINKeyboardLayout.swift */,
-				C2A4D3142BC097F80001587C /* MainRepository.swift */,
-				C2B86D212BC3058A00AAAC63 /* UserDefaultsRepository.swift */,
-				C2B86D232BC3070F00AAAC63 /* AppPIN.swift */,
 				C2B86D252BC32F9200AAAC63 /* MainInteractor.swift */,
 				C2B86D272BC32FA300AAAC63 /* InteractorFactory.swift */,
 				C2B86D292BC33D3000AAAC63 /* AppDelegateInteractor.swift */,
-				C2B86D2B2BC3492A00AAAC63 /* Service.swift */,
 				C260DCC12BC885F1007807CC /* ServiceCellView.swift */,
-				C268918E2BC4974800713078 /* Category.swift */,
 				C268918B2BC4960C00713078 /* ServiceList */,
 				C2627F382BC72E19009F93A9 /* Service */,
 				C2B86D352BC3574900AAAC63 /* SettingsView.swift */,
@@ -10072,14 +10102,15 @@
 				C2B86D2A2BC33D3000AAAC63 /* AppDelegateInteractor.swift in Sources */,
 				C2A4D32E2BC0B1B20001587C /* Token.swift in Sources */,
 				C268918A2BC4960600713078 /* ServiceListPresenter.swift in Sources */,
-				C2A1B3B82BB608C900D6B923 /* PINKeyboardLayout.swift in Sources */,
+				C26983822BCC8326009B3BE2 /* AppPresenter.swift in Sources */,
 				C274C9D22BAB8ABB008E7212 /* ContentView.swift in Sources */,
 				C274C9D02BAB8ABB008E7212 /* TwoFASWatchApp.swift in Sources */,
 				C2B86D362BC3574900AAAC63 /* SettingsView.swift in Sources */,
 				C2627F3A2BC72E96009F93A9 /* ServicePresenter.swift in Sources */,
 				C2B86D282BC32FA300AAAC63 /* InteractorFactory.swift in Sources */,
+				C269837B2BCC5D03009B3BE2 /* PINKeyboardPresenter.swift in Sources */,
 				C2A4D32F2BC0B1B50001587C /* Generator.swift in Sources */,
-				C2A1B3B42BB6071C00D6B923 /* PINKeyboard.swift in Sources */,
+				C2A1B3B42BB6071C00D6B923 /* PINKeyboardView.swift in Sources */,
 				C268918D2BC4962300713078 /* ServiceListInteractor.swift in Sources */,
 				C2A4D32C2BC0B0C30001587C /* ServiceIcon.swift in Sources */,
 				C2A4D3312BC0B2540001587C /* TokenGenerator.swift in Sources */,
@@ -10095,6 +10126,7 @@
 				C2B86D262BC32F9200AAAC63 /* MainInteractor.swift in Sources */,
 				C260DCC22BC885F1007807CC /* ServiceCellView.swift in Sources */,
 				C2B86D242BC3070F00AAAC63 /* AppPIN.swift in Sources */,
+				C26983802BCC718D009B3BE2 /* PINKeyboardInteractor.swift in Sources */,
 				C2627F3C2BC72EA0009F93A9 /* ServiceInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -17,30 +17,24 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import SwiftUI
+import Foundation
 
-struct ServiceCellView: View {
-    let service: Service
+final class AppPresenter: ObservableObject {
+    @Published var isAppLocked: Bool
     
-    var body: some View {
-        HStack(alignment: .center, spacing: 8) {
-            Rectangle()
-                .fill(service.badgeColor)
-                .frame(width: 5)
-            IconRenderer(service: service)
-            VStack(alignment: .leading, spacing: 8) {
-                Text(service.name)
-                    .font(.callout)
-                    .padding(4)
-                    .foregroundStyle(.primary)
-                if let additionalInfo = service.additionalInfo {
-                    Text(additionalInfo)
-                        .padding(.horizontal, 4)
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                }
-            }
-        }
-        .listItemTint(.clear)
+    private let mainRepository: MainRepository
+    
+    init(mainRepository: MainRepository) {
+        self.mainRepository = mainRepository
+        isAppLocked = mainRepository.isAppLocked
+    }
+    
+    func update() {
+        isAppLocked = mainRepository.isAppLocked
+    }
+    
+    func unlockApp() {
+        mainRepository.unlockApp()
+        isAppLocked = mainRepository.isAppLocked
     }
 }

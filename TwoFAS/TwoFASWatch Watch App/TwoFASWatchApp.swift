@@ -22,26 +22,36 @@ import SwiftUI
 @main
 struct TwoFASWatch_Watch_AppApp: App {
     @WKApplicationDelegateAdaptor var appDelegate: AppDelegateInteractor
-//    @State var isPresented: Bool = false
+    @State var locked: Bool = false
+    @ObservedObject var presenter = AppPresenter(mainRepository: MainRepositoryImpl.shared)
     var body: some Scene {
         WindowGroup {
-            MainView(
-                presenter: MainPresenter(interactor: InteractorFactory.shared.mainInteractor())
-            )
-            .containerBackground(.red.gradient, for: .navigation)
-            
-//            Button("Present!") {
-//                       isPresented.toggle()
-//                   }
-//                   .fullScreenCover(isPresented: $isPresented, content: PINKeyboard.init)
-            
-//            PINKeyboard()
-////                .sheet(item: $presentingModal, content: { id in
-////                    PINKeyboard()
-////                })
-//                .fullScreenCover(item: $test) { id in
-//                    PINKeyboard()
-//                }
+            if presenter.isAppLocked {
+                NavigationStack {
+                    PINKeyboardView(
+                        presenter: PINKeyboardPresenter(
+                            interactor: PINKeyboardInteractor(
+                                mainRepository: MainRepositoryImpl.shared,
+                                variant: .PINValidation), completion: { result in
+                                    guard result == .verified else { return }
+                                    presenter.unlockApp()
+                                }
+                        )
+                    )
+                }
+            } else {
+                MainView(
+                    presenter: MainPresenter(
+                        interactor: InteractorFactory.shared.mainInteractor()
+                    )
+                )
+                .containerBackground(.red.gradient, for: .navigation)
+            }
+        }
+        .onChange(of: WKApplication.shared().applicationState) { oldValue, newValue in
+            if newValue == .active {
+                presenter.update()
+            }
         }
     }
 }

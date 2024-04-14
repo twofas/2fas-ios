@@ -42,7 +42,9 @@ final class AppDelegateInteractor: NSObject, WKApplicationDelegate {
 
     func applicationDidBecomeActive() {
         mainRepository.synchronizeCloudBackup()
-        // TODO: Show PIN
+        if mainRepository.pin != nil {
+            mainRepository.lockApp()
+        }
     }
 
     func applicationWillResignActive() {
@@ -50,7 +52,9 @@ final class AppDelegateInteractor: NSObject, WKApplicationDelegate {
     }
 
     func applicationWillEnterForeground() {
-        // TODO: Show PIN
+        if mainRepository.pin != nil {
+            mainRepository.lockApp()
+        }
     }
 
     func applicationDidEnterBackground() {}

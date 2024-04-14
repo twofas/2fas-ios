@@ -23,7 +23,7 @@ import ProtectionWatch
 
 protocol UserDefaultsRepository: AnyObject {
     var pin: AppPIN? { get }
-    func setPIN(_ pin: AppPIN)
+    func setPIN(_ pin: AppPIN?)
 
     var sortType: SortType? { get }
     func setSortType(_ sortType: SortType)
@@ -58,7 +58,12 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         return decrypted
     }
     
-    func setPIN(_ pin: AppPIN) {
+    func setPIN(_ pin: AppPIN?) {
+        guard let pin else {
+            userDefaults.set(nil, forKey: Keys.pin.rawValue)
+            userDefaults.synchronize()
+            return
+        }
         do {
             let encrypted = AppPIN(type: pin.type, value: localEncryption.encrypt(pin.value))
             let encodedNode = try encoder.encode(encrypted)

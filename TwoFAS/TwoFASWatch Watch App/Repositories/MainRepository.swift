@@ -49,7 +49,11 @@ protocol MainRepository: AnyObject {
     var sortType: SortType? { get }
     func setSortType(_ sortType: SortType)
     var pin: AppPIN? { get }
-    func setPIN(_ pin: AppPIN)
+    func setPIN(_ pin: AppPIN?)
+    
+    func lockApp()
+    func unlockApp()
+    var isAppLocked: Bool { get }
     
     var currentCloudState: CloudState { get }
     func registerForCloudStateChanges(_ listener: @escaping CloudStateListener, id: CloudStateListenerID)
@@ -86,6 +90,8 @@ final class MainRepositoryImpl: MainRepository {
     let storageRepository: StorageRepository
     
     let notificationCenter = NotificationCenter.default
+    
+    private(set) var isAppLocked: Bool
     
     private static var _shared: MainRepositoryImpl!
     
@@ -143,11 +149,13 @@ final class MainRepositoryImpl: MainRepository {
         userDefaultsRepository = UserDefaultsRepositoryImpl()
         
         storageRepository = storage.storageRepository
+        isAppLocked = userDefaultsRepository.pin != nil
         MainRepositoryImpl._shared = self
         
         storage.addUserPresentableError { [weak self] error in
             self?.storageError?(error)
         }
+        
     }
 }
 
@@ -216,8 +224,17 @@ extension MainRepositoryImpl {
         userDefaultsRepository.pin
     }
     
-    func setPIN(_ pin: AppPIN) {
+    func setPIN(_ pin: AppPIN?) {
         userDefaultsRepository.setPIN(pin)
+    }
+}
+
+extension MainRepositoryImpl {
+    func lockApp() {
+        isAppLocked = true
+    }
+    func unlockApp() {
+        isAppLocked = false
     }
 }
 

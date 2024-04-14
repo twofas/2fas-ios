@@ -36,7 +36,7 @@ final class ServicePresenter: ObservableObject {
         name = interactor.service.name
         additionalInfo = interactor.service.additionalInfo
         service = interactor.service
-        isFavorite =  interactor.isFavorite()
+        isFavorite = interactor.isFavorite()
     }
 }
 

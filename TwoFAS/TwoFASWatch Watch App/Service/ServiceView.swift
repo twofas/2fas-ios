@@ -74,9 +74,9 @@ struct ServiceView: View {
                     presenter.toggleFavorite()
                 } label: {
                     if presenter.isFavorite {
-                        Image(systemName:"star.fill")
+                        Image(systemName: "star.fill")
                     } else {
-                        Image(systemName:"star")
+                        Image(systemName: "star")
                     }
                 }
                 .controlSize(.mini)

@@ -155,7 +155,6 @@ final class MainRepositoryImpl: MainRepository {
         storage.addUserPresentableError { [weak self] error in
             self?.storageError?(error)
         }
-        
     }
 }
 

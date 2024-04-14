@@ -26,7 +26,7 @@ struct ServiceListView: View {
         Group {
             if presenter.list.isEmpty {
                 VStack(alignment: .center, spacing: 4) {
-                    Image(systemName:"folder")
+                    Image(systemName: "folder")
                     Text("No services")
                 }
             } else {

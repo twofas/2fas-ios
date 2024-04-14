@@ -587,8 +587,6 @@
 		C274CA602BAB8C3F008E7212 /* Protection.h in Headers */ = {isa = PBXBuildFile; fileRef = C2147CB7205D78600001D011 /* Protection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C274CA622BAB8C3F008E7212 /* ExtensionsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23443DD26B08EAA00C9F645 /* ExtensionsStorage.swift */; };
 		C274CA632BAB8C3F008E7212 /* CodeStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CC3205D78790001D011 /* CodeStorage.swift */; };
-		C274CA652BAB8C3F008E7212 /* RSAKeyStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278122227FA16BC00F31453 /* RSAKeyStorage.swift */; };
-		C274CA682BAB8C3F008E7212 /* BiometryFingerprintStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27CDA7A29A2CFA200DC7C98 /* BiometryFingerprintStorage.swift */; };
 		C274CA692BAB8C3F008E7212 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1513F294E831300F8B511 /* Keys.swift */; };
 		C274CA6A2BAB8C3F008E7212 /* LocalKeyEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20F00DD25698F0A0026FBB2 /* LocalKeyEncryption.swift */; };
 		C274CA6D2BAB8C3F008E7212 /* ExportPublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278121B27F9F3E600F31453 /* ExportPublicKey.swift */; };
@@ -596,8 +594,6 @@
 		C274CA6F2BAB8C3F008E7212 /* LocalEncryptedStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22E417825DF076300105195 /* LocalEncryptedStorage.swift */; };
 		C274CA702BAB8C3F008E7212 /* BiometricAuthDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CC5205D78790001D011 /* BiometricAuthDelegate.swift */; };
 		C274CA722BAB8C3F008E7212 /* KeyEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22E418725DF07B300105195 /* KeyEncryption.swift */; };
-		C274CA762BAB8C3F008E7212 /* SwCrypt in Frameworks */ = {isa = PBXBuildFile; productRef = C274CA5D2BAB8C3F008E7212 /* SwCrypt */; };
-		C274CA772BAB8C3F008E7212 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; platformFilters = (ios, watchos, ); productRef = C274CA5B2BAB8C3F008E7212 /* KeychainAccess */; };
 		C274CA7E2BAB8C5B008E7212 /* CommonWatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C274CA232BAB8B92008E7212 /* CommonWatch.framework */; };
 		C274CA832BAB8C70008E7212 /* ProtectionWatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C274CA7C2BAB8C3F008E7212 /* ProtectionWatch.framework */; };
 		C274CA882BAB8CBD008E7212 /* CommonWatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C274CA232BAB8B92008E7212 /* CommonWatch.framework */; };
@@ -3154,8 +3150,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C274CA762BAB8C3F008E7212 /* SwCrypt in Frameworks */,
-				C274CA772BAB8C3F008E7212 /* KeychainAccess in Frameworks */,
 				C274CA7E2BAB8C5B008E7212 /* CommonWatch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8589,8 +8583,6 @@
 			);
 			name = ProtectionWatch;
 			packageProductDependencies = (
-				C274CA5B2BAB8C3F008E7212 /* KeychainAccess */,
-				C274CA5D2BAB8C3F008E7212 /* SwCrypt */,
 			);
 			productName = Protection;
 			productReference = C274CA7C2BAB8C3F008E7212 /* ProtectionWatch.framework */;
@@ -10236,8 +10228,6 @@
 			files = (
 				C274CA622BAB8C3F008E7212 /* ExtensionsStorage.swift in Sources */,
 				C274CA632BAB8C3F008E7212 /* CodeStorage.swift in Sources */,
-				C274CA652BAB8C3F008E7212 /* RSAKeyStorage.swift in Sources */,
-				C274CA682BAB8C3F008E7212 /* BiometryFingerprintStorage.swift in Sources */,
 				C274CA972BAB8FD8008E7212 /* Protection.swift in Sources */,
 				C274CA692BAB8C3F008E7212 /* Keys.swift in Sources */,
 				C274CA6A2BAB8C3F008E7212 /* LocalKeyEncryption.swift in Sources */,
@@ -11179,8 +11169,9 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.StorageWatch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp.StorageWatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -11221,8 +11212,9 @@
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.StorageWatch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp.StorageWatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -11928,8 +11920,9 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.SyncWatch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp.SyncWatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -11971,8 +11964,9 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.SyncWatch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp.SyncWatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -12016,7 +12010,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASWatch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -12058,7 +12052,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASWatch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -12100,8 +12094,9 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.CommonWatch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp.CommonWatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -12146,8 +12141,9 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.CommonWatch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp.CommonWatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -12192,8 +12188,9 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.ContentWatch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp.ContentWatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -12238,8 +12235,9 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.ContentWatch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp.ContentWatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -12282,8 +12280,9 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.ProtectionWatch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp.ProtectionWatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -12325,8 +12324,9 @@
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.ProtectionWatch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp.ProtectionWatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -12527,9 +12527,10 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRIVATE_HEADERS_FOLDER_PATH = Base32.framework/PrivateHeaders;
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Base32Watch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp.Base32Watch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = Base32.framework/Headers;
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -12573,9 +12574,10 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
 				PRIVATE_HEADERS_FOLDER_PATH = Base32.framework/PrivateHeaders;
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Base32Watch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp.Base32Watch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = Base32.framework/Headers;
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -13531,22 +13533,6 @@
 				minimumVersion = 4.2.1;
 			};
 		};
-		C274CA5C2BAB8C3F008E7212 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.2.0;
-			};
-		};
-		C274CA5E2BAB8C3F008E7212 /* XCRemoteSwiftPackageReference "SwCrypt" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/soyersoyer/SwCrypt";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.1.4;
-			};
-		};
 		C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/soyersoyer/SwCrypt";
@@ -13604,16 +13590,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
-		};
-		C274CA5B2BAB8C3F008E7212 /* KeychainAccess */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C274CA5C2BAB8C3F008E7212 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
-			productName = KeychainAccess;
-		};
-		C274CA5D2BAB8C3F008E7212 /* SwCrypt */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C274CA5E2BAB8C3F008E7212 /* XCRemoteSwiftPackageReference "SwCrypt" */;
-			productName = SwCrypt;
 		};
 		C278121E27F9F4C000F31453 /* SwCrypt */ = {
 			isa = XCSwiftPackageProductDependency;

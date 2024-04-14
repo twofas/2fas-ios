@@ -22,7 +22,7 @@ import SwiftUI
 @main
 struct TwoFASWatch_Watch_AppApp: App {
     @WKApplicationDelegateAdaptor var appDelegate: AppDelegateInteractor
-    @State var locked: Bool = false
+    @State var locked = false
     @ObservedObject var presenter = AppPresenter(mainRepository: MainRepositoryImpl.shared)
     var body: some Scene {
         WindowGroup {
@@ -48,7 +48,7 @@ struct TwoFASWatch_Watch_AppApp: App {
                 .containerBackground(.red.gradient, for: .navigation)
             }
         }
-        .onChange(of: WKApplication.shared().applicationState) { oldValue, newValue in
+        .onChange(of: WKApplication.shared().applicationState) { _, newValue in
             if newValue == .active {
                 presenter.update()
             }

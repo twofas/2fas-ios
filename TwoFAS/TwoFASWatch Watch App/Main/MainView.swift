@@ -29,7 +29,7 @@ struct MainView: View {
                 if !presenter.favoriteList.isEmpty {
                     Section(header:
                                 HStack(alignment: .center) {
-                                    Image(systemName:"star.fill")
+                                    Image(systemName: "star.fill")
                                     Text("Favorite Services")
                                 }
                         ) {
@@ -54,7 +54,7 @@ struct MainView: View {
                         )
                     )) {
                         HStack(alignment: .center) {
-                            Image(systemName:"folder")
+                            Image(systemName: "folder")
                             Text("All Services")
                                 .font(.callout)
                                 .padding(4)
@@ -64,7 +64,7 @@ struct MainView: View {
                     
                     NavigationLink(destination: SettingsView()) {
                         HStack(alignment: .center) {
-                            Image(systemName:"gear")
+                            Image(systemName: "gear")
                             Text("Settings")
                                 .font(.callout)
                                 .padding(4)

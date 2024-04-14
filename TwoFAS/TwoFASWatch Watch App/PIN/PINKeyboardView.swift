@@ -72,7 +72,7 @@ struct PINKeyboardView: View {
                 }
             }
         }
-        .onChange(of: presenter.animateFailure, { oldValue, newValue in
+        .onChange(of: presenter.animateFailure, { _, newValue in
             if newValue {
                 withAnimation(.easeInOut(duration: 1)) {
                     shake = 3
@@ -89,7 +89,7 @@ struct PINKeyboardView: View {
         .ignoresSafeArea(edges: [.horizontal, .bottom])
         .toolbar(content: {
             if presenter.showCloseButton {
-                ToolbarItem(placement: .cancellationAction){
+                ToolbarItem(placement: .cancellationAction) {
                     Button {
                         presenter.onCloseAction()
                     } label: {
@@ -142,7 +142,7 @@ public struct KeyboardButton: ButtonStyle {
     
     public func makeBody(configuration: Configuration) -> some View {
         GeometryReader(content: { geometry in
-            if configuration.isPressed  {
+            if configuration.isPressed {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .fill(Color.gray.opacity(0.7))
                     .frame(width: geometry.size.width, height: geometry.size.height)
@@ -150,7 +150,7 @@ public struct KeyboardButton: ButtonStyle {
             } else {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .fill(Color.gray.opacity(0.5))
-                    .frame(width:  geometry.size.width, height:  geometry.size.height)
+                    .frame(width: geometry.size.width, height: geometry.size.height)
                     .scaleEffect(1)
             }
             
@@ -161,8 +161,8 @@ public struct KeyboardButton: ButtonStyle {
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .fill(Color.clear)
                                 .frame(
-                                    width: configuration.isPressed ? geometry.size.width/0.75 : geometry.size.width,
-                                    height: configuration.isPressed ? geometry.size.height/0.8 : geometry.size.height
+                                    width: configuration.isPressed ? geometry.size.width / 0.75 : geometry.size.width,
+                                    height: configuration.isPressed ? geometry.size.height / 0.8 : geometry.size.height
                                 )
                         })
                     }

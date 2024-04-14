@@ -30,7 +30,6 @@ struct ServiceView: View {
     
     @ViewBuilder
     var body: some View {
-            //            Spacer()
             TimelineView(.explicit(presenter.timelineEntries())) { context in
                 VStack(alignment: .leading, spacing: nil) {
                     HStack(alignment: .center, spacing: nil) {
@@ -42,13 +41,8 @@ struct ServiceView: View {
                             .lineLimit(1)
                             .contentTransition(.numericText(countsDown: true))
                     }
-                    //                Spacer(minLength: spacing * 3)
                     Spacer()
                     VStack(alignment: .leading, spacing: 3) {
-//                        Text(presenter.name)
-//                            .font(.caption)
-//                            .multilineTextAlignment(.leading)
-//                            .lineLimit(1)
                         Text(presenter.calculateToken(for: context.date))
                             .font(Font.system(.title).weight(.light).monospacedDigit())
                             .multilineTextAlignment(.leading)
@@ -56,7 +50,6 @@ struct ServiceView: View {
                             .contentTransition(.numericText())
                             .foregroundColor(.primary)
                             .layoutPriority(1)
-//                            .background(Material.ultraThin, in: RoundedRectangle(cornerRadius: 8))
                         if let info = presenter.additionalInfo {
                             Text(info)
                                 .lineLimit(1)
@@ -78,16 +71,19 @@ struct ServiceView: View {
         .toolbar {
             ToolbarItem(placement: .bottomBar) {
                 Button {
-                    print("Test")
+                    presenter.toggleFavorite()
                 } label: {
-                    Image(systemName:"star")
+                    if presenter.isFavorite {
+                        Image(systemName:"star.fill")
+                    } else {
+                        Image(systemName:"star")
+                    }
                 }
                 .controlSize(.mini)
                 .background(Color.accentColor, in: Circle())
             }
         }
         .scenePadding()
-//        .background(Color.accentColor.gradient)
     }
     
     @ViewBuilder

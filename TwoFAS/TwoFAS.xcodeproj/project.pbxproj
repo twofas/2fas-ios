@@ -5592,6 +5592,16 @@
 			path = PIN;
 			sourceTree = "<group>";
 		};
+		C26983832BCC8F6B009B3BE2 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				C2B86D2D2BC3498D00AAAC63 /* MainView.swift */,
+				C2B86D2F2BC349AE00AAAC63 /* MainPresenter.swift */,
+				C2B86D252BC32F9200AAAC63 /* MainInteractor.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		C2698B662986B3E500EBC179 /* MainTab */ = {
 			isa = PBXGroup;
 			children = (
@@ -5711,11 +5721,9 @@
 				C274C9CF2BAB8ABB008E7212 /* TwoFASWatchApp.swift */,
 				C26983812BCC8326009B3BE2 /* AppPresenter.swift */,
 				C274C9D12BAB8ABB008E7212 /* ContentView.swift */,
-				C2B86D2D2BC3498D00AAAC63 /* MainView.swift */,
-				C2B86D2F2BC349AE00AAAC63 /* MainPresenter.swift */,
+				C26983832BCC8F6B009B3BE2 /* Main */,
 				C274C9D32BAB8ABC008E7212 /* Assets.xcassets */,
 				C274C9D52BAB8ABC008E7212 /* Preview Content */,
-				C2B86D252BC32F9200AAAC63 /* MainInteractor.swift */,
 				C2B86D272BC32FA300AAAC63 /* InteractorFactory.swift */,
 				C2B86D292BC33D3000AAAC63 /* AppDelegateInteractor.swift */,
 				C260DCC12BC885F1007807CC /* ServiceCellView.swift */,

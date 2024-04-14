@@ -24,6 +24,7 @@ final class ServicePresenter: ObservableObject {
     @Published var name = ""
     @Published var additionalInfo: String?
     @Published var service: Service
+    @Published var isFavorite: Bool
     
     private let interactor: ServiceInteracting
     
@@ -35,6 +36,7 @@ final class ServicePresenter: ObservableObject {
         name = interactor.service.name
         additionalInfo = interactor.service.additionalInfo
         service = interactor.service
+        isFavorite =  interactor.isFavorite()
     }
 }
 
@@ -49,5 +51,10 @@ extension ServicePresenter {
     
     func timeToNextDate(for date: Date) -> Date {
         interactor.timeToNextDate(for: date)
+    }
+    
+    func toggleFavorite() {
+        interactor.toogleFavorite()
+        isFavorite = interactor.isFavorite()
     }
 }

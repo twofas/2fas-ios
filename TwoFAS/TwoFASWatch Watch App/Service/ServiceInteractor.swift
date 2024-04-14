@@ -27,6 +27,9 @@ protocol ServiceInteracting: AnyObject {
     func token(for date: Date) -> TokenValue
     func timelineEntries(for date: Date) -> [Date]
     func timeToNextDate(for date: Date) -> Date
+    
+    func isFavorite() -> Bool
+    func toogleFavorite()
 }
 
 final class ServiceInteractor {
@@ -106,5 +109,17 @@ extension ServiceInteractor: ServiceInteracting {
         }
         
         return entries
+    }
+    
+    func isFavorite() -> Bool {
+        mainRepository.listFavoriteServices().contains(where: { $0.secret == service.id })
+    }
+    
+    func toogleFavorite() {
+        if isFavorite() {
+            mainRepository.removeFavoriteService(service.id)
+        } else {
+            mainRepository.addFavoriteService(service.id)
+        }
     }
 }

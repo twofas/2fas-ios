@@ -27,7 +27,12 @@ struct MainView: View {
         NavigationStack {
             List {
                 if !presenter.favoriteList.isEmpty {
-                    Section(header: Text("Favorite Services")) {
+                    Section(header:
+                                HStack(alignment: .center) {
+                                    Image(systemName:"star.fill")
+                                    Text("Favorite Services")
+                                }
+                        ) {
                         ForEach(presenter.favoriteList, id: \.self) { service in
                             NavigationLink(destination: ServiceView(
                                 presenter: ServicePresenter(
@@ -37,6 +42,8 @@ struct MainView: View {
                             ) {
                                 ServiceCellView(service: service)
                             }
+                            .listRowBackground(Color.clear)
+                            .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                         }
                     }
                 }
@@ -46,7 +53,8 @@ struct MainView: View {
                             interactor: InteractorFactory.shared.serviceListInteractor()
                         )
                     )) {
-                        VStack(alignment: .leading) {
+                        HStack(alignment: .center) {
+                            Image(systemName:"folder")
                             Text("All Services")
                                 .font(.callout)
                                 .padding(4)
@@ -55,7 +63,8 @@ struct MainView: View {
                     }
                     
                     NavigationLink(destination: SettingsView()) {
-                        VStack(alignment: .leading) {
+                        HStack(alignment: .center) {
+                            Image(systemName:"gear")
                             Text("Settings")
                                 .font(.callout)
                                 .padding(4)
@@ -64,9 +73,12 @@ struct MainView: View {
                     }
                 }
             }
+            .onAppear {
+                presenter.onAppear()
+            }
             .containerBackground(.red.gradient, for: .navigation)
             .listStyle(.carousel)
-            .environment(\.defaultMinListRowHeight, 70)
+            .environment(\.defaultMinListRowHeight, 50)
             .navigationTitle("2FAS")
             .navigationBarTitleDisplayMode(.automatic)
             .listItemTint(.clear)

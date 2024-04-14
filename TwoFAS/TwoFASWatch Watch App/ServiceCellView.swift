@@ -31,16 +31,18 @@ struct ServiceCellView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(service.name)
                     .font(.callout)
-                    .padding(4)
                     .foregroundStyle(.primary)
                 if let additionalInfo = service.additionalInfo {
                     Text(additionalInfo)
-                        .padding(.horizontal, 4)
                         .font(.caption2)
                         .foregroundStyle(.secondary)
                 }
             }
+            .padding(.vertical, 4)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Material.thin, in: Rectangle())
         .listItemTint(.clear)
+        .mask(RoundedRectangle(cornerRadius: 16))
     }
 }

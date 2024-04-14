@@ -23,33 +23,44 @@ struct ServiceListView: View {
     @ObservedObject var presenter: ServiceListPresenter
     
     var body: some View {
-        NavigationStack {
-            List {
-                ForEach(presenter.list, id: \.self) { category in
-                    Section(header: Text(category.name)) {
-                        ForEach(category.services, id: \.self) { service in
-                            NavigationLink(
-                                destination: ServiceView(
-                                    presenter: ServicePresenter(
-                                        interactor: InteractorFactory.shared.serviceInteractor(service: service)
-                                    )
-                                )
-                            ) {
-                                ServiceCellView(service: service)
+        Group {
+            if presenter.list.isEmpty {
+                VStack(alignment: .center, spacing: 4) {
+                    Image(systemName:"folder")
+                    Text("No services")
+                }
+            } else {
+                NavigationStack {
+                    List {
+                        ForEach(presenter.list, id: \.self) { category in
+                            Section(header: Text(category.name)) {
+                                ForEach(category.services, id: \.self) { service in
+                                    NavigationLink(
+                                        destination: ServiceView(
+                                            presenter: ServicePresenter(
+                                                interactor: InteractorFactory.shared.serviceInteractor(service: service)
+                                            )
+                                        )
+                                    ) {
+                                        ServiceCellView(service: service)
+                                    }
+                                    .listRowBackground(Color.clear)
+                                    .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                                }
                             }
                         }
                     }
                 }
             }
-            .onAppear {
-                presenter.onAppear()
-            }
-            .containerBackground(.red.gradient, for: .navigation)
-            .listStyle(.carousel)
-            .environment(\.defaultMinListRowHeight, 70)
-            .navigationTitle("Services")
-            .navigationBarTitleDisplayMode(.automatic)
-            .listItemTint(.clear)
         }
+        .onAppear {
+            presenter.onAppear()
+        }
+        .containerBackground(.red.gradient, for: .navigation)
+        .listStyle(.carousel)
+        .environment(\.defaultMinListRowHeight, 60)
+        .navigationTitle("Services")
+        .navigationBarTitleDisplayMode(.automatic)
+        .listItemTint(.clear)
     }
 }

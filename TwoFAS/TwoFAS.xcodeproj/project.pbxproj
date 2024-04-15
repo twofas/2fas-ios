@@ -251,6 +251,7 @@
 		C23BAB042545A861009B1EF8 /* CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23BAB032545A861009B1EF8 /* CloudKit.swift */; };
 		C23BAB142545AEF5009B1EF8 /* ConstStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23BAB132545AEF5009B1EF8 /* ConstStorage.swift */; };
 		C23EBF122651276800FA9E81 /* Kronos in Frameworks */ = {isa = PBXBuildFile; productRef = C23EBF112651276800FA9E81 /* Kronos */; };
+		C23FC6312BCD49BB0040FE5C /* Assets.car in Resources */ = {isa = PBXBuildFile; fileRef = C23FC62F2BCD49BB0040FE5C /* Assets.car */; };
 		C23FD50A2814635400E4E9C5 /* ComposeServiceWebExtensionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23FD5092814635400E4E9C5 /* ComposeServiceWebExtensionFlowController.swift */; };
 		C23FD5102814648C00E4E9C5 /* ComposeServiceWebExtensionModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23FD50F2814648C00E4E9C5 /* ComposeServiceWebExtensionModuleInteractor.swift */; };
 		C23FD51228146E2E00E4E9C5 /* ComposeServiceWebExtensionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23FD51128146E2E00E4E9C5 /* ComposeServiceWebExtensionPresenter.swift */; };
@@ -580,7 +581,6 @@
 		C274CA3F2BAB8BE3008E7212 /* ServiceDefinitionDatabaseImpl+Database7.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53B672B62DDFB008E1E70 /* ServiceDefinitionDatabaseImpl+Database7.swift */; };
 		C274CA402BAB8BE3008E7212 /* ServiceDefinitionDatabaseImpl+Database1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53B622B62DDFB008E1E70 /* ServiceDefinitionDatabaseImpl+Database1.swift */; };
 		C274CA412BAB8BE3008E7212 /* ServiceDefinitionDatabaseImpl+Database0.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53B582B62DDFB008E1E70 /* ServiceDefinitionDatabaseImpl+Database0.swift */; };
-		C274CA452BAB8BE3008E7212 /* Assets.car in Resources */ = {isa = PBXBuildFile; fileRef = C2E53B882B62DE13008E1E70 /* Assets.car */; };
 		C274CA4A2BAB8C23008E7212 /* CommonWatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C274CA232BAB8B92008E7212 /* CommonWatch.framework */; };
 		C274CA4F2BAB8C35008E7212 /* CommonWatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C274CA232BAB8B92008E7212 /* CommonWatch.framework */; };
 		C274CA532BAB8C35008E7212 /* ContentWatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C274CA492BAB8BE3008E7212 /* ContentWatch.framework */; };
@@ -2115,6 +2115,7 @@
 		C23BAAF32545A1E9009B1EF8 /* SyncHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncHandler.swift; sourceTree = "<group>"; };
 		C23BAB032545A861009B1EF8 /* CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKit.swift; sourceTree = "<group>"; };
 		C23BAB132545AEF5009B1EF8 /* ConstStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstStorage.swift; sourceTree = "<group>"; };
+		C23FC62F2BCD49BB0040FE5C /* Assets.car */ = {isa = PBXFileReference; lastKnownFileType = file; path = Assets.car; sourceTree = "<group>"; };
 		C23FD5092814635400E4E9C5 /* ComposeServiceWebExtensionFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionFlowController.swift; sourceTree = "<group>"; };
 		C23FD50F2814648C00E4E9C5 /* ComposeServiceWebExtensionModuleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionModuleInteractor.swift; sourceTree = "<group>"; };
 		C23FD51128146E2E00E4E9C5 /* ComposeServiceWebExtensionPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionPresenter.swift; sourceTree = "<group>"; };
@@ -4637,6 +4638,14 @@
 				C23736992AC08E4800792054 /* GuideSelectorFlowController.swift */,
 			);
 			path = Flow;
+			sourceTree = "<group>";
+		};
+		C23FC6302BCD49BB0040FE5C /* AssetsWatch */ = {
+			isa = PBXGroup;
+			children = (
+				C23FC62F2BCD49BB0040FE5C /* Assets.car */,
+			);
+			path = AssetsWatch;
 			sourceTree = "<group>";
 		};
 		C23FD50828144A4B00E4E9C5 /* WebExtension */ = {
@@ -7704,6 +7713,7 @@
 		C2E53B4C2B62DDCB008E1E70 /* Content */ = {
 			isa = PBXGroup;
 			children = (
+				C23FC6302BCD49BB0040FE5C /* AssetsWatch */,
 				C2E53B872B62DE13008E1E70 /* Assets */,
 				C2E53B562B62DDFB008E1E70 /* Sources */,
 				C2E53B4D2B62DDCB008E1E70 /* Content.h */,
@@ -9123,7 +9133,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C274CA452BAB8BE3008E7212 /* Assets.car in Resources */,
+				C23FC6312BCD49BB0040FE5C /* Assets.car in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

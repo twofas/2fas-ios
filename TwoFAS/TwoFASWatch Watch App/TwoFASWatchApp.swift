@@ -39,13 +39,21 @@ struct TwoFASWatch_Watch_AppApp: App {
                         )
                     )
                 }
+                .transition(.opacity)
             } else {
-                MainView(
-                    presenter: MainPresenter(
-                        interactor: InteractorFactory.shared.mainInteractor()
+                if presenter.showIntro {
+                    IntroductionView {
+                        presenter.markIntroAsShown()
+                    }
+                    .transition(.opacity)
+                } else {
+                    MainView(
+                        presenter: MainPresenter(
+                            interactor: InteractorFactory.shared.mainInteractor()
+                        )
                     )
-                )
-                .containerBackground(.red.gradient, for: .navigation)
+                    .containerBackground(.red.gradient, for: .navigation)
+                }
             }
         }
         .onChange(of: WKApplication.shared().applicationState) { _, newValue in

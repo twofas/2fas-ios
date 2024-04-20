@@ -57,7 +57,11 @@ final class AppDelegateInteractor: NSObject, WKApplicationDelegate {
         }
     }
 
-    func applicationDidEnterBackground() {}
+    func applicationDidEnterBackground() {
+        if mainRepository.pin != nil {
+            mainRepository.lockApp()
+        }
+    }
         
     func didReceiveRemoteNotification(
         _ userInfo: [AnyHashable: Any],

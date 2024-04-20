@@ -66,7 +66,7 @@ struct MainView: View {
                     NavigationLink(value: MainPath.settings) {
                         HStack(alignment: .center) {
                             Image(systemName: "gear")
-                            Text("Settings")
+                            Text(T.Settings.settings)
                                 .font(.callout)
                                 .padding(4)
                                 .foregroundStyle(.primary)

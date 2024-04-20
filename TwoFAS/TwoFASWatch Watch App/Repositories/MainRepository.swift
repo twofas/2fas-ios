@@ -231,9 +231,11 @@ extension MainRepositoryImpl {
 extension MainRepositoryImpl {
     func lockApp() {
         isAppLocked = true
+        notificationCenter.post(name: .appLockUpdate, object: nil)
     }
     func unlockApp() {
         isAppLocked = false
+        notificationCenter.post(name: .appLockUpdate, object: nil)
     }
 }
 
@@ -316,4 +318,8 @@ extension MainRepositoryImpl {
         }
         userDefaultsRepository.setFavoriteServices(favoriteServicesCache)
     }
+}
+
+public extension Notification.Name {
+    static let appLockUpdate = Notification.Name("appLockUpdate")
 }

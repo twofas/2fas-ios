@@ -648,6 +648,9 @@
 		C27FBA491FBA239600D424D8 /* ServiceEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27FBA471FBA239600D424D8 /* ServiceEntity+CoreDataClass.swift */; };
 		C27FBA4C1FBA23DD00D424D8 /* ServiceEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27FBA4B1FBA23DD00D424D8 /* ServiceEntity+CoreDataProperties.swift */; };
 		C281A2732BD47D6C0068451C /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C281A2722BD47D6C0068451C /* SuccessView.swift */; };
+		C281A2772BD489590068451C /* IntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C281A2762BD489590068451C /* IntroductionView.swift */; };
+		C281A2782BD48A930068451C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C225E617241CFCE90041C238 /* Localizable.strings */; };
+		C281A2792BD48A9C0068451C /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24AEDBF291BD119005F59CB /* T.generated.swift */; };
 		C2823B1626F3E84F00583586 /* RevealPasswordInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2823B1526F3E84F00583586 /* RevealPasswordInput.swift */; };
 		C2830D7A293D440900B3DDAF /* TokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D79293D440900B3DDAF /* TokensPresenter.swift */; };
 		C2830D7C293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D7B293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift */; };
@@ -2433,6 +2436,7 @@
 		C281909D2B0B84910042BB7D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C281909E2B0B84910042BB7D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C281A2722BD47D6C0068451C /* SuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
+		C281A2762BD489590068451C /* IntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionView.swift; sourceTree = "<group>"; };
 		C2823B1526F3E84F00583586 /* RevealPasswordInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealPasswordInput.swift; sourceTree = "<group>"; };
 		C2830D79293D440900B3DDAF /* TokensPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensPresenter.swift; sourceTree = "<group>"; };
 		C2830D7B293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+CommonSearchDataSourceSearchable.swift"; sourceTree = "<group>"; };
@@ -5767,6 +5771,7 @@
 				C260DCC02BC882AD007807CC /* TwoFASWatch-Watch-App-Info.plist */,
 				C274CAA02BAB98A5008E7212 /* TwoFASWatch Watch App.entitlements */,
 				C274C9CF2BAB8ABB008E7212 /* TwoFASWatchApp.swift */,
+				C281A2762BD489590068451C /* IntroductionView.swift */,
 				C26983812BCC8326009B3BE2 /* AppPresenter.swift */,
 				C26983832BCC8F6B009B3BE2 /* Main */,
 				C274C9D32BAB8ABC008E7212 /* Assets.xcassets */,
@@ -6919,9 +6924,9 @@
 				C2F8702A262C7A900032DB1F /* FileIcons */,
 				C2CB5D1125DB1B7E00A362A9 /* External */,
 				C2355B4A2221D33300BA001D /* GoogleService-Info.plist */,
+				C225E617241CFCE90041C238 /* Localizable.strings */,
 				C2BDC6DE1FC1F66F00967D0E /* TwoFAS.entitlements */,
 				C2D291DB2955FC9E0084FE1E /* Settings.bundle */,
-				C225E617241CFCE90041C238 /* Localizable.strings */,
 				C23666801FB2644900989ACA /* Assets.xcassets */,
 				C27C104826AE093200F00191 /* TwoFASWidgetExtension.entitlements */,
 				C23666821FB2644900989ACA /* LaunchScreen.storyboard */,
@@ -9166,6 +9171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C274C9D72BAB8ABC008E7212 /* Preview Assets.xcassets in Resources */,
+				C281A2782BD48A930068451C /* Localizable.strings in Resources */,
 				C274C9D42BAB8ABC008E7212 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -10160,6 +10166,8 @@
 				C2B86D2E2BC3498D00AAAC63 /* MainView.swift in Sources */,
 				C29378362BD1A3B6008D5125 /* AboutView.swift in Sources */,
 				C2A4D3152BC097F80001587C /* MainRepository.swift in Sources */,
+				C281A2772BD489590068451C /* IntroductionView.swift in Sources */,
+				C281A2792BD48A9C0068451C /* T.generated.swift in Sources */,
 				C2B86D2A2BC33D3000AAAC63 /* AppDelegateInteractor.swift in Sources */,
 				C2A4D32E2BC0B1B20001587C /* Token.swift in Sources */,
 				C268918A2BC4960600713078 /* ServiceListPresenter.swift in Sources */,

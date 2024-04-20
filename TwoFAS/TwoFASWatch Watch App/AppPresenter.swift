@@ -21,14 +21,19 @@ import Foundation
 
 final class AppPresenter: ObservableObject {
     @Published var isAppLocked: Bool
+    @Published var showIntro: Bool
     
     private let mainRepository: MainRepository
+    private let notificationCenter = NotificationCenter.default
     
     init(mainRepository: MainRepository) {
         self.mainRepository = mainRepository
         isAppLocked = mainRepository.isAppLocked
+        showIntro = !mainRepository.wasIntroductionShown()
+        notificationCenter.addObserver(self, selector: #selector(update), name: .appLockUpdate, object: nil)
     }
     
+    @objc
     func update() {
         isAppLocked = mainRepository.isAppLocked
     }
@@ -36,5 +41,14 @@ final class AppPresenter: ObservableObject {
     func unlockApp() {
         mainRepository.unlockApp()
         isAppLocked = mainRepository.isAppLocked
+    }
+    
+    func markIntroAsShown() {
+        mainRepository.markIntroductionAsShown()
+        showIntro = false
+    }
+    
+    deinit {
+        notificationCenter.removeObserver(self)
     }
 }

@@ -496,7 +496,6 @@
 		C274C9BC2BAB89C7008E7212 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27E6FB528FC8B0000AC9FD1 /* Info.swift */; };
 		C274C9BD2BAB89C7008E7212 /* RecordIDGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C4F64828FE002F00285B81 /* RecordIDGenerator.swift */; };
 		C274C9D02BAB8ABB008E7212 /* TwoFASWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C274C9CF2BAB8ABB008E7212 /* TwoFASWatchApp.swift */; };
-		C274C9D22BAB8ABB008E7212 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C274C9D12BAB8ABB008E7212 /* ContentView.swift */; };
 		C274C9D42BAB8ABC008E7212 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C274C9D32BAB8ABC008E7212 /* Assets.xcassets */; };
 		C274C9D72BAB8ABC008E7212 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C274C9D62BAB8ABC008E7212 /* Preview Assets.xcassets */; };
 		C274C9DA2BAB8ABC008E7212 /* TwoFASWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C274C9CD2BAB8ABB008E7212 /* TwoFASWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -648,6 +647,7 @@
 		C27E6FBA28FCA73400AC9FD1 /* ItemHandlerMigrationProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27E6FB928FCA73400AC9FD1 /* ItemHandlerMigrationProxy.swift */; };
 		C27FBA491FBA239600D424D8 /* ServiceEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27FBA471FBA239600D424D8 /* ServiceEntity+CoreDataClass.swift */; };
 		C27FBA4C1FBA23DD00D424D8 /* ServiceEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27FBA4B1FBA23DD00D424D8 /* ServiceEntity+CoreDataProperties.swift */; };
+		C281A2732BD47D6C0068451C /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C281A2722BD47D6C0068451C /* SuccessView.swift */; };
 		C2823B1626F3E84F00583586 /* RevealPasswordInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2823B1526F3E84F00583586 /* RevealPasswordInput.swift */; };
 		C2830D7A293D440900B3DDAF /* TokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D79293D440900B3DDAF /* TokensPresenter.swift */; };
 		C2830D7C293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D7B293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift */; };
@@ -686,6 +686,12 @@
 		C28B38C927CD784D00BD4A96 /* RefreshTokenCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28B38C827CD784D00BD4A96 /* RefreshTokenCounter.swift */; };
 		C28B9120268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C28B911F268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel */; };
 		C28C441724A67B7000534B30 /* CommonSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28C441624A67B7000534B30 /* CommonSearchBar.swift */; };
+		C29378302BD1A218008D5125 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C293782F2BD1A218008D5125 /* SettingsView.swift */; };
+		C29378342BD1A342008D5125 /* SecurityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29378332BD1A342008D5125 /* SecurityView.swift */; };
+		C29378362BD1A3B6008D5125 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29378352BD1A3B6008D5125 /* AboutView.swift */; };
+		C29378382BD1BF15008D5125 /* SecurityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29378372BD1BF15008D5125 /* SecurityPresenter.swift */; };
+		C293783A2BD1BF23008D5125 /* SecurityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29378392BD1BF23008D5125 /* SecurityInteractor.swift */; };
+		C293783D2BD1C24A008D5125 /* PINTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C293783C2BD1C24A008D5125 /* PINTypeView.swift */; };
 		C2959627267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2959626267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift */; };
 		C295962B267F79190086DEB1 /* TokensSectionHeader+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C295962A267F79190086DEB1 /* TokensSectionHeader+.swift */; };
 		C29626B8236F80A200C133BC /* Animate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29626B7236F80A200C133BC /* Animate.swift */; };
@@ -885,7 +891,6 @@
 		C2B86D302BC349AE00AAAC63 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B86D2F2BC349AE00AAAC63 /* MainPresenter.swift */; };
 		C2B86D322BC356BA00AAAC63 /* ServiceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B86D312BC356BA00AAAC63 /* ServiceListView.swift */; };
 		C2B86D342BC3571E00AAAC63 /* ServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B86D332BC3571E00AAAC63 /* ServiceView.swift */; };
-		C2B86D362BC3574900AAAC63 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B86D352BC3574900AAAC63 /* SettingsView.swift */; };
 		C2B86D382BC35B8300AAAC63 /* IconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B86D372BC35B8300AAAC63 /* IconRenderer.swift */; };
 		C2B90EEE281EB3CF004B8AEC /* MainRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B90EED281EB3CF004B8AEC /* MainRepositoryImpl.swift */; };
 		C2B90EF0281EB3F8004B8AEC /* MainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B90EEF281EB3F8004B8AEC /* MainRepository.swift */; };
@@ -1011,6 +1016,7 @@
 		C2E2C81127B03E7300F04B70 /* SearchResultEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2C81027B03E7300F04B70 /* SearchResultEmptyView.swift */; };
 		C2E2C81427B0702300F04B70 /* CollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2C81327B0702300F04B70 /* CollectionViewAdapter.swift */; };
 		C2E2C81627B070B700F04B70 /* CollectionViewDataSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2C81527B070B700F04B70 /* CollectionViewDataSnapshot.swift */; };
+		C2E3A2B12BD4600F00DCBEF6 /* SecurityPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E3A2B02BD4600F00DCBEF6 /* SecurityPath.swift */; };
 		C2E3CBF629210320006A1522 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2E3CBF429210320006A1522 /* Localizable.strings */; };
 		C2E3CBF829210624006A1522 /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E3CBF729210624006A1522 /* T.generated.swift */; };
 		C2E3D55927D94ECB0050AF48 /* BrowserExtensionIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E3D55827D94ECB0050AF48 /* BrowserExtensionIntroView.swift */; };
@@ -2352,7 +2358,6 @@
 		C274C9C62BAB89C7008E7212 /* SyncWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SyncWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C274C9CD2BAB8ABB008E7212 /* TwoFASWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TwoFASWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C274C9CF2BAB8ABB008E7212 /* TwoFASWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWatchApp.swift; sourceTree = "<group>"; };
-		C274C9D12BAB8ABB008E7212 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C274C9D32BAB8ABC008E7212 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C274C9D62BAB8ABC008E7212 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C274CA232BAB8B92008E7212 /* CommonWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2427,6 +2432,7 @@
 		C281909C2B0B84910042BB7D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C281909D2B0B84910042BB7D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C281909E2B0B84910042BB7D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C281A2722BD47D6C0068451C /* SuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
 		C2823B1526F3E84F00583586 /* RevealPasswordInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealPasswordInput.swift; sourceTree = "<group>"; };
 		C2830D79293D440900B3DDAF /* TokensPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensPresenter.swift; sourceTree = "<group>"; };
 		C2830D7B293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+CommonSearchDataSourceSearchable.swift"; sourceTree = "<group>"; };
@@ -2479,6 +2485,12 @@
 		C28ECE991FEDBFB3000EBB9D /* CameraDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraDelegate.swift; sourceTree = "<group>"; };
 		C28ECE9F1FEE8273000EBB9D /* CodeParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeParser.swift; sourceTree = "<group>"; };
 		C28ECEA51FEEA9CE000EBB9D /* QueryItemsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryItemsType.swift; sourceTree = "<group>"; };
+		C293782F2BD1A218008D5125 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C29378332BD1A342008D5125 /* SecurityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityView.swift; sourceTree = "<group>"; };
+		C29378352BD1A3B6008D5125 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		C29378372BD1BF15008D5125 /* SecurityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityPresenter.swift; sourceTree = "<group>"; };
+		C29378392BD1BF23008D5125 /* SecurityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityInteractor.swift; sourceTree = "<group>"; };
+		C293783C2BD1C24A008D5125 /* PINTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINTypeView.swift; sourceTree = "<group>"; };
 		C2959626267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDiffableDataSourceSnapshot+.swift"; sourceTree = "<group>"; };
 		C295962A267F79190086DEB1 /* TokensSectionHeader+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensSectionHeader+.swift"; sourceTree = "<group>"; };
 		C29626B7236F80A200C133BC /* Animate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animate.swift; sourceTree = "<group>"; };
@@ -2655,7 +2667,6 @@
 		C2B86D2F2BC349AE00AAAC63 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		C2B86D312BC356BA00AAAC63 /* ServiceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListView.swift; sourceTree = "<group>"; };
 		C2B86D332BC3571E00AAAC63 /* ServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceView.swift; sourceTree = "<group>"; };
-		C2B86D352BC3574900AAAC63 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C2B86D372BC35B8300AAAC63 /* IconRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconRenderer.swift; sourceTree = "<group>"; };
 		C2B90EED281EB3CF004B8AEC /* MainRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepositoryImpl.swift; sourceTree = "<group>"; };
 		C2B90EEF281EB3F8004B8AEC /* MainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepository.swift; sourceTree = "<group>"; };
@@ -2828,6 +2839,7 @@
 		C2E2C81027B03E7300F04B70 /* SearchResultEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultEmptyView.swift; sourceTree = "<group>"; };
 		C2E2C81327B0702300F04B70 /* CollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewAdapter.swift; sourceTree = "<group>"; };
 		C2E2C81527B070B700F04B70 /* CollectionViewDataSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSnapshot.swift; sourceTree = "<group>"; };
+		C2E3A2B02BD4600F00DCBEF6 /* SecurityPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityPath.swift; sourceTree = "<group>"; };
 		C2E3CBF529210320006A1522 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = TwoFAS/Other/en.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C2E3CBF729210624006A1522 /* T.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = T.generated.swift; sourceTree = "<group>"; };
 		C2E3D55827D94ECB0050AF48 /* BrowserExtensionIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroView.swift; sourceTree = "<group>"; };
@@ -4948,6 +4960,37 @@
 			path = NetworkStack;
 			sourceTree = "<group>";
 		};
+		C244BE492BD07AA000F7E566 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C244BE4B2BD07AFF00F7E566 /* Security */,
+				C244BE4A2BD07AFA00F7E566 /* About */,
+				C293782F2BD1A218008D5125 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		C244BE4A2BD07AFA00F7E566 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				C29378352BD1A3B6008D5125 /* AboutView.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
+		C244BE4B2BD07AFF00F7E566 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				C293783B2BD1C240008D5125 /* PINType */,
+				C29378332BD1A342008D5125 /* SecurityView.swift */,
+				C29378372BD1BF15008D5125 /* SecurityPresenter.swift */,
+				C29378392BD1BF23008D5125 /* SecurityInteractor.swift */,
+				C2E3A2B02BD4600F00DCBEF6 /* SecurityPath.swift */,
+				C281A2722BD47D6C0068451C /* SuccessView.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
 		C244F9DF22762955009992D3 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -5716,6 +5759,8 @@
 		C274C9CE2BAB8ABB008E7212 /* TwoFASWatch Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				C2B86D272BC32FA300AAAC63 /* InteractorFactory.swift */,
+				C244BE492BD07AA000F7E566 /* Settings */,
 				C269837E2BCC7180009B3BE2 /* PIN */,
 				C269837D2BCC7175009B3BE2 /* Repositories */,
 				C269837C2BCC715C009B3BE2 /* Models */,
@@ -5723,16 +5768,13 @@
 				C274CAA02BAB98A5008E7212 /* TwoFASWatch Watch App.entitlements */,
 				C274C9CF2BAB8ABB008E7212 /* TwoFASWatchApp.swift */,
 				C26983812BCC8326009B3BE2 /* AppPresenter.swift */,
-				C274C9D12BAB8ABB008E7212 /* ContentView.swift */,
 				C26983832BCC8F6B009B3BE2 /* Main */,
 				C274C9D32BAB8ABC008E7212 /* Assets.xcassets */,
 				C274C9D52BAB8ABC008E7212 /* Preview Content */,
-				C2B86D272BC32FA300AAAC63 /* InteractorFactory.swift */,
 				C2B86D292BC33D3000AAAC63 /* AppDelegateInteractor.swift */,
 				C260DCC12BC885F1007807CC /* ServiceCellView.swift */,
 				C268918B2BC4960C00713078 /* ServiceList */,
 				C2627F382BC72E19009F93A9 /* Service */,
-				C2B86D352BC3574900AAAC63 /* SettingsView.swift */,
 				C2B86D372BC35B8300AAAC63 /* IconRenderer.swift */,
 			);
 			path = "TwoFASWatch Watch App";
@@ -6092,6 +6134,14 @@
 				C21247F927B717660044D9F2 /* Modules */,
 			);
 			path = ComposeService;
+			sourceTree = "<group>";
+		};
+		C293783B2BD1C240008D5125 /* PINType */ = {
+			isa = PBXGroup;
+			children = (
+				C293783C2BD1C24A008D5125 /* PINTypeView.swift */,
+			);
+			path = PINType;
 			sourceTree = "<group>";
 		};
 		C29626D72370BD7F00C133BC /* TimeVerification */ = {
@@ -10108,15 +10158,16 @@
 			files = (
 				C2A4D3302BC0B1B80001587C /* Crypto.swift in Sources */,
 				C2B86D2E2BC3498D00AAAC63 /* MainView.swift in Sources */,
+				C29378362BD1A3B6008D5125 /* AboutView.swift in Sources */,
 				C2A4D3152BC097F80001587C /* MainRepository.swift in Sources */,
 				C2B86D2A2BC33D3000AAAC63 /* AppDelegateInteractor.swift in Sources */,
 				C2A4D32E2BC0B1B20001587C /* Token.swift in Sources */,
 				C268918A2BC4960600713078 /* ServiceListPresenter.swift in Sources */,
 				C26983822BCC8326009B3BE2 /* AppPresenter.swift in Sources */,
-				C274C9D22BAB8ABB008E7212 /* ContentView.swift in Sources */,
 				C274C9D02BAB8ABB008E7212 /* TwoFASWatchApp.swift in Sources */,
-				C2B86D362BC3574900AAAC63 /* SettingsView.swift in Sources */,
 				C2627F3A2BC72E96009F93A9 /* ServicePresenter.swift in Sources */,
+				C29378302BD1A218008D5125 /* SettingsView.swift in Sources */,
+				C29378342BD1A342008D5125 /* SecurityView.swift in Sources */,
 				C2B86D282BC32FA300AAAC63 /* InteractorFactory.swift in Sources */,
 				C269837B2BCC5D03009B3BE2 /* PINKeyboardPresenter.swift in Sources */,
 				C2A4D32F2BC0B1B50001587C /* Generator.swift in Sources */,
@@ -10124,17 +10175,22 @@
 				C268918D2BC4962300713078 /* ServiceListInteractor.swift in Sources */,
 				C2A4D32C2BC0B0C30001587C /* ServiceIcon.swift in Sources */,
 				C2A4D3312BC0B2540001587C /* TokenGenerator.swift in Sources */,
+				C29378382BD1BF15008D5125 /* SecurityPresenter.swift in Sources */,
 				C2A4D32D2BC0B1AD0001587C /* TokenHandler.swift in Sources */,
 				C2B86D222BC3058A00AAAC63 /* UserDefaultsRepository.swift in Sources */,
 				C2B86D342BC3571E00AAAC63 /* ServiceView.swift in Sources */,
 				C2A4D3322BC0B2B30001587C /* String+.swift in Sources */,
 				C2B86D2C2BC3492A00AAAC63 /* Service.swift in Sources */,
+				C293783A2BD1BF23008D5125 /* SecurityInteractor.swift in Sources */,
 				C2B86D382BC35B8300AAAC63 /* IconRenderer.swift in Sources */,
 				C2B86D322BC356BA00AAAC63 /* ServiceListView.swift in Sources */,
+				C281A2732BD47D6C0068451C /* SuccessView.swift in Sources */,
 				C268918F2BC4974800713078 /* Category.swift in Sources */,
 				C2B86D302BC349AE00AAAC63 /* MainPresenter.swift in Sources */,
 				C2B86D262BC32F9200AAAC63 /* MainInteractor.swift in Sources */,
+				C2E3A2B12BD4600F00DCBEF6 /* SecurityPath.swift in Sources */,
 				C260DCC22BC885F1007807CC /* ServiceCellView.swift in Sources */,
+				C293783D2BD1C24A008D5125 /* PINTypeView.swift in Sources */,
 				C2B86D242BC3070F00AAAC63 /* AppPIN.swift in Sources */,
 				C26983802BCC718D009B3BE2 /* PINKeyboardInteractor.swift in Sources */,
 				C2627F3C2BC72EA0009F93A9 /* ServiceInteractor.swift in Sources */,

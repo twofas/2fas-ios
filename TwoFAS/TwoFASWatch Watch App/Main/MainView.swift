@@ -22,9 +22,10 @@ import SwiftUI
 struct MainView: View {
     @ObservedObject var presenter: MainPresenter
     @State private var selectedService: Service?
+    @State private var path = NavigationPath()
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             List {
                 if !presenter.favoriteList.isEmpty {
                     Section(header:
@@ -62,7 +63,7 @@ struct MainView: View {
                         }
                     }
                     
-                    NavigationLink(destination: SettingsView()) {
+                    NavigationLink(value: MainPath.settings) {
                         HStack(alignment: .center) {
                             Image(systemName: "gear")
                             Text("Settings")
@@ -72,6 +73,9 @@ struct MainView: View {
                         }
                     }
                 }
+            }
+            .navigationDestination(for: MainPath.self) { route in
+                SettingsView(path: $path)
             }
             .onAppear {
                 presenter.onAppear()
@@ -84,4 +88,8 @@ struct MainView: View {
             .listItemTint(.clear)
         }
     }
+}
+
+enum MainPath: Hashable {
+    case settings
 }

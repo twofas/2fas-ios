@@ -20,7 +20,7 @@
 import Foundation
 import CommonWatch
 
-struct AppPIN: Codable {
+struct AppPIN: Codable, Hashable {
     let type: PINType
     let value: String
 }

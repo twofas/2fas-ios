@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2024 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -19,16 +19,25 @@
 
 import Foundation
 
-public enum PINType: CaseIterable, Codable, Hashable {
-    case digits4
-    case digits6
+protocol SecurityInteracting: AnyObject {
+    var isPINSet: Bool { get }
+    func disablePIN() 
 }
 
-public extension PINType {
-    var digits: Int {
-        switch self {
-        case .digits4: return 4
-        case .digits6: return 6
-        }
+final class SecurityInteractor {
+    private let mainRepository: MainRepository
+    
+    init(mainRepository: MainRepository) {
+        self.mainRepository = mainRepository
+    }
+}
+
+extension SecurityInteractor: SecurityInteracting {
+    var isPINSet: Bool {
+        mainRepository.pin != nil
+    }
+    
+    func disablePIN() {
+        mainRepository.setPIN(nil)
     }
 }

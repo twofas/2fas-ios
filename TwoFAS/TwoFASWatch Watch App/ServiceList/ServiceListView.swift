@@ -25,8 +25,9 @@ struct ServiceListView: View {
     var body: some View {
         Group {
             if presenter.list.isEmpty {
-                VStack(alignment: .center, spacing: 4) {
+                VStack(alignment: .center, spacing: 8) {
                     Image(systemName: "folder")
+                        .font(.system(size: 40))
                     Text("No services")
                 }
             } else {

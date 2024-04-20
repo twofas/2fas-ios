@@ -19,8 +19,24 @@
 
 import SwiftUI
 
-struct SettingsView: View {
+struct SuccessView: View {
+    var close: () -> Void
     var body: some View {
-        Text("Settings")
+        VStack(spacing: 8) {
+            Image(systemName: "checkmark.shield.fill")
+                .font(.system(size: 40))
+            Text("Success")
+            Spacer()
+            Button {
+                close()
+            } label: {
+                Text("Close")
+            }
+            .controlSize(.large)
+        }
     }
+}
+
+#Preview {
+    SuccessView(close: {})
 }

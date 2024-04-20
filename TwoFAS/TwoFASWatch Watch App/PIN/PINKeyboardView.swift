@@ -86,6 +86,7 @@ struct PINKeyboardView: View {
                 }
             }
         })
+        .navigationBarBackButtonHidden(presenter.showCloseButton)
         .ignoresSafeArea(edges: [.horizontal, .bottom])
         .toolbar(content: {
             if presenter.showCloseButton {

@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2024 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -18,17 +18,28 @@
 //
 
 import Foundation
+import CommonWatch
 
-public enum PINType: CaseIterable, Codable, Hashable {
-    case digits4
-    case digits6
-}
-
-public extension PINType {
-    var digits: Int {
-        switch self {
-        case .digits4: return 4
-        case .digits6: return 6
-        }
+enum SecurityPath: Hashable {
+    enum SetPIN: Hashable {
+        case selectLength
+        case enterPIN(PINType)
+        case verifyPIN(AppPIN)
+        case success
     }
+    enum DisablePIN: Hashable {
+        case verify
+        case success
+    }
+    enum ChangePIN: Hashable {
+        case verify
+        case selectLength
+        case enterPIN(PINType)
+        case verifyPIN(AppPIN)
+        case success
+    }
+    
+    case setPIN(SetPIN)
+    case disablePIN(DisablePIN)
+    case changePIN(ChangePIN)
 }

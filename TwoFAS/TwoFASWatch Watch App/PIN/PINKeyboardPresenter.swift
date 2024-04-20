@@ -21,7 +21,7 @@ import Foundation
 import CommonWatch
 import WatchKit
 
-enum PINKeyboardResult: Equatable {
+enum PINKeyboardResult: Equatable, Hashable {
     static func == (lhs: PINKeyboardResult, rhs: PINKeyboardResult) -> Bool {
         switch (lhs, rhs) {
         case (.verified, .verified): true
@@ -30,6 +30,10 @@ enum PINKeyboardResult: Equatable {
         case (.saved, .saved): true
         default: false
         }
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self)
     }
     
     case verified
@@ -45,7 +49,7 @@ final class PINKeyboardPresenter: ObservableObject {
     @Published var animateFailure = false
     @Published var showCloseButton = false
     @Published var navigationTitle = ""
-    
+        
     private let interactor: PINKeyboardInteracting
     private let completion: (PINKeyboardResult) -> Void
     

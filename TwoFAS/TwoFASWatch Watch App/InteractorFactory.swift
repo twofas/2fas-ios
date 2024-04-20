@@ -38,4 +38,14 @@ final class InteractorFactory {
             service: service
         )
     }
+    
+    func securityInteractor() -> SecurityInteracting {
+        SecurityInteractor(
+            mainRepository: MainRepositoryImpl.shared
+        )
+    }
+    
+    func pinInteractor(variant: PINKeyboardVariant) -> PINKeyboardInteracting {
+        PINKeyboardInteractor(mainRepository: MainRepositoryImpl.shared, variant: variant)
+    }
 }

@@ -18,31 +18,76 @@
 //
 
 import SwiftUI
+import CommonWatch
 
 struct ServiceCellView: View {
     let service: Service
     
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
-            Rectangle()
-                .fill(service.badgeColor)
-                .frame(width: 5)
+            UnevenRoundedRectangle(
+                cornerRadii:
+                        .init(
+                            topLeading: 4,
+                            bottomLeading: 4,
+                            bottomTrailing: 0,
+                            topTrailing: 0
+                        ),
+                style: .continuous
+            )
+            .fill(service.badgeColor)
+            .frame(width: 5)
             IconRenderer(service: service)
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 0) {
                 Text(service.name)
                     .font(.callout)
+                    .lineLimit(1)
                     .foregroundStyle(.primary)
                 if let additionalInfo = service.additionalInfo {
                     Text(additionalInfo)
                         .font(.caption2)
                         .foregroundStyle(.secondary)
+                        .lineLimit(1)
                 }
             }
             .padding(.vertical, 4)
         }
+        .padding(.trailing, 4)
+        .background(
+            Material.ultraThinMaterial,
+            in: UnevenRoundedRectangle(
+                cornerRadii:
+                        .init(
+                            topLeading: 4,
+                            bottomLeading: 4,
+                            bottomTrailing: 8,
+                            topTrailing: 8
+                        ),
+                style: .continuous
+            )
+        )
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Material.thin, in: Rectangle())
         .listItemTint(.clear)
-        .mask(RoundedRectangle(cornerRadius: 16))
+    }
+}
+
+#Preview {
+    NavigationStack {
+        List {
+            ServiceCellView(service: .init(
+                id: "ID",
+                name: "2FAS Service",
+                additionalInfo: "contact@2fas.com",
+                iconType: .brand,
+                iconTypeID: .default,
+                labelColor: TintColor.green.color,
+                labelTitle: "2F",
+                badgeColor: TintColor.indigo.color
+            ))
+            .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+        }
+        .containerBackground(.red.gradient, for: .navigation)
+        .environment(\.defaultMinListRowHeight, 40)
+        .listRowBackground(Color.clear)
     }
 }

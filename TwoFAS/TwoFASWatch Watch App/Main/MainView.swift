@@ -82,7 +82,7 @@ struct MainView: View {
             }
             .containerBackground(.red.gradient, for: .navigation)
             .listStyle(.carousel)
-            .environment(\.defaultMinListRowHeight, 50)
+            .environment(\.defaultMinListRowHeight, 40)
             .navigationTitle("2FAS")
             .navigationBarTitleDisplayMode(.automatic)
             .listItemTint(.clear)

@@ -25,6 +25,7 @@ final class ServicePresenter: ObservableObject {
     @Published var additionalInfo: String?
     @Published var service: Service
     @Published var isFavorite: Bool
+    @Published var isHOTP: Bool
     
     private let interactor: ServiceInteracting
     
@@ -37,6 +38,7 @@ final class ServicePresenter: ObservableObject {
         additionalInfo = interactor.service.additionalInfo
         service = interactor.service
         isFavorite = interactor.isFavorite()
+        isHOTP = interactor.isHOTP()
     }
 }
 

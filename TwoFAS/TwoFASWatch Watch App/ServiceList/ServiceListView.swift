@@ -59,7 +59,7 @@ struct ServiceListView: View {
         }
         .containerBackground(.red.gradient, for: .navigation)
         .listStyle(.carousel)
-        .environment(\.defaultMinListRowHeight, 60)
+        .environment(\.defaultMinListRowHeight, 40)
         .navigationTitle("Services")
         .navigationBarTitleDisplayMode(.automatic)
         .listItemTint(.clear)

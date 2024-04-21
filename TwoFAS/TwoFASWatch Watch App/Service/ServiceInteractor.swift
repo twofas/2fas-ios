@@ -30,6 +30,8 @@ protocol ServiceInteracting: AnyObject {
     
     func isFavorite() -> Bool
     func toogleFavorite()
+    
+    func isHOTP() -> Bool
 }
 
 final class ServiceInteractor {
@@ -113,6 +115,11 @@ extension ServiceInteractor: ServiceInteracting {
     
     func isFavorite() -> Bool {
         mainRepository.listFavoriteServices().contains(where: { $0.secret == service.id })
+    }
+    
+    func isHOTP() -> Bool {
+        guard let serviceData else { return false }
+        return serviceData.tokenType == .hotp
     }
     
     func toogleFavorite() {

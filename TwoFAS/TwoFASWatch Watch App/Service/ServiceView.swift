@@ -30,43 +30,55 @@ struct ServiceView: View {
     
     @ViewBuilder
     var body: some View {
-            TimelineView(.explicit(presenter.timelineEntries())) { context in
-                VStack(alignment: .leading, spacing: nil) {
-                    HStack(alignment: .center, spacing: nil) {
-                        IconRenderer(service: presenter.service)
-                        Spacer()
-                        counterText(for: presenter.timeToNextDate(for: context.date))
-                            .multilineTextAlignment(.trailing)
-                            .font(Font.body.monospacedDigit())
-                            .lineLimit(1)
-                            .contentTransition(.numericText(countsDown: true))
-                    }
-                    Spacer()
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text(presenter.calculateToken(for: context.date))
-                            .font(Font.system(.title).weight(.light).monospacedDigit())
-                            .multilineTextAlignment(.leading)
-                            .minimumScaleFactor(0.2)
-                            .contentTransition(.numericText())
-                            .foregroundColor(.primary)
-                            .layoutPriority(1)
-                        if let info = presenter.additionalInfo {
-                            Text(info)
-                                .lineLimit(1)
-                                .font(.caption2)
-                                .foregroundColor(.secondary)
-                                .multilineTextAlignment(.leading)
-                        }
-                        Spacer()
-                            .frame(maxHeight: .infinity)
-                    }
-                    .frame(alignment: .leading)
-                    .padding(.top, 4)
-                }
+        Group {
+            if presenter.isHOTP {
+                unsupportedHOTP()
+            } else {
+                list()
+            }
         }
         .navigationTitle {
             Text(presenter.name)
                 .lineLimit(1)
+        }
+        .scenePadding()
+    }
+    
+    @ViewBuilder
+    private func list() -> some View {
+        TimelineView(.explicit(presenter.timelineEntries())) { context in
+            VStack(alignment: .leading, spacing: nil) {
+                HStack(alignment: .center, spacing: nil) {
+                    IconRenderer(service: presenter.service)
+                    Spacer()
+                    counterText(for: presenter.timeToNextDate(for: context.date))
+                        .multilineTextAlignment(.trailing)
+                        .font(Font.body.monospacedDigit())
+                        .lineLimit(1)
+                        .contentTransition(.numericText(countsDown: true))
+                }
+                Spacer()
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(presenter.calculateToken(for: context.date))
+                        .font(Font.system(.title).weight(.light).monospacedDigit())
+                        .multilineTextAlignment(.leading)
+                        .minimumScaleFactor(0.2)
+                        .contentTransition(.numericText())
+                        .foregroundColor(.primary)
+                        .layoutPriority(1)
+                    if let info = presenter.additionalInfo {
+                        Text(info)
+                            .lineLimit(1)
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.leading)
+                    }
+                    Spacer()
+                        .frame(maxHeight: .infinity)
+                }
+                .frame(alignment: .leading)
+                .padding(.top, 4)
+            }
         }
         .toolbar {
             ToolbarItem(placement: .bottomBar) {
@@ -83,7 +95,11 @@ struct ServiceView: View {
                 .background(Color.accentColor, in: Circle())
             }
         }
-        .scenePadding()
+    }
+    
+    @ViewBuilder
+    private func unsupportedHOTP() -> some View {
+        Text("HOTP services aren't supported yet")
     }
     
     @ViewBuilder

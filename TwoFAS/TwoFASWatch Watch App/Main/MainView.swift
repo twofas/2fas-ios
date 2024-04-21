@@ -35,12 +35,7 @@ struct MainView: View {
                     }
                     ) {
                         ForEach(presenter.favoriteList, id: \.self) { service in
-                            NavigationLink(destination: ServiceView(
-                                presenter: ServicePresenter(
-                                    interactor: InteractorFactory.shared.serviceInteractor(service: service)
-                                )
-                            )
-                            ) {
+                            NavigationLink(value: MainPath.favorite(service)) {
                                 ServiceCellView(service: service)
                             }
                             .listRowBackground(Color.clear)
@@ -50,11 +45,7 @@ struct MainView: View {
                     }
                 }
                 Section {
-                    NavigationLink(destination: ServiceListView(
-                        presenter: ServiceListPresenter(
-                            interactor: InteractorFactory.shared.serviceListInteractor()
-                        )
-                    )) {
+                    NavigationLink(value: MainPath.tokens) {
                         HStack(alignment: .center) {
                             Image(systemName: "folder")
                             Text(T.Commons.tokens)
@@ -76,7 +67,18 @@ struct MainView: View {
                 }
             }
             .navigationDestination(for: MainPath.self) { route in
-                SettingsView(path: $path)
+                switch route {
+                case .settings: SettingsView(path: $path)
+                case .tokens: ServiceListView(presenter: ServiceListPresenter(
+                    interactor: InteractorFactory.shared.serviceListInteractor()
+                ))
+                case .favorite(let service):
+                    ServiceView(
+                        presenter: ServicePresenter(
+                        interactor: InteractorFactory.shared.serviceInteractor(service: service)
+                        )
+                    )
+                }
             }
             .onAppear {
                 presenter.onAppear()
@@ -93,4 +95,6 @@ struct MainView: View {
 
 enum MainPath: Hashable {
     case settings
+    case tokens
+    case favorite(Service)
 }

@@ -31,30 +31,32 @@ struct ServiceListView: View {
                     Text(T.Tokens.tokensListIsEmpty)
                 }
             } else {
-                NavigationStack {
-                    List {
-                        ForEach(presenter.list, id: \.self) { category in
-                            Section(header: Text(category.name)) {
-                                ForEach(category.services, id: \.self) { service in
-                                    NavigationLink(
-                                        destination: ServiceView(
-                                            presenter: ServicePresenter(
-                                                interactor: InteractorFactory.shared.serviceInteractor(service: service)
-                                            )
-                                        )
-                                    ) {
-                                        ServiceCellView(service: service)
-                                    }
-                                    .listRowBackground(Color.clear)
-                                    .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                                    .listSectionSpacing(WatchConsts.listSectionRowSpacing)
+                List {
+                    ForEach(presenter.list, id: \.self) { category in
+                        Section(header: Text(category.name)) {
+                            ForEach(category.services, id: \.self) { service in
+                                NavigationLink(value: ServiceListPath.service(service)) {
+                                    ServiceCellView(service: service)
                                 }
+                                .listRowBackground(Color.clear)
+                                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                                .listSectionSpacing(WatchConsts.listSectionRowSpacing)
                             }
                         }
                     }
                 }
             }
         }
+        .navigationDestination(for: ServiceListPath.self, destination: { route in
+            switch route {
+            case .service(let service):
+                ServiceView(
+                    presenter: ServicePresenter(
+                        interactor: InteractorFactory.shared.serviceInteractor(service: service)
+                    )
+                )
+            }
+        })
         .onAppear {
             presenter.onAppear()
         }
@@ -65,4 +67,8 @@ struct ServiceListView: View {
         .navigationBarTitleDisplayMode(.automatic)
         .listItemTint(.clear)
     }
+}
+
+enum ServiceListPath: Hashable {
+    case service(Service)
 }

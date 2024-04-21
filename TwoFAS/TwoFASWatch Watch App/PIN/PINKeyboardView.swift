@@ -94,7 +94,7 @@ struct PINKeyboardView: View {
                     Button {
                         presenter.onCloseAction()
                     } label: {
-                        Label("Close", systemImage: "xmark")
+                        Label(T.Commons.close, systemImage: "xmark")
                     }
                 }
             }

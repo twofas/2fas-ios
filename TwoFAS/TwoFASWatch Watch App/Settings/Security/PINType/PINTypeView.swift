@@ -36,17 +36,17 @@ struct PINTypeView: View {
             Button {
                 didSelect(.digits4)
             } label: {
-                Text("4 digits")
+                Text(T.Settings.pin4Digits)
             }
 
             Button {
                 didSelect(.digits6)
             } label: {
-                Text("6 digits")
+                Text(T.Settings.pin6Digits)
             }
         }
         .containerBackground(.red.gradient, for: .navigation)
-        .navigationTitle("Select PIN length")
+        .navigationTitle(T.Settings.selectPinLength)
         .navigationBarTitleDisplayMode(.automatic)
         .navigationBarBackButtonHidden(showClose)
         .toolbar(content: {
@@ -55,7 +55,7 @@ struct PINTypeView: View {
                     Button {
                         
                     } label: {
-                        Label("Close", systemImage: "xmark")
+                        Label(T.Commons.close, systemImage: "xmark")
                     }
                 }
             }

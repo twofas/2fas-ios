@@ -284,8 +284,8 @@ internal enum T {
     internal static let name = T.tr("Localizable", "app__name", fallback: "2FAS Authenticator")
   }
   internal enum Appearance {
-    /// Active search on startup
-    internal static let activeSearchDescription = T.tr("Localizable", "appearance__active_search_description", fallback: "Active search on startup")
+    /// Active search on startup.
+    internal static let activeSearchDescription = T.tr("Localizable", "appearance__active_search_description", fallback: "Active search on startup.")
     /// Active search
     internal static let toggleActiveSearch = T.tr("Localizable", "appearance__toggle_active_search", fallback: "Active search")
   }
@@ -336,8 +336,8 @@ internal enum T {
     internal static let exportToFile = T.tr("Localizable", "backup__export_to_file", fallback: "Export to file")
     /// File Backup
     internal static let fileBackup = T.tr("Localizable", "backup__file_backup", fallback: "File Backup")
-    /// Use File Backup for offline backup of your tokens
-    internal static let fileBackupOfflineTitle = T.tr("Localizable", "backup__file_backup_offline_title", fallback: "Use File Backup for offline backup of your tokens")
+    /// Use File Backup for offline backup of your tokens.
+    internal static let fileBackupOfflineTitle = T.tr("Localizable", "backup__file_backup_offline_title", fallback: "Use File Backup for offline backup of your tokens.")
     /// File error!
     internal static let fileError = T.tr("Localizable", "backup__file_error", fallback: "File error!")
     /// Google Drive has been disabled by the user
@@ -442,8 +442,8 @@ internal enum T {
     internal static let userOverQuotaIcloud = T.tr("Localizable", "backup__user_over_quota_icloud", fallback: "User is over quota on iCloud")
     /// Verify PIN
     internal static let verifyPin = T.tr("Localizable", "backup__verify_pin", fallback: "Verify PIN")
-    /// Warning! If you delete 2FAS Backup, you will also erase all tokens from other devices synced with this account. To preserve the tokens on other devices, please ensure that you've turned off the 2FAS Backup before the deletion
-    internal static let warningIntroduction = T.tr("Localizable", "backup__warning_introduction", fallback: "Warning! If you delete 2FAS Backup, you will also erase all tokens from other devices synced with this account. To preserve the tokens on other devices, please ensure that you've turned off the 2FAS Backup before the deletion")
+    /// Warning! If you delete 2FAS Backup, you will also erase all tokens from other devices synced with this account. To preserve the tokens on other devices, please ensure that you've turned off the 2FAS Backup before the deletion.
+    internal static let warningIntroduction = T.tr("Localizable", "backup__warning_introduction", fallback: "Warning! If you delete 2FAS Backup, you will also erase all tokens from other devices synced with this account. To preserve the tokens on other devices, please ensure that you've turned off the 2FAS Backup before the deletion.")
   }
   internal enum Browser {
     /// Do you want to share the 2FA token for 
@@ -482,8 +482,8 @@ internal enum T {
     internal static let deviceName = T.tr("Localizable", "browser__device_name", fallback: "Device nickname")
     /// Forget this web browser
     internal static let forgetThisBrowser = T.tr("Localizable", "browser__forget_this_browser", fallback: "Forget this web browser")
-    /// Install the 2FAS browser extension on your desktop computer
-    internal static let infoDescriptionFirst = T.tr("Localizable", "browser__info_description_first", fallback: "Install the 2FAS browser extension on your desktop computer")
+    /// Install the 2FAS browser extension on your desktop computer.
+    internal static let infoDescriptionFirst = T.tr("Localizable", "browser__info_description_first", fallback: "Install the 2FAS browser extension on your desktop computer.")
     /// Pair it with your 2FAS app.
     internal static let infoDescriptionSecond = T.tr("Localizable", "browser__info_description_second", fallback: "Pair it with your 2FAS app.")
     /// 2FAS Web Browser extension
@@ -666,6 +666,8 @@ internal enum T {
     internal static let `set` = T.tr("Localizable", "commons__set", fallback: "Set")
     /// Skip
     internal static let skip = T.tr("Localizable", "commons__skip", fallback: "Skip")
+    /// Success
+    internal static let success = T.tr("Localizable", "commons__success", fallback: "Success")
     /// The provided text is too long (max. %d chars)
     internal static func textLongTitle(_ p1: Int) -> String {
       return T.tr("Localizable", "commons__text_long_title", p1, fallback: "The provided text is too long (max. %d chars)")
@@ -970,6 +972,8 @@ internal enum T {
     internal static let enterCurrentPin = T.tr("Localizable", "security__enter_current_pin", fallback: "Please enter your current PIN")
     /// Please enter your new PIN
     internal static let enterNewPin = T.tr("Localizable", "security__enter_new_pin", fallback: "Please enter your new PIN")
+    /// Enter new PIN
+    internal static let enterNewPinShort = T.tr("Localizable", "security__enter_new_pin_short", fallback: "Enter new PIN")
     /// Please enter your PIN
     internal static let enterPin = T.tr("Localizable", "security__enter_pin", fallback: "Please enter your PIN")
     /// Please enter your new %s PIN
@@ -980,6 +984,8 @@ internal enum T {
     internal static let incorrectPIN = T.tr("Localizable", "security__incorrect_PIN", fallback: "Incorrect PIN")
     /// PIN incorrect! Please try again
     internal static let pinErrorIncorrect = T.tr("Localizable", "security__pin_error_incorrect", fallback: "PIN incorrect! Please try again")
+    /// Repeat new PIN
+    internal static let repeatNewPinShort = T.tr("Localizable", "security__repeat_new_pin_short", fallback: "Repeat new PIN")
     /// Too many attempts. Please try again later.
     internal static let tooManyAttemptsError = T.tr("Localizable", "security__too_many_attempts_error", fallback: "Too many attempts. Please try again later.")
     /// Too many attempts. Please try after one minute
@@ -1053,16 +1059,15 @@ internal enum T {
     internal static let gdSyncInfo = T.tr("Localizable", "settings__gd_sync_info", fallback: "Google Drive sync reminder")
     /// General
     internal static let general = T.tr("Localizable", "settings__general", fallback: "General")
-    /// Tokens will be revealed on tap
-    internal static let hideTokensDescription = T.tr("Localizable", "settings__hide_tokens_description", fallback: "Tokens will be revealed on tap")
+    /// Tokens will be revealed on tap.
+    internal static let hideTokensDescription = T.tr("Localizable", "settings__hide_tokens_description", fallback: "Tokens will be revealed on tap.")
     /// Hide tokens
     internal static let hideTokensTitle = T.tr("Localizable", "settings__hide_tokens_title", fallback: "Hide tokens")
     /// Select the maximum number of unsuccessful attempts to enter the passcode before locking the application (lockout time can be changed below).
     /// 
     internal static let howManyAttemptsFooter = T.tr("Localizable", "settings__how_many_attempts_footer", fallback: "Select the maximum number of unsuccessful attempts to enter the passcode before locking the application (lockout time can be changed below).\n")
-    /// Your support allows us to develop new features and
-    /// improvements. Thank you!
-    internal static let infoFooter = T.tr("Localizable", "settings__info_footer", fallback: "Your support allows us to develop new features and\nimprovements. Thank you!")
+    /// Your support allows us to develop new features and improvements. Thank you!
+    internal static let infoFooter = T.tr("Localizable", "settings__info_footer", fallback: "Your support allows us to develop new features and improvements. Thank you!")
     /// It matters
     internal static let itMatters = T.tr("Localizable", "settings__it_matters", fallback: "It matters")
     /// Knowledge
@@ -1314,6 +1319,8 @@ internal enum T {
     internal static let enterServiceName = T.tr("Localizable", "tokens__enter_service_name", fallback: "Enter Service Name")
     /// Add manually
     internal static let fabAddmanually = T.tr("Localizable", "tokens__fab_addmanually", fallback: "Add manually")
+    /// Favorite Services
+    internal static let favoriteServices = T.tr("Localizable", "tokens__favorite_services", fallback: "Favorite Services")
     /// Service added successfully. We strongly recommend that you 
     internal static let galleryAdviceContentFirst = T.tr("Localizable", "tokens__gallery_advice_content_first", fallback: "Service added successfully. We strongly recommend that you ")
     /// 
@@ -1339,6 +1346,8 @@ internal enum T {
     internal static let groupName = T.tr("Localizable", "tokens__group_name", fallback: "Group name:")
     /// HOTP
     internal static let hotp = T.tr("Localizable", "tokens__hotp", fallback: "HOTP")
+    /// HOTP services aren't supported yet
+    internal static let hotpNotSupported = T.tr("Localizable", "tokens__hotp_not_supported", fallback: "HOTP services aren't supported yet")
     /// Yes, I want to delete this service
     internal static let iWantToDeleteThisToken = T.tr("Localizable", "tokens__i_want_to_delete_this_token", fallback: "Yes, I want to delete this service")
     /// Incorrect Secret key (only numbers 2 to 7, letters), max. 512 chars long
@@ -1589,6 +1598,36 @@ internal enum T {
     }
     /// Use the Add Service button to add a new service
     internal static let useAddServiceButtonTitle = T.tr("Localizable", "voiceover__use_add_service_button_title", fallback: "Use the Add Service button to add a new service")
+  }
+  internal enum Watch {
+    /// 2FAS watchOS app is a companion app for the 2FAS iOS application. It will present services backed up using iCloud sync.
+    /// 
+    /// For quick access, add them to Favorite Services.
+    /// 
+    /// Please remember to donate so we can further improve the 2FAS platform!
+    internal static let intro = T.tr("Localizable", "watch__intro", fallback: "2FAS watchOS app is a companion app for the 2FAS iOS application. It will present services backed up using iCloud sync.\n\nFor quick access, add them to Favorite Services.\n\nPlease remember to donate so we can further improve the 2FAS platform!")
+  }
+  internal enum Widget {
+    /// My secured account
+    internal static let mySecuredAccount = T.tr("Localizable", "widget__my_secured_account", fallback: "My secured account")
+    /// There are no services in the app available for selection
+    internal static let noServices = T.tr("Localizable", "widget__no_services", fallback: "There are no services in the app available for selection")
+    /// Widget functionality is not enabled in 2FAS Settings section
+    internal static let notEnabled = T.tr("Localizable", "widget__not_enabled", fallback: "Widget functionality is not enabled in 2FAS Settings section")
+    /// Widget functionality is not enabled in 2FAS Settings section and there are no services in the app available for selection
+    internal static let notEnabledNoServices = T.tr("Localizable", "widget__not_enabled_no_services", fallback: "Widget functionality is not enabled in 2FAS Settings section and there are no services in the app available for selection")
+    /// Placeholder
+    internal static let placeholder = T.tr("Localizable", "widget__placeholder", fallback: "Placeholder")
+    /// Select Service you want to show on your 2FAS Widget
+    internal static let selectServiceIntentDescription = T.tr("Localizable", "widget__select_service_intent_description", fallback: "Select Service you want to show on your 2FAS Widget")
+    /// Service icon
+    internal static let serviceIcon = T.tr("Localizable", "widget__service_icon", fallback: "Service icon")
+    /// Select which Services you would like to display on the Widget. If no Services are available, make sure that you've enabled Widgets in app Settings section
+    internal static let settingsDescription = T.tr("Localizable", "widget__settings_description", fallback: "Select which Services you would like to display on the Widget. If no Services are available, make sure that you've enabled Widgets in app Settings section")
+    /// This size is not supported yet
+    internal static let sizeNotSupported = T.tr("Localizable", "widget__size_not_supported", fallback: "This size is not supported yet")
+    /// Token
+    internal static let token = T.tr("Localizable", "widget__token", fallback: "Token")
   }
   internal enum Widgets {
     /// Expires in:

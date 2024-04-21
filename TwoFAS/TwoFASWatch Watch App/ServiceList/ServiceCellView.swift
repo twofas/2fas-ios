@@ -53,6 +53,7 @@ struct ServiceCellView: View {
             .padding(.vertical, 4)
         }
         .padding(.trailing, 4)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             Material.ultraThinMaterial,
             in: UnevenRoundedRectangle(
@@ -66,7 +67,6 @@ struct ServiceCellView: View {
                 style: .continuous
             )
         )
-        .frame(maxWidth: .infinity, alignment: .leading)
         .listItemTint(.clear)
     }
 }
@@ -87,7 +87,7 @@ struct ServiceCellView: View {
             .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
         }
         .containerBackground(.red.gradient, for: .navigation)
-        .environment(\.defaultMinListRowHeight, 40)
+        .environment(\.defaultMinListRowHeight, WatchConsts.minRowHeight)
         .listRowBackground(Color.clear)
     }
 }

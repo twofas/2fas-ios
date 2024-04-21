@@ -30,10 +30,10 @@ struct MainView: View {
                 if !presenter.favoriteList.isEmpty {
                     Section(header:
                                 HStack(alignment: .center) {
-                                    Image(systemName: "star.fill")
-                                    Text("Favorite Services")
-                                }
-                        ) {
+                        Image(systemName: "star.fill")
+                        Text(T.Tokens.favoriteServices)
+                    }
+                    ) {
                         ForEach(presenter.favoriteList, id: \.self) { service in
                             NavigationLink(destination: ServiceView(
                                 presenter: ServicePresenter(
@@ -45,6 +45,7 @@ struct MainView: View {
                             }
                             .listRowBackground(Color.clear)
                             .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            .listSectionSpacing(WatchConsts.listSectionRowSpacing)
                         }
                     }
                 }
@@ -56,7 +57,7 @@ struct MainView: View {
                     )) {
                         HStack(alignment: .center) {
                             Image(systemName: "folder")
-                            Text("All Services")
+                            Text(T.Commons.tokens)
                                 .font(.callout)
                                 .padding(4)
                                 .foregroundStyle(.primary)
@@ -82,8 +83,8 @@ struct MainView: View {
             }
             .containerBackground(.red.gradient, for: .navigation)
             .listStyle(.carousel)
-            .environment(\.defaultMinListRowHeight, 40)
-            .navigationTitle("2FAS")
+            .environment(\.defaultMinListRowHeight, WatchConsts.minRowHeight)
+            .navigationTitle(T.Commons._2fasToolbar)
             .navigationBarTitleDisplayMode(.automatic)
             .listItemTint(.clear)
         }

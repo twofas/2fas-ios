@@ -25,12 +25,12 @@ struct SuccessView: View {
         VStack(spacing: 8) {
             Image(systemName: "checkmark.shield.fill")
                 .font(.system(size: 40))
-            Text("Success")
+            Text(T.Commons.success)
             Spacer()
             Button {
                 close()
             } label: {
-                Text("Close")
+                Text(T.Commons.close)
             }
             .controlSize(.large)
         }

@@ -28,7 +28,7 @@ struct ServiceListView: View {
                 VStack(alignment: .center, spacing: 8) {
                     Image(systemName: "folder")
                         .font(.system(size: 40))
-                    Text("No services")
+                    Text(T.Tokens.tokensListIsEmpty)
                 }
             } else {
                 NavigationStack {
@@ -47,6 +47,7 @@ struct ServiceListView: View {
                                     }
                                     .listRowBackground(Color.clear)
                                     .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                                    .listSectionSpacing(WatchConsts.listSectionRowSpacing)
                                 }
                             }
                         }
@@ -59,8 +60,8 @@ struct ServiceListView: View {
         }
         .containerBackground(.red.gradient, for: .navigation)
         .listStyle(.carousel)
-        .environment(\.defaultMinListRowHeight, 40)
-        .navigationTitle("Services")
+        .environment(\.defaultMinListRowHeight, WatchConsts.minRowHeight)
+        .navigationTitle(T.Commons.tokens)
         .navigationBarTitleDisplayMode(.automatic)
         .listItemTint(.clear)
     }

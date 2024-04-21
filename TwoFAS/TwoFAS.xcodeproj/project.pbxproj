@@ -639,6 +639,8 @@
 		C27D543F275D393D001E9ABF /* BackupMenuPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27D543E275D393D001E9ABF /* BackupMenuPresenter.swift */; };
 		C27D5441275D462D001E9ABF /* BackupMenuViewController+TableCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27D5440275D462D001E9ABF /* BackupMenuViewController+TableCellHandling.swift */; };
 		C27D5443275D478E001E9ABF /* BackupMenuViewControlling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27D5442275D478E001E9ABF /* BackupMenuViewControlling.swift */; };
+		C27D99DF2BD52C8A0008203F /* WatchConsts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27D99DE2BD52C8A0008203F /* WatchConsts.swift */; };
+		C27D99E12BD53AB30008203F /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27D99E02BD53AB30008203F /* LogoView.swift */; };
 		C27E6FAF28FC57FD00AC9FD1 /* DynamicTypesEntityMigrationPolicySync.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27E6FAE28FC57FD00AC9FD1 /* DynamicTypesEntityMigrationPolicySync.swift */; };
 		C27E6FB128FC7E3800AC9FD1 /* ServiceRecord2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27E6FB028FC7E3800AC9FD1 /* ServiceRecord2.swift */; };
 		C27E6FB328FC87AD00AC9FD1 /* InfoRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27E6FB228FC87AD00AC9FD1 /* InfoRecord.swift */; };
@@ -2423,6 +2425,8 @@
 		C27D543E275D393D001E9ABF /* BackupMenuPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupMenuPresenter.swift; sourceTree = "<group>"; };
 		C27D5440275D462D001E9ABF /* BackupMenuViewController+TableCellHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackupMenuViewController+TableCellHandling.swift"; sourceTree = "<group>"; };
 		C27D5442275D478E001E9ABF /* BackupMenuViewControlling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupMenuViewControlling.swift; sourceTree = "<group>"; };
+		C27D99DE2BD52C8A0008203F /* WatchConsts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConsts.swift; sourceTree = "<group>"; };
+		C27D99E02BD53AB30008203F /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		C27E6FAB28FC463600AC9FD1 /* Sync5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sync5.xcdatamodel; sourceTree = "<group>"; };
 		C27E6FAE28FC57FD00AC9FD1 /* DynamicTypesEntityMigrationPolicySync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicTypesEntityMigrationPolicySync.swift; sourceTree = "<group>"; };
 		C27E6FB028FC7E3800AC9FD1 /* ServiceRecord2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceRecord2.swift; sourceTree = "<group>"; };
@@ -4978,6 +4982,7 @@
 			isa = PBXGroup;
 			children = (
 				C29378352BD1A3B6008D5125 /* AboutView.swift */,
+				C27D99E02BD53AB30008203F /* LogoView.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -5606,6 +5611,7 @@
 		C268918B2BC4960C00713078 /* ServiceList */ = {
 			isa = PBXGroup;
 			children = (
+				C260DCC12BC885F1007807CC /* ServiceCellView.swift */,
 				C2B86D312BC356BA00AAAC63 /* ServiceListView.swift */,
 				C26891892BC4960600713078 /* ServiceListPresenter.swift */,
 				C268918C2BC4962300713078 /* ServiceListInteractor.swift */,
@@ -5763,24 +5769,19 @@
 		C274C9CE2BAB8ABB008E7212 /* TwoFASWatch Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				C2B86D272BC32FA300AAAC63 /* InteractorFactory.swift */,
-				C244BE492BD07AA000F7E566 /* Settings */,
-				C269837E2BCC7180009B3BE2 /* PIN */,
-				C269837D2BCC7175009B3BE2 /* Repositories */,
-				C269837C2BCC715C009B3BE2 /* Models */,
+				C274C9D52BAB8ABC008E7212 /* Preview Content */,
+				C27D99DD2BD52A690008203F /* Data */,
 				C260DCC02BC882AD007807CC /* TwoFASWatch-Watch-App-Info.plist */,
 				C274CAA02BAB98A5008E7212 /* TwoFASWatch Watch App.entitlements */,
 				C274C9CF2BAB8ABB008E7212 /* TwoFASWatchApp.swift */,
-				C26983812BCC8326009B3BE2 /* AppPresenter.swift */,
+				C27D99DC2BD52A5E0008203F /* App */,
+				C274C9D32BAB8ABC008E7212 /* Assets.xcassets */,
 				C281A2762BD489590068451C /* IntroductionView.swift */,
 				C26983832BCC8F6B009B3BE2 /* Main */,
-				C274C9D32BAB8ABC008E7212 /* Assets.xcassets */,
-				C274C9D52BAB8ABC008E7212 /* Preview Content */,
-				C2B86D292BC33D3000AAAC63 /* AppDelegateInteractor.swift */,
-				C260DCC12BC885F1007807CC /* ServiceCellView.swift */,
+				C244BE492BD07AA000F7E566 /* Settings */,
+				C269837E2BCC7180009B3BE2 /* PIN */,
 				C268918B2BC4960C00713078 /* ServiceList */,
 				C2627F382BC72E19009F93A9 /* Service */,
-				C2B86D372BC35B8300AAAC63 /* IconRenderer.swift */,
 			);
 			path = "TwoFASWatch Watch App";
 			sourceTree = "<group>";
@@ -5956,6 +5957,27 @@
 				C27D5442275D478E001E9ABF /* BackupMenuViewControlling.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		C27D99DC2BD52A5E0008203F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				C26983812BCC8326009B3BE2 /* AppPresenter.swift */,
+				C2B86D292BC33D3000AAAC63 /* AppDelegateInteractor.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		C27D99DD2BD52A690008203F /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				C27D99DE2BD52C8A0008203F /* WatchConsts.swift */,
+				C2B86D272BC32FA300AAAC63 /* InteractorFactory.swift */,
+				C269837D2BCC7175009B3BE2 /* Repositories */,
+				C269837C2BCC715C009B3BE2 /* Models */,
+				C2B86D372BC35B8300AAAC63 /* IconRenderer.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		C27E6FB428FC8AF200AC9FD1 /* Info */ = {
@@ -10187,9 +10209,11 @@
 				C2A4D32D2BC0B1AD0001587C /* TokenHandler.swift in Sources */,
 				C2B86D222BC3058A00AAAC63 /* UserDefaultsRepository.swift in Sources */,
 				C2B86D342BC3571E00AAAC63 /* ServiceView.swift in Sources */,
+				C27D99E12BD53AB30008203F /* LogoView.swift in Sources */,
 				C2A4D3322BC0B2B30001587C /* String+.swift in Sources */,
 				C2B86D2C2BC3492A00AAAC63 /* Service.swift in Sources */,
 				C293783A2BD1BF23008D5125 /* SecurityInteractor.swift in Sources */,
+				C27D99DF2BD52C8A0008203F /* WatchConsts.swift in Sources */,
 				C2B86D382BC35B8300AAAC63 /* IconRenderer.swift in Sources */,
 				C2B86D322BC356BA00AAAC63 /* ServiceListView.swift in Sources */,
 				C281A2732BD47D6C0068451C /* SuccessView.swift in Sources */,

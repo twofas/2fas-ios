@@ -18,34 +18,8 @@
 //
 
 import Foundation
-import StorageWatch
 
-struct Category: Identifiable, Hashable {
-    let id: UUID
-    let name: String
-    let services: [Service]
-}
-
-extension CategoryData {
-    func toCategory() -> Category {
-        let id: UUID = {
-            if let section {
-                return section.sectionID
-            }
-            return UUID()
-        }()
-        let name: String = {
-            if let section {
-                return section.title
-            }
-            return "Services" // TODO: Add translation
-        }()
-        return Category(id: id, name: name, services: services.toServices())
-    }
-}
-
-extension Array where Element == CategoryData {
-    func toCategories() -> [Category] {
-        map { $0.toCategory() }
-    }
+enum WatchConsts {
+    static let minRowHeight: CGFloat = 60
+    static let listSectionRowSpacing: CGFloat = 4
 }

@@ -33,21 +33,21 @@ struct SecurityView: View {
                     NavigationLink(value: SecurityPath.changePIN(.verify)) {
                         HStack {
                             Image(systemName: "lock.rotation")
-                            Text("Change PIN")
+                            Text(T.Security.changePin)
                         }
                     }
 
                     NavigationLink(value: SecurityPath.disablePIN(.verify)) {
                         HStack {
                             Image(systemName: "lock.open.fill")
-                            Text("Disable PIN")
+                            Text(T.Security.disablePin)
                         }
                     }
                 } else {
                     NavigationLink(value: SecurityPath.setPIN(.selectLength)) {
                         HStack {
                             Image(systemName: "lock.fill")
-                            Text("Set PIN")
+                            Text(T.Security.createPin)
                         }
                     }
                 }
@@ -142,8 +142,8 @@ struct SecurityView: View {
         }
         .containerBackground(.red.gradient, for: .navigation)
         .listStyle(.carousel)
-        .environment(\.defaultMinListRowHeight, 60)
-        .navigationTitle("Security")
+        .environment(\.defaultMinListRowHeight, WatchConsts.minRowHeight)
+        .navigationTitle(T.Settings.security)
         .navigationBarTitleDisplayMode(.automatic)
         .listItemTint(.clear)
     }

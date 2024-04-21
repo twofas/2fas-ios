@@ -143,14 +143,10 @@ private extension PINKeyboardPresenter {
 private extension PINKeyboardVariant {
     var navigationTitle: String {
         switch self {
-        case .PINValidation:
-            "Enter PIN"
-        case .PINValidationWithClose:
-            "Enter PIN"
-        case .enterNewPIN:
-            "Enter new PIN"
-        case .verifyPIN:
-            "Repeat PIN"
+        case .PINValidation: T.Security.enterPin
+        case .PINValidationWithClose: T.Security.enterPin
+        case .enterNewPIN: T.Security.enterNewPinShort
+        case .verifyPIN: T.Security.repeatNewPinShort
         }
     }
     

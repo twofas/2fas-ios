@@ -17,36 +17,35 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import SwiftUI
+import Foundation
+import StorageWatch
 
-struct AboutView: View {
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .center, spacing: 4) {
-                LogoView()
-                Spacer()
+struct Category: Identifiable, Hashable {
+    let id: UUID
+    let name: String
+    let services: [Service]
+}
 
-                Text(T.Watch.intro)
-                    .font(.body)
-                    .padding(4)
-                    .foregroundStyle(.primary)
-                
-                Spacer()
-                
-                Text(T.Settings.version(appVersion))
-                    .font(.body)
-                    .padding(4)
-                    .foregroundStyle(.primary)
+extension CategoryData {
+    func toCategory() -> Category {
+        let id: UUID = {
+            if let section {
+                return section.sectionID
             }
-        }
-        .navigationTitle(T.Settings.about)
-    }
-    
-    private var appVersion: String {
-        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "-"
+            return UUID()
+        }()
+        let name: String = {
+            if let section {
+                return section.title
+            }
+            return T.Commons.service
+        }()
+        return Category(id: id, name: name, services: services.toServices())
     }
 }
 
-#Preview {
-    AboutView()
+extension Array where Element == CategoryData {
+    func toCategories() -> [Category] {
+        map { $0.toCategory() }
+    }
 }

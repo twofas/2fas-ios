@@ -28,7 +28,7 @@ struct SettingsView: View {
                 NavigationLink(value: SettingsPath.security) {
                     HStack {
                         Image(systemName: "lock.fill")
-                        Text("Security")
+                        Text(T.Settings.security)
                             .font(.callout)
                             .padding(4)
                             .foregroundStyle(.primary)
@@ -38,7 +38,7 @@ struct SettingsView: View {
                 NavigationLink(value: SettingsPath.about) {
                     HStack {
                         Image(systemName: "info.bubble.fill")
-                        Text("About")
+                        Text(T.Settings.about)
                             .font(.callout)
                             .padding(4)
                             .foregroundStyle(.primary)
@@ -58,8 +58,8 @@ struct SettingsView: View {
             }
         .containerBackground(.red.gradient, for: .navigation)
         .listStyle(.carousel)
-        .environment(\.defaultMinListRowHeight, 60)
-        .navigationTitle("Settings")
+        .environment(\.defaultMinListRowHeight, WatchConsts.minRowHeight)
+        .navigationTitle(T.Settings.settings)
         .navigationBarTitleDisplayMode(.automatic)
         .listItemTint(.clear)
     }

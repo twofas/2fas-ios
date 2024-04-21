@@ -99,7 +99,7 @@ struct ServiceView: View {
     
     @ViewBuilder
     private func unsupportedHOTP() -> some View {
-        Text("HOTP services aren't supported yet")
+        Text(T.Tokens.hotpNotSupported)
     }
     
     @ViewBuilder

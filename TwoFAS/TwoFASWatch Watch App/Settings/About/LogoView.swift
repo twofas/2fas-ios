@@ -19,34 +19,26 @@
 
 import SwiftUI
 
-struct AboutView: View {
+struct LogoView: View {
     var body: some View {
-        ScrollView {
-            VStack(alignment: .center, spacing: 4) {
-                LogoView()
-                Spacer()
-
-                Text(T.Watch.intro)
-                    .font(.body)
-                    .padding(4)
+        VStack(alignment: .leading) {
+            HStack(alignment: .center, spacing: 4) {
+                Image("AboutLogo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 40)
+                    .padding(.leading, 4)
+                    .padding(.bottom, 4)
+                
+                Text(T.Commons._2fasToolbar)
+                    .font(.title)
+                    .multilineTextAlignment(.leading)
+                    .padding(.horizontal, 12)
                     .foregroundStyle(.primary)
                 
                 Spacer()
-                
-                Text(T.Settings.version(appVersion))
-                    .font(.body)
-                    .padding(4)
-                    .foregroundStyle(.primary)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .navigationTitle(T.Settings.about)
     }
-    
-    private var appVersion: String {
-        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "-"
-    }
-}
-
-#Preview {
-    AboutView()
 }

@@ -36,6 +36,7 @@ struct ServiceCellView: View {
                 style: .continuous
             )
             .fill(service.badgeColor)
+            .preferredColorScheme(.dark)
             .frame(width: 5)
             IconRenderer(service: service)
             VStack(alignment: .leading, spacing: 0) {

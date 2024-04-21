@@ -109,6 +109,7 @@ final class SyncHandler {
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (BackgroundFetchResult) -> Void
     ) {
+        #if os(iOS)
         let dict = userInfo as! [String: NSObject]
         guard let notification: CKDatabaseNotification = CKNotification(
             fromRemoteNotificationDictionary: dict
@@ -117,6 +118,10 @@ final class SyncHandler {
             return
         }
         Log("SyncHandler - We have a notification! \(notification)", module: .cloudSync)
+        #elseif os(watchOS)
+        Log("SyncHandler - We have a notification!", module: .cloudSync)
+        #endif
+        
         fromNotificationCompletionHandler = completionHandler
         synchronize()
     }

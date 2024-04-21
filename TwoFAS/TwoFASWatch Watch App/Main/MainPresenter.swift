@@ -25,28 +25,15 @@ final class MainPresenter: ObservableObject {
     @Published var favoriteList: [Service] = []
     
     private let interactor: MainInteracting
-    private let notificationCenter = NotificationCenter.default
     
     init(interactor: MainInteracting) {
         self.interactor = interactor
-        
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(refresh),
-            name: .syncCompletedSuccessfuly,
-            object: nil
-        )
-    }
-    
-    deinit {
-        notificationCenter.removeObserver(self)
     }
     
     func onAppear() {
         refresh()
     }
     
-    @objc
     private func refresh() {
         favoriteList = interactor
             .listFavoriteServices()

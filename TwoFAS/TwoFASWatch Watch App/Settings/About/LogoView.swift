@@ -28,7 +28,7 @@ struct LogoView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 40)
                     .padding(.leading, 4)
-                    .padding(.bottom, 4)
+                    .padding(.vertical, 4)
                 
                 Text(T.Commons._2fasToolbar)
                     .font(.title)

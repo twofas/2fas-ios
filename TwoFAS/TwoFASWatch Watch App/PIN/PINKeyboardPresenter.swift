@@ -56,9 +56,7 @@ final class PINKeyboardPresenter: ObservableObject {
     init(interactor: PINKeyboardInteracting, completion: @escaping (PINKeyboardResult) -> Void) {
         self.interactor = interactor
         self.completion = completion
-    }
-    
-    func onAppear() {
+        
         showCloseButton = interactor.variant.showCloseButton
         navigationTitle = interactor.variant.navigationTitle
     }
@@ -143,8 +141,8 @@ private extension PINKeyboardPresenter {
 private extension PINKeyboardVariant {
     var navigationTitle: String {
         switch self {
-        case .PINValidation: T.Security.enterPin
-        case .PINValidationWithClose: T.Security.enterPin
+        case .PINValidation: T.Security.enterPinShort
+        case .PINValidationWithClose: T.Security.enterPinShort
         case .enterNewPIN: T.Security.enterNewPinShort
         case .verifyPIN: T.Security.repeatNewPinShort
         }

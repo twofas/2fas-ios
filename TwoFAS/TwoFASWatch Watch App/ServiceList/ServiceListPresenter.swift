@@ -24,21 +24,9 @@ final class ServiceListPresenter: ObservableObject {
     @Published var list: [Category] = []
     
     private let interactor: ServiceListInteracting
-    private let notificationCenter = NotificationCenter.default
     
     init(interactor: ServiceListInteracting) {
         self.interactor = interactor
-        
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(refresh),
-            name: .syncCompletedSuccessfuly,
-            object: nil
-        )
-    }
-    
-    deinit {
-        notificationCenter.removeObserver(self)
     }
 }
 
@@ -47,7 +35,6 @@ extension ServiceListPresenter {
         refresh()
     }
     
-    @objc
     private func refresh() {
         list = interactor.listAllServices()
             .toCategories()

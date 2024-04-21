@@ -976,6 +976,8 @@ internal enum T {
     internal static let enterNewPinShort = T.tr("Localizable", "security__enter_new_pin_short", fallback: "Enter new PIN")
     /// Please enter your PIN
     internal static let enterPin = T.tr("Localizable", "security__enter_pin", fallback: "Please enter your PIN")
+    /// Enter PIN
+    internal static let enterPinShort = T.tr("Localizable", "security__enter_pin_short", fallback: "Enter PIN")
     /// Please enter your new %s PIN
     internal static func enterYourNewPin(_ p1: UnsafePointer<CChar>) -> String {
       return T.tr("Localizable", "security__enter_your_new_pin", p1, fallback: "Please enter your new %s PIN")

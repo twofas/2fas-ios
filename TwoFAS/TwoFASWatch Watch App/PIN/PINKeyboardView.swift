@@ -101,9 +101,6 @@ struct PINKeyboardView: View {
         })
         .toolbarTitleDisplayMode(.inline)
         .navigationTitle(presenter.navigationTitle)
-        .onAppear {
-            presenter.onAppear()
-        }
     }
     
     @ViewBuilder

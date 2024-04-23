@@ -104,13 +104,13 @@ struct SecurityView: View {
                         PINKeyboardView(presenter: .init(interactor: InteractorFactory.shared.pinInteractor(variant: .PINValidationWithClose), completion: { result in
                             switch result {
                             case .closed: path.removeLast()
-                            case .verified: path.append(SecurityPath.setPIN(.selectLength))
+                            case .verified: path.append(SecurityPath.changePIN(.selectLength))
                             default: break
                             }
                         }))
                     case .selectLength:
                         PINTypeView(didSelect: { PINType in
-                            path.append(SecurityPath.setPIN(.enterPIN(PINType)))
+                            path.append(SecurityPath.changePIN(.enterPIN(PINType)))
                         }, showClose: true) {
                             path.removeLast(2)
                         }
@@ -118,7 +118,7 @@ struct SecurityView: View {
                         PINKeyboardView(presenter: .init(interactor: InteractorFactory.shared.pinInteractor(variant: .enterNewPIN(PINType)), completion: { result in
                             switch result {
                             case .closed: path.removeLast(3)
-                            case .entered(let appPIN): path.append(SecurityPath.setPIN(.verifyPIN(appPIN)))
+                            case .entered(let appPIN): path.append(SecurityPath.changePIN(.verifyPIN(appPIN)))
                             default: break
                             }
                         }))
@@ -126,7 +126,7 @@ struct SecurityView: View {
                         PINKeyboardView(presenter: .init(interactor: InteractorFactory.shared.pinInteractor(variant: .verifyPIN(appPIN)), completion: { result in
                             switch result {
                             case .closed: path.removeLast(4)
-                            case .saved: path.append(SecurityPath.setPIN(.success))
+                            case .saved: path.append(SecurityPath.changePIN(.success))
                             default: break
                             }
                         }))

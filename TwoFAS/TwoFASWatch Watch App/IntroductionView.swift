@@ -37,6 +37,7 @@ struct IntroductionView: View {
                 }, label: {
                     Text(T.Commons.continue)
                 })
+                .padding(.vertical, 12)
             }
         }
     }

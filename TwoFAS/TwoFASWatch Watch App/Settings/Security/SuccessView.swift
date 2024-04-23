@@ -34,6 +34,7 @@ struct SuccessView: View {
             }
             .controlSize(.large)
         }
+        .navigationBarBackButtonHidden()
     }
 }
 

@@ -38,7 +38,7 @@ extension CategoryData {
             if let section {
                 return section.title
             }
-            return T.Commons.service
+            return T.Tokens.myTokens
         }()
         return Category(id: id, name: name, services: services.toServices())
     }

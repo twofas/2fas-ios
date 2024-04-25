@@ -57,7 +57,9 @@ extension RootViewController: RootViewControlling {
     func tokenCopied() {
         func flashNotification() {
             VoiceOver.say(T.Notifications.tokenCopied)
-            HUDNotification.presentSuccess(title: T.Notifications.tokenCopied)
+            if let keyWindow = UIApplication.keyWindow {
+                HUDNotification.presentSuccess(title: T.Notifications.tokenCopied, on: keyWindow)
+            }
         }
         
         if UIApplication.keyWindow != nil && view != nil {

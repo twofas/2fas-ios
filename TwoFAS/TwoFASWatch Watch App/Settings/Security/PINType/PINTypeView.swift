@@ -53,7 +53,7 @@ struct PINTypeView: View {
             if showClose {
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
-                        
+                        didClose?()
                     } label: {
                         Label(T.Commons.close, systemImage: "xmark")
                     }

@@ -61,7 +61,10 @@ struct SecurityView: View {
                             path.append(SecurityPath.setPIN(.enterPIN(PINType)))
                         }
                     case .enterPIN(let PINType):
-                        PINKeyboardView(presenter: .init(interactor: InteractorFactory.shared.pinInteractor(variant: .enterNewPIN(PINType)), completion: { result in
+                        PINKeyboardView(
+                            presenter: .init(
+                                interactor: InteractorFactory.shared.pinInteractor(variant: .enterNewPIN(PINType)
+                        ), completion: { result in
                             switch result {
                             case .closed: path.removeLast(2)
                             case .entered(let appPIN): path.append(SecurityPath.setPIN(.verifyPIN(appPIN)))
@@ -69,7 +72,10 @@ struct SecurityView: View {
                             }
                         }))
                     case .verifyPIN(let appPIN):
-                        PINKeyboardView(presenter: .init(interactor: InteractorFactory.shared.pinInteractor(variant: .verifyPIN(appPIN)), completion: { result in
+                        PINKeyboardView(
+                            presenter: .init(
+                                interactor: InteractorFactory.shared.pinInteractor(variant: .verifyPIN(appPIN)
+                        ), completion: { result in
                             switch result {
                             case .closed: path.removeLast(3)
                             case .saved: path.append(SecurityPath.setPIN(.success))
@@ -84,7 +90,10 @@ struct SecurityView: View {
                 case .disablePIN(let disablePIN):
                     switch disablePIN {
                     case .verify:
-                        PINKeyboardView(presenter: .init(interactor: InteractorFactory.shared.pinInteractor(variant: .PINValidationWithClose), completion: { result in
+                        PINKeyboardView(
+                            presenter: .init(
+                                interactor: InteractorFactory.shared.pinInteractor(
+                                    variant: .PINValidationWithClose), completion: { result in
                             switch result {
                             case .closed: path.removeLast()
                             case .verified: 
@@ -101,7 +110,10 @@ struct SecurityView: View {
                 case .changePIN(let changePIN):
                     switch changePIN {
                     case .verify:
-                        PINKeyboardView(presenter: .init(interactor: InteractorFactory.shared.pinInteractor(variant: .PINValidationWithClose), completion: { result in
+                        PINKeyboardView(
+                            presenter: .init(
+                                interactor: InteractorFactory.shared.pinInteractor(
+                                    variant: .PINValidationWithClose), completion: { result in
                             switch result {
                             case .closed: path.removeLast()
                             case .verified: path.append(SecurityPath.changePIN(.selectLength))
@@ -115,7 +127,9 @@ struct SecurityView: View {
                             path.removeLast(2)
                         }
                     case .enterPIN(let PINType):
-                        PINKeyboardView(presenter: .init(interactor: InteractorFactory.shared.pinInteractor(variant: .enterNewPIN(PINType)), completion: { result in
+                        PINKeyboardView(presenter: .init(
+                            interactor: InteractorFactory.shared.pinInteractor(
+                                variant: .enterNewPIN(PINType)), completion: { result in
                             switch result {
                             case .closed: path.removeLast(3)
                             case .entered(let appPIN): path.append(SecurityPath.changePIN(.verifyPIN(appPIN)))
@@ -123,7 +137,9 @@ struct SecurityView: View {
                             }
                         }))
                     case .verifyPIN(let appPIN):
-                        PINKeyboardView(presenter: .init(interactor: InteractorFactory.shared.pinInteractor(variant: .verifyPIN(appPIN)), completion: { result in
+                        PINKeyboardView(presenter: .init(
+                            interactor: InteractorFactory.shared.pinInteractor(
+                                variant: .verifyPIN(appPIN)), completion: { result in
                             switch result {
                             case .closed: path.removeLast(4)
                             case .saved: path.append(SecurityPath.changePIN(.success))

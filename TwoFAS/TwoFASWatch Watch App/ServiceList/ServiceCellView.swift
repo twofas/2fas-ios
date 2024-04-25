@@ -36,8 +36,8 @@ struct ServiceCellView: View {
                 style: .continuous
             )
             .fill(service.badgeColor)
-            .preferredColorScheme(.dark)
             .frame(width: 5)
+            
             IconRenderer(service: service)
             VStack(alignment: .leading, spacing: 0) {
                 Text(service.name)
@@ -79,11 +79,11 @@ struct ServiceCellView: View {
                 id: "ID",
                 name: "2FAS Service",
                 additionalInfo: "contact@2fas.com",
-                iconType: .brand,
+                iconType: .label,
                 iconTypeID: .default,
                 labelColor: TintColor.green.color,
                 labelTitle: "2F",
-                badgeColor: TintColor.indigo.color
+                badgeColor: TintColor.default.color
             ))
             .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
         }

@@ -18,8 +18,12 @@
 //
 
 import Foundation
-import Common
 import CoreData
+#if os(iOS)
+import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 public final class LogHandler: LogStorageHandling {
     private struct CachedEntry {
@@ -48,6 +52,7 @@ public final class LogHandler: LogStorageHandling {
         context = coreDataStack.createBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
         
+        #if os(iOS)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(save),
@@ -66,6 +71,7 @@ public final class LogHandler: LogStorageHandling {
             name: UIApplication.didEnterBackgroundNotification,
             object: nil
         )
+        #endif
     }
     
     public func markZoneStart() {

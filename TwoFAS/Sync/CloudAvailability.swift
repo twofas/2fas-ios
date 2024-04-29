@@ -19,7 +19,11 @@
 
 import Foundation
 import CloudKit
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 enum CloudAvailabilityStatus {
     case available

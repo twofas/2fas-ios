@@ -22,4 +22,5 @@ TwoFAS/Content/Sources/ServiceDefinitionDatabaseImpl+Database7.swift filter=git-
 TwoFAS/Content/Sources/ServiceDefinitionDatabaseImpl+Database8.swift filter=git-crypt diff=git-crypt
 TwoFAS/Content/Sources/ServiceDefinitionDatabaseImpl+Database9.swift filter=git-crypt diff=git-crypt
 TwoFAS/Content/Assets/Assets.car filter=git-crypt diff=git-crypt
+TwoFAS/Content/AssetsWatch/Assets.car filter=git-crypt diff=git-crypt
 TwoFAS/TwoFAS/Other/Guides/** filter=git-crypt diff=git-crypt

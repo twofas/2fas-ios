@@ -19,8 +19,13 @@
 
 import Foundation
 import CoreData
+#if os(iOS)
 import Common
 import Content
+#elseif os(watchOS)
+import CommonWatch
+import ContentWatch
+#endif
 
 @objc(DynamicTypesEntityMigrationPolicy)
 final class DynamicTypesEntityMigrationPolicy: NSEntityMigrationPolicy {

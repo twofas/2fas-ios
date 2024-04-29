@@ -18,9 +18,14 @@
 //
 
 import Foundation
-import Common
 import CoreData
+#if os(iOS)
+import Common
 import Protection
+#elseif os(watchOS)
+import CommonWatch
+import ProtectionWatch
+#endif
 
 final class ServiceHandler {
     private let coreDataStack: CoreDataStack

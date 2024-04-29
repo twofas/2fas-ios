@@ -20,6 +20,7 @@
 import Foundation
 import Sync
 import Storage
+import Common
 
 public enum LogUploadingInteractorError: Error {
     case notExists

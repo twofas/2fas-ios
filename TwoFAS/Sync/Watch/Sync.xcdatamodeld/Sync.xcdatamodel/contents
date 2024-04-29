@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22757" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="LogEntity" representedClassName="LogEntity" syncable="YES">
+        <attribute name="action" attributeType="String"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="entityID" attributeType="String"/>
+        <attribute name="isApplied" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="kind" attributeType="String"/>
+    </entity>
+    <entity name="SectionCacheEntity" representedClassName="SectionCacheEntity" syncable="YES">
+        <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="metadata" attributeType="Binary"/>
+        <attribute name="modificationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="order" attributeType="Integer 32" usesScalarValueType="YES"/>
+        <attribute name="sectionID" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+    </entity>
+    <entity name="ServiceCacheEntity" representedClassName="ServiceCacheEntity" syncable="YES">
+        <attribute name="additionalInfo" optional="YES" attributeType="String"/>
+        <attribute name="algorithm" attributeType="String"/>
+        <attribute name="badgeColor" optional="YES" attributeType="String"/>
+        <attribute name="counter" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="iconType" attributeType="String"/>
+        <attribute name="iconTypeID" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="labelColor" attributeType="String"/>
+        <attribute name="labelTitle" attributeType="String"/>
+        <attribute name="metadata" attributeType="Binary"/>
+        <attribute name="modificationDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="otpAuth" optional="YES" attributeType="String"/>
+        <attribute name="rawIssuer" optional="YES" attributeType="String"/>
+        <attribute name="secret" attributeType="String"/>
+        <attribute name="sectionID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="sectionOrder" attributeType="Integer 32" usesScalarValueType="YES"/>
+        <attribute name="serviceTypeID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="source" attributeType="String"/>
+        <attribute name="tokenLength" attributeType="Integer 32" usesScalarValueType="YES"/>
+        <attribute name="tokenPeriod" optional="YES" attributeType="Integer 32" usesScalarValueType="YES"/>
+        <attribute name="tokenType" attributeType="String"/>
+    </entity>
+</model>

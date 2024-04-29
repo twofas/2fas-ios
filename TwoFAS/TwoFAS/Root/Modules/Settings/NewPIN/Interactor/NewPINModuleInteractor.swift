@@ -19,6 +19,7 @@
 
 import Foundation
 import Data
+import Common
 
 protocol NewPINModuleInteracting: AnyObject {
     var selectedPIN: String? { get set }

@@ -18,7 +18,11 @@
 //
 
 import Foundation
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 extension Array where Element == ServiceEntity {
     var groupByCategory: ServiceEntity.ServicesWithinSections {

@@ -18,7 +18,11 @@
 //
 
 import UIKit
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 import CloudKit
 
 final class SyncHandler {
@@ -32,7 +36,7 @@ final class SyncHandler {
     
     private var timeOffset: Int = 0
     
-    private var fromNotificationCompletionHandler: ((UIBackgroundFetchResult) -> Void)?
+    private var fromNotificationCompletionHandler: ((BackgroundFetchResult) -> Void)?
     
     typealias OtherError = (NSError) -> Void
     
@@ -60,7 +64,17 @@ final class SyncHandler {
         
         cloudKit.deletedEntries = { [weak self] entries in self?.deleteEntries(entries) }
         cloudKit.updatedEntries = { [weak self] entries in self?.updateEntries(entries) }
-        cloudKit.fetchFinishedSuccessfuly = { [weak self] in self?.fetchFinishedSuccessfuly() }
+        cloudKit.fetchFinishedSuccessfuly = { [weak self] in
+            #if os(watchOS)
+            Log("SyncHandler - WatchOS doesn't modify iCloud - returning", module: .cloudSync)
+            self?.itemHandler.commit()
+            self?.logHandler.deleteAll()
+            self?.applyingChanges = false
+            self?.syncCompleted()
+            #else
+            self?.fetchFinishedSuccessfuly()
+            #endif
+        }
         cloudKit.changesSavedSuccessfuly = { [weak self] in self?.changesSavedSuccessfuly() }
         cloudKit.abortSync = { [weak self] in self?.abortSync() }
         
@@ -93,8 +107,9 @@ final class SyncHandler {
     
     func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+        fetchCompletionHandler completionHandler: @escaping (BackgroundFetchResult) -> Void
     ) {
+        #if os(iOS)
         let dict = userInfo as! [String: NSObject]
         guard let notification: CKDatabaseNotification = CKNotification(
             fromRemoteNotificationDictionary: dict
@@ -103,6 +118,10 @@ final class SyncHandler {
             return
         }
         Log("SyncHandler - We have a notification! \(notification)", module: .cloudSync)
+        #elseif os(watchOS)
+        Log("SyncHandler - We have a notification!", module: .cloudSync)
+        #endif
+        
         fromNotificationCompletionHandler = completionHandler
         synchronize()
     }

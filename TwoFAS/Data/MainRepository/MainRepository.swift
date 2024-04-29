@@ -23,9 +23,6 @@ import Common
 import NetworkStack
 @_implementationOnly import PushNotifications
 
-typealias CloudStateListenerID = String
-typealias CloudStateListener = (CloudState) -> Void
-
 protocol MainRepository: AnyObject {
     // MARK: - Security
     var isPINSet: Bool { get }

@@ -19,6 +19,7 @@
 
 import Foundation
 import Data
+import Common
 
 protocol MainModuleInteracting: AnyObject {
     var secretSyncError: ((String) -> Void)? { get set }

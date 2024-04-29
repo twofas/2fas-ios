@@ -18,7 +18,7 @@
 //
 
 import Foundation
-import Data
+import Common
 
 extension PINType {
     var localized: String {

@@ -19,29 +19,7 @@
 
 import UIKit
 import Sync
-
-public enum CloudState: Equatable {
-    public enum NotAvailableReason: Equatable {
-        case overQuota
-        case disabledByUser
-        case error(error: NSError?)
-        case useriCloudProblem
-        case other
-        case newerVersion
-        case incorrectService(serviceName: String)
-        case cloudEncrypted
-    }
-    
-    public enum Sync: Equatable {
-        case syncing
-        case synced
-    }
-    
-    case unknown
-    case disabledNotAvailable(reason: NotAvailableReason)
-    case disabledAvailable
-    case enabled(sync: Sync)
-}
+import Common
 
 extension MainRepositoryImpl {
     var successSyncDate: Date? {
@@ -57,13 +35,10 @@ extension MainRepositoryImpl {
         }
     }
     var isCloudBackupConnected: Bool { cloudHandler.isConnected }
-    var cloudCurrentState: CloudState { cloudCurrentStateToCloudState(cloudHandler.currentState) }
+    var cloudCurrentState: CloudState { cloudHandler.currentState.toCloudState }
     
     func registerForCloudStateChanges(_ listener: @escaping CloudStateListener, id: CloudStateListenerID) {
-        cloudHandler.registerForStateChange({ [weak self] cloudCurrentState in
-            guard let cloudState = self?.cloudCurrentStateToCloudState(cloudCurrentState) else { return }
-            listener(cloudState)
-        }, with: id)
+        cloudHandler.registerForStateChange({ listener($0.toCloudState) }, with: id)
         cloudHandler.checkState()
     }
     
@@ -96,42 +71,5 @@ extension MainRepositoryImpl {
     
     func saveSuccessSyncDate(_ date: Date?) {
         userDefaultsRepository.saveSuccessSyncDate(date)
-    }
-}
-
-private extension MainRepositoryImpl {
-    func cloudCurrentStateToCloudState(_ cloudCurrentState: CloudCurrentState) -> CloudState {
-        switch cloudCurrentState {
-        case .unknown:
-            return .unknown
-        case .disabledNotAvailable(let reason):
-            switch reason {
-            case .overQuota:
-                return .disabledNotAvailable(reason: .overQuota)
-            case .disabledByUser:
-                return .disabledNotAvailable(reason: .disabledByUser)
-            case .error(let error):
-                return .disabledNotAvailable(reason: .error(error: error))
-            case .useriCloudProblem:
-                return .disabledNotAvailable(reason: .useriCloudProblem)
-            case .other:
-                return .disabledNotAvailable(reason: .other)
-            case .incorrectService(let serviceName):
-                return .disabledNotAvailable(reason: .incorrectService(serviceName: serviceName))
-            case .newerVersion:
-                return .disabledNotAvailable(reason: .newerVersion)
-            case .cloudEncrypted:
-                return .disabledNotAvailable(reason: .cloudEncrypted)
-            }
-        case .disabledAvailable:
-            return .disabledAvailable
-        case .enabled(let sync):
-            switch sync {
-            case .syncing:
-                return .enabled(sync: .synced)
-            case .synced:
-                return .enabled(sync: .synced)
-            }
-        }
     }
 }

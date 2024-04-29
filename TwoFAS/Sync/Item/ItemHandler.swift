@@ -19,8 +19,13 @@
 
 import Foundation
 import CloudKit
+#if os(iOS)
 import Common
 import Protection
+#elseif os(watchOS)
+import CommonWatch
+import ProtectionWatch
+#endif
 
 final class ItemHandler {
     typealias SecretError = (String) -> Void

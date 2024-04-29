@@ -19,7 +19,11 @@
 
 import Foundation
 import CommonCrypto
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 func HMAC(algorithm: Algorithm, key: Data, data: Data) -> Data {
     let (hashFunction, hashLength) = algorithm.hashInfo

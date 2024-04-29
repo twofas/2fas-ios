@@ -24,7 +24,11 @@
 //
 
 import Foundation
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 /// A `Generator` contains all of the parameters needed to generate a one-time password.
 struct Generator: Equatable {

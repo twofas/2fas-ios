@@ -19,7 +19,11 @@
 
 import Foundation
 import CoreData
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 @objc(LogEntity)
 final class LogEntity: NSManagedObject {

@@ -19,5 +19,17 @@
 
 import Foundation
 
+#if os(iOS)
+import UIKit
+#elseif os(watchOS)
+import WatchKit
+#endif
+
 typealias Callback = () -> Void
 typealias EntityOfKind = (entityID: String, type: RecordType)
+
+#if os(iOS)
+public typealias BackgroundFetchResult = UIBackgroundFetchResult
+#elseif os(watchOS)
+public typealias BackgroundFetchResult = WKBackgroundFetchResult
+#endif

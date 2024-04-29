@@ -19,6 +19,7 @@
 
 import Foundation
 import Data
+import Common
 
 final class NewPINPresenter: PINKeyboardPresenter {
     weak var view: NewPINViewControlling?

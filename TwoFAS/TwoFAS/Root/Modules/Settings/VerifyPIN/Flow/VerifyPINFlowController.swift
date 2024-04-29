@@ -19,6 +19,7 @@
 
 import UIKit
 import Data
+import Common
 
 protocol VerifyPINFlowControllerParent: AnyObject {
     func hideVerifyPIN()

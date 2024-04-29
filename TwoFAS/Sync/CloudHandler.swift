@@ -18,7 +18,11 @@
 //
 
 import UIKit
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 public enum CloudCurrentState: Equatable {
     public enum NotAvailableReason: Equatable {
@@ -42,6 +46,41 @@ public enum CloudCurrentState: Equatable {
     case disabledNotAvailable(reason: NotAvailableReason)
     case disabledAvailable
     case enabled(sync: Sync)
+    
+    public var toCloudState: CloudState {
+        switch self {
+        case .unknown:
+            return .unknown
+        case .disabledNotAvailable(let reason):
+            switch reason {
+            case .overQuota:
+                return .disabledNotAvailable(reason: .overQuota)
+            case .disabledByUser:
+                return .disabledNotAvailable(reason: .disabledByUser)
+            case .error(let error):
+                return .disabledNotAvailable(reason: .error(error: error))
+            case .useriCloudProblem:
+                return .disabledNotAvailable(reason: .useriCloudProblem)
+            case .other:
+                return .disabledNotAvailable(reason: .other)
+            case .incorrectService(let serviceName):
+                return .disabledNotAvailable(reason: .incorrectService(serviceName: serviceName))
+            case .newerVersion:
+                return .disabledNotAvailable(reason: .newerVersion)
+            case .cloudEncrypted:
+                return .disabledNotAvailable(reason: .cloudEncrypted)
+            }
+        case .disabledAvailable:
+            return .disabledAvailable
+        case .enabled(let sync):
+            switch sync {
+            case .syncing:
+                return .enabled(sync: .synced)
+            case .synced:
+                return .enabled(sync: .synced)
+            }
+        }
+    }
 }
 
 public typealias CloudHandlerStateListener = (CloudCurrentState) -> Void
@@ -54,7 +93,7 @@ public protocol CloudHandlerType: AnyObject {
     func registerForStateChange(_ listener: @escaping CloudHandlerStateListener, with id: String)
     func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+        fetchCompletionHandler completionHandler: @escaping (BackgroundFetchResult) -> Void
     )
     func unregisterForStateChange(id: String)
     
@@ -213,7 +252,7 @@ final class CloudHandler: CloudHandlerType {
     
     func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+        fetchCompletionHandler completionHandler: @escaping (BackgroundFetchResult) -> Void
     ) {
         switch currentState {
         case .enabled:

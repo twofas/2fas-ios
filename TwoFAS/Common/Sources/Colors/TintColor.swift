@@ -18,6 +18,9 @@
 //
 
 import UIKit
+#if os(watchOS)
+import SwiftUI
+#endif
 
 public enum TintColor: String, Hashable, CaseIterable, Codable {
     case `default`
@@ -108,6 +111,7 @@ public extension TintColor {
         }
     }
     
+    #if os(iOS)
     var color: UIColor {
         let bundle = Bundle(for: CountdownTimer.self)
         switch self {
@@ -124,4 +128,22 @@ public extension TintColor {
         case .brown: return UIColor(named: "tintBrownColor", in: bundle, compatibleWith: nil)!
         }
     }
+    #elseif os(watchOS)
+    var color: Color {
+        let bundle = Bundle(for: CoreDataStack.self)
+        switch self {
+        case .`default`: return Color("tintDefaultColor", bundle: bundle)
+        case .lightBlue: return Color("tintLightBlueColor", bundle: bundle)
+        case .indigo: return Color("tintIndigoColor", bundle: bundle)
+        case .purple: return Color("tintPurpleColor", bundle: bundle)
+        case .turquoise: return Color("tintTurquoiseColor", bundle: bundle)
+        case .green: return Color("tintGreenColor", bundle: bundle)
+        case .red: return Color("tintRedColor", bundle: bundle)
+        case .orange: return Color("tintOrangeColor", bundle: bundle)
+        case .yellow: return Color("tintYellowColor", bundle: bundle)
+        case .pink: return Color("tintPinkColor", bundle: bundle)
+        case .brown: return Color("tintBrownColor", bundle: bundle)
+        }
+    }
+    #endif
 }

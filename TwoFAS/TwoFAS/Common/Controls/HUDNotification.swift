@@ -22,22 +22,22 @@ import PKHUD
 import Common
 
 enum HUDNotification {
-    static func presentSuccess(title: String, completion: Callback? = nil) {
+    static func presentSuccess(title: String, on view: UIView? = nil, completion: Callback? = nil) {
         HUD.dimsBackground = false
         HUD.allowsInteraction = false
         PKHUD.sharedHUD.effect = UIBlurEffect(style: .dark)
         let notification = NotificationIcon(title: title, iconKind: .success)
-        HUD.flash(HUDContentType.customView(view: notification), delay: 1) { _ in
+        HUD.flash(HUDContentType.customView(view: notification), onView: view, delay: 1) { _ in
             completion?()
         }
     }
     
-    static func presentFailure(title: String, completion: Callback? = nil) {
+    static func presentFailure(title: String, on view: UIView? = nil, completion: Callback? = nil) {
         HUD.dimsBackground = false
         HUD.allowsInteraction = false
         PKHUD.sharedHUD.effect = UIBlurEffect(style: .dark)
         let notification = NotificationIcon(title: title, iconKind: .failure)
-        HUD.flash(HUDContentType.customView(view: notification), delay: 1) { _ in
+        HUD.flash(HUDContentType.customView(view: notification), onView: view, delay: 1) { _ in
             completion?()
         }
     }

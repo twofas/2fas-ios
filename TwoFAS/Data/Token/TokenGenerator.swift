@@ -18,7 +18,11 @@
 //
 
 import Foundation
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 public enum TokenGenerator {
     // swiftlint:disable function_default_parameter_at_end

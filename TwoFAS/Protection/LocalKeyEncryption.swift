@@ -18,13 +18,19 @@
 //
 
 import Foundation
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 public final class LocalKeyEncryption: CommonLocalKeyEncryption {
     private let encryption = KeyEncryption(
         key: Keys.LocalKeyEncryption.key,
         alphabet: Keys.LocalKeyEncryption.alphabet
     )
+    
+    public init() {}
     
     public func encrypt(_ str: String) -> String { encryption.encipher(str) }
     public func decrypt(_ str: String) -> String { encryption.decipher(str) }

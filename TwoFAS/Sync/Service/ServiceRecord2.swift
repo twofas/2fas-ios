@@ -19,7 +19,11 @@
 
 import Foundation
 import CloudKit
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 enum ServiceEntryKey2: String {
     case name

@@ -19,7 +19,11 @@
 
 import Foundation
 import CoreData
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 public struct SectionData: Hashable {
     public let title: String

@@ -19,6 +19,7 @@
 
 import UIKit
 import Data
+import Common
 
 protocol NewPINFlowControllerParent: AnyObject {
     func hideNewPIN()

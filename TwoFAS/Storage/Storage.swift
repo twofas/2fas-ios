@@ -18,7 +18,11 @@
 //
 
 import Foundation
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 public final class Storage {
     private let coreDataStack: CoreDataStack
@@ -31,11 +35,9 @@ public final class Storage {
     public init(readOnly: Bool = false, logError: ((String) -> Void)?) {
         let packageName = "TwoFAS"
         let bundle = Bundle(for: Storage.self)
-        coreDataStack = CoreDataStack(
-            readOnly: readOnly,
-            name: packageName,
-            bundle: bundle,
-            migrator: CoreDataMigrator(
+        let migrator: CoreDataMigratorProtocol? = {
+            #if os(iOS)
+            CoreDataMigrator(
                 momdSubdirectory: packageName,
                 versions: [
                     CoreDataMigrationVersion(rawValue: "TwoFAS"),
@@ -47,6 +49,15 @@ public final class Storage {
                     CoreDataMigrationVersion(rawValue: "TwoFAS7")
                 ]
             )
+            #elseif os(watchOS)
+            return nil
+            #endif
+        }()
+        coreDataStack = CoreDataStack(
+            readOnly: readOnly,
+            name: packageName,
+            bundle: bundle,
+            migrator: migrator
         )
         coreDataStack.logError = logError
         

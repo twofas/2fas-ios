@@ -18,21 +18,30 @@
 //
 
 import Foundation
+#if os(iOS)
 import Storage
 import Common
 import Content
+#elseif os(watchOS)
+import CommonWatch
+import ContentWatch
+#endif
 
 // Migrate to interactor when main architecture will be refactored
-final class ServiceMigrationController {
+public final class ServiceMigrationController {
     private let migrationKey = "ServiceMigrationController"
     private let storageRepository: StorageRepository
     private var serviceDatabase: ServiceDefinitionDatabase?
     
-    init(storageRepository: StorageRepository) {
+    #if os(watchOS)
+    public var serviceNameTranslation: String?
+    #endif
+    
+    public init(storageRepository: StorageRepository) {
         self.storageRepository = storageRepository
     }
     
-    func migrateIfNeeded() {
+    public func migrateIfNeeded() {
         guard
             let currentVersionString = Bundle.main.appVersion,
             let currentVersion = currentVersionString.splitVersion()
@@ -43,7 +52,9 @@ final class ServiceMigrationController {
         
         if let sv = savedVersionString {
             if sv < currentVersion {
+                #if os(iOS)
                 AppEventLog(.appUpdate(currentVersionString))
+                #endif
                 userDefaults.set(currentVersionString, forKey: migrationKey)
                 userDefaults.synchronize()
             } else {
@@ -75,9 +86,16 @@ final class ServiceMigrationController {
             else { continue }
             
             let name: String = {
+                #if os(iOS)
                 if s.name.contains(MainRepositoryImpl.shared.serviceNameTranslation) {
                     return def.name
                 }
+                #elseif os(watchOS)
+                if let serviceNameTranslation, s.name.contains(serviceNameTranslation) {
+                    return def.name
+                }
+                #endif
+                
                 return s.name
             }()
             

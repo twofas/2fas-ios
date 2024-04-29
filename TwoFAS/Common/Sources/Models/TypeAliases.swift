@@ -27,6 +27,8 @@ public typealias ServiceTypeID = UUID
 public typealias IconTypeID = UUID
 public typealias SectionID = UUID
 public typealias DeviceName = String
+public typealias CloudStateListenerID = String
+public typealias CloudStateListener = (CloudState) -> Void
 
 public typealias Secret = String
 public typealias TokenValue = String

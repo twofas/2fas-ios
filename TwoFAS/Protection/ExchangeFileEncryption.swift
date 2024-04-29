@@ -20,7 +20,11 @@
 import Foundation
 import CryptoKit
 import CommonCrypto
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 public final class ExchangeFileEncryption {
     public struct EncryptionResult {

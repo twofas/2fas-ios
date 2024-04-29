@@ -18,16 +18,22 @@
 //
 
 import Foundation
+#if os(iOS)
 import Common
+public typealias Algo = Common.Algorithm
+#elseif os(watchOS)
+import CommonWatch
+public typealias Algo = CommonWatch.Algorithm
+#endif
 
 public struct TimedSecret {
     public let secret: Secret
     public let period: Period
     public let digits: Digits
     public let tokenType: TokenType
-    public let algorithm: Common.Algorithm
+    public let algorithm: Algo
     
-    public init(secret: Secret, period: Period, digits: Digits, algorithm: Common.Algorithm, tokenType: TokenType) {
+    public init(secret: Secret, period: Period, digits: Digits, algorithm: Algo, tokenType: TokenType) {
         self.secret = secret
         self.period = period
         self.digits = digits
@@ -40,9 +46,9 @@ public struct CounterSecret {
     public let secret: Secret
     public let counter: Int
     public let digits: Digits
-    public let algorithm: Common.Algorithm
+    public let algorithm: Algo
     
-    public init(secret: Secret, counter: Int, digits: Digits, algorithm: Common.Algorithm) {
+    public init(secret: Secret, counter: Int, digits: Digits, algorithm: Algo) {
         self.secret = secret
         self.counter = counter
         self.digits = digits
@@ -56,7 +62,7 @@ public enum TokenHandler {
         time: Date? = nil,
         digits: Digits,
         period: Period,
-        algorithm: Common.Algorithm,
+        algorithm: Algo,
         counter: Int,
         tokenType: TokenType
     ) -> TokenValue {
@@ -73,8 +79,10 @@ public enum TokenHandler {
         return TokenGenerator.generateHOTP(secret: secret, counter: counter, digits: digits, algoritm: algorithm)
     }
     
+#if os(iOS)
     public static let timer = TimerHandler()
     public static let counter = CounterHandler()
+#endif
 }
 
 public extension TokenValue {

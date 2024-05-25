@@ -21,24 +21,25 @@ import SwiftUI
 
 struct LogoView: View {
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack(alignment: .center, spacing: 4) {
+        VStack {
+            HStack(spacing: 4) {
                 Image("AboutLogo")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 40)
+                    .frame(width: 30)
                     .padding(.leading, 4)
                     .padding(.vertical, 4)
                 
                 Text(T.Commons._2fasToolbar)
-                    .font(.title)
+                    .font(.title2)
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal, 12)
                     .foregroundStyle(.primary)
-                
-                Spacer()
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
+}
+
+#Preview {
+    LogoView()
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F00E46A2C23953B001F15AD /* SortTokensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00E4692C23953B001F15AD /* SortTokensView.swift */; };
 		C200E49E1FB3911B00D7C748 /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = C200E49C1FB3911B00D7C748 /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C200E4A11FB3911B00D7C748 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C200E4A21FB3911B00D7C748 /* Storage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1875,6 +1876,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8F00E4692C23953B001F15AD /* SortTokensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTokensView.swift; sourceTree = "<group>"; };
 		C200E49A1FB3911B00D7C748 /* Storage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Storage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C200E49C1FB3911B00D7C748 /* Storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
 		C200E49D1FB3911B00D7C748 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -3305,6 +3307,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F00E4682C239524001F15AD /* SortTokens */ = {
+			isa = PBXGroup;
+			children = (
+				8F00E4692C23953B001F15AD /* SortTokensView.swift */,
+			);
+			path = SortTokens;
+			sourceTree = "<group>";
+		};
 		C200E46A1FB38E6200D7C748 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -4971,6 +4981,7 @@
 		C244BE492BD07AA000F7E566 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				8F00E4682C239524001F15AD /* SortTokens */,
 				C244BE4B2BD07AFF00F7E566 /* Security */,
 				C244BE4A2BD07AFA00F7E566 /* About */,
 				C293782F2BD1A218008D5125 /* SettingsView.swift */,
@@ -10193,6 +10204,7 @@
 				C2B86D2A2BC33D3000AAAC63 /* AppDelegateInteractor.swift in Sources */,
 				C2A4D32E2BC0B1B20001587C /* Token.swift in Sources */,
 				C268918A2BC4960600713078 /* ServiceListPresenter.swift in Sources */,
+				8F00E46A2C23953B001F15AD /* SortTokensView.swift in Sources */,
 				C26983822BCC8326009B3BE2 /* AppPresenter.swift in Sources */,
 				C274C9D02BAB8ABB008E7212 /* TwoFASWatchApp.swift in Sources */,
 				C2627F3A2BC72E96009F93A9 /* ServicePresenter.swift in Sources */,

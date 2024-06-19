@@ -19,6 +19,12 @@
 
 import SwiftUI
 
+enum SettingsPath: Hashable {
+    case security
+    case about
+    case sortTokens
+}
+
 struct SettingsView: View {
     @Binding
     var path: NavigationPath
@@ -26,23 +32,15 @@ struct SettingsView: View {
     var body: some View {
             List {
                 NavigationLink(value: SettingsPath.security) {
-                    HStack {
-                        Image(systemName: "lock.fill")
-                        Text(T.Settings.security)
-                            .font(.callout)
-                            .padding(4)
-                            .foregroundStyle(.primary)
-                    }
+                    settingsRow(image: Image(systemName: "lock.fill"), title: T.Settings.security)
                 }
                 
                 NavigationLink(value: SettingsPath.about) {
-                    HStack {
-                        Image(systemName: "info.bubble.fill")
-                        Text(T.Settings.about)
-                            .font(.callout)
-                            .padding(4)
-                            .foregroundStyle(.primary)
-                    }
+                    settingsRow(image: Image(systemName: "info.bubble.fill"), title: T.Settings.about)
+                }
+
+                NavigationLink(value: SettingsPath.sortTokens) {
+                    settingsRow(image: Image(.naviIconSort), title: T.Settings.sortTokens)
                 }
             }
             .navigationDestination(for: SettingsPath.self) { route in
@@ -54,6 +52,7 @@ struct SettingsView: View {
                     )
                 )
                 case .about: AboutView()
+                case .sortTokens: EmptyView()
                 }
             }
         .containerBackground(.red.gradient, for: .navigation)
@@ -63,9 +62,19 @@ struct SettingsView: View {
         .navigationBarTitleDisplayMode(.automatic)
         .listItemTint(.clear)
     }
+
+    private func settingsRow(image: Image, title: String) -> some View {
+        HStack {
+            image
+                .foregroundColor(.primary)
+            Text(title)
+                .font(.callout)
+                .padding(4)
+                .foregroundStyle(.primary)
+        }
+    }
 }
 
-enum SettingsPath: Hashable {
-    case security
-    case about
+#Preview {
+    SettingsView(path: .constant(NavigationPath()))
 }

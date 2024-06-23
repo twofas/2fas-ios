@@ -21,7 +21,6 @@ import Foundation
 
 public enum AEGISDataParseError: Error {
     case encrypted
-    case newerVersion
     case error
 }
 
@@ -76,9 +75,6 @@ public struct AEGISData: Decodable {
                 self.entries = entriesList
             } catch {
                 throw AEGISDataParseError.error
-            }
-            if version != 2 {
-                throw AEGISDataParseError.newerVersion
             }
         }
     }

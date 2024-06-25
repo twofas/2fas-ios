@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8F00E46A2C23953B001F15AD /* SortTokensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00E4692C23953B001F15AD /* SortTokensView.swift */; };
+		8F872DE92C24EE2600160D14 /* SortTokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DE82C24EE2600160D14 /* SortTokensPresenter.swift */; };
+		8F872DEB2C24EE5500160D14 /* SortTokensInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */; };
 		C200E49E1FB3911B00D7C748 /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = C200E49C1FB3911B00D7C748 /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C200E4A11FB3911B00D7C748 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C200E4A21FB3911B00D7C748 /* Storage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1877,6 +1879,8 @@
 
 /* Begin PBXFileReference section */
 		8F00E4692C23953B001F15AD /* SortTokensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTokensView.swift; sourceTree = "<group>"; };
+		8F872DE82C24EE2600160D14 /* SortTokensPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTokensPresenter.swift; sourceTree = "<group>"; };
+		8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTokensInteractor.swift; sourceTree = "<group>"; };
 		C200E49A1FB3911B00D7C748 /* Storage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Storage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C200E49C1FB3911B00D7C748 /* Storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
 		C200E49D1FB3911B00D7C748 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -3311,6 +3315,8 @@
 			isa = PBXGroup;
 			children = (
 				8F00E4692C23953B001F15AD /* SortTokensView.swift */,
+				8F872DE82C24EE2600160D14 /* SortTokensPresenter.swift */,
+				8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */,
 			);
 			path = SortTokens;
 			sourceTree = "<group>";
@@ -10219,6 +10225,7 @@
 				C2A4D3312BC0B2540001587C /* TokenGenerator.swift in Sources */,
 				C29378382BD1BF15008D5125 /* SecurityPresenter.swift in Sources */,
 				C2A4D32D2BC0B1AD0001587C /* TokenHandler.swift in Sources */,
+				8F872DE92C24EE2600160D14 /* SortTokensPresenter.swift in Sources */,
 				C2B86D222BC3058A00AAAC63 /* UserDefaultsRepository.swift in Sources */,
 				C2B86D342BC3571E00AAAC63 /* ServiceView.swift in Sources */,
 				C27D99E12BD53AB30008203F /* LogoView.swift in Sources */,
@@ -10227,6 +10234,7 @@
 				C293783A2BD1BF23008D5125 /* SecurityInteractor.swift in Sources */,
 				C27D99DF2BD52C8A0008203F /* WatchConsts.swift in Sources */,
 				C2B86D382BC35B8300AAAC63 /* IconRenderer.swift in Sources */,
+				8F872DEB2C24EE5500160D14 /* SortTokensInteractor.swift in Sources */,
 				C2B86D322BC356BA00AAAC63 /* ServiceListView.swift in Sources */,
 				C281A2732BD47D6C0068451C /* SuccessView.swift in Sources */,
 				C268918F2BC4974800713078 /* Category.swift in Sources */,

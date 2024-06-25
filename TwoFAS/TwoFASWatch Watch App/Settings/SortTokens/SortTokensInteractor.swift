@@ -1,7 +1,7 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
-//  Contributed by Zbigniew Cisiński. All rights reserved.
+//  Copyright © 2024 Two Factor Authentication Service, Inc.
+//  Contributed by Grzegorz Machnio. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,10 +17,27 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import CommonWatch
 
-public enum SortType: String, CaseIterable, Equatable {
-    case manual
-    case az
-    case za
+protocol SortTokensInteracting {
+    var currentSortType: SortType { get }
+
+    func set(_ sortType: SortType)
+}
+
+final class SortTokensInteractor: SortTokensInteracting {
+    var currentSortType: SortType {
+        mainRepository.sortType ?? .manual
+    }
+
+    private let mainRepository: MainRepository
+
+    init(mainRepository: MainRepository) {
+        self.mainRepository = mainRepository
+    }
+
+    func set(_ sortType: SortType) {
+        Log("SortInteractor - saving new sort type \(sortType)", module: .interactor)
+        mainRepository.setSortType(sortType)
+    }
 }

@@ -34,25 +34,32 @@ struct SettingsView: View {
                 NavigationLink(value: SettingsPath.security) {
                     settingsRow(image: Image(systemName: "lock.fill"), title: T.Settings.security)
                 }
-                
-                NavigationLink(value: SettingsPath.about) {
-                    settingsRow(image: Image(systemName: "info.bubble.fill"), title: T.Settings.about)
-                }
 
                 NavigationLink(value: SettingsPath.sortTokens) {
                     settingsRow(image: Image(.naviIconSort), title: T.Settings.sortTokens)
                 }
+
+                NavigationLink(value: SettingsPath.about) {
+                    settingsRow(image: Image(systemName: "info.bubble.fill"), title: T.Settings.about)
+                }
             }
             .navigationDestination(for: SettingsPath.self) { route in
                 switch route {
-                case .security: SecurityView(
-                    path: $path,
-                    presenter: SecurityPresenter(
-                        interactor: InteractorFactory.shared.securityInteractor()
+                case .security: 
+                    SecurityView(
+                        path: $path,
+                        presenter: SecurityPresenter(
+                            interactor: InteractorFactory.shared.securityInteractor()
+                        )
                     )
-                )
-                case .about: AboutView()
-                case .sortTokens: EmptyView()
+                case .about: 
+                    AboutView()
+                case .sortTokens:
+                    SortTokensView(
+                        presenter: SortTokensPresenter(
+                            interactor: InteractorFactory.shared.sortTokensInteractor()
+                        )
+                    )
                 }
             }
         .containerBackground(.red.gradient, for: .navigation)

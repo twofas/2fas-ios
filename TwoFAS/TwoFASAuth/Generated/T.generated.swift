@@ -388,8 +388,6 @@ internal enum T {
     internal static func newServices(_ p1: Int) -> String {
       return T.tr("Localizable", "backup__new_services", p1, fallback: "%d new services")
     }
-    /// This file is in a newer format version than the one the app supports
-    internal static let newerFormatNotSupported = T.tr("Localizable", "backup__newer_format_not_supported", fallback: "This file is in a newer format version than the one the app supports")
     /// Nothing to import
     internal static let noNewServices = T.tr("Localizable", "backup__no_new_services", fallback: "Nothing to import")
     /// Either this file is empty, or all the services within are already available in the app
@@ -1155,6 +1153,8 @@ internal enum T {
     internal static let showNextToken = T.tr("Localizable", "settings__show_next_token", fallback: "Show next token")
     /// Show next token when current one is about to expire.
     internal static let showNextTokenDesc = T.tr("Localizable", "settings__show_next_token_desc", fallback: "Show next token when current one is about to expire.")
+    /// Sort tokens
+    internal static let sortTokens = T.tr("Localizable", "settings__sort_tokens", fallback: "Sort tokens")
     /// An SSL error has occurred and a secure connection to the server cannot be made. Ensure you have the latest version of the app or try to change the network.
     internal static let sslErrorDescription = T.tr("Localizable", "settings__ssl_error_description", fallback: "An SSL error has occurred and a secure connection to the server cannot be made. Ensure you have the latest version of the app or try to change the network.")
     /// SSL Error

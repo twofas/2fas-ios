@@ -18,16 +18,8 @@
 //
 
 import SwiftUI
-
-protocol SortTokensPresenting: ObservableObject {
-    func onAppear()
-}
-
-final class SortTokensPresenter: SortTokensPresenting {
-    func onAppear() {
-
-    }
-}
+import UIKit
+import CommonWatch
 
 struct SortTokensView<Presenter: SortTokensPresenting>: View {
     @ObservedObject
@@ -35,7 +27,26 @@ struct SortTokensView<Presenter: SortTokensPresenting>: View {
 
     var body: some View {
         List {
+            ForEach(presenter.sortTypes, id: \.rawValue) { sortType in
+                HStack {
+                    Image(uiImage: sortType.image(
+                        forSelectedOption: sortType,
+                        configuration: (UIImage.SymbolConfiguration(weight: presenter.currentSortType == sortType ? .heavy : .regular)))
+                    )
+                    .foregroundColor(.primary)
 
+                    Text(sortType.localized)
+                        .font(.callout)
+                        .fontWeight(presenter.currentSortType == sortType ? .heavy : .regular)
+                        .padding(4)
+                        .foregroundStyle(.primary)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    presenter.set(sortType)
+                }
+            }
         }
         .containerBackground(.red.gradient, for: .navigation)
         .listStyle(.carousel)
@@ -43,12 +54,30 @@ struct SortTokensView<Presenter: SortTokensPresenting>: View {
         .navigationTitle(T.Settings.sortTokens)
         .navigationBarTitleDisplayMode(.automatic)
         .listItemTint(.clear)
+        .onAppear {
+            presenter.onAppear()
+        }
+    }
+
+    private func sortOptionRow(image: Image, title: String) -> some View {
+        HStack {
+            image
+                .foregroundColor(.primary)
+            Text(title)
+                .font(.callout)
+                .padding(4)
+                .foregroundStyle(.primary)
+        }
     }
 }
 
 #Preview {
     final class SortTokensPresenterMock: SortTokensPresenting {
+        var currentSortType: CommonWatch.SortType = .manual
+        var sortTypes: [CommonWatch.SortType] = CommonWatch.SortType.allCases
+
         func onAppear() {}
+        func set(_ sortType: SortType) {}
     }
 
     return SortTokensView(presenter: SortTokensPresenterMock())

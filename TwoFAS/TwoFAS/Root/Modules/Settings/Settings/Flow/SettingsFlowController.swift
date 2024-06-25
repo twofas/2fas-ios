@@ -214,6 +214,10 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
             AppearanceFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
         }
     }
+
+    func toWatch() {
+        //TODO:
+    }
 }
 extension SettingsFlowController: BackupMenuFlowControllerParent {
     func showFAQ() {

@@ -156,6 +156,7 @@ internal enum Asset {
   internal static let settingsTouchID = ImageAsset(name: "SettingsTouchID")
   internal static let settingsTrash = ImageAsset(name: "SettingsTrash")
   internal static let settingsValut = ImageAsset(name: "SettingsValut")
+  internal static let settingsWatch = ImageAsset(name: "SettingsWatch")
   internal static let settingsWidget = ImageAsset(name: "SettingsWidget")
   internal static let settingsWriteReview = ImageAsset(name: "SettingsWriteReview")
   internal static let trashEmptyIcon = ImageAsset(name: "TrashEmptyIcon")

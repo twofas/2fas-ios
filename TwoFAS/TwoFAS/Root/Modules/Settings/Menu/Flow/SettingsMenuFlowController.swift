@@ -45,6 +45,7 @@ protocol SettingsMenuFlowControllerParent: AnyObject {
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func toExternalImport()
     func toAppearance()
+    func toWatch()
 }
 
 protocol SettingsMenuFlowControlling: AnyObject {
@@ -60,6 +61,7 @@ protocol SettingsMenuFlowControlling: AnyObject {
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func toExternalImport()
     func toAppearance()
+    func toWatch()
 }
 
 final class SettingsMenuFlowController: FlowController {
@@ -109,6 +111,7 @@ extension SettingsMenuFlowController: SettingsMenuFlowControlling {
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) { parent?.toUpdateCurrentPosition(viewPath) }
     func toExternalImport() { parent?.toExternalImport() }
     func toAppearance() { parent?.toAppearance() }
+    func toWatch() { parent?.toWatch() }
 }
 
 extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {

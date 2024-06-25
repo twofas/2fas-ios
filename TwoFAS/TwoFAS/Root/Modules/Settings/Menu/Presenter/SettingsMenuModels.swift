@@ -78,6 +78,7 @@ enum SettingsNavigationModule: Hashable {
     case donate
     case externalImport
     case appearance
+    case watch
 }
 
 enum SettingsNavigationToggle: Hashable {

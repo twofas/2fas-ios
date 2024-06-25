@@ -201,6 +201,8 @@ private extension SettingsMenuPresenter {
             flowController.toExternalImport()
         case .appearance:
             flowController.toAppearance()
+        case .watch:
+            flowController.toWatch()
         }
     }
     

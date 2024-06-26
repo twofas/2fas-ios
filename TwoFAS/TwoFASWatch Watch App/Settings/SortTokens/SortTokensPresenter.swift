@@ -51,27 +51,3 @@ final class SortTokensPresenter: SortTokensPresenting {
         currentSortType = sortType
     }
 }
-
-extension SortType {
-    var localized: String {
-        switch self {
-        case .az: return T.Tokens.sortByAToZ
-        case .za: return T.Tokens.sortByZToA
-        case .manual: return T.Tokens.sortByManual
-        }
-    }
-
-    func image(forSelectedOption option: Self, configuration: UIImage.SymbolConfiguration) -> UIImage {
-        var image: UIImage?
-        switch self {
-        case .az: image = UIImage(systemName: "arrow.down")
-        case .za: image = UIImage(systemName: "arrow.up")
-        case .manual: image = UIImage(systemName: "line.3.horizontal")
-        }
-
-        if self == option {
-            image = image?.withConfiguration(configuration)
-        }
-        return image?.withRenderingMode(.alwaysTemplate) ?? UIImage()
-    }
-}

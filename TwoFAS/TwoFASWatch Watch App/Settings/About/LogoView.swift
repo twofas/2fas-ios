@@ -23,8 +23,8 @@ struct LogoView: View {
     var body: some View {
         Image(.logo)
             .resizable()
-            .padding(.horizontal, 16)
             .scaledToFit()
+            .padding(.horizontal, 16)
     }
 }
 

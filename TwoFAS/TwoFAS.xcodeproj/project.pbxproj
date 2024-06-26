@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8F7952532C01D1940053F776 /* KeyboardButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */; };
+		8F5C0C6C2BFFAC8A00D73ADE /* TwoFAS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F5C0C6A2BFFAC8900D73ADE /* TwoFAS.xcdatamodeld */; };
+		8F5C0C6F2BFFACA900D73ADE /* Sync.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F5C0C6D2BFFACA900D73ADE /* Sync.xcdatamodeld */; };
 		C200E49E1FB3911B00D7C748 /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = C200E49C1FB3911B00D7C748 /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C200E4A11FB3911B00D7C748 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C200E4A21FB3911B00D7C748 /* Storage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -114,8 +116,6 @@
 		C213BC5B2BAC3DBF000794C9 /* StorageWatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C213BC502BAC3C82000794C9 /* StorageWatch.framework */; };
 		C213BC5C2BAC3DBF000794C9 /* StorageWatch.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C213BC502BAC3C82000794C9 /* StorageWatch.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C213BC602BAC3FE3000794C9 /* ServiceMigrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ACF9DE20A8A30E003E0987 /* ServiceMigrationController.swift */; };
-		C213BC702BAC5758000794C9 /* TwoFAS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C213BC6E2BAC5758000794C9 /* TwoFAS.xcdatamodeld */; };
-		C213BC732BAC5771000794C9 /* Sync.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C213BC712BAC5771000794C9 /* Sync.xcdatamodeld */; };
 		C2147CB9205D78600001D011 /* Protection.h in Headers */ = {isa = PBXBuildFile; fileRef = C2147CB7205D78600001D011 /* Protection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2147CBC205D78600001D011 /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
 		C2147CBD205D78600001D011 /* Protection.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1877,6 +1877,8 @@
 
 /* Begin PBXFileReference section */
 		8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButtonStyle.swift; sourceTree = "<group>"; };
+		8F5C0C6B2BFFAC8900D73ADE /* TwoFAS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS.xcdatamodel; sourceTree = "<group>"; };
+		8F5C0C6E2BFFACA900D73ADE /* Sync.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sync.xcdatamodel; sourceTree = "<group>"; };
 		C200E49A1FB3911B00D7C748 /* Storage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Storage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C200E49C1FB3911B00D7C748 /* Storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
 		C200E49D1FB3911B00D7C748 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1962,8 +1964,6 @@
 		C21247FA27B7181A0044D9F2 /* ComposeServiceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceModels.swift; sourceTree = "<group>"; };
 		C212ACDD2AF6F929001C8665 /* RootInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootInteractor.swift; sourceTree = "<group>"; };
 		C213BC502BAC3C82000794C9 /* StorageWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C213BC6F2BAC5758000794C9 /* TwoFAS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS.xcdatamodel; sourceTree = "<group>"; };
-		C213BC722BAC5771000794C9 /* Sync.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sync.xcdatamodel; sourceTree = "<group>"; };
 		C2147CB5205D78600001D011 /* Protection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Protection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2147CB7205D78600001D011 /* Protection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Protection.h; sourceTree = "<group>"; };
 		C2147CB8205D78600001D011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -3938,7 +3938,7 @@
 		C213BC612BAC4777000794C9 /* Watch */ = {
 			isa = PBXGroup;
 			children = (
-				C213BC6E2BAC5758000794C9 /* TwoFAS.xcdatamodeld */,
+				8F5C0C6A2BFFAC8900D73ADE /* TwoFAS.xcdatamodeld */,
 			);
 			path = Watch;
 			sourceTree = "<group>";
@@ -3946,7 +3946,7 @@
 		C213BC652BAC4883000794C9 /* Watch */ = {
 			isa = PBXGroup;
 			children = (
-				C213BC712BAC5771000794C9 /* Sync.xcdatamodeld */,
+				8F5C0C6D2BFFACA900D73ADE /* Sync.xcdatamodeld */,
 			);
 			path = Watch;
 			sourceTree = "<group>";
@@ -9411,6 +9411,7 @@
 				C213BC232BAC3C82000794C9 /* StorageRepositoryImpl+CategoriesSections.swift in Sources */,
 				C213BC242BAC3C82000794C9 /* CategoryData.swift in Sources */,
 				C213BC252BAC3C82000794C9 /* StorageRepository.swift in Sources */,
+				8F5C0C6C2BFFAC8A00D73ADE /* TwoFAS.xcdatamodeld in Sources */,
 				C213BC262BAC3C82000794C9 /* StorageRepositoryImpl.swift in Sources */,
 				C213BC272BAC3C82000794C9 /* Extensions.swift in Sources */,
 				C213BC292BAC3C82000794C9 /* StorageRepositoryImpl+AuthRequest.swift in Sources */,
@@ -9424,7 +9425,6 @@
 				C213BC332BAC3C82000794C9 /* CategoryHandler.swift in Sources */,
 				C213BC342BAC3C82000794C9 /* SectionEntity+CoreDataProperties.swift in Sources */,
 				C213BC352BAC3C82000794C9 /* ServiceOptions.swift in Sources */,
-				C213BC702BAC5758000794C9 /* TwoFAS.xcdatamodeld in Sources */,
 				C213BC602BAC3FE3000794C9 /* ServiceMigrationController.swift in Sources */,
 				C213BC362BAC3C82000794C9 /* AuthRequestFilterOptions.swift in Sources */,
 				C213BC372BAC3C82000794C9 /* NewsEntity+CoreDataClass.swift in Sources */,
@@ -10158,6 +10158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F5C0C6F2BFFACA900D73ADE /* Sync.xcdatamodeld in Sources */,
 				C274C9962BAB89C7008E7212 /* CloudKit.swift in Sources */,
 				C274C9972BAB89C7008E7212 /* SecretValidation.swift in Sources */,
 				C274C9992BAB89C7008E7212 /* SectionCacheEntity+CoreDataClass.swift in Sources */,
@@ -10190,7 +10191,6 @@
 				C274C9B62BAB89C7008E7212 /* SyncHandler.swift in Sources */,
 				C274C9B72BAB89C7008E7212 /* SectionRecord.swift in Sources */,
 				C274C9B82BAB89C7008E7212 /* LogEntity+CoreDataClass.swift in Sources */,
-				C213BC732BAC5771000794C9 /* Sync.xcdatamodeld in Sources */,
 				C274C9BA2BAB89C7008E7212 /* InfoRecord.swift in Sources */,
 				C274C9BB2BAB89C7008E7212 /* InfoHandler.swift in Sources */,
 				C274C9BC2BAB89C7008E7212 /* Info.swift in Sources */,
@@ -13764,25 +13764,23 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		C213BC6E2BAC5758000794C9 /* TwoFAS.xcdatamodeld */ = {
+		8F5C0C6A2BFFAC8900D73ADE /* TwoFAS.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				C213BC6F2BAC5758000794C9 /* TwoFAS.xcdatamodel */,
+				8F5C0C6B2BFFAC8900D73ADE /* TwoFAS.xcdatamodel */,
 			);
-			currentVersion = C213BC6F2BAC5758000794C9 /* TwoFAS.xcdatamodel */;
-			name = TwoFAS.xcdatamodeld;
-			path = /Users/adocyn/Documents/Projects/2FAS/TwoFAS/Storage/Watch/TwoFAS.xcdatamodeld;
+			currentVersion = 8F5C0C6B2BFFAC8900D73ADE /* TwoFAS.xcdatamodel */;
+			path = TwoFAS.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
-		C213BC712BAC5771000794C9 /* Sync.xcdatamodeld */ = {
+		8F5C0C6D2BFFACA900D73ADE /* Sync.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				C213BC722BAC5771000794C9 /* Sync.xcdatamodel */,
+				8F5C0C6E2BFFACA900D73ADE /* Sync.xcdatamodel */,
 			);
-			currentVersion = C213BC722BAC5771000794C9 /* Sync.xcdatamodel */;
-			name = Sync.xcdatamodeld;
-			path = /Users/adocyn/Documents/Projects/2FAS/TwoFAS/Sync/Watch/Sync.xcdatamodeld;
+			currentVersion = 8F5C0C6E2BFFACA900D73ADE /* Sync.xcdatamodel */;
+			path = Sync.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

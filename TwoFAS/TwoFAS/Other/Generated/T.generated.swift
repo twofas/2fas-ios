@@ -388,8 +388,6 @@ internal enum T {
     internal static func newServices(_ p1: Int) -> String {
       return T.tr("Localizable", "backup__new_services", p1, fallback: "%d new services")
     }
-    /// This file is in a newer format version than the one the app supports
-    internal static let newerFormatNotSupported = T.tr("Localizable", "backup__newer_format_not_supported", fallback: "This file is in a newer format version than the one the app supports")
     /// Nothing to import
     internal static let noNewServices = T.tr("Localizable", "backup__no_new_services", fallback: "Nothing to import")
     /// Either this file is empty, or all the services within are already available in the app

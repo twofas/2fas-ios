@@ -29,11 +29,9 @@ public enum ImportFromFileParsing {
     public enum AEGISParseResult {
         case error
         case encrypted
-        case newerVersion
         case success(AEGISData)
     }
     public enum LastPassResult {
-        case newerVersion
         case success(LastPassData)
     }
     case twoFAS(ExchangeDataFormat)
@@ -155,7 +153,6 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
             }
             switch error {
             case .encrypted: return .aegis(.encrypted)
-            case .newerVersion: return .aegis(.newerVersion)
             case .error: return .aegis(.error)
             }
         }

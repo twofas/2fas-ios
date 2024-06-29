@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8F594C422C3027160066562F /* AppleWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F594C412C3027160066562F /* AppleWatchView.swift */; };
+		8F594C442C3054F90066562F /* AppleWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F594C432C3054F90066562F /* AppleWatchViewController.swift */; };
 		8F5C0C6C2BFFAC8A00D73ADE /* TwoFAS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F5C0C6A2BFFAC8900D73ADE /* TwoFAS.xcdatamodeld */; };
 		8F5C0C6F2BFFACA900D73ADE /* Sync.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F5C0C6D2BFFACA900D73ADE /* Sync.xcdatamodeld */; };
 		8F7952532C01D1940053F776 /* KeyboardButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */; };
@@ -1878,6 +1879,7 @@
 
 /* Begin PBXFileReference section */
 		8F594C412C3027160066562F /* AppleWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleWatchView.swift; sourceTree = "<group>"; };
+		8F594C432C3054F90066562F /* AppleWatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleWatchViewController.swift; sourceTree = "<group>"; };
 		8F5C0C6B2BFFAC8900D73ADE /* TwoFAS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS.xcdatamodel; sourceTree = "<group>"; };
 		8F5C0C6E2BFFACA900D73ADE /* Sync.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sync.xcdatamodel; sourceTree = "<group>"; };
 		8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButtonStyle.swift; sourceTree = "<group>"; };
@@ -3313,6 +3315,7 @@
 			isa = PBXGroup;
 			children = (
 				8F594C412C3027160066562F /* AppleWatchView.swift */,
+				8F594C432C3054F90066562F /* AppleWatchViewController.swift */,
 			);
 			path = AppleWatch;
 			sourceTree = "<group>";
@@ -10028,6 +10031,7 @@
 				C20524C32807620500B2B20C /* NavigationBarHiddenHostingController.swift in Sources */,
 				C2FDEE57279C8FF8002CAB9E /* SwiftUIButtons.swift in Sources */,
 				C22E6FA121E2666B00A2E66B /* CircularShape.swift in Sources */,
+				8F594C442C3054F90066562F /* AppleWatchViewController.swift in Sources */,
 				C2F7FE092A8ABA25004B2C95 /* AddingServiceManuallyView.swift in Sources */,
 				C2AC221327661BA300271402 /* ExporterPasswordProtectionViewController.swift in Sources */,
 				C2B2ED1E27C4349100332255 /* AdvancedAlert.swift in Sources */,

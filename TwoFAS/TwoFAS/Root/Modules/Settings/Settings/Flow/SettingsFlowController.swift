@@ -215,8 +215,8 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
         }
     }
 
-    func toWatch() {
-        //TODO:
+    func toAppleWatch() {
+        AppleWatchFlowController.push(in: viewController.navigationNavi, parent: self)
     }
 }
 extension SettingsFlowController: BackupMenuFlowControllerParent {
@@ -243,3 +243,4 @@ extension SettingsFlowController: BrowserExtensionMainFlowControllerParent {}
 extension SettingsFlowController: AboutFlowControllerParent {}
 extension SettingsFlowController: ExternalImportFlowControllerParent {}
 extension SettingsFlowController: AppearanceFlowControllerParent {}
+extension SettingsFlowController: AppleWatchFlowControllerParent {}

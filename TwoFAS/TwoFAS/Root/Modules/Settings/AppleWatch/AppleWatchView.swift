@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct AppleWatchInstallationStep: Hashable, Identifiable {
     var id = UUID()
@@ -28,12 +29,8 @@ struct AppleWatchInstallationStep: Hashable, Identifiable {
 struct AppleWatchView: View {
     private let spacing: CGFloat = Theme.Metrics.doubleSpacing
 
-    let appleWatchInstallationSteps: [AppleWatchInstallationStep] = [
-        .init(descirption: "Install 2FAS Auth via Watch app",
-              actionTitle: "Open Watch app"),
-        .init(descirption: "Ensure your 2FAS Backup iCloud sync is enabled.",
-              actionTitle: "Go to 2FAS Backup settings")
-    ]
+    let appleWatchInstallationSteps: [AppleWatchInstallationStep] 
+    let installationStepActionCallback: (_ stepNumber: Int) -> Void
 
     var body: some View {
         VStack(spacing: spacing) {
@@ -42,7 +39,7 @@ struct AppleWatchView: View {
                 .padding(.top, Theme.Metrics.standardSpacing)
 
                 Text("2FAS Apple Watch app installation")
-                    .font(.title)
+                .font(Font(Theme.Fonts.Text.title))
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.7)
 
@@ -66,22 +63,33 @@ struct AppleWatchView: View {
         isDividerVisible: Bool
     ) -> some View {
         HStack(alignment: .top) {
-
             Text("\(stepNumber)")
+                .font(Font(Theme.Fonts.iconLabelLarge))
                 .frame(width: 28, height: 28)
                 .background(Color(Theme.Colors.Fill.tertiary))
                 .clipShape(Circle())
 
-
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: Theme.Metrics.halfSpacing) {
                 Text(step.descirption)
-                Button(step.actionTitle) {
+                    .font(Font(Theme.Fonts.Text.content))
 
+                Button {
+                    installationStepActionCallback(stepNumber)
+                } label: {
+                    HStack(spacing: Theme.Metrics.halfSpacing) {
+                        Text(step.actionTitle)
+                            .font(Font(Theme.Fonts.Text.boldContent))
+
+                        Image(systemName: "arrow.up.right")
+                            .font(Font(Theme.Fonts.iconLabelExtraLarge))
+                    }
+                    .foregroundColor(Color(Theme.Colors.Text.theme))
                 }
 
                 if isDividerVisible {
                     Divider()
                         .frame(height: Theme.Metrics.separatorHeight)
+                        .padding(.vertical, Theme.Metrics.standardSpacing)
                 }
             }
         }
@@ -89,5 +97,13 @@ struct AppleWatchView: View {
 }
 
 #Preview {
-    AppleWatchView()
+    AppleWatchView(
+        appleWatchInstallationSteps: [
+            .init(descirption: "Install 2FAS Auth via Watch app",
+                  actionTitle: "Open Watch app"),
+            .init(descirption: "Ensure your 2FAS Backup iCloud sync is enabled.",
+                  actionTitle: "Go to 2FAS Backup settings")
+        ], 
+        installationStepActionCallback: { _ in }
+    )
 }

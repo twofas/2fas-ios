@@ -29,6 +29,7 @@ internal enum Asset {
   internal static let imageIcon = ImageAsset(name: "imageIcon")
   internal static let keybordIcon = ImageAsset(name: "keybordIcon")
   internal static let alertIcon = ImageAsset(name: "AlertIcon")
+  internal static let appleWatch = ImageAsset(name: "AppleWatch")
   internal static let authRequestQuestion = ImageAsset(name: "AuthRequestQuestion")
   internal static let deleteSettingsIcon = ImageAsset(name: "DeleteSettingsIcon")
   internal static let backupDeleted = ImageAsset(name: "backupDeleted")

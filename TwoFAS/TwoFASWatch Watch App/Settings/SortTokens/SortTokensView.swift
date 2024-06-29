@@ -29,11 +29,8 @@ struct SortTokensView<Presenter: SortTokensPresenting>: View {
         List {
             ForEach(presenter.sortTypes, id: \.rawValue) { sortType in
                 HStack {
-                    Image(uiImage: sortType.image(
-                        forSelectedOption: sortType,
-                        configuration: (UIImage.SymbolConfiguration(weight: presenter.currentSortType == sortType ? .heavy : .regular)))
-                    )
-                    .foregroundColor(.primary)
+                    presenter.image(for: sortType)
+                        .foregroundColor(.primary)
 
                     Text(sortType.localized)
                         .font(.callout)
@@ -102,6 +99,9 @@ extension SortType {
 
         func onAppear() {}
         func set(_ sortType: SortType) {}
+        func image(for sortType: SortType) -> Image {
+            .init(systemName: "arrowDown")
+        }
     }
 
     return SortTokensView(presenter: SortTokensPresenterMock())

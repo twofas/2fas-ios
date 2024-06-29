@@ -26,6 +26,7 @@ protocol SortTokensPresenting: ObservableObject {
 
     func onAppear()
     func set(_ sortType: SortType)
+    func image(for sortType: SortType) -> Image
 }
 
 final class SortTokensPresenter: SortTokensPresenting {
@@ -49,5 +50,13 @@ final class SortTokensPresenter: SortTokensPresenting {
     func set(_ sortType: SortType) {
         interactor.set(sortType)
         currentSortType = sortType
+    }
+
+    func image(for sortType: SortType) -> Image {
+        let configuration: UIImage.SymbolConfiguration = {
+            return .init(weight: currentSortType == sortType ? .heavy : .regular)
+        }()
+
+        return Image(uiImage: sortType.image(forSelectedOption: sortType, configuration: configuration))
     }
 }

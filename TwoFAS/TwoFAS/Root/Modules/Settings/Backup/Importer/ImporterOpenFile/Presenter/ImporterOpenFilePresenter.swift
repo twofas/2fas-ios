@@ -67,8 +67,6 @@ private extension ImporterOpenFilePresenter {
         case .twoFAS(let data): checkTwoFAS(data)
         case .lastPass(let result):
             switch result {
-            case .newerVersion:
-                flowController.toFileError(error: .cantReadFile(reason: result.localizedDescription))
             case .success(let lastPassData):
                 let parseResult = interactor.parseLastPass(lastPassData)
                 if parseResult.isEmpty {
@@ -124,7 +122,7 @@ private extension ImporterOpenFilePresenter {
             }
         case .aegis(let result):
             switch result {
-            case .error, .encrypted, .newerVersion:
+            case .error, .encrypted:
                 flowController.toFileError(error: .cantReadFile(reason: result.localizedDescription))
             case .success(let AEGISData):
                 let parseResult = interactor.parseAEGIS(AEGISData)

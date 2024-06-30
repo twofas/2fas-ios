@@ -129,58 +129,6 @@ struct PINKeyboardView: View {
     }
 }
 
-public struct KeyboardButton: ButtonStyle {
-    let press: (() -> Void)?
-    let release: (() -> Void)?
-    
-    init(press: (() -> Void)? = nil, release: (() -> Void)? = nil) {
-        self.press = press
-        self.release = release
-    }
-    
-    public func makeBody(configuration: Configuration) -> some View {
-        GeometryReader(content: { geometry in
-            if configuration.isPressed {
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(Color.gray.opacity(0.7))
-                    .frame(width: geometry.size.width, height: geometry.size.height)
-                    .scaleEffect(1.1)
-            } else {
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(Color.gray.opacity(0.5))
-                    .frame(width: geometry.size.width, height: geometry.size.height)
-                    .scaleEffect(1)
-            }
-            
-            configuration.label
-                .background(
-                    ZStack {
-                        GeometryReader(content: { geometry in
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .fill(Color.clear)
-                                .frame(
-                                    width: configuration.isPressed ? geometry.size.width / 0.75 : geometry.size.width,
-                                    height: configuration.isPressed ? geometry.size.height / 0.8 : geometry.size.height
-                                )
-                        })
-                    }
-                )
-                .frame(width: geometry.size.width, height: geometry.size.height)
-                .scaleEffect(configuration.isPressed ? 1.2 : 1)
-        })
-        .onChange(of: configuration.isPressed) { old, new in
-            if new {
-                press?()
-                DispatchQueue.main.async {
-                    WKInterfaceDevice().play(.click)
-                }
-            } else if old && !new {
-                release?()
-            }
-        }
-    }
-}
-
 struct Shake: AnimatableModifier {
     var amount: CGFloat = 10
     var shakesPerUnit = 3

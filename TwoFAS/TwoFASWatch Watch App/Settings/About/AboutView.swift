@@ -24,7 +24,7 @@ struct AboutView: View {
         ScrollView {
             VStack(alignment: .center, spacing: 4) {
                 LogoView()
-                Spacer()
+                Spacer(minLength: 0)
 
                 Text(T.Watch.intro)
                     .font(.body)

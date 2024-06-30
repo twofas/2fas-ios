@@ -23,18 +23,8 @@ import Data
 extension ImportFromFileParsing.AEGISParseResult {
     var localizedDescription: String? {
         switch self {
-        case .newerVersion: return T.Backup.newerFormatNotSupported
         case .encrypted: return T.Backup.encryptedFilesNotSupported
         case .error: return T.Backup.cantReadFileError
-        default: return nil
-        }
-    }
-}
-
-extension ImportFromFileParsing.LastPassResult {
-    var localizedDescription: String? {
-        switch self {
-        case .newerVersion: return T.Backup.newerFormatNotSupported
         default: return nil
         }
     }

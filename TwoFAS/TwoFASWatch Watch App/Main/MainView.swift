@@ -83,7 +83,7 @@ struct MainView: View {
             .onAppear {
                 presenter.onAppear()
             }
-            .containerBackground(.red.gradient, for: .navigation)
+            .containerBackground(.red.opacity(0.7).gradient, for: .navigation)
             .listStyle(.carousel)
             .environment(\.defaultMinListRowHeight, WatchConsts.minRowHeight)
             .navigationTitle(T.Commons._2fasToolbar)

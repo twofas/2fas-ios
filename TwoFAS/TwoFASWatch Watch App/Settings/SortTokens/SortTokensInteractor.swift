@@ -19,7 +19,7 @@
 
 import CommonWatch
 
-protocol SortTokensInteracting {
+protocol SortTokensInteracting: AnyObject {
     var currentSortType: SortType { get }
 
     func set(_ sortType: SortType)

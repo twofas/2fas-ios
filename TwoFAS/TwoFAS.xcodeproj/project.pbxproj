@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F00E46A2C23953B001F15AD /* SortTokensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00E4692C23953B001F15AD /* SortTokensView.swift */; };
+		8F872DE92C24EE2600160D14 /* SortTokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DE82C24EE2600160D14 /* SortTokensPresenter.swift */; };
+		8F872DEB2C24EE5500160D14 /* SortTokensInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */; };
 		8F5C0C6C2BFFAC8A00D73ADE /* TwoFAS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F5C0C6A2BFFAC8900D73ADE /* TwoFAS.xcdatamodeld */; };
 		8F5C0C6F2BFFACA900D73ADE /* Sync.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F5C0C6D2BFFACA900D73ADE /* Sync.xcdatamodeld */; };
 		8F7952532C01D1940053F776 /* KeyboardButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */; };
@@ -1876,6 +1879,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8F00E4692C23953B001F15AD /* SortTokensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTokensView.swift; sourceTree = "<group>"; };
+		8F872DE82C24EE2600160D14 /* SortTokensPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTokensPresenter.swift; sourceTree = "<group>"; };
+		8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTokensInteractor.swift; sourceTree = "<group>"; };
 		8F5C0C6B2BFFAC8900D73ADE /* TwoFAS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS.xcdatamodel; sourceTree = "<group>"; };
 		8F5C0C6E2BFFACA900D73ADE /* Sync.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sync.xcdatamodel; sourceTree = "<group>"; };
 		8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButtonStyle.swift; sourceTree = "<group>"; };
@@ -3312,6 +3318,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F00E4682C239524001F15AD /* SortTokens */ = {
+			isa = PBXGroup;
+			children = (
+				8F00E4692C23953B001F15AD /* SortTokensView.swift */,
+				8F872DE82C24EE2600160D14 /* SortTokensPresenter.swift */,
+				8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */,
+			);
+			path = SortTokens;
+               sourceTree = "<group>";
+        };
 		8F7952502C01D1770053F776 /* CommonSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -4994,6 +5010,7 @@
 		C244BE492BD07AA000F7E566 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				8F00E4682C239524001F15AD /* SortTokens */,
 				C244BE4B2BD07AFF00F7E566 /* Security */,
 				C244BE4A2BD07AFA00F7E566 /* About */,
 				C293782F2BD1A218008D5125 /* SettingsView.swift */,
@@ -10219,6 +10236,7 @@
 				C2B86D2A2BC33D3000AAAC63 /* AppDelegateInteractor.swift in Sources */,
 				C2A4D32E2BC0B1B20001587C /* Token.swift in Sources */,
 				C268918A2BC4960600713078 /* ServiceListPresenter.swift in Sources */,
+				8F00E46A2C23953B001F15AD /* SortTokensView.swift in Sources */,
 				C26983822BCC8326009B3BE2 /* AppPresenter.swift in Sources */,
 				C274C9D02BAB8ABB008E7212 /* TwoFASWatchApp.swift in Sources */,
 				C2627F3A2BC72E96009F93A9 /* ServicePresenter.swift in Sources */,
@@ -10233,6 +10251,7 @@
 				C2A4D3312BC0B2540001587C /* TokenGenerator.swift in Sources */,
 				C29378382BD1BF15008D5125 /* SecurityPresenter.swift in Sources */,
 				C2A4D32D2BC0B1AD0001587C /* TokenHandler.swift in Sources */,
+				8F872DE92C24EE2600160D14 /* SortTokensPresenter.swift in Sources */,
 				C2B86D222BC3058A00AAAC63 /* UserDefaultsRepository.swift in Sources */,
 				C2B86D342BC3571E00AAAC63 /* ServiceView.swift in Sources */,
 				C27D99E12BD53AB30008203F /* LogoView.swift in Sources */,
@@ -10241,6 +10260,7 @@
 				C293783A2BD1BF23008D5125 /* SecurityInteractor.swift in Sources */,
 				C27D99DF2BD52C8A0008203F /* WatchConsts.swift in Sources */,
 				C2B86D382BC35B8300AAAC63 /* IconRenderer.swift in Sources */,
+				8F872DEB2C24EE5500160D14 /* SortTokensInteractor.swift in Sources */,
 				C2B86D322BC356BA00AAAC63 /* ServiceListView.swift in Sources */,
 				C281A2732BD47D6C0068451C /* SuccessView.swift in Sources */,
 				C268918F2BC4974800713078 /* Category.swift in Sources */,

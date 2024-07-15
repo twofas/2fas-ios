@@ -37,6 +37,6 @@ extension ServiceListInteractor: ServiceListInteracting {
     var hasServices: Bool { mainRepository.hasServices }
     
     func listAllServices() -> [CategoryData] {
-        mainRepository.listAllServicesWithingCategories(for: nil, sorting: .manual, ids: [])
+        mainRepository.listAllServicesWithingCategories(for: nil, sorting: mainRepository.sortType ?? .manual, ids: [])
     }
 }

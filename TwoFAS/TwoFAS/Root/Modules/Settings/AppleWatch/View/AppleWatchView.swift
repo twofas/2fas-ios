@@ -38,7 +38,7 @@ struct AppleWatchView: View {
                 .renderingMode(.original)
                 .padding(.top, Theme.Metrics.standardSpacing)
 
-                Text("2FAS Apple Watch app installation")
+            Text(T.AppleWatch.installationInfoTitle)
                 .font(Font(Theme.Fonts.Text.title))
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.7)
@@ -99,10 +99,10 @@ struct AppleWatchView: View {
 #Preview {
     AppleWatchView(
         appleWatchInstallationSteps: [
-            .init(descirption: "Install 2FAS Auth via Watch app",
-                  actionTitle: "Open Watch app"),
-            .init(descirption: "Ensure your 2FAS Backup iCloud sync is enabled.",
-                  actionTitle: "Go to 2FAS Backup settings")
+            .init(descirption: T.AppleWatch.installationFirstStep,
+                  actionTitle: T.AppleWatch.installationFirstStepLink),
+            .init(descirption: T.AppleWatch.installationSecondStep,
+                  actionTitle: T.AppleWatch.installationSecondStepLink)
         ], 
         installationStepActionCallback: { _ in }
     )

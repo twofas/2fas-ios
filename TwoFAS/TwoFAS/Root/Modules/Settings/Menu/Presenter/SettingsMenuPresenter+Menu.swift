@@ -75,7 +75,7 @@ extension SettingsMenuPresenter {
                 ),
                 .init(
                     icon: Asset.settingsWatch.image,
-                    title: "Apple watch",
+                    title: T.Settings.appleWatch,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .appleWatch)
                 )

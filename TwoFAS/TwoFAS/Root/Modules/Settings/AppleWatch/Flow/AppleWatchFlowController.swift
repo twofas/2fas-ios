@@ -18,7 +18,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 protocol AppleWatchFlowControllerParent: AnyObject {
     func toBackup()
@@ -54,55 +53,8 @@ extension AppleWatchFlowController: AppleWatchFlowControlling {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
-    
+
     func toBackup() {
         parent?.toBackup()
     }
-}
-
-final class AppleWatchPresenter {
-    private let flowController: AppleWatchFlowControlling
-
-    init(flowController: AppleWatchFlowControlling) {
-        self.flowController = flowController
-    }
-}
-
-extension AppleWatchPresenter {
-    func handleInstallationStep(number: Int) {
-        if number == 1 {
-            flowController.toSystemWatchApp()
-        } else if number == 2 {
-            flowController.toBackup()
-        }
-    }
-}
-
-
-final class AppleWatchViewController: UIViewController {
-    var presenter: AppleWatchPresenter!
-
-    override func viewDidLoad() {
-        title = "Apple watch"
-
-        let installationStepAction: (_ stepNumber: Int) -> Void = { [weak self] stepNumber in
-            self?.presenter.handleInstallationStep(number: stepNumber)
-        }
-        let appleWatchView = AppleWatchView(
-            appleWatchInstallationSteps: [
-                .init(descirption: "Install 2FAS Auth via Watch app",
-                      actionTitle: "Open Watch app"),
-                .init(descirption: "Ensure your 2FAS Backup iCloud sync is enabled.",
-                      actionTitle: "Go to 2FAS Backup settings")
-            ],
-            installationStepActionCallback: installationStepAction
-        )
-        let hostingController = UIHostingController(rootView: appleWatchView)
-        hostingController.willMove(toParent: self)
-        addChild(hostingController)
-        view.addSubview(hostingController.view)
-        hostingController.view.pinToParent()
-        hostingController.didMove(toParent: self)
-    }
-
 }

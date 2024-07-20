@@ -3,6 +3,16 @@
     {
       "filename" : "appleWatch.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "appleWatchDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

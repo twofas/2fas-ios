@@ -20,11 +20,13 @@
 import UIKit
 import SwiftUI
 
-protocol AppleWatchFlowControllerParent: AnyObject {}
+protocol AppleWatchFlowControllerParent: AnyObject {
+    func toBackup()
+}
 
 protocol AppleWatchFlowControlling: AnyObject {
     func toSystemWatchApp()
-    func toBackupSettings()
+    func toBackup()
 }
 
 final class AppleWatchFlowController: FlowController {
@@ -50,14 +52,11 @@ extension AppleWatchFlowController: AppleWatchFlowControlling {
     func toSystemWatchApp() {
         if let url = URL(string: "itms-watchs://") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        } else {
-            // Handle the case where the URL can't be opened
-            print("Unable to open Watch app.")
         }
     }
     
-    func toBackupSettings() {
-        //TODO:
+    func toBackup() {
+        parent?.toBackup()
     }
 }
 
@@ -74,7 +73,7 @@ extension AppleWatchPresenter {
         if number == 1 {
             flowController.toSystemWatchApp()
         } else if number == 2 {
-            flowController.toBackupSettings()
+            flowController.toBackup()
         }
     }
 }

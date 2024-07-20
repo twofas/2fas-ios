@@ -57,7 +57,7 @@ extension ExternalImportInstructionsPresenter {
         case .lastPass: return T.Externalimport.infoLastpassTitle
         case .googleAuth: return T.Externalimport.infoGoogleAuthenticatorTitle
         case .andOTP: return T.Externalimport.infoAndotpTitle
-        case .authenticatorPro: return T.Externalimport.authenticatorproTitle
+        case .authenticatorPro: return T.Externalimport.infoAuthenticatorproTitle
         case .twofas: return T.Commons._2fasToolbar // Not used here
         }
     }

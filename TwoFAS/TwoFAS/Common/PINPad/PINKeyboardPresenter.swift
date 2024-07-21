@@ -30,8 +30,14 @@ class PINKeyboardPresenter {
     private let timer = CountdownTimer()
     private let textChangeTime: Int = 3
     
-    private(set) var numbers: [Int] = []
-    
+    private(set) var numbers: [Int] = [] {
+        didSet {
+            if numbers.isEmpty {
+                keyboard?.hideDeleteButton()
+            }
+        }
+    }
+
     let remainingTimeFormatter: RelativeDateTimeFormatter = {
         let formatter = RelativeDateTimeFormatter()
         formatter.dateTimeStyle = .numeric
@@ -66,7 +72,6 @@ class PINKeyboardPresenter {
         keyboard?.emptyDots()
         keyboard?.lock(withMessage: lockTimeMessage)
         keyboard?.hideLeftButton()
-        keyboard?.hideDeleteButton()
     }
     
     func unlock() {
@@ -88,14 +93,12 @@ class PINKeyboardPresenter {
         keyboard?.setDots(number: codeLength)
         keyboard?.emptyDots()
         keyboard?.hideLeftButton()
-        keyboard?.hideDeleteButton()
         configureNormalScreen()
     }
     
     func invalidInput() {
         guard !isLocked else { return }
         numbers = []
-        keyboard?.hideDeleteButton()
         keyboard?.emptyDots()
         keyboard?.shakeDots()
         configureErrorScreen()
@@ -167,10 +170,6 @@ private extension PINKeyboardPresenter {
     func delete() {
         _ = numbers.popLast()
         keyboard?.fillDots(count: numbers.count)
-        
-        if numbers.count == 0 {
-            keyboard?.hideDeleteButton()
-        }
     }
     
     func insert(_ number: Int) {

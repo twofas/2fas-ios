@@ -26,18 +26,7 @@ final class AppleWatchViewController: UIViewController {
     override func viewDidLoad() {
         title = T.Settings.appleWatch
 
-        let installationStepAction: (_ stepNumber: Int) -> Void = { [weak self] stepNumber in
-            self?.presenter.handleInstallationStep(number: stepNumber)
-        }
-        let appleWatchView = AppleWatchView(
-            appleWatchInstallationSteps: [
-                .init(descirption: T.AppleWatch.installationFirstStep,
-                      actionTitle: T.AppleWatch.installationFirstStepLink),
-                .init(descirption: T.AppleWatch.installationSecondStep,
-                      actionTitle: T.AppleWatch.installationSecondStepLink)
-            ],
-            installationStepActionCallback: installationStepAction
-        )
+        let appleWatchView = AppleWatchView(presenter: presenter)
         let hostingController = UIHostingController(rootView: appleWatchView)
         hostingController.willMove(toParent: self)
         addChild(hostingController)

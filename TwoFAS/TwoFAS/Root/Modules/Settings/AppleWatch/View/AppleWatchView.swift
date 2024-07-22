@@ -22,15 +22,17 @@ import Common
 
 struct AppleWatchInstallationStep: Hashable, Identifiable {
     var id = UUID()
-    let descirption: String
+    let description: String
     let actionTitle: String
 }
 
-struct AppleWatchView: View {
+struct AppleWatchView<Presenter: AppleWatchPresenting>: View {
     private let spacing: CGFloat = Theme.Metrics.doubleSpacing
+    private let presenter: Presenter
 
-    let appleWatchInstallationSteps: [AppleWatchInstallationStep] 
-    let installationStepActionCallback: (_ stepNumber: Int) -> Void
+    init(presenter: Presenter) {
+        self.presenter = presenter
+    }
 
     var body: some View {
         VStack(spacing: spacing) {
@@ -44,12 +46,12 @@ struct AppleWatchView: View {
                     .minimumScaleFactor(0.7)
 
             VStack(alignment: .leading) {
-                ForEach(Array(appleWatchInstallationSteps.enumerated()), id: \.element) { index, step in
+                ForEach(Array(presenter.appleWatchInstallationSteps.enumerated()), id: \.element) { index, step in
                     let stepNumber = index + 1
                     stepView(
                         for: step,
                         stepNumber: stepNumber,
-                        isDividerVisible: stepNumber != appleWatchInstallationSteps.count
+                        isDividerVisible: stepNumber != presenter.appleWatchInstallationSteps.count
                     )
                 }
             }
@@ -70,11 +72,11 @@ struct AppleWatchView: View {
                 .clipShape(Circle())
 
             VStack(alignment: .leading, spacing: Theme.Metrics.halfSpacing) {
-                Text(step.descirption)
+                Text(step.description)
                     .font(Font(Theme.Fonts.Text.content))
 
                 Button {
-                    installationStepActionCallback(stepNumber)
+                    presenter.handleInstallationStep(number: stepNumber)
                 } label: {
                     HStack(spacing: Theme.Metrics.halfSpacing) {
                         Text(step.actionTitle)
@@ -97,13 +99,16 @@ struct AppleWatchView: View {
 }
 
 #Preview {
-    AppleWatchView(
-        appleWatchInstallationSteps: [
-            .init(descirption: T.AppleWatch.installationFirstStep,
+    final class AppleWatchPresenterMock: AppleWatchPresenting {
+        let appleWatchInstallationSteps: [AppleWatchInstallationStep] = [
+            .init(description: T.AppleWatch.installationFirstStep,
                   actionTitle: T.AppleWatch.installationFirstStepLink),
-            .init(descirption: T.AppleWatch.installationSecondStep,
+            .init(description: T.AppleWatch.installationSecondStep,
                   actionTitle: T.AppleWatch.installationSecondStepLink)
-        ], 
-        installationStepActionCallback: { _ in }
-    )
+        ]
+
+        func handleInstallationStep(number: Int) {}
+    }
+
+    return AppleWatchView(presenter: AppleWatchPresenterMock())
 }

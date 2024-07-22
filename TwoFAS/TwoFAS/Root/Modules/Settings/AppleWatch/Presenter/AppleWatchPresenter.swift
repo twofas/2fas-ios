@@ -19,15 +19,26 @@
 
 import Foundation
 
-final class AppleWatchPresenter {
+protocol AppleWatchPresenting {
+    var appleWatchInstallationSteps: [AppleWatchInstallationStep] { get }
+
+    func handleInstallationStep(number: Int)
+}
+
+final class AppleWatchPresenter: AppleWatchPresenting {
+    let appleWatchInstallationSteps: [AppleWatchInstallationStep] = [
+        .init(description: T.AppleWatch.installationFirstStep,
+              actionTitle: T.AppleWatch.installationFirstStepLink),
+        .init(description: T.AppleWatch.installationSecondStep,
+              actionTitle: T.AppleWatch.installationSecondStepLink)
+    ]
+
     private let flowController: AppleWatchFlowControlling
 
     init(flowController: AppleWatchFlowControlling) {
         self.flowController = flowController
     }
-}
 
-extension AppleWatchPresenter {
     func handleInstallationStep(number: Int) {
         if number == 1 {
             flowController.toSystemWatchApp()

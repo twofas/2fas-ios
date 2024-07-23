@@ -64,11 +64,11 @@ extension AddingServiceMainPresenter {
                 total: codes.count,
                 codes: importableCodes
             )
-        case .lastPass(let codes):
+        case .lastPass(let codes, let totalCodesCount):
             let importableCodes = interactor.filterImportableCodes(codes)
             flowController.toLastPassSummary(
                 importable: importableCodes.count,
-                total: codes.count,
+                total: totalCodesCount,
                 codes: importableCodes
             )
         case .appStore:

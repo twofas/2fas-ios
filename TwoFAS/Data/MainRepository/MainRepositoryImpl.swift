@@ -45,7 +45,10 @@ final class MainRepositoryImpl: MainRepository {
     let userDefaultsRepository: UserDefaultsRepository
     let storageRepository: StorageRepository
     let logDataChange: LogDataChange
-    let networkStack = NetworkStack(baseURL: Config.API.baseURL)
+    let networkStack = NetworkStack(
+        baseURL: Config.API.baseURL,
+        notificationsBaseURL: Config.API.notificationsURL
+    )
     let iconDatabase: IconDescriptionDatabase = IconDescriptionDatabaseImpl()
     let serviceDefinitionDatabase: ServiceDefinitionDatabase = ServiceDefinitionDatabaseImpl()
     let iconDescriptionDatabase: IconDescriptionDatabase = IconDescriptionDatabaseImpl()

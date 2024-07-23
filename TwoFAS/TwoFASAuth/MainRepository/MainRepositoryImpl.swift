@@ -26,7 +26,10 @@ import Protection
 import TimeVerification
 
 final class MainRepositoryImpl {
-    let network = NetworkStack(baseURL: Config.API.baseURL)
+    let network = NetworkStack(
+        baseURL: Config.API.baseURL,
+        notificationsBaseURL: Config.API.notificationsURL
+    )
     let protectionModule = Protection()
     let storageRepository: StorageRepository
     

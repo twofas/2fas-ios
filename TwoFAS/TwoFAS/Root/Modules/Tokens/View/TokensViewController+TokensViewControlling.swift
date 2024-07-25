@@ -125,22 +125,53 @@ extension TokensViewController: TokensViewControlling {
     func disableDragging() {
         tokensView.dragInteractionEnabled = false
     }
-    
+
+    private func animate(_ barButtonItem: UIBarButtonItem) {
+        let angle: Double = .pi / 8
+        let numberOfFrames: Double = 5
+        let frameDuration = Double(1/numberOfFrames)
+
+        UIView.animateKeyframes(withDuration: 1, delay: 0) {
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: frameDuration) {
+                barButtonItem.customView?.transform = CGAffineTransform(rotationAngle: -angle)
+            }
+
+            UIView.addKeyframe(withRelativeStartTime: frameDuration, relativeDuration: frameDuration) {
+                barButtonItem.customView?.transform = CGAffineTransform(rotationAngle: +angle)
+            }
+
+            UIView.addKeyframe(withRelativeStartTime: 2*frameDuration, relativeDuration: frameDuration) {
+                barButtonItem.customView?.transform = CGAffineTransform(rotationAngle: -angle)
+            }
+
+            UIView.addKeyframe(withRelativeStartTime: 3*frameDuration, relativeDuration: frameDuration) {
+                barButtonItem.customView?.transform = CGAffineTransform(rotationAngle: +angle)
+            }
+
+            UIView.addKeyframe(withRelativeStartTime: 4*frameDuration, relativeDuration: frameDuration) {
+                barButtonItem.customView?.transform = CGAffineTransform.identity
+            }
+        }
+    }
+
     // MARK: - Navibar icons
     func updateAddIcon(using state: TokensViewControllerAddState) {
         func createNewsIcon() -> UIBarButtonItem {
             let img: UIImage = {
                 presenter.hasUnreadNews ? Asset.navibarNewsIconBadge.image : Asset.navibarNewsIcon.image
             }()
-            img.withTintColor(Theme.Colors.Icon.theme)
-            let button = UIBarButtonItem(
-                image: img,
-                style: .plain,
-                target: self,
-                action: #selector(showNotifications)
-            )
-            button.accessibilityLabel = T.Commons.notifications
-            return button
+            let naviButton = UIButton(type: .custom)
+            naviButton.translatesAutoresizingMaskIntoConstraints = false
+            naviButton.setBackgroundImage(img, for: .normal)
+            naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
+            naviButton.accessibilityLabel = T.Commons.notifications
+
+            let uiBarButtonItem = UIBarButtonItem(customView: naviButton)
+            if presenter.hasUnreadNews {
+                animate(uiBarButtonItem)
+            }
+
+            return uiBarButtonItem
         }
         
         func createAddButton(image: UIImage) -> UIBarButtonItem {

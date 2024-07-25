@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8F7952532C01D1940053F776 /* KeyboardButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */; };
 		8F5C0C6C2BFFAC8A00D73ADE /* TwoFAS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F5C0C6A2BFFAC8900D73ADE /* TwoFAS.xcdatamodeld */; };
 		8F5C0C6F2BFFACA900D73ADE /* Sync.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F5C0C6D2BFFACA900D73ADE /* Sync.xcdatamodeld */; };
+		8F7952532C01D1940053F776 /* KeyboardButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */; };
 		C200E49E1FB3911B00D7C748 /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = C200E49C1FB3911B00D7C748 /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C200E4A11FB3911B00D7C748 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C200E4A21FB3911B00D7C748 /* Storage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1876,9 +1876,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButtonStyle.swift; sourceTree = "<group>"; };
 		8F5C0C6B2BFFAC8900D73ADE /* TwoFAS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS.xcdatamodel; sourceTree = "<group>"; };
 		8F5C0C6E2BFFACA900D73ADE /* Sync.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sync.xcdatamodel; sourceTree = "<group>"; };
+		8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButtonStyle.swift; sourceTree = "<group>"; };
+		8FD3F0852C37324B0042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		8FD3F0862C37324B0042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
+		8FD3F0872C37324B0042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8FD3F0882C37324B0042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8FD3F0892C3732A80042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = ../TwoFAS/Other/el.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C200E49A1FB3911B00D7C748 /* Storage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Storage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C200E49C1FB3911B00D7C748 /* Storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
 		C200E49D1FB3911B00D7C748 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -9080,6 +9085,7 @@
 				nl,
 				tr,
 				"zh-Hans",
+				el,
 			);
 			mainGroup = C236666A1FB2644900989ACA;
 			packageReferences = (
@@ -11079,6 +11085,7 @@
 				C22294E12A9F5B4400DB7965 /* nl */,
 				C281909E2B0B84910042BB7D /* tr */,
 				C21BF26C2B5B340100915507 /* zh-Hans */,
+				8FD3F0882C37324B0042092E /* el */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -11099,6 +11106,7 @@
 				C22294E02A9F5B4300DB7965 /* nl */,
 				C281909D2B0B84910042BB7D /* tr */,
 				C21BF26B2B5B340100915507 /* zh-Hans */,
+				8FD3F0872C37324B0042092E /* el */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -11128,6 +11136,7 @@
 				C22294DF2A9F5B4300DB7965 /* nl */,
 				C281909C2B0B84910042BB7D /* tr */,
 				C21BF26A2B5B340100915507 /* zh-Hans */,
+				8FD3F0862C37324B0042092E /* el */,
 			);
 			name = TwoFASWidget.intentdefinition;
 			sourceTree = "<group>";
@@ -11148,6 +11157,7 @@
 				C2BBD2402B813103009A91FB /* es */,
 				C2BBD2412B81310A009A91FB /* fr */,
 				C2BBD2422B81311F009A91FB /* zh-Hans */,
+				8FD3F0892C3732A80042092E /* el */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -11168,6 +11178,7 @@
 				C2BBD24C2B813162009A91FB /* uk */,
 				C2BBD24D2B813162009A91FB /* de */,
 				C2BBD24E2B813162009A91FB /* pl */,
+				8FD3F08A2C3732E20042092E /* el */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

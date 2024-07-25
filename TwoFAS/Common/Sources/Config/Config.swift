@@ -29,6 +29,7 @@ public enum Config {
     
     public enum API {
         public static let baseURL = URL(string: "https://api2.2fas.com")!
+        public static let notificationsURL = URL(string: "https://notifications.2fas.com")!
     }
     
     public enum TokenConsts {

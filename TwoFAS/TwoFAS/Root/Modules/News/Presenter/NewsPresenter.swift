@@ -91,7 +91,8 @@ private extension NewsPresenter {
     func reload() {
         let now = Date()
         interactor.fetchList { [weak self] news in
-            let cells = news.map { entry in
+            let sortedNews = news.sorted { $0.publishedAt > $1.publishedAt }
+            var cells = sortedNews.map { entry in
                 NewsCell(
                     icon: entry.icon.image,
                     title: entry.message ?? entry.link?.absoluteString ?? "",

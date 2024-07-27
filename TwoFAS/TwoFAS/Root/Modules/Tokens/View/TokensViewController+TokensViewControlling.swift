@@ -29,7 +29,7 @@ protocol TokensViewControlling: AnyObject {
     func enableDragging()
     func disableDragging()
     
-    func updateAddIcon(using state: TokensViewControllerAddState)
+    func updateNaviIcons(using state: TokensViewControllerAddState, hasUnreadNews: Bool)
     func updateEditState(using state: TokensViewControllerEditState)
     
     func lockBars()
@@ -126,108 +126,25 @@ extension TokensViewController: TokensViewControlling {
         tokensView.dragInteractionEnabled = false
     }
 
-    class DualImageButton: UIButton {
-        let imageView1 = UIImageView(image: Asset.navibarNewsIcon.image)
-        let imageView2 = UIImageView(image: Asset.badge.image)
-
-        override init(frame: CGRect) {
-            super.init(frame: frame)
-            setupViews()
-        }
-
-        required init?(coder: NSCoder) {
-            super.init(coder: coder)
-            setupViews()
-        }
-
-        private func setupViews() {
-            imageView1.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(imageView1)
-
-            imageView2.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(imageView2)
-            imageView2.isHidden = true
-
-            // Constraints for imageView1 to be centered
-            NSLayoutConstraint.activate([
-                imageView1.centerXAnchor.constraint(equalTo: centerXAnchor),
-                imageView1.centerYAnchor.constraint(equalTo: centerYAnchor)
-            ])
-            
-            NSLayoutConstraint.activate([
-                imageView2.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-                imageView2.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -2),
-                imageView2.widthAnchor.constraint(equalToConstant: 3),
-                imageView2.heightAnchor.constraint(equalToConstant: 3)
-            ])
-        }
-    }
-
-
-    private func animate(_ barButtonItem: UIBarButtonItem) {
-        let angle: Double = .pi / 8
-        let numberOfFrames: Double = 5
-        let frameDuration = Double(1/numberOfFrames)
-
-        let button = barButtonItem.customView as? DualImageButton
-
-        UIView.animateKeyframes(withDuration: 1, delay: 0, animations: {
-            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: frameDuration) {
-                button?.imageView1.transform = CGAffineTransform(rotationAngle: -angle)
-            }
-
-            UIView.addKeyframe(withRelativeStartTime: frameDuration, relativeDuration: frameDuration) {
-                button?.imageView1.transform = CGAffineTransform(rotationAngle: +angle)
-            }
-
-            UIView.addKeyframe(withRelativeStartTime: 2*frameDuration, relativeDuration: frameDuration) {
-                button?.imageView1.transform = CGAffineTransform(rotationAngle: -angle)
-            }
-
-            UIView.addKeyframe(withRelativeStartTime: 3*frameDuration, relativeDuration: frameDuration) {
-                button?.imageView1.transform = CGAffineTransform(rotationAngle: +angle)
-            }
-
-            UIView.addKeyframe(withRelativeStartTime: 4*frameDuration, relativeDuration: frameDuration) {
-                button?.imageView1.transform = CGAffineTransform.identity
-            }
-        }, completion: { _ in
-            button?.imageView2.isHidden = false
-            UIView.animate(withDuration: 0.4,
-                             animations: {
-                                button?.imageView2.transform = CGAffineTransform(scaleX: 12.0/3.0, y: 12.0/3.0)
-                             },
-                             completion: { _ in
-                                 UIView.animate(withDuration: 0.2,
-                                                animations: {
-                                     button?.imageView2.transform = CGAffineTransform(scaleX: 8.0/3.0, y: 8.0/3.0)
-                                                })
-                             })
-        })
-    }
-
     // MARK: - Navibar icons
-    func updateAddIcon(using state: TokensViewControllerAddState) {
-        func createNewsIcon() -> UIBarButtonItem {
-//            let img: UIImage = {
-//                presenter.hasUnreadNews ? Asset.navibarNewsIconBadge.image : Asset.navibarNewsIcon.image
-//            }()
-            
-            let naviButton = DualImageButton()
-//            naviButton.translatesAutoresizingMaskIntoConstraints = false
-//            naviButton.setBackgroundImage(img, for: .normal)
-            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showNotifications))
-
-//            naviButton.target(forAction: #selector(showNotifications), withSender: self)
-//            naviButton.accessibilityLabel = T.Commons.notifications
-
-            let uiBarButtonItem = UIBarButtonItem(customView: naviButton)
-            uiBarButtonItem.customView?.addGestureRecognizer(tapGestureRecognizer)
-            if !presenter.hasUnreadNews {
-                animate(uiBarButtonItem)
+    func updateNaviIcons(using state: TokensViewControllerAddState, hasUnreadNews: Bool) {
+        func createNewsButton() -> UIBarButtonItem {
+            print("Create news icon called")
+            if presenter.hasUnreadNews {
+                let naviButton = UnreadNewsNaviButton()
+                naviButton.translatesAutoresizingMaskIntoConstraints = false
+                naviButton.accessibilityLabel = T.Commons.notifications
+                naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
+                naviButton.animate()
+                return UIBarButtonItem(customView: naviButton)
+            } else {
+                let naviButton = UIButton(type: .custom)
+                naviButton.setBackgroundImage(Asset.navibarNewsIcon.image, for: .normal)
+                naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
+                naviButton.translatesAutoresizingMaskIntoConstraints = false
+                naviButton.accessibilityLabel = T.Commons.notifications
+                return UIBarButtonItem(customView: naviButton)
             }
-
-            return uiBarButtonItem
         }
         
         func createAddButton(image: UIImage) -> UIBarButtonItem {
@@ -243,15 +160,33 @@ extension TokensViewController: TokensViewControlling {
             
         switch state {
         case .firstTime:
-            navigationItem.rightBarButtonItems = [
-                createAddButton(image: Asset.naviIconAddFirst.image),
-                createNewsIcon()
-            ]
+            if let newsButton, hasUnreadNews {
+                navigationItem.rightBarButtonItems = [
+                    createAddButton(image: Asset.naviIconAddFirst.image),
+                    newsButton
+                ]
+            } else {
+                let newsButton = createNewsButton()
+                self.newsButton = newsButton
+                navigationItem.rightBarButtonItems = [
+                    createAddButton(image: Asset.naviIconAddFirst.image),
+                    newsButton
+                ]
+            }
         case .normal:
-            navigationItem.rightBarButtonItems = [
-                createAddButton(image: Asset.naviIconAdd.image),
-                createNewsIcon()
-            ]
+            if let newsButton, !hasUnreadNews {
+                navigationItem.rightBarButtonItems = [
+                    createAddButton(image: Asset.naviIconAdd.image),
+                    newsButton
+                ]
+            } else {
+                let newsButton = createNewsButton()
+                self.newsButton = newsButton
+                navigationItem.rightBarButtonItems = [
+                    createAddButton(image: Asset.naviIconAdd.image),
+                    newsButton
+                ]
+            }
         case .none:
             let buttonSection = UIBarButtonItem(
                 image: Asset.addCategory.image,
@@ -439,5 +374,79 @@ extension TokensViewController {
     @objc
     func userLoggedIn() {
         presenter.handleAppUnlocked()
+    }
+}
+
+private extension TokensViewController {
+    final class UnreadNewsNaviButton: UIButton {
+        let newsImageView = UIImageView(image: Asset.navibarNewsIcon.image)
+        let badgeImageView = UIImageView(image: Asset.badge.image)
+
+        private let badgeWidth: CGFloat = 3
+
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            setupViews()
+        }
+
+        required init?(coder: NSCoder) {
+            super.init(coder: coder)
+            setupViews()
+        }
+
+        private func setupViews() {
+            newsImageView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(newsImageView)
+
+            badgeImageView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(badgeImageView)
+            badgeImageView.isHidden = true
+
+            NSLayoutConstraint.activate([
+                newsImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+                newsImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+                badgeImageView.topAnchor.constraint(equalTo: topAnchor, constant:  Theme.Metrics.halfSpacing),
+                badgeImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Theme.Metrics.quaterSpacing),
+                badgeImageView.widthAnchor.constraint(equalToConstant: badgeWidth),
+                badgeImageView.heightAnchor.constraint(equalToConstant: badgeWidth)
+            ])
+        }
+
+        func animate() {
+            let angle: Double = .pi / 12
+            let numberOfFrames: Double = 5
+            let frameDuration = Double(1/numberOfFrames)
+
+            UIView.animateKeyframes(withDuration: 1, delay: 0, animations: { [newsImageView] in
+                UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: frameDuration) {
+                    newsImageView.transform = CGAffineTransform(rotationAngle: -angle)
+                }
+
+                UIView.addKeyframe(withRelativeStartTime: frameDuration, relativeDuration: frameDuration) {
+                    newsImageView.transform = CGAffineTransform(rotationAngle: +angle)
+                }
+
+                UIView.addKeyframe(withRelativeStartTime: 2*frameDuration, relativeDuration: frameDuration) {
+                    newsImageView.transform = CGAffineTransform(rotationAngle: -angle)
+                }
+
+                UIView.addKeyframe(withRelativeStartTime: 3*frameDuration, relativeDuration: frameDuration) {
+                    newsImageView.transform = CGAffineTransform(rotationAngle: +angle)
+                }
+
+                UIView.addKeyframe(withRelativeStartTime: 4*frameDuration, relativeDuration: frameDuration) {
+                    newsImageView.transform = CGAffineTransform.identity
+                }
+            }, completion: { [badgeImageView, badgeWidth] _ in
+                badgeImageView.isHidden = false
+                UIView.animate(withDuration: 0.3, animations: {
+                    badgeImageView.transform = CGAffineTransform(scaleX: 12.0/badgeWidth, y: 12.0/badgeWidth)
+                }, completion: { _ in
+                    UIView.animate(withDuration: 0.2, animations: {
+                        badgeImageView.transform = CGAffineTransform(scaleX: 8.0/badgeWidth, y: 8.0/badgeWidth)
+                    })
+                })
+            })
+        }
     }
 }

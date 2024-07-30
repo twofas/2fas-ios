@@ -129,7 +129,6 @@ extension TokensViewController: TokensViewControlling {
     // MARK: - Navibar icons
     func updateNaviIcons(using state: TokensViewControllerAddState, hasUnreadNews: Bool) {
         func createNewsButton() -> UIBarButtonItem {
-            print("Create news icon called")
             if presenter.hasUnreadNews {
                 let naviButton = UnreadNewsNaviButton()
                 naviButton.translatesAutoresizingMaskIntoConstraints = false
@@ -405,8 +404,11 @@ private extension TokensViewController {
             NSLayoutConstraint.activate([
                 newsImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
                 newsImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-                badgeImageView.topAnchor.constraint(equalTo: topAnchor, constant:  Theme.Metrics.halfSpacing),
-                badgeImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Theme.Metrics.quaterSpacing),
+                badgeImageView.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.halfSpacing),
+                badgeImageView.trailingAnchor.constraint(
+                    equalTo: trailingAnchor,
+                    constant: -Theme.Metrics.quaterSpacing
+                ),
                 badgeImageView.widthAnchor.constraint(equalToConstant: badgeWidth),
                 badgeImageView.heightAnchor.constraint(equalToConstant: badgeWidth)
             ])
@@ -415,38 +417,46 @@ private extension TokensViewController {
         func animate() {
             let angle: Double = .pi / 12
             let numberOfFrames: Double = 5
-            let frameDuration = Double(1/numberOfFrames)
+            let frameDuration = Double(0.7 / numberOfFrames)
 
-            UIView.animateKeyframes(withDuration: 1, delay: 0, animations: { [newsImageView] in
-                UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: frameDuration) {
-                    newsImageView.transform = CGAffineTransform(rotationAngle: -angle)
+            UIView.animateKeyframes(
+                withDuration: 1,
+                delay: 0,
+                animations: { [newsImageView] in
+                    UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: frameDuration) {
+                        newsImageView.transform = CGAffineTransform(rotationAngle: -angle)
+                    }
+                    UIView.addKeyframe(withRelativeStartTime: frameDuration, relativeDuration: frameDuration) {
+                        newsImageView.transform = CGAffineTransform(rotationAngle: +angle)
+                    }
+                    UIView.addKeyframe(withRelativeStartTime: 2 * frameDuration, relativeDuration: frameDuration) {
+                        newsImageView.transform = CGAffineTransform(rotationAngle: -angle)
+                    }
+                    UIView.addKeyframe(withRelativeStartTime: 3 * frameDuration, relativeDuration: frameDuration) {
+                        newsImageView.transform = CGAffineTransform(rotationAngle: +angle)
+                    }
+                    UIView.addKeyframe(withRelativeStartTime: 4 * frameDuration, relativeDuration: frameDuration) {
+                        newsImageView.transform = CGAffineTransform.identity
+                    }
+                }, 
+                completion: { [weak self] _ in
+                    self?.badgeImageView.isHidden = false
+                    self?.animateBadge()
                 }
+            )
+        }
 
-                UIView.addKeyframe(withRelativeStartTime: frameDuration, relativeDuration: frameDuration) {
-                    newsImageView.transform = CGAffineTransform(rotationAngle: +angle)
+        private func animateBadge() {
+            UIView.animate(
+                withDuration: 0.2,
+                animations: { [badgeImageView, badgeWidth] in
+                    badgeImageView.transform = CGAffineTransform(scaleX: 12.0 / badgeWidth, y: 12.0 / badgeWidth)
+                }, completion: { [badgeImageView, badgeWidth] _ in
+                    UIView.animate(withDuration: 0.15) {
+                        badgeImageView.transform = CGAffineTransform(scaleX: 8.0 / badgeWidth, y: 8.0 / badgeWidth)
+                    }
                 }
-
-                UIView.addKeyframe(withRelativeStartTime: 2*frameDuration, relativeDuration: frameDuration) {
-                    newsImageView.transform = CGAffineTransform(rotationAngle: -angle)
-                }
-
-                UIView.addKeyframe(withRelativeStartTime: 3*frameDuration, relativeDuration: frameDuration) {
-                    newsImageView.transform = CGAffineTransform(rotationAngle: +angle)
-                }
-
-                UIView.addKeyframe(withRelativeStartTime: 4*frameDuration, relativeDuration: frameDuration) {
-                    newsImageView.transform = CGAffineTransform.identity
-                }
-            }, completion: { [badgeImageView, badgeWidth] _ in
-                badgeImageView.isHidden = false
-                UIView.animate(withDuration: 0.3, animations: {
-                    badgeImageView.transform = CGAffineTransform(scaleX: 12.0/badgeWidth, y: 12.0/badgeWidth)
-                }, completion: { _ in
-                    UIView.animate(withDuration: 0.2, animations: {
-                        badgeImageView.transform = CGAffineTransform(scaleX: 8.0/badgeWidth, y: 8.0/badgeWidth)
-                    })
-                })
-            })
+            )
         }
     }
 }

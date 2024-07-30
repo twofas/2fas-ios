@@ -26,6 +26,8 @@ final class TokensViewController: UIViewController {
     var addButton: UIBarButtonItem? {
         navigationItem.rightBarButtonItem
     }
+    var newsButton: UIBarButtonItem?
+
     private(set) var tokensView: TokensView!
     private(set) var dataSource: UICollectionViewDiffableDataSource<TokensSection, TokenCell>!
     

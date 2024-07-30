@@ -289,6 +289,18 @@ internal enum T {
     /// Active search
     internal static let toggleActiveSearch = T.tr("Localizable", "appearance__toggle_active_search", fallback: "Active search")
   }
+  internal enum AppleWatch {
+    /// Install 2FAS Auth via Watch app
+    internal static let installationFirstStep = T.tr("Localizable", "appleWatch__installation_first_step", fallback: "Install 2FAS Auth via Watch app")
+    /// Open Watch app
+    internal static let installationFirstStepLink = T.tr("Localizable", "appleWatch__installation_first_step_link", fallback: "Open Watch app")
+    /// 2FAS Apple Watch app installation
+    internal static let installationInfoTitle = T.tr("Localizable", "appleWatch__installation_info_title", fallback: "2FAS Apple Watch app installation")
+    /// Ensure your iCloud Sync is enabled
+    internal static let installationSecondStep = T.tr("Localizable", "appleWatch__installation_second_step", fallback: "Ensure your iCloud Sync is enabled")
+    /// Go to 2FAS Backup settings
+    internal static let installationSecondStepLink = T.tr("Localizable", "appleWatch__installation_second_step_link", fallback: "Go to 2FAS Backup settings")
+  }
   internal enum Backup {
     /// 2FAS Backup
     internal static let _2fasBackup = T.tr("Localizable", "backup__2fas_backup", fallback: "2FAS Backup")
@@ -378,9 +390,9 @@ internal enum T {
     internal static let incorrectCharacterError = T.tr("Localizable", "backup__incorrect_character_error", fallback: "Incorrect character. Use only letter A-Z, a-z, digits and special characters: -_/!#$%&+*~@?=^.,'(){}[]:;<>|")
     /// Incorrect Password
     internal static let incorrectPassword = T.tr("Localizable", "backup__incorrect_password", fallback: "Incorrect Password")
-    /// Couldn't backup tokens because "%@" secret contains illegal characters. Remove it from list and try again
+    /// Couldn't backup tokens because "%@" secret contains invalid characters. Remove it from list and try again
     internal static func incorrectSecret(_ p1: Any) -> String {
-      return T.tr("Localizable", "backup__incorrect_secret", String(describing: p1), fallback: "Couldn't backup tokens because \"%@\" secret contains illegal characters. Remove it from list and try again")
+      return T.tr("Localizable", "backup__incorrect_secret", String(describing: p1), fallback: "Couldn't backup tokens because \"%@\" secret contains invalid characters. Remove it from list and try again")
     }
     /// Local file
     internal static let localFileTitle = T.tr("Localizable", "backup__local_file_title", fallback: "Local file")
@@ -1020,6 +1032,8 @@ internal enum T {
     internal static let appSecurity = T.tr("Localizable", "settings__app_security", fallback: "App security")
     /// Appearance
     internal static let appearance = T.tr("Localizable", "settings__appearance", fallback: "Appearance")
+    /// Apple Watch
+    internal static let appleWatch = T.tr("Localizable", "settings__apple_watch", fallback: "Apple Watch")
     /// Backup and Synchronization
     internal static let backupAndSynchronization = T.tr("Localizable", "settings__backup_and_synchronization", fallback: "Backup and Synchronization")
     /// Biometric Authentication

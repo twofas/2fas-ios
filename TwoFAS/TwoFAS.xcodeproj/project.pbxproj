@@ -8,11 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		8F00E46A2C23953B001F15AD /* SortTokensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00E4692C23953B001F15AD /* SortTokensView.swift */; };
-		8F872DE92C24EE2600160D14 /* SortTokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DE82C24EE2600160D14 /* SortTokensPresenter.swift */; };
-		8F872DEB2C24EE5500160D14 /* SortTokensInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */; };
+		8F43E7002C4C50DD0006D380 /* AppleWatchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F43E6FF2C4C50DD0006D380 /* AppleWatchPresenter.swift */; };
+		8F43E7032C4C511A0006D380 /* AppleWatchFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F43E7022C4C511A0006D380 /* AppleWatchFlowController.swift */; };
+		8F594C422C3027160066562F /* AppleWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F594C412C3027160066562F /* AppleWatchView.swift */; };
+		8F594C442C3054F90066562F /* AppleWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F594C432C3054F90066562F /* AppleWatchViewController.swift */; };
 		8F5C0C6C2BFFAC8A00D73ADE /* TwoFAS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F5C0C6A2BFFAC8900D73ADE /* TwoFAS.xcdatamodeld */; };
 		8F5C0C6F2BFFACA900D73ADE /* Sync.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F5C0C6D2BFFACA900D73ADE /* Sync.xcdatamodeld */; };
 		8F7952532C01D1940053F776 /* KeyboardButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */; };
+		8F872DE92C24EE2600160D14 /* SortTokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DE82C24EE2600160D14 /* SortTokensPresenter.swift */; };
+		8F872DEB2C24EE5500160D14 /* SortTokensInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */; };
 		C200E49E1FB3911B00D7C748 /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = C200E49C1FB3911B00D7C748 /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C200E4A11FB3911B00D7C748 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C200E4A21FB3911B00D7C748 /* Storage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1880,12 +1884,15 @@
 
 /* Begin PBXFileReference section */
 		8F00E4692C23953B001F15AD /* SortTokensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTokensView.swift; sourceTree = "<group>"; };
-		8F872DE82C24EE2600160D14 /* SortTokensPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTokensPresenter.swift; sourceTree = "<group>"; };
-		8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTokensInteractor.swift; sourceTree = "<group>"; };
+		8F43E6FF2C4C50DD0006D380 /* AppleWatchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleWatchPresenter.swift; sourceTree = "<group>"; };
+		8F43E7022C4C511A0006D380 /* AppleWatchFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleWatchFlowController.swift; sourceTree = "<group>"; };
+		8F594C412C3027160066562F /* AppleWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleWatchView.swift; sourceTree = "<group>"; };
+		8F594C432C3054F90066562F /* AppleWatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleWatchViewController.swift; sourceTree = "<group>"; };
 		8F5C0C6B2BFFAC8900D73ADE /* TwoFAS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS.xcdatamodel; sourceTree = "<group>"; };
 		8F5C0C6E2BFFACA900D73ADE /* Sync.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sync.xcdatamodel; sourceTree = "<group>"; };
 		8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardButtonStyle.swift; sourceTree = "<group>"; };
-		8FD3F0852C37324B0042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		8F872DE82C24EE2600160D14 /* SortTokensPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTokensPresenter.swift; sourceTree = "<group>"; };
+		8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTokensInteractor.swift; sourceTree = "<group>"; };
 		8FD3F0862C37324B0042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		8FD3F0872C37324B0042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8FD3F0882C37324B0042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3326,8 +3333,43 @@
 				8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */,
 			);
 			path = SortTokens;
-               sourceTree = "<group>";
-        };
+			sourceTree = "<group>";
+		};
+		8F43E6FD2C4C50A60006D380 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8F594C412C3027160066562F /* AppleWatchView.swift */,
+				8F594C432C3054F90066562F /* AppleWatchViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8F43E6FE2C4C50C70006D380 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				8F43E6FF2C4C50DD0006D380 /* AppleWatchPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		8F43E7012C4C51060006D380 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				8F43E7022C4C511A0006D380 /* AppleWatchFlowController.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		8F594C402C3024E60066562F /* AppleWatch */ = {
+			isa = PBXGroup;
+			children = (
+				8F43E7012C4C51060006D380 /* Flow */,
+				8F43E6FE2C4C50C70006D380 /* Presenter */,
+				8F43E6FD2C4C50A60006D380 /* View */,
+			);
+			path = AppleWatch;
+			sourceTree = "<group>";
+		};
 		8F7952502C01D1770053F776 /* CommonSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -3735,6 +3777,7 @@
 		C21111E1274AB8C100CA7C78 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				8F594C402C3024E60066562F /* AppleWatch */,
 				C2B1208529D767150020281E /* Appearance */,
 				C2CC0A4129D08D7700677A7B /* ExternalImportInstructions */,
 				C2CC0A3429D056CF00677A7B /* ExternalImport */,
@@ -9811,6 +9854,7 @@
 				C21B1B312A882A920021CAF1 /* AddingServiceTOTPTimerView.swift in Sources */,
 				C27BE517275D6ACC0090CA12 /* BackupMenuModuleInteractor.swift in Sources */,
 				C2B39E5B29F5D0AA00EC31F6 /* TokensServiceName.swift in Sources */,
+				8F594C422C3027160066562F /* AppleWatchView.swift in Sources */,
 				C27D543F275D393D001E9ABF /* BackupMenuPresenter.swift in Sources */,
 				C25C91CF2B08E84800E58729 /* AddingServiceManuallyNavigationFlowController.swift in Sources */,
 				C23FD51228146E2E00E4E9C5 /* ComposeServiceWebExtensionPresenter.swift in Sources */,
@@ -9833,6 +9877,7 @@
 				C2035AED245DCAAD00C482D2 /* MainContainerBottomNavigationGenerator.swift in Sources */,
 				C2B2ED2427C44BF300332255 /* AdvancedAlertViewController.swift in Sources */,
 				C25B221927C199B80052AAC4 /* ComposeServicePrivateKeyCell.swift in Sources */,
+				8F43E7002C4C50DD0006D380 /* AppleWatchPresenter.swift in Sources */,
 				C2ADD6122752DC1E0010F5E7 /* SettingsMenuFlowController.swift in Sources */,
 				C2C1DDDF27CAA7F2002C7867 /* ComposeServiceAdvancedEditFlowController.swift in Sources */,
 				C263F45A29900DED009B0837 /* MainMenuModels.swift in Sources */,
@@ -10039,6 +10084,7 @@
 				C20524C32807620500B2B20C /* NavigationBarHiddenHostingController.swift in Sources */,
 				C2FDEE57279C8FF8002CAB9E /* SwiftUIButtons.swift in Sources */,
 				C22E6FA121E2666B00A2E66B /* CircularShape.swift in Sources */,
+				8F594C442C3054F90066562F /* AppleWatchViewController.swift in Sources */,
 				C2F7FE092A8ABA25004B2C95 /* AddingServiceManuallyView.swift in Sources */,
 				C2AC221327661BA300271402 /* ExporterPasswordProtectionViewController.swift in Sources */,
 				C2B2ED1E27C4349100332255 /* AdvancedAlert.swift in Sources */,
@@ -10082,6 +10128,7 @@
 				C296D4D42A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift in Sources */,
 				C2C66F951FE068CC00AD5A1C /* TokensViewController.swift in Sources */,
 				C2EBDFFC2AC44750008FD744 /* GuideMenuViewController.swift in Sources */,
+				8F43E7032C4C511A0006D380 /* AppleWatchFlowController.swift in Sources */,
 				C240487C27656DB40076376E /* ImporterFileErrorFlowController.swift in Sources */,
 				C2A74FD72610D3A8007E5AB3 /* TintColor.swift in Sources */,
 				C2CC0A3A29D0580B00677A7B /* ExternalImportViewController.swift in Sources */,
@@ -11198,7 +11245,6 @@
 				C2BBD24C2B813162009A91FB /* uk */,
 				C2BBD24D2B813162009A91FB /* de */,
 				C2BBD24E2B813162009A91FB /* pl */,
-				8FD3F08A2C3732E20042092E /* el */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

@@ -129,20 +129,24 @@ extension TokensViewController: TokensViewControlling {
     // MARK: - Navibar icons
     func updateNaviIcons(using state: TokensViewControllerAddState, hasUnreadNews: Bool) {
         func createNewsButton() -> UIBarButtonItem {
-            if presenter.hasUnreadNews {
+            if hasUnreadNews {
                 let naviButton = UnreadNewsNaviButton()
                 naviButton.translatesAutoresizingMaskIntoConstraints = false
                 naviButton.accessibilityLabel = T.Commons.notifications
                 naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
                 naviButton.animate()
-                return UIBarButtonItem(customView: naviButton)
+                let uiBarButtonItem = UIBarButtonItem(customView: naviButton)
+                newsButton = .unread(uiBarButtonItem)
+                return uiBarButtonItem
             } else {
                 let naviButton = UIButton(type: .custom)
                 naviButton.setBackgroundImage(Asset.navibarNewsIcon.image, for: .normal)
                 naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
                 naviButton.translatesAutoresizingMaskIntoConstraints = false
                 naviButton.accessibilityLabel = T.Commons.notifications
-                return UIBarButtonItem(customView: naviButton)
+                let uiBarButtonItem = UIBarButtonItem(customView: naviButton)
+                newsButton = .read(uiBarButtonItem)
+                return uiBarButtonItem
             }
         }
         
@@ -159,31 +163,59 @@ extension TokensViewController: TokensViewControlling {
             
         switch state {
         case .firstTime:
-            if let newsButton, hasUnreadNews {
+            switch (hasUnreadNews, newsButton) {
+            case (true, .unread(let unreadNewsButton)):
                 navigationItem.rightBarButtonItems = [
                     createAddButton(image: Asset.naviIconAddFirst.image),
-                    newsButton
+                    unreadNewsButton
                 ]
-            } else {
-                let newsButton = createNewsButton()
-                self.newsButton = newsButton
+            case (false, .unread):
                 navigationItem.rightBarButtonItems = [
                     createAddButton(image: Asset.naviIconAddFirst.image),
-                    newsButton
+                    createNewsButton()
+                ]
+            case (true, .read):
+                navigationItem.rightBarButtonItems = [
+                    createAddButton(image: Asset.naviIconAddFirst.image),
+                    createNewsButton()
+                ]
+            case (false, .read(let readNewsButton)):
+                navigationItem.rightBarButtonItems = [
+                    createAddButton(image: Asset.naviIconAddFirst.image),
+                    readNewsButton
+                ]
+            case (_, .none):
+                navigationItem.rightBarButtonItems = [
+                    createAddButton(image: Asset.naviIconAddFirst.image),
+                    createNewsButton()
                 ]
             }
         case .normal:
-            if let newsButton, !hasUnreadNews {
+            switch (hasUnreadNews, newsButton) {
+            case (true, .unread(let unreadNewsButton)):
                 navigationItem.rightBarButtonItems = [
                     createAddButton(image: Asset.naviIconAdd.image),
-                    newsButton
+                    unreadNewsButton
                 ]
-            } else {
-                let newsButton = createNewsButton()
-                self.newsButton = newsButton
+            case (false, .unread):
                 navigationItem.rightBarButtonItems = [
                     createAddButton(image: Asset.naviIconAdd.image),
-                    newsButton
+                    createNewsButton()
+                ]
+            case (true, .read):
+                navigationItem.rightBarButtonItems = [
+                    createAddButton(image: Asset.naviIconAdd.image),
+                    createNewsButton()
+                ]
+            case (false, .read(let readNewsButton)):
+                navigationItem.rightBarButtonItems = [
+                    createAddButton(image: Asset.naviIconAdd.image),
+                    readNewsButton
+                ]
+            case (_, .none):
+                navigationItem.rightBarButtonItems = [
+                    createAddButton(image: Asset.naviIconAdd.image),
+                    createNewsButton()
                 ]
             }
         case .none:

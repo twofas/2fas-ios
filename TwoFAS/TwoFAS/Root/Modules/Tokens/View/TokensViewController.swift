@@ -22,11 +22,16 @@ import Common
 import Data
 
 final class TokensViewController: UIViewController {
+    enum NewsButtonType {
+        case unread(UIBarButtonItem)
+        case read(UIBarButtonItem)
+    }
+
     var presenter: TokensPresenter!
     var addButton: UIBarButtonItem? {
         navigationItem.rightBarButtonItem
     }
-    var newsButton: UIBarButtonItem?
+    var newsButton: NewsButtonType?
 
     private(set) var tokensView: TokensView!
     private(set) var dataSource: UICollectionViewDiffableDataSource<TokensSection, TokenCell>!

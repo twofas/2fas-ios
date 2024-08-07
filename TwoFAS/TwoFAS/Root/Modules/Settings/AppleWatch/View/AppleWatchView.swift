@@ -29,6 +29,7 @@ struct AppleWatchInstallationStep: Hashable, Identifiable {
 struct AppleWatchView<Presenter: AppleWatchPresenting>: View {
     private let spacing: CGFloat = Theme.Metrics.doubleSpacing
     private let presenter: Presenter
+    private let appleWatchImageXOffset: CGFloat = 10
 
     init(presenter: Presenter) {
         self.presenter = presenter
@@ -39,6 +40,7 @@ struct AppleWatchView<Presenter: AppleWatchPresenting>: View {
             Image(uiImage: Asset.appleWatch.image)
                 .renderingMode(.original)
                 .padding(.top, Theme.Metrics.standardSpacing)
+                .offset(x: appleWatchImageXOffset)
 
             Text(T.AppleWatch.installationInfoTitle)
                 .font(Font(Theme.Fonts.Text.title))

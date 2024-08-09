@@ -106,6 +106,9 @@ extension TokensPresenter {
         if isSearching {
             handleClearSearchPhrase()
         }
+        if currentState == .edit {
+            handleLeaveEditMode()
+        }
     }
     
     // MARK: - External Actions

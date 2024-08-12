@@ -34,5 +34,4 @@ final class AppleWatchViewController: UIViewController {
         hostingController.view.pinToParent()
         hostingController.didMove(toParent: self)
     }
-
 }

@@ -600,11 +600,11 @@ private extension TokensPresenter {
     func updateNewsIcon() {
         updateNaviIcons()
         interactor.fetchNews { [weak self] in
-            self?.updateNaviIcons(hasUnreadNews: self?.hasUnreadNews ?? false)
+            self?.updateNaviIcons()
         }
     }
     
-    private func updateNaviIcons(hasUnreadNews: Bool = false) {
+    private func updateNaviIcons() {
         if interactor.hasServices {
             view?.updateNaviIcons(
                 using: mapButtonStateFor(currentState, isFirst: false),

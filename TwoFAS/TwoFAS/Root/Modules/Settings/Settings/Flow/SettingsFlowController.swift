@@ -216,7 +216,11 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
     }
 
     func toAppleWatch() {
-        AppleWatchFlowController.push(in: viewController.navigationNavi, parent: self)
+        if isCollapsed {
+            AppleWatchFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            AppleWatchFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
     }
 }
 extension SettingsFlowController: BackupMenuFlowControllerParent {

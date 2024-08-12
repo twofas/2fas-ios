@@ -29,6 +29,7 @@ public enum ViewPath: Equatable, Codable {
         case trash
         case about
         case appearance
+        case appleWatch
     }
     
     case main

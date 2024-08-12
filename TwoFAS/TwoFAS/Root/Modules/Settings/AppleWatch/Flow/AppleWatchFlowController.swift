@@ -32,6 +32,20 @@ final class AppleWatchFlowController: FlowController {
     private weak var parent: AppleWatchFlowControllerParent?
     private weak var navigationController: UINavigationController?
 
+    static func showAsRoot(
+        in navigationController: UINavigationController,
+        parent: AppleWatchFlowControllerParent
+    ) {
+        let viewController = AppleWatchViewController()
+        let flowController = AppleWatchFlowController(viewController: viewController)
+        flowController.parent = parent
+        flowController.navigationController = navigationController
+        let presenter = AppleWatchPresenter(flowController: flowController)
+        viewController.presenter = presenter
+
+        navigationController.setViewControllers([viewController], animated: false)
+    }
+
     static func push(
         in navigationController: UINavigationController,
         parent: AppleWatchFlowControllerParent

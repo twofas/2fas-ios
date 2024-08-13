@@ -133,7 +133,11 @@ extension SettingsMenuPresenter {
     func handleSwitchToAppearance() {
         navigate(to: .appearance)
     }
-    
+
+    func handleSwitchToBackup() {
+        navigate(to: .backup)
+    }
+
     func handleSwitchToBrowserExtension() {
         guard selectedModule != .browserExtension else { return }
         navigate(to: .browserExtension)

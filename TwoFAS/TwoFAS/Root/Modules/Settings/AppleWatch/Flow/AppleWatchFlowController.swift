@@ -20,12 +20,12 @@
 import UIKit
 
 protocol AppleWatchFlowControllerParent: AnyObject {
-    func toBackup()
+    func switchToBackup()
 }
 
 protocol AppleWatchFlowControlling: AnyObject {
     func toSystemWatchApp()
-    func toBackup()
+    func switchToBackup()
 }
 
 final class AppleWatchFlowController: FlowController {
@@ -68,7 +68,7 @@ extension AppleWatchFlowController: AppleWatchFlowControlling {
         }
     }
 
-    func toBackup() {
-        parent?.toBackup()
+    func switchToBackup() {
+        parent?.switchToBackup()
     }
 }

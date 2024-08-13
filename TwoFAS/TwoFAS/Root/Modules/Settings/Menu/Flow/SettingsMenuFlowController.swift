@@ -31,6 +31,7 @@ protocol SettingsMenuFlowControllerChild: AnyObject {
     func appSecurityChaged()
     func toSwitchToExternlImport()
     func toSwitchToAppearance()
+    func toSwitchToBackup()
 }
 
 protocol SettingsMenuFlowControllerParent: AnyObject {
@@ -152,6 +153,10 @@ extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {
     }
     func toSwitchToAppearance() {
         viewController.presenter.handleSwitchToAppearance()
+    }
+
+    func toSwitchToBackup() {
+        viewController.presenter.handleSwitchToBackup()
     }
 }
 

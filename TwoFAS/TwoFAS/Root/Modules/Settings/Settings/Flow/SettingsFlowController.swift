@@ -242,9 +242,14 @@ extension SettingsFlowController: AppSecurityFlowControllerParent {
     }
 }
 
+extension SettingsFlowController: AppleWatchFlowControllerParent {
+    func switchToBackup() {
+        navigationMenu?.toSwitchToBackup()
+    }
+}
+
 extension SettingsFlowController: TrashFlowControllerParent {}
 extension SettingsFlowController: BrowserExtensionMainFlowControllerParent {}
 extension SettingsFlowController: AboutFlowControllerParent {}
 extension SettingsFlowController: ExternalImportFlowControllerParent {}
 extension SettingsFlowController: AppearanceFlowControllerParent {}
-extension SettingsFlowController: AppleWatchFlowControllerParent {}

@@ -43,7 +43,7 @@ final class AppleWatchPresenter: AppleWatchPresenting {
         if number == 1 {
             flowController.toSystemWatchApp()
         } else if number == 2 {
-            flowController.toBackup()
+            flowController.switchToBackup()
         }
     }
 }

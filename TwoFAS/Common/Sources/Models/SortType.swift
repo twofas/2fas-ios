@@ -20,7 +20,7 @@
 import Foundation
 
 public enum SortType: String, CaseIterable, Equatable {
+    case manual
     case az
     case za
-    case manual
 }

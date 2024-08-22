@@ -28,8 +28,11 @@ public final class NetworkStack {
     private let appVersionHandler = AppVersionHandler()
     private let networkHandler: NetworkStackRepositoryImpl
         
-    public init(baseURL: URL) {
-        networkHandler = NetworkStackRepositoryImpl(baseURL: baseURL)
+    public init(baseURL: URL, notificationsBaseURL: URL) {
+        networkHandler = NetworkStackRepositoryImpl(
+            baseURL: baseURL,
+            notificationsBaseURL: notificationsBaseURL
+        )
     }
 }
 

@@ -25,6 +25,7 @@ final class NetworkCall {
     var noError: (() -> Void)?
     
     private let baseURL: URL
+    private let notificationsBaseURL: URL
     private let jsonDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -60,8 +61,9 @@ final class NetworkCall {
     }()
     private let session: URLSession
     
-    init(baseURL: URL) {
+    init(baseURL: URL, notificationsBaseURL: URL) {
         self.baseURL = baseURL
+        self.notificationsBaseURL = notificationsBaseURL
         self.session = URLSession(configuration: configuration)
     }
     
@@ -79,7 +81,22 @@ final class NetworkCall {
             dataTask.resume()
         }
     }
-    
+
+    func handleNotificationsCall<T: Decodable>(
+        with request: NetworkRequestFormat,
+        completion: @escaping (Result<T, NetworkError>) -> Void
+    ) {
+        queue.async { [weak self] in
+            guard let self else { return }
+            let dataTask = self.session.dataTask(
+                with: self.notificationsUrlRequest(for: request)
+            ) { [weak self] data, response, error in
+                self?.completionHandler(data, response as? HTTPURLResponse, error, completion: completion)
+            }
+            dataTask.resume()
+        }
+    }
+
     func handleCall(with request: NetworkRequestFormat, completion: @escaping (Result<Void, NetworkError>) -> Void) {
         queue.async { [weak self] in
             guard let self else { return }
@@ -246,7 +263,18 @@ private extension NetworkCall {
         
         return urlRequest
     }
-    
+
+    func notificationsUrlRequest(for request: NetworkRequestFormat) -> URLRequest {
+        let path = notificationsBaseURL.absoluteString + "/" + request.path
+        guard
+            let url = URL(string: path)
+        else { fatalError("Network Stack: Can't create path for url: \(request.path)") }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = request.method.rawValue
+
+        return urlRequest
+    }
+
     func urlRequest<P: Encodable>(for request: NetworkRequestFormat, data: P) -> URLRequest {
         let path = baseURL.absoluteString + "/" + request.path
         guard

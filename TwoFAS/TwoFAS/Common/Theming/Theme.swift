@@ -148,6 +148,7 @@ enum Theme {
             static let background = ThemeColor.background
             static let backgroundLight = ThemeColor.backgroundLight
             static let placeholder = ThemeColor.divider
+            static let tertiary = ThemeColor.tertiary
         }
     }
     
@@ -211,6 +212,8 @@ enum Theme {
         static let warning = UIFont.systemFont(ofSize: 13, weight: .medium)
         static let iconLabel = UIFont.systemFont(ofSize: 13, weight: .bold)
         static let iconLabelSmall = UIFont.systemFont(ofSize: 12, weight: .bold)
+        static let iconLabelLarge = UIFont.systemFont(ofSize: 15, weight: .bold)
+        static let iconLabelExtraLarge = UIFont.systemFont(ofSize: 15, weight: .bold)
         static let sectionHeader = UIFont.systemFont(ofSize: 13, weight: .regular)
         static let iconLabelInputTitle = UIFont.systemFont(ofSize: 22, weight: .light)
         static let tabBar = UIFont.systemFont(ofSize: 10, weight: .semibold)
@@ -258,7 +261,9 @@ enum Theme {
         static let mediumMargin: CGFloat = (3 * ThemeMetrics.margin) / 2
         /// 16
         static let doubleMargin: CGFloat = 2 * ThemeMetrics.margin
-        
+        /// 32
+        static let quadrupleMargin: CGFloat = 4 * ThemeMetrics.margin
+
         static let lineWidth: CGFloat = ThemeMetrics.lineWidth
         static let separatorHeight: CGFloat = 0.5
         /// 6

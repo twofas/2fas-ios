@@ -25,10 +25,11 @@ final class BrowserExtensionEditNamePresenter {
     
     let minLength = 3
     let maxLength = 60
-    
+
     private let flowController: BrowserExtensionEditNameFlowControlling
     private(set) var currentName: String
-    
+    private(set) var isSaveEnable = false
+
     init(flowController: BrowserExtensionEditNameFlowControlling, currentName: String) {
         self.flowController = flowController
         self.currentName = currentName
@@ -44,10 +45,12 @@ final class BrowserExtensionEditNamePresenter {
     
     func handleNewValue(_ newValue: String?) {
         guard let newValue = newValue?.trim(), newValue.count >= minLength, newValue.count <= maxLength else {
+            isSaveEnable = false
             view?.disableSave()
             return
         }
-        
+
+        isSaveEnable = true
         view?.enableSave()
         currentName = newValue
     }

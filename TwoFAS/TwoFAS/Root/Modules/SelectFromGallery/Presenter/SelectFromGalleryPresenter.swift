@@ -120,14 +120,14 @@ private extension SelectFromGalleryPresenter {
                 total: codes.count,
                 codes: importableCodes
             )
-        case .lastPass(let codes):
+        case .lastPass(let codes, let totalCodesCount):
             Log("SelectFromGalleryPresenter: Found LastPass codes: \(codes.count)")
             Log("Codes: \(codes)", save: false)
             
             let importableCodes = interactor.filterImportableCodes(codes)
             flowController.toLastPassSummary(
                 importable: importableCodes.count,
-                total: codes.count,
+                total: totalCodesCount,
                 codes: importableCodes
             )
         case .appStore:

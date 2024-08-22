@@ -26,7 +26,7 @@ enum MainContainerBottomNavigationGenerator {
             case normal
             case template(color: UIColor)
         }
-        case filledButton(text: String, callback: Callback, created: ((LoadingContentButton) -> Void)? = nil)
+        case filledButton(text: String, isEnabled: Bool = true, callback: Callback, created: ((LoadingContentButton) -> Void)? = nil)
         case textButton(text: String, callback: Callback, created: ((LoadingContentButton) -> Void)? = nil)
         case text(text: String, style: MainContainerTextStyling, created: ((UILabel) -> Void)? = nil)
         case pagination(currentPage: Int, totalPages: Int)
@@ -52,10 +52,11 @@ enum MainContainerBottomNavigationGenerator {
     
     private static func elementToView(_ element: Element) -> UIView {
         switch element {
-        case .filledButton(let text, let callback, let created):
+        case .filledButton(let text, let isEnabled, let callback, let created):
             let button = LoadingContentButton()
             button.configure(style: .background, title: text)
             button.action = callback
+            button.setState(isEnabled ? .active : .inactive)
             created?(button)
             return button
             

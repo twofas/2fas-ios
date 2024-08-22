@@ -43,6 +43,7 @@ extension TrashingServiceInteractor: TrashingServiceInteracting {
     func trashService(_ serviceData: ServiceData) {
         Log("TrashingServiceInteractor - trashService", module: .interactor)
         mainRepository.trashService(serviceData)
+        removeAuthRequests(for: serviceData.secret)
     }
     
     func untrashService(_ serviceData: ServiceData) {

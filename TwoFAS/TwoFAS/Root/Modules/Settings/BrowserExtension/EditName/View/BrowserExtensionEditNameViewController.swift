@@ -165,7 +165,12 @@ extension BrowserExtensionEditNameViewController {
                 returnKeyType: .done,
                 maxLength: presenter.maxLength,
                 autocapitalizationType: UITextAutocapitalizationType.allCharacters,
-                configTextField: LimitedTextField.Config.none
+                configTextField: LimitedTextField.Config.none, 
+                actionButtonTapped: { [weak self] in
+                    if self?.presenter.isSaveEnable == true {
+                        self?.presenter.handleSave()
+                    }
+                }
             ),
             isRequired: true
         )

@@ -35,7 +35,7 @@ protocol AddingServiceTokenModuleInteracting: AnyObject {
         
     func copyToken(_ token: String)
     func refresh()
-    
+
     func start()
     func clear()
 }
@@ -77,7 +77,7 @@ extension AddingServiceTokenModuleInteractor: AddingServiceTokenModuleInteractin
     
     func refresh() {
         guard serviceTokenType == .hotp else { return }
-        tokenInteractor.unlockCounter(for: serviceData.secret)
+        tokenInteractor.unlockCounter(for: serviceData.secret, isInitialCounter: false)
     }
     
     func start() {
@@ -88,7 +88,7 @@ extension AddingServiceTokenModuleInteractor: AddingServiceTokenModuleInteractin
         case .hotp:
             guard let counterConsumer else { return }
             tokenInteractor.enableCounter(counterConsumer)
-            refresh()
+            initialHOTPRefresh()
         }
     }
     
@@ -101,5 +101,9 @@ extension AddingServiceTokenModuleInteractor: AddingServiceTokenModuleInteractin
             guard let counterConsumer else { return }
             tokenInteractor.disableCounter(counterConsumer)
         }
+    }
+
+    private func initialHOTPRefresh() {
+        tokenInteractor.unlockCounter(for: serviceData.secret, isInitialCounter: true)
     }
 }

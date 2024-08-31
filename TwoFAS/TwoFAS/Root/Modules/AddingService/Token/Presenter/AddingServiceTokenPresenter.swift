@@ -86,7 +86,9 @@ extension AddingServiceTokenPresenter {
     }
     
     func handleAppBecomeActive() {
-        interactor.start()
+        if interactor.serviceTokenType != .hotp {
+            interactor.start()
+        }
     }
     
     // MARK: - TOTP

@@ -1884,6 +1884,11 @@
 
 /* Begin PBXFileReference section */
 		8F00E4692C23953B001F15AD /* SortTokensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTokensView.swift; sourceTree = "<group>"; };
+		8F1077252C8C80310031448C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		8F1077262C8C80310031448C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
+		8F1077272C8C80310031448C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8F1077282C8C80320031448C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8F1077292C8C805B0031448C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ../TwoFAS/Other/ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8F43E6FF2C4C50DD0006D380 /* AppleWatchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleWatchPresenter.swift; sourceTree = "<group>"; };
 		8F43E7022C4C511A0006D380 /* AppleWatchFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleWatchFlowController.swift; sourceTree = "<group>"; };
 		8F594C412C3027160066562F /* AppleWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleWatchView.swift; sourceTree = "<group>"; };
@@ -9146,6 +9151,7 @@
 				tr,
 				"zh-Hans",
 				el,
+				ja,
 			);
 			mainGroup = C236666A1FB2644900989ACA;
 			packageReferences = (
@@ -11153,6 +11159,7 @@
 				C281909E2B0B84910042BB7D /* tr */,
 				C21BF26C2B5B340100915507 /* zh-Hans */,
 				8FD3F0882C37324B0042092E /* el */,
+				8F1077282C8C80320031448C /* ja */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -11174,6 +11181,7 @@
 				C281909D2B0B84910042BB7D /* tr */,
 				C21BF26B2B5B340100915507 /* zh-Hans */,
 				8FD3F0872C37324B0042092E /* el */,
+				8F1077272C8C80310031448C /* ja */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -11182,6 +11190,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C23666831FB2644900989ACA /* Base */,
+				8F1077252C8C80310031448C /* ja */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -11204,6 +11213,7 @@
 				C281909C2B0B84910042BB7D /* tr */,
 				C21BF26A2B5B340100915507 /* zh-Hans */,
 				8FD3F0862C37324B0042092E /* el */,
+				8F1077262C8C80310031448C /* ja */,
 			);
 			name = TwoFASWidget.intentdefinition;
 			sourceTree = "<group>";
@@ -11225,6 +11235,7 @@
 				C2BBD2412B81310A009A91FB /* fr */,
 				C2BBD2422B81311F009A91FB /* zh-Hans */,
 				8FD3F0892C3732A80042092E /* el */,
+				8F1077292C8C805B0031448C /* ja */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

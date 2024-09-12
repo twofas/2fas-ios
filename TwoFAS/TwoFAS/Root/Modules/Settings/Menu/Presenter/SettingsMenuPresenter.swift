@@ -244,7 +244,8 @@ private extension SettingsMenuPresenter {
         case .about: return .about
         case .externalImport: return .externalImport
         case .appearance: return .appearance
-        default: return nil
+        case .appleWatch: return .appleWatch
+        case .faq, .donate: return nil
         }
     }
 }

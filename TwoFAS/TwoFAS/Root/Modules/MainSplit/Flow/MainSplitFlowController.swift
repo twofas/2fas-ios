@@ -183,6 +183,10 @@ extension MainSplitFlowController: TokensPlainFlowControllerParent {
 }
 
 extension MainSplitFlowController: SettingsFlowControllerParent {
+    func switchToMainOnSuccessfulImport() {
+        viewController.tabBar?.presenter.handleDidSelectViewPath(.main)
+    }
+    
     func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
         viewController.presenter.handlePathWasUpdated(to: .settings(option: viewPath))
     }

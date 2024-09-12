@@ -91,6 +91,10 @@ extension BackupMenuFlowController: BackupMenuFlowControlling {
 }
 
 extension BackupMenuFlowController: ImporterOpenFileHeadlessFlowControllerParent {
+    func importerCloseOnSucessfulImport() {
+        
+    }
+    
     func importerClose() {
         viewController.dismiss(animated: true) { [weak self] in
             self?.importer = nil

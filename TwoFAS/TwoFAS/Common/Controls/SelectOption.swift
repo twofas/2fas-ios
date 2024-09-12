@@ -108,7 +108,7 @@ private final class Radio: UIView {
     private let dimension: CGFloat = 20
     
     private let deselectedImage: UIImageView = {
-        let imgView = UIImageView(image: Asset.radioDeselected.image
+        let imgView = UIImageView(image: Asset.radioSelectionDeselected.image
             .withRenderingMode(.alwaysTemplate)
         )
         imgView.tintColor = Theme.Colors.Controls.inactive
@@ -116,7 +116,7 @@ private final class Radio: UIView {
         return imgView
     }()
     private let selectedImage: UIImageView = {
-        let imgView = UIImageView(image: Asset.radioSelected.image
+        let imgView = UIImageView(image: Asset.radioSelectionSelected.image
             .withRenderingMode(.alwaysTemplate)
         )
         imgView.tintColor = Theme.Colors.Controls.active

@@ -24,6 +24,7 @@ import Data
 protocol SettingsFlowControllerParent: AnyObject {
     func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func settingsToRevealMenu()
+    func switchToMainOnSuccessfulImport()
 }
 
 protocol SettingsFlowControlling: AnyObject {
@@ -251,5 +252,10 @@ extension SettingsFlowController: AppleWatchFlowControllerParent {
 extension SettingsFlowController: TrashFlowControllerParent {}
 extension SettingsFlowController: BrowserExtensionMainFlowControllerParent {}
 extension SettingsFlowController: AboutFlowControllerParent {}
-extension SettingsFlowController: ExternalImportFlowControllerParent {}
+extension SettingsFlowController: ExternalImportFlowControllerParent {
+    func switchToMainOnSucessfulImport() {
+        viewController.presenter.handleShowingRootMenu()
+        parent?.switchToMainOnSuccessfulImport()
+    }
+}
 extension SettingsFlowController: AppearanceFlowControllerParent {}

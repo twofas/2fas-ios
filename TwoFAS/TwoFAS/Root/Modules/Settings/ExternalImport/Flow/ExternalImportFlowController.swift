@@ -20,7 +20,9 @@
 import UIKit
 import Common
 
-protocol ExternalImportFlowControllerParent: AnyObject {}
+protocol ExternalImportFlowControllerParent: AnyObject {
+    func switchToMainOnSucessfulImport()
+}
 
 protocol ExternalImportFlowControlling: AnyObject {
     func toAegis()
@@ -188,6 +190,16 @@ extension ExternalImportFlowController: SelectFromGalleryFlowControllerParent {
 }
 
 extension ExternalImportFlowController: ImporterOpenFileHeadlessFlowControllerParent {
+    func importerCloseOnSucessfulImport() {
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.tabBarController?.tabBar.isHidden = false
+        importer = nil
+        navigationController?.dismiss(animated: true) { [weak self] in
+            self?.navigationController?.popToRootViewController(animated: false)
+            self?.parent?.switchToMainOnSucessfulImport()
+        }
+    }
+
     func importerClose() {
         importer = nil
         end()

@@ -146,6 +146,7 @@ extension LoginView: LoginViewControlling {
         PINPad.alpha = Theme.Alpha.disabledElement
         titleLabel.text = message
         titleLabel.textColor = Theme.Colors.Text.theme
+        showResetButton()
         VoiceOver.say(message)
     }
     

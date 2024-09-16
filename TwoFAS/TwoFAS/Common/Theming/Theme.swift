@@ -276,6 +276,7 @@ enum Theme {
         
         static let serviceIconSize: CGFloat = 40
         
+        static let settingsAccessoryViewSize: CGFloat = 20
         static let settingsTableViewCellHeight: CGFloat = 44
         static let settingsTableViewHeaderHeight: CGFloat = 54
         static let settingsIconSize: CGFloat = 30

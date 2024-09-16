@@ -99,7 +99,8 @@ final class SettingsMenuTableViewCell: UITableViewCell {
     
     private func commonInit() {
         let iconSize = Theme.Metrics.settingsIconSize
-        
+        let accessoryViewSize = Theme.Metrics.settingsAccessoryViewSize
+
         preservesSuperviewLayoutMargins = true
         contentView.preservesSuperviewLayoutMargins = true
         
@@ -118,6 +119,11 @@ final class SettingsMenuTableViewCell: UITableViewCell {
             settingsIcon.centerYAnchor.constraint(equalTo: iconContainer.centerYAnchor)
         ])
         
+        NSLayoutConstraint.activate([
+            customViewContainer.widthAnchor.constraint(equalToConstant: accessoryViewSize),
+            customViewContainer.heightAnchor.constraint(equalToConstant: accessoryViewSize)
+        ])
+
         infoLabelContainer.addSubview(infoLabel)
         infoLabel.pinToParent()
         

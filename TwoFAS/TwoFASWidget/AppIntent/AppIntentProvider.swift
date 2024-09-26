@@ -138,7 +138,7 @@ struct AppIntentProvider: AppIntentTimelineProvider {
             }()
             let entryDate = calendar.date(byAdding: .second, value: currentOffset, to: currentDate)!
             let tokenDate = calendar.date(byAdding: .second, value: currentOffset, to: correctedDate)!
-            let entriesList: [CodeEntry.Entry] = services.map { value in
+            let entriesList: [CodeEntry.Entry] = services.compactMap { value in
                 guard case Values.entry(let entryDescription) = value
                 else { return CodeEntry.Entry.placeholder() }
                 
@@ -153,6 +153,9 @@ struct AppIntentProvider: AppIntentTimelineProvider {
                 }()
                 
                 let countdownTo = calendar.date(byAdding: .second, value: secondsToNewOne, to: entryDate)!
+                if entries.contains(where: { $0.entries.contains(where: { $0.data.countdownTo == countdownTo }) }) {
+                    return nil
+                }
                 
                 let token = TokenGenerator.generateTOTP(
                     secret: entryDescription.secret,
@@ -188,9 +191,11 @@ struct AppIntentProvider: AppIntentTimelineProvider {
                 )
                 return .init(kind: .singleEntry, data: entryData)
             }
-            
-            let entry = CodeEntry(date: entryDate, entries: entriesList)
-            entries.append(entry)
+
+            if !entriesList.isEmpty {
+                let entry = CodeEntry(date: entryDate, entries: entriesList)
+                entries.append(entry)
+            }
         }
         
         return Timeline(entries: entries, policy: .atEnd)

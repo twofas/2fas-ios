@@ -57,7 +57,7 @@ struct ServiceAppEntity: AppEntity {
             let all: [WidgetCategory] = AccessManager.serviceHandler.listAll(search: nil, exclude: [])
             let sections = all.map({ category -> ItemSection<ServiceAppEntity> in
                 let services: [Item] = category.services
-                    .filter({ !SelectedItems.list.contains($0.serviceID) })
+                    .filter({ !SelectedItems.list.contains($0.serviceID) && $0.period != .period10 })
                     .map({ service in
                     let icon = service.icon.pngData()
                     let image: DisplayRepresentation.Image? = {

@@ -105,7 +105,10 @@ struct AppIntentProvider: AppIntentTimelineProvider {
         }()
         
         let calendar = Calendar.current
-        let smallestIncrement: Int = 10
+        // minimum period for wigets tokens is 30s
+        let smallestIncrement: Int = currentServices.min(by: {
+            $0.period.rawValue < $1.period.rawValue
+        })?.period.rawValue ?? Period.period30.rawValue
         
         let currentDate = Date()
         let correctedDate = currentDate + Double(TimeOffsetStorage.offset ?? 0)
@@ -114,18 +117,8 @@ struct AppIntentProvider: AppIntentTimelineProvider {
             let rest = seconds % smallestIncrement
             return smallestIncrement - rest
         }()
-        let slotsCount = context.family.servicesCount
-        let divider: Int = {
-            if slotsCount > 3 {
-                return 27
-            }
-            let value = slotsCount / 2
-            if value == 0 {
-                return 1
-            }
-            return value
-        }()
-        let upTo = 256 / divider
+
+        let upTo = 62
         
         for i in 0 ..< upTo {
             let currentOffset: Int = {
@@ -153,9 +146,6 @@ struct AppIntentProvider: AppIntentTimelineProvider {
                 }()
                 
                 let countdownTo = calendar.date(byAdding: .second, value: secondsToNewOne, to: entryDate)!
-                if entries.contains(where: { $0.entries.contains(where: { $0.data.countdownTo == countdownTo }) }) {
-                    return nil
-                }
                 
                 let token = TokenGenerator.generateTOTP(
                     secret: entryDescription.secret,
@@ -192,10 +182,8 @@ struct AppIntentProvider: AppIntentTimelineProvider {
                 return .init(kind: .singleEntry, data: entryData)
             }
 
-            if !entriesList.isEmpty {
-                let entry = CodeEntry(date: entryDate, entries: entriesList)
-                entries.append(entry)
-            }
+            let entry = CodeEntry(date: entryDate, entries: entriesList)
+            entries.append(entry)
         }
         
         return Timeline(entries: entries, policy: .atEnd)

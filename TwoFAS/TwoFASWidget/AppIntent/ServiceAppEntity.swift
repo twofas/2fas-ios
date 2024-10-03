@@ -35,7 +35,7 @@ struct ServiceAppEntity: AppEntity {
             SelectedItems.list = identifiers
             return AccessManager.serviceHandler.listAll(search: nil, exclude: [])
                 .flatMap({ $0.services })
-                .filter({ identifiers.contains($0.serviceID) })
+                .filter({ identifiers.contains($0.serviceID) && $0.period != .period10 })
                 .map({ service in
                     ServiceAppEntity(
                         id: service.serviceID,

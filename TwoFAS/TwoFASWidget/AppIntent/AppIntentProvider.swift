@@ -118,7 +118,7 @@ struct AppIntentProvider: AppIntentTimelineProvider {
             return smallestIncrement - rest
         }()
 
-        let upTo = 62
+        let upTo = 186 / services.count
         
         for i in 0 ..< upTo {
             let currentOffset: Int = {
@@ -187,11 +187,5 @@ struct AppIntentProvider: AppIntentTimelineProvider {
         }
         
         return Timeline(entries: entries, policy: .atEnd)
-    }
-}
-
-extension Period {
-    var isShort: Bool {
-        rawValue < 30
     }
 }

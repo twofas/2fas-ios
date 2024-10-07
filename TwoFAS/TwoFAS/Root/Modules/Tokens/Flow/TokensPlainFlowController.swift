@@ -227,7 +227,13 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     
     // MARK: - Link actions
     func toDuplicatedCode(forceAdd: @escaping Callback, cancel: @escaping Callback) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        guard let mainSplitViewController else { return }
+        
+        if let presentedViewController = mainSplitViewController.presentedViewController,
+               presentedViewController is AddingServiceViewController {
+            presentedViewController.dismiss(animated: false)
+            return
+        }
         
         let alert = UIAlertController(
             title: T.Commons.warning,
@@ -241,12 +247,19 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         alert.addAction(UIAlertAction(title: T.Commons.no, style: .cancel, handler: { _ in
             cancel()
         }))
-
+        
         mainSplitViewController.present(alert, animated: true)
     }
     
     func toShowShouldAddCode(with descriptionText: String?) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        guard let mainSplitViewController else { return }
+
+        if let presentedViewController = mainSplitViewController.presentedViewController,
+               presentedViewController is AddingServiceViewController {
+            presentedViewController.dismiss(animated: false)
+            return
+        }
+
         let msg = T.Notifications.addCodeQuestionTitle(descriptionText ?? T.Browser.unkownName)
         let alert = UIAlertController(title: T.Notifications.addingCode, message: msg, preferredStyle: .alert)
         
@@ -256,12 +269,18 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         alert.addAction(UIAlertAction(title: T.Commons.add, style: .default) { [weak self] _ in
             self?.viewController.presenter.handleAddStoredCode()
         })
-        
+
         mainSplitViewController.present(alert, animated: true)
     }
     
     func toIncorrectCode() {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        guard let mainSplitViewController else { return }
+        
+        if let presentedViewController = mainSplitViewController.presentedViewController,
+               presentedViewController is AddingServiceViewController {
+            presentedViewController.dismiss(animated: false)
+            return
+        }
         
         let alert = UIAlertController(
             title: T.Commons.warning,

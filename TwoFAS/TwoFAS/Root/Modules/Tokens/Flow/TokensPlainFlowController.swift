@@ -63,6 +63,18 @@ final class TokensPlainFlowController: FlowController, TokensNavigationFlowContr
     private weak var parent: TokensPlainFlowControllerParent?
     private weak var mainSplitViewController: MainSplitViewController?
     private var galleryViewController: UIViewController?
+
+    private var isMainSplitViewControllerReadyToPresentAlert: Bool {
+        guard let mainSplitViewController else { return false }
+        
+        if let presentedViewController = mainSplitViewController.presentedViewController,
+           presentedViewController is AddingServiceViewController {
+            presentedViewController.dismiss(animated: false)
+            return false
+        }
+        
+        return true
+    }
     
     static func showAsTab(
         viewController: TokensViewController,
@@ -227,69 +239,51 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     
     // MARK: - Link actions
     func toDuplicatedCode(forceAdd: @escaping Callback, cancel: @escaping Callback) {
-        guard let mainSplitViewController else { return }
-        
-        if let presentedViewController = mainSplitViewController.presentedViewController,
-               presentedViewController is AddingServiceViewController {
-            presentedViewController.dismiss(animated: false)
-            return
+        if isMainSplitViewControllerReadyToPresentAlert {
+            let alert = UIAlertController(
+                title: T.Commons.warning,
+                message: T.Tokens.serviceAlreadyExists,
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: T.Commons.yes, style: .destructive, handler: { [weak self] _ in
+                self?.parent?.tokensSwitchToTokensTab()
+                forceAdd()
+            }))
+            alert.addAction(UIAlertAction(title: T.Commons.no, style: .cancel, handler: { _ in
+                cancel()
+            }))
+            
+            mainSplitViewController!.present(alert, animated: true)
         }
-        
-        let alert = UIAlertController(
-            title: T.Commons.warning,
-            message: T.Tokens.serviceAlreadyExists,
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: T.Commons.yes, style: .destructive, handler: { [weak self] _ in
-            self?.parent?.tokensSwitchToTokensTab()
-            forceAdd()
-        }))
-        alert.addAction(UIAlertAction(title: T.Commons.no, style: .cancel, handler: { _ in
-            cancel()
-        }))
-        
-        mainSplitViewController.present(alert, animated: true)
     }
     
     func toShowShouldAddCode(with descriptionText: String?) {
-        guard let mainSplitViewController else { return }
+        if isMainSplitViewControllerReadyToPresentAlert {
+            let msg = T.Notifications.addCodeQuestionTitle(descriptionText ?? T.Browser.unkownName)
+            let alert = UIAlertController(title: T.Notifications.addingCode, message: msg, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel) { [weak self] _ in
+                self?.viewController.presenter.handleClearStoredCode()
+            })
+            alert.addAction(UIAlertAction(title: T.Commons.add, style: .default) { [weak self] _ in
+                self?.viewController.presenter.handleAddStoredCode()
+            })
 
-        if let presentedViewController = mainSplitViewController.presentedViewController,
-               presentedViewController is AddingServiceViewController {
-            presentedViewController.dismiss(animated: false)
-            return
+            mainSplitViewController!.present(alert, animated: true)
         }
-
-        let msg = T.Notifications.addCodeQuestionTitle(descriptionText ?? T.Browser.unkownName)
-        let alert = UIAlertController(title: T.Notifications.addingCode, message: msg, preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel) { [weak self] _ in
-            self?.viewController.presenter.handleClearStoredCode()
-        })
-        alert.addAction(UIAlertAction(title: T.Commons.add, style: .default) { [weak self] _ in
-            self?.viewController.presenter.handleAddStoredCode()
-        })
-
-        mainSplitViewController.present(alert, animated: true)
     }
     
     func toIncorrectCode() {
-        guard let mainSplitViewController else { return }
-        
-        if let presentedViewController = mainSplitViewController.presentedViewController,
-               presentedViewController is AddingServiceViewController {
-            presentedViewController.dismiss(animated: false)
-            return
-        }
-        
-        let alert = UIAlertController(
-            title: T.Commons.warning,
-            message: T.Tokens.thisQrCodeIsInavlid,
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel, handler: { _ in }))
+        if isMainSplitViewControllerReadyToPresentAlert {
+            let alert = UIAlertController(
+                title: T.Commons.warning,
+                message: T.Tokens.thisQrCodeIsInavlid,
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel, handler: { _ in }))
 
-        mainSplitViewController.present(alert, animated: true)
+            mainSplitViewController!.present(alert, animated: true)
+        }
     }
     
     func toSendLogs(auditID: UUID) {

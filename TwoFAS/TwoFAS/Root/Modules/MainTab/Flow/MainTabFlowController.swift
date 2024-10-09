@@ -76,10 +76,6 @@ extension MainTabFlowController: MainTabFlowControlling {
 }
 
 extension MainTabFlowController: SettingsFlowControllerParent {
-    func switchToMainOnSuccessfulImport() {
-        parent?.tabToTokens()
-    }
-
     func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
         parent?.tabNavigatedToViewPath(.settings(option: viewPath))
         viewController.presenter.handleSettingsChangedViewPath(viewPath)

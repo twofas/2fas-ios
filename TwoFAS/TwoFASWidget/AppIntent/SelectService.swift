@@ -32,8 +32,6 @@ struct SelectService: AppIntent, WidgetConfigurationIntent, CustomIntentMigrated
         size: [
         .systemSmall: 1,
         .systemMedium: 3,
-        .systemLarge: 6,
-        .systemExtraLarge: 12,
         .accessoryCircular: 1,
         .accessoryRectangular: 1,
         .accessoryInline: 1

@@ -21,10 +21,10 @@ import UIKit
 
 enum AddingServiceMetrics {
     static var cameraActiveAreaHeight: CGFloat = {
-        if UIDevice.isiPad {
-            return 320
+        if #available(iOS 18.0, *) {
+            return 240
         }
-        return 240
+        return UIDevice.isiPad ? 320 : 240
     }()
     static let largeSpacing: CGFloat = 15
 }

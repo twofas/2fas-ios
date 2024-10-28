@@ -21,7 +21,7 @@ import UIKit
 import Common
 
 final class ComposeServiceBadgeColorView: UIView {
-    private let badgeColorDimension: CGFloat = 30
+    private let badgeColorDimension: CGFloat = 20
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,7 +34,7 @@ final class ComposeServiceBadgeColorView: UIView {
     }
     
     private func commonInit() {
-        applyRoundedCorners(withBackgroundColor: .black, cornerRadius: 15)
+        applyRoundedCorners(withBackgroundColor: .black, cornerRadius: badgeColorDimension / 2)
     }
     
     func setBadgeColor(_ tintColor: TintColor) {

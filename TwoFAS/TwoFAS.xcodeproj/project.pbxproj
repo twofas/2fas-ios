@@ -13766,7 +13766,7 @@
 			repositoryURL = "https://github.com/devicekit/DeviceKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.6.0;
+				minimumVersion = 5.5.0;
 			};
 		};
 		C23EBF102651276800FA9E81 /* XCRemoteSwiftPackageReference "Kronos" */ = {
@@ -13790,7 +13790,7 @@
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.2.0;
+				minimumVersion = 4.2.2;
 			};
 		};
 		C2ABB61A25379D4B005CD66F /* XCRemoteSwiftPackageReference "PKHUD" */ = {
@@ -13806,7 +13806,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 10.16.0;
+				minimumVersion = 11.4.0;
 			};
 		};
 		C2CE0E1127934579007DB667 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
@@ -13814,7 +13814,7 @@
 			repositoryURL = "https://github.com/apple/swift-protobuf.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.19.0;
+				minimumVersion = 1.28.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

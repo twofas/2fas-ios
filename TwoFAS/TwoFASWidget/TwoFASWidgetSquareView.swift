@@ -51,14 +51,25 @@ struct TwoFASWidgetSquareView: View {
         
         let codeReason: RedactionReason = {
             switch kind {
-            case .placeholder: return .codePlaceholder
+            case .placeholder, .singleEntryHidden: return .codePlaceholder
             default: return .noPlaceholder
             }
         }()
+        
+        let countDownReason: RedactionReasons = {
+            switch kind {
+            case .placeholder, .singleEntryHidden: return .placeholder
+            default: return []
+            }
+        }()
+        
         if showLogo() {
             image()
         } else {
-            CopyIntentButton(rawEntry: entryData.rawEntry) {
+            CopyIntentButton(
+                rawEntry: entryData.rawEntry,
+                secret: kind == .singleEntryHidden ? entry?.data.secret : nil
+            ) {
                 VStack(alignment: .leading, spacing: nil) {
                     Spacer()
                     HStack(alignment: .center, spacing: nil) {
@@ -69,7 +80,7 @@ struct TwoFASWidgetSquareView: View {
                             .multilineTextAlignment(.trailing)
                             .font(Font.body.monospacedDigit())
                             .lineLimit(1)
-                            .redacted(reason: reason)
+                            .redacted(reason: countDownReason)
                             .contentTransition(.numericText(countsDown: true))
                     }
                     Spacer(minLength: spacing * 3)

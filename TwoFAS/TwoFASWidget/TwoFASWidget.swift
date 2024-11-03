@@ -33,6 +33,10 @@ struct TwoFASWidgetEntryView: View {
                 TwoFASWidgetSquareView(entry: entry.entries.first)
             case .systemMedium:
                 TwoFASWidgetLineView(entries: entry.entries)
+            case .systemLarge:
+                TwoFASWidgetLineView(entries: entry.entries)
+            case .systemExtraLarge:
+                TwoFASWidgetLineViewGrid(entries: entry.entries)
             case .accessoryCircular:
                 TwoFASWidgetCircular(entry: entry.entries.first)
             case .accessoryRectangular:
@@ -62,12 +66,19 @@ struct TwoFASWidget: Widget {
             [
                 .systemSmall,
                 .systemMedium,
+                .systemLarge,
+                .systemExtraLarge,
                 .accessoryCircular,
                 .accessoryRectangular,
                 .accessoryInline
             ]
         } else {
-            [.systemSmall, .systemMedium]
+            [
+                .systemSmall,
+                .systemMedium,
+                .systemLarge,
+                .systemExtraLarge
+            ]
         }
     }()
     

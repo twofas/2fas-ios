@@ -18,32 +18,8 @@
 //
 
 import Foundation
-import AppIntents
 
-@available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
-struct SelectService: AppIntent, WidgetConfigurationIntent, CustomIntentMigratedAppIntent {
-    static let intentClassName = "SelectServiceIntent"
-
-    static var title = LocalizedStringResource("tokens__select_service")
-    static var description = IntentDescription(LocalizedStringResource("widget__settings_description"))
-    
-    @Parameter(
-        title: "Service",
-        size: [
-        .systemSmall: 1,
-        .systemMedium: 3,
-        .systemLarge: 6,
-        .systemExtraLarge: 12,
-        .accessoryCircular: 1,
-        .accessoryRectangular: 1,
-        .accessoryInline: 1
-        ]
-    )
-    var service: [ServiceAppEntity]?
-
-    init() {
-        self.service = nil
-    }
-    
-    static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
+enum CommonKeys {
+    static let tapDate = "tapDate"
+    static let tapSecret = "tapSecret"
 }

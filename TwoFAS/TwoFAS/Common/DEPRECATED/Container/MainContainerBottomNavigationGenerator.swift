@@ -26,7 +26,12 @@ enum MainContainerBottomNavigationGenerator {
             case normal
             case template(color: UIColor)
         }
-        case filledButton(text: String, isEnabled: Bool = true, callback: Callback, created: ((LoadingContentButton) -> Void)? = nil)
+        case filledButton(
+            text: String,
+            isEnabled: Bool = true,
+            callback: Callback,
+            created: ((LoadingContentButton) -> Void)? = nil
+        )
         case textButton(text: String, callback: Callback, created: ((LoadingContentButton) -> Void)? = nil)
         case text(text: String, style: MainContainerTextStyling, created: ((UILabel) -> Void)? = nil)
         case pagination(currentPage: Int, totalPages: Int)

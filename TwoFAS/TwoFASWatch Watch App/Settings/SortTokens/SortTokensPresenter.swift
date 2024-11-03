@@ -54,7 +54,7 @@ final class SortTokensPresenter: SortTokensPresenting {
 
     func image(for sortType: SortType) -> Image {
         let configuration: UIImage.SymbolConfiguration = {
-            return .init(weight: currentSortType == sortType ? .heavy : .regular)
+            .init(weight: currentSortType == sortType ? .heavy : .regular)
         }()
 
         return Image(uiImage: sortType.image(forSelectedOption: sortType, configuration: configuration))

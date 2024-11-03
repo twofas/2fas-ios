@@ -21,7 +21,7 @@ import Foundation
 import Storage
 import Common
 import NetworkStack
-@_implementationOnly import PushNotifications
+import PushNotifications
 
 protocol MainRepository: AnyObject {
     // MARK: - Security

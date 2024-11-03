@@ -104,4 +104,8 @@ public extension TokenValue {
         let tokenStr = String(self[indexStartOfText..<indexMiddleOfText]) + " " + String(self[indexMiddleOfText...])
         return tokenStr        
     }
+    
+    static func emptyOfLength(_ length: Int) -> TokenValue {
+        Array(repeating: "0", count: length).joined()
+    }
 }

@@ -31,7 +31,6 @@ struct TwoFASWidgetLineView: View {
     @ViewBuilder
     var body: some View {
         ForEach(entries, id: \.self) { entry in
-            let entryData = entry.data
             let kind = entry.kind
             
             let reason: RedactionReasons = {
@@ -43,20 +42,31 @@ struct TwoFASWidgetLineView: View {
             
             let codeReason: RedactionReason = {
                 switch kind {
-                case .placeholder: return .codePlaceholder
+                case .placeholder, .singleEntryHidden: return .codePlaceholder
                 default: return .noPlaceholder
+                }
+            }()
+            
+            let countDownReason: RedactionReasons = {
+                switch kind {
+                case .placeholder, .singleEntryHidden: return .placeholder
+                default: return []
                 }
             }()
             
             generateLine(
                 entry: entry,
-                entryData: entryData,
+                data: entry.data,
                 reason: reason,
-                codeReason: codeReason
+                codeReason: codeReason,
+                countDownReason: countDownReason
             )
                 .accessibility(hidden: codeReason == .codePlaceholder)
                 .overlay {
-                    CopyIntentButton(rawEntry: entryData.rawEntry) {
+                    CopyIntentButton(
+                        rawEntry: entry.data.rawEntry,
+                        secret: kind == .singleEntryHidden ? entry.data.secret : nil
+                    ) {
                         Rectangle()
                             .foregroundStyle(Color.clear)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -69,21 +79,22 @@ struct TwoFASWidgetLineView: View {
     @ViewBuilder
     private func generateLine(
         entry: CodeEntry.Entry,
-        entryData: CodeEntry.EntryData,
+        data: CodeEntry.EntryData,
         reason: RedactionReasons,
-        codeReason: RedactionReason
+        codeReason: RedactionReason,
+        countDownReason: RedactionReasons
     ) -> some View {
         HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
             IconRenderer(entry: entry)
                 .frame(width: 24)
                 .redacted(reason: reason)
             VStack(alignment: .leading, spacing: 3) {
-                Text(entryData.name)
+                Text(data.name)
                     .font(.caption2)
                     .multilineTextAlignment(.leading)
                     .redacted(reason: reason)
                     .lineLimit(1)
-                let info = entryData.info ?? ""
+                let info = data.info ?? ""
                 Text(info)
                     .lineLimit(1)
                     .multilineTextAlignment(.leading)
@@ -97,7 +108,7 @@ struct TwoFASWidgetLineView: View {
                 maxHeight: .infinity,
                 alignment: .topLeading
             )
-            Text(verbatim: entryData.code)
+            Text(verbatim: data.code)
                 .font(Font.system(.title).weight(.light).monospacedDigit())
                 .multilineTextAlignment(.leading)
                 .minimumScaleFactor(0.2)
@@ -105,12 +116,12 @@ struct TwoFASWidgetLineView: View {
                 .redacted(reason: codeReason)
                 .contentTransition(.numericText())
                 .frame(width: 100)
-            counterText(for: entryData.countdownTo)
+            counterText(for: data.countdownTo)
                 .multilineTextAlignment(.trailing)
                 .font(Font.body.monospacedDigit())
                 .contentTransition(.numericText(countsDown: true))
                 .lineLimit(1)
-                .redacted(reason: reason)
+                .redacted(reason: countDownReason)
                 .frame(width: 40)
         }
     }

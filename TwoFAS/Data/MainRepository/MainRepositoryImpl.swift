@@ -20,7 +20,7 @@
 import Foundation
 import Storage
 import Protection
-@_implementationOnly import PushNotifications
+import PushNotifications
 import Common
 import Sync
 import NetworkStack

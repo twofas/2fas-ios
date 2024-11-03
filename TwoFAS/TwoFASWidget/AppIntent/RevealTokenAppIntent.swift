@@ -17,33 +17,33 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import SwiftUI
+import UIKit
 import AppIntents
+import Protection
+import TimeVerification
+import Common
+import Data
 
-@available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
-struct SelectService: AppIntent, WidgetConfigurationIntent, CustomIntentMigratedAppIntent {
-    static let intentClassName = "SelectServiceIntent"
-
-    static var title = LocalizedStringResource("tokens__select_service")
-    static var description = IntentDescription(LocalizedStringResource("widget__settings_description"))
+struct RevealTokenAppIntent: AppIntent {
+    static var title = LocalizedStringResource("widget__token")
     
-    @Parameter(
-        title: "Service",
-        size: [
-        .systemSmall: 1,
-        .systemMedium: 3,
-        .systemLarge: 6,
-        .systemExtraLarge: 12,
-        .accessoryCircular: 1,
-        .accessoryRectangular: 1,
-        .accessoryInline: 1
-        ]
-    )
-    var service: [ServiceAppEntity]?
-
-    init() {
-        self.service = nil
+    @Parameter(title: "Secret")
+    var secret: String
+    
+    init() {}
+    
+    init(secret: String) {
+        self.secret = secret
     }
     
-    static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
+    @MainActor
+    func perform() async throws -> some IntentResult {
+        let defaults = UserDefaults.standard
+        defaults.set(Date().timeIntervalSince1970, forKey: CommonKeys.tapDate)
+        defaults.set(secret, forKey: CommonKeys.tapSecret)
+        defaults.synchronize()
+        
+        return .result()
+    }
 }

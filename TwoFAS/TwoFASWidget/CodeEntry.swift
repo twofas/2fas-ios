@@ -28,6 +28,7 @@ struct CodeEntry: TimelineEntry, Encodable {
     
     enum Kind: String, Identifiable, Encodable {
         case singleEntry
+        case singleEntryHidden
         case placeholder
         
         var id: String { self.rawValue }
@@ -43,13 +44,7 @@ struct CodeEntry: TimelineEntry, Encodable {
         var id: String { data.id }
     }
     
-    struct EntryData: Identifiable, Hashable, Encodable {
-        enum IconType: Identifiable, Hashable, Encodable {
-            var id: Self { self }
-            
-            case brand
-            case label
-        }
+    struct EntryData: Hashable, Encodable {
         struct RawEntryData: Identifiable, Hashable, Encodable {
             var id: String { secret }
             let secret: String
@@ -58,16 +53,23 @@ struct CodeEntry: TimelineEntry, Encodable {
             let algorithm: String
             let tokenType: String
         }
+        enum IconType: Identifiable, Hashable, Encodable {
+            var id: Self { self }
+            
+            case brand
+            case label
+        }
+
         let id: String
+        let secret: String
         let name: String
         let info: String?
-        let code: String
         let iconType: IconType
         let labelTitle: String
         let labelColor: TintColor
         let iconTypeID: IconTypeID
-        let serviceTypeID: ServiceTypeID?
-        let countdownTo: Date?
-        let rawEntry: RawEntryData?
+        let code: String
+        var countdownTo: Date?
+        var rawEntry: RawEntryData?
     }
 }

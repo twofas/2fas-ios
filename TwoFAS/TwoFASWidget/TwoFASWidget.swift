@@ -24,34 +24,61 @@ import Intents
 struct TwoFASWidgetEntryView: View {
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
+    
+    private var noEntryView: some View {
+        VStack(alignment: .leading) {
+            Image("LogoWidgetMono")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 17, height: 21, alignment: .center)
+                .foregroundStyle(.accent)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.white)
+                        .frame(width: 32, height: 32)
+                )
+            
+            Spacer()
+
+            Text("Hold and select service to activate widget...")
+                .multilineTextAlignment(.leading)
+                .font(.footnote)
+                .bold()
+                .frame(maxWidth: 200, alignment: .leading)
+                .foregroundColor(.white)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .padding(4)
+        .widgetBackground(backgroundView: Color.accent)
+    }
 
     @ViewBuilder
     var body: some View {
-        Group {
-            switch family {
-            case .systemSmall:
-                TwoFASWidgetSquareView(entry: entry.entries.first)
-            case .systemMedium:
-                TwoFASWidgetLineView(entries: entry.entries)
-            case .systemLarge:
-                TwoFASWidgetLineView(entries: entry.entries)
-            case .systemExtraLarge:
-                TwoFASWidgetLineViewGrid(entries: entry.entries)
-            case .accessoryCircular:
-                TwoFASWidgetCircular(entry: entry.entries.first)
-            case .accessoryRectangular:
-                TwoFASWidgetRectangular(entry: entry.entries.first)
-            case .accessoryInline:
-                TwoFASWidgetInline(entry: entry.entries.first)
-            default:
-                Text("widget__size_not_supported")
+        if entry.entries.isEmpty || entry.entries.filter({ $0.kind != .placeholder }).isEmpty {
+            noEntryView
+        } else {
+            Group {
+                switch family {
+                case .systemSmall:
+                    TwoFASWidgetSquareView(entry: entry.entries.first)
+                case .systemMedium:
+                    TwoFASWidgetLineView(entries: entry.entries)
+                case .systemLarge:
+                    TwoFASWidgetLineView(entries: entry.entries)
+                case .systemExtraLarge:
+                    TwoFASWidgetLineViewGrid(entries: entry.entries)
+                case .accessoryCircular:
+                    TwoFASWidgetCircular(entry: entry.entries.first)
+                case .accessoryRectangular:
+                    TwoFASWidgetRectangular(entry: entry.entries.first)
+                case .accessoryInline:
+                    TwoFASWidgetInline(entry: entry.entries.first)
+                default:
+                    Text("widget__size_not_supported")
+                }
             }
+            .widgetBackground(backgroundView: Color.clear)
         }
-        .widgetBackground(backgroundView: backgroundView)
-    }
-    
-    private var backgroundView: some View {
-        Color.clear
     }
 }
 
@@ -119,7 +146,9 @@ struct TwoFASWidget_Previews: PreviewProvider {
 extension View {
     func widgetBackground(backgroundView: some View) -> some View {
         if #available(iOSApplicationExtension 17.0, *) {
-            return containerBackground(for: .widget) {}
+            return containerBackground(for: .widget) {
+                backgroundView
+            }
         } else {
             return background(backgroundView)
         }

@@ -20,6 +20,28 @@
 import SwiftUI
 import AppIntents
 
+struct RevealTokenIntentButton<Content>: View where Content: View {
+    private let appIntent: any AppIntent
+    private let content: () -> Content
+    
+    init(secret: String, @ViewBuilder content: @escaping () -> Content) {
+        self.appIntent = RevealTokenAppIntent(secret: secret)
+        self.content = content
+    }
+    
+    @ViewBuilder
+    var body: some View {
+        if #available(iOS 17.0, *) {
+            Button(intent: appIntent, label: {
+                content()
+            })
+            .buttonStyle(.plain)
+        } else {
+            content()
+        }
+    }
+}
+
 struct CopyIntentButton<Content>: View where Content: View {
     private let appIntent: (any AppIntent)?
     private let content: () -> Content
@@ -35,9 +57,11 @@ struct CopyIntentButton<Content>: View where Content: View {
                 algorithm: rawEntry.algorithm,
                 tokenType: rawEntry.tokenType
             )
-        } else if let secret {
-            self.appIntent = RevealTokenAppIntent(secret: secret)
-        } else {
+        }
+//        else if let secret {
+//            self.appIntent = RevealTokenAppIntent(secret: secret)
+//        }
+        else {
             self.appIntent = nil
         }
         self.content = content

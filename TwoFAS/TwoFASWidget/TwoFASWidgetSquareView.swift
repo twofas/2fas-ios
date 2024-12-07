@@ -21,6 +21,17 @@ import WidgetKit
 import SwiftUI
 import Common
 
+struct RevealTokenImage: View {
+    var body: some View {
+        Image("eye.slash2")
+            .background(
+                Circle()
+                    .fill(Color.gray5)
+                    .frame(width: 40, height: 40)
+            )
+    }
+}
+
 struct TwoFASWidgetSquareView: View {
     @Environment(\.redactionReasons) private var redactionReasons
     @Environment(\.colorScheme) private var colorScheme
@@ -42,12 +53,12 @@ struct TwoFASWidgetSquareView: View {
         let entryData = entryValue.data
         let kind = entryValue.kind
         
-        let reason: RedactionReasons = {
-            switch kind {
-            case .placeholder: return .placeholder
-            default: return []
-            }
-        }()
+//        let reason: RedactionReasons = {
+//            switch kind {
+//            case .placeholder: return .placeholder
+//            default: return []
+//            }
+//        }()
         
         let codeReason: RedactionReason = {
             switch kind {
@@ -56,56 +67,82 @@ struct TwoFASWidgetSquareView: View {
             }
         }()
         
-        let countDownReason: RedactionReasons = {
-            switch kind {
-            case .placeholder, .singleEntryHidden: return .placeholder
-            default: return []
-            }
-        }()
+//        let countDownReason: RedactionReasons = {
+//            switch kind {
+//            case .placeholder, .singleEntryHidden: return .placeholder
+//            default: return []
+//            }
+//        }()
         
         if showLogo() {
             image()
         } else {
-            CopyIntentButton(
-                rawEntry: entryData.rawEntry,
-                secret: kind == .singleEntryHidden ? entry?.data.secret : nil
-            ) {
-                VStack(alignment: .leading, spacing: nil) {
+            VStack(alignment: .leading) {
+                HStack(alignment: .top) {
+                    IconRenderer(entry: entryValue)
+                        .frame(width: 32, height: 32)
                     Spacer()
-                    HStack(alignment: .center, spacing: nil) {
-                        IconRenderer(entry: entryValue)
-                            .redacted(reason: reason)
-                        Spacer()
-                        counterText(for: entryData.countdownTo)
-                            .multilineTextAlignment(.trailing)
-                            .font(Font.body.monospacedDigit())
-                            .lineLimit(1)
-                            .redacted(reason: countDownReason)
-                            .contentTransition(.numericText(countsDown: true))
-                    }
-                    Spacer(minLength: spacing * 3)
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text(entryData.name)
-                            .font(.caption)
-                            .multilineTextAlignment(.leading)
-                            .redacted(reason: reason)
-                        Text(entryData.code)
-                            .font(Font.system(.title).weight(.light).monospacedDigit())
-                            .multilineTextAlignment(.leading)
-                            .minimumScaleFactor(0.2)
-                            .redacted(reason: codeReason)
-                            .contentTransition(.numericText())
-                        let info = entryData.info ?? ""
-                        Text(info)
-                            .lineLimit(1)
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                            .redacted(reason: reason)
-                    }
-                    Spacer()
+                    counterText(for: entryData.countdownTo)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 3)
+                        .frame(width: 40)
+                        .foregroundStyle(.primaryWhite)
+                        .multilineTextAlignment(.center)
+                        .font(.caption.weight(.semibold))
+                        .lineLimit(1)
+                        .contentTransition(.numericText(countsDown: true))
+                        .background {
+                            Capsule()
+                                .fill(Color.primaryGreen)
+                        }
+                        .shadow(color: Color.primaryGreen.opacity(0.3), radius: 10, x: 0, y: 2)
+                        .overlay {
+                            Capsule()
+                                .stroke(Color.primaryWhite, lineWidth: 1)
+                        }
                 }
-                .addWidgetContentMargins(standard: spacing)
-                .accessibility(hidden: codeReason == .codePlaceholder)
+                
+                Spacer()
+                
+                VStack(alignment: .leading) {
+                    Text(entryData.name)
+                        .foregroundStyle(.primaryBlack)
+                        .font(.caption)
+                        .multilineTextAlignment(.leading)
+                    Text(entryData.code)
+                        .foregroundStyle(.primaryBlack)
+                        .font(Font.system(.title).weight(.semibold).monospacedDigit())
+                        .multilineTextAlignment(.leading)
+                        .minimumScaleFactor(0.2)
+                        .contentTransition(.numericText())
+                }
+            }
+            .blur(radius: kind == .singleEntryHidden ? 25 : 0)
+            .widgetBackground(backgroundView: Color.primaryWhite)
+            .accessibility(hidden: codeReason == .codePlaceholder)
+            .overlay {
+                if kind == .singleEntry {
+                    CopyIntentButton(
+                        rawEntry: entryData.rawEntry,
+                        secret: kind == .singleEntryHidden ? entry?.data.secret : nil
+                    ) {
+                        Rectangle()
+                            .foregroundStyle(Color.clear)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                } else if kind == .singleEntryHidden, let secret = entry?.data.secret {
+                    RevealTokenIntentButton(secret: secret) {
+                        VStack {
+                            Spacer()
+                            RevealTokenImage()
+                            Spacer()
+                            Text("Reveal for 60 seconds")
+                                .foregroundStyle(Color.gray10)
+                                .font(.caption2)
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                }
             }
         }
     }

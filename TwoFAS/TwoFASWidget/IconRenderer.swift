@@ -31,6 +31,7 @@ struct IconRenderer: View {
             case .brand:
                 Image(uiImage: ServiceIcon.for(iconTypeID: entry.data.iconTypeID))
                     .resizable()
+                    .frame(width: 32, height: 32)
             case .label:
                 ZStack(alignment: .center) {
                     Circle()

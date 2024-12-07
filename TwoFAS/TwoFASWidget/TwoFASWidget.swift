@@ -77,7 +77,7 @@ struct TwoFASWidgetEntryView: View {
                     Text("widget__size_not_supported")
                 }
             }
-            .widgetBackground(backgroundView: Color.clear)
+//            .widgetBackground(backgroundView: Color.primaryWhite)
         }
     }
 }

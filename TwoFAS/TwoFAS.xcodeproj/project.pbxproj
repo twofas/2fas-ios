@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		8F00E46A2C23953B001F15AD /* SortTokensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00E4692C23953B001F15AD /* SortTokensView.swift */; };
+		8F0FFF002D04D73E0064B0D3 /* RevealTokenImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0FFEFF2D04D73D0064B0D3 /* RevealTokenImage.swift */; };
+		8F0FFF022D04D74E0064B0D3 /* CountdownTimerText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0FFF012D04D74D0064B0D3 /* CountdownTimerText.swift */; };
+		8F0FFF052D0514B80064B0D3 /* RevealTokenIntentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0FFF042D0514B60064B0D3 /* RevealTokenIntentButton.swift */; };
+		8F0FFF072D051AD40064B0D3 /* RevealTokenOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0FFF062D051AD10064B0D3 /* RevealTokenOverlayView.swift */; };
 		8F43E7002C4C50DD0006D380 /* AppleWatchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F43E6FF2C4C50DD0006D380 /* AppleWatchPresenter.swift */; };
 		8F43E7032C4C511A0006D380 /* AppleWatchFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F43E7022C4C511A0006D380 /* AppleWatchFlowController.swift */; };
 		8F594C422C3027160066562F /* AppleWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F594C412C3027160066562F /* AppleWatchView.swift */; };
@@ -1888,6 +1892,10 @@
 
 /* Begin PBXFileReference section */
 		8F00E4692C23953B001F15AD /* SortTokensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortTokensView.swift; sourceTree = "<group>"; };
+		8F0FFEFF2D04D73D0064B0D3 /* RevealTokenImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealTokenImage.swift; sourceTree = "<group>"; };
+		8F0FFF012D04D74D0064B0D3 /* CountdownTimerText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerText.swift; sourceTree = "<group>"; };
+		8F0FFF042D0514B60064B0D3 /* RevealTokenIntentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealTokenIntentButton.swift; sourceTree = "<group>"; };
+		8F0FFF062D051AD10064B0D3 /* RevealTokenOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealTokenOverlayView.swift; sourceTree = "<group>"; };
 		8F1077252C8C80310031448C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		8F1077262C8C80310031448C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		8F1077272C8C80310031448C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -3344,6 +3352,25 @@
 				8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */,
 			);
 			path = SortTokens;
+			sourceTree = "<group>";
+		};
+		8F0FFEFE2D04D7220064B0D3 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				8F0FFF062D051AD10064B0D3 /* RevealTokenOverlayView.swift */,
+				8F0FFF012D04D74D0064B0D3 /* CountdownTimerText.swift */,
+				8F0FFEFF2D04D73D0064B0D3 /* RevealTokenImage.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		8F0FFF032D0514AA0064B0D3 /* IntentButtons */ = {
+			isa = PBXGroup;
+			children = (
+				C248DDAE2B799CD3004712E3 /* CopyIntentButton.swift */,
+				8F0FFF042D0514B60064B0D3 /* RevealTokenIntentButton.swift */,
+			);
+			path = IntentButtons;
 			sourceTree = "<group>";
 		};
 		8F43E6FD2C4C50A60006D380 /* View */ = {
@@ -7203,27 +7230,28 @@
 		C2C3AE12269E224A00506ACF /* TwoFASWidget */ = {
 			isa = PBXGroup;
 			children = (
-				C2BBD2332B81308C009A91FB /* Localizable.strings */,
-				C25228ED2B72E44C00F40C86 /* AppIntent */,
-				C2C3AE13269E224A00506ACF /* TwoFASWidget.swift */,
-				C2A7B99226B706B000055738 /* TwoFASWidget.intentdefinition */,
-				C2D07EE926A475F400AF8E7B /* CodeEntry.swift */,
-				C248DDAE2B799CD3004712E3 /* CopyIntentButton.swift */,
-				C254D11B26ACB71B005FEBD4 /* TwoFASWidgetSquareView.swift */,
-				C29787DD27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift */,
-				C254D11D26ACB73D005FEBD4 /* TwoFASWidgetLineView.swift */,
-				C28AB9322B76970D009E3601 /* TwoFASWidgetRectangular.swift */,
-				C2BBD1D22B81127C009A91FB /* TwoFASWidgetInline.swift */,
-				C2BBD1D52B8120F4009A91FB /* TwoFASWidgetCircular.swift */,
-				C254D11F26ACB777005FEBD4 /* Provider.swift */,
-				C2A57C5826ACAAD000D3B344 /* Extensions.swift */,
-				C248DDA72B794A69004712E3 /* WidgetContentMargins.swift */,
-				C2C8F92E2CD6CB62001179C0 /* CommonKeys.swift */,
-				C2C3AE16269E224B00506ACF /* Assets.xcassets */,
 				C2C3AE18269E224B00506ACF /* Info.plist */,
-				C254D12126ACB7D8005FEBD4 /* CodeRedaction.swift */,
-				C2C32A302AB7198C00DDB944 /* IconRenderer.swift */,
 				C25DCB2D2B8030B200871035 /* AccessManager.swift */,
+				C2D07EE926A475F400AF8E7B /* CodeEntry.swift */,
+				C254D12126ACB7D8005FEBD4 /* CodeRedaction.swift */,
+				C2C8F92E2CD6CB62001179C0 /* CommonKeys.swift */,
+				C2A57C5826ACAAD000D3B344 /* Extensions.swift */,
+				C2C32A302AB7198C00DDB944 /* IconRenderer.swift */,
+				C254D11F26ACB777005FEBD4 /* Provider.swift */,
+				C2C3AE13269E224A00506ACF /* TwoFASWidget.swift */,
+				C2BBD1D52B8120F4009A91FB /* TwoFASWidgetCircular.swift */,
+				C2BBD1D22B81127C009A91FB /* TwoFASWidgetInline.swift */,
+				C254D11D26ACB73D005FEBD4 /* TwoFASWidgetLineView.swift */,
+				C29787DD27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift */,
+				C28AB9322B76970D009E3601 /* TwoFASWidgetRectangular.swift */,
+				C254D11B26ACB71B005FEBD4 /* TwoFASWidgetSquareView.swift */,
+				C248DDA72B794A69004712E3 /* WidgetContentMargins.swift */,
+				C2C3AE16269E224B00506ACF /* Assets.xcassets */,
+				C25228ED2B72E44C00F40C86 /* AppIntent */,
+				8F0FFEFE2D04D7220064B0D3 /* Components */,
+				8F0FFF032D0514AA0064B0D3 /* IntentButtons */,
+				C2BBD2332B81308C009A91FB /* Localizable.strings */,
+				C2A7B99226B706B000055738 /* TwoFASWidget.intentdefinition */,
 			);
 			path = TwoFASWidget;
 			sourceTree = "<group>";
@@ -10506,14 +10534,18 @@
 				C254D12226ACB7D8005FEBD4 /* CodeRedaction.swift in Sources */,
 				C254D12026ACB777005FEBD4 /* Provider.swift in Sources */,
 				C254D11C26ACB71B005FEBD4 /* TwoFASWidgetSquareView.swift in Sources */,
+				8F0FFF072D051AD40064B0D3 /* RevealTokenOverlayView.swift in Sources */,
 				C29787DE27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift in Sources */,
 				C25DCB2E2B8030B200871035 /* AccessManager.swift in Sources */,
 				C2C3AE14269E224A00506ACF /* TwoFASWidget.swift in Sources */,
 				C2D07EEB26A47B8100AF8E7B /* CodeEntry.swift in Sources */,
+				8F0FFF002D04D73E0064B0D3 /* RevealTokenImage.swift in Sources */,
 				C248DDA82B794A69004712E3 /* WidgetContentMargins.swift in Sources */,
 				C2C8F92F2CD6CB67001179C0 /* CommonKeys.swift in Sources */,
 				C2404F782B72E61B00EBD8DC /* ServiceAppEntity.swift in Sources */,
+				8F0FFF022D04D74E0064B0D3 /* CountdownTimerText.swift in Sources */,
 				C28AB9332B76970D009E3601 /* TwoFASWidgetRectangular.swift in Sources */,
+				8F0FFF052D0514B80064B0D3 /* RevealTokenIntentButton.swift in Sources */,
 				C2A57C5A26ACAB2800D3B344 /* Extensions.swift in Sources */,
 				C2404F7C2B72E8D000EBD8DC /* AppIntentProvider.swift in Sources */,
 				C2404F792B72E61B00EBD8DC /* SelectService.swift in Sources */,

@@ -34,7 +34,7 @@ struct TwoFASWidgetEntryView: View {
                 .foregroundStyle(.accent)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.white)
+                        .fill(Color.primaryWhite)
                         .frame(width: 32, height: 32)
                 )
             
@@ -77,7 +77,7 @@ struct TwoFASWidgetEntryView: View {
                     Text("widget__size_not_supported")
                 }
             }
-//            .widgetBackground(backgroundView: Color.primaryWhite)
+            .widgetBackground(backgroundView: Color.primaryWhite)
         }
     }
 }

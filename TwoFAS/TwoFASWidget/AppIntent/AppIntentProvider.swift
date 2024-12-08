@@ -129,7 +129,7 @@ struct AppIntentProvider: AppIntentTimelineProvider {
                 guard case Values.entry(let entryDescription) = value
                 else { return CodeEntry.Entry.placeholder() }
                 
-                let showWithCode = !isLast && entryDescription.isValidSecret
+                let showWithCode = !isLast
                 let secondsToNewOne: Int = {
                     let period = entryDescription.period.rawValue
                     let currentSeconds: Int = calendar.component(.second, from: tokenDate)

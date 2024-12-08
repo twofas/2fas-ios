@@ -40,16 +40,17 @@ struct TwoFASWidgetRectangular: View {
                         Spacer()
                         code(data.code)
                     }
-                    .overlay {
-                        CopyIntentButton(
-                            rawEntry: data.rawEntry,
-                            secret: kind == .singleEntryHidden ? data.secret : nil
-                        ) {
-                            Rectangle()
-                                .foregroundStyle(Color.clear)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        }
-                    }
+                    //TODO: check
+//                    .overlay {
+//                        CopyIntentButton(
+//                            rawEntry: data.rawEntry,
+//                            secret: kind == .singleEntryHidden ? data.secret : nil
+//                        ) {
+//                            Rectangle()
+//                                .foregroundStyle(Color.clear)
+//                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                        }
+//                    }
                 }
             } else {
                 image()

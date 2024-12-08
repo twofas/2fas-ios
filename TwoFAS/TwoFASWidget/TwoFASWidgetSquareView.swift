@@ -21,17 +21,6 @@ import WidgetKit
 import SwiftUI
 import Common
 
-struct RevealTokenImage: View {
-    var body: some View {
-        Image("eye.slash2")
-            .background(
-                Circle()
-                    .fill(Color.gray5)
-                    .frame(width: 40, height: 40)
-            )
-    }
-}
-
 struct TwoFASWidgetSquareView: View {
     @Environment(\.redactionReasons) private var redactionReasons
     @Environment(\.colorScheme) private var colorScheme
@@ -53,26 +42,12 @@ struct TwoFASWidgetSquareView: View {
         let entryData = entryValue.data
         let kind = entryValue.kind
         
-//        let reason: RedactionReasons = {
-//            switch kind {
-//            case .placeholder: return .placeholder
-//            default: return []
-//            }
-//        }()
-        
         let codeReason: RedactionReason = {
             switch kind {
             case .placeholder, .singleEntryHidden: return .codePlaceholder
             default: return .noPlaceholder
             }
         }()
-        
-//        let countDownReason: RedactionReasons = {
-//            switch kind {
-//            case .placeholder, .singleEntryHidden: return .placeholder
-//            default: return []
-//            }
-//        }()
         
         if showLogo() {
             image()
@@ -82,24 +57,8 @@ struct TwoFASWidgetSquareView: View {
                     IconRenderer(entry: entryValue)
                         .frame(width: 32, height: 32)
                     Spacer()
-                    counterText(for: entryData.countdownTo)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 3)
-                        .frame(width: 40)
-                        .foregroundStyle(.primaryWhite)
-                        .multilineTextAlignment(.center)
-                        .font(.caption.weight(.semibold))
-                        .lineLimit(1)
-                        .contentTransition(.numericText(countsDown: true))
-                        .background {
-                            Capsule()
-                                .fill(Color.primaryGreen)
-                        }
-                        .shadow(color: Color.primaryGreen.opacity(0.3), radius: 10, x: 0, y: 2)
-                        .overlay {
-                            Capsule()
-                                .stroke(Color.primaryWhite, lineWidth: 1)
-                        }
+                    CountdownTimerText(date: entryData.countdownTo)
+                        .redacted(reason: codeReason)
                 }
                 
                 Spacer()
@@ -107,40 +66,30 @@ struct TwoFASWidgetSquareView: View {
                 VStack(alignment: .leading) {
                     Text(entryData.name)
                         .foregroundStyle(.primaryBlack)
-                        .font(.caption)
+                        .font(.caption.weight(.medium))
                         .multilineTextAlignment(.leading)
+                        .redacted(reason: codeReason)
                     Text(entryData.code)
                         .foregroundStyle(.primaryBlack)
                         .font(Font.system(.title).weight(.semibold).monospacedDigit())
                         .multilineTextAlignment(.leading)
                         .minimumScaleFactor(0.2)
                         .contentTransition(.numericText())
+                        .redacted(reason: codeReason)
                 }
             }
             .blur(radius: kind == .singleEntryHidden ? 25 : 0)
-            .widgetBackground(backgroundView: Color.primaryWhite)
             .accessibility(hidden: codeReason == .codePlaceholder)
             .overlay {
                 if kind == .singleEntry {
-                    CopyIntentButton(
-                        rawEntry: entryData.rawEntry,
-                        secret: kind == .singleEntryHidden ? entry?.data.secret : nil
-                    ) {
+                    CopyIntentButton(rawEntry: entryData.rawEntry) {
                         Rectangle()
                             .foregroundStyle(Color.clear)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                 } else if kind == .singleEntryHidden, let secret = entry?.data.secret {
                     RevealTokenIntentButton(secret: secret) {
-                        VStack {
-                            Spacer()
-                            RevealTokenImage()
-                            Spacer()
-                            Text("Reveal for 60 seconds")
-                                .foregroundStyle(Color.gray10)
-                                .font(.caption2)
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        RevealTokenOverlayView()
                     }
                 }
             }
@@ -168,14 +117,5 @@ struct TwoFASWidgetSquareView: View {
         }
 
         return false
-    }
-    
-    @ViewBuilder
-    private func counterText(for date: Date?) -> some View {
-        if let countdownTo = date {
-            Text(countdownTo, style: .timer)
-        } else {
-            Text("0:00")
-        }
     }
 }

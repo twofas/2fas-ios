@@ -30,11 +30,12 @@ struct TwoFASWidgetLineView: View {
     private let spacing: CGFloat = 10
     
     let entries: [CodeEntry.Entry]
+    let isRevealTokenOverlayVisible: Bool
     
     @ViewBuilder
     var body: some View {
         VStack(spacing: 0) {
-            ForEach(entries, id: \.self) { entry in
+            ForEach(entries.filter { $0.kind != .placeholder }, id: \.self) { entry in
                 let kind = entry.kind
                 let reason: RedactionReasons = {
                     switch kind {
@@ -48,20 +49,11 @@ struct TwoFASWidgetLineView: View {
                     default: return .noPlaceholder
                     }
                 }()
-                
-                let countDownReason: RedactionReasons = {
-                    switch kind {
-                    case .placeholder, .singleEntryHidden: return .placeholder
-                    default: return []
-                    }
-                }()
 
                 generateLine(
                     entry: entry,
                     data: entry.data,
-                    reason: reason,
-                    codeReason: codeReason,
-                    countDownReason: countDownReason
+                    reason: reason
                 )
                 .frame(height: 50)
                 .accessibility(hidden: codeReason == .codePlaceholder)
@@ -74,10 +66,10 @@ struct TwoFASWidgetLineView: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .blur(radius: isAnyEntryHidden ? 25 : 0)
         .overlay {
-            if isAnyEntryHidden, let secret = entries.first?.data.secret {
+            if isRevealTokenOverlayVisible, isAnyEntryHidden, let secret = entries.first?.data.secret {
                 RevealTokenIntentButton(secret: secret) {
                     RevealTokenOverlayView()
                 }
@@ -89,9 +81,7 @@ struct TwoFASWidgetLineView: View {
     private func generateLine(
         entry: CodeEntry.Entry,
         data: CodeEntry.EntryData,
-        reason: RedactionReasons,
-        codeReason: RedactionReason,
-        countDownReason: RedactionReasons
+        reason: RedactionReasons
     ) -> some View {
         HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
             IconRenderer(entry: entry)
@@ -115,12 +105,14 @@ struct TwoFASWidgetLineView: View {
                 .minimumScaleFactor(0.2)
                 .lineLimit(1)
                 .contentTransition(.numericText())
-                .redacted(reason: codeReason)
+                .redacted(reason: reason)
                 .frame(width: 90)
                 .padding(.trailing, 10)
             
             CountdownTimerText(date: data.countdownTo)
-                .redacted(reason: countDownReason)
+                .redacted(reason: reason)
         }
     }
 }
+
+//struct HorizontalTokenView

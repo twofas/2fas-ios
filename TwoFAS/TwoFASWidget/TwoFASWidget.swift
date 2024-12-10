@@ -62,9 +62,9 @@ struct TwoFASWidgetEntryView: View {
                 case .systemSmall:
                     TwoFASWidgetSquareView(entry: entry.entries.first)
                 case .systemMedium:
-                    TwoFASWidgetLineView(entries: entry.entries)
+                    TwoFASWidgetLineView(entries: entry.entries, isRevealTokenOverlayVisible: true)
                 case .systemLarge:
-                    TwoFASWidgetLineView(entries: entry.entries)
+                    TwoFASWidgetLineView(entries: entry.entries, isRevealTokenOverlayVisible: true)
                 case .systemExtraLarge:
                     TwoFASWidgetLineViewGrid(entries: entry.entries)
                 case .accessoryCircular:

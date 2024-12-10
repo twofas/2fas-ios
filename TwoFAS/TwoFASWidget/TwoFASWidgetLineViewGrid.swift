@@ -27,6 +27,10 @@ struct TwoFASWidgetLineViewGrid: View {
     private let spacing: CGFloat = 8
     private let minSize: CGFloat = 170
     
+    private var isAnyEntryHidden: Bool {
+        entries.contains { $0.kind == .singleEntryHidden }
+    }
+    
     let entries: [CodeEntry.Entry]
     
     @ViewBuilder
@@ -43,9 +47,18 @@ struct TwoFASWidgetLineViewGrid: View {
             spacing: 2 * spacing,
             pinnedViews: [],
             content: {
-                TwoFASWidgetLineView(entries: firstHalf)
-                TwoFASWidgetLineView(entries: secondHalf)
-            })
+                TwoFASWidgetLineView(entries: firstHalf, isRevealTokenOverlayVisible: false)
+                TwoFASWidgetLineView(entries: secondHalf, isRevealTokenOverlayVisible: false)
+            }
+        )
+        .overlay {
+            if isAnyEntryHidden, let secret = entries.first?.data.secret {
+                RevealTokenIntentButton(secret: secret) {
+                    RevealTokenOverlayView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            }
+        }
         .addWidgetContentMargins(standard: spacing)
     }
 }

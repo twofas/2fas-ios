@@ -20,14 +20,17 @@
 import SwiftUI
 import AppIntents
 
-
 struct CopyIntentButton<Content>: View where Content: View {
     private let appIntent: (any AppIntent)?
     private let content: () -> Content
-    
+
     // TODO: Add support for NIL app intent - ios 16
     
-    init(rawEntry: CodeEntry.EntryData.RawEntryData?, @ViewBuilder content: @escaping () -> Content) {
+    init(
+        rawEntry: CodeEntry.EntryData.RawEntryData?,
+        secret: String? = nil,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
         if let rawEntry {
             self.appIntent = CopyTokenIntent(
                 secret: rawEntry.secret,
@@ -35,7 +38,9 @@ struct CopyIntentButton<Content>: View where Content: View {
                 digits: rawEntry.digits,
                 algorithm: rawEntry.algorithm,
                 tokenType: rawEntry.tokenType
-            )
+            )  
+        } else if let secret {
+            self.appIntent = RevealTokenAppIntent(secret: secret)
         } else {
             self.appIntent = nil
         }

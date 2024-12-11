@@ -860,8 +860,8 @@ internal enum T {
     internal static let backupIcloudCta = T.tr("Localizable", "introduction__backup_icloud_cta", fallback: "Learn more about backup")
     /// 2FAS uses iCloud for secure backup and sync of your 2FA tokens. The **encrypted** backup data is stored in iCloud, accessible **only by the 2FAS app**. Additionally, this feature aids with token **recovery and syncing** across iOS devices.
     /// 
-    /// It's enabled by default and can disabled at any time in the app's backup settings.
-    internal static let backupIcloudDescription = T.tr("Localizable", "introduction__backup_icloud_description", fallback: "2FAS uses iCloud for secure backup and sync of your 2FA tokens. The **encrypted** backup data is stored in iCloud, accessible **only by the 2FAS app**. Additionally, this feature aids with token **recovery and syncing** across iOS devices.\n\nIt's enabled by default and can disabled at any time in the app's backup settings.")
+    /// It's enabled by default and can be disabled at any time in the app's backup settings.
+    internal static let backupIcloudDescription = T.tr("Localizable", "introduction__backup_icloud_description", fallback: "2FAS uses iCloud for secure backup and sync of your 2FA tokens. The **encrypted** backup data is stored in iCloud, accessible **only by the 2FAS app**. Additionally, this feature aids with token **recovery and syncing** across iOS devices.\n\nIt's enabled by default and can be disabled at any time in the app's backup settings.")
     /// Secure sync and backup
     internal static let backupIcloudTitle = T.tr("Localizable", "introduction__backup_icloud_title", fallback: "Secure sync and backup")
     /// Google Drive sync turned on successfully!
@@ -912,8 +912,8 @@ internal enum T {
   internal enum NewVersion {
     /// A new version of 2FAS is available on Google Store. Update now!
     internal static let newVersionMessageAndroid = T.tr("Localizable", "new_version__new_version_message_android", fallback: "A new version of 2FAS is available on Google Store. Update now!")
-    /// A new version of 2FAS is available on AppStore. Update now!
-    internal static let newVersionMessageIos = T.tr("Localizable", "new_version__new_version_message_ios", fallback: "A new version of 2FAS is available on AppStore. Update now!")
+    /// A new version of 2FAS is available on App Store. Update now!
+    internal static let newVersionMessageIos = T.tr("Localizable", "new_version__new_version_message_ios", fallback: "A new version of 2FAS is available on App Store. Update now!")
     /// New version
     internal static let newVersionTitle = T.tr("Localizable", "new_version__new_version_title", fallback: "New version")
     /// Skip this version
@@ -1626,6 +1626,8 @@ internal enum T {
   internal enum Widget {
     /// My secured account
     internal static let mySecuredAccount = T.tr("Localizable", "widget__my_secured_account", fallback: "My secured account")
+    /// Hold and select service to activate widget...
+    internal static let noSelectedServices = T.tr("Localizable", "widget__no_selected_services", fallback: "Hold and select service to activate widget...")
     /// There are no services in the app available for selection
     internal static let noServices = T.tr("Localizable", "widget__no_services", fallback: "There are no services in the app available for selection")
     /// Widget functionality is not enabled in 2FAS Settings section
@@ -1634,6 +1636,10 @@ internal enum T {
     internal static let notEnabledNoServices = T.tr("Localizable", "widget__not_enabled_no_services", fallback: "Widget functionality is not enabled in 2FAS Settings section and there are no services in the app available for selection")
     /// Placeholder
     internal static let placeholder = T.tr("Localizable", "widget__placeholder", fallback: "Placeholder")
+    /// Reveal your 2FAS tokens for 60 seconds
+    internal static let revealTokensLongMessage = T.tr("Localizable", "widget__reveal_tokens_long_message", fallback: "Reveal your 2FAS tokens for 60 seconds")
+    /// Reveal for 60 seconds
+    internal static let revealTokensShortMessage = T.tr("Localizable", "widget__reveal_tokens_short_message", fallback: "Reveal for 60 seconds")
     /// Select Service you want to show on your 2FAS Widget
     internal static let selectServiceIntentDescription = T.tr("Localizable", "widget__select_service_intent_description", fallback: "Select Service you want to show on your 2FAS Widget")
     /// Service icon

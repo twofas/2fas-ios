@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct RevealTokenOverlayView: View {
     enum RevealTokenMessageType {
@@ -25,8 +26,8 @@ struct RevealTokenOverlayView: View {
         
         var message: String {
             switch self {
-            case .short: "Reveal for 60 seconds"
-            case .long: "Reveal your 2FAS tokens for 60 seconds"
+            case .short: return T.Widget.revealTokensShortMessage
+            case .long: return T.Widget.revealTokensLongMessage
             }
         }
     }

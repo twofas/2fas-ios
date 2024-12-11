@@ -67,7 +67,7 @@ struct TwoFASWidgetLineView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .blur(radius: isAnyEntryHidden ? 25 : 0)
+        .blur(radius: isAnyEntryHidden ? 21 : 0)
         .overlay {
             if isRevealTokenOverlayVisible, isAnyEntryHidden, let secret = entries.first?.data.secret {
                 RevealTokenIntentButton(secret: secret) {
@@ -109,10 +109,8 @@ struct TwoFASWidgetLineView: View {
                 .frame(width: 90)
                 .padding(.trailing, 10)
             
-            CountdownTimerText(date: data.countdownTo)
+            CountdownTimerText(date: data.countdownTo ?? Date())
                 .redacted(reason: reason)
         }
     }
 }
-
-//struct HorizontalTokenView

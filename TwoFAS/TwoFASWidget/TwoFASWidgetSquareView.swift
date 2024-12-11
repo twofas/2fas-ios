@@ -57,7 +57,7 @@ struct TwoFASWidgetSquareView: View {
                     IconRenderer(entry: entryValue)
                         .frame(width: 32, height: 32)
                     Spacer()
-                    CountdownTimerText(date: entryData.countdownTo)
+                    CountdownTimerText(date: entryData.countdownTo ?? Date())
                         .redacted(reason: codeReason)
                 }
                 
@@ -78,7 +78,7 @@ struct TwoFASWidgetSquareView: View {
                         .redacted(reason: codeReason)
                 }
             }
-            .blur(radius: kind == .singleEntryHidden ? 25 : 0)
+            .blur(radius: kind == .singleEntryHidden ? 21 : 0)
             .accessibility(hidden: codeReason == .codePlaceholder)
             .overlay {
                 if kind == .singleEntry {

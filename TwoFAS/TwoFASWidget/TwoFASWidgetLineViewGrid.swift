@@ -59,6 +59,5 @@ struct TwoFASWidgetLineViewGrid: View {
                 }
             }
         }
-        .addWidgetContentMargins(standard: spacing)
     }
 }

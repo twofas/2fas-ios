@@ -20,6 +20,7 @@
 import WidgetKit
 import SwiftUI
 import Intents
+import Common
 
 struct TwoFASWidgetEntryView: View {
     var entry: Provider.Entry
@@ -40,7 +41,7 @@ struct TwoFASWidgetEntryView: View {
             
             Spacer()
 
-            Text("Hold and select service to activate widget...")
+            Text(T.Widget.noSelectedServices)
                 .multilineTextAlignment(.leading)
                 .font(.footnote)
                 .bold()

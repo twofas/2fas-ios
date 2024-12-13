@@ -55,7 +55,7 @@ struct TwoFASWidgetLineView: View {
                     data: entry.data,
                     reason: reason
                 )
-                .frame(height: 50)
+                .frame(height: 49)
                 .accessibility(hidden: codeReason == .codePlaceholder)
                 .overlay {
                     CopyIntentButton(rawEntry: entry.data.rawEntry) {
@@ -63,6 +63,11 @@ struct TwoFASWidgetLineView: View {
                             .foregroundStyle(Color.clear)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
+                }
+
+                if entry != entries.filter({ $0.kind != .placeholder }).last {
+                    Divider()
+                        .foregroundStyle(.gray15)
                 }
             }
         }
@@ -83,33 +88,41 @@ struct TwoFASWidgetLineView: View {
         data: CodeEntry.EntryData,
         reason: RedactionReasons
     ) -> some View {
-        HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
+        HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: 0) {
             IconRenderer(entry: entry)
                 .frame(width: 24)
-                .padding(.trailing, 6)
+                .scaledToFit()
+                .padding(.trailing, 12)
                 .redacted(reason: reason)
 
-            Text(data.name)
-                .foregroundStyle(.primaryBlack)
-                .font(.caption2)
-                .redacted(reason: reason)
-                .multilineTextAlignment(.leading)
-                .lineLimit(1)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(data.name)
+                    .foregroundStyle(.textPrimary)
+                    .font(.system(size: 11).weight(.regular))
+                    .redacted(reason: reason)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(1)
+                
+                if let info = data.info, !info.isEmpty {
+                    Text(info)
+                        .foregroundStyle(.textSecondary)
+                        .lineLimit(1)
+                        .font(.system(size: 11).weight(.regular))
+                }
+            }
             
             Spacer()
             
             Text(verbatim: data.code)
-                .foregroundStyle(.primaryBlack)
-                .font(Font.system(.title3).weight(.semibold).monospacedDigit())
-                .multilineTextAlignment(.leading)
-                .minimumScaleFactor(0.2)
+                .foregroundStyle(.textPrimary)
+                .font(.system(size: 27).weight(.light).monospacedDigit())
+                .multilineTextAlignment(.center)
+                .minimumScaleFactor(0.1)
                 .lineLimit(1)
                 .contentTransition(.numericText())
                 .redacted(reason: reason)
-                .frame(width: 90)
-                .padding(.trailing, 10)
             
-            CountdownTimerText(date: data.countdownTo ?? Date())
+            CountdownTimerText(date: data.countdownTo)
                 .redacted(reason: reason)
         }
     }

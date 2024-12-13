@@ -24,7 +24,7 @@ import Common
 struct TwoFASWidgetLineViewGrid: View {
     @Environment(\.colorScheme) var colorScheme
     
-    private let spacing: CGFloat = 8
+    private let spacing: CGFloat = 16
     private let minSize: CGFloat = 170
     
     private var isAnyEntryHidden: Bool {
@@ -40,11 +40,11 @@ struct TwoFASWidgetLineViewGrid: View {
         let secondHalf = Array(entries.suffix(halfElements))
         LazyVGrid(
             columns: [
-                GridItem(.flexible(minimum: minSize)),
-                GridItem(.flexible(minimum: minSize))
+                GridItem(.flexible(minimum: minSize), spacing: spacing),
+                GridItem(.flexible(minimum: minSize), spacing: spacing)
             ],
             alignment: .leading,
-            spacing: 2 * spacing,
+            spacing: spacing,
             pinnedViews: [],
             content: {
                 TwoFASWidgetLineView(entries: firstHalf, isRevealTokenOverlayVisible: false)

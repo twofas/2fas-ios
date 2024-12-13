@@ -32,19 +32,10 @@ struct CountdownTimerText: View {
     var body: some View {
         timerText
             .frame(width: 40, height: 18)
-            .foregroundStyle(.primaryWhite)
-            .multilineTextAlignment(.center)
+            .foregroundStyle(.textPrimary)
+            .multilineTextAlignment(.trailing)
             .font(.caption.weight(.semibold))
             .lineLimit(1)
             .contentTransition(.numericText(countsDown: true))
-            .background {
-                Capsule()
-                    .fill(Color.primaryGreen)
-            }
-            .shadow(color: Color.primaryGreen.opacity(0.3), radius: 10, x: 0, y: 2)
-            .overlay {
-                Capsule()
-                    .stroke(Color.primaryWhite, lineWidth: 1)
-            }
     }
 }

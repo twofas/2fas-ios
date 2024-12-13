@@ -53,29 +53,36 @@ struct TwoFASWidgetSquareView: View {
             image()
         } else {
             VStack(alignment: .leading) {
-                HStack(alignment: .top) {
+                HStack {
                     IconRenderer(entry: entryValue)
                         .frame(width: 32, height: 32)
                     Spacer()
-                    CountdownTimerText(date: entryData.countdownTo ?? Date())
+                    CountdownTimerText(date: entryData.countdownTo)
                         .redacted(reason: codeReason)
                 }
                 
                 Spacer()
                 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(entryData.name)
-                        .foregroundStyle(.primaryBlack)
-                        .font(.caption.weight(.medium))
+                        .foregroundStyle(.textPrimary)
+                        .font(.system(size: 12).weight(.regular).monospacedDigit())
                         .multilineTextAlignment(.leading)
                         .redacted(reason: codeReason)
                     Text(entryData.code)
-                        .foregroundStyle(.primaryBlack)
-                        .font(Font.system(.title).weight(.semibold).monospacedDigit())
+                        .foregroundStyle(.textPrimary)
+                        .font(.system(size: 31).weight(.light).monospacedDigit())
                         .multilineTextAlignment(.leading)
-                        .minimumScaleFactor(0.2)
+                        .minimumScaleFactor(0.1)
                         .contentTransition(.numericText())
                         .redacted(reason: codeReason)
+                    
+                    if let info = entryData.info, !info.isEmpty {
+                        Text(info)
+                            .foregroundStyle(.textSecondary)
+                            .lineLimit(1)
+                            .font(.system(size: 12).weight(.regular))
+                    }
                 }
             }
             .blur(radius: kind == .singleEntryHidden ? 21 : 0)

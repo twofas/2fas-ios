@@ -73,7 +73,7 @@ struct RevealTokenOverlayView: View {
     
     private func revealText(type: RevealTokenMessageType) -> some View {
         Text(type.message)
-            .foregroundStyle(Color.primaryBlack)
+            .foregroundStyle(.gray10)
             .font(.caption2)
     }
 }

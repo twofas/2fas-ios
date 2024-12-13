@@ -28,25 +28,22 @@ struct TwoFASWidgetEntryView: View {
     
     private var noEntryView: some View {
         VStack(alignment: .leading) {
-            Image("LogoWidgetMono")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 17, height: 21, alignment: .center)
-                .foregroundStyle(.accent)
+            Image("TwoFASLogo")
+                .foregroundStyle(.white)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.primaryWhite)
+                        .fill(.widgetBackground)
                         .frame(width: 32, height: 32)
                 )
             
             Spacer()
 
             Text(T.Widget.noSelectedServices)
+                .foregroundStyle(.textAccent)
                 .multilineTextAlignment(.leading)
-                .font(.footnote)
+                .font(.system(size: 16).weight(.semibold))
                 .bold()
                 .frame(maxWidth: 200, alignment: .leading)
-                .foregroundColor(.white)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .padding(4)
@@ -78,7 +75,7 @@ struct TwoFASWidgetEntryView: View {
                     Text("widget__size_not_supported")
                 }
             }
-            .widgetBackground(backgroundView: Color.primaryWhite)
+            .widgetBackground(backgroundView: Color.widgetBackground)
         }
     }
 }

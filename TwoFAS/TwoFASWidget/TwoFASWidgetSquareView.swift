@@ -94,8 +94,8 @@ struct TwoFASWidgetSquareView: View {
                             .foregroundStyle(Color.clear)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
-                } else if kind == .singleEntryHidden, let secret = entry?.data.secret {
-                    RevealTokenIntentButton(secret: secret) {
+                } else if kind == .singleEntryHidden {
+                    RevealTokenIntentButton(secret: entryData.secret) {
                         RevealTokenOverlayView()
                     }
                 }

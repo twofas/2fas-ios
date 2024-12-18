@@ -47,6 +47,7 @@ struct TwoFASWidgetEntryView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .padding(4)
+        .addWidgetContentMargins()
         .widgetBackground(backgroundView: Color.accent)
     }
 
@@ -76,6 +77,7 @@ struct TwoFASWidgetEntryView: View {
                 }
             }
             .widgetBackground(backgroundView: Color.widgetBackground)
+            .addWidgetContentMargins()
         }
     }
 }

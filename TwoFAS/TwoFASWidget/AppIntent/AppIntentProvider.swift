@@ -29,7 +29,7 @@ import TimeVerification
 
 @available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
 struct AppIntentProvider: AppIntentTimelineProvider {
-    private let defaults = UserDefaults.standard
+    private let defaults = UserDefaults(suiteName: "group.twofas.com")
     private let calendar = Calendar.current
     typealias Intent = SelectService
     
@@ -129,7 +129,7 @@ struct AppIntentProvider: AppIntentTimelineProvider {
                 guard case Values.entry(let entryDescription) = value
                 else { return CodeEntry.Entry.placeholder() }
                 
-                let showWithCode = !isLast && entryDescription.isValidSecret
+                let showWithCode = !isLast
                 let secondsToNewOne: Int = {
                     let period = entryDescription.period.rawValue
                     let currentSeconds: Int = calendar.component(.second, from: tokenDate)
@@ -204,19 +204,18 @@ struct AppIntentProvider: AppIntentTimelineProvider {
 @available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
 extension AppIntentProvider {
     private func clearDefaults() {
-        defaults.removeObject(forKey: CommonKeys.tapDate)
-        defaults.removeObject(forKey: CommonKeys.tapSecret)
-        defaults.synchronize()
+        defaults?.removeObject(forKey: CommonKeys.tapDate)
+        defaults?.removeObject(forKey: CommonKeys.tapSecret)
+        defaults?.synchronize()
     }
     
     private func handleClickableWidgets() -> (validSecret: Secret?, secondsLeft: Int) {
         let validSecret: Secret?
         let secondsLeft: Int
         
-        let dateValue = defaults.double(forKey: "tapDate")
-        if !dateValue.isZero {
+        if  let dateValue = defaults?.double(forKey: "tapDate"), !dateValue.isZero {
             let duration = Date().timeIntervalSince1970 - dateValue
-            if duration < 60.0, let storedSecret = defaults.string(forKey: "tapSecret") {
+            if duration < 60.0, let storedSecret = defaults?.string(forKey: "tapSecret") {
                 secondsLeft = 60 - Int(duration)
                 validSecret = storedSecret
             } else {

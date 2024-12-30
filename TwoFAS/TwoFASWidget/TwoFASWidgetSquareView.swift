@@ -42,13 +42,6 @@ struct TwoFASWidgetSquareView: View {
         let entryData = entryValue.data
         let kind = entryValue.kind
         
-        let reason: RedactionReasons = {
-            switch kind {
-            case .placeholder: return .placeholder
-            default: return []
-            }
-        }()
-        
         let codeReason: RedactionReason = {
             switch kind {
             case .placeholder, .singleEntryHidden: return .codePlaceholder
@@ -56,56 +49,56 @@ struct TwoFASWidgetSquareView: View {
             }
         }()
         
-        let countDownReason: RedactionReasons = {
-            switch kind {
-            case .placeholder, .singleEntryHidden: return .placeholder
-            default: return []
-            }
-        }()
-        
         if showLogo() {
             image()
         } else {
-            CopyIntentButton(
-                rawEntry: entryData.rawEntry,
-                secret: kind == .singleEntryHidden ? entry?.data.secret : nil
-            ) {
-                VStack(alignment: .leading, spacing: nil) {
+            VStack(alignment: .leading) {
+                HStack {
+                    IconRenderer(entry: entryValue)
+                        .frame(width: 32, height: 32)
                     Spacer()
-                    HStack(alignment: .center, spacing: nil) {
-                        IconRenderer(entry: entryValue)
-                            .redacted(reason: reason)
-                        Spacer()
-                        counterText(for: entryData.countdownTo)
-                            .multilineTextAlignment(.trailing)
-                            .font(Font.body.monospacedDigit())
-                            .lineLimit(1)
-                            .redacted(reason: countDownReason)
-                            .contentTransition(.numericText(countsDown: true))
-                    }
-                    Spacer(minLength: spacing * 3)
-                    VStack(alignment: .leading, spacing: 3) {
-                        Text(entryData.name)
-                            .font(.caption)
-                            .multilineTextAlignment(.leading)
-                            .redacted(reason: reason)
-                        Text(entryData.code)
-                            .font(Font.system(.title).weight(.light).monospacedDigit())
-                            .multilineTextAlignment(.leading)
-                            .minimumScaleFactor(0.2)
-                            .redacted(reason: codeReason)
-                            .contentTransition(.numericText())
-                        let info = entryData.info ?? ""
-                        Text(info)
-                            .lineLimit(1)
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                            .redacted(reason: reason)
-                    }
-                    Spacer()
+                    CountdownTimerText(date: entryData.countdownTo)
+                        .redacted(reason: codeReason)
                 }
-                .addWidgetContentMargins(standard: spacing)
-                .accessibility(hidden: codeReason == .codePlaceholder)
+                
+                Spacer()
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(entryData.name)
+                        .foregroundStyle(.textPrimary)
+                        .font(.system(size: 12).weight(.regular).monospacedDigit())
+                        .multilineTextAlignment(.leading)
+                        .redacted(reason: codeReason)
+                    Text(entryData.code)
+                        .foregroundStyle(.textPrimary)
+                        .font(.system(size: 31).weight(.light).monospacedDigit())
+                        .multilineTextAlignment(.leading)
+                        .minimumScaleFactor(0.1)
+                        .contentTransition(.numericText())
+                        .redacted(reason: codeReason)
+                    
+                    if let info = entryData.info, !info.isEmpty {
+                        Text(info)
+                            .foregroundStyle(.textSecondary)
+                            .lineLimit(1)
+                            .font(.system(size: 12).weight(.regular))
+                    }
+                }
+            }
+            .blur(radius: kind == .singleEntryHidden ? 21 : 0)
+            .accessibility(hidden: codeReason == .codePlaceholder)
+            .overlay {
+                if kind == .singleEntry {
+                    CopyIntentButton(rawEntry: entryData.rawEntry) {
+                        Rectangle()
+                            .foregroundStyle(Color.clear)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                } else if kind == .singleEntryHidden {
+                    RevealTokenIntentButton(secret: entryData.secret) {
+                        RevealTokenOverlayView()
+                    }
+                }
             }
         }
     }
@@ -131,14 +124,5 @@ struct TwoFASWidgetSquareView: View {
         }
 
         return false
-    }
-    
-    @ViewBuilder
-    private func counterText(for date: Date?) -> some View {
-        if let countdownTo = date {
-            Text(countdownTo, style: .timer)
-        } else {
-            Text("0:00")
-        }
     }
 }

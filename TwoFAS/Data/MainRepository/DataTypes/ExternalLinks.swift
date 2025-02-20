@@ -25,7 +25,7 @@ public enum ExternalLinks {
     public var url: URL {
         switch self {
         case .support:
-            return URL(string: "https://support.2fas.com")!
+            return URL(string: "https://2fas.com/support/")!
         }
     }
 }

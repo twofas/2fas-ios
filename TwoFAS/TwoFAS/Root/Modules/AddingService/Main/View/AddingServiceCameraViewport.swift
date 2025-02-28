@@ -124,7 +124,7 @@ final class CameraScanningView: UIView {
     private var camera: Camera?
     var codeFound: ((CodeType) -> Void)?
     
-    override class var layerClass: AnyClass { AVCaptureVideoPreviewLayer.self }
+    override static var layerClass: AnyClass { AVCaptureVideoPreviewLayer.self }
     // swiftlint:disable force_cast
     override var layer: CALayer { super.layer as! AVCaptureVideoPreviewLayer }
     // swiftlint:enable force_cast

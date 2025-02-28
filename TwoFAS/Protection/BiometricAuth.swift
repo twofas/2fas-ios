@@ -96,7 +96,7 @@ public final class BiometricAuth {
         context.evaluatePolicy(
             LAPolicy.deviceOwnerAuthenticationWithBiometrics,
             localizedReason: reason,
-            reply: { [weak self] (success: Bool, evalPolicyError: Error?) -> Void in
+            reply: { [weak self] (success: Bool, evalPolicyError: Error?) in
                 
                 DispatchQueue.main.async { [weak self] in
                     guard let self else { return }

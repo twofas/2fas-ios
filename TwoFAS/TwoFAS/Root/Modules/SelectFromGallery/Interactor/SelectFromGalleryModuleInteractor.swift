@@ -32,7 +32,7 @@ protocol SelectFromGalleryModuleInteracting: AnyObject {
     var serviceWasCreated: ((ServiceData) -> Void)? { get set }
     var shouldRename: ((String, String) -> Void)? { get set }
     
-    func scanImage(_ image: UIImage, completion: @escaping(SelectFromGalleryModuleInteractorScanResult) -> Void)
+    func scanImage(_ image: UIImage, completion: @escaping (SelectFromGalleryModuleInteractorScanResult) -> Void)
     func addSelectedCode(_ code: Code, force: Bool)
     func addSelectedCodes(_ codes: [Code])
     func codeExists(_ code: Code) -> Bool

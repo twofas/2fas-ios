@@ -97,10 +97,6 @@ final class AppSecurityViewController: UIViewController {
         presenter.viewWillAppear()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
     @objc
     private func shouldRefresh() {
         presenter.handleBecomeActive()

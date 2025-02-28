@@ -145,7 +145,7 @@ private final class CircleShape: UIView {
     private let dimension: CGFloat = 65
     
     private let lineWidth: CGFloat = 2
-    override class var layerClass: AnyClass { CAShapeLayer.self }
+    override static var layerClass: AnyClass { CAShapeLayer.self }
     private var shapeLayer: CAShapeLayer { self.layer as! CAShapeLayer }
     
     override func layoutSubviews() {

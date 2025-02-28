@@ -96,9 +96,10 @@ extension TokensViewController {
             useNextToken: item.useNextToken,
             shouldAnimate: presenter.shouldAnimate
         )
+        cell?.accessibilityCustomActions = tokenActions(item)
         return cell
     }
-    
+
     func getHOTPCell(
         for collectionView: UICollectionView,
         indexPath: IndexPath,
@@ -125,6 +126,7 @@ extension TokensViewController {
             category: item.category,
             shouldAnimate: presenter.shouldAnimate
         )
+        cell?.accessibilityCustomActions = tokenActions(item)
         return cell
     }
     
@@ -221,6 +223,31 @@ extension TokensViewController {
         case .default: return .estimated(135)
         case .compact: return .absolute(90)
         }
+    }
+    
+    /// Returns some actions a user can do using *Voice Over*.
+    /// There are the same actions as the ones defined in the *context menu*.
+    private func tokenActions(_ token: TokenCell) -> [UIAccessibilityCustomAction] {
+        guard let serviceData = token.serviceData else { return [] }
+        return [
+            UIAccessibilityCustomAction(name: T.Commons.edit,
+                                        actionHandler: { (_: UIAccessibilityCustomAction) -> Bool in
+                                            self.presenter.handleEditService(serviceData)
+                                            return true
+                                        }),
+            
+            UIAccessibilityCustomAction(name: T.Tokens.copyToken,
+                                        actionHandler: { (_: UIAccessibilityCustomAction) -> Bool in
+                                            self.presenter.handleCopyToken(from: serviceData)
+                                            return true
+                                        }),
+            
+            UIAccessibilityCustomAction(name: T.Commons.delete,
+                                        actionHandler: { (_: UIAccessibilityCustomAction) -> Bool in
+                                            self.presenter.handleDeleteService(serviceData)
+                                            return true
+                                        })
+        ]
     }
 }
 

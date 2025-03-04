@@ -127,7 +127,7 @@ private final class Circle: UIView {
     private var dimension: CGFloat = TokensCellKind.normal.iconDimension
     private var color: UIColor = .white
     
-    override class var layerClass: AnyClass { CAShapeLayer.self }
+    override static var layerClass: AnyClass { CAShapeLayer.self }
     private var shapeLayer = CAShapeLayer()
     private var rectLayer = CAShapeLayer()
     

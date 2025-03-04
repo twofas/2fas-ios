@@ -82,7 +82,7 @@ private final class GradientView: UIView {
     private let locationsTop: [NSNumber] = [0.2, 1.0]
     private let locationsBottom: [NSNumber] = [0.1, 1.0]
     
-    override class var layerClass: AnyClass {
+    override static var layerClass: AnyClass {
         CAGradientLayer.self
     }
     override init(frame: CGRect) {

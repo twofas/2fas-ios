@@ -42,7 +42,7 @@ struct ExternalImportCell: Hashable {
 
 extension ExternalImportPresenter {
     func buildMenu() -> [ExternalImportSection] {
-        return[
+        [
             ExternalImportSection(
                 title: T.externalimportSelectApp,
                 cells: [

@@ -124,8 +124,8 @@ private extension IconSelectorModuleInteractor {
         let tags = serviceDefinitionInteractor.findServices(byTag: searchText)
             .map({ $0.iconTypeID })
         let icons = iconInteractor.grouppedList()
-        let filteredIcons: [IconDescriptionGroup] = icons.enumerated().compactMap { _, element in
-            let selectedIcon: [IconDescription] = element.icons.enumerated().compactMap { _, iconElement in
+        let filteredIcons: [IconDescriptionGroup] = icons.compactMap { element in
+            let selectedIcon: [IconDescription] = element.icons.compactMap { iconElement in
                 if iconElement.name.uppercased().contains(searchTextFormatted)
                     || tags.contains(iconElement.iconTypeID) {
                     return iconElement

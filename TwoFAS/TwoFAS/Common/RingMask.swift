@@ -20,7 +20,7 @@
 import UIKit
 
 final class RingMask: UIView {
-    override class var layerClass: AnyClass { CAShapeLayer.self }
+    override static var layerClass: AnyClass { CAShapeLayer.self }
     
     private var shapeLayer: CAShapeLayer { self.layer as! CAShapeLayer }
     

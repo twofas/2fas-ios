@@ -41,7 +41,6 @@ final class TokensLogo: UIView {
         imageView.pinToParent()
         setContentHuggingPriority(.defaultHigh + 2, for: .horizontal)
         setContentHuggingPriority(.defaultLow - 2, for: .vertical)
-        
         addSubview(labelRenderer)
         labelRenderer.pinToParentCenter()
     }
@@ -57,6 +56,7 @@ final class TokensLogo: UIView {
         }
         
         isAccessibilityElement = false
+        accessibilityElementsHidden = true
     }
     
     func configure(with logoType: LogoType) {
@@ -75,7 +75,7 @@ final class TokensLogo: UIView {
             labelRenderer.isHidden = true
         case .label(let text, let tintColor):
             labelRenderer.setColor(tintColor, animated: false)
-            labelRenderer.setText(text)
+            labelRenderer.setText(text, ignoreVocalization: true)
             
             imageView.isHidden = true
             labelRenderer.isHidden = false

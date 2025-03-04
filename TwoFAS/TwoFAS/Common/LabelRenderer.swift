@@ -84,14 +84,16 @@ final class LabelRenderer: UIView {
         updateAccessibility()
     }
     
-    func setText(_ text: String) {
+    func setText(_ text: String, ignoreVocalization: Bool = true) {
         var newText = text.uppercased()
         if newText.count > 2 {
             newText = newText[0...2]
         }
         titleLabel.text = newText
         
-        accessibilityText = text
+        if !ignoreVocalization {
+            accessibilityText = text
+        }
         updateAccessibility()
     }
     

@@ -11726,7 +11726,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 5.3.13;
+				MARKETING_VERSION = 5.4.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
@@ -11788,7 +11788,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 5.3.13;
+				MARKETING_VERSION = 5.4.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
@@ -13770,7 +13770,7 @@
 			repositoryURL = "https://github.com/MobileNativeFoundation/Kronos";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.2.1;
+				minimumVersion = 4.3.1;
 			};
 		};
 		C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */ = {
@@ -13810,7 +13810,7 @@
 			repositoryURL = "https://github.com/apple/swift-protobuf.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.28.0;
+				minimumVersion = 1.28.2;
 			};
 		};
 		C2EC97D22D917D8900C0A27A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {

@@ -33,10 +33,13 @@ final class CameraController {
         case inputDeviceRegistration
         case outputModuleRegistration(module: CameraOutputModule)
     }
-        
+    
     private var captureSession: AVCaptureSession?
+    private var captureDevice: AVCaptureDevice?
     private var outputs: [CameraOutputModule] = []
     private weak var layer: AVCaptureVideoPreviewLayer?
+    
+    private let notificationCenter = NotificationCenter.default
     
     weak var delegate: CameraControllerDelegate?
     
@@ -57,6 +60,15 @@ final class CameraController {
         let captureSession = AVCaptureSession()
         captureSession.sessionPreset = .high
         
+        if #available(iOS 17, *) {
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(updateOrientation),
+                name: UIDevice.orientationDidChangeNotification,
+                object: nil
+            )
+        }
+        
         self.outputs = outputs
         
         guard let device = AVCaptureDevice.default(for: .video) else { return }
@@ -70,6 +82,7 @@ final class CameraController {
             initializationFailed(.deviceInitialization(error: error))
             return
         }
+        self.captureDevice = device
         
         let videoInput: AVCaptureDeviceInput
         do {
@@ -115,6 +128,9 @@ final class CameraController {
         guard !isRunning else { return }
         Log("CameraController - startPreview. Starting!", module: .camera)
         updateOrientation()
+        if #available(iOS 17, *) {
+            UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+        }
         DispatchQueue.global(qos: .userInitiated).async {
             self.captureSession?.startRunning()
             DispatchQueue.main.async {
@@ -126,6 +142,9 @@ final class CameraController {
     func stopPreview() {
         guard isRunning else { return }
         Log("CameraController - stopPreview. Stopping!", module: .camera)
+        if #available(iOS 17, *) {
+            UIDevice.current.endGeneratingDeviceOrientationNotifications()
+        }
         DispatchQueue.main.async {
             self.captureSession?.stopRunning()
             self.delegate?.cameraStoppedPreview()
@@ -157,13 +176,47 @@ final class CameraController {
         clearSession(useAsync: true)
     }
     
+    @objc
     func updateOrientation() {
+        if #available(iOS 17, *) {
+            modernUpdateOrientation()
+        } else {
+            legacyUpdateOrientation()
+        }
+        
+    }
+    
+    @available(iOS 17, *)
+    private func modernUpdateOrientation() {
         guard
-            let connection = self.layer?.connection,
+            let layer,
+            let connection = layer.connection,
             let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-            connection.isVideoOrientationSupported
+            let device = self.captureDevice
         else { return }
+        
         Log("CameraController - updateOrientation", module: .camera)
+        
+        let rotationCoordinator = AVCaptureDevice.RotationCoordinator(
+            device: device,
+            previewLayer: layer
+        )
+        let angle = rotationCoordinator.videoRotationAngleForHorizonLevelPreview
+        
+        guard connection.isVideoRotationAngleSupported(angle) else { return }
+        
+        connection.videoRotationAngle = angle
+    }
+    
+    private func legacyUpdateOrientation() {
+        guard let layer,
+              let connection = layer.connection,
+              let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              connection.isVideoOrientationSupported
+        else { return }
+        
+        Log("CameraController - updateOrientation", module: .camera)
+        
         let avOrientation: AVCaptureVideoOrientation = {
             switch scene.interfaceOrientation {
             case .landscapeLeft: return .landscapeLeft
@@ -219,6 +272,7 @@ final class CameraController {
     
     deinit {
         Log("CameraController - deinit!", module: .camera)
+        notificationCenter.removeObserver(self)
         clearSession(useAsync: false)
     }
 }

@@ -39,7 +39,7 @@ public final class LogHandler: LogStorageHandling {
     private var checkCounter: Int = 0
     private var saveCounter: Int = 0
     private var zoneSaveCounter: Int = 0
-        
+    
     private var inZone = false
     
     private let context: NSManagedObjectContext
@@ -136,8 +136,8 @@ public final class LogHandler: LogStorageHandling {
             self?.saveCounter = 0
             self?.zoneSaveCounter = 0
             
-            if self?.context.hasChanges == true {
-                self?.context.performAndWait { [weak self] in
+            self?.context.performAndWait { [weak self] in
+                if self?.context.hasChanges == true {
                     do {
                         try self?.context.save()
                     } catch {

@@ -32,6 +32,7 @@ final class ServiceCacheEntity: NSManagedObject {
     @nonobjc static func create(
         on context: NSManagedObjectContext,
         metadata: Data,
+        entryID: UUID,
         name: String,
         secret: String,
         serviceTypeID: ServiceTypeID?,
@@ -59,6 +60,7 @@ final class ServiceCacheEntity: NSManagedObject {
             into: context
         ) as! ServiceCacheEntity
         
+        service.entryID = entryID
         service.metadata = metadata
         service.name = name
         service.secret = secret
@@ -95,10 +97,23 @@ final class ServiceCacheEntity: NSManagedObject {
         guard let service = findService(on: context, secret: secret) else { return }
         delete(on: context, serviceEntity: service)
     }
+    
+    @nonobjc static func delete(on context: NSManagedObjectContext, identifiedBy entryID: UUID) {
+        guard let service = findService(on: context, entryID: entryID) else { return }
+        delete(on: context, serviceEntity: service)
+    }
+    
+    @nonobjc static func findService(on context: NSManagedObjectContext, entryID: UUID) -> ServiceCacheEntity? {
+        findService(on: context, predicate: NSPredicate(format: "entryID == %@", entryID as CVarArg))
+    }
+    
+    @nonobjc static func findService(on context: NSManagedObjectContext, secret: Secret) -> ServiceCacheEntity? {
+        findService(on: context, predicate: NSPredicate(format: "secret == %@", secret))
+    }
         
-    @nonobjc static func findService(on context: NSManagedObjectContext, secret: String) -> ServiceCacheEntity? {
+    @nonobjc private static func findService(on context: NSManagedObjectContext, predicate: NSPredicate) -> ServiceCacheEntity? {
         let fetchRequest = ServiceCacheEntity.request()
-        fetchRequest.predicate = NSPredicate(format: "secret == %@", secret)
+        fetchRequest.predicate = predicate
         
         var list: [ServiceCacheEntity] = []
         do {

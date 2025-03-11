@@ -25,20 +25,13 @@ import Common
 import CommonWatch
 #endif
 
-private enum ServiceEntryKey2: String {
-    case name
-    case secret
-    case serviceTypeID
-    case additionalInfo
-    case rawIssuer
-    case otpAuth
+private enum ServiceEntryKey3: String {
     case tokenLength
     case tokenPeriod
     case badgeColor
     case iconType
     case labelTitle
     case labelColor
-    case iconTypeID
     case sectionID
     case sectionOrder
     case algorithm
@@ -48,7 +41,17 @@ private enum ServiceEntryKey2: String {
     case reference
 }
 
-final class ServiceRecord2 {
+private enum ServiceEntryKeyEncrypted3: String {
+    case name
+    case secret
+    case serviceTypeID
+    case additionalInfo
+    case rawIssuer
+    case otpAuth
+    case iconTypeID
+}
+
+final class ServiceRecord3 {
     private(set) var name: String = ""
     private(set) var secret: String = ""
     private(set) var unencryptedSecret: String = ""
@@ -205,6 +208,7 @@ final class ServiceRecord2 {
     }
     
     static func create(
+        entryID: String,
         zoneID: CKRecordZone.ID,
         name: String,
         secret: String,
@@ -229,8 +233,8 @@ final class ServiceRecord2 {
         reference: String
     ) -> CKRecord? {
         let record = CKRecord(
-            recordType: RecordType.service2.rawValue,
-            recordID: recordID(with: unencryptedSecret, zoneID: zoneID)
+            recordType: RecordType.service3.rawValue,
+            recordID: recordID(with: entryID, zoneID: zoneID)
         )
         
         update(
@@ -306,15 +310,20 @@ final class ServiceRecord2 {
     }
 }
 
-extension ServiceRecord2: RecordIDGenerator {
+extension ServiceRecord3: RecordIDGenerator {
     static func recordID(with identifier: String, zoneID: CKRecordZone.ID) -> CKRecord.ID {
-        CKRecord.ID(recordName: "\(iCloudIdentifier.generate(from: identifier))".encrypt(), zoneID: zoneID)
+        CKRecord.ID(recordName: "\(iCloudIdentifier.generate(from: identifier))", zoneID: zoneID)
     }
 }
 
 private extension CKRecord {
-    subscript(_ key: ServiceEntryKey2) -> CKRecordValue? {
+    subscript(_ key: ServiceEntryKey3) -> CKRecordValue? {
         get { self[key.rawValue] }
         set { self[key.rawValue] = newValue }
+    }
+    
+    subscript(_ key: ServiceEntryKeyEncrypted3) -> CKRecordValue? {
+        get { self.encryptedValues[key.rawValue] }
+        set { self.encryptedValues[key.rawValue] = newValue }
     }
 }

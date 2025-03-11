@@ -25,7 +25,7 @@ import Common
 import CommonWatch
 #endif
 
-enum ServiceEntryKey: String {
+private enum ServiceEntryKey: String {
     case name
     case secret
     case service

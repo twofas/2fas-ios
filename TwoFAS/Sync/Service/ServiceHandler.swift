@@ -38,6 +38,10 @@ final class ServiceHandler {
     }
     
     func delete(identifiedBy identifier: String) {
+        if case let iCloudIdentifier.v3(id) = iCloudIdentifier.parse(identifier) {
+            ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: id)
+            return
+        }
         let identifier = identifier.decrypt()
         switch iCloudIdentifier.parse(identifier) {
         case .v2(let secret):
@@ -51,7 +55,7 @@ final class ServiceHandler {
                 return
             }
             ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: first.secret)
-        case .deprecated:
+        default:
             Log("ServiceHandler - Can't find range in identifier", severity: .error)
             return
         }
@@ -91,14 +95,14 @@ final class ServiceHandler {
         return services.map({ $0.serviceData })
     }
     
-    func updateOrCreate(with records: [ServiceRecord2]) {
+    func updateOrCreate(with records: [ServiceRecord3]) {
         records.forEach { record in
             updateOrCreate(with: record, save: false)
         }
         coreDataStack.save()
     }
     
-    func updateOrCreate(with record: ServiceRecord2, save: Bool) {
+    func updateOrCreate(with record: ServiceRecord3, save: Bool) {
         guard
             let encryption,
             let embedded,

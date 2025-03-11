@@ -43,7 +43,7 @@ enum iCloudIdentifier {
         return "\(longID)\(longIdentifier)\(str[0...9])"
     }
     
-    private static func hash(from str: String) -> String {
+    static func hash(from str: String) -> String {
         guard let data = str.data(using: .utf8) else { return str }
         return SHA256.hash(data: data)
             .compactMap { String(format: "%02x", $0) }

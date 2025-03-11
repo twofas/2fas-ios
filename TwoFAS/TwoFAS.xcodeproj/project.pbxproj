@@ -376,6 +376,8 @@
 		C254D12026ACB777005FEBD4 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254D11F26ACB777005FEBD4 /* Provider.swift */; };
 		C254D12226ACB7D8005FEBD4 /* CodeRedaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254D12126ACB7D8005FEBD4 /* CodeRedaction.swift */; };
 		C2557A9923F5E96200E713EF /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2557A9823F5E96200E713EF /* Separator.swift */; };
+		C257DD742D80DC44004FB575 /* ServiceRecord3.swift in Sources */ = {isa = PBXBuildFile; fileRef = C257DD732D80DC44004FB575 /* ServiceRecord3.swift */; };
+		C257DD752D80E15F004FB575 /* ServiceRecord3.swift in Sources */ = {isa = PBXBuildFile; fileRef = C257DD732D80DC44004FB575 /* ServiceRecord3.swift */; };
 		C258594628034E85002DC749 /* PairingEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C258594428034E85002DC749 /* PairingEntity+CoreDataClass.swift */; };
 		C258594728034E85002DC749 /* PairingEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C258594528034E85002DC749 /* PairingEntity+CoreDataProperties.swift */; };
 		C258594C28035205002DC749 /* AuthRequestEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C258594A28035205002DC749 /* AuthRequestEntity+CoreDataClass.swift */; };
@@ -2282,6 +2284,7 @@
 		C254D11F26ACB777005FEBD4 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		C254D12126ACB7D8005FEBD4 /* CodeRedaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeRedaction.swift; sourceTree = "<group>"; };
 		C2557A9823F5E96200E713EF /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
+		C257DD732D80DC44004FB575 /* ServiceRecord3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceRecord3.swift; sourceTree = "<group>"; };
 		C257FD061FD9F6F300CF6898 /* PermissionsStateDataControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsStateDataControllerProtocol.swift; sourceTree = "<group>"; };
 		C257FD0E1FDC3B0F00CF6898 /* TokenStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenStorage.swift; sourceTree = "<group>"; };
 		C25859352802E73B002DC749 /* MainRepositoryImpl+PushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+PushNotifications.swift"; sourceTree = "<group>"; };
@@ -8150,6 +8153,7 @@
 			children = (
 				C2EF3F6D25575D730006735E /* ServiceRecord.swift */,
 				C27E6FB028FC7E3800AC9FD1 /* ServiceRecord2.swift */,
+				C257DD732D80DC44004FB575 /* ServiceRecord3.swift */,
 				C2EF4044255860FC0006735E /* ServiceHandler.swift */,
 				C2EF402425582AFB0006735E /* ServiceCacheEntity+CoreDataClass.swift */,
 				C2EF402525582AFB0006735E /* ServiceCacheEntity+CoreDataProperties.swift */,
@@ -10228,6 +10232,7 @@
 				C23BAB142545AEF5009B1EF8 /* ConstStorage.swift in Sources */,
 				C207C11F2559F1CB0053975E /* CloudKitErrorParser.swift in Sources */,
 				C24EECF6268787B400C6ABAA /* SectionHandler.swift in Sources */,
+				C257DD742D80DC44004FB575 /* ServiceRecord3.swift in Sources */,
 				C2F543DD25672E7600611716 /* Types.swift in Sources */,
 				C244EF14268685BC0040A58F /* Sync2-Sync3.xcmappingmodel in Sources */,
 				C2D507B6256477DA00151359 /* CloudHandler.swift in Sources */,
@@ -10299,6 +10304,7 @@
 				C274C9AC2BAB89C7008E7212 /* ServiceCacheEntity+CoreDataClass.swift in Sources */,
 				C274C9AD2BAB89C7008E7212 /* DynamicTypesEntityMigrationPolicySync.swift in Sources */,
 				C274C9B12BAB89C7008E7212 /* ServiceRecord.swift in Sources */,
+				C257DD752D80E15F004FB575 /* ServiceRecord3.swift in Sources */,
 				C274C9B22BAB89C7008E7212 /* iCloudIdentifier.swift in Sources */,
 				C274C9B32BAB89C7008E7212 /* ServiceCacheEntity+CoreDataProperties.swift in Sources */,
 				C274C9B42BAB89C7008E7212 /* ServiceHandler.swift in Sources */,

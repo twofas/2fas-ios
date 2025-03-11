@@ -22,6 +22,7 @@ import Foundation
 enum RecordType: String {
     case service1 = "ServiceRecord"
     case service2 = "ServiceRecord2"
+    case service3 = "ServiceRecord3"
     case info = "CloudInfo"
     case section = "SectionRecord"
 }
@@ -29,14 +30,11 @@ enum RecordType: String {
 extension RecordType {
     var recordIDGenerator: RecordIDGenerator.Type {
         switch self {
-        case .service1:
-            return ServiceRecord.self
-        case .service2:
-            return ServiceRecord2.self
-        case .info:
-            return InfoRecord.self
-        case .section:
-            return SectionRecord.self
+        case .service1: ServiceRecord.self
+        case .service2: ServiceRecord2.self
+        case .service3: ServiceRecord3.self
+        case .info: InfoRecord.self
+        case .section: SectionRecord.self
         }
     }
 }

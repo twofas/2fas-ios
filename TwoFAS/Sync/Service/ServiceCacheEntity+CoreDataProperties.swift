@@ -25,6 +25,7 @@ extension ServiceCacheEntity {
         NSFetchRequest<ServiceCacheEntity>(entityName: "ServiceCacheEntity")
     }
     
+    @NSManaged var entryID: UUID
     @NSManaged var name: String
     @NSManaged var secret: String
     @NSManaged var serviceTypeID: UUID?

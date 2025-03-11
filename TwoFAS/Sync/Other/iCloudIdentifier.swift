@@ -28,7 +28,9 @@ import CommonWatch
 enum iCloudIdentifier {
     private static let v2Identifier = "_V2"
     private static let longIdentifier = "_L00NG_"
+    private static let v3Identifier = "_V3"
     
+    case v3(id: UUID)
     case v2(id: String)
     case long(hash: String, beginsWith: String)
     case deprecated(id: String)
@@ -41,7 +43,7 @@ enum iCloudIdentifier {
         return "\(longID)\(longIdentifier)\(str[0...9])"
     }
     
-    static func hash(from str: String) -> String {
+    private static func hash(from str: String) -> String {
         guard let data = str.data(using: .utf8) else { return str }
         return SHA256.hash(data: data)
             .compactMap { String(format: "%02x", $0) }
@@ -50,6 +52,12 @@ enum iCloudIdentifier {
     }
     
     static func parse(_ str: String) -> Self {
+        if let range = str.range(of: v3Identifier) {
+            let uuidString = str.replacingCharacters(in: range, with: "")
+            if let uuid = UUID(uuidString: uuidString) {
+                return .v3(id: uuid)
+            }
+        }
         if let range = str.range(of: v2Identifier) {
             let secret = str.replacingCharacters(in: range, with: "")
             return .v2(id: secret)

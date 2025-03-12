@@ -26,6 +26,6 @@ struct Info: Hashable {
         case system
         case user
     }
-    let version: Int = 2
+    let version: Int = 3
     let encyption: Encryption = .system
 }

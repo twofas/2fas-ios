@@ -992,6 +992,10 @@
 		C2CC0A4E29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A4D29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift */; };
 		C2CC80D627B99AF700294CF2 /* ComposeServicePresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC80D527B99AF700294CF2 /* ComposeServicePresenter+Menu.swift */; };
 		C2CC80D827B99B0600294CF2 /* ComposeServicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC80D727B99B0600294CF2 /* ComposeServicePresenter.swift */; };
+		C2CCEB5D2D822AF70067FDCB /* ModificationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CCEB5C2D822AF30067FDCB /* ModificationQueue.swift */; };
+		C2CCEB5E2D822AF70067FDCB /* ModificationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CCEB5C2D822AF30067FDCB /* ModificationQueue.swift */; };
+		C2CCEB602D8237AD0067FDCB /* MergeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CCEB5F2D8237A90067FDCB /* MergeHandler.swift */; };
+		C2CCEB612D8237AD0067FDCB /* MergeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CCEB5F2D8237A90067FDCB /* MergeHandler.swift */; };
 		C2CD687325FEC94400EFEFCF /* FormLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CD687225FEC94400EFEFCF /* FormLine.swift */; };
 		C2CE84A12814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CE84A02814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift */; };
 		C2CF23FE23623DE000B759DD /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = C2CF23FD23623DE000B759DD /* KeychainAccess */; };
@@ -2832,6 +2836,8 @@
 		C2CC0A4D29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalImportInstructionsFlowController.swift; sourceTree = "<group>"; };
 		C2CC80D527B99AF700294CF2 /* ComposeServicePresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComposeServicePresenter+Menu.swift"; sourceTree = "<group>"; };
 		C2CC80D727B99B0600294CF2 /* ComposeServicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServicePresenter.swift; sourceTree = "<group>"; };
+		C2CCEB5C2D822AF30067FDCB /* ModificationQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModificationQueue.swift; sourceTree = "<group>"; };
+		C2CCEB5F2D8237A90067FDCB /* MergeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeHandler.swift; sourceTree = "<group>"; };
 		C2CD687225FEC94400EFEFCF /* FormLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormLine.swift; path = TwoFAS/Common/Controls/FormLine.swift; sourceTree = SOURCE_ROOT; };
 		C2CE0E152793471E007DB667 /* GoogleAuth.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAuth.pb.swift; sourceTree = "<group>"; };
 		C2CE84A02814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionTableViewHeader.swift; sourceTree = "<group>"; };
@@ -5305,6 +5311,7 @@
 		C24D1C1B253C744E0029D27D /* Sync */ = {
 			isa = PBXGroup;
 			children = (
+				C2CCEB5F2D8237A90067FDCB /* MergeHandler.swift */,
 				C213BC652BAC4883000794C9 /* Watch */,
 				C2F5443425685C2100611716 /* SyncInstance.swift */,
 				C274CA992BAB94B3008E7212 /* SyncInstanceWatch.swift */,
@@ -5316,6 +5323,7 @@
 				C24EECF926878C5C00C6ABAA /* CommonItemHandler.swift */,
 				C2A7ABF1286328E60085CFEF /* SyncTokenHandler.swift */,
 				C2EFCE0625D05E320031293F /* ClearHandler.swift */,
+				C2CCEB5C2D822AF30067FDCB /* ModificationQueue.swift */,
 				C2C4F64528FDEF6C00285B81 /* Item */,
 				C2F543FB25672EBA00611716 /* Other */,
 				C27E6FB428FC8AF200AC9FD1 /* Info */,
@@ -10224,6 +10232,7 @@
 			files = (
 				C23BAB042545A861009B1EF8 /* CloudKit.swift in Sources */,
 				C201F24D25BDD017001DA257 /* SecretValidation.swift in Sources */,
+				C2CCEB612D8237AD0067FDCB /* MergeHandler.swift in Sources */,
 				C2F5443525685C2100611716 /* SyncInstance.swift in Sources */,
 				C24EECF12687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift in Sources */,
 				C2058E09277D24940015F17E /* LogDataChange.swift in Sources */,
@@ -10241,6 +10250,7 @@
 				C24EECF22687772800C6ABAA /* SectionCacheEntity+CoreDataProperties.swift in Sources */,
 				C24EECEC268772B600C6ABAA /* RecordType.swift in Sources */,
 				C2EFCE0725D05E320031293F /* ClearHandler.swift in Sources */,
+				C2CCEB5E2D822AF70067FDCB /* ModificationQueue.swift in Sources */,
 				C2A7ABF2286328E60085CFEF /* SyncTokenHandler.swift in Sources */,
 				C27E6FB128FC7E3800AC9FD1 /* ServiceRecord2.swift in Sources */,
 				C2D61E4225602F5000C5BE3A /* LogEntity+CoreDataProperties.swift in Sources */,
@@ -10299,8 +10309,10 @@
 				C274C9A72BAB89C7008E7212 /* ClearHandler.swift in Sources */,
 				C274C9A82BAB89C7008E7212 /* SyncTokenHandler.swift in Sources */,
 				C274C9A92BAB89C7008E7212 /* ServiceRecord2.swift in Sources */,
+				C2CCEB5D2D822AF70067FDCB /* ModificationQueue.swift in Sources */,
 				C274C9AA2BAB89C7008E7212 /* LogEntity+CoreDataProperties.swift in Sources */,
 				C274C9AB2BAB89C7008E7212 /* CloudAvailability.swift in Sources */,
+				C2CCEB602D8237AD0067FDCB /* MergeHandler.swift in Sources */,
 				C274C9AC2BAB89C7008E7212 /* ServiceCacheEntity+CoreDataClass.swift in Sources */,
 				C274C9AD2BAB89C7008E7212 /* DynamicTypesEntityMigrationPolicySync.swift in Sources */,
 				C274C9B12BAB89C7008E7212 /* ServiceRecord.swift in Sources */,

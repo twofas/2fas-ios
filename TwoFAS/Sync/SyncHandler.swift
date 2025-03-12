@@ -30,6 +30,8 @@ final class SyncHandler {
     private let itemHandler: ItemHandlerMigrationProxy
     private let commonItemHandler: CommonItemHandler
     private let cloudKit: CloudKit
+    private let modificationQueue: ModificationQueue
+    private let mergeHandler: MergeHandler
     
     private var isSyncing = false
     private var applyingChanges = false
@@ -53,12 +55,16 @@ final class SyncHandler {
         itemHandler: ItemHandlerMigrationProxy,
         commonItemHandler: CommonItemHandler,
         logHandler: LogHandler,
-        cloudKit: CloudKit
+        cloudKit: CloudKit,
+        modificationQueue: ModificationQueue,
+        mergeHandler: MergeHandler
     ) {
         self.itemHandler = itemHandler
         self.commonItemHandler = commonItemHandler
         self.logHandler = logHandler
         self.cloudKit = cloudKit
+        self.modificationQueue = modificationQueue
+        self.mergeHandler = mergeHandler
         
         cloudKit.initialize()
         
@@ -132,6 +138,7 @@ final class SyncHandler {
         logHandler.deleteAll()
         itemHandler.purge()
         ConstStorage.clearZone()
+        modificationQueue.clear()
         
         commonItemHandler.logFirstImport()
     }
@@ -145,6 +152,7 @@ final class SyncHandler {
         isSyncing = true
         startedSync?()
         
+        modificationQueue.clear()
         cloudKit.cloudSync()
     }
     
@@ -156,11 +164,6 @@ final class SyncHandler {
         itemHandler.purge()
         ConstStorage.clearZone()
         cloudKit.clear()
-    }
-    
-    func clearSimulateFirstStart() {
-        Log("SyncHandler - Sync Handler: clearSimulateFirstStart", module: .cloudSync)
-        ConstStorage.clearZone()
     }
     
     func setTimeOffset(_ offset: Int) {
@@ -190,149 +193,14 @@ final class SyncHandler {
         Log("SyncHandler - method: fetch finished successfuly", module: .cloudSync)
         guard isSyncing else { return }
         Log("SyncHandler -  method: fetch finished successfuly - is syncing now", module: .cloudSync)
-        guard logHandler.countChanges() > 0 else {
+        guard mergeHandler.hasChanges else {
             Log("SyncHandler - No logs with changes. Exiting", module: .cloudSync)
             applyingChanges = false
             syncCompleted()
             return
         }
         
-        LogZoneStart()
-        Log("Starting sync", module: .cloudSync)
-        
-        // Add items from migration before we get all items
-        commonItemHandler.setItemsFromMigration(itemHandler.servicesToAppend())
-        
-        let changes = logHandler.listAllActions()
-        let current = commonItemHandler.getAllItems()
-        
-        // If in migration then we're removing from current cache Service2, otherwise they'll be removed -> same entityID as Service1
-        // They will be force-added as Service2
-        let currentCache = itemHandler.listAllCommonItems()
-        var listToSend = currentCache
-        
-        var deleteRecordsIDs: [CKRecord.ID] = itemHandler.itemsToDeleteAfterMigration()
-        var recordsToModify: [CKRecord] = []
-        
-        if let deleted = changes[.deleted] {
-            let deletedEntities: [EntityOfKind] = deleted.compactMap { item in
-                guard let type = RecordType(rawValue: item.kind) else { return nil }
-                return (entityID: item.entityID, type: type)
-            }
-            deleteRecordsIDs += itemHandler.findItemsRecordIDs(for: deletedEntities, zoneID: cloudKit.zoneID)
-            Log("SyncHandler - Deletition: Removing services logged: \(deleted.count), existing in cloud: \(deleteRecordsIDs.count)", module: .cloudSync)
-            listToSend = itemHandler.filterDeleted(from: currentCache, deleted: deletedEntities)
-        }
-        
-        if let created = changes[.created] {
-            created.forEach { newLogEntry in
-                if let type = RecordType(rawValue: newLogEntry.kind) {
-                    if let cloudEntry = itemHandler.findItemForEntryID(newLogEntry.entityID, type: type, in: currentCache) {
-                        Log("SyncHandler - Creation: Item already exists - merging", module: .cloudSync)
-                        guard let currentEntry = itemHandler.findItemForEntryID(newLogEntry.entityID, type: type, in: current) else {
-                            Log("SyncHandler - Creation: Can't find new entry in local database!", module: .cloudSync)
-                            return
-                        }
-                        guard currentEntry != cloudEntry else {
-                            Log("SyncHandler - Creation: Item already in place and identical to the one in the cloud", module: .cloudSync)
-                            return
-                        }
-                        if dateOffsetet(for: newLogEntry) > cloudEntry.comparisionDate {
-                            Log("SyncHandler - Creation: New entry newer than the cloud one", module: .cloudSync)
-                            var list = listToSend[type] ?? []
-                            if currentEntry.index == cloudEntry.index {
-                                Log("SyncHandler - Creation: Inserting in the same order", module: .cloudSync)
-                                list[cloudEntry.index] = currentEntry.item
-                            } else {
-                                Log("SyncHandler - Creation: Moving to new order", module: .cloudSync)
-                                list.safeRemoval(at: cloudEntry.index)
-                                list.safeInsert(currentEntry.item, at: currentEntry.index)
-                            }
-                            listToSend[type] = list
-                        } else {
-                            Log("SyncHandler - Creation: Item exists in cloud and it's newer", module: .cloudSync)
-                        }
-                    } else {
-                        Log("SyncHandler - Creation: Couldn't find service in current cache - trying to create one to send to cloud", module: .cloudSync)
-                        guard let entry = itemHandler.findItemForEntryID(newLogEntry.entityID, type: type, in: current) else {
-                            Log("SyncHandler - Creation: Can't find new entry in local database which should be added!", module: .cloudSync)
-                            return
-                        }
-                        Log("SyncHandler - Creation: Creating new item at index: \(entry.index)", module: .cloudSync)
-                        Log("SyncHandler - the item: \(entry.item)", module: .cloudSync, save: false)
-                        var list = listToSend[type] ?? []
-                        list.safeInsert(entry.item, at: entry.index)
-                        listToSend[type] = list
-                    }
-                }
-            }
-        }
-        
-        if let modified = changes[.modified] {
-            modified.forEach { modifiedLogEntry in
-                if let type = RecordType(rawValue: modifiedLogEntry.kind) {
-                    if let cloudEntry = itemHandler.findItemForEntryID(modifiedLogEntry.entityID, type: type, in: listToSend) {
-                        guard let currentEntry = itemHandler.findItemForEntryID(modifiedLogEntry.entityID, type: type, in: current) else {
-                            Log("SyncHandler - Modification: Can't find modified entry in local database!", module: .cloudSync)
-                            return
-                        }
-                        guard currentEntry != cloudEntry else {
-                            Log("SyncHandler - Modification: Items already in place", module: .cloudSync)
-                            return
-                        }
-                        if dateOffsetet(for: modifiedLogEntry) > cloudEntry.comparisionDate {
-                            var list = listToSend[type] ?? []
-                            if currentEntry.index == cloudEntry.index {
-                                Log("SyncHandler - Modification: Item in place but overriding with local one", module: .cloudSync)
-                                list[cloudEntry.index] = currentEntry.item
-                            } else {
-                                Log("SyncHandler - Modification: Item overrided with local one", module: .cloudSync)
-                                list.safeRemoval(at: cloudEntry.index)
-                                list.safeInsert(currentEntry.item, at: currentEntry.index)
-                            }
-                            listToSend[type] = list
-                        } else {
-                            Log("SyncHandler - Modification: Items in cloud are newer", module: .cloudSync)
-                        }
-                    } else {
-                        Log("SyncHandler - Modification: Item already removed from cloud", module: .cloudSync)
-                    }
-                }
-            }
-        }
-        
-        for (type, items) in listToSend {
-            for (index, item) in items.enumerated() {
-                if let elementInCache = itemHandler.findItem(for: item, type: type, in: currentCache) {
-                    Log("SyncHandler - Preparation: element in cache", module: .cloudSync)
-                    if index != elementInCache.index || !elementInCache.isEqual(to: item) {
-                        Log("SyncHandler - Preparation: element has diffrent content or index. Creating from exisiting one", module: .cloudSync)
-                        
-                        guard let record = itemHandler.record(for: type, item: item, modifiedData: current) else {
-                            Log("SyncHandler - Preparation: couldn't create record from exisiting service", module: .cloudSync)
-                            continue
-                        }
-                        recordsToModify.append(record)
-                    } else {
-                        Log("SyncHandler - Preparation: content and index is the same", module: .cloudSync)
-                    }
-                } else {
-                    Log("SyncHandler - Preparation: new service", module: .cloudSync)
-                    
-                    guard let record = itemHandler.record(for: type, item: item, index: index, zoneID: cloudKit.zoneID, allItems: items) else { continue }
-                    recordsToModify.append(record)
-                }
-            }
-        }
-        
-        Log("SyncHandler - Marking all as applied", module: .cloudSync)
-        logHandler.markAllAsApplied()
-        
-        let recordIDsToDeleteOnServer = deleteRecordsIDs.isEmpty ? nil : deleteRecordsIDs
-        let recordsToModifyOnServer = recordsToModify.isEmpty ? nil : recordsToModify
-        
-        Log("SyncHandler - Change records: deletition: \(String(describing: recordIDsToDeleteOnServer?.count)), modification: \(String(describing: recordsToModifyOnServer?.count))", module: .cloudSync)
-        LogZoneEnd()
+       
         
         guard recordIDsToDeleteOnServer != nil || recordsToModifyOnServer != nil else {
             Log("SyncHandler - Nothing to delete or modify", module: .cloudSync)
@@ -344,12 +212,28 @@ final class SyncHandler {
         Log("SyncHandler - Sending changes", module: .cloudSync)
         applyingChanges = true
         cloudKit.modifyRecord(recordsToSave: recordsToModifyOnServer, recordIDsToDelete: recordIDsToDeleteOnServer)
+        
+//        modifyQueue.setRecordsToModifyOnServer(recordsToModifyOnServer, deleteIDs: recordIDsToDeleteOnServer)
+//        let current = modifyQueue.currentBatch()
+//        cloudKit.modifyRecord(recordsToSave: current.modify, recordIDsToDelete: current.delete)
     }
     
     private func changesSavedSuccessfuly() {
         Log("SyncHandler - Changes Saved Successfuly", module: .cloudSync)
         logHandler.deleteAllApplied()
         syncCompleted()
+        
+//        guard isSyncing, applyingChanges else { return }
+//        modifyQueue.prevBatchProcessed()
+//        if modifyQueue.finished {
+//            Log("SyncHandler - All Changes Saved Successfuly", module: .cloudSync)
+//            applyingChanges = false
+//            syncCompleted()
+//        } else {
+//            Log("SyncHandler - Batch Changes Saved Successfuly. Preparing next batch", module: .cloudSync)
+//            let current = modifyQueue.currentBatch()
+//            cloudKit.modifyRecord(recordsToSave: current.modify, recordIDsToDelete: current.delete)
+//        }
     }
     
     private func syncCompleted() {
@@ -398,6 +282,7 @@ final class SyncHandler {
         Log("SyncHandler - Sync Handler: resetStack", module: .cloudSync)
         isSyncing = false
         applyingChanges = false
+        modificationQueue.clear()
         logHandler.deleteAll()
         itemHandler.purge()
         ConstStorage.clearZone()

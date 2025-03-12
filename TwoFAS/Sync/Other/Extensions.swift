@@ -52,6 +52,7 @@ struct CommonDataIndex: Equatable {
         case .section: return (lhs.item as? CommonSectionData) == (rhs.item as? CommonSectionData)
         case .service1: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
         case .service2: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
+        case .service3: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
         case .info: return (lhs.item as? Info) == (rhs.item as? Info)
         }
     }
@@ -66,6 +67,7 @@ struct CommonDataIndex: Equatable {
         case .section: date = (item as? CommonSectionData)?.comparisionDate
         case .service1: date = (item as? ServiceData)?.comparisionDate
         case .service2: date = (item as? ServiceData)?.comparisionDate
+        case .service3: date = (item as? ServiceData)?.comparisionDate
         case .info: date = (item as? Info)?.comparisionDate
         }
         return date ?? Date.distantPast
@@ -76,6 +78,7 @@ struct CommonDataIndex: Equatable {
         case .section: return (item as? CommonSectionData) == (other as? CommonSectionData)
         case .service1: return (item as? ServiceData) == (other as? ServiceData)
         case .service2: return (item as? ServiceData) == (other as? ServiceData)
+        case .service3: return (item as? ServiceData) == (other as? ServiceData)
         case .info:  return (item as? Info) == (other as? Info)
         }
     }

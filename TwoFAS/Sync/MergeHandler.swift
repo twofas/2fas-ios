@@ -19,22 +19,37 @@
 
 import Foundation
 import Common
+import CloudKit
 
 final class MergeHandler {
+    private var timeOffset: Int = 0
+
     private let logHandler: LogHandler
     private let commonItemHandler: CommonItemHandler
+    private let itemHandler: ItemHandlerMigrationProxy
+    private let cloudKit: CloudKit
     
-    
+    init(
+        logHandler: LogHandler,
+        commonItemHandler: CommonItemHandler,
+        itemHandler: ItemHandlerMigrationProxy,
+        cloudKit: CloudKit
+    ) {
+        self.logHandler = logHandler
+        self.commonItemHandler = commonItemHandler
+        self.itemHandler = itemHandler
+        self.cloudKit = cloudKit
+    }
 }
 
 extension MergeHandler {
     var hasChanges: Bool {
-        logHandler.countChanges() > 0
+        logHandler.countChanges() > 0 // TODO: OR OF MIGRATION IN PROGRESS!
     }
     
-    func merge() {
+    func merge() -> (recordIDsToDeleteOnServer: [CKRecord.ID]?, recordsToModifyOnServer: [CKRecord]?) {
         LogZoneStart()
-        Log("Starting sync", module: .cloudSync)
+        Log("MergeHandler: Starting sync", module: .cloudSync)
         
         // Add items from migration before we get all items
         commonItemHandler.setItemsFromMigration(itemHandler.servicesToAppend())
@@ -56,7 +71,7 @@ extension MergeHandler {
                 return (entityID: item.entityID, type: type)
             }
             deleteRecordsIDs += itemHandler.findItemsRecordIDs(for: deletedEntities, zoneID: cloudKit.zoneID)
-            Log("SyncHandler - Deletition: Removing services logged: \(deleted.count), existing in cloud: \(deleteRecordsIDs.count)", module: .cloudSync)
+            Log("MergeHandler: Deletition: Removing services logged: \(deleted.count), existing in cloud: \(deleteRecordsIDs.count)", module: .cloudSync)
             listToSend = itemHandler.filterDeleted(from: currentCache, deleted: deletedEntities)
         }
         
@@ -64,38 +79,38 @@ extension MergeHandler {
             created.forEach { newLogEntry in
                 if let type = RecordType(rawValue: newLogEntry.kind) {
                     if let cloudEntry = itemHandler.findItemForEntryID(newLogEntry.entityID, type: type, in: currentCache) {
-                        Log("SyncHandler - Creation: Item already exists - merging", module: .cloudSync)
+                        Log("MergeHandler: Creation: Item already exists - merging", module: .cloudSync)
                         guard let currentEntry = itemHandler.findItemForEntryID(newLogEntry.entityID, type: type, in: current) else {
                             Log("SyncHandler - Creation: Can't find new entry in local database!", module: .cloudSync)
                             return
                         }
                         guard currentEntry != cloudEntry else {
-                            Log("SyncHandler - Creation: Item already in place and identical to the one in the cloud", module: .cloudSync)
+                            Log("MergeHandler: Creation: Item already in place and identical to the one in the cloud", module: .cloudSync)
                             return
                         }
                         if dateOffsetet(for: newLogEntry) > cloudEntry.comparisionDate {
-                            Log("SyncHandler - Creation: New entry newer than the cloud one", module: .cloudSync)
+                            Log("MergeHandler: Creation: New entry newer than the cloud one", module: .cloudSync)
                             var list = listToSend[type] ?? []
                             if currentEntry.index == cloudEntry.index {
-                                Log("SyncHandler - Creation: Inserting in the same order", module: .cloudSync)
+                                Log("MergeHandler: Creation: Inserting in the same order", module: .cloudSync)
                                 list[cloudEntry.index] = currentEntry.item
                             } else {
-                                Log("SyncHandler - Creation: Moving to new order", module: .cloudSync)
+                                Log("MergeHandler: Creation: Moving to new order", module: .cloudSync)
                                 list.safeRemoval(at: cloudEntry.index)
                                 list.safeInsert(currentEntry.item, at: currentEntry.index)
                             }
                             listToSend[type] = list
                         } else {
-                            Log("SyncHandler - Creation: Item exists in cloud and it's newer", module: .cloudSync)
+                            Log("MergeHandler: Creation: Item exists in cloud and it's newer", module: .cloudSync)
                         }
                     } else {
-                        Log("SyncHandler - Creation: Couldn't find service in current cache - trying to create one to send to cloud", module: .cloudSync)
+                        Log("MergeHandler: Creation: Couldn't find service in current cache - trying to create one to send to cloud", module: .cloudSync)
                         guard let entry = itemHandler.findItemForEntryID(newLogEntry.entityID, type: type, in: current) else {
                             Log("SyncHandler - Creation: Can't find new entry in local database which should be added!", module: .cloudSync)
                             return
                         }
-                        Log("SyncHandler - Creation: Creating new item at index: \(entry.index)", module: .cloudSync)
-                        Log("SyncHandler - the item: \(entry.item)", module: .cloudSync, save: false)
+                        Log("MergeHandler: Creation: Creating new item at index: \(entry.index)", module: .cloudSync)
+                        Log("MergeHandler: the item: \(entry.item)", module: .cloudSync, save: false)
                         var list = listToSend[type] ?? []
                         list.safeInsert(entry.item, at: entry.index)
                         listToSend[type] = list
@@ -109,29 +124,29 @@ extension MergeHandler {
                 if let type = RecordType(rawValue: modifiedLogEntry.kind) {
                     if let cloudEntry = itemHandler.findItemForEntryID(modifiedLogEntry.entityID, type: type, in: listToSend) {
                         guard let currentEntry = itemHandler.findItemForEntryID(modifiedLogEntry.entityID, type: type, in: current) else {
-                            Log("SyncHandler - Modification: Can't find modified entry in local database!", module: .cloudSync)
+                            Log("MergeHandler: Modification: Can't find modified entry in local database!", module: .cloudSync)
                             return
                         }
                         guard currentEntry != cloudEntry else {
-                            Log("SyncHandler - Modification: Items already in place", module: .cloudSync)
+                            Log("MergeHandler: Modification: Items already in place", module: .cloudSync)
                             return
                         }
                         if dateOffsetet(for: modifiedLogEntry) > cloudEntry.comparisionDate {
                             var list = listToSend[type] ?? []
                             if currentEntry.index == cloudEntry.index {
-                                Log("SyncHandler - Modification: Item in place but overriding with local one", module: .cloudSync)
+                                Log("MergeHandler: Modification: Item in place but overriding with local one", module: .cloudSync)
                                 list[cloudEntry.index] = currentEntry.item
                             } else {
-                                Log("SyncHandler - Modification: Item overrided with local one", module: .cloudSync)
+                                Log("MergeHandler: Modification: Item overrided with local one", module: .cloudSync)
                                 list.safeRemoval(at: cloudEntry.index)
                                 list.safeInsert(currentEntry.item, at: currentEntry.index)
                             }
                             listToSend[type] = list
                         } else {
-                            Log("SyncHandler - Modification: Items in cloud are newer", module: .cloudSync)
+                            Log("MergeHandler: Modification: Items in cloud are newer", module: .cloudSync)
                         }
                     } else {
-                        Log("SyncHandler - Modification: Item already removed from cloud", module: .cloudSync)
+                        Log("MergeHandler: Modification: Item already removed from cloud", module: .cloudSync)
                     }
                 }
             }
@@ -140,20 +155,20 @@ extension MergeHandler {
         for (type, items) in listToSend {
             for (index, item) in items.enumerated() {
                 if let elementInCache = itemHandler.findItem(for: item, type: type, in: currentCache) {
-                    Log("SyncHandler - Preparation: element in cache", module: .cloudSync)
+                    Log("MergeHandler: Preparation: element in cache", module: .cloudSync)
                     if index != elementInCache.index || !elementInCache.isEqual(to: item) {
-                        Log("SyncHandler - Preparation: element has diffrent content or index. Creating from exisiting one", module: .cloudSync)
+                        Log("MergeHandler: Preparation: element has diffrent content or index. Creating from exisiting one", module: .cloudSync)
                         
                         guard let record = itemHandler.record(for: type, item: item, modifiedData: current) else {
-                            Log("SyncHandler - Preparation: couldn't create record from exisiting service", module: .cloudSync)
+                            Log("MergeHandler: Preparation: couldn't create record from exisiting service", module: .cloudSync)
                             continue
                         }
                         recordsToModify.append(record)
                     } else {
-                        Log("SyncHandler - Preparation: content and index is the same", module: .cloudSync)
+                        Log("MergeHandler: Preparation: content and index is the same", module: .cloudSync)
                     }
                 } else {
-                    Log("SyncHandler - Preparation: new service", module: .cloudSync)
+                    Log("MergeHandler: Preparation: new service", module: .cloudSync)
                     
                     guard let record = itemHandler.record(for: type, item: item, index: index, zoneID: cloudKit.zoneID, allItems: items) else { continue }
                     recordsToModify.append(record)
@@ -161,13 +176,23 @@ extension MergeHandler {
             }
         }
         
-        Log("SyncHandler - Marking all as applied", module: .cloudSync)
+        Log("MergeHandler: Marking all as applied", module: .cloudSync)
         logHandler.markAllAsApplied()
         
         let recordIDsToDeleteOnServer = deleteRecordsIDs.isEmpty ? nil : deleteRecordsIDs
         let recordsToModifyOnServer = recordsToModify.isEmpty ? nil : recordsToModify
         
-        Log("SyncHandler - Change records: deletition: \(String(describing: recordIDsToDeleteOnServer?.count)), modification: \(String(describing: recordsToModifyOnServer?.count))", module: .cloudSync)
+        Log("MergeHandler: Change records: deletition: \(String(describing: recordIDsToDeleteOnServer?.count)), modification: \(String(describing: recordsToModifyOnServer?.count))", module: .cloudSync)
         LogZoneEnd()
+        
+        return (recordIDsToDeleteOnServer: recordIDsToDeleteOnServer, recordsToModifyOnServer: recordsToModifyOnServer)
+    }
+    
+    func setTimeOffset(_ offset: Int) {
+        timeOffset = offset
+    }
+    
+    private func dateOffsetet(for logEntity: LogEntity) -> Date {
+        logEntity.date.addingTimeInterval(TimeInterval(timeOffset))
     }
 }

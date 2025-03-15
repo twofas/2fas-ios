@@ -52,11 +52,20 @@ public enum SyncInstanceWatch {
         let itemHandlerMigrationProxy = ItemHandlerMigrationProxy(
             itemHandler: itemHandler
         )
+        let mergeHandler = MergeHandler(
+            logHandler: logHandler,
+            commonItemHandler: commonItemHandler,
+            itemHandler: itemHandlerMigrationProxy,
+            cloudKit: cloudKit
+        )
+        let modificationQueue = ModificationQueue()
         let syncHandler = SyncHandler(
             itemHandler: itemHandlerMigrationProxy,
             commonItemHandler: commonItemHandler,
             logHandler: logHandler,
-            cloudKit: cloudKit
+            cloudKit: cloudKit,
+            modificationQueue: modificationQueue,
+            mergeHandler: mergeHandler
         )
         let cloudAvailability = CloudAvailability(container: syncHandler.container)
         cloudHandler = CloudHandler(
@@ -64,7 +73,8 @@ public enum SyncInstanceWatch {
             syncHandler: syncHandler,
             itemHandler: itemHandler,
             itemHandlerMigrationProxy: itemHandlerMigrationProxy,
-            cloudKit: cloudKit
+            cloudKit: cloudKit,
+            mergeHandler: mergeHandler
         )
         
         logDataChangeImpl = LogDataChangeImpl(logHandler: logHandler)

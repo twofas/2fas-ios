@@ -18,8 +18,13 @@
 //
 
 import Foundation
-import Common
 import CloudKit
+
+#if os(iOS)
+import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 final class MergeHandler {
     private var timeOffset: Int = 0
@@ -44,9 +49,10 @@ final class MergeHandler {
 
 extension MergeHandler {
     var hasChanges: Bool {
-        logHandler.countChanges() > 0 // TODO: OR OF MIGRATION IN PROGRESS!
+        logHandler.countChanges() > 0 // TODO: OR OF MIGRATION IN PROGRESS!??
     }
     
+    // swiftlint:disable line_length
     func merge() -> (recordIDsToDeleteOnServer: [CKRecord.ID]?, recordsToModifyOnServer: [CKRecord]?) {
         LogZoneStart()
         Log("MergeHandler: Starting sync", module: .cloudSync)
@@ -70,7 +76,7 @@ extension MergeHandler {
                 guard let type = RecordType(rawValue: item.kind) else { return nil }
                 return (entityID: item.entityID, type: type)
             }
-            deleteRecordsIDs += itemHandler.findItemsRecordIDs(for: deletedEntities, zoneID: cloudKit.zoneID)
+            deleteRecordsIDs += itemHandler.findItemsRecordIDs(for: deletedEntities, zoneID: cloudKit.zoneID) // TODO: Check how the v2 vs v3 will behave here! do we need v2 recordID generation?
             Log("MergeHandler: Deletition: Removing services logged: \(deleted.count), existing in cloud: \(deleteRecordsIDs.count)", module: .cloudSync)
             listToSend = itemHandler.filterDeleted(from: currentCache, deleted: deletedEntities)
         }
@@ -187,6 +193,7 @@ extension MergeHandler {
         
         return (recordIDsToDeleteOnServer: recordIDsToDeleteOnServer, recordsToModifyOnServer: recordsToModifyOnServer)
     }
+    // swiftlint:enable line_length
     
     func setTimeOffset(_ offset: Int) {
         timeOffset = offset

@@ -183,7 +183,6 @@ final class CameraController {
         } else {
             legacyUpdateOrientation()
         }
-        
     }
     
     @available(iOS 17, *)
@@ -191,7 +190,6 @@ final class CameraController {
         guard
             let layer,
             let connection = layer.connection,
-            let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
             let device = self.captureDevice
         else { return }
         

@@ -208,7 +208,6 @@ final class ServiceRecord3 {
     }
     
     static func create(
-        entryID: String,
         zoneID: CKRecordZone.ID,
         name: String,
         secret: String,
@@ -234,7 +233,7 @@ final class ServiceRecord3 {
     ) -> CKRecord? {
         let record = CKRecord(
             recordType: RecordType.service3.rawValue,
-            recordID: recordID(with: entryID, zoneID: zoneID)
+            recordID: recordID(with: unencryptedSecret, zoneID: zoneID)
         )
         
         update(

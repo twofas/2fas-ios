@@ -123,6 +123,7 @@ final class CloudHandler: CloudHandlerType {
     private let itemHandler: ItemHandler
     private let itemHandlerMigrationProxy: ItemHandlerMigrationProxy
     private let cloudKit: CloudKit
+    private let mergeHandler: MergeHandler
     
     private let notificationCenter = NotificationCenter.default
     
@@ -155,6 +156,7 @@ final class CloudHandler: CloudHandlerType {
         self.itemHandler = itemHandler
         self.itemHandlerMigrationProxy = itemHandlerMigrationProxy
         self.cloudKit = cloudKit
+        self.mergeHandler = mergeHandler
         clearHandler = ClearHandler()
         
         itemHandlerMigrationProxy.newerVersion = { [weak self] in self?.newerVersionOfCloud() }

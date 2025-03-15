@@ -19,7 +19,11 @@
 
 import Foundation
 import CloudKit
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 final class ModificationQueue {
     private let batchElementLimit = 399

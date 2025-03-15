@@ -30,17 +30,13 @@ enum iCloudIdentifier {
     private static let longIdentifier = "_L00NG_"
     private static let v3Identifier = "_V3"
     
-    case v3(id: UUID)
+    case v3(id: String)
     case v2(id: String)
     case long(hash: String, beginsWith: String)
     case deprecated(id: String)
     
     static func generate(from str: String) -> String {
-        guard str.count > Config.maxIdentifierLength else {
-            return "\(str)\(v2Identifier)"
-        }
-        let longID = hash(from: str)
-        return "\(longID)\(longIdentifier)\(str[0...9])"
+        "\(hash(from: str))\(v3Identifier)"
     }
     
     static func hash(from str: String) -> String {
@@ -53,10 +49,7 @@ enum iCloudIdentifier {
     
     static func parse(_ str: String) -> Self {
         if let range = str.range(of: v3Identifier) {
-            let uuidString = str.replacingCharacters(in: range, with: "")
-            if let uuid = UUID(uuidString: uuidString) {
-                return .v3(id: uuid)
-            }
+            return .v3(id: str.replacingCharacters(in: range, with: ""))
         }
         if let range = str.range(of: v2Identifier) {
             let secret = str.replacingCharacters(in: range, with: "")

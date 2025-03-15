@@ -79,7 +79,7 @@ extension ItemHandler: ItemHandling {
             if let recordType = RecordType(rawValue: record.recordType) {
                 switch recordType {
                 case .section: sectionHandler.updateOrCreate(with: SectionRecord(record: record), save: false)
-                case .service2: serviceHandler.updateOrCreate(with: ServiceRecord2(record: record), save: false)
+                case .service3: serviceHandler.updateOrCreate(with: ServiceRecord3(record: record), save: false)
                 case .info: infoHandler.saveMetadata(InfoRecord(record: record).encodeSystemFields())
                 default: break
                 }
@@ -298,7 +298,7 @@ extension ItemHandler: ItemHandling {
 extension ItemHandler {
     func allEntityRecordIDs(zoneID: CKRecordZone.ID) -> [CKRecord.ID] {
         sectionHandler.listAll().map({ SectionRecord.recordID(with: $0.sectionID, zoneID: zoneID) }) +
-        serviceHandler.listAll().map({ ServiceRecord2.recordID(with: $0.secret, zoneID: zoneID) }) +
+        serviceHandler.listAll().map({ ServiceRecord3.recordID(with: $0.secret, zoneID: zoneID) }) +
         [InfoRecord.recordID(with: "", zoneID: zoneID)]
     }
 }

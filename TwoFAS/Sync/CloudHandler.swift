@@ -147,7 +147,8 @@ final class CloudHandler: CloudHandlerType {
         syncHandler: SyncHandler,
         itemHandler: ItemHandler,
         itemHandlerMigrationProxy: ItemHandlerMigrationProxy,
-        cloudKit: CloudKit
+        cloudKit: CloudKit,
+        mergeHandler: MergeHandler
     ) {
         self.cloudAvailability = cloudAvailability
         self.syncHandler = syncHandler
@@ -287,7 +288,7 @@ final class CloudHandler: CloudHandlerType {
     }
     
     func setTimeOffset(_ offset: Int) {
-        syncHandler.setTimeOffset(offset)
+        mergeHandler.setTimeOffset(offset)
     }
     
     // MARK: - Private

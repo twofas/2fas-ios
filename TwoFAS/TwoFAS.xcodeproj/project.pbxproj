@@ -5311,12 +5311,12 @@
 		C24D1C1B253C744E0029D27D /* Sync */ = {
 			isa = PBXGroup;
 			children = (
-				C2CCEB5F2D8237A90067FDCB /* MergeHandler.swift */,
 				C213BC652BAC4883000794C9 /* Watch */,
 				C2F5443425685C2100611716 /* SyncInstance.swift */,
 				C274CA992BAB94B3008E7212 /* SyncInstanceWatch.swift */,
 				C2D507B5256477DA00151359 /* CloudHandler.swift */,
 				C23BAAF32545A1E9009B1EF8 /* SyncHandler.swift */,
+				C2CCEB5F2D8237A90067FDCB /* MergeHandler.swift */,
 				C23BAB032545A861009B1EF8 /* CloudKit.swift */,
 				C23BAB132545AEF5009B1EF8 /* ConstStorage.swift */,
 				C2EF21D625630C9D0075743D /* CloudAvailability.swift */,

@@ -35,9 +35,7 @@ final class SyncHandler {
     
     private var isSyncing = false
     private var applyingChanges = false
-    
-    private var timeOffset: Int = 0
-    
+        
     private var fromNotificationCompletionHandler: ((BackgroundFetchResult) -> Void)?
     
     typealias OtherError = (NSError) -> Void
@@ -166,10 +164,6 @@ final class SyncHandler {
         cloudKit.clear()
     }
     
-    func setTimeOffset(_ offset: Int) {
-        timeOffset = offset
-    }
-    
     // MARK: - Private
     
     private func updateEntries(_ entries: [CKRecord]) {
@@ -200,7 +194,7 @@ final class SyncHandler {
             return
         }
         
-       
+        let (recordIDsToDeleteOnServer, recordsToModifyOnServer) = mergeHandler.merge()
         
         guard recordIDsToDeleteOnServer != nil || recordsToModifyOnServer != nil else {
             Log("SyncHandler - Nothing to delete or modify", module: .cloudSync)
@@ -211,29 +205,26 @@ final class SyncHandler {
         }
         Log("SyncHandler - Sending changes", module: .cloudSync)
         applyingChanges = true
-        cloudKit.modifyRecord(recordsToSave: recordsToModifyOnServer, recordIDsToDelete: recordIDsToDeleteOnServer)
         
-//        modifyQueue.setRecordsToModifyOnServer(recordsToModifyOnServer, deleteIDs: recordIDsToDeleteOnServer)
-//        let current = modifyQueue.currentBatch()
-//        cloudKit.modifyRecord(recordsToSave: current.modify, recordIDsToDelete: current.delete)
+        modificationQueue.setRecordsToModifyOnServer(recordsToModifyOnServer, deleteIDs: recordIDsToDeleteOnServer)
+        let current = modificationQueue.currentBatch()
+        cloudKit.modifyRecord(recordsToSave: current.modify, recordIDsToDelete: current.delete)
     }
     
     private func changesSavedSuccessfuly() {
-        Log("SyncHandler - Changes Saved Successfuly", module: .cloudSync)
-        logHandler.deleteAllApplied()
-        syncCompleted()
+        guard isSyncing, applyingChanges else { return }
+        modificationQueue.prevBatchProcessed()
         
-//        guard isSyncing, applyingChanges else { return }
-//        modifyQueue.prevBatchProcessed()
-//        if modifyQueue.finished {
-//            Log("SyncHandler - All Changes Saved Successfuly", module: .cloudSync)
-//            applyingChanges = false
-//            syncCompleted()
-//        } else {
-//            Log("SyncHandler - Batch Changes Saved Successfuly. Preparing next batch", module: .cloudSync)
-//            let current = modifyQueue.currentBatch()
-//            cloudKit.modifyRecord(recordsToSave: current.modify, recordIDsToDelete: current.delete)
-//        }
+        if modificationQueue.finished {
+            Log("SyncHandler - All Changes Saved Successfuly", module: .cloudSync)
+            applyingChanges = false
+            logHandler.deleteAllApplied()
+            syncCompleted()
+        } else {
+            Log("SyncHandler - Batch Changes Saved Successfuly. Preparing next batch", module: .cloudSync)
+            let current = modificationQueue.currentBatch()
+            cloudKit.modifyRecord(recordsToSave: current.modify, recordIDsToDelete: current.delete)
+        }
     }
     
     private func syncCompleted() {
@@ -286,10 +277,6 @@ final class SyncHandler {
         logHandler.deleteAll()
         itemHandler.purge()
         ConstStorage.clearZone()
-    }
-    
-    private func dateOffsetet(for logEntity: LogEntity) -> Date {
-        logEntity.date.addingTimeInterval(TimeInterval(timeOffset))
     }
     
     private func abortSync() {

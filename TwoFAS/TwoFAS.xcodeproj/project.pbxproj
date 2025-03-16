@@ -399,6 +399,18 @@
 		C25C91D52B0A632500E58729 /* IntroductionNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C91D42B0A632500E58729 /* IntroductionNavigationFlowController.swift */; };
 		C25C91D72B0A6DE600E58729 /* IntroductionModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C91D62B0A6DE600E58729 /* IntroductionModuleInteractor.swift */; };
 		C25C91DA2B0A75B100E58729 /* IntroductionCloudInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C91D92B0A75B100E58729 /* IntroductionCloudInfoViewController.swift */; };
+		C25CB2392D87440F0099FAFD /* MigrationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB2372D87440B0099FAFD /* MigrationHandler.swift */; };
+		C25CB23B2D8744310099FAFD /* MigrationHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB23A2D87442E0099FAFD /* MigrationHandling.swift */; };
+		C25CB23C2D8744310099FAFD /* MigrationHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB23A2D87442E0099FAFD /* MigrationHandling.swift */; };
+		C25CB2412D8758700099FAFD /* ServiceRecordEncryptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB2402D87586A0099FAFD /* ServiceRecordEncryptionHandler.swift */; };
+		C25CB2422D8758700099FAFD /* ServiceRecordEncryptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB2402D87586A0099FAFD /* ServiceRecordEncryptionHandler.swift */; };
+		C25CB3BD2D877A390099FAFD /* RequirementCheckHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB3BC2D877A2C0099FAFD /* RequirementCheckHandler.swift */; };
+		C25CB3BE2D877A390099FAFD /* RequirementCheckHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB3BC2D877A2C0099FAFD /* RequirementCheckHandler.swift */; };
+		C25CB3C12D8785020099FAFD /* MigrationHandlerWatchPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB3BF2D8784EF0099FAFD /* MigrationHandlerWatchPlaceholder.swift */; };
+		C25CB3C32D878BCD0099FAFD /* SyncEncryptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB3C22D878BC80099FAFD /* SyncEncryptionHandler.swift */; };
+		C25CB3C42D878BCD0099FAFD /* SyncEncryptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB3C22D878BC80099FAFD /* SyncEncryptionHandler.swift */; };
+		C25CB3C62D878C010099FAFD /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C25CB3C52D878C010099FAFD /* KeychainAccess */; };
+		C25CB3C92D878EA60099FAFD /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C25CB3C82D878EA60099FAFD /* KeychainAccess */; };
 		C25D5E782A64908200CA359B /* CameraLastPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25D5E772A64908200CA359B /* CameraLastPass.swift */; };
 		C25DCB2E2B8030B200871035 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25DCB2D2B8030B200871035 /* AccessManager.swift */; };
 		C25DCB2F2B80318C00871035 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25DCB2D2B8030B200871035 /* AccessManager.swift */; };
@@ -417,6 +429,10 @@
 		C2627F3A2BC72E96009F93A9 /* ServicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2627F392BC72E96009F93A9 /* ServicePresenter.swift */; };
 		C2627F3C2BC72EA0009F93A9 /* ServiceInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2627F3B2BC72EA0009F93A9 /* ServiceInteractor.swift */; };
 		C2633F1F265B045F0034B836 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2633F1E265B045F0034B836 /* UIApplication.swift */; };
+		C263E9C22D87901E00E98298 /* SignalArgon2 in Frameworks */ = {isa = PBXBuildFile; productRef = C263E9C12D87901E00E98298 /* SignalArgon2 */; };
+		C263E9C42D87902900E98298 /* SignalArgon2 in Frameworks */ = {isa = PBXBuildFile; productRef = C263E9C32D87902900E98298 /* SignalArgon2 */; };
+		C263E9C62D8791D100E98298 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263E9C52D8791CE00E98298 /* Data+.swift */; };
+		C263E9C72D8791D100E98298 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263E9C52D8791CE00E98298 /* Data+.swift */; };
 		C263F45A29900DED009B0837 /* MainMenuModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263F45929900DED009B0837 /* MainMenuModels.swift */; };
 		C263F45E29901C4F009B0837 /* MainSplitFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263F45D29901C4F009B0837 /* MainSplitFlowController.swift */; };
 		C263F46029903B51009B0837 /* MainMenuFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263F45F29903B51009B0837 /* MainMenuFlowController.swift */; };
@@ -478,7 +494,6 @@
 		C274C9972BAB89C7008E7212 /* SecretValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C201F24C25BDD017001DA257 /* SecretValidation.swift */; };
 		C274C9992BAB89C7008E7212 /* SectionCacheEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECEF2687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift */; };
 		C274C99A2BAB89C7008E7212 /* LogDataChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2058E08277D24940015F17E /* LogDataChange.swift */; };
-		C274C99B2BAB89C7008E7212 /* ItemHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C4F64628FDEF8400285B81 /* ItemHandling.swift */; };
 		C274C99C2BAB89C7008E7212 /* ServiceCacheEntity+toServiceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27E6FB728FC995100AC9FD1 /* ServiceCacheEntity+toServiceData.swift */; };
 		C274C99D2BAB89C7008E7212 /* ConstStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23BAB132545AEF5009B1EF8 /* ConstStorage.swift */; };
 		C274C99E2BAB89C7008E7212 /* CloudKitErrorParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207C11E2559F1CB0053975E /* CloudKitErrorParser.swift */; };
@@ -619,7 +634,6 @@
 		C274CA972BAB8FD8008E7212 /* Protection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CC2205D78790001D011 /* Protection.swift */; };
 		C274CA982BAB91E3008E7212 /* ExchangeFileEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F6AF3F273056010015BC59 /* ExchangeFileEncryption.swift */; };
 		C274CA9B2BAB94B8008E7212 /* SyncInstanceWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C274CA992BAB94B3008E7212 /* SyncInstanceWatch.swift */; };
-		C274CAA32BAB9D5E008E7212 /* ItemHandlerMigrationProxyWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C274CAA12BAB9D59008E7212 /* ItemHandlerMigrationProxyWatch.swift */; };
 		C276D1712B9A672C008C9CD4 /* LocalNotificationStateInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C276D1702B9A672C008C9CD4 /* LocalNotificationStateInteractor.swift */; };
 		C277C32C245C3FD6009214F3 /* MainContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C277C32B245C3FD6009214F3 /* MainContainerViewController.swift */; };
 		C278121C27F9F3E600F31453 /* ExportPublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278121B27F9F3E600F31453 /* ExportPublicKey.swift */; };
@@ -659,7 +673,6 @@
 		C27E6FB328FC87AD00AC9FD1 /* InfoRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27E6FB228FC87AD00AC9FD1 /* InfoRecord.swift */; };
 		C27E6FB628FC8B0000AC9FD1 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27E6FB528FC8B0000AC9FD1 /* Info.swift */; };
 		C27E6FB828FC995100AC9FD1 /* ServiceCacheEntity+toServiceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27E6FB728FC995100AC9FD1 /* ServiceCacheEntity+toServiceData.swift */; };
-		C27E6FBA28FCA73400AC9FD1 /* ItemHandlerMigrationProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27E6FB928FCA73400AC9FD1 /* ItemHandlerMigrationProxy.swift */; };
 		C27FBA491FBA239600D424D8 /* ServiceEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27FBA471FBA239600D424D8 /* ServiceEntity+CoreDataClass.swift */; };
 		C27FBA4C1FBA23DD00D424D8 /* ServiceEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27FBA4B1FBA23DD00D424D8 /* ServiceEntity+CoreDataProperties.swift */; };
 		C281A2732BD47D6C0068451C /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C281A2722BD47D6C0068451C /* SuccessView.swift */; };
@@ -958,7 +971,6 @@
 		C2C3AE27269E274700506ACF /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE26269E274700506ACF /* Intents.framework */; };
 		C2C3AE2A269E274700506ACF /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C3AE29269E274700506ACF /* IntentHandler.swift */; };
 		C2C3AE3F269E274700506ACF /* TwoFASServiceIntent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C2C3AE25269E274700506ACF /* TwoFASServiceIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		C2C4F64728FDEF8400285B81 /* ItemHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C4F64628FDEF8400285B81 /* ItemHandling.swift */; };
 		C2C4F64928FE002F00285B81 /* RecordIDGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C4F64828FE002F00285B81 /* RecordIDGenerator.swift */; };
 		C2C4F64B28FE08EB00285B81 /* InfoHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C4F64A28FE08EB00285B81 /* InfoHandler.swift */; };
 		C2C56D3927C96743003B4C43 /* ComposeServiceAdvancedSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C56D3827C96743003B4C43 /* ComposeServiceAdvancedSettings.swift */; };
@@ -2322,6 +2334,12 @@
 		C25C91D42B0A632500E58729 /* IntroductionNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionNavigationFlowController.swift; sourceTree = "<group>"; };
 		C25C91D62B0A6DE600E58729 /* IntroductionModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionModuleInteractor.swift; sourceTree = "<group>"; };
 		C25C91D92B0A75B100E58729 /* IntroductionCloudInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionCloudInfoViewController.swift; sourceTree = "<group>"; };
+		C25CB2372D87440B0099FAFD /* MigrationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationHandler.swift; sourceTree = "<group>"; };
+		C25CB23A2D87442E0099FAFD /* MigrationHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationHandling.swift; sourceTree = "<group>"; };
+		C25CB2402D87586A0099FAFD /* ServiceRecordEncryptionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRecordEncryptionHandler.swift; sourceTree = "<group>"; };
+		C25CB3BC2D877A2C0099FAFD /* RequirementCheckHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequirementCheckHandler.swift; sourceTree = "<group>"; };
+		C25CB3BF2D8784EF0099FAFD /* MigrationHandlerWatchPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationHandlerWatchPlaceholder.swift; sourceTree = "<group>"; };
+		C25CB3C22D878BC80099FAFD /* SyncEncryptionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncEncryptionHandler.swift; sourceTree = "<group>"; };
 		C25D5E752A64863000CA359B /* Code+LastPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Code+LastPass.swift"; sourceTree = "<group>"; };
 		C25D5E772A64908200CA359B /* CameraLastPass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraLastPass.swift; sourceTree = "<group>"; };
 		C25DCB2D2B8030B200871035 /* AccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessManager.swift; sourceTree = "<group>"; };
@@ -2348,6 +2366,7 @@
 		C262E83629E9AA96008D148E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C262E83729E9AA97008D148E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C2633F1E265B045F0034B836 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
+		C263E9C52D8791CE00E98298 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		C263F45929900DED009B0837 /* MainMenuModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuModels.swift; sourceTree = "<group>"; };
 		C263F45D29901C4F009B0837 /* MainSplitFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitFlowController.swift; sourceTree = "<group>"; };
 		C263F45F29903B51009B0837 /* MainMenuFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuFlowController.swift; sourceTree = "<group>"; };
@@ -2417,7 +2436,6 @@
 		C274CA942BAB8F92008E7212 /* Protection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Protection+.swift"; sourceTree = "<group>"; };
 		C274CA992BAB94B3008E7212 /* SyncInstanceWatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncInstanceWatch.swift; sourceTree = "<group>"; };
 		C274CAA02BAB98A5008E7212 /* TwoFASWatch Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TwoFASWatch Watch App.entitlements"; sourceTree = "<group>"; };
-		C274CAA12BAB9D59008E7212 /* ItemHandlerMigrationProxyWatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemHandlerMigrationProxyWatch.swift; sourceTree = "<group>"; };
 		C276D1702B9A672C008C9CD4 /* LocalNotificationStateInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationStateInteractor.swift; sourceTree = "<group>"; };
 		C277C32B245C3FD6009214F3 /* MainContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerViewController.swift; sourceTree = "<group>"; };
 		C278121B27F9F3E600F31453 /* ExportPublicKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPublicKey.swift; sourceTree = "<group>"; };
@@ -2479,7 +2497,6 @@
 		C27E6FB228FC87AD00AC9FD1 /* InfoRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoRecord.swift; sourceTree = "<group>"; };
 		C27E6FB528FC8B0000AC9FD1 /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
 		C27E6FB728FC995100AC9FD1 /* ServiceCacheEntity+toServiceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceCacheEntity+toServiceData.swift"; sourceTree = "<group>"; };
-		C27E6FB928FCA73400AC9FD1 /* ItemHandlerMigrationProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemHandlerMigrationProxy.swift; sourceTree = "<group>"; };
 		C27FBA471FBA239600D424D8 /* ServiceEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C27FBA4B1FBA23DD00D424D8 /* ServiceEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C281909C2B0B84910042BB7D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
@@ -2803,7 +2820,6 @@
 		C2C3AE29269E274700506ACF /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		C2C3AE2B269E274700506ACF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C2C3AE31269E274700506ACF /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
-		C2C4F64628FDEF8400285B81 /* ItemHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemHandling.swift; sourceTree = "<group>"; };
 		C2C4F64828FE002F00285B81 /* RecordIDGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordIDGenerator.swift; sourceTree = "<group>"; };
 		C2C4F64A28FE08EB00285B81 /* InfoHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHandler.swift; sourceTree = "<group>"; };
 		C2C56D3827C96743003B4C43 /* ComposeServiceAdvancedSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedSettings.swift; sourceTree = "<group>"; };
@@ -3172,8 +3188,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C25CB3C62D878C010099FAFD /* KeychainAccess in Frameworks */,
 				C25AAA3C290455B2005747C5 /* Protection.framework in Frameworks */,
 				C2E53BC42B62DF74008E1E70 /* Content.framework in Frameworks */,
+				C263E9C22D87901E00E98298 /* SignalArgon2 in Frameworks */,
 				C2E53BA62B62DE49008E1E70 /* Common.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3189,8 +3207,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C25CB3C92D878EA60099FAFD /* KeychainAccess in Frameworks */,
 				C274CA4F2BAB8C35008E7212 /* CommonWatch.framework in Frameworks */,
 				C274CA532BAB8C35008E7212 /* ContentWatch.framework in Frameworks */,
+				C263E9C42D87902900E98298 /* SignalArgon2 in Frameworks */,
 				C274CA832BAB8C70008E7212 /* ProtectionWatch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5311,6 +5331,12 @@
 		C24D1C1B253C744E0029D27D /* Sync */ = {
 			isa = PBXGroup;
 			children = (
+				C25CB3C22D878BC80099FAFD /* SyncEncryptionHandler.swift */,
+				C25CB3BF2D8784EF0099FAFD /* MigrationHandlerWatchPlaceholder.swift */,
+				C25CB3BC2D877A2C0099FAFD /* RequirementCheckHandler.swift */,
+				C25CB2402D87586A0099FAFD /* ServiceRecordEncryptionHandler.swift */,
+				C25CB23A2D87442E0099FAFD /* MigrationHandling.swift */,
+				C25CB2372D87440B0099FAFD /* MigrationHandler.swift */,
 				C213BC652BAC4883000794C9 /* Watch */,
 				C2F5443425685C2100611716 /* SyncInstance.swift */,
 				C274CA992BAB94B3008E7212 /* SyncInstanceWatch.swift */,
@@ -7271,9 +7297,6 @@
 		C2C4F64528FDEF6C00285B81 /* Item */ = {
 			isa = PBXGroup;
 			children = (
-				C2C4F64628FDEF8400285B81 /* ItemHandling.swift */,
-				C27E6FB928FCA73400AC9FD1 /* ItemHandlerMigrationProxy.swift */,
-				C274CAA12BAB9D59008E7212 /* ItemHandlerMigrationProxyWatch.swift */,
 				C24EECF7268789DE00C6ABAA /* ItemHandler.swift */,
 			);
 			path = Item;
@@ -7882,6 +7905,7 @@
 		C2E53AFC2B62DDAF008E1E70 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C263E9C52D8791CE00E98298 /* Data+.swift */,
 				C2E53AFD2B62DDAF008E1E70 /* Character+.swift */,
 				C2E53AFE2B62DDAF008E1E70 /* ServiceData+.swift */,
 				C2E53AFF2B62DDAF008E1E70 /* Collection+.swift */,
@@ -8684,6 +8708,8 @@
 			);
 			name = Sync;
 			packageProductDependencies = (
+				C25CB3C52D878C010099FAFD /* KeychainAccess */,
+				C263E9C12D87901E00E98298 /* SignalArgon2 */,
 			);
 			productName = Sync;
 			productReference = C24D1C1A253C744E0029D27D /* Sync.framework */;
@@ -8725,6 +8751,8 @@
 			);
 			name = SyncWatch;
 			packageProductDependencies = (
+				C25CB3C82D878EA60099FAFD /* KeychainAccess */,
+				C263E9C32D87902900E98298 /* SignalArgon2 */,
 			);
 			productName = Sync;
 			productReference = C274C9C62BAB89C7008E7212 /* SyncWatch.framework */;
@@ -9211,6 +9239,7 @@
 				C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */,
 				C2EC97D22D917D8900C0A27A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C28FD19D2E4028450053B0BE /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+				C25CB3C72D878E2B0099FAFD /* XCRemoteSwiftPackageReference "Argon2" */,
 			);
 			productRefGroup = C23666741FB2644900989ACA /* Products */;
 			projectDirPath = "";
@@ -10231,12 +10260,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C23BAB042545A861009B1EF8 /* CloudKit.swift in Sources */,
+				C25CB2392D87440F0099FAFD /* MigrationHandler.swift in Sources */,
 				C201F24D25BDD017001DA257 /* SecretValidation.swift in Sources */,
 				C2CCEB612D8237AD0067FDCB /* MergeHandler.swift in Sources */,
 				C2F5443525685C2100611716 /* SyncInstance.swift in Sources */,
 				C24EECF12687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift in Sources */,
 				C2058E09277D24940015F17E /* LogDataChange.swift in Sources */,
-				C2C4F64728FDEF8400285B81 /* ItemHandling.swift in Sources */,
 				C27E6FB828FC995100AC9FD1 /* ServiceCacheEntity+toServiceData.swift in Sources */,
 				C23BAB142545AEF5009B1EF8 /* ConstStorage.swift in Sources */,
 				C207C11F2559F1CB0053975E /* CloudKitErrorParser.swift in Sources */,
@@ -10247,6 +10276,7 @@
 				C2D507B6256477DA00151359 /* CloudHandler.swift in Sources */,
 				C244EF11268674650040A58F /* Extensions.swift in Sources */,
 				C2D61E522560393000C5BE3A /* LogHandler.swift in Sources */,
+				C25CB23B2D8744310099FAFD /* MigrationHandling.swift in Sources */,
 				C24EECF22687772800C6ABAA /* SectionCacheEntity+CoreDataProperties.swift in Sources */,
 				C24EECEC268772B600C6ABAA /* RecordType.swift in Sources */,
 				C2EFCE0725D05E320031293F /* ClearHandler.swift in Sources */,
@@ -10257,11 +10287,12 @@
 				C2EF21D725630C9D0075743D /* CloudAvailability.swift in Sources */,
 				C2EF402625582AFB0006735E /* ServiceCacheEntity+CoreDataClass.swift in Sources */,
 				C27E6FAF28FC57FD00AC9FD1 /* DynamicTypesEntityMigrationPolicySync.swift in Sources */,
-				C27E6FBA28FCA73400AC9FD1 /* ItemHandlerMigrationProxy.swift in Sources */,
 				C2EF401525582A7D0006735E /* Sync.xcdatamodeld in Sources */,
 				C24EECFA26878C5C00C6ABAA /* CommonItemHandler.swift in Sources */,
+				C25CB3C32D878BCD0099FAFD /* SyncEncryptionHandler.swift in Sources */,
 				C2EF3F6E25575D730006735E /* ServiceRecord.swift in Sources */,
 				C2D75D37297D51B60002531E /* iCloudIdentifier.swift in Sources */,
+				C25CB3BE2D877A390099FAFD /* RequirementCheckHandler.swift in Sources */,
 				C2EF402725582AFB0006735E /* ServiceCacheEntity+CoreDataProperties.swift in Sources */,
 				C2EF4045255860FC0006735E /* ServiceHandler.swift in Sources */,
 				C24EECF8268789DE00C6ABAA /* ItemHandler.swift in Sources */,
@@ -10270,6 +10301,7 @@
 				C2D61E4125602F5000C5BE3A /* LogEntity+CoreDataClass.swift in Sources */,
 				C26A5FE3290475EA00A5A620 /* Sync4-Sync5.xcmappingmodel in Sources */,
 				C27E6FB328FC87AD00AC9FD1 /* InfoRecord.swift in Sources */,
+				C25CB2422D8758700099FAFD /* ServiceRecordEncryptionHandler.swift in Sources */,
 				C2C4F64B28FE08EB00285B81 /* InfoHandler.swift in Sources */,
 				C27E6FB628FC8B0000AC9FD1 /* Info.swift in Sources */,
 				C2C4F64928FE002F00285B81 /* RecordIDGenerator.swift in Sources */,
@@ -10291,14 +10323,13 @@
 				8F5C0C6F2BFFACA900D73ADE /* Sync.xcdatamodeld in Sources */,
 				C274C9962BAB89C7008E7212 /* CloudKit.swift in Sources */,
 				C274C9972BAB89C7008E7212 /* SecretValidation.swift in Sources */,
+				C25CB3C12D8785020099FAFD /* MigrationHandlerWatchPlaceholder.swift in Sources */,
 				C274C9992BAB89C7008E7212 /* SectionCacheEntity+CoreDataClass.swift in Sources */,
 				C274C99A2BAB89C7008E7212 /* LogDataChange.swift in Sources */,
-				C274C99B2BAB89C7008E7212 /* ItemHandling.swift in Sources */,
 				C274C99C2BAB89C7008E7212 /* ServiceCacheEntity+toServiceData.swift in Sources */,
 				C274C99D2BAB89C7008E7212 /* ConstStorage.swift in Sources */,
 				C274C99E2BAB89C7008E7212 /* CloudKitErrorParser.swift in Sources */,
 				C213BC192BAC3BD5000794C9 /* CommonItemHandler.swift in Sources */,
-				C274CAA32BAB9D5E008E7212 /* ItemHandlerMigrationProxyWatch.swift in Sources */,
 				C274C99F2BAB89C7008E7212 /* SectionHandler.swift in Sources */,
 				C274C9A02BAB89C7008E7212 /* Types.swift in Sources */,
 				C274C9A22BAB89C7008E7212 /* CloudHandler.swift in Sources */,
@@ -10310,6 +10341,7 @@
 				C274C9A82BAB89C7008E7212 /* SyncTokenHandler.swift in Sources */,
 				C274C9A92BAB89C7008E7212 /* ServiceRecord2.swift in Sources */,
 				C2CCEB5D2D822AF70067FDCB /* ModificationQueue.swift in Sources */,
+				C25CB23C2D8744310099FAFD /* MigrationHandling.swift in Sources */,
 				C274C9AA2BAB89C7008E7212 /* LogEntity+CoreDataProperties.swift in Sources */,
 				C274C9AB2BAB89C7008E7212 /* CloudAvailability.swift in Sources */,
 				C2CCEB602D8237AD0067FDCB /* MergeHandler.swift in Sources */,
@@ -10320,11 +10352,14 @@
 				C274C9B22BAB89C7008E7212 /* iCloudIdentifier.swift in Sources */,
 				C274C9B32BAB89C7008E7212 /* ServiceCacheEntity+CoreDataProperties.swift in Sources */,
 				C274C9B42BAB89C7008E7212 /* ServiceHandler.swift in Sources */,
+				C25CB3C42D878BCD0099FAFD /* SyncEncryptionHandler.swift in Sources */,
 				C274C9B52BAB89C7008E7212 /* ItemHandler.swift in Sources */,
 				C274C9B62BAB89C7008E7212 /* SyncHandler.swift in Sources */,
 				C274C9B72BAB89C7008E7212 /* SectionRecord.swift in Sources */,
+				C25CB2412D8758700099FAFD /* ServiceRecordEncryptionHandler.swift in Sources */,
 				C274C9B82BAB89C7008E7212 /* LogEntity+CoreDataClass.swift in Sources */,
 				C274C9BA2BAB89C7008E7212 /* InfoRecord.swift in Sources */,
+				C25CB3BD2D877A390099FAFD /* RequirementCheckHandler.swift in Sources */,
 				C274C9BB2BAB89C7008E7212 /* InfoHandler.swift in Sources */,
 				C274C9BC2BAB89C7008E7212 /* Info.swift in Sources */,
 				C274C9BD2BAB89C7008E7212 /* RecordIDGenerator.swift in Sources */,
@@ -10398,6 +10433,7 @@
 				C274C9ED2BAB8B92008E7212 /* CoreDataMigrator.swift in Sources */,
 				C274C9EF2BAB8B92008E7212 /* Log.swift in Sources */,
 				C274C9F02BAB8B92008E7212 /* CountdownTimer.swift in Sources */,
+				C263E9C62D8791D100E98298 /* Data+.swift in Sources */,
 				C274C9F12BAB8B92008E7212 /* CommonLocalKeyEncryption.swift in Sources */,
 				C2A1B3B62BB6084100D6B923 /* PINType.swift in Sources */,
 				C274C9F22BAB8B92008E7212 /* PairedAuthRequest.swift in Sources */,
@@ -10636,6 +10672,7 @@
 				C2A1B3B52BB6084100D6B923 /* PINType.swift in Sources */,
 				C2E53B1A2B62DDAF008E1E70 /* LegacyExchangeDatabase.swift in Sources */,
 				C2E53B302B62DDAF008E1E70 /* TokenType.swift in Sources */,
+				C263E9C72D8791D100E98298 /* Data+.swift in Sources */,
 				C2E53B252B62DDAF008E1E70 /* CommonSectionData.swift in Sources */,
 				C2E53B3E2B62DDAF008E1E70 /* Date+Extensions.swift in Sources */,
 				C2E53B3C2B62DDAF008E1E70 /* AttributedText+Formatting.swift in Sources */,
@@ -13791,6 +13828,14 @@
 				minimumVersion = 4.3.1;
 			};
 		};
+		C25CB3C72D878E2B0099FAFD /* XCRemoteSwiftPackageReference "Argon2" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kamwysoc/Argon2";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/soyersoyer/SwCrypt";
@@ -13846,6 +13891,36 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C23EBF102651276800FA9E81 /* XCRemoteSwiftPackageReference "Kronos" */;
 			productName = Kronos;
+		};
+		C25CB3C52D878C010099FAFD /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C27ABAD423297F470008F9B5 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		C25CB3C82D878EA60099FAFD /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C27ABAD423297F470008F9B5 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		C263E9C12D87901E00E98298 /* SignalArgon2 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C25CB3C72D878E2B0099FAFD /* XCRemoteSwiftPackageReference "Argon2" */;
+			productName = SignalArgon2;
+		};
+		C263E9C32D87902900E98298 /* SignalArgon2 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C25CB3C72D878E2B0099FAFD /* XCRemoteSwiftPackageReference "Argon2" */;
+			productName = SignalArgon2;
+		};
+		C274C7752ADD3DF900B8AAC1 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		C274C77B2ADD3E3500B8AAC1 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2B811CD284D1C9E009FD99D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 		C278121E27F9F4C000F31453 /* SwCrypt */ = {
 			isa = XCSwiftPackageProductDependency;

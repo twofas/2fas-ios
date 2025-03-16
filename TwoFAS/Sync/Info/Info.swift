@@ -21,11 +21,12 @@ import Foundation
 
 struct Info: Hashable {
     static let id = "info"
+    static let version: Int = 3
     
     enum Encryption: String {
         case system
         case user
     }
-    let version: Int = 3
+    let version: Int = Self.version
     let encyption: Encryption = .system
 }

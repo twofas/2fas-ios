@@ -57,15 +57,5 @@ public final class Protection {
         migrationHandler = MigrationHandler(storage: encryptedStorage)
         migrationHandler.migrateIfNeeded()
     }
-    #elseif os(watchOS)
-//    private let encryptedStorage: LocalEncryptedStorage
-//    public let codeStorage: CodeStorage
-      public let localKeyEncryption: CommonLocalKeyEncryption
-//
-    public init() {
-//        encryptedStorage = LocalEncryptedStorage(defaults: UserDefaults(suiteName: Config.suiteName)!)
-//        codeStorage = CodeStorage(storage: encryptedStorage)
-        localKeyEncryption = LocalKeyEncryption()
-    }
     #endif
 }

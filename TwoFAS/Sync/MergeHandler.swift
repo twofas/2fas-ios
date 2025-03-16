@@ -31,13 +31,13 @@ final class MergeHandler {
 
     private let logHandler: LogHandler
     private let commonItemHandler: CommonItemHandler
-    private let itemHandler: ItemHandlerMigrationProxy
+    private let itemHandler: ItemHandler
     private let cloudKit: CloudKit
     
     init(
         logHandler: LogHandler,
         commonItemHandler: CommonItemHandler,
-        itemHandler: ItemHandlerMigrationProxy,
+        itemHandler: ItemHandler,
         cloudKit: CloudKit
     ) {
         self.logHandler = logHandler
@@ -49,7 +49,7 @@ final class MergeHandler {
 
 extension MergeHandler {
     var hasChanges: Bool {
-        logHandler.countChanges() > 0 // TODO: OR OF MIGRATION IN PROGRESS!??
+        logHandler.countChanges() > 0
     }
     
     // swiftlint:disable line_length
@@ -57,18 +57,13 @@ extension MergeHandler {
         LogZoneStart()
         Log("MergeHandler: Starting sync", module: .cloudSync)
         
-        // Add items from migration before we get all items
-        commonItemHandler.setItemsFromMigration(itemHandler.servicesToAppend())
-        
         let changes = logHandler.listAllActions()
         let current = commonItemHandler.getAllItems()
         
-        // If in migration then we're removing from current cache Service2, otherwise they'll be removed -> same entityID as Service1
-        // They will be force-added as Service2
         let currentCache = itemHandler.listAllCommonItems()
         var listToSend = currentCache
         
-        var deleteRecordsIDs: [CKRecord.ID] = itemHandler.itemsToDeleteAfterMigration()
+        var deleteRecordsIDs: [CKRecord.ID] = []
         var recordsToModify: [CKRecord] = []
         
         if let deleted = changes[.deleted] {
@@ -76,7 +71,7 @@ extension MergeHandler {
                 guard let type = RecordType(rawValue: item.kind) else { return nil }
                 return (entityID: item.entityID, type: type)
             }
-            deleteRecordsIDs += itemHandler.findItemsRecordIDs(for: deletedEntities, zoneID: cloudKit.zoneID) // TODO: Check how the v2 vs v3 will behave here! do we need v2 recordID generation?
+            deleteRecordsIDs += itemHandler.findItemsRecordIDs(for: deletedEntities, zoneID: cloudKit.zoneID)
             Log("MergeHandler: Deletition: Removing services logged: \(deleted.count), existing in cloud: \(deleteRecordsIDs.count)", module: .cloudSync)
             listToSend = itemHandler.filterDeleted(from: currentCache, deleted: deletedEntities)
         }

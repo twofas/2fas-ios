@@ -27,11 +27,13 @@ import CloudKit
 
 final class SyncHandler {
     private let logHandler: LogHandler
-    private let itemHandler: ItemHandlerMigrationProxy
+    private let itemHandler: ItemHandler
     private let commonItemHandler: CommonItemHandler
     private let cloudKit: CloudKit
     private let modificationQueue: ModificationQueue
     private let mergeHandler: MergeHandler
+    private let migrationHandler: MigrationHandler
+    private let requirementCheck: RequirementCheckHandler
     
     private var isSyncing = false
     private var applyingChanges = false
@@ -50,12 +52,14 @@ final class SyncHandler {
     var container: CKContainer { cloudKit.container }
     
     init(
-        itemHandler: ItemHandlerMigrationProxy,
+        itemHandler: ItemHandler,
         commonItemHandler: CommonItemHandler,
         logHandler: LogHandler,
         cloudKit: CloudKit,
         modificationQueue: ModificationQueue,
-        mergeHandler: MergeHandler
+        mergeHandler: MergeHandler,
+        migrationHandler: MigrationHandler,
+        requriemntCheck: RequirementCheckHandler
     ) {
         self.itemHandler = itemHandler
         self.commonItemHandler = commonItemHandler
@@ -63,6 +67,8 @@ final class SyncHandler {
         self.cloudKit = cloudKit
         self.modificationQueue = modificationQueue
         self.mergeHandler = mergeHandler
+        self.migrationHandler = migrationHandler
+        self.requirementCheck = requriemntCheck
         
         cloudKit.initialize()
         
@@ -182,10 +188,39 @@ final class SyncHandler {
     
     // swiftlint:disable line_length
     private func fetchFinishedSuccessfuly() {
-        itemHandler.commit()
-        
-        Log("SyncHandler - method: fetch finished successfuly", module: .cloudSync)
         guard isSyncing else { return }
+        Log("SyncHandler - method: fetch finished successfuly", module: .cloudSync)
+        
+        guard !requirementCheck.checkIfStopSync(
+            using: itemHandler.updatedCreated,
+            migrationPending: migrationHandler.migrationPending
+        ) else {
+            clearCacheAndDisable()
+            useriCloudProblem?()
+            return
+        }
+        
+        Log("SyncHandler - commiting iCloud state into item handler", module: .cloudSync)
+        itemHandler.commit(ignoreRemovals: migrationHandler.isMigrating)
+        migrationHandler.migrationFinished()
+
+        if migrationHandler.checkIfMigrationNeeded() {
+            Log("SyncHandler - migration needed", module: .cloudSync)
+            let (recordIDsToDeleteOnServer, recordsToModifyOnServer) = migrationHandler.migrate(with: itemHandler.updatedCreated)
+            itemHandler.cleanUp()
+
+            Log("SyncHandler - Sending migrated changes", module: .cloudSync)
+            applyingChanges = true
+            
+            modificationQueue.setRecordsToModifyOnServer(recordsToModifyOnServer, deleteIDs: recordIDsToDeleteOnServer)
+            let current = modificationQueue.currentBatch()
+            cloudKit.modifyRecord(recordsToSave: current.modify, recordIDsToDelete: current.delete)
+
+            return
+        }
+        
+        itemHandler.cleanUp()
+                
         Log("SyncHandler -  method: fetch finished successfuly - is syncing now", module: .cloudSync)
         guard mergeHandler.hasChanges else {
             Log("SyncHandler - No logs with changes. Exiting", module: .cloudSync)
@@ -232,7 +267,7 @@ final class SyncHandler {
         Log("SyncHandler - Sync completed, clearing changes for sending", module: .cloudSync)
         isSyncing = false
         
-        if logHandler.countNotApplied() > 0 || applyingChanges {
+        if logHandler.countNotApplied() > 0 || applyingChanges || migrationHandler.isMigrating {
             Log("SyncHandler - New sync on it way. Not applied changes: \(logHandler.countNotApplied()) or need to apply changes: \(applyingChanges)", module: .cloudSync)
             synchronize()
             return

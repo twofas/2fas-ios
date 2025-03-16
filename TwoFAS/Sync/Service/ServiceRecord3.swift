@@ -38,7 +38,6 @@ private enum ServiceEntryKey3: String {
     case counter
     case tokenType
     case source
-    case reference
 }
 
 private enum ServiceEntryKeyEncrypted3: String {
@@ -52,13 +51,13 @@ private enum ServiceEntryKeyEncrypted3: String {
 }
 
 final class ServiceRecord3 {
-    private(set) var name: String = ""
-    private(set) var secret: String = ""
+    private(set) var name: Data = Data()
+    private(set) var secret: Data = Data()
     private(set) var unencryptedSecret: String = ""
-    private(set) var serviceTypeID: String?
-    private(set) var additionalInfo: String?
-    private(set) var rawIssuer: String?
-    private(set) var otpAuth: String?
+    private(set) var serviceTypeID: Data? = nil
+    private(set) var additionalInfo: Data? = nil
+    private(set) var rawIssuer: Data? = nil
+    private(set) var otpAuth: Data? = nil
     private(set) var ckRecord: CKRecord?
     private(set) var creationDate = Date()
     private(set) var modificationDate = Date()
@@ -66,7 +65,7 @@ final class ServiceRecord3 {
     private(set) var tokenPeriod: Int?
     private(set) var badgeColor: String?
     private(set) var iconType: String = ""
-    private(set) var iconTypeID: String = ""
+    private(set) var iconTypeID: Data = Data()
     private(set) var labelColor: String = ""
     private(set) var labelTitle: String = ""
     private(set) var sectionID: String?
@@ -75,34 +74,25 @@ final class ServiceRecord3 {
     private(set) var counter: Int?
     private(set) var tokenType: String
     private(set) var source: String
-    private(set) var reference: String
     
     init(record: CKRecord) {
-        name = record[.name] as! String
-        secret = record[.secret] as! String
+        name = record[.name] as! Data
+        secret = record[.secret] as! Data
+        
+        if let data = record[.serviceTypeID] as? Data, !data.isEmpty {
+            serviceTypeID = data
+        }
+        
+        if let data = record[.additionalInfo] as? Data, !data.isEmpty {
+            additionalInfo = data
+        }
+        
+        if let data = record[.rawIssuer] as? Data, !data.isEmpty {
+            rawIssuer = data
+        }
 
-        if let serviceTypeIDRaw = record[.serviceTypeID] as? String, !serviceTypeIDRaw.isEmpty {
-            serviceTypeID = serviceTypeIDRaw
-        } else {
-            serviceTypeID = nil
-        }
-        
-        if let rawAdditionalInfo = record[.additionalInfo] as? String, !rawAdditionalInfo.isEmpty {
-            additionalInfo = rawAdditionalInfo
-        } else {
-            additionalInfo = nil
-        }
-        
-        if let rawRawIssuer = record[.rawIssuer] as? String, !rawRawIssuer.isEmpty {
-            rawIssuer = rawRawIssuer
-        } else {
-            rawIssuer = nil
-        }
-        
-        if let rawOtpAuth = record[.otpAuth] as? String, !rawOtpAuth.isEmpty {
-            otpAuth = rawOtpAuth
-        } else {
-            otpAuth = nil
+        if let data = record[.otpAuth] as? Data, !data.isEmpty {
+            otpAuth = data
         }
         
         creationDate = record.creationDate ?? Date()
@@ -123,7 +113,7 @@ final class ServiceRecord3 {
         }
         
         iconType = record[.iconType] as! String
-        iconTypeID = record[.iconTypeID] as! String
+        iconTypeID = record[.iconTypeID] as! Data
         
         labelColor = record[.labelColor] as! String
         labelTitle = record[.labelTitle] as! String
@@ -142,8 +132,6 @@ final class ServiceRecord3 {
         
         source = record[.source] as! String
         
-        reference = record[.reference] as! String
-        
         ckRecord = record
     }
     
@@ -154,17 +142,17 @@ final class ServiceRecord3 {
     
     static func create(
         with metadata: Data,
-        name: String,
-        secret: String,
-        serviceTypeID: String?,
-        additionalInfo: String?,
-        rawIssuer: String?,
-        otpAuth: String?,
+        name: Data,
+        secret: Data,
+        serviceTypeID: Data?,
+        additionalInfo: Data?,
+        rawIssuer: Data?,
+        otpAuth: Data?,
         tokenPeriod: Int?,
         tokenLength: Int,
         badgeColor: String?,
         iconType: String,
-        iconTypeID: String,
+        iconTypeID: Data,
         labelColor: String,
         labelTitle: String,
         sectionID: String?,
@@ -172,8 +160,7 @@ final class ServiceRecord3 {
         algorithm: String,
         counter: Int?,
         tokenType: String,
-        source: String,
-        reference: String
+        source: String
     ) -> CKRecord? {
         guard let decoder = try? NSKeyedUnarchiver(forReadingFrom: metadata) else { return nil }
         decoder.requiresSecureCoding = true
@@ -200,8 +187,7 @@ final class ServiceRecord3 {
             algorithm: algorithm,
             counter: counter,
             tokenType: tokenType,
-            source: source,
-            reference: reference
+            source: source
         )
         
         return record
@@ -209,18 +195,18 @@ final class ServiceRecord3 {
     
     static func create(
         zoneID: CKRecordZone.ID,
-        name: String,
-        secret: String,
+        name: Data,
+        secret: Data,
         unencryptedSecret: String,
-        serviceTypeID: String?,
-        additionalInfo: String?,
-        rawIssuer: String?,
-        otpAuth: String?,
+        serviceTypeID: Data?,
+        additionalInfo: Data?,
+        rawIssuer: Data?,
+        otpAuth: Data?,
         tokenPeriod: Int?,
         tokenLength: Int,
         badgeColor: String?,
         iconType: String,
-        iconTypeID: String,
+        iconTypeID: Data,
         labelColor: String,
         labelTitle: String,
         sectionID: String?,
@@ -228,8 +214,7 @@ final class ServiceRecord3 {
         algorithm: String,
         counter: Int?,
         tokenType: String,
-        source: String,
-        reference: String
+        source: String
     ) -> CKRecord? {
         let record = CKRecord(
             recordType: RecordType.service3.rawValue,
@@ -256,8 +241,7 @@ final class ServiceRecord3 {
             algorithm: algorithm,
             counter: counter,
             tokenType: tokenType,
-            source: source,
-            reference: reference
+            source: source
         )
         
         return record
@@ -265,17 +249,17 @@ final class ServiceRecord3 {
     
     static func update(
         _ record: CKRecord,
-        name: String,
-        secret: String,
-        serviceTypeID: String?,
-        additionalInfo: String?,
-        rawIssuer: String?,
-        otpAuth: String?,
+        name: Data,
+        secret: Data,
+        serviceTypeID: Data?,
+        additionalInfo: Data?,
+        rawIssuer: Data?,
+        otpAuth: Data?,
         tokenPeriod: Int?,
         tokenLength: Int,
         badgeColor: String?,
         iconType: String,
-        iconTypeID: String,
+        iconTypeID: Data,
         labelColor: String,
         labelTitle: String,
         sectionID: String?,
@@ -283,15 +267,14 @@ final class ServiceRecord3 {
         algorithm: String,
         counter: Int?,
         tokenType: String,
-        source: String,
-        reference: String
+        source: String
     ) {
         record[.name] = name as CKRecordValue
         record[.secret] = secret as CKRecordValue
-        record[.serviceTypeID] = (serviceTypeID ?? "") as CKRecordValue
-        record[.additionalInfo] = (additionalInfo ?? "") as CKRecordValue
-        record[.rawIssuer] = (rawIssuer ?? "") as CKRecordValue
-        record[.otpAuth] = (otpAuth ?? "") as CKRecordValue
+        record[.serviceTypeID] = (serviceTypeID ?? Data()) as CKRecordValue
+        record[.additionalInfo] = (additionalInfo ?? Data()) as CKRecordValue
+        record[.rawIssuer] = (rawIssuer ?? Data()) as CKRecordValue
+        record[.otpAuth] = (otpAuth ?? Data()) as CKRecordValue
         record[.tokenLength] = tokenLength as CKRecordValue
         record[.tokenPeriod] = (tokenPeriod ?? 0) as CKRecordValue
         record[.badgeColor] = (badgeColor ?? "") as CKRecordValue
@@ -305,13 +288,12 @@ final class ServiceRecord3 {
         record[.counter] = (counter ?? TokenType.hotpDefaultValue) as CKRecordValue
         record[.tokenType] = tokenType as CKRecordValue
         record[.source] = source as CKRecordValue
-        record[.reference] = reference as CKRecordValue
     }
 }
 
 extension ServiceRecord3: RecordIDGenerator {
     static func recordID(with identifier: String, zoneID: CKRecordZone.ID) -> CKRecord.ID {
-        CKRecord.ID(recordName: "\(iCloudIdentifier.generate(from: identifier))", zoneID: zoneID)
+        CKRecord.ID(recordName: "\(iCloudIdentifier.generate(from: identifier))".encrypt(), zoneID: zoneID)
     }
 }
 

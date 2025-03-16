@@ -29,21 +29,21 @@ import ProtectionWatch
 
 final class ServiceHandler {
     private let coreDataStack: CoreDataStack
+    private let serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler
     
     var encryption: ExchangeFileEncryption?
     var embedded: String?
     
-    init(coreDataStack: CoreDataStack) {
+    init(coreDataStack: CoreDataStack, serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler) {
         self.coreDataStack = coreDataStack
+        self.serviceRecordEncryptionHandler = serviceRecordEncryptionHandler
     }
     
     func delete(identifiedBy identifier: String) {
-        if case let iCloudIdentifier.v3(id) = iCloudIdentifier.parse(identifier) {
-            ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: id)
-            return
-        }
         let identifier = identifier.decrypt()
         switch iCloudIdentifier.parse(identifier) {
+        case .v3(let secret):
+            ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: secret.encrypt())
         case .v2(let secret):
             ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: secret.encrypt())
         case .long(let hash, let beginsWith):
@@ -103,6 +103,65 @@ final class ServiceHandler {
     }
     
     func updateOrCreate(with record: ServiceRecord3, save: Bool) {
+        guard let serviceData = serviceRecordEncryptionHandler.createServiceData(from: record) else {
+            return
+        }
+        
+        if let service = findService(by: serviceData.secret) {
+            service.name = serviceData.name
+            service.serviceTypeID = serviceData.serviceTypeID
+            service.additionalInfo = serviceData.additionalInfo
+            service.rawIssuer = serviceData.rawIssuer
+            service.otpAuth = serviceData.otpAuth
+            service.metadata = record.encodeSystemFields()
+            service.creationDate = record.creationDate
+            service.modificationDate = record.modificationDate
+            service.tokenLength = NSNumber(value: record.tokenLength)
+            service.tokenPeriod = intToNumber(record.tokenPeriod)
+            service.iconType = record.iconType
+            service.iconTypeID = serviceData.iconTypeID
+            service.badgeColor = record.badgeColor
+            service.labelColor = record.labelColor
+            service.labelTitle = serviceData.labelTitle
+            service.sectionID = serviceData.sectionID
+            service.sectionOrder = record.sectionOrder
+            service.algorithm = record.algorithm
+            service.counter = intToNumber(record.counter)
+            service.tokenType = record.tokenType
+            service.source = record.source
+        } else {
+            ServiceCacheEntity.create(
+                on: coreDataStack.context,
+                metadata: record.encodeSystemFields(),
+                name: serviceData.name,
+                secret: serviceData.secret.encrypt(),
+                serviceTypeID: serviceData.serviceTypeID,
+                additionalInfo: serviceData.additionalInfo,
+                rawIssuer: serviceData.rawIssuer,
+                otpAuth: serviceData.otpAuth,
+                creationDate: record.creationDate,
+                modificationDate: record.modificationDate,
+                tokenPeriod: record.tokenPeriod,
+                tokenLength: record.tokenLength,
+                badgeColor: record.badgeColor,
+                iconType: record.iconType,
+                iconTypeID: serviceData.iconTypeID,
+                labelColor: record.labelColor,
+                labelTitle: record.labelTitle,
+                sectionID: serviceData.sectionID,
+                sectionOrder: record.sectionOrder,
+                algorithm: record.algorithm,
+                counter: record.counter,
+                tokenType: record.tokenType,
+                source: record.source
+            )
+        }
+        if save {
+            coreDataStack.save()
+        }
+    }
+    
+    func updateOrCreate(with record: ServiceRecord2, save: Bool) {
         guard
             let encryption,
             let embedded,

@@ -35,28 +35,53 @@ final class ItemHandler {
     private let serviceHandler: ServiceHandler
     private let infoHandler: InfoHandler
     private let logHandler: LogHandler
+    private let serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler
     
     private let encryption = ExchangeFileEncryption()
     private let embedded = Keys.Sync.key.decrypt()
-    private let allowedDevicesNone = "none"
+    
+    private var deletedEntries: [EntityOfKind] = []
+    private(set) var updatedCreated: [CKRecord] = []
     
     init(
         sectionHandler: SectionHandler,
         serviceHandler: ServiceHandler,
         infoHandler: InfoHandler,
-        logHandler: LogHandler
+        logHandler: LogHandler,
+        serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler
     ) {
         self.sectionHandler = sectionHandler
         self.serviceHandler = serviceHandler
         self.infoHandler = infoHandler
         self.logHandler = logHandler
+        self.serviceRecordEncryptionHandler = serviceRecordEncryptionHandler
         
         serviceHandler.encryption = encryption
         serviceHandler.embedded = embedded
     }
 }
 
-extension ItemHandler: ItemHandling {
+extension ItemHandler {
+    func commit(ignoreRemovals: Bool = false) {
+        if !ignoreRemovals {
+            queuedDeleteEntries(deletedEntries)
+        }
+        queuedUpdateOrCreate(with: updatedCreated)
+    }
+    
+    func cleanUp() {
+        deletedEntries = []
+        updatedCreated = []
+    }
+    
+    func deleteEntries(_ entries: [EntityOfKind]) {
+        deletedEntries = entries
+    }
+    
+    func updateOrCreate(with entries: [CKRecord]) {
+        updatedCreated = entries
+    }
+    
     func purge() {
         Log("ItemHandler - Purging section handler and service handler", module: .cloudSync)
         sectionHandler.purge()
@@ -64,35 +89,10 @@ extension ItemHandler: ItemHandling {
         infoHandler.purge()
     }
     
-    func deleteEntries(_ entries: [EntityOfKind]) {
-        entries.forEach { entryID, type in
-            switch type {
-            case .section: sectionHandler.delete(identifiedBy: entryID)
-            case .service2: serviceHandler.delete(identifiedBy: entryID)
-            default: break
-            }
-        }
-    }
-    
-    func updateOrCreate(with entries: [CKRecord]) {
-        entries.forEach { record in
-            if let recordType = RecordType(rawValue: record.recordType) {
-                switch recordType {
-                case .section: sectionHandler.updateOrCreate(with: SectionRecord(record: record), save: false)
-                case .service3: serviceHandler.updateOrCreate(with: ServiceRecord3(record: record), save: false)
-                case .info: infoHandler.saveMetadata(InfoRecord(record: record).encodeSystemFields())
-                default: break
-                }
-            }
-        }
-        sectionHandler.saveAfterBatch()
-        serviceHandler.saveAfterBatch()
-    }
-    
     func listAllCommonItems() -> [RecordType: [Any]] {
         var value = [RecordType: [Any]]()
         value[RecordType.section] = sectionHandler.listAllCommonSection()
-        value[RecordType.service2] = serviceHandler.listAll()
+        value[RecordType.service3] = serviceHandler.listAll()
         value[RecordType.info] = infoHandler.infoIfExists()
         return value
     }
@@ -105,10 +105,10 @@ extension ItemHandler: ItemHandling {
         var items = items
         
         let deletedSections = deleted.filter({ $0.type == .section }).map({ $0.entityID })
-        let deletedServices = deleted.filter({ $0.type == .service2 }).map({ $0.entityID })
+        let deletedServices = deleted.filter({ $0.type == .service3 }).map({ $0.entityID })
         
         items[.section] = (items[.section] as? [CommonSectionData])?.filter({ !deletedSections.contains($0.sectionID) })
-        items[.service2] = (items[.service2] as? [ServiceData])?.filter({ !deletedServices.contains($0.secret) })
+        items[.service3] = (items[.service3] as? [ServiceData])?.filter({ !deletedServices.contains($0.secret) })
         
         return items
     }
@@ -118,6 +118,7 @@ extension ItemHandler: ItemHandling {
             switch type {
             case .section: return (item as? CommonSectionData)?.sectionID
             case .service2: return (item as? ServiceData)?.secret
+            case .service3: return (item as? ServiceData)?.secret
             case .info: return ""
             default: return nil
             }
@@ -141,6 +142,13 @@ extension ItemHandler: ItemHandling {
                 let index = list.firstIndex(where: { $0.secret == entryID })
             else { return nil }
             return .init(index: index, item: item, type: .service2)
+        case .service3:
+            guard
+                let list = (items[.service3] as? [ServiceData]),
+                let item = list.first(where: { $0.secret == entryID }),
+                let index = list.firstIndex(where: { $0.secret == entryID })
+            else { return nil }
+            return .init(index: index, item: item, type: .service3)
         case .info:
             guard let item = items[.info]?.first else { return nil }
             return .init(index: 0, item: item, type: .info)
@@ -152,7 +160,7 @@ extension ItemHandler: ItemHandling {
         guard let entityID = { () -> String? in
             switch type {
             case .section: return (item as? CommonSectionData)?.sectionID
-            case .service2: return (item as? ServiceData)?.secret
+            case .service3: return (item as? ServiceData)?.secret
             case .info: return ""
             default: return nil
             }
@@ -171,53 +179,23 @@ extension ItemHandler: ItemHandling {
                 order: index
             )
             
-        case .service2:
+        case .service3:
             guard let current = serviceHandler.findService(by: entityID),
-                  let list = (from[.service2] as? [ServiceData]),
-                  let modified = list.first(where: { $0.secret == entityID }),
-                  let data = modified.secret.data(using: .utf8),
-                  let ref = encryption.encrypt(with: embedded, data: data)
+                  let list = (from[.service3] as? [ServiceData]),
+                  let modified = list.first(where: { $0.secret == entityID })
             else {
                 Log("ItemHandler - Can't create CKRecord with ServiceData", module: .cloudSync)
                 Log("ItemHandler - Can't create CKRecord with ServiceData: \(item)", module: .cloudSync, save: false)
                 return nil
             }
             
-            let sectionOrder = Dictionary(grouping: list, by: { $0.sectionID })[modified.sectionID]?
-                .firstIndex(where: { $0.secret == entityID }) ?? 0
-            
-            return ServiceRecord2.create(
-                with: current.metadata,
-                name: modified.name,
-                secret: ref.data,
-                serviceTypeID: modified.serviceTypeID?.uuidString,
-                additionalInfo: modified.additionalInfo,
-                rawIssuer: modified.rawIssuer,
-                otpAuth: modified.otpAuth,
-                tokenPeriod: modified.tokenPeriod?.rawValue,
-                tokenLength: modified.tokenLength.rawValue,
-                badgeColor: modified.badgeColor?.rawValue,
-                iconType: modified.iconType.rawValue,
-                iconTypeID: modified.iconTypeID.uuidString,
-                labelColor: modified.labelColor.rawValue,
-                labelTitle: modified.labelTitle,
-                sectionID: modified.sectionID?.uuidString,
-                sectionOrder: sectionOrder,
-                algorithm: modified.algorithm.rawValue,
-                counter: modified.counter,
-                tokenType: modified.tokenType.rawValue,
-                source: modified.source.rawValue,
-                reference: ref.reference
+            return serviceRecordEncryptionHandler.createServiceRecord3(
+                from: modified,
+                metadata: current.metadata,
+                list: list
             )
         case .info:
-            guard let info = (from[.info] as? [Info])?.first, let metadata = infoHandler.metadata() else { return nil }
-            return InfoRecord.create(
-                with: metadata,
-                version: info.version,
-                encryption: info.encyption.rawValue,
-                allowedDevices: [allowedDevicesNone],
-                enableWatch: false
-            )
+            return infoHandler.record()
         default: return nil
         }
     }
@@ -226,7 +204,7 @@ extension ItemHandler: ItemHandling {
         guard let entityID = { () -> String? in
             switch type {
             case .section: return (item as? CommonSectionData)?.sectionID
-            case .service2: return (item as? ServiceData)?.secret
+            case .service3: return (item as? ServiceData)?.secret
             case .info: return ""
             default: return nil
             }
@@ -237,11 +215,9 @@ extension ItemHandler: ItemHandling {
             guard let new = item as? CommonSectionData else { return nil }
             return SectionRecord.create(sectionID: new.sectionID, title: new.name, order: index, zoneID: zoneID)
             
-        case .service2:
+        case .service3:
             guard let new = item as? ServiceData,
-                  let list = (allItems as? [ServiceData]),
-                  let data = new.secret.data(using: .utf8),
-                  let ref = encryption.encrypt(with: embedded, data: data) else {
+                  let list = (allItems as? [ServiceData]) else {
                 Log("ItemHandler - Can't create CKRecord with ServiceData", module: .cloudSync)
                 Log("ItemHandler - Can't create CKRecord with ServiceData: \(item)", module: .cloudSync, save: false)
                 return nil
@@ -254,44 +230,41 @@ extension ItemHandler: ItemHandling {
                 secretError?(new.name)
                 return nil
             }
-            let sectionOrder = Dictionary(grouping: list, by: { $0.sectionID })[new.sectionID]?
-                .firstIndex(where: { $0.secret == entityID }) ?? 0
             
-            return ServiceRecord2.create(
-                zoneID: zoneID,
-                name: new.name,
-                secret: ref.data,
-                unencryptedSecret: new.secret,
-                serviceTypeID: new.serviceTypeID?.uuidString,
-                additionalInfo: new.additionalInfo,
-                rawIssuer: new.rawIssuer,
-                otpAuth: new.otpAuth,
-                tokenPeriod: new.tokenPeriod?.rawValue,
-                tokenLength: new.tokenLength.rawValue,
-                badgeColor: new.badgeColor?.rawValue,
-                iconType: new.iconType.rawValue,
-                iconTypeID: new.iconTypeID.uuidString,
-                labelColor: new.labelColor.rawValue,
-                labelTitle: new.labelTitle,
-                sectionID: new.sectionID?.uuidString,
-                sectionOrder: sectionOrder,
-                algorithm: new.algorithm.rawValue,
-                counter: new.counter,
-                tokenType: new.tokenType.rawValue,
-                source: new.source.rawValue,
-                reference: ref.reference
-            )
+            return serviceRecordEncryptionHandler.createServiceRecord3(from: new, metadata: nil, list: list)
         case .info:
-            guard let new = item as? Info else { return nil }
-            return InfoRecord.create(
-                zoneID: zoneID,
-                version: new.version,
-                encryption: new.encyption.rawValue,
-                allowedDevices: [allowedDevicesNone],
-                enableWatch: false
-            )
+            return infoHandler.record()
         default: return nil
         }
+    }
+}
+
+private extension ItemHandler {
+    func queuedDeleteEntries(_ entries: [EntityOfKind]) {
+        entries.forEach { entryID, type in
+            switch type {
+            case .section: sectionHandler.delete(identifiedBy: entryID)
+            case .service2: serviceHandler.delete(identifiedBy: entryID)
+            case .service3: serviceHandler.delete(identifiedBy: entryID)
+            default: break
+            }
+        }
+    }
+    
+    func queuedUpdateOrCreate(with entries: [CKRecord]) {
+        entries.forEach { record in
+            if let recordType = RecordType(rawValue: record.recordType) {
+                switch recordType {
+                case .section: sectionHandler.updateOrCreate(with: SectionRecord(record: record), save: false)
+                case .service2: serviceHandler.updateOrCreate(with: ServiceRecord2(record: record), save: false)
+                case .service3: serviceHandler.updateOrCreate(with: ServiceRecord3(record: record), save: false)
+                case .info: infoHandler.saveMetadata(InfoRecord(record: record).encodeSystemFields())
+                default: break
+                }
+            }
+        }
+        sectionHandler.saveAfterBatch()
+        serviceHandler.saveAfterBatch()
     }
 }
 

@@ -20,6 +20,8 @@
 import Foundation
 import KeychainAccess
 import SignalArgon2
+import CryptoKit
+
 #if os(iOS)
 import Common
 #elseif os(watchOS)
@@ -31,49 +33,67 @@ final class SyncEncryptionHandler {
         .synchronizable(true)
         .accessibility(.afterFirstUnlockThisDeviceOnly)
     
-    private let encryptionReferenceKey = "io.twofas.encryptionReferenceKey"
+//    private let encryptionReferenceKey = "io.twofas.encryptionReferenceKey"
     private let systemKeyKey = "io.twofas.systemKeyKey"
     private let userKeyKey = "io.twofas.userKeyKey"
     private let saltKey = "io.twofas.saltKey"
     
-    init {
-        if keychain[data: encryptionReferenceKey] == nil {
-            
+    private var salt: Data?
+    private var userKey: Data?
+    private var systemKey: Data?
+    
+    func initialize() {
+        if let savedSalt = keychain[data: saltKey] {
+            salt = savedSalt
+        } else {
+            guard let createdSalt = createSalt() else {
+                Log("SyncEncryptionHandler: Can't create salt!", module: .cloudSync, severity: .error)
+                return
+            }
+            keychain[data: saltKey] = createdSalt
+            salt = createdSalt
+        }
+        
+        userKey = keychain[data: userKeyKey]
+        
+        if let savedSystemKey = keychain[data: systemKeyKey] {
+            systemKey = savedSystemKey
+        } else {
+            let randomStr = String.random(length: 128)
+            guard let createdSystemKey = generateKey(for: randomStr) else {
+                Log("SyncEncryptionHandler: Can't create system key!", module: .cloudSync, severity: .error)
+                return
+            }
+            keychain[data: systemKeyKey] = createdSystemKey
+            systemKey = createdSystemKey
         }
     }
     
     public func setUserPassword(_ password: String) {
-        
+        guard let createdUserKey = generateKey(for: password) else {
+            Log("SyncEncryptionHandler: Can't create user key!", module: .cloudSync, severity: .error)
+            return
+        }
+        keychain[data: userKeyKey] = createdUserKey
+        userKey = createdUserKey
     }
     
-    public func disableUserPassword() {
-        
-    }
-    
-//    public static func save(privateKey: Data, publicKey: Data) {
-//        keychainTokens[data: privateKeyStorageKey] = privateKey
-//        keychainTokens[data: publicKeyStorageKey] = publicKey
-//    }
-//    
-//    public static var privateKey: Data? {
-//        keychainTokens[data: privateKeyStorageKey]
-//    }
-//    
-//    public static var publicKey: Data? {
-//        keychainTokens[data: publicKeyStorageKey]
-//    }
+    // TODO: Add encrypt and decrypt methods using ... current encryption key?
     
     private func generateKey(for password: String) -> Data? {
         guard let hexPassword = normalizeStringIntoHEXData(password) else {
-            Log("Can't create HEX from Password", module: .cloudSync, severity: .error)
+            Log("SyncEncryptionHandler: Can't create HEX from Password", module: .cloudSync, severity: .error)
             return nil
         }
        
         guard let passwordData = Data(hexString: hexPassword) else {
-            Log("Can't create HEX from Key", module: .cloudSync, severity: .error)
+            Log("SyncEncryptionHandler: Can't create HEX from Key", module: .cloudSync, severity: .error)
             return nil
         }
-        let partOfSalt = salt[0...15]
+        guard let partOfSalt = salt?[0...15] else {
+            Log("SyncEncryptionHandler: Cant' get salt!", module: .cloudSync, severity: .error)
+            return nil
+        }
         do  {
             let (rawHash, _) = try Argon2.hash(
                 iterations: UInt32(3),
@@ -87,7 +107,7 @@ final class SyncEncryptionHandler {
             )
             return rawHash
         } catch {
-            Log("Can't create key, error: \(error)", module: .cloudSync, severity: .error)
+            Log("SyncEncryptionHandler: Can't create key, error: \(error)", module: .cloudSync, severity: .error)
         }
         return nil
     }
@@ -99,14 +119,8 @@ final class SyncEncryptionHandler {
     }
     
     private func createSalt() -> Data? {
-        let lastCount = 4
-        guard words.count >= lastCount else {
-            Log("Can't get 4 words. Words count: \(words.count)", module: .cloudSync, severity: .error)
-            return nil
-        }
-        let words = words.map({ $0.lowercased() })
-        let elements = words.suffix(lastCount).joined()
-        guard let data = elements.data(using: .utf8) else {
+        let str = String.random(length: 64)
+        guard let data = str.data(using: .utf8) else {
             Log("Can't greate data from words", module: .cloudSync, severity: .error)
             return nil
         }

@@ -93,7 +93,7 @@ extension ItemHandler {
         var value = [RecordType: [Any]]()
         value[RecordType.section] = sectionHandler.listAllCommonSection()
         value[RecordType.service3] = serviceHandler.listAll()
-        value[RecordType.info] = infoHandler.infoIfExists()
+        value[RecordType.info] = infoHandler.re()
         return value
     }
     
@@ -195,7 +195,7 @@ extension ItemHandler {
                 list: list
             )
         case .info:
-            return infoHandler.record()
+            return infoHandler.recreateWithNewData()
         default: return nil
         }
     }
@@ -233,7 +233,7 @@ extension ItemHandler {
             
             return serviceRecordEncryptionHandler.createServiceRecord3(from: new, metadata: nil, list: list)
         case .info:
-            return infoHandler.record()
+            return infoHandler.createNew()
         default: return nil
         }
     }
@@ -258,7 +258,7 @@ private extension ItemHandler {
                 case .section: sectionHandler.updateOrCreate(with: SectionRecord(record: record), save: false)
                 case .service2: serviceHandler.updateOrCreate(with: ServiceRecord2(record: record), save: false)
                 case .service3: serviceHandler.updateOrCreate(with: ServiceRecord3(record: record), save: false)
-                case .info: infoHandler.saveMetadata(InfoRecord(record: record).encodeSystemFields())
+                case .info: infoHandler.updateUsingRecord(InfoRecord(record: record))
                 default: break
                 }
             }

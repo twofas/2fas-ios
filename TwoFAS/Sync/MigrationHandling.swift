@@ -20,11 +20,12 @@
 import CloudKit
 
 protocol MigrationHandling: AnyObject {
-    var retriggerFullSync: (() -> Void)? { get set }
-    var migrationPending: Bool { get }
-    func setMigrationPending()
-    func markFirstStart()
+    var isMigrating: Bool { get }
+    
+    var isReencryptionPending: (() -> Bool)? { get set }
+    var isMigratingToV3: (() -> Void)? { get set }
+    
     func checkIfMigrationNeeded() -> Bool
-    func migrate(with records: [CKRecord]) -> (recordIDsToDeleteOnServer: [CKRecord.ID]?, recordsToModifyOnServer: [CKRecord]?)
-    func migrationFinished()
+    func migrate() -> (recordIDsToDeleteOnServer: [CKRecord.ID]?, recordsToModifyOnServer: [CKRecord]?)
+    func itemsCommited()
 }

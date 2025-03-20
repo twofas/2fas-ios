@@ -22,19 +22,33 @@ import CloudKit
 import Common
 
 final class MigrationHandler {
-    var retriggerFullSync: (() -> Void)?
+    private enum MigrationPath {
+        case v1v3
+        case v2v3
+        case reencryption
+        
+        var migratingToNewestVersion: Bool {
+            switch self {
+            case .v1v3, .v2v3: true
+            case .reencryption: false
+            }
+        }
+    }
     
-    private let migrationToV3Key = "migrationToV3"
+    var isReencryptionPending: (() -> Bool)?
+    var isMigratingToV3: (() -> Void)?
     
-    private var isFirstStart = false
-    private var isMigrationPending = false
-    private(set) var isMigrating = false
+    var isMigrating: Bool {
+        migrationPath != nil
+    }
+    
+    private var migrationPath: MigrationPath?
     
     private let serviceHandler: ServiceHandler
     private let zoneID: CKRecordZone.ID
     private let serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler
     private let infoHandler: InfoHandler
-    private let userDefaults: UserDefaults
+   
     
     init(
         serviceHandler: ServiceHandler,
@@ -46,91 +60,57 @@ final class MigrationHandler {
         self.zoneID = zoneID
         self.serviceRecordEncryptionHandler = serviceRecordEncryptionHandler
         self.infoHandler = infoHandler
-        self.userDefaults = .standard
     }
 }
 
 extension MigrationHandler: MigrationHandling {
-    var migrationPending: Bool {
-        isMigrationPending
-    }
-    
-    func markFirstStart() {
-        isFirstStart = true
-    }
-    
-    func setMigrationPending() {
-        isMigrationPending = true
-    }
-    
     func checkIfMigrationNeeded() -> Bool {
-        guard migratedToNewestVersion || migrationPending else {
+        guard let migrationPathValue = checkMigrationVersion() else {
             return false
         }
-        guard isFirstStart else {
-            retriggerFullSync?()
-            return true
+        if migrationPathValue.migratingToNewestVersion {
+            isMigratingToV3?()
         }
-        isMigrating = true
+        migrationPath = migrationPathValue
         return true
     }
     
-    func migrate(with records: [CKRecord]) -> (recordIDsToDeleteOnServer: [CKRecord.ID]?, recordsToModifyOnServer: [CKRecord]?) {
-        guard isMigrating else { return (nil, nil) }
-        if migrationPending { // encryption changed - recreating V3
+    func migrate() -> (recordIDsToDeleteOnServer: [CKRecord.ID]?, recordsToModifyOnServer: [CKRecord]?) {
+        guard let migrationPath else { return (nil, nil) }
+        switch migrationPath {
+        case .v1v3:
+            let listForRemoval = serviceHandler.listAll().map({ ServiceRecord.recordID(with: $0.secret, zoneID: zoneID) })
             var listForCreationModification = listV3ForCreationModification()
-            if let info = infoHandler.record() { // updating - should exist
+            if let info = infoHandler.createNew() {
+                listForCreationModification?.append(info)
+            }
+            return (recordIDsToDeleteOnServer: listForRemoval, recordsToModifyOnServer: listForCreationModification)
+        case .v2v3:
+            let listForRemoval = serviceHandler.listAll().map({ ServiceRecord2.recordID(with: $0.secret, zoneID: zoneID) })
+            var listForCreationModification = listV3ForCreationModification()
+            if let info = infoHandler.recreateWithNewData() { // updating - should exist
+                listForCreationModification?.append(info)
+            }
+            return (recordIDsToDeleteOnServer: listForRemoval, recordsToModifyOnServer: listForCreationModification)
+        case .reencryption:
+            var listForCreationModification = listV3ForCreationModification()
+            if let info = infoHandler.recreateWithNewData() { // updating - should exist
                 listForCreationModification?.append(info)
             }
             return (recordIDsToDeleteOnServer: nil, recordsToModifyOnServer: listForCreationModification)
         }
-        if let infoRecord = records.first(where: { RecordType(rawValue: $0.recordType) == .info }) {
-            let info = InfoRecord(record: infoRecord)
-            if info.version < Info().version { // Migration from V2 to V3
-                let listForRemoval = listV2ForRemoval(from: records)
-                var listForCreationModification = listV3ForCreationModification()
-                if let info = infoHandler.record() { // updating - should exist
-                    listForCreationModification?.append(info)
-                }
-                return (recordIDsToDeleteOnServer: listForRemoval, recordsToModifyOnServer: listForCreationModification)
-            }
-        } else { // Migration from V1 to V3
-            let listForRemoval = listV1ForRemoval(from: records)
-            var listForCreationModification = listV3ForCreationModification()
-            if let info = infoHandler.record() {
-                listForCreationModification?.append(info)
-            }
-            return (recordIDsToDeleteOnServer: listForRemoval, recordsToModifyOnServer: listForCreationModification)
-        }
         return (recordIDsToDeleteOnServer: nil, recordsToModifyOnServer: nil)
     }
         
-    func migrationFinished() {
-        setMigratedToNewestVersion()
-        
-        isMigrating = false
-        isMigrationPending = false
-        isFirstStart = false
+    func itemsCommited() {
+        migrationPath = nil
+        if isReencryptionPending?() == true {
+            migrationPath = .reencryption
+        }
     }
 }
 
 private extension MigrationHandler {
-    func listV1ForRemoval(from records: [CKRecord]) -> [CKRecord.ID]? {
-        let list = records.filter { RecordType(rawValue: $0.recordType) == .service1 }
-        guard !list.isEmpty else {
-            return nil
-        }
-        return list.map({ $0.recordID })
-    }
-    
-    func listV2ForRemoval(from records: [CKRecord]) -> [CKRecord.ID]? {
-        let list = records.filter { RecordType(rawValue: $0.recordType) == .service2 }
-        guard !list.isEmpty else {
-            return nil
-        }
-        return list.map({ $0.recordID })
-    }
-    
     func listV3ForCreationModification() -> [CKRecord]? {
         let list = serviceHandler.listAll()
         let servicesRecords = list.compactMap ({ serviceRecordEncryptionHandler.createServiceRecord3(
@@ -144,12 +124,16 @@ private extension MigrationHandler {
         return servicesRecords
     }
     
-    var migratedToNewestVersion: Bool {
-        userDefaults.bool(forKey: migrationToV3Key)
-    }
-    
-    func setMigratedToNewestVersion() {
-        userDefaults.set(true, forKey: migrationToV3Key)
-        userDefaults.synchronize()
+    private func checkMigrationVersion() -> MigrationPath? {
+        guard migrationPath == nil else {
+            return migrationPath
+        }
+        guard let version = infoHandler.version else {
+            return .v1v3
+        }
+        if version == Info.version - 1 {
+            return .v2v3
+        }
+        return nil
     }
 }

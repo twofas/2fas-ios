@@ -31,13 +31,13 @@ enum InfoEntryKey: String {
     case allowedDevices
     case enableWatch
     case encryptionReference
+    case modificationDate
 }
 
 final class InfoRecord {
     private(set) var version: Int = 0
     private(set) var encryption: String = ""
     private(set) var ckRecord: CKRecord?
-    private(set) var creationDate = Date()
     private(set) var modificationDate = Date()
     private(set) var allowedDevices: [String] = []
     private(set) var encryptionReference: Data? = nil
@@ -52,7 +52,6 @@ final class InfoRecord {
             encryptionReference = er
         }
 
-        creationDate = record.creationDate ?? Date()
         modificationDate = record.modificationDate ?? Date()
 
         ckRecord = record
@@ -63,13 +62,14 @@ final class InfoRecord {
         return ckRecord.encodeSystemFields()
     }
     
-    static func create(
+    static func recreate(
         with metadata: Data,
         version: Int,
         encryption: String,
         allowedDevices: [String],
         enableWatch: Bool,
-        encryptionReference: Data
+        encryptionReference: Data,
+        modificationDate: Date
     ) -> CKRecord? {
         guard let decoder = try? NSKeyedUnarchiver(forReadingFrom: metadata) else { return nil }
         decoder.requiresSecureCoding = true
@@ -82,7 +82,8 @@ final class InfoRecord {
             encryption: encryption,
             allowedDevices: allowedDevices,
             enableWatch: enableWatch,
-            encryptionReference: encryptionReference
+            encryptionReference: encryptionReference,
+            modificationDate: modificationDate
         )
         
         return record
@@ -94,7 +95,8 @@ final class InfoRecord {
         encryption: String,
         allowedDevices: [String],
         enableWatch: Bool,
-        encryptionReference: Data
+        encryptionReference: Data,
+        modificationDate: Date
     ) -> CKRecord? {
         let record = CKRecord(recordType: RecordType.info.rawValue, recordID: recordID(with: "", zoneID: zoneID))
         
@@ -104,7 +106,8 @@ final class InfoRecord {
             encryption: encryption,
             allowedDevices: allowedDevices,
             enableWatch: enableWatch,
-            encryptionReference: encryptionReference
+            encryptionReference: encryptionReference,
+            modificationDate: modificationDate
         )
         
         return record
@@ -116,13 +119,15 @@ final class InfoRecord {
         encryption: String,
         allowedDevices: [String],
         enableWatch: Bool,
-        encryptionReference: Data
+        encryptionReference: Data,
+        modificationDate: Date
     ) {
         record[.version] = version as CKRecordValue
         record[.encryption] = encryption as CKRecordValue
         record[.allowedDevices] = allowedDevices as CKRecordValue
         record[.enableWatch] = enableWatch as CKRecordValue
         record[.encryptionReference] = encryptionReference as CKRecordValue
+        record[.modificationDate] = modificationDate as CKRecordValue
     }
 }
 

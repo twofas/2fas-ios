@@ -108,9 +108,7 @@ public protocol CloudHandlerType: AnyObject {
     func disable(notify: Bool)
     func clearBackup()
     func setTimeOffset(_ offset: Int)
-    func resetStateBeforeSync()
-    
-    func markPendingMigration()
+    func resetStateBeforeSync()    
 }
 
 final class CloudHandler: CloudHandlerType {
@@ -124,7 +122,6 @@ final class CloudHandler: CloudHandlerType {
     private let cloudKit: CloudKit
     private let mergeHandler: MergeHandler
     private let migrationHandler: MigrationHandling
-    private let requirementCheck: RequirementCheckHandler
     
     private let notificationCenter = NotificationCenter.default
     
@@ -150,8 +147,7 @@ final class CloudHandler: CloudHandlerType {
         itemHandler: ItemHandler,
         cloudKit: CloudKit,
         mergeHandler: MergeHandler,
-        migrationHandler: MigrationHandling,
-        requirementCheck: RequirementCheckHandler
+        migrationHandler: MigrationHandling
     ) {
         self.cloudAvailability = cloudAvailability
         self.syncHandler = syncHandler
@@ -159,13 +155,7 @@ final class CloudHandler: CloudHandlerType {
         self.cloudKit = cloudKit
         self.mergeHandler = mergeHandler
         self.migrationHandler = migrationHandler
-        self.requirementCheck = requirementCheck
         clearHandler = ClearHandler()
-        
-        migrationHandler.retriggerFullSync = { [weak self] in self?.resetBeforeMigration() }
-        
-        requirementCheck.newerVersion = { [weak self] in self?.newerVersionOfCloud() }
-        requirementCheck.cloudEncrypted = { [weak self] in self?.cloudIsEncrypted() }
         
         cloudAvailability.availabilityCheckResult = { [weak self] resultStatus in
             self?.availabilityCheckResult(resultStatus)
@@ -297,21 +287,11 @@ final class CloudHandler: CloudHandlerType {
     func setTimeOffset(_ offset: Int) {
         mergeHandler.setTimeOffset(offset)
     }
-
-    func markPendingMigration() {
-        migrationHandler.setMigrationPending()
-        if isSynced {
-            resetBeforeMigration()
-        } else {
-            resetStateBeforeSync()
-        }
-    }
     
     // MARK: - Private
 
     private func resetBeforeMigration() {
         Log("Cloud Handler - resetBeforeMigration", module: .cloudSync)
-        migrationHandler.markFirstStart()
         syncHandler.firstStart()
     }
     
@@ -328,7 +308,6 @@ final class CloudHandler: CloudHandlerType {
             if isEnabled {
                 Log("Cloud Handler - account changed - clearing all, first start", module: .cloudSync)
                 clearCache()
-                migrationHandler.markFirstStart()
                 syncHandler.firstStart()
                 sync()
             } else {
@@ -365,7 +344,6 @@ final class CloudHandler: CloudHandlerType {
     private func setEnabled() {
         Log("Cloud Handler - Set Enabled", module: .cloudSync)
         ConstStorage.cloudEnabled = true
-        migrationHandler.markFirstStart()
         syncHandler.firstStart()
     }
     

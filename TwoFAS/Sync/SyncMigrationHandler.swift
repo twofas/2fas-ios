@@ -17,8 +17,34 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-// add connection to UI
-// add migration process handling
-// check if synced, otherwise wait
-// after that sync
-// handle incorrect password error
+import Common
+
+public protocol SyncMigrationHandling: AnyObject {
+    var showMigrationToNewestVersion: (() -> Void)? { get set }
+    func changePassword(_ password: String)
+    func useSystemPassword()
+}
+
+final class SyncMigrationHandler {
+    private let migrationToV3Key = "migrationToV3"
+    private let userDefaults: UserDefaults
+    
+    
+    // add connection to UI
+    // add migration process handling
+    // check if synced, otherwise wait
+    // after that sync
+    // handle incorrect password error
+
+}
+
+private extension SyncMigrationHandler {
+    var migratedToNewestVersion: Bool {
+        userDefaults.bool(forKey: migrationToV3Key)
+    }
+    
+    func setMigratedToNewestVersion() {
+        userDefaults.set(true, forKey: migrationToV3Key)
+        userDefaults.synchronize()
+    }
+}

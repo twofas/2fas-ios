@@ -27,7 +27,13 @@ import CommonWatch
 
 final class RequirementCheckHandler {
     var newerVersion: (() -> Void)?
-    var cloudEncrypted: (() -> Void)?
+    var cloudEncrypted: ((Info.Encryption?) -> Void)?
+    
+    private let encryptionHandler: SyncEncryptionHandler
+    
+    init(encryptionHandler: SyncEncryptionHandler) {
+        self.encryptionHandler = encryptionHandler
+    }
     
     func checkIfStopSync(using records: [CKRecord], migrationPending: Bool) -> Bool {
         Log("RequirementCheckHandler - checkIfStopSync", module: .cloudSync)
@@ -40,7 +46,7 @@ final class RequirementCheckHandler {
             }
             if !migrationPending && info.encryptionReference != encryptionReference {
                 Log("RequirementCheckHandler - STOP: Different encryption!", module: .cloudSync)
-                cloudEncrypted?()
+                cloudEncrypted?(Info.Encryption(rawValue: info.encryption))
                 return true
             }
         }
@@ -48,7 +54,7 @@ final class RequirementCheckHandler {
         return false
     }
     
-    private var encryptionReference: Data {
-        Data()
+    private var encryptionReference: Data? {
+        encryptionHandler.encryptionReference
     }
 }

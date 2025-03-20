@@ -79,6 +79,9 @@ extension MigrationHandler: MigrationHandling {
         guard isMigrating else { return (nil, nil) }
         if migrationPending { // encryption changed - recreating V3
             var listForCreationModification = listV3ForCreationModification()
+            if let info = infoHandler.record() { // updating - should exist
+                listForCreationModification?.append(info)
+            }
             return (recordIDsToDeleteOnServer: nil, recordsToModifyOnServer: listForCreationModification)
         }
         if let infoRecord = records.first(where: { RecordType(rawValue: $0.recordType) == .info }) {

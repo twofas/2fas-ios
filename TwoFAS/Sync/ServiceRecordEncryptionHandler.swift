@@ -27,9 +27,11 @@ import CommonWatch
 
 final class ServiceRecordEncryptionHandler {
     private let zoneID: CKRecordZone.ID
+    private let encryptionHandler: SyncEncryptionHandler
     
-    init(zoneID: CKRecordZone.ID) {
+    init(zoneID: CKRecordZone.ID, encryptionHandler: SyncEncryptionHandler) {
         self.zoneID = zoneID
+        self.encryptionHandler = encryptionHandler
     }
     
     func createServiceRecord3(from serviceData: ServiceData, metadata: Data?, list: [ServiceData]) -> CKRecord? {
@@ -192,10 +194,18 @@ final class ServiceRecordEncryptionHandler {
 
 private extension ServiceRecordEncryptionHandler { // using current encryption
     func encrypt(_ str: String) -> Data? {
-        
+        guard let data = str.data(using: .utf8) else {
+            return nil
+        }
+        return encryptionHandler.encrypt(data)
     }
     
     func decrypt(_ data: Data) -> String? {
-        
+        guard let decrypted = encryptionHandler.decrypt(data),
+              let str = String(data: decrypted, encoding: .utf8)
+        else {
+            return nil
+        }
+        return str
     }
 }

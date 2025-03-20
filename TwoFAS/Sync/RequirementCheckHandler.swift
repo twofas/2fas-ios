@@ -30,9 +30,11 @@ final class RequirementCheckHandler {
     var cloudEncrypted: ((Info.Encryption?) -> Void)?
     
     private let encryptionHandler: SyncEncryptionHandler
+    private let infoHandler: InfoHandler
     
-    init(encryptionHandler: SyncEncryptionHandler) {
+    init(encryptionHandler: SyncEncryptionHandler, infoHandler: InfoHandler) {
         self.encryptionHandler = encryptionHandler
+        self.infoHandler = infoHandler
     }
     
     func checkIfStopSync(using records: [CKRecord], migrationPending: Bool) -> Bool {
@@ -44,10 +46,12 @@ final class RequirementCheckHandler {
                 newerVersion?()
                 return true
             }
-            if !migrationPending && info.encryptionReference != encryptionReference {
-                Log("RequirementCheckHandler - STOP: Different encryption!", module: .cloudSync)
-                cloudEncrypted?(Info.Encryption(rawValue: info.encryption))
-                return true
+            if let infoEncryptionReference = info.encryptionReference {
+                if !migrationPending && infoEncryptionReference != encryptionReference {
+                    Log("RequirementCheckHandler - STOP: Different encryption!", module: .cloudSync)
+                    cloudEncrypted?(Info.Encryption(rawValue: info.encryption))
+                    return true
+                }
             }
         }
         Log("RequirementCheckHandler - everything is fine. Continuing ...", module: .cloudSync)

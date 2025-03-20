@@ -23,63 +23,151 @@ import CloudKit
 final class InfoHandler {
     private let allowedDevicesNone = "none"
     
-    private enum Keys: String {
+    private enum Keys: String, CaseIterable {
         case metadata
+        case modificationDate
+        case version
+        case encryptionReference
+        case encryptionType
     }
     private let userDefault = UserDefaults()
     private let zoneID: CKRecordZone.ID
+    private let syncEncryptionHandler: SyncEncryptionHandler
     
-    init(zoneID: CKRecordZone.ID) {
+    init(zoneID: CKRecordZone.ID, syncEncryptionHandler: SyncEncryptionHandler) {
         self.zoneID = zoneID
+        self.syncEncryptionHandler = syncEncryptionHandler
     }
     
-    func infoIfExists() -> [Any] {
-        guard metadata() != nil else {
-            return []
+    func updateUsingRecord(_ record: InfoRecord) {
+        saveMetadata(record.encodeSystemFields())
+        saveVersion(record.version)
+        // TODO: Add allowed devices and watch state
+        saveEncryptionReference(record.encryptionReference ?? Data())
+        saveEncryptionType(Info.Encryption(rawValue: record.encryption) ?? .system)
+        saveModificationDate(record.modificationDate)
+    }
+    
+    func createNew() -> CKRecord? { // first creation with default value
+        InfoRecord.create(
+            zoneID: zoneID,
+            version: Info.version,
+            encryption: Info.Encryption.system.rawValue,
+            allowedDevices: [allowedDevicesNone],
+            enableWatch: false,
+            encryptionReference: syncEncryptionHandler.encryptionReference ?? Data(),
+            modificationDate: Date()
+        )
+    }
+    
+    func recreateWithNewData() -> CKRecord? {
+        guard let metadata else {
+            return nil
         }
-        return [Info()]
+        return InfoRecord.recreate(
+            with: metadata,
+            version: Info.version,
+            encryption: Info.Encryption.system.rawValue,
+            allowedDevices: [allowedDevicesNone],
+            enableWatch: false,
+            encryptionReference: syncEncryptionHandler.encryptionReference ?? Data(),
+            modificationDate: Date()
+        )
     }
     
+    func recreate() -> CKRecord? {
+        guard let metadata,
+              let version,
+              let encryptionReference,
+              let encryptionType
+        else {
+            return nil
+        }
+        return InfoRecord.recreate(
+            with: metadata,
+            version: version,
+            encryption: encryptionType.rawValue,
+            allowedDevices: [allowedDevicesNone],
+            enableWatch: false,
+            encryptionReference: encryptionReference,
+            modificationDate: modificationDate
+        )
+    }
+}
+
+extension InfoHandler {
+    func purge() {
+        Keys.allCases.forEach { key in
+            userDefault.set(nil, forKey: Keys.metadata.rawValue)
+        }
+        userDefault.synchronize()
+    }
+
+    //
+    
+    var metadata: Data? {
+        userDefault.data(forKey: Keys.metadata.rawValue)
+    }
+
     func saveMetadata(_ metadata: Data) {
         userDefault.set(metadata, forKey: Keys.metadata.rawValue)
         userDefault.synchronize()
     }
     
-    func metadata() -> Data? {
-        userDefault.data(forKey: Keys.metadata.rawValue)
-    }
+    //
     
-    func purge() {
-        userDefault.set(nil, forKey: Keys.metadata.rawValue)
+    var modificationDate: Date {
+        let value = userDefault.double(forKey: Keys.modificationDate.rawValue)
+        guard !value.isZero else {
+            return Date()
+        }
+        return Date(timeIntervalSince1970: value)
+    }
+
+    func saveModificationDate(_ date: Date) {
+        userDefault.set(date.timeIntervalSince1970, forKey: Keys.modificationDate.rawValue)
         userDefault.synchronize()
     }
     
-    func record() -> CKRecord? {
-        if let metadata = metadata() {
-            return InfoRecord.create(
-                with: metadata,
-                version: Info.version,
-                encryption: encryptionType.rawValue,
-                allowedDevices: [allowedDevicesNone],
-                enableWatch: false,
-                encryptionReference: encryptionReference
-            )
+    //
+    
+    var version: Int? {
+        let value = userDefault.integer(forKey: Keys.version.rawValue)
+        if value == 0 {
+            return nil
         }
-        return InfoRecord.create(
-            zoneID: zoneID,
-            version: Info.version,
-            encryption: encryptionType.rawValue,
-            allowedDevices: [allowedDevicesNone],
-            enableWatch: false,
-            encryptionReference: encryptionReference
-        )
+        return value
     }
     
-    private var encryptionType: Info.Encryption {
-        return .system
+    func saveVersion(_ version: Int) {
+        userDefault.set(version, forKey: Keys.version.rawValue)
+        userDefault.synchronize()
     }
     
-    private var encryptionReference: Data {
-        return Data()
+    //
+    
+    var encryptionReference: Data? {
+        userDefault.data(forKey: Keys.encryptionReference.rawValue)
+    }
+
+    func saveEncryptionReference(_ encryptionReference: Data) {
+        userDefault.set(encryptionReference, forKey: Keys.encryptionReference.rawValue)
+        userDefault.synchronize()
+    }
+    
+    //
+    
+    var encryptionType: Info.Encryption? {
+        guard let str = userDefault.string(forKey: Keys.encryptionType.rawValue),
+              let value = Info.Encryption(rawValue: str)
+        else {
+            return nil
+        }
+        return value
+    }
+
+    func saveEncryptionType(_ encryptionType: Info.Encryption) {
+        userDefault.set(encryptionType.rawValue, forKey: Keys.encryptionType.rawValue)
+        userDefault.synchronize()
     }
 }

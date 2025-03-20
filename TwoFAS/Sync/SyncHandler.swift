@@ -59,7 +59,7 @@ final class SyncHandler {
         modificationQueue: ModificationQueue,
         mergeHandler: MergeHandler,
         migrationHandler: MigrationHandler,
-        requriemntCheck: RequirementCheckHandler
+        requirementCheck: RequirementCheckHandler
     ) {
         self.itemHandler = itemHandler
         self.commonItemHandler = commonItemHandler
@@ -68,7 +68,7 @@ final class SyncHandler {
         self.modificationQueue = modificationQueue
         self.mergeHandler = mergeHandler
         self.migrationHandler = migrationHandler
-        self.requirementCheck = requriemntCheck
+        self.requirementCheck = requirementCheck
         
         cloudKit.initialize()
         
@@ -193,7 +193,7 @@ final class SyncHandler {
         
         guard !requirementCheck.checkIfStopSync(
             using: itemHandler.updatedCreated,
-            migrationPending: migrationHandler.migrationPending
+            migrationPending: migrationHandler.isMigrating
         ) else {
             clearCacheAndDisable()
             useriCloudProblem?()
@@ -202,12 +202,12 @@ final class SyncHandler {
         
         Log("SyncHandler - commiting iCloud state into item handler", module: .cloudSync)
         itemHandler.commit(ignoreRemovals: migrationHandler.isMigrating)
-        migrationHandler.migrationFinished()
+        migrationHandler.itemsCommited()
+        itemHandler.cleanUp()
 
-        if migrationHandler.checkIfMigrationNeeded() {
+        if migrationHandler.checkIfMigrationNeeded() { // if pending - send changes to server and break cycle
             Log("SyncHandler - migration needed", module: .cloudSync)
-            let (recordIDsToDeleteOnServer, recordsToModifyOnServer) = migrationHandler.migrate(with: itemHandler.updatedCreated)
-            itemHandler.cleanUp()
+            let (recordIDsToDeleteOnServer, recordsToModifyOnServer) = migrationHandler.migrate()
 
             Log("SyncHandler - Sending migrated changes", module: .cloudSync)
             applyingChanges = true
@@ -218,9 +218,7 @@ final class SyncHandler {
 
             return
         }
-        
-        itemHandler.cleanUp()
-                
+                        
         Log("SyncHandler -  method: fetch finished successfuly - is syncing now", module: .cloudSync)
         guard mergeHandler.hasChanges else {
             Log("SyncHandler - No logs with changes. Exiting", module: .cloudSync)

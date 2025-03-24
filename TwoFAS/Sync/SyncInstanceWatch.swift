@@ -28,26 +28,41 @@ public enum SyncInstanceWatch {
     public static func initialize(
         commonSectionHandler: CommonSectionHandler,
         commonServiceHandler: CommonServiceHandler,
+        reference: Data,
         errorLog: @escaping (String) -> Void
     ) {
         coreDataStack.logError = { errorLog($0) }
         
+        let cloudKit = CloudKit()
         let logHandler = LogHandler(coreDataStack: coreDataStack)
+        let syncEncryptionHandler = SyncEncryptionHandler(reference: reference)
         let sectionHandler = SectionHandler(coreDataStack: coreDataStack)
-        let serviceHandler = ServiceHandler(coreDataStack: coreDataStack)
-        let infoHandler = InfoHandler()
+        let serviceRecordEncryptionHandler = ServiceRecordEncryptionHandler(
+            zoneID: cloudKit.zoneID,
+            encryptionHandler: syncEncryptionHandler
+        )
+        let serviceHandler = ServiceHandler(
+            coreDataStack: coreDataStack,
+            serviceRecordEncryptionHandler: serviceRecordEncryptionHandler
+        )
+        let infoHandler = InfoHandler(
+            zoneID: cloudKit.zoneID,
+            syncEncryptionHandler: syncEncryptionHandler
+        )
         let commonItemHandler = CommonItemHandler(
             commonSectionHandler: commonSectionHandler,
             commonServiceHandler: commonServiceHandler,
+            infoHandler: infoHandler,
             logHandler: logHandler
         )
-        let cloudKit = CloudKit()
         
         let itemHandler = ItemHandler(
             sectionHandler: sectionHandler,
             serviceHandler: serviceHandler,
             infoHandler: infoHandler,
-            logHandler: logHandler
+            logHandler: logHandler,
+            serviceRecordEncryptionHandler: serviceRecordEncryptionHandler,
+            syncEncryptionHandler: syncEncryptionHandler
         )
         let mergeHandler = MergeHandler(
             logHandler: logHandler,
@@ -56,22 +71,31 @@ public enum SyncInstanceWatch {
             cloudKit: cloudKit
         )
         let modificationQueue = ModificationQueue()
+        let migrationHandler = MigrationHandlerWatchPlaceholder()
+        let requirementCheckHandler = RequirementCheckHandler(
+            encryptionHandler: syncEncryptionHandler,
+            infoHandler: infoHandler
+        )
         let syncHandler = SyncHandler(
             itemHandler: itemHandler,
             commonItemHandler: commonItemHandler,
             logHandler: logHandler,
             cloudKit: cloudKit,
             modificationQueue: modificationQueue,
-            mergeHandler: mergeHandler
+            mergeHandler: mergeHandler,
+            migrationHandler: migrationHandler,
+            requirementCheck: requirementCheckHandler
         )
+        syncEncryptionHandler.initialize()
         let cloudAvailability = CloudAvailability(container: syncHandler.container)
         cloudHandler = CloudHandler(
             cloudAvailability: cloudAvailability,
             syncHandler: syncHandler,
             itemHandler: itemHandler,
-            itemHandlerMigrationProxy: itemHandler,
             cloudKit: cloudKit,
-            mergeHandler: mergeHandler
+            mergeHandler: mergeHandler,
+            migrationHandler: migrationHandler,
+            requirementCheckHandler: requirementCheckHandler
         )
         
         logDataChangeImpl = LogDataChangeImpl(logHandler: logHandler)

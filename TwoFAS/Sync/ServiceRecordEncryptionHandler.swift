@@ -138,21 +138,21 @@ final class ServiceRecordEncryptionHandler {
         }()
         let additionalInfo: String? = {
             if let additionalInfoData = record.additionalInfo,
-               let additionalInfo = decrypt(additionalInfoData){
+               let additionalInfo = decrypt(additionalInfoData) {
                 return additionalInfo
             }
             return nil
         }()
         let rawIssuer: String? = {
             if let rawIssuerData = record.rawIssuer,
-               let rawIssuer = decrypt(rawIssuerData){
+               let rawIssuer = decrypt(rawIssuerData) {
                 return rawIssuer
             }
             return nil
         }()
         let otpAuth: String? = {
             if let otpAuthData = record.otpAuth,
-               let otpAuth = decrypt(otpAuthData){
+               let otpAuth = decrypt(otpAuthData) {
                 return otpAuth
             }
             return nil

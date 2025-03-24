@@ -111,7 +111,11 @@ final class MainRepositoryImpl: MainRepository {
         
         let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
         
-        SyncInstance.initialize(commonSectionHandler: storage.section, commonServiceHandler: storage.service) {
+        SyncInstance.initialize(
+            commonSectionHandler: storage.section,
+            commonServiceHandler: storage.service,
+            reference: protection.reference
+        ) {
             DebugLog("Sync: \($0)")
         }
         SyncInstance.migrateStoreIfNeeded()

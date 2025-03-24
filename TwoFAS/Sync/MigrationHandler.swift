@@ -48,18 +48,20 @@ final class MigrationHandler {
     private let zoneID: CKRecordZone.ID
     private let serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler
     private let infoHandler: InfoHandler
+    private let syncEncryptionHandler: SyncEncryptionHandler
    
-    
     init(
         serviceHandler: ServiceHandler,
         zoneID: CKRecordZone.ID,
         serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler,
-        infoHandler: InfoHandler
+        infoHandler: InfoHandler,
+        syncEncryptionHandler: SyncEncryptionHandler
     ) {
         self.serviceHandler = serviceHandler
         self.zoneID = zoneID
         self.serviceRecordEncryptionHandler = serviceRecordEncryptionHandler
         self.infoHandler = infoHandler
+        self.syncEncryptionHandler = syncEncryptionHandler
     }
 }
 
@@ -79,27 +81,46 @@ extension MigrationHandler: MigrationHandling {
         guard let migrationPath else { return (nil, nil) }
         switch migrationPath {
         case .v1v3:
-            let listForRemoval = serviceHandler.listAll().map({ ServiceRecord.recordID(with: $0.secret, zoneID: zoneID) })
-            var listForCreationModification = listV3ForCreationModification()
-            if let info = infoHandler.createNew() {
-                listForCreationModification?.append(info)
+            let listForRemoval = serviceHandler
+                .listAll()
+                .map({ ServiceRecord.recordID(with: $0.secret, zoneID: zoneID) })
+            var listForCreationModification = listV3ForCreationModification() ?? []
+            if let info = infoHandler.createNew(
+                encryptionReference: syncEncryptionHandler.encryptionReference ?? Data()
+            ) {
+                listForCreationModification.append(info)
             }
             return (recordIDsToDeleteOnServer: listForRemoval, recordsToModifyOnServer: listForCreationModification)
         case .v2v3:
-            let listForRemoval = serviceHandler.listAll().map({ ServiceRecord2.recordID(with: $0.secret, zoneID: zoneID) })
-            var listForCreationModification = listV3ForCreationModification()
-            if let info = infoHandler.recreateWithNewData() { // updating - should exist
-                listForCreationModification?.append(info)
+            let listForRemoval = serviceHandler
+                .listAll()
+                .map({ ServiceRecord2.recordID(with: $0.secret, zoneID: zoneID) })
+            var listForCreationModification = listV3ForCreationModification() ?? []
+            infoHandler.update(
+                version: Info.version,
+                encryption: syncEncryptionHandler.encryptionType,
+                allowedDevices: nil,
+                enableWatch: nil,
+                encryptionReference: syncEncryptionHandler.encryptionReference
+            )
+            if let info = infoHandler.recreate() { // updating - should exist
+                listForCreationModification.append(info)
             }
             return (recordIDsToDeleteOnServer: listForRemoval, recordsToModifyOnServer: listForCreationModification)
         case .reencryption:
-            var listForCreationModification = listV3ForCreationModification()
-            if let info = infoHandler.recreateWithNewData() { // updating - should exist
-                listForCreationModification?.append(info)
+            var listForCreationModification = listV3ForCreationModification() ?? []
+            infoHandler.update(
+                version: Info.version,
+                encryption: syncEncryptionHandler.encryptionType,
+                allowedDevices: nil,
+                enableWatch: nil,
+                encryptionReference: syncEncryptionHandler.encryptionReference
+            )
+            if let info = infoHandler.recreate() { // updating - should exist
+                listForCreationModification.append(info)
             }
             return (recordIDsToDeleteOnServer: nil, recordsToModifyOnServer: listForCreationModification)
         }
-        return (recordIDsToDeleteOnServer: nil, recordsToModifyOnServer: nil)
     }
         
     func itemsCommited() {
@@ -113,7 +134,7 @@ extension MigrationHandler: MigrationHandling {
 private extension MigrationHandler {
     func listV3ForCreationModification() -> [CKRecord]? {
         let list = serviceHandler.listAll()
-        let servicesRecords = list.compactMap ({ serviceRecordEncryptionHandler.createServiceRecord3(
+        let servicesRecords = list.compactMap({ serviceRecordEncryptionHandler.createServiceRecord3(
             from: $0,
             metadata: nil,
             list: list

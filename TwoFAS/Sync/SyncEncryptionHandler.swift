@@ -135,6 +135,10 @@ extension SyncEncryptionHandler {
     var encryptionReference: Data? {
         cachedEncryptionReference
     }
+    
+    var encryptionType: Info.Encryption {
+        cachedUsedKey
+    }
 }
 
 private extension SyncEncryptionHandler {
@@ -181,7 +185,7 @@ private extension SyncEncryptionHandler {
             Log("SyncEncryptionHandler: Cant' get salt!", module: .cloudSync, severity: .error)
             return nil
         }
-        do  {
+        do {
             let (rawHash, _) = try Argon2.hash(
                 iterations: UInt32(3),
                 memoryInKiB: UInt32(64 * 1024),

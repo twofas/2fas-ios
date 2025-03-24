@@ -19,9 +19,9 @@
 
 import Foundation
 import Common
-@_implementationOnly import FirebaseCore
-@_implementationOnly import FirebaseCrashlytics
-@_implementationOnly import FirebaseMessaging
+import FirebaseCore
+import FirebaseCrashlytics
+import FirebaseMessaging
 
 final class FCM: NSObject, MessagingDelegate, FCMHandlerProtocol {
     var FCMTokenObtained: FCMTokenObtainedCompletion?

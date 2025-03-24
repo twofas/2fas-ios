@@ -20,11 +20,10 @@
 import CloudKit
 
 final class MigrationHandlerWatchPlaceholder: MigrationHandling {
-    var migrationPending: Bool { false }
-    func markFirstStart() {}
     func checkIfMigrationNeeded() -> Bool { false }
-    func migrate(with records: [CKRecord]) -> (recordIDsToDeleteOnServer: [CKRecord.ID]?, recordsToModifyOnServer: [CKRecord]?) {
-        (recordIDsToDeleteOnServer: nil, recordsToModifyOnServer: nil)
-    }
-    func migrationFinished() {}
+    var isMigrating: Bool { false }
+    var isReencryptionPending: (() -> Bool)?
+    var isMigratingToV3: (() -> Void)?
+    func migrate() -> (recordIDsToDeleteOnServer: [CKRecord.ID]?, recordsToModifyOnServer: [CKRecord]?) { (nil, nil) }
+    func itemsCommited() {}
 }

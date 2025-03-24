@@ -27,6 +27,7 @@ import CommonWatch
 final class CommonItemHandler {
     private let commonSectionHandler: CommonSectionHandler
     private let commonServiceHandler: CommonServiceHandler
+    private let infoHandler: InfoHandler
     private let logHandler: LogHandler
     
     private var itemsToAppend: [ServiceData] = []
@@ -34,10 +35,12 @@ final class CommonItemHandler {
     init(
         commonSectionHandler: CommonSectionHandler,
         commonServiceHandler: CommonServiceHandler,
+        infoHandler: InfoHandler,
         logHandler: LogHandler
     ) {
         self.commonSectionHandler = commonSectionHandler
         self.commonServiceHandler = commonServiceHandler
+        self.infoHandler = infoHandler
         self.logHandler = logHandler
         
         commonSectionHandler.commonDidCreate = { [weak self] sectionID in
@@ -57,23 +60,23 @@ final class CommonItemHandler {
         
         commonServiceHandler.commonDidCreate = { [weak self] secret in
             Log("CommonItemHandler - commonServiceHandler - commonDidCreate", module: .cloudSync)
-            self?.logHandler.log(entityID: secret, actionType: .created, kind: .service2)
+            self?.logHandler.log(entityID: secret, actionType: .created, kind: .service3)
         }
         commonServiceHandler.commonDidModify = { [weak self] secrets in
             Log("CommonItemHandler - commonServiceHandler - commonDidModify", module: .cloudSync)
             secrets.forEach {
-                self?.logHandler.log(entityID: $0, actionType: .modified, kind: .service2)
+                self?.logHandler.log(entityID: $0, actionType: .modified, kind: .service3)
             }
         }
         commonServiceHandler.commonDidDelete = { [weak self] secret in
             Log("CommonItemHandler - commonServiceHandler - commonDidDelete", module: .cloudSync)
-            self?.logHandler.log(entityID: secret, actionType: .deleted, kind: .service2)
+            self?.logHandler.log(entityID: secret, actionType: .deleted, kind: .service3)
         }
     }
     
     func logFirstImport() {
         logHandler.logFirstImport(entityIDs: commonSectionHandler.getAllSections().map { $0.sectionID }, kind: .section)
-        logHandler.logFirstImport(entityIDs: commonServiceHandler.getAllServices().map { $0.secret }, kind: .service2)
+        logHandler.logFirstImport(entityIDs: commonServiceHandler.getAllServices().map { $0.secret }, kind: .service3)
         logHandler.logFirstImport(entityIDs: [Info.id], kind: .info)
     }
     
@@ -86,7 +89,7 @@ final class CommonItemHandler {
             newDataWasSet = newDataWasSet || value
         }
         
-        if let services = items[.service2] as? [ServiceData] {
+        if let services = items[.service3] as? [ServiceData] {
             Log("CommonItemHandler: services (\(services.count))")
             let value = commonServiceHandler.setServices(services)
             newDataWasSet = newDataWasSet || value
@@ -106,8 +109,8 @@ final class CommonItemHandler {
         itemsToAppend = []
         var value = [RecordType: [Any]]()
         value[.section] = sections
-        value[.service2] = services
-        value[.info] = [Info()]
+        value[.service3] = services
+        value[.info] = infoHandler.prepareForSendoff()
         return value
     }
 }

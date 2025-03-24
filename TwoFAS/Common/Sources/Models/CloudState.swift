@@ -28,7 +28,8 @@ public enum CloudState: Equatable {
         case other
         case newerVersion
         case incorrectService(serviceName: String)
-        case cloudEncrypted
+        case cloudEncryptedUser
+        case cloudEncryptedSystem
     }
     
     public enum Sync: Equatable {

@@ -114,7 +114,11 @@ final class MainRepositoryImpl: MainRepository {
         let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
         serviceMigration.serviceNameTranslation = T.Commons.service
         
-        SyncInstanceWatch.initialize(commonSectionHandler: storage.section, commonServiceHandler: storage.service) {
+        SyncInstanceWatch.initialize(
+            commonSectionHandler: storage.section,
+            commonServiceHandler: storage.service,
+            reference: protection.reference
+        ) {
             Log("Sync: \($0)")
         }
         SyncInstanceWatch.migrateStoreIfNeeded()

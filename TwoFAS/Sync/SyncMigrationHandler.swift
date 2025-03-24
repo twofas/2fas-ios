@@ -17,34 +17,133 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 public protocol SyncMigrationHandling: AnyObject {
     var showMigrationToNewestVersion: (() -> Void)? { get set }
+    var showiCloudIsEncryptedByUser: (() -> Void)? { get set }
+    var showiCloudIsEncryptedBySystem: (() -> Void)? { get set }
+    var showNeverVersionOfiCloud: (() -> Void)? { get set }
+    var synchronize: (() -> Void)? { get set }
+    
     func changePassword(_ password: String)
     func useSystemPassword()
+    func setMissingUserPassword(_ password: String)
+    func cloudStateChange(_ state: CloudCurrentState)
 }
 
 final class SyncMigrationHandler {
-    private let migrationToV3Key = "migrationToV3"
-    private let userDefaults: UserDefaults
+    private enum SyncMigrationChangeType {
+        case system
+        case password(String)
+    }
     
+    var showMigrationToNewestVersion: (() -> Void)?
+    var showiCloudIsEncryptedByUser: (() -> Void)?
+    var showiCloudIsEncryptedBySystem: (() -> Void)?
+    var showNeverVersionOfiCloud: (() -> Void)?
+    var synchronize: (() -> Void)?
     
-    // add connection to UI
-    // add migration process handling
-    // check if synced, otherwise wait
-    // after that sync
-    // handle incorrect password error
+    private var canChangePassword = false
+    private var passwordChangePending: SyncMigrationChangeType?
+    private var isMigrating = false
+    private var isiCloudEncryptedByDiffrentUserPass = false
+    
+    private let migrationHandler: MigrationHandling
+    private let syncEncryptionHandler: SyncEncryptionHandler
 
+    init(migrationHandler: MigrationHandling, syncEncryptionHandler: SyncEncryptionHandler) {
+        self.migrationHandler = migrationHandler
+        self.syncEncryptionHandler = syncEncryptionHandler
+        
+        migrationHandler.isReencryptionPending = { [weak self] () -> Bool in
+            guard let self, let passwordChangePending else { return false }
+            switch passwordChangePending {
+            case .system:
+                self.syncEncryptionHandler.setSystemKey()
+            case .password(let password):
+                self.syncEncryptionHandler.setUserPassword(password)
+            }
+            self.passwordChangePending = nil
+            return true
+        }
+        migrationHandler.isMigratingToV3 = { [weak self] in
+            self?.isMigrating = true
+            self?.showMigrationToNewestVersion?()
+        }
+    }
+}
+
+extension SyncMigrationHandler: SyncMigrationHandling {
+    func changePassword(_ password: String) {
+        guard passwordChangePending == nil, !isMigrating else {
+            return
+        }
+        isMigrating = true
+        passwordChangePending = .password(password)
+        changePasswordOrQueue()
+    }
+    
+    func useSystemPassword() {
+        guard passwordChangePending == nil, !isMigrating else {
+            return
+        }
+        isMigrating = true
+        passwordChangePending = .system
+        changePasswordOrQueue()
+    }
+    
+    func setMissingUserPassword(_ password: String) {
+        guard isiCloudEncryptedByDiffrentUserPass else {
+            return
+        }
+        syncEncryptionHandler.setUserPassword(password)
+        isiCloudEncryptedByDiffrentUserPass = false
+        synchronize?()
+    }
+    
+    func cloudStateChange(_ state: CloudCurrentState) {
+        switch state {
+        case .unknown:
+            canChangePassword = false
+        case .disabledNotAvailable(let reason):
+            switch reason {
+            case .newerVersion:
+                showNeverVersionOfiCloud?()
+            case .cloudEncryptedUser:
+                isiCloudEncryptedByDiffrentUserPass = true
+                showiCloudIsEncryptedByUser?()
+            case .cloudEncryptedSystem:
+                showiCloudIsEncryptedBySystem?()
+            default: break
+            }
+            canChangePassword = false
+        case .disabledAvailable:
+            canChangePassword = false
+        case .enabled(let sync):
+            switch sync {
+            case .syncing:
+                canChangePassword = false
+            case .synced:
+                canChangePassword = true
+                if passwordChangePending == nil {
+                    isMigrating = false
+                }
+                changePasswordOrQueue()
+            }
+        }
+    }
 }
 
 private extension SyncMigrationHandler {
-    var migratedToNewestVersion: Bool {
-        userDefaults.bool(forKey: migrationToV3Key)
-    }
-    
-    func setMigratedToNewestVersion() {
-        userDefaults.set(true, forKey: migrationToV3Key)
-        userDefaults.synchronize()
+    func changePasswordOrQueue() {
+        guard canChangePassword, passwordChangePending != nil else {
+            return
+        }
+        synchronize?()
     }
 }

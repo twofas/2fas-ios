@@ -29,6 +29,8 @@ final class InfoHandler {
         case version
         case encryptionReference
         case encryptionType
+        case allowedDevices
+        case enableWatch
     }
     private let userDefault = UserDefaults()
     private let zoneID: CKRecordZone.ID
@@ -42,37 +44,57 @@ final class InfoHandler {
     func updateUsingRecord(_ record: InfoRecord) {
         saveMetadata(record.encodeSystemFields())
         saveVersion(record.version)
-        // TODO: Add allowed devices and watch state
+        saveAllowedDevices(record.allowedDevices)
+        saveEnableWatch(record.enableWatch)
         saveEncryptionReference(record.encryptionReference ?? Data())
         saveEncryptionType(Info.Encryption(rawValue: record.encryption) ?? .system)
         saveModificationDate(record.modificationDate)
     }
     
-    func createNew() -> CKRecord? { // first creation with default value
+    func createNew(encryptionReference: Data) -> CKRecord? { // first creation with default value
         InfoRecord.create(
             zoneID: zoneID,
             version: Info.version,
             encryption: Info.Encryption.system.rawValue,
             allowedDevices: [allowedDevicesNone],
             enableWatch: false,
-            encryptionReference: syncEncryptionHandler.encryptionReference ?? Data(),
+            encryptionReference: encryptionReference,
             modificationDate: Date()
         )
     }
     
-    func recreateWithNewData() -> CKRecord? {
-        guard let metadata else {
-            return nil
+    func update(
+        version: Int?,
+        encryption: Info.Encryption?,
+        allowedDevices: [String]?,
+        enableWatch: Bool?,
+        encryptionReference: Data?
+    ) {
+        if let version {
+            saveVersion(version)
         }
-        return InfoRecord.recreate(
-            with: metadata,
-            version: Info.version,
-            encryption: Info.Encryption.system.rawValue,
-            allowedDevices: [allowedDevicesNone],
-            enableWatch: false,
-            encryptionReference: syncEncryptionHandler.encryptionReference ?? Data(),
-            modificationDate: Date()
-        )
+        if let encryption {
+            saveEncryptionType(encryption)
+        }
+        if let allowedDevices {
+            saveAllowedDevices(allowedDevices)
+        }
+        if let enableWatch {
+            saveEnableWatch(enableWatch)
+        }
+        if let encryptionReference {
+            saveEncryptionReference(encryptionReference)
+        }
+    }
+    
+    func prepareForSendoff() -> [CKRecord] {
+        if let record = recreate() {
+            return [record]
+        }
+        if let record = createNew(encryptionReference: syncEncryptionHandler.encryptionReference ?? Data()) {
+            return [record]
+        }
+        return []
     }
     
     func recreate() -> CKRecord? {
@@ -87,8 +109,8 @@ final class InfoHandler {
             with: metadata,
             version: version,
             encryption: encryptionType.rawValue,
-            allowedDevices: [allowedDevicesNone],
-            enableWatch: false,
+            allowedDevices: allowedDevices,
+            enableWatch: enableWatch,
             encryptionReference: encryptionReference,
             modificationDate: modificationDate
         )
@@ -98,7 +120,7 @@ final class InfoHandler {
 extension InfoHandler {
     func purge() {
         Keys.allCases.forEach { key in
-            userDefault.set(nil, forKey: Keys.metadata.rawValue)
+            userDefault.set(nil, forKey: key.rawValue)
         }
         userDefault.synchronize()
     }
@@ -168,6 +190,41 @@ extension InfoHandler {
 
     func saveEncryptionType(_ encryptionType: Info.Encryption) {
         userDefault.set(encryptionType.rawValue, forKey: Keys.encryptionType.rawValue)
+        userDefault.synchronize()
+    }
+    
+    //
+    
+    var allowedDevices: [String] {
+        guard let devices = userDefault.array(forKey: Keys.allowedDevices.rawValue) as? [String],
+              !devices.isEmpty
+        else {
+            return [allowedDevicesNone]
+        }
+        return devices
+    }
+    
+    func saveAllowedDevices(_ devices: [String]?) {
+        if let devices, !devices.isEmpty {
+            userDefault.set(devices, forKey: Keys.allowedDevices.rawValue)
+        } else {
+            userDefault.set([allowedDevices], forKey: Keys.allowedDevices.rawValue)
+        }
+        userDefault.synchronize()
+    }
+    
+    //
+    
+    var enableWatch: Bool {
+        userDefault.bool(forKey: Keys.enableWatch.rawValue)
+    }
+    
+    func saveEnableWatch(_ enable: Bool?) {
+        if let enable {
+            userDefault.set(enable, forKey: Keys.enableWatch.rawValue)
+        } else {
+            userDefault.set(false, forKey: Keys.enableWatch.rawValue)
+        }
         userDefault.synchronize()
     }
 }

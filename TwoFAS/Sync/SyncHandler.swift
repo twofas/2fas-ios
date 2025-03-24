@@ -32,7 +32,7 @@ final class SyncHandler {
     private let cloudKit: CloudKit
     private let modificationQueue: ModificationQueue
     private let mergeHandler: MergeHandler
-    private let migrationHandler: MigrationHandler
+    private let migrationHandler: MigrationHandling
     private let requirementCheck: RequirementCheckHandler
     
     private var isSyncing = false
@@ -58,7 +58,7 @@ final class SyncHandler {
         cloudKit: CloudKit,
         modificationQueue: ModificationQueue,
         mergeHandler: MergeHandler,
-        migrationHandler: MigrationHandler,
+        migrationHandler: MigrationHandling,
         requirementCheck: RequirementCheckHandler
     ) {
         self.itemHandler = itemHandler
@@ -203,12 +203,12 @@ final class SyncHandler {
         Log("SyncHandler - commiting iCloud state into item handler", module: .cloudSync)
         itemHandler.commit(ignoreRemovals: migrationHandler.isMigrating)
         migrationHandler.itemsCommited()
-        itemHandler.cleanUp()
-
-        if migrationHandler.checkIfMigrationNeeded() { // if pending - send changes to server and break cycle
+        
+        if !itemHandler.isCacheEmpty && migrationHandler.checkIfMigrationNeeded() { // if pending - send changes to server and break cycle
             Log("SyncHandler - migration needed", module: .cloudSync)
             let (recordIDsToDeleteOnServer, recordsToModifyOnServer) = migrationHandler.migrate()
-
+            itemHandler.cleanUp()
+            
             Log("SyncHandler - Sending migrated changes", module: .cloudSync)
             applyingChanges = true
             
@@ -218,7 +218,9 @@ final class SyncHandler {
 
             return
         }
-                        
+        
+        itemHandler.cleanUp()
+    
         Log("SyncHandler -  method: fetch finished successfuly - is syncing now", module: .cloudSync)
         guard mergeHandler.hasChanges else {
             Log("SyncHandler - No logs with changes. Exiting", module: .cloudSync)

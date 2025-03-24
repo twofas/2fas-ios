@@ -33,7 +33,8 @@ public enum CloudCurrentState: Equatable {
         case other
         case newerVersion
         case incorrectService(serviceName: String)
-        case cloudEncrypted
+        case cloudEncryptedUser
+        case cloudEncryptedSystem
     }
     
     public enum Sync: Equatable {
@@ -67,8 +68,10 @@ public enum CloudCurrentState: Equatable {
                 return .disabledNotAvailable(reason: .incorrectService(serviceName: serviceName))
             case .newerVersion:
                 return .disabledNotAvailable(reason: .newerVersion)
-            case .cloudEncrypted:
-                return .disabledNotAvailable(reason: .cloudEncrypted)
+            case .cloudEncryptedUser:
+                return .disabledNotAvailable(reason: .cloudEncryptedUser)
+            case .cloudEncryptedSystem:
+                return .disabledNotAvailable(reason: .cloudEncryptedSystem)
             }
         case .disabledAvailable:
             return .disabledAvailable
@@ -101,14 +104,13 @@ public protocol CloudHandlerType: AnyObject {
     var currentState: CloudCurrentState { get }
     var isConnected: Bool { get }
     var secretSyncError: SecretSyncError? { get set }
-    
     func checkState()
     func synchronize()
     func enable()
     func disable(notify: Bool)
     func clearBackup()
     func setTimeOffset(_ offset: Int)
-    func resetStateBeforeSync()    
+    func resetStateBeforeSync()
 }
 
 final class CloudHandler: CloudHandlerType {
@@ -122,6 +124,7 @@ final class CloudHandler: CloudHandlerType {
     private let cloudKit: CloudKit
     private let mergeHandler: MergeHandler
     private let migrationHandler: MigrationHandling
+    private let requirementCheckHandler: RequirementCheckHandler
     
     private let notificationCenter = NotificationCenter.default
     
@@ -147,7 +150,8 @@ final class CloudHandler: CloudHandlerType {
         itemHandler: ItemHandler,
         cloudKit: CloudKit,
         mergeHandler: MergeHandler,
-        migrationHandler: MigrationHandling
+        migrationHandler: MigrationHandling,
+        requirementCheckHandler: RequirementCheckHandler
     ) {
         self.cloudAvailability = cloudAvailability
         self.syncHandler = syncHandler
@@ -155,6 +159,7 @@ final class CloudHandler: CloudHandlerType {
         self.cloudKit = cloudKit
         self.mergeHandler = mergeHandler
         self.migrationHandler = migrationHandler
+        self.requirementCheckHandler = requirementCheckHandler
         clearHandler = ClearHandler()
         
         cloudAvailability.availabilityCheckResult = { [weak self] resultStatus in
@@ -171,6 +176,9 @@ final class CloudHandler: CloudHandlerType {
             self?.incorrectService(serviceName: $0)
             self?.secretSyncError?($0)
         }
+        
+        requirementCheckHandler.newerVersion = { [weak self] in self?.newerVersionOfCloud() }
+        requirementCheckHandler.cloudEncrypted = { [weak self] in self?.cloudIsEncrypted($0) }
         
         clearHandler.didClear = { [weak self] in self?.didClear() }
     }
@@ -423,9 +431,14 @@ final class CloudHandler: CloudHandlerType {
         currentState = .disabledNotAvailable(reason: .newerVersion)
     }
     
-    private func cloudIsEncrypted() {
+    private func cloudIsEncrypted(_ encryptionType: Info.Encryption?) {
         Log("Cloud Handler - cloud is encrypted", module: .cloudSync)
         clearAll()
-        currentState = .disabledNotAvailable(reason: .cloudEncrypted)
+        switch encryptionType {
+        case .system, .none:
+            currentState = .disabledNotAvailable(reason: .cloudEncryptedSystem)
+        case .user:
+            currentState = .disabledNotAvailable(reason: .cloudEncryptedUser)
+        }
     }
 }

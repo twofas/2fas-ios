@@ -36,6 +36,7 @@ public final class Protection {
         let PINvalue: PIN
         let codeType: CodeType
     }
+    public let reference = Keys.Reference.dataValue
     #if os(iOS)
     private let encryptedStorage: LocalEncryptedStorage
     
@@ -56,6 +57,11 @@ public final class Protection {
         extensionsStorage = ExtensionsStorage(storage: encryptedStorage)
         migrationHandler = MigrationHandler(storage: encryptedStorage)
         migrationHandler.migrateIfNeeded()
+    }
+    #elseif os(watchOS)
+    public let localKeyEncryption: CommonLocalKeyEncryption
+    public init() {
+        localKeyEncryption = LocalKeyEncryption()
     }
     #endif
 }

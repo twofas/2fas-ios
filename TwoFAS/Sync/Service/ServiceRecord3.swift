@@ -51,13 +51,13 @@ private enum ServiceEntryKeyEncrypted3: String {
 }
 
 final class ServiceRecord3 {
-    private(set) var name: Data = Data()
-    private(set) var secret: Data = Data()
-    private(set) var unencryptedSecret: String = ""
-    private(set) var serviceTypeID: Data? = nil
-    private(set) var additionalInfo: Data? = nil
-    private(set) var rawIssuer: Data? = nil
-    private(set) var otpAuth: Data? = nil
+    private(set) var name = Data()
+    private(set) var secret = Data()
+    private(set) var unencryptedSecret = ""
+    private(set) var serviceTypeID: Data?
+    private(set) var additionalInfo: Data?
+    private(set) var rawIssuer: Data?
+    private(set) var otpAuth: Data?
     private(set) var ckRecord: CKRecord?
     private(set) var creationDate = Date()
     private(set) var modificationDate = Date()
@@ -65,7 +65,7 @@ final class ServiceRecord3 {
     private(set) var tokenPeriod: Int?
     private(set) var badgeColor: String?
     private(set) var iconType: String = ""
-    private(set) var iconTypeID: Data = Data()
+    private(set) var iconTypeID = Data()
     private(set) var labelColor: String = ""
     private(set) var labelTitle: String = ""
     private(set) var sectionID: String?

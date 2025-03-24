@@ -72,7 +72,7 @@ nesting:
 line_length:
   ignores_comments: true
 
-swiftlint_version: 0.57.0
+swiftlint_version: 0.58.2
 
 included:
   - ./

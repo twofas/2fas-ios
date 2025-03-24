@@ -18,7 +18,7 @@
 //
 
 import Foundation
-@_implementationOnly import Firebase
+@_implementationOnly import FirebaseCore
 @_implementationOnly import FirebaseCrashlytics
 @_implementationOnly import FirebaseMessaging
 

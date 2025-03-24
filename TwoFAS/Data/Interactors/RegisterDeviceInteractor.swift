@@ -49,6 +49,7 @@ final class RegisterDeviceInteractor {
     private let mainRepository: MainRepository
     private let localName: WebExtensionLocalDeviceNameInteracting
     private let channelState: FCMHandlerProtocol
+    private let logTokenLength: Int = 8
     
     private var isRegistering = false
     private var awaitingGCMToken: String?
@@ -62,6 +63,7 @@ final class RegisterDeviceInteractor {
     }
 }
 
+// swiftlint:disable line_length
 extension RegisterDeviceInteractor: RegisterDeviceInteracting {
     var isDeviceRegistered: Bool {
         mainRepository.isDeviceIDSet
@@ -76,7 +78,10 @@ extension RegisterDeviceInteractor: RegisterDeviceInteracting {
         channelState.initializeFCM()
         channelState.enableCrashlytics(!mainRepository.isCrashlyticsDisabled)
         if isDeviceRegistered {
+            Log("RegisterDeviceInteractor - device is registered: \(mainRepository.deviceID?.suffix(logTokenLength) ?? "-")", module: .interactor)
             channelState.enableFCM()
+        } else {
+            Log("RegisterDeviceInteractor - device not registered yet", module: .interactor)
         }
     }
     
@@ -96,8 +101,9 @@ extension RegisterDeviceInteractor: RegisterDeviceInteracting {
         let dispatchTime: DispatchTime = .now().advanced(by: .seconds(fcmRegistrationAwaitingTime))
         DispatchQueue.main.asyncAfter(deadline: dispatchTime) {
             let tokenExists = self.mainRepository.isGCMTokenSet
+            let token = self.mainRepository.gcmToken?.suffix(self.logTokenLength) ?? "-"
             Log(
-                "RegisterDeviceInteractor - awaiting for GCM token finished, tokenExists: \(tokenExists)",
+                "RegisterDeviceInteractor - awaiting for GCM token finished, tokenExists: \(tokenExists), partial-token: \(token)",
                 module: .interactor
             )
             Log("RegisterDeviceInteractor - isDeviceRegistered: \(self.isDeviceRegistered)", module: .interactor)
@@ -131,6 +137,9 @@ extension RegisterDeviceInteractor: RegisterDeviceInteracting {
         mainRepository.setCrashlyticsDisabled(disabled)
     }
 }
+// swiftlint:enable line_length
+
+// swiftlint:disable line_length
 private extension RegisterDeviceInteractor {
     func registerDeviceOnServer(completion: @escaping (Result<Void, RegisterDeviceError>) -> Void) {
         Log("RegisterDeviceInteractor - registerDeviceOnServer", module: .interactor)
@@ -193,7 +202,10 @@ private extension RegisterDeviceInteractor {
         mainRepository.updateDeviceNameToken(deviceName, gcmToken: gcmToken, for: deviceID) { result in
             switch result {
             case .success:
-                Log("RegisterDeviceInteractor - Updating success!", module: .interactor)
+                Log(
+                    "RegisterDeviceInteractor - Updating success! Partial-token: \(gcmToken.suffix(self.logTokenLength))",
+                    module: .interactor
+                )
                 completion(.success(Void()))
             case .failure(let error):
                 Log("RegisterDeviceInteractor - Updating failure! error: \(error)", module: .interactor)
@@ -236,13 +248,16 @@ private extension RegisterDeviceInteractor {
             }
         }
         
-        Log("RegisterDeviceInteractor - FCM token obtained!", module: .interactor)
+        Log("RegisterDeviceInteractor - FCM token obtained! Partial-token: \(token.suffix(self.logTokenLength))", module: .interactor)
         Log("FCM/FCM: \(token)", module: .interactor, save: false)
         
         if isDeviceRegistered {
             Log("RegisterDeviceInteractor - Token obtained, device registered", module: .interactor)
             if let storedToken = mainRepository.gcmToken {
-                Log("RegisterDeviceInteractor - have stored FCM token", module: .interactor)
+                Log(
+                    "RegisterDeviceInteractor - have stored FCM token. Partial-token: \(storedToken.suffix(self.logTokenLength))",
+                    module: .interactor
+                )
                 if storedToken != token {
                     Log(
                         "RegisterDeviceInteractor - stored FCM token is diffrent then the new one - update",
@@ -260,3 +275,4 @@ private extension RegisterDeviceInteractor {
         }
     }
 }
+// swiftlint:enable line_length

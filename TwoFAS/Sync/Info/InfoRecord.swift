@@ -31,16 +31,24 @@ enum InfoEntryKey: String {
     case allowedDevices
     case enableWatch
     case encryptionReference
-    case modificationDate
 }
 
-final class InfoRecord {
+final class InfoRecord: Equatable {
+    static func == (lhs: InfoRecord, rhs: InfoRecord) -> Bool {
+        lhs.version == rhs.version &&
+        lhs.encryption == rhs.encryption &&
+        lhs.modificationDate == rhs.modificationDate &&
+        lhs.allowedDevices == rhs.allowedDevices &&
+        lhs.encryptionReference == rhs.encryptionReference &&
+        lhs.enableWatch == rhs.enableWatch
+    }
+    
     private(set) var version: Int = 0
     private(set) var encryption: String = ""
     private(set) var ckRecord: CKRecord?
     private(set) var modificationDate = Date()
     private(set) var allowedDevices: [String] = []
-    private(set) var encryptionReference: Data? = nil
+    private(set) var encryptionReference: Data?
     private(set) var enableWatch = false
     
     init(record: CKRecord) {
@@ -127,7 +135,6 @@ final class InfoRecord {
         record[.allowedDevices] = allowedDevices as CKRecordValue
         record[.enableWatch] = enableWatch as CKRecordValue
         record[.encryptionReference] = encryptionReference as CKRecordValue
-        record[.modificationDate] = modificationDate as CKRecordValue
     }
 }
 

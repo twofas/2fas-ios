@@ -94,7 +94,8 @@ extension CloudState.NotAvailableReason {
         case .incorrectService(let serviceName): return T.Backup.incorrectSecret(serviceName)
         case .useriCloudProblem: return T.Backup.icloudProblem
         case .newerVersion: return T.Error.cloudBackupNewerVersion
-        case .cloudEncrypted: return T.Error.cloudBackupEncryptedNotSupported
+        case .cloudEncryptedUser: return "iCloud is encrypted using custom password. Enter the password and enable sync"
+        case .cloudEncryptedSystem: return "iCloud is encrypted using a shared key. Ensure that you have enabled the iCloud Keychain"
         }
     }
 }

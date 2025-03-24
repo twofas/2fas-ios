@@ -39,9 +39,9 @@ extension CommonSectionData {
     }
 }
 
-extension Info {
+extension InfoRecord {
     var comparisionDate: Date {
-        Date(timeIntervalSince1970: 1665947380)
+        modificationDate
     }
 }
 
@@ -53,7 +53,7 @@ struct CommonDataIndex: Equatable {
         case .service1: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
         case .service2: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
         case .service3: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
-        case .info: return (lhs.item as? Info) == (rhs.item as? Info)
+        case .info: return (lhs.item as? InfoRecord) == (rhs.item as? InfoRecord)
         }
     }
     
@@ -68,7 +68,7 @@ struct CommonDataIndex: Equatable {
         case .service1: date = (item as? ServiceData)?.comparisionDate
         case .service2: date = (item as? ServiceData)?.comparisionDate
         case .service3: date = (item as? ServiceData)?.comparisionDate
-        case .info: date = (item as? Info)?.comparisionDate
+        case .info: date = (item as? InfoRecord)?.comparisionDate
         }
         return date ?? Date.distantPast
     }
@@ -79,7 +79,7 @@ struct CommonDataIndex: Equatable {
         case .service1: return (item as? ServiceData) == (other as? ServiceData)
         case .service2: return (item as? ServiceData) == (other as? ServiceData)
         case .service3: return (item as? ServiceData) == (other as? ServiceData)
-        case .info:  return (item as? Info) == (other as? Info)
+        case .info:  return (item as? InfoRecord) == (other as? InfoRecord)
         }
     }
 }

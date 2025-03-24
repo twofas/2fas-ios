@@ -152,7 +152,8 @@ private extension CloudState.NotAvailableReason {
         case .incorrectService(let serviceName): return "incorrect service named: \(serviceName)"
         case .useriCloudProblem: return "User has iCloud problem"
         case .newerVersion: return "Newer version of cloud is available"
-        case .cloudEncrypted: return "Cloud is encrypted"
+        case .cloudEncryptedUser: return "Cloud is encrypted using user password"
+        case .cloudEncryptedSystem: return "Cloud is encrypted using system password"
         }
     }
 }

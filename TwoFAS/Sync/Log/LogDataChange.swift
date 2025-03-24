@@ -38,17 +38,17 @@ final class LogDataChangeImpl: LogDataChange {
     }
     
     func logNewServiceAdded(with secret: String) {
-        logHandler.log(entityID: secret, actionType: .created, kind: .service2)
+        logHandler.log(entityID: secret, actionType: .created, kind: .service3)
     }
     
     func logServicesModified(with secrets: [String]) {
         secrets.forEach {
-            logHandler.log(entityID: $0, actionType: .modified, kind: .service2)
+            logHandler.log(entityID: $0, actionType: .modified, kind: .service3)
         }
     }
     
     func logServiceDeleted(with secret: String) {
-        logHandler.log(entityID: secret, actionType: .deleted, kind: .service2)
+        logHandler.log(entityID: secret, actionType: .deleted, kind: .service3)
     }
     
     // MARK: Section

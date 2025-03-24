@@ -105,9 +105,9 @@ extension MergeHandler {
                             Log("MergeHandler: Creation: Item exists in cloud and it's newer", module: .cloudSync)
                         }
                     } else {
-                        Log("MergeHandler: Creation: Couldn't find service in current cache - trying to create one to send to cloud", module: .cloudSync)
+                        Log("MergeHandler: Creation: Couldn't find service \(type) in current cache - trying to create one to send to cloud", module: .cloudSync)
                         guard let entry = itemHandler.findItemForEntryID(newLogEntry.entityID, type: type, in: current) else {
-                            Log("SyncHandler - Creation: Can't find new entry in local database which should be added!", module: .cloudSync)
+                            Log("SyncHandler - Creation: Can't find new entry in local database which should be added!", module: .cloudSync, severity: .error)
                             return
                         }
                         Log("MergeHandler: Creation: Creating new item at index: \(entry.index)", module: .cloudSync)

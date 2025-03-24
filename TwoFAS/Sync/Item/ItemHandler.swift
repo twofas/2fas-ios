@@ -36,6 +36,7 @@ final class ItemHandler {
     private let infoHandler: InfoHandler
     private let logHandler: LogHandler
     private let serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler
+    private let syncEncryptionHandler: SyncEncryptionHandler
     
     private let encryption = ExchangeFileEncryption()
     private let embedded = Keys.Sync.key.decrypt()
@@ -48,13 +49,15 @@ final class ItemHandler {
         serviceHandler: ServiceHandler,
         infoHandler: InfoHandler,
         logHandler: LogHandler,
-        serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler
+        serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler,
+        syncEncryptionHandler: SyncEncryptionHandler
     ) {
         self.sectionHandler = sectionHandler
         self.serviceHandler = serviceHandler
         self.infoHandler = infoHandler
         self.logHandler = logHandler
         self.serviceRecordEncryptionHandler = serviceRecordEncryptionHandler
+        self.syncEncryptionHandler = syncEncryptionHandler
         
         serviceHandler.encryption = encryption
         serviceHandler.embedded = embedded
@@ -62,6 +65,12 @@ final class ItemHandler {
 }
 
 extension ItemHandler {
+    var isCacheEmpty: Bool {
+        sectionHandler.listAllCommonSection().isEmpty &&
+        serviceHandler.listAll().isEmpty &&
+        infoHandler.metadata == nil
+    }
+    
     func commit(ignoreRemovals: Bool = false) {
         if !ignoreRemovals {
             queuedDeleteEntries(deletedEntries)
@@ -93,7 +102,7 @@ extension ItemHandler {
         var value = [RecordType: [Any]]()
         value[RecordType.section] = sectionHandler.listAllCommonSection()
         value[RecordType.service3] = serviceHandler.listAll()
-        value[RecordType.info] = infoHandler.re()
+        value[RecordType.info] = infoHandler.prepareForSendoff()
         return value
     }
     
@@ -195,21 +204,12 @@ extension ItemHandler {
                 list: list
             )
         case .info:
-            return infoHandler.recreateWithNewData()
+            return infoHandler.recreate()
         default: return nil
         }
     }
     
     func record(for type: RecordType, item: Any, index: Int, zoneID: CKRecordZone.ID, allItems: [Any]) -> CKRecord? {
-        guard let entityID = { () -> String? in
-            switch type {
-            case .section: return (item as? CommonSectionData)?.sectionID
-            case .service3: return (item as? ServiceData)?.secret
-            case .info: return ""
-            default: return nil
-            }
-        }() else { return nil }
-        
         switch type {
         case .section:
             guard let new = item as? CommonSectionData else { return nil }
@@ -233,7 +233,7 @@ extension ItemHandler {
             
             return serviceRecordEncryptionHandler.createServiceRecord3(from: new, metadata: nil, list: list)
         case .info:
-            return infoHandler.createNew()
+            return infoHandler.recreate()
         default: return nil
         }
     }

@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Common
 @_implementationOnly import FirebaseCore
 @_implementationOnly import FirebaseCrashlytics
 @_implementationOnly import FirebaseMessaging
@@ -25,13 +26,31 @@ import Foundation
 final class FCM: NSObject, MessagingDelegate, FCMHandlerProtocol {
     var FCMTokenObtained: FCMTokenObtainedCompletion?
     
+    private var messaging: Messaging?
+    
     func initializeFCM() {
-        Messaging.messaging().delegate = self
+        guard messaging == nil else {
+            return
+        }
+        messaging = Messaging.messaging()
+        messaging?.delegate = self
     }
     
     func enableFCM() {
         FirebaseApp.configure()
         initializeFCM()
+        
+        guard messaging?.fcmToken == nil else {
+            return
+        }
+        Log("FCM - obtaining FCM Token", module: .unknown)
+        Task {
+            do {
+                try await messaging?.token()
+            } catch {
+                Log("FCM Error while obtaining FCM Token: \(error)", module: .unknown, severity: .error)
+            }
+        }
     }
     
     func enableCrashlytics(_ enable: Bool) {
@@ -41,7 +60,6 @@ final class FCM: NSObject, MessagingDelegate, FCMHandlerProtocol {
     }
     
     // MARK: - FCM Delegate
-    
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken GCMToken: String?) {
         guard let GCMToken else { return }
         FCMTokenObtained?(GCMToken)

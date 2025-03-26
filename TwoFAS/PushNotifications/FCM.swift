@@ -27,6 +27,7 @@ final class FCM: NSObject, MessagingDelegate, FCMHandlerProtocol {
     var FCMTokenObtained: FCMTokenObtainedCompletion?
     
     private var messaging: Messaging?
+    private var deviceToken: Data?
     
     func initializeFCM() {
         guard messaging == nil else {
@@ -40,9 +41,28 @@ final class FCM: NSObject, MessagingDelegate, FCMHandlerProtocol {
         FirebaseApp.configure()
         initializeFCM()
         
-        guard messaging?.fcmToken == nil else {
+        guard let deviceToken else {
             return
         }
+        messaging?.apnsToken = deviceToken
+        self.deviceToken = nil
+        Log("FCM - APNS Token set", module: .unknown)
+        
+        getToken()
+    }
+    
+    func setDeviceToken(_ deviceToken: Data) {
+        if let messaging {
+            messaging.apnsToken = deviceToken
+            Log("FCM - APNS Token set", module: .unknown)
+            
+            getToken()
+        } else {
+            self.deviceToken = deviceToken
+        }
+    }
+    
+    private func getToken() {
         Log("FCM - obtaining FCM Token", module: .unknown)
         Task {
             do {

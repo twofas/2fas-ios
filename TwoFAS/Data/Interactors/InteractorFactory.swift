@@ -270,4 +270,8 @@ public final class InteractorFactory {
             mainRepository: MainRepositoryImpl.shared
         )
     }
+    
+    public func syncMigrationInteractor() -> SyncMigrationInteracting {
+        SyncMigrationInteractor(mainRepository: MainRepositoryImpl.shared)
+    }
 }

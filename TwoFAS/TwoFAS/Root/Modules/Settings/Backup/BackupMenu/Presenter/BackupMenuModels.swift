@@ -85,11 +85,11 @@ extension Array where Element == BackupMenuSection {
 }
 
 extension CloudState.NotAvailableReason {
-    var errorText: String? {
+    var errorText: String {
         switch self {
         case .disabledByUser: return T.Backup.icloudDisabledTitle
         case .other: return T.Backup.icloudNotAvailable
-        case .error(let error): return error?.localizedDescription
+        case .error(let error): return error?.localizedDescription ?? T.Commons.unknownError
         case .overQuota: return T.Backup.userOverQuotaIcloud
         case .incorrectService(let serviceName): return T.Backup.incorrectSecret(serviceName)
         case .useriCloudProblem: return T.Backup.icloudProblem

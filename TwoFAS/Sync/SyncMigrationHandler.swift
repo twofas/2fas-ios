@@ -28,12 +28,10 @@ public protocol SyncMigrationHandling: AnyObject {
     var showiCloudIsEncryptedByUser: (() -> Void)? { get set }
     var showiCloudIsEncryptedBySystem: (() -> Void)? { get set }
     var showNeverVersionOfiCloud: (() -> Void)? { get set }
-    var synchronize: (() -> Void)? { get set }
     
     func changePassword(_ password: String)
     func useSystemPassword()
     func setMissingUserPassword(_ password: String)
-    func cloudStateChange(_ state: CloudCurrentState)
 }
 
 final class SyncMigrationHandler {

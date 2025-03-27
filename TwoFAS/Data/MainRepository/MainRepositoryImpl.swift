@@ -54,6 +54,7 @@ final class MainRepositoryImpl: MainRepository {
     let iconDescriptionDatabase: IconDescriptionDatabase = IconDescriptionDatabaseImpl()
     let initialPermissionStateDataController = PermissionsStateDataController()
     let mdmRepository: MDMRepository = MDMRepositoryImpl()
+    let syncMigration: SyncMigrationHandling
     
     let serviceNameTranslation: String
     let notificationCenter = NotificationCenter.default
@@ -134,7 +135,8 @@ final class MainRepositoryImpl: MainRepository {
             timeVerificationController: TimeVerificationController(),
             cloudHandler: SyncInstance.getCloudHandler(),
             logDataChange: SyncInstance.logDataChange,
-            serviceNameTranslation: serviceNameTranslation
+            serviceNameTranslation: serviceNameTranslation,
+            syncMigration: SyncInstance.getSyncMigrationHandler()
         )
     }
     
@@ -149,7 +151,8 @@ final class MainRepositoryImpl: MainRepository {
         timeVerificationController: TimeVerificationController,
         cloudHandler: CloudHandlerType,
         logDataChange: LogDataChange,
-        serviceNameTranslation: String
+        serviceNameTranslation: String,
+        syncMigration: SyncMigrationHandling
     ) {
         self.service = storage.service
         self.pushNotifications = pushNotifications
@@ -167,6 +170,7 @@ final class MainRepositoryImpl: MainRepository {
         self.userDefaultsRepository = UserDefaultsRepositoryImpl()
         self.logDataChange = logDataChange
         self.serviceNameTranslation = serviceNameTranslation
+        self.syncMigration = syncMigration
         
         storageRepository = storage.storageRepository
         timeVerificationController.log = { value in Log(value, module: .counter) }

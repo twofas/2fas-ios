@@ -22,6 +22,13 @@ import Data
 import Common
 
 protocol MainModuleInteracting: AnyObject {
+    var showMigrationToNewestVersion: (() -> Void)? { get set }
+    var showiCloudIsEncryptedByUser: (() -> Void)? { get set }
+    var showiCloudIsEncryptedBySystem: (() -> Void)? { get set }
+    var showNeverVersionOfiCloud: (() -> Void)? { get set }
+    var migrationEndedSuccessfuly: (() -> Void)? { get set }
+    var migrationError: ((CloudState.NotAvailableReason) -> Void)? { get set }
+    
     var secretSyncError: ((String) -> Void)? { get set }
     var isAppLocked: Bool { get }
     var isBrowserExtensionAllowed: Bool { get }
@@ -42,6 +49,13 @@ protocol MainModuleInteracting: AnyObject {
 }
 
 final class MainModuleInteractor {
+    var showMigrationToNewestVersion: (() -> Void)?
+    var showiCloudIsEncryptedByUser: (() -> Void)?
+    var showiCloudIsEncryptedBySystem: (() -> Void)?
+    var showNeverVersionOfiCloud: (() -> Void)?
+    var migrationEndedSuccessfuly: (() -> Void)?
+    var migrationError: ((CloudState.NotAvailableReason) -> Void)?
+    
     var secretSyncError: ((String) -> Void)?
     
     var isAppLocked: Bool {
@@ -65,6 +79,7 @@ final class MainModuleInteractor {
     private let rootInteractor: RootInteracting
     private let mdmInteractor: MDMInteracting
     private let protectionInteractor: ProtectionInteracting
+    private let syncMigrationInteractor: SyncMigrationInteracting
     
     init(
         logUploadingInteractor: LogUploadingInteracting,
@@ -76,7 +91,8 @@ final class MainModuleInteractor {
         appInfoInteractor: AppInfoInteracting,
         rootInteractor: RootInteracting,
         mdmInteractor: MDMInteracting,
-        protectionInteractor: ProtectionInteracting
+        protectionInteractor: ProtectionInteracting,
+        syncMigrationInteractor: SyncMigrationInteracting
     ) {
         self.logUploadingInteractor = logUploadingInteractor
         self.cloudBackupStateInteractor = cloudBackupStateInteractor
@@ -87,8 +103,16 @@ final class MainModuleInteractor {
         self.rootInteractor = rootInteractor
         self.mdmInteractor = mdmInteractor
         self.protectionInteractor = protectionInteractor
+        self.syncMigrationInteractor = syncMigrationInteractor
 
         cloudBackupStateInteractor.secretSyncError = { [weak self] in self?.secretSyncError?($0) }
+        
+        syncMigrationInteractor.showMigrationToNewestVersion = { [weak self] in self?.showMigrationToNewestVersion?() }
+        syncMigrationInteractor.showiCloudIsEncryptedByUser = { [weak self] in self?.showiCloudIsEncryptedByUser?() }
+        syncMigrationInteractor.showiCloudIsEncryptedBySystem = { [weak self] in self?.showiCloudIsEncryptedBySystem?() }
+        syncMigrationInteractor.showNeverVersionOfiCloud = { [weak self] in self?.showNeverVersionOfiCloud?() }
+        syncMigrationInteractor.migrationEndedSuccessfuly = { [weak self] in self?.migrationEndedSuccessfuly?() }
+        syncMigrationInteractor.migrationError = { [weak self] error in self?.migrationError?(error) }
     }
 }
 

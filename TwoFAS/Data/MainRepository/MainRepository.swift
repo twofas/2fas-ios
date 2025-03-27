@@ -134,6 +134,14 @@ protocol MainRepository: AnyObject {
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     )
     func saveSuccessSyncDate(_ date: Date?)
+    // MARK: Migration
+    var cloudShowMigrationToNewestVersion: (() -> Void)? { get set }
+    var cloudShowiCloudIsEncryptedByUser: (() -> Void)? { get set }
+    var cloudShowiCloudIsEncryptedBySystem: (() -> Void)? { get set }
+    var cloudShowNeverVersionOfiCloud: (() -> Void)? { get set }
+    func cloudChangePassword(_ password: String)
+    func cloudUseSystemPassword()
+    func cloudSetMissingUserPassword(_ password: String)
     
     // MARK: - Import
     var fileURL: URL? { get set }

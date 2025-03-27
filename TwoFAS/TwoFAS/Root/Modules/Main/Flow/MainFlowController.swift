@@ -32,6 +32,13 @@ protocol MainFlowControlling: AnyObject {
     func toSetupSplit()
     func toSetPIN()
     
+    func toMigrationToNewestVersion()
+    func toiCloudIsEncryptedByUser()
+    func toiCloudIsEncryptedBySystem()
+    func toNeverVersionOfiCloud()
+    func toMigrationEndedSuccessfuly()
+    func toMigrationError(_ error: CloudState.NotAvailableReason)
+    
     // MARK: - App update
     func toShowNewVersionAlert(for appStoreURL: URL, skip: @escaping Callback)
 }
@@ -43,6 +50,8 @@ final class MainFlowController: FlowController {
     private weak var naviViewController: UINavigationController!
     private var galleryViewController: UIViewController?
     private var importer: ImporterOpenFileHeadlessFlowController?
+    
+    private var syncMigrationHandler: ((SyncMigrationToNewestVersionFlowResult) -> Void)?
     
     static func showAsRoot(
         in viewController: UIViewController,
@@ -96,7 +105,7 @@ extension MainFlowController: MainFlowControlling {
     func toAuthorize(for tokenRequestID: String) {
         authRequestsFlowController?.authorizeFromApp(for: tokenRequestID)
     }
-
+    
     func toSecretSyncError(_ serviceName: String) {
         let alert = AlertControllerDismissFlow(
             title: T.Commons.error,
@@ -135,7 +144,7 @@ extension MainFlowController: MainFlowControlling {
         alertController.addAction(skipButton)
         
         guard viewController.presentedViewController == nil else { return }
-
+        
         viewController.present(alertController, animated: true, completion: nil)
     }
     
@@ -143,6 +152,56 @@ extension MainFlowController: MainFlowControlling {
     
     func toSetPIN() {
         NewPINNavigationFlowController.present(on: viewController, parent: self)
+    }
+    
+    func toMigrationToNewestVersion() {
+        guard viewController.presentedViewController == nil else { return }
+        syncMigrationHandler = SyncMigrationToNewestVersionFlowController.showAsRoot(in: _viewController, parent: self)
+    }
+    
+    func toiCloudIsEncryptedByUser() {
+        
+    }
+    
+    func toiCloudIsEncryptedBySystem() {
+        let alertTitle = "Cloud Backup error"
+        let alertMessage = "Can't decrypt Cloud Backup because there's no system key. Check if iCloud Keychain sync is enabled and works correctly."
+        
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: T.Commons.ok, style: .default)
+        
+        alertController.addAction(okButton)
+        guard viewController.presentedViewController == nil else { return }
+        
+        viewController.present(alertController, animated: true, completion: nil)
+    }
+    
+    func toNeverVersionOfiCloud() {
+        let alertTitle = T.NewVersion.newVersionTitle
+        let alertMessage = "Can't sync with Cloud Backup because it was migrated by newer version of the app. Update the app to continue using Cloud Backup."
+        
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: T.Commons.ok, style: .default)
+        
+        alertController.addAction(okButton)
+        guard viewController.presentedViewController == nil else { return }
+        
+        viewController.present(alertController, animated: true, completion: nil)
+    }
+    
+    func toMigrationEndedSuccessfuly() {
+        syncMigrationHandler?(.success)
+    }
+    
+    func toMigrationError(_ error: CloudState.NotAvailableReason) {
+        syncMigrationHandler?(.error(error))
+    }
+}
+
+extension MainFlowController: SyncMigrationToNewestVersionFlowControllerParent {
+    func closeMigrationToNewestVersion() {
+        syncMigrationHandler = nil
+        _viewController.dismiss(animated: true)
     }
 }
 

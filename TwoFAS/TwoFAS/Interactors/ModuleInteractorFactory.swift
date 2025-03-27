@@ -345,7 +345,8 @@ final class ModuleInteractorFactory {
             appInfoInteractor: InteractorFactory.shared.appInfoInteractor(),
             rootInteractor: InteractorFactory.shared.rootInteractor(),
             mdmInteractor: InteractorFactory.shared.mdmInteractor(),
-            protectionInteractor: InteractorFactory.shared.protectionInteractor()
+            protectionInteractor: InteractorFactory.shared.protectionInteractor(),
+            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor()
         )
     }
     

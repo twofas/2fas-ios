@@ -1,8 +1,6 @@
-// Generated using Sourcery 2.2.6 — https://github.com/krzysztofzablocki/Sourcery
-// DO NOT EDIT
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2025 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -19,29 +17,21 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-// swiftlint:disable all
-
-import Foundation
-#if os(iOS) || os(tvOS) || os(watchOS)
 import UIKit
-#elseif os(OSX)
-import AppKit
-#endif
+import SwiftUI
 
-@testable import TwoFAS
-@testable import Common
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// swiftlint:enable all
+final class SyncMigrationToNewestVersionViewController: UIViewController {
+    var presenter: SyncMigrationToNewestVersionPresenter!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let vc = UIHostingController(rootView: SyncMigrationToNewestVersionView(presenter: presenter))
+        vc.willMove(toParent: self)
+        addChild(vc)
+        view.addSubview(vc.view)
+        vc.view.pinToParent()
+        vc.view.backgroundColor = Theme.Colors.Fill.System.third
+        vc.didMove(toParent: self)
+    }
+}

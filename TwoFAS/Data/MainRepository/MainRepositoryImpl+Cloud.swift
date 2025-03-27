@@ -72,4 +72,54 @@ extension MainRepositoryImpl {
     func saveSuccessSyncDate(_ date: Date?) {
         userDefaultsRepository.saveSuccessSyncDate(date)
     }
+    
+    // Migration
+    
+    var cloudShowMigrationToNewestVersion: (() -> Void)? {
+        get {
+            syncMigration.showMigrationToNewestVersion
+        }
+        set {
+            syncMigration.showMigrationToNewestVersion = newValue
+        }
+    }
+    
+    var cloudShowiCloudIsEncryptedByUser: (() -> Void)? {
+        get {
+            syncMigration.showiCloudIsEncryptedByUser
+        }
+        set {
+            syncMigration.showiCloudIsEncryptedByUser = newValue
+        }
+    }
+    
+    var cloudShowiCloudIsEncryptedBySystem: (() -> Void)? {
+        get {
+            syncMigration.showiCloudIsEncryptedBySystem
+        }
+        set {
+            syncMigration.showiCloudIsEncryptedBySystem = newValue
+        }
+    }
+    
+    var cloudShowNeverVersionOfiCloud: (() -> Void)? {
+        get {
+            syncMigration.showNeverVersionOfiCloud
+        }
+        set {
+            syncMigration.showNeverVersionOfiCloud = newValue
+        }
+    }
+    
+    func cloudChangePassword(_ password: String) {
+        syncMigration.changePassword(password)
+    }
+    
+    func cloudUseSystemPassword() {
+        syncMigration.useSystemPassword()
+    }
+    
+    func cloudSetMissingUserPassword(_ password: String) {
+        syncMigration.setMissingUserPassword(password)
+    }
 }

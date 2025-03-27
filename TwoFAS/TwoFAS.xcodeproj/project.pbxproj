@@ -967,6 +967,7 @@
 		C2BDF4532868B39800D46FA4 /* StorageRepositoryImpl+CategoriesSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDF4512868B39000D46FA4 /* StorageRepositoryImpl+CategoriesSections.swift */; };
 		C2BE80582811DF03009CBC4A /* AuthRequestsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BE80572811DF03009CBC4A /* AuthRequestsPresenter.swift */; };
 		C2BE805B2811DF3D009CBC4A /* AuthRequestsFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BE805A2811DF3D009CBC4A /* AuthRequestsFlowController.swift */; };
+		C2BF61142D95D5F900E308BF /* SyncMigrationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BF61132D95D5F000E308BF /* SyncMigrationInteractor.swift */; };
 		C2C02242297F222100D596A8 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C02241297F222100D596A8 /* MainPresenter.swift */; };
 		C2C02244297F224700D596A8 /* MainModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C02243297F224700D596A8 /* MainModuleInteractor.swift */; };
 		C2C15140294E831300F8B511 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1513F294E831300F8B511 /* Keys.swift */; };
@@ -1353,6 +1354,10 @@
 		C2F7FE0F2A8AC2FA004B2C95 /* AddingServiceDividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F7FE0E2A8AC2FA004B2C95 /* AddingServiceDividerView.swift */; };
 		C2F9038626BFF77B008DBC4A /* TimeOffsetStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F9038526BFF77B008DBC4A /* TimeOffsetStorage.swift */; };
 		C2F9D60A2A1FEC700085B65A /* TokensRevealButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F9D6092A1FEC700085B65A /* TokensRevealButton.swift */; };
+		C2F9E15D2D982D9C004B7DFA /* SyncMigrationToNewestVersionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F9E15C2D982D8A004B7DFA /* SyncMigrationToNewestVersionFlowController.swift */; };
+		C2F9E15F2D983938004B7DFA /* SyncMigrationToNewestVersionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F9E15E2D983936004B7DFA /* SyncMigrationToNewestVersionPresenter.swift */; };
+		C2F9E1612D983A85004B7DFA /* SyncMigrationToNewestVersionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F9E1602D983A83004B7DFA /* SyncMigrationToNewestVersionViewController.swift */; };
+		C2F9E1632D98607B004B7DFA /* SyncMigrationToNewestVersionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F9E1622D986079004B7DFA /* SyncMigrationToNewestVersionView.swift */; };
 		C2FA3E7B280AD60D0097ED71 /* AuthRequestFilterOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA3E7A280AD60D0097ED71 /* AuthRequestFilterOptions.swift */; };
 		C2FA3E7D280ADCC90097ED71 /* StorageRepositoryImpl+AuthRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA3E7C280ADCC90097ED71 /* StorageRepositoryImpl+AuthRequest.swift */; };
 		C2FA3E7F280ADDB40097ED71 /* AuthRequestEntityToPairedAuthRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA3E7E280ADDB40097ED71 /* AuthRequestEntityToPairedAuthRequest.swift */; };
@@ -2814,6 +2819,7 @@
 		C2BDF4512868B39000D46FA4 /* StorageRepositoryImpl+CategoriesSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StorageRepositoryImpl+CategoriesSections.swift"; sourceTree = "<group>"; };
 		C2BE80572811DF03009CBC4A /* AuthRequestsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestsPresenter.swift; sourceTree = "<group>"; };
 		C2BE805A2811DF3D009CBC4A /* AuthRequestsFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestsFlowController.swift; sourceTree = "<group>"; };
+		C2BF61132D95D5F000E308BF /* SyncMigrationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationInteractor.swift; sourceTree = "<group>"; };
 		C2C02241297F222100D596A8 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		C2C02243297F224700D596A8 /* MainModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModuleInteractor.swift; sourceTree = "<group>"; };
 		C2C1513F294E831300F8B511 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
@@ -3091,6 +3097,10 @@
 		C2F7FE0E2A8AC2FA004B2C95 /* AddingServiceDividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceDividerView.swift; sourceTree = "<group>"; };
 		C2F9038526BFF77B008DBC4A /* TimeOffsetStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOffsetStorage.swift; sourceTree = "<group>"; };
 		C2F9D6092A1FEC700085B65A /* TokensRevealButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensRevealButton.swift; sourceTree = "<group>"; };
+		C2F9E15C2D982D8A004B7DFA /* SyncMigrationToNewestVersionFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationToNewestVersionFlowController.swift; sourceTree = "<group>"; };
+		C2F9E15E2D983936004B7DFA /* SyncMigrationToNewestVersionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationToNewestVersionPresenter.swift; sourceTree = "<group>"; };
+		C2F9E1602D983A83004B7DFA /* SyncMigrationToNewestVersionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationToNewestVersionViewController.swift; sourceTree = "<group>"; };
+		C2F9E1622D986079004B7DFA /* SyncMigrationToNewestVersionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationToNewestVersionView.swift; sourceTree = "<group>"; };
 		C2FA3E76280AC5130097ED71 /* WebExtensionAuthInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebExtensionAuthInteractor.swift; sourceTree = "<group>"; };
 		C2FA3E7A280AD60D0097ED71 /* AuthRequestFilterOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestFilterOptions.swift; sourceTree = "<group>"; };
 		C2FA3E7C280ADCC90097ED71 /* StorageRepositoryImpl+AuthRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StorageRepositoryImpl+AuthRequest.swift"; sourceTree = "<group>"; };
@@ -3937,6 +3947,7 @@
 		C21111F3274ABDB300CA7C78 /* Interactors */ = {
 			isa = PBXGroup;
 			children = (
+				C2BF61132D95D5F000E308BF /* SyncMigrationInteractor.swift */,
 				C21111F4274ABDDA00CA7C78 /* InteractorFactory.swift */,
 				C24295562E43D99100E236EA /* CompressionInteractor.swift */,
 				C27BE51A275D7DDE0090CA12 /* CloudBackupStateInteractor.swift */,
@@ -7638,6 +7649,7 @@
 		C2D75D38297DA07B0002531E /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				C2F9E15A2D982D68004B7DFA /* SyncMigration */,
 				C252B38A2981D44500C2074D /* Models */,
 				C2C02240297F21A400D596A8 /* Flow */,
 				C2C0223F297F219900D596A8 /* Interactor */,
@@ -8339,6 +8351,25 @@
 				C230DB8B274710E5005E7060 /* icon_320.png */,
 			);
 			path = FileIcons;
+			sourceTree = "<group>";
+		};
+		C2F9E15A2D982D68004B7DFA /* SyncMigration */ = {
+			isa = PBXGroup;
+			children = (
+				C2F9E15B2D982D75004B7DFA /* MigrationToNewestVersion */,
+			);
+			path = SyncMigration;
+			sourceTree = "<group>";
+		};
+		C2F9E15B2D982D75004B7DFA /* MigrationToNewestVersion */ = {
+			isa = PBXGroup;
+			children = (
+				C2F9E1622D986079004B7DFA /* SyncMigrationToNewestVersionView.swift */,
+				C2F9E15C2D982D8A004B7DFA /* SyncMigrationToNewestVersionFlowController.swift */,
+				C2F9E15E2D983936004B7DFA /* SyncMigrationToNewestVersionPresenter.swift */,
+				C2F9E1602D983A83004B7DFA /* SyncMigrationToNewestVersionViewController.swift */,
+			);
+			path = MigrationToNewestVersion;
 			sourceTree = "<group>";
 		};
 		C2FA3E86280B624D0097ED71 /* AuthRequests */ = {
@@ -9999,6 +10030,7 @@
 				C2508E132753AABF0072C564 /* SettingsMenuPresenter.swift in Sources */,
 				C2508E1B2753AEEB0072C564 /* TableViewAdapter.swift in Sources */,
 				C2BDC6D41FC1CBE100967D0E /* Dictionary+Extensions.swift in Sources */,
+				C2F9E15F2D983938004B7DFA /* SyncMigrationToNewestVersionPresenter.swift in Sources */,
 				C2BD82B2236619E800FBD69A /* BackupAreaWarningView.swift in Sources */,
 				C2AC220C276618AD00271402 /* ExporterMainScreenFlowController.swift in Sources */,
 				C240186F2618685500800DBF /* IconSelectorViewController.swift in Sources */,
@@ -10046,10 +10078,12 @@
 				C2C02244297F224700D596A8 /* MainModuleInteractor.swift in Sources */,
 				C24590FA280F54400079C21C /* SelectServiceModels.swift in Sources */,
 				C274BDC42769425900EE28BC /* AppSecurityPresenter+Menu.swift in Sources */,
+				C2F9E15D2D982D9C004B7DFA /* SyncMigrationToNewestVersionFlowController.swift in Sources */,
 				C2EBDFFE2AC4476D008FD744 /* GuideMenuPresenter.swift in Sources */,
 				C25C91D72B0A6DE600E58729 /* IntroductionModuleInteractor.swift in Sources */,
 				C27C03BD27F4FA980020DB5E /* BrowserExtensionMainFlowController.swift in Sources */,
 				C20CD53E2A1D013200A7F324 /* TokensTOTPCellType.swift in Sources */,
+				C2F9E1632D98607B004B7DFA /* SyncMigrationToNewestVersionView.swift in Sources */,
 				C2F4D93B2A8D470100608F63 /* AddingServiceServiceTypeButton.swift in Sources */,
 				C266542B2725EF7B00DC3A3C /* ExportFileRules.swift in Sources */,
 				C2C56D4627C98AA3003B4C43 /* ComposeServiceAdvancedSummaryModuleInteractor.swift in Sources */,
@@ -10060,6 +10094,7 @@
 				C2323C52276B535D00038B76 /* AppLockViewController.swift in Sources */,
 				C2C66F9B1FE06A4500AD5A1C /* GridViewModelDelegate.swift in Sources */,
 				C2CA2B7D258699DA009FB700 /* FirstCodeAddedStatsController.swift in Sources */,
+				C2F9E1612D983A85004B7DFA /* SyncMigrationToNewestVersionViewController.swift in Sources */,
 				C284AF77276016EB00FEE810 /* BackupDeleteModuleInteractor.swift in Sources */,
 				C2EA566F28569A5E00026BFE /* AskForAuthPresenter.swift in Sources */,
 				C20E2DE52A7C27A500DB64BB /* GlobalState.swift in Sources */,
@@ -10820,6 +10855,7 @@
 				C2E7C3F02ADB2BB400478D89 /* TimerInteractor.swift in Sources */,
 				C274C7742ADD3CB000B8AAC1 /* CounterState.swift in Sources */,
 				C2E7C3D12ADB2B9C00478D89 /* MainRepositoryImpl+NewAppVersion.swift in Sources */,
+				C2BF61142D95D5F900E308BF /* SyncMigrationInteractor.swift in Sources */,
 				C2E7C3E32ADB2BB400478D89 /* NewCodeInteractor.swift in Sources */,
 				C2CACFC42B015847001E0F8E /* MainRepositoryImpl+LockScreen.swift in Sources */,
 				C2E7C3CF2ADB2B9C00478D89 /* MainRepositoryImpl+ServiceDefinition.swift in Sources */,

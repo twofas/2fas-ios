@@ -103,22 +103,21 @@ public enum SyncInstance {
             migrationHandler: migrationHandler,
             requirementCheckHandler: requirementCheck
         )
-        syncMigrationHandler = SyncMigrationHandler(
+        let syncMigrationHandlerInstance = SyncMigrationHandler(
             migrationHandler: migrationHandler,
             syncEncryptionHandler: syncEncryptionHandler
         )
         cloudHandler.registerForStateChange({ cloudState in
-            syncMigrationHandler.cloudStateChange(cloudState)
+            syncMigrationHandlerInstance.cloudStateChange(cloudState)
         }, with: "syncMigrationHandler")
-        syncMigrationHandler.synchronize = { syncHandler.synchronize() }
+        syncMigrationHandlerInstance.synchronize = { syncHandler.synchronize() }
         syncEncryptionHandler.initialize()
         
-        // TODO: Add rest
-        
-        
+        syncMigrationHandler = syncMigrationHandlerInstance
         logDataChangeImpl = LogDataChangeImpl(logHandler: logHandler)
     }
     public static func getCloudHandler() -> CloudHandlerType { cloudHandler }
+    public static func getSyncMigrationHandler() -> SyncMigrationHandling { syncMigrationHandler }
     
     public static func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],

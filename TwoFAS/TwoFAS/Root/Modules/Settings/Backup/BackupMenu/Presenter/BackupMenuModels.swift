@@ -65,6 +65,7 @@ enum BackupNavigationAction: Hashable {
     case importFile
     case exportFile
     case deleteCloudBackup
+    case changeCloudBackupPassword
 }
 
 enum BackupNavigationToggle: Hashable {

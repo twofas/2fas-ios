@@ -412,4 +412,10 @@ final class ModuleInteractorFactory {
             syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor()
         )
     }
+    
+    func backupChangeEncryptionModuleInteractor() -> BackupChangeEncryptionModuleInteracting {
+        BackupChangeEncryptionModuleInteractor(
+            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor()
+        )
+    }
 }

@@ -17,16 +17,21 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import CloudKit
-import CommonWatch
+import UIKit
+import SwiftUI
 
-final class MigrationHandlerWatchPlaceholder: MigrationHandling {
-    var currentEncryption: CloudEncryptionType? { .system }
+final class BackupChangeEncryptionViewController: UIViewController {
+    var presenter: BackupChangeEncryptionPresenter!
     
-    func checkIfMigrationNeeded() -> Bool { false }
-    var isMigrating: Bool { false }
-    var isReencryptionPending: (() -> Bool)?
-    var isMigratingToV3: (() -> Void)?
-    func migrate() -> (recordIDsToDeleteOnServer: [CKRecord.ID]?, recordsToModifyOnServer: [CKRecord]?) { (nil, nil) }
-    func itemsCommited() {}
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let vc = UIHostingController(rootView: BackupChangeEncryptionView(presenter: presenter))
+        vc.willMove(toParent: self)
+        addChild(vc)
+        view.addSubview(vc.view)
+        vc.view.pinToParent()
+        vc.view.backgroundColor = Theme.Colors.Fill.System.third
+        vc.didMove(toParent: self)
+    }
 }

@@ -63,6 +63,8 @@ final class BackupMenuPresenter {
             flowController.toFileExport()
         case .deleteCloudBackup:
             flowController.toDeleteCloudBackup()
+        case .changeCloudBackupPassword:
+            flowController.toChangeEncryption()
         }
     }
     

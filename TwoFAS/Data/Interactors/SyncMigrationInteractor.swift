@@ -30,12 +30,27 @@ public protocol SyncMigrationInteracting: AnyObject {
     var migrationEndedSuccessfuly: (() -> Void)? { get set }
     var migrationError: ((CloudState.NotAvailableReason) -> Void)? { get set }
     
+    var currentEncryption: CloudEncryptionType { get }
+    var currentCloudState: CloudState { get }
+    
     func changePassword(_ password: String)
     func useSystemPassword()
     func setMissingUserPassword(_ password: String)
 }
 
 final class SyncMigrationInteractor {
+    var currentEncryption: CloudEncryptionType {
+        if let encryption = mainRepository.cloudCurrentEncryption {
+            return encryption
+        }
+        Log("SyncMigrationInteractor: No current encryption", module: .interactor, severity: .error)
+        return .system
+    }
+    
+    var currentCloudState: CloudState {
+        mainRepository.cloudCurrentState
+    }
+    
     var showMigrationToNewestVersion: (() -> Void)? {
         get {
             mainRepository.cloudShowMigrationToNewestVersion
@@ -84,6 +99,10 @@ final class SyncMigrationInteractor {
             name: .syncStateChanged,
             object: nil
         )
+    }
+    
+    deinit {
+        notificationCenter.removeObserver(self)
     }
 }
 

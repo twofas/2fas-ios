@@ -18,9 +18,16 @@
 //
 
 import CloudKit
+#if os(iOS)
+import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 protocol MigrationHandling: AnyObject {
     var isMigrating: Bool { get }
+    
+    var currentEncryption: CloudEncryptionType? { get }
     
     var isReencryptionPending: (() -> Bool)? { get set }
     var isMigratingToV3: (() -> Void)? { get set }

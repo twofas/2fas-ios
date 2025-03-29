@@ -17,16 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import CloudKit
-import CommonWatch
-
-final class MigrationHandlerWatchPlaceholder: MigrationHandling {
-    var currentEncryption: CloudEncryptionType? { .system }
-    
-    func checkIfMigrationNeeded() -> Bool { false }
-    var isMigrating: Bool { false }
-    var isReencryptionPending: (() -> Bool)?
-    var isMigratingToV3: (() -> Void)?
-    func migrate() -> (recordIDsToDeleteOnServer: [CKRecord.ID]?, recordsToModifyOnServer: [CKRecord]?) { (nil, nil) }
-    func itemsCommited() {}
+public enum CloudEncryptionType: Equatable {
+    case system
+    case user
 }

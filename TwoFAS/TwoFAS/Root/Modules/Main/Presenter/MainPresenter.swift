@@ -35,12 +35,24 @@ final class MainPresenter {
         self.interactor = interactor
         interactor.secretSyncError = { [weak flowController] in flowController?.toSecretSyncError($0) }
         
-        interactor.showMigrationToNewestVersion = { [weak flowController] in flowController?.toMigrationToNewestVersion() }
-        interactor.showiCloudIsEncryptedByUser = { [weak flowController] in flowController?.toiCloudIsEncryptedByUser() }
-        interactor.showiCloudIsEncryptedBySystem = { [weak flowController] in flowController?.toiCloudIsEncryptedBySystem() }
-        interactor.showNeverVersionOfiCloud = { [weak flowController] in flowController?.toNeverVersionOfiCloud() }
-        interactor.migrationEndedSuccessfuly = { [weak flowController] in flowController?.toMigrationEndedSuccessfuly() }
-        interactor.migrationError = { [weak flowController] error in flowController?.toMigrationError(error) }
+        interactor.showMigrationToNewestVersion = { [weak flowController] in
+            flowController?.toMigrationToNewestVersion()
+        }
+        interactor.showiCloudIsEncryptedByUser = { [weak flowController] in
+            flowController?.toiCloudIsEncryptedByUser()
+        }
+        interactor.showiCloudIsEncryptedBySystem = { [weak flowController] in
+            flowController?.toiCloudIsEncryptedBySystem()
+        }
+        interactor.showNeverVersionOfiCloud = { [weak flowController] in
+            flowController?.toNeverVersionOfiCloud()
+        }
+        interactor.migrationEndedSuccessfuly = { [weak flowController] in
+            flowController?.toMigrationEndedSuccessfuly()
+        }
+        interactor.migrationError = { [weak flowController] error in
+            flowController?.toMigrationError(error)
+        }
     }
     
     func viewDidLoad() {

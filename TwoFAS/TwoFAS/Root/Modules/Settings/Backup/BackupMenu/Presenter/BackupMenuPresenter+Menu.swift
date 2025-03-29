@@ -79,6 +79,17 @@ extension BackupMenuPresenter {
             footer: T.Backup.warningIntroduction
         )
         
+        let cloudBackupChangePassword = BackupMenuSection(
+            title: "Encryption method",
+            cells: [
+                .init(
+                    title: "Change encryption method",
+                    action: .changeCloudBackupPassword
+                )
+            ],
+            footer: "Select System or User encryption"
+        )
+        
         var menu: [BackupMenuSection] = []
         
         if interactor.isBackupAllowed {
@@ -88,6 +99,7 @@ extension BackupMenuPresenter {
         menu.append(fileBackup)
                 
         if interactor.isCloudBackupConnected && interactor.isBackupAllowed {
+            menu.append(cloudBackupChangePassword)
             menu.append(cloudBackupDeletition)
         }
 

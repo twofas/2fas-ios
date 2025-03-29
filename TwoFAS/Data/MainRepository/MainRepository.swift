@@ -139,6 +139,7 @@ protocol MainRepository: AnyObject {
     var cloudShowiCloudIsEncryptedByUser: (() -> Void)? { get set }
     var cloudShowiCloudIsEncryptedBySystem: (() -> Void)? { get set }
     var cloudShowNeverVersionOfiCloud: (() -> Void)? { get set }
+    var cloudCurrentEncryption: CloudEncryptionType? { get }
     func cloudChangePassword(_ password: String)
     func cloudUseSystemPassword()
     func cloudSetMissingUserPassword(_ password: String)

@@ -28,6 +28,7 @@ public protocol SyncMigrationHandling: AnyObject {
     var showiCloudIsEncryptedByUser: (() -> Void)? { get set }
     var showiCloudIsEncryptedBySystem: (() -> Void)? { get set }
     var showNeverVersionOfiCloud: (() -> Void)? { get set }
+    var currentEncryption: CloudEncryptionType? { get }
     
     func changePassword(_ password: String)
     func useSystemPassword()
@@ -45,6 +46,8 @@ final class SyncMigrationHandler {
     var showiCloudIsEncryptedBySystem: (() -> Void)?
     var showNeverVersionOfiCloud: (() -> Void)?
     var synchronize: (() -> Void)?
+    
+    var currentEncryption: CloudEncryptionType? { migrationHandler.currentEncryption }
     
     private var canChangePassword = false
     private var passwordChangePending: SyncMigrationChangeType?

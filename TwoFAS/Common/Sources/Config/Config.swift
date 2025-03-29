@@ -38,8 +38,10 @@ public enum Config {
     
     public static let maxIdentifierLength: Int = 128
     
-    public static let minQRCodeSize: CGFloat = 280
-    
+    public static let maxSyncPasswordLength = 32
+    public static let minSyncPasswordLength = 4
+
+    public static let minQRCodeSize: CGFloat = 280    
     public static let twofasAuthOldScheme = "twofas"
     public static let twofasAuthNewScheme = "twofasauth"
     public static let twofasPassCheckLink = URL(string: "twofaspass://")!

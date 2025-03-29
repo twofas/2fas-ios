@@ -49,7 +49,7 @@ final class SyncMigrationHandler {
     private var canChangePassword = false
     private var passwordChangePending: SyncMigrationChangeType?
     private var isMigrating = false
-    private var isiCloudEncryptedByDiffrentUserPass = false
+    private var isiCloudEncryptedByDifferentUserPass = false
     
     private let migrationHandler: MigrationHandling
     private let syncEncryptionHandler: SyncEncryptionHandler
@@ -96,11 +96,11 @@ extension SyncMigrationHandler: SyncMigrationHandling {
     }
     
     func setMissingUserPassword(_ password: String) {
-        guard isiCloudEncryptedByDiffrentUserPass else {
+        guard isiCloudEncryptedByDifferentUserPass else {
             return
         }
         syncEncryptionHandler.setUserPassword(password)
-        isiCloudEncryptedByDiffrentUserPass = false
+        isiCloudEncryptedByDifferentUserPass = false
         synchronize?()
     }
     
@@ -113,7 +113,7 @@ extension SyncMigrationHandler: SyncMigrationHandling {
             case .newerVersion:
                 showNeverVersionOfiCloud?()
             case .cloudEncryptedUser:
-                isiCloudEncryptedByDiffrentUserPass = true
+                isiCloudEncryptedByDifferentUserPass = true
                 showiCloudIsEncryptedByUser?()
             case .cloudEncryptedSystem:
                 showiCloudIsEncryptedBySystem?()

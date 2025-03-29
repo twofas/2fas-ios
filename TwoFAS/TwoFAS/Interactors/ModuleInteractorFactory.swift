@@ -406,6 +406,12 @@ final class ModuleInteractorFactory {
         IntroductionModuleInteractor(rootInteractor: InteractorFactory.shared.rootInteractor())
     }
     
+    func encryptedByUserPasswordSyncModuleInteractor() -> EncryptedByUserPasswordSyncModuleInteracting {
+        EncryptedByUserPasswordSyncModuleInteractor(
+            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor()
+        )
+    }
+
     func exportTokensModuleInteractor() -> ExportTokensModuleInteracting {
         ExportTokensModuleInteractor(
             serviceListingInteractor: InteractorFactory.shared.serviceListingInteractor(),

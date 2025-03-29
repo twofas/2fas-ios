@@ -21,26 +21,28 @@ import UIKit
 import Common
 import Data
 
-protocol SyncMigrationToNewestVersionFlowControllerParent: AnyObject {
-    func closeMigrationToNewestVersion()
+protocol EncryptedByUserPasswordSyncFlowControllerParent: AnyObject {
+    func closeEncryptedByUser()
 }
 
-protocol SyncMigrationToNewestVersionFlowControlling: AnyObject {
+protocol EncryptedByUserPasswordSyncFlowControlling: AnyObject {
     func close()
 }
 
-final class SyncMigrationToNewestVersionFlowController: FlowController {
-    private weak var parent: SyncMigrationToNewestVersionFlowControllerParent?
+final class EncryptedByUserPasswordSyncFlowController: FlowController {
+    private weak var parent: EncryptedByUserPasswordSyncFlowControllerParent?
 
     static func showAsRoot(
         in viewController: UIViewController,
-        parent: SyncMigrationToNewestVersionFlowControllerParent
+        parent: EncryptedByUserPasswordSyncFlowControllerParent
     ) -> (MigrationResult) -> Void {
-        let view = SyncMigrationToNewestVersionViewController()
-        let flowController = SyncMigrationToNewestVersionFlowController(viewController: view)
+        let view = EncryptedByUserPasswordSyncViewController()
+        let flowController = EncryptedByUserPasswordSyncFlowController(viewController: view)
+        let interactor = ModuleInteractorFactory.shared.encryptedByUserPasswordSyncModuleInteractor()
         flowController.parent = parent
-        let presenter = SyncMigrationToNewestVersionPresenter(
-            flowController: flowController
+        let presenter = EncryptedByUserPasswordSyncPresenter(
+            flowController: flowController,
+            interactor: interactor
         )
         view.presenter = presenter
 
@@ -51,8 +53,8 @@ final class SyncMigrationToNewestVersionFlowController: FlowController {
     }
 }
 
-extension SyncMigrationToNewestVersionFlowController: SyncMigrationToNewestVersionFlowControlling {
+extension EncryptedByUserPasswordSyncFlowController: EncryptedByUserPasswordSyncFlowControlling {
     func close() {
-        parent?.closeMigrationToNewestVersion()
+        parent?.closeEncryptedByUser()
     }
 }

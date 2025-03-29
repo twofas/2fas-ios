@@ -89,6 +89,12 @@
 		C21247F827B70D420044D9F2 /* LabelComposeFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21247F727B70D420044D9F2 /* LabelComposeFlowController.swift */; };
 		C21247FB27B7181A0044D9F2 /* ComposeServiceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21247FA27B7181A0044D9F2 /* ComposeServiceModels.swift */; };
 		C212ACDE2AF6F929001C8665 /* RootInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C212ACDD2AF6F929001C8665 /* RootInteractor.swift */; };
+		C21347822D98786B00D325F6 /* EncryptedByUserPasswordSyncView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21347812D98786700D325F6 /* EncryptedByUserPasswordSyncView.swift */; };
+		C21347842D98789900D325F6 /* EncryptedByUserPasswordSyncPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21347832D98789600D325F6 /* EncryptedByUserPasswordSyncPresenter.swift */; };
+		C21347862D98795000D325F6 /* MigrationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21347852D98794700D325F6 /* MigrationResult.swift */; };
+		C21347882D98799A00D325F6 /* EncryptedByUserPasswordSyncFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21347872D98799600D325F6 /* EncryptedByUserPasswordSyncFlowController.swift */; };
+		C213478A2D9879FA00D325F6 /* EncryptedByUserPasswordSyncViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21347892D9879F600D325F6 /* EncryptedByUserPasswordSyncViewController.swift */; };
+		C213478C2D9885CB00D325F6 /* EncryptedByUserPasswordSyncModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C213478B2D9885C700D325F6 /* EncryptedByUserPasswordSyncModuleInteractor.swift */; };
 		C213BC192BAC3BD5000794C9 /* CommonItemHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF926878C5C00C6ABAA /* CommonItemHandler.swift */; };
 		C213BC202BAC3C82000794C9 /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = C200E49C1FB3911B00D7C748 /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C213BC232BAC3C82000794C9 /* StorageRepositoryImpl+CategoriesSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BDF4512868B39000D46FA4 /* StorageRepositoryImpl+CategoriesSections.swift */; };
@@ -2030,6 +2036,12 @@
 		C21247F727B70D420044D9F2 /* LabelComposeFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelComposeFlowController.swift; sourceTree = "<group>"; };
 		C21247FA27B7181A0044D9F2 /* ComposeServiceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceModels.swift; sourceTree = "<group>"; };
 		C212ACDD2AF6F929001C8665 /* RootInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootInteractor.swift; sourceTree = "<group>"; };
+		C21347812D98786700D325F6 /* EncryptedByUserPasswordSyncView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedByUserPasswordSyncView.swift; sourceTree = "<group>"; };
+		C21347832D98789600D325F6 /* EncryptedByUserPasswordSyncPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedByUserPasswordSyncPresenter.swift; sourceTree = "<group>"; };
+		C21347852D98794700D325F6 /* MigrationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationResult.swift; sourceTree = "<group>"; };
+		C21347872D98799600D325F6 /* EncryptedByUserPasswordSyncFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedByUserPasswordSyncFlowController.swift; sourceTree = "<group>"; };
+		C21347892D9879F600D325F6 /* EncryptedByUserPasswordSyncViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedByUserPasswordSyncViewController.swift; sourceTree = "<group>"; };
+		C213478B2D9885C700D325F6 /* EncryptedByUserPasswordSyncModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedByUserPasswordSyncModuleInteractor.swift; sourceTree = "<group>"; };
 		C213BC502BAC3C82000794C9 /* StorageWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2147CB5205D78600001D011 /* Protection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Protection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2147CB7205D78600001D011 /* Protection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Protection.h; sourceTree = "<group>"; };
@@ -3947,8 +3959,8 @@
 		C21111F3274ABDB300CA7C78 /* Interactors */ = {
 			isa = PBXGroup;
 			children = (
-				C2BF61132D95D5F000E308BF /* SyncMigrationInteractor.swift */,
 				C21111F4274ABDDA00CA7C78 /* InteractorFactory.swift */,
+				C2BF61132D95D5F000E308BF /* SyncMigrationInteractor.swift */,
 				C24295562E43D99100E236EA /* CompressionInteractor.swift */,
 				C27BE51A275D7DDE0090CA12 /* CloudBackupStateInteractor.swift */,
 				C240485B276549C00076376E /* ImportFromFileInteractor.swift */,
@@ -4097,6 +4109,18 @@
 				C2B6D78C260BAFE1005B599E /* LabelCompose */,
 			);
 			path = Modules;
+			sourceTree = "<group>";
+		};
+		C21347802D98785000D325F6 /* EncryptedByUserPasswordSync */ = {
+			isa = PBXGroup;
+			children = (
+				C21347872D98799600D325F6 /* EncryptedByUserPasswordSyncFlowController.swift */,
+				C213478B2D9885C700D325F6 /* EncryptedByUserPasswordSyncModuleInteractor.swift */,
+				C21347832D98789600D325F6 /* EncryptedByUserPasswordSyncPresenter.swift */,
+				C21347892D9879F600D325F6 /* EncryptedByUserPasswordSyncViewController.swift */,
+				C21347812D98786700D325F6 /* EncryptedByUserPasswordSyncView.swift */,
+			);
+			path = EncryptedByUserPasswordSync;
 			sourceTree = "<group>";
 		};
 		C213BC612BAC4777000794C9 /* Watch */ = {
@@ -8356,6 +8380,8 @@
 		C2F9E15A2D982D68004B7DFA /* SyncMigration */ = {
 			isa = PBXGroup;
 			children = (
+				C21347852D98794700D325F6 /* MigrationResult.swift */,
+				C21347802D98785000D325F6 /* EncryptedByUserPasswordSync */,
 				C2F9E15B2D982D75004B7DFA /* MigrationToNewestVersion */,
 			);
 			path = SyncMigration;
@@ -9726,6 +9752,7 @@
 				C2D4196621F39B2400DFDB2B /* CameraView.swift in Sources */,
 				C2F5F9E928611DEF00F778E1 /* BrowserExtensionPairingAlreadyPairedView.swift in Sources */,
 				C20E60F928188AA500AB002E /* PushNotificationPermissionViewController.swift in Sources */,
+				C213478C2D9885CB00D325F6 /* EncryptedByUserPasswordSyncModuleInteractor.swift in Sources */,
 				C2C56D4A27C99314003B4C43 /* ComposeServiceAdvancedSummaryFlowController.swift in Sources */,
 				C245702228A04BAB008E99F4 /* GridViewGAImportViewController.swift in Sources */,
 				C296D1EC28B2D4CA001F026D /* UserIconInfoPresenter.swift in Sources */,
@@ -9938,6 +9965,7 @@
 				C263F462299040F0009B0837 /* MainSplitPresenter.swift in Sources */,
 				C27C03C327F4FF0D0020DB5E /* BrowserExtensionMainPresenter+Menu.swift in Sources */,
 				C252B3892981CE0800C2074D /* BrowserExtenionServiceTableViewCell.swift in Sources */,
+				C21347882D98799A00D325F6 /* EncryptedByUserPasswordSyncFlowController.swift in Sources */,
 				C2AD653B27F261CC008997DB /* BrowserExtensionSuccessViewController.swift in Sources */,
 				C2AB92CB2766543700698382 /* ExporterPINModuleInteractor.swift in Sources */,
 				C286200229D5BCDF00217AF9 /* UUIDInputContainer.swift in Sources */,
@@ -9979,6 +10007,7 @@
 				C217E17023D7953000EE6C08 /* NotificationBottomOffset.swift in Sources */,
 				C284AF732760159D00FEE810 /* BackupDeletePresenter.swift in Sources */,
 				C23B899927C292C30028FE34 /* CommonNavigationControlllerFlow.swift in Sources */,
+				C21347822D98786B00D325F6 /* EncryptedByUserPasswordSyncView.swift in Sources */,
 				C24BC311264DC2E300A20084 /* IntroductionPage3View.swift in Sources */,
 				C26BCE03281013A700CA6A9A /* SelectServiceFlowController.swift in Sources */,
 				C21B40DC28C520E400348E04 /* ImporterOpenFileError.swift in Sources */,
@@ -10004,6 +10033,7 @@
 				C248B14D2AC4C01600E6B897 /* GuidePagesFlowController.swift in Sources */,
 				C240188D2618740200800DBF /* IconSelectorCollectionViewCell.swift in Sources */,
 				C284991327CC0FD40092098D /* ComposeServiceAlgorithmFlowController.swift in Sources */,
+				C21347842D98789900D325F6 /* EncryptedByUserPasswordSyncPresenter.swift in Sources */,
 				C21A9E8227CBF55500FE4CC4 /* ComposeServiceNumberOfDigitsFlowController.swift in Sources */,
 				C2698B632986860F00EBC179 /* SelectServiceViewController.swift in Sources */,
 				C24590F8280F52620079C21C /* SelectServicePresenter.swift in Sources */,
@@ -10150,6 +10180,8 @@
 				C2404885276572060076376E /* ImporterPreimportSummaryPresenter.swift in Sources */,
 				C2F4D93D2A8D549000608F63 /* AddingServiceServiceTypeSelector.swift in Sources */,
 				C233870827810D1A00F8DBC3 /* TrashModels.swift in Sources */,
+				C213478A2D9879FA00D325F6 /* EncryptedByUserPasswordSyncViewController.swift in Sources */,
+				C21347862D98795000D325F6 /* MigrationResult.swift in Sources */,
 				C2286034266972B5005E88E3 /* TokenCell.swift in Sources */,
 				C25860B428246DC9009AE54F /* NewsModuleInteractor.swift in Sources */,
 				C2625F9028BB85B100D84C5C /* AboutModuleInteractor.swift in Sources */,

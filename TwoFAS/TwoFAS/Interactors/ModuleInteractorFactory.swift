@@ -406,4 +406,10 @@ final class ModuleInteractorFactory {
     func introductionModuleInteractor() -> IntroductionModuleInteracting {
         IntroductionModuleInteractor(rootInteractor: InteractorFactory.shared.rootInteractor())
     }
+    
+    func encryptedByUserPasswordSyncModuleInteractor() -> EncryptedByUserPasswordSyncModuleInteracting {
+        EncryptedByUserPasswordSyncModuleInteractor(
+            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor()
+        )
+    }
 }

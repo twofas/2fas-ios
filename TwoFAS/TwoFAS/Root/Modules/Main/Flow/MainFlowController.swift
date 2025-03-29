@@ -51,7 +51,7 @@ final class MainFlowController: FlowController {
     private var galleryViewController: UIViewController?
     private var importer: ImporterOpenFileHeadlessFlowController?
     
-    private var syncMigrationHandler: ((SyncMigrationToNewestVersionFlowResult) -> Void)?
+    private var syncMigrationHandler: ((MigrationResult) -> Void)?
     
     static func showAsRoot(
         in viewController: UIViewController,
@@ -160,7 +160,8 @@ extension MainFlowController: MainFlowControlling {
     }
     
     func toiCloudIsEncryptedByUser() {
-        
+        guard viewController.presentedViewController == nil else { return }
+        syncMigrationHandler = EncryptedByUserPasswordSyncFlowController.showAsRoot(in: viewController, parent: self)
     }
     
     func toiCloudIsEncryptedBySystem() {
@@ -200,6 +201,13 @@ extension MainFlowController: MainFlowControlling {
 
 extension MainFlowController: SyncMigrationToNewestVersionFlowControllerParent {
     func closeMigrationToNewestVersion() {
+        syncMigrationHandler = nil
+        _viewController.dismiss(animated: true)
+    }
+}
+
+extension MainFlowController: EncryptedByUserPasswordSyncFlowControllerParent {
+    func closeEncryptedByUser() {
         syncMigrationHandler = nil
         _viewController.dismiss(animated: true)
     }

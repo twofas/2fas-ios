@@ -21,9 +21,18 @@ import UIKit
 import Common
 import Data
 
-final class SyncMigrationToNewestVersionPresenter: ObservableObject {
-    @Published var isMigrating = true
+final class EncryptedByUserPasswordSyncPresenter: ObservableObject {
+    @Published var isCheckingPassword = false
+    @Published var wrongPassword = false
+    @Published var isDone = false
     @Published var migrationFailureReason: CloudState.NotAvailableReason?
+    @Published var password: String = "" {
+        didSet {
+            checkPasswordEnabled = password.count > Config.minSyncPasswordLength &&
+            password.count <= Config.maxSyncPasswordLength
+        }
+    }
+    @Published var checkPasswordEnabled = false
     
     lazy var callback: (MigrationResult) -> Void = { [weak self] result in
         switch result {
@@ -31,27 +40,48 @@ final class SyncMigrationToNewestVersionPresenter: ObservableObject {
         case .error(let reason): self?.toFailure(reason)
         }
     }
-    private let flowController: SyncMigrationToNewestVersionFlowControlling
+    private let flowController: EncryptedByUserPasswordSyncFlowControlling
+    private let interactor: EncryptedByUserPasswordSyncModuleInteracting
     
-    init(flowController: SyncMigrationToNewestVersionFlowControlling) {
+    init(
+        flowController: EncryptedByUserPasswordSyncFlowControlling,
+        interactor: EncryptedByUserPasswordSyncModuleInteracting
+    ) {
         self.flowController = flowController
+        self.interactor = interactor
     }
 }
 
-extension SyncMigrationToNewestVersionPresenter {
+extension EncryptedByUserPasswordSyncPresenter {
     func close() {
         flowController.close()
     }
+    
+    func onCheckPassword() {
+        isCheckingPassword = true
+        interactor.setPassword(password)
+    }
 }
 
-private extension SyncMigrationToNewestVersionPresenter {
+private extension EncryptedByUserPasswordSyncPresenter {
     func toSuccess() {
         migrationFailureReason = nil
-        isMigrating = false
+        wrongPassword = false
+        isCheckingPassword = false
+        isDone = true
     }
     
     func toFailure(_ reason: CloudState.NotAvailableReason) {
+        if reason == .cloudEncryptedUser {
+            migrationFailureReason = nil
+            wrongPassword = true
+            
+            return
+        }
+        
         migrationFailureReason = reason
-        isMigrating = false
+        wrongPassword = false
+        
+        isCheckingPassword = false
     }
 }

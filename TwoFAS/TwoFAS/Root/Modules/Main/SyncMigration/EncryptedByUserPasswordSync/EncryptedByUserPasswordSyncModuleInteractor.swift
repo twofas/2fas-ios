@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2025 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -18,26 +18,22 @@
 //
 
 import Foundation
+import Data
 
-public enum Config {
-    public static let tosURL = URL(string: "https://2fas.com/terms-of-service/")!
-    public static let allowedTimeIntervalDifference: Int = 5
-        
-    public static let suiteName = "group.twofas.com"
+protocol EncryptedByUserPasswordSyncModuleInteracting: AnyObject {
+    func setPassword(_ password: String)
+}
+
+final class EncryptedByUserPasswordSyncModuleInteractor {
+    private let syncMigrationInteractor: SyncMigrationInteracting
     
-    public static let exchangeTokenKey = "exchangeTokenKey"
-    
-    public enum API {
-        public static let baseURL = URL(string: "https://api2.2fas.com")!
-        public static let notificationsURL = URL(string: "https://notifications.2fas.com")!
+    init(syncMigrationInteractor: SyncMigrationInteracting) {
+        self.syncMigrationInteractor = syncMigrationInteractor
     }
-    
-    public enum TokenConsts {
-        public static let formatTimerWhenSecondsOrLess: Int = 5
+}
+
+extension EncryptedByUserPasswordSyncModuleInteractor: EncryptedByUserPasswordSyncModuleInteracting {
+    func setPassword(_ password: String) {
+        syncMigrationInteractor.setMissingUserPassword(password)
     }
-    
-    public static let maxIdentifierLength: Int = 128
-    
-    public static let minSyncPasswordLength = 4
-    public static let maxSyncPasswordLength = 32
 }

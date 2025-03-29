@@ -42,6 +42,14 @@ final class MigrationHandler {
         migrationPath != nil
     }
     
+    var currentEncryption: CloudEncryptionType? {
+        switch infoHandler.encryptionType {
+        case .system: .system
+        case .user: .user
+        case .none: nil
+        }
+    }
+    
     private var migrationPath: MigrationPath?
     
     private let serviceHandler: ServiceHandler

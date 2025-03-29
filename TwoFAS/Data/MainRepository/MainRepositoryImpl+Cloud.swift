@@ -122,4 +122,8 @@ extension MainRepositoryImpl {
     func cloudSetMissingUserPassword(_ password: String) {
         syncMigration.setMissingUserPassword(password)
     }
+    
+    var cloudCurrentEncryption: CloudEncryptionType? {
+        syncMigration.currentEncryption
+    }
 }

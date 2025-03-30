@@ -41,8 +41,13 @@ final class MainPresenter {
         interactor.showiCloudIsEncryptedByUser = { [weak flowController] in
             flowController?.toiCloudIsEncryptedByUser()
         }
-        interactor.showiCloudIsEncryptedBySystem = { [weak flowController] in
-            flowController?.toiCloudIsEncryptedBySystem()
+        interactor.showiCloudIsEncryptedBySystemError = { [weak flowController] in
+            flowController?.toiCloudIsEncryptedBySystemError()
+        }
+        interactor.showiCloudIsEncryptedBySystemSwitch = { [weak self, weak flowController] in
+            flowController?.toiCloudIsEncryptedBySystemSwitch { [weak self] in
+                self?.interactor.switchCloudEncryptionToSystemKey()
+            }
         }
         interactor.showNeverVersionOfiCloud = { [weak flowController] in
             flowController?.toNeverVersionOfiCloud()

@@ -34,7 +34,8 @@ protocol MainFlowControlling: AnyObject {
     
     func toMigrationToNewestVersion()
     func toiCloudIsEncryptedByUser()
-    func toiCloudIsEncryptedBySystem()
+    func toiCloudIsEncryptedBySystemError()
+    func toiCloudIsEncryptedBySystemSwitch(switchKey: @escaping () -> Void)
     func toNeverVersionOfiCloud()
     func toMigrationEndedSuccessfuly()
     func toMigrationError(_ error: CloudState.NotAvailableReason)
@@ -164,7 +165,7 @@ extension MainFlowController: MainFlowControlling {
         syncMigrationHandler = EncryptedByUserPasswordSyncFlowController.showAsRoot(in: viewController, parent: self)
     }
     
-    func toiCloudIsEncryptedBySystem() {
+    func toiCloudIsEncryptedBySystemError() {
         let alertTitle = "Cloud Backup error"
         let alertMessage = "Can't decrypt Cloud Backup because there's no system key. Check if iCloud Keychain sync is enabled and works correctly."
         
@@ -172,6 +173,23 @@ extension MainFlowController: MainFlowControlling {
         let okButton = UIAlertAction(title: T.Commons.ok, style: .default)
         
         alertController.addAction(okButton)
+        guard viewController.presentedViewController == nil else { return }
+        
+        viewController.present(alertController, animated: true, completion: nil)
+    }
+    
+    func toiCloudIsEncryptedBySystemSwitch(switchKey: @escaping () -> Void) {
+        let alertTitle = "Cloud Backup error"
+        let alertMessage = "Can't decrypt Cloud Backup because it's encrypted using System Key and you're using custom password. Would you like to switch?"
+        
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        let switchButton = UIAlertAction(title: "Switch to System Key", style: .default) { _ in
+            switchKey()
+        }
+        let offButton = UIAlertAction(title: "Turn Cloud Backup off", style: .default)
+        
+        alertController.addAction(switchButton)
+        alertController.addAction(offButton)
         guard viewController.presentedViewController == nil else { return }
         
         viewController.present(alertController, animated: true, completion: nil)

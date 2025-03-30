@@ -111,6 +111,7 @@ public enum SyncInstance {
             syncMigrationHandlerInstance.cloudStateChange(cloudState)
         }, with: "syncMigrationHandler")
         syncMigrationHandlerInstance.synchronize = { syncHandler.synchronize() }
+        syncMigrationHandlerInstance.enable = { cloudHandler.enable() }
         syncEncryptionHandler.initialize()
         
         syncMigrationHandler = syncMigrationHandlerInstance

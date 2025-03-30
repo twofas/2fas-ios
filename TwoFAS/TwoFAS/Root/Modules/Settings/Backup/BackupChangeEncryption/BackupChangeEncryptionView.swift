@@ -21,7 +21,7 @@ import SwiftUI
 import Common
 
 struct BackupChangeEncryptionView: View {
-    @State
+    @ObservedObject
     var presenter: BackupChangeEncryptionPresenter
     
     var body: some View {
@@ -30,10 +30,14 @@ struct BackupChangeEncryptionView: View {
                 VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
                     List {
                         Section("Encryption type") {
-                            Picker("Select encryption", selection: $presenter.selectedEncryption) {
-                                Text("System").tag(CloudEncryptionType.system)
-                                Text("User").tag(CloudEncryptionType.user)
+                        Picker("Select encryption", selection: $presenter.selectedEncryption) {
+                                ForEach(CloudEncryptionType.allCases, id: \.self) { type in
+                                    Text(type.localized)
+                                        .tag(type)
+                                }
                             }
+                            .pickerStyle(.menu)
+                            .tint(Color(Theme.Colors.Fill.theme))
                         }
                         if presenter.selectedEncryption == .user {
                             Section(content: {
@@ -66,12 +70,19 @@ struct BackupChangeEncryptionView: View {
                                 Text("Apply")
                                     .frame(maxWidth: .infinity)
                             }
-                            .buttonStyle(RoundedFilledButtonStyle())
+                            .modify {
+                                if presenter.changePasswordEnabled {
+                                    $0.buttonStyle(RoundedFilledButtonStyle())
+                                } else {
+                                    $0.buttonStyle(RoundedFilledInactiveButtonStyle())
+                                }
+                            }
                             .frame(maxWidth: Theme.Metrics.componentWidth)
                             .disabled(!presenter.changePasswordEnabled)
                         }
                     }
                 }
+                .disabled(presenter.isChangingEncryption)
                 .padding(.vertical, Theme.Metrics.doubleMargin)
                 .navigationTitle("Change Encryption")
                 .toolbar {

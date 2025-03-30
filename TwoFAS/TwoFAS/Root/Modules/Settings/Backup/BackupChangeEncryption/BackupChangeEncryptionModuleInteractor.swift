@@ -55,7 +55,7 @@ extension BackupChangeEncryptionModuleInteractor: BackupChangeEncryptionModuleIn
     }
     
     func setSystemEncryption() {
-        syncMigrationInteractor.useSystemPassword()
+        syncMigrationInteractor.migrateToSystemPassword()
     }
     
     func setCustomPassword(_ password: String) {

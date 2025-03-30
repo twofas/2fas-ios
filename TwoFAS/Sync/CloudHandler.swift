@@ -220,6 +220,8 @@ final class CloudHandler: CloudHandlerType {
         Log("Cloud Handler - Got Enable action", module: .cloudSync)
         switch currentState {
         case .enabled:
+            ConstStorage.cloudEnabled = true
+            userToggledState?(true)
             Log("Cloud Handler - Can't enable again!", module: .cloudSync)
         case .disabledAvailable:
             Log("Cloud Handler - enable and state is disabledAvailable - enabling!", module: .cloudSync)

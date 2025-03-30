@@ -34,7 +34,8 @@ public protocol SyncMigrationInteracting: AnyObject {
     var currentCloudState: CloudState { get }
     
     func changePassword(_ password: String)
-    func useSystemPassword()
+    func switchLocallyToUseSystemPassword()
+    func migrateToSystemPassword()
     func setMissingUserPassword(_ password: String)
 }
 
@@ -111,8 +112,12 @@ extension SyncMigrationInteractor: SyncMigrationInteracting {
         mainRepository.cloudChangePassword(password)
     }
     
-    func useSystemPassword() {
-        mainRepository.cloudUseSystemPassword()
+    func switchLocallyToUseSystemPassword() {
+        mainRepository.cloudSwitchLocallyToUseSystemPassword()
+    }
+    
+    func migrateToSystemPassword() {
+        mainRepository.cloudMigrateToSystemPassword()
     }
     
     func setMissingUserPassword(_ password: String) {

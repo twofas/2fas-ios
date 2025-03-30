@@ -115,8 +115,12 @@ extension MainRepositoryImpl {
         syncMigration.changePassword(password)
     }
     
-    func cloudUseSystemPassword() {
-        syncMigration.useSystemPassword()
+    func cloudMigrateToSystemPassword() {
+        syncMigration.migrateToSystemPassword()
+    }
+    
+    func cloudSwitchLocallyToUseSystemPassword() {
+        syncMigration.switchLocallyToUseSystemPassword()
     }
     
     func cloudSetMissingUserPassword(_ password: String) {

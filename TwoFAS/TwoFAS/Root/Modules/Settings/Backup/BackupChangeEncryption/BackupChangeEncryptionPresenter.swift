@@ -58,6 +58,7 @@ extension BackupChangeEncryptionPresenter {
     }
     
     func applyChange() {
+        isChangingEncryption = true
         if selectedEncryption == .system {
             interactor.setSystemEncryption()
         } else {
@@ -100,5 +101,14 @@ private extension BackupChangeEncryptionPresenter {
                 return checkPassword()
             }
         }()
+    }
+}
+
+extension CloudEncryptionType {
+    var localized: String {
+        switch self {
+        case .system: return "System key"
+        case .user: return "Custom password"
+        }
     }
 }

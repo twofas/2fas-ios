@@ -246,6 +246,7 @@ private extension ItemHandler {
             case .section: sectionHandler.delete(identifiedBy: entryID)
             case .service2: serviceHandler.delete(identifiedBy: entryID)
             case .service3: serviceHandler.delete(identifiedBy: entryID)
+            case .info: infoHandler.purge()
             default: break
             }
         }

@@ -36,7 +36,11 @@ enum iCloudIdentifier {
     case deprecated(id: String)
     
     static func generate(from str: String) -> String {
-        "\(hash(from: str))\(v3Identifier)"
+        "\(hash(from: str.uppercased()))\(v3Identifier)"
+    }
+    
+    static func generateV2(from str: String) -> String {
+        "\(str)\(v2Identifier)"
     }
     
     static func hash(from str: String) -> String {

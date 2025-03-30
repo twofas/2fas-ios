@@ -27,6 +27,7 @@ protocol BackupMenuModuleInteracting: AnyObject {
     
     var isBackupAllowed: Bool { get }
     var isBackupOn: Bool { get }
+    var canDelete: Bool { get }
     var exportEnabled: Bool { get }
     var isBackupAvailable: Bool { get }
     var isCloudBackupConnected: Bool { get }
@@ -67,6 +68,10 @@ extension BackupMenuModuleInteractor: BackupMenuModuleInteracting {
         set {
             cloudBackup.stateChanged = newValue
         }
+    }
+    
+    var canDelete: Bool {
+        cloudBackup.canDelete
     }
     
     var error: CloudState.NotAvailableReason? {

@@ -101,6 +101,8 @@ extension BackupMenuPresenter {
         if interactor.isCloudBackupConnected && interactor.isBackupAllowed {
             menu.append(cloudBackupChangePassword)
             menu.append(cloudBackupDeletition)
+        } else if interactor.canDelete {
+            menu.append(cloudBackupDeletition)
         }
 
         return menu

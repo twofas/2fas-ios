@@ -42,8 +42,14 @@ final class ServiceHandler {
     func delete(identifiedBy identifier: String) {
         let identifier = identifier.decrypt()
         switch iCloudIdentifier.parse(identifier) {
-        case .v3(let secret):
-            ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: secret.encrypt())
+        case .v3(let secretHash):
+            let list = ServiceCacheEntity.listAll(on: coreDataStack.context)
+                .filter({ iCloudIdentifier.hash(from: $0.secret.decrypt().uppercased()) == secretHash })
+            guard let first = list.first, list.count == 1 else {
+                Log("ServiceHandler - Can't find V3 identifier", severity: .error)
+                return
+            }
+            ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: first.secret)
         case .v2(let secret):
             ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: secret.encrypt())
         case .long(let hash, let beginsWith):

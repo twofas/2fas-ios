@@ -82,6 +82,7 @@ final class SyncHandler {
             self?.applyingChanges = false
             self?.syncCompleted()
             #else
+            guard self?.isSyncing == true else { return }
             self?.fetchFinishedSuccessfuly()
             #endif
         }
@@ -196,7 +197,6 @@ final class SyncHandler {
             migrationPending: migrationHandler.isMigrating
         ) else {
             clearCacheAndDisable()
-            useriCloudProblem?()
             return
         }
         

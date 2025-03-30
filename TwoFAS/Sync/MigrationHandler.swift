@@ -87,12 +87,13 @@ extension MigrationHandler: MigrationHandling {
     
     func migrate() -> (recordIDsToDeleteOnServer: [CKRecord.ID]?, recordsToModifyOnServer: [CKRecord]?) {
         guard let migrationPath else { return (nil, nil) }
+        Log("MigrationHandler: migrating: \(migrationPath)")
         switch migrationPath {
         case .v1v3:
             let listForRemoval = serviceHandler
                 .listAll()
                 .map({ ServiceRecord.recordID(with: $0.secret, zoneID: zoneID) })
-            var listForCreationModification = listV3ForCreationModification() ?? []
+            var listForCreationModification = listV3ForCreation() ?? []
             if let info = infoHandler.createNew(
                 encryptionReference: syncEncryptionHandler.encryptionReference ?? Data()
             ) {
@@ -103,7 +104,7 @@ extension MigrationHandler: MigrationHandling {
             let listForRemoval = serviceHandler
                 .listAll()
                 .map({ ServiceRecord2.recordID(with: $0.secret, zoneID: zoneID) })
-            var listForCreationModification = listV3ForCreationModification() ?? []
+            var listForCreationModification = listV3ForCreation() ?? []
             infoHandler.update(
                 version: Info.version,
                 encryption: syncEncryptionHandler.encryptionType,
@@ -116,7 +117,7 @@ extension MigrationHandler: MigrationHandling {
             }
             return (recordIDsToDeleteOnServer: listForRemoval, recordsToModifyOnServer: listForCreationModification)
         case .reencryption:
-            var listForCreationModification = listV3ForCreationModification() ?? []
+            var listForCreationModification = listV3ForModification() ?? []
             infoHandler.update(
                 version: Info.version,
                 encryption: syncEncryptionHandler.encryptionType,
@@ -140,12 +141,25 @@ extension MigrationHandler: MigrationHandling {
 }
 
 private extension MigrationHandler {
-    func listV3ForCreationModification() -> [CKRecord]? {
+    func listV3ForModification() -> [CKRecord]? {
         let listWithMetadata = serviceHandler.listAllWithMetadata()
         let list = listWithMetadata.map({ $0.0 })
         let servicesRecords = listWithMetadata.compactMap({ serviceRecordEncryptionHandler.createServiceRecord3(
             from: $0.0,
             metadata: $0.1,
+            list: list
+        ) })
+        guard !servicesRecords.isEmpty else {
+            return nil
+        }
+        return servicesRecords
+    }
+    
+    func listV3ForCreation() -> [CKRecord]? {
+        let list = serviceHandler.listAll()
+        let servicesRecords = list.compactMap({ serviceRecordEncryptionHandler.createServiceRecord3(
+            from: $0,
+            metadata: nil,
             list: list
         ) })
         guard !servicesRecords.isEmpty else {

@@ -40,7 +40,11 @@ enum iCloudIdentifier {
     }
     
     static func generateV2(from str: String) -> String {
-        "\(str)\(v2Identifier)"
+        guard str.count > Config.maxIdentifierLength else {
+            return "\(str)\(v2Identifier)"
+        }
+        let longID = hash(from: str)
+        return "\(longID)\(longIdentifier)\(str[0...9])"
     }
     
     static func hash(from str: String) -> String {

@@ -20,7 +20,7 @@
 import SwiftUI
 
 struct SyncMigrationToNewestVersionView: View {
-    @State
+    @ObservedObject
     var presenter: SyncMigrationToNewestVersionPresenter
     
     var body: some View {
@@ -38,7 +38,7 @@ struct SyncMigrationToNewestVersionView: View {
                         .font(.body)
                         .fontWeight(.medium)
                         .multilineTextAlignment(.center)
-                    Text("Contents of your backup are encrypted using a generated key. This key will be shared amongst your app installations using iCloud Keychain so remember to have that option on. If you want to use your own key and password you can do that in Cloud Backup settings right after the migration.")
+                    Text("Your backup is being encrypted using a generated key. This key will be shared amongst your app installations using iCloud Keychain so remember to have that option on. If you want to use your own key and password you can do that in Cloud Backup settings right after the migration.")
                         .font(.caption)
                         .minimumScaleFactor(0.5)
                         .multilineTextAlignment(.center)

@@ -254,7 +254,9 @@ final class CloudHandler: CloudHandlerType {
     
     func clearBackup() {
         isClearing = true
-        if isSynced {
+        if isSynced ||
+            currentState == .disabledNotAvailable(reason: .cloudEncryptedSystem) ||
+            currentState == .disabledNotAvailable(reason: .cloudEncryptedUser) {
             clearBackupForSyncedState()
         }
     }

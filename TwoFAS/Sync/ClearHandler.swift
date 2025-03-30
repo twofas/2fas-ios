@@ -28,6 +28,8 @@ import CloudKit
 final class ClearHandler {
     private let cloudKit = CloudKit()
     private var isClearing = false
+    private var batchCount: Int = 0
+    private let batchElementLimit = 399
 
     var didClear: Callback?
     
@@ -36,8 +38,21 @@ final class ClearHandler {
         Log("ClearHandler - Deleting 2FAS Backup", module: .cloudSync)
         isClearing = true
         cloudKit.initialize()
-        cloudKit.changesSavedSuccessfuly = { [weak self] in self?.changesSavedSuccessfuly() }
-        cloudKit.modifyRecord(recordsToSave: nil, recordIDsToDelete: recordIDs)
+        cloudKit.changesSavedSuccessfuly = { [weak self] in
+            guard let self, batchCount > 0, isClearing else { return }
+            batchCount -= 1
+            Log("ClearHandler - Batch Delete Saved Successfuly", module: .cloudSync)
+            if batchCount == 0 {
+                Log("ClearHandler - All Entries Deleted Successfuly", module: .cloudSync)
+                changesSavedSuccessfuly()
+            }
+        }
+        
+        let batch = recordIDs.grouped(by: batchElementLimit)
+        batchCount = batch.count
+        for i in 0..<batchCount {
+            cloudKit.modifyRecord(recordsToSave: nil, recordIDsToDelete: batch[i])
+        }
     }
     
     private func changesSavedSuccessfuly() {

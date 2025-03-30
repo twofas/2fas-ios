@@ -30,6 +30,7 @@ public protocol CloudBackupStateInteracting: AnyObject {
     
     var isBackupEnabled: Bool { get }
     var isBackupAvailable: Bool { get }
+    var canDelete: Bool { get }
     var error: CloudState.NotAvailableReason? { get }
     
     var stateChanged: Callback? { get set }
@@ -86,6 +87,11 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
     
     var successSyncDate: Date? {
         mainRepository.successSyncDate
+    }
+    
+    var canDelete: Bool {
+        mainRepository.cloudCurrentState == .disabledNotAvailable(reason: .cloudEncryptedSystem) ||
+        mainRepository.cloudCurrentState == .disabledNotAvailable(reason: .cloudEncryptedUser)
     }
     
     func startMonitoring() {

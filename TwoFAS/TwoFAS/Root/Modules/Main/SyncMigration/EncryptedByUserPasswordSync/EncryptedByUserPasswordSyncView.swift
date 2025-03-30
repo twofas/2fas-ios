@@ -20,7 +20,7 @@
 import SwiftUI
 
 struct EncryptedByUserPasswordSyncView: View {
-    @State
+    @ObservedObject
     var presenter: EncryptedByUserPasswordSyncPresenter
     
     var body: some View {

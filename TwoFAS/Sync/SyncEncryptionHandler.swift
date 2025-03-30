@@ -145,6 +145,13 @@ extension SyncEncryptionHandler {
     var encryptionType: Info.Encryption {
         cachedUsedKey
     }
+    
+    func purge() {
+        saveUserKey(nil)
+        if encryptionType == .user {
+            setSystemKey()
+        }
+    }
 }
 
 private extension SyncEncryptionHandler {

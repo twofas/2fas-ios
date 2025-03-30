@@ -102,6 +102,7 @@ public protocol CloudHandlerType: AnyObject {
     
     var userToggledState: UserToggledState? { get set }
     var currentState: CloudCurrentState { get }
+    var purgeUserEncryptionKey: (() -> Void)? { get set }
     var isConnected: Bool { get }
     var secretSyncError: SecretSyncError? { get set }
     func checkState()
@@ -116,6 +117,7 @@ public protocol CloudHandlerType: AnyObject {
 final class CloudHandler: CloudHandlerType {
     var stateChange: StateChange?
     var secretSyncError: SecretSyncError?
+    var purgeUserEncryptionKey: Callback?
     
     private let cloudAvailability: CloudAvailability
     private let syncHandler: SyncHandler
@@ -363,6 +365,7 @@ final class CloudHandler: CloudHandlerType {
     private func setDisabled() {
         Log("Cloud Handler - Set Disabled", module: .cloudSync)
         ConstStorage.cloudEnabled = false
+        purgeUserEncryptionKey?()
         notificationCenter.post(name: .clearSyncCompletedSuccessfuly, object: nil)
     }
     

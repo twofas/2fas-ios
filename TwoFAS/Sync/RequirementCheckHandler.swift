@@ -57,6 +57,10 @@ final class RequirementCheckHandler {
                             cloudEncrypted?(Info.Encryption(rawValue: info.encryption))
                             return true
                         }
+                    } else {
+                        Log("RequirementCheckHandler - STOP: Different encryption reference!", module: .cloudSync)
+                        cloudEncrypted?(Info.Encryption(rawValue: info.encryption))
+                        return true
                     }
                 } else {
                     Log("RequirementCheckHandler - STOP: Different encryption type!", module: .cloudSync)

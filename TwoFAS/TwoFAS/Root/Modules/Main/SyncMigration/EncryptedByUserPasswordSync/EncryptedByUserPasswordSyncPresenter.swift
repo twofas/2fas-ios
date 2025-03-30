@@ -75,7 +75,7 @@ private extension EncryptedByUserPasswordSyncPresenter {
         if reason == .cloudEncryptedUser {
             migrationFailureReason = nil
             wrongPassword = true
-            
+            isCheckingPassword = false
             return
         }
         

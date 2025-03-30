@@ -141,8 +141,9 @@ protocol MainRepository: AnyObject {
     var cloudShowNeverVersionOfiCloud: (() -> Void)? { get set }
     var cloudCurrentEncryption: CloudEncryptionType? { get }
     func cloudChangePassword(_ password: String)
-    func cloudUseSystemPassword()
     func cloudSetMissingUserPassword(_ password: String)
+    func cloudMigrateToSystemPassword()
+    func cloudSwitchLocallyToUseSystemPassword()
     
     // MARK: - Import
     var fileURL: URL? { get set }

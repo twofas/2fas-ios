@@ -31,7 +31,8 @@ public protocol SyncMigrationHandling: AnyObject {
     var currentEncryption: CloudEncryptionType? { get }
     
     func changePassword(_ password: String)
-    func useSystemPassword()
+    func migrateToSystemPassword()
+    func switchLocallyToUseSystemPassword()
     func setMissingUserPassword(_ password: String)
 }
 
@@ -46,13 +47,20 @@ final class SyncMigrationHandler {
     var showiCloudIsEncryptedBySystem: (() -> Void)?
     var showNeverVersionOfiCloud: (() -> Void)?
     var synchronize: (() -> Void)?
+    var enable: (() -> Void)?
     
-    var currentEncryption: CloudEncryptionType? { migrationHandler.currentEncryption }
+    var currentEncryption: CloudEncryptionType? {
+        switch syncEncryptionHandler.encryptionType {
+        case .system: .system
+        case .user: .user
+        }
+    }
     
     private var canChangePassword = false
     private var passwordChangePending: SyncMigrationChangeType?
     private var isMigrating = false
     private var isiCloudEncryptedByDifferentUserPass = false
+    private var enableIfSuccess = false
     
     private let migrationHandler: MigrationHandling
     private let syncEncryptionHandler: SyncEncryptionHandler
@@ -89,7 +97,7 @@ extension SyncMigrationHandler: SyncMigrationHandling {
         changePasswordOrQueue()
     }
     
-    func useSystemPassword() {
+    func migrateToSystemPassword() {
         guard passwordChangePending == nil, !isMigrating else {
             return
         }
@@ -104,6 +112,17 @@ extension SyncMigrationHandler: SyncMigrationHandling {
         }
         syncEncryptionHandler.setUserPassword(password)
         isiCloudEncryptedByDifferentUserPass = false
+        enableIfSuccess = true
+        synchronize?()
+    }
+    
+    // locally user, but iCloud is using system
+    func switchLocallyToUseSystemPassword() {
+        guard passwordChangePending == nil, !isMigrating else {
+            return
+        }
+        syncEncryptionHandler.setSystemKey()
+        enableIfSuccess = true
         synchronize?()
     }
     
@@ -114,15 +133,17 @@ extension SyncMigrationHandler: SyncMigrationHandling {
         case .disabledNotAvailable(let reason):
             switch reason {
             case .newerVersion:
+                canChangePassword = false
                 showNeverVersionOfiCloud?()
             case .cloudEncryptedUser:
+                canChangePassword = false
                 isiCloudEncryptedByDifferentUserPass = true
                 showiCloudIsEncryptedByUser?()
             case .cloudEncryptedSystem:
+                canChangePassword = true
                 showiCloudIsEncryptedBySystem?()
             default: break
             }
-            canChangePassword = false
         case .disabledAvailable:
             canChangePassword = false
         case .enabled(let sync):
@@ -134,17 +155,24 @@ extension SyncMigrationHandler: SyncMigrationHandling {
                 if passwordChangePending == nil {
                     isMigrating = false
                 }
-                changePasswordOrQueue()
+                if !changePasswordOrQueue() {
+                    if enableIfSuccess {
+                        enable?()
+                        enableIfSuccess = false
+                    }
+                 }
             }
         }
     }
 }
 
 private extension SyncMigrationHandler {
-    func changePasswordOrQueue() {
+    @discardableResult
+    func changePasswordOrQueue() -> Bool {
         guard canChangePassword, passwordChangePending != nil else {
-            return
+            return false
         }
         synchronize?()
+        return true
     }
 }

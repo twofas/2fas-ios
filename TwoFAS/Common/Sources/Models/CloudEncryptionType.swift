@@ -17,7 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-public enum CloudEncryptionType: Equatable {
+public enum CloudEncryptionType: String, CaseIterable, Hashable {
     case system
     case user
 }

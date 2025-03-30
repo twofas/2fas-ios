@@ -104,6 +104,8 @@ extension SyncEncryptionHandler {
         
         setUsedKey(.user)
         cachedUsedKey = .user
+        
+        cachedEncryptionReference = encrypt(reference)
     }
     
     func setSystemKey() {
@@ -112,6 +114,8 @@ extension SyncEncryptionHandler {
         
         setUsedKey(.system)
         cachedUsedKey = .system
+        
+        cachedEncryptionReference = encrypt(reference)
     }
     
     func encrypt(_ data: Data) -> Data? {
@@ -167,9 +171,9 @@ private extension SyncEncryptionHandler {
     
     var currentKey: SymmetricKey? {
         if cachedUsedKey == .system {
-            return cachedSystemKey
+            cachedSystemKey
         } else {
-            return cachedUserKey
+            cachedUserKey
         }
     }
     

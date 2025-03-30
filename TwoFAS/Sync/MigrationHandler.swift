@@ -141,10 +141,11 @@ extension MigrationHandler: MigrationHandling {
 
 private extension MigrationHandler {
     func listV3ForCreationModification() -> [CKRecord]? {
-        let list = serviceHandler.listAll()
-        let servicesRecords = list.compactMap({ serviceRecordEncryptionHandler.createServiceRecord3(
-            from: $0,
-            metadata: nil,
+        let listWithMetadata = serviceHandler.listAllWithMetadata()
+        let list = listWithMetadata.map({ $0.0 })
+        let servicesRecords = listWithMetadata.compactMap({ serviceRecordEncryptionHandler.createServiceRecord3(
+            from: $0.0,
+            metadata: $0.1,
             list: list
         ) })
         guard !servicesRecords.isEmpty else {

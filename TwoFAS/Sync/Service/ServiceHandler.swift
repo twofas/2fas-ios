@@ -79,6 +79,11 @@ final class ServiceHandler {
         ServiceCacheEntity.listAll(on: coreDataStack.context).map({ $0.serviceData })
     }
     
+    func listAllWithMetadata() -> [(ServiceData, Data)] {
+        ServiceCacheEntity.listAll(on: coreDataStack.context)
+            .map({ ($0.serviceData, $0.metadata) })
+    }
+    
     func count() -> Int {
         ServiceCacheEntity.listAll(on: coreDataStack.context).count
     }

@@ -38,7 +38,11 @@ struct EncryptedByUserPasswordSyncView: View {
                         .font(.caption)
                         .minimumScaleFactor(0.5)
                         .multilineTextAlignment(.center)
+                    Spacer()
+                        .frame(height: Theme.Metrics.doubleMargin)
                     SecureField("Password", text: $presenter.password)
+                        .disabled(presenter.isCheckingPassword)
+                        .background(Color(Theme.Colors.Form.rowInput))
                 }
                 Spacer()
                 if presenter.isCheckingPassword {
@@ -57,7 +61,7 @@ struct EncryptedByUserPasswordSyncView: View {
                                     .font(.caption)
                                     .fontWeight(.bold)
                                     .foregroundStyle(Color(Theme.Colors.Text.theme))
-                            } else {
+                            } else if presenter.isDone {
                                 Label("Success!", systemImage: "checkmark.circle.fill")
                                     .font(.caption)
                                     .fontWeight(.bold)
@@ -75,8 +79,13 @@ struct EncryptedByUserPasswordSyncView: View {
                                 Text(presenter.isDone ? T.Commons.done : "Check password")
                                     .frame(minWidth: 0, maxWidth: .infinity)
                             }
-                            .buttonStyle(RoundedFilledButtonStyle())
-                            .disabled(!presenter.checkPasswordEnabled)
+                            .modify {
+                                if presenter.checkPasswordEnabled {
+                                    $0.buttonStyle(RoundedFilledButtonStyle())
+                                } else {
+                                    $0.buttonStyle(RoundedFilledInactiveButtonStyle())
+                                }
+                            }
                             Button {
                                 presenter.close()
                             } label: {

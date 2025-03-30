@@ -31,7 +31,7 @@ import CommonWatch
 final class SyncEncryptionHandler {
     private let keychain = Keychain(service: "TWOFASSync")
         .synchronizable(true)
-        .accessibility(.afterFirstUnlockThisDeviceOnly)
+        .accessibility(.afterFirstUnlock)
     private let userDefaults = UserDefaults.standard
     
     private let systemKeyKey = "io.twofas.systemKeyKey"
@@ -119,8 +119,10 @@ extension SyncEncryptionHandler {
             Log("Error while encrypting: no current key!", module: .cloudSync, severity: .error)
             return nil
         }
-        
-        return encrypt(data, using: currentKey)
+        guard let encrypted = encrypt(data, using: currentKey) else {
+            return nil
+        }
+        return encrypted
     }
     
     func decrypt(_ data: Data) -> Data? {

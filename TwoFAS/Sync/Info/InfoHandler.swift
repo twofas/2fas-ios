@@ -91,6 +91,10 @@ final class InfoHandler {
         if let record = recreate() {
             return [record]
         }
+        return []
+    }
+    
+    func createNewRecord() -> [CKRecord] {
         if let record = createNew(encryptionReference: syncEncryptionHandler.encryptionReference ?? Data()) {
             return [record]
         }

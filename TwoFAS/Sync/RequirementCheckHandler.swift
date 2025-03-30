@@ -47,10 +47,14 @@ final class RequirementCheckHandler {
                 return true
             }
             if let infoEncryptionReference = info.encryptionReference {
-                if !migrationPending && infoEncryptionReference != encryptionReference {
-                    Log("RequirementCheckHandler - STOP: Different encryption!", module: .cloudSync)
-                    cloudEncrypted?(Info.Encryption(rawValue: info.encryption))
-                    return true
+                if let infoDecryptedReference = encryptionHandler.decrypt(infoEncryptionReference),
+                   let encryptionReference,
+                   let decryptedReference = encryptionHandler.decrypt(encryptionReference) {
+                    if !migrationPending && infoDecryptedReference != decryptedReference {
+                        Log("RequirementCheckHandler - STOP: Different encryption!", module: .cloudSync)
+                        cloudEncrypted?(Info.Encryption(rawValue: info.encryption))
+                        return true
+                    }
                 }
             }
         }

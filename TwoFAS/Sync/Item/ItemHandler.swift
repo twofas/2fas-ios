@@ -233,7 +233,7 @@ extension ItemHandler {
             
             return serviceRecordEncryptionHandler.createServiceRecord3(from: new, metadata: nil, list: list)
         case .info:
-            return infoHandler.recreate()
+            return infoHandler.createNew(encryptionReference: syncEncryptionHandler.encryptionReference ?? Data())
         default: return nil
         }
     }

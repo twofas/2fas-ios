@@ -101,6 +101,9 @@ protocol UserDefaultsRepository: AnyObject {
     var successSyncDate: Date? { get }
     func saveSuccessSyncDate(_ date: Date?)
     
+    var registrationDate: Date? { get }
+    func saveRegistrationDate(_ date: Date)
+    
     // MARK: - Local Notifications
     
     var localNotificationPublicationDate: Date? { get }

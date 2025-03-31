@@ -69,6 +69,10 @@ extension RegisterDeviceInteractor: RegisterDeviceInteracting {
         mainRepository.isDeviceIDSet
     }
     
+    var shouldRefresh: Bool {
+        mainRepository.registrationDate?.isOlderThanTwoMonths ?? true
+    }
+    
     var isCrashlyticsDisabled: Bool {
         mainRepository.isCrashlyticsDisabled
     }
@@ -80,6 +84,15 @@ extension RegisterDeviceInteractor: RegisterDeviceInteracting {
         if isDeviceRegistered {
             Log("RegisterDeviceInteractor - device is registered: \(mainRepository.deviceID?.suffix(logTokenLength) ?? "-")", module: .interactor)
             channelState.enableFCM()
+            
+            if shouldRefresh {
+                Log("RegisterDeviceInteractor - refreshing token, GCM token: \(mainRepository.isGCMTokenSet)", module: .interactor)
+                updateDevice { result in
+                    Log("RegisterDeviceInteractor - result of refresh: \(result)", module: .interactor)
+                }
+            } else {
+                Log("RegisterDeviceInteractor - no need for refresh", module: .interactor)
+            }
         } else {
             Log("RegisterDeviceInteractor - device not registered yet", module: .interactor)
         }
@@ -156,6 +169,7 @@ private extension RegisterDeviceInteractor {
                 Log("RegisterDeviceInteractor - Register success!", module: .interactor)
                 Log("RegisterDeviceInteractor - DeviceID: \(data.id)", module: .interactor, save: false)
                 self?.mainRepository.saveDeviceID(data.id)
+                self?.mainRepository.saveRegistrationDate()
                 if let awaitingGCMToken = self?.awaitingGCMToken {
                     self?.updateWithAwaitingGCMToken(awaitingGCMToken, completion: completion)
                 } else {
@@ -199,13 +213,15 @@ private extension RegisterDeviceInteractor {
         
         let deviceName = localName.currentDeviceName
         
-        mainRepository.updateDeviceNameToken(deviceName, gcmToken: gcmToken, for: deviceID) { result in
+        mainRepository.updateDeviceNameToken(deviceName, gcmToken: gcmToken, for: deviceID) { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success:
                 Log(
-                    "RegisterDeviceInteractor - Updating success! Partial-token: \(gcmToken.suffix(self.logTokenLength))",
+                    "RegisterDeviceInteractor - Updating success! Partial-token: \(gcmToken.suffix(logTokenLength))",
                     module: .interactor
                 )
+                mainRepository.saveRegistrationDate()
                 completion(.success(Void()))
             case .failure(let error):
                 Log("RegisterDeviceInteractor - Updating failure! error: \(error)", module: .interactor)

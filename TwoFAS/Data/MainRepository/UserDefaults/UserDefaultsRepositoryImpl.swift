@@ -57,6 +57,7 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case localNotificationWasRead
         case localNotificationCycle
         case runCount
+        case registrationDate
     }
     private let userDefaults = UserDefaults()
     private let sharedDefaults = UserDefaults(suiteName: Config.suiteName)!
@@ -271,6 +272,17 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
     
     func saveDateOfFirstRun(_ date: Date) {
         userDefaults.set(date.timeIntervalSince1970, forKey: Keys.dateOfFirstRun.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    var registrationDate: Date? {
+        guard userDefaults.object(forKey: Keys.registrationDate.rawValue) != nil else { return nil }
+        let value = userDefaults.double(forKey: Keys.registrationDate.rawValue)
+        let date = Date(timeIntervalSince1970: value)
+        return date
+    }
+    func saveRegistrationDate(_ date: Date) {
+        userDefaults.set(date.timeIntervalSince1970, forKey: Keys.registrationDate.rawValue)
         userDefaults.synchronize()
     }
     

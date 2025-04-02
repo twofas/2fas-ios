@@ -297,6 +297,8 @@ protocol MainRepository: AnyObject {
     var deviceID: String? { get }
     func saveDeviceID(_ deviceID: String)
     func clearDeviceID()
+    var registrationDate: Date? { get }
+    func saveRegistrationDate()
     
     // MARK: - FCM Token
     var isGCMTokenSet: Bool { get }

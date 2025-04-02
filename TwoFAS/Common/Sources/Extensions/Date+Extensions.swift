@@ -76,4 +76,11 @@ public extension Date {
         let year = cal.component(.year, from: self)
         return year
     }
+    
+    var isOlderThanTwoMonths: Bool {
+        guard let twoMonthsAgo = Calendar.current.date(byAdding: .month, value: -2, to: Date()) else {
+            return false
+        }
+        return self < twoMonthsAgo
+    }
 }

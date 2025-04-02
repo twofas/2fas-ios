@@ -18,20 +18,59 @@
 //
 
 import Foundation
-@_implementationOnly import Firebase
+import Common
+@_implementationOnly import FirebaseCore
 @_implementationOnly import FirebaseCrashlytics
 @_implementationOnly import FirebaseMessaging
 
 final class FCM: NSObject, MessagingDelegate, FCMHandlerProtocol {
     var FCMTokenObtained: FCMTokenObtainedCompletion?
     
+    private var messaging: Messaging?
+    private var deviceToken: Data?
+    
     func initializeFCM() {
-        Messaging.messaging().delegate = self
+        guard messaging == nil else {
+            return
+        }
+        messaging = Messaging.messaging()
+        messaging?.delegate = self
     }
     
     func enableFCM() {
         FirebaseApp.configure()
         initializeFCM()
+        
+        guard let deviceToken else {
+            return
+        }
+        messaging?.apnsToken = deviceToken
+        self.deviceToken = nil
+        Log("FCM - APNS Token set", module: .unknown)
+        
+        getToken()
+    }
+    
+    func setDeviceToken(_ deviceToken: Data) {
+        if let messaging {
+            messaging.apnsToken = deviceToken
+            Log("FCM - APNS Token set", module: .unknown)
+            
+            getToken()
+        } else {
+            self.deviceToken = deviceToken
+        }
+    }
+    
+    private func getToken() {
+        Log("FCM - obtaining FCM Token", module: .unknown)
+        Task {
+            do {
+                try await messaging?.token()
+            } catch {
+                Log("FCM Error while obtaining FCM Token: \(error)", module: .unknown, severity: .error)
+            }
+        }
     }
     
     func enableCrashlytics(_ enable: Bool) {
@@ -41,7 +80,6 @@ final class FCM: NSObject, MessagingDelegate, FCMHandlerProtocol {
     }
     
     // MARK: - FCM Delegate
-    
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken GCMToken: String?) {
         guard let GCMToken else { return }
         FCMTokenObtained?(GCMToken)

@@ -29,7 +29,7 @@ Add as a subview or set as view in loadView() method of UIViewController
  ````
 */
 public final class CameraPreview: UIView {
-    public override class var layerClass: AnyClass { AVCaptureVideoPreviewLayer.self }
+    public override static var layerClass: AnyClass { AVCaptureVideoPreviewLayer.self }
     // swiftlint:disable force_cast
     public override var layer: CALayer { super.layer as! AVCaptureVideoPreviewLayer }
     // swiftlint:enable force_cast

@@ -29,7 +29,7 @@ struct WidgetContentMarginsModifier: ViewModifier {
 }
 
 extension View {
-    @ViewBuilder func addWidgetContentMargins(standard: Double = 8.0) -> some View {
+    @ViewBuilder func addWidgetContentMargins(standard: Double = 16.0) -> some View {
         if #available(iOS 17, *) {
             self
         } else {

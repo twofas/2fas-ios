@@ -64,7 +64,7 @@ extension SettingsMenuPresenter {
             return T.Commons.off
         }()
         let browerExtension = SettingsMenuSection(
-            title: T.Browser.browserExtension,
+            title: T.Settings.advanced,
             cells: [
                 .init(
                     icon: Asset.settingsBrowserExtension.image,
@@ -72,6 +72,12 @@ extension SettingsMenuPresenter {
                     info: browerExtensionDescription,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .browserExtension)
+                ),
+                .init(
+                    icon: Asset.settingsWatch.image,
+                    title: T.Settings.appleWatch,
+                    accessory: .arrow,
+                    action: .navigation(navigatesTo: .appleWatch)
                 )
             ]
         )

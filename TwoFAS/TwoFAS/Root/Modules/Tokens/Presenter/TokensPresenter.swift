@@ -106,6 +106,9 @@ extension TokensPresenter {
         if isSearching {
             handleClearSearchPhrase()
         }
+        if currentState == .edit {
+            handleLeaveEditMode()
+        }
     }
     
     // MARK: - External Actions
@@ -531,7 +534,7 @@ private extension TokensPresenter {
         }()
         
         if interactor.hasServices {
-            updateAddServiceIcon()
+            updateNaviIcons()
             view?.showList()
             
             if Set<CategoryData>(currentServices) != Set<CategoryData>(newServices) || changeRequriesTokenRefresh {
@@ -552,7 +555,7 @@ private extension TokensPresenter {
             if !isSearching && currentState == .edit {
                 setCurrentState(.normal)
             }
-            updateAddServiceIcon()
+            updateNaviIcons()
             interactor.stopCounters()
             updateEditStateButton()
 
@@ -595,17 +598,23 @@ private extension TokensPresenter {
     }
     
     func updateNewsIcon() {
-        updateAddServiceIcon()
+        updateNaviIcons()
         interactor.fetchNews { [weak self] in
-            self?.updateAddServiceIcon()
+            self?.updateNaviIcons()
         }
     }
     
-    private func updateAddServiceIcon() {
+    private func updateNaviIcons() {
         if interactor.hasServices {
-            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: false))
+            view?.updateNaviIcons(
+                using: mapButtonStateFor(currentState, isFirst: false),
+                hasUnreadNews: hasUnreadNews
+            )
         } else {
-            view?.updateAddIcon(using: mapButtonStateFor(currentState, isFirst: !isSearching))
+            view?.updateNaviIcons(
+                using: mapButtonStateFor(currentState, isFirst: !isSearching),
+                hasUnreadNews: hasUnreadNews
+            )
         }
     }
 }

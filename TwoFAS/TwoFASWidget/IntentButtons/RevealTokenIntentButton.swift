@@ -1,7 +1,7 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
 //  Copyright © 2024 Two Factor Authentication Service, Inc.
-//  Contributed by Zbigniew Cisiński. All rights reserved.
+//  Contributed by Grzegorz Machnio. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,37 +18,24 @@
 //
 
 import SwiftUI
+import AppIntents
 
-struct CopyIntentButton<Content>: View where Content: View {
-    private let appIntent: CopyTokenIntent?
+struct RevealTokenIntentButton<Content>: View where Content: View {
+    private let appIntent: any AppIntent
     private let content: () -> Content
     
-    init(rawEntry: CodeEntry.EntryData.RawEntryData?, @ViewBuilder content: @escaping () -> Content) {
-        if let rawEntry {
-            self.appIntent = CopyTokenIntent(
-                secret: rawEntry.secret,
-                period: rawEntry.period,
-                digits: rawEntry.digits,
-                algorithm: rawEntry.algorithm,
-                tokenType: rawEntry.tokenType
-            )
-        } else {
-            self.appIntent = nil
-        }
+    init(secret: String, @ViewBuilder content: @escaping () -> Content) {
+        self.appIntent = RevealTokenAppIntent(secret: secret)
         self.content = content
     }
     
     @ViewBuilder
     var body: some View {
         if #available(iOS 17.0, *) {
-            if let appIntent {
-                Button(intent: appIntent, label: {
-                    content()
-                })
-                .buttonStyle(.plain)
-            } else {
+            Button(intent: appIntent, label: {
                 content()
-            }
+            })
+            .buttonStyle(.plain)
         } else {
             content()
         }

@@ -24,6 +24,7 @@ import Data
 
 protocol ImporterOpenFileHeadlessFlowControllerParent: AnyObject {
     func importerClose()
+    func importerCloseOnSucessfulImport()
 }
 
 protocol ImporterOpenFileHeadlessFlowControlling: AnyObject {
@@ -234,7 +235,7 @@ private extension ImporterOpenFileHeadlessFlowController {
         )
         alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
         alert.didDisappear = { [weak self] _ in
-            self?.parent?.importerClose()
+            self?.parent?.importerCloseOnSucessfulImport()
         }
         return alert
     }

@@ -27,7 +27,7 @@ public final class Delay: NSObject {
     @objc(Long) public static let long: TimeInterval = 3.5
 }
 
-open class Toast: Operation {
+open class Toast: Operation, @unchecked Sendable {
     
     // MARK: Properties
     

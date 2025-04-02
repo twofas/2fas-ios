@@ -48,4 +48,8 @@ final class InteractorFactory {
     func pinInteractor(variant: PINKeyboardVariant) -> PINKeyboardInteracting {
         PINKeyboardInteractor(mainRepository: MainRepositoryImpl.shared, variant: variant)
     }
+
+    func sortTokensInteractor() -> SortTokensInteracting {
+        SortTokensInteractor(mainRepository: MainRepositoryImpl.shared)
+    }
 }

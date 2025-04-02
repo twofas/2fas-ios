@@ -22,7 +22,7 @@ import Compression
 import Common
 
 extension Code {
-    static func checkLastPass(with str: String) -> [Code]? {
+    static func checkLastPass(with str: String) -> (codes: [Code], totalCodesCount: Int)? {
         guard let components = NSURLComponents(string: str),
               let scheme = components.scheme, scheme == "lpaauth-migration",
               let host = components.host, host == "offline",
@@ -31,9 +31,9 @@ extension Code {
               let value = data.value?.removingPercentEncoding,
               let encodeData = Data(base64Encoded: value),
               let decompressedData = decompress(encodeData),
-              let codes = parseAndDecompressMainStructure(for: decompressedData)
+              let (codes, totalCodesCount) = parseAndDecompressMainStructure(for: decompressedData)
         else { return nil }
-        return codes
+        return (codes, totalCodesCount)
     }
 }
 
@@ -77,7 +77,7 @@ private extension Code {
         return decompressedData
     }
     
-    static func parseAndDecompressMainStructure(for data: Data) -> [Code]? {
+    static func parseAndDecompressMainStructure(for data: Data) -> (codes: [Code], totalCodesCount: Int)? {
         let supportedVersion: Int = 3
         struct MainStructure: Decodable {
             let content: String
@@ -112,16 +112,22 @@ private extension Code {
             return nil
         }
         
-        return content.a.map({ parseLastPassService($0) })
+        return (content.a.compactMap({ parseLastPassService($0) }), totalCodesCount: content.a.count)
     }
     
-    static func parseLastPassService(_ service: LastPassService) -> Code {
-        Code(
+    static func parseLastPassService(_ service: LastPassService) -> Code? {
+        guard let digits = Digits(rawValue: service.d),
+              let periodValue = service.tS,
+              let period = Period(rawValue: periodValue),
+              service.s.sanitazeSecret().isValidSecret()
+        else { return nil }
+
+        return Code(
             issuer: service.iN,
             label: service.uN?.sanitizeInfo(),
             secret: service.s.sanitazeSecret(),
-            period: .create(service.tS),
-            digits: .create(service.d),
+            period: period,
+            digits: digits,
             algorithm: .create(service.a),
             tokenType: .totp,
             counter: 0,

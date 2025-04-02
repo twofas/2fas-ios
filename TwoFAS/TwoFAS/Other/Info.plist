@@ -63,7 +63,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(MARKETING_VERSION)</string>
+	<string>5.3.11</string>
 	<key>CFBundleSpokenName</key>
 	<string>2 F A S</string>
 	<key>CFBundleURLTypes</key>

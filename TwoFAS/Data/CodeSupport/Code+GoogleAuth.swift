@@ -30,7 +30,7 @@ extension Code {
               let data = query.first(where: { $0.name == "data" }),
               let value = data.value?.removingPercentEncoding,
               let encodeData = Data(base64Encoded: value),
-              let unpacked = try? MigrationPayload(serializedData: encodeData)
+              let unpacked = try? MigrationPayload(serializedBytes: encodeData)
         else { return nil }
                 
         return unpacked.otpParameters.compactMap { param -> Code? in

@@ -47,7 +47,7 @@ final class PINPadKeyboard: UIView {
         
         for rowIndex in 0...3 {
             let offset = rowIndex * 3
-            let range: Range<Int> = Range<Int>((0 + offset)...(2 + offset)).clamped(to: 0..<buttons.count)
+            let range = Range<Int>((0 + offset)...(2 + offset)).clamped(to: 0..<buttons.count)
             let row = Array(buttons[range])
             let horizontalStack = UIStackView(arrangedSubviews: row)
             horizontalStack.translatesAutoresizingMaskIntoConstraints = false

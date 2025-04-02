@@ -22,8 +22,11 @@ import Foundation
 public final class NetworkStackRepositoryImpl {
     private let platform = "ios"
     private let networkCall: NetworkCall
-    init(baseURL: URL) {
-        self.networkCall = NetworkCall(baseURL: baseURL)
+    init(baseURL: URL, notificationsBaseURL: URL) {
+        self.networkCall = NetworkCall(
+            baseURL: baseURL, 
+            notificationsBaseURL: notificationsBaseURL
+        )
         networkCall.sslError = {
             NotificationCenter.default.post(name: .SSLNetworkErrorNotificationKey, object: nil)
         }
@@ -128,13 +131,13 @@ extension NetworkStackRepositoryImpl: NetworkStackRepository {
         )
         networkCall.handleCall(with: req, data: reqData, completion: completion)
     }
-    
+
     public func listAllNews(
         publishedAfter: String,
         completion: @escaping (Result<[ListNews.NewsEntry], NetworkError>) -> Void
     ) {
         let req = ListNews.Request(platform: "ios", publishedAfter: publishedAfter)
-        networkCall.handleCall(with: req, completion: completion)
+        networkCall.handleNotificationsCall(with: req, completion: completion)
     }
     
     public func uploadLogs(

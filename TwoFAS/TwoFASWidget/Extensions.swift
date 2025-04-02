@@ -24,19 +24,25 @@ import Common
 
 extension CodeEntry {
     static func placeholder(with serviceCount: Int) -> CodeEntry {
-        let data: [Entry] = (0..<serviceCount).map { _ in Entry(kind: .placeholder, data: EntryData.createSnapshot()) }
+        let data: [Entry] = (0..<serviceCount).map { _ in Entry(
+            kind: .placeholder,
+            data: .createSnapshot()
+        )}
         return .init(date: Date(), entries: data)
     }
     
     static func snapshot(with serviceCount: Int) -> CodeEntry {
-        let data: [Entry] = (0..<serviceCount).map { _ in Entry(kind: .singleEntry, data: EntryData.createSnapshot()) }
+        let data: [Entry] = (0..<serviceCount).map { _ in Entry(
+            kind: .singleEntry,
+            data: .createSnapshot()
+        )}
         return .init(date: Date(), entries: data)
     }
 }
 
 extension CodeEntry.Entry {
     static func placeholder() -> Self {
-        .init(kind: .placeholder, data: CodeEntry.EntryData.createSnapshot())
+        .init(kind: .placeholder, data: .createSnapshot())
     }
 }
 
@@ -45,14 +51,14 @@ extension CodeEntry.EntryData {
         let theID = UUID().uuidString
         return .init(
             id: theID,
+            secret: theID,
             name: "2FAS",
             info: String(localized: "widget__my_secured_account"),
-            code: "127 924",
             iconType: .brand,
             labelTitle: "2F",
             labelColor: .red,
             iconTypeID: IconTypeID.default,
-            serviceTypeID: nil,
+            code: "127 924",
             countdownTo: nil,
             rawEntry: nil
         )
@@ -62,14 +68,24 @@ extension CodeEntry.EntryData {
 extension WidgetFamily {
     var servicesCount: Int {
         switch self {
-        case .systemSmall: return 1
-        case .systemMedium: return 3
-        case .systemLarge: return 6
-        case .systemExtraLarge: return 12
-        case .accessoryCircular: return 1
-        case .accessoryInline: return 1
-        case .accessoryRectangular: return 1
-        default: return 1
+        case .systemSmall: 1
+        case .systemMedium: 3
+        case .systemLarge: 6
+        case .systemExtraLarge: 12
+        case .accessoryCircular: 1
+        case .accessoryInline: 1
+        case .accessoryRectangular: 1
+        default: 1
+        }
+    }
+    
+    var isClickable: Bool {
+        switch self {
+        case .systemSmall: true
+        case .systemMedium: true
+        case .systemLarge: true
+        case .systemExtraLarge: true
+        default: false
         }
     }
 }

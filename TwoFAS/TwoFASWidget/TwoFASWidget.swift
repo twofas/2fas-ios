@@ -20,42 +20,68 @@
 import WidgetKit
 import SwiftUI
 import Intents
+import Common
 
 struct TwoFASWidgetEntryView: View {
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
+    
+    private var noEntryView: some View {
+        VStack(alignment: .leading) {
+            Image("TwoFASLogo")
+                .foregroundStyle(.white)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(.widgetBackground)
+                        .frame(width: 32, height: 32)
+                )
+            
+            Spacer()
+
+            Text(T.Widget.noSelectedServices)
+                .foregroundStyle(.textAccent)
+                .multilineTextAlignment(.leading)
+                .font(.system(size: 16).weight(.semibold))
+                .bold()
+                .frame(maxWidth: 200, alignment: .leading)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .padding(4)
+        .addWidgetContentMargins()
+        .widgetBackground(backgroundView: Color.accent)
+    }
 
     @ViewBuilder
     var body: some View {
-        Group {
-            switch family {
-            case .systemSmall:
-                TwoFASWidgetSquareView(entry: entry.entries.first)
-            case .systemMedium:
-                TwoFASWidgetLineView(entries: entry.entries)
-            case .systemLarge:
-                TwoFASWidgetLineView(entries: entry.entries)
-            case .systemExtraLarge:
-                TwoFASWidgetLineViewGrid(entries: entry.entries)
-            case .accessoryCircular:
-                TwoFASWidgetCircular(entry: entry.entries.first)
-            case .accessoryRectangular:
-                TwoFASWidgetRectangular(entry: entry.entries.first)
-            case .accessoryInline:
-                TwoFASWidgetInline(entry: entry.entries.first)
-            default:
-                Text("widget__size_not_supported")
+        if entry.entries.isEmpty || entry.entries.filter({ $0.kind != .placeholder }).isEmpty {
+            noEntryView
+        } else {
+            Group {
+                switch family {
+                case .systemSmall:
+                    TwoFASWidgetSquareView(entry: entry.entries.first)
+                case .systemMedium:
+                    TwoFASWidgetLineView(entries: entry.entries, isRevealTokenOverlayVisible: true)
+                case .systemLarge:
+                    TwoFASWidgetLineView(entries: entry.entries, isRevealTokenOverlayVisible: true)
+                case .systemExtraLarge:
+                    TwoFASWidgetLineViewGrid(entries: entry.entries)
+                case .accessoryCircular:
+                    TwoFASWidgetCircular(entry: entry.entries.first)
+                case .accessoryRectangular:
+                    TwoFASWidgetRectangular(entry: entry.entries.first)
+                case .accessoryInline:
+                    TwoFASWidgetInline(entry: entry.entries.first)
+                default:
+                    Text("widget__size_not_supported")
+                }
             }
+            .widgetBackground(backgroundView: Color.widgetBackground)
+            .addWidgetContentMargins()
         }
-        .widgetBackground(backgroundView: backgroundView)
-    }
-    
-    private var backgroundView: some View {
-        Color.clear
     }
 }
 
-//
 @main
 struct TwoFASWidget: Widget {
     @Environment(\.widgetFamily) var family
@@ -74,7 +100,12 @@ struct TwoFASWidget: Widget {
                 .accessoryInline
             ]
         } else {
-            [.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge]
+            [
+                .systemSmall,
+                .systemMedium,
+                .systemLarge,
+                .systemExtraLarge
+            ]
         }
     }()
     
@@ -115,7 +146,9 @@ struct TwoFASWidget_Previews: PreviewProvider {
 extension View {
     func widgetBackground(backgroundView: some View) -> some View {
         if #available(iOSApplicationExtension 17.0, *) {
-            return containerBackground(for: .widget) {}
+            return containerBackground(for: .widget) {
+                backgroundView
+            }
         } else {
             return background(backgroundView)
         }

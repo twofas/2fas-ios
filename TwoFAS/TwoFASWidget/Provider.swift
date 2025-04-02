@@ -84,7 +84,6 @@ struct Provider: IntentTimelineProvider {
         
         let selectedServices = configuration.service ?? []
         let currentServices = serviceHandler.listServices(with: selectedServices.compactMap { $0.secret })
-            .filter({ $0.period != .period10 })
         
         var entries: [CodeEntry] = []
         
@@ -163,7 +162,6 @@ struct Provider: IntentTimelineProvider {
                 }()
                 
                 let countdownTo = calendar.date(byAdding: .second, value: secondsToNewOne, to: entryDate)!
-                
                 let token = TokenGenerator.generateTOTP(
                     secret: entryDescription.secret,
                     time: tokenDate,
@@ -174,9 +172,9 @@ struct Provider: IntentTimelineProvider {
                 )
                 let entryData = CodeEntry.EntryData(
                     id: entryDescription.identifier,
+                    secret: entryDescription.secret,
                     name: entryDescription.title,
                     info: entryDescription.subtitle,
-                    code: token.formattedValue(for: entryDescription.tokenType),
                     iconType: {
                         switch entryDescription.iconType {
                         case .brand: return .brand
@@ -186,7 +184,7 @@ struct Provider: IntentTimelineProvider {
                     labelTitle: entryDescription.labelTitle,
                     labelColor: entryDescription.labelColor,
                     iconTypeID: entryDescription.iconTypeID,
-                    serviceTypeID: entryDescription.serviceTypeID,
+                    code: token.formattedValue(for: entryDescription.tokenType),
                     countdownTo: countdownTo,
                     rawEntry: .init(
                         secret: entryDescription.secret,

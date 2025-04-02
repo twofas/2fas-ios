@@ -31,13 +31,16 @@ struct TwoFASWidgetCircular: View {
             image()
                 .unredacted()
         } else {
-            if let kind = entry?.kind, let entryData = entry?.data {
+            if let kind = entry?.kind, let data = entry?.data {
                 if kind == .placeholder {
                     image()
                 } else {
-                    code(entryData.code)
+                    code(data.code)
                         .overlay {
-                            CopyIntentButton(rawEntry: entryData.rawEntry) {
+                            CopyIntentButton(
+                                rawEntry: data.rawEntry,
+                                secret: kind == .singleEntryHidden ? data.secret : nil
+                            ) {
                                 Rectangle()
                                     .foregroundStyle(Color.clear)
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)

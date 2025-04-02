@@ -182,7 +182,7 @@ extension MainSplitFlowController: TokensPlainFlowControllerParent {
     }
 }
 
-extension MainSplitFlowController: SettingsFlowControllerParent {
+extension MainSplitFlowController: SettingsFlowControllerParent {    
     func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
         viewController.presenter.handlePathWasUpdated(to: .settings(option: viewPath))
     }

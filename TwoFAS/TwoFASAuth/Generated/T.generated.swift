@@ -289,6 +289,18 @@ internal enum T {
     /// Active search
     internal static let toggleActiveSearch = T.tr("Localizable", "appearance__toggle_active_search", fallback: "Active search")
   }
+  internal enum AppleWatch {
+    /// Install 2FAS Auth via Watch app
+    internal static let installationFirstStep = T.tr("Localizable", "appleWatch__installation_first_step", fallback: "Install 2FAS Auth via Watch app")
+    /// Open Watch app
+    internal static let installationFirstStepLink = T.tr("Localizable", "appleWatch__installation_first_step_link", fallback: "Open Watch app")
+    /// 2FAS Apple Watch app installation
+    internal static let installationInfoTitle = T.tr("Localizable", "appleWatch__installation_info_title", fallback: "2FAS Apple Watch app installation")
+    /// Ensure your iCloud Sync is enabled
+    internal static let installationSecondStep = T.tr("Localizable", "appleWatch__installation_second_step", fallback: "Ensure your iCloud Sync is enabled")
+    /// Go to 2FAS Backup settings
+    internal static let installationSecondStepLink = T.tr("Localizable", "appleWatch__installation_second_step_link", fallback: "Go to 2FAS Backup settings")
+  }
   internal enum Backup {
     /// 2FAS Backup
     internal static let _2fasBackup = T.tr("Localizable", "backup__2fas_backup", fallback: "2FAS Backup")
@@ -378,9 +390,9 @@ internal enum T {
     internal static let incorrectCharacterError = T.tr("Localizable", "backup__incorrect_character_error", fallback: "Incorrect character. Use only letter A-Z, a-z, digits and special characters: -_/!#$%&+*~@?=^.,'(){}[]:;<>|")
     /// Incorrect Password
     internal static let incorrectPassword = T.tr("Localizable", "backup__incorrect_password", fallback: "Incorrect Password")
-    /// Couldn't backup tokens because "%@" secret contains illegal characters. Remove it from list and try again
+    /// Couldn't backup tokens because "%@" secret contains invalid characters. Remove it from list and try again
     internal static func incorrectSecret(_ p1: Any) -> String {
-      return T.tr("Localizable", "backup__incorrect_secret", String(describing: p1), fallback: "Couldn't backup tokens because \"%@\" secret contains illegal characters. Remove it from list and try again")
+      return T.tr("Localizable", "backup__incorrect_secret", String(describing: p1), fallback: "Couldn't backup tokens because \"%@\" secret contains invalid characters. Remove it from list and try again")
     }
     /// Local file
     internal static let localFileTitle = T.tr("Localizable", "backup__local_file_title", fallback: "Local file")
@@ -388,8 +400,6 @@ internal enum T {
     internal static func newServices(_ p1: Int) -> String {
       return T.tr("Localizable", "backup__new_services", p1, fallback: "%d new services")
     }
-    /// This file is in a newer format version than the one the app supports
-    internal static let newerFormatNotSupported = T.tr("Localizable", "backup__newer_format_not_supported", fallback: "This file is in a newer format version than the one the app supports")
     /// Nothing to import
     internal static let noNewServices = T.tr("Localizable", "backup__no_new_services", fallback: "Nothing to import")
     /// Either this file is empty, or all the services within are already available in the app
@@ -850,8 +860,8 @@ internal enum T {
     internal static let backupIcloudCta = T.tr("Localizable", "introduction__backup_icloud_cta", fallback: "Learn more about backup")
     /// 2FAS uses iCloud for secure backup and sync of your 2FA tokens. The **encrypted** backup data is stored in iCloud, accessible **only by the 2FAS app**. Additionally, this feature aids with token **recovery and syncing** across iOS devices.
     /// 
-    /// It's enabled by default and can disabled at any time in the app's backup settings.
-    internal static let backupIcloudDescription = T.tr("Localizable", "introduction__backup_icloud_description", fallback: "2FAS uses iCloud for secure backup and sync of your 2FA tokens. The **encrypted** backup data is stored in iCloud, accessible **only by the 2FAS app**. Additionally, this feature aids with token **recovery and syncing** across iOS devices.\n\nIt's enabled by default and can disabled at any time in the app's backup settings.")
+    /// It's enabled by default and can be disabled at any time in the app's backup settings.
+    internal static let backupIcloudDescription = T.tr("Localizable", "introduction__backup_icloud_description", fallback: "2FAS uses iCloud for secure backup and sync of your 2FA tokens. The **encrypted** backup data is stored in iCloud, accessible **only by the 2FAS app**. Additionally, this feature aids with token **recovery and syncing** across iOS devices.\n\nIt's enabled by default and can be disabled at any time in the app's backup settings.")
     /// Secure sync and backup
     internal static let backupIcloudTitle = T.tr("Localizable", "introduction__backup_icloud_title", fallback: "Secure sync and backup")
     /// Google Drive sync turned on successfully!
@@ -902,8 +912,8 @@ internal enum T {
   internal enum NewVersion {
     /// A new version of 2FAS is available on Google Store. Update now!
     internal static let newVersionMessageAndroid = T.tr("Localizable", "new_version__new_version_message_android", fallback: "A new version of 2FAS is available on Google Store. Update now!")
-    /// A new version of 2FAS is available on AppStore. Update now!
-    internal static let newVersionMessageIos = T.tr("Localizable", "new_version__new_version_message_ios", fallback: "A new version of 2FAS is available on AppStore. Update now!")
+    /// A new version of 2FAS is available on App Store. Update now!
+    internal static let newVersionMessageIos = T.tr("Localizable", "new_version__new_version_message_ios", fallback: "A new version of 2FAS is available on App Store. Update now!")
     /// New version
     internal static let newVersionTitle = T.tr("Localizable", "new_version__new_version_title", fallback: "New version")
     /// Skip this version
@@ -1022,6 +1032,8 @@ internal enum T {
     internal static let appSecurity = T.tr("Localizable", "settings__app_security", fallback: "App security")
     /// Appearance
     internal static let appearance = T.tr("Localizable", "settings__appearance", fallback: "Appearance")
+    /// Apple Watch
+    internal static let appleWatch = T.tr("Localizable", "settings__apple_watch", fallback: "Apple Watch")
     /// Backup and Synchronization
     internal static let backupAndSynchronization = T.tr("Localizable", "settings__backup_and_synchronization", fallback: "Backup and Synchronization")
     /// Biometric Authentication
@@ -1155,6 +1167,8 @@ internal enum T {
     internal static let showNextToken = T.tr("Localizable", "settings__show_next_token", fallback: "Show next token")
     /// Show next token when current one is about to expire.
     internal static let showNextTokenDesc = T.tr("Localizable", "settings__show_next_token_desc", fallback: "Show next token when current one is about to expire.")
+    /// Sort tokens
+    internal static let sortTokens = T.tr("Localizable", "settings__sort_tokens", fallback: "Sort tokens")
     /// An SSL error has occurred and a secure connection to the server cannot be made. Ensure you have the latest version of the app or try to change the network.
     internal static let sslErrorDescription = T.tr("Localizable", "settings__ssl_error_description", fallback: "An SSL error has occurred and a secure connection to the server cannot be made. Ensure you have the latest version of the app or try to change the network.")
     /// SSL Error
@@ -1612,6 +1626,8 @@ internal enum T {
   internal enum Widget {
     /// My secured account
     internal static let mySecuredAccount = T.tr("Localizable", "widget__my_secured_account", fallback: "My secured account")
+    /// Hold and select service to activate widget...
+    internal static let noSelectedServices = T.tr("Localizable", "widget__no_selected_services", fallback: "Hold and select service to activate widget...")
     /// There are no services in the app available for selection
     internal static let noServices = T.tr("Localizable", "widget__no_services", fallback: "There are no services in the app available for selection")
     /// Widget functionality is not enabled in 2FAS Settings section
@@ -1620,6 +1636,10 @@ internal enum T {
     internal static let notEnabledNoServices = T.tr("Localizable", "widget__not_enabled_no_services", fallback: "Widget functionality is not enabled in 2FAS Settings section and there are no services in the app available for selection")
     /// Placeholder
     internal static let placeholder = T.tr("Localizable", "widget__placeholder", fallback: "Placeholder")
+    /// Reveal your 2FAS tokens for 60 seconds
+    internal static let revealTokensLongMessage = T.tr("Localizable", "widget__reveal_tokens_long_message", fallback: "Reveal your 2FAS tokens for 60 seconds")
+    /// Reveal for 60 seconds
+    internal static let revealTokensShortMessage = T.tr("Localizable", "widget__reveal_tokens_short_message", fallback: "Reveal for 60 seconds")
     /// Select Service you want to show on your 2FAS Widget
     internal static let selectServiceIntentDescription = T.tr("Localizable", "widget__select_service_intent_description", fallback: "Select Service you want to show on your 2FAS Widget")
     /// Service icon

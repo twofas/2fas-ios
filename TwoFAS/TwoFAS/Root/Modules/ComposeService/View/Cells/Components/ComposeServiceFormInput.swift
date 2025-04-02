@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class ComposeServiceFormInput: LimitedTextField {
     private let height: CGFloat = 40
@@ -29,14 +30,16 @@ final class ComposeServiceFormInput: LimitedTextField {
         let maxLength: Int?
         let autocapitalizationType: UITextAutocapitalizationType?
         let configTextField: LimitedTextField.Config
-        
+        let actionButtonTapped: Callback?
+
         init(
             canPaste: Bool,
             shouldUppercase: Bool,
             returnKeyType: UIReturnKeyType?,
             maxLength: Int?,
             autocapitalizationType: UITextAutocapitalizationType?,
-            configTextField: LimitedTextField.Config = .none
+            configTextField: LimitedTextField.Config = .none,
+            actionButtonTapped: Callback? = nil
         ) {
             self.canPaste = canPaste
             self.shouldUppercase = shouldUppercase
@@ -44,6 +47,7 @@ final class ComposeServiceFormInput: LimitedTextField {
             self.maxLength = maxLength
             self.autocapitalizationType = autocapitalizationType
             self.configTextField = configTextField
+            self.actionButtonTapped = actionButtonTapped
         }
     }
     
@@ -67,6 +71,7 @@ final class ComposeServiceFormInput: LimitedTextField {
     func configure(with config: InputConfig, text: String?) {
         super.configure(for: config.configTextField)
         
+        actionButtonTapped = config.actionButtonTapped
         canPaste = config.canPaste
         shouldUppercase = config.shouldUppercase
         self.text = text

@@ -24,7 +24,7 @@ public enum CodeType: Hashable {
     case appStore
     case service(code: Code)
     case googleAuth(codes: [Code])
-    case lastPass(codes: [Code])
+    case lastPass(codes: [Code], totalCodesCount: Int)
     case twoFASWebExtension(extensionID: String)
     case support(auditID: UUID)
     case unknown
@@ -86,8 +86,8 @@ public extension Code {
             return .googleAuth(codes: codes)
         } else if let extensionID = Code.checkTwoFASWebExtension(with: data) {
             return .twoFASWebExtension(extensionID: extensionID)
-        } else if let codes = Code.checkLastPass(with: data) {
-            return .lastPass(codes: codes)
+        } else if let parsedData = Code.checkLastPass(with: data) {
+            return .lastPass(codes: parsedData.codes, totalCodesCount: parsedData.totalCodesCount)
         } else if Code.isAppStore(with: data) {
             return .appStore
         } else if let auditID = Code.parseSupport(with: data) {

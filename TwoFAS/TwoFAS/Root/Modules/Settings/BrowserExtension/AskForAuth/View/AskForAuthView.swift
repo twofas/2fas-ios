@@ -85,7 +85,7 @@ struct AskForAuthView_Previews: PreviewProvider {
         Group {
             AskForAuthView(action: {}, cancel: {}, domain: "2fas.com")
                 .previewDevice("iPhone SE (1st generation)")
-            AskForAuthView(action: {}, cancel: {}, domain: "support.2fas.com")
+            AskForAuthView(action: {}, cancel: {}, domain: "2fas.com/support/")
                 .preferredColorScheme(.dark)
                 .previewDevice("iPhone 13 Pro Max")
         }

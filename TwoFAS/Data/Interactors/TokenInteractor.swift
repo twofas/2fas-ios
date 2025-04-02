@@ -27,7 +27,7 @@ public protocol TokenInteracting: AnyObject {
     
     func enableCounter(_ counterConsumer: TokenCounterConsumer)
     func disableCounter(_ counterConsumer: TokenCounterConsumer)
-    func unlockCounter(for secret: String)
+    func unlockCounter(for secret: String, isInitialCounter: Bool)
     
     func registerTOTP(_ consumer: TokenTimerConsumer)
     func removeTOTP(_ consumer: TokenTimerConsumer)
@@ -87,14 +87,17 @@ extension TokenInteractor: TokenInteracting {
         counterHandler.remove(counterConsumer, lock: false)
     }
     
-    func unlockCounter(for secret: String) {
+    func unlockCounter(for secret: String, isInitialCounter: Bool) {
         guard
             let service = serviceInteractor.service(for: secret),
             let counter = service.counter
         else { return }
-        serviceInteractor.incrementCounter(for: secret)
+
+        if !isInitialCounter {
+            serviceInteractor.incrementCounter(for: secret)
+        }
         
-        counterHandler.unlock(for: secret, counter: counter + 1)
+        counterHandler.unlock(for: secret, counter: isInitialCounter ? counter : counter + 1)
     }
     
     func HOTPToken(for secret: Secret) -> TokenValue? {

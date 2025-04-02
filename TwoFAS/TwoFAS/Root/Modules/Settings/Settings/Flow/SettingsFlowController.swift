@@ -214,6 +214,14 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
             AppearanceFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
         }
     }
+
+    func toAppleWatch() {
+        if isCollapsed {
+            AppleWatchFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            AppleWatchFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
 }
 extension SettingsFlowController: BackupMenuFlowControllerParent {
     func showFAQ() {
@@ -231,6 +239,12 @@ extension SettingsFlowController: PushNotificationPermissionPlainFlowControllerP
 extension SettingsFlowController: AppSecurityFlowControllerParent {
     func appSecurityChaged() {
         navigationMenu?.appSecurityChaged()
+    }
+}
+
+extension SettingsFlowController: AppleWatchFlowControllerParent {
+    func switchToBackup() {
+        navigationMenu?.toSwitchToBackup()
     }
 }
 

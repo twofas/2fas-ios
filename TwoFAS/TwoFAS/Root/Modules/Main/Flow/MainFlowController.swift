@@ -147,7 +147,15 @@ extension MainFlowController: MainFlowControlling {
 }
 
 extension MainFlowController: ImporterOpenFileHeadlessFlowControllerParent {
+    func importerCloseOnSucessfulImport() {
+        handleImporterClose()
+    }
+    
     func importerClose() {
+        handleImporterClose()
+    }
+    
+    private func handleImporterClose() {
         viewController.dismiss(animated: true) { [weak self] in
             NotificationCenter.default.post(name: .servicesWereUpdated, object: nil)
             self?.importer = nil

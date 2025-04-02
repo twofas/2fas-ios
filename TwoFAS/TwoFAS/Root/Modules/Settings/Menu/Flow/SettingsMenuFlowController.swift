@@ -31,6 +31,7 @@ protocol SettingsMenuFlowControllerChild: AnyObject {
     func appSecurityChaged()
     func toSwitchToExternlImport()
     func toSwitchToAppearance()
+    func toSwitchToBackup()
 }
 
 protocol SettingsMenuFlowControllerParent: AnyObject {
@@ -45,6 +46,7 @@ protocol SettingsMenuFlowControllerParent: AnyObject {
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func toExternalImport()
     func toAppearance()
+    func toAppleWatch()
 }
 
 protocol SettingsMenuFlowControlling: AnyObject {
@@ -60,6 +62,7 @@ protocol SettingsMenuFlowControlling: AnyObject {
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func toExternalImport()
     func toAppearance()
+    func toAppleWatch()
 }
 
 final class SettingsMenuFlowController: FlowController {
@@ -109,6 +112,7 @@ extension SettingsMenuFlowController: SettingsMenuFlowControlling {
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) { parent?.toUpdateCurrentPosition(viewPath) }
     func toExternalImport() { parent?.toExternalImport() }
     func toAppearance() { parent?.toAppearance() }
+    func toAppleWatch() { parent?.toAppleWatch() }
 }
 
 extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {
@@ -149,6 +153,10 @@ extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {
     }
     func toSwitchToAppearance() {
         viewController.presenter.handleSwitchToAppearance()
+    }
+
+    func toSwitchToBackup() {
+        viewController.presenter.handleSwitchToBackup()
     }
 }
 

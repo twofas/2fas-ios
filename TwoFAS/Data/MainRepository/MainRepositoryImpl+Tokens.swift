@@ -39,6 +39,15 @@ extension MainRepositoryImpl {
         protectionModule.tokenStorage.removeDeviceID()
     }
     
+    var registrationDate: Date? {
+        userDefaultsRepository.registrationDate
+    }
+    
+    func saveRegistrationDate() {
+        userDefaultsRepository.saveRegistrationDate(Date())
+    }
+
+    
     // MARK: - FCM Token
     
     var isGCMTokenSet: Bool {

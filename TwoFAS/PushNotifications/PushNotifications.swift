@@ -43,6 +43,7 @@ public final class PushNotifications {
 
     public func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {
         apns.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
+        fcm.setDeviceToken(deviceToken)
     }
     
     public func didFailToRegisterForRemoteNotifications(with error: Error) {

@@ -1327,9 +1327,6 @@
 		C2EBE0022AC44787008FD744 /* GuideMenuFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBE0012AC44787008FD744 /* GuideMenuFlowController.swift */; };
 		C2EBE0042AC44DC3008FD744 /* GuideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBE0032AC44DC3008FD744 /* GuideMenuView.swift */; };
 		C2EC83DE21E69B4800DF5C49 /* ViewTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EC83DD21E69B4800DF5C49 /* ViewTheme.swift */; };
-		C2EC97D42D917D8900C0A27A /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = C2EC97D32D917D8900C0A27A /* FirebaseCore */; };
-		C2EC97D62D917D8900C0A27A /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C2EC97D52D917D8900C0A27A /* FirebaseCrashlytics */; };
-		C2EC97D82D917D8900C0A27A /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C2EC97D72D917D8900C0A27A /* FirebaseMessaging */; };
 		C2EE37AA291D2B9800CAB85C /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EE37A9291D2B9800CAB85C /* Assets.swift */; };
 		C2EF21D725630C9D0075743D /* CloudAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF21D625630C9D0075743D /* CloudAvailability.swift */; };
 		C2EF3F6E25575D730006735E /* ServiceRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF3F6D25575D730006735E /* ServiceRecord.swift */; };
@@ -14002,14 +13999,6 @@
 				minimumVersion = 1.28.2;
 			};
 		};
-		C2EC97D22D917D8900C0A27A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 11.10.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -14102,21 +14091,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C27ABAD423297F470008F9B5 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
-		};
-		C2EC97D32D917D8900C0A27A /* FirebaseCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C2EC97D22D917D8900C0A27A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCore;
-		};
-		C2EC97D52D917D8900C0A27A /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C2EC97D22D917D8900C0A27A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		C2EC97D72D917D8900C0A27A /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C2EC97D22D917D8900C0A27A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 

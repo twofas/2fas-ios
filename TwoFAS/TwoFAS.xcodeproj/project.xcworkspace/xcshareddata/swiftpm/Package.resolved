@@ -1,5 +1,5 @@
 {
-  "originHash" : "3ae961d83e2f3591891baab074891de0db883ade9c0b542205d1a0c4cafb4747",
+  "originHash" : "563d7097428dae9bfa12e1b74a537bd7c01ab25bb67080a7ebbfdb714eaae25b",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "61b85103a1aeed8218f17c794687781505fbbef5",
         "version" : "11.2.0"
+      }
+    },
+    {
+      "identity" : "argon2",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kamwysoc/Argon2",
+      "state" : {
+        "branch" : "main",
+        "revision" : "977818270c6b571bf1a4407d468986ae8d930d75"
       }
     },
     {

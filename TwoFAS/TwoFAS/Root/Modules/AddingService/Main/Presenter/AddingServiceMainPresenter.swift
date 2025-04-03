@@ -134,6 +134,10 @@ extension AddingServiceMainPresenter {
     func handleResumeCamera() {
         freezeCamera = false
     }
+    
+    func onClose() {
+        flowController.close()
+    }
 }
 
 private extension AddingServiceMainPresenter {

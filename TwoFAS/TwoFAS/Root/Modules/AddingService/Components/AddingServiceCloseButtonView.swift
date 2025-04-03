@@ -22,6 +22,7 @@ import SwiftUI
 struct AddingServiceCloseButtonView: View {
     let action: () -> Void
     
+    private let size: CGFloat = 30
     var body: some View {
         HStack {
             Spacer()
@@ -37,8 +38,9 @@ struct AddingServiceCloseButtonView: View {
                        .font(.system(size: 22))
                        .frame(alignment: .trailing)
             }
-            .frame(alignment: .trailing)
-        }.frame(maxWidth: .infinity)
+            .frame(width: size, height: size, alignment: .trailing)
+        }
+        .frame(maxWidth: .infinity)
     }
 }
 

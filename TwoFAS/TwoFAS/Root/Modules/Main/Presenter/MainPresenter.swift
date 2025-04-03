@@ -67,6 +67,8 @@ final class MainPresenter {
     
     func viewWillAppear() {
        viewIsVisible()
+        
+        flowController.toMigrationToNewestVersion()
     }
     
     func handleSwitchToSetupPIN() {

@@ -38,7 +38,8 @@ struct SyncMigrationToNewestVersionView: View {
                         .font(.body)
                         .fontWeight(.medium)
                         .multilineTextAlignment(.center)
-                    Text("Your backup is being encrypted using a generated key. This key will be shared amongst your app installations using iCloud Keychain so remember to have that option on. If you want to use your own key and password you can do that in Cloud Backup settings right after the migration.")
+                        .foregroundStyle(Color(Theme.Colors.Text.theme))
+                    Text("Your backup is being encrypted using a generated key. This key will be shared amongst your app installations using iCloud Keychain so remember to have that option turned on. If you want to use your own key and password you can do that in Cloud Backup settings right after the migration.")
                         .font(.caption)
                         .minimumScaleFactor(0.5)
                         .multilineTextAlignment(.center)
@@ -47,6 +48,7 @@ struct SyncMigrationToNewestVersionView: View {
                 if presenter.isMigrating {
                     ProgressView()
                         .progressViewStyle(.circular)
+                        .padding(.vertical, Theme.Metrics.doubleMargin)
                 } else {
                     VStack {
                         if let migrationFailureReason = presenter.migrationFailureReason {
@@ -67,7 +69,7 @@ struct SyncMigrationToNewestVersionView: View {
                                 .frame(minWidth: 0, maxWidth: .infinity)
                         }
                         .buttonStyle(RoundedFilledButtonStyle())
-                        .padding(.top, Theme.Metrics.doubleMargin)
+                        .padding(.vertical, Theme.Metrics.doubleMargin)
                     }
                 }
             }

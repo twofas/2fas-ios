@@ -49,9 +49,7 @@ final class AddingServiceMainViewController: UIViewController {
             cameraUnavailable: cameraUnavailable,
             changeHeight: { [weak self] height in
                 self?.heightChange?(height)
-            }, presenter: presenter) { [weak self] in
-                self?.presentingViewController?.dismiss(animated: true)
-            }
+            }, presenter: presenter)
         
         let vc = UIHostingController(rootView: main)
         vc.willMove(toParent: self)
@@ -70,20 +68,17 @@ private struct AddingServiceMain: View {
     
     let cameraUnavailable: Bool
     let changeHeight: (CGFloat) -> Void
-    let dismiss: () -> Void
     
     @ObservedObject var presenter: AddingServiceMainPresenter
     
     init(
         cameraUnavailable: Bool,
         changeHeight: @escaping (CGFloat) -> Void,
-        presenter: AddingServiceMainPresenter,
-        dismiss: @escaping () -> Void
+        presenter: AddingServiceMainPresenter
     ) {
         self.cameraUnavailable = cameraUnavailable
         self.changeHeight = changeHeight
         self.presenter = presenter
-        self.dismiss = dismiss
         
         if cameraUnavailable {
             errorReason = T.Tokens.cameraIsUnavailableAppPermission
@@ -92,9 +87,11 @@ private struct AddingServiceMain: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+            Spacer()
+                .frame(height: Theme.Metrics.doubleMargin)
             VStack(spacing: 0) {
                 AddingServiceCloseButtonView {
-                    dismiss()
+                    presenter.onClose()
                 }
                 .accessibilityAddTraits(.isButton)
                 AddingServiceTitleView(text: T.Tokens.addManualTitle)

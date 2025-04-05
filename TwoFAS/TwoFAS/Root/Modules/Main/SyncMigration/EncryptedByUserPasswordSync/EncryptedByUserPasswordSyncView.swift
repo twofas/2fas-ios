@@ -77,7 +77,7 @@ struct EncryptedByUserPasswordSyncView: View {
                                     .foregroundStyle(Color(Theme.Colors.Text.theme))
                             } else {
                                 if presenter.wrongPassword {
-                                    Label("Wrong password! Try again)", systemImage: "xmark.circle.fill")
+                                    Label("Wrong password! Try again", systemImage: "xmark.circle.fill")
                                         .font(.caption)
                                         .fontWeight(.bold)
                                         .foregroundStyle(Color(Theme.Colors.Text.theme))

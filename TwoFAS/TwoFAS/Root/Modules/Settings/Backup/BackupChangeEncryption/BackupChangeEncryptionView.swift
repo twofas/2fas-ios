@@ -43,7 +43,7 @@ struct BackupChangeEncryptionView: View {
                             Section(content: {
                                 SecureField("Enter password", text: $presenter.password)
                             }, header: {
-                                Text("Enter password")
+                                presenter.changingPassword ? Text("Change password") : Text("Enter password")
                             }, footer: {
                                 Text("Password is used to encrypt your data. If you loose it you won't be able to recover data from Cloud Backup")
                                     .font(.caption2)
@@ -65,6 +65,7 @@ struct BackupChangeEncryptionView: View {
                                     .foregroundStyle(Color(Theme.Colors.Text.theme))
                             }
                             Button {
+                                dismissKeyboard()
                                 presenter.applyChange()
                             } label: {
                                 Text("Apply")
@@ -78,6 +79,7 @@ struct BackupChangeEncryptionView: View {
                                 }
                             }
                             .frame(maxWidth: Theme.Metrics.componentWidth)
+                            .padding(.bottom, Theme.Metrics.doubleMargin)
                             .disabled(!presenter.changePasswordEnabled)
                         }
                     }
@@ -101,5 +103,8 @@ struct BackupChangeEncryptionView: View {
         .ignoresSafeArea()
         .frame(maxWidth: .infinity)
         .background(Color(Theme.Colors.Fill.System.third))
+        .onAppear {
+            presenter.onAppear()
+        }
     }
 }

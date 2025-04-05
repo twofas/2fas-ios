@@ -76,6 +76,14 @@ extension View {
     ) -> ModifiedContent<Self, AnimationCompletionObserverModifier<Value>> {
         modifier(AnimationCompletionObserverModifier(observedValue: value, completion: completion))
     }
+    
+    func dismissKeyboard() {
+        guard let window = UIApplication.shared.connectedScenes
+            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
+              let keyWindow = window.windows.first(where: { $0.isKeyWindow })
+        else { return }
+        keyWindow.endEditing(true)
+    }
 }
 
 private struct SizeReaderPreferenceKey: PreferenceKey {

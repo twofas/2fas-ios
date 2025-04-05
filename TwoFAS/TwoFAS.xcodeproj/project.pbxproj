@@ -6541,8 +6541,8 @@
 				C29B42BD2D98905700F49DCE /* BackupChangeEncryptionFlowController.swift */,
 				C29B42BE2D98905700F49DCE /* BackupChangeEncryptionModuleInteractor.swift */,
 				C29B42BF2D98905700F49DCE /* BackupChangeEncryptionPresenter.swift */,
-				C29B42C02D98905700F49DCE /* BackupChangeEncryptionViewController.swift */,
 				C29B42C12D98905700F49DCE /* BackupChangeEncryptionView.swift */,
+				C29B42C02D98905700F49DCE /* BackupChangeEncryptionViewController.swift */,
 			);
 			path = BackupChangeEncryption;
 			sourceTree = "<group>";

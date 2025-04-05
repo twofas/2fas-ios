@@ -28,6 +28,7 @@ final class BackupChangeEncryptionPresenter: ObservableObject {
         }
     }
     
+    @Published var changingPassword = false
     @Published var isChangingEncryption = false
     @Published var migrationFailureReason: CloudState.NotAvailableReason?
     @Published var password: String = "" {
@@ -53,6 +54,11 @@ final class BackupChangeEncryptionPresenter: ObservableObject {
 }
 
 extension BackupChangeEncryptionPresenter {
+    func onAppear() {
+        selectedEncryption = interactor.currentEncryption
+        updateApplyState()
+    }
+    
     func close() {
         flowController.close()
     }
@@ -69,11 +75,7 @@ extension BackupChangeEncryptionPresenter {
 
 private extension BackupChangeEncryptionPresenter {
     func toSuccess() {
-        password = ""
-        selectedEncryption = interactor.currentEncryption
-        migrationFailureReason = nil
-        
-        isChangingEncryption = false
+        close()
     }
     
     func toFailure(_ reason: CloudState.NotAvailableReason) {
@@ -83,10 +85,17 @@ private extension BackupChangeEncryptionPresenter {
     }
     
     func updateApplyState() {
+        guard !isChangingEncryption else { return }
         func checkPassword() -> Bool {
             password.count > Config.minSyncPasswordLength &&
             password.count <= Config.maxSyncPasswordLength
         }
+        changingPassword = {
+            switch interactor.currentEncryption {
+            case .system: false
+            case .user: true
+            }
+        }()
         changePasswordEnabled = {
             switch interactor.currentEncryption {
             case .system:
@@ -96,9 +105,9 @@ private extension BackupChangeEncryptionPresenter {
                 return checkPassword()
             case .user:
                 if selectedEncryption == .user {
-                    return false
+                    return checkPassword()
                 }
-                return checkPassword()
+                return true
             }
         }()
     }

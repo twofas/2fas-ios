@@ -78,7 +78,7 @@ public enum CloudCurrentState: Equatable {
         case .enabled(let sync):
             switch sync {
             case .syncing:
-                return .enabled(sync: .synced)
+                return .enabled(sync: .syncing)
             case .synced:
                 return .enabled(sync: .synced)
             }
@@ -138,10 +138,10 @@ final class CloudHandler: CloudHandlerType {
     private(set) var currentState: CloudCurrentState = .unknown {
         didSet {
             Log("Cloud Handler - state change \(currentState)", module: .cloudSync)
-            notificationCenter.post(name: .syncStateChanged, object: nil)
             DispatchQueue.main.async {
                 self.listeners.forEach { $0.value(self.currentState) }
             }
+            notificationCenter.post(name: .syncStateChanged, object: nil)
         }
     }
     

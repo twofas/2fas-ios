@@ -92,10 +92,5 @@ private extension BackupMenuPresenter {
     func reload() {
         let menu = buildMenu()
         view?.reload(with: menu)
-        if let error = interactor.error?.errorText {
-            view?.showError(error)
-        } else {
-            view?.clearError()
-        }
     }
 }

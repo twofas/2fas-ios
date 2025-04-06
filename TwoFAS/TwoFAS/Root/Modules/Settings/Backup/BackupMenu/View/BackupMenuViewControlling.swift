@@ -21,6 +21,4 @@ import Foundation
 
 protocol BackupMenuViewControlling: AnyObject {
     func reload(with data: [BackupMenuSection])
-    func showError(_ error: String)
-    func clearError()
 }

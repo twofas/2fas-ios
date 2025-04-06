@@ -19,11 +19,7 @@
 
 import Foundation
 import CloudKit
-#if os(iOS)
 import Common
-#elseif os(watchOS)
-import CommonWatch
-#endif
 
 final class RequirementCheckHandler {
     var newerVersion: (() -> Void)?
@@ -36,7 +32,9 @@ final class RequirementCheckHandler {
         self.encryptionHandler = encryptionHandler
         self.infoHandler = infoHandler
     }
-    
+}
+
+extension RequirementCheckHandler: RequirementCheckHandling {
     func checkIfStopSync(using records: [CKRecord], migrationPending: Bool) -> Bool {
         Log("RequirementCheckHandler - checkIfStopSync", module: .cloudSync)
         if let infoRecord = records.first(where: { RecordType(rawValue: $0.recordType) == .info }) {

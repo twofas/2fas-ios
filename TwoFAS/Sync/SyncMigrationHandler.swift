@@ -17,11 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-#if os(iOS)
 import Common
-#elseif os(watchOS)
-import CommonWatch
-#endif
 
 public protocol SyncMigrationHandling: AnyObject {
     var showMigrationToNewestVersion: (() -> Void)? { get set }

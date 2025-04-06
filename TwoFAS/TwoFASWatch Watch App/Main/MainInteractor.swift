@@ -21,19 +21,55 @@ import Foundation
 import CommonWatch
 
 protocol MainInteracting: AnyObject {
+    var showPairQRCode: ((Bool) -> Void)? { get set }
+    var showSystemKeyError: ((Bool) -> Void)? { get set }
     func listFavoriteServices() -> [ServiceData]
 }
 
 final class MainInteractor {
     private let mainRepository: MainRepository
+    private let notificationCenter: NotificationCenter
+    
+    var showPairQRCode: ((Bool) -> Void)?
+    var showSystemKeyError: ((Bool) -> Void)?
     
     init(mainRepository: MainRepository) {
         self.mainRepository = mainRepository
+        notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(syncStateChanged), name: .syncStateChanged, object: nil)
+    }
+    
+    deinit {
+        notificationCenter.removeObserver(self)
     }
 }
 
 extension MainInteractor: MainInteracting {
     func listFavoriteServices() -> [ServiceData] {
         mainRepository.listFavoriteServices()
+    }
+}
+
+private extension MainInteractor {
+    @objc
+    func syncStateChanged() {
+        switch mainRepository.currentCloudState {
+        case .disabledNotAvailable(let reason):
+            switch reason {
+            case .cloudEncryptedUser:
+                showPairQRCode?(true)
+            case .cloudEncryptedSystem:
+                showSystemKeyError?(true)
+            default: break
+            }
+        case .enabled(let sync):
+            switch sync {
+            case .synced:
+                showPairQRCode?(false)
+                showSystemKeyError?(false)
+            default: break
+            }
+        default: break
+        }
     }
 }

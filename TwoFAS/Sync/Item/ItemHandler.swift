@@ -36,7 +36,7 @@ final class ItemHandler {
     private let infoHandler: InfoHandler
     private let logHandler: LogHandler
     private let serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler
-    private let syncEncryptionHandler: SyncEncryptionHandler
+    private let syncEncryptionHandler: SyncEncryptionHandling
     
     private let encryption = ExchangeFileEncryption()
     private let embedded = Keys.Sync.key.decrypt()
@@ -50,7 +50,7 @@ final class ItemHandler {
         infoHandler: InfoHandler,
         logHandler: LogHandler,
         serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler,
-        syncEncryptionHandler: SyncEncryptionHandler
+        syncEncryptionHandler: SyncEncryptionHandling
     ) {
         self.sectionHandler = sectionHandler
         self.serviceHandler = serviceHandler

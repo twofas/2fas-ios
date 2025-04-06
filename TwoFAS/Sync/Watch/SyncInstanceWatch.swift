@@ -24,18 +24,24 @@ import CommonWatch
 public enum SyncInstanceWatch {
     private static var cloudHandler: CloudHandlerType!
     private static var logDataChangeImpl: LogDataChangeImpl!
+    private static var syncEncryptionHandler: SyncEncryptionWatchHandler!
     
     public static func initialize(
         commonSectionHandler: CommonSectionHandler,
         commonServiceHandler: CommonServiceHandler,
         reference: Data,
+        localEncryptionKeyData: Data,
         errorLog: @escaping (String) -> Void
     ) {
         coreDataStack.logError = { errorLog($0) }
         
         let cloudKit = CloudKit()
         let logHandler = LogHandler(coreDataStack: coreDataStack)
-        let syncEncryptionHandler = SyncEncryptionHandler(reference: reference)
+        let syncEncryptionHandler = SyncEncryptionWatchHandler(
+            reference: reference,
+            localEncryptionKeyData: localEncryptionKeyData
+        )
+        self.syncEncryptionHandler = syncEncryptionHandler
         let sectionHandler = SectionHandler(coreDataStack: coreDataStack)
         let serviceRecordEncryptionHandler = ServiceRecordEncryptionHandler(
             zoneID: cloudKit.zoneID,
@@ -72,7 +78,7 @@ public enum SyncInstanceWatch {
         )
         let modificationQueue = ModificationQueue()
         let migrationHandler = MigrationHandlerWatchPlaceholder()
-        let requirementCheckHandler = RequirementCheckHandler(
+        let requirementCheckHandler = RequirementCheckWatchHandler(
             encryptionHandler: syncEncryptionHandler,
             infoHandler: infoHandler
         )
@@ -101,6 +107,7 @@ public enum SyncInstanceWatch {
         logDataChangeImpl = LogDataChangeImpl(logHandler: logHandler)
     }
     public static func getCloudHandler() -> CloudHandlerType { cloudHandler }
+    public static func getDeviceCode() -> DeviceCode { syncEncryptionHandler.deviceCode }
 
     public static func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],

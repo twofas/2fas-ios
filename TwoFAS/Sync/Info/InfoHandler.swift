@@ -34,9 +34,9 @@ final class InfoHandler {
     }
     private let userDefault = UserDefaults()
     private let zoneID: CKRecordZone.ID
-    private let syncEncryptionHandler: SyncEncryptionHandler
+    private let syncEncryptionHandler: SyncEncryptionHandling
     
-    init(zoneID: CKRecordZone.ID, syncEncryptionHandler: SyncEncryptionHandler) {
+    init(zoneID: CKRecordZone.ID, syncEncryptionHandler: SyncEncryptionHandling) {
         self.zoneID = zoneID
         self.syncEncryptionHandler = syncEncryptionHandler
     }

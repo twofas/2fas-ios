@@ -89,6 +89,12 @@ struct MainView: View {
             .navigationTitle(T.Commons._2fasToolbar)
             .navigationBarTitleDisplayMode(.automatic)
             .listItemTint(.clear)
+            .alert("Missing System Key", isPresented: $presenter.showSystemKeyError) {
+                Button(action: {}, label: { Text(T.Commons.ok) })
+            } message: {
+                Text("Can't decrypt Cloud Backup because there's no system key. Check if iCloud Keychain sync is enabled and works correctly.")
+            }
+            .fullScreenCover(isPresented: $presenter.showPairQRCode, content: PairQRCodeView.init)
         }
     }
 }

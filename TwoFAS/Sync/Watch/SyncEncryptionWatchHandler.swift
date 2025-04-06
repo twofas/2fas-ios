@@ -21,9 +21,9 @@ import Foundation
 import KeychainAccess
 import SignalArgon2
 import CryptoKit
-import Common
+import CommonWatch
 
-final class SyncEncryptionHandler {
+final class SyncEncryptionWatchHandler {
     private let keychain = Keychain(service: "TWOFASSync")
         .synchronizable(true)
         .accessibility(.afterFirstUnlock)
@@ -32,42 +32,30 @@ final class SyncEncryptionHandler {
     private let systemKeyKey = "io.twofas.systemKeyKey"
     private let userKeyKey = "io.twofas.userKeyKey"
     private let usedKeyKey = "io.twofas.usedKeyKey"
-    private let saltKey = "io.twofas.saltKey"
+    private let deviceCodeKey = "io.twofas.deviceCodeKey"
     
     private let reference: Data
     
-    private var cachedSalt: Data?
     private var cachedSystemKey: SymmetricKey?
     private var cachedUsedKey: Info.Encryption = .system
     private var cachedUserKey: SymmetricKey?
     private var cachedEncryptionReference: Data?
+    private var cachedDeviceCode: String?
     
-    init(reference: Data) {
+    private var localEncryptionKey: SymmetricKey
+    
+    private var encryptedUserKeyCached: Data?
+    
+    init(reference: Data, localEncryptionKeyData: Data) {
         self.reference = reference
+        self.localEncryptionKey = SymmetricKey(data: localEncryptionKeyData)
     }
     
     func initialize() {
-        if let savedSalt = keychain[data: saltKey] {
-            cachedSalt = savedSalt
-        } else {
-            guard let createdSalt = createSalt() else {
-                Log("SyncEncryptionHandler: Can't create salt!", module: .cloudSync, severity: .error)
-                return
-            }
-            keychain[data: saltKey] = createdSalt
-            cachedSalt = createdSalt
-        }
-        
         if let savedSystemKey = keychain[data: systemKeyKey] {
             cachedSystemKey = SymmetricKey(data: savedSystemKey)
         } else {
-            let randomStr = String.random(length: 128)
-            guard let createdSystemKey = generateKey(for: randomStr) else {
-                Log("SyncEncryptionHandler: Can't create system key!", module: .cloudSync, severity: .error)
-                return
-            }
-            keychain[data: systemKeyKey] = createdSystemKey
-            cachedSystemKey = SymmetricKey(data: createdSystemKey)
+            Log("No system key available!", module: .cloudSync, severity: .error)
         }
         
         if var usedKeyValue = usedKey() {
@@ -84,17 +72,34 @@ final class SyncEncryptionHandler {
             setUsedKey(.system)
         }
         
+        if let restored = restoreDeviceCode() {
+            cachedDeviceCode = restored
+        } else {
+            let generated = DeviceCode.generate()
+            saveDeviceCode(generated)
+            cachedDeviceCode = generated
+        }
+        
         cachedEncryptionReference = encrypt(reference)
+    }
+    
+    var deviceCode: DeviceCode {
+        DeviceCode(code: cachedDeviceCode ?? "")
     }
 }
 
-extension SyncEncryptionHandler: SyncEncryptionHandling {
-    func setUserPassword(_ password: String) {
-        guard let key = generateKey(for: password) else {
-            Log("SyncEncryptionHandler: Can't create user key!", module: .cloudSync, severity: .error)
+extension SyncEncryptionWatchHandler: SyncEncryptionHandling {
+    func setEncryptedUserKey(_ encryptedKey: Data) {
+        if let cachedEncrypted = encryptedUserKeyCached, cachedEncrypted == encryptedKey {
             return
         }
-        saveUserKey(key)
+        encryptedUserKeyCached = encryptedKey
+        guard let key = decrypt(encryptedKey, using: localEncryptionKey) else {
+            Log("Error while decrypting user key!", module: .cloudSync, severity: .error)
+            return
+        }
+        userDefaults.set(encryptedKey, forKey: userKeyKey)
+        userDefaults.synchronize()
         cachedUserKey = SymmetricKey(data: key)
         
         setUsedKey(.user)
@@ -149,7 +154,7 @@ extension SyncEncryptionHandler: SyncEncryptionHandling {
     }
 }
 
-private extension SyncEncryptionHandler {
+private extension SyncEncryptionWatchHandler {
     func encrypt(_ data: Data, using key: SymmetricKey) -> Data? {
         do {
             let sealedBox = try AES.GCM.seal(data, using: key)
@@ -179,72 +184,25 @@ private extension SyncEncryptionHandler {
         }
     }
     
-    func generateKey(for password: String) -> Data? {
-        guard let hexPassword = normalizeStringIntoHEXData(password) else {
-            Log("SyncEncryptionHandler: Can't create HEX from Password", module: .cloudSync, severity: .error)
-            return nil
-        }
-        
-        guard let passwordData = Data(hexString: hexPassword) else {
-            Log("SyncEncryptionHandler: Can't create HEX from Key", module: .cloudSync, severity: .error)
-            return nil
-        }
-        guard let partOfSalt = cachedSalt?[0...15] else {
-            Log("SyncEncryptionHandler: Cant' get salt!", module: .cloudSync, severity: .error)
-            return nil
-        }
-        do {
-            let (rawHash, _) = try Argon2.hash(
-                iterations: UInt32(3),
-                memoryInKiB: UInt32(64 * 1024),
-                threads: UInt32(4),
-                password: passwordData,
-                salt: partOfSalt,
-                desiredLength: 32,
-                variant: .id,
-                version: .v13
-            )
-            return rawHash
-        } catch {
-            Log("SyncEncryptionHandler: Can't create key, error: \(error)", module: .cloudSync, severity: .error)
-        }
-        return nil
-    }
-    
-    private func normalizeStringIntoHEXData(_ string: String) -> String? {
-        let normalized = string.decomposedStringWithCompatibilityMapping
-        return normalized.data(using: .utf8)?
-            .hexEncodedString()
-    }
-    
-    private func createSalt() -> Data? {
-        let str = String.random(length: 64)
-        guard let data = str.data(using: .utf8) else {
-            Log("Can't create data for salt", module: .cloudSync, severity: .error)
-            return nil
-        }
-        return Data(SHA256.hash(data: data))
-    }
-    
     private func saveUserKey(_ userKey: Data?) {
         guard let userKey else {
             userDefaults.set(nil, forKey: userKeyKey)
             userDefaults.synchronize()
             return
         }
-        guard let cachedSystemKey, let encrypted = encrypt(userKey, using: cachedSystemKey) else {
+        guard let encrypted = encrypt(userKey, using: localEncryptionKey) else {
             Log("Can't encrypt user key for saving", module: .cloudSync, severity: .error)
             return
         }
         userDefaults.set(encrypted, forKey: userKeyKey)
         userDefaults.synchronize()
     }
-    
+        
     private func userKey() -> Data? {
         guard let encrypted = userDefaults.data(forKey: userKeyKey) else {
             return nil
         }
-        guard let cachedSystemKey, let decrypted = decrypt(encrypted, using: cachedSystemKey) else {
+        guard let decrypted = decrypt(encrypted, using: localEncryptionKey) else {
             Log("Can't decrypt user key for retrieval", module: .cloudSync, severity: .error)
             return nil
         }
@@ -252,9 +210,8 @@ private extension SyncEncryptionHandler {
     }
     
     private func setUsedKey(_ usedKey: Info.Encryption) {
-        guard let cachedSystemKey,
-              let data = usedKey.rawValue.data(using: .utf8),
-              let encrypted = encrypt(data, using: cachedSystemKey) else {
+        guard let data = usedKey.rawValue.data(using: .utf8),
+              let encrypted = encrypt(data, using: localEncryptionKey) else {
             Log("Can't encrypt used key for saving", module: .cloudSync, severity: .error)
             return
         }
@@ -266,8 +223,7 @@ private extension SyncEncryptionHandler {
         guard let encrypted = userDefaults.data(forKey: usedKeyKey) else {
             return nil
         }
-        guard let cachedSystemKey,
-              let decryptedData = decrypt(encrypted, using: cachedSystemKey),
+        guard let decryptedData = decrypt(encrypted, using: localEncryptionKey),
               let decryptedRaw = String(data: decryptedData, encoding: .utf8),
               let decrypted = Info.Encryption(rawValue: decryptedRaw)
         else {
@@ -275,5 +231,14 @@ private extension SyncEncryptionHandler {
             return nil
         }
         return decrypted
+    }
+    
+    private func restoreDeviceCode() -> String? {
+        userDefaults.string(forKey: deviceCodeKey)
+    }
+    
+    private func saveDeviceCode(_ code: String) {
+        userDefaults.set(code, forKey: deviceCodeKey)
+        userDefaults.synchronize()
     }
 }

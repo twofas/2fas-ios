@@ -126,7 +126,7 @@ final class CloudHandler: CloudHandlerType {
     private let cloudKit: CloudKit
     private let mergeHandler: MergeHandler
     private let migrationHandler: MigrationHandling
-    private let requirementCheckHandler: RequirementCheckHandler
+    private let requirementCheckHandler: RequirementCheckHandling
     
     private let notificationCenter = NotificationCenter.default
     
@@ -154,7 +154,7 @@ final class CloudHandler: CloudHandlerType {
         cloudKit: CloudKit,
         mergeHandler: MergeHandler,
         migrationHandler: MigrationHandling,
-        requirementCheckHandler: RequirementCheckHandler
+        requirementCheckHandler: RequirementCheckHandling
     ) {
         self.cloudAvailability = cloudAvailability
         self.syncHandler = syncHandler

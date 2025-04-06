@@ -25,6 +25,7 @@ import StorageWatch
 import ContentWatch
 
 protocol MainRepository: AnyObject {
+    var deviceCode: DeviceCode { get }
     func saveStorage()
     func service(for secret: String) -> ServiceData?
     func listAllServicesWithingCategories(
@@ -117,7 +118,8 @@ final class MainRepositoryImpl: MainRepository {
         SyncInstanceWatch.initialize(
             commonSectionHandler: storage.section,
             commonServiceHandler: storage.service,
-            reference: protection.reference
+            reference: protection.reference,
+            localEncryptionKeyData: protection.localEncryptionKeyData
         ) {
             Log("Sync: \($0)")
         }
@@ -163,6 +165,10 @@ final class MainRepositoryImpl: MainRepository {
 }
 
 extension MainRepositoryImpl {
+    var deviceCode: DeviceCode {
+        SyncInstanceWatch.getDeviceCode()
+    }
+    
     func saveStorage() {
         storage.save()
     }

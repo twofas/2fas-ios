@@ -84,19 +84,3 @@ extension Array where Element == BackupMenuSection {
         return nil
     }
 }
-
-extension CloudState.NotAvailableReason {
-    var errorText: String {
-        switch self {
-        case .disabledByUser: return T.Backup.icloudDisabledTitle
-        case .other: return T.Backup.icloudNotAvailable
-        case .error(let error): return error?.localizedDescription ?? T.Commons.unknownError
-        case .overQuota: return T.Backup.userOverQuotaIcloud
-        case .incorrectService(let serviceName): return T.Backup.incorrectSecret(serviceName)
-        case .useriCloudProblem: return T.Backup.icloudProblem
-        case .newerVersion: return T.Error.cloudBackupNewerVersion
-        case .cloudEncryptedUser: return "iCloud is encrypted using custom password. Enter the password and enable sync"
-        case .cloudEncryptedSystem: return "iCloud is encrypted using a shared key. Ensure that you have enabled the iCloud Keychain"
-        }
-    }
-}

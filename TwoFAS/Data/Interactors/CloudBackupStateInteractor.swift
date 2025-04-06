@@ -31,7 +31,7 @@ public protocol CloudBackupStateInteracting: AnyObject {
     var isBackupEnabled: Bool { get }
     var isBackupAvailable: Bool { get }
     var canDelete: Bool { get }
-    var error: CloudState.NotAvailableReason? { get }
+    var iCloudState: CloudState { get }
     
     var stateChanged: Callback? { get set }
     
@@ -58,7 +58,9 @@ final class CloudBackupStateInteractor {
     private var isEnabled = false
     private var isAvailable = false
     
-    private(set) var error: CloudState.NotAvailableReason?
+    var iCloudState: CloudState {
+        mainRepository.cloudCurrentState
+    }
     
     var stateChanged: Callback?
     
@@ -179,7 +181,7 @@ private extension CloudBackupStateInteractor {
         isEnabled = mainRepository.isCloudBackupConnected
         isAvailable = isAvailableCheck()
         previousState = mainRepository.cloudCurrentState
-        error = checkError()
+        let error = checkError()
         Log("""
             CloudBackupStateInteractor - saveStates:
             isEnable: \(isEnabled)

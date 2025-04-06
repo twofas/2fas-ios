@@ -32,7 +32,7 @@ protocol BackupMenuModuleInteracting: AnyObject {
     var isBackupAvailable: Bool { get }
     var isCloudBackupConnected: Bool { get }
     var reload: Callback? { get set }
-    var error: CloudState.NotAvailableReason? { get }
+    var iCloudState: CloudState { get }
     
     func toggleBackup()
     func clearBackup()
@@ -74,8 +74,8 @@ extension BackupMenuModuleInteractor: BackupMenuModuleInteracting {
         cloudBackup.canDelete
     }
     
-    var error: CloudState.NotAvailableReason? {
-        cloudBackup.error
+    var iCloudState: CloudState {
+        cloudBackup.iCloudState
     }
     
     var isBackupOn: Bool {

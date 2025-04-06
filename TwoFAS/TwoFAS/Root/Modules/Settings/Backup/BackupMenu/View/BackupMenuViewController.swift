@@ -26,7 +26,6 @@ final class BackupMenuViewController: UIViewController {
     
     private var tableViewAdapter: TableViewAdapter<BackupMenuSection, BackupMenuCell>!
     
-    private let warningView = BackupAreaWarningView(frame: CGRect.zero)
     private let footerStackView: UIStackView = {
         let stack = UIStackView()
         stack.alignment = .fill
@@ -62,9 +61,7 @@ final class BackupMenuViewController: UIViewController {
         view.backgroundColor = Theme.Colors.Table.background
         
         setupViewLayout()
-        
-        warningView.isHidden = true
-        
+                
         title = T.Backup._2fasBackup
     }
     
@@ -153,14 +150,5 @@ extension BackupMenuViewController: BackupMenuViewControlling {
         let snapshot = TableViewDataSnapshot<BackupMenuSection, BackupMenuCell>()
         data.forEach { snapshot.appendSection($0) }
         tableViewAdapter.apply(snapshot: snapshot)
-    }
-    
-    func showError(_ error: String) {
-        warningView.setTitle(error) {}
-        warningView.isHidden = false
-    }
-    
-    func clearError() {
-        warningView.isHidden = true
     }
 }

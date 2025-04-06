@@ -962,7 +962,6 @@
 		C2BBD1D72B812117009A91FB /* TwoFASWidgetCircular.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD1D52B8120F4009A91FB /* TwoFASWidgetCircular.swift */; };
 		C2BBD2382B8130B0009A91FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2BBD2332B81308C009A91FB /* Localizable.strings */; };
 		C2BC3FC92B94E70F004C4BA0 /* NewPINNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BC3FC82B94E70F004C4BA0 /* NewPINNavigationFlowController.swift */; };
-		C2BD82B2236619E800FBD69A /* BackupAreaWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD82B1236619E800FBD69A /* BackupAreaWarningView.swift */; };
 		C2BD85DA2640290E0087D087 /* IntroductionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD85D92640290E0087D087 /* IntroductionFlowController.swift */; };
 		C2BD85DC26402A910087D087 /* IntroductionContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD85DB26402A910087D087 /* IntroductionContainerView.swift */; };
 		C2BD85E02640308C0087D087 /* IntroductionPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD85DF2640308C0087D087 /* IntroductionPageView.swift */; };
@@ -983,6 +982,7 @@
 		C2BF61142D95D5F900E308BF /* SyncMigrationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BF61132D95D5F000E308BF /* SyncMigrationInteractor.swift */; };
 		C2C02242297F222100D596A8 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C02241297F222100D596A8 /* MainPresenter.swift */; };
 		C2C02244297F224700D596A8 /* MainModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C02243297F224700D596A8 /* MainModuleInteractor.swift */; };
+		C2C0A7FC2DA2B46D000A1772 /* CloudState+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A7FB2DA2B469000A1772 /* CloudState+.swift */; };
 		C2C15140294E831300F8B511 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1513F294E831300F8B511 /* Keys.swift */; };
 		C2C1DDE427CAD37D002C7867 /* SelectOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1DDE327CAD37D002C7867 /* SelectOption.swift */; };
 		C2C32A312AB7198C00DDB944 /* IconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C32A302AB7198C00DDB944 /* IconRenderer.swift */; };
@@ -2821,7 +2821,6 @@
 		C2BBD24D2B813162009A91FB /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = TwoFAS/Other/de.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C2BBD24E2B813162009A91FB /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = TwoFAS/Other/pl.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C2BC3FC82B94E70F004C4BA0 /* NewPINNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPINNavigationFlowController.swift; sourceTree = "<group>"; };
-		C2BD82B1236619E800FBD69A /* BackupAreaWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupAreaWarningView.swift; sourceTree = "<group>"; };
 		C2BD85D92640290E0087D087 /* IntroductionFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionFlowController.swift; sourceTree = "<group>"; };
 		C2BD85DB26402A910087D087 /* IntroductionContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionContainerView.swift; sourceTree = "<group>"; };
 		C2BD85DF2640308C0087D087 /* IntroductionPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionPageView.swift; sourceTree = "<group>"; };
@@ -2844,6 +2843,7 @@
 		C2BF61132D95D5F000E308BF /* SyncMigrationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationInteractor.swift; sourceTree = "<group>"; };
 		C2C02241297F222100D596A8 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		C2C02243297F224700D596A8 /* MainModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModuleInteractor.swift; sourceTree = "<group>"; };
+		C2C0A7FB2DA2B469000A1772 /* CloudState+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudState+.swift"; sourceTree = "<group>"; };
 		C2C1513F294E831300F8B511 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		C2C1DDE327CAD37D002C7867 /* SelectOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectOption.swift; sourceTree = "<group>"; };
 		C2C32A302AB7198C00DDB944 /* IconRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconRenderer.swift; sourceTree = "<group>"; };
@@ -6180,7 +6180,6 @@
 		C27D543B275D37C3001E9ABF /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C284AF6F276011B500FEE810 /* Subviews */,
 				C27D543C275D38E0001E9ABF /* BackupMenuViewController.swift */,
 				C27D5440275D462D001E9ABF /* BackupMenuViewController+TableCellHandling.swift */,
 				C27D5442275D478E001E9ABF /* BackupMenuViewControlling.swift */,
@@ -6320,14 +6319,6 @@
 				C284AF70276011F300FEE810 /* View */,
 			);
 			path = BackupDelete;
-			sourceTree = "<group>";
-		};
-		C284AF6F276011B500FEE810 /* Subviews */ = {
-			isa = PBXGroup;
-			children = (
-				C2BD82B1236619E800FBD69A /* BackupAreaWarningView.swift */,
-			);
-			path = Subviews;
 			sourceTree = "<group>";
 		};
 		C284AF70276011F300FEE810 /* View */ = {
@@ -7746,6 +7737,7 @@
 		C2DD28C521D5591500034476 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C2C0A7FB2DA2B469000A1772 /* CloudState+.swift */,
 				C27A1EB429127C8D00702DB9 /* AlertController+Ready.swift */,
 				C2BDC6CE1FC1CBE000967D0E /* Dictionary+Extensions.swift */,
 				C2BDC6D31FC1CBE000967D0E /* String+Extensions.swift */,
@@ -9852,6 +9844,7 @@
 				C2D44E68275C10850043F5D6 /* SettingsMenuTableView.swift in Sources */,
 				C233DCAD2B04285E008E41D8 /* LoginViewController.swift in Sources */,
 				C2A74FE62610D510007E5AB3 /* ColorGridSelector.swift in Sources */,
+				C2C0A7FC2DA2B46D000A1772 /* CloudState+.swift in Sources */,
 				C25C661428BADAB0008EC66A /* AboutFlowController.swift in Sources */,
 				C20E60FB2818971300AB002E /* PushNotificationPermissionPresenter.swift in Sources */,
 				C2F134B0246844B10014FB4E /* MainContainerActionButton.swift in Sources */,
@@ -10085,7 +10078,6 @@
 				C2508E1B2753AEEB0072C564 /* TableViewAdapter.swift in Sources */,
 				C2BDC6D41FC1CBE100967D0E /* Dictionary+Extensions.swift in Sources */,
 				C2F9E15F2D983938004B7DFA /* SyncMigrationToNewestVersionPresenter.swift in Sources */,
-				C2BD82B2236619E800FBD69A /* BackupAreaWarningView.swift in Sources */,
 				C2AC220C276618AD00271402 /* ExporterMainScreenFlowController.swift in Sources */,
 				C240186F2618685500800DBF /* IconSelectorViewController.swift in Sources */,
 				C237369E2AC09ABE00792054 /* GuideSelectorModuleInteractor.swift in Sources */,

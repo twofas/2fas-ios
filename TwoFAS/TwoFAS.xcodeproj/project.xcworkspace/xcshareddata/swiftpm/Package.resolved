@@ -1,5 +1,5 @@
 {
-  "originHash" : "563d7097428dae9bfa12e1b74a537bd7c01ab25bb67080a7ebbfdb714eaae25b",
+  "originHash" : "321efe913bc92454423b2f7b5533107e5aaba3d235cb958c26bb74fec09c40b9",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -35,6 +35,15 @@
       "state" : {
         "revision" : "513b9d7e7a1bd46504a1009bbab943b75ce2f195",
         "version" : "5.6.0"
+      }
+    },
+    {
+      "identity" : "efqrcode",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/EFPrefix/EFQRCode.git",
+      "state" : {
+        "revision" : "3a6c5012f1a0df404a92e55bb01b4b685ff5a2d1",
+        "version" : "6.2.2"
       }
     },
     {
@@ -170,6 +179,15 @@
       "state" : {
         "revision" : "d72aed98f8253ec1aa9ea1141e28150f408cf17f",
         "version" : "1.29.0"
+      }
+    },
+    {
+      "identity" : "swift_qrcodejs",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/EFPrefix/swift_qrcodejs.git",
+      "state" : {
+        "revision" : "817ba220a2eba840bae888e7eeb11207bec05f8c",
+        "version" : "2.3.0"
       }
     }
   ],

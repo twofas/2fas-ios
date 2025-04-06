@@ -33,7 +33,7 @@ final class SyncHandler {
     private let modificationQueue: ModificationQueue
     private let mergeHandler: MergeHandler
     private let migrationHandler: MigrationHandling
-    private let requirementCheck: RequirementCheckHandler
+    private let requirementCheck: RequirementCheckHandling
     
     private var isSyncing = false
     private var applyingChanges = false
@@ -59,7 +59,7 @@ final class SyncHandler {
         modificationQueue: ModificationQueue,
         mergeHandler: MergeHandler,
         migrationHandler: MigrationHandling,
-        requirementCheck: RequirementCheckHandler
+        requirementCheck: RequirementCheckHandling
     ) {
         self.itemHandler = itemHandler
         self.commonItemHandler = commonItemHandler
@@ -74,18 +74,7 @@ final class SyncHandler {
         
         cloudKit.deletedEntries = { [weak self] entries in self?.deleteEntries(entries) }
         cloudKit.updatedEntries = { [weak self] entries in self?.updateEntries(entries) }
-        cloudKit.fetchFinishedSuccessfuly = { [weak self] in
-            #if os(watchOS)
-            Log("SyncHandler - WatchOS doesn't modify iCloud - returning", module: .cloudSync)
-            self?.itemHandler.commit()
-            self?.logHandler.deleteAll()
-            self?.applyingChanges = false
-            self?.syncCompleted()
-            #else
-            guard self?.isSyncing == true else { return }
-            self?.fetchFinishedSuccessfuly()
-            #endif
-        }
+        cloudKit.fetchFinishedSuccessfuly = { [weak self] in self?.fetchFinishedSuccessfuly() }
         cloudKit.changesSavedSuccessfuly = { [weak self] in self?.changesSavedSuccessfuly() }
         cloudKit.abortSync = { [weak self] in self?.abortSync() }
         

@@ -60,8 +60,10 @@ public final class Protection {
     }
     #elseif os(watchOS)
     public let localKeyEncryption: CommonLocalKeyEncryption
+    public let localEncryptionKeyData: Data
     public init() {
         localKeyEncryption = LocalKeyEncryption()
+        localEncryptionKeyData = Keys.LocalEncryptionKey.dataValue
     }
     #endif
 }

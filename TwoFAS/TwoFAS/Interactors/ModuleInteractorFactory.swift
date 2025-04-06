@@ -344,7 +344,7 @@ final class ModuleInteractorFactory {
             networkStatusInteractor: InteractorFactory.shared.networkStatusInteractor(),
             appInfoInteractor: InteractorFactory.shared.appInfoInteractor(),
             rootInteractor: InteractorFactory.shared.rootInteractor(),
-            mdmInteractor: InteractorFactory.shared.mdmInteractor(),
+            mdmInteractor: InteractorFactory.shared.mdmInteractor(monitorCloudState: true),
             protectionInteractor: InteractorFactory.shared.protectionInteractor(),
             syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor()
         )

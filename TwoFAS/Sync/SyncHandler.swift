@@ -252,7 +252,6 @@ final class SyncHandler {
         
         if modificationQueue.finished {
             Log("SyncHandler - All Changes Saved Successfuly", module: .cloudSync)
-            applyingChanges = false
             logHandler.deleteAllApplied()
             syncCompleted()
         } else {

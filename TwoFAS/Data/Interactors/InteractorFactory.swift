@@ -243,11 +243,12 @@ public final class InteractorFactory {
         AppStateInteractor(mainRepository: MainRepositoryImpl.shared)
     }
     
-    public func mdmInteractor() -> MDMInteracting {
+    public func mdmInteractor(monitorCloudState: Bool = false) -> MDMInteracting {
         MDMInteractor(
             mainRepository: MainRepositoryImpl.shared,
             pairingInteractor: pairingWebExtensionInteractor(),
-            cloudBackupStateInteractor: cloudBackupStateInteractor(listenerID: "MDMInteractor")
+            cloudBackupStateInteractor: cloudBackupStateInteractor(listenerID: "MDMInteractor"),
+            monitorCloudState: monitorCloudState
         )
     }
     

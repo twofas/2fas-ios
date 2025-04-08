@@ -38,7 +38,8 @@ struct PairQRCodeView: View {
         let deviceCode = MainRepositoryImpl.shared.deviceCode.code
         let devicePath = DeviceCodePath(code: deviceCode)
         let generator = EFQRCodeGenerator(
-            content: devicePath.codePath, encoding: .ascii,
+            content: devicePath.codePath,
+            encoding: .ascii,
             size: EFIntSize(width: dimension, height: dimension)
         )
         generator.withMode(EFQRCodeMode.grayscale)
@@ -54,4 +55,3 @@ struct PairQRCodeView: View {
         return image
     }
 }
-

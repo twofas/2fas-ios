@@ -52,7 +52,11 @@ public struct DeviceCodePath: Equatable {
     }
 }
 
-public struct DeviceCode: Equatable, Codable {
+public struct DeviceCode: Equatable, Codable, Comparable, Hashable {
+    public static func < (lhs: DeviceCode, rhs: DeviceCode) -> Bool {
+        lhs.code < rhs.code
+    }
+    
     static let prefixLength = 14
     
     public let code: String
@@ -67,12 +71,16 @@ public struct DeviceCode: Equatable, Codable {
     }
 }
 
-public struct DeviceCodeKey: Equatable, Codable {
+public struct DeviceCodeKey: Equatable, Codable, Hashable {
     private static let separator = "___"
     
     public let deviceCode: DeviceCode
     public let encryptedData: Data
-    public let deviceName: String
+    public private(set) var deviceName: String
+    
+    public init?(deviceCodePath: DeviceCodePath) {
+        self.init(string: deviceCodePath.codePath)
+    }
     
     public init?(string: String) {
         let splitted = string.split(separator: Self.separator)
@@ -122,5 +130,9 @@ public struct DeviceCodeKey: Equatable, Codable {
             return nil
         }
         return "\(deviceCode.code)\(Self.separator)\(strData)\(Self.separator)\(name)"
+    }
+    
+    public mutating func updateName(_ deviceName: String) {
+        self.deviceName = deviceName
     }
 }

@@ -30,12 +30,16 @@ public enum SyncInstance {
         commonSectionHandler: CommonSectionHandler,
         commonServiceHandler: CommonServiceHandler,
         reference: Data,
+        localEncryptionKeyData: Data,
         errorLog: @escaping (String) -> Void
     ) {
         coreDataStack.logError = { errorLog($0) }
         
         let cloudKit = CloudKit()
-        let syncEncryptionHandler = SyncEncryptionHandler(reference: reference)
+        let syncEncryptionHandler = SyncEncryptionHandler(
+            reference: reference,
+            localEncryptionKeyData: localEncryptionKeyData
+        )
         let serviceRecordEncryptionHandler = ServiceRecordEncryptionHandler(
             zoneID: cloudKit.zoneID,
             encryptionHandler: syncEncryptionHandler

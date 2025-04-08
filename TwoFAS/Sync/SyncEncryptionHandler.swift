@@ -42,8 +42,11 @@ final class SyncEncryptionHandler {
     private var cachedUserKey: SymmetricKey?
     private var cachedEncryptionReference: Data?
     
-    init(reference: Data) {
+    private let localEncryptionKey: SymmetricKey
+    
+    init(reference: Data, localEncryptionKeyData: Data) {
         self.reference = reference
+        self.localEncryptionKey = SymmetricKey(data: localEncryptionKeyData)
     }
     
     func initialize() {

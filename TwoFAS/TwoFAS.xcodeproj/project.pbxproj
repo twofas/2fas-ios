@@ -217,6 +217,7 @@
 		C22E417925DF076300105195 /* LocalEncryptedStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22E417825DF076300105195 /* LocalEncryptedStorage.swift */; };
 		C22E418825DF07B300105195 /* KeyEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22E418725DF07B300105195 /* KeyEncryption.swift */; };
 		C22E6FA121E2666B00A2E66B /* CircularShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22E6FA021E2666B00A2E66B /* CircularShape.swift */; };
+		C22FFC3E2DA5C02000A68ABD /* WatchPairHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22FFC3C2DA5C01900A68ABD /* WatchPairHandler.swift */; };
 		C230A898275AC99C00FB83AE /* SettingsMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C230A897275AC99C00FB83AE /* SettingsMenuTableViewCell.swift */; };
 		C230A89A275AE1A800FB83AE /* SettingsMenuToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C230A899275AE1A800FB83AE /* SettingsMenuToggle.swift */; };
 		C230DB8C274710E5005E7060 /* icon_64.png in Resources */ = {isa = PBXBuildFile; fileRef = C230DB8A274710E5005E7060 /* icon_64.png */; };
@@ -2157,6 +2158,7 @@
 		C22E418725DF07B300105195 /* KeyEncryption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyEncryption.swift; sourceTree = "<group>"; };
 		C22E6F9E21E21A1E00A2E66B /* NotificationIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationIcon.swift; sourceTree = "<group>"; };
 		C22E6FA021E2666B00A2E66B /* CircularShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularShape.swift; sourceTree = "<group>"; };
+		C22FFC3C2DA5C01900A68ABD /* WatchPairHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchPairHandler.swift; sourceTree = "<group>"; };
 		C230A897275AC99C00FB83AE /* SettingsMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuTableViewCell.swift; sourceTree = "<group>"; };
 		C230A899275AE1A800FB83AE /* SettingsMenuToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuToggle.swift; sourceTree = "<group>"; };
 		C230DB8A274710E5005E7060 /* icon_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_64.png; sourceTree = "<group>"; };
@@ -5408,6 +5410,7 @@
 		C24D1C1B253C744E0029D27D /* Sync */ = {
 			isa = PBXGroup;
 			children = (
+				C22FFC3C2DA5C01900A68ABD /* WatchPairHandler.swift */,
 				C2F5443425685C2100611716 /* SyncInstance.swift */,
 				C2D507B5256477DA00151359 /* CloudHandler.swift */,
 				C245877F2D8B917100F28B22 /* SyncMigrationHandler.swift */,
@@ -10400,6 +10403,7 @@
 				C23BAB142545AEF5009B1EF8 /* ConstStorage.swift in Sources */,
 				C207C11F2559F1CB0053975E /* CloudKitErrorParser.swift in Sources */,
 				C24EECF6268787B400C6ABAA /* SectionHandler.swift in Sources */,
+				C22FFC3E2DA5C02000A68ABD /* WatchPairHandler.swift in Sources */,
 				C257DD742D80DC44004FB575 /* ServiceRecord3.swift in Sources */,
 				C2F543DD25672E7600611716 /* Types.swift in Sources */,
 				C244EF14268685BC0040A58F /* Sync2-Sync3.xcmappingmodel in Sources */,

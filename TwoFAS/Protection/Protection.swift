@@ -38,6 +38,7 @@ public final class Protection {
     }
     public let reference = Keys.Reference.dataValue
     #if os(iOS)
+    public let localEncryptionKeyData: Data = Keys.LocalEncryptionKey.dataValue
     private let encryptedStorage: LocalEncryptedStorage
     
     public let biometricAuth: BiometricAuth

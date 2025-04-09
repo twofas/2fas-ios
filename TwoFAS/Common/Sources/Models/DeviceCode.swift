@@ -32,6 +32,10 @@ public struct DeviceCodePath: Equatable {
         extractCode(from: path) != nil
     }
     
+    public func extractDeviceCode() -> DeviceCode? {
+        Self.extractDeviceCode(from: codePath)
+    }
+    
     public static func extractDeviceCode(from path: String) -> DeviceCode? {
         guard let code = extractCode(from: path) else {
             return nil
@@ -77,10 +81,6 @@ public struct DeviceCodeKey: Equatable, Codable, Hashable {
     public let deviceCode: DeviceCode
     public let encryptedData: Data
     public private(set) var deviceName: String
-    
-    public init?(deviceCodePath: DeviceCodePath) {
-        self.init(string: deviceCodePath.codePath)
-    }
     
     public init?(string: String) {
         let splitted = string.split(separator: Self.separator)

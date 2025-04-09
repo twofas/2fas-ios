@@ -21,6 +21,10 @@ import Foundation
 import CloudKit
 
 final class InfoHandler {
+    var allowedDevicesUpdated: (([String]) -> Void)?
+    var allowedList: (() -> [String])?
+    var allowedDevicesChanged: (() -> Bool)?
+    
     private let allowedDevicesNone = "none"
     
     private enum Keys: String, CaseIterable {
@@ -49,6 +53,7 @@ final class InfoHandler {
         saveEncryptionReference(record.encryptionReference ?? Data())
         saveEncryptionType(Info.Encryption(rawValue: record.encryption) ?? .system)
         saveModificationDate(record.modificationDate)
+        allowedDevicesUpdated?(record.allowedDevices)
     }
     
     func createNew(encryptionReference: Data) -> CKRecord? { // first creation with default value
@@ -85,6 +90,7 @@ final class InfoHandler {
         if let encryptionReference {
             saveEncryptionReference(encryptionReference)
         }
+        saveModificationDate(Date())
     }
     
     func prepareForSendoff() -> [CKRecord] {
@@ -109,14 +115,28 @@ final class InfoHandler {
         else {
             return nil
         }
+        let devicesChanged = allowedDevicesChanged?() == true
+        let devicesList = allowedList?() ?? []
+        let devices = {
+            if devicesChanged {
+                return devicesList
+            }
+            return allowedDevices
+        }()
+        let date: Date = {
+            if devicesChanged {
+                return Date()
+            }
+            return modificationDate
+        }()
         return InfoRecord.recreate(
             with: metadata,
             version: version,
             encryption: encryptionType.rawValue,
-            allowedDevices: allowedDevices,
+            allowedDevices: devices,
             enableWatch: enableWatch,
             encryptionReference: encryptionReference,
-            modificationDate: modificationDate
+            modificationDate: date
         )
     }
 }

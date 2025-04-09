@@ -34,7 +34,7 @@ public protocol WatchPairHandling: AnyObject {
     func list() -> [PairedWatch]
     func unpair(_ pairedWatch: PairedWatch)
     func rename(_ pairedWatch: PairedWatch, newName: String)
-    func pair(deviceCodePath: DeviceCodePath)
+    func pair(deviceCodePath: DeviceCodePath, deviceName: String)
 }
 
 protocol WatchPairInfoHandling: AnyObject {
@@ -43,12 +43,19 @@ protocol WatchPairInfoHandling: AnyObject {
 }
 
 final class WatchPairHandler {
+    var synchronize: Callback?
+    var logInfoModification: Callback?
+    
     private let syncEncryptionHandler: SyncEncryptionHandler
     private let infoHandler: InfoHandler
-    private let key = "WatchPairHandlerStorage"
+    
+    private let storageKey = "WatchPairHandlerStorage"
+    private let newDataForSyncKey = "WatchPairHandlerNewDataForSync"
+    
     private let userDefaults: UserDefaults
     private let jsonEncoder: JSONEncoder
     private let jsonDecoder: JSONDecoder
+    private let notificationCenter: NotificationCenter
     
     private var cachedList: [DeviceCodeKey]?
     
@@ -58,6 +65,22 @@ final class WatchPairHandler {
         self.jsonDecoder = JSONDecoder()
         self.syncEncryptionHandler = syncEncryptionHandler
         self.infoHandler = infoHandler
+        self.notificationCenter = .default
+        notificationCenter.addObserver(
+                self,
+                selector: #selector(syncFinished),
+                name: .syncCompletedSuccessfuly,
+                object: nil
+            )
+        infoHandler.allowedDevicesUpdated = { [weak self] in
+            self?.update(cloudList: $0)
+        }
+        infoHandler.allowedList = { [weak self] in
+            self?.cloudList() ?? []
+        }
+        infoHandler.allowedDevicesChanged = { [weak self] in
+            self?.needsUpdateFlag ?? false
+        }
     }
 }
 
@@ -86,11 +109,13 @@ extension WatchPairHandler: WatchPairHandling {
         saveList(list)
     }
     
-    func pair(deviceCodePath: DeviceCodePath) {
-        guard let device = DeviceCodeKey(deviceCodePath: deviceCodePath) else {
+    func pair(deviceCodePath: DeviceCodePath, deviceName: String) {
+        guard let deviceCode = deviceCodePath.extractDeviceCode(),
+              let key = getCurrentKey() else {
             Log("Error while creating DeviceCodeKey from code path", module: .cloudSync, severity: .error)
             return
         }
+        let device = DeviceCodeKey(deviceCode: deviceCode, encryptedData: key, deviceName: deviceName)
         var list = getList()
         if let index = list.firstIndex(where: { $0.deviceCode == device.deviceCode }) {
             list[index] = device
@@ -98,6 +123,13 @@ extension WatchPairHandler: WatchPairHandling {
             list.append(device)
         }
         saveList(list)
+    }
+    
+    func clearList() {
+        cachedList = nil
+        removeList()
+        update()
+        synchronize?()
     }
 }
 
@@ -120,6 +152,11 @@ extension WatchPairHandler: WatchPairInfoHandling {
 }
 
 private extension WatchPairHandler {
+    @objc
+    func syncFinished() {
+        clearNeedsUpdateFlag()
+    }
+    
     func getList() -> [DeviceCodeKey] {
         if let cachedList {
             return cachedList
@@ -134,14 +171,34 @@ private extension WatchPairHandler {
         cachedList = list
         storeList(list)
         
-        // update info!
+        update()
         if sync {
-            //        sync()
+            synchronize?()
         }
     }
     
-    func getCurrentKey() -> Data {
-        Data() // get from encryption handler
+    func update() {
+        setNeedsUpdateFlag()
+        
+        logInfoModification?()
+    }
+        
+    func getCurrentKey() -> Data? {
+        syncEncryptionHandler.encryptedWatchTicket
+    }
+    
+    func setNeedsUpdateFlag() {
+        userDefaults.set(true, forKey: newDataForSyncKey)
+        userDefaults.synchronize()
+    }
+    
+    func clearNeedsUpdateFlag() {
+        userDefaults.set(false, forKey: newDataForSyncKey)
+        userDefaults.synchronize()
+    }
+    
+    var needsUpdateFlag: Bool {
+        userDefaults.bool(forKey: newDataForSyncKey)
     }
     
     func storeList(_ list: [DeviceCodeKey]) {
@@ -149,12 +206,17 @@ private extension WatchPairHandler {
             Log("Error while encoding DeviceCodeKey list", module: .cloudSync, severity: .error)
             return
         }
-        userDefaults.set(encodedList, forKey: key)
+        userDefaults.set(encodedList, forKey: storageKey)
+        userDefaults.synchronize()
+    }
+    
+    func removeList() {
+        userDefaults.removeObject(forKey: storageKey)
         userDefaults.synchronize()
     }
     
     func storedList() -> [DeviceCodeKey] {
-        guard let encodedList = userDefaults.data(forKey: key) else {
+        guard let encodedList = userDefaults.data(forKey: storageKey) else {
             return []
         }
         guard let list = try? jsonDecoder.decode([DeviceCodeKey].self, from: encodedList) else {

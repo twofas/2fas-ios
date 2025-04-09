@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -9322,7 +9322,6 @@
 				};
 			};
 			buildConfigurationList = C236666E1FB2644900989ACA /* Build configuration list for PBXProject "TwoFAS" */;
-			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -9358,6 +9357,7 @@
 				C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C2C0A9862DA33A72000A1772 /* XCRemoteSwiftPackageReference "EFQRCode" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = C23666741FB2644900989ACA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

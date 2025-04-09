@@ -24,6 +24,8 @@ import CryptoKit
 import Common
 
 final class SyncEncryptionHandler {
+    var keyDidChange: Callback?
+    
     private let keychain = Keychain(service: "TWOFASSync")
         .synchronizable(true)
         .accessibility(.afterFirstUnlock)
@@ -104,6 +106,7 @@ extension SyncEncryptionHandler: SyncEncryptionHandling {
         cachedUsedKey = .user
         
         cachedEncryptionReference = encrypt(reference)
+        keyDidChange?()
     }
     
     func setSystemKey() {
@@ -114,6 +117,7 @@ extension SyncEncryptionHandler: SyncEncryptionHandling {
         cachedUsedKey = .system
         
         cachedEncryptionReference = encrypt(reference)
+        keyDidChange?()
     }
     
     func encrypt(_ data: Data) -> Data? {
@@ -142,6 +146,13 @@ extension SyncEncryptionHandler: SyncEncryptionHandling {
     
     var encryptionType: Info.Encryption {
         cachedUsedKey
+    }
+    
+    var encryptedWatchTicket: Data? {
+        guard usedKey() == .user, let userKey = userKey() else {
+            return nil
+        }
+        return encrypt(userKey, using: localEncryptionKey)
     }
     
     func purge() {

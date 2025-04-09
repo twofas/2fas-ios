@@ -25,6 +25,7 @@ public enum SyncInstance {
     private static var cloudHandler: CloudHandlerType!
     private static var logDataChangeImpl: LogDataChangeImpl!
     private static var syncMigrationHandler: SyncMigrationHandling!
+    private static var watchPairHandler: WatchPairHandling!
     
     public static func initialize(
         commonSectionHandler: CommonSectionHandler,
@@ -97,6 +98,12 @@ public enum SyncInstance {
             migrationHandler: migrationHandler,
             requirementCheck: requirementCheck
         )
+        let watchPairHandlerInstance = WatchPairHandler(
+            syncEncryptionHandler: syncEncryptionHandler,
+            infoHandler: infoHandler
+        )
+        syncEncryptionHandler.keyDidChange = { watchPairHandlerInstance.clearList() }
+        
         let cloudAvailability = CloudAvailability(container: syncHandler.container)
         cloudHandler = CloudHandler(
             cloudAvailability: cloudAvailability,
@@ -111,6 +118,12 @@ public enum SyncInstance {
             migrationHandler: migrationHandler,
             syncEncryptionHandler: syncEncryptionHandler
         )
+        watchPairHandlerInstance.synchronize = { cloudHandler.synchronize() }
+        watchPairHandlerInstance.logInfoModification = { logHandler.log(
+            entityID: Info.id,
+            actionType: .modified,
+            kind: .info
+        ) }
         cloudHandler.registerForStateChange({ cloudState in
             syncMigrationHandlerInstance.cloudStateChange(cloudState)
         }, with: "syncMigrationHandler")
@@ -121,9 +134,11 @@ public enum SyncInstance {
         
         syncMigrationHandler = syncMigrationHandlerInstance
         logDataChangeImpl = LogDataChangeImpl(logHandler: logHandler)
+        watchPairHandler = watchPairHandlerInstance
     }
     public static func getCloudHandler() -> CloudHandlerType { cloudHandler }
     public static func getSyncMigrationHandler() -> SyncMigrationHandling { syncMigrationHandler }
+    public static func getWatchPairHandler() -> WatchPairHandling { watchPairHandler }
     
     public static func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],

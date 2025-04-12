@@ -65,6 +65,8 @@ final class BackupMenuPresenter {
             flowController.toDeleteCloudBackup()
         case .changeCloudBackupPassword:
             flowController.toChangeEncryption()
+        case .manageAppleWatch:
+            flowController.toManageAppleWatch()
         }
     }
     

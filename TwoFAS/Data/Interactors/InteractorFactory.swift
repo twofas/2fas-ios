@@ -279,4 +279,8 @@ public final class InteractorFactory {
     public func compressionInteractor() -> CompressionInteracting {
         CompressionInteractor()
     }
+
+    public func watchPairingInteractor() -> WatchPairingInteracting {
+        WatchPairingInteractor(mainRepository: MainRepositoryImpl.shared)
+    }
 }

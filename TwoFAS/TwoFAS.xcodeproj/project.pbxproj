@@ -401,6 +401,10 @@
 		C25B221427C17F1E0052AAC4 /* ComposeServiceInputKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25B221327C17F1E0052AAC4 /* ComposeServiceInputKind.swift */; };
 		C25B221627C181690052AAC4 /* ComposeServiceInputCellKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25B221527C181690052AAC4 /* ComposeServiceInputCellKind.swift */; };
 		C25B221927C199B80052AAC4 /* ComposeServicePrivateKeyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25B221827C199B80052AAC4 /* ComposeServicePrivateKeyCell.swift */; };
+		C25BB2C82DAAE2E600BEC626 /* ManageWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BB2C72DAAE2E600BEC626 /* ManageWatchViewController.swift */; };
+		C25BB2CA2DAAE35000BEC626 /* ManageWatchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BB2C92DAAE34C00BEC626 /* ManageWatchPresenter.swift */; };
+		C25BB2CC2DAAE3FF00BEC626 /* ManageWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BB2CB2DAAE3E500BEC626 /* ManageWatchView.swift */; };
+		C25BB2CE2DAAE45700BEC626 /* ManageWatchModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BB2CD2DAAE44C00BEC626 /* ManageWatchModuleInteractor.swift */; };
 		C25BDA0A27B59DB700514161 /* IconSelectorViewController+CollectionViewCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BDA0927B59DB700514161 /* IconSelectorViewController+CollectionViewCellHandling.swift */; };
 		C25C661428BADAB0008EC66A /* AboutFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C661328BADAB0008EC66A /* AboutFlowController.swift */; };
 		C25C91CF2B08E84800E58729 /* AddingServiceManuallyNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C91CE2B08E84800E58729 /* AddingServiceManuallyNavigationFlowController.swift */; };
@@ -1342,6 +1346,11 @@
 		C2EF402625582AFB0006735E /* ServiceCacheEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF402425582AFB0006735E /* ServiceCacheEntity+CoreDataClass.swift */; };
 		C2EF402725582AFB0006735E /* ServiceCacheEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF402525582AFB0006735E /* ServiceCacheEntity+CoreDataProperties.swift */; };
 		C2EF4045255860FC0006735E /* ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF4044255860FC0006735E /* ServiceHandler.swift */; };
+		C2EF7B1A2DA99BE700BAA559 /* MainRepositoryImpl+WatchPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF7B192DA99BE100BAA559 /* MainRepositoryImpl+WatchPair.swift */; };
+		C2EF7B1E2DA99D1000BAA559 /* PairedWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF7B1D2DA99D1000BAA559 /* PairedWatch.swift */; };
+		C2EF7B1F2DA99D1000BAA559 /* PairedWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF7B1D2DA99D1000BAA559 /* PairedWatch.swift */; };
+		C2EF7B212DA99D9B00BAA559 /* WatchPairingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF7B202DA99D9600BAA559 /* WatchPairingInteractor.swift */; };
+		C2EF7B242DA9AE7100BAA559 /* ManageWatchFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF7B232DA9AE6800BAA559 /* ManageWatchFlowController.swift */; };
 		C2EFCE0725D05E320031293F /* ClearHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EFCE0625D05E320031293F /* ClearHandler.swift */; };
 		C2F134B0246844B10014FB4E /* MainContainerActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F134AF246844B10014FB4E /* MainContainerActionButton.swift */; };
 		C2F33940214AB53F0072FE80 /* RatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F3393F214AB53F0072FE80 /* RatingController.swift */; };
@@ -2366,6 +2375,10 @@
 		C25B221327C17F1E0052AAC4 /* ComposeServiceInputKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceInputKind.swift; sourceTree = "<group>"; };
 		C25B221527C181690052AAC4 /* ComposeServiceInputCellKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceInputCellKind.swift; sourceTree = "<group>"; };
 		C25B221827C199B80052AAC4 /* ComposeServicePrivateKeyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServicePrivateKeyCell.swift; sourceTree = "<group>"; };
+		C25BB2C72DAAE2E600BEC626 /* ManageWatchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchViewController.swift; sourceTree = "<group>"; };
+		C25BB2C92DAAE34C00BEC626 /* ManageWatchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchPresenter.swift; sourceTree = "<group>"; };
+		C25BB2CB2DAAE3E500BEC626 /* ManageWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchView.swift; sourceTree = "<group>"; };
+		C25BB2CD2DAAE44C00BEC626 /* ManageWatchModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchModuleInteractor.swift; sourceTree = "<group>"; };
 		C25BDA0927B59DB700514161 /* IconSelectorViewController+CollectionViewCellHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IconSelectorViewController+CollectionViewCellHandling.swift"; sourceTree = "<group>"; };
 		C25C318C2881BC5A002C9044 /* NotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationInteractor.swift; sourceTree = "<group>"; };
 		C25C318E2881CDA4002C9044 /* LinkInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkInteractor.swift; sourceTree = "<group>"; };
@@ -3100,6 +3113,10 @@
 		C2EF402425582AFB0006735E /* ServiceCacheEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceCacheEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C2EF402525582AFB0006735E /* ServiceCacheEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceCacheEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C2EF4044255860FC0006735E /* ServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceHandler.swift; sourceTree = "<group>"; };
+		C2EF7B192DA99BE100BAA559 /* MainRepositoryImpl+WatchPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+WatchPair.swift"; sourceTree = "<group>"; };
+		C2EF7B1D2DA99D1000BAA559 /* PairedWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairedWatch.swift; sourceTree = "<group>"; };
+		C2EF7B202DA99D9600BAA559 /* WatchPairingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchPairingInteractor.swift; sourceTree = "<group>"; };
+		C2EF7B232DA9AE6800BAA559 /* ManageWatchFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchFlowController.swift; sourceTree = "<group>"; };
 		C2EFCE0625D05E320031293F /* ClearHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearHandler.swift; sourceTree = "<group>"; };
 		C2F134AF246844B10014FB4E /* MainContainerActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerActionButton.swift; sourceTree = "<group>"; };
 		C2F245D2293566F0006F7F5B /* Code+Support.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Code+Support.swift"; sourceTree = "<group>"; };
@@ -3986,6 +4003,7 @@
 			isa = PBXGroup;
 			children = (
 				C21111F4274ABDDA00CA7C78 /* InteractorFactory.swift */,
+				C2EF7B202DA99D9600BAA559 /* WatchPairingInteractor.swift */,
 				C2BF61132D95D5F000E308BF /* SyncMigrationInteractor.swift */,
 				C24295562E43D99100E236EA /* CompressionInteractor.swift */,
 				C27BE51A275D7DDE0090CA12 /* CloudBackupStateInteractor.swift */,
@@ -5410,9 +5428,9 @@
 		C24D1C1B253C744E0029D27D /* Sync */ = {
 			isa = PBXGroup;
 			children = (
-				C22FFC3C2DA5C01900A68ABD /* WatchPairHandler.swift */,
 				C2F5443425685C2100611716 /* SyncInstance.swift */,
 				C2D507B5256477DA00151359 /* CloudHandler.swift */,
+				C22FFC3C2DA5C01900A68ABD /* WatchPairHandler.swift */,
 				C245877F2D8B917100F28B22 /* SyncMigrationHandler.swift */,
 				C25CB3C22D878BC80099FAFD /* SyncEncryptionHandler.swift */,
 				C25CB3BC2D877A2C0099FAFD /* RequirementCheckHandler.swift */,
@@ -6747,6 +6765,7 @@
 		C2AC21FB27660E0200271402 /* Backup */ = {
 			isa = PBXGroup;
 			children = (
+				C2EF7B222DA9A47E00BAA559 /* ManageWatch */,
 				C29B42BC2D98900500F49DCE /* BackupChangeEncryption */,
 				C2ADD6132752DF590010F5E7 /* BackupMenu */,
 				C284AF6C2760112900FEE810 /* BackupDelete */,
@@ -7638,6 +7657,7 @@
 				C240485627652E170076376E /* DataTypes */,
 				C2D44E69275C14790043F5D6 /* MainRepository.swift */,
 				C2D44E6C275C14A70043F5D6 /* MainRepositoryImpl.swift */,
+				C2EF7B192DA99BE100BAA559 /* MainRepositoryImpl+WatchPair.swift */,
 				C2D44E6E275C19220043F5D6 /* MainRepositoryImpl+Security.swift */,
 				C2D44E70275C1FD30043F5D6 /* MainRepositoryImpl+Extensions.swift */,
 				C2D44E72275C1FE90043F5D6 /* MainRepositoryImpl+Tokens.swift */,
@@ -7954,6 +7974,7 @@
 		C2E53AE42B62DDAF008E1E70 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C2EF7B1D2DA99D1000BAA559 /* PairedWatch.swift */,
 				C2C0A97E2DA31AD5000A1772 /* DeviceCode.swift */,
 				C2E53AE52B62DDAF008E1E70 /* WidgetServiceHandlerType.swift */,
 				C2E53AE62B62DDAF008E1E70 /* ServiceSource.swift */,
@@ -8245,6 +8266,18 @@
 				C2BDC6CF1FC1CBE000967D0E /* Theme.swift */,
 			);
 			path = Theming;
+			sourceTree = "<group>";
+		};
+		C2EF7B222DA9A47E00BAA559 /* ManageWatch */ = {
+			isa = PBXGroup;
+			children = (
+				C2EF7B232DA9AE6800BAA559 /* ManageWatchFlowController.swift */,
+				C25BB2CD2DAAE44C00BEC626 /* ManageWatchModuleInteractor.swift */,
+				C25BB2C92DAAE34C00BEC626 /* ManageWatchPresenter.swift */,
+				C25BB2C72DAAE2E600BEC626 /* ManageWatchViewController.swift */,
+				C25BB2CB2DAAE3E500BEC626 /* ManageWatchView.swift */,
+			);
+			path = ManageWatch;
 			sourceTree = "<group>";
 		};
 		C2F134B32468510D0014FB4E /* Stats */ = {
@@ -9891,6 +9924,7 @@
 				C2DDEB1F289ED4A300011712 /* IntroductionDots.swift in Sources */,
 				C20CD53C2A1CF03F00A7F324 /* TokensViewController+Layout.swift in Sources */,
 				C26654292725D6EA00DC3A3C /* PasswordTextField.swift in Sources */,
+				C25BB2CC2DAAE3FF00BEC626 /* ManageWatchView.swift in Sources */,
 				C25B221627C181690052AAC4 /* ComposeServiceInputCellKind.swift in Sources */,
 				C2A7946027F9071F00E5C641 /* BrowserExtensionServicePresenter.swift in Sources */,
 				C267315A299AC9C40031DE09 /* LargeNavigationController.swift in Sources */,
@@ -10022,6 +10056,7 @@
 				C20E2E072A7C51E700DB64BB /* AddingServiceTokenFlowController.swift in Sources */,
 				C21EB2F32A7FD8C400FA8AA1 /* AddingServiceTextContentView.swift in Sources */,
 				C235FA76229DAED80098F8E9 /* GridViewItemProviderWriting.swift in Sources */,
+				C25BB2CE2DAAE45700BEC626 /* ManageWatchModuleInteractor.swift in Sources */,
 				C23721A12804C07600DE335D /* CameraScannerNavigationFlowController.swift in Sources */,
 				C2625F9428BBC01900D84C5C /* AboutPresenter+Menu.swift in Sources */,
 				C21EB2F72A7FF64700FA8AA1 /* AddingServiceFullWidthButtonWithImage.swift in Sources */,
@@ -10096,6 +10131,7 @@
 				C2830D82293D53CA00B3DDAF /* TokensMoveItem.swift in Sources */,
 				C2A4C8392A1153A200AFD67C /* TokensTokenView.swift in Sources */,
 				C26BCE072810287500CA6A9A /* SelectServiceTableViewHeader.swift in Sources */,
+				C2EF7B242DA9AE7100BAA559 /* ManageWatchFlowController.swift in Sources */,
 				C2EE37AA291D2B9800CAB85C /* Assets.swift in Sources */,
 				C24471C225F507280024B4C5 /* ComposeServiceFormReveal.swift in Sources */,
 				C2508E132753AABF0072C564 /* SettingsMenuPresenter.swift in Sources */,
@@ -10183,6 +10219,8 @@
 				C233870A2781113800F8DBC3 /* TrashViewController+TableCellHandling.swift in Sources */,
 				C2ADD6162752DF770010F5E7 /* BackupMenuFlowController.swift in Sources */,
 				C2AC21FE27660F5700271402 /* ImporterOpenFileModuleInteractor.swift in Sources */,
+				C2C1DDDB27CAA619002C7867 /* ComposeServiceAdvancedEditPresenter+Menu.swift in Sources */,
+				C25BB2C82DAAE2E600BEC626 /* ManageWatchViewController.swift in Sources */,
 				C24018C92618DE8100800DBF /* ComposeServiceIconTypeSelection.swift in Sources */,
 				C2AC220A2766178400271402 /* ExporterMainScreenModuleInteractor.swift in Sources */,
 				C2DFE5BD264C851700F828C0 /* CircleView.swift in Sources */,
@@ -10303,6 +10341,7 @@
 				C20524C32807620500B2B20C /* NavigationBarHiddenHostingController.swift in Sources */,
 				C2FDEE57279C8FF8002CAB9E /* SwiftUIButtons.swift in Sources */,
 				C22E6FA121E2666B00A2E66B /* CircularShape.swift in Sources */,
+				C25BB2CA2DAAE35000BEC626 /* ManageWatchPresenter.swift in Sources */,
 				8F594C442C3054F90066562F /* AppleWatchViewController.swift in Sources */,
 				C2F7FE092A8ABA25004B2C95 /* AddingServiceManuallyView.swift in Sources */,
 				C2AC221327661BA300271402 /* ExporterPasswordProtectionViewController.swift in Sources */,
@@ -10564,6 +10603,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C274C9E82BAB8B92008E7212 /* Collection+.swift in Sources */,
+				C2EF7B1E2DA99D1000BAA559 /* PairedWatch.swift in Sources */,
 				C274C9E92BAB8B92008E7212 /* String+.swift in Sources */,
 				C274C9EA2BAB8B92008E7212 /* EncryptionHolder.swift in Sources */,
 				C274C9EB2BAB8B92008E7212 /* CommonSectionHandler.swift in Sources */,
@@ -10777,6 +10817,7 @@
 				C2E53B412B62DDAF008E1E70 /* CommonSectionHandler.swift in Sources */,
 				C2E53B192B62DDAF008E1E70 /* LegacyServiceDatabase.swift in Sources */,
 				C2E53B1E2B62DDAF008E1E70 /* CoreDataMigrator.swift in Sources */,
+				C2EF7B1F2DA99D1000BAA559 /* PairedWatch.swift in Sources */,
 				C2E53B402B62DDAF008E1E70 /* ThemeColor.swift in Sources */,
 				C2E53B162B62DDAF008E1E70 /* Log.swift in Sources */,
 				C29B42C92D98943100F49DCE /* CloudEncryptionType.swift in Sources */,
@@ -10892,6 +10933,7 @@
 				C2AE5F5F2ADC370F00AED670 /* ShortDateTimeFormatter.swift in Sources */,
 				C2CACFC02AFFB7F7001E0F8E /* LoginInteractor.swift in Sources */,
 				C274C76F2ADD3C9C00B8AAC1 /* TokenHandler.swift in Sources */,
+				C2EF7B1A2DA99BE700BAA559 /* MainRepositoryImpl+WatchPair.swift in Sources */,
 				C2E7C4172ADB2BE500478D89 /* AEGISData.swift in Sources */,
 				C2E7C3E72ADB2BB400478D89 /* ServiceDefinitionInteractor.swift in Sources */,
 				C2E7C3BB2ADB2B9C00478D89 /* MainRepositoryImpl+Sort.swift in Sources */,
@@ -10924,6 +10966,7 @@
 				C2AE5F822ADC8B0D00AED670 /* Code+GoogleAuth.swift in Sources */,
 				C2E7C4082ADB2BB400478D89 /* ProtectionInteractor.swift in Sources */,
 				C2E7C3C12ADB2B9C00478D89 /* MainRepositoryImpl+Logs.swift in Sources */,
+				C2EF7B212DA99D9B00BAA559 /* WatchPairingInteractor.swift in Sources */,
 				C2AE5F862ADC8B0D00AED670 /* CodeParser.swift in Sources */,
 				C2AE5F852ADC8B0D00AED670 /* Code+LastPass.swift in Sources */,
 				C2E7C3CC2ADB2B9C00478D89 /* MainRepositoryImpl+WebExtensionPairing.swift in Sources */,

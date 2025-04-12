@@ -33,6 +33,8 @@ protocol BackupMenuModuleInteracting: AnyObject {
     var isCloudBackupConnected: Bool { get }
     var reload: Callback? { get set }
     var iCloudState: CloudState { get }
+    var isCloudBackupSynced: Bool { get }
+    var encryptionTypeIsUser: Bool { get }
     
     func toggleBackup()
     func clearBackup()
@@ -76,6 +78,14 @@ extension BackupMenuModuleInteractor: BackupMenuModuleInteracting {
     
     var iCloudState: CloudState {
         cloudBackup.iCloudState
+    }
+    
+    var isCloudBackupSynced: Bool {
+        cloudBackup.isCloudBackupSynced
+    }
+    
+    var encryptionTypeIsUser: Bool {
+        cloudBackup.encryptionTypeIsUser
     }
     
     var isBackupOn: Bool {

@@ -51,6 +51,8 @@ protocol AddingServiceMainFlowControlling: AnyObject {
     func toSendLogs(auditID: UUID)
     func toPushPermissions(for extensionID: ExtensionID)
     func toRename(currentName: String, secret: String)
+    func toPairWatchQuestion(_ deviceCodePath: DeviceCodePath)
+    func toCantPairWatch()
 }
 
 final class AddingServiceMainFlowController: FlowController {
@@ -181,5 +183,33 @@ extension AddingServiceMainFlowController: AddingServiceMainFlowControlling {
     
     func toSendLogs(auditID: UUID) {
         parent?.mainToSendLogs(auditID: auditID)
+    }
+    
+    func toPairWatchQuestion(_ deviceCodePath: DeviceCodePath) {
+        let alert = AlertControllerPromptFactory.create(
+            title: "Watch Pairing",
+            message: "Do you want to pair an Apple Watch with your Cloud Backup? Enter name for your device:",
+            actionName: "Name your device",
+            defaultText: "Apple Watch",
+            inputConfiguration: .name,
+            action: { [weak self] deviceName in
+                self?.viewController.presenter.handleAppleWatchPairing(deviceCodePath: deviceCodePath, deviceName: deviceName)
+            },
+            cancel: {},
+            verify: { deviceName in
+                ServiceRules.isAppleWatchNameValid(deviceName: deviceName)
+            }
+        )
+        
+        viewController.present(alert, animated: true, completion: nil)
+    }
+    
+    func toCantPairWatch() {
+        let alert = AlertController.makeSimple(
+            with: "Error",
+            message: "Can't pair watch now. Make sure the Cloud Backup is enabled, synced and you're using a password",
+            buttonTitle: T.Commons.ok
+        )
+        viewController.present(alert, animated: true, completion: nil)
     }
 }

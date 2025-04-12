@@ -19,7 +19,7 @@
 
 import Foundation
 
-public struct DeviceCodePath: Equatable {
+public struct DeviceCodePath: Equatable, Hashable {
     private static let prefix = "twofas://pair-watch/"
     
     public let codePath: String

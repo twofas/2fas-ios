@@ -121,6 +121,7 @@ protocol MainRepository: AnyObject {
     // MARK: - Cloud
     var secretSyncError: ((String) -> Void)? { get set }
     var isCloudBackupConnected: Bool { get }
+    var isCloudBackupSynced: Bool { get }
     var successSyncDate: Date? { get }
     var cloudCurrentState: CloudState { get }
     func registerForCloudStateChanges(_ listener: @escaping CloudStateListener, id: CloudStateListenerID)
@@ -134,6 +135,11 @@ protocol MainRepository: AnyObject {
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     )
     func saveSuccessSyncDate(_ date: Date?)
+    // MARK: Watch Pair
+    func watchPairingList() -> [PairedWatch]
+    func watchPairingUnpair(_ pairedWatch: PairedWatch)
+    func watchPairingRename(_ pairedWatch: PairedWatch, newName: String)
+    func watchPairingPair(deviceCodePath: DeviceCodePath, deviceName: String)
     // MARK: Migration
     var cloudShowMigrationToNewestVersion: (() -> Void)? { get set }
     var cloudShowiCloudIsEncryptedByUser: (() -> Void)? { get set }

@@ -20,16 +20,6 @@
 import Foundation
 import Common
 
-public struct PairedWatch {
-    public let deviceName: String
-    let deviceCodeKey: DeviceCodeKey
-    
-    init(deviceCodeKey: DeviceCodeKey) {
-        self.deviceName = deviceCodeKey.deviceName
-        self.deviceCodeKey = deviceCodeKey
-    }
-}
-
 public protocol WatchPairHandling: AnyObject {
     func list() -> [PairedWatch]
     func unpair(_ pairedWatch: PairedWatch)

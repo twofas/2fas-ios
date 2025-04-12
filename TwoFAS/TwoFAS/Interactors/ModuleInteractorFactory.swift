@@ -176,7 +176,8 @@ final class ModuleInteractorFactory {
         CameraScannerModuleInteractor(
             newCodeInteractor: InteractorFactory.shared.newCodeInteractor(),
             pushNotificationPermission: InteractorFactory.shared.pushNotificationRegistrationInteractor(),
-            cameraPermissionInteractor: InteractorFactory.shared.cameraPermissionInteractor()
+            cameraPermissionInteractor: InteractorFactory.shared.cameraPermissionInteractor(),
+            watchPairing: InteractorFactory.shared.watchPairingInteractor()
         )
     }
     
@@ -368,7 +369,8 @@ final class ModuleInteractorFactory {
             cameraPermissionInteractor: InteractorFactory.shared.cameraPermissionInteractor(),
             newCodeInteractor: InteractorFactory.shared.newCodeInteractor(),
             pushNotificationPermission: InteractorFactory.shared.pushNotificationRegistrationInteractor(),
-            notificationInteractor: InteractorFactory.shared.notificationInteractor()
+            notificationInteractor: InteractorFactory.shared.notificationInteractor(),
+            watchPairing: InteractorFactory.shared.watchPairingInteractor()
         )
     }
     
@@ -416,6 +418,10 @@ final class ModuleInteractorFactory {
         BackupChangeEncryptionModuleInteractor(
             syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor()
         )
+    }
+    
+    func manageWatchModuleInteractor() -> ManageWatchModuleInteracting {
+        ManageWatchModuleInteractor(manageWatch: InteractorFactory.shared.watchPairingInteractor())
     }
 
     func exportTokensModuleInteractor() -> ExportTokensModuleInteracting {

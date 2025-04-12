@@ -35,6 +35,7 @@ extension MainRepositoryImpl {
         }
     }
     var isCloudBackupConnected: Bool { cloudHandler.isConnected }
+    var isCloudBackupSynced: Bool { cloudHandler.isSynced }
     var cloudCurrentState: CloudState { cloudHandler.currentState.toCloudState }
     
     func registerForCloudStateChanges(_ listener: @escaping CloudStateListener, id: CloudStateListenerID) {

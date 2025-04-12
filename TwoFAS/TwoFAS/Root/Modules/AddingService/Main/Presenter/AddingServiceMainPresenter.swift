@@ -45,16 +45,16 @@ extension AddingServiceMainPresenter {
         
         switch codeType {
         case .service(let code):
-            Log("CameraScannerPresenter: Found code: \(code)")
+            Log("AddingServiceMainPresenter: Found code: \(code)")
             if interactor.codeExists(code) {
                 guard let description = interactor.serviceDescription(for: code) else { return }
-                Log("CameraScannerPresenter: Found code: \(code) which is a duplicate of: \(description)")
+                Log("AddingServiceMainPresenter: Found code: \(code) which is a duplicate of: \(description)")
                 interactor.warning()
                 flowController.toDuplicatedCode { [weak self] in
                     self?.interactor.addCode(code, force: true)
                 }
             } else {
-                Log("CameraScannerPresenter: Adding unique code: \(code)")
+                Log("AddingServiceMainPresenter: Adding unique code: \(code)")
                 interactor.addCode(code, force: false)
             }
         case .googleAuth(let codes):
@@ -72,28 +72,36 @@ extension AddingServiceMainPresenter {
                 codes: importableCodes
             )
         case .appStore:
-            Log("CameraScannerPresenter: Found wrong code: \(codeType)", save: false)
-            Log("CameraScannerPresenter: It's an app store link!")
+            Log("AddingServiceMainPresenter: Found wrong code: \(codeType)", save: false)
+            Log("AddingServiceMainPresenter: It's an app store link!")
             interactor.warning()
             flowController.toAppStore()
         case .twoFASWebExtension(let extensionID):
-            Log("CameraScannerPresenter: Found 2FAS Web Extension code for: \(codeType)", save: false)
-            Log("CameraScannerPresenter: It's a 2FAS Web Extension!")
+            Log("AddingServiceMainPresenter: Found 2FAS Web Extension code for: \(codeType)", save: false)
+            Log("AddingServiceMainPresenter: It's a 2FAS Web Extension!")
             interactor.warning()
             if interactor.wasUserAskedAboutPush {
                 flowController.toTwoFASWebExtensionPairing(for: extensionID)
             } else {
                 flowController.toPushPermissions(for: extensionID)
             }
+        case .pairWatch(let deviceCodePath):
+            Log("AddingServiceMainPresenter: Found Device Code Path: \(deviceCodePath.codePath)")
+            interactor.warning()
+            if interactor.canPairWatch {
+                flowController.toPairWatchQuestion(deviceCodePath)
+            } else {
+                flowController.toCantPairWatch()
+            }
         case .support(let auditID):
-            Log("CameraScannerPresenter: Found 2FAS support request. AuditID: \(auditID)")
+            Log("AddingServiceMainPresenter: Found 2FAS support request. AuditID: \(auditID)")
             interactor.warning()
             flowController.toSendLogs(auditID: auditID)
         case .open:
             Log("CameraScannerPresenter: Found 2FAS open request.")
         case .unknown:
-            Log("CameraScannerPresenter: Found wrong code: \(codeType)", save: false)
-            Log("CameraScannerPresenter: General wrong code")
+            Log("AddingServiceMainPresenter: Found wrong code: \(codeType)", save: false)
+            Log("AddingServiceMainPresenter: General wrong code")
             interactor.warning()
             flowController.toGeneralError()
         }
@@ -138,6 +146,11 @@ extension AddingServiceMainPresenter {
     }
     
     func onClose() {
+        flowController.close()
+    }
+    
+    func handleAppleWatchPairing(deviceCodePath: DeviceCodePath, deviceName: String) {
+        interactor.pairAppleWatch(deviceCodePath: deviceCodePath, deviceName: deviceName)
         flowController.close()
     }
 }

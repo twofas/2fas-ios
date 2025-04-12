@@ -35,6 +35,9 @@ public protocol CloudBackupStateInteracting: AnyObject {
     
     var stateChanged: Callback? { get set }
     
+    var isCloudBackupSynced: Bool { get }
+    var encryptionTypeIsUser: Bool { get }
+    
     func toggleBackup()
     
     func enableBackup()
@@ -86,6 +89,8 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
     
     var isBackupEnabled: Bool { isEnabled }
     var isBackupAvailable: Bool { isAvailable }
+    var isCloudBackupSynced: Bool { mainRepository.isCloudBackupSynced }
+    var encryptionTypeIsUser: Bool { mainRepository.cloudCurrentEncryption == .user }
     
     var successSyncDate: Date? {
         mainRepository.successSyncDate

@@ -104,6 +104,7 @@ public protocol CloudHandlerType: AnyObject {
     var currentState: CloudCurrentState { get }
     var purgeUserEncryptionKey: (() -> Void)? { get set }
     var isConnected: Bool { get }
+    var isSynced: Bool { get }
     var secretSyncError: SecretSyncError? { get set }
     func checkState()
     func synchronize()

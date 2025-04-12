@@ -91,6 +91,17 @@ extension BackupMenuPresenter {
             footer: "Select System or User encryption"
         )
         
+        let cloudBackupPairWatch = BackupMenuSection(
+            title: "Managed paired Apple Watches",
+            cells: [
+                .init(
+                    title: "Managed Apple Watches",
+                    action: .manageAppleWatch
+                )
+            ],
+            footer: "Add, remove or rename Apple Watches which have access to this Cloud Backup."
+        )
+        
         var menu: [BackupMenuSection] = []
         
         if interactor.isBackupAllowed {
@@ -102,6 +113,9 @@ extension BackupMenuPresenter {
         if interactor.isCloudBackupConnected && interactor.isBackupAllowed {
             menu.append(cloudBackupChangePassword)
             menu.append(cloudBackupDeletition)
+            if interactor.encryptionTypeIsUser && interactor.isCloudBackupSynced {
+                menu.append(cloudBackupPairWatch)
+            }
         } else if interactor.canDelete {
             menu.append(cloudBackupDeletition)
         }

@@ -23,6 +23,7 @@ import Data
 
 protocol AddingServiceMainModuleInteracting: AnyObject {
     func checkCameraPermission(completion: @escaping (Bool) -> Void)
+    var canPairWatch: Bool { get }
     
     var serviceWasCreated: ((ServiceData) -> Void)? { get set }
     var shouldRename: ((String, String) -> Void)? { get set }
@@ -38,6 +39,7 @@ protocol AddingServiceMainModuleInteracting: AnyObject {
     func service(for secret: String) -> ServiceData?
     
     func warning()
+    func pairAppleWatch(deviceCodePath: DeviceCodePath, deviceName: String)
 }
 
 final class AddingServiceMainModuleInteractor {
@@ -45,6 +47,7 @@ final class AddingServiceMainModuleInteractor {
     private let pushNotificationPermission: PushNotificationRegistrationInteracting
     private let cameraPermissionInteractor: CameraPermissionInteracting
     private let notificationInteractor: NotificationInteracting
+    private let watchPairing: WatchPairingInteracting
     
     var serviceWasCreated: ((ServiceData) -> Void)?
     var shouldRename: ((String, String) -> Void)?
@@ -53,12 +56,14 @@ final class AddingServiceMainModuleInteractor {
         cameraPermissionInteractor: CameraPermissionInteracting,
         newCodeInteractor: NewCodeInteracting,
         pushNotificationPermission: PushNotificationRegistrationInteracting,
-        notificationInteractor: NotificationInteracting
+        notificationInteractor: NotificationInteracting,
+        watchPairing: WatchPairingInteracting
     ) {
         self.cameraPermissionInteractor = cameraPermissionInteractor
         self.newCodeInteractor = newCodeInteractor
         self.pushNotificationPermission = pushNotificationPermission
         self.notificationInteractor = notificationInteractor
+        self.watchPairing = watchPairing
         
         newCodeInteractor.serviceWasCreated = { [weak self] in
             self?.serviceWasCreated?($0)
@@ -89,6 +94,10 @@ extension AddingServiceMainModuleInteractor: AddingServiceMainModuleInteracting 
     
     // MARK: - Code Adding
     
+    var canPairWatch: Bool {
+        watchPairing.canModify
+    }
+    
     func addCode(_ code: Code, force: Bool) {
         newCodeInteractor.addCode(code, force: force)
     }
@@ -115,6 +124,10 @@ extension AddingServiceMainModuleInteractor: AddingServiceMainModuleInteracting 
     
     func service(for secret: String) -> ServiceData? {
         newCodeInteractor.service(for: secret)
+    }
+    
+    func pairAppleWatch(deviceCodePath: DeviceCodePath, deviceName: String) {
+        watchPairing.pair(deviceCodePath: deviceCodePath, deviceName: deviceName)
     }
     
     // MARK: - Notifications

@@ -275,4 +275,8 @@ public final class InteractorFactory {
     public func syncMigrationInteractor() -> SyncMigrationInteracting {
         SyncMigrationInteractor(mainRepository: MainRepositoryImpl.shared)
     }
+    
+    public func watchPairingInteractor() -> WatchPairingInteracting {
+        WatchPairingInteractor(mainRepository: MainRepositoryImpl.shared)
+    }
 }

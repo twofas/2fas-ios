@@ -30,6 +30,7 @@ public enum ServiceRules {
     public static let minKeyLength: Int = 4
     public static let maxSectionNameLength: Int = 32
     public static let defaultTwoLetters = "MN"
+    public static let appleWatchNameMaxLength = 32
     
     public static func isPrivateKeyTooShort(privateKey: String) -> Bool {
         privateKey.count < minKeyLength
@@ -50,6 +51,10 @@ public enum ServiceRules {
     
     public static func isServiceNameValid(serviceName: String) -> Bool {
         !serviceName.isEmpty && serviceName.count <= serviceNameMaxLength
+    }
+    
+    public static func isAppleWatchNameValid(deviceName: String) -> Bool {
+        !deviceName.isEmpty && deviceName.count <= appleWatchNameMaxLength
     }
     
     public static func isSectionNameValid(sectionName: String) -> Bool {

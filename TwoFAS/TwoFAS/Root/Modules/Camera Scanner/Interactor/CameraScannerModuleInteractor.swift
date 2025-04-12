@@ -25,6 +25,7 @@ protocol CameraScannerModuleInteracting: AnyObject {
     var serviceWasCreated: ((ServiceData) -> Void)? { get set }
     var shouldRename: ((String, String) -> Void)? { get set }
     var wasUserAskedAboutPush: Bool { get }
+    var canPairWatch: Bool { get }
     
     func isCameraAvailable() -> Bool
     func isCameraAllowed() -> Bool
@@ -37,12 +38,14 @@ protocol CameraScannerModuleInteracting: AnyObject {
     func serviceDescription(for code: Code) -> String?
     func renameService(newName: String, secret: String)
     func cancelRenaming(secret: String)
+    func pairAppleWatch(deviceCodePath: DeviceCodePath, deviceName: String)
 }
 
 final class CameraScannerModuleInteractor {
     private let newCodeInteractor: NewCodeInteracting
     private let pushNotificationPermission: PushNotificationRegistrationInteracting
     private let cameraPermissionInteractor: CameraPermissionInteracting
+    private let watchPairing: WatchPairingInteracting
     
     var serviceWasCreated: ((ServiceData) -> Void)?
     var shouldRename: ((String, String) -> Void)?
@@ -50,11 +53,14 @@ final class CameraScannerModuleInteractor {
     init(
         newCodeInteractor: NewCodeInteracting,
         pushNotificationPermission: PushNotificationRegistrationInteracting,
-        cameraPermissionInteractor: CameraPermissionInteracting
+        cameraPermissionInteractor: CameraPermissionInteracting,
+        watchPairing: WatchPairingInteracting
     ) {
         self.newCodeInteractor = newCodeInteractor
         self.pushNotificationPermission = pushNotificationPermission
         self.cameraPermissionInteractor = cameraPermissionInteractor
+        self.watchPairing = watchPairing
+        
         newCodeInteractor.serviceWasCreated = { [weak self] in self?.serviceWasCreated?($0) }
         newCodeInteractor.shouldRename = { [weak self] in self?.shouldRename?($0, $1) }
     }
@@ -77,6 +83,10 @@ extension CameraScannerModuleInteractor: CameraScannerModuleInteracting {
     
     var wasUserAskedAboutPush: Bool {
         pushNotificationPermission.wasUserAsked
+    }
+    
+    var canPairWatch: Bool {
+        watchPairing.canModify
     }
     
     func addCode(_ code: Code, force: Bool) {
@@ -105,5 +115,9 @@ extension CameraScannerModuleInteractor: CameraScannerModuleInteracting {
     
     func cancelRenaming(secret: String) {
         newCodeInteractor.cancelRenaming(secret: secret)
+    }
+    
+    func pairAppleWatch(deviceCodePath: DeviceCodePath, deviceName: String) {
+        watchPairing.pair(deviceCodePath: deviceCodePath, deviceName: deviceName)
     }
 }

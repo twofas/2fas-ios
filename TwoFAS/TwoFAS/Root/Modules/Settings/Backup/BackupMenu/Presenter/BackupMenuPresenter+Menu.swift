@@ -29,7 +29,7 @@ extension BackupMenuPresenter {
             }
             return "-"
         }()
-        footer.append("\n\nState: \(state)\n\(T.backupSettingsSyncTitle): \(dateStr)")
+        footer.append("\n\n\(T.Backup.state) \(state)\n\(T.backupSettingsSyncTitle): \(dateStr)")
         
         let cloudBackup = BackupMenuSection(
             title: T.Backup.cloudBackup,
@@ -81,25 +81,25 @@ extension BackupMenuPresenter {
         )
         
         let cloudBackupChangePassword = BackupMenuSection(
-            title: "Encryption method",
+            title: T.Backup.encryptionMethodTitle,
             cells: [
                 .init(
-                    title: "Change encryption method",
+                    title: T.Backup.encryptionMethodAction,
                     action: .changeCloudBackupPassword
                 )
             ],
-            footer: "Select System or User encryption"
+            footer: T.Backup.encryptionMethodFooter
         )
         
         let cloudBackupPairWatch = BackupMenuSection(
-            title: "Managed paired Apple Watches",
+            title: T.Backup.managePairedWatchesTitle,
             cells: [
                 .init(
-                    title: "Managed Apple Watches",
+                    title: T.Backup.managePairedWatchesAction,
                     action: .manageAppleWatch
                 )
             ],
-            footer: "Add, remove or rename Apple Watches which have access to this Cloud Backup."
+            footer: T.Backup.managePairedWatchesFooter
         )
         
         var menu: [BackupMenuSection] = []

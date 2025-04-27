@@ -29,8 +29,8 @@ struct BackupChangeEncryptionView: View {
             VStack(alignment: .center) {
                 VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
                     List {
-                        Section("Encryption type") {
-                        Picker("Select encryption", selection: $presenter.selectedEncryption) {
+                        Section(T.Backup.encryptionType) {
+                            Picker(T.Backup.encryptionSelect, selection: $presenter.selectedEncryption) {
                                 ForEach(CloudEncryptionType.allCases, id: \.self) { type in
                                     Text(type.localized)
                                         .tag(type)
@@ -40,15 +40,20 @@ struct BackupChangeEncryptionView: View {
                             .tint(Color(Theme.Colors.Fill.theme))
                         }
                         if presenter.selectedEncryption == .user {
-                            Section(content: {
-                                SecureField("Enter password", text: $presenter.password)
-                            }, header: {
-                                presenter.changingPassword ? Text("Change password") : Text("Enter password")
-                            }, footer: {
-                                Text("Password is used to encrypt your data. If you loose it you won't be able to recover data from Cloud Backup")
-                                    .font(.caption2)
-                                    .minimumScaleFactor(0.8)
-                            })
+                            Section(
+                                content: {
+                                    SecureField(T.Backup.encryptionEnterPassword, text: $presenter.password)
+                                },
+                                header: {
+                                    presenter.changingPassword ?
+                                    Text(verbatim: T.Backup.encryptionChangePassword) :
+                                    Text(verbatim: T.Backup.encryptionEnterPassword)
+                                },
+                                footer: {
+                                    Text(verbatim: T.Backup.encryptionPasswordDescription)
+                                        .font(.caption2)
+                                        .minimumScaleFactor(0.8)
+                                })
                         }
                     }
                     Spacer()
@@ -59,7 +64,7 @@ struct BackupChangeEncryptionView: View {
                     } else {
                         VStack(spacing: Theme.Metrics.doubleMargin) {
                             if let migrationFailureReason = presenter.migrationFailureReason {
-                                Label("Failure! \(migrationFailureReason.description)", systemImage: "xmark.circle.fill")
+                                Label(T.Backup.enterPasswordFailure(migrationFailureReason.description), systemImage: "xmark.circle.fill")
                                     .font(.caption)
                                     .fontWeight(.bold)
                                     .foregroundStyle(Color(Theme.Colors.Text.theme))
@@ -68,7 +73,7 @@ struct BackupChangeEncryptionView: View {
                                 dismissKeyboard()
                                 presenter.applyChange()
                             } label: {
-                                Text("Apply")
+                                Text(verbatim: T.Commons.apply)
                                     .frame(maxWidth: .infinity)
                             }
                             .modify {
@@ -86,7 +91,7 @@ struct BackupChangeEncryptionView: View {
                 }
                 .disabled(presenter.isChangingEncryption)
                 .padding(.vertical, Theme.Metrics.doubleMargin)
-                .navigationTitle("Change Encryption")
+                .navigationTitle(T.Backup.encryptionChangeTitle)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {

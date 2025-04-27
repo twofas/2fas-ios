@@ -92,7 +92,7 @@ struct MainView: View {
             .alert("Missing System Key", isPresented: $presenter.showSystemKeyError) {
                 Button(action: {}, label: { Text(T.Commons.ok) })
             } message: {
-                Text("Can't decrypt Cloud Backup because there's no system key. Check if iCloud Keychain sync is enabled and works correctly.")
+                Text(verbatim: T.Backup.cloudErrorMissingSystemKeyContent)
             }
             .fullScreenCover(isPresented: $presenter.showPairQRCode, content: PairQRCodeView.init)
         }

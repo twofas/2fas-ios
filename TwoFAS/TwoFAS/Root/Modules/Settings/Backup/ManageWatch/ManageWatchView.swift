@@ -29,7 +29,7 @@ struct ManageWatchView: View {
             .onAppear {
                 presenter.onAppear()
             }
-            .navigationTitle("Manage Watches")
+            .navigationTitle(T.Backup.managePairedWatchesTitleShort)
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -55,14 +55,14 @@ struct ManageWatchView: View {
         VStack {
             if presenter.isListAvailable {
                 if presenter.list.isEmpty {
-                    Text("List is empty. Pair watch using + button")
+                    Text(T.Backup.managePairedWatchesEmptyList)
                         .font(.caption)
                         .fontWeight(.semibold)
                 } else {
                     list()
                 }
             } else {
-                Text("Cloud Backup is syncing...")
+                Text(verbatim: T.Backup.managePairedWatchesSyncing)
                     .font(.caption)
                     .fontWeight(.semibold)
             }

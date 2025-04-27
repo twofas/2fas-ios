@@ -116,8 +116,8 @@ private extension BackupChangeEncryptionPresenter {
 extension CloudEncryptionType {
     var localized: String {
         switch self {
-        case .system: return "System key"
-        case .user: return "Custom password"
+        case .system: T.Backup.systemKey
+        case .user: T.Backup.customPassword
         }
     }
 }

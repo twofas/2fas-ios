@@ -47,7 +47,6 @@ extension MainRepositoryImpl {
         userDefaultsRepository.saveRegistrationDate(Date())
     }
 
-    
     // MARK: - FCM Token
     
     var isGCMTokenSet: Bool {

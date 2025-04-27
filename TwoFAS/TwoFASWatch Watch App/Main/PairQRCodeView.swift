@@ -28,14 +28,14 @@ struct PairQRCodeView: View {
         ScrollView {
             VStack {
                 HStack {
-                    Text("Pair your Apple Watch")
+                    Text(verbatim: T.Backup.watchPairTitle)
                         .font(.title2)
                         .multilineTextAlignment(.leading)
                     Spacer()
                 }
                 Spacer()
                 HStack {
-                    Text("Enter Backup section in 2FAS Settings on your iPhone/iPad and navigate to Manage Apple Watches. It will be visible if the state of Cloud Backup is Synced. Scan the QR code from there.")
+                    Text(verbatim: T.Backup.watchPairDescription)
                         .font(.body)
                     Spacer()
                 }
@@ -45,7 +45,7 @@ struct PairQRCodeView: View {
                         .interpolation(.none)
                         .renderingMode(.original)
                 } else {
-                    Text("Error while generating QR Code")
+                    Text(verbatim: T.Backup.watchPairQrError)
                 }
                 Spacer(minLength: padding)
             }

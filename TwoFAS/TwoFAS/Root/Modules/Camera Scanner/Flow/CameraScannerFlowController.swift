@@ -237,10 +237,10 @@ extension CameraScannerFlowController: CameraScannerFlowControlling {
     
     func toPairWatchQuestion(_ deviceCodePath: DeviceCodePath) {
         let alert = AlertControllerPromptFactory.create(
-            title: "Watch Pairing",
-            message: "Do you want to pair an Apple Watch with your Cloud Backup? Enter name for your device:",
-            actionName: "Name your device",
-            defaultText: "Apple Watch",
+            title: T.Backup.watchPairingTitle,
+            message: T.Backup.watchPairingDescription,
+            actionName: T.Backup.watchPairingAction,
+            defaultText: T.Backup.watchPairingDefaultName,
             inputConfiguration: .name,
             action: { [weak self] deviceName in
                 self?.viewController.presenter.handleAppleWatchPairing(deviceCodePath: deviceCodePath, deviceName: deviceName)

@@ -23,8 +23,8 @@ import Common
 extension CloudState.Sync {
     var description: String {
         switch self {
-        case .syncing: "Syncing ..."
-        case .synced: "Synced"
+        case .syncing: T.Backup.syncStatusProgress
+        case .synced: T.Backup.synced
         }
     }
 }
@@ -32,9 +32,9 @@ extension CloudState.Sync {
 extension CloudState {
     var description: String {
         switch self {
-        case .unknown: "Checking ..."
-        case .disabledNotAvailable(let reason): "Sync is not available: \(reason.description)"
-        case .disabledAvailable: "Sync is currently disabled"
+        case .unknown: T.Backup.checking
+        case .disabledNotAvailable(let reason): T.Backup.syncNotAvailable(reason.description)
+        case .disabledAvailable: T.Backup.syncDisabled
         case .enabled(let sync): sync.description
         }
     }
@@ -50,8 +50,8 @@ extension CloudState.NotAvailableReason {
         case .incorrectService(let serviceName): return T.Backup.incorrectSecret(serviceName)
         case .useriCloudProblem: return T.Backup.icloudProblem
         case .newerVersion: return T.Error.cloudBackupNewerVersion
-        case .cloudEncryptedUser: return "iCloud is encrypted using custom password. Enter the password and enable sync"
-        case .cloudEncryptedSystem: return "iCloud is encrypted using a shared key. Ensure that you have enabled the iCloud Keychain"
+        case .cloudEncryptedUser: return T.Backup.cloudEncryptedUser
+        case .cloudEncryptedSystem: return T.Backup.cloudEncryptedSystem
         }
     }
 }

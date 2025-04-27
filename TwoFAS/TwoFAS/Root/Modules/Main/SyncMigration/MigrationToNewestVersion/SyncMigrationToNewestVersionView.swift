@@ -31,15 +31,15 @@ struct SyncMigrationToNewestVersionView: View {
                     Asset.cloudBackup.swiftUIImage
                     Spacer()
                         .frame(height: Theme.Metrics.doubleMargin)
-                    Text("Migrating Cloud Backup")
+                    Text(verbatim: T.Backup.migrationTitle)
                         .font(.title)
                         .multilineTextAlignment(.center)
-                    Text("Don't turn the app off!")
+                    Text(verbatim: T.Backup.migrationSubtitle)
                         .font(.body)
                         .fontWeight(.medium)
                         .multilineTextAlignment(.center)
                         .foregroundStyle(Color(Theme.Colors.Text.theme))
-                    Text("Your backup is being encrypted using a generated key. This key will be shared amongst your app installations using iCloud Keychain so remember to have that option turned on. If you want to use your own key and password you can do that in Cloud Backup settings right after the migration.")
+                    Text(verbatim: T.Backup.migrationDescription)
                         .font(.caption)
                         .minimumScaleFactor(0.5)
                         .multilineTextAlignment(.center)
@@ -52,12 +52,12 @@ struct SyncMigrationToNewestVersionView: View {
                 } else {
                     VStack {
                         if let migrationFailureReason = presenter.migrationFailureReason {
-                            Label("Failure! \(migrationFailureReason.description)", systemImage: "xmark.circle.fill")
+                            Label(T.Backup.enterPasswordFailure(migrationFailureReason.description), systemImage: "xmark.circle.fill")
                                 .font(.caption)
                                 .fontWeight(.bold)
                                 .foregroundStyle(Color(Theme.Colors.Text.theme))
                         } else {
-                            Label("Success!", systemImage: "checkmark.circle.fill")
+                            Label(T.Commons.successEx, systemImage: "checkmark.circle.fill")
                                 .font(.caption)
                                 .fontWeight(.bold)
                                 .foregroundStyle(Color.green)

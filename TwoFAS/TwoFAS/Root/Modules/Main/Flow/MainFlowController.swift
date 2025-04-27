@@ -166,8 +166,8 @@ extension MainFlowController: MainFlowControlling {
     }
     
     func toiCloudIsEncryptedBySystemError() {
-        let alertTitle = "Cloud Backup error"
-        let alertMessage = "Can't decrypt Cloud Backup because there's no system key. Check if iCloud Keychain sync is enabled and works correctly."
+        let alertTitle = T.Backup.cloudErrorTitle
+        let alertMessage = T.Backup.cloudErrorMismatchKeyContent
         
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         let okButton = UIAlertAction(title: T.Commons.ok, style: .default)
@@ -179,14 +179,14 @@ extension MainFlowController: MainFlowControlling {
     }
     
     func toiCloudIsEncryptedBySystemSwitch(switchKey: @escaping () -> Void) {
-        let alertTitle = "Cloud Backup error"
-        let alertMessage = "Can't decrypt Cloud Backup because it's encrypted using System Key and you're using custom password. Would you like to switch?"
+        let alertTitle = T.Backup.cloudErrorTitle
+        let alertMessage = T.Backup.cloudErrorMismatchKeyContent
         
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
-        let switchButton = UIAlertAction(title: "Switch to System Key", style: .default) { _ in
+        let switchButton = UIAlertAction(title: T.Backup.cloudSwitchSystemKey, style: .default) { _ in
             switchKey()
         }
-        let offButton = UIAlertAction(title: "Turn Cloud Backup off", style: .default)
+        let offButton = UIAlertAction(title: T.Backup.cloudTurnBackupOff, style: .default)
         
         alertController.addAction(switchButton)
         alertController.addAction(offButton)
@@ -197,7 +197,7 @@ extension MainFlowController: MainFlowControlling {
     
     func toNeverVersionOfiCloud() {
         let alertTitle = T.NewVersion.newVersionTitle
-        let alertMessage = "Can't sync with Cloud Backup because it was migrated by newer version of the app. Update the app to continue using Cloud Backup."
+        let alertMessage = T.Backup.cloudErrorNewVersionContent
         
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         let okButton = UIAlertAction(title: T.Commons.ok, style: .default)

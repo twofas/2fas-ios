@@ -32,10 +32,10 @@ struct EncryptedByUserPasswordSyncView: View {
                         Asset.cloudBackup.swiftUIImage
                         Spacer()
                             .frame(height: Theme.Metrics.doubleMargin)
-                        Text("Enter Cloud Backup Password")
+                        Text(verbatim: T.Backup.enterPasswordTitle)
                             .font(.title)
                             .multilineTextAlignment(.center)
-                        Text("iCloud Backup is encrypted by your password. Enter password to enable sync")
+                        Text(verbatim: T.Backup.enterPasswordDescription)
                             .font(.caption)
                             .minimumScaleFactor(0.5)
                             .multilineTextAlignment(.center)
@@ -43,11 +43,11 @@ struct EncryptedByUserPasswordSyncView: View {
                             .frame(height: Theme.Metrics.doubleMargin)
                         
                         VStack(alignment: .leading, spacing: Theme.Metrics.standardMargin) {
-                            Text("Password")
+                            Text(verbatim: T.Backup.password)
                                 .font(.caption2)
                                 .foregroundStyle(Color(Theme.Colors.Text.subtitle))
                             VStack(spacing: Theme.Metrics.halfSpacing) {
-                                SecureField("Password", text: $presenter.password)
+                                SecureField(T.Backup.password, text: $presenter.password)
                                     .font(Font(Theme.Fonts.iconLabelInputTitle))
                                     .foregroundStyle(presenter.isCheckingPassword ?
                                                      Color(Theme.Colors.Text.inactive) :
@@ -71,18 +71,18 @@ struct EncryptedByUserPasswordSyncView: View {
                     } else {
                         VStack {
                             if let migrationFailureReason = presenter.migrationFailureReason {
-                                Label("Failure! \(migrationFailureReason.description)", systemImage: "xmark.circle.fill")
+                                Label(T.Backup.enterPasswordFailure(migrationFailureReason.description), systemImage: "xmark.circle.fill")
                                     .font(.caption)
                                     .fontWeight(.bold)
                                     .foregroundStyle(Color(Theme.Colors.Text.theme))
                             } else {
                                 if presenter.wrongPassword {
-                                    Label("Wrong password! Try again", systemImage: "xmark.circle.fill")
+                                    Label(T.Backup.enterPasswordWrongPassword, systemImage: "xmark.circle.fill")
                                         .font(.caption)
                                         .fontWeight(.bold)
                                         .foregroundStyle(Color(Theme.Colors.Text.theme))
                                 } else if presenter.isDone {
-                                    Label("Success!", systemImage: "checkmark.circle.fill")
+                                    Label(T.Commons.successEx, systemImage: "checkmark.circle.fill")
                                         .font(.caption)
                                         .fontWeight(.bold)
                                         .foregroundStyle(Color.green)
@@ -96,7 +96,7 @@ struct EncryptedByUserPasswordSyncView: View {
                                         presenter.onCheckPassword()
                                     }
                                 } label: {
-                                    Text(presenter.isDone ? T.Commons.done : "Check password")
+                                    Text(presenter.isDone ? T.Commons.done : T.Backup.checkPassword)
                                         .frame(minWidth: 0, maxWidth: .infinity)
                                 }
                                 .modify {

@@ -65,10 +65,10 @@ extension ManageWatchFlowController: ManageWatchFlowControlling {
     
     func toRename(_ pairedWatch: PairedWatch) {
         let alert = AlertControllerPromptFactory.create(
-            title: "Watch Renaaming",
+            title: "Watch Renaming",
             message: "Enter new device name",
             actionName: "Name your device",
-            defaultText: "Apple Watch",
+            defaultText: pairedWatch.deviceName,
             inputConfiguration: .name,
             action: { [weak self] deviceName in
                 self?.viewController.presenter.handleRename(deviceName, pairedWatch)

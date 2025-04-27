@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import CloudKit
 #if os(iOS)
 import Common
 #elseif os(watchOS)
@@ -53,7 +54,14 @@ struct CommonDataIndex: Equatable {
         case .service1: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
         case .service2: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
         case .service3: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
-        case .info: return (lhs.item as? InfoRecord) == (rhs.item as? InfoRecord)
+        case .info:
+            guard let lhsCKRecord = lhs.item as? CKRecord, let rhsCKRecord = rhs.item as? CKRecord,
+                  lhsCKRecord.recordType == rhsCKRecord.recordType,
+                  RecordType(rawValue: lhsCKRecord.recordType) == .info
+            else { return false }
+            let lhsInfoRecord = InfoRecord(record: lhsCKRecord)
+            let rhsInfoRecord = InfoRecord(record: rhsCKRecord)
+            return lhsInfoRecord == rhsInfoRecord
         }
     }
     
@@ -68,7 +76,10 @@ struct CommonDataIndex: Equatable {
         case .service1: date = (item as? ServiceData)?.comparisionDate
         case .service2: date = (item as? ServiceData)?.comparisionDate
         case .service3: date = (item as? ServiceData)?.comparisionDate
-        case .info: date = (item as? InfoRecord)?.comparisionDate
+        case .info: date = {
+            guard let record = item as? CKRecord, RecordType(rawValue: record.recordType) == .info else { return nil }
+            return InfoRecord(record: record).modificationDate
+        }()
         }
         return date ?? Date.distantPast
     }
@@ -79,7 +90,14 @@ struct CommonDataIndex: Equatable {
         case .service1: return (item as? ServiceData) == (other as? ServiceData)
         case .service2: return (item as? ServiceData) == (other as? ServiceData)
         case .service3: return (item as? ServiceData) == (other as? ServiceData)
-        case .info:  return (item as? InfoRecord) == (other as? InfoRecord)
+        case .info:
+            guard let lhsCKRecord = item as? CKRecord, let rhsCKRecord = other as? CKRecord,
+                  lhsCKRecord.recordType == rhsCKRecord.recordType,
+                  RecordType(rawValue: lhsCKRecord.recordType) == .info
+            else { return false }
+            let lhsInfoRecord = InfoRecord(record: lhsCKRecord)
+            let rhsInfoRecord = InfoRecord(record: rhsCKRecord)
+            return lhsInfoRecord == rhsInfoRecord
         }
     }
 }

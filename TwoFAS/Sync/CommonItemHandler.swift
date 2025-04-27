@@ -110,7 +110,7 @@ final class CommonItemHandler {
         var value = [RecordType: [Any]]()
         value[.section] = sections
         value[.service3] = services
-        value[.info] = infoHandler.createNewRecord()
+        value[.info] = infoHandler.prepareForSendoff()
         return value
     }
 }

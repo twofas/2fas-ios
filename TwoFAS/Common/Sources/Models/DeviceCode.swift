@@ -28,6 +28,10 @@ public struct DeviceCodePath: Equatable, Hashable {
         self.codePath = Self.prefix + code
     }
     
+    public init(codePath: String) {
+        self.codePath = codePath
+    }
+    
     public static func isDeviceCode(_ path: String) -> Bool {
         extractCode(from: path) != nil
     }

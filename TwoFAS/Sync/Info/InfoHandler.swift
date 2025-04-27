@@ -93,11 +93,18 @@ final class InfoHandler {
         saveModificationDate(Date())
     }
     
+    func prepareForSendoffCachedVersion() -> [CKRecord] {
+        if let record = recreateCached() {
+            return [record]
+        }
+        return []
+    }
+    
     func prepareForSendoff() -> [CKRecord] {
         if let record = recreate() {
             return [record]
         }
-        return []
+        return createNewRecord()
     }
     
     func createNewRecord() -> [CKRecord] {
@@ -137,6 +144,25 @@ final class InfoHandler {
             enableWatch: enableWatch,
             encryptionReference: encryptionReference,
             modificationDate: date
+        )
+    }
+    
+    func recreateCached() -> CKRecord? {
+        guard let metadata,
+              let version,
+              let encryptionReference,
+              let encryptionType
+        else {
+            return nil
+        }
+        return InfoRecord.recreate(
+            with: metadata,
+            version: version,
+            encryption: encryptionType.rawValue,
+            allowedDevices: allowedDevices,
+            enableWatch: enableWatch,
+            encryptionReference: encryptionReference,
+            modificationDate: modificationDate
         )
     }
 }

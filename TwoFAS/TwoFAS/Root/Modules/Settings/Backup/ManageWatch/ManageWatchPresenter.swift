@@ -40,7 +40,7 @@ final class ManageWatchPresenter: ObservableObject {
 
 extension ManageWatchPresenter {
     func onAppear() {
-        isListAvailable = interactor.canAccessList
+        reload()
     }
     
     func handleReloadList() {

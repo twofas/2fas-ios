@@ -68,8 +68,8 @@ final class WatchPairHandler {
         infoHandler.allowedList = { [weak self] in
             self?.cloudList() ?? []
         }
-        infoHandler.allowedDevicesChanged = { [weak self] in
-            self?.needsUpdateFlag ?? false
+        infoHandler.allowedDevicesChanged = { [weak self] () -> Bool in
+            self?.needsUpdateFlag == true
         }
     }
 }
@@ -132,7 +132,7 @@ extension WatchPairHandler: WatchPairInfoHandling {
         if listSet == cloudSet {
             return
         }
-        saveList(cloudList, sync: false)
+        saveList(cloudList)
     }
     
     func cloudList() -> [String] {
@@ -169,7 +169,6 @@ private extension WatchPairHandler {
     
     func update() {
         setNeedsUpdateFlag()
-        
         logInfoModification?()
     }
         

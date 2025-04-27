@@ -157,10 +157,16 @@ final class MainRepositoryImpl: MainRepository {
         storageRepository = storage.storageRepository
         isAppLocked = userDefaultsRepository.pin != nil
         MainRepositoryImpl._shared = self
-        
+                
         storage.addUserPresentableError { [weak self] error in
             self?.storageError?(error)
         }
+        
+        notificationCenter.addObserver(self, selector: #selector(cloudStateChange), name: .syncStateChanged, object: nil)
+    }
+    
+    deinit {
+        notificationCenter.removeObserver(self)
     }
 }
 
@@ -327,6 +333,14 @@ extension MainRepositoryImpl {
             return
         }
         userDefaultsRepository.setFavoriteServices(favoriteServicesCache)
+    }
+    
+    @objc
+    private func cloudStateChange() {
+        if cloudHandler.currentState == .disabledNotAvailable(reason: .cloudEncryptedSystem) ||
+        cloudHandler.currentState == .disabledNotAvailable(reason: .cloudEncryptedUser) {
+            storage.reset()
+        }
     }
 }
 

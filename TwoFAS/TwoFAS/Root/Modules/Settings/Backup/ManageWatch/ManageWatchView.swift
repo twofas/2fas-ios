@@ -25,22 +25,12 @@ struct ManageWatchView: View {
     
     var body: some View {
         NavigationStack {
-            Group {
-                if presenter.isListAvailable {
-                    if presenter.list.isEmpty {
-                        Text("List is empty. Pair watch using + button")
-                            .font(.caption)
-                            .fontWeight(.semibold)
-                    } else {
-                        list()
-                    }
-                } else {
-                    Text("Cloud Backup is syncing...")
-                        .font(.caption)
-                        .fontWeight(.semibold)
-                }
+            mainView
+            .onAppear {
+                presenter.onAppear()
             }
             .navigationTitle("Manage Watches")
+            .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(T.Commons.close) {
@@ -57,7 +47,25 @@ struct ManageWatchView: View {
                     .tint(Color(Theme.Colors.Icon.theme))
                 }
             }
-            .navigationBarTitleDisplayMode(.large)
+        }
+    }
+    
+    @ViewBuilder
+    private var mainView: some View {
+        VStack {
+            if presenter.isListAvailable {
+                if presenter.list.isEmpty {
+                    Text("List is empty. Pair watch using + button")
+                        .font(.caption)
+                        .fontWeight(.semibold)
+                } else {
+                    list()
+                }
+            } else {
+                Text("Cloud Backup is syncing...")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+            }
         }
     }
     

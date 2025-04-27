@@ -132,7 +132,7 @@ final class InfoRecord: Equatable {
     ) {
         record[.version] = version as CKRecordValue
         record[.encryption] = encryption as CKRecordValue
-        record[.allowedDevices] = allowedDevices as CKRecordValue
+        record[.allowedDevices] = (allowedDevices.map({ $0 as NSString }) as NSArray) as CKRecordValue
         record[.enableWatch] = enableWatch as CKRecordValue
         record[.encryptionReference] = encryptionReference as CKRecordValue
     }

@@ -102,7 +102,7 @@ extension ItemHandler {
         var value = [RecordType: [Any]]()
         value[RecordType.section] = sectionHandler.listAllCommonSection()
         value[RecordType.service3] = serviceHandler.listAll()
-        value[RecordType.info] = infoHandler.prepareForSendoff()
+        value[RecordType.info] = infoHandler.prepareForSendoffCachedVersion()
         return value
     }
     
@@ -204,7 +204,7 @@ extension ItemHandler {
                 list: list
             )
         case .info:
-            return infoHandler.recreate()
+            return infoHandler.recreate() // already contains changes
         default: return nil
         }
     }

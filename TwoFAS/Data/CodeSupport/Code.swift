@@ -94,7 +94,7 @@ public extension Code {
         } else if let auditID = Code.parseSupport(with: data) {
             return .support(auditID: auditID)
         } else if DeviceCodePath.isDeviceCode(data) {
-            return .pairWatch(DeviceCodePath(code: data))
+            return .pairWatch(DeviceCodePath(codePath: data))
         }
         return .unknown
     }

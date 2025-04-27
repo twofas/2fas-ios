@@ -256,8 +256,8 @@ extension CameraScannerFlowController: CameraScannerFlowControlling {
     
     func toCantPairWatch() {
         let alert = AlertController.makeSimple(
-            with: "Error",
-            message: "Can't pair watch now. Make sure the Cloud Backup is enabled, synced and you're using a password",
+            with:T.Commons.error,
+            message: T.Backup.watchPairingError,
             buttonTitle: T.Commons.ok
         )
         viewController.present(alert, animated: true, completion: nil)

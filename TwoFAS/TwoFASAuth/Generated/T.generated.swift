@@ -80,8 +80,6 @@ internal enum T {
   internal static let browserExtensionResultSuccessDescription = T.tr("Localizable", "browser_extension_result_success_description", fallback: "2FAS will send you PUSH notifications whenever you log in to your online services using this web browser. You will no longer need to re-type your tokens for each use.")
   /// 2 F A S
   internal static let cfBundleSpokenName = T.tr("Localizable", "CFBundleSpokenName", fallback: "2 F A S")
-  /// Apply
-  internal static let commonsApply = T.tr("Localizable", "commons_apply", fallback: "Apply")
   /// Advanced
   internal static let customizationAdvanced = T.tr("Localizable", "customization_advanced", fallback: "Advanced")
   /// Change branding
@@ -338,6 +336,8 @@ internal enum T {
     internal static let cloudSwitchSystemKey = T.tr("Localizable", "backup__cloud_switch_system_key", fallback: "Switch to System Key")
     /// Turn Cloud Backup off
     internal static let cloudTurnBackupOff = T.tr("Localizable", "backup__cloud_turn_backup_off", fallback: "Turn Cloud Backup off")
+    /// Custom Password
+    internal static let customPassword = T.tr("Localizable", "backup__custom_password", fallback: "Custom Password")
     /// Delete 2FAS Backup
     internal static let delete2fasBackup = T.tr("Localizable", "backup__delete_2fas_backup", fallback: "Delete 2FAS Backup")
     /// Google Sync will be disabled. Your tokens will remain locally, but the 2FAS app will be logged out from your Google Account on this and your synced other devices.
@@ -470,6 +470,8 @@ internal enum T {
     internal static let migrationSubtitle = T.tr("Localizable", "backup__migration_subtitle", fallback: "Don't turn the app off!")
     /// Migrating Cloud Backup
     internal static let migrationTitle = T.tr("Localizable", "backup__migration_title", fallback: "Migrating Cloud Backup")
+    /// Missing System Key
+    internal static let missingSystemKey = T.tr("Localizable", "backup__missing_system_key", fallback: "Missing System Key")
     /// %d new services
     internal static func newServices(_ p1: Int) -> String {
       return T.tr("Localizable", "backup__new_services", p1, fallback: "%d new services")
@@ -526,6 +528,8 @@ internal enum T {
     internal static let synced = T.tr("Localizable", "backup__synced", fallback: "Synced")
     /// Synchronization settings
     internal static let synchronizationSettings = T.tr("Localizable", "backup__synchronization_settings", fallback: "Synchronization settings")
+    /// System Key
+    internal static let systemKey = T.tr("Localizable", "backup__system_key", fallback: "System Key")
     /// Provided phrase is too short (min. 3 char)
     internal static let toShortError = T.tr("Localizable", "backup__to_short_error", fallback: "Provided phrase is too short (min. 3 char)")
     /// You'll need a new version of the app to import the contents of this file. You can find the newest version in the App Store
@@ -700,6 +704,8 @@ internal enum T {
     internal static let _2fasToolbar = T.tr("Localizable", "commons__2fas_toolbar", fallback: "2FAS")
     /// Add
     internal static let add = T.tr("Localizable", "commons__add", fallback: "Add")
+    /// Apply
+    internal static let apply = T.tr("Localizable", "commons__apply", fallback: "Apply")
     /// Approve
     internal static let approve = T.tr("Localizable", "commons__approve", fallback: "Approve")
     /// Best match

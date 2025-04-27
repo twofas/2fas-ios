@@ -89,7 +89,7 @@ struct MainView: View {
             .navigationTitle(T.Commons._2fasToolbar)
             .navigationBarTitleDisplayMode(.automatic)
             .listItemTint(.clear)
-            .alert("Missing System Key", isPresented: $presenter.showSystemKeyError) {
+            .alert(T.Backup.missingSystemKey, isPresented: $presenter.showSystemKeyError) {
                 Button(action: {}, label: { Text(T.Commons.ok) })
             } message: {
                 Text(verbatim: T.Backup.cloudErrorMissingSystemKeyContent)

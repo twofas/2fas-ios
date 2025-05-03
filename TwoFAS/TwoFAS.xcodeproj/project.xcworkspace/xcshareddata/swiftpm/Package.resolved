@@ -1,5 +1,5 @@
 {
-  "originHash" : "55781531a0b6ef7130222eca2204ba3478ba3f0983693330eb93bf85508ec6fc",
+  "originHash" : "3ae961d83e2f3591891baab074891de0db883ade9c0b542205d1a0c4cafb4747",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/devicekit/DeviceKit.git",
       "state" : {
-        "revision" : "7ff5331960151aec74fb422e1d45f54ef6cc086d",
-        "version" : "5.5.0"
+        "revision" : "513b9d7e7a1bd46504a1009bbab943b75ce2f195",
+        "version" : "5.6.0"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/firebase-ios-sdk.git",
       "state" : {
-        "revision" : "2e4a4daac9da51f79c131e76cb47e785dd7708c4",
-        "version" : "11.10.0"
+        "revision" : "fbd463894af94d90eb4d6a4e54080459a8179519",
+        "version" : "11.12.0"
       }
     },
     {
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GoogleAppMeasurement.git",
       "state" : {
-        "revision" : "defe1970a9099d47765592ebd7ac5f5e9fdb57c6",
-        "version" : "11.10.0"
+        "revision" : "f7460ea630bddf172115c28493ae8b3798d95ce3",
+        "version" : "11.12.0"
       }
     },
     {
@@ -78,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/gtm-session-fetcher.git",
       "state" : {
-        "revision" : "5cfe5f090c982de9c58605d2a82a4fc77b774fbd",
-        "version" : "4.1.0"
+        "revision" : "4d70340d55d7d07cc2fdf8e8125c4c126c1d5f35",
+        "version" : "4.4.0"
       }
     },
     {
@@ -159,8 +159,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-protobuf.git",
       "state" : {
-        "revision" : "ebc7251dd5b37f627c93698e4374084d98409633",
-        "version" : "1.28.2"
+        "revision" : "d72aed98f8253ec1aa9ea1141e28150f408cf17f",
+        "version" : "1.29.0"
       }
     }
   ],

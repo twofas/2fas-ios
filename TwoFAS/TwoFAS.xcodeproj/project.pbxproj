@@ -1895,7 +1895,6 @@
 		8F0FFF012D04D74D0064B0D3 /* CountdownTimerText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerText.swift; sourceTree = "<group>"; };
 		8F0FFF042D0514B60064B0D3 /* RevealTokenIntentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealTokenIntentButton.swift; sourceTree = "<group>"; };
 		8F0FFF062D051AD10064B0D3 /* RevealTokenOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealTokenOverlayView.swift; sourceTree = "<group>"; };
-		8F1077252C8C80310031448C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		8F1077262C8C80310031448C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		8F1077272C8C80310031448C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8F1077282C8C80320031448C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2299,6 +2298,9 @@
 		C25860B528247B87009AE54F /* NewsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsPresenter.swift; sourceTree = "<group>"; };
 		C25860B728247CB6009AE54F /* NewsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModels.swift; sourceTree = "<group>"; };
 		C258EC6D227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+DragAndDrop.swift"; sourceTree = "<group>"; };
+		C25913392DBD70EF0040EF78 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
+		C259133A2DBD70EF0040EF78 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C259133B2DBD70EF0040EF78 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C25B220F27C174EF0052AAC4 /* ComposeServiceModels+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComposeServiceModels+Extensions.swift"; sourceTree = "<group>"; };
 		C25B221127C177170052AAC4 /* ComposeServiceFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceFlowController.swift; sourceTree = "<group>"; };
 		C25B221327C17F1E0052AAC4 /* ComposeServiceInputKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceInputKind.swift; sourceTree = "<group>"; };
@@ -2530,6 +2532,10 @@
 		C28ECE991FEDBFB3000EBB9D /* CameraDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraDelegate.swift; sourceTree = "<group>"; };
 		C28ECE9F1FEE8273000EBB9D /* CodeParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeParser.swift; sourceTree = "<group>"; };
 		C28ECEA51FEEA9CE000EBB9D /* QueryItemsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryItemsType.swift; sourceTree = "<group>"; };
+		C292044C2DBE4FC50061E985 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = TwoFAS/Other/sv.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C292044D2DBE4FE40061E985 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = TwoFAS/Other/sv.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C292044E2DBE4FE60061E985 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = TwoFAS/Other/ja.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
+		C292044F2DBE4FE90061E985 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = TwoFAS/Other/el.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C293782F2BD1A218008D5125 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C29378332BD1A342008D5125 /* SecurityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityView.swift; sourceTree = "<group>"; };
 		C29378352BD1A3B6008D5125 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -9062,7 +9068,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 1630;
 				ORGANIZATIONNAME = "Two Factor Authentication Service, Inc.";
 				TargetAttributes = {
 					C200E4991FB3911B00D7C748 = {
@@ -9183,6 +9189,7 @@
 				"zh-Hans",
 				el,
 				ja,
+				sv,
 			);
 			mainGroup = C236666A1FB2644900989ACA;
 			packageReferences = (
@@ -11200,6 +11207,7 @@
 				C21BF26C2B5B340100915507 /* zh-Hans */,
 				8FD3F0882C37324B0042092E /* el */,
 				8F1077282C8C80320031448C /* ja */,
+				C259133B2DBD70EF0040EF78 /* sv */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -11222,6 +11230,7 @@
 				C21BF26B2B5B340100915507 /* zh-Hans */,
 				8FD3F0872C37324B0042092E /* el */,
 				8F1077272C8C80310031448C /* ja */,
+				C259133A2DBD70EF0040EF78 /* sv */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -11230,7 +11239,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				C23666831FB2644900989ACA /* Base */,
-				8F1077252C8C80310031448C /* ja */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -11254,6 +11262,7 @@
 				C21BF26A2B5B340100915507 /* zh-Hans */,
 				8FD3F0862C37324B0042092E /* el */,
 				8F1077262C8C80310031448C /* ja */,
+				C25913392DBD70EF0040EF78 /* sv */,
 			);
 			name = TwoFASWidget.intentdefinition;
 			sourceTree = "<group>";
@@ -11276,6 +11285,7 @@
 				C2BBD2422B81311F009A91FB /* zh-Hans */,
 				8FD3F0892C3732A80042092E /* el */,
 				8F1077292C8C805B0031448C /* ja */,
+				C292044C2DBE4FC50061E985 /* sv */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -11296,6 +11306,9 @@
 				C2BBD24C2B813162009A91FB /* uk */,
 				C2BBD24D2B813162009A91FB /* de */,
 				C2BBD24E2B813162009A91FB /* pl */,
+				C292044D2DBE4FE40061E985 /* sv */,
+				C292044E2DBE4FE60061E985 /* ja */,
+				C292044F2DBE4FE90061E985 /* el */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -11313,7 +11326,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -11327,7 +11339,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -11357,7 +11369,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -11371,7 +11382,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -11399,7 +11410,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 7;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -11413,7 +11423,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -11445,7 +11455,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 7;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -11459,7 +11468,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -11489,7 +11498,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -11504,7 +11512,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -11534,7 +11542,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -11549,7 +11556,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -11577,7 +11584,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -11592,7 +11598,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -11626,7 +11632,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -11641,7 +11646,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -11700,7 +11705,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				ENABLE_BITCODE = NO;
+				ENABLE_ONLY_ACTIVE_RESOURCES = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -11719,6 +11726,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 5.3.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
@@ -11766,6 +11774,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -11779,6 +11788,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 5.3.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
@@ -11801,7 +11811,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEPLOYMENT_POSTPROCESSING = NO;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFAS/Other/Info.plist;
@@ -11812,7 +11821,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGED_BINARY_TYPE = manual;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				OTHER_LDFLAGS = (
@@ -11845,7 +11854,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEPLOYMENT_POSTPROCESSING = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFAS/Other/Info.plist;
@@ -11856,7 +11864,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_execute;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGED_BINARY_TYPE = manual;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
@@ -11890,7 +11898,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -11904,7 +11911,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
@@ -11938,7 +11945,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -11952,7 +11958,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
@@ -11982,7 +11988,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -11996,7 +12001,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -12027,7 +12032,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -12041,7 +12045,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -12070,7 +12074,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -12087,7 +12090,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -12116,7 +12119,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -12133,7 +12135,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
@@ -12161,7 +12163,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 7;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -12175,7 +12176,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -12208,7 +12209,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 7;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -12222,7 +12222,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -12255,7 +12255,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TwoFASWatch Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -12271,7 +12270,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp;
@@ -12298,7 +12297,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TwoFASWatch Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -12314,7 +12312,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -12336,7 +12334,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 7;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -12353,7 +12350,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -12385,7 +12382,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 7;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -12402,7 +12398,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
@@ -12432,7 +12428,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 7;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -12449,7 +12444,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -12481,7 +12476,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 7;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -12498,7 +12492,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
@@ -12529,7 +12523,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 7;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -12544,7 +12537,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -12576,7 +12569,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 7;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -12591,7 +12583,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -12620,7 +12612,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFASAuth/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
@@ -12630,7 +12621,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGED_BINARY_TYPE = manual;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASAuth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -12654,7 +12645,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFASAuth/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
@@ -12664,7 +12654,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGED_BINARY_TYPE = manual;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASAuth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -12690,7 +12680,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -12704,7 +12693,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -12736,7 +12725,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -12750,7 +12738,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -12778,7 +12766,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 7;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -12795,7 +12782,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -12826,7 +12813,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 7;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -12843,7 +12829,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
@@ -12872,7 +12858,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = TwoFASTests/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -12881,7 +12866,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -12901,7 +12886,6 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = TwoFASTests/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -12910,7 +12894,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -12934,7 +12918,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = TwoFASWidget/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -12943,7 +12926,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGED_BINARY_TYPE = manual;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -12970,7 +12953,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = TwoFASWidget/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -12979,7 +12961,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGED_BINARY_TYPE = manual;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASWidget;
@@ -13003,7 +12985,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = TwoFASServiceIntent/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -13012,7 +12993,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGED_BINARY_TYPE = manual;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -13037,7 +13018,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = TwoFASServiceIntent/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -13046,7 +13026,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGED_BINARY_TYPE = manual;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TwoFASServiceIntent;
@@ -13068,13 +13048,12 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.DataTests;
@@ -13097,13 +13076,12 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.DataTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -13126,7 +13104,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -13143,7 +13120,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -13173,7 +13150,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -13190,7 +13166,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
@@ -13218,7 +13194,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -13235,7 +13210,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -13265,7 +13240,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -13282,7 +13256,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
@@ -13310,7 +13284,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -13327,7 +13300,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -13358,7 +13331,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -13375,7 +13347,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -13404,7 +13376,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -13421,7 +13392,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -13452,7 +13423,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -13469,7 +13439,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -13496,7 +13466,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = ProtectionTests/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -13505,7 +13474,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.ProtectionTests;
@@ -13526,7 +13495,6 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ZY8UR5ADFW;
 				INFOPLIST_FILE = ProtectionTests/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -13535,7 +13503,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.3.12;
+				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.ProtectionTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

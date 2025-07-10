@@ -20,6 +20,7 @@
 import Foundation
 
 public extension String {
+    private static let allowedNumbers = ["2", "3", "4", "5", "6", "7"]
     // swiftlint:disable no_magic_numbers
     func splitVersion() -> VersionDecoded? {
         
@@ -74,12 +75,10 @@ public extension String {
     
     func isValidSecret() -> Bool {
         let maxLength = ServiceRules.privateKeyMaxLength
-        let numbers = ["2", "3", "4", "5", "6", "7"]
         guard count >= ServiceRules.minKeyLength && count <= maxLength else { return false }
         let chars = Array(self)
         for char in chars {
-            if char.isASCII
-                && (char.isLetter || char.isPadding || (char.isNumber && numbers.contains(String(char)))) {
+            if isValidSecretCharacter(char) {
                 // valid
             } else {
                 return false
@@ -94,11 +93,15 @@ public extension String {
     }
     
     func sanitazeSecret() -> String {
-        trimmingCharacters(in: .init(charactersIn: "="))
+        var str = self.removeWhitespaces()
+            .trimmingCharacters(in: .init(charactersIn: "="))
             .replacingOccurrences(of: " ", with: "")
             .replacingOccurrences(of: "\\", with: "")
             .replacingOccurrences(of: "-", with: "")
             .uppercased()
+        return str.filter { char in
+            isValidSecretCharacter(char)
+        }
     }
     
     func prepareSecretForParsing() -> String {
@@ -228,5 +231,9 @@ public extension String {
     func matches(_ regex: String) -> Bool {
         let wholeRange = self.startIndex..<self.endIndex
         return range(of: regex, options: .regularExpression, range: nil, locale: nil) == wholeRange
+    }
+    
+    private func isValidSecretCharacter(_ char: Character) -> Bool {
+        char.isASCII && (char.isLetter || char.isPadding || (char.isNumber && Self.allowedNumbers.contains(String(char))))
     }
 }

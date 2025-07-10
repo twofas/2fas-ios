@@ -265,7 +265,7 @@ struct AddingServiceManuallyView: View {
                 .accessibilityHidden(true)
             TextField("", text: $secret)
                 .onChange(of: secret) { newValue in
-                    let trimmed = newValue.removeWhitespaces()
+                    let trimmed = newValue.sanitazeSecret()
                     if trimmed != newValue {
                         secret = trimmed
                     }

@@ -22,18 +22,6 @@ import Common
 import Storage
 import Data
 
-enum ComposeServiceModuleInteractorActionType {
-    case new
-    case edit
-}
-
-enum ComposeServiceModuleInteractorPrivateKeyError {
-    case empty
-    case incorrect
-    case tooShort
-    case duplicated
-}
-
 // swiftlint:disable discouraged_none_name
 enum ComposeServiceModuleInteractorSectionState {
     case none
@@ -79,16 +67,12 @@ protocol ComposeServiceModuleInteracting: AnyObject {
     var isPINSet: Bool { get }
     
     var serviceData: ServiceData? { get }
-    
-    var actionType: ComposeServiceModuleInteractorActionType { get }
-    var privateKeyError: ComposeServiceModuleInteractorPrivateKeyError? { get }
-    
+        
     var isBrowserExtensionAllowed: Bool { get }
     
     var isSecretCopyingBlocked: Bool { get }
     
     var isDataCorrectNotifier: ((Bool) -> Void)? { get set }
-    var serviceWasCreated: ((ServiceData) -> Void)? { get set }
     
     func trashService()
     func copySecret()
@@ -96,20 +80,13 @@ protocol ComposeServiceModuleInteracting: AnyObject {
     func setServiceName(_ newServiceName: String?)
     func setAdditionalInfo(_ newAdditionalInfo: String?)
     
-    func setPrivateKey(_ newPrivateKey: String?)
     func setIconType(_ iconType: IconType)
     
     func save()
     func initialize()
     
-    var advancedAlertShown: Bool { get }
-    func markAdvancedAlertAsShown()
-    
     var advancedSettings: ComposeServiceAdvancedSettings { get }
-    func saveAdvancedSettings(_ advancedSettings: ComposeServiceAdvancedSettings)
-    
-    var isEditing: Bool { get }
-    
+        
     var sectionID: SectionID? { get }
     var selectedSectionTitle: String? { get }
     
@@ -122,7 +99,6 @@ protocol ComposeServiceModuleInteracting: AnyObject {
 
 final class ComposeServiceModuleInteractor {
     var isDataCorrectNotifier: ((Bool) -> Void)?
-    var serviceWasCreated: ((ServiceData) -> Void)?
     
     private var isServiceNameCorrect = false
     private var isAdditionalInfoCorrect = false
@@ -150,9 +126,7 @@ final class ComposeServiceModuleInteractor {
     private var sectionState: ComposeServiceModuleInteractorSectionState = .none
     
     private(set) var badgeColor: TintColor = .default
-    
-    private(set) var privateKeyError: ComposeServiceModuleInteractorPrivateKeyError?
-    
+        
     private let isServiceNameValid = ServiceRules.isServiceNameValid
     private let isPrivateKeyValid = ServiceRules.isPrivateKeyValid
     private let isPrivateKeyTooShort = ServiceRules.isPrivateKeyTooShort
@@ -165,7 +139,6 @@ final class ComposeServiceModuleInteractor {
     private let sectionInteractor: SectionInteracting
     private let notificationsInteractor: NotificationInteracting
     private let serviceDefinitionInteractor: ServiceDefinitionInteracting
-    private let advancedAlertInteractor: AdvancedAlertInteracting
     private let mdmInteractor: MDMInteracting
     
     private(set) var serviceData: ServiceData?
@@ -179,7 +152,6 @@ final class ComposeServiceModuleInteractor {
         sectionInteractor: SectionInteracting,
         notificationsInteractor: NotificationInteracting,
         serviceDefinitionInteractor: ServiceDefinitionInteracting,
-        advancedAlertInteractor: AdvancedAlertInteracting,
         mdmInteractor: MDMInteracting
     ) {
         self.modifyInteractor = modifyInteractor
@@ -190,7 +162,6 @@ final class ComposeServiceModuleInteractor {
         self.sectionInteractor = sectionInteractor
         self.notificationsInteractor = notificationsInteractor
         self.serviceDefinitionInteractor = serviceDefinitionInteractor
-        self.advancedAlertInteractor = advancedAlertInteractor
         self.mdmInteractor = mdmInteractor
         
         updateValues()
@@ -210,14 +181,7 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
     var isLabelEnabled: Bool {
         iconType == .label
     }
-    
-    var actionType: ComposeServiceModuleInteractorActionType {
-        if isEditing {
-            return .edit
-        }
-        return .new
-    }
-    
+
     var iconTypeName: String {
         serviceDefinitionInteractor.name(for: iconTypeID) ?? ""
     }
@@ -241,12 +205,6 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
         validate()
     }
     
-    func setPrivateKey(_ newPrivateKey: String?) {
-        guard !isEditing else { return }
-        privateKey = newPrivateKey
-        validate()
-    }
-    
     func setIconType(_ iconType: IconType) {
         guard self.iconType != iconType else { return }
         
@@ -257,9 +215,8 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
     
     func save() {
         validate()
-        guard isDataValid else { return }
+        guard isDataValid, let serviceData, let serviceName else { return }
         
-        if let serviceData, let serviceName, isEditing {
             modifyInteractor.updateService(
                 serviceData,
                 name: serviceName,
@@ -273,39 +230,10 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
             if sectionState.isDifferent {
                 sectionInteractor.moveServiceToSection(move: serviceData.secret, to: sectionID)
             }
-        } else {
-            guard let serviceName, let privateKey, !serviceExists(for: privateKey) else { return }
-            
-            modifyInteractor.addService(
-                name: serviceName,
-                secret: privateKey,
-                serviceTypeID: nil,
-                additionalInfo: additionalInfo,
-                rawIssuer: nil,
-                otpAuth: nil,
-                tokenPeriod: period ?? .defaultValue,
-                tokenLength: digits,
-                badgeColor: badgeColor,
-                iconType: iconType,
-                iconTypeID: iconTypeID,
-                labelColor: labelColor,
-                labelTitle: labelTitle,
-                algorithm: algorithm,
-                counter: counter,
-                tokenType: tokenType,
-                source: .manual,
-                sectionID: sectionID
-            )
-            
-            logSave()
-            
-            guard let serviceData = modifyInteractor.service(for: privateKey) else { return }
-            serviceWasCreated?(serviceData)
-        }
     }
     
     var isDataValid: Bool {
-        isServiceNameCorrect && (privateKeyError == nil) && isAdditionalInfoCorrect
+        isServiceNameCorrect && isAdditionalInfoCorrect
     }
     
     var isPINSet: Bool {
@@ -345,28 +273,6 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
         )
     }
     
-    func saveAdvancedSettings(_ advancedSettings: ComposeServiceAdvancedSettings) {
-        guard !isEditing else { return }
-        
-        guard tokenType != advancedSettings.tokenType ||
-                algorithm != advancedSettings.algorithm ||
-                period != advancedSettings.period ||
-                digits != advancedSettings.digits ||
-                counter != advancedSettings.counter else { return }
-        
-        tokenType = advancedSettings.tokenType ?? .defaultValue
-        algorithm = advancedSettings.algorithm ?? .defaultValue
-        period = advancedSettings.period
-        digits = advancedSettings.digits ?? .defaultValue
-        counter = advancedSettings.counter
-        
-        validate()
-    }
-    
-    var isEditing: Bool {
-        serviceData != nil
-    }
-    
     // MARK: - External editors
     func setIconTypeID(_ newIconTypeID: IconTypeID) {
         guard iconTypeID != newIconTypeID else { return }
@@ -393,14 +299,6 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
         validate()
     }
     
-    var advancedAlertShown: Bool {
-        advancedAlertInteractor.wasShowed
-    }
-    
-    func markAdvancedAlertAsShown() {
-        advancedAlertInteractor.markAsShown()
-    }
-    
     func setSectionID(_ sectionID: SectionID?) {
         guard self.sectionID != sectionID else { return }
         
@@ -418,7 +316,6 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
 private extension ComposeServiceModuleInteractor {
     func validate() {
         validateServiceName()
-        validatePrivateKey()
         validateAdditionalInfo()
         let correctData = isDataValid
         Log("ComposeServiceModuleInteractor - validate: \(correctData)", module: .moduleInteractor, save: false)
@@ -434,39 +331,12 @@ private extension ComposeServiceModuleInteractor {
         isServiceNameCorrect = isServiceNameValid(serviceName)
     }
     
-    func validatePrivateKey() {
-        guard !isEditing else { return }
-        
-        guard let privateKey, !privateKey.isEmpty else {
-            privateKeyError = .empty
-            return
-        }
-        
-        if isPrivateKeyValid(privateKey) {
-            if serviceExists(for: privateKey) {
-                privateKeyError = .duplicated
-            } else {
-                privateKeyError = nil
-            }
-        } else {
-            if isPrivateKeyTooShort(privateKey) {
-                privateKeyError = .tooShort
-            } else {
-                privateKeyError = .incorrect
-            }
-        }
-    }
-    
     func validateAdditionalInfo() {
         guard let additionalInfo else {
             isAdditionalInfoCorrect = true
             return
         }
         isAdditionalInfoCorrect = additionalInfo.count <= ServiceRules.additionalInfoMaxLength
-    }
-    
-    func serviceExists(for secret: String) -> Bool {
-        modifyInteractor.serviceExists(for: secret) == .yes
     }
     
     func updateValues() {

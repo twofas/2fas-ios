@@ -40,8 +40,6 @@ protocol ComposeServiceFlowControlling: AnyObject {
     func toDelete(serviceData: ServiceData)
     func toSetupPIN()
     func toAdvancedSummary(settings: ComposeServiceAdvancedSettings)
-    func toAdvancedNewService(settings: ComposeServiceAdvancedSettings)
-    func toAdvancedWarning()
     func toBrowserExtension(with secret: String)
     func toCategorySelection(with sectionID: SectionID?)
     func toServiceWasCreated(serviceData: ServiceData)
@@ -145,15 +143,6 @@ extension ComposeServiceFlowController: ComposeServiceFlowControlling {
         ComposeServiceAdvancedSummaryFlowController.present(in: navi, parent: self, settings: settings)
     }
     
-    func toAdvancedNewService(settings: ComposeServiceAdvancedSettings) {
-        guard let navi = viewController.navigationController else { return }
-        ComposeServiceAdvancedEditFlowController.present(in: navi, parent: self, settings: settings)
-    }
-    
-    func toAdvancedWarning() {
-        AdvancedAlertFlowController.present(on: viewController, parent: self)
-    }
-    
     func toBrowserExtension(with secret: String) {
         guard let navi = viewController.navigationController else { return }
         ComposeServiceWebExtensionFlowController.present(in: navi, parent: self, secret: secret)
@@ -235,27 +224,9 @@ extension ComposeServiceFlowController: LabelComposeFlowControllerParent {
     }
 }
 
-extension ComposeServiceFlowController: AdvancedAlertFlowControllerParent {
-    func advancedAlertContinue() {
-        dismiss { [weak self] in
-            self?.viewController.presenter.handleProceedToAdvanced()
-        }
-    }
-    
-    func advancedAlertCancel() {
-        dismiss()
-    }
-}
-
 extension ComposeServiceFlowController: ComposeServiceAdvancedSummaryFlowControllerParent {
     func advancedSummaryDidFinish() {
         toClose()
-    }
-}
-
-extension ComposeServiceFlowController: ComposeServiceAdvancedEditFlowControllerParent {
-    func advancedEditDidChange(settings: ComposeServiceAdvancedSettings) {
-        viewController.presenter.handleSaveAdvancedSettings(settings)
     }
 }
 

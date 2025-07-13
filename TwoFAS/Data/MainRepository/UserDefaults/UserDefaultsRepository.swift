@@ -39,9 +39,6 @@ protocol UserDefaultsRepository: AnyObject {
     var sortType: SortType? { get }
     func setSortType(_ sortType: SortType)
     
-    var advancedAlertShown: Bool { get }
-    func markAdvancedAlertAsShown()
-    
     var areExtensionKeysGenerated: Bool { get }
     func markExtensionKeysAsGenerated()
     func clearExtensionKeys()

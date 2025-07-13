@@ -62,11 +62,6 @@ extension ComposeServiceViewController {
             }()
             cell.configure(privateKeyKind: kind)
             cell.value = config.value
-            if let error = config.error {
-                cell.showError(error.localizedStringValue)
-            } else {
-                cell.hideError()
-            }
             cell.didSelectActionButton = { [weak self] in self?.presenter.handleActionButton(for: $0) }
             cell.didUpdateValue = { [weak self] kind, value in
                 self?.presenter.handleValueUpdate(for: kind, value: value)

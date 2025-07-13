@@ -181,10 +181,6 @@ public final class InteractorFactory {
         IconInteractor(mainRepository: MainRepositoryImpl.shared)
     }
     
-    public func advancedAlertInteractor() -> AdvancedAlertInteracting {
-        AdvancedAlertInteractor(mainRepository: MainRepositoryImpl.shared)
-    }
-    
     public func pushNotificationInteractor() -> PushNotificationInteracting {
         PushNotificationInteractor(mainRepository: MainRepositoryImpl.shared)
     }

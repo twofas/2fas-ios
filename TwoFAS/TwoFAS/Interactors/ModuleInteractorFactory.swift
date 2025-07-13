@@ -206,7 +206,6 @@ final class ModuleInteractorFactory {
             sectionInteractor: InteractorFactory.shared.sectionInteractor(),
             notificationsInteractor: InteractorFactory.shared.notificationInteractor(),
             serviceDefinitionInteractor: InteractorFactory.shared.serviceDefinitionInteractor(),
-            advancedAlertInteractor: InteractorFactory.shared.advancedAlertInteractor(),
             mdmInteractor: InteractorFactory.shared.mdmInteractor()
         )
     }
@@ -216,14 +215,6 @@ final class ModuleInteractorFactory {
     ) -> ComposeServiceAdvancedSummaryModuleInteracting {
         ComposeServiceAdvancedSummaryModuleInteractor(
             notificationInteractor: InteractorFactory.shared.notificationInteractor(),
-            settings: settings
-        )
-    }
-    
-    func composeServiceAdvancedEditModuleInteractor(
-        settings: ComposeServiceAdvancedSettings
-    ) -> ComposeServiceAdvancedEditModuleInteracting {
-        ComposeServiceAdvancedEditModuleInteractor(
             settings: settings
         )
     }

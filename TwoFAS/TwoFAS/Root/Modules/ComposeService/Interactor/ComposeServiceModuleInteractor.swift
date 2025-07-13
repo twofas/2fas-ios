@@ -75,7 +75,10 @@ protocol ComposeServiceModuleInteracting: AnyObject {
     var isDataCorrectNotifier: ((Bool) -> Void)? { get set }
     
     func trashService()
+    
     func copySecret()
+    func copyLink()
+    func createQRCode(size: CGFloat, margin: CGFloat) -> UIImage?
     
     func setServiceName(_ newServiceName: String?)
     func setAdditionalInfo(_ newAdditionalInfo: String?)
@@ -140,6 +143,7 @@ final class ComposeServiceModuleInteractor {
     private let notificationsInteractor: NotificationInteracting
     private let serviceDefinitionInteractor: ServiceDefinitionInteracting
     private let mdmInteractor: MDMInteracting
+    private let qrCodeGeneratorInteractor: QRCodeGeneratorInteracting
     
     private(set) var serviceData: ServiceData?
     
@@ -152,7 +156,8 @@ final class ComposeServiceModuleInteractor {
         sectionInteractor: SectionInteracting,
         notificationsInteractor: NotificationInteracting,
         serviceDefinitionInteractor: ServiceDefinitionInteracting,
-        mdmInteractor: MDMInteracting
+        mdmInteractor: MDMInteracting,
+        qrCodeGeneratorInteractor: QRCodeGeneratorInteracting
     ) {
         self.modifyInteractor = modifyInteractor
         self.trashingServiceInteractor = trashingServiceInteractor
@@ -163,6 +168,7 @@ final class ComposeServiceModuleInteractor {
         self.notificationsInteractor = notificationsInteractor
         self.serviceDefinitionInteractor = serviceDefinitionInteractor
         self.mdmInteractor = mdmInteractor
+        self.qrCodeGeneratorInteractor = qrCodeGeneratorInteractor
         
         updateValues()
     }
@@ -257,6 +263,18 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
     func copySecret() {
         guard let privateKey else { return }
         notificationsInteractor.copyWithSuccess(value: privateKey)
+    }
+    
+    func copyLink() {
+        guard let serviceData else { return }
+        let link = serviceDefinitionInteractor.otpAuth(from: serviceData)
+        notificationsInteractor.copyWithSuccess(value: link)
+    }
+    
+    func createQRCode(size: CGFloat, margin: CGFloat) -> UIImage? {
+        guard let serviceData else { return nil }
+        let link = serviceDefinitionInteractor.otpAuth(from: serviceData)
+        return qrCodeGeneratorInteractor.qrCode(of: size, margin: margin, for: link)
     }
     
     func initialize() {

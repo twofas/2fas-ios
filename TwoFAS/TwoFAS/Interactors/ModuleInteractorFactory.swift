@@ -206,7 +206,8 @@ final class ModuleInteractorFactory {
             sectionInteractor: InteractorFactory.shared.sectionInteractor(),
             notificationsInteractor: InteractorFactory.shared.notificationInteractor(),
             serviceDefinitionInteractor: InteractorFactory.shared.serviceDefinitionInteractor(),
-            mdmInteractor: InteractorFactory.shared.mdmInteractor()
+            mdmInteractor: InteractorFactory.shared.mdmInteractor(),
+            qrCodeGeneratorInteractor: InteractorFactory.shared.qrCodeGeneratorInteractor()
         )
     }
     

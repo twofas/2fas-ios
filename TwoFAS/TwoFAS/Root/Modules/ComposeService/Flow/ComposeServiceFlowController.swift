@@ -45,6 +45,8 @@ protocol ComposeServiceFlowControlling: AnyObject {
     func toServiceWasCreated(serviceData: ServiceData)
     func toServiceWasModified()
     func toServiceWasDeleted()
+    func toRevealMenu()
+    func toQRCode(code: UIImage)
 }
 
 final class ComposeServiceFlowController: FlowController {
@@ -164,6 +166,36 @@ extension ComposeServiceFlowController: ComposeServiceFlowControlling {
     func toServiceWasDeleted() {
         parent?.composeServiceServiceWasDeleted()
     }
+    
+    func toRevealMenu() {
+        let alert = UIAlertController(title: T.Commons.optionsTitle, message: nil, preferredStyle: .actionSheet)
+        
+        let copySecretAction = UIAlertAction(title: T.Tokens.copySecret, style: .default) { [weak self] _ in
+            self?.viewController.presenter.handleCopySecret()
+        }
+        let copyOTPAuthLinkAction = UIAlertAction(title: T.Tokens.copyLink, style: .default) { [weak self] _ in
+            self?.viewController.presenter.handleCopyLink()
+        }
+        let showQRCodeAction = UIAlertAction(title: T.Tokens.showQrCode, style: .default) { [weak self] _ in
+            self?.viewController.presenter.handleShowQRCode()
+        }
+        let cancelAction = UIAlertAction(title: T.Commons.cancel, style: .cancel, handler: nil)
+        
+        alert.addAction(copySecretAction)
+        alert.addAction(copyOTPAuthLinkAction)
+        alert.addAction(showQRCodeAction)
+        alert.addAction(cancelAction)
+        
+        viewController.present(alert, animated: true, completion: nil)
+    }
+    
+    func toQRCode(code: UIImage) {
+        QRCodeDisplayFlowController.present(
+            on: viewController,
+            parent: self,
+            qrCodeImage: code
+        )
+    }
 }
 
 private extension ComposeServiceFlowController {
@@ -175,6 +207,12 @@ private extension ComposeServiceFlowController {
     
     func pop() {
         viewController.navigationController?.popToRootViewController(animated: true)
+    }
+}
+
+extension ComposeServiceFlowController: QRCodeDisplayFlowControllerParent {
+    func closeQRCodeDisplay() {
+        viewController.dismiss(animated: true)
     }
 }
 

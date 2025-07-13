@@ -118,8 +118,7 @@ extension ComposeServicePresenter {
             if isLocked {
                 flowController.toLogin()
             } else {
-                interactor.copySecret()
-                view?.copySecret()
+                flowController.toRevealMenu()
             }
         } else {
             flowController.toSetPIN()
@@ -182,6 +181,25 @@ extension ComposeServicePresenter {
     func handleSectionSelected(_ sectionID: SectionID?) {
         interactor.setSectionID(sectionID)
         reload()
+    }
+    
+    // MARK: Reveal menu
+    func handleShowQRCode() {
+        guard let code = interactor.createQRCode(size: Config.minQRCodeSize, margin: 0) else {
+            Log("ComposeServicePresenter: Error while generating QR Code", severity: .error)
+            return
+        }
+        flowController.toQRCode(code: code)
+    }
+    
+    func handleCopySecret() {
+        interactor.copySecret()
+        view?.copySecret()
+    }
+    
+    func handleCopyLink() {
+        interactor.copyLink()
+        view?.copyLink()
     }
     
     // MARK: - Start editing

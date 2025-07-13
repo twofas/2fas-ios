@@ -21,7 +21,6 @@
 		8F7952532C01D1940053F776 /* KeyboardButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */; };
 		8F872DE92C24EE2600160D14 /* SortTokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DE82C24EE2600160D14 /* SortTokensPresenter.swift */; };
 		8F872DEB2C24EE5500160D14 /* SortTokensInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */; };
-		8FF1CC7F2D09030000428BB4 /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24AEDBF291BD119005F59CB /* T.generated.swift */; };
 		C200E49E1FB3911B00D7C748 /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = C200E49C1FB3911B00D7C748 /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C200E4A11FB3911B00D7C748 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C200E4A21FB3911B00D7C748 /* Storage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -330,7 +329,6 @@
 		C248DDAF2B799CD3004712E3 /* CopyIntentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDAE2B799CD3004712E3 /* CopyIntentButton.swift */; };
 		C249773A277F618A00DC872C /* TrashServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2497739277F618A00DC872C /* TrashServiceFlowController.swift */; };
 		C249773C277F62B100DC872C /* TrashServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249773B277F62B100DC872C /* TrashServiceViewController.swift */; };
-		C24AEDC0291BD11A005F59CB /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24AEDBF291BD119005F59CB /* T.generated.swift */; };
 		C24BC311264DC2E300A20084 /* IntroductionPage3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24BC310264DC2E300A20084 /* IntroductionPage3View.swift */; };
 		C24D1C2C253C744F0029D27D /* Sync.h in Headers */ = {isa = PBXBuildFile; fileRef = C24D1C1C253C744E0029D27D /* Sync.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C24D1C2F253C744F0029D27D /* Sync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24D1C1A253C744E0029D27D /* Sync.framework */; };
@@ -664,7 +662,6 @@
 		C281A2732BD47D6C0068451C /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C281A2722BD47D6C0068451C /* SuccessView.swift */; };
 		C281A2772BD489590068451C /* IntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C281A2762BD489590068451C /* IntroductionView.swift */; };
 		C281A2782BD48A930068451C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C225E617241CFCE90041C238 /* Localizable.strings */; };
-		C281A2792BD48A9C0068451C /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24AEDBF291BD119005F59CB /* T.generated.swift */; };
 		C2823B1626F3E84F00583586 /* RevealPasswordInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2823B1526F3E84F00583586 /* RevealPasswordInput.swift */; };
 		C2830D7A293D440900B3DDAF /* TokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D79293D440900B3DDAF /* TokensPresenter.swift */; };
 		C2830D7C293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D7B293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift */; };
@@ -1011,6 +1008,13 @@
 		C2D6731D25DB2C5D004BD697 /* ToastCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6731825DB2C5D004BD697 /* ToastCenter.swift */; };
 		C2D6731E25DB2C5D004BD697 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6731925DB2C5D004BD697 /* Toast.swift */; };
 		C2D75D37297D51B60002531E /* iCloudIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D75D36297D51B60002531E /* iCloudIdentifier.swift */; };
+		C2D97E7D2E24436900E213A7 /* QRCodeGeneratorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E7C2E24436200E213A7 /* QRCodeGeneratorInteractor.swift */; };
+		C2D97E802E2454D600E213A7 /* QRCodeDisplayFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E7F2E2454D600E213A7 /* QRCodeDisplayFlowController.swift */; };
+		C2D97E822E24556F00E213A7 /* QRCodeDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E812E24556F00E213A7 /* QRCodeDisplayView.swift */; };
+		C2D97E842E2455F400E213A7 /* QRCodeDisplayPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E832E2455F400E213A7 /* QRCodeDisplayPresenter.swift */; };
+		C2D97E882E2469BD00E213A7 /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E872E2469BD00E213A7 /* T.generated.swift */; };
+		C2D97E892E2469EA00E213A7 /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E872E2469BD00E213A7 /* T.generated.swift */; };
+		C2D97E8A2E246A0F00E213A7 /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E872E2469BD00E213A7 /* T.generated.swift */; };
 		C2DB8E5D21F8FE33002F124B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2DB8E5C21F8FE33002F124B /* Assets.xcassets */; };
 		C2DDEB1F289ED4A300011712 /* IntroductionDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DDEB1E289ED4A300011712 /* IntroductionDots.swift */; };
 		C2DDEB25289F3D5200011712 /* TokensViewEmptyListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */; };
@@ -2224,7 +2228,6 @@
 		C249AF67278A411B005F9D80 /* NewVersionInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewVersionInteractor.swift; sourceTree = "<group>"; };
 		C249AF69278A4148005F9D80 /* MainRepositoryImpl+NewAppVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+NewAppVersion.swift"; sourceTree = "<group>"; };
 		C249AF7F278A537F005F9D80 /* MainRepositoryImpl+AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+AppInfo.swift"; sourceTree = "<group>"; };
-		C24AEDBF291BD119005F59CB /* T.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = T.generated.swift; sourceTree = "<group>"; };
 		C24BC310264DC2E300A20084 /* IntroductionPage3View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductionPage3View.swift; sourceTree = "<group>"; };
 		C24D1C1A253C744E0029D27D /* Sync.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sync.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C24D1C1C253C744E0029D27D /* Sync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sync.h; sourceTree = "<group>"; };
@@ -2855,6 +2858,11 @@
 		C2D6731925DB2C5D004BD697 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		C2D75D36297D51B60002531E /* iCloudIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudIdentifier.swift; sourceTree = "<group>"; };
 		C2D958CF276FABE500B5A6BD /* TwoFAS5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS5.xcdatamodel; sourceTree = "<group>"; };
+		C2D97E7C2E24436200E213A7 /* QRCodeGeneratorInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGeneratorInteractor.swift; sourceTree = "<group>"; };
+		C2D97E7F2E2454D600E213A7 /* QRCodeDisplayFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDisplayFlowController.swift; sourceTree = "<group>"; };
+		C2D97E812E24556F00E213A7 /* QRCodeDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDisplayView.swift; sourceTree = "<group>"; };
+		C2D97E832E2455F400E213A7 /* QRCodeDisplayPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDisplayPresenter.swift; sourceTree = "<group>"; };
+		C2D97E872E2469BD00E213A7 /* T.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = T.generated.swift; path = TwoFASAuth/Generated/T.generated.swift; sourceTree = SOURCE_ROOT; };
 		C2DB8E5C21F8FE33002F124B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C2DDEB1E289ED4A300011712 /* IntroductionDots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionDots.swift; sourceTree = "<group>"; };
 		C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensViewEmptyListScreen.swift; sourceTree = "<group>"; };
@@ -3916,6 +3924,7 @@
 				C22CD3972B9142CA005FE348 /* MDMInteractor.swift */,
 				C276D1702B9A672C008C9CD4 /* LocalNotificationStateInteractor.swift */,
 				C2EA6E5B2BA10AFE0034A964 /* LocalNotificationFetchInteractor.swift */,
+				C2D97E7C2E24436200E213A7 /* QRCodeGeneratorInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -3999,6 +4008,7 @@
 		C21247F927B717660044D9F2 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				C2D97E7E2E2453AF00E213A7 /* QRCodeDisplay */,
 				C296D1E528B2D20D001F026D /* UserIconInfo */,
 				C26764A628723CFD00D468B2 /* CategorySelection */,
 				C23FD50828144A4B00E4E9C5 /* WebExtension */,
@@ -7427,8 +7437,8 @@
 		C2D17FF3291BB5D90072EBFD /* Generated */ = {
 			isa = PBXGroup;
 			children = (
+				C2D97E872E2469BD00E213A7 /* T.generated.swift */,
 				C2EE37A9291D2B9800CAB85C /* Assets.swift */,
-				C24AEDBF291BD119005F59CB /* T.generated.swift */,
 			);
 			path = Generated;
 			sourceTree = "<group>";
@@ -7521,6 +7531,16 @@
 				C2C0223D297F218D00D596A8 /* View */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		C2D97E7E2E2453AF00E213A7 /* QRCodeDisplay */ = {
+			isa = PBXGroup;
+			children = (
+				C2D97E7F2E2454D600E213A7 /* QRCodeDisplayFlowController.swift */,
+				C2D97E832E2455F400E213A7 /* QRCodeDisplayPresenter.swift */,
+				C2D97E812E24556F00E213A7 /* QRCodeDisplayView.swift */,
+			);
+			path = QRCodeDisplay;
 			sourceTree = "<group>";
 		};
 		C2DD28C421D5590600034476 /* Controls */ = {
@@ -9699,6 +9719,7 @@
 				C29803C4245F01600066DFE0 /* CenteringScrollView.swift in Sources */,
 				C2B077BC292A8FA80074517F /* UploadLogsSuccessViewController.swift in Sources */,
 				C20418622ABB969300874654 /* AddingServiceCloseButtonView.swift in Sources */,
+				C2D97E822E24556F00E213A7 /* QRCodeDisplayView.swift in Sources */,
 				C240484A2765218C0076376E /* WidgetWarningPresenter.swift in Sources */,
 				C2F5F9E328611D6200F778E1 /* BrowserExtensionPairingAlreadyPairedFlowController.swift in Sources */,
 				C28356232897098300421882 /* SelectFromGalleryAdvice.swift in Sources */,
@@ -9799,6 +9820,7 @@
 				C2BD85E6264068C00087D087 /* IntroductionPage1View.swift in Sources */,
 				C2FDEE5F279CC316002CAB9E /* CameraScannerPresenter.swift in Sources */,
 				C2BE805B2811DF3D009CBC4A /* AuthRequestsFlowController.swift in Sources */,
+				C2D97E842E2455F400E213A7 /* QRCodeDisplayPresenter.swift in Sources */,
 				C23B899527C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift in Sources */,
 				C2BD85E22640394B0087D087 /* IntroductionScrollView.swift in Sources */,
 				C2404F7E2B72FC6000EBD8DC /* SelectService.swift in Sources */,
@@ -9965,6 +9987,7 @@
 				C2404846276520A80076376E /* WidgetWarningModuleInteractor.swift in Sources */,
 				C2404889276573420076376E /* ImporterPreimportSummaryModuleInteractor.swift in Sources */,
 				C235A011298FD97D008F4FD0 /* MainSplitViewController.swift in Sources */,
+				C2D97E802E2454D600E213A7 /* QRCodeDisplayFlowController.swift in Sources */,
 				C233870627810C2E00F8DBC3 /* TrashViewController.swift in Sources */,
 				C2A7946427F9073400E5C641 /* BrowserExtensionServiceViewController.swift in Sources */,
 				C240486027654E370076376E /* ImporterEnterPasswordModuleInteractor.swift in Sources */,
@@ -9981,9 +10004,9 @@
 				C27C03BF27F4FD6C0020DB5E /* BrowserExtensionMainModuleInteractor.swift in Sources */,
 				C2A2AF6F23D8EA710059094D /* UIActivityIndicator+.swift in Sources */,
 				C2F7FE052A8AB70D004B2C95 /* AddingServiceManuallyModuleInteractor.swift in Sources */,
-				C24AEDC0291BD11A005F59CB /* T.generated.swift in Sources */,
 				C2035AEF245DE27700C482D2 /* MainContainerContentGenerator.swift in Sources */,
 				C2E2C80D27B0392D00F04B70 /* IconSelectorPresenter.swift in Sources */,
+				C2D97E882E2469BD00E213A7 /* T.generated.swift in Sources */,
 				C20CD5402A1D017700A7F324 /* TokensHOTPCellType.swift in Sources */,
 				C29803C0245EE05C0066DFE0 /* MainContainerElementsStyling.swift in Sources */,
 				C2AB92BF2766342900698382 /* PINKeyboardViewController.swift in Sources */,
@@ -10227,12 +10250,12 @@
 				C2A4D3152BC097F80001587C /* MainRepository.swift in Sources */,
 				C281A2772BD489590068451C /* IntroductionView.swift in Sources */,
 				8F7952532C01D1940053F776 /* KeyboardButtonStyle.swift in Sources */,
-				C281A2792BD48A9C0068451C /* T.generated.swift in Sources */,
 				C2B86D2A2BC33D3000AAAC63 /* AppDelegateInteractor.swift in Sources */,
 				C2A4D32E2BC0B1B20001587C /* Token.swift in Sources */,
 				C268918A2BC4960600713078 /* ServiceListPresenter.swift in Sources */,
 				8F00E46A2C23953B001F15AD /* SortTokensView.swift in Sources */,
 				C26983822BCC8326009B3BE2 /* AppPresenter.swift in Sources */,
+				C2D97E892E2469EA00E213A7 /* T.generated.swift in Sources */,
 				C274C9D02BAB8ABB008E7212 /* TwoFASWatchApp.swift in Sources */,
 				C2627F3A2BC72E96009F93A9 /* ServicePresenter.swift in Sources */,
 				C29378302BD1A218008D5125 /* SettingsView.swift in Sources */,
@@ -10446,7 +10469,7 @@
 				8F0FFF002D04D73E0064B0D3 /* RevealTokenImage.swift in Sources */,
 				C248DDA82B794A69004712E3 /* WidgetContentMargins.swift in Sources */,
 				C2C8F92F2CD6CB67001179C0 /* CommonKeys.swift in Sources */,
-				8FF1CC7F2D09030000428BB4 /* T.generated.swift in Sources */,
+				C2D97E8A2E246A0F00E213A7 /* T.generated.swift in Sources */,
 				C2404F782B72E61B00EBD8DC /* ServiceAppEntity.swift in Sources */,
 				8F0FFF022D04D74E0064B0D3 /* CountdownTimerText.swift in Sources */,
 				C28AB9332B76970D009E3601 /* TwoFASWidgetRectangular.swift in Sources */,
@@ -10638,6 +10661,7 @@
 				C2AE5F802ADC8B0D00AED670 /* Code+Support.swift in Sources */,
 				C2E7C3D62ADB2B9C00478D89 /* MainRepositoryImpl+PushNotifications.swift in Sources */,
 				C2E7C40B2ADB2BE500478D89 /* SocialChannel.swift in Sources */,
+				C2D97E7D2E24436900E213A7 /* QRCodeGeneratorInteractor.swift in Sources */,
 				C22CD3962B91419B005FE348 /* MainRepositoryImpl+MDM.swift in Sources */,
 				C2E7C3C32ADB2B9C00478D89 /* MainRepositoryImpl+News.swift in Sources */,
 				C2E7C3BC2ADB2B9C00478D89 /* MainRepositoryImpl+Guides.swift in Sources */,

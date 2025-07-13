@@ -37,4 +37,6 @@ public enum Config {
     }
     
     public static let maxIdentifierLength: Int = 128
+    
+    public static let minQRCodeSize: CGFloat = 280
 }

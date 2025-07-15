@@ -912,6 +912,7 @@
 		C2B950F62925977700F1C069 /* UploadLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B950F52925977700F1C069 /* UploadLogs.swift */; };
 		C2B950F929259ADA00F1C069 /* NSMutableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B950F829259ADA00F1C069 /* NSMutableData.swift */; };
 		C2B950FC29259B1800F1C069 /* NetworkMultipartRequestFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B950FB29259B1800F1C069 /* NetworkMultipartRequestFormat.swift */; };
+		C2BBD0232E270138004ECE56 /* QRCodeDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD0222E270133004ECE56 /* QRCodeDisplayViewController.swift */; };
 		C2BBD1D42B8113A9009A91FB /* TwoFASWidgetInline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD1D22B81127C009A91FB /* TwoFASWidgetInline.swift */; };
 		C2BBD1D72B812117009A91FB /* TwoFASWidgetCircular.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD1D52B8120F4009A91FB /* TwoFASWidgetCircular.swift */; };
 		C2BBD2382B8130B0009A91FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2BBD2332B81308C009A91FB /* Localizable.strings */; };
@@ -2715,6 +2716,7 @@
 		C2B950F52925977700F1C069 /* UploadLogs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadLogs.swift; sourceTree = "<group>"; };
 		C2B950F829259ADA00F1C069 /* NSMutableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableData.swift; sourceTree = "<group>"; };
 		C2B950FB29259B1800F1C069 /* NetworkMultipartRequestFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMultipartRequestFormat.swift; sourceTree = "<group>"; };
+		C2BBD0222E270133004ECE56 /* QRCodeDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDisplayViewController.swift; sourceTree = "<group>"; };
 		C2BBD1D22B81127C009A91FB /* TwoFASWidgetInline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetInline.swift; sourceTree = "<group>"; };
 		C2BBD1D52B8120F4009A91FB /* TwoFASWidgetCircular.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetCircular.swift; sourceTree = "<group>"; };
 		C2BBD2342B81308C009A91FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = TwoFAS/Other/en.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
@@ -7537,6 +7539,7 @@
 			isa = PBXGroup;
 			children = (
 				C2D97E7F2E2454D600E213A7 /* QRCodeDisplayFlowController.swift */,
+				C2BBD0222E270133004ECE56 /* QRCodeDisplayViewController.swift */,
 				C2D97E832E2455F400E213A7 /* QRCodeDisplayPresenter.swift */,
 				C2D97E812E24556F00E213A7 /* QRCodeDisplayView.swift */,
 			);
@@ -9873,6 +9876,7 @@
 				C21EB2EE2A7FC55800FA8AA1 /* AddingServiceMetrics.swift in Sources */,
 				C2F51F0127DAB37200A67C73 /* BrowserExtensionPairingAnimationView.swift in Sources */,
 				C2B5BF592946616900E5092D /* TokensNavigationFlowController.swift in Sources */,
+				C2BBD0232E270138004ECE56 /* QRCodeDisplayViewController.swift in Sources */,
 				C27D5441275D462D001E9ABF /* BackupMenuViewController+TableCellHandling.swift in Sources */,
 				C27A549B27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift in Sources */,
 				C204FAEE21F4A0850041E2F4 /* CGFloat+Extensions.swift in Sources */,

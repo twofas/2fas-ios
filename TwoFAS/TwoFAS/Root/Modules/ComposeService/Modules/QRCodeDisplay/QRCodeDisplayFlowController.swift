@@ -17,7 +17,6 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-
 import UIKit
 import SwiftUI
 
@@ -38,7 +37,7 @@ final class QRCodeDisplayFlowController: FlowController {
         qrCodeImage: UIImage
     ) {
         let presenter = QRCodeDisplayPresenter(qrCodeImage: qrCodeImage)
-        let view = UIHostingController(rootView: QRCodeDisplayView(presenter: presenter))
+        let view = QRCodeDisplayViewController(rootView: QRCodeDisplayView(presenter: presenter))
 
         let flowController = QRCodeDisplayFlowController(viewController: view)
         flowController.parent = parent

@@ -46,7 +46,8 @@ protocol ComposeServiceFlowControlling: AnyObject {
     func toServiceWasModified()
     func toServiceWasDeleted()
     func toRevealMenu()
-    func toQRCode(code: UIImage)
+    func toShowQRCode(code: UIImage)
+    func toShareQRCode(code: UIImage)
 }
 
 final class ComposeServiceFlowController: FlowController {
@@ -173,28 +174,45 @@ extension ComposeServiceFlowController: ComposeServiceFlowControlling {
         let copySecretAction = UIAlertAction(title: T.Tokens.copySecret, style: .default) { [weak self] _ in
             self?.viewController.presenter.handleCopySecret()
         }
+        copySecretAction.setValue(UIImage(systemName: "doc.on.doc"), forKey: "image")
+
         let copyOTPAuthLinkAction = UIAlertAction(title: T.Tokens.copyLink, style: .default) { [weak self] _ in
             self?.viewController.presenter.handleCopyLink()
         }
-        let showQRCodeAction = UIAlertAction(title: T.Tokens.showQrCode, style: .default) { [weak self] _ in
+        copyOTPAuthLinkAction.setValue(UIImage(systemName: "link"), forKey: "image")
+
+        let showQRCodeAction = UIAlertAction(title: T.Tokens.qrCodeShow, style: .default) { [weak self] _ in
             self?.viewController.presenter.handleShowQRCode()
         }
+        showQRCodeAction.setValue(UIImage(systemName: "qrcode"), forKey: "image")
+
+        let shareQRCodeAction = UIAlertAction(title: T.Tokens.qrCodeShare, style: .default) { [weak self] _ in
+            self?.viewController.presenter.handleShareQRCode()
+        }
+        shareQRCodeAction.setValue(UIImage(systemName: "square.and.arrow.up"), forKey: "image")
+
         let cancelAction = UIAlertAction(title: T.Commons.cancel, style: .cancel, handler: nil)
         
         alert.addAction(copySecretAction)
         alert.addAction(copyOTPAuthLinkAction)
         alert.addAction(showQRCodeAction)
+        alert.addAction(shareQRCodeAction)
         alert.addAction(cancelAction)
         
         viewController.present(alert, animated: true, completion: nil)
     }
     
-    func toQRCode(code: UIImage) {
+    func toShowQRCode(code: UIImage) {
         QRCodeDisplayFlowController.present(
             on: viewController,
             parent: self,
             qrCodeImage: code
         )
+    }
+    
+    func toShareQRCode(code: UIImage) {
+        let activityVC = ShareActivityController.createWithQRCode(code, title: T.Tokens.qrCodeShare)
+        viewController.present(activityVC, animated: true, completion: nil)
     }
 }
 

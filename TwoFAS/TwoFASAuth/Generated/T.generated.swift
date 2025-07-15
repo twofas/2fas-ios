@@ -1540,6 +1540,10 @@ internal enum T {
     internal static let qrCodeLeadsToAppStore = T.tr("Localizable", "tokens__qr_code_leads_to_app_store", fallback: "This QR Code takes you to the App Store")
     /// This QR Code takes you to the Google Store
     internal static let qrCodeLeadsToGoogleStore = T.tr("Localizable", "tokens__qr_code_leads_to_google_store", fallback: "This QR Code takes you to the Google Store")
+    /// Share service QR Code
+    internal static let qrCodeShare = T.tr("Localizable", "tokens__qr_code_share", fallback: "Share service QR Code")
+    /// Show service QR Code
+    internal static let qrCodeShow = T.tr("Localizable", "tokens__qr_code_show", fallback: "Show service QR Code")
     /// This QR Code does not work!
     internal static let qrDoesNotWork = T.tr("Localizable", "tokens__qr_does_not_work", fallback: "This QR Code does not work!")
     /// Point your camera to the right QR Code and scan again.

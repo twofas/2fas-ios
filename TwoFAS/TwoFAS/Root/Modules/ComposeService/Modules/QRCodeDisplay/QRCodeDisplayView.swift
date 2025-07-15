@@ -47,6 +47,7 @@ struct QRCodeDisplayView: View {
                 Image(uiImage: presenter.qrCodeImage)
                     .frame(width: presenter.qrCodeImage.size.width, height: presenter.qrCodeImage.size.height)
                     .padding(.horizontal, 20)
+                    .padding(.bottom, 70)
                 
                 Spacer()
             }
@@ -54,8 +55,8 @@ struct QRCodeDisplayView: View {
         .onAppear {
             presenter.viewDidAppear()
         }
-        .onDisappear {
-            presenter.viewWillDisappear()
-        }
+//        .onDisappear {
+//            presenter.viewWillDisappear()
+//        }
     }
 }

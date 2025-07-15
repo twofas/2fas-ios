@@ -185,11 +185,27 @@ extension ComposeServicePresenter {
     
     // MARK: Reveal menu
     func handleShowQRCode() {
-        guard let code = interactor.createQRCode(size: Config.minQRCodeSize, margin: 0) else {
-            Log("ComposeServicePresenter: Error while generating QR Code", severity: .error)
-            return
+        Task {
+            guard let code = await interactor.createQRCode(size: Config.minQRCodeSize, margin: 0) else {
+                Log("ComposeServicePresenter: Error while generating QR Code", severity: .error)
+                return
+            }
+            Task { @MainActor  in
+                flowController.toShowQRCode(code: code)
+            }
         }
-        flowController.toQRCode(code: code)
+    }
+    
+    func handleShareQRCode() {
+        Task {
+            guard let code = await interactor.createQRCode(size: Config.minQRCodeSize, margin: 0) else {
+                Log("ComposeServicePresenter: Error while generating QR Code", severity: .error)
+                return
+            }
+            Task { @MainActor  in
+                flowController.toShareQRCode(code: code)
+            }
+        }
     }
     
     func handleCopySecret() {

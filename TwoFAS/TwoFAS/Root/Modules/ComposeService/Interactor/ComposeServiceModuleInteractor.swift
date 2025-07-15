@@ -78,7 +78,7 @@ protocol ComposeServiceModuleInteracting: AnyObject {
     
     func copySecret()
     func copyLink()
-    func createQRCode(size: CGFloat, margin: CGFloat) -> UIImage?
+    func createQRCode(size: CGFloat, margin: CGFloat) async -> UIImage?
     
     func setServiceName(_ newServiceName: String?)
     func setAdditionalInfo(_ newAdditionalInfo: String?)
@@ -271,10 +271,10 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
         notificationsInteractor.copyWithSuccess(value: link)
     }
     
-    func createQRCode(size: CGFloat, margin: CGFloat) -> UIImage? {
+    func createQRCode(size: CGFloat, margin: CGFloat) async -> UIImage? {
         guard let serviceData else { return nil }
         let link = serviceDefinitionInteractor.otpAuth(from: serviceData)
-        return qrCodeGeneratorInteractor.qrCode(of: size, margin: margin, for: link)
+        return await qrCodeGeneratorInteractor.qrCode(of: size, margin: margin, for: link)
     }
     
     func initialize() {

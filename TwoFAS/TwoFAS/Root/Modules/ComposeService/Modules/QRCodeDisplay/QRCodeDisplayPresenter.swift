@@ -54,7 +54,7 @@ final class QRCodeDisplayPresenter: ObservableObject {
         flowController?.close()
     }
     
-    func handleAppDidEnterBackground() {
+    func handleAppWillResignActive() {
         restorePreviousBrightness()
     }
     
@@ -69,11 +69,11 @@ final class QRCodeDisplayPresenter: ObservableObject {
     private func setupBrightnessObserver() {
         previousBrightness = UIScreen.main.brightness
         brightnessObserver = NotificationCenter.default.addObserver(
-            forName: UIApplication.didEnterBackgroundNotification,
+            forName: UIApplication.willResignActiveNotification,
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            self?.handleAppDidEnterBackground()
+            self?.handleAppWillResignActive()
         }
         
         NotificationCenter.default.addObserver(

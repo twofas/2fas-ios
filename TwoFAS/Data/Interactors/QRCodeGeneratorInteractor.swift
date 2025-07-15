@@ -21,66 +21,58 @@ import UIKit
 import Common
 
 public protocol QRCodeGeneratorInteracting: AnyObject {
-    func qrCode(of size: CGFloat, margin: CGFloat, for link: String) -> UIImage?
+    func qrCode(of size: CGFloat, margin: CGFloat, for link: String) async -> UIImage?
 }
 
-final class QRCodeGeneratorInteractor {
-    private let correctionLevel = "L"
-}
-
-extension QRCodeGeneratorInteractor: QRCodeGeneratorInteracting {
-    func qrCode(of size: CGFloat, margin: CGFloat, for link: String) -> UIImage? {
-        guard let qrCode = generateQRCode(from: link) else {
-            return nil
+final class QRCodeGeneratorInteractor: QRCodeGeneratorInteracting {
+    func qrCode(of size: CGFloat, margin: CGFloat, for link: String) async -> UIImage? {
+        await withCheckedContinuation { continuation in
+            DispatchQueue.global(qos: .userInitiated).async {
+                guard let data = link.data(using: .ascii) else {
+                    continuation.resume(returning: nil)
+                    return
+                }
+                
+                guard let filter = CIFilter(name: "CIQRCodeGenerator") else {
+                    continuation.resume(returning: nil)
+                    return
+                }
+                
+                filter.setValue(data, forKey: "inputMessage")
+                filter.setValue("L", forKey: "inputCorrectionLevel")
+                
+                guard let qrCode = filter.outputImage else {
+                    continuation.resume(returning: nil)
+                    return
+                }
+                let finalSize = size - 2 * margin
+                let scale = UIScreen.main.scale
+                let scaledSize = CGSize(width: finalSize * scale, height: finalSize * scale)
+                let context = CIContext(options: [
+                    .useSoftwareRenderer: false,
+                    .highQualityDownsample: true
+                ])
+                let transform = CGAffineTransform(
+                    scaleX: scaledSize.width / qrCode.extent.width,
+                    y: scaledSize.height / qrCode.extent.height
+                )
+                let scaledQRCode = qrCode.transformed(by: transform)
+                guard let cgImage = context.createCGImage(scaledQRCode, from: scaledQRCode.extent) else {
+                    continuation.resume(returning: nil)
+                    return
+                }
+                // UIKit drawing must be on main thread
+                DispatchQueue.main.async {
+                    let renderer = UIGraphicsImageRenderer(size: CGSize(width: size, height: size))
+                    let image = renderer.image { context in
+                        UIColor.white.setFill()
+                        context.fill(CGRect(x: 0, y: 0, width: size, height: size))
+                        let qrCodeImage = UIImage(cgImage: cgImage)
+                        qrCodeImage.draw(in: CGRect(x: margin, y: margin, width: finalSize, height: finalSize))
+                    }
+                    continuation.resume(returning: image)
+                }
+            }
         }
-        
-        let finalSize = size - 2 * margin
-        
-        let scale = UIScreen.main.scale
-        let scaledSize = CGSize(width: finalSize * scale, height: finalSize * scale)
-        
-        let context = CIContext(options: [
-            .useSoftwareRenderer: false,
-            .highQualityDownsample: true
-        ])
-        
-        let transform = CGAffineTransform(
-            scaleX: scaledSize.width / qrCode.extent.width,
-                                        y: scaledSize.height / qrCode.extent.height
-        )
-        let scaledQRCode = qrCode.transformed(by: transform)
-        
-        guard let cgImage = context.createCGImage(scaledQRCode, from: scaledQRCode.extent) else {
-            return nil
-        }
-        
-
-        let renderer = UIGraphicsImageRenderer(size: CGSize(width: size, height: size))
-        let image = renderer.image { context in
-            UIColor.white.setFill()
-            context.fill(CGRect(x: 0, y: 0, width: size, height: size))
-            
-            let qrCodeImage = UIImage(cgImage: cgImage)
-            qrCodeImage.draw(in: CGRect(x: margin, y: margin, width: finalSize, height: finalSize))
-        }
-        
-        return image
-    }
-}
-
-private extension QRCodeGeneratorInteractor {
-    func generateQRCode(from text: String) -> CIImage? {
-        guard let data = text.data(using: .ascii) else {
-            return nil
-        }
-        
-        guard let filter = CIFilter(name: "CIQRCodeGenerator") else {
-            return nil
-        }
-        
-        filter.setValue(data, forKey: "inputMessage")
-        filter.setValue(correctionLevel, forKey: "inputCorrectionLevel")
-        
-        return filter.outputImage
     }
 }

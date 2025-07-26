@@ -190,10 +190,12 @@ final class NewsTableViewCell: UITableViewCell {
             newsIcon.tintColor = Theme.Colors.Icon.inactive
             titleLabel.font = readText
             titleLabel.textColor = UIColor.secondaryLabel
+            backgroundViewFrame.backgroundColor = Theme.Colors.notificationsBackground
         } else {
             newsIcon.tintColor = Theme.Colors.Icon.theme
             titleLabel.font = unreadText
             titleLabel.textColor = UIColor.label
+            backgroundViewFrame.backgroundColor = Theme.Colors.Fill.System.third
         }
     }
     

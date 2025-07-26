@@ -55,10 +55,10 @@ enum Theme {
         static let inactiveInverted = ThemeColor.inactiveInverted
         static let inactiveMoreContrast = ThemeColor.inactiveMoreContrast
         static let overlay = ThemeColor.overlay
-        
+
         static let notificationsBackground = UIColor { trait in
             if trait.userInterfaceStyle == .dark {
-                return Theme.Colors.Fill.background
+                return Theme.Colors.Fill.System.first
             }
             return Theme.Colors.Fill.System.second
         }

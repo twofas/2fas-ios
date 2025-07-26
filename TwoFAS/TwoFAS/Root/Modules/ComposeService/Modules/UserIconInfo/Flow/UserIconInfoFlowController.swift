@@ -54,7 +54,7 @@ extension UserIconInfoFlowController: UserIconInfoFlowControlling {
     }
     
     func toShare() {
-        let vc = ShareActivityController().createWithText(T.Tokens.requestIconProviderMessage)
+        let vc = ShareActivityController.createWithText(T.Tokens.requestIconProviderMessage)
         _viewController.present(vc, animated: true, completion: nil)
     }
 }

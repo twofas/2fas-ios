@@ -24,9 +24,7 @@ import Storage
 final class ComposeServicePresenter {
     weak var view: ComposeServiceViewControlling?
     
-    private var privateKeyError: ComposeServiceModuleInteractorPrivateKeyError?
     private var isLocked = true
-    private var didShowKeyboard = false
     
     private let flowController: ComposeServiceFlowControlling
     let interactor: ComposeServiceModuleInteracting
@@ -42,20 +40,12 @@ final class ComposeServicePresenter {
         self.freshlyAdded = freshlyAdded
         
         interactor.isDataCorrectNotifier = { [weak self] _ in self?.refreshStatus() }
-        interactor.serviceWasCreated = { [weak self] in self?.handleServiceWasCreated(serviceData: $0) }
     }
 }
 
 extension ComposeServicePresenter {
     func viewWillAppear() {
         reload()
-    }
-    
-    func viewDidAppear() {
-        if interactor.actionType == .new && !didShowKeyboard {
-            view?.becomeFirstResponder(for: .serviceName)
-            didShowKeyboard = true
-        }
     }
     
     func handleSelection(at indexPath: IndexPath, cell: ComposeServiceSectionCell) {
@@ -78,7 +68,8 @@ extension ComposeServicePresenter {
                     selectedIcon: interactor.iconTypeID,
                     animated: true
                 )
-            case .advanced: checkAdvancedFlow()
+            case .advanced:
+                flowController.toAdvancedSummary(settings: interactor.advancedSettings)
             case .browserExtension:
                 guard let secret = interactor.serviceData?.secret, interactor.webExtensionActive else { return }
                 flowController.toBrowserExtension(with: secret)
@@ -102,11 +93,7 @@ extension ComposeServicePresenter {
     func handleActionButton(for kind: ComposeServiceInputKind) {
         switch kind {
         case .serviceName:
-            if interactor.actionType == .new {
-                view?.becomeFirstResponder(for: .privateKey)
-            } else {
-                view?.becomeFirstResponder(for: .additionalInfo)
-            }
+            view?.becomeFirstResponder(for: .additionalInfo)
         case .privateKey:
             view?.becomeFirstResponder(for: .additionalInfo)
         case .additionalInfo:
@@ -119,9 +106,7 @@ extension ComposeServicePresenter {
         case .serviceName:
             interactor.setServiceName(value)
         case .privateKey:
-            guard interactor.actionType == .new else { return }
-            interactor.setPrivateKey(value)
-            checkPrivateKeyError()
+            return
         case .additionalInfo:
             interactor.setAdditionalInfo(value)
         }
@@ -133,8 +118,7 @@ extension ComposeServicePresenter {
             if isLocked {
                 flowController.toLogin()
             } else {
-                interactor.copySecret()
-                view?.copySecret()
+                flowController.toRevealMenu()
             }
         } else {
             flowController.toSetPIN()
@@ -194,18 +178,44 @@ extension ComposeServicePresenter {
         reload()
     }
     
-    func handleProceedToAdvanced() {
-        interactor.markAdvancedAlertAsShown()
-        toAdvancedNewService()
-    }
-    
-    func handleSaveAdvancedSettings(_ settings: ComposeServiceAdvancedSettings) {
-        interactor.saveAdvancedSettings(settings)
-    }
-    
     func handleSectionSelected(_ sectionID: SectionID?) {
         interactor.setSectionID(sectionID)
         reload()
+    }
+    
+    // MARK: Reveal menu
+    func handleShowQRCode() {
+        Task {
+            guard let code = await interactor.createQRCode(size: Config.minQRCodeSize, margin: 0) else {
+                Log("ComposeServicePresenter: Error while generating QR Code", severity: .error)
+                return
+            }
+            Task { @MainActor  in
+                flowController.toShowQRCode(code: code)
+            }
+        }
+    }
+    
+    func handleShareQRCode() {
+        Task {
+            guard let code = await interactor.createQRCode(size: Config.minQRCodeSize, margin: 0) else {
+                Log("ComposeServicePresenter: Error while generating QR Code", severity: .error)
+                return
+            }
+            Task { @MainActor  in
+                flowController.toShareQRCode(code: code)
+            }
+        }
+    }
+    
+    func handleCopySecret() {
+        interactor.copySecret()
+        view?.copySecret()
+    }
+    
+    func handleCopyLink() {
+        interactor.copyLink()
+        view?.copyLink()
     }
     
     // MARK: - Start editing
@@ -226,35 +236,5 @@ private extension ComposeServicePresenter {
         } else {
             view?.disableSave()
         }
-    }
-    
-    func checkPrivateKeyError() {
-        guard privateKeyError != interactor.privateKeyError else { return }
-        privateKeyError = interactor.privateKeyError
-        let menu = buildMenu()
-        view?.reloadPrivateKeyError(with: menu)
-    }
-    
-    func checkAdvancedFlow() {
-        if interactor.isEditing {
-            flowController.toAdvancedSummary(settings: interactor.advancedSettings)
-            return
-        }
-        
-        if interactor.advancedAlertShown {
-            toAdvancedNewService()
-            return
-        }
-        
-        // TODO: Remove advanced warning - only editing now
-        flowController.toAdvancedWarning()
-    }
-    
-    func toAdvancedNewService() {
-        flowController.toAdvancedNewService(settings: interactor.advancedSettings)
-    }
-    
-    func handleServiceWasCreated(serviceData: ServiceData) {
-        flowController.toServiceWasCreated(serviceData: serviceData)
     }
 }

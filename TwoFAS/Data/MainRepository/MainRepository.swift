@@ -271,10 +271,6 @@ protocol MainRepository: AnyObject {
     var sortType: SortType? { get }
     func setSortType(_ sortType: SortType)
     
-    // MARK: - Advanced Alert State
-    var advancedAlertShown: Bool { get }
-    func markAdvancedAlertAsShown()
-    
     // MARK: - RSA Encryption
     var privateRSAKey: Data? { get }
     var publicRSAKey: Data? { get }

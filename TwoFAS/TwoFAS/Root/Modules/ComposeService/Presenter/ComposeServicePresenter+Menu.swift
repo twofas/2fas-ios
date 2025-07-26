@@ -24,22 +24,11 @@ extension ComposeServicePresenter {
     func buildMenu() -> [ComposeServiceSection] {
         let serviceName: String? = interactor.serviceName
         let additionalInfo: String? = interactor.additionalInfo
-        let keyError: ComposeServiceSectionCell.PrivateKeyConfig.PrivateKeyError? = {
-            switch interactor.privateKeyError {
-            case .duplicated: return .duplicated
-            case .incorrect: return .incorrect
-            case .tooShort: return .tooShort
-            case .none, .empty: return nil
-            }
-        }()
         let privateKeyKind: ComposeServiceSectionCell.PrivateKeyConfig.PrivateKeyKind = {
-            if interactor.actionType == .edit {
-                if interactor.isSecretCopyingBlocked {
-                    return .hiddenNonCopyable
-                }
-                return .hidden
+            if interactor.isSecretCopyingBlocked {
+                return .hiddenNonCopyable
             }
-            return .empty
+            return .hidden
         }()
         
         let service = ComposeServiceSection(
@@ -49,15 +38,14 @@ extension ComposeServicePresenter {
                 .init(kind: .privateKey(
                     .init(
                         value: interactor.privateKey,
-                        privateKeyKind: privateKeyKind,
-                        error: keyError
+                        privateKeyKind: privateKeyKind
                     )
                 )),
                 .init(kind: .input(.init(kind: .additionalInfo, value: additionalInfo))),
                 .init(kind: .navigate(.init(kind: .advanced, isEnabled: true, accessory: nil)))
             ]
         )
-
+        
         let currentCategory = interactor.selectedSectionTitle ?? T.Tokens.myTokens
         let iconKind: IconType = interactor.iconType
         let iconTypeID: IconTypeID = interactor.iconTypeID
@@ -100,11 +88,25 @@ extension ComposeServicePresenter {
             ]
         )
         
-        let webExtension = ComposeServiceSection(title: T.Tokens.addManualOther, cells: [
-            .init(kind:
-                    .navigate(.init(kind: .browserExtension, isEnabled: interactor.webExtensionActive, accessory: nil))
-            )
-        ])
+        var array = [
+            service,
+            personalization
+        ]
+        
+        if interactor.isBrowserExtensionAllowed {
+            let webExtension = ComposeServiceSection(title: T.Tokens.addManualOther, cells: [
+                .init(kind:
+                        .navigate(
+                            .init(
+                                kind: .browserExtension,
+                                isEnabled: interactor.webExtensionActive,
+                                accessory: nil
+                            )
+                        )
+                )
+            ])
+            array.append(webExtension)
+        }
         
         let remove = ComposeServiceSection(
             title: nil,
@@ -114,18 +116,7 @@ extension ComposeServicePresenter {
                 ))
             ]
         )
-        
-        var array = [
-            service,
-            personalization
-        ]
-        
-        if interactor.actionType == .edit {
-            if interactor.isBrowserExtensionAllowed {
-                array.append(webExtension)
-            }
-            array.append(remove)
-        }
+        array.append(remove)
         
         return array
     }

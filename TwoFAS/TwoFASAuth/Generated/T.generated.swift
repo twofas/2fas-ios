@@ -312,10 +312,32 @@ internal enum T {
     internal static let backupRemoval = T.tr("Localizable", "backup__backup_removal", fallback: "Backup removal")
     /// Can't read this file. It can be damaged, or there was an error while trying to access it. Please choose another one
     internal static let cantReadFileError = T.tr("Localizable", "backup__cant_read_file_error", fallback: "Can't read this file. It can be damaged, or there was an error while trying to access it. Please choose another one")
+    /// Check password
+    internal static let checkPassword = T.tr("Localizable", "backup__check_password", fallback: "Check password")
+    /// Checking...
+    internal static let checking = T.tr("Localizable", "backup__checking", fallback: "Checking...")
     /// Choose another file
     internal static let chooseAntotherFile = T.tr("Localizable", "backup__choose_antother_file", fallback: "Choose another file")
-    /// Cloud Backup
-    internal static let cloudBackup = T.tr("Localizable", "backup__cloud_backup", fallback: "Cloud Backup")
+    /// Cloud backup
+    internal static let cloudBackup = T.tr("Localizable", "backup__cloud_backup", fallback: "Cloud backup")
+    /// iCloud is encrypted with a System Key. Ensure that you have enabled the iCloud Keychain.
+    internal static let cloudEncryptedSystem = T.tr("Localizable", "backup__cloud_encrypted_system", fallback: "iCloud is encrypted with a System Key. Ensure that you have enabled the iCloud Keychain.")
+    /// iCloud is encrypted with a custom password. Enter the password and enable sync.
+    internal static let cloudEncryptedUser = T.tr("Localizable", "backup__cloud_encrypted_user", fallback: "iCloud is encrypted with a custom password. Enter the password and enable sync.")
+    /// Can't decrypt Cloud backup because it's encrypted using System Key, and you're using a custom password. Would you like to switch?
+    internal static let cloudErrorMismatchKeyContent = T.tr("Localizable", "backup__cloud_error_mismatch_key_content", fallback: "Can't decrypt Cloud backup because it's encrypted using System Key, and you're using a custom password. Would you like to switch?")
+    /// Can't decrypt Cloud backup because there's no System Key. Check if iCloud Keychain sync is enabled and works correctly.
+    internal static let cloudErrorMissingSystemKeyContent = T.tr("Localizable", "backup__cloud_error_missing_system_key_content", fallback: "Can't decrypt Cloud backup because there's no System Key. Check if iCloud Keychain sync is enabled and works correctly.")
+    /// Can't sync with Cloud backup because it was migrated to a newer version of the app. Update the app to continue using Cloud backup.
+    internal static let cloudErrorNewVersionContent = T.tr("Localizable", "backup__cloud_error_new_version_content", fallback: "Can't sync with Cloud backup because it was migrated to a newer version of the app. Update the app to continue using Cloud backup.")
+    /// Cloud backup error
+    internal static let cloudErrorTitle = T.tr("Localizable", "backup__cloud_error_title", fallback: "Cloud backup error")
+    /// Switch to System Key
+    internal static let cloudSwitchSystemKey = T.tr("Localizable", "backup__cloud_switch_system_key", fallback: "Switch to System Key")
+    /// Disable Cloud backup
+    internal static let cloudTurnBackupOff = T.tr("Localizable", "backup__cloud_turn_backup_off", fallback: "Disable Cloud backup")
+    /// Custom password
+    internal static let customPassword = T.tr("Localizable", "backup__custom_password", fallback: "Custom password")
     /// Delete 2FAS Backup
     internal static let delete2fasBackup = T.tr("Localizable", "backup__delete_2fas_backup", fallback: "Delete 2FAS Backup")
     /// Google Sync will be disabled. Your tokens will remain locally, but the 2FAS app will be logged out from your Google Account on this and your synced other devices.
@@ -328,14 +350,38 @@ internal enum T {
     internal static let driveTitle = T.tr("Localizable", "backup__drive_title", fallback: "Google Drive sync")
     /// This file is encrypted. We support only unencrypted files
     internal static let encryptedFilesNotSupported = T.tr("Localizable", "backup__encrypted_files_not_supported", fallback: "This file is encrypted. We support only unencrypted files")
+    /// Change password
+    internal static let encryptionChangePassword = T.tr("Localizable", "backup__encryption_change_password", fallback: "Change password")
+    /// Change encryption type
+    internal static let encryptionChangeTitle = T.tr("Localizable", "backup__encryption_change_title", fallback: "Change encryption type")
+    /// Enter password
+    internal static let encryptionEnterPassword = T.tr("Localizable", "backup__encryption_enter_password", fallback: "Enter password")
+    /// Select System or Custom password
+    internal static let encryptionMethodFooter = T.tr("Localizable", "backup__encryption_method_footer", fallback: "Select System or Custom password")
+    /// Password is used to encrypt your data. If you lose it, you won't be able to recover data from the Cloud backup.
+    internal static let encryptionPasswordDescription = T.tr("Localizable", "backup__encryption_password_description", fallback: "Password is used to encrypt your data. If you lose it, you won't be able to recover data from the Cloud backup.")
+    /// Select encryption type
+    internal static let encryptionSelect = T.tr("Localizable", "backup__encryption_select", fallback: "Select encryption type")
+    /// Encryption type
+    internal static let encryptionType = T.tr("Localizable", "backup__encryption_type", fallback: "Encryption type")
+    /// Enter Cloud backup password
+    internal static let enterCloudBackupPasswordTitle = T.tr("Localizable", "backup__enter_cloud_backup_password_title", fallback: "Enter Cloud backup password")
+    /// iCloud backup is encrypted with your password. Enter it to enable sync.
+    internal static let enterPasswordDescription = T.tr("Localizable", "backup__enter_password_description", fallback: "iCloud backup is encrypted with your password. Enter it to enable sync.")
     /// Type in password
     internal static let enterPasswordDialogTitle = T.tr("Localizable", "backup__enter_password_dialog_title", fallback: "Type in password")
+    /// Failure! %@
+    internal static func enterPasswordFailure(_ p1: Any) -> String {
+      return T.tr("Localizable", "backup__enter_password_failure", String(describing: p1), fallback: "Failure! %@")
+    }
     /// It looks like your Google Drive backup file is password-protected. Type in the correct password to proceed. If you’d like to wipe your Google Drive backup file,
     internal static let enterPasswordGoogleDriveMsg1 = T.tr("Localizable", "backup__enter_password_google_drive_msg1", fallback: "It looks like your Google Drive backup file is password-protected. Type in the correct password to proceed. If you’d like to wipe your Google Drive backup file,")
     /// tap here to see how
     internal static let enterPasswordGoogleDriveMsg2 = T.tr("Localizable", "backup__enter_password_google_drive_msg2", fallback: "tap here to see how")
     /// Type in a password for this backup file to proceed with the import process
     internal static let enterPasswordTitle = T.tr("Localizable", "backup__enter_password_title", fallback: "Type in a password for this backup file to proceed with the import process")
+    /// Wrong password! Please try again
+    internal static let enterPasswordWrongPassword = T.tr("Localizable", "backup__enter_password_wrong_password", fallback: "Wrong password! Please try again")
     /// Error while exporting the file
     internal static let errorWhileExportingFile = T.tr("Localizable", "backup__error_while_exporting_file", fallback: "Error while exporting the file")
     /// Export
@@ -396,6 +442,30 @@ internal enum T {
     }
     /// Local file
     internal static let localFileTitle = T.tr("Localizable", "backup__local_file_title", fallback: "Local file")
+    /// List is empty. Pair Watch using + button
+    internal static let managePairedWatchesEmptyList = T.tr("Localizable", "backup__manage_paired_watches_empty_list", fallback: "List is empty. Pair Watch using + button")
+    /// Add, remove or rename Apple Watches with access to this Cloud backup.
+    internal static let managePairedWatchesFooter = T.tr("Localizable", "backup__manage_paired_watches_footer", fallback: "Add, remove or rename Apple Watches with access to this Cloud backup.")
+    /// Rename
+    internal static let managePairedWatchesRenameAction = T.tr("Localizable", "backup__manage_paired_watches_rename_action", fallback: "Rename")
+    /// Enter new device name
+    internal static let managePairedWatchesRenameDescription = T.tr("Localizable", "backup__manage_paired_watches_rename_description", fallback: "Enter new device name")
+    /// Rename Watch
+    internal static let managePairedWatchesRenameTitle = T.tr("Localizable", "backup__manage_paired_watches_rename_title", fallback: "Rename Watch")
+    /// Cloud backup is syncing...
+    internal static let managePairedWatchesSyncing = T.tr("Localizable", "backup__manage_paired_watches_syncing", fallback: "Cloud backup is syncing...")
+    /// Manage paired Apple Watches
+    internal static let managePairedWatchesTitle = T.tr("Localizable", "backup__manage_paired_watches_title", fallback: "Manage paired Apple Watches")
+    /// Manage Watches
+    internal static let managePairedWatchesTitleShort = T.tr("Localizable", "backup__manage_paired_watches_title_short", fallback: "Manage Watches")
+    /// Your backup is encrypted with a System key. This key will be shared amongst your apps that use iCloud Keychain. Remember to have that option turned on. If you want to use your password, you can do that in the Cloud backup settings after migration.
+    internal static let migrationDescription = T.tr("Localizable", "backup__migration_description", fallback: "Your backup is encrypted with a System key. This key will be shared amongst your apps that use iCloud Keychain. Remember to have that option turned on. If you want to use your password, you can do that in the Cloud backup settings after migration.")
+    /// Don't turn off the app!
+    internal static let migrationSubtitle = T.tr("Localizable", "backup__migration_subtitle", fallback: "Don't turn off the app!")
+    /// Migrating Cloud backup
+    internal static let migrationTitle = T.tr("Localizable", "backup__migration_title", fallback: "Migrating Cloud backup")
+    /// Missing System Key
+    internal static let missingSystemKey = T.tr("Localizable", "backup__missing_system_key", fallback: "Missing System Key")
     /// %d new services
     internal static func newServices(_ p1: Int) -> String {
       return T.tr("Localizable", "backup__new_services", p1, fallback: "%d new services")
@@ -436,12 +506,24 @@ internal enum T {
     internal static let setPasswordTitle = T.tr("Localizable", "backup__set_password_title", fallback: "To increase the protection of your backup file, please set the password")
     /// Could not share file!
     internal static let shareResultFailure = T.tr("Localizable", "backup__share_result_failure", fallback: "Could not share file!")
+    /// State:
+    internal static let state = T.tr("Localizable", "backup__state", fallback: "State:")
+    /// Sync is disabled.
+    internal static let syncDisabled = T.tr("Localizable", "backup__sync_disabled", fallback: "Sync is disabled.")
+    /// Sync not available: %@
+    internal static func syncNotAvailable(_ p1: Any) -> String {
+      return T.tr("Localizable", "backup__sync_not_available", String(describing: p1), fallback: "Sync not available: %@")
+    }
     /// Syncing…
     internal static let syncStatusProgress = T.tr("Localizable", "backup__sync_status_progress", fallback: "Syncing…")
     /// Waiting for sync…
     internal static let syncStatusWaiting = T.tr("Localizable", "backup__sync_status_waiting", fallback: "Waiting for sync…")
+    /// Synced
+    internal static let synced = T.tr("Localizable", "backup__synced", fallback: "Synced")
     /// Synchronization settings
     internal static let synchronizationSettings = T.tr("Localizable", "backup__synchronization_settings", fallback: "Synchronization settings")
+    /// System Key
+    internal static let systemKey = T.tr("Localizable", "backup__system_key", fallback: "System Key")
     /// Provided phrase is too short (min. 3 char)
     internal static let toShortError = T.tr("Localizable", "backup__to_short_error", fallback: "Provided phrase is too short (min. 3 char)")
     /// You'll need a new version of the app to import the contents of this file. You can find the newest version in the App Store
@@ -454,6 +536,22 @@ internal enum T {
     internal static let verifyPin = T.tr("Localizable", "backup__verify_pin", fallback: "Verify PIN")
     /// Warning! If you delete 2FAS Backup, you will also erase all tokens from other devices synced with this account. To preserve the tokens on other devices, please ensure that you've turned off the 2FAS Backup before the deletion.
     internal static let warningIntroduction = T.tr("Localizable", "backup__warning_introduction", fallback: "Warning! If you delete 2FAS Backup, you will also erase all tokens from other devices synced with this account. To preserve the tokens on other devices, please ensure that you've turned off the 2FAS Backup before the deletion.")
+    /// Go to 2FAS Backup settings in 2FAS Auth on your iPhone/iPad and navigate to "Managed Paired Apple Watches". This option will be visible if the backup is synced. Scan the QR code from there.
+    internal static let watchPairDescription = T.tr("Localizable", "backup__watch_pair_description", fallback: "Go to 2FAS Backup settings in 2FAS Auth on your iPhone/iPad and navigate to \"Managed Paired Apple Watches\". This option will be visible if the backup is synced. Scan the QR code from there.")
+    /// Error while generating QR Code
+    internal static let watchPairQrError = T.tr("Localizable", "backup__watch_pair_qr_error", fallback: "Error while generating QR Code")
+    /// Pair your Apple Watch
+    internal static let watchPairTitle = T.tr("Localizable", "backup__watch_pair_title", fallback: "Pair your Apple Watch")
+    /// Pair device
+    internal static let watchPairingAction = T.tr("Localizable", "backup__watch_pairing_action", fallback: "Pair device")
+    /// Apple Watch
+    internal static let watchPairingDefaultName = T.tr("Localizable", "backup__watch_pairing_default_name", fallback: "Apple Watch")
+    /// Do you want to pair an Apple Watch with your iCloud backup? Enter the name for your device:
+    internal static let watchPairingDescription = T.tr("Localizable", "backup__watch_pairing_description", fallback: "Do you want to pair an Apple Watch with your iCloud backup? Enter the name for your device:")
+    /// Can't pair with the Watch now. Ensure the Cloud backup is enabled and synced using a password.
+    internal static let watchPairingError = T.tr("Localizable", "backup__watch_pairing_error", fallback: "Can't pair with the Watch now. Ensure the Cloud backup is enabled and synced using a password.")
+    /// Pairing with Apple Watch
+    internal static let watchPairingTitle = T.tr("Localizable", "backup__watch_pairing_title", fallback: "Pairing with Apple Watch")
   }
   internal enum Browser {
     /// Do you want to share the 2FA token for 
@@ -600,6 +698,8 @@ internal enum T {
     internal static let _2fasToolbar = T.tr("Localizable", "commons__2fas_toolbar", fallback: "2FAS")
     /// Add
     internal static let add = T.tr("Localizable", "commons__add", fallback: "Add")
+    /// Apply
+    internal static let apply = T.tr("Localizable", "commons__apply", fallback: "Apply")
     /// Approve
     internal static let approve = T.tr("Localizable", "commons__approve", fallback: "Approve")
     /// Best match
@@ -650,6 +750,8 @@ internal enum T {
     internal static let ok = T.tr("Localizable", "commons__OK", fallback: "OK")
     /// On
     internal static let on = T.tr("Localizable", "commons__on", fallback: "On")
+    /// Options
+    internal static let optionsTitle = T.tr("Localizable", "commons__options_title", fallback: "Options")
     /// %d of %d
     internal static func pageOfPageTitle(_ p1: Int, _ p2: Int) -> String {
       return T.tr("Localizable", "commons__page_of_page_title", p1, p2, fallback: "%d of %d")
@@ -678,6 +780,8 @@ internal enum T {
     internal static let skip = T.tr("Localizable", "commons__skip", fallback: "Skip")
     /// Success
     internal static let success = T.tr("Localizable", "commons__success", fallback: "Success")
+    /// Success!
+    internal static let successEx = T.tr("Localizable", "commons__success_ex", fallback: "Success!")
     /// The provided text is too long (max. %d chars)
     internal static func textLongTitle(_ p1: Int) -> String {
       return T.tr("Localizable", "commons__text_long_title", p1, fallback: "The provided text is too long (max. %d chars)")
@@ -780,8 +884,8 @@ internal enum T {
     internal static let andotpSuccessMsg = T.tr("Localizable", "externalimport__andotp_success_msg", fallback: "This JSON file allows importing tokens from andOTP.")
     /// Importing 2FA tokens from andOTP app
     internal static let andotpTitle = T.tr("Localizable", "externalimport__andotp_title", fallback: "Importing 2FA tokens from andOTP app")
-    /// Authenticator Pro
-    internal static let authenticatorpro = T.tr("Localizable", "externalimport__authenticatorpro", fallback: "Authenticator Pro")
+    /// Stratum (Authenticator Pro)
+    internal static let authenticatorpro = T.tr("Localizable", "externalimport__authenticatorpro", fallback: "Stratum (Authenticator Pro)")
     /// Export your accounts from Authenticator Pro to an unencrypted text file and upload it using the "Choose text file" button. Remember to remove the file after a successful import.
     internal static let authenticatorproMsg = T.tr("Localizable", "externalimport__authenticatorpro_msg", fallback: "Export your accounts from Authenticator Pro to an unencrypted text file and upload it using the \"Choose text file\" button. Remember to remove the file after a successful import.")
     /// This text file allows importing tokens from Authenticator Pro.
@@ -932,6 +1036,8 @@ internal enum T {
     internal static let addingCode = T.tr("Localizable", "notifications__adding_code", fallback: "Adding a new code")
     /// Counter Copied
     internal static let counterCopied = T.tr("Localizable", "notifications__counter_copied", fallback: "Counter Copied")
+    /// Link Copied
+    internal static let linkCopied = T.tr("Localizable", "notifications__link_copied", fallback: "Link Copied")
     /// Next Token Copied
     internal static let nextTokenCopied = T.tr("Localizable", "notifications__next_token_copied", fallback: "Next Token Copied")
     /// No notifications
@@ -1163,6 +1269,8 @@ internal enum T {
     internal static let settings = T.tr("Localizable", "settings__settings", fallback: "Settings")
     /// Share the app
     internal static let shareApp = T.tr("Localizable", "settings__share_app", fallback: "Share the app")
+    /// Show error details
+    internal static let showErrorDetails = T.tr("Localizable", "settings__show_error_details", fallback: "Show error details")
     /// Show next token
     internal static let showNextToken = T.tr("Localizable", "settings__show_next_token", fallback: "Show next token")
     /// Show next token when current one is about to expire.
@@ -1319,8 +1427,14 @@ internal enum T {
     internal static let chooseMethod = T.tr("Localizable", "tokens__choose_method", fallback: "Choose method")
     /// Token copied to clipboard!
     internal static let copiedClipboard = T.tr("Localizable", "tokens__copied_clipboard", fallback: "Token copied to clipboard!")
+    /// Copy OTP Auth link
+    internal static let copyLink = T.tr("Localizable", "tokens__copy_link", fallback: "Copy OTP Auth link")
+    /// Copy Secret Key
+    internal static let copySecret = T.tr("Localizable", "tokens__copy_secret", fallback: "Copy Secret Key")
     /// Copy token
     internal static let copyToken = T.tr("Localizable", "tokens__copy_token", fallback: "Copy token")
+    /// Copy URI
+    internal static let copyUri = T.tr("Localizable", "tokens__copy_uri", fallback: "Copy URI")
     /// Counter
     internal static let counter = T.tr("Localizable", "tokens__counter", fallback: "Counter")
     /// Customize service
@@ -1426,6 +1540,10 @@ internal enum T {
     internal static let qrCodeLeadsToAppStore = T.tr("Localizable", "tokens__qr_code_leads_to_app_store", fallback: "This QR Code takes you to the App Store")
     /// This QR Code takes you to the Google Store
     internal static let qrCodeLeadsToGoogleStore = T.tr("Localizable", "tokens__qr_code_leads_to_google_store", fallback: "This QR Code takes you to the Google Store")
+    /// Share service QR Code
+    internal static let qrCodeShare = T.tr("Localizable", "tokens__qr_code_share", fallback: "Share service QR Code")
+    /// Show service QR Code
+    internal static let qrCodeShow = T.tr("Localizable", "tokens__qr_code_show", fallback: "Show service QR Code")
     /// This QR Code does not work!
     internal static let qrDoesNotWork = T.tr("Localizable", "tokens__qr_does_not_work", fallback: "This QR Code does not work!")
     /// Point your camera to the right QR Code and scan again.
@@ -1508,10 +1626,14 @@ internal enum T {
     internal static let serviceUnsavedChanges = T.tr("Localizable", "tokens__service_unsaved_changes", fallback: "Do you want to discard your changes?")
     /// Unsaved changes
     internal static let serviceUnsavedChangesTitle = T.tr("Localizable", "tokens__service_unsaved_changes_title", fallback: "Unsaved changes")
+    /// Service QR Code
+    internal static let showQrCode = T.tr("Localizable", "tokens__show_qr_code", fallback: "Service QR Code")
     /// Show Secret Key
     internal static let showServiceKey = T.tr("Localizable", "tokens__show_service_key", fallback: "Show Secret Key")
     /// Your Secret key is protected. Please add a PIN or Fingerprint lock to see it.
     internal static let showServiceKeySetupLock = T.tr("Localizable", "tokens__show_service_key_setup_lock", fallback: "Your Secret key is protected. Please add a PIN or Fingerprint lock to see it.")
+    /// Your service is protected. Please add a PIN or Fingerprint lock to see QR code.
+    internal static let showServiceQrSetupLock = T.tr("Localizable", "tokens__show_service_qr_setup_lock", fallback: "Your service is protected. Please add a PIN or Fingerprint lock to see QR code.")
     /// You will not be able to sign in to your %@ account without this token, as long as you have second factor authentication for %@ turned on.
     internal static func signInNotPossibleTitle(_ p1: Any, _ p2: Any) -> String {
       return T.tr("Localizable", "tokens__sign_in_not_possible_title", String(describing: p1), String(describing: p2), fallback: "You will not be able to sign in to your %@ account without this token, as long as you have second factor authentication for %@ turned on.")

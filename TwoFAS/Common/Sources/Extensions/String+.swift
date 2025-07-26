@@ -93,7 +93,7 @@ public extension String {
     }
     
     func sanitazeSecret() -> String {
-        var str = self.removeWhitespaces()
+        let str = self.removeWhitespaces()
             .trimmingCharacters(in: .init(charactersIn: "="))
             .replacingOccurrences(of: " ", with: "")
             .replacingOccurrences(of: "\\", with: "")
@@ -234,6 +234,7 @@ public extension String {
     }
     
     private func isValidSecretCharacter(_ char: Character) -> Bool {
-        char.isASCII && (char.isLetter || char.isPadding || (char.isNumber && Self.allowedNumbers.contains(String(char))))
+        char.isASCII &&
+        (char.isLetter || char.isPadding || (char.isNumber && Self.allowedNumbers.contains(String(char))))
     }
 }

@@ -81,5 +81,6 @@ excluded:
   - swiftgen
   - TwoFAS/CodeSupport/GoogleAuthenticator
   - TwoFAS/update.swift
+  - TwoFAS/translate.swift
   - TwoFAS/Common/Generated
   - TwoFAS/Other/External

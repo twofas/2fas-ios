@@ -64,7 +64,6 @@ struct ComposeServiceSectionCell: Hashable {
         
         let value: String?
         let privateKeyKind: PrivateKeyKind
-        let error: PrivateKeyError?
     }
     
     struct ActionConfig: Hashable {

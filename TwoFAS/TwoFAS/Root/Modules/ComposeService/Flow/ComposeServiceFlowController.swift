@@ -40,13 +40,14 @@ protocol ComposeServiceFlowControlling: AnyObject {
     func toDelete(serviceData: ServiceData)
     func toSetupPIN()
     func toAdvancedSummary(settings: ComposeServiceAdvancedSettings)
-    func toAdvancedNewService(settings: ComposeServiceAdvancedSettings)
-    func toAdvancedWarning()
     func toBrowserExtension(with secret: String)
     func toCategorySelection(with sectionID: SectionID?)
     func toServiceWasCreated(serviceData: ServiceData)
     func toServiceWasModified()
     func toServiceWasDeleted()
+    func toRevealMenu()
+    func toShowQRCode(code: UIImage)
+    func toShareQRCode(code: UIImage)
 }
 
 final class ComposeServiceFlowController: FlowController {
@@ -145,15 +146,6 @@ extension ComposeServiceFlowController: ComposeServiceFlowControlling {
         ComposeServiceAdvancedSummaryFlowController.present(in: navi, parent: self, settings: settings)
     }
     
-    func toAdvancedNewService(settings: ComposeServiceAdvancedSettings) {
-        guard let navi = viewController.navigationController else { return }
-        ComposeServiceAdvancedEditFlowController.present(in: navi, parent: self, settings: settings)
-    }
-    
-    func toAdvancedWarning() {
-        AdvancedAlertFlowController.present(on: viewController, parent: self)
-    }
-    
     func toBrowserExtension(with secret: String) {
         guard let navi = viewController.navigationController else { return }
         ComposeServiceWebExtensionFlowController.present(in: navi, parent: self, secret: secret)
@@ -175,6 +167,53 @@ extension ComposeServiceFlowController: ComposeServiceFlowControlling {
     func toServiceWasDeleted() {
         parent?.composeServiceServiceWasDeleted()
     }
+    
+    func toRevealMenu() {
+        let alert = UIAlertController(title: T.Commons.optionsTitle, message: nil, preferredStyle: .actionSheet)
+        
+        let copySecretAction = UIAlertAction(title: T.Tokens.copySecret, style: .default) { [weak self] _ in
+            self?.viewController.presenter.handleCopySecret()
+        }
+        copySecretAction.setValue(UIImage(systemName: "doc.on.doc"), forKey: "image")
+
+        let copyOTPAuthLinkAction = UIAlertAction(title: T.Tokens.copyLink, style: .default) { [weak self] _ in
+            self?.viewController.presenter.handleCopyLink()
+        }
+        copyOTPAuthLinkAction.setValue(UIImage(systemName: "link"), forKey: "image")
+
+        let showQRCodeAction = UIAlertAction(title: T.Tokens.qrCodeShow, style: .default) { [weak self] _ in
+            self?.viewController.presenter.handleShowQRCode()
+        }
+        showQRCodeAction.setValue(UIImage(systemName: "qrcode"), forKey: "image")
+
+        let shareQRCodeAction = UIAlertAction(title: T.Tokens.qrCodeShare, style: .default) { [weak self] _ in
+            self?.viewController.presenter.handleShareQRCode()
+        }
+        shareQRCodeAction.setValue(UIImage(systemName: "square.and.arrow.up"), forKey: "image")
+
+        let cancelAction = UIAlertAction(title: T.Commons.cancel, style: .cancel, handler: nil)
+        
+        alert.addAction(copySecretAction)
+        alert.addAction(copyOTPAuthLinkAction)
+        alert.addAction(showQRCodeAction)
+        alert.addAction(shareQRCodeAction)
+        alert.addAction(cancelAction)
+        
+        viewController.present(alert, animated: true, completion: nil)
+    }
+    
+    func toShowQRCode(code: UIImage) {
+        QRCodeDisplayFlowController.present(
+            on: viewController,
+            parent: self,
+            qrCodeImage: code
+        )
+    }
+    
+    func toShareQRCode(code: UIImage) {
+        let activityVC = ShareActivityController.createWithQRCode(code, title: T.Tokens.qrCodeShare)
+        viewController.present(activityVC, animated: true, completion: nil)
+    }
 }
 
 private extension ComposeServiceFlowController {
@@ -186,6 +225,12 @@ private extension ComposeServiceFlowController {
     
     func pop() {
         viewController.navigationController?.popToRootViewController(animated: true)
+    }
+}
+
+extension ComposeServiceFlowController: QRCodeDisplayFlowControllerParent {
+    func closeQRCodeDisplay() {
+        viewController.dismiss(animated: true)
     }
 }
 
@@ -235,27 +280,9 @@ extension ComposeServiceFlowController: LabelComposeFlowControllerParent {
     }
 }
 
-extension ComposeServiceFlowController: AdvancedAlertFlowControllerParent {
-    func advancedAlertContinue() {
-        dismiss { [weak self] in
-            self?.viewController.presenter.handleProceedToAdvanced()
-        }
-    }
-    
-    func advancedAlertCancel() {
-        dismiss()
-    }
-}
-
 extension ComposeServiceFlowController: ComposeServiceAdvancedSummaryFlowControllerParent {
     func advancedSummaryDidFinish() {
         toClose()
-    }
-}
-
-extension ComposeServiceFlowController: ComposeServiceAdvancedEditFlowControllerParent {
-    func advancedEditDidChange(settings: ComposeServiceAdvancedSettings) {
-        viewController.presenter.handleSaveAdvancedSettings(settings)
     }
 }
 

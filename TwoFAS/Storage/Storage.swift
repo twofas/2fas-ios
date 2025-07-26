@@ -66,8 +66,12 @@ public final class Storage {
         categoryHandler = CategoryHandler(sectionHandler: sectionHandler, serviceHandler: serviceHandler)
         storageRepositoryImpl = StorageRepositoryImpl(coreDataStack: coreDataStack)
         
-        let logStorage = CoreDataStack(readOnly: false, name: "LogStorage", bundle: bundle, migrator: nil)
-        logHandler = LogHandler(coreDataStack: logStorage)
+        logHandler = LogHandler()
+        
+        Task {
+            let logStorage = CoreDataStack(readOnly: false, name: "LogStorage", bundle: bundle, migrator: nil)
+            await logHandler.initializeStorage(coreDataStack: logStorage)
+        }
     }
     
     public func addUserPresentableError(presentErrorToUser: @escaping ((String) -> Void)) {

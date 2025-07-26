@@ -42,15 +42,17 @@ public final class LogHandler: LogStorageHandling {
         
     private var inZone = false
     
-    private let context: NSManagedObjectContext
+    private var context: NSManagedObjectContext?
     private let queue = DispatchQueue(
         label: "com.2fas.logHandlerQueue",
         attributes: .concurrent
     )
     
-    init(coreDataStack: CoreDataStack) {
+    init() {}
+    
+    public func initializeStorage(coreDataStack: CoreDataStack) async {
         context = coreDataStack.createBackgroundContext()
-        context.automaticallyMergesChangesFromParent = true
+        context?.automaticallyMergesChangesFromParent = true
         
         #if os(iOS)
         NotificationCenter.default.addObserver(
@@ -87,10 +89,10 @@ public final class LogHandler: LogStorageHandling {
     
     public func store(content: String, timestamp: Date, module: Int, severity: Int) {
         queue.async(flags: .barrier) { [weak self] in
-            guard let self else { return }
-            self.context.performAndWait {
+            guard let self, let context = self.context else { return }
+            context.performAndWait {
                 LogEntryEntity.create(
-                    on: self.context,
+                    on: context,
                     content: content,
                     timestamp: timestamp,
                     module: module,
@@ -112,7 +114,8 @@ public final class LogHandler: LogStorageHandling {
     
     public func listAll() -> [LogEntry] {
         queue.sync {
-            LogEntryEntity.listAll(on: context, ascending: true)
+            guard let context = self.context else { return [] }
+            return LogEntryEntity.listAll(on: context, ascending: true)
                 .map { entity in
                     LogEntry(
                         content: entity.content,
@@ -136,10 +139,10 @@ public final class LogHandler: LogStorageHandling {
             self?.saveCounter = 0
             self?.zoneSaveCounter = 0
             
-            if self?.context.hasChanges == true {
-                self?.context.performAndWait { [weak self] in
+            if self?.context?.hasChanges == true {
+                self?.context?.performAndWait { [weak self] in
                     do {
-                        try self?.context.save()
+                        try self?.context?.save()
                     } catch {
                         Log("Error while saving context in LogStorage: \(error)")
                     }
@@ -153,9 +156,8 @@ public final class LogHandler: LogStorageHandling {
         checkCounter = 0
         
         queue.async(flags: .barrier) { [weak self] in
-            self?.context.performAndWait { [weak self] in
-                guard let self else { return }
-                let context = self.context
+            self?.context?.performAndWait { [weak self] in
+                guard let self, let context = self.context else { return }
                 
                 guard LogEntryEntity.count(on: context) > self.maxEntries else { return }
                 let all = LogEntryEntity.listAll(on: context, quickFetch: true, ascending: false)

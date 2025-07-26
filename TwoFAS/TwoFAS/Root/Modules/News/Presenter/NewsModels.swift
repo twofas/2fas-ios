@@ -37,15 +37,15 @@ struct NewsCell: Hashable {
 extension ListNewsEntry.Icon {
     var image: UIImage {
         switch self {
-        case .news: return Asset.notificationNews.image
+        case .news: Asset.notificationNews.image
                 .withRenderingMode(.alwaysTemplate)
-        case .features: return Asset.notificationFeatures.image
+        case .features: Asset.notificationFeatures.image
                 .withRenderingMode(.alwaysTemplate)
-        case .updates: return Asset.notificationUpdates.image
+        case .updates: Asset.notificationUpdates.image
                 .withRenderingMode(.alwaysTemplate)
-        case .youtube: return Asset.notificationYoutube.image
+        case .youtube: Asset.notificationYoutube.image
                 .withRenderingMode(.alwaysTemplate)
-        case .tips: return Asset.notificationTips.image
+        case .tips: Asset.notificationTips.image
                 .withRenderingMode(.alwaysTemplate)
         }
     }

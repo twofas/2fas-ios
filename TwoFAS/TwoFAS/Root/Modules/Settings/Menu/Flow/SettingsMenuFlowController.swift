@@ -19,6 +19,7 @@
 
 import UIKit
 import Data
+import Common
 
 protocol SettingsMenuFlowControllerChild: AnyObject {
     func toCollapsed()
@@ -63,6 +64,8 @@ protocol SettingsMenuFlowControlling: AnyObject {
     func toExternalImport()
     func toAppearance()
     func toAppleWatch()
+    func toTwoPASSAppStore()
+    func toOpenTwoPASS()
 }
 
 final class SettingsMenuFlowController: FlowController {
@@ -113,6 +116,12 @@ extension SettingsMenuFlowController: SettingsMenuFlowControlling {
     func toExternalImport() { parent?.toExternalImport() }
     func toAppearance() { parent?.toAppearance() }
     func toAppleWatch() { parent?.toAppleWatch() }
+    func toTwoPASSAppStore() {
+        UIApplication.shared.open(Config.twofasPassAppStoreLink, options: [:], completionHandler: nil)
+    }
+    func toOpenTwoPASS() {
+        UIApplication.shared.open(Config.twofasPassOpenLink, options: [:], completionHandler: nil)
+    }
 }
 
 extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {

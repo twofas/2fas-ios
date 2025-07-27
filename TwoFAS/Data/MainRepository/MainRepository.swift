@@ -113,6 +113,8 @@ protocol MainRepository: AnyObject {
     func initialPermissionStateSetChildren(_ children: [PermissionsStateChildDataControllerProtocol])
     func initialPermissionStateInitialize()
     
+    var is2FASPASSInstalled: Bool { get }
+    
     // MARK: - Services
     var hasServices: Bool { get }
     

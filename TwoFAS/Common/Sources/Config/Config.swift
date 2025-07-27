@@ -39,4 +39,8 @@ public enum Config {
     public static let maxIdentifierLength: Int = 128
     
     public static let minQRCodeSize: CGFloat = 280
+    
+    public static let twofasPassCheckLink = URL(string: "twofaspass://")!
+    public static let twofasPassOpenLink = URL(string: "twofaspass://open")!
+    public static let twofasPassAppStoreLink = URL(string: "itms-apps://itunes.apple.com/app/id6504464955")!
 }

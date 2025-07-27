@@ -149,6 +149,7 @@ internal enum Asset {
   internal static let settingsInfo = ImageAsset(name: "SettingsInfo")
   internal static let settingsNextToken = ImageAsset(name: "SettingsNextToken")
   internal static let settingsPIN = ImageAsset(name: "SettingsPIN")
+  internal static let settingsPass = ImageAsset(name: "SettingsPass")
   internal static let settingsPrivacyPolicy = ImageAsset(name: "SettingsPrivacyPolicy")
   internal static let settingsTOC = ImageAsset(name: "SettingsTOC")
   internal static let settingsTellFriend = ImageAsset(name: "SettingsTellFriend")

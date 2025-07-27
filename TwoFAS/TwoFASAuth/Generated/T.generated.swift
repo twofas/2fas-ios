@@ -257,6 +257,12 @@ internal enum T {
   internal static let securityErrorNoMatch = T.tr("Localizable", "security_error_no_match", fallback: "PIN does not match! Please try again.")
   /// Developer Options
   internal static let settingsDeveloperOptions = T.tr("Localizable", "settings_developer_options", fallback: "Developer Options")
+  /// Manage Passwords
+  internal static let settingsManagePasswordsTitle = T.tr("Localizable", "settings_manage_passwords_title", fallback: "Manage Passwords")
+  /// Open 2FAS Pass
+  internal static let settingsOpenTwofass = T.tr("Localizable", "settings_open_twofass", fallback: "Open 2FAS Pass")
+  /// Get 2FAS Pass
+  internal static let settingsOpenTwofassAppstore = T.tr("Localizable", "settings_open_twofass_appstore", fallback: "Get 2FAS Pass")
   /// s
   internal static let timeUnitSecondsShort = T.tr("Localizable", "time_unit_seconds_short", fallback: "s")
   /// Please update to the newest 2FAS version to get all features and maintain a high-security level.

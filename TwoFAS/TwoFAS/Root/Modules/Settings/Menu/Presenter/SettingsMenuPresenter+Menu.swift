@@ -25,7 +25,7 @@ extension SettingsMenuPresenter {
             title: T.Settings.sslErrorTitle,
             cells: [
                 .init(title: T.Settings.sslErrorDescription, accessory: .warning, isEnabled: false)
-        ])
+            ])
         
         let backup = SettingsMenuSection(
             title: T.Settings.backupAndSynchronization,
@@ -118,7 +118,20 @@ extension SettingsMenuPresenter {
                 )
             ]
         )
-                
+        
+        let pass = SettingsMenuSection(
+            title: T.settingsManagePasswordsTitle,
+            cells: [
+                .init(
+                    icon: Asset.settingsPass.image,
+                    title: interactor.is2PASSInstalled ? T.settingsOpenTwofass : T.settingsOpenTwofassAppstore,
+                    accessory: .external,
+                    action: .navigation(navigatesTo: interactor.is2PASSInstalled ? .openPass : .appStorePass)
+                )
+            ],
+            footer: nil
+        )
+        
         let info = SettingsMenuSection(
             title: T.Commons.info,
             cells: [
@@ -143,7 +156,7 @@ extension SettingsMenuPresenter {
             ],
             footer: T.Settings.infoFooter
         )
-
+        
         var menu: [SettingsMenuSection] = []
         if interactor.hasSSLNetworkError && interactor.hasActiveBrowserExtension {
             menu.append(networkSSLError)
@@ -161,6 +174,7 @@ extension SettingsMenuPresenter {
         menu.append(contentsOf: [
             preferences,
             manageTokens,
+            pass,
             info
         ])
         return menu

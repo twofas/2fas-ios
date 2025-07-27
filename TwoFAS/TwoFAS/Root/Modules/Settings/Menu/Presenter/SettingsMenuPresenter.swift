@@ -51,7 +51,7 @@ extension SettingsMenuPresenter {
         case .externalImport: return .externalImport
         case .appearance: return .appearance
         case .appleWatch: return .appleWatch
-        case .faq, .donate: return nil
+        case .faq, .donate, .appStorePass, .openPass: return nil
         }
     }
 
@@ -209,6 +209,10 @@ private extension SettingsMenuPresenter {
             flowController.toAppearance()
         case .appleWatch:
             flowController.toAppleWatch()
+        case .appStorePass:
+            flowController.toTwoPASSAppStore()
+        case .openPass:
+            flowController.toOpenTwoPASS()
         }
     }
     
@@ -245,7 +249,7 @@ private extension SettingsMenuPresenter {
         case .externalImport: return .externalImport
         case .appearance: return .appearance
         case .appleWatch: return .appleWatch
-        case .faq, .donate: return nil
+        case .faq, .donate, .appStorePass, .openPass: return nil
         }
     }
 }

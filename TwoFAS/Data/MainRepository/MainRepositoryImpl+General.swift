@@ -17,7 +17,8 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
+import Common
 
 extension MainRepositoryImpl {
     var currentAppVersion: String {
@@ -46,5 +47,13 @@ extension MainRepositoryImpl {
     
     func initialPermissionStateInitialize() {
         initialPermissionStateDataController.initialize()
+    }
+    
+    var is2FASPASSInstalled: Bool {
+#if os(iOS)
+        UIApplication.shared.canOpenURL(Config.twofasPassCheckLink)
+#else
+        false
+#endif
     }
 }

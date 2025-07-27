@@ -90,6 +90,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>twofas</string>
+				<string>twofasauth</string>
 			</array>
 		</dict>
 	</array>
@@ -120,6 +121,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mailto</string>
+		<string>twofaspass</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

@@ -50,7 +50,8 @@ final class ModuleInteractorFactory {
             protectionInteractor: InteractorFactory.shared.protectionInteractor(),
             networkStatusInteractor: InteractorFactory.shared.networkStatusInteractor(),
             pairingDeviceInteractor: InteractorFactory.shared.pairingWebExtensionInteractor(),
-            mdmInteractor: InteractorFactory.shared.mdmInteractor()
+            mdmInteractor: InteractorFactory.shared.mdmInteractor(),
+            appInfoInteractor: InteractorFactory.shared.appInfoInteractor()
         )
     }
     

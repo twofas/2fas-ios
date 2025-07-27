@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 protocol AddingServiceViewControlling: AnyObject {
     func updateHeight(_ height: CGFloat)
@@ -33,7 +34,6 @@ final class AddingServiceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Theme.Colors.Fill.System.third
         
         presenter?.viewDidLoad()
         
@@ -43,6 +43,14 @@ final class AddingServiceViewController: UIViewController {
             sheet.prefersEdgeAttachedInCompactHeight = true
             sheet.preferredCornerRadius = Theme.Metrics.modalCornerRadius
         }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        let isDark = userInterfaceStyle == .dark
+        view.backgroundColor = isDark ? ThemeColor.buttonCloseBackground : Theme.Colors.Fill.System.third
     }
 }
 

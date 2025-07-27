@@ -30,10 +30,10 @@ struct AddingServiceFullWidthButtonWithImage: View {
     var body: some View {
         Divider()
             .frame(height: 1)
-            .overlay(Color(Theme.Colors.Line.secondarySeparator))
+            .overlay(Color(ThemeColor.secondarySeparator))
             .padding(.horizontal, -Theme.Metrics.doubleMargin)
             .accessibilityHidden(true)
-        
+
         Button {
             action()
         } label: {

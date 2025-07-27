@@ -20,6 +20,7 @@
 import UIKit
 import SwiftUI
 import Data
+import Common
 
 protocol AddingServiceMainViewControlling: AnyObject {}
 
@@ -33,6 +34,14 @@ final class AddingServiceMainViewController: UIViewController {
         presenter.handleCameraAvailability { [weak self] isCameraAvailable in
             self?.setupView(cameraUnavailable: !isCameraAvailable)
         }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        let isDark = userInterfaceStyle == .dark
+        view.backgroundColor = isDark ? ThemeColor.buttonCloseBackground : Theme.Colors.Fill.System.third
     }
     
     private func setupView(cameraUnavailable: Bool) {
@@ -49,7 +58,7 @@ final class AddingServiceMainViewController: UIViewController {
         addChild(vc)
         view.addSubview(vc.view)
         vc.view.pinToParent()
-        vc.view.backgroundColor = Theme.Colors.Fill.System.third
+        vc.view.backgroundColor = .clear
         vc.didMove(toParent: self)
     }
 }

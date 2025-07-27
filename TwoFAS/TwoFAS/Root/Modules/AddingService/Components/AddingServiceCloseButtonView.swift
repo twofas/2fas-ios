@@ -20,6 +20,7 @@
 import SwiftUI
 
 struct AddingServiceCloseButtonView: View {
+    @Environment(\.colorScheme) private var colorScheme
     let action: () -> Void
     
     var body: some View {
@@ -32,7 +33,9 @@ struct AddingServiceCloseButtonView: View {
                     .symbolRenderingMode(.palette)
                     .foregroundStyle(
                         Color(Theme.Colors.CloseButton.foreground),
-                        Color(Theme.Colors.CloseButton.background)
+                        Color(
+                            colorScheme == .dark ? Theme.Colors.Fill.System.third : Theme.Colors.CloseButton.background
+                        )
                     )
                        .font(.system(size: 22))
                        .frame(alignment: .trailing)

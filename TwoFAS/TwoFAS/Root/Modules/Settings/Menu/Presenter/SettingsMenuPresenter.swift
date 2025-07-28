@@ -69,7 +69,7 @@ extension SettingsMenuPresenter {
         }
         switch action {
         case .navigation(let navigatesTo):
-            navigate(to: navigatesTo)
+            navigate(to: navigatesTo, rememberPosition: cell.rememberPosition)
         }
         reload()
     }
@@ -175,12 +175,17 @@ extension SettingsMenuPresenter {
 }
 
 private extension SettingsMenuPresenter {
-    func navigate(to navigateTo: SettingsNavigationModule) {
-        guard navigateTo != selectedModule else { return }
+    func navigate(to navigateTo: SettingsNavigationModule, rememberPosition: Bool = true) {
+        guard rememberPosition == false || navigateTo != selectedModule else { return }
         let menu = buildMenu()
         guard let indexPath = menu.indexPath(for: navigateTo) else { return }
-        selectedModule = navigateTo
-        selectedIndex = indexPath
+        if rememberPosition {
+            selectedModule = navigateTo
+            selectedIndex = indexPath
+        } else {
+            selectedModule = nil
+            selectedIndex = nil
+        }
         
         flowController.toUpdateCurrentPosition(navigateToViewPath(navigateTo: navigateTo))
         

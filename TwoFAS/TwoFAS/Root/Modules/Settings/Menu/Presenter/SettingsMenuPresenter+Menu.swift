@@ -126,7 +126,8 @@ extension SettingsMenuPresenter {
                     icon: Asset.settingsPass.image,
                     title: interactor.is2PASSInstalled ? T.settingsOpenTwofass : T.settingsOpenTwofassAppstore,
                     accessory: .external,
-                    action: .navigation(navigatesTo: interactor.is2PASSInstalled ? .openPass : .appStorePass)
+                    action: .navigation(navigatesTo: interactor.is2PASSInstalled ? .openPass : .appStorePass),
+                    rememberPosition: false
                 )
             ],
             footer: nil
@@ -139,7 +140,8 @@ extension SettingsMenuPresenter {
                     icon: Asset.settingsFAQ.image,
                     title: T.Settings.support,
                     accessory: .external,
-                    action: .navigation(navigatesTo: .faq)
+                    action: .navigation(navigatesTo: .faq),
+                    rememberPosition: false
                 ),
                 .init(
                     icon: Asset.settingsInfo.image,
@@ -151,7 +153,8 @@ extension SettingsMenuPresenter {
                     icon: Asset.settingsDonate.image,
                     title: T.Settings.donateTwofas,
                     accessory: .donate,
-                    action: .navigation(navigatesTo: .donate)
+                    action: .navigation(navigatesTo: .donate),
+                    rememberPosition: false
                 )
             ],
             footer: T.Settings.infoFooter

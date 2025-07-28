@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2025 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -20,27 +20,18 @@
 import Foundation
 import Common
 
-public extension Code {
-    static func parseSupport(with data: String) -> UUID? {
-        // twofas|twofasauth://support/send-logs/[uuid]
+extension Code {
+    static func parseOpen(with data: String) -> Bool {
+        // twofas|twofasauth://open
         guard let components = NSURLComponents(string: data),
               let scheme = components.scheme,
               let type = components.host,
-              let path = components.path,
-              scheme == Config.twofasAuthOldScheme || scheme == Config.twofasAuthNewScheme,
-              type == "support"
+              scheme == Config.twofasAuthNewScheme,
+              type == "open"
         else {
-            return nil
+            return false
         }
         
-        let paths = path.split(separator: "/")
-        
-        guard paths.count == 2,
-              paths[0] == "send-logs"
-        else {
-            return nil
-        }
-        
-        return UUID(uuidString: String(paths[1]))
+        return true
     }
 }

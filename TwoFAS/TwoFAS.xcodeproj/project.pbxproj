@@ -689,6 +689,7 @@
 		C28633D21FFABD2200C8F4B4 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28633D11FFABD2200C8F4B4 /* NotificationViewController.swift */; };
 		C28633D91FFABD2200C8F4B4 /* TwoFASAuth.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C28633CB1FFABD2200C8F4B4 /* TwoFASAuth.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C28633E11FFAC6B600C8F4B4 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
+		C286E9AA2E377CF20019CF79 /* Code+Open.swift in Sources */ = {isa = PBXBuildFile; fileRef = C286E9A92E377CED0019CF79 /* Code+Open.swift */; };
 		C286ED4E25F4365000F92EDE /* ComposeServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C286ED4D25F4365000F92EDE /* ComposeServiceViewController.swift */; };
 		C28705F42980776300745459 /* MainFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28705F32980776300745459 /* MainFlowController.swift */; };
 		C2872DDA27A6B9C2000F5AE9 /* SortType+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2872DD927A6B9C2000F5AE9 /* SortType+.swift */; };
@@ -2504,6 +2505,7 @@
 		C28633D61FFABD2200C8F4B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C28633E01FFAC69D00C8F4B4 /* TwoFASAuth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASAuth.entitlements; sourceTree = "<group>"; };
 		C28681E62891D41F00BE0CA7 /* TimerInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerInteractor.swift; sourceTree = "<group>"; };
+		C286E9A92E377CED0019CF79 /* Code+Open.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Code+Open.swift"; sourceTree = "<group>"; };
 		C286ED4D25F4365000F92EDE /* ComposeServiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceViewController.swift; sourceTree = "<group>"; };
 		C28705F32980776300745459 /* MainFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowController.swift; sourceTree = "<group>"; };
 		C2872DD527A6A1FE000F5AE9 /* SortInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortInteractor.swift; sourceTree = "<group>"; };
@@ -6814,6 +6816,7 @@
 				C29DD5831FE84575007ECEEE /* Extensions.swift */,
 				C28ECEA51FEEA9CE000EBB9D /* QueryItemsType.swift */,
 				C2E7F8D0246B3F3400E401FB /* Code+AppStoreCode.swift */,
+				C286E9A92E377CED0019CF79 /* Code+Open.swift */,
 				C2F245D2293566F0006F7F5B /* Code+Support.swift */,
 				C208101327948DFD0035E339 /* Code+GoogleAuth.swift */,
 				C278122427FA3A3200F31453 /* Code+TwoFASWebExtension.swift */,
@@ -10676,6 +10679,7 @@
 				C2E7C3E32ADB2BB400478D89 /* NewCodeInteractor.swift in Sources */,
 				C2CACFC42B015847001E0F8E /* MainRepositoryImpl+LockScreen.swift in Sources */,
 				C2E7C3CF2ADB2B9C00478D89 /* MainRepositoryImpl+ServiceDefinition.swift in Sources */,
+				C286E9AA2E377CF20019CF79 /* Code+Open.swift in Sources */,
 				C2E7C3D92ADB2B9C00478D89 /* MainRepositoryImpl+General.swift in Sources */,
 				C2E7C3DA2ADB2BA600478D89 /* MainRepositoryImpl+ViewPath.swift in Sources */,
 				C2EA6E5E2BA110FA0034A964 /* MainRepositoryImpl+LocalNotifications.swift in Sources */,

@@ -142,6 +142,8 @@ extension CameraScannerPresenter {
             view?.enableOverlay()
             view?.feedback()
             flowController.toSendLogs(auditID: auditID)
+        case .open:
+            Log("CameraScannerPresenter: Found 2FAS open request")
         case .unknown:
             Log("CameraScannerPresenter: Found wrong code: \(codeType)", save: false)
             Log("CameraScannerPresenter: General wrong code")

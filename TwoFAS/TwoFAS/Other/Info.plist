@@ -86,7 +86,7 @@
 			<key>CFBundleURLIconFile</key>
 			<string>icon_64</string>
 			<key>CFBundleURLName</key>
-			<string>2FAS internal</string>
+			<string>2FAS Auth</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>twofas</string>

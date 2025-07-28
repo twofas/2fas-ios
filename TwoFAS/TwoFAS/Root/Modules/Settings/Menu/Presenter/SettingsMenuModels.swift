@@ -50,6 +50,7 @@ struct SettingsMenuCell: Hashable {
     let accessory: AccessoryKind?
     let action: Action?
     let isEnabled: Bool
+    let rememberPosition: Bool
     
     init(
         icon: UIImage? = nil,
@@ -57,7 +58,8 @@ struct SettingsMenuCell: Hashable {
         info: String? = nil,
         accessory: AccessoryKind? = nil,
         action: Action? = nil,
-        isEnabled: Bool = true
+        isEnabled: Bool = true,
+        rememberPosition: Bool = true
     ) {
         self.icon = icon
         self.title = title
@@ -65,6 +67,7 @@ struct SettingsMenuCell: Hashable {
         self.accessory = accessory
         self.action = action
         self.isEnabled = isEnabled
+        self.rememberPosition = rememberPosition
     }
 }
 

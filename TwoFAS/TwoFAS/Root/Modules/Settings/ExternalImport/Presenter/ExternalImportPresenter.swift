@@ -52,6 +52,10 @@ final class ExternalImportPresenter {
             flowController.toAndOTP()
         case .authenticatorPro:
             flowController.toAuthenticatorPro()
+        case .file:
+            break
+        case .clipboard:
+            break
         }
     }
     

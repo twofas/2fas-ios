@@ -82,6 +82,7 @@ final class VerifyPINFlowController: FlowController {
         viewController.view.addSubview(view.view)
         view.view.pinToParent()
         viewController.addChild(view)
+        viewController.becomeFirstResponder()
     }
 }
 

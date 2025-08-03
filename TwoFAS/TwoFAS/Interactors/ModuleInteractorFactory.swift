@@ -82,10 +82,16 @@ final class ModuleInteractorFactory {
         )
     }
     
-    func importerOpenFileModuleInteractor(url: URL?) -> ImporterOpenFileModuleInteracting {
+    func importerOpenFileModuleInteractor(
+        url: URL?,
+        importingOTPAuthFile: Bool,
+        isFromClipboard: Bool
+    ) -> ImporterOpenFileModuleInteracting {
         ImporterOpenFileModuleInteractor(
             importInteractor: InteractorFactory.shared.importFromFileInteractor(),
-            url: url
+            url: url,
+            importingOTPAuthFile: importingOTPAuthFile,
+            isFromClipboard: isFromClipboard
         )
     }
     

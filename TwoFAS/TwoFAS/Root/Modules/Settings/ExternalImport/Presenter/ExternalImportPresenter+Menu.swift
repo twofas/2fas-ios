@@ -85,17 +85,17 @@ extension ExternalImportPresenter {
                 title: "OTPAuth links",
                 cells: [
                     .init(
-                        icon: UIImage(systemName: "document.fill")!,
+                        icon: UIImage(systemName: "doc.fill")!,
                         title: "Import from file",
                         action: .file
                     ),
                     .init(
-                        icon: UIImage(systemName: "document.on.clipboard")!,
+                        icon: UIImage(systemName: "list.clipboard.fill")!,
                         title: "Read from clipboard",
                         action: .clipboard
                     )
                 ],
-                footer: "Select a file with OTPAuth links to import or copy them to clipboard."
+                footer: "Select a text file with OTPAuth links to import or paste OTPAuth links to clipboard."
             )
         ]
     }

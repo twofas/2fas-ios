@@ -36,7 +36,7 @@ final class ExternalImportInstructionsViewController: UIViewController {
         }()
         
         let v = ExternalImportInstructionsView(
-            sourceLogo: presenter.sourceLogo,
+            sourceLogo: AnyView(presenter.sourceLogo),
             sourceName: presenter.sourceName,
             info: presenter.info,
             action: action,

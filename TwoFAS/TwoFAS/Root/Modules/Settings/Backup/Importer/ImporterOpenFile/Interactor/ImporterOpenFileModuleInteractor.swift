@@ -17,12 +17,16 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 import Common
 import Data
 
 protocol ImporterOpenFileModuleInteracting: AnyObject {
     var url: URL? { get }
+    var importingOTPAuthFile: Bool { get }
+    var isFromClipboard: Bool { get }
+    
+    func readClipboard() -> Data?
     
     func openFile(_ url: URL, completion: @escaping (Result<Data, ImportFromFileError>) -> Void)
     func parseContent(_ data: Data) -> ImportFromFileParsing?
@@ -43,14 +47,30 @@ final class ImporterOpenFileModuleInteractor {
     private let importInteractor: ImportFromFileInteracting
     
     let url: URL?
+    let importingOTPAuthFile: Bool
+    let isFromClipboard: Bool
     
-    init(importInteractor: ImportFromFileInteracting, url: URL?) {
+    init(
+        importInteractor: ImportFromFileInteracting,
+        url: URL?,
+        importingOTPAuthFile: Bool,
+        isFromClipboard: Bool
+    ) {
         self.importInteractor = importInteractor
         self.url = url
+        self.importingOTPAuthFile = importingOTPAuthFile
+        self.isFromClipboard = isFromClipboard
     }
 }
 
 extension ImporterOpenFileModuleInteractor: ImporterOpenFileModuleInteracting {
+    func readClipboard() -> Data? {
+        guard let str = UIPasteboard.general.string, let data = str.data(using: .utf8) else {
+            return nil
+        }
+        return data
+    }
+    
     func openFile(_ url: URL, completion: @escaping (Result<Data, ImportFromFileError>) -> Void) {
         importInteractor.openFile(url, completion: completion)
     }

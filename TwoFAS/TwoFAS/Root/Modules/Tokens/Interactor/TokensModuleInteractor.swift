@@ -235,7 +235,7 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     // MARK: - Tokens
     
     func enableHOTPCounter(for secret: Secret) {
-        tokenInteractor.unlockCounter(for: secret, isInitialCounter: false)
+        tokenInteractor.unlockCounter(for: secret)
     }
     
     func unlockConsumer(for consumer: TokenTimerConsumer) {

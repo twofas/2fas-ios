@@ -77,7 +77,7 @@ extension AddingServiceTokenModuleInteractor: AddingServiceTokenModuleInteractin
     
     func refresh() {
         guard serviceTokenType == .hotp else { return }
-        tokenInteractor.unlockCounter(for: serviceData.secret, isInitialCounter: false)
+        tokenInteractor.unlockCounter(for: serviceData.secret)
     }
     
     func start() {
@@ -104,6 +104,6 @@ extension AddingServiceTokenModuleInteractor: AddingServiceTokenModuleInteractin
     }
 
     private func initialHOTPRefresh() {
-        tokenInteractor.unlockCounter(for: serviceData.secret, isInitialCounter: true)
+        tokenInteractor.unlockCounter(for: serviceData.secret)
     }
 }

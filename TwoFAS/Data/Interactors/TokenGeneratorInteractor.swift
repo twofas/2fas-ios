@@ -37,17 +37,11 @@ final class TokenGeneratorInteractor {
 extension TokenGeneratorInteractor: TokenGeneratorInteracting {
     func generateToken(for secret: String) -> String? {
         guard let serviceData = serviceInteractor.service(for: secret) else { return nil }
-        if serviceData.tokenType == .hotp {
-            serviceInteractor.incrementCounter(for: secret)
-        }
         let counter: Int = {
             guard serviceData.tokenType == .hotp else { return TokenType.hotpDefaultValue }
-            if let counter = serviceData.counter {
-                return counter + 1
-            }
-            return TokenType.hotpDefaultValue
+            return serviceData.counter ?? TokenType.hotpDefaultValue
         }()
-        return mainRepository.token(
+        let token = mainRepository.token(
             secret: serviceData.secret,
             time: mainRepository.currentDate,
             digits: Digits(rawValue: serviceData.digits) ?? .defaultValue,
@@ -56,5 +50,10 @@ extension TokenGeneratorInteractor: TokenGeneratorInteracting {
             counter: counter,
             tokenType: serviceData.tokenType
         )
+        if serviceData.tokenType == .hotp {
+            serviceInteractor.incrementCounter(for: secret)
+        }
+
+        return token
     }
 }

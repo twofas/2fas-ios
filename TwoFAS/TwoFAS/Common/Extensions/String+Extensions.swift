@@ -22,6 +22,11 @@ import Common
 
 extension String {
     var localized: String { NSLocalizedString(self, comment: "") }
+    
+    func sanitizeFilename() -> String {
+        let invalidCharacters = CharacterSet(charactersIn: ":/\\?%*|\"<>")
+        return self.components(separatedBy: invalidCharacters).joined(separator: "_")
+    }
 }
 
 extension Optional where Wrapped == String {

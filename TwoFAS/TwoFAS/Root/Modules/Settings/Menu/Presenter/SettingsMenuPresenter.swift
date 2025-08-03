@@ -49,6 +49,7 @@ extension SettingsMenuPresenter {
         case .trash: return .trash
         case .about: return .about
         case .externalImport: return .externalImport
+        case .exportTokens: return .exportTokens
         case .appearance: return .appearance
         case .appleWatch: return .appleWatch
         case .faq, .donate, .appStorePass, .openPass: return nil
@@ -168,6 +169,7 @@ extension SettingsMenuPresenter {
         case .trash: navigate(to: .trash)
         case .about: navigate(to: .about)
         case .externalImport: navigate(to: .externalImport)
+        case .exportTokens: navigate(to: .exportTokens)
         case .appearance: navigate(to: .appearance)
         case .appleWatch: navigate(to: .appleWatch)
         }
@@ -218,6 +220,8 @@ private extension SettingsMenuPresenter {
             flowController.toTwoPASSAppStore()
         case .openPass:
             flowController.toOpenTwoPASS()
+        case .exportTokens:
+            flowController.toExportTokens()
         }
     }
     
@@ -252,6 +256,7 @@ private extension SettingsMenuPresenter {
         case .trash: return .trash
         case .about: return .about
         case .externalImport: return .externalImport
+        case .exportTokens: return .exportTokens
         case .appearance: return .appearance
         case .appleWatch: return .appleWatch
         case .faq, .donate, .appStorePass, .openPass: return nil

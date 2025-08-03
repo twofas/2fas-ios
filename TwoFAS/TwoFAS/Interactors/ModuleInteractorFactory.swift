@@ -404,4 +404,14 @@ final class ModuleInteractorFactory {
     func introductionModuleInteractor() -> IntroductionModuleInteracting {
         IntroductionModuleInteractor(rootInteractor: InteractorFactory.shared.rootInteractor())
     }
+    
+    func exportTokensModuleInteractor() -> ExportTokensModuleInteracting {
+        ExportTokensModuleInteractor(
+            serviceListingInteractor: InteractorFactory.shared.serviceListingInteractor(),
+            notificationsInteractor: InteractorFactory.shared.notificationInteractor(),
+            qrCodeGeneratorInteractor: InteractorFactory.shared.qrCodeGeneratorInteractor(),
+            serviceDefinitionInteractor: InteractorFactory.shared.serviceDefinitionInteractor(),
+            protectionInteractor: InteractorFactory.shared.protectionInteractor()
+        )
+    }
 }

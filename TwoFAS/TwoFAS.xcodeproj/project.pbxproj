@@ -701,6 +701,12 @@
 		C28B38C927CD784D00BD4A96 /* RefreshTokenCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28B38C827CD784D00BD4A96 /* RefreshTokenCounter.swift */; };
 		C28B9120268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C28B911F268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel */; };
 		C28C441724A67B7000534B30 /* CommonSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28C441624A67B7000534B30 /* CommonSearchBar.swift */; };
+		C28FC6DA2E400B6E0053B0BE /* ExportTokensViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28FC6D72E400B6E0053B0BE /* ExportTokensViewController.swift */; };
+		C28FC6DB2E400B6E0053B0BE /* ExportTokensPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28FC6D52E400B6E0053B0BE /* ExportTokensPresenter+Menu.swift */; };
+		C28FC6DC2E400B6E0053B0BE /* ExportTokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28FC6D42E400B6E0053B0BE /* ExportTokensPresenter.swift */; };
+		C28FC6DD2E400B6E0053B0BE /* ExportTokensFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28FC6D22E400B6E0053B0BE /* ExportTokensFlowController.swift */; };
+		C28FC6E02E4011580053B0BE /* ExportTokensModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28FC6DF2E4011560053B0BE /* ExportTokensModuleInteractor.swift */; };
+		C28FD19F2E4028450053B0BE /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C28FD19E2E4028450053B0BE /* ZIPFoundation */; };
 		C29378302BD1A218008D5125 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C293782F2BD1A218008D5125 /* SettingsView.swift */; };
 		C29378342BD1A342008D5125 /* SecurityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29378332BD1A342008D5125 /* SecurityView.swift */; };
 		C29378362BD1A3B6008D5125 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29378352BD1A3B6008D5125 /* AboutView.swift */; };
@@ -2525,6 +2531,11 @@
 		C28ECE991FEDBFB3000EBB9D /* CameraDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraDelegate.swift; sourceTree = "<group>"; };
 		C28ECE9F1FEE8273000EBB9D /* CodeParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeParser.swift; sourceTree = "<group>"; };
 		C28ECEA51FEEA9CE000EBB9D /* QueryItemsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryItemsType.swift; sourceTree = "<group>"; };
+		C28FC6D22E400B6E0053B0BE /* ExportTokensFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportTokensFlowController.swift; sourceTree = "<group>"; };
+		C28FC6D42E400B6E0053B0BE /* ExportTokensPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportTokensPresenter.swift; sourceTree = "<group>"; };
+		C28FC6D52E400B6E0053B0BE /* ExportTokensPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExportTokensPresenter+Menu.swift"; sourceTree = "<group>"; };
+		C28FC6D72E400B6E0053B0BE /* ExportTokensViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportTokensViewController.swift; sourceTree = "<group>"; };
+		C28FC6DF2E4011560053B0BE /* ExportTokensModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportTokensModuleInteractor.swift; sourceTree = "<group>"; };
 		C292044C2DBE4FC50061E985 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = TwoFAS/Other/sv.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C292044D2DBE4FE40061E985 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = TwoFAS/Other/sv.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C292044E2DBE4FE60061E985 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = TwoFAS/Other/ja.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
@@ -3322,6 +3333,7 @@
 				C2E7C3982ADB21B400478D89 /* NetworkStack.framework in Frameworks */,
 				C251EDE82AE8721B007722F2 /* Base32.framework in Frameworks */,
 				C2E7C39C2ADB21B400478D89 /* Protection.framework in Frameworks */,
+				C28FD19F2E4028450053B0BE /* ZIPFoundation in Frameworks */,
 				C2AE5F882ADC8B2300AED670 /* SwiftProtobuf in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3808,6 +3820,7 @@
 		C21111E1274AB8C100CA7C78 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				C28FC6D92E400B6E0053B0BE /* ExportTokens */,
 				8F594C402C3024E60066562F /* AppleWatch */,
 				C2B1208529D767150020281E /* Appearance */,
 				C2CC0A4129D08D7700677A7B /* ExternalImportInstructions */,
@@ -6277,6 +6290,50 @@
 				C21247F927B717660044D9F2 /* Modules */,
 			);
 			path = ComposeService;
+			sourceTree = "<group>";
+		};
+		C28FC6D32E400B6E0053B0BE /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				C28FC6D22E400B6E0053B0BE /* ExportTokensFlowController.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		C28FC6D62E400B6E0053B0BE /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C28FC6D42E400B6E0053B0BE /* ExportTokensPresenter.swift */,
+				C28FC6D52E400B6E0053B0BE /* ExportTokensPresenter+Menu.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C28FC6D82E400B6E0053B0BE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C28FC6D72E400B6E0053B0BE /* ExportTokensViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C28FC6D92E400B6E0053B0BE /* ExportTokens */ = {
+			isa = PBXGroup;
+			children = (
+				C28FC6D32E400B6E0053B0BE /* Flow */,
+				C28FC6DE2E40114F0053B0BE /* Interactor */,
+				C28FC6D62E400B6E0053B0BE /* Presenter */,
+				C28FC6D82E400B6E0053B0BE /* View */,
+			);
+			path = ExportTokens;
+			sourceTree = "<group>";
+		};
+		C28FC6DE2E40114F0053B0BE /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				C28FC6DF2E4011560053B0BE /* ExportTokensModuleInteractor.swift */,
+			);
+			path = Interactor;
 			sourceTree = "<group>";
 		};
 		C293783B2BD1C240008D5125 /* PINType */ = {
@@ -8973,6 +9030,7 @@
 			packageProductDependencies = (
 				C2AE5F712ADC880B00AED670 /* DeviceKit */,
 				C2AE5F872ADC8B2300AED670 /* SwiftProtobuf */,
+				C28FD19E2E4028450053B0BE /* ZIPFoundation */,
 			);
 			productName = Data;
 			productReference = C2E7C3822ADB19F300478D89 /* Data.framework */;
@@ -9137,6 +9195,7 @@
 				C2CE0E1127934579007DB667 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */,
 				C2EC97D22D917D8900C0A27A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C28FD19D2E4028450053B0BE /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 			);
 			productRefGroup = C23666741FB2644900989ACA /* Products */;
 			projectDirPath = "";
@@ -9575,6 +9634,7 @@
 				C2C56D4A27C99314003B4C43 /* ComposeServiceAdvancedSummaryFlowController.swift in Sources */,
 				C245702228A04BAB008E99F4 /* GridViewGAImportViewController.swift in Sources */,
 				C296D1EC28B2D4CA001F026D /* UserIconInfoPresenter.swift in Sources */,
+				C28FC6E02E4011580053B0BE /* ExportTokensModuleInteractor.swift in Sources */,
 				C2CC0A3E29D0603000677A7B /* ExternalImportPresenter+Menu.swift in Sources */,
 				C25371A2281DCF56005FB118 /* UINavigationController+.swift in Sources */,
 				C27D5443275D478E001E9ABF /* BackupMenuViewControlling.swift in Sources */,
@@ -9655,6 +9715,10 @@
 				C286ED4E25F4365000F92EDE /* ComposeServiceViewController.swift in Sources */,
 				C2C56D4227C98243003B4C43 /* ComposeServiceAdvancedSummaryPresenter.swift in Sources */,
 				C2F5F9E728611DD600F778E1 /* BrowserExtensionPairingAlreadyPairedViewController.swift in Sources */,
+				C28FC6DA2E400B6E0053B0BE /* ExportTokensViewController.swift in Sources */,
+				C28FC6DB2E400B6E0053B0BE /* ExportTokensPresenter+Menu.swift in Sources */,
+				C28FC6DC2E400B6E0053B0BE /* ExportTokensPresenter.swift in Sources */,
+				C28FC6DD2E400B6E0053B0BE /* ExportTokensFlowController.swift in Sources */,
 				C20E60F728188A8E00AB002E /* PushNotificationPermissionView.swift in Sources */,
 				C2557A9923F5E96200E713EF /* Separator.swift in Sources */,
 				C2E2C81427B0702300F04B70 /* CollectionViewAdapter.swift in Sources */,
@@ -13721,6 +13785,14 @@
 				minimumVersion = 4.2.2;
 			};
 		};
+		C28FD19D2E4028450053B0BE /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.19;
+			};
+		};
 		C2ABB61A25379D4B005CD66F /* XCRemoteSwiftPackageReference "PKHUD" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pkluz/PKHUD.git";
@@ -13757,6 +13829,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */;
 			productName = SwCrypt;
+		};
+		C28FD19E2E4028450053B0BE /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C28FD19D2E4028450053B0BE /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
 		};
 		C2AE5F622ADC395800AED670 /* PKHUD */ = {
 			isa = XCSwiftPackageProductDependency;

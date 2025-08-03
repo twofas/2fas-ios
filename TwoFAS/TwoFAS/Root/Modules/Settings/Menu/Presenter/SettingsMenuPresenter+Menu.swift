@@ -111,6 +111,12 @@ extension SettingsMenuPresenter {
                     action: .navigation(navigatesTo: .externalImport)
                 ),
                 .init(
+                    icon: Asset.settingsExport.image,
+                    title: "Export tokens",
+                    accessory: .arrow,
+                    action: .navigation(navigatesTo: .exportTokens)
+                ),
+                .init(
                     icon: Asset.settingsTrash.image,
                     title: T.Settings.trashOption,
                     accessory: .arrow,

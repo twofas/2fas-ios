@@ -46,6 +46,7 @@ protocol SettingsMenuFlowControllerParent: AnyObject {
     func toDonate()
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func toExternalImport()
+    func toExportTokens()
     func toAppearance()
     func toAppleWatch()
 }
@@ -62,6 +63,7 @@ protocol SettingsMenuFlowControlling: AnyObject {
     func toDonate()
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func toExternalImport()
+    func toExportTokens()
     func toAppearance()
     func toAppleWatch()
     func toTwoPASSAppStore()
@@ -114,6 +116,7 @@ extension SettingsMenuFlowController: SettingsMenuFlowControlling {
     func toBrowserExtension() { parent?.toBrowserExtension() }
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) { parent?.toUpdateCurrentPosition(viewPath) }
     func toExternalImport() { parent?.toExternalImport() }
+    func toExportTokens() { parent?.toExportTokens() }
     func toAppearance() { parent?.toAppearance() }
     func toAppleWatch() { parent?.toAppleWatch() }
     func toTwoPASSAppStore() {

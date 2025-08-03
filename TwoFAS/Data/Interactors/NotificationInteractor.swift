@@ -22,6 +22,7 @@ import Common
 
 public protocol NotificationInteracting: AnyObject {
     func copyWithSuccess(value: String)
+    func copyWithSuccessNoModification(value: String)
     func error()
     func warning()
     func success()
@@ -39,6 +40,12 @@ extension NotificationInteractor: NotificationInteracting {
     func copyWithSuccess(value: String) {
         Log("NotificationInteractor - copy with success", module: .interactor)
         let value = value.removeWhitespaces()
+        mainRepository.copy(value)
+        mainRepository.wobbleSuccess()
+    }
+    
+    func copyWithSuccessNoModification(value: String) {
+        Log("NotificationInteractor - copy with success", module: .interactor)
         mainRepository.copy(value)
         mainRepository.wobbleSuccess()
     }

@@ -624,11 +624,11 @@ private extension TokensModuleInteractor {
     }
 
     private func copyToken(_ token: String) {
-        notificationsInteractor.copyWithSuccess(value: token)
+        notificationsInteractor.copyWithSuccess(value: token.removeWhitespaces())
     }
     
     private func copyNextToken(_ token: String) {
-        notificationsInteractor.copyWithSuccess(value: token)
+        notificationsInteractor.copyWithSuccess(value: token.removeWhitespaces())
     }
 }
 

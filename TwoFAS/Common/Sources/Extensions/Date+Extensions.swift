@@ -83,4 +83,34 @@ public extension Date {
         }
         return self < twoMonthsAgo
     }
+    
+    func fileDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateString = dateFormatter.string(from: self)
+        return dateString
+            .replacingOccurrences(of: ":", with: "-")
+            .replacingOccurrences(of: " ", with: "_")
+    }
+    
+    func fileDateAndTime() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+        let dateString = dateFormatter.string(from: self)
+        return dateString
+            .replacingOccurrences(of: ":", with: "-")
+            .replacingOccurrences(of: " ", with: "_")
+    }
+    
+    func isAfter(_ date: Date) -> Bool {
+        self > date
+    }
+    
+    func isBefore(_ date: Date) -> Bool {
+        self < date
+    }
+    
+    func isSame(as date: Date) -> Bool {
+        self == date
+    }
 }

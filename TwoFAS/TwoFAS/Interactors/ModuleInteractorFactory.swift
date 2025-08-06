@@ -411,7 +411,8 @@ final class ModuleInteractorFactory {
             notificationsInteractor: InteractorFactory.shared.notificationInteractor(),
             qrCodeGeneratorInteractor: InteractorFactory.shared.qrCodeGeneratorInteractor(),
             serviceDefinitionInteractor: InteractorFactory.shared.serviceDefinitionInteractor(),
-            protectionInteractor: InteractorFactory.shared.protectionInteractor()
+            protectionInteractor: InteractorFactory.shared.protectionInteractor(),
+            compressionInteractor: InteractorFactory.shared.compressionInteractor()
         )
     }
 }

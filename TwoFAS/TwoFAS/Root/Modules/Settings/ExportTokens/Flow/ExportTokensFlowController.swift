@@ -28,8 +28,9 @@ protocol ExportTokensFlowControlling: AnyObject {
     func toSaveOTPAuthFile()
     func toExportQRCodes()
     func toSetupPIN()
-    func toShareOTPAuthFileContents(_ contents: String)
-    func toShareQRCodes(_ urls: [URL], completion: @escaping () -> Void)
+    func toShareOTPAuthFileContents(_ url: URL, completion: @escaping () -> Void)
+    func toShareQRCodes(_ url: URL, completion: @escaping () -> Void)
+    func toError(_ message: String)
 }
 
 final class ExportTokensFlowController: FlowController {
@@ -123,22 +124,26 @@ extension ExportTokensFlowController: ExportTokensFlowControlling {
         viewController.present(alert, animated: true, completion: nil)
     }
     
-    func toShareOTPAuthFileContents(_ contents: String) {
-        let activityVC = ShareActivityController.create(contents, title: "Export Tokens")
-        
-        if let popover = activityVC.popoverPresentationController, let view = UIApplication.keyWindow {
-            let bounds = view.bounds
-            popover.permittedArrowDirections = .init(rawValue: 0)
-            popover.sourceRect = CGRect(x: bounds.midX, y: bounds.midY, width: 1, height: 2)
-            popover.sourceView = view
-        }
-        
+    func toShareOTPAuthFileContents(_ url: URL, completion: @escaping () -> Void) {
+        let activityVC = activityVC(for: url, title: "Export Tokens", completion: completion)
         viewController.present(activityVC, animated: true, completion: nil)
     }
     
-    func toShareQRCodes(_ urls: [URL], completion: @escaping () -> Void) {
-        let activityVC = UIActivityViewController(activityItems: urls, applicationActivities: nil)
-        activityVC.title = "Export QR Codes"
+    func toShareQRCodes(_ url: URL, completion: @escaping () -> Void) {
+        let activityVC = activityVC(for: url, title: "Export QR Codes", completion: completion)
+        viewController.present(activityVC, animated: true, completion: nil)
+    }
+    
+    func toError(_ message: String) {
+        let alert = UIAlertController.makeSimple(with: T.Commons.error, message: message)
+        viewController.present(alert, animated: true, completion: nil)
+    }
+}
+
+private extension ExportTokensFlowController {
+    func activityVC(for url: URL, title: String, completion: @escaping () -> Void) -> UIActivityViewController {
+        let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        activityVC.title = title
         activityVC.excludedActivityTypes = [
             .addToReadingList,
             .assignToContact,
@@ -163,7 +168,7 @@ extension ExportTokensFlowController: ExportTokensFlowControlling {
             completion()
         }
         
-        viewController.present(activityVC, animated: true, completion: nil)
+        return activityVC
     }
 }
 

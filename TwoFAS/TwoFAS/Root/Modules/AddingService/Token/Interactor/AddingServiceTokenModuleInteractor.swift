@@ -72,7 +72,7 @@ extension AddingServiceTokenModuleInteractor: AddingServiceTokenModuleInteractin
     var serviceTokenType: TokenType { serviceData.tokenType }
     
     func copyToken(_ token: String) {
-        notificationsInteractor.copyWithSuccess(value: token)
+        notificationsInteractor.copyWithSuccess(value: token.removeWhitespaces())
     }
     
     func refresh() {

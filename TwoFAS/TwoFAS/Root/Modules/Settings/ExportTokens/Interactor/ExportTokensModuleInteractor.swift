@@ -25,9 +25,9 @@ import CryptoKit
 protocol ExportTokensModuleInteracting: AnyObject {
     var hasServices: Bool { get }
     var hasPIN: Bool { get }
-    func generateOTPAuthCodes() -> String
-    func copyToClipBoardGenertedCodes()
-    func generateQRCodeFiles() async -> [URL]
+    func copyToClipboardGeneratedCodes(message: String)
+    func createOTPAuthCodesFile() -> URL?
+    func createQRCodeFiles() async -> URL?
     func cleanupTemporaryFiles(urls: [URL])
 }
 
@@ -37,6 +37,7 @@ final class ExportTokensModuleInteractor {
     private let qrCodeGeneratorInteractor: QRCodeGeneratorInteracting
     private let serviceDefinitionInteractor: ServiceDefinitionInteracting
     private let protectionInteractor: ProtectionInteracting
+    private let compressionInteractor: CompressionInteracting
     
     private let fileManager = FileManager.default
     
@@ -53,31 +54,37 @@ final class ExportTokensModuleInteractor {
         notificationsInteractor: NotificationInteracting,
         qrCodeGeneratorInteractor: QRCodeGeneratorInteracting,
         serviceDefinitionInteractor: ServiceDefinitionInteracting,
-        protectionInteractor: ProtectionInteracting
+        protectionInteractor: ProtectionInteracting,
+        compressionInteractor: CompressionInteracting
     ) {
         self.serviceListingInteractor = serviceListingInteractor
         self.notificationsInteractor = notificationsInteractor
         self.qrCodeGeneratorInteractor = qrCodeGeneratorInteractor
         self.serviceDefinitionInteractor = serviceDefinitionInteractor
         self.protectionInteractor = protectionInteractor
+        self.compressionInteractor = compressionInteractor
     }
 }
 
 extension ExportTokensModuleInteractor: ExportTokensModuleInteracting {
-    func generateOTPAuthCodes() -> String {
-        serviceListingInteractor.listAll()
-            .map { serviceDefinitionInteractor.otpAuth(from: $0) }
-            .joined(separator: "\n")
+    func createOTPAuthCodesFile() -> URL? {
+        let contents = generateOTPAuthCodes().utf8
+        let data = Data(contents)
+        let fileName = "otpauth_\(Date().fileDateAndTime()).txt"
+        return createTemporaryFiles(from: [fileName: data]).first
     }
     
-    func copyToClipBoardGenertedCodes() {
-        notificationsInteractor.copyWithSuccessNoModification(value: generateOTPAuthCodes())
+    func copyToClipboardGeneratedCodes(message: String) {
+        notificationsInteractor.copyWithSuccess(value: generateOTPAuthCodes())
+        HUDNotification.presentSuccess(title: message)
     }
     
-    func generateQRCodeFiles() async -> [URL] {
+    func createQRCodeFiles() async -> URL? {
         let codes = await generateQRCodes()
         let urls = createTemporaryFiles(from: codes)
-        return urls
+        let zipURL = await compressionInteractor.zipFiles(urls, into: "QRCodes_\(Date().fileDateAndTime())")
+        cleanupTemporaryFiles(urls: urls)
+        return zipURL
     }
     
     func cleanupTemporaryFiles(urls: [URL]) {
@@ -92,29 +99,37 @@ extension ExportTokensModuleInteractor: ExportTokensModuleInteracting {
 }
 
 private extension ExportTokensModuleInteractor {
-    func createTemporaryFiles(from imageFilePairs: [String: Data]) -> [URL] {
+    func generateOTPAuthCodes() -> String {
+        serviceListingInteractor.listAll()
+            .map { serviceDefinitionInteractor.otpAuth(from: $0) }
+            .joined(separator: "\n")
+    }
+    
+    func createTemporaryFiles(from filePairs: [String: Data]) -> [URL] {
         let tempDirectory = fileManager.temporaryDirectory
         
         var createdURLs: [URL] = []
         
-        Log("ExportTokensModuleInteractor: Creating \(imageFilePairs.count) temporary files in \(tempDirectory.path)")
+        Log("ExportTokensModuleInteractor: Creating \(filePairs.count) temporary files in \(tempDirectory.path)")
         
-        for (filename, imageData) in imageFilePairs {
-            let fileURL = tempDirectory.appendingPathComponent(filename)
+        for (filename, data) in filePairs {
+            let fileURL = URL(fileURLWithPath: tempDirectory.appendingPathComponent(filename).path())
             
             Log("ExportTokensModuleInteractor: Creating file: \(filename) at \(fileURL.path)")
             
             do {
-                try imageData.write(to: fileURL)
+                try data.write(to: fileURL, options: .atomic)
                 createdURLs.append(fileURL)
             } catch {
                 Log("ExportTokensModuleInteractor: Failed to create temporary file \(filename): \(error)")
-                Log("ExportTokensModuleInteractor: Error details - code: \((error as NSError).code), domain: \((error as NSError).domain)")
+                let errorCode = (error as NSError).code
+                let domain = (error as NSError).domain
+                Log("ExportTokensModuleInteractor: Error details - code: \(errorCode), domain: \(domain)")
             }
         }
         
-        Log("ExportTokensModuleInteractor: Created \(createdURLs.count) out of \(imageFilePairs.count) files")
-                
+        Log("ExportTokensModuleInteractor: Created \(createdURLs.count) out of \(filePairs.count) files")
+        
         return createdURLs
     }
     
@@ -136,7 +151,7 @@ private extension ExportTokensModuleInteractor {
             
             for await (secret, qrCode) in group {
                 if let qrCode {
-                    let filename = createName(for: secret)
+                    let filename = createQRCodeImageName(from: secret)
                     result[filename] = qrCode
                     Log("ExportTokensModuleInteractor: Generated QR code: \(filename)")
                 } else {
@@ -149,36 +164,31 @@ private extension ExportTokensModuleInteractor {
         return result
     }
     
-    func createName(for secret: String) -> String {
+    func createQRCodeImageName(from content: String) -> String {
         let timestamp = Int(Date().timeIntervalSince1970)
-        let data = Data("\(secret)\(timestamp)".utf8)
+        let data = Data("\(content)\(timestamp)".utf8)
         let hash = SHA256.hash(data: data).map { String(format: "%02hhx", $0) }.joined()
         return "QR_\(hash.prefix(16)).png"
     }
     
     func createQRCode(link: String) async -> Data? {
-        do {
-            let qrCode = await qrCodeGeneratorInteractor.qrCode(
-                of: Config.minQRCodeSize,
-                margin: round(Config.minQRCodeSize / 12.0),
-                for: link
-            )
-            
-            guard let qrCode = qrCode else {
-                Log("ExportTokensModuleInteractor: Failed to generate QR code image")
-                return nil
-            }
-            
-            guard let pngData = qrCode.pngData() else {
-                Log("ExportTokensModuleInteractor: Failed to convert QR code to PNG data")
-                return nil
-            }
-            
-            Log("ExportTokensModuleInteractor: Successfully created QR code PNG data: \(pngData.count) bytes")
-            return pngData
-        } catch {
-            Log("ExportTokensModuleInteractor: Error creating QR code: \(error)")
+        let qrCode = await qrCodeGeneratorInteractor.qrCode(
+            of: Config.minQRCodeSize,
+            margin: round(Config.minQRCodeSize / 12.0),
+            for: link
+        )
+        
+        guard let qrCode else {
+            Log("ExportTokensModuleInteractor: Failed to generate QR code image")
             return nil
         }
+        
+        guard let pngData = qrCode.pngData() else {
+            Log("ExportTokensModuleInteractor: Failed to convert QR code to PNG data")
+            return nil
+        }
+        
+        Log("ExportTokensModuleInteractor: Successfully created QR code PNG data: \(pngData.count) bytes")
+        return pngData
     }
 }

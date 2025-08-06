@@ -65,21 +65,32 @@ final class ExportTokensPresenter {
 
 extension ExportTokensPresenter {
     func handleCopyToClipboard() {
-        interactor.copyToClipBoardGenertedCodes()
+        interactor.copyToClipboardGeneratedCodes(message: T.Commons.success)
     }
     
     func handleSaveOTPAuthFile() {
-        let contents = interactor.generateOTPAuthCodes()
-        flowController.toShareOTPAuthFileContents(contents)
+        guard let url = interactor.createOTPAuthCodesFile() else {
+            flowController.toError("Failed to create file")
+            return
+        }
+        flowController.toShareOTPAuthFileContents(url) { [weak self] in
+            self?.interactor.cleanupTemporaryFiles(urls: [url])
+        }
     }
     
     func handleExportQRCodes() {
         view?.exporting()
         Task {
-            let urls = await interactor.generateQRCodeFiles()
+            guard let url = await interactor.createQRCodeFiles() else {
+                Task { @MainActor in
+                    flowController.toError("Failed to create file")
+                    view?.unlock()
+                }
+                return
+            }
             Task { @MainActor in
-                flowController.toShareQRCodes(urls) { [weak self] in
-                    self?.interactor.cleanupTemporaryFiles(urls: urls)
+                flowController.toShareQRCodes(url) { [weak self] in
+                    self?.interactor.cleanupTemporaryFiles(urls: [url])
                 }
                 view?.unlock()
             }

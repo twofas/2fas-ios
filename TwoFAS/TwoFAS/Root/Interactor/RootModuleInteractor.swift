@@ -118,7 +118,7 @@ extension RootModuleInteractor: RootModuleInteracting {
     
     func applicationDidBecomeActive(didCopyToken: @escaping Callback) {
         if let token = widgetsInteractor.exchangeToken {
-            notificationInteractor.copyWithSuccess(value: token)
+            notificationInteractor.copyWithSuccess(value: token.removeWhitespaces())
             widgetsInteractor.clearExchangeToken()
             didCopyToken()
         }

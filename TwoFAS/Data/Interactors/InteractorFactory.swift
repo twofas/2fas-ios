@@ -270,4 +270,8 @@ public final class InteractorFactory {
     public func qrCodeGeneratorInteractor() -> QRCodeGeneratorInteracting {
         QRCodeGeneratorInteractor()
     }
+    
+    public func compressionInteractor() -> CompressionInteracting {
+        CompressionInteractor()
+    }
 }

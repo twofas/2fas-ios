@@ -304,6 +304,7 @@
 		C241D448278B9E0E00D7C604 /* NetworkStack.h in Headers */ = {isa = PBXBuildFile; fileRef = C241D447278B9E0E00D7C604 /* NetworkStack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C241D452278B9E2D00D7C604 /* NetworkStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C241D450278B9E2D00D7C604 /* NetworkStack.swift */; };
 		C241D453278B9E2D00D7C604 /* AppVersionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C241D451278B9E2D00D7C604 /* AppVersionHandler.swift */; };
+		C24295572E43DA4E00E236EA /* CompressionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24295562E43D99100E236EA /* CompressionInteractor.swift */; };
 		C242B4D12A9BD950005CC1BC /* AddingServiceAdvancedSectionDividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C242B4D02A9BD950005CC1BC /* AddingServiceAdvancedSectionDividerView.swift */; };
 		C244718825F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C244718725F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift */; };
 		C24471A425F503690024B4C5 /* ComposeServiceFormInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24471A325F503690024B4C5 /* ComposeServiceFormInput.swift */; };
@@ -2202,6 +2203,7 @@
 		C241D447278B9E0E00D7C604 /* NetworkStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkStack.h; sourceTree = "<group>"; };
 		C241D450278B9E2D00D7C604 /* NetworkStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStack.swift; sourceTree = "<group>"; };
 		C241D451278B9E2D00D7C604 /* AppVersionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersionHandler.swift; sourceTree = "<group>"; };
+		C24295562E43D99100E236EA /* CompressionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressionInteractor.swift; sourceTree = "<group>"; };
 		C242B4D02A9BD950005CC1BC /* AddingServiceAdvancedSectionDividerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceAdvancedSectionDividerView.swift; sourceTree = "<group>"; };
 		C24336E7299ECEC700BF35B1 /* NewsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsInteractor.swift; sourceTree = "<group>"; };
 		C244718725F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceFormRowTitleLabel.swift; sourceTree = "<group>"; };
@@ -3893,6 +3895,7 @@
 			isa = PBXGroup;
 			children = (
 				C21111F4274ABDDA00CA7C78 /* InteractorFactory.swift */,
+				C24295562E43D99100E236EA /* CompressionInteractor.swift */,
 				C27BE51A275D7DDE0090CA12 /* CloudBackupStateInteractor.swift */,
 				C240485B276549C00076376E /* ImportFromFileInteractor.swift */,
 				C278295F2AB4C546006224CC /* ImportFromFileInteractor+Parsers.swift */,
@@ -10778,6 +10781,7 @@
 				C2E7C3BE2ADB2B9C00478D89 /* MainRepositoryImpl+WebExtensionAuthRequest.swift in Sources */,
 				C2E7C3E52ADB2BB400478D89 /* NotificationInteractor.swift in Sources */,
 				C2E7C3F42ADB2BB400478D89 /* CameraPermissionInteractor.swift in Sources */,
+				C24295572E43DA4E00E236EA /* CompressionInteractor.swift in Sources */,
 				C2E7C4142ADB2BE500478D89 /* BiometryType.swift in Sources */,
 				C2AE5F7F2ADC8B0D00AED670 /* Code+AppStoreCode.swift in Sources */,
 				C2B2B9AF2AE932BD00AB61FD /* String+.swift in Sources */,

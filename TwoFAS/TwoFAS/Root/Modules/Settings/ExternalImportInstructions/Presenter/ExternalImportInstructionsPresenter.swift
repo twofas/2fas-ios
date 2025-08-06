@@ -74,8 +74,8 @@ extension ExternalImportInstructionsPresenter {
         case .googleAuth: T.Externalimport.infoGoogleAuthenticatorTitle
         case .andOTP: T.Externalimport.infoAndotpTitle
         case .authenticatorPro: T.Externalimport.infoAuthenticatorproTitle
-        case .otpAuthFile: "Import tokens from text file"
-        case .clipboard: "Import tokens from clipboard"
+        case .otpAuthFile: T.Settings.importFromTextFile
+        case .clipboard: T.Settings.importFromClipboard
         case .twofas: T.Commons._2fasToolbar // Not used here
         }
     }
@@ -88,8 +88,8 @@ extension ExternalImportInstructionsPresenter {
         case .googleAuth: T.Introduction.googleAuthenticatorImportProcess
         case .andOTP: T.Externalimport.andotpMsg
         case .authenticatorPro: T.Externalimport.authenticatorproMsg
-        case .otpAuthFile: "Text file should contain a list of links starting with 'otpauth://'."
-        case .clipboard: "Clipboard should contain a list of links starting with 'otpauth://'."
+        case .otpAuthFile: T.Settings.importFromTextFileDescription
+        case .clipboard: T.Settings.importFromClipboardDescription
         case .twofas: ""  // Not used here
         }
     }
@@ -100,7 +100,7 @@ extension ExternalImportInstructionsPresenter {
         case .authenticatorPro, .otpAuthFile: T.Externalimport.chooseTxtCta
         case .googleAuth: T.Commons.scanQrCode
         case .twofas: "" // Not used here
-        case .clipboard: "Read from Clipboard"
+        case .clipboard: T.Settings.importReadFromClipboard
         }
     }
     

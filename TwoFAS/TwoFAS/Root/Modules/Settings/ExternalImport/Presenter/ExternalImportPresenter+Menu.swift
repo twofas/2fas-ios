@@ -82,20 +82,20 @@ extension ExternalImportPresenter {
                 footer: T.externalimportDescription
             ),
             ExternalImportSection(
-                title: "OTPAuth links",
+                title: T.Settings.importOtpauthTitle,
                 cells: [
                     .init(
                         icon: UIImage(systemName: "doc.fill")!,
-                        title: "Import from file",
+                        title: T.Settings.importFromFile,
                         action: .file
                     ),
                     .init(
                         icon: UIImage(systemName: "list.clipboard.fill")!,
-                        title: "Read from clipboard",
+                        title: T.Settings.importReadFromClipboard,
                         action: .clipboard
                     )
                 ],
-                footer: "Select a text file with OTPAuth links to import or paste OTPAuth links to clipboard."
+                footer: T.Settings.importOtpauthFooter
             )
         ]
     }

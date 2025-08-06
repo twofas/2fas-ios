@@ -112,7 +112,7 @@ extension SettingsMenuPresenter {
                 ),
                 .init(
                     icon: Asset.settingsExport.image,
-                    title: "Export tokens",
+                    title: T.Settings.exportTitleTokens,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .exportTokens)
                 ),

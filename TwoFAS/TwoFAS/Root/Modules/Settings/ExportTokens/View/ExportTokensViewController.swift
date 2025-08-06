@@ -71,7 +71,7 @@ final class ExportTokensViewController: UIViewController {
         
         setupViewLayout()
                 
-        title = "Export Tokens"
+        title = T.Settings.exportTitleTokens
     }
     
     private func setupViewLayout() {

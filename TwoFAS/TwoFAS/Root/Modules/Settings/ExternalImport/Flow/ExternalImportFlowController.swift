@@ -253,7 +253,7 @@ private extension ExternalImportFlowController {
     func showSummary(count: Int) {
         let alert = AlertControllerDismissFlow(
             title: T.Backup.importCompletedSuccessfuly,
-            message: "%d services imported"  /*T.Backup.servicesImportedCount(count)*/,
+            message: T.Backup.servicesImportedCount(count),
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))

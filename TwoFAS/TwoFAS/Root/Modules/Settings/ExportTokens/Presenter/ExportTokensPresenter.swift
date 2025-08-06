@@ -70,7 +70,7 @@ extension ExportTokensPresenter {
     
     func handleSaveOTPAuthFile() {
         guard let url = interactor.createOTPAuthCodesFile() else {
-            flowController.toError("Failed to create file")
+            flowController.toError(T.Commons.fileCreationError)
             return
         }
         flowController.toShareOTPAuthFileContents(url) { [weak self] in
@@ -83,7 +83,7 @@ extension ExportTokensPresenter {
         Task {
             guard let url = await interactor.createQRCodeFiles() else {
                 Task { @MainActor in
-                    flowController.toError("Failed to create file")
+                    flowController.toError(T.Commons.fileCreationError)
                     view?.unlock()
                 }
                 return

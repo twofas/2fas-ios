@@ -41,25 +41,25 @@ extension ExportTokensPresenter {
     func buildMenu() -> [ExportTokensSection] {
         [
             ExportTokensSection(
-                title: "Export Options",
+                title: T.Settings.exportTitleOptions,
                 cells: [
                     .init(
                         icon: UIImage(systemName: "doc.on.clipboard.fill")!,
-                        title: "Copy to clipboard",
+                        title: T.Settings.exportOptionsCopyClipboard,
                         action: .copyToClipboard
                     ),
                     .init(
                         icon: UIImage(systemName: "doc.fill")!,
-                        title: "Save OTPAuth file",
+                        title: T.Settings.exportOptionsSaveFile,
                         action: .saveOTPAuthFile
                     ),
                     .init(
                         icon: UIImage(systemName: "qrcode")!,
-                        title: "Export QR Codes",
+                        title: T.Settings.exportTitleQrCodes,
                         action: .exportQRCodes
                     )
                 ],
-                footer: "Choose how you would like to export your tokens. You can copy them to clipboard, save as an OTPAuth file, or export as QR codes."
+                footer: T.Settings.exportOptionsFooter
             )
         ]
     }

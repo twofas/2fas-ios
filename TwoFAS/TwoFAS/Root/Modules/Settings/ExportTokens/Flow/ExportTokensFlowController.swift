@@ -111,7 +111,7 @@ extension ExportTokensFlowController: ExportTokensFlowControlling {
     func toSetupPIN() {
         let alert = UIAlertController(
             title: T.Commons.notice,
-            message: "Your Secret keys are protected. Please add a PIN or Biometry lock to export them.",
+            message: T.Settings.exportPinNeeded,
             preferredStyle: .alert
         )
         let setPIN = UIAlertAction(title: T.Commons.set, style: .destructive) { _ in
@@ -125,12 +125,20 @@ extension ExportTokensFlowController: ExportTokensFlowControlling {
     }
     
     func toShareOTPAuthFileContents(_ url: URL, completion: @escaping () -> Void) {
-        let activityVC = activityVC(for: url, title: "Export Tokens", completion: completion)
+        let activityVC = activityVC(
+            for: url,
+            title: T.Settings.exportTitleTokens,
+            completion: completion
+        )
         viewController.present(activityVC, animated: true, completion: nil)
     }
     
     func toShareQRCodes(_ url: URL, completion: @escaping () -> Void) {
-        let activityVC = activityVC(for: url, title: "Export QR Codes", completion: completion)
+        let activityVC = activityVC(
+            for: url,
+            title: T.Settings.exportTitleQrCodes,
+            completion: completion
+        )
         viewController.present(activityVC, animated: true, completion: nil)
     }
     

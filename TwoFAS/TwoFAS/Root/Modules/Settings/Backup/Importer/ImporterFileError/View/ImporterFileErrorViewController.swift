@@ -57,7 +57,7 @@ final class ImporterFileErrorViewController: UIViewController {
             case .cantReadFile(let errReason):
                 reason = errReason
                 return T.Backup.cantReadFileError
-            case .emptyClipboard: return "Clipboard is empty or doesn't contain a supported link format."
+            case .emptyClipboard: return T.Settings.importClipboardEmpty
             }
         }()
         

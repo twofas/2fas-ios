@@ -69,8 +69,8 @@ final class ImporterPreimportSummaryPresenter {
         case .andOTP: T.Externalimport.andotpSuccessMsg
         case .authenticatorPro: T.Externalimport.authenticatorproSuccessMsg
         case .googleAuth, .twofas: T.Backup.importOtherDevices
-        case .otpAuthFile: "Contents of this file will be imported."
-        case .clipboard: "Contents of clipboard will be imported."
+        case .otpAuthFile: T.Settings.importContentsFile
+        case .clipboard: T.Settings.importContentsClipboard
         }
     }
     

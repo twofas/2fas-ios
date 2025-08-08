@@ -21,6 +21,7 @@ import SwiftUI
 import Common
 
 struct AddingServiceTokenView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @State private var rotationAngle = 0.0
     @State private var animationProgress: CGFloat = 0
     
@@ -76,6 +77,7 @@ struct AddingServiceTokenView: View {
                 animationProgress = newValue
             }
         }
+        .background(Color(colorScheme == .dark ? ThemeColor.buttonCloseBackground : Theme.Colors.Fill.System.third))
     }
     
     @ViewBuilder

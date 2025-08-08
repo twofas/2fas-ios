@@ -51,7 +51,7 @@ final class AddingServiceTokenViewController: UIViewController, AddingServiceTok
         addChild(vc)
         view.addSubview(vc.view)
         vc.view.pinToParent()
-        vc.view.backgroundColor = Theme.Colors.Fill.System.third
+        vc.view.backgroundColor = .clear
         vc.didMove(toParent: self)
         
         totpAdapter.configure(presenter: presenter)
@@ -65,6 +65,14 @@ final class AddingServiceTokenViewController: UIViewController, AddingServiceTok
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        let userInterfaceStyle = traitCollection.userInterfaceStyle
+        let isDark = userInterfaceStyle == .dark
+        view.backgroundColor = isDark ? ThemeColor.buttonCloseBackground : Theme.Colors.Fill.System.third
     }
     
     override func viewWillDisappear(_ animated: Bool) {

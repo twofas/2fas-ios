@@ -27,12 +27,20 @@ final class ImporterOpenFileViewController: UIDocumentPickerViewController {
     var handleCancelFileOpen: Callback?
     
     override init(forOpeningContentTypes contentTypes: [UTType]?, asCopy: Bool) {
-        let supportedTypes: [UTType] = [
+        var supportedTypes: [UTType] = [
             UTType.json,
             UTType.text,
             UTType(filenameExtension: "2fas", conformingTo: UTType.json),
             UTType(filenameExtension: "bak", conformingTo: UTType.json)
         ].compactMap({ $0 })
+        if let mime = UTType(mimeType: "application/2fas-backup-bak"),
+           let type = UTType(filenameExtension: "bak", conformingTo: mime) {
+            supportedTypes.append(type)
+        }
+        if let mime = UTType(mimeType: "application/2fas-backup-2fas"),
+           let type = UTType(filenameExtension: "2fas", conformingTo: mime) {
+            supportedTypes.append(type)
+        }
         super.init(forOpeningContentTypes: supportedTypes, asCopy: false)
         
         commonInit()

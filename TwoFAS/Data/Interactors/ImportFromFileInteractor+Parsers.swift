@@ -269,11 +269,23 @@ extension ImportFromFileInteractor {
                     }
                     return .brand
                 }()
+                let name: String = {
+                    if let name = serviceDef?.name.sanitazeName() {
+                        return name
+                    }
+                    return entry.issuer.sanitazeName()
+                }()
+                let additionalInfo: String? = {
+                    if !entry.name.isEmpty {
+                        return entry.name.sanitizeInfo()
+                    }
+                    return entry.note?.sanitizeInfo()
+                }()
                 return ServiceData(
-                    name: entry.name.sanitazeName(),
+                    name: name,
                     secret: secret,
                     serviceTypeID: serviceDef?.serviceTypeID,
-                    additionalInfo: entry.note?.sanitizeInfo(),
+                    additionalInfo: additionalInfo,
                     rawIssuer: entry.issuer,
                     modifiedAt: date,
                     createdAt: date,

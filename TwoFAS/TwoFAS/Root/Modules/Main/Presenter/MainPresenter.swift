@@ -48,6 +48,10 @@ final class MainPresenter {
     func handleSwitchToSetupPIN() {
         view?.navigateToViewPath(.settings(option: .security))
     }
+    
+    func handleSwitchToTokens() {
+        view?.navigateToViewPath(.main)
+    }
 
     func handleSwitchToBrowserExtension() {
         view?.navigateToViewPath(.settings(option: .browserExtension))

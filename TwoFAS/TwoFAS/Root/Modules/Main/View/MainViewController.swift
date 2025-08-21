@@ -87,6 +87,12 @@ extension MainViewController {
         )
         notificationCenter.addObserver(
             self,
+            selector: #selector(switchToTokens),
+            name: .switchToTokens,
+            object: nil
+        )
+        notificationCenter.addObserver(
+            self,
             selector: #selector(switchToBrowserExtension),
             name: .switchToBrowserExtension,
             object: nil
@@ -148,6 +154,11 @@ extension MainViewController {
     @objc
     private func switchToSetupPIN() {
         presenter.handleSwitchToSetupPIN()
+    }
+    
+    @objc
+    private func switchToTokens() {
+        presenter.handleSwitchToTokens()
     }
     
     @objc

@@ -159,9 +159,7 @@ extension ExternalImportFlowController: ExternalImportFlowControlling {
 
 extension ExternalImportFlowController: ExternalImportInstructionsFlowControllerParent {
     func instructionsClose() {
-        navigationController?.popViewController(animated: true)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.tabBarController?.tabBar.isHidden = false
+        close()
     }
     
     func instructionsOpenFile(service: ExternalImportService) {
@@ -240,6 +238,12 @@ extension ExternalImportFlowController: ImporterOpenFileHeadlessFlowControllerPa
 }
 
 private extension ExternalImportFlowController {
+    func close(animated: Bool = true) {
+        navigationController?.popViewController(animated: animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        navigationController?.tabBarController?.tabBar.isHidden = false
+    }
+    
     func endGallery() {
         navigationController?.dismiss(animated: true) { [weak self] in
             self?.galleryViewController = nil
@@ -256,7 +260,13 @@ private extension ExternalImportFlowController {
             message: T.Backup.servicesImportedCount(count),
             preferredStyle: .alert
         )
-        alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: T.Commons.tokens, style: .default, handler: { [weak self] _ in
+            NotificationCenter.default.post(name: .switchToTokens, object: nil)
+            self?.close(animated: false)
+        }))
+        alert.addAction(UIAlertAction(title: T.Commons.close, style: .cancel, handler: { [weak self] _ in
+            self?.instructionsClose()
+        }))
         navigationController?.present(alert, animated: true)
     }
 }

@@ -34,7 +34,7 @@ struct CountdownTimerText: View {
             .frame(width: 40, height: 18)
             .foregroundStyle(.textPrimary)
             .multilineTextAlignment(.trailing)
-            .font(.caption.weight(.semibold))
+            .font(.caption.weight(.semibold).monospacedDigit())
             .lineLimit(1)
             .contentTransition(.numericText(countsDown: true))
     }

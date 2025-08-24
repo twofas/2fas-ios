@@ -40,10 +40,6 @@ struct SelectService: AppIntent, WidgetConfigurationIntent, CustomIntentMigrated
         ]
     )
     var service: [ServiceAppEntity]?
-
-    init() {
-        self.service = nil
-    }
     
     static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
 }

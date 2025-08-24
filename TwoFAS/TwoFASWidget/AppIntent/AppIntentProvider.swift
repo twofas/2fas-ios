@@ -62,9 +62,9 @@ struct AppIntentProvider: AppIntentTimelineProvider {
         CodeEntry.snapshot(with: context.family.servicesCount)
     }
     
-    @MainActor
     func timeline(for configuration: SelectService, in context: Context) async -> Timeline<CodeEntry> {
         let protection = AccessManager.protection
+        let serviceHandler = AccessManager.serviceHandler
         
         let slots = context.family.servicesCount
         guard protection.extensionsStorage.areWidgetsEnabled else {
@@ -73,13 +73,18 @@ struct AppIntentProvider: AppIntentTimelineProvider {
         
         let isClickable = context.family.isClickable
         let (validSecret, secondsLeft) = handleClickableWidgets()
-        let currentServices = AccessManager
-            .serviceHandler
-            .listServices(with: configuration.service?.compactMap { $0.secret } ?? [])
+        let requestedServices: [Secret] = (configuration.service?.compactMap { $0.secret } ?? [])
+        let uniqueServices = requestedServices.reduce(into: [Secret]()) { result, secret in
+            if !result.contains(where: { $0 == secret }) {
+                result.append(secret)
+            }
+        }
+        let currentServices = serviceHandler.listServices(with: uniqueServices)
+            
         let services = listServices(
             slots: slots,
             validSecret: validSecret,
-            configuration: configuration,
+            uniqueServices: uniqueServices,
             currentServices: currentServices,
             isClickable: isClickable
         )
@@ -232,23 +237,22 @@ extension AppIntentProvider {
         return (validSecret: validSecret, secondsLeft: secondsLeft)
     }
     
-    @MainActor
     private func listServices(
         slots: Int,
         validSecret: Secret?,
-        configuration: SelectService,
+        uniqueServices: [Secret],
         currentServices: [WidgetService],
         isClickable: Bool
     ) -> [Values] {
         var result: [Values] = Array(repeating: Values.placeholder, count: slots)
         for i in 0..<slots {
-            guard let service = configuration.service?[safe: i],
-                  let widgetService = currentServices.first(where: { $0.serviceID == service.secret }) else {
+            guard let secret = uniqueServices[safe: i],
+                  let widgetService = currentServices.first(where: { $0.serviceID == secret }) else {
                 continue
             }
             let entryDescription = EntryDescription(
-                identifier: "\(service.secret)\(UUID().uuidString)",
-                secret: service.secret,
+                identifier: "\(secret)\(UUID().uuidString)",
+                secret: secret,
                 title: widgetService.serviceName,
                 subtitle: widgetService.serviceInfo,
                 iconTypeID: widgetService.iconTypeID,
@@ -259,7 +263,7 @@ extension AppIntentProvider {
                 iconType: widgetService.iconType,
                 labelTitle: widgetService.labelTitle,
                 labelColor: widgetService.labelColor,
-                isValidSecret: isClickable ? service.secret == validSecret : true
+                isValidSecret: isClickable ? secret == validSecret : true
             )
             
             result[i] = .entry(entryDescription)

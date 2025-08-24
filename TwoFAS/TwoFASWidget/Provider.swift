@@ -48,14 +48,6 @@ struct Provider: IntentTimelineProvider {
         let labelTitle: String
         let labelColor: TintColor
     }
-    private let protection: Protection
-    private let serviceHandler: WidgetServiceHandlerType
-    
-    init() {
-        protection = Protection()
-        EncryptionHolder.initialize(with: protection.localKeyEncryption)
-        serviceHandler = Storage(readOnly: true, logError: nil).widgetService
-    }
     
     func placeholder(in context: Context) -> CodeEntry {
         CodeEntry.placeholder(with: context.family.servicesCount)
@@ -75,6 +67,8 @@ struct Provider: IntentTimelineProvider {
         completion: @escaping (Timeline<CodeEntry>) -> Void
     ) {
         let slots = context.family.servicesCount
+        let protection = AccessManager.protection
+        let serviceHandler = AccessManager.serviceHandler
         
         guard protection.extensionsStorage.areWidgetsEnabled else {
             let timeline = Timeline<CodeEntry>(entries: [CodeEntry.placeholder(with: slots)], policy: .never)

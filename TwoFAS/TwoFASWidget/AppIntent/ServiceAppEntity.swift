@@ -22,18 +22,30 @@ import AppIntents
 import Common
 import CommonUIKit
 
-@available(iOS 16.0, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
+@available(iOS 16.4, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 struct ServiceAppEntity: AppEntity {
     static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Service")
+    static var defaultQuery = ServiceAppEntityQuery()
     
-    @Property(title: "Secret")
-    var secret: String
+    let id: String
+    let secret: String
+    var displayRepresentation: DisplayRepresentation {
+        DisplayRepresentation(title: "\(displayString)")
+    }
+    private let displayString: String
     
+    init(id: String, displayString: String, secret: String) {
+        self.id = id
+        self.displayString = displayString
+        self.secret = secret
+    }
+}
+
+extension ServiceAppEntity {
     struct ServiceAppEntityQuery: EntityQuery {
         @MainActor
         func entities(for identifiers: [String]) async throws -> [ServiceAppEntity] {
-            SelectedItems.list = identifiers
-            return AccessManager.serviceHandler.listAll(search: nil, exclude: [])
+            AccessManager.serviceHandler.listAll(search: nil, exclude: [])
                 .flatMap({ $0.services })
                 .filter({ identifiers.contains($0.serviceID) })
                 .map({ service in
@@ -53,36 +65,35 @@ struct ServiceAppEntity: AppEntity {
             guard AccessManager.serviceHandler.hasServices() else {
                 throw SelectServiceError.errorNoServices
             }
-                        
+            
             let all: [WidgetCategory] = AccessManager.serviceHandler.listAll(search: nil, exclude: [])
             let sections = all.map({ category -> ItemSection<ServiceAppEntity> in
                 let services: [Item] = category.services
-                    .filter({ !SelectedItems.list.contains($0.serviceID) })
                     .map({ service in
-                    let icon = service.icon.pngData()
-                    let image: DisplayRepresentation.Image? = {
-                        if let icon {
-                            return DisplayRepresentation.Image(data: icon)
-                        }
-                        return nil
-                    }()
-                    let subtitle: LocalizedStringResource? = {
-                        if let serviceInfo = service.serviceInfo {
-                            return LocalizedStringResource(stringLiteral: serviceInfo)
-                        }
-                        return nil
-                    }()
-                    return Item(
-                        ServiceAppEntity(
-                            id: service.serviceID,
-                            displayString: service.serviceName,
-                            secret: service.serviceID
-                        ),
-                        title: LocalizedStringResource(stringLiteral: service.serviceName),
-                        subtitle: subtitle,
-                        image: image
-                    )
-                })
+                        let icon = service.icon.pngData()
+                        let image: DisplayRepresentation.Image? = {
+                            if let icon {
+                                return DisplayRepresentation.Image(data: icon)
+                            }
+                            return nil
+                        }()
+                        let subtitle: LocalizedStringResource? = {
+                            if let serviceInfo = service.serviceInfo {
+                                return LocalizedStringResource(stringLiteral: serviceInfo)
+                            }
+                            return nil
+                        }()
+                        return Item(
+                            ServiceAppEntity(
+                                id: service.serviceID,
+                                displayString: service.serviceName,
+                                secret: service.serviceID
+                            ),
+                            title: LocalizedStringResource(stringLiteral: service.serviceName),
+                            subtitle: subtitle,
+                            image: image
+                        )
+                    })
                 let categoryName: LocalizedStringResource = {
                     if let categoryName = category.categoryName {
                         return LocalizedStringResource(stringLiteral: categoryName)
@@ -96,19 +107,6 @@ struct ServiceAppEntity: AppEntity {
                 sections: sections
             )
         }
-    }
-    static var defaultQuery = ServiceAppEntityQuery()
-    
-    var id: String
-    var displayString: String
-    var displayRepresentation: DisplayRepresentation {
-        DisplayRepresentation(title: "\(displayString)")
-    }
-    
-    init(id: String, displayString: String, secret: String) {
-        self.id = id
-        self.displayString = displayString
-        self.secret = secret
     }
 }
 
@@ -124,8 +122,4 @@ enum SelectServiceError: Error, CustomLocalizedStringResourceConvertible {
         case .errorNoServices: LocalizedStringResource("widget__no_services")
         }
     }
-}
-
-enum SelectedItems {
-    static var list: [String] = []
 }

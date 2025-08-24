@@ -32,7 +32,7 @@ public final class Storage {
     private let logHandler: LogHandler
     private let storageRepositoryImpl: StorageRepositoryImpl
     
-    public init(readOnly: Bool = false, logError: ((String) -> Void)?) {
+    public init(readOnly: Bool = false, initializeLogStorage: Bool = true, logError: ((String) -> Void)?) {
         let packageName = "TwoFAS"
         let bundle = Bundle(for: Storage.self)
         let migrator: CoreDataMigratorProtocol? = {
@@ -68,9 +68,11 @@ public final class Storage {
         
         logHandler = LogHandler()
         
-        Task {
-            let logStorage = CoreDataStack(readOnly: false, name: "LogStorage", bundle: bundle, migrator: nil)
-            await logHandler.initializeStorage(coreDataStack: logStorage)
+        if initializeLogStorage {
+            Task {
+                let logStorage = CoreDataStack(readOnly: false, name: "LogStorage", bundle: bundle, migrator: nil)
+                await logHandler.initializeStorage(coreDataStack: logStorage)
+            }
         }
     }
     

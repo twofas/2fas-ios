@@ -324,7 +324,6 @@
 		C248B14F2AC4C31300E6B897 /* GuidePagesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B14E2AC4C31300E6B897 /* GuidePagesPresenter.swift */; };
 		C248B1512AC4C6BE00E6B897 /* GuidePagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B1502AC4C6BE00E6B897 /* GuidePagesViewController.swift */; };
 		C248B1532AC4C77100E6B897 /* GuidePagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B1522AC4C77100E6B897 /* GuidePagesView.swift */; };
-		C248DDA82B794A69004712E3 /* WidgetContentMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDA72B794A69004712E3 /* WidgetContentMargins.swift */; };
 		C248DDAC2B7998DA004712E3 /* CopyTokenAppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */; };
 		C248DDAD2B799BB8004712E3 /* CopyTokenAppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */; };
 		C248DDAF2B799CD3004712E3 /* CopyIntentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDAE2B799CD3004712E3 /* CopyIntentButton.swift */; };
@@ -368,14 +367,19 @@
 		C251EDE82AE8721B007722F2 /* Base32.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C251EDD52AE87150007722F2 /* Base32.framework */; };
 		C251EDED2AE87284007722F2 /* Base32.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C251EDD52AE87150007722F2 /* Base32.framework */; };
 		C251EDF12AE8729C007722F2 /* Base32.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C251EDD52AE87150007722F2 /* Base32.framework */; };
-		C252971C2E5BAEA700515AB7 /* TwoFASControlWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C252971B2E5BAE9D00515AB7 /* TwoFASControlWidget.swift */; };
-		C2529CA52E5C5B3A00515AB7 /* TwoFASControlIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CA42E5C5B3400515AB7 /* TwoFASControlIntent.swift */; };
-		C2529CA62E5C5B4700515AB7 /* TwoFASControlIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CA42E5C5B3400515AB7 /* TwoFASControlIntent.swift */; };
+		C2529CB32E5C6AE200515AB7 /* TwoFASWidgetSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CB12E5C6AE200515AB7 /* TwoFASWidgetSquareView.swift */; };
+		C2529CB42E5C6AE200515AB7 /* TwoFASWidgetRectangular.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CB02E5C6AE200515AB7 /* TwoFASWidgetRectangular.swift */; };
+		C2529CB52E5C6AE200515AB7 /* TwoFASWidgetLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CAE2E5C6AE200515AB7 /* TwoFASWidgetLineView.swift */; };
+		C2529CB62E5C6AE200515AB7 /* TwoFASWidgetInline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CAD2E5C6AE200515AB7 /* TwoFASWidgetInline.swift */; };
+		C2529CB72E5C6AE200515AB7 /* TwoFASWidgetLineViewGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CAF2E5C6AE200515AB7 /* TwoFASWidgetLineViewGrid.swift */; };
+		C2529CB82E5C6AE200515AB7 /* TwoFASControlWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CAB2E5C6AE200515AB7 /* TwoFASControlWidget.swift */; };
+		C2529CB92E5C6AE200515AB7 /* TwoFASWidgetCircular.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CAC2E5C6AE200515AB7 /* TwoFASWidgetCircular.swift */; };
+		C2529CBB2E5C6B6F00515AB7 /* TwoFASControlIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */; };
+		C2529CBC2E5C6B6F00515AB7 /* TwoFASControlIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */; };
+		C2529CBE2E5C6B8F00515AB7 /* WidgetContentMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CBD2E5C6B8F00515AB7 /* WidgetContentMargins.swift */; };
 		C252B3892981CE0800C2074D /* BrowserExtenionServiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C252B3882981CE0800C2074D /* BrowserExtenionServiceTableViewCell.swift */; };
 		C252B38C2981D45200C2074D /* MainContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C252B38B2981D45200C2074D /* MainContent.swift */; };
 		C25371A2281DCF56005FB118 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25371A1281DCF56005FB118 /* UINavigationController+.swift */; };
-		C254D11C26ACB71B005FEBD4 /* TwoFASWidgetSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254D11B26ACB71B005FEBD4 /* TwoFASWidgetSquareView.swift */; };
-		C254D11E26ACB73D005FEBD4 /* TwoFASWidgetLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254D11D26ACB73D005FEBD4 /* TwoFASWidgetLineView.swift */; };
 		C254D12026ACB777005FEBD4 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254D11F26ACB777005FEBD4 /* Provider.swift */; };
 		C254D12226ACB7D8005FEBD4 /* CodeRedaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254D12126ACB7D8005FEBD4 /* CodeRedaction.swift */; };
 		C2557A9923F5E96200E713EF /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2557A9823F5E96200E713EF /* Separator.swift */; };
@@ -701,7 +705,6 @@
 		C2872DE027A6EFB0000F5AE9 /* ServiceOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2872DDF27A6EFB0000F5AE9 /* ServiceOptions.swift */; };
 		C287D4FB276A92460001B272 /* AppSecurityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C287D4FA276A92460001B272 /* AppSecurityExtensions.swift */; };
 		C287D4FF276A9B5C0001B272 /* AppSecurityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C287D4FE276A9B5C0001B272 /* AppSecurityViewController.swift */; };
-		C28AB9332B76970D009E3601 /* TwoFASWidgetRectangular.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28AB9322B76970D009E3601 /* TwoFASWidgetRectangular.swift */; };
 		C28B38C927CD784D00BD4A96 /* RefreshTokenCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28B38C827CD784D00BD4A96 /* RefreshTokenCounter.swift */; };
 		C28B9120268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C28B911F268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel */; };
 		C28C441724A67B7000534B30 /* CommonSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28C441624A67B7000534B30 /* CommonSearchBar.swift */; };
@@ -730,7 +733,6 @@
 		C296D1EE28B2D52C001F026D /* UserIconInfoFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D1ED28B2D52C001F026D /* UserIconInfoFlowController.swift */; };
 		C296D4D22A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D4D12A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift */; };
 		C296D4D42A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D4D32A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift */; };
-		C29787DE27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29787DD27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift */; };
 		C29803C0245EE05C0066DFE0 /* MainContainerElementsStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29803BF245EE05C0066DFE0 /* MainContainerElementsStyling.swift */; };
 		C29803C2245EEB470066DFE0 /* MainContainerGenerators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29803C1245EEB470066DFE0 /* MainContainerGenerators.swift */; };
 		C29803C4245F01600066DFE0 /* CenteringScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29803C3245F01600066DFE0 /* CenteringScrollView.swift */; };
@@ -924,8 +926,6 @@
 		C2B950F929259ADA00F1C069 /* NSMutableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B950F829259ADA00F1C069 /* NSMutableData.swift */; };
 		C2B950FC29259B1800F1C069 /* NetworkMultipartRequestFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B950FB29259B1800F1C069 /* NetworkMultipartRequestFormat.swift */; };
 		C2BBD0232E270138004ECE56 /* QRCodeDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD0222E270133004ECE56 /* QRCodeDisplayViewController.swift */; };
-		C2BBD1D42B8113A9009A91FB /* TwoFASWidgetInline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD1D22B81127C009A91FB /* TwoFASWidgetInline.swift */; };
-		C2BBD1D72B812117009A91FB /* TwoFASWidgetCircular.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD1D52B8120F4009A91FB /* TwoFASWidgetCircular.swift */; };
 		C2BBD2382B8130B0009A91FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2BBD2332B81308C009A91FB /* Localizable.strings */; };
 		C2BC3FC92B94E70F004C4BA0 /* NewPINNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BC3FC82B94E70F004C4BA0 /* NewPINNavigationFlowController.swift */; };
 		C2BD82B2236619E800FBD69A /* BackupAreaWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD82B1236619E800FBD69A /* BackupAreaWarningView.swift */; };
@@ -2229,7 +2229,6 @@
 		C248B14E2AC4C31300E6B897 /* GuidePagesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesPresenter.swift; sourceTree = "<group>"; };
 		C248B1502AC4C6BE00E6B897 /* GuidePagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesViewController.swift; sourceTree = "<group>"; };
 		C248B1522AC4C77100E6B897 /* GuidePagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesView.swift; sourceTree = "<group>"; };
-		C248DDA72B794A69004712E3 /* WidgetContentMargins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetContentMargins.swift; sourceTree = "<group>"; };
 		C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyTokenAppIntent.swift; sourceTree = "<group>"; };
 		C248DDAE2B799CD3004712E3 /* CopyIntentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyIntentButton.swift; sourceTree = "<group>"; };
 		C249772D277F3D6100DC872C /* TrashingServiceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashingServiceInteractor.swift; sourceTree = "<group>"; };
@@ -2277,13 +2276,18 @@
 		C251EDE02AE871A2007722F2 /* MF_Base32Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MF_Base32Additions.h; sourceTree = "<group>"; };
 		C251EDE12AE871A2007722F2 /* MF_Base32Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MF_Base32Additions.m; sourceTree = "<group>"; };
 		C251EDE62AE87207007722F2 /* Data+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
-		C252971B2E5BAE9D00515AB7 /* TwoFASControlWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASControlWidget.swift; sourceTree = "<group>"; };
-		C2529CA42E5C5B3400515AB7 /* TwoFASControlIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASControlIntent.swift; sourceTree = "<group>"; };
+		C2529CAB2E5C6AE200515AB7 /* TwoFASControlWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASControlWidget.swift; sourceTree = "<group>"; };
+		C2529CAC2E5C6AE200515AB7 /* TwoFASWidgetCircular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetCircular.swift; sourceTree = "<group>"; };
+		C2529CAD2E5C6AE200515AB7 /* TwoFASWidgetInline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetInline.swift; sourceTree = "<group>"; };
+		C2529CAE2E5C6AE200515AB7 /* TwoFASWidgetLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetLineView.swift; sourceTree = "<group>"; };
+		C2529CAF2E5C6AE200515AB7 /* TwoFASWidgetLineViewGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetLineViewGrid.swift; sourceTree = "<group>"; };
+		C2529CB02E5C6AE200515AB7 /* TwoFASWidgetRectangular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetRectangular.swift; sourceTree = "<group>"; };
+		C2529CB12E5C6AE200515AB7 /* TwoFASWidgetSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetSquareView.swift; sourceTree = "<group>"; };
+		C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASControlIntent.swift; sourceTree = "<group>"; };
+		C2529CBD2E5C6B8F00515AB7 /* WidgetContentMargins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetContentMargins.swift; sourceTree = "<group>"; };
 		C252B3882981CE0800C2074D /* BrowserExtenionServiceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserExtenionServiceTableViewCell.swift; sourceTree = "<group>"; };
 		C252B38B2981D45200C2074D /* MainContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContent.swift; sourceTree = "<group>"; };
 		C25371A1281DCF56005FB118 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
-		C254D11B26ACB71B005FEBD4 /* TwoFASWidgetSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetSquareView.swift; sourceTree = "<group>"; };
-		C254D11D26ACB73D005FEBD4 /* TwoFASWidgetLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetLineView.swift; sourceTree = "<group>"; };
 		C254D11F26ACB777005FEBD4 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		C254D12126ACB7D8005FEBD4 /* CodeRedaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeRedaction.swift; sourceTree = "<group>"; };
 		C2557A9823F5E96200E713EF /* Separator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
@@ -2530,7 +2534,6 @@
 		C287D4FA276A92460001B272 /* AppSecurityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecurityExtensions.swift; sourceTree = "<group>"; };
 		C287D4FC276A98FE0001B272 /* BiometryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometryType.swift; sourceTree = "<group>"; };
 		C287D4FE276A9B5C0001B272 /* AppSecurityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecurityViewController.swift; sourceTree = "<group>"; };
-		C28AB9322B76970D009E3601 /* TwoFASWidgetRectangular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetRectangular.swift; sourceTree = "<group>"; };
 		C28B38C827CD784D00BD4A96 /* RefreshTokenCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenCounter.swift; sourceTree = "<group>"; };
 		C28B911F268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = "TwoFas3-TwoFas4.xcmappingmodel"; sourceTree = "<group>"; };
 		C28C441624A67B7000534B30 /* CommonSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSearchBar.swift; sourceTree = "<group>"; };
@@ -2567,7 +2570,6 @@
 		C296D1ED28B2D52C001F026D /* UserIconInfoFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIconInfoFlowController.swift; sourceTree = "<group>"; };
 		C296D4D12A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionNavigationFlowController.swift; sourceTree = "<group>"; };
 		C296D4D32A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionPairingNavigationFlowController.swift; sourceTree = "<group>"; };
-		C29787DD27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetLineViewGrid.swift; sourceTree = "<group>"; };
 		C29803BF245EE05C0066DFE0 /* MainContainerElementsStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerElementsStyling.swift; sourceTree = "<group>"; };
 		C29803C1245EEB470066DFE0 /* MainContainerGenerators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerGenerators.swift; sourceTree = "<group>"; };
 		C29803C3245F01600066DFE0 /* CenteringScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteringScrollView.swift; sourceTree = "<group>"; };
@@ -2737,8 +2739,6 @@
 		C2B950F829259ADA00F1C069 /* NSMutableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableData.swift; sourceTree = "<group>"; };
 		C2B950FB29259B1800F1C069 /* NetworkMultipartRequestFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMultipartRequestFormat.swift; sourceTree = "<group>"; };
 		C2BBD0222E270133004ECE56 /* QRCodeDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDisplayViewController.swift; sourceTree = "<group>"; };
-		C2BBD1D22B81127C009A91FB /* TwoFASWidgetInline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetInline.swift; sourceTree = "<group>"; };
-		C2BBD1D52B8120F4009A91FB /* TwoFASWidgetCircular.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetCircular.swift; sourceTree = "<group>"; };
 		C2BBD2342B81308C009A91FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = TwoFAS/Other/en.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C2BBD2362B813099009A91FB /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = TwoFAS/Other/id.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C2BBD2372B8130AA009A91FB /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = TwoFAS/Other/tr.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
@@ -3372,7 +3372,7 @@
 				8F0FFF062D051AD10064B0D3 /* RevealTokenOverlayView.swift */,
 				8F0FFF012D04D74D0064B0D3 /* CountdownTimerText.swift */,
 				8F0FFEFF2D04D73D0064B0D3 /* RevealTokenImage.swift */,
-				C248DDA72B794A69004712E3 /* WidgetContentMargins.swift */,
+				C2529CBD2E5C6B8F00515AB7 /* WidgetContentMargins.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -5432,27 +5432,27 @@
 		C25228ED2B72E44C00F40C86 /* AppIntent */ = {
 			isa = PBXGroup;
 			children = (
+				C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */,
 				C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */,
 				C205CE012CD170F100B69B62 /* RevealTokenAppIntent.swift */,
 				C2404F742B72E4AB00EBD8DC /* SelectService.swift */,
 				C2404F752B72E4AB00EBD8DC /* ServiceAppEntity.swift */,
 				C2404F7A2B72E89100EBD8DC /* AppIntentProvider.swift */,
-				C2529CA42E5C5B3400515AB7 /* TwoFASControlIntent.swift */,
 			);
 			name = AppIntent;
 			path = TwoFASWidget/AppIntent;
 			sourceTree = SOURCE_ROOT;
 		};
-		C2529CA72E5C5BA500515AB7 /* Widgets */ = {
+		C2529CB22E5C6AE200515AB7 /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
-				C252971B2E5BAE9D00515AB7 /* TwoFASControlWidget.swift */,
-				C2BBD1D52B8120F4009A91FB /* TwoFASWidgetCircular.swift */,
-				C2BBD1D22B81127C009A91FB /* TwoFASWidgetInline.swift */,
-				C29787DD27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift */,
-				C254D11D26ACB73D005FEBD4 /* TwoFASWidgetLineView.swift */,
-				C28AB9322B76970D009E3601 /* TwoFASWidgetRectangular.swift */,
-				C254D11B26ACB71B005FEBD4 /* TwoFASWidgetSquareView.swift */,
+				C2529CAB2E5C6AE200515AB7 /* TwoFASControlWidget.swift */,
+				C2529CAC2E5C6AE200515AB7 /* TwoFASWidgetCircular.swift */,
+				C2529CAD2E5C6AE200515AB7 /* TwoFASWidgetInline.swift */,
+				C2529CAE2E5C6AE200515AB7 /* TwoFASWidgetLineView.swift */,
+				C2529CAF2E5C6AE200515AB7 /* TwoFASWidgetLineViewGrid.swift */,
+				C2529CB02E5C6AE200515AB7 /* TwoFASWidgetRectangular.swift */,
+				C2529CB12E5C6AE200515AB7 /* TwoFASWidgetSquareView.swift */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -7251,7 +7251,7 @@
 				C254D11F26ACB777005FEBD4 /* Provider.swift */,
 				C2C3AE13269E224A00506ACF /* TwoFASWidget.swift */,
 				C2C3AE16269E224B00506ACF /* Assets.xcassets */,
-				C2529CA72E5C5BA500515AB7 /* Widgets */,
+				C2529CB22E5C6AE200515AB7 /* Widgets */,
 				C25228ED2B72E44C00F40C86 /* AppIntent */,
 				8F0FFEFE2D04D7220064B0D3 /* Components */,
 				8F0FFF032D0514AA0064B0D3 /* IntentButtons */,
@@ -7263,6 +7263,7 @@
 		C2C3AE28269E274700506ACF /* TwoFASServiceIntent */ = {
 			isa = PBXGroup;
 			children = (
+				C2A7B99226B706B000055738 /* TwoFASWidget.intentdefinition */,
 				C27C104926AE093E00F00191 /* TwoFASServiceIntent.entitlements */,
 				C2C3AE29269E274700506ACF /* IntentHandler.swift */,
 				C2C3AE2B269E274700506ACF /* Info.plist */,
@@ -7675,7 +7676,6 @@
 			isa = PBXGroup;
 			children = (
 				C2DF710D2B5DD31200D85D87 /* DataTests.swift */,
-				C2A7B99226B706B000055738 /* TwoFASWidget.intentdefinition */,
 			);
 			path = DataTests;
 			sourceTree = "<group>";
@@ -10190,10 +10190,10 @@
 				C2EBDFFC2AC44750008FD744 /* GuideMenuViewController.swift in Sources */,
 				8F43E7032C4C511A0006D380 /* AppleWatchFlowController.swift in Sources */,
 				C240487C27656DB40076376E /* ImporterFileErrorFlowController.swift in Sources */,
-				C2529CA62E5C5B4700515AB7 /* TwoFASControlIntent.swift in Sources */,
 				C2A74FD72610D3A8007E5AB3 /* TintColor.swift in Sources */,
 				C2CC0A3A29D0580B00677A7B /* ExternalImportViewController.swift in Sources */,
 				C2FBF1302A7EBCCB00CA80CE /* AddingServiceCameraViewport.swift in Sources */,
+				C2529CBC2E5C6B6F00515AB7 /* TwoFASControlIntent.swift in Sources */,
 				C2B6D78E260BB024005B599E /* ColorPickerButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -10542,32 +10542,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				C248DDAF2B799CD3004712E3 /* CopyIntentButton.swift in Sources */,
-				C2BBD1D42B8113A9009A91FB /* TwoFASWidgetInline.swift in Sources */,
-				C2529CA52E5C5B3A00515AB7 /* TwoFASControlIntent.swift in Sources */,
-				C254D11E26ACB73D005FEBD4 /* TwoFASWidgetLineView.swift in Sources */,
+				C2529CB32E5C6AE200515AB7 /* TwoFASWidgetSquareView.swift in Sources */,
+				C2529CB42E5C6AE200515AB7 /* TwoFASWidgetRectangular.swift in Sources */,
+				C2529CB52E5C6AE200515AB7 /* TwoFASWidgetLineView.swift in Sources */,
+				C2529CB62E5C6AE200515AB7 /* TwoFASWidgetInline.swift in Sources */,
+				C2529CB72E5C6AE200515AB7 /* TwoFASWidgetLineViewGrid.swift in Sources */,
+				C2529CB82E5C6AE200515AB7 /* TwoFASControlWidget.swift in Sources */,
+				C2529CB92E5C6AE200515AB7 /* TwoFASWidgetCircular.swift in Sources */,
 				C2C32A312AB7198C00DDB944 /* IconRenderer.swift in Sources */,
 				C248DDAC2B7998DA004712E3 /* CopyTokenAppIntent.swift in Sources */,
 				C2A7B98F26B706B000055738 /* TwoFASWidget.intentdefinition in Sources */,
-				C2BBD1D72B812117009A91FB /* TwoFASWidgetCircular.swift in Sources */,
+				C2529CBE2E5C6B8F00515AB7 /* WidgetContentMargins.swift in Sources */,
 				C254D12226ACB7D8005FEBD4 /* CodeRedaction.swift in Sources */,
 				C254D12026ACB777005FEBD4 /* Provider.swift in Sources */,
-				C254D11C26ACB71B005FEBD4 /* TwoFASWidgetSquareView.swift in Sources */,
 				8F0FFF072D051AD40064B0D3 /* RevealTokenOverlayView.swift in Sources */,
-				C29787DE27341FF600C67CE0 /* TwoFASWidgetLineViewGrid.swift in Sources */,
 				C25DCB2E2B8030B200871035 /* AccessManager.swift in Sources */,
 				C2C3AE14269E224A00506ACF /* TwoFASWidget.swift in Sources */,
 				C2D07EEB26A47B8100AF8E7B /* CodeEntry.swift in Sources */,
 				8F0FFF002D04D73E0064B0D3 /* RevealTokenImage.swift in Sources */,
-				C248DDA82B794A69004712E3 /* WidgetContentMargins.swift in Sources */,
 				C2C8F92F2CD6CB67001179C0 /* CommonKeys.swift in Sources */,
+				C2529CBB2E5C6B6F00515AB7 /* TwoFASControlIntent.swift in Sources */,
 				C2D97E8A2E246A0F00E213A7 /* T.generated.swift in Sources */,
 				C2404F782B72E61B00EBD8DC /* ServiceAppEntity.swift in Sources */,
 				8F0FFF022D04D74E0064B0D3 /* CountdownTimerText.swift in Sources */,
-				C28AB9332B76970D009E3601 /* TwoFASWidgetRectangular.swift in Sources */,
 				8F0FFF052D0514B80064B0D3 /* RevealTokenIntentButton.swift in Sources */,
 				C2A57C5A26ACAB2800D3B344 /* Extensions.swift in Sources */,
 				C2404F7C2B72E8D000EBD8DC /* AppIntentProvider.swift in Sources */,
-				C252971C2E5BAEA700515AB7 /* TwoFASControlWidget.swift in Sources */,
 				C2404F792B72E61B00EBD8DC /* SelectService.swift in Sources */,
 				C205CE032CD1716600B69B62 /* RevealTokenAppIntent.swift in Sources */,
 			);

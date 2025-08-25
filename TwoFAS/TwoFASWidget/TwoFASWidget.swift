@@ -82,13 +82,25 @@ struct TwoFASWidgetEntryView: View {
     }
 }
 
+// MARK: - Widget Bundle
+
 @main
+struct TwoFASWidgetBundle: WidgetBundle {
+    var body: some Widget {
+        TwoFASWidget()
+        
+        if #available(iOS 18.0, macOS 15.0, watchOS 11.0, *) {
+            TwoFASControlWidget()
+        }
+    }
+}
+
+// MARK: - Main TwoFAS Widget
+
 struct TwoFASWidget: Widget {
-    @Environment(\.widgetFamily) var family
-    
     let kind: String = "TwoFASWidget"
     
-    var supportedFamilies: [WidgetFamily] = {
+    var supportedFamilies: [WidgetFamily] {
         if #available(iOS 17.0, macOS 14.0, watchOS 10.0, *) {
             [
                 .systemSmall,
@@ -107,19 +119,10 @@ struct TwoFASWidget: Widget {
                 .systemExtraLarge
             ]
         }
-    }()
-    
-    @MainActor
-    var body: some WidgetConfiguration {
-        makeWidgetConfiguration()
-            .configurationDisplayName("2FAS")
-            .description("widget__settings_description")
-            .supportedFamilies(supportedFamilies)
-            .widgetNotInStandBy()
     }
     
     @MainActor
-    private func makeWidgetConfiguration() -> some WidgetConfiguration {
+    var body: some WidgetConfiguration {
         if #available(iOS 17.0, macOS 14.0, watchOS 10.0, *) {
             return AppIntentConfiguration(
                 kind: kind,
@@ -128,13 +131,21 @@ struct TwoFASWidget: Widget {
             ) { entry in
                 TwoFASWidgetEntryView(entry: entry)
             }
+            .configurationDisplayName("2FAS")
+            .description("widget__settings_description")
+            .supportedFamilies(supportedFamilies)
         } else {
             return IntentConfiguration(kind: kind, intent: SelectServiceIntent.self, provider: Provider()) { entry in
                 TwoFASWidgetEntryView(entry: entry)
             }
+            .configurationDisplayName("2FAS")
+            .description("widget__settings_description")
+            .supportedFamilies(supportedFamilies)
         }
     }
 }
+
+// MARK: - Previews
 
 struct TwoFASWidget_Previews: PreviewProvider {
     static var previews: some View {
@@ -142,6 +153,8 @@ struct TwoFASWidget_Previews: PreviewProvider {
             .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
     }
 }
+
+// MARK: - Extensions
 
 extension View {
     func widgetBackground(backgroundView: some View) -> some View {

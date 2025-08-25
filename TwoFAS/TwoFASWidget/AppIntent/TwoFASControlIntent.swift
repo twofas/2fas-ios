@@ -21,7 +21,7 @@ import AppIntents
 
 @available(iOS 18.0, *)
 struct TwoFASControlIntent: AppIntent {
-    static let title: LocalizedStringResource = "Open 2FAS"
+    static let title = LocalizedStringResource("widget__open_app")
     
     static var openAppWhenRun = true
     static var isDiscoverable = true

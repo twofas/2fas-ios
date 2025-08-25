@@ -27,15 +27,12 @@ struct TwoFASControlWidget: ControlWidget {
         StaticControlConfiguration(kind: "TwoFASControlWidget") {
             ControlWidgetButton(action: TwoFASControlIntent()) {
                 Label("2FAS", image: "TwoFASAuth")
-            } actionLabel: { isActive in
-                if isActive {
-                    Text("Opening…")
-                } else {
-                    Text("Open 2FAS")
-                }
+            } actionLabel: { _ in
+                Text("widget__open_app")
             }
+            .tint(Color.accentColor)
         }
         .displayName("2FAS")
-        .description("Quick access to 2FAS app")
+        .description("widget__open_app_description")
     }
 }

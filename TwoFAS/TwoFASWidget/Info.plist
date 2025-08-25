@@ -24,6 +24,11 @@
 	<dict>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.widgetkit-extension</string>
+        <key>NSExtensionAttributes</key>
+        <dict>
+            <key>WKWidgetDiscoverability</key>
+            <string>always</string>
+        </dict>
 	</dict>
 </dict>
 </plist>

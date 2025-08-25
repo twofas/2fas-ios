@@ -377,6 +377,7 @@
 		C2529CBB2E5C6B6F00515AB7 /* TwoFASControlIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */; };
 		C2529CBC2E5C6B6F00515AB7 /* TwoFASControlIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */; };
 		C2529CBE2E5C6B8F00515AB7 /* WidgetContentMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CBD2E5C6B8F00515AB7 /* WidgetContentMargins.swift */; };
+		C2529CC02E5C757D00515AB7 /* TwoFASControlWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CAB2E5C6AE200515AB7 /* TwoFASControlWidget.swift */; };
 		C252B3892981CE0800C2074D /* BrowserExtenionServiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C252B3882981CE0800C2074D /* BrowserExtenionServiceTableViewCell.swift */; };
 		C252B38C2981D45200C2074D /* MainContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C252B38B2981D45200C2074D /* MainContent.swift */; };
 		C25371A2281DCF56005FB118 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25371A1281DCF56005FB118 /* UINavigationController+.swift */; };
@@ -9905,6 +9906,7 @@
 				C24BC311264DC2E300A20084 /* IntroductionPage3View.swift in Sources */,
 				C26BCE03281013A700CA6A9A /* SelectServiceFlowController.swift in Sources */,
 				C21B40DC28C520E400348E04 /* ImporterOpenFileError.swift in Sources */,
+				C2529CC02E5C757D00515AB7 /* TwoFASControlWidget.swift in Sources */,
 				C2BD85E6264068C00087D087 /* IntroductionPage1View.swift in Sources */,
 				C2FDEE5F279CC316002CAB9E /* CameraScannerPresenter.swift in Sources */,
 				C2BE805B2811DF3D009CBC4A /* AuthRequestsFlowController.swift in Sources */,

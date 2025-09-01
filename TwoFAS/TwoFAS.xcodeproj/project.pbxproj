@@ -2845,6 +2845,11 @@
 		C2D07EE726A468D000AF8E7B /* LabelImageRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelImageRenderer.swift; sourceTree = "<group>"; };
 		C2D07EE926A475F400AF8E7B /* CodeEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEntry.swift; sourceTree = "<group>"; };
 		C2D291DB2955FC9E0084FE1E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		C2D316692E6648730044056F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		C2D3166A2E6648730044056F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		C2D3166B2E6648E90044056F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "TwoFAS/Other/zh-Hant.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
+		C2D3166C2E6648FD0044056F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "TwoFAS/Other/zh-Hant.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
+		C2D3166E2E66499B0044056F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/TwoFASWidget.strings"; sourceTree = "<group>"; };
 		C2D39DD92823184500E864E9 /* ListNewsNetworkInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListNewsNetworkInteractor.swift; sourceTree = "<group>"; };
 		C2D39DDB28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C2D39DDC28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -9204,6 +9209,7 @@
 				el,
 				ja,
 				sv,
+				"zh-Hant",
 			);
 			mainGroup = C236666A1FB2644900989ACA;
 			packageReferences = (
@@ -11228,6 +11234,7 @@
 				8FD3F0882C37324B0042092E /* el */,
 				8F1077282C8C80320031448C /* ja */,
 				C259133B2DBD70EF0040EF78 /* sv */,
+				C2D3166A2E6648730044056F /* zh-Hant */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -11251,6 +11258,7 @@
 				8FD3F0872C37324B0042092E /* el */,
 				8F1077272C8C80310031448C /* ja */,
 				C259133A2DBD70EF0040EF78 /* sv */,
+				C2D316692E6648730044056F /* zh-Hant */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -11283,6 +11291,7 @@
 				8FD3F0862C37324B0042092E /* el */,
 				8F1077262C8C80310031448C /* ja */,
 				C25913392DBD70EF0040EF78 /* sv */,
+				C2D3166E2E66499B0044056F /* zh-Hant */,
 			);
 			name = TwoFASWidget.intentdefinition;
 			sourceTree = "<group>";
@@ -11306,6 +11315,7 @@
 				8FD3F0892C3732A80042092E /* el */,
 				8F1077292C8C805B0031448C /* ja */,
 				C292044C2DBE4FC50061E985 /* sv */,
+				C2D3166B2E6648E90044056F /* zh-Hant */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -11329,6 +11339,7 @@
 				C292044D2DBE4FE40061E985 /* sv */,
 				C292044E2DBE4FE60061E985 /* ja */,
 				C292044F2DBE4FE90061E985 /* el */,
+				C2D3166C2E6648FD0044056F /* zh-Hant */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

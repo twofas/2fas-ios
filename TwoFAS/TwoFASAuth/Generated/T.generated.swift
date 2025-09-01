@@ -1806,10 +1806,10 @@ internal enum T {
     internal static let notEnabled = T.tr("Localizable", "widget__not_enabled", fallback: "Widget functionality is not enabled in 2FAS Settings section")
     /// Widget functionality is not enabled in 2FAS Settings section and there are no services in the app available for selection
     internal static let notEnabledNoServices = T.tr("Localizable", "widget__not_enabled_no_services", fallback: "Widget functionality is not enabled in 2FAS Settings section and there are no services in the app available for selection")
-    /// Open 2FAS app
-    internal static let openApp = T.tr("Localizable", "widget__open_app", fallback: "Open 2FAS app")
-    /// Quick access to 2FAS app
-    internal static let openAppDescription = T.tr("Localizable", "widget__open_app_description", fallback: "Quick access to 2FAS app")
+    /// Open 2FAS Auth
+    internal static let openApp = T.tr("Localizable", "widget__open_app", fallback: "Open 2FAS Auth")
+    /// Quick access to 2FAS Auth
+    internal static let openAppDescription = T.tr("Localizable", "widget__open_app_description", fallback: "Quick access to 2FAS Auth")
     /// Placeholder
     internal static let placeholder = T.tr("Localizable", "widget__placeholder", fallback: "Placeholder")
     /// Reveal your 2FAS Tokens for 60 seconds

@@ -273,6 +273,62 @@ extension TokensModuleInteractor: TokensModuleInteracting {
         newCodeInteractor.addCodes(codes)
     }
     
+    // MARK: - Move
+    
+    func canServiceMoveUp(serviceData: ServiceData) -> Bool {
+        let indexes = getIndexesFor(serviceData)
+        guard let sectionOrder = indexes.0, let serviceOrder = indexes.1  else { return false }
+        
+        if sectionOrder == 0 && serviceOrder == 0 {
+            return false
+        }
+        return true
+    }
+    
+    func canServiceMoveDown(serviceData: ServiceData) -> Bool {
+        let indexes = getIndexesFor(serviceData)
+        guard let sectionOrder = indexes.0, let serviceOrder = indexes.1  else { return false }
+        
+        if sectionOrder == categoryData.count - 1,
+           let services = categoryData[safe: sectionOrder]?.services,
+           serviceOrder == services.count - 1 {
+            return false
+        }
+        return true
+    }
+    
+    func moveServiceUp(serviceData: ServiceData) {
+        let indexes = getIndexesFor(serviceData)
+        guard let sectionOrder = indexes.0, let serviceOrder = indexes.1  else { return }
+        
+        // TODO:
+    }
+    
+    func moveServiceDown(serviceData: ServiceData) {
+        let indexes = getIndexesFor(serviceData)
+        guard let sectionOrder = indexes.0, let serviceOrder = indexes.1  else { return }
+        
+        // TODO:
+
+    }
+    
+    private func getIndexesFor(_ serviceData: ServiceData) -> (Int?, Int?) {
+        var sectionOrder: Int?
+        var serviceOrder: Int?
+        
+        for (sectionIndex, section) in categoryData.enumerated() {
+            for (serviceIndex, service) in section.services.enumerated() {
+                if service.secret == serviceData.secret {
+                    sectionOrder = sectionIndex
+                    serviceOrder = serviceIndex
+                    break
+                }
+            }
+        }
+        
+        return (sectionOrder, serviceOrder)
+    }
+    
     // MARK: - Sort type
     
     var isSortingEnabled: Bool {

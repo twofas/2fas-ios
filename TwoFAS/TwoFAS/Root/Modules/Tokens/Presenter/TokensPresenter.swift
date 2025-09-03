@@ -272,21 +272,21 @@ extension TokensPresenter {
         view?.unlockBars()
     }
     
-    func canMoveUp(serviceData: ServiceData) -> Bool {
-        interactor.canMoveUp(serviceData: serviceData)
+    func canMoveServiceUp(_ serviceData: ServiceData) -> Bool {
+        interactor.canServiceMoveUp(serviceData: serviceData) && canMoveItems
     }
     
-    func canMoveDown(serviceData: ServiceData) -> Bool {
-        interactor.canMoveDown(serviceData: serviceData)
+    func canMoveServiceDown(_ serviceData: ServiceData) -> Bool {
+        interactor.canServiceMoveDown(serviceData: serviceData) && canMoveItems
     }
     
-    func moveUpItem(serviceData: ServiceData) {
-        interactor.moveUp(serviceData: serviceData)
+    func handleMoveServiceUp(_ serviceData: ServiceData) {
+        interactor.moveServiceUp(serviceData: serviceData)
         reloadData()
     }
     
-    func moveDownItem(serviceData: ServiceData) {
-        interactor.moveDown(serviceData: serviceData)
+    func handleMoveServiceDown(_ serviceData: ServiceData) {
+        interactor.moveServiceDown(serviceData: serviceData)
         reloadData()
     }
     

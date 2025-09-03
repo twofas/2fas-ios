@@ -31,7 +31,7 @@ extension TokensViewController {
                 presenter.enableMenu
         else { return nil }
         
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak self] _ in
             let edit = UIAction(
                 title: T.Commons.edit,
                 image: UIImage(systemName: "square.and.pencil")
@@ -54,7 +54,34 @@ extension TokensViewController {
                 self?.presenter.handleDeleteService(serviceData)
             }
             
-            return UIMenu(title: T.Commons.service, children: [edit, copy, delete])
+            let topActions = [edit, copy, delete]
+            
+            let canMoveUp = self?.presenter.canMoveServiceUp(serviceData) == true
+            let canModeDown = self?.presenter.canMoveServiceDown(serviceData) == true
+            
+            if canMoveUp || canModeDown {
+                let divider = UIMenu(title: "", options: .displayInline, children: topActions)
+                var actions: [UIMenuElement] = [divider]
+                if canMoveUp {
+                    actions.append(UIAction(
+                        title: T.Tokens.moveUp,
+                        image: UIImage(systemName: "chevron.up")
+                    ) { [weak self] _ in
+                        self?.presenter.handleMoveServiceUp(serviceData)
+                    })
+                }
+                if canModeDown {
+                    actions.append(UIAction(
+                        title: T.Tokens.moveDown,
+                        image: UIImage(systemName: "chevron.down")
+                    ) { [weak self] _ in
+                        self?.presenter.handleMoveServiceDown(serviceData)
+                    })
+                }
+                return UIMenu(title: T.Commons.service, children: actions)
+            } else {
+                return UIMenu(title: T.Commons.service, children: topActions)
+            }
         }
     }
     

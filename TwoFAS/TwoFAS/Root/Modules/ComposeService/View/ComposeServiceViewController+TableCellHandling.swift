@@ -96,7 +96,7 @@ extension ComposeServiceViewController {
                 for: indexPath
             ) as? SettingsMenuTableViewCell else { return UITableViewCell() }
             if config.kind == .delete {
-                cell.update(icon: nil, title: T.Tokens.removeServiceFromApp, kind: .none, decorateText: .action)
+                cell.update(icon: nil, title: T.Tokens.moveToTrash, kind: .none, decorateText: .action)
             }
             return cell
         case .icon(let config):

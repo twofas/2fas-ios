@@ -80,6 +80,11 @@ protocol TokensModuleInteracting: AnyObject {
     // MARK: News
     var hasUnreadNews: Bool { get }
     func fetchNews(completion: @escaping () -> Void)
+    // MARK: Move service
+    func canServiceMoveUp(serviceData: ServiceData) -> Bool
+    func canServiceMoveDown(serviceData: ServiceData) -> Bool
+    func moveServiceUp(serviceData: ServiceData)
+    func moveServiceDown(serviceData: ServiceData)
 }
 
 final class TokensModuleInteractor {
@@ -301,15 +306,55 @@ extension TokensModuleInteractor: TokensModuleInteracting {
         let indexes = getIndexesFor(serviceData)
         guard let sectionOrder = indexes.0, let serviceOrder = indexes.1  else { return }
         
-        // TODO:
+        guard canServiceMoveUp(serviceData: serviceData) else { return }
+        
+        if serviceOrder > 0 {
+            moveService(
+                serviceData,
+                from: IndexPath(row: serviceOrder, section: sectionOrder),
+                to: IndexPath(row: serviceOrder - 1, section: sectionOrder),
+                newSection: categoryData[safe: sectionOrder]?.section
+            )
+        } else {
+            let catData = categoryData[safe: sectionOrder - 1]
+            let newSection = catData?.section
+            let count = catData?.services.count ?? 0
+            let newServiceOrder = count == 0 ? 0 : count
+            moveService(
+                serviceData,
+                from: IndexPath(row: serviceOrder, section: sectionOrder),
+                to: IndexPath(row: newServiceOrder, section: sectionOrder - 1),
+                newSection: newSection
+            )
+        }
     }
     
     func moveServiceDown(serviceData: ServiceData) {
         let indexes = getIndexesFor(serviceData)
         guard let sectionOrder = indexes.0, let serviceOrder = indexes.1  else { return }
         
-        // TODO:
-
+        guard canServiceMoveDown(serviceData: serviceData) else { return }
+        
+        let count = categoryData[safe: sectionOrder]?.services.count ?? 1
+        if serviceOrder == count - 1 {
+            guard let nextCatData = categoryData[safe: sectionOrder + 1] else { return }
+            
+            let newServiceOrder = 0
+            
+            moveService(
+                serviceData,
+                from: IndexPath(row: serviceOrder, section: sectionOrder),
+                to: IndexPath(row: newServiceOrder, section: sectionOrder + 1),
+                newSection: nextCatData.section
+            )
+        } else {
+            moveService(
+                serviceData,
+                from: IndexPath(row: serviceOrder, section: sectionOrder),
+                to: IndexPath(row: serviceOrder + 1, section: sectionOrder),
+                newSection: categoryData[safe: sectionOrder]?.section
+            )
+        }
     }
     
     private func getIndexesFor(_ serviceData: ServiceData) -> (Int?, Int?) {

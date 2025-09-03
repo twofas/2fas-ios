@@ -1544,8 +1544,12 @@ internal enum T {
     internal static let lastPassImportSubtitle = T.tr("Localizable", "tokens__last_pass_import_subtitle", fallback: "This QR code allows you to import Tokens from LastPass")
     /// Manage list
     internal static let manageList = T.tr("Localizable", "tokens__manage_list", fallback: "Manage list")
+    /// Mode down
+    internal static let moveDown = T.tr("Localizable", "tokens__move_down", fallback: "Mode down")
     /// Move to Trash
     internal static let moveToTrash = T.tr("Localizable", "tokens__move_to_trash", fallback: "Move to Trash")
+    /// Move up
+    internal static let moveUp = T.tr("Localizable", "tokens__move_up", fallback: "Move up")
     /// My Tokens
     internal static let myTokens = T.tr("Localizable", "tokens__my_tokens", fallback: "My Tokens")
     /// Next Token copied to clipboard!

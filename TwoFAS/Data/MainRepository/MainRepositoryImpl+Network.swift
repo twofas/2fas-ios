@@ -132,9 +132,19 @@ extension MainRepositoryImpl {
     
     func listAllNews(
         publishedAfter: String,
+        lang: String,
+        group: String,
+        noCompanionAppFrom: String?,
         completion: @escaping (Result<[ListNews.NewsEntry], NetworkError>) -> Void
     ) {
-        networkStack.network.listAllNews(publishedAfter: publishedAfter, completion: completion)
+        networkStack.network
+            .listAllNews(
+                publishedAfter: publishedAfter,
+                lang: lang,
+                group: group,
+                noCompanionAppFrom: noCompanionAppFrom,
+                completion: completion
+            )
     }
     
     func uploadLogs(

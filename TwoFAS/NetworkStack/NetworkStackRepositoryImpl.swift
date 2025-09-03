@@ -134,9 +134,19 @@ extension NetworkStackRepositoryImpl: NetworkStackRepository {
 
     public func listAllNews(
         publishedAfter: String,
+        lang: String,
+        group: String,
+        noCompanionAppFrom: String?,
         completion: @escaping (Result<[ListNews.NewsEntry], NetworkError>) -> Void
     ) {
-        let req = ListNews.Request(platform: "ios", publishedAfter: publishedAfter)
+        let req = ListNews.Request(
+            platform: "ios",
+            app: "auth",
+            publishedAfter: publishedAfter,
+            lang: lang,
+            group: group,
+            noCompanionAppFrom: noCompanionAppFrom
+        )
         networkCall.handleNotificationsCall(with: req, completion: completion)
     }
     

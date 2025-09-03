@@ -36,7 +36,6 @@ public struct ListNewsEntry: Hashable {
     public let icon: Icon
     public let link: URL?
     public let message: String?
-    public let publishedAt: Date
     public let createdAt: Date?
     public let wasRead: Bool
     public let internalLink: InternalLink?
@@ -47,7 +46,6 @@ public struct ListNewsEntry: Hashable {
         icon: Icon,
         link: URL?,
         message: String?,
-        publishedAt: Date,
         createdAt: Date?,
         wasRead: Bool,
         internalLink: InternalLink?,
@@ -57,7 +55,6 @@ public struct ListNewsEntry: Hashable {
         self.icon = icon
         self.link = link
         self.message = message
-        self.publishedAt = publishedAt
         self.createdAt = createdAt
         self.wasRead = wasRead
         self.internalLink = internalLink

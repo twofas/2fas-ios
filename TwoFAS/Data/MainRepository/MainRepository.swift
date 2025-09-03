@@ -358,6 +358,9 @@ protocol MainRepository: AnyObject {
     )
     func listAllNews(
         publishedAfter: String,
+        lang: String,
+        group: String,
+        noCompanionAppFrom: String?,
         completion: @escaping (Result<[ListNews.NewsEntry], NetworkError>) -> Void
     )
     func uploadLogs(

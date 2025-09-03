@@ -22,22 +22,35 @@ import Foundation
 public enum ListNews {
     public struct Request: NetworkRequestFormat {
         let platform: String
+        let app: String
         let publishedAfter: String
+        let lang: String
+        let group: String
+        let noCompanionAppFrom: String?
         
         let method: HTTPMethod = .GET
+        
         var path: String {
-            let path = "mobile/notifications"
             var params: [String] = []
             if let platform = platform.addingPercentEncoding(withAllowedCharacters: .alphanumerics) {
                 params.append("platform=\(platform)")
             }
+            if let app = app.addingPercentEncoding(withAllowedCharacters: .alphanumerics) {
+                params.append("app=\(app)")
+            }
             if let publishedAfter = publishedAfter.addingPercentEncoding(withAllowedCharacters: .alphanumerics) {
                 params.append("published_after=\(publishedAfter)")
             }
-            if params.isEmpty {
-                return path
+            if let lang = lang.addingPercentEncoding(withAllowedCharacters: .alphanumerics) {
+                params.append("lang=\(lang)")
             }
-            return path + "?" + params.joined(separator: "&")
+            if let group = group.addingPercentEncoding(withAllowedCharacters: .alphanumerics) {
+                params.append("group=\(group)")
+            }
+            if let noCompanionAppFrom = noCompanionAppFrom?.addingPercentEncoding(withAllowedCharacters: .alphanumerics) {
+                params.append("no_companion_app_from=\(noCompanionAppFrom)")
+            }
+            return "?" + params.joined(separator: "&")
         }
     }
         
@@ -48,7 +61,6 @@ public enum ListNews {
         public let icon: String
         public let link: String?
         public let message: String?
-        public let publishedAt: String
         public let createdAt: String?
     }
 }

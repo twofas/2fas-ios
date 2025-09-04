@@ -35,6 +35,8 @@ public protocol ServiceDefinitionInteracting: AnyObject {
     func findServices(byTag searchText: String) -> [ServiceDefinition]
     func findServicesByTagOrIssuer(_ searchText: String, exactMatch: Bool, useTags: Bool) -> [ServiceDefinition]
     func findServices(domain searchText: String) -> [ServiceDefinition]
+    
+    func otpAuth(from serviceData: ServiceData) -> String
 }
 
 final class ServiceDefinitionInteractor {
@@ -92,5 +94,68 @@ extension ServiceDefinitionInteractor: ServiceDefinitionInteracting {
     
     func findServices(domain searchText: String) -> [ServiceDefinition] {
         mainRepository.findServices(domain: searchText)
+    }
+    
+    /// Format: otpauth://{tokenType}/{label}?secret={secret}&issuer={issuer}&algorithm={algorithm}&digits={digits}&period={period}&counter={counter}
+    func otpAuth(from serviceData: ServiceData) -> String {
+        if let otpAuth = serviceData.otpAuth {
+            return otpAuth
+        }
+        
+        let scheme = "otpauth"
+        let tokenType = serviceData.tokenType.rawValue.lowercased()
+        
+        let label: String = {
+            if let additionalInfo = serviceData.additionalInfo, !additionalInfo.isEmpty {
+                return additionalInfo.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? additionalInfo
+            } else if let issuer = serviceData.rawIssuer, !issuer.isEmpty {
+                return issuer.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? issuer
+            } else {
+                return serviceData.name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ??
+                    serviceData.name
+            }
+        }()
+        let issuer: String? = {
+            if let issuer = serviceData.rawIssuer {
+                return issuer
+            }
+            if let serviceTypeID = serviceData.serviceTypeID {
+                return mainRepository.serviceDefinition(using: serviceTypeID)?.issuer?.first
+            }
+            return nil
+        }()
+        
+        var queryItems: [String] = []
+        
+        let secret = serviceData.secret.addingPercentEncoding(
+            withAllowedCharacters: .urlQueryAllowed
+        ) ?? serviceData.secret
+        queryItems.append("secret=\(secret)")
+        
+        if let issuer, !issuer.isEmpty {
+            let issuerParam = issuer.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? issuer
+            queryItems.append("issuer=\(issuerParam)")
+        }
+        
+        if serviceData.algorithm != .SHA1 {
+            queryItems.append("algorithm=\(serviceData.algorithm.rawValue)")
+        }
+        
+        if serviceData.tokenLength != .digits6 {
+            queryItems.append("digits=\(serviceData.tokenLength.rawValue)")
+        }
+        
+        if serviceData.tokenType == .totp, let period = serviceData.tokenPeriod, period != .period30 {
+            queryItems.append("period=\(period.rawValue)")
+        }
+        
+        if serviceData.tokenType == .hotp, let counter = serviceData.counter {
+            queryItems.append("counter=\(counter)")
+        }
+        
+        let queryString = queryItems.joined(separator: "&")
+        let path = "\(scheme)://\(tokenType)/\(label)?\(queryString)"
+        
+        return path
     }
 }

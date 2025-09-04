@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2025 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -17,29 +17,21 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
+import Foundation
 import Common
 
-public protocol AdvancedAlertInteracting: AnyObject {
-    var wasShowed: Bool { get }
-    func markAsShown()
-}
-
-final class AdvancedAlertInteractor {
-    private let mainRepository: MainRepository
-    
-    init(mainRepository: MainRepository) {
-        self.mainRepository = mainRepository
-    }
-}
-
-extension AdvancedAlertInteractor: AdvancedAlertInteracting {
-    var wasShowed: Bool {
-        mainRepository.advancedAlertShown
-    }
-    
-    func markAsShown() {
-        Log("AdvancedAlertInteractor - markAsShown", module: .interactor)
-        mainRepository.markAdvancedAlertAsShown()
+extension Code {
+    static func parseOpen(with data: String) -> Bool {
+        // twofas|twofasauth://open
+        guard let components = NSURLComponents(string: data),
+              let scheme = components.scheme,
+              let type = components.host,
+              scheme == Config.twofasAuthNewScheme,
+              type == "open"
+        else {
+            return false
+        }
+        
+        return true
     }
 }

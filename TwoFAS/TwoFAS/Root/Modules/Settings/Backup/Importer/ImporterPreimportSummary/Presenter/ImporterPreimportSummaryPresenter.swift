@@ -40,34 +40,37 @@ final class ImporterPreimportSummaryPresenter {
     
     var additionalIcon: UIImage? {
         switch externalImportService {
-        case .aegis: return Asset.externalImportAegis.image
-        case .raivo: return Asset.externalImportRavio.image
-        case .lastPass: return Asset.externalImportLastPass.image
-        case .andOTP: return Asset.externalImportAndOTP.image
-        case .authenticatorPro: return Asset.externalImportAuthenticatorPro.image
-        case .googleAuth, .twofas: return nil
+        case .aegis: Asset.externalImportAegis.image
+        case .raivo: Asset.externalImportRavio.image
+        case .lastPass: Asset.externalImportLastPass.image
+        case .andOTP: Asset.externalImportAndOTP.image
+        case .authenticatorPro: Asset.externalImportAuthenticatorPro.image
+        case .googleAuth, .twofas, .otpAuthFile, .clipboard: nil
         }
     }
     
     var title: String {
         switch externalImportService {
-        case .aegis: return T.Externalimport.aegisTitle
-        case .raivo: return T.Externalimport.raivoTitle
-        case .lastPass: return T.Externalimport.lastpassTitle
-        case .andOTP: return T.Externalimport.andotpTitle
-        case .authenticatorPro: return T.Externalimport.authenticatorproTitle
-        case .googleAuth, .twofas: return T.Backup.importBackupFile
+        case .aegis: T.Externalimport.aegisTitle
+        case .raivo: T.Externalimport.raivoTitle
+        case .lastPass: T.Externalimport.lastpassTitle
+        case .andOTP: T.Externalimport.andotpTitle
+        case .authenticatorPro: T.Externalimport.authenticatorproTitle
+        case .googleAuth, .twofas: T.Backup.importBackupFile
+        case .otpAuthFile, .clipboard: T.Backup.import
         }
     }
     
     var subtitle: String {
         switch externalImportService {
-        case .aegis: return T.Externalimport.aegisSuccessMsg
-        case .raivo: return T.Externalimport.raivoSuccessMsg
-        case .lastPass: return T.Externalimport.lastpassSuccessMsg
-        case .andOTP: return T.Externalimport.andotpSuccessMsg
-        case .authenticatorPro: return T.Externalimport.authenticatorproSuccessMsg
-        case .googleAuth, .twofas: return T.Backup.importOtherDevices
+        case .aegis: T.Externalimport.aegisSuccessMsg
+        case .raivo: T.Externalimport.raivoSuccessMsg
+        case .lastPass: T.Externalimport.lastpassSuccessMsg
+        case .andOTP: T.Externalimport.andotpSuccessMsg
+        case .authenticatorPro: T.Externalimport.authenticatorproSuccessMsg
+        case .googleAuth, .twofas: T.Backup.importOtherDevices
+        case .otpAuthFile: T.Settings.importContentsFile
+        case .clipboard: T.Settings.importContentsClipboard
         }
     }
     

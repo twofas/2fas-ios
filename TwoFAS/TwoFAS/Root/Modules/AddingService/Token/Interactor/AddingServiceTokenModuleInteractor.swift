@@ -72,12 +72,12 @@ extension AddingServiceTokenModuleInteractor: AddingServiceTokenModuleInteractin
     var serviceTokenType: TokenType { serviceData.tokenType }
     
     func copyToken(_ token: String) {
-        notificationsInteractor.copyWithSuccess(value: token)
+        notificationsInteractor.copyWithSuccess(value: token.removeWhitespaces())
     }
     
     func refresh() {
         guard serviceTokenType == .hotp else { return }
-        tokenInteractor.unlockCounter(for: serviceData.secret, isInitialCounter: false)
+        tokenInteractor.unlockCounter(for: serviceData.secret)
     }
     
     func start() {
@@ -104,6 +104,6 @@ extension AddingServiceTokenModuleInteractor: AddingServiceTokenModuleInteractin
     }
 
     private func initialHOTPRefresh() {
-        tokenInteractor.unlockCounter(for: serviceData.secret, isInitialCounter: true)
+        tokenInteractor.unlockCounter(for: serviceData.secret)
     }
 }

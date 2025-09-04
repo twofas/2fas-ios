@@ -49,9 +49,10 @@ extension SettingsMenuPresenter {
         case .trash: return .trash
         case .about: return .about
         case .externalImport: return .externalImport
+        case .exportTokens: return .exportTokens
         case .appearance: return .appearance
         case .appleWatch: return .appleWatch
-        case .faq, .donate: return nil
+        case .faq, .donate, .appStorePass, .openPass: return nil
         }
     }
 
@@ -69,7 +70,7 @@ extension SettingsMenuPresenter {
         }
         switch action {
         case .navigation(let navigatesTo):
-            navigate(to: navigatesTo)
+            navigate(to: navigatesTo, rememberPosition: cell.rememberPosition)
         }
         reload()
     }
@@ -168,6 +169,7 @@ extension SettingsMenuPresenter {
         case .trash: navigate(to: .trash)
         case .about: navigate(to: .about)
         case .externalImport: navigate(to: .externalImport)
+        case .exportTokens: navigate(to: .exportTokens)
         case .appearance: navigate(to: .appearance)
         case .appleWatch: navigate(to: .appleWatch)
         }
@@ -175,12 +177,17 @@ extension SettingsMenuPresenter {
 }
 
 private extension SettingsMenuPresenter {
-    func navigate(to navigateTo: SettingsNavigationModule) {
-        guard navigateTo != selectedModule else { return }
+    func navigate(to navigateTo: SettingsNavigationModule, rememberPosition: Bool = true) {
+        guard rememberPosition == false || navigateTo != selectedModule else { return }
         let menu = buildMenu()
         guard let indexPath = menu.indexPath(for: navigateTo) else { return }
-        selectedModule = navigateTo
-        selectedIndex = indexPath
+        if rememberPosition {
+            selectedModule = navigateTo
+            selectedIndex = indexPath
+        } else {
+            selectedModule = nil
+            selectedIndex = nil
+        }
         
         flowController.toUpdateCurrentPosition(navigateToViewPath(navigateTo: navigateTo))
         
@@ -209,6 +216,12 @@ private extension SettingsMenuPresenter {
             flowController.toAppearance()
         case .appleWatch:
             flowController.toAppleWatch()
+        case .appStorePass:
+            flowController.toTwoPASSAppStore()
+        case .openPass:
+            flowController.toOpenTwoPASS()
+        case .exportTokens:
+            flowController.toExportTokens()
         }
     }
     
@@ -243,9 +256,10 @@ private extension SettingsMenuPresenter {
         case .trash: return .trash
         case .about: return .about
         case .externalImport: return .externalImport
+        case .exportTokens: return .exportTokens
         case .appearance: return .appearance
         case .appleWatch: return .appleWatch
-        case .faq, .donate: return nil
+        case .faq, .donate, .appStorePass, .openPass: return nil
         }
     }
 }

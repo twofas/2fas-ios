@@ -38,11 +38,10 @@ final class NotificationInteractor {
 extension NotificationInteractor: NotificationInteracting {
     func copyWithSuccess(value: String) {
         Log("NotificationInteractor - copy with success", module: .interactor)
-        let value = value.removeWhitespaces()
         mainRepository.copy(value)
         mainRepository.wobbleSuccess()
     }
-    
+        
     func error() {
         mainRepository.wobbleError()
     }

@@ -82,6 +82,28 @@ final class VerifyPINFlowController: FlowController {
         viewController.view.addSubview(view.view)
         view.view.pinToParent()
         viewController.addChild(view)
+        viewController.becomeFirstResponder()
+    }
+    
+    static func present(
+        on viewController: UIViewController,
+        parent: VerifyPINFlowControllerParent
+    ) {
+        let view = VerifyPINViewController()
+        let flowController = VerifyPINFlowController(viewController: view)
+        flowController.parent = parent
+        flowController.action = .authorize
+        let interactor = ModuleInteractorFactory.shared.verifyPINModuleInteractor()
+        let presenter = VerifyPINPresenter(
+            flowController: flowController,
+            interactor: interactor
+        )
+        view.presenter = presenter
+        presenter.keyboard = view
+        
+        let navigation = CommonNavigationController(rootViewController: view)
+        navigation.modalPresentationStyle = .fullScreen
+        viewController.present(navigation, animated: true)
     }
 }
 

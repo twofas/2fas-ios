@@ -17,11 +17,12 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 
 public protocol AppInfoInteracting: AnyObject {
     var currentAppVersion: String { get }
     var dateOfFirstRun: Date { get }
+    var is2FASPASSInstalled: Bool { get }
     func markDateOfFirstRunIfNeeded()
 }
 
@@ -45,5 +46,9 @@ extension AppInfoInteractor: AppInfoInteracting {
     func markDateOfFirstRunIfNeeded() {
         guard mainRepository.dateOfFirstRun == nil else { return }
         mainRepository.saveDateOfFirstRun(Date.now)
+    }
+    
+    var is2FASPASSInstalled: Bool {
+        mainRepository.is2FASPASSInstalled
     }
 }

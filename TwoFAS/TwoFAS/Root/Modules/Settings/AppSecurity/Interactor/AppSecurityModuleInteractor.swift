@@ -21,7 +21,7 @@ import Foundation
 import Data
 import Common
 
-protocol AppSecurityModuleInteracting: AnyObject {
+public protocol AppSecurityModuleInteracting: AnyObject {
     var isPINSet: Bool { get }
     var limitOfTrials: AppLockAttempts { get }
     var biometryType: BiometryType { get }

@@ -18,15 +18,16 @@
 //
 
 import Foundation
+import Common
 
 public extension Code {
     static func parseSupport(with data: String) -> UUID? {
-        // twofas://support/send-logs/[uuid]
+        // twofas|twofasauth://support/send-logs/[uuid]
         guard let components = NSURLComponents(string: data),
               let scheme = components.scheme,
               let type = components.host,
               let path = components.path,
-              scheme == "twofas",
+              scheme == Config.twofasAuthOldScheme || scheme == Config.twofasAuthNewScheme,
               type == "support"
         else {
             return nil

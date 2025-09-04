@@ -34,7 +34,6 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case newVersionIgnored
         case newVersionCheckDisabled
         case sortType
-        case advancedAlertShown
         case extensionKeysGenerated
         case savedDeviceName
         case unkownCodeCounter = "UnkownCodeCounter"
@@ -128,15 +127,6 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
     
     func setSortType(_ sortType: SortType) {
         userDefaults.set(sortType.rawValue, forKey: Keys.sortType.rawValue)
-        userDefaults.synchronize()
-    }
-    
-    var advancedAlertShown: Bool {
-        userDefaults.bool(forKey: Keys.advancedAlertShown.rawValue)
-    }
-    
-    func markAdvancedAlertAsShown() {
-        userDefaults.set(true, forKey: Keys.advancedAlertShown.rawValue)
         userDefaults.synchronize()
     }
     

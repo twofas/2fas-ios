@@ -50,7 +50,8 @@ final class ModuleInteractorFactory {
             protectionInteractor: InteractorFactory.shared.protectionInteractor(),
             networkStatusInteractor: InteractorFactory.shared.networkStatusInteractor(),
             pairingDeviceInteractor: InteractorFactory.shared.pairingWebExtensionInteractor(),
-            mdmInteractor: InteractorFactory.shared.mdmInteractor()
+            mdmInteractor: InteractorFactory.shared.mdmInteractor(),
+            appInfoInteractor: InteractorFactory.shared.appInfoInteractor()
         )
     }
     
@@ -81,10 +82,16 @@ final class ModuleInteractorFactory {
         )
     }
     
-    func importerOpenFileModuleInteractor(url: URL?) -> ImporterOpenFileModuleInteracting {
+    func importerOpenFileModuleInteractor(
+        url: URL?,
+        importingOTPAuthFile: Bool,
+        isFromClipboard: Bool
+    ) -> ImporterOpenFileModuleInteracting {
         ImporterOpenFileModuleInteractor(
             importInteractor: InteractorFactory.shared.importFromFileInteractor(),
-            url: url
+            url: url,
+            importingOTPAuthFile: importingOTPAuthFile,
+            isFromClipboard: isFromClipboard
         )
     }
     
@@ -206,8 +213,8 @@ final class ModuleInteractorFactory {
             sectionInteractor: InteractorFactory.shared.sectionInteractor(),
             notificationsInteractor: InteractorFactory.shared.notificationInteractor(),
             serviceDefinitionInteractor: InteractorFactory.shared.serviceDefinitionInteractor(),
-            advancedAlertInteractor: InteractorFactory.shared.advancedAlertInteractor(),
-            mdmInteractor: InteractorFactory.shared.mdmInteractor()
+            mdmInteractor: InteractorFactory.shared.mdmInteractor(),
+            qrCodeGeneratorInteractor: InteractorFactory.shared.qrCodeGeneratorInteractor()
         )
     }
     
@@ -216,14 +223,6 @@ final class ModuleInteractorFactory {
     ) -> ComposeServiceAdvancedSummaryModuleInteracting {
         ComposeServiceAdvancedSummaryModuleInteractor(
             notificationInteractor: InteractorFactory.shared.notificationInteractor(),
-            settings: settings
-        )
-    }
-    
-    func composeServiceAdvancedEditModuleInteractor(
-        settings: ComposeServiceAdvancedSettings
-    ) -> ComposeServiceAdvancedEditModuleInteracting {
-        ComposeServiceAdvancedEditModuleInteractor(
             settings: settings
         )
     }
@@ -404,5 +403,16 @@ final class ModuleInteractorFactory {
     
     func introductionModuleInteractor() -> IntroductionModuleInteracting {
         IntroductionModuleInteractor(rootInteractor: InteractorFactory.shared.rootInteractor())
+    }
+    
+    func exportTokensModuleInteractor() -> ExportTokensModuleInteracting {
+        ExportTokensModuleInteractor(
+            serviceListingInteractor: InteractorFactory.shared.serviceListingInteractor(),
+            notificationsInteractor: InteractorFactory.shared.notificationInteractor(),
+            qrCodeGeneratorInteractor: InteractorFactory.shared.qrCodeGeneratorInteractor(),
+            serviceDefinitionInteractor: InteractorFactory.shared.serviceDefinitionInteractor(),
+            protectionInteractor: InteractorFactory.shared.protectionInteractor(),
+            compressionInteractor: InteractorFactory.shared.compressionInteractor()
+        )
     }
 }

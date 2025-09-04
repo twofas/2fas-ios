@@ -89,6 +89,8 @@ extension AddingServiceMainPresenter {
             Log("CameraScannerPresenter: Found 2FAS support request. AuditID: \(auditID)")
             interactor.warning()
             flowController.toSendLogs(auditID: auditID)
+        case .open:
+            Log("CameraScannerPresenter: Found 2FAS open request.")
         case .unknown:
             Log("CameraScannerPresenter: Found wrong code: \(codeType)", save: false)
             Log("CameraScannerPresenter: General wrong code")

@@ -59,6 +59,9 @@ final class LoginFlowController: FlowController {
         
         let viewDidAppear: Callback = { [weak view] in
             view?.presenter.viewDidAppear()
+            if view?.isFirstResponder == false {
+                view?.becomeFirstResponder()
+            }
         }
         
         return (view: view, viewWillAppear: viewWillAppear, viewDidAppear: viewDidAppear)

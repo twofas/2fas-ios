@@ -25,7 +25,7 @@ extension SettingsMenuPresenter {
             title: T.Settings.sslErrorTitle,
             cells: [
                 .init(title: T.Settings.sslErrorDescription, accessory: .warning, isEnabled: false)
-        ])
+            ])
         
         let backup = SettingsMenuSection(
             title: T.Settings.backupAndSynchronization,
@@ -111,6 +111,12 @@ extension SettingsMenuPresenter {
                     action: .navigation(navigatesTo: .externalImport)
                 ),
                 .init(
+                    icon: Asset.settingsExport.image,
+                    title: T.Settings.exportTitleTokens,
+                    accessory: .arrow,
+                    action: .navigation(navigatesTo: .exportTokens)
+                ),
+                .init(
                     icon: Asset.settingsTrash.image,
                     title: T.Settings.trashOption,
                     accessory: .arrow,
@@ -118,7 +124,21 @@ extension SettingsMenuPresenter {
                 )
             ]
         )
-                
+        
+        let pass = SettingsMenuSection(
+            title: T.settingsManagePasswordsTitle,
+            cells: [
+                .init(
+                    icon: Asset.settingsPass.image,
+                    title: interactor.is2PASSInstalled ? T.settingsOpenTwofass : T.settingsOpenTwofassAppstore,
+                    accessory: .external,
+                    action: .navigation(navigatesTo: interactor.is2PASSInstalled ? .openPass : .appStorePass),
+                    rememberPosition: false
+                )
+            ],
+            footer: nil
+        )
+        
         let info = SettingsMenuSection(
             title: T.Commons.info,
             cells: [
@@ -126,7 +146,8 @@ extension SettingsMenuPresenter {
                     icon: Asset.settingsFAQ.image,
                     title: T.Settings.support,
                     accessory: .external,
-                    action: .navigation(navigatesTo: .faq)
+                    action: .navigation(navigatesTo: .faq),
+                    rememberPosition: false
                 ),
                 .init(
                     icon: Asset.settingsInfo.image,
@@ -138,12 +159,13 @@ extension SettingsMenuPresenter {
                     icon: Asset.settingsDonate.image,
                     title: T.Settings.donateTwofas,
                     accessory: .donate,
-                    action: .navigation(navigatesTo: .donate)
+                    action: .navigation(navigatesTo: .donate),
+                    rememberPosition: false
                 )
             ],
             footer: T.Settings.infoFooter
         )
-
+        
         var menu: [SettingsMenuSection] = []
         if interactor.hasSSLNetworkError && interactor.hasActiveBrowserExtension {
             menu.append(networkSSLError)
@@ -161,6 +183,7 @@ extension SettingsMenuPresenter {
         menu.append(contentsOf: [
             preferences,
             manageTokens,
+            pass,
             info
         ])
         return menu

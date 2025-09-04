@@ -19,54 +19,61 @@
 
 import SwiftUI
 import Data
+import Common
 
 struct GuideSelectorView: View {
+    @Environment(\.colorScheme) private var colorScheme
     private static let itemWidth: CGFloat = 148
     private static let itemHeight: CGFloat = 118
     private let columns = [GridItem(.fixed(Self.itemWidth)), GridItem(.fixed(Self.itemWidth))]
     let presenter: GuideSelectorPresenter
     
     var body: some View {
-        ScrollView(.vertical) {
-            VStack(spacing: Theme.Metrics.standardSpacing) {
-                Text(T.Guides.selectDescription)
+        VStack(spacing: 0) {
+            ScrollView(.vertical) {
+                VStack(spacing: Theme.Metrics.standardSpacing) {
+                    Text(T.Guides.selectDescription)
+                        .font(.footnote)
+                        .textCase(.uppercase)
+                        .foregroundStyle(
+                            Color(colorScheme == .dark ? ThemeColor.pageIndicator : Theme.Colors.inactiveInverted)
+                        )
+                        .padding(.vertical, Theme.Metrics.doubleMargin)
+                        .accessibilityAddTraits(.isHeader)
+                    LazyVGrid(columns: columns, spacing: Theme.Metrics.doubleMargin) {
+                        ForEach(presenter.guides.chunked(into: 2), id: \.self) { values in
+                            if let first = values.first {
+                                serviceGuide(first)
+                            }
+                            if let last = values.last {
+                                serviceGuide(last)
+                            }
+                        }
+                    }
+                    .padding(.bottom, Theme.Metrics.doubleMargin)
+                }
+            }
+            VStack(alignment: .center) {
+                Text(verbatim: T.Guides.selectProvideGuide)
                     .font(.footnote)
-                    .textCase(.uppercase)
-                    .foregroundStyle(Color(Theme.Colors.inactiveInverted))
+                    .foregroundStyle(Color(colorScheme == .dark ? ThemeColor.pageIndicator : Theme.Colors.Line.active))
                     .padding(.vertical, Theme.Metrics.doubleMargin)
                     .accessibilityAddTraits(.isHeader)
-                LazyVGrid(columns: columns, spacing: Theme.Metrics.doubleMargin) {
-                    ForEach(presenter.guides.chunked(into: 2), id: \.self) { values in
-                        if let first = values.first {
-                            serviceGuide(first)
-                        }
-                        if let last = values.last {
-                            serviceGuide(last)
-                        }
+                Link(destination: URL(string: "https://2fas.com/your-2fa-guide/")!) {
+                    HStack(spacing: Theme.Metrics.halfSpacing) {
+                        Text(verbatim: T.Guides.selectProvideGuideCta)
+                            .font(.body)
+                            .fontWeight(.medium)
+                            .foregroundStyle(Color(Theme.Colors.Text.theme))
+                        Asset.externalLinkIcon.swiftUIImage
+                            .foregroundStyle(Color(Theme.Colors.Text.theme))
                     }
                 }
             }
+            .padding(.bottom, Theme.Metrics.doubleMargin)
+            .frame(maxWidth: .infinity)
+            .background(Color(colorScheme == .dark ? ThemeColor.buttonCloseBackground : Theme.Colors.Fill.notification))
         }
-        VStack(alignment: .center) {
-            Text(verbatim: T.Guides.selectProvideGuide)
-                .font(.footnote)
-                .foregroundStyle(Color(Theme.Colors.Line.active))
-                .padding(.vertical, Theme.Metrics.doubleMargin)
-                .accessibilityAddTraits(.isHeader)
-            Link(destination: URL(string: "https://2fas.com/your-2fa-guide/")!) {
-                HStack(spacing: Theme.Metrics.halfSpacing) {
-                    Text(verbatim: T.Guides.selectProvideGuideCta)
-                        .font(.body)
-                        .fontWeight(.medium)
-                        .foregroundStyle(Color(Theme.Colors.Text.theme))
-                    Asset.externalLinkIcon.swiftUIImage
-                        .foregroundStyle(Color(Theme.Colors.Text.theme))
-                }
-            }
-        }
-        .padding(.bottom, Theme.Metrics.doubleMargin)
-        .frame(maxWidth: .infinity)
-        .background(Color(Theme.Colors.Fill.notification))
     }
     
     @ViewBuilder
@@ -85,7 +92,10 @@ struct GuideSelectorView: View {
         .background {
             let size = CGSize(width: Theme.Metrics.modalCornerRadius, height: Theme.Metrics.modalCornerRadius)
             RoundedRectangle(cornerSize: size)
-                .stroke(Color(Theme.Colors.Line.secondarySeparator), lineWidth: 1)
+                .stroke(
+                    Color(colorScheme == .dark ? ThemeColor.tableSeparator : Theme.Colors.Line.secondarySeparator),
+                    lineWidth: 1
+                )
         }
         .onTapGesture {
             presenter.handleShowGuideMenu(guide)

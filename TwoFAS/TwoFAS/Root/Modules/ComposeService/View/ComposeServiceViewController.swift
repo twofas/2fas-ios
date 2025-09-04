@@ -28,6 +28,7 @@ protocol ComposeServiceViewControlling: AnyObject {
     func reloadPrivateKeyError(with data: [ComposeServiceSection])
     func revealCode(_ privateKey: String)
     func copySecret()
+    func copyLink()
 }
 
 final class ComposeServiceViewController: UIViewController {
@@ -42,7 +43,7 @@ final class ComposeServiceViewController: UIViewController {
     }()
     private let tableView = SettingsMenuTableView()
     private var tableViewAdapter: TableViewAdapter<ComposeServiceSection, ComposeServiceSectionCell>!
-
+    
     override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         guard let key = presses.first?.key else { return }
         
@@ -105,7 +106,7 @@ final class ComposeServiceViewController: UIViewController {
         
         saveActionBarButtonItem.target = self
         saveActionBarButtonItem.action = #selector(saveAction)
-                
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: T.Commons.cancel,
             style: .plain,
@@ -115,7 +116,7 @@ final class ComposeServiceViewController: UIViewController {
         navigationItem.rightBarButtonItem = saveActionBarButtonItem
         
         setupTableViewLayout()
-                        
+        
         hidesBottomBarWhenPushed = false
         navigationItem.backButtonDisplayMode = .minimal
         
@@ -139,12 +140,6 @@ final class ComposeServiceViewController: UIViewController {
         super.viewWillAppear(animated)
         
         presenter.viewWillAppear()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        presenter.viewDidAppear()
     }
     
     @objc(didTapAction)
@@ -195,8 +190,8 @@ extension ComposeServiceViewController: ComposeServiceViewControlling {
     
     func reloadPrivateKeyError(with data: [ComposeServiceSection]) {
         guard let (cell, indexPath) = findCell(for: .privateKey),
-        let privateKeyCell = cell as? ComposeServicePrivateKeyCell else { return }
-
+              let privateKeyCell = cell as? ComposeServicePrivateKeyCell else { return }
+        
         let isFirst = privateKeyCell.isFirstResponder
         
         let snapshot = TableViewDataSnapshot<ComposeServiceSection, ComposeServiceSectionCell>()
@@ -206,7 +201,7 @@ extension ComposeServiceViewController: ComposeServiceViewControlling {
         tableView.reloadRows(at: [indexPath], with: .automatic)
         
         guard let (cell, _) = findCell(for: .privateKey),
-        let privateKeyCell = cell as? ComposeServicePrivateKeyCell else { return }
+              let privateKeyCell = cell as? ComposeServicePrivateKeyCell else { return }
         
         if isFirst {
             _ = privateKeyCell.becomeFirstResponder()
@@ -215,13 +210,18 @@ extension ComposeServiceViewController: ComposeServiceViewControlling {
     
     func revealCode(_ privateKey: String) {
         guard let (cell, _) = findCell(for: .privateKey),
-        let privateKeyCell = cell as? ComposeServicePrivateKeyCell else { return }
+              let privateKeyCell = cell as? ComposeServicePrivateKeyCell else { return }
         privateKeyCell.setRevealState(state: .copy(privateKey))
     }
     
     func copySecret() {
         VoiceOver.say(T.Notifications.serviceKeyCopied)
         HUDNotification.presentSuccess(title: T.Notifications.serviceKeyCopied)
+    }
+    
+    func copyLink() {
+        VoiceOver.say(T.Notifications.linkCopied)
+        HUDNotification.presentSuccess(title: T.Notifications.linkCopied)
     }
     
     private func findCell(for kind: ComposeServiceInputKind) -> (cell: UITableViewCell, indexPath: IndexPath)? {

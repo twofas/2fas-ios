@@ -45,6 +45,7 @@ final class ImporterFileErrorViewController: UIViewController {
         let title: String = {
             switch error {
             case .noNewServices: return T.Backup.noNewServices
+            case .emptyClipboard: return T.Commons.error
             default: return T.Backup.fileError
             }
         }()
@@ -56,6 +57,7 @@ final class ImporterFileErrorViewController: UIViewController {
             case .cantReadFile(let errReason):
                 reason = errReason
                 return T.Backup.cantReadFileError
+            case .emptyClipboard: return T.Settings.importClipboardEmpty
             }
         }()
         

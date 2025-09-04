@@ -181,10 +181,6 @@ public final class InteractorFactory {
         IconInteractor(mainRepository: MainRepositoryImpl.shared)
     }
     
-    public func advancedAlertInteractor() -> AdvancedAlertInteracting {
-        AdvancedAlertInteractor(mainRepository: MainRepositoryImpl.shared)
-    }
-    
     public func pushNotificationInteractor() -> PushNotificationInteracting {
         PushNotificationInteractor(mainRepository: MainRepositoryImpl.shared)
     }
@@ -269,5 +265,13 @@ public final class InteractorFactory {
         LocalNotificationFetchInteractor(
             mainRepository: MainRepositoryImpl.shared
         )
+    }
+    
+    public func qrCodeGeneratorInteractor() -> QRCodeGeneratorInteracting {
+        QRCodeGeneratorInteractor()
+    }
+    
+    public func compressionInteractor() -> CompressionInteracting {
+        CompressionInteractor()
     }
 }

@@ -113,6 +113,8 @@ protocol MainRepository: AnyObject {
     func initialPermissionStateSetChildren(_ children: [PermissionsStateChildDataControllerProtocol])
     func initialPermissionStateInitialize()
     
+    var is2FASPASSInstalled: Bool { get }
+    
     // MARK: - Services
     var hasServices: Bool { get }
     
@@ -270,10 +272,6 @@ protocol MainRepository: AnyObject {
     // MARK: - Sort
     var sortType: SortType? { get }
     func setSortType(_ sortType: SortType)
-    
-    // MARK: - Advanced Alert State
-    var advancedAlertShown: Bool { get }
-    func markAdvancedAlertAsShown()
     
     // MARK: - RSA Encryption
     var privateRSAKey: Data? { get }

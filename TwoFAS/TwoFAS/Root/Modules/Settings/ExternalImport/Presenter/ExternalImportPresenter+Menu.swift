@@ -33,9 +33,11 @@ struct ExternalImportCell: Hashable {
         case googleAuth
         case andOTP
         case authenticatorPro
+        case file
+        case clipboard
     }
     
-    let icon: UIImage
+    let icon: UIImage?
     let title: String
     let action: ExternalImportAction
 }
@@ -78,6 +80,22 @@ extension ExternalImportPresenter {
                     )
                 ],
                 footer: T.externalimportDescription
+            ),
+            ExternalImportSection(
+                title: T.Settings.importOtpauthTitle,
+                cells: [
+                    .init(
+                        icon: UIImage(systemName: "doc.fill")!,
+                        title: T.Settings.importFromFile,
+                        action: .file
+                    ),
+                    .init(
+                        icon: UIImage(systemName: "list.clipboard.fill")!,
+                        title: T.Settings.importReadFromClipboard,
+                        action: .clipboard
+                    )
+                ],
+                footer: T.Settings.importOtpauthFooter
             )
         ]
     }

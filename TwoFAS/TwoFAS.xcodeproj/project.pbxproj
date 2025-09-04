@@ -21,7 +21,6 @@
 		8F7952532C01D1940053F776 /* KeyboardButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */; };
 		8F872DE92C24EE2600160D14 /* SortTokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DE82C24EE2600160D14 /* SortTokensPresenter.swift */; };
 		8F872DEB2C24EE5500160D14 /* SortTokensInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */; };
-		8FF1CC7F2D09030000428BB4 /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24AEDBF291BD119005F59CB /* T.generated.swift */; };
 		C200E49E1FB3911B00D7C748 /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = C200E49C1FB3911B00D7C748 /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C200E4A11FB3911B00D7C748 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C200E4A21FB3911B00D7C748 /* Storage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -305,6 +304,7 @@
 		C241D448278B9E0E00D7C604 /* NetworkStack.h in Headers */ = {isa = PBXBuildFile; fileRef = C241D447278B9E0E00D7C604 /* NetworkStack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C241D452278B9E2D00D7C604 /* NetworkStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C241D450278B9E2D00D7C604 /* NetworkStack.swift */; };
 		C241D453278B9E2D00D7C604 /* AppVersionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C241D451278B9E2D00D7C604 /* AppVersionHandler.swift */; };
+		C24295572E43DA4E00E236EA /* CompressionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24295562E43D99100E236EA /* CompressionInteractor.swift */; };
 		C242B4D12A9BD950005CC1BC /* AddingServiceAdvancedSectionDividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C242B4D02A9BD950005CC1BC /* AddingServiceAdvancedSectionDividerView.swift */; };
 		C244718825F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C244718725F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift */; };
 		C24471A425F503690024B4C5 /* ComposeServiceFormInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24471A325F503690024B4C5 /* ComposeServiceFormInput.swift */; };
@@ -330,7 +330,6 @@
 		C248DDAF2B799CD3004712E3 /* CopyIntentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDAE2B799CD3004712E3 /* CopyIntentButton.swift */; };
 		C249773A277F618A00DC872C /* TrashServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2497739277F618A00DC872C /* TrashServiceFlowController.swift */; };
 		C249773C277F62B100DC872C /* TrashServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249773B277F62B100DC872C /* TrashServiceViewController.swift */; };
-		C24AEDC0291BD11A005F59CB /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24AEDBF291BD119005F59CB /* T.generated.swift */; };
 		C24BC311264DC2E300A20084 /* IntroductionPage3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24BC310264DC2E300A20084 /* IntroductionPage3View.swift */; };
 		C24D1C2C253C744F0029D27D /* Sync.h in Headers */ = {isa = PBXBuildFile; fileRef = C24D1C1C253C744E0029D27D /* Sync.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C24D1C2F253C744F0029D27D /* Sync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C24D1C1A253C744E0029D27D /* Sync.framework */; };
@@ -440,7 +439,6 @@
 		C26983802BCC718D009B3BE2 /* PINKeyboardInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C269837F2BCC718D009B3BE2 /* PINKeyboardInteractor.swift */; };
 		C26983822BCC8326009B3BE2 /* AppPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26983812BCC8326009B3BE2 /* AppPresenter.swift */; };
 		C2698B632986860F00EBC179 /* SelectServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B622986860F00EBC179 /* SelectServiceViewController.swift */; };
-		C2698B652986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B642986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift */; };
 		C2698B6C2986B42400EBC179 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B6B2986B42400EBC179 /* MainTabViewController.swift */; };
 		C2698B6E2986C03600EBC179 /* MainTabPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B6D2986C03600EBC179 /* MainTabPresenter.swift */; };
 		C2698B702986CA3C00EBC179 /* MainTabFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B6F2986CA3C00EBC179 /* MainTabFlowController.swift */; };
@@ -665,7 +663,6 @@
 		C281A2732BD47D6C0068451C /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C281A2722BD47D6C0068451C /* SuccessView.swift */; };
 		C281A2772BD489590068451C /* IntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C281A2762BD489590068451C /* IntroductionView.swift */; };
 		C281A2782BD48A930068451C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C225E617241CFCE90041C238 /* Localizable.strings */; };
-		C281A2792BD48A9C0068451C /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24AEDBF291BD119005F59CB /* T.generated.swift */; };
 		C2823B1626F3E84F00583586 /* RevealPasswordInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2823B1526F3E84F00583586 /* RevealPasswordInput.swift */; };
 		C2830D7A293D440900B3DDAF /* TokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D79293D440900B3DDAF /* TokensPresenter.swift */; };
 		C2830D7C293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D7B293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift */; };
@@ -693,6 +690,7 @@
 		C28633D21FFABD2200C8F4B4 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28633D11FFABD2200C8F4B4 /* NotificationViewController.swift */; };
 		C28633D91FFABD2200C8F4B4 /* TwoFASAuth.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C28633CB1FFABD2200C8F4B4 /* TwoFASAuth.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C28633E11FFAC6B600C8F4B4 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
+		C286E9AA2E377CF20019CF79 /* Code+Open.swift in Sources */ = {isa = PBXBuildFile; fileRef = C286E9A92E377CED0019CF79 /* Code+Open.swift */; };
 		C286ED4E25F4365000F92EDE /* ComposeServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C286ED4D25F4365000F92EDE /* ComposeServiceViewController.swift */; };
 		C28705F42980776300745459 /* MainFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28705F32980776300745459 /* MainFlowController.swift */; };
 		C2872DDA27A6B9C2000F5AE9 /* SortType+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2872DD927A6B9C2000F5AE9 /* SortType+.swift */; };
@@ -704,6 +702,12 @@
 		C28B38C927CD784D00BD4A96 /* RefreshTokenCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28B38C827CD784D00BD4A96 /* RefreshTokenCounter.swift */; };
 		C28B9120268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C28B911F268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel */; };
 		C28C441724A67B7000534B30 /* CommonSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28C441624A67B7000534B30 /* CommonSearchBar.swift */; };
+		C28FC6DA2E400B6E0053B0BE /* ExportTokensViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28FC6D72E400B6E0053B0BE /* ExportTokensViewController.swift */; };
+		C28FC6DB2E400B6E0053B0BE /* ExportTokensPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28FC6D52E400B6E0053B0BE /* ExportTokensPresenter+Menu.swift */; };
+		C28FC6DC2E400B6E0053B0BE /* ExportTokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28FC6D42E400B6E0053B0BE /* ExportTokensPresenter.swift */; };
+		C28FC6DD2E400B6E0053B0BE /* ExportTokensFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28FC6D22E400B6E0053B0BE /* ExportTokensFlowController.swift */; };
+		C28FC6E02E4011580053B0BE /* ExportTokensModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28FC6DF2E4011560053B0BE /* ExportTokensModuleInteractor.swift */; };
+		C28FD19F2E4028450053B0BE /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C28FD19E2E4028450053B0BE /* ZIPFoundation */; };
 		C29378302BD1A218008D5125 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C293782F2BD1A218008D5125 /* SettingsView.swift */; };
 		C29378342BD1A342008D5125 /* SecurityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29378332BD1A342008D5125 /* SecurityView.swift */; };
 		C29378362BD1A3B6008D5125 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29378352BD1A3B6008D5125 /* AboutView.swift */; };
@@ -876,9 +880,6 @@
 		C2B1209129D76FA60020281E /* AppearanceModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1209029D76FA60020281E /* AppearanceModuleInteractor.swift */; };
 		C2B1209529D773770020281E /* AppearanceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1209429D773770020281E /* AppearanceFlowController.swift */; };
 		C2B2B9AF2AE932BD00AB61FD /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B2B9AE2AE932BD00AB61FD /* String+.swift */; };
-		C2B2ED1E27C4349100332255 /* AdvancedAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B2ED1D27C4349100332255 /* AdvancedAlert.swift */; };
-		C2B2ED2227C44B1B00332255 /* AdvancedAlertFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B2ED2127C44B1B00332255 /* AdvancedAlertFlowController.swift */; };
-		C2B2ED2427C44BF300332255 /* AdvancedAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B2ED2327C44BF300332255 /* AdvancedAlertViewController.swift */; };
 		C2B39C7027A5882D00D3B579 /* SelectFromGalleryFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39C6F27A5882D00D3B579 /* SelectFromGalleryFlowController.swift */; };
 		C2B39C7327A58E0800D3B579 /* SelectFromGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39C7227A58E0800D3B579 /* SelectFromGalleryView.swift */; };
 		C2B39C7527A58F0E00D3B579 /* SelectFromGalleryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39C7427A58F0E00D3B579 /* SelectFromGalleryPresenter.swift */; };
@@ -919,6 +920,7 @@
 		C2B950F62925977700F1C069 /* UploadLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B950F52925977700F1C069 /* UploadLogs.swift */; };
 		C2B950F929259ADA00F1C069 /* NSMutableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B950F829259ADA00F1C069 /* NSMutableData.swift */; };
 		C2B950FC29259B1800F1C069 /* NetworkMultipartRequestFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B950FB29259B1800F1C069 /* NetworkMultipartRequestFormat.swift */; };
+		C2BBD0232E270138004ECE56 /* QRCodeDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD0222E270133004ECE56 /* QRCodeDisplayViewController.swift */; };
 		C2BBD1D42B8113A9009A91FB /* TwoFASWidgetInline.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD1D22B81127C009A91FB /* TwoFASWidgetInline.swift */; };
 		C2BBD1D72B812117009A91FB /* TwoFASWidgetCircular.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBD1D52B8120F4009A91FB /* TwoFASWidgetCircular.swift */; };
 		C2BBD2382B8130B0009A91FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2BBD2332B81308C009A91FB /* Localizable.strings */; };
@@ -944,11 +946,6 @@
 		C2C02242297F222100D596A8 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C02241297F222100D596A8 /* MainPresenter.swift */; };
 		C2C02244297F224700D596A8 /* MainModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C02243297F224700D596A8 /* MainModuleInteractor.swift */; };
 		C2C15140294E831300F8B511 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1513F294E831300F8B511 /* Keys.swift */; };
-		C2C1DDD927CAA5CC002C7867 /* ComposeServiceAdvancedEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1DDD827CAA5CC002C7867 /* ComposeServiceAdvancedEditPresenter.swift */; };
-		C2C1DDDB27CAA619002C7867 /* ComposeServiceAdvancedEditPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1DDDA27CAA619002C7867 /* ComposeServiceAdvancedEditPresenter+Menu.swift */; };
-		C2C1DDDD27CAA773002C7867 /* ComposeServiceAdvancedEditModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1DDDC27CAA773002C7867 /* ComposeServiceAdvancedEditModuleInteractor.swift */; };
-		C2C1DDDF27CAA7F2002C7867 /* ComposeServiceAdvancedEditFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1DDDE27CAA7F2002C7867 /* ComposeServiceAdvancedEditFlowController.swift */; };
-		C2C1DDE227CAD2DF002C7867 /* ComposeServiceAdvancedEditTokenTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1DDE127CAD2DF002C7867 /* ComposeServiceAdvancedEditTokenTypeCell.swift */; };
 		C2C1DDE427CAD37D002C7867 /* SelectOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1DDE327CAD37D002C7867 /* SelectOption.swift */; };
 		C2C32A312AB7198C00DDB944 /* IconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C32A302AB7198C00DDB944 /* IconRenderer.swift */; };
 		C2C3AE0F269E224A00506ACF /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE0E269E224A00506ACF /* WidgetKit.framework */; };
@@ -1020,6 +1017,13 @@
 		C2D6731D25DB2C5D004BD697 /* ToastCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6731825DB2C5D004BD697 /* ToastCenter.swift */; };
 		C2D6731E25DB2C5D004BD697 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6731925DB2C5D004BD697 /* Toast.swift */; };
 		C2D75D37297D51B60002531E /* iCloudIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D75D36297D51B60002531E /* iCloudIdentifier.swift */; };
+		C2D97E7D2E24436900E213A7 /* QRCodeGeneratorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E7C2E24436200E213A7 /* QRCodeGeneratorInteractor.swift */; };
+		C2D97E802E2454D600E213A7 /* QRCodeDisplayFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E7F2E2454D600E213A7 /* QRCodeDisplayFlowController.swift */; };
+		C2D97E822E24556F00E213A7 /* QRCodeDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E812E24556F00E213A7 /* QRCodeDisplayView.swift */; };
+		C2D97E842E2455F400E213A7 /* QRCodeDisplayPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E832E2455F400E213A7 /* QRCodeDisplayPresenter.swift */; };
+		C2D97E882E2469BD00E213A7 /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E872E2469BD00E213A7 /* T.generated.swift */; };
+		C2D97E892E2469EA00E213A7 /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E872E2469BD00E213A7 /* T.generated.swift */; };
+		C2D97E8A2E246A0F00E213A7 /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E872E2469BD00E213A7 /* T.generated.swift */; };
 		C2DB8E5D21F8FE33002F124B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2DB8E5C21F8FE33002F124B /* Assets.xcassets */; };
 		C2DDEB1F289ED4A300011712 /* IntroductionDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DDEB1E289ED4A300011712 /* IntroductionDots.swift */; };
 		C2DDEB25289F3D5200011712 /* TokensViewEmptyListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */; };
@@ -1176,7 +1180,6 @@
 		C2E7C3BF2ADB2B9C00478D89 /* MainRepositoryImpl+AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249AF7F278A537F005F9D80 /* MainRepositoryImpl+AppInfo.swift */; };
 		C2E7C3C02ADB2B9C00478D89 /* MainRepositoryImpl+Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D3B0F728EE115200D2F991 /* MainRepositoryImpl+Icons.swift */; };
 		C2E7C3C12ADB2B9C00478D89 /* MainRepositoryImpl+Logs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077A7292A809A0074517F /* MainRepositoryImpl+Logs.swift */; };
-		C2E7C3C22ADB2B9C00478D89 /* MainRepositoryImpl+AdvancedAlertState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C299110327C58A9100D334A3 /* MainRepositoryImpl+AdvancedAlertState.swift */; };
 		C2E7C3C32ADB2B9C00478D89 /* MainRepositoryImpl+News.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DE42823324E00E864E9 /* MainRepositoryImpl+News.swift */; };
 		C2E7C3C42ADB2B9C00478D89 /* MainRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D44E69275C14790043F5D6 /* MainRepository.swift */; };
 		C2E7C3C52ADB2B9C00478D89 /* MainRepositoryImpl+Export.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404854276529FF0076376E /* MainRepositoryImpl+Export.swift */; };
@@ -1215,7 +1218,6 @@
 		C2E7C3E62ADB2BB400478D89 /* NewVersionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249AF67278A411B005F9D80 /* NewVersionInteractor.swift */; };
 		C2E7C3E72ADB2BB400478D89 /* ServiceDefinitionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D3B0F928EE12A700D2F991 /* ServiceDefinitionInteractor.swift */; };
 		C2E7C3E82ADB2BB400478D89 /* SectionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C279BD51286509F8000FD69D /* SectionInteractor.swift */; };
-		C2E7C3E92ADB2BB400478D89 /* AdvancedAlertInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935DF2921510A000F5AA7 /* AdvancedAlertInteractor.swift */; };
 		C2E7C3EA2ADB2BB400478D89 /* CloudBackupStateInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27BE51A275D7DDE0090CA12 /* CloudBackupStateInteractor.swift */; };
 		C2E7C3EB2ADB2BB400478D89 /* AppInfoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20935E529215453000F5AA7 /* AppInfoInteractor.swift */; };
 		C2E7C3EC2ADB2BB400478D89 /* TokenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A2255B293BFE1E00B76115 /* TokenInteractor.swift */; };
@@ -1951,7 +1953,6 @@
 		C20935D629214BC3000F5AA7 /* ExportToFileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportToFileInteractor.swift; sourceTree = "<group>"; };
 		C20935D929214E54000F5AA7 /* ScanInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanInteractor.swift; sourceTree = "<group>"; };
 		C20935DC29214FA7000F5AA7 /* IconInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconInteractor.swift; sourceTree = "<group>"; };
-		C20935DF2921510A000F5AA7 /* AdvancedAlertInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedAlertInteractor.swift; sourceTree = "<group>"; };
 		C20935E2292152FA000F5AA7 /* PushNotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationInteractor.swift; sourceTree = "<group>"; };
 		C20935E529215453000F5AA7 /* AppInfoInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoInteractor.swift; sourceTree = "<group>"; };
 		C209E9B8267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensEmptyDropSpaceCell.swift; sourceTree = "<group>"; };
@@ -2202,6 +2203,7 @@
 		C241D447278B9E0E00D7C604 /* NetworkStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkStack.h; sourceTree = "<group>"; };
 		C241D450278B9E2D00D7C604 /* NetworkStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStack.swift; sourceTree = "<group>"; };
 		C241D451278B9E2D00D7C604 /* AppVersionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersionHandler.swift; sourceTree = "<group>"; };
+		C24295562E43D99100E236EA /* CompressionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressionInteractor.swift; sourceTree = "<group>"; };
 		C242B4D02A9BD950005CC1BC /* AddingServiceAdvancedSectionDividerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceAdvancedSectionDividerView.swift; sourceTree = "<group>"; };
 		C24336E7299ECEC700BF35B1 /* NewsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsInteractor.swift; sourceTree = "<group>"; };
 		C244718725F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceFormRowTitleLabel.swift; sourceTree = "<group>"; };
@@ -2236,7 +2238,6 @@
 		C249AF67278A411B005F9D80 /* NewVersionInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewVersionInteractor.swift; sourceTree = "<group>"; };
 		C249AF69278A4148005F9D80 /* MainRepositoryImpl+NewAppVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+NewAppVersion.swift"; sourceTree = "<group>"; };
 		C249AF7F278A537F005F9D80 /* MainRepositoryImpl+AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+AppInfo.swift"; sourceTree = "<group>"; };
-		C24AEDBF291BD119005F59CB /* T.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = T.generated.swift; sourceTree = "<group>"; };
 		C24BC310264DC2E300A20084 /* IntroductionPage3View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductionPage3View.swift; sourceTree = "<group>"; };
 		C24D1C1A253C744E0029D27D /* Sync.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sync.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C24D1C1C253C744E0029D27D /* Sync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sync.h; sourceTree = "<group>"; };
@@ -2367,7 +2368,6 @@
 		C269837F2BCC718D009B3BE2 /* PINKeyboardInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINKeyboardInteractor.swift; sourceTree = "<group>"; };
 		C26983812BCC8326009B3BE2 /* AppPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPresenter.swift; sourceTree = "<group>"; };
 		C2698B622986860F00EBC179 /* SelectServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectServiceViewController.swift; sourceTree = "<group>"; };
-		C2698B642986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedEditViewController.swift; sourceTree = "<group>"; };
 		C2698B6B2986B42400EBC179 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		C2698B6D2986C03600EBC179 /* MainTabPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabPresenter.swift; sourceTree = "<group>"; };
 		C2698B6F2986CA3C00EBC179 /* MainTabFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabFlowController.swift; sourceTree = "<group>"; };
@@ -2513,6 +2513,7 @@
 		C28633D61FFABD2200C8F4B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C28633E01FFAC69D00C8F4B4 /* TwoFASAuth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASAuth.entitlements; sourceTree = "<group>"; };
 		C28681E62891D41F00BE0CA7 /* TimerInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerInteractor.swift; sourceTree = "<group>"; };
+		C286E9A92E377CED0019CF79 /* Code+Open.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Code+Open.swift"; sourceTree = "<group>"; };
 		C286ED4D25F4365000F92EDE /* ComposeServiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceViewController.swift; sourceTree = "<group>"; };
 		C28705F32980776300745459 /* MainFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowController.swift; sourceTree = "<group>"; };
 		C2872DD527A6A1FE000F5AE9 /* SortInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortInteractor.swift; sourceTree = "<group>"; };
@@ -2532,6 +2533,11 @@
 		C28ECE991FEDBFB3000EBB9D /* CameraDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraDelegate.swift; sourceTree = "<group>"; };
 		C28ECE9F1FEE8273000EBB9D /* CodeParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeParser.swift; sourceTree = "<group>"; };
 		C28ECEA51FEEA9CE000EBB9D /* QueryItemsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryItemsType.swift; sourceTree = "<group>"; };
+		C28FC6D22E400B6E0053B0BE /* ExportTokensFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportTokensFlowController.swift; sourceTree = "<group>"; };
+		C28FC6D42E400B6E0053B0BE /* ExportTokensPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportTokensPresenter.swift; sourceTree = "<group>"; };
+		C28FC6D52E400B6E0053B0BE /* ExportTokensPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExportTokensPresenter+Menu.swift"; sourceTree = "<group>"; };
+		C28FC6D72E400B6E0053B0BE /* ExportTokensViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportTokensViewController.swift; sourceTree = "<group>"; };
+		C28FC6DF2E4011560053B0BE /* ExportTokensModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportTokensModuleInteractor.swift; sourceTree = "<group>"; };
 		C292044C2DBE4FC50061E985 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = TwoFAS/Other/sv.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C292044D2DBE4FE40061E985 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = TwoFAS/Other/sv.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C292044E2DBE4FE60061E985 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = TwoFAS/Other/ja.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
@@ -2560,7 +2566,6 @@
 		C29803BF245EE05C0066DFE0 /* MainContainerElementsStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerElementsStyling.swift; sourceTree = "<group>"; };
 		C29803C1245EEB470066DFE0 /* MainContainerGenerators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerGenerators.swift; sourceTree = "<group>"; };
 		C29803C3245F01600066DFE0 /* CenteringScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenteringScrollView.swift; sourceTree = "<group>"; };
-		C299110327C58A9100D334A3 /* MainRepositoryImpl+AdvancedAlertState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+AdvancedAlertState.swift"; sourceTree = "<group>"; };
 		C2997AA82454D767006D5943 /* SelectPINLengthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPINLengthController.swift; sourceTree = "<group>"; };
 		C299B7D1236DE78700224F51 /* StackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView+.swift"; sourceTree = "<group>"; };
 		C29B2B7829982E4900EDE75B /* MainSplitModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitModuleInteractor.swift; sourceTree = "<group>"; };
@@ -2685,9 +2690,6 @@
 		C2B1209229D771AA0020281E /* MainRepositoryImpl+Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Appearance.swift"; sourceTree = "<group>"; };
 		C2B1209429D773770020281E /* AppearanceFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceFlowController.swift; sourceTree = "<group>"; };
 		C2B2B9AE2AE932BD00AB61FD /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
-		C2B2ED1D27C4349100332255 /* AdvancedAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedAlert.swift; sourceTree = "<group>"; };
-		C2B2ED2127C44B1B00332255 /* AdvancedAlertFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedAlertFlowController.swift; sourceTree = "<group>"; };
-		C2B2ED2327C44BF300332255 /* AdvancedAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedAlertViewController.swift; sourceTree = "<group>"; };
 		C2B39C6F27A5882D00D3B579 /* SelectFromGalleryFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFromGalleryFlowController.swift; sourceTree = "<group>"; };
 		C2B39C7227A58E0800D3B579 /* SelectFromGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFromGalleryView.swift; sourceTree = "<group>"; };
 		C2B39C7427A58F0E00D3B579 /* SelectFromGalleryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFromGalleryPresenter.swift; sourceTree = "<group>"; };
@@ -2729,6 +2731,7 @@
 		C2B950F52925977700F1C069 /* UploadLogs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadLogs.swift; sourceTree = "<group>"; };
 		C2B950F829259ADA00F1C069 /* NSMutableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableData.swift; sourceTree = "<group>"; };
 		C2B950FB29259B1800F1C069 /* NetworkMultipartRequestFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMultipartRequestFormat.swift; sourceTree = "<group>"; };
+		C2BBD0222E270133004ECE56 /* QRCodeDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDisplayViewController.swift; sourceTree = "<group>"; };
 		C2BBD1D22B81127C009A91FB /* TwoFASWidgetInline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetInline.swift; sourceTree = "<group>"; };
 		C2BBD1D52B8120F4009A91FB /* TwoFASWidgetCircular.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetCircular.swift; sourceTree = "<group>"; };
 		C2BBD2342B81308C009A91FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = TwoFAS/Other/en.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
@@ -2780,11 +2783,6 @@
 		C2C02241297F222100D596A8 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		C2C02243297F224700D596A8 /* MainModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModuleInteractor.swift; sourceTree = "<group>"; };
 		C2C1513F294E831300F8B511 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
-		C2C1DDD827CAA5CC002C7867 /* ComposeServiceAdvancedEditPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedEditPresenter.swift; sourceTree = "<group>"; };
-		C2C1DDDA27CAA619002C7867 /* ComposeServiceAdvancedEditPresenter+Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeServiceAdvancedEditPresenter+Menu.swift"; sourceTree = "<group>"; };
-		C2C1DDDC27CAA773002C7867 /* ComposeServiceAdvancedEditModuleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedEditModuleInteractor.swift; sourceTree = "<group>"; };
-		C2C1DDDE27CAA7F2002C7867 /* ComposeServiceAdvancedEditFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedEditFlowController.swift; sourceTree = "<group>"; };
-		C2C1DDE127CAD2DF002C7867 /* ComposeServiceAdvancedEditTokenTypeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedEditTokenTypeCell.swift; sourceTree = "<group>"; };
 		C2C1DDE327CAD37D002C7867 /* SelectOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectOption.swift; sourceTree = "<group>"; };
 		C2C32A302AB7198C00DDB944 /* IconRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconRenderer.swift; sourceTree = "<group>"; };
 		C2C3AE0D269E224A00506ACF /* TwoFASWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TwoFASWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2877,6 +2875,11 @@
 		C2D6731925DB2C5D004BD697 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		C2D75D36297D51B60002531E /* iCloudIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudIdentifier.swift; sourceTree = "<group>"; };
 		C2D958CF276FABE500B5A6BD /* TwoFAS5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS5.xcdatamodel; sourceTree = "<group>"; };
+		C2D97E7C2E24436200E213A7 /* QRCodeGeneratorInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGeneratorInteractor.swift; sourceTree = "<group>"; };
+		C2D97E7F2E2454D600E213A7 /* QRCodeDisplayFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDisplayFlowController.swift; sourceTree = "<group>"; };
+		C2D97E812E24556F00E213A7 /* QRCodeDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDisplayView.swift; sourceTree = "<group>"; };
+		C2D97E832E2455F400E213A7 /* QRCodeDisplayPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDisplayPresenter.swift; sourceTree = "<group>"; };
+		C2D97E872E2469BD00E213A7 /* T.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = T.generated.swift; path = TwoFASAuth/Generated/T.generated.swift; sourceTree = SOURCE_ROOT; };
 		C2DB8E5C21F8FE33002F124B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C2DDEB1E289ED4A300011712 /* IntroductionDots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionDots.swift; sourceTree = "<group>"; };
 		C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensViewEmptyListScreen.swift; sourceTree = "<group>"; };
@@ -3332,6 +3335,7 @@
 				C2E7C3982ADB21B400478D89 /* NetworkStack.framework in Frameworks */,
 				C251EDE82AE8721B007722F2 /* Base32.framework in Frameworks */,
 				C2E7C39C2ADB21B400478D89 /* Protection.framework in Frameworks */,
+				C28FD19F2E4028450053B0BE /* ZIPFoundation in Frameworks */,
 				C2AE5F882ADC8B2300AED670 /* SwiftProtobuf in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3818,6 +3822,7 @@
 		C21111E1274AB8C100CA7C78 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				C28FC6D92E400B6E0053B0BE /* ExportTokens */,
 				8F594C402C3024E60066562F /* AppleWatch */,
 				C2B1208529D767150020281E /* Appearance */,
 				C2CC0A4129D08D7700677A7B /* ExternalImportInstructions */,
@@ -3890,6 +3895,7 @@
 			isa = PBXGroup;
 			children = (
 				C21111F4274ABDDA00CA7C78 /* InteractorFactory.swift */,
+				C24295562E43D99100E236EA /* CompressionInteractor.swift */,
 				C27BE51A275D7DDE0090CA12 /* CloudBackupStateInteractor.swift */,
 				C240485B276549C00076376E /* ImportFromFileInteractor.swift */,
 				C278295F2AB4C546006224CC /* ImportFromFileInteractor+Parsers.swift */,
@@ -3923,7 +3929,6 @@
 				C20935D629214BC3000F5AA7 /* ExportToFileInteractor.swift */,
 				C20935D929214E54000F5AA7 /* ScanInteractor.swift */,
 				C20935DC29214FA7000F5AA7 /* IconInteractor.swift */,
-				C20935DF2921510A000F5AA7 /* AdvancedAlertInteractor.swift */,
 				C20935E2292152FA000F5AA7 /* PushNotificationInteractor.swift */,
 				C20935E529215453000F5AA7 /* AppInfoInteractor.swift */,
 				C2B950F229258C0E00F1C069 /* LogUploadingInteractor.swift */,
@@ -3939,6 +3944,7 @@
 				C22CD3972B9142CA005FE348 /* MDMInteractor.swift */,
 				C276D1702B9A672C008C9CD4 /* LocalNotificationStateInteractor.swift */,
 				C2EA6E5B2BA10AFE0034A964 /* LocalNotificationFetchInteractor.swift */,
+				C2D97E7C2E24436200E213A7 /* QRCodeGeneratorInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -4022,6 +4028,7 @@
 		C21247F927B717660044D9F2 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				C2D97E7E2E2453AF00E213A7 /* QRCodeDisplay */,
 				C296D1E528B2D20D001F026D /* UserIconInfo */,
 				C26764A628723CFD00D468B2 /* CategorySelection */,
 				C23FD50828144A4B00E4E9C5 /* WebExtension */,
@@ -4029,10 +4036,8 @@
 				C21A9E9727CC0F3400FE4CC4 /* Algorithm */,
 				C21A9E8B27CC09F400FE4CC4 /* RefreshTime */,
 				C21A9E7D27CBF25900FE4CC4 /* NumberOfDigits */,
-				C2C1DDD127CAA30B002C7867 /* AdvancedEdit */,
 				C2C56D3A27C9788A003B4C43 /* AdvancedSummary */,
 				C2C56D3727C9672A003B4C43 /* Models */,
-				C2B2ED1C27C4348200332255 /* AdvancedAlert */,
 				C2E2C80227B0303F00F04B70 /* IconSelector */,
 				C21B3A0D27AF0B4E005C603B /* ColorPicker */,
 				C2B6D78C260BAFE1005B599E /* LabelCompose */,
@@ -6290,6 +6295,50 @@
 			path = ComposeService;
 			sourceTree = "<group>";
 		};
+		C28FC6D32E400B6E0053B0BE /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				C28FC6D22E400B6E0053B0BE /* ExportTokensFlowController.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		C28FC6D62E400B6E0053B0BE /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C28FC6D42E400B6E0053B0BE /* ExportTokensPresenter.swift */,
+				C28FC6D52E400B6E0053B0BE /* ExportTokensPresenter+Menu.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C28FC6D82E400B6E0053B0BE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C28FC6D72E400B6E0053B0BE /* ExportTokensViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C28FC6D92E400B6E0053B0BE /* ExportTokens */ = {
+			isa = PBXGroup;
+			children = (
+				C28FC6D32E400B6E0053B0BE /* Flow */,
+				C28FC6DE2E40114F0053B0BE /* Interactor */,
+				C28FC6D62E400B6E0053B0BE /* Presenter */,
+				C28FC6D82E400B6E0053B0BE /* View */,
+			);
+			path = ExportTokens;
+			sourceTree = "<group>";
+		};
+		C28FC6DE2E40114F0053B0BE /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				C28FC6DF2E4011560053B0BE /* ExportTokensModuleInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
 		C293783B2BD1C240008D5125 /* PINType */ = {
 			isa = PBXGroup;
 			children = (
@@ -6827,6 +6876,7 @@
 				C29DD5831FE84575007ECEEE /* Extensions.swift */,
 				C28ECEA51FEEA9CE000EBB9D /* QueryItemsType.swift */,
 				C2E7F8D0246B3F3400E401FB /* Code+AppStoreCode.swift */,
+				C286E9A92E377CED0019CF79 /* Code+Open.swift */,
 				C2F245D2293566F0006F7F5B /* Code+Support.swift */,
 				C208101327948DFD0035E339 /* Code+GoogleAuth.swift */,
 				C278122427FA3A3200F31453 /* Code+TwoFASWebExtension.swift */,
@@ -6965,16 +7015,6 @@
 				C2B2B9AE2AE932BD00AB61FD /* String+.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		C2B2ED1C27C4348200332255 /* AdvancedAlert */ = {
-			isa = PBXGroup;
-			children = (
-				C2B2ED2127C44B1B00332255 /* AdvancedAlertFlowController.swift */,
-				C2B2ED1D27C4349100332255 /* AdvancedAlert.swift */,
-				C2B2ED2327C44BF300332255 /* AdvancedAlertViewController.swift */,
-			);
-			path = AdvancedAlert;
 			sourceTree = "<group>";
 		};
 		C2B39C6C27A581C600D3B579 /* Presenter */ = {
@@ -7175,59 +7215,6 @@
 				C277C32A245C3FB8009214F3 /* Container */,
 			);
 			path = DEPRECATED;
-			sourceTree = "<group>";
-		};
-		C2C1DDD127CAA30B002C7867 /* AdvancedEdit */ = {
-			isa = PBXGroup;
-			children = (
-				C2C1DDD527CAA327002C7867 /* Flow */,
-				C2C1DDD427CAA31F002C7867 /* Interactor */,
-				C2C1DDD327CAA319002C7867 /* Presenter */,
-				C2C1DDD227CAA314002C7867 /* View */,
-			);
-			path = AdvancedEdit;
-			sourceTree = "<group>";
-		};
-		C2C1DDD227CAA314002C7867 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C2698B642986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift */,
-				C2C1DDE027CAD2C1002C7867 /* Cells */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2C1DDD327CAA319002C7867 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2C1DDD827CAA5CC002C7867 /* ComposeServiceAdvancedEditPresenter.swift */,
-				C2C1DDDA27CAA619002C7867 /* ComposeServiceAdvancedEditPresenter+Menu.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2C1DDD427CAA31F002C7867 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2C1DDDC27CAA773002C7867 /* ComposeServiceAdvancedEditModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2C1DDD527CAA327002C7867 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2C1DDDE27CAA7F2002C7867 /* ComposeServiceAdvancedEditFlowController.swift */,
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
-		C2C1DDE027CAD2C1002C7867 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				C2C1DDE127CAD2DF002C7867 /* ComposeServiceAdvancedEditTokenTypeCell.swift */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		C2C3AE12269E224A00506ACF /* TwoFASWidget */ = {
@@ -7515,8 +7502,8 @@
 		C2D17FF3291BB5D90072EBFD /* Generated */ = {
 			isa = PBXGroup;
 			children = (
+				C2D97E872E2469BD00E213A7 /* T.generated.swift */,
 				C2EE37A9291D2B9800CAB85C /* Assets.swift */,
-				C24AEDBF291BD119005F59CB /* T.generated.swift */,
 			);
 			path = Generated;
 			sourceTree = "<group>";
@@ -7553,7 +7540,6 @@
 				C27CCE9B279DF8DC00C3D88F /* MainRepositoryImpl+Code.swift */,
 				C2B39C7927A5921900D3B579 /* MainRepositoryImpl+Vision.swift */,
 				C2872DDB27A6BAAE000F5AE9 /* MainRepositoryImpl+Sort.swift */,
-				C299110327C58A9100D334A3 /* MainRepositoryImpl+AdvancedAlertState.swift */,
 				C278122827FA462000F31453 /* MainRepositoryImpl+RSAEncryption.swift */,
 				C278122C27FA4B5A00F31453 /* MainRepositoryImpl+DeviceName.swift */,
 				C233BD212801CB2600A9CFF2 /* MainRepositoryImpl+Network.swift */,
@@ -7610,6 +7596,17 @@
 				C2C0223D297F218D00D596A8 /* View */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		C2D97E7E2E2453AF00E213A7 /* QRCodeDisplay */ = {
+			isa = PBXGroup;
+			children = (
+				C2D97E7F2E2454D600E213A7 /* QRCodeDisplayFlowController.swift */,
+				C2BBD0222E270133004ECE56 /* QRCodeDisplayViewController.swift */,
+				C2D97E832E2455F400E213A7 /* QRCodeDisplayPresenter.swift */,
+				C2D97E812E24556F00E213A7 /* QRCodeDisplayView.swift */,
+			);
+			path = QRCodeDisplay;
 			sourceTree = "<group>";
 		};
 		C2DD28C421D5590600034476 /* Controls */ = {
@@ -9036,6 +9033,7 @@
 			packageProductDependencies = (
 				C2AE5F712ADC880B00AED670 /* DeviceKit */,
 				C2AE5F872ADC8B2300AED670 /* SwiftProtobuf */,
+				C28FD19E2E4028450053B0BE /* ZIPFoundation */,
 			);
 			productName = Data;
 			productReference = C2E7C3822ADB19F300478D89 /* Data.framework */;
@@ -9068,7 +9066,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 1640;
 				ORGANIZATIONNAME = "Two Factor Authentication Service, Inc.";
 				TargetAttributes = {
 					C200E4991FB3911B00D7C748 = {
@@ -9200,6 +9198,7 @@
 				C2CE0E1127934579007DB667 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */,
 				C2EC97D22D917D8900C0A27A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C28FD19D2E4028450053B0BE /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 			);
 			productRefGroup = C23666741FB2644900989ACA /* Products */;
 			projectDirPath = "";
@@ -9638,6 +9637,7 @@
 				C2C56D4A27C99314003B4C43 /* ComposeServiceAdvancedSummaryFlowController.swift in Sources */,
 				C245702228A04BAB008E99F4 /* GridViewGAImportViewController.swift in Sources */,
 				C296D1EC28B2D4CA001F026D /* UserIconInfoPresenter.swift in Sources */,
+				C28FC6E02E4011580053B0BE /* ExportTokensModuleInteractor.swift in Sources */,
 				C2CC0A3E29D0603000677A7B /* ExternalImportPresenter+Menu.swift in Sources */,
 				C25371A2281DCF56005FB118 /* UINavigationController+.swift in Sources */,
 				C27D5443275D478E001E9ABF /* BackupMenuViewControlling.swift in Sources */,
@@ -9700,7 +9700,6 @@
 				C20A3B8326E6A7D90020D8C5 /* MainContainerCenteredImage.swift in Sources */,
 				C2E2C81627B070B700F04B70 /* CollectionViewDataSnapshot.swift in Sources */,
 				C21A9E8A27CBFDC200FE4CC4 /* ComposeServiceNumberOfDigitsViewController.swift in Sources */,
-				C2B2ED2227C44B1B00332255 /* AdvancedAlertFlowController.swift in Sources */,
 				C20E2DF72A7C4AC900DB64BB /* AddingServiceFlowController.swift in Sources */,
 				C207324B29F725DE00FB294E /* TokensDragIcon.swift in Sources */,
 				C2E2C80B27B038DC00F04B70 /* IconSelectorModuleInteractor.swift in Sources */,
@@ -9719,6 +9718,10 @@
 				C286ED4E25F4365000F92EDE /* ComposeServiceViewController.swift in Sources */,
 				C2C56D4227C98243003B4C43 /* ComposeServiceAdvancedSummaryPresenter.swift in Sources */,
 				C2F5F9E728611DD600F778E1 /* BrowserExtensionPairingAlreadyPairedViewController.swift in Sources */,
+				C28FC6DA2E400B6E0053B0BE /* ExportTokensViewController.swift in Sources */,
+				C28FC6DB2E400B6E0053B0BE /* ExportTokensPresenter+Menu.swift in Sources */,
+				C28FC6DC2E400B6E0053B0BE /* ExportTokensPresenter.swift in Sources */,
+				C28FC6DD2E400B6E0053B0BE /* ExportTokensFlowController.swift in Sources */,
 				C20E60F728188A8E00AB002E /* PushNotificationPermissionView.swift in Sources */,
 				C2557A9923F5E96200E713EF /* Separator.swift in Sources */,
 				C2E2C81427B0702300F04B70 /* CollectionViewAdapter.swift in Sources */,
@@ -9752,7 +9755,6 @@
 				C2A4C8352A10F13800AFD67C /* TokensTOTPCell.swift in Sources */,
 				C2117181276CE54900042D28 /* VerifyPINFlowController.swift in Sources */,
 				C29FEFF92756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift in Sources */,
-				C2C1DDE227CAD2DF002C7867 /* ComposeServiceAdvancedEditTokenTypeCell.swift in Sources */,
 				C2959627267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift in Sources */,
 				C2CC0A4E29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift in Sources */,
 				C2F5A9D9276E233000C422C4 /* SettingsMenuIcon.swift in Sources */,
@@ -9775,7 +9777,6 @@
 				C24471D125F51F760024B4C5 /* ComposeServiceFormError.swift in Sources */,
 				C245702428A04CBA008E99F4 /* GridViewGAImportPresenter.swift in Sources */,
 				C2A74FC82610CBAF007E5AB3 /* ColorPickerButtonWithName.swift in Sources */,
-				C2C1DDD927CAA5CC002C7867 /* ComposeServiceAdvancedEditPresenter.swift in Sources */,
 				C2C56D4027C98140003B4C43 /* ComposeServiceAdvancedSummaryViewController.swift in Sources */,
 				C2AF5F7D28B18CCC00A30DCF /* IconSelectorCollectionViewDelegatee.swift in Sources */,
 				C2147CE5205D7B790001D011 /* PINPadKey.swift in Sources */,
@@ -9791,6 +9792,7 @@
 				C29803C4245F01600066DFE0 /* CenteringScrollView.swift in Sources */,
 				C2B077BC292A8FA80074517F /* UploadLogsSuccessViewController.swift in Sources */,
 				C20418622ABB969300874654 /* AddingServiceCloseButtonView.swift in Sources */,
+				C2D97E822E24556F00E213A7 /* QRCodeDisplayView.swift in Sources */,
 				C240484A2765218C0076376E /* WidgetWarningPresenter.swift in Sources */,
 				C2F5F9E328611D6200F778E1 /* BrowserExtensionPairingAlreadyPairedFlowController.swift in Sources */,
 				C28356232897098300421882 /* SelectFromGalleryAdvice.swift in Sources */,
@@ -9890,8 +9892,8 @@
 				C21B40DC28C520E400348E04 /* ImporterOpenFileError.swift in Sources */,
 				C2BD85E6264068C00087D087 /* IntroductionPage1View.swift in Sources */,
 				C2FDEE5F279CC316002CAB9E /* CameraScannerPresenter.swift in Sources */,
-				C2698B652986863E00EBC179 /* ComposeServiceAdvancedEditViewController.swift in Sources */,
 				C2BE805B2811DF3D009CBC4A /* AuthRequestsFlowController.swift in Sources */,
+				C2D97E842E2455F400E213A7 /* QRCodeDisplayPresenter.swift in Sources */,
 				C23B899527C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift in Sources */,
 				C2BD85E22640394B0087D087 /* IntroductionScrollView.swift in Sources */,
 				C2404F7E2B72FC6000EBD8DC /* SelectService.swift in Sources */,
@@ -9920,11 +9922,9 @@
 				C29FEFFB2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift in Sources */,
 				C24018BA2618BCF300800DBF /* CommonSearchController.swift in Sources */,
 				C2035AED245DCAAD00C482D2 /* MainContainerBottomNavigationGenerator.swift in Sources */,
-				C2B2ED2427C44BF300332255 /* AdvancedAlertViewController.swift in Sources */,
 				C25B221927C199B80052AAC4 /* ComposeServicePrivateKeyCell.swift in Sources */,
 				8F43E7002C4C50DD0006D380 /* AppleWatchPresenter.swift in Sources */,
 				C2ADD6122752DC1E0010F5E7 /* SettingsMenuFlowController.swift in Sources */,
-				C2C1DDDF27CAA7F2002C7867 /* ComposeServiceAdvancedEditFlowController.swift in Sources */,
 				C263F45A29900DED009B0837 /* MainMenuModels.swift in Sources */,
 				C2AB92BD27662E4C00698382 /* ExporterPasswordProtectionModuleInteractor.swift in Sources */,
 				C21B1B292A8820BE0021CAF1 /* HOTPAdapter.swift in Sources */,
@@ -9946,6 +9946,7 @@
 				C21EB2EE2A7FC55800FA8AA1 /* AddingServiceMetrics.swift in Sources */,
 				C2F51F0127DAB37200A67C73 /* BrowserExtensionPairingAnimationView.swift in Sources */,
 				C2B5BF592946616900E5092D /* TokensNavigationFlowController.swift in Sources */,
+				C2BBD0232E270138004ECE56 /* QRCodeDisplayViewController.swift in Sources */,
 				C27D5441275D462D001E9ABF /* BackupMenuViewController+TableCellHandling.swift in Sources */,
 				C27A549B27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift in Sources */,
 				C204FAEE21F4A0850041E2F4 /* CGFloat+Extensions.swift in Sources */,
@@ -10011,7 +10012,6 @@
 				C233870A2781113800F8DBC3 /* TrashViewController+TableCellHandling.swift in Sources */,
 				C2ADD6162752DF770010F5E7 /* BackupMenuFlowController.swift in Sources */,
 				C2AC21FE27660F5700271402 /* ImporterOpenFileModuleInteractor.swift in Sources */,
-				C2C1DDDB27CAA619002C7867 /* ComposeServiceAdvancedEditPresenter+Menu.swift in Sources */,
 				C24018C92618DE8100800DBF /* ComposeServiceIconTypeSelection.swift in Sources */,
 				C2AC220A2766178400271402 /* ExporterMainScreenModuleInteractor.swift in Sources */,
 				C2DFE5BD264C851700F828C0 /* CircleView.swift in Sources */,
@@ -10061,6 +10061,7 @@
 				C2404846276520A80076376E /* WidgetWarningModuleInteractor.swift in Sources */,
 				C2404889276573420076376E /* ImporterPreimportSummaryModuleInteractor.swift in Sources */,
 				C235A011298FD97D008F4FD0 /* MainSplitViewController.swift in Sources */,
+				C2D97E802E2454D600E213A7 /* QRCodeDisplayFlowController.swift in Sources */,
 				C233870627810C2E00F8DBC3 /* TrashViewController.swift in Sources */,
 				C2A7946427F9073400E5C641 /* BrowserExtensionServiceViewController.swift in Sources */,
 				C240486027654E370076376E /* ImporterEnterPasswordModuleInteractor.swift in Sources */,
@@ -10077,11 +10078,10 @@
 				C27C03BF27F4FD6C0020DB5E /* BrowserExtensionMainModuleInteractor.swift in Sources */,
 				C2A2AF6F23D8EA710059094D /* UIActivityIndicator+.swift in Sources */,
 				C2F7FE052A8AB70D004B2C95 /* AddingServiceManuallyModuleInteractor.swift in Sources */,
-				C24AEDC0291BD11A005F59CB /* T.generated.swift in Sources */,
 				C2035AEF245DE27700C482D2 /* MainContainerContentGenerator.swift in Sources */,
 				C2E2C80D27B0392D00F04B70 /* IconSelectorPresenter.swift in Sources */,
+				C2D97E882E2469BD00E213A7 /* T.generated.swift in Sources */,
 				C20CD5402A1D017700A7F324 /* TokensHOTPCellType.swift in Sources */,
-				C2C1DDDD27CAA773002C7867 /* ComposeServiceAdvancedEditModuleInteractor.swift in Sources */,
 				C29803C0245EE05C0066DFE0 /* MainContainerElementsStyling.swift in Sources */,
 				C2AB92BF2766342900698382 /* PINKeyboardViewController.swift in Sources */,
 				C240486F27655E760076376E /* ImporterOpenFileFlowController.swift in Sources */,
@@ -10133,7 +10133,6 @@
 				8F594C442C3054F90066562F /* AppleWatchViewController.swift in Sources */,
 				C2F7FE092A8ABA25004B2C95 /* AddingServiceManuallyView.swift in Sources */,
 				C2AC221327661BA300271402 /* ExporterPasswordProtectionViewController.swift in Sources */,
-				C2B2ED1E27C4349100332255 /* AdvancedAlert.swift in Sources */,
 				C24471A425F503690024B4C5 /* ComposeServiceFormInput.swift in Sources */,
 				C25860B828247CB7009AE54F /* NewsModels.swift in Sources */,
 				C2698B6C2986B42400EBC179 /* MainTabViewController.swift in Sources */,
@@ -10325,12 +10324,12 @@
 				C2A4D3152BC097F80001587C /* MainRepository.swift in Sources */,
 				C281A2772BD489590068451C /* IntroductionView.swift in Sources */,
 				8F7952532C01D1940053F776 /* KeyboardButtonStyle.swift in Sources */,
-				C281A2792BD48A9C0068451C /* T.generated.swift in Sources */,
 				C2B86D2A2BC33D3000AAAC63 /* AppDelegateInteractor.swift in Sources */,
 				C2A4D32E2BC0B1B20001587C /* Token.swift in Sources */,
 				C268918A2BC4960600713078 /* ServiceListPresenter.swift in Sources */,
 				8F00E46A2C23953B001F15AD /* SortTokensView.swift in Sources */,
 				C26983822BCC8326009B3BE2 /* AppPresenter.swift in Sources */,
+				C2D97E892E2469EA00E213A7 /* T.generated.swift in Sources */,
 				C274C9D02BAB8ABB008E7212 /* TwoFASWatchApp.swift in Sources */,
 				C2627F3A2BC72E96009F93A9 /* ServicePresenter.swift in Sources */,
 				C29378302BD1A218008D5125 /* SettingsView.swift in Sources */,
@@ -10544,7 +10543,7 @@
 				8F0FFF002D04D73E0064B0D3 /* RevealTokenImage.swift in Sources */,
 				C248DDA82B794A69004712E3 /* WidgetContentMargins.swift in Sources */,
 				C2C8F92F2CD6CB67001179C0 /* CommonKeys.swift in Sources */,
-				8FF1CC7F2D09030000428BB4 /* T.generated.swift in Sources */,
+				C2D97E8A2E246A0F00E213A7 /* T.generated.swift in Sources */,
 				C2404F782B72E61B00EBD8DC /* ServiceAppEntity.swift in Sources */,
 				8F0FFF022D04D74E0064B0D3 /* CountdownTimerText.swift in Sources */,
 				C28AB9332B76970D009E3601 /* TwoFASWidgetRectangular.swift in Sources */,
@@ -10706,7 +10705,6 @@
 				C2E7C3C82ADB2B9C00478D89 /* MainRepositoryImpl+DeviceName.swift in Sources */,
 				C22CD3982B9142CA005FE348 /* MDMInteractor.swift in Sources */,
 				C2E7C3E22ADB2BB400478D89 /* InteractorFactory.swift in Sources */,
-				C2E7C3E92ADB2BB400478D89 /* AdvancedAlertInteractor.swift in Sources */,
 				C274C7722ADD3CA500B8AAC1 /* Generator.swift in Sources */,
 				C2E7C3F52ADB2BB400478D89 /* ExportToFileInteractor.swift in Sources */,
 				C2E7C3E82ADB2BB400478D89 /* SectionInteractor.swift in Sources */,
@@ -10737,6 +10735,7 @@
 				C2AE5F802ADC8B0D00AED670 /* Code+Support.swift in Sources */,
 				C2E7C3D62ADB2B9C00478D89 /* MainRepositoryImpl+PushNotifications.swift in Sources */,
 				C2E7C40B2ADB2BE500478D89 /* SocialChannel.swift in Sources */,
+				C2D97E7D2E24436900E213A7 /* QRCodeGeneratorInteractor.swift in Sources */,
 				C22CD3962B91419B005FE348 /* MainRepositoryImpl+MDM.swift in Sources */,
 				C2E7C3C32ADB2B9C00478D89 /* MainRepositoryImpl+News.swift in Sources */,
 				C2E7C3BC2ADB2B9C00478D89 /* MainRepositoryImpl+Guides.swift in Sources */,
@@ -10747,6 +10746,7 @@
 				C2E7C3E32ADB2BB400478D89 /* NewCodeInteractor.swift in Sources */,
 				C2CACFC42B015847001E0F8E /* MainRepositoryImpl+LockScreen.swift in Sources */,
 				C2E7C3CF2ADB2B9C00478D89 /* MainRepositoryImpl+ServiceDefinition.swift in Sources */,
+				C286E9AA2E377CF20019CF79 /* Code+Open.swift in Sources */,
 				C2E7C3D92ADB2B9C00478D89 /* MainRepositoryImpl+General.swift in Sources */,
 				C2E7C3DA2ADB2BA600478D89 /* MainRepositoryImpl+ViewPath.swift in Sources */,
 				C2EA6E5E2BA110FA0034A964 /* MainRepositoryImpl+LocalNotifications.swift in Sources */,
@@ -10781,6 +10781,7 @@
 				C2E7C3BE2ADB2B9C00478D89 /* MainRepositoryImpl+WebExtensionAuthRequest.swift in Sources */,
 				C2E7C3E52ADB2BB400478D89 /* NotificationInteractor.swift in Sources */,
 				C2E7C3F42ADB2BB400478D89 /* CameraPermissionInteractor.swift in Sources */,
+				C24295572E43DA4E00E236EA /* CompressionInteractor.swift in Sources */,
 				C2E7C4142ADB2BE500478D89 /* BiometryType.swift in Sources */,
 				C2AE5F7F2ADC8B0D00AED670 /* Code+AppStoreCode.swift in Sources */,
 				C2B2B9AF2AE932BD00AB61FD /* String+.swift in Sources */,
@@ -10788,7 +10789,6 @@
 				C2E7C3D32ADB2B9C00478D89 /* MainRepositoryImpl.swift in Sources */,
 				C2E7C3D52ADB2B9C00478D89 /* MainRepositoryImpl+Tokens.swift in Sources */,
 				C2AE5F522ADC19E600AED670 /* Notifications.swift in Sources */,
-				C2E7C3C22ADB2B9C00478D89 /* MainRepositoryImpl+AdvancedAlertState.swift in Sources */,
 				C2E7C4152ADB2BE500478D89 /* ExchangeData.swift in Sources */,
 				C22CD3942B913EB4005FE348 /* MDMRepositoryImpl.swift in Sources */,
 				C2E7C3F32ADB2BB400478D89 /* ViewPathInteractor.swift in Sources */,
@@ -11331,7 +11331,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Storage/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -11374,7 +11374,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Storage/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -11415,7 +11415,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -11460,7 +11460,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -11504,7 +11504,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Protection/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -11548,7 +11548,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Protection/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -11590,7 +11590,7 @@
 				ENABLE_MODULE_VERIFIER = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = PushNotifications/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -11638,7 +11638,7 @@
 				ENABLE_MODULE_VERIFIER = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = PushNotifications/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -11726,7 +11726,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 5.3.13;
+				MARKETING_VERSION = 5.3.14;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
@@ -11788,7 +11788,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 5.3.13;
+				MARKETING_VERSION = 5.3.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
@@ -11814,7 +11814,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFAS/Other/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -11857,7 +11857,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFAS/Other/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -11903,7 +11903,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -11950,7 +11950,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -11993,7 +11993,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Sync/Other/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12037,7 +12037,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Sync/Other/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12081,7 +12081,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12126,7 +12126,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12168,7 +12168,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12214,7 +12214,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12261,7 +12261,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TwoFASWatch-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "2FAS Auth";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.twofas.org;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -12303,7 +12303,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TwoFASWatch-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "2FAS Auth";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.twofas.org;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -12341,7 +12341,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12389,7 +12389,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12435,7 +12435,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12483,7 +12483,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12529,7 +12529,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12575,7 +12575,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12614,7 +12614,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFASAuth/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -12647,7 +12647,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFASAuth/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -12685,7 +12685,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = TimeVerification/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12730,7 +12730,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = TimeVerification/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12773,7 +12773,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12820,7 +12820,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12859,7 +12859,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = TwoFASTests/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -12887,7 +12887,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = TwoFASTests/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -12919,7 +12919,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = TwoFASWidget/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -12954,7 +12954,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = TwoFASWidget/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -12986,7 +12986,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = TwoFASServiceIntent/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -13019,7 +13019,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = TwoFASServiceIntent/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -13051,6 +13051,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
@@ -13079,6 +13080,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
@@ -13111,7 +13113,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13157,7 +13159,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13201,7 +13203,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13247,7 +13249,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13291,7 +13293,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13338,7 +13340,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13383,7 +13385,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13430,7 +13432,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13467,7 +13469,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = ProtectionTests/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -13496,7 +13498,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = ProtectionTests/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -13789,6 +13791,14 @@
 				minimumVersion = 4.2.2;
 			};
 		};
+		C28FD19D2E4028450053B0BE /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.19;
+			};
+		};
 		C2ABB61A25379D4B005CD66F /* XCRemoteSwiftPackageReference "PKHUD" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pkluz/PKHUD.git";
@@ -13825,6 +13835,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */;
 			productName = SwCrypt;
+		};
+		C28FD19E2E4028450053B0BE /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C28FD19D2E4028450053B0BE /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
 		};
 		C2AE5F622ADC395800AED670 /* PKHUD */ = {
 			isa = XCSwiftPackageProductDependency;

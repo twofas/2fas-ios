@@ -18,19 +18,30 @@
 //
 
 import UIKit
-import Common
 
-protocol ComposeServiceAdvancedEditViewControlling: AnyObject {
-    func reload(with data: ComposeServiceAdvancedEditMenuSection)
+protocol ExportTokensViewControlling: AnyObject {
+    func reload(with data: [ExportTokensSection])
+    func exporting()
+    func unlock()
+    func lock()
 }
 
-final class ComposeServiceAdvancedEditViewController: UIViewController {
-    var presenter: ComposeServiceAdvancedEditPresenter!
+final class ExportTokensViewController: UIViewController {
+    var presenter: ExportTokensPresenter!
     
     private let tableView = SettingsMenuTableView()
-    private var tableViewAdapter: TableViewAdapter<
-        ComposeServiceAdvancedEditMenuSection, ComposeServiceAdvancedEditMenuCell
-    >!
+    
+    private var tableViewAdapter: TableViewAdapter<ExportTokensSection, ExportTokensCell>!
+    
+    private var spinnerBarButtonItem: UIBarButtonItem?
+    
+    private let footerStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.alignment = .fill
+        stack.distribution = .fill
+        stack.axis = .vertical
+        return stack
+    }()
     
     private var leadingCompact: NSLayoutConstraint?
     private var trailingCompact: NSLayoutConstraint?
@@ -41,19 +52,15 @@ final class ComposeServiceAdvancedEditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(
-            ComposeServiceAdvancedEditTokenTypeCell.self,
-            forCellReuseIdentifier: ComposeServiceAdvancedEditTokenTypeCell.identifier
-        )
         tableViewAdapter = TableViewAdapter(
             tableView: tableView,
             cellProvider: { [weak self] tableView, indexPath, cellData -> UITableViewCell in
-                self?.cell(for: cellData, in: tableView, at: indexPath) ?? UITableViewCell()
-            })
+            self?.cell(for: cellData, in: tableView, at: indexPath) ?? UITableViewCell()
+        })
         tableViewAdapter.titleForHeader = { [weak self] _, sectionOffset, snapshot in
             self?.titleForHeader(offset: sectionOffset, snapshot: snapshot)
         }
-        tableViewAdapter.titleForFooter = {  [weak self] _, sectionOffset, snapshot in
+        tableViewAdapter.titleForFooter = { [weak self] _, sectionOffset, snapshot in
             self?.titleForFooter(offset: sectionOffset, snapshot: snapshot)
         }
         tableViewAdapter.delegatee.didSelectItem = { [weak self] tableView, indexPath, data in
@@ -62,15 +69,12 @@ final class ComposeServiceAdvancedEditViewController: UIViewController {
         
         view.backgroundColor = Theme.Colors.Table.background
         
-        setupTableViewLayout()
-        
-        title = T.Tokens.advanced
-        
-        hidesBottomBarWhenPushed = false
-        navigationItem.backButtonDisplayMode = .minimal
+        setupViewLayout()
+                
+        title = T.Settings.exportTitleTokens
     }
     
-    private func setupTableViewLayout() {
+    private func setupViewLayout() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -94,73 +98,78 @@ final class ComposeServiceAdvancedEditViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(shouldRefresh),
+            name: .refreshTabContent,
+            object: nil
+        )
         presenter.viewWillAppear()
     }
     
-    private func setupConstraints() {
-        switch traitCollection.horizontalSizeClass {
-        case .regular:
-            leadingRegular?.isActive = true
-            trailingRegular?.isActive = true
-            
-            leadingCompact?.isActive = false
-            trailingCompact?.isActive = false
-            
-        case .compact, .unspecified: fallthrough
-        @unknown default:
-            leadingRegular?.isActive = false
-            trailingRegular?.isActive = false
-            
-            leadingCompact?.isActive = true
-            trailingCompact?.isActive = true
-        }
+    @objc private func shouldRefresh() {
+        presenter.handleBecomeActive()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
-extension ComposeServiceAdvancedEditViewController: ComposeServiceAdvancedEditViewControlling {
-    func reload(with data: ComposeServiceAdvancedEditMenuSection) {
-        let snapshot = TableViewDataSnapshot<
-            ComposeServiceAdvancedEditMenuSection,
-            ComposeServiceAdvancedEditMenuCell
-        >()
-        snapshot.appendSection(data)
+extension ExportTokensViewController: ExportTokensViewControlling {
+    func reload(with data: [ExportTokensSection]) {
+        let snapshot = TableViewDataSnapshot<ExportTokensSection, ExportTokensCell>()
+        data.forEach { snapshot.appendSection($0) }
         tableViewAdapter.apply(snapshot: snapshot)
     }
+    
+    func exporting() {
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.startAnimating()
+        
+        spinnerBarButtonItem = UIBarButtonItem(customView: activityIndicator)
+        navigationItem.rightBarButtonItems = [spinnerBarButtonItem!]
+        view.isUserInteractionEnabled = false
+    }
+    func unlock() {
+        navigationItem.rightBarButtonItems = nil
+        view.isUserInteractionEnabled = true
+        spinnerBarButtonItem = nil
+    }
+    
+    func lock() {
+        tableView.isUserInteractionEnabled = false
+    }
 }
 
-extension ComposeServiceAdvancedEditViewController {
+private extension ExportTokensViewController {
+    func setupConstraints() {
+        leadingCompact?.isActive = traitCollection.horizontalSizeClass == .compact
+        leadingRegular?.isActive = traitCollection.horizontalSizeClass == .regular
+        
+        trailingCompact?.isActive = traitCollection.horizontalSizeClass == .compact
+        trailingRegular?.isActive = traitCollection.horizontalSizeClass == .regular
+    }
+    
     func cell(
-        for data: ComposeServiceAdvancedEditMenuCell,
+        for cellData: ExportTokensCell,
         in tableView: UITableView,
         at indexPath: IndexPath
     ) -> UITableViewCell {
-        if case ComposeServiceAdvancedEditMenuCell.Kind.tokenType(let tokenType) = data.kind {
-            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: ComposeServiceAdvancedEditTokenTypeCell.identifier,
-                for: indexPath
-            ) as? ComposeServiceAdvancedEditTokenTypeCell else { return UITableViewCell() }
-            let selectedTokenType: TokenType = {
-                switch tokenType {
-                case .totp: return .totp
-                case .hotp: return .hotp
-                }
-            }()
-            cell.didSelect = { [weak self] in self?.presenter.handleTokenTypeChange($0) }
-            cell.setSelectedTokenType(selectedTokenType)
-            return cell
-        }
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: SettingsMenuTableViewCell.identifier,
             for: indexPath
         ) as? SettingsMenuTableViewCell else { return UITableViewCell() }
-        cell.update(icon: nil, title: data.kind.localizedString, kind: .infoArrow(text: data.kind.value))
+        
+        cell.disableIconBorder()
+        cell.update(icon: cellData.icon, title: cellData.title, kind: .arrow)
+        
         return cell
     }
     
     func titleForHeader(
         offset: Int,
-        snapshot: TableViewDataSnapshot<ComposeServiceAdvancedEditMenuSection, ComposeServiceAdvancedEditMenuCell>
+        snapshot: TableViewDataSnapshot<ExportTokensSection, ExportTokensCell>
     ) -> String? {
         let section = snapshot.section(at: offset)
         return section.title
@@ -168,14 +177,14 @@ extension ComposeServiceAdvancedEditViewController {
     
     func titleForFooter(
         offset: Int,
-        snapshot: TableViewDataSnapshot<ComposeServiceAdvancedEditMenuSection, ComposeServiceAdvancedEditMenuCell>
+        snapshot: TableViewDataSnapshot<ExportTokensSection, ExportTokensCell>
     ) -> String? {
         let section = snapshot.section(at: offset)
         return section.footer
     }
     
-    func didSelect(tableView: UITableView, indexPath: IndexPath, data: ComposeServiceAdvancedEditMenuCell) {
+    func didSelect(tableView: UITableView, indexPath: IndexPath, data: ExportTokensCell) {
         tableView.deselectRow(at: indexPath, animated: true)
         presenter.handleSelection(at: indexPath)
     }
-}
+} 

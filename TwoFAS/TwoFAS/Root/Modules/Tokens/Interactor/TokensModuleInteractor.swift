@@ -235,7 +235,7 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     // MARK: - Tokens
     
     func enableHOTPCounter(for secret: Secret) {
-        tokenInteractor.unlockCounter(for: secret, isInitialCounter: false)
+        tokenInteractor.unlockCounter(for: secret)
     }
     
     func unlockConsumer(for consumer: TokenTimerConsumer) {
@@ -624,11 +624,11 @@ private extension TokensModuleInteractor {
     }
 
     private func copyToken(_ token: String) {
-        notificationsInteractor.copyWithSuccess(value: token)
+        notificationsInteractor.copyWithSuccess(value: token.removeWhitespaces())
     }
     
     private func copyNextToken(_ token: String) {
-        notificationsInteractor.copyWithSuccess(value: token)
+        notificationsInteractor.copyWithSuccess(value: token.removeWhitespaces())
     }
 }
 

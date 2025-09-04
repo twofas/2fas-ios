@@ -75,7 +75,7 @@ final class ImporterPreimportSummaryViewController: UIViewController {
         
         let contentBottom = MainContainerBottomContentGenerator(elements: [
             .filledButton(
-                text: T.Backup.importFile,
+                text: T.Backup.import,
                 isEnabled: presenter.countNew > 0,
                 callback: { [weak self] in self?.presenter.handleImport() }
             ),

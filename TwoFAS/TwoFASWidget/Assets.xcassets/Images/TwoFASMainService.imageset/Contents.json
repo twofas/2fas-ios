@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "unknown.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "unknown@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "unknown@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "TwoFASMainService.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

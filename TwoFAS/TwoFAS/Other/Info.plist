@@ -12,7 +12,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>bak</string>
-				<string>2fas</string>
 			</array>
 			<key>CFBundleTypeIconFiles</key>
 			<array>
@@ -31,6 +30,29 @@
 			</array>
 			<key>NSDocumentClass</key>
 			<string>App.BakDocument</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>2fas</string>
+			</array>
+			<key>CFBundleTypeIconFiles</key>
+			<array>
+				<string>icon_64.png</string>
+				<string>icon_320.png</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>2FAS Backup</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.2fas.backup.2fas</string>
+			</array>
+			<key>NSDocumentClass</key>
+			<string>App.2FASDocument</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
@@ -86,10 +108,11 @@
 			<key>CFBundleURLIconFile</key>
 			<string>icon_64</string>
 			<key>CFBundleURLName</key>
-			<string>2FAS internal</string>
+			<string>2FAS Auth</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>twofas</string>
+				<string>twofasauth</string>
 			</array>
 		</dict>
 	</array>
@@ -120,6 +143,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mailto</string>
+		<string>twofaspass</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -166,7 +190,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.json</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>2FAS Backup</string>
@@ -186,11 +210,40 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>bak</string>
-					<string>2fas</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
 					<string>application/2fas-backup-bak</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>2FAS Backup</string>
+			<key>UTTypeIconFiles</key>
+			<array>
+				<string>icon_64.png</string>
+				<string>icon_320.png</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.2fas.backup.2fas</string>
+			<key>UTTypeSize320IconFile</key>
+			<string>icon_320.png</string>
+			<key>UTTypeSize64IconFile</key>
+			<string>icon_64.png</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>2fas</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>application/2fas-backup-2fas</string>
 				</array>
 			</dict>
 		</dict>
@@ -200,7 +253,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.json</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>2FAS Backup</string>
@@ -220,11 +273,40 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>bak</string>
-					<string>2fas</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
 					<string>application/2fas-backup-bak</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>2FAS Backup</string>
+			<key>UTTypeIconFiles</key>
+			<array>
+				<string>icon_64.png</string>
+				<string>icon_320.png</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.2fas.backup.2fas</string>
+			<key>UTTypeSize320IconFile</key>
+			<string>icon_320.png</string>
+			<key>UTTypeSize64IconFile</key>
+			<string>icon_64.png</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>2fas</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>application/2fas-backup-2fas</string>
 				</array>
 			</dict>
 		</dict>

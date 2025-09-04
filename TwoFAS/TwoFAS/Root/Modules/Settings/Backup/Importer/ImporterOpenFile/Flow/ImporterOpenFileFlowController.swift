@@ -40,6 +40,7 @@ protocol ImporterOpenFileHeadlessFlowControlling: AnyObject {
     func toFileError(error: ImporterOpenFileError)
     func toFileIsEmpty()
     func toEnterPassword(for data: ExchangeDataFormat, externalImportService: ExternalImportService)
+    func toEmptyClipboard()
 }
 
 final class ImporterOpenFileHeadlessFlowController: FlowController {
@@ -52,11 +53,17 @@ final class ImporterOpenFileHeadlessFlowController: FlowController {
     static func present(
         on viewController: UIViewController,
         parent: ImporterOpenFileHeadlessFlowControllerParent,
-        url: URL?
+        url: URL?,
+        importingOTPAuthFile: Bool = false,
+        isFromClipboard: Bool = false
     ) -> ImporterOpenFileHeadlessFlowController {
         let flowController = ImporterOpenFileHeadlessFlowController(viewController: viewController)
         flowController.parent = parent
-        let interactor = ModuleInteractorFactory.shared.importerOpenFileModuleInteractor(url: url)
+        let interactor = ModuleInteractorFactory.shared.importerOpenFileModuleInteractor(
+            url: url,
+            importingOTPAuthFile: importingOTPAuthFile,
+            isFromClipboard: isFromClipboard
+        )
         let presenter = ImporterOpenFilePresenter(
             flowController: flowController,
             interactor: interactor
@@ -139,6 +146,19 @@ extension ImporterOpenFileHeadlessFlowController: ImporterOpenFileHeadlessFlowCo
                 parent: self,
                 data: data,
                 externalImportService: externalImportService,
+                animated: animated
+            )
+        }
+    }
+    
+    func toEmptyClipboard() {
+        showNavigationController { [weak self, weak navigationController] animated in
+            guard let self, let navigationController else { return }
+            
+            ImporterFileErrorFlowController.push(
+                in: navigationController,
+                parent: self,
+                fileError: .emptyClipboard,
                 animated: animated
             )
         }

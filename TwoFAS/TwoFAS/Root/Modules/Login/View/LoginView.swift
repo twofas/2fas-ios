@@ -63,6 +63,8 @@ final class LoginView: UIView {
     private var appReset: UIView?
     private var appResetTop: NSLayoutConstraint?
     
+    private let backspaceCharacter = "\u{8}"
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -92,6 +94,49 @@ final class LoginView: UIView {
         PINPad.numberButtonAction = { [weak self] number in
             self?.numberButtonPressed(number: number)
         }
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        true
+    }
+
+    override var keyCommands: [UIKeyCommand]? {
+        var commands = (0...9).map { number in
+            UIKeyCommand(
+                input: String(number),
+                modifierFlags: [],
+                action: #selector(keyboardNumberPressed(_:))
+            )
+        }
+        
+        let backspaceCommand = UIKeyCommand(
+            input: backspaceCharacter,
+            modifierFlags: [],
+            action: #selector(keyboardDeletePressed(_:))
+        )
+        
+        let deleteCommand = UIKeyCommand(
+            input: UIKeyCommand.inputDelete,
+            modifierFlags: [],
+            action: #selector(keyboardDeletePressed(_:))
+        )
+        
+        commands.append(backspaceCommand)
+        commands.append(deleteCommand)
+        
+        return commands
+    }
+
+    @objc
+    private func keyboardNumberPressed(_ sender: UIKeyCommand) {
+        guard let input = sender.input, let number = Int(input) else { return }
+        presenter.onNumberInput(number)
+    }
+    
+    @objc
+    private func keyboardDeletePressed(_ sender: UIKeyCommand) {
+        guard let input = sender.input, input == backspaceCharacter || input == UIKeyCommand.inputDelete else { return }
+        presenter.onDelete()
     }
 }
 

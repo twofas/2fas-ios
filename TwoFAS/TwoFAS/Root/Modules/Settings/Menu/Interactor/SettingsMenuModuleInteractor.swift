@@ -28,6 +28,7 @@ protocol SettingsMenuModuleInteracting: AnyObject {
     var hasSSLNetworkError: Bool { get }
     var hasActiveBrowserExtension: Bool { get }
     var isBrowserExtensionAllowed: Bool { get }
+    var is2PASSInstalled: Bool { get }
     
     func enableWidgets()
     func disableWidgets()
@@ -40,6 +41,7 @@ final class SettingsMenuModuleInteractor {
     private let networkStatusInteractor: NetworkStatusInteracting
     private let pairingDeviceInteractor: PairingWebExtensionInteracting
     private let mdmInteractor: MDMInteracting
+    private let appInfoInteractor: AppInfoInteracting
     
     init(
         widgetsInteractor: WidgetsInteracting,
@@ -47,7 +49,8 @@ final class SettingsMenuModuleInteractor {
         protectionInteractor: ProtectionInteracting,
         networkStatusInteractor: NetworkStatusInteracting,
         pairingDeviceInteractor: PairingWebExtensionInteracting,
-        mdmInteractor: MDMInteracting
+        mdmInteractor: MDMInteracting,
+        appInfoInteractor: AppInfoInteracting
     ) {
         self.widgetsInteractor = widgetsInteractor
         self.pushNotifications = pushNotifications
@@ -55,6 +58,7 @@ final class SettingsMenuModuleInteractor {
         self.networkStatusInteractor = networkStatusInteractor
         self.pairingDeviceInteractor = pairingDeviceInteractor
         self.mdmInteractor = mdmInteractor
+        self.appInfoInteractor = appInfoInteractor
     }
 }
 
@@ -73,5 +77,9 @@ extension SettingsMenuModuleInteractor: SettingsMenuModuleInteracting {
     
     func disableWidgets() {
         widgetsInteractor.disable()
+    }
+    
+    var is2PASSInstalled: Bool {
+        appInfoInteractor.is2FASPASSInstalled
     }
 }

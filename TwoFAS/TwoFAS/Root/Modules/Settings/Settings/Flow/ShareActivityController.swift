@@ -25,26 +25,73 @@ final class ShareActivityController: NSObject {
         let vc = UIActivityViewController(activityItems: [text], applicationActivities: nil)
         vc.title = title
         vc.excludedActivityTypes = [.addToReadingList, .assignToContact, .markupAsPDF, .openInIBooks, .saveToCameraRoll]
-        if let popover = vc.popoverPresentationController, let view = UIApplication.keyWindow {
-            let bounds = view.bounds
-            popover.permittedArrowDirections = .init(rawValue: 0)
-            popover.sourceRect = CGRect(x: bounds.midX, y: bounds.midY, width: 1, height: 2)
-            popover.sourceView = view
-        }
+        setupPopover(vc)
         return vc
     }
     
-    func createWithText(_ text: String) -> UIViewController {
+    static func createWithText(_ text: String) -> UIViewController {
         let vc = UIActivityViewController(activityItems: [text], applicationActivities: nil)
         vc.title = T.Tokens.requestIconPageTitle
         vc.excludedActivityTypes = [.addToReadingList, .assignToContact, .markupAsPDF, .openInIBooks, .saveToCameraRoll]
+        setupPopover(vc)
+        return vc
+    }
+    
+    static func createWithQRCode(_ image: UIImage, title: String) -> UIViewController {
+        let img = ImageItemSource(image: image, title: title)
+        let vc = UIActivityViewController(activityItems: [img], applicationActivities: nil)
+        vc.title = title
+        vc.excludedActivityTypes = [
+            .addToReadingList,
+            .assignToContact,
+            .markupAsPDF,
+            .openInIBooks,
+            .postToFacebook,
+            .postToVimeo,
+            .postToFlickr,
+            .postToTencentWeibo,
+            .postToTwitter,
+            .postToWeibo
+        ]
+        setupPopover(vc)
+        return vc
+    }
+    
+    private static func setupPopover(_ vc: UIActivityViewController) {
         if let popover = vc.popoverPresentationController, let view = UIApplication.keyWindow {
             let bounds = view.bounds
             popover.permittedArrowDirections = .init(rawValue: 0)
             popover.sourceRect = CGRect(x: bounds.midX, y: bounds.midY, width: 1, height: 2)
             popover.sourceView = view
         }
-        return vc
+    }
+}
+
+private class ImageItemSource: NSObject, UIActivityItemSource {
+    let image: UIImage
+    let title: String
+    
+    init(image: UIImage, title: String) {
+        self.image = image
+        self.title = title
+    }
+    
+    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        image
+    }
+    
+    func activityViewController(
+        _ activityViewController: UIActivityViewController,
+        itemForActivityType activityType: UIActivity.ActivityType?
+    ) -> Any? {
+        image
+    }
+    
+    func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
+        let metadata = LPLinkMetadata()
+        metadata.title = title
+        metadata.imageProvider = NSItemProvider(object: image)
+        return metadata
     }
 }
 

@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 protocol ExternalImportFlowControllerParent: AnyObject {}
 
@@ -29,6 +30,8 @@ protocol ExternalImportFlowControlling: AnyObject {
     func toGoogleAuth()
     func toAndOTP()
     func toAuthenticatorPro()
+    func toOpenTXTFile()
+    func toReadFromClipboard()
 }
 
 final class ExternalImportFlowController: FlowController {
@@ -132,6 +135,26 @@ extension ExternalImportFlowController: ExternalImportFlowControlling {
             service: .authenticatorPro
         )
     }
+    
+    func toOpenTXTFile() {
+        guard let navigationController else { return }
+        navigationController.setNavigationBarHidden(true, animated: true)
+        ExternalImportInstructionsFlowController.push(
+            in: navigationController,
+            parent: self,
+            service: .otpAuthFile
+        )
+    }
+    
+    func toReadFromClipboard() {
+        guard let navigationController else { return }
+        navigationController.setNavigationBarHidden(true, animated: true)
+        ExternalImportInstructionsFlowController.push(
+            in: navigationController,
+            parent: self,
+            service: .clipboard
+        )
+    }
 }
 
 extension ExternalImportFlowController: ExternalImportInstructionsFlowControllerParent {
@@ -141,9 +164,10 @@ extension ExternalImportFlowController: ExternalImportInstructionsFlowController
         navigationController?.tabBarController?.tabBar.isHidden = false
     }
     
-    func instructionsOpenFile() {
+    func instructionsOpenFile(service: ExternalImportService) {
         guard let navigationController else { return }
-        importer = ImporterOpenFileHeadlessFlowController.present(on: navigationController, parent: self, url: nil)
+        importer = ImporterOpenFileHeadlessFlowController
+            .present(on: navigationController, parent: self, url: nil, importingOTPAuthFile: service == .otpAuthFile)
     }
     
     func instructionsCamera() {
@@ -161,6 +185,18 @@ extension ExternalImportFlowController: ExternalImportInstructionsFlowController
             applyOverlay: true,
             parent: self
         )
+    }
+    
+    func instructionsFromClipboard() {
+        guard let navigationController else { return }
+        importer = ImporterOpenFileHeadlessFlowController
+            .present(
+                on: navigationController,
+                parent: self,
+                url: nil,
+                importingOTPAuthFile: true,
+                isFromClipboard: true
+            )
     }
 }
 

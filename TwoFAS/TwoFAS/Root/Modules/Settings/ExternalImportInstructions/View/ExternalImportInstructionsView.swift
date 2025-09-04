@@ -23,7 +23,7 @@ import Common
 struct ExternalImportInstructionsView: View {
     private let spacing: CGFloat = Theme.Metrics.doubleSpacing
     
-    let sourceLogo: Image
+    let sourceLogo: AnyView
     let sourceName: String
     let info: String
     
@@ -99,7 +99,7 @@ struct ExternalImportInstructionsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ExternalImportInstructionsView(
-                sourceLogo: Asset.externalImportRavio.swiftUIImage,
+                sourceLogo: AnyView(Asset.externalImportRavio.swiftUIImage),
                 sourceName: T.externalimportGoogleAuthenticator,
                 info: T.Introduction.googleAuthenticatorImportProcess,
                 action: {},
@@ -111,7 +111,7 @@ struct ExternalImportInstructionsView_Previews: PreviewProvider {
                 .previewDevice("iPhone SE (1st generation)")
             
             ExternalImportInstructionsView(
-                sourceLogo: Asset.externalImportGoogleAuth.swiftUIImage,
+                sourceLogo: AnyView(Asset.externalImportGoogleAuth.swiftUIImage),
                 sourceName: T.externalimportGoogleAuthenticator,
                 info: T.Introduction.googleAuthenticatorImportProcess,
                 action: {},

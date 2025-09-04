@@ -64,6 +64,8 @@ class PINKeyboardViewController: UIViewController {
     private let numberFeedback = UIImpactFeedbackGenerator(style: .medium)
     private let actionFeedback = UIImpactFeedbackGenerator(style: .heavy)
     
+    private let backspaceCharacter = "\u{8}"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -116,6 +118,53 @@ class PINKeyboardViewController: UIViewController {
         deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
         
         PINPad.numberButtonAction = numberButtonPressed(number:)
+    }
+    
+    override var keyCommands: [UIKeyCommand]? {
+        var commands = (0...9).map { number in
+            UIKeyCommand(
+                input: String(number),
+                modifierFlags: [],
+                action: #selector(keyboardNumberPressed(_:))
+            )
+        }
+        
+        let backspaceCommand = UIKeyCommand(
+            input: backspaceCharacter,
+            modifierFlags: [],
+            action: #selector(keyboardDeletePressed(_:))
+        )
+        
+        let deleteCommand = UIKeyCommand(
+            input: UIKeyCommand.inputDelete,
+            modifierFlags: [],
+            action: #selector(keyboardDeletePressed(_:))
+        )
+        
+        commands.append(backspaceCommand)
+        commands.append(deleteCommand)
+        
+        return commands
+    }
+    
+    override var canBecomeFirstResponder: Bool { true }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        becomeFirstResponder()
+    }
+    
+    @objc
+    private func keyboardNumberPressed(_ sender: UIKeyCommand) {
+        guard let input = sender.input, let number = Int(input) else { return }
+        numberButtonTap(number)
+    }
+    
+    @objc
+    private func keyboardDeletePressed(_ sender: UIKeyCommand) {
+        guard let input = sender.input, input == backspaceCharacter || input == UIKeyCommand.inputDelete else { return }
+        deleteButtonTap()
     }
     
     // MARK: - Overridables

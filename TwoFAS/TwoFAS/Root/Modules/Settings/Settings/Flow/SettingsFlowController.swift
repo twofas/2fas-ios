@@ -199,6 +199,14 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
         }
     }
     
+    func toExportTokens() {
+        if isCollapsed {
+            ExportTokensFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            ExportTokensFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
+    
     func toDonate() {
         UIApplication.shared.open(URL(string: "https://2fas.com/donate")!, options: [:], completionHandler: nil)
     }
@@ -252,4 +260,5 @@ extension SettingsFlowController: TrashFlowControllerParent {}
 extension SettingsFlowController: BrowserExtensionMainFlowControllerParent {}
 extension SettingsFlowController: AboutFlowControllerParent {}
 extension SettingsFlowController: ExternalImportFlowControllerParent {}
+extension SettingsFlowController: ExportTokensFlowControllerParent {}
 extension SettingsFlowController: AppearanceFlowControllerParent {}

@@ -34,6 +34,7 @@ final class ComposeServiceFormReveal: UIView {
         button.setTitleColor(Theme.Colors.Controls.inactive, for: .disabled)
         button.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
         button.setContentCompressionResistancePriority(.required, for: .horizontal)
+        button.imageView?.contentMode = .scaleAspectFit
         return button
     }()
     
@@ -81,7 +82,6 @@ final class ComposeServiceFormReveal: UIView {
         case .masked:
             privateKey.text = "•••••••••••••••"
             privateKey.accessibilityLabel = T.Voiceover.revealHiddenSecretKeyButtonTitle
-            button.setTitle(nil, for: .normal)
             button.setImage(Asset.revealIcon.image
                 .apply(Theme.Colors.Controls.active)?
                 .withRenderingMode(.alwaysOriginal), for: .normal)
@@ -94,9 +94,10 @@ final class ComposeServiceFormReveal: UIView {
         case .copy(let privateKeyValue):
             privateKey.text = privateKeyValue
             privateKey.accessibilityLabel = privateKeyValue
-            button.setTitle(T.Commons.copy, for: .normal)
-            button.setImage(nil, for: .normal)
-            button.setImage(nil, for: .highlighted)
+            button.setImage(UIImage(systemName: "square.and.arrow.up")?
+                .apply(Theme.Colors.Controls.active)?.withRenderingMode(.alwaysOriginal), for: .normal)
+            button.setImage(UIImage(systemName: "square.and.arrow.up")?
+                .apply(Theme.Colors.Controls.highlighed)?.withRenderingMode(.alwaysOriginal), for: .highlighted)
             button.accessibilityLabel = T.Voiceover.copyServiceKey
             enable()
         }

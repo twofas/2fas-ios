@@ -18,19 +18,22 @@
 //
 
 import UIKit
+import Data
 
 protocol ExternalImportInstructionsFlowControllerParent: AnyObject {
     func instructionsClose()
-    func instructionsOpenFile()
+    func instructionsOpenFile(service: ExternalImportService)
     func instructionsCamera()
     func instructionsGallery()
+    func instructionsFromClipboard()
 }
 
 protocol ExternalImportInstructionsFlowControlling: AnyObject {
     func close()
-    func toOpenFile()
+    func toOpenFile(service: ExternalImportService)
     func toCamera()
     func toGallery()
+    func toFromClipboard()
 }
 
 final class ExternalImportInstructionsFlowController: FlowController {
@@ -57,13 +60,19 @@ final class ExternalImportInstructionsFlowController: FlowController {
     }
 }
 
+extension ExternalImportInstructionsFlowController {
+    var viewController: ExternalImportInstructionsViewController {
+        _viewController as! ExternalImportInstructionsViewController
+    }
+}
+
 extension ExternalImportInstructionsFlowController: ExternalImportInstructionsFlowControlling {
     func close() {
         parent?.instructionsClose()
     }
     
-    func toOpenFile() {
-        parent?.instructionsOpenFile()
+    func toOpenFile(service: ExternalImportService) {
+        parent?.instructionsOpenFile(service: service)
     }
     
     func toCamera() {
@@ -72,5 +81,9 @@ extension ExternalImportInstructionsFlowController: ExternalImportInstructionsFl
     
     func toGallery() {
         parent?.instructionsGallery()
+    }
+    
+    func toFromClipboard() {
+        parent?.instructionsFromClipboard()
     }
 }

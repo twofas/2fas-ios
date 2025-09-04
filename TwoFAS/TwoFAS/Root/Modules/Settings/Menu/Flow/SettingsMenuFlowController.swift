@@ -19,6 +19,7 @@
 
 import UIKit
 import Data
+import Common
 
 protocol SettingsMenuFlowControllerChild: AnyObject {
     func toCollapsed()
@@ -45,6 +46,7 @@ protocol SettingsMenuFlowControllerParent: AnyObject {
     func toDonate()
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func toExternalImport()
+    func toExportTokens()
     func toAppearance()
     func toAppleWatch()
 }
@@ -61,8 +63,11 @@ protocol SettingsMenuFlowControlling: AnyObject {
     func toDonate()
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func toExternalImport()
+    func toExportTokens()
     func toAppearance()
     func toAppleWatch()
+    func toTwoPASSAppStore()
+    func toOpenTwoPASS()
 }
 
 final class SettingsMenuFlowController: FlowController {
@@ -111,8 +116,15 @@ extension SettingsMenuFlowController: SettingsMenuFlowControlling {
     func toBrowserExtension() { parent?.toBrowserExtension() }
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) { parent?.toUpdateCurrentPosition(viewPath) }
     func toExternalImport() { parent?.toExternalImport() }
+    func toExportTokens() { parent?.toExportTokens() }
     func toAppearance() { parent?.toAppearance() }
     func toAppleWatch() { parent?.toAppleWatch() }
+    func toTwoPASSAppStore() {
+        UIApplication.shared.open(Config.twofasPassAppStoreLink, options: [:], completionHandler: nil)
+    }
+    func toOpenTwoPASS() {
+        UIApplication.shared.open(Config.twofasPassOpenLink, options: [:], completionHandler: nil)
+    }
 }
 
 extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {

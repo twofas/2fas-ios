@@ -47,7 +47,9 @@ public enum ListNews {
             if let group = group.addingPercentEncoding(withAllowedCharacters: .alphanumerics) {
                 params.append("group=\(group)")
             }
-            if let noCompanionAppFrom = noCompanionAppFrom?.addingPercentEncoding(withAllowedCharacters: .alphanumerics) {
+            if let noCompanionAppFrom = noCompanionAppFrom?.addingPercentEncoding(
+                withAllowedCharacters: .alphanumerics
+            ) {
                 params.append("no_companion_app_from=\(noCompanionAppFrom)")
             }
             return "?" + params.joined(separator: "&")

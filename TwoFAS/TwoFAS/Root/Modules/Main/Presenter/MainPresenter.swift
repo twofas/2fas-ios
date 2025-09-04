@@ -110,7 +110,9 @@ private extension MainPresenter {
     func viewIsVisible() {
         guard !interactor.isAppLocked && !handlingViewIsVisible else { return }
         handlingViewIsVisible = true
+        interactor.setNotificationGroupID()
         interactor.applyMDMRules()
+        interactor.checkForCompanionApp()
         if interactor.shouldSetPasscode {
             flowController.toSetPIN()
         } else if let url = interactor.checkForImport() {

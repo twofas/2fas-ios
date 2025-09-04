@@ -115,8 +115,7 @@ extension LocalNotification {
             icon: icon,
             link: link,
             message: message,
-            publishedAt: self.publishedAt,
-            createdAt: nil,
+            createdAt: self.createdAt,
             wasRead: self.wasRead,
             internalLink: internalLink,
             localNotificationType: kind.rawValue
@@ -126,6 +125,6 @@ extension LocalNotification {
 
 extension Array where Element == ListNewsEntry {
     var sorted: Self {
-        sorted(by: { $0.publishedAt <= $1.publishedAt })
+        sorted(by: { $0.createdAt <= $1.createdAt })
     }
 }

@@ -57,6 +57,8 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case localNotificationCycle
         case runCount
         case registrationDate
+        case noCompanionAppDate
+        case notificationGroupID
     }
     private let userDefaults = UserDefaults()
     private let sharedDefaults = UserDefaults(suiteName: Config.suiteName)!
@@ -394,6 +396,31 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
     
     func saveRunCount(_ count: Int) {
         userDefaults.set(count, forKey: Keys.runCount.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    // MARK: No compannion app date
+    var dateOfNoCompanionApp: Date? {
+        userDefaults.object(forKey: Keys.noCompanionAppDate.rawValue) as? Date
+    }
+    
+    func saveDateOfNoCompanionApp(_ date: Date) {
+        userDefaults.set(date, forKey: Keys.noCompanionAppDate.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    func clearDateOfNoCompanionApp() {
+        userDefaults.set(nil, forKey: Keys.noCompanionAppDate.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    // MARK: Notification Group ID
+    var notificationGroupID: String? {
+        userDefaults.string(forKey: Keys.notificationGroupID.rawValue)
+    }
+    
+    func saveNotificationGroupID(_ id: String) {
+        userDefaults.set(id, forKey: Keys.notificationGroupID.rawValue)
         userDefaults.synchronize()
     }
     

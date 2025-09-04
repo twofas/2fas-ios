@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import CryptoKit
 
 extension MainRepositoryImpl {
     var currentAppVersion: String {
@@ -49,6 +50,30 @@ extension MainRepositoryImpl {
         initialPermissionStateDataController.initialize()
     }
     
+    var dateOfNoCompanionApp: Date? {
+        userDefaultsRepository.dateOfNoCompanionApp
+    }
+    
+    func saveDateOfNoCompanionApp(_ date: Date) {
+        userDefaultsRepository.saveDateOfNoCompanionApp(date)
+    }
+    
+    func clearDateOfNoCompanionApp() {
+        userDefaultsRepository.clearDateOfNoCompanionApp()
+    }
+    
+    var notificationGroupID: String? {
+        userDefaultsRepository.notificationGroupID
+    }
+    
+    func createNotificationGroupID() {
+        let groupID = UUID().uuidString
+        let groupData = SHA256.hash(data: Data(groupID.utf8))
+        let hasGroupID = String(groupData.map { String(format: "%02hhx", $0) }.joined())
+        let lastTwo = String(hasGroupID.suffix(2))
+        userDefaultsRepository.saveNotificationGroupID(lastTwo)
+    }
+
     var is2FASPASSInstalled: Bool {
 #if os(iOS)
         UIApplication.shared.canOpenURL(Config.twofasPassCheckLink)

@@ -54,14 +54,28 @@ extension ListNewsNetworkInteractor: ListNewsNetworkInteracting {
     func fetchNews(completion: @escaping (Result<[ListNewsEntry], ListNewsError>) -> Void) {
         Log("ListNewsNetworkInteractor - fetchNews", module: .interactor)
         let installDate = mainRepository.dateOfFirstRun ?? Date.now
-        mainRepository.listAllNews(publishedAfter: dateFormatter.string(from: installDate)) { [weak self] result in
+        let publishedAfter = dateFormatter.string(from: installDate)
+        let lang = Locale.current.identifier
+        guard let groupID = mainRepository.notificationGroupID else { return }
+        let noCompanionAppFrom: String? = {
+            if let date = mainRepository.dateOfNoCompanionApp {
+                return dateFormatter.string(from: date)
+            }
+            return nil
+        }()
+        
+        mainRepository
+            .listAllNews(
+                publishedAfter: publishedAfter,
+                lang: lang,
+                group: groupID,
+                noCompanionAppFrom: noCompanionAppFrom
+            ) { [weak self] result in
             switch result {
             case .success(let list):
                 Log("ListNewsNetworkInteractor - fetchNews. Success", module: .interactor)
                 let parsed = self?.parsedList(list) ?? []
-                // Temporary taking last 10 entries
-                let lastTen = Array((parsed).suffix(10))
-                completion(.success(lastTen))
+                completion(.success(parsed))
             case .failure(let error):
                 Log("ListNewsNetworkInteractor - fetchNews. Failure: \(error)", module: .interactor)
                 switch error {
@@ -77,7 +91,8 @@ private extension ListNewsNetworkInteractor {
     func parsedList(_ list: [ListNews.NewsEntry]) -> [ListNewsEntry] {
         list.compactMap { entry -> ListNewsEntry? in
             guard let icon = ListNewsEntry.Icon(rawValue: entry.icon),
-                  let publishedAt = dateFormatter.date(from: entry.publishedAt)
+                  let createdAtValue = entry.createdAt,
+                  let createdAt = dateFormatter.date(from: createdAtValue)
             else { return nil }
             return ListNewsEntry(
                 newsID: entry.id,
@@ -87,15 +102,11 @@ private extension ListNewsNetworkInteractor {
                     return URL(string: link)
                 }(),
                 message: entry.message,
-                publishedAt: publishedAt,
-                createdAt: {
-                    guard let createdAt = entry.createdAt else { return nil }
-                    return dateFormatter.date(from: createdAt)
-                }(),
+                createdAt: createdAt,
                 wasRead: false,
                 internalLink: nil
             )
         }
-        .sorted(by: { $0.publishedAt > $1.publishedAt })
+        .sorted(by: { $0.createdAt > $1.createdAt })
     }
 }

@@ -101,6 +101,13 @@ protocol UserDefaultsRepository: AnyObject {
     var registrationDate: Date? { get }
     func saveRegistrationDate(_ date: Date)
     
+    var dateOfNoCompanionApp: Date? { get }
+    func saveDateOfNoCompanionApp(_ date: Date)
+    func clearDateOfNoCompanionApp()
+    
+    var notificationGroupID: String? { get }
+    func saveNotificationGroupID(_ id: String)
+    
     // MARK: - Local Notifications
     
     var localNotificationPublicationDate: Date? { get }

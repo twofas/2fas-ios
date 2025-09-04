@@ -91,13 +91,13 @@ private extension NewsPresenter {
     func reload() {
         let now = Date()
         interactor.fetchList { [weak self] news in
-            let sortedNews = news.sorted { $0.publishedAt > $1.publishedAt }
+            let sortedNews = news.sorted { $0.createdAt > $1.createdAt }
             let cells = sortedNews.map { entry in
                 NewsCell(
                     icon: entry.icon.image,
                     title: entry.message ?? entry.link?.absoluteString ?? "",
                     wasRead: entry.wasRead,
-                    publishedAgo: self?.dateFormatter.localizedString(for: entry.publishedAt, relativeTo: now) ?? "",
+                    publishedAgo: self?.dateFormatter.localizedString(for: entry.createdAt, relativeTo: now) ?? "",
                     hasURL: entry.link != nil,
                     newsItem: entry
                 )

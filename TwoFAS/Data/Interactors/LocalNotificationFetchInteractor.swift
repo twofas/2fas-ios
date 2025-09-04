@@ -39,7 +39,7 @@ public struct LocalNotification: Hashable {
     
     public let id: String
     public let kind: NotificationKind
-    public let publishedAt: Date
+    public let createdAt: Date
     public let wasRead: Bool
 }
 
@@ -120,7 +120,7 @@ private extension LocalNotificationFetchInteractor {
         return LocalNotification(
             id: publishedID,
             kind: kind,
-            publishedAt: notificationPublishedDate,
+            createdAt: notificationPublishedDate,
             wasRead: wasRead
         )
     }

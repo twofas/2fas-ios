@@ -24,6 +24,8 @@ public protocol AppInfoInteracting: AnyObject {
     var dateOfFirstRun: Date { get }
     var is2FASPASSInstalled: Bool { get }
     func markDateOfFirstRunIfNeeded()
+    func update2FASPassMissingDate()
+    func setNotificationGroupID()
 }
 
 final class AppInfoInteractor {
@@ -50,5 +52,23 @@ extension AppInfoInteractor: AppInfoInteracting {
     
     var is2FASPASSInstalled: Bool {
         mainRepository.is2FASPASSInstalled
+    }
+    
+    func update2FASPassMissingDate() {
+        if is2FASPASSInstalled {
+            if mainRepository.dateOfNoCompanionApp != nil {
+                mainRepository.clearDateOfNoCompanionApp()
+            }
+        } else {
+            if mainRepository.dateOfNoCompanionApp == nil {
+                mainRepository.saveDateOfNoCompanionApp(.now)
+            }
+        }
+    }
+    
+    func setNotificationGroupID() {
+        if mainRepository.notificationGroupID == nil {
+            mainRepository.createNotificationGroupID()
+        }
     }
 }

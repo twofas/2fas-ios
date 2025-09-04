@@ -114,6 +114,12 @@ protocol MainRepository: AnyObject {
     func initialPermissionStateInitialize()
     
     var is2FASPASSInstalled: Bool { get }
+    var dateOfNoCompanionApp: Date? { get }
+    func saveDateOfNoCompanionApp(_ date: Date)
+    func clearDateOfNoCompanionApp()
+    
+    var notificationGroupID: String? { get }
+    func createNotificationGroupID()
     
     // MARK: - Services
     var hasServices: Bool { get }

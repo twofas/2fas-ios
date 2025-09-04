@@ -7578,8 +7578,8 @@
 				C2A026B22AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift */,
 				C2CACFC32B015847001E0F8E /* MainRepositoryImpl+LockScreen.swift */,
 				C2EA6E5D2BA110FA0034A964 /* MainRepositoryImpl+LocalNotifications.swift */,
-				C249AF62278A40FE005F9D80 /* UserDefaults */,
 				C22CD3952B91419B005FE348 /* MainRepositoryImpl+MDM.swift */,
+				C249AF62278A40FE005F9D80 /* UserDefaults */,
 			);
 			path = MainRepository;
 			sourceTree = "<group>";

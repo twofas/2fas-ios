@@ -36,6 +36,9 @@ protocol MainModuleInteracting: AnyObject {
     func saveSuccessSync()
     func clearSavesuccessSync()
     
+    func checkForCompanionApp()
+    func setNotificationGroupID()
+    
     // MARK: - New app version
     func checkForNewAppVersion(completion: @escaping (URL?) -> Void)
     func skipAppVersion()
@@ -121,6 +124,14 @@ extension MainModuleInteractor: MainModuleInteracting {
     
     func clearSavesuccessSync() {
         cloudBackupStateInteractor.clearSaveSuccessSync()
+    }
+    
+    func checkForCompanionApp() {
+        appInfoInteractor.update2FASPassMissingDate()
+    }
+    
+    func setNotificationGroupID() {
+        appInfoInteractor.setNotificationGroupID()
     }
     
     // MARK: - New app version

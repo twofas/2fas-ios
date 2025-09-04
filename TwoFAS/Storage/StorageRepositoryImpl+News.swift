@@ -32,7 +32,6 @@ extension StorageRepositoryImpl {
             icon: newsEntry.icon.rawValue,
             link: newsEntry.link,
             message: newsEntry.message,
-            publishedAt: newsEntry.publishedAt,
             createdAt: newsEntry.createdAt
         )
         save()
@@ -49,7 +48,7 @@ extension StorageRepositoryImpl {
             identifiedByID: newsEntry.newsID,
             link: newsEntry.link,
             message: newsEntry.message,
-            publishedAt: newsEntry.publishedAt,
+            publishedAt: newsEntry.createdAt,
             createdAt: newsEntry.createdAt
         )
         save()
@@ -87,8 +86,7 @@ private extension StorageRepositoryImpl {
                     icon: .init(rawValue: entity.icon) ?? .news,
                     link: entity.link,
                     message: entity.message,
-                    publishedAt: entity.publishedAt,
-                    createdAt: entity.createdAt,
+                    createdAt: entity.createdAt ?? .now,
                     wasRead: entity.wasRead,
                     internalLink: nil
                 )

@@ -35,15 +35,14 @@ final class NewsEntity: NSManagedObject {
         icon: String,
         link: URL?,
         message: String?,
-        publishedAt: Date,
-        createdAt: Date?
+        createdAt: Date
     ) {
         let news = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as! NewsEntity
         news.newsID = newsID
         news.icon = icon
         news.link = link
         news.message = message
-        news.publishedAt = publishedAt
+        news.publishedAt = createdAt
         news.createdAt = createdAt
         news.wasRead = false
     }

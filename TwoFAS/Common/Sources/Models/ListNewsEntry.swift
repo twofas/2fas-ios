@@ -36,7 +36,7 @@ public struct ListNewsEntry: Hashable {
     public let icon: Icon
     public let link: URL?
     public let message: String?
-    public let createdAt: Date?
+    public let createdAt: Date
     public let wasRead: Bool
     public let internalLink: InternalLink?
     public let localNotificationType: String?
@@ -46,7 +46,7 @@ public struct ListNewsEntry: Hashable {
         icon: Icon,
         link: URL?,
         message: String?,
-        createdAt: Date?,
+        createdAt: Date,
         wasRead: Bool,
         internalLink: InternalLink?,
         localNotificationType: String? = nil

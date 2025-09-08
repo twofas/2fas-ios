@@ -329,10 +329,10 @@ final class StorageRepositoryImpl: StorageRepository {
             .count
     }
     
-    func incrementCounter(for secret: String) {
-        guard let serviceData = findService(for: secret) else { return }
+    func incrementCounter(for secret: String) -> String? {
+        guard let serviceData = findService(for: secret) else { return nil }
         let currentCounter = serviceData.counter ?? TokenType.hotpDefaultValue
-        updateService(
+        return updateService(
             serviceData,
             name: serviceData.name,
             additionalInfo: serviceData.additionalInfo,

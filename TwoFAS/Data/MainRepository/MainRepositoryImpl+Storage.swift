@@ -191,7 +191,10 @@ extension MainRepositoryImpl {
     }
     
     func incrementCounter(for secret: Secret) {
-        storageRepository.incrementCounter(for: secret)
+        if let result = storageRepository.incrementCounter(for: secret) {
+            logDataChange.logServicesModified(with: [result])
+            cloudHandler.synchronize()
+        }
     }
     
     func listAllServicesWithingCategories(

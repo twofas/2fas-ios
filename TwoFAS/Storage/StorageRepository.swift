@@ -94,7 +94,7 @@ public protocol StorageRepository: AnyObject {
     func findService(for secret: String) -> ServiceData?
     func findAllUnknownServices() -> [ServiceData]
     func countServicesNotTrashed() -> Int
-    func incrementCounter(for secret: String)
+    func incrementCounter(for secret: String) -> String?
     
     // MARK: - Pairings
     func createPairing(name: String, extensionID: ExtensionID, publicKey: String)

@@ -27,6 +27,8 @@ public enum Config {
     
     public static let exchangeTokenKey = "exchangeTokenKey"
     
+    public static let hiddenSecret = "[hidden]"
+    
     public enum API {
         public static let baseURL = URL(string: "https://api2.2fas.com")!
         public static let notificationsURL = URL(string: "https://notify.2fas.com")!

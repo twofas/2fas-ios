@@ -58,7 +58,7 @@ final class CodeParser {
                     var value = i.value
                     
                     if case QueryItemsType.secret = i {
-                        value = "[hidden]"
+                        value = Config.hiddenSecret
                     }
                     list += "\(key)=\(value)&"
                 }

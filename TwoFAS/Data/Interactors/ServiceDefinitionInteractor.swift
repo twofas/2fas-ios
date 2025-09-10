@@ -99,7 +99,8 @@ extension ServiceDefinitionInteractor: ServiceDefinitionInteracting {
     /// Format: otpauth://{tokenType}/{label}?secret={secret}&issuer={issuer}&algorithm={algorithm}&digits={digits}&period={period}&counter={counter}
     func otpAuth(from serviceData: ServiceData) -> String {
         if let otpAuth = serviceData.otpAuth {
-            return otpAuth
+            let value = replaceHidden(in: otpAuth, with: serviceData.secret)
+            return value
         }
         
         let scheme = "otpauth"
@@ -157,5 +158,11 @@ extension ServiceDefinitionInteractor: ServiceDefinitionInteracting {
         let path = "\(scheme)://\(tokenType)/\(label)?\(queryString)"
         
         return path
+    }
+}
+
+private extension ServiceDefinitionInteractor {
+    func replaceHidden(in source: String, with replacement: String) -> String {
+        source.replacingOccurrences(of: Config.hiddenSecret, with: replacement)
     }
 }

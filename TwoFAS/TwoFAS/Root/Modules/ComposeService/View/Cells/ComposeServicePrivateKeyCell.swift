@@ -25,7 +25,7 @@ final class ComposeServicePrivateKeyCell: UITableViewCell, ComposeServiceInputCe
     
     var didUpdateValue: ((ComposeServiceInputKind, String?) -> Void)?
     var didSelectActionButton: ((ComposeServiceInputKind) -> Void)?
-    var revealButtonAction: Callback?
+    var revealButtonAction: ((UIView) -> Void)?
     
     private let titleLabel = ComposeServiceFormRowTitleLabel()
     private let privateKeyInput = ComposeServiceFormInput()
@@ -99,7 +99,10 @@ final class ComposeServicePrivateKeyCell: UITableViewCell, ComposeServiceInputCe
             text: nil
         )
         privateKeyInput.accessibilityHint = T.Voiceover.secretHint
-        privateKeyReveal.buttonPressed = { [weak self] in self?.revealButtonAction?() }
+        privateKeyReveal.buttonPressed = { [weak self] in
+            guard let self else { return }
+            revealButtonAction?(self.privateKeyReveal)
+        }
         privateKeyError.isHidden = true
         
         selectionStyle = .none

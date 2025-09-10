@@ -66,7 +66,9 @@ extension ComposeServiceViewController {
             cell.didUpdateValue = { [weak self] kind, value in
                 self?.presenter.handleValueUpdate(for: kind, value: value)
             }
-            cell.revealButtonAction = { [weak self] in self?.presenter.handleReveal() }
+            cell.revealButtonAction = { [weak self] shareButton in
+                self?.presenter.handleReveal(shareButton: shareButton)
+            }
             return cell
         case .navigate(let config):
             guard let cell = tableView.dequeueReusableCell(

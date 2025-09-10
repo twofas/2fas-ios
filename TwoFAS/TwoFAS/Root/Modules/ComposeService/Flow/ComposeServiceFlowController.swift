@@ -45,7 +45,7 @@ protocol ComposeServiceFlowControlling: AnyObject {
     func toServiceWasCreated(serviceData: ServiceData)
     func toServiceWasModified()
     func toServiceWasDeleted()
-    func toRevealMenu()
+    func toRevealMenu(shareButton: UIView)
     func toShowQRCode(code: UIImage)
     func toShareQRCode(code: UIImage)
 }
@@ -168,7 +168,7 @@ extension ComposeServiceFlowController: ComposeServiceFlowControlling {
         parent?.composeServiceServiceWasDeleted()
     }
     
-    func toRevealMenu() {
+    func toRevealMenu(shareButton: UIView) {
         let alert = UIAlertController(title: T.Commons.optionsTitle, message: nil, preferredStyle: .actionSheet)
         
         let copySecretAction = UIAlertAction(title: T.Tokens.copySecret, style: .default) { [weak self] _ in
@@ -198,6 +198,13 @@ extension ComposeServiceFlowController: ComposeServiceFlowControlling {
         alert.addAction(showQRCodeAction)
         alert.addAction(shareQRCodeAction)
         alert.addAction(cancelAction)
+        
+        if let popover = alert.popoverPresentationController {
+            let bounds = shareButton.bounds
+            popover.permittedArrowDirections = .init(rawValue: 0)
+            popover.sourceRect = CGRect(x: bounds.midX, y: bounds.midY, width: 1, height: 2)
+            popover.sourceView = shareButton
+        }
         
         viewController.present(alert, animated: true, completion: nil)
     }

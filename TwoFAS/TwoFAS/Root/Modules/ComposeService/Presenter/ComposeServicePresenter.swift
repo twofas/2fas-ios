@@ -113,12 +113,12 @@ extension ComposeServicePresenter {
         refreshStatus()
     }
     
-    func handleReveal() {
+    func handleReveal(shareButton: UIView) {
         if interactor.isPINSet {
             if isLocked {
                 flowController.toLogin()
             } else {
-                flowController.toRevealMenu()
+                flowController.toRevealMenu(shareButton: shareButton)
             }
         } else {
             flowController.toSetPIN()

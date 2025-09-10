@@ -97,7 +97,7 @@ extension MainRepositoryImpl: MainRepository {
     }
     
     func incrementCounter(for secret: String) {
-        storageRepository.incrementCounter(for: secret)
+        _ = storageRepository.incrementCounter(for: secret)
     }
     
     func updateAuthRequestUsage(for authRequest: PairedAuthRequest) {

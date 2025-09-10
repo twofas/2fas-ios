@@ -106,8 +106,16 @@ extension SettingsFlowController: SettingsFlowControlling {
         } else {
             var vcs = viewController.navigationNavi.viewControllers
             vcs += viewController.contentNavi.viewControllers
-            viewController.navigationNavi.setViewControllers(vcs, animated: false)
             viewController.contentNavi.setViewControllers([], animated: false)
+
+            if let last = viewController.contentNavi.viewControllers.last,
+               let presented = last.presentedViewController { // dismissing any modals on top
+                presented.dismiss(animated: false) { [weak self] in
+                    self?.viewController.navigationNavi.setViewControllers(vcs, animated: false)
+                }
+            } else {
+                viewController.navigationNavi.setViewControllers(vcs, animated: false)
+            }
         }
     }
     

@@ -265,8 +265,8 @@ internal enum T {
   internal static let settingsManagePasswordsTitle = T.tr("Localizable", "settings_manage_passwords_title", fallback: "Manage Passwords")
   /// Open 2FAS Pass
   internal static let settingsOpenTwofass = T.tr("Localizable", "settings_open_twofass", fallback: "Open 2FAS Pass")
-  /// Get 2FAS Pass
-  internal static let settingsOpenTwofassAppstore = T.tr("Localizable", "settings_open_twofass_appstore", fallback: "Get 2FAS Pass")
+  /// Install 2FAS Pass
+  internal static let settingsOpenTwofassAppstore = T.tr("Localizable", "settings_open_twofass_appstore", fallback: "Install 2FAS Pass")
   /// s
   internal static let timeUnitSecondsShort = T.tr("Localizable", "time_unit_seconds_short", fallback: "s")
   /// Please update to the newest 2FAS version to get all features and maintain a high-security level.
@@ -1544,8 +1544,8 @@ internal enum T {
     internal static let lastPassImportSubtitle = T.tr("Localizable", "tokens__last_pass_import_subtitle", fallback: "This QR code allows you to import Tokens from LastPass")
     /// Manage list
     internal static let manageList = T.tr("Localizable", "tokens__manage_list", fallback: "Manage list")
-    /// Mode down
-    internal static let moveDown = T.tr("Localizable", "tokens__move_down", fallback: "Mode down")
+    /// Move down
+    internal static let moveDown = T.tr("Localizable", "tokens__move_down", fallback: "Move down")
     /// Move to Trash
     internal static let moveToTrash = T.tr("Localizable", "tokens__move_to_trash", fallback: "Move to Trash")
     /// Move up

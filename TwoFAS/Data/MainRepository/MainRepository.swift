@@ -147,6 +147,7 @@ protocol MainRepository: AnyObject {
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     )
+    func debugEraseCloudBackup()
     func saveSuccessSyncDate(_ date: Date?)
     // MARK: Watch Pair
     func watchPairingList() -> [PairedWatch]

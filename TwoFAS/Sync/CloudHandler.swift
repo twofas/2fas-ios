@@ -115,6 +115,7 @@ public protocol CloudHandlerType: AnyObject {
     func clearBackup()
     func setTimeOffset(_ offset: Int)
     func resetStateBeforeSync()
+    func debugErase()
 }
 
 final class CloudHandler: CloudHandlerType {
@@ -273,6 +274,15 @@ final class CloudHandler: CloudHandlerType {
         }
     }
     
+    func debugErase() {
+        isClearing = true
+        if isSynced ||
+            currentState == .disabledNotAvailable(reason: .cloudEncryptedSystem) ||
+            currentState == .disabledNotAvailable(reason: .cloudEncryptedUser) {
+            debugEraseBackupForSyncedState()
+        }
+    }
+    
     func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (BackgroundFetchResult) -> Void
@@ -405,6 +415,15 @@ final class CloudHandler: CloudHandlerType {
         disable(notify: false)
         
         clearHandler.clear(recordIDs: recordIDs, infoRecord: infoRecord)
+    }
+    
+    private func debugEraseBackupForSyncedState() {
+        Log("Cloud Handler - debugEraseBackupForSyncedState", module: .cloudSync)
+        disable(notify: false)
+        setSystemEncryption?()
+        ConstStorage.cloudMigratedToV3 = false
+        
+        clearHandler.erase()
     }
     
     // MARK: -

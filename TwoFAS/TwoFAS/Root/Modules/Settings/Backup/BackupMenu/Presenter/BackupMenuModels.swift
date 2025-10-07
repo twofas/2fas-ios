@@ -67,6 +67,7 @@ enum BackupNavigationAction: Hashable {
     case deleteCloudBackup
     case changeCloudBackupPassword
     case manageAppleWatch
+    case debugEraseCloudBackup
 }
 
 enum BackupNavigationToggle: Hashable {

@@ -66,4 +66,52 @@ final class ClearHandler {
         cloudKit.clear()
         didClear?()
     }
+    
+    func erase() {
+        cloudKit.clear()
+        var zoneIDs: [CKRecordZone.ID] = []
+        let database = CKContainer(identifier: Config.containerIdentifier).privateCloudDatabase
+        let fetchZones = CKFetchRecordZonesOperation.fetchAllRecordZonesOperation()
+        fetchZones.perRecordZoneResultBlock = { recordZoneID, _ in
+            zoneIDs.append(recordZoneID)
+        }
+        fetchZones.fetchRecordZonesResultBlock = { [weak self] result in
+            switch result {
+            case .success:
+                if zoneIDs.isEmpty {
+                    self?.didClear?()
+                    return
+                }
+                self?.removeZones(zoneIDs, database: database)
+            case .failure(let error):
+                Log(
+                    "ClearHandler: Erase error in fetchRecordZonesResultBlock: \(error)",
+                    module: .cloudSync,
+                    severity: .error
+                )
+                self?.didClear?()
+            }
+        }
+        database.add(fetchZones)
+    }
+    
+    private func removeZones(_ zoneIDs: [CKRecordZone.ID], database: CKDatabase) {
+        Log("ClearHandler: erasing: \(zoneIDs)", module: .cloudSync)
+       
+        let modifyOp = CKModifyRecordZonesOperation(recordZonesToSave: nil, recordZoneIDsToDelete: zoneIDs)
+        modifyOp.modifyRecordZonesResultBlock = { [weak self] result in
+            switch result {
+            case .success:
+                self?.didClear?()
+            case .failure(let error):
+                Log(
+                    "ClearHandler: Erase error in modifyRecordZonesResultBlock: \(error)",
+                    module: .cloudSync,
+                    severity: .error
+                )
+                self?.didClear?()
+            }
+        }
+        database.add(modifyOp)
+    }
 }

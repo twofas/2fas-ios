@@ -80,6 +80,16 @@ extension BackupMenuPresenter {
             footer: T.Backup.warningIntroduction
         )
         
+        let cloudBackupNuke = BackupMenuSection(
+            title: "DEBUG: Completely erase iCloud backup",
+            cells: [
+                .init(
+                    title: "<ERASE>",
+                    action: .debugEraseCloudBackup
+                )
+            ]
+        )
+        
         let cloudBackupChangePassword = BackupMenuSection(
             title: T.Backup.encryptionChangeTitle,
             cells: [
@@ -113,6 +123,7 @@ extension BackupMenuPresenter {
         if interactor.isCloudBackupConnected && interactor.isBackupAllowed {
             menu.append(cloudBackupChangePassword)
             menu.append(cloudBackupDeletition)
+            menu.append(cloudBackupNuke)
             if interactor.encryptionTypeIsUser && interactor.isCloudBackupSynced {
                 menu.append(cloudBackupPairWatch)
             }

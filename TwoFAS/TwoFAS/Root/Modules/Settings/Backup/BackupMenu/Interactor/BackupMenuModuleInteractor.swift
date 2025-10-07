@@ -25,6 +25,8 @@ protocol BackupMenuModuleInteracting: AnyObject {
     func startMonitoring()
     func stopMonitoring()
     
+    func debugErase()
+    
     var isBackupAllowed: Bool { get }
     var isBackupOn: Bool { get }
     var canDelete: Bool { get }
@@ -61,6 +63,10 @@ final class BackupMenuModuleInteractor {
 extension BackupMenuModuleInteractor: BackupMenuModuleInteracting {
     var isBackupAllowed: Bool {
         !mdmInteractor.isBackupBlocked
+    }
+    
+    func debugErase() {
+        cloudBackup.debugErase()
     }
     
     var reload: Callback? {

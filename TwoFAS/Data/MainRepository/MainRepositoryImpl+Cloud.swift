@@ -59,6 +59,10 @@ extension MainRepositoryImpl {
         cloudHandler.clearBackup()
     }
     
+    func debugEraseCloudBackup() {
+        cloudHandler.debugErase()
+    }
+    
     func synchronizeBackup() {
         cloudHandler.synchronize()
     }

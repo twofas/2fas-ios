@@ -281,6 +281,10 @@ final class CloudHandler: CloudHandlerType {
         case .enabled:
             Log("Cloud Handler - we have a notification and we're in enabled state!", module: .cloudSync)
             syncHandler.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
+#if os(watchOS)
+        case .disabledNotAvailable(reason: .cloudEncryptedUser), .disabledNotAvailable(reason: .cloudEncryptedSystem):
+            synchronize()
+#endif
         default:
             Log("Cloud Handler - we have a notification but we're in a state \(currentState)", module: .cloudSync)
             return

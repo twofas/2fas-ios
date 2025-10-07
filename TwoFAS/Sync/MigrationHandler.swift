@@ -55,12 +55,20 @@ extension MigrationHandler: MigrationHandling {
                     continuation.resume(with: result)
                 }
             }
-            if result.contains(where: { $0 == .v3 }) || result.isEmpty {
+            if result.contains(where: { $0 == .v3 }) {
                 Log("MigrationHandler: probed value - already migrated", module: .cloudSync)
+                zoneManager.setCurrentZoneID(Config.vaultV2)
+                ConstStorage.cloudMigratedToV3 = true
+                clearCloudState?()
+                return
+            }
+            if result.isEmpty {
+                Log("MigrationHandler: probed value - clean iCloud", module: .cloudSync)
                 zoneManager.setCurrentZoneID(Config.vaultV2)
                 ConstStorage.cloudMigratedToV3 = true
                 return
             }
+            
             Log("MigrationHandler: awaiting migration to v3", module: .cloudSync)
             zoneManager.setCurrentZoneID(Config.vaultV1)
             isMigrating = true

@@ -37,6 +37,7 @@ final class ItemHandler {
     private let logHandler: LogHandler
     private let serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler
     private let syncEncryptionHandler: SyncEncryptionHandling
+    private let zoneManager: ZoneManaging
     
     private let encryption = ExchangeFileEncryption()
     private let embedded = Keys.Sync.key.decrypt()
@@ -50,7 +51,8 @@ final class ItemHandler {
         infoHandler: InfoHandler,
         logHandler: LogHandler,
         serviceRecordEncryptionHandler: ServiceRecordEncryptionHandler,
-        syncEncryptionHandler: SyncEncryptionHandling
+        syncEncryptionHandler: SyncEncryptionHandling,
+        zoneManager: ZoneManaging
     ) {
         self.sectionHandler = sectionHandler
         self.serviceHandler = serviceHandler
@@ -58,6 +60,7 @@ final class ItemHandler {
         self.logHandler = logHandler
         self.serviceRecordEncryptionHandler = serviceRecordEncryptionHandler
         self.syncEncryptionHandler = syncEncryptionHandler
+        self.zoneManager = zoneManager
         
         serviceHandler.encryption = encryption
         serviceHandler.embedded = embedded
@@ -99,7 +102,8 @@ extension ItemHandler {
     func listAllCommonItems() -> [RecordType: [Any]] {
         var value = [RecordType: [Any]]()
         value[RecordType.section] = sectionHandler.listAllCommonSection()
-        value[RecordType.service3] = serviceHandler.listAll()
+        let recordType: RecordType = zoneManager.inOldVault ? .service2 : .service3
+        value[recordType] = serviceHandler.listAll()
         value[RecordType.info] = infoHandler.prepareForSendoffCachedVersion()
         return value
     }
@@ -110,12 +114,13 @@ extension ItemHandler {
     
     func filterDeleted(from items: [RecordType: [Any]], deleted: [EntityOfKind]) -> [RecordType: [Any]] {
         var items = items
+        let recordType: RecordType = zoneManager.inOldVault ? .service2 : .service3
         
         let deletedSections = deleted.filter({ $0.type == .section }).map({ $0.entityID })
-        let deletedServices = deleted.filter({ $0.type == .service3 }).map({ $0.entityID })
+        let deletedServices = deleted.filter({ $0.type == recordType }).map({ $0.entityID })
         
         items[.section] = (items[.section] as? [CommonSectionData])?.filter({ !deletedSections.contains($0.sectionID) })
-        items[.service3] = (items[.service3] as? [ServiceData])?.filter({ !deletedServices.contains($0.secret) })
+        items[recordType] = (items[recordType] as? [ServiceData])?.filter({ !deletedServices.contains($0.secret) })
         
         return items
     }
@@ -167,6 +172,7 @@ extension ItemHandler {
         guard let entityID = { () -> String? in
             switch type {
             case .section: return (item as? CommonSectionData)?.sectionID
+            case .service2: return (item as? ServiceData)?.secret
             case .service3: return (item as? ServiceData)?.secret
             case .info: return ""
             default: return nil
@@ -185,7 +191,45 @@ extension ItemHandler {
                 title: modified.name,
                 order: index
             )
+        case .service2:
+            guard let current = serviceHandler.findService(by: entityID),
+                  let list = (from[.service2] as? [ServiceData]),
+                  let modified = list.first(where: { $0.secret == entityID }),
+                  let data = modified.secret.data(using: .utf8),
+                  let ref = encryption.encrypt(with: embedded, data: data)
+            else {
+                Log("ItemHandler - Can't create CKRecord with ServiceData", module: .cloudSync)
+                Log("ItemHandler - Can't create CKRecord with ServiceData: \(item)", module: .cloudSync, save: false)
+                return nil
+            }
             
+            let sectionOrder = Dictionary(grouping: list, by: { $0.sectionID })[modified.sectionID]?
+                .firstIndex(where: { $0.secret == entityID }) ?? 0
+            
+            return ServiceRecord2.create(
+                with: current.metadata,
+                name: modified.name,
+                secret: ref.data,
+                serviceTypeID: modified.serviceTypeID?.uuidString,
+                additionalInfo: modified.additionalInfo,
+                rawIssuer: modified.rawIssuer,
+                otpAuth: modified.otpAuth,
+                tokenPeriod: modified.tokenPeriod?.rawValue,
+                tokenLength: modified.tokenLength.rawValue,
+                badgeColor: modified.badgeColor?.rawValue,
+                iconType: modified.iconType.rawValue,
+                iconTypeID: modified.iconTypeID.uuidString,
+                labelColor: modified.labelColor.rawValue,
+                labelTitle: modified.labelTitle,
+                sectionID: modified.sectionID?.uuidString,
+                sectionOrder: sectionOrder,
+                algorithm: modified.algorithm.rawValue,
+                counter: modified.counter,
+                tokenType: modified.tokenType.rawValue,
+                source: modified.source.rawValue,
+                reference: ref.reference
+            )
+
         case .service3:
             guard let current = serviceHandler.findService(by: entityID),
                   let list = (from[.service3] as? [ServiceData]),
@@ -212,7 +256,51 @@ extension ItemHandler {
         case .section:
             guard let new = item as? CommonSectionData else { return nil }
             return SectionRecord.create(sectionID: new.sectionID, title: new.name, order: index, zoneID: zoneID)
+        case .service2:
+            guard let new = item as? ServiceData,
+                  let list = (allItems as? [ServiceData]),
+                  let data = new.secret.data(using: .utf8),
+                  let ref = encryption.encrypt(with: embedded, data: data) else {
+                Log("ItemHandler - Can't create CKRecord with ServiceData", module: .cloudSync)
+                Log("ItemHandler - Can't create CKRecord with ServiceData: \(item)", module: .cloudSync, save: false)
+                return nil
+            }
+            guard new.secret.isValidSecret() else {
+                // swiftlint:disable line_length
+                Log("ItemHandler - Preparation: new service - can't create - can't be used as recordId", module: .cloudSync)
+                logHandler.delete(identifiedBy: new.secret)
+                // swiftlint:enable line_length
+                secretError?(new.name)
+                return nil
+            }
+            let sectionOrder = Dictionary(grouping: list, by: { $0.sectionID })[new.sectionID]?
+                .firstIndex(where: { $0.secret == new.secret }) ?? 0
             
+            return ServiceRecord2.create(
+                zoneID: zoneID,
+                name: new.name,
+                secret: ref.data,
+                unencryptedSecret: new.secret,
+                serviceTypeID: new.serviceTypeID?.uuidString,
+                additionalInfo: new.additionalInfo,
+                rawIssuer: new.rawIssuer,
+                otpAuth: new.otpAuth,
+                tokenPeriod: new.tokenPeriod?.rawValue,
+                tokenLength: new.tokenLength.rawValue,
+                badgeColor: new.badgeColor?.rawValue,
+                iconType: new.iconType.rawValue,
+                iconTypeID: new.iconTypeID.uuidString,
+                labelColor: new.labelColor.rawValue,
+                labelTitle: new.labelTitle,
+                sectionID: new.sectionID?.uuidString,
+                sectionOrder: sectionOrder,
+                algorithm: new.algorithm.rawValue,
+                counter: new.counter,
+                tokenType: new.tokenType.rawValue,
+                source: new.source.rawValue,
+                reference: ref.reference
+            )
+
         case .service3:
             guard let new = item as? ServiceData,
                   let list = (allItems as? [ServiceData]) else {

@@ -281,11 +281,7 @@ final class SyncHandler {
             return
         }
         
-        Log("SyncHandler - Sending current cloud state to local database", module: .cloudSync)
-        let cloudData = itemHandler.listAllCommonItems()
-        let didSetNewData = commonItemHandler.setItems(cloudData)
-        Log("SyncHandler - Sync completed! Did set new data: \(didSetNewData)", module: .cloudSync)
-        Log("SyncHandler - The data: \(cloudData)", module: .cloudSync, save: false)
+        let didSetNewData = saveCloudDataToLocalDatabase()
         
         if logHandler.countNotApplied() > 0 {
             applyingChanges = true
@@ -326,6 +322,16 @@ final class SyncHandler {
     private func abortSync() {
         isSyncing = false
         applyingChanges = false
+    }
+    
+    @discardableResult
+    private func saveCloudDataToLocalDatabase() -> Bool {
+        Log("SyncHandler - Sending current cloud state to local database", module: .cloudSync)
+        let cloudData = itemHandler.listAllCommonItems()
+        let didSetNewData = commonItemHandler.setItems(cloudData)
+        Log("SyncHandler - Sync completed! Did set new data: \(didSetNewData)", module: .cloudSync)
+        Log("SyncHandler - The data: \(cloudData)", module: .cloudSync, save: false)
+        return didSetNewData
     }
     
     // swiftlint:enable line_length

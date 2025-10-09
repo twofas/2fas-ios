@@ -29,6 +29,7 @@ final class CommonItemHandler {
     private let commonServiceHandler: CommonServiceHandler
     private let infoHandler: InfoHandler
     private let logHandler: LogHandler
+    private let zoneManager: ZoneManaging
     
     private var itemsToAppend: [ServiceData] = []
     
@@ -36,12 +37,14 @@ final class CommonItemHandler {
         commonSectionHandler: CommonSectionHandler,
         commonServiceHandler: CommonServiceHandler,
         infoHandler: InfoHandler,
-        logHandler: LogHandler
+        logHandler: LogHandler,
+        zoneManager: ZoneManaging
     ) {
         self.commonSectionHandler = commonSectionHandler
         self.commonServiceHandler = commonServiceHandler
         self.infoHandler = infoHandler
         self.logHandler = logHandler
+        self.zoneManager = zoneManager
         
         commonSectionHandler.commonDidCreate = { [weak self] sectionID in
             Log("CommonItemHandler - commonSectionHandler - commonDidCreate", module: .cloudSync)
@@ -109,7 +112,8 @@ final class CommonItemHandler {
         itemsToAppend = []
         var value = [RecordType: [Any]]()
         value[.section] = sections
-        value[.service3] = services
+        let recordType: RecordType = zoneManager.inOldVault ? .service2 : .service3
+        value[recordType] = services
         value[.info] = infoHandler.prepareForSendoff()
         return value
     }

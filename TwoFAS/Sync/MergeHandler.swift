@@ -164,7 +164,7 @@ extension MergeHandler {
                         Log("MergeHandler: Preparation: element has diffrent content or index. Creating from exisiting one", module: .cloudSync)
                         
                         guard let record = itemHandler.record(for: type, item: item, modifiedData: current) else {
-                            Log("MergeHandler: Preparation: couldn't create record from exisiting service", module: .cloudSync)
+                            Log("MergeHandler: Preparation:MergeHandler: Preparation: element has diffrent content or index. Creating from exisiting one couldn't create record from exisiting service", module: .cloudSync)
                             continue
                         }
                         recordsToModify.append(record)

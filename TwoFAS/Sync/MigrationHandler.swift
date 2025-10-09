@@ -41,6 +41,10 @@ final class MigrationHandler {
 }
 
 extension MigrationHandler: MigrationHandling {
+    var isMigratingInV1Zone: Bool {
+        zoneManager.currentZoneID.zoneName == Config.vaultV1 && isMigrating
+    }
+    
     func checkIfMigrationNeeded() async {
         guard !ConstStorage.cloudMigratedToV3 else {
             Log("MigrationHandler: cached value - already migrated", module: .cloudSync)
@@ -85,7 +89,7 @@ extension MigrationHandler: MigrationHandling {
         
     func migrateIfNeeded() -> Bool {
         guard isMigrating else { return false }
-        if zoneManager.currentZoneID.zoneName == Config.vaultV1 {
+        if zoneManager.inOldVault {
             Log("MigrationHandler: migration to v3 from older Vault", module: .cloudSync)
             zoneManager.setCurrentZoneID(Config.vaultV2)
             return true

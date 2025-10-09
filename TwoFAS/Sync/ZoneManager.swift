@@ -25,7 +25,8 @@ import Common
 import CommonWatch
 #endif
 
-protocol ZoneManaging {
+protocol ZoneManaging: AnyObject {
+    var inOldVault: Bool { get }
     var currentZoneID: CKRecordZone.ID { get }
 }
 
@@ -35,6 +36,10 @@ final class ZoneManager: ZoneManaging {
     init() {
         currentZoneID = CKRecordZone.ID(zoneName: Config.vaultV2, ownerName: CKCurrentUserDefaultName)
         Log("ZoneManager: Default zone is \(Config.vaultV2)", module: .cloudSync)
+    }
+    
+    var inOldVault: Bool {
+        currentZoneID.zoneName == Config.vaultV1
     }
     
     func setCurrentZoneID(_ zoneName: String) {

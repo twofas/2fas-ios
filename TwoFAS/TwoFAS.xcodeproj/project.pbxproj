@@ -1001,8 +1001,8 @@
 		C2C02244297F224700D596A8 /* MainModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C02243297F224700D596A8 /* MainModuleInteractor.swift */; };
 		C2C0A7FC2DA2B46D000A1772 /* CloudState+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A7FB2DA2B469000A1772 /* CloudState+.swift */; };
 		C2C0A7FE2DA2E8C9000A1772 /* SyncEncryptionWatchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A7FD2DA2E8C9000A1772 /* SyncEncryptionWatchHandler.swift */; };
-		C2C0A8002DA2EF8A000A1772 /* RequirmentCheckHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A7FF2DA2EF82000A1772 /* RequirmentCheckHandling.swift */; };
-		C2C0A8012DA2EF8A000A1772 /* RequirmentCheckHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A7FF2DA2EF82000A1772 /* RequirmentCheckHandling.swift */; };
+		C2C0A8002DA2EF8A000A1772 /* RequirementCheckHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A7FF2DA2EF82000A1772 /* RequirementCheckHandling.swift */; };
+		C2C0A8012DA2EF8A000A1772 /* RequirementCheckHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A7FF2DA2EF82000A1772 /* RequirementCheckHandling.swift */; };
 		C2C0A8042DA2F027000A1772 /* RequirementCheckWatchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A8022DA2F00A000A1772 /* RequirementCheckWatchHandler.swift */; };
 		C2C0A97F2DA31ADD000A1772 /* DeviceCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A97E2DA31AD5000A1772 /* DeviceCode.swift */; };
 		C2C0A9802DA31ADD000A1772 /* DeviceCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A97E2DA31AD5000A1772 /* DeviceCode.swift */; };
@@ -2897,7 +2897,7 @@
 		C2C02243297F224700D596A8 /* MainModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModuleInteractor.swift; sourceTree = "<group>"; };
 		C2C0A7FB2DA2B469000A1772 /* CloudState+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudState+.swift"; sourceTree = "<group>"; };
 		C2C0A7FD2DA2E8C9000A1772 /* SyncEncryptionWatchHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncEncryptionWatchHandler.swift; sourceTree = "<group>"; };
-		C2C0A7FF2DA2EF82000A1772 /* RequirmentCheckHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequirmentCheckHandling.swift; sourceTree = "<group>"; };
+		C2C0A7FF2DA2EF82000A1772 /* RequirementCheckHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequirementCheckHandling.swift; sourceTree = "<group>"; };
 		C2C0A8022DA2F00A000A1772 /* RequirementCheckWatchHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequirementCheckWatchHandler.swift; sourceTree = "<group>"; };
 		C2C0A97E2DA31AD5000A1772 /* DeviceCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCode.swift; sourceTree = "<group>"; };
 		C2C0A9812DA321F4000A1772 /* SyncEncryptionHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncEncryptionHandling.swift; sourceTree = "<group>"; };
@@ -8384,7 +8384,7 @@
 				C2CCEB5C2D822AF30067FDCB /* ModificationQueue.swift */,
 				C2A7ABF1286328E60085CFEF /* SyncTokenHandler.swift */,
 				C25CB23A2D87442E0099FAFD /* MigrationHandling.swift */,
-				C2C0A7FF2DA2EF82000A1772 /* RequirmentCheckHandling.swift */,
+				C2C0A7FF2DA2EF82000A1772 /* RequirementCheckHandling.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -10496,7 +10496,7 @@
 				C2F5443525685C2100611716 /* SyncInstance.swift in Sources */,
 				C24EECF12687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift in Sources */,
 				C2058E09277D24940015F17E /* LogDataChange.swift in Sources */,
-				C2C0A8002DA2EF8A000A1772 /* RequirmentCheckHandling.swift in Sources */,
+				C2C0A8002DA2EF8A000A1772 /* RequirementCheckHandling.swift in Sources */,
 				C27E6FB828FC995100AC9FD1 /* ServiceCacheEntity+toServiceData.swift in Sources */,
 				C23BAB142545AEF5009B1EF8 /* ConstStorage.swift in Sources */,
 				C207C11F2559F1CB0053975E /* CloudKitErrorParser.swift in Sources */,
@@ -10601,7 +10601,7 @@
 				C25CB2412D8758700099FAFD /* ServiceRecordEncryptionHandler.swift in Sources */,
 				C274C9B82BAB89C7008E7212 /* LogEntity+CoreDataClass.swift in Sources */,
 				C274C9BA2BAB89C7008E7212 /* InfoRecord.swift in Sources */,
-				C2C0A8012DA2EF8A000A1772 /* RequirmentCheckHandling.swift in Sources */,
+				C2C0A8012DA2EF8A000A1772 /* RequirementCheckHandling.swift in Sources */,
 				C274C9BB2BAB89C7008E7212 /* InfoHandler.swift in Sources */,
 				C274C9BC2BAB89C7008E7212 /* Info.swift in Sources */,
 				C274C9BD2BAB89C7008E7212 /* RecordIDGenerator.swift in Sources */,

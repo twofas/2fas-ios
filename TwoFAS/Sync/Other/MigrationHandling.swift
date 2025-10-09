@@ -30,6 +30,7 @@ protocol MigrationHandling: AnyObject {
     var finishedMigratingToV3: Callback? { get set }
     
     var isMigrating: Bool { get }
+    var isMigratingInV1Zone: Bool { get }
     
     func checkIfMigrationNeeded() async
     func migrateIfNeeded() -> Bool

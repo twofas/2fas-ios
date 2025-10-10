@@ -246,6 +246,7 @@ final class SyncHandler {
     private func migrateIfNeeded() {
         applyingChanges = false
         if migrationHandler.migrateIfNeeded() {
+            saveCloudDataToLocalDatabase()                  
             resetStack()
             commonItemHandler.logFirstImport()
             synchronize()

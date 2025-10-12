@@ -160,12 +160,14 @@ final class SyncHandler {
         }
     }
     
-    func clearCacheAndDisable() {
+    func clearCacheAndDisable(skipItemsPurge: Bool = false) {
         Log("SyncHandler - Sync Handler: clearCacheAndDisable", module: .cloudSync)
         isSyncing = false
         applyingChanges = false
         logHandler.deleteAll()
-        itemHandler.purge()
+        if !skipItemsPurge {
+            itemHandler.purge()
+        }
         ConstStorage.clearZone()
         cloudKit.clear()
     }
@@ -196,7 +198,8 @@ final class SyncHandler {
             migrationPending: migrationHandler.isMigrating,
             encryptionPending: reencryptionHandler.willReencrypt
         ) else {
-            clearCacheAndDisable()
+            itemHandler.commitInfo()
+            clearCacheAndDisable(skipItemsPurge: true)
             return
         }
         

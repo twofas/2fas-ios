@@ -84,6 +84,12 @@ extension ItemHandler {
         updatedCreated = []
     }
     
+    func commitInfo() {
+        if let infoRecord = updatedCreated.first(where: { $0.recordType == RecordType.info.rawValue }) {
+            infoHandler.updateUsingRecord(InfoRecord(record: infoRecord))
+        }
+    }
+    
     func deleteEntries(_ entries: [EntityOfKind]) {
         deletedEntries = entries
     }
@@ -357,7 +363,11 @@ private extension ItemHandler {
 
 extension ItemHandler {
     func allEntityRecordIDs(zoneID: CKRecordZone.ID) -> [CKRecord.ID] { // minus Info - it should stay, but empty
-        sectionHandler.listAll().map({ SectionRecord.recordID(with: $0.sectionID, zoneID: zoneID) }) +
-        serviceHandler.listAll().map({ ServiceRecord3.recordID(with: $0.secret, zoneID: zoneID) })
+        let completeList: [CKRecord.ID] =
+        sectionHandler.listAll().map({ SectionRecord.recordID(with: $0.sectionID, zoneID: zoneID) })
+        + serviceHandler.listAll().map({ ServiceRecord3.recordID(with: $0.secret, zoneID: zoneID) })
+        + updatedCreated.filter({ $0.recordType != RecordType.info.rawValue }).map({ $0.recordID })
+        let set = Set(completeList)
+        return Array(set)
     }
 }

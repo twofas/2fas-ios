@@ -411,6 +411,7 @@ final class CloudHandler: CloudHandlerType {
             Log("Cloud Handler - error recreating info record for cloud clearing", module: .cloudSync)
             return
         }
+        itemHandler.purge()
 
         disable(notify: false)
         
@@ -482,7 +483,8 @@ final class CloudHandler: CloudHandlerType {
     
     private func cloudIsEncrypted(_ encryptionType: Info.Encryption?) {
         Log("Cloud Handler - cloud is encrypted", module: .cloudSync)
-        clearAll()
+        setDisabled()
+        cloudAvailability.clear()
         switch encryptionType {
         case .system, .none:
             currentState = .disabledNotAvailable(reason: .cloudEncryptedSystem)

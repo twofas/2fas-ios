@@ -5468,10 +5468,10 @@
 		C24D1C1B253C744E0029D27D /* Sync */ = {
 			isa = PBXGroup;
 			children = (
-				C264B6502E8C80FE00CA8648 /* ZoneManager.swift */,
-				C264B64D2E8C7A5900CA8648 /* CloudProbe.swift */,
 				C2F5443425685C2100611716 /* SyncInstance.swift */,
 				C2D507B5256477DA00151359 /* CloudHandler.swift */,
+				C264B6502E8C80FE00CA8648 /* ZoneManager.swift */,
+				C264B64D2E8C7A5900CA8648 /* CloudProbe.swift */,
 				C22FFC3C2DA5C01900A68ABD /* WatchPairHandler.swift */,
 				C245877F2D8B917100F28B22 /* SyncMigrationHandler.swift */,
 				C25CB3C22D878BC80099FAFD /* SyncEncryptionHandler.swift */,

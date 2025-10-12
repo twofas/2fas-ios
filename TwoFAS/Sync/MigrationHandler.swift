@@ -99,6 +99,7 @@ extension MigrationHandler: MigrationHandling {
             ConstStorage.cloudMigratedToV3 = true
             Task { @MainActor in
                 finishedMigratingToV3?()
+                NotificationCenter.default.post(name: .vaultWasMigrated, object: nil)
             }
             return false
         }

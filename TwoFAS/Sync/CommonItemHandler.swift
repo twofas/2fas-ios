@@ -78,8 +78,9 @@ final class CommonItemHandler {
     }
     
     func logFirstImport() {
+        let recordType: RecordType = zoneManager.inOldVault ? .service2 : .service3
         logHandler.logFirstImport(entityIDs: commonSectionHandler.getAllSections().map { $0.sectionID }, kind: .section)
-        logHandler.logFirstImport(entityIDs: commonServiceHandler.getAllServices().map { $0.secret }, kind: .service3)
+        logHandler.logFirstImport(entityIDs: commonServiceHandler.getAllServices().map { $0.secret }, kind: recordType)
         logHandler.logFirstImport(entityIDs: [Info.id], kind: .info)
     }
     

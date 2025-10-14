@@ -110,6 +110,11 @@ final class SyncHandler {
             self?.resetStack()
             self?.commonItemHandler.logFirstImport()
         }
+        migrationHandler.setFirstStart = { [weak self] in
+            self?.resetStack()
+            self?.isSyncing = true
+            self?.commonItemHandler.logFirstImport()
+        }
     }
     
     func didReceiveRemoteNotification(

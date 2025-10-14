@@ -23,6 +23,7 @@ import CommonWatch
 final class MigrationHandlerWatchPlaceholder: MigrationHandling {
     var clearCloudState: Callback?
     var isMigratingToV3: Callback?
+    var setFirstStart: Callback?
     var finishedMigratingToV3: Callback?
     
     var isMigrating: Bool { false }

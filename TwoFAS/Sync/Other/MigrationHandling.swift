@@ -26,6 +26,7 @@ import CommonWatch
 
 protocol MigrationHandling: AnyObject {
     var clearCloudState: Callback? { get set }
+    var setFirstStart: Callback? { get set }
     var isMigratingToV3: Callback? { get set }
     var finishedMigratingToV3: Callback? { get set }
     

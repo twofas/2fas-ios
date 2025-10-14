@@ -23,6 +23,7 @@ import Common
 
 final class MigrationHandler {
     var isMigratingToV3: Callback?
+    var setFirstStart: Callback?
     var finishedMigratingToV3: Callback?
     var clearCloudState: Callback?
     
@@ -76,6 +77,7 @@ extension MigrationHandler: MigrationHandling {
             Log("MigrationHandler: awaiting migration to v3", module: .cloudSync)
             zoneManager.setCurrentZoneID(Config.vaultV1)
             isMigrating = true
+            setFirstStart?()
             Task { @MainActor in
                 isMigratingToV3?()
             }

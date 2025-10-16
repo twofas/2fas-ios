@@ -35,7 +35,7 @@ final class ServiceRecordEncryptionHandler {
     }
     
     func createServiceRecord3(from serviceData: ServiceData, metadata: Data?, list: [ServiceData]) -> CKRecord? {
-        let sectionOrder = Dictionary(grouping: list, by: { $0.sectionID })[serviceData.sectionID]?
+        let sectionOrder = serviceData.order ?? list.sortedBySection[serviceData.sectionID]?
             .firstIndex(where: { $0.secret == serviceData.secret }) ?? 0
         
         guard let name = encrypt(serviceData.name),

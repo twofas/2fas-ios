@@ -139,8 +139,8 @@ public final class LogHandler: LogStorageHandling {
             self?.saveCounter = 0
             self?.zoneSaveCounter = 0
             
-            if self?.context?.hasChanges == true {
                 self?.context?.performAndWait { [weak self] in
+                    if self?.context?.hasChanges == true {
                     do {
                         try self?.context?.save()
                     } catch {

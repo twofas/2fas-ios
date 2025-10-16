@@ -95,7 +95,10 @@ final class CommonItemHandler {
         
         if let services = items[.service3] as? [ServiceData] {
             Log("CommonItemHandler: services (\(services.count))")
-            let value = commonServiceHandler.setServices(services)
+            let sortedServices = services.sortedBySection.reduce(into: [ServiceData]()) { result, element in
+                result += element.value
+            }
+            let value = commonServiceHandler.setServices(sortedServices)
             newDataWasSet = newDataWasSet || value
         }
         

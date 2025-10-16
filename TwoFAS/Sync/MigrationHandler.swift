@@ -77,8 +77,8 @@ extension MigrationHandler: MigrationHandling {
             Log("MigrationHandler: awaiting migration to v3", module: .cloudSync)
             zoneManager.setCurrentZoneID(Config.vaultV1)
             isMigrating = true
-            setFirstStart?()
             Task { @MainActor in
+                setFirstStart?()
                 isMigratingToV3?()
             }
         } catch {

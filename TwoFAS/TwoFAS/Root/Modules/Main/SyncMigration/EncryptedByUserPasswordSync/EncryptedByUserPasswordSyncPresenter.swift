@@ -22,13 +22,14 @@ import Common
 import Data
 
 final class EncryptedByUserPasswordSyncPresenter: ObservableObject {
+    @Published var firstInputReveal = false
     @Published var isCheckingPassword = false
     @Published var wrongPassword = false
     @Published var isDone = false
     @Published var migrationFailureReason: CloudState.NotAvailableReason?
     @Published var password: String = "" {
         didSet {
-            checkPasswordEnabled = password.count > Config.minSyncPasswordLength &&
+            checkPasswordEnabled = password.count >= Config.minSyncPasswordLength &&
             password.count <= Config.maxSyncPasswordLength
         }
     }

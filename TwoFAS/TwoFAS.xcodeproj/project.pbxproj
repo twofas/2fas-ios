@@ -760,6 +760,7 @@
 		C29378382BD1BF15008D5125 /* SecurityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29378372BD1BF15008D5125 /* SecurityPresenter.swift */; };
 		C293783A2BD1BF23008D5125 /* SecurityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29378392BD1BF23008D5125 /* SecurityInteractor.swift */; };
 		C293783D2BD1C24A008D5125 /* PINTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C293783C2BD1C24A008D5125 /* PINTypeView.swift */; };
+		C29492E02EA3EF2800474B84 /* PasswordInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29492DF2EA3EF2700474B84 /* PasswordInput.swift */; };
 		C2959627267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2959626267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift */; };
 		C295962B267F79190086DEB1 /* TokensSectionHeader+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C295962A267F79190086DEB1 /* TokensSectionHeader+.swift */; };
 		C29626B8236F80A200C133BC /* Animate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29626B7236F80A200C133BC /* Animate.swift */; };
@@ -2654,6 +2655,7 @@
 		C29378372BD1BF15008D5125 /* SecurityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityPresenter.swift; sourceTree = "<group>"; };
 		C29378392BD1BF23008D5125 /* SecurityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityInteractor.swift; sourceTree = "<group>"; };
 		C293783C2BD1C24A008D5125 /* PINTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINTypeView.swift; sourceTree = "<group>"; };
+		C29492DF2EA3EF2700474B84 /* PasswordInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInput.swift; sourceTree = "<group>"; };
 		C2959626267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDiffableDataSourceSnapshot+.swift"; sourceTree = "<group>"; };
 		C295962A267F79190086DEB1 /* TokensSectionHeader+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensSectionHeader+.swift"; sourceTree = "<group>"; };
 		C29626B7236F80A200C133BC /* Animate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animate.swift; sourceTree = "<group>"; };
@@ -8552,6 +8554,7 @@
 		C2FDEE55279C8FE8002CAB9E /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				C29492DF2EA3EF2700474B84 /* PasswordInput.swift */,
 				C2FDEE56279C8FF8002CAB9E /* SwiftUIButtons.swift */,
 				C206CACE27A35ABE0068284C /* View+.swift */,
 				C20524C22807620500B2B20C /* NavigationBarHiddenHostingController.swift */,
@@ -9958,6 +9961,7 @@
 				C2C0A7FC2DA2B46D000A1772 /* CloudState+.swift in Sources */,
 				C25C661428BADAB0008EC66A /* AboutFlowController.swift in Sources */,
 				C20E60FB2818971300AB002E /* PushNotificationPermissionPresenter.swift in Sources */,
+				C29492E02EA3EF2800474B84 /* PasswordInput.swift in Sources */,
 				C2F134B0246844B10014FB4E /* MainContainerActionButton.swift in Sources */,
 				C2C1DDE427CAD37D002C7867 /* SelectOption.swift in Sources */,
 				C2508E102753A59F0072C564 /* SettingsMenuViewController.swift in Sources */,

@@ -744,6 +744,8 @@ internal enum T {
     internal static let fileCreationError = T.tr("Localizable", "commons__file_creation_error", fallback: "File creation failed")
     /// Got it!
     internal static let gotIt = T.tr("Localizable", "commons__got_it", fallback: "Got it!")
+    /// iCloud Backup Password
+    internal static let icloudBackupPassword = T.tr("Localizable", "commons__icloud_backup_password", fallback: "iCloud Backup Password")
     /// Info
     internal static let info = T.tr("Localizable", "commons__info", fallback: "Info")
     /// Next

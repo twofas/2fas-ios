@@ -24,18 +24,24 @@ struct EncryptedByUserPasswordSyncView: View {
     @ObservedObject
     var presenter: EncryptedByUserPasswordSyncPresenter
     
+    @FocusState
+    private var focusedField: FocusedField?
+    
+    private enum FocusedField {
+        case password
+    }
+    
     var body: some View {
         Form {
             Section {
                 VStack(alignment: .center) {
                     VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-                        Spacer()
                         VStack(spacing: Theme.Metrics.standardSpacing) {
                             Asset.cloudBackup.swiftUIImage
                             Spacer()
                                 .frame(height: Theme.Metrics.doubleMargin)
-                            Text(verbatim: T.Backup.enterPasswordTitle)
-                                .font(.title)
+                            Text(verbatim: T.Commons.icloudBackupPassword)
+                                .font(.title2)
                                 .multilineTextAlignment(.center)
                             Text(verbatim: T.Backup.enterPasswordDescription)
                                 .font(.caption)
@@ -44,34 +50,8 @@ struct EncryptedByUserPasswordSyncView: View {
                             Spacer()
                                 .frame(height: Theme.Metrics.doubleMargin)
                             
-                            VStack(alignment: .leading, spacing: Theme.Metrics.standardMargin) {
-                                Text(verbatim: T.Backup.password)
-                                    .font(.caption2)
-                                    .foregroundStyle(Color(Theme.Colors.Text.subtitle))
-                                VStack(spacing: Theme.Metrics.halfSpacing) {
-                                    SecureField(T.Backup.password, text: $presenter.password)
-                                        .font(Font(Theme.Fonts.iconLabelInputTitle))
-                                        .foregroundStyle(presenter.isCheckingPassword ?
-                                                         Color(Theme.Colors.Text.inactive) :
-                                                            Color(Theme.Colors.Form.rowInput))
-                                        .lineLimit(1)
-                                        .disabled(presenter.isCheckingPassword)
-                                        .onSubmit {
-                                            if presenter.checkPasswordEnabled {
-                                                presenter.onCheckPassword()
-                                            }
-                                        }
-                                        .submitLabel(presenter.checkPasswordEnabled ? .send : .return)
-                                    Divider()
-                                        .overlay {
-                                            Rectangle()
-                                                .foregroundStyle(presenter.isCheckingPassword ?
-                                                                 Color(Theme.Colors.Text.inactive) :
-                                                                    Color(Theme.Colors.Line.primaryLine))
-                                        }
-                                }
+                            input()
                                 .padding(.bottom, Theme.Metrics.halfSpacing)
-                            }
                         }
                         Spacer()
                         if presenter.isCheckingPassword {
@@ -143,5 +123,40 @@ struct EncryptedByUserPasswordSyncView: View {
         }
         .scrollContentBackground(.hidden)
         .background(Color(Theme.Colors.Fill.background))
+    }
+    
+    @ViewBuilder
+    private func input() -> some View {
+        VStack(spacing: Theme.Metrics.quaterSpacing) {
+            HStack {
+                FloatingField(placeholder: Text(T.Backup.password), isEmpty: presenter.password.isEmpty) {
+                    PasswordContentInput(
+                        label: "",
+                        password: $presenter.password,
+                        isReveal: presenter.firstInputReveal
+                    )
+                }
+                .focused($focusedField, equals: .password)
+                .onSubmit {
+                    if presenter.checkPasswordEnabled {
+                        presenter.onCheckPassword()
+                    }
+                }
+                .submitLabel(presenter.checkPasswordEnabled ? .send : .return)
+                
+                Spacer()
+                
+                Toggle(isOn: $presenter.firstInputReveal, label: {})
+                    .toggleStyle(RevealToggleStyle())
+            }
+            Divider()
+                .overlay {
+                    Rectangle()
+                        .foregroundStyle(presenter.isCheckingPassword ?
+                                         Color(Theme.Colors.Text.inactive) :
+                                            Color(Theme.Colors.Line.primaryLine))
+                }
+        }
+        .disabled(presenter.isCheckingPassword)
     }
 }

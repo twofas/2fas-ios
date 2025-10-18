@@ -76,7 +76,7 @@ struct ManageWatchView: View {
             ForEach(presenter.list) { item in
                 Text(item.deviceName)
                     .padding(.vertical, Theme.Metrics.standardSpacing)
-                    .font(.title2)
+                    .font(.body)
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
                             presenter.onDelete(item)

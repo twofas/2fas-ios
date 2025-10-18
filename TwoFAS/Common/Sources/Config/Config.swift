@@ -41,7 +41,7 @@ public enum Config {
     public static let maxIdentifierLength: Int = 128
     
     public static let maxSyncPasswordLength = 32
-    public static let minSyncPasswordLength = 4
+    public static let minSyncPasswordLength = 9
 
     public static let minQRCodeSize: CGFloat = 280    
     public static let twofasAuthOldScheme = "twofas"
@@ -53,4 +53,14 @@ public enum Config {
     public static let vaultV1 = "Vault1"
     public static let vaultV2 = "Vault2"
     public static let containerIdentifier = "iCloud.com.twofas.org.Vault"
+    
+    enum PasswordCharacterSet {
+        static let digits = (48...57).map { String(UnicodeScalar($0)!) }
+        static let uppercase = (65...90).map { String(UnicodeScalar($0)!) }
+        static let special = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_"]
+        static let lowercase = (97...122).map { String(UnicodeScalar($0)!) }
+        static let letters = uppercase + lowercase
+        static let complete = digits + special + letters
+        static let characterSet = CharacterSet(charactersIn: complete.joined())
+    }
 }

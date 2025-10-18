@@ -46,7 +46,7 @@ final class EncryptedByUserPasswordSyncFlowController: FlowController {
         )
         view.presenter = presenter
 
-        view.configureAsModal()
+        view.configureAsPhoneFullscreenModal()
         viewController.present(view, animated: true)
         
         return presenter.callback

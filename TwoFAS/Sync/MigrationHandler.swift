@@ -64,7 +64,9 @@ extension MigrationHandler: MigrationHandling {
                 Log("MigrationHandler: probed value - already migrated", module: .cloudSync)
                 zoneManager.setCurrentZoneID(Config.vaultV2)
                 ConstStorage.cloudMigratedToV3 = true
-                clearCloudState?()
+                Task { @MainActor in
+                    clearCloudState?()
+                }
                 return
             }
             if result.isEmpty {
@@ -84,7 +86,9 @@ extension MigrationHandler: MigrationHandling {
         } catch {
             Log("MigrationHandler - can't probe cloud", module: .cloudSync, severity: .error)
             zoneManager.setCurrentZoneID(Config.vaultV2)
-            clearCloudState?()
+            Task { @MainActor in
+                clearCloudState?()
+            }
             return
         }
     }

@@ -39,14 +39,16 @@ final class LogHandler {
     }
     
     func logFirstImport(entityIDs: [String], kind: RecordType) {
+        var counter: Int = 0
         entityIDs.forEach {
             LogEntity.create(
                 on: coreDataStack.context,
                 entityID: $0,
                 action: LogActionType.created.rawValue,
-                date: Date.distantPast,
+                date: Date.distantPast.addingTimeInterval((60 * 60 * 24) * Double(counter)),
                 kind: kind.rawValue
             )
+            counter += 1
         }
         coreDataStack.save()
     }

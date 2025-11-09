@@ -121,7 +121,9 @@ extension BackupMenuPresenter {
         menu.append(fileBackup)
                 
         if interactor.isCloudBackupConnected && interactor.isBackupAllowed {
-            menu.append(cloudBackupChangePassword)
+            if /*interactor.encryptionTypeIsUser && */interactor.isCloudBackupSynced {
+                menu.append(cloudBackupChangePassword)
+            }
             menu.append(cloudBackupDeletition)
             menu.append(cloudBackupNuke)
             if interactor.encryptionTypeIsUser && interactor.isCloudBackupSynced {

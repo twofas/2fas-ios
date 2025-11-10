@@ -42,7 +42,8 @@ extension BackupMenuPresenter {
                         isOn: interactor.isBackupOn,
                         isActive: interactor.isBackupAvailable
                     )
-                )
+                ),
+                .init(title: "Manage Backup", action: .manageBackup)
             ],
             footer: footer
         )

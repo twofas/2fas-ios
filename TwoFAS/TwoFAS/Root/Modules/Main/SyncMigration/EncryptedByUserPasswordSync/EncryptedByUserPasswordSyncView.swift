@@ -27,12 +27,15 @@ struct EncryptedByUserPasswordSyncView: View {
     @FocusState
     private var focusedField: FocusedField?
     
+    @State
+    private var height: CGFloat = 0
+    
     private enum FocusedField {
         case password
     }
     
     var body: some View {
-        Form {
+        ScrollView {
             Section {
                 VStack(alignment: .center) {
                     VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
@@ -82,6 +85,7 @@ struct EncryptedByUserPasswordSyncView: View {
                                             .foregroundStyle(Color.green)
                                     }
                                 }
+                                Spacer()
                                 VStack {
                                     Button {
                                         if presenter.isDone {
@@ -116,6 +120,7 @@ struct EncryptedByUserPasswordSyncView: View {
                     .frame(maxWidth: Theme.Metrics.componentWidth)
                     .padding(.top, Theme.Metrics.doubleMargin)
                 }
+                .frame(height: height)
                 .frame(maxWidth: .infinity)
                 .background(Color(Theme.Colors.Fill.background))
             }
@@ -123,6 +128,12 @@ struct EncryptedByUserPasswordSyncView: View {
         }
         .scrollContentBackground(.hidden)
         .background(Color(Theme.Colors.Fill.background))
+        .frame(maxHeight: .infinity)
+        .observeHeight { height in
+            if focusedField == nil {
+                self.height = height
+            }
+        }
     }
     
     @ViewBuilder

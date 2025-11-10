@@ -94,6 +94,34 @@ final class SyncEncryptionHandler {
 }
 
 extension SyncEncryptionHandler: SyncEncryptionHandling {
+    func verifyUserPassword(_ password: String) -> Bool {
+        guard usedKey() == .user else {
+            Log(
+                "SyncEncryptionHandler: Using system encryption - can't verify password",
+                module: .cloudSync,
+                severity: .error
+            )
+            return false
+        }
+        guard let cachedEncryptionReference else {
+            Log(
+                "SyncEncryptionHandler: No cached encryption reference",
+                module: .cloudSync,
+                severity: .error
+            )
+            return false
+        }
+        guard let key = generateKey(for: password) else {
+            Log("SyncEncryptionHandler: Can't recreate user key for verification", module: .cloudSync, severity: .error)
+            return false
+        }
+        guard let data = decrypt(cachedEncryptionReference, using: SymmetricKey(data: key)) else {
+            Log("SyncEncryptionHandler: Can't decrypt reference for verification", module: .cloudSync)
+            return false
+        }
+        return data == reference
+    }
+    
     func setUserPassword(_ password: String) {
         guard let key = generateKey(for: password) else {
             Log("SyncEncryptionHandler: Can't create user key!", module: .cloudSync, severity: .error)

@@ -29,6 +29,15 @@ protocol EncryptedByUserPasswordSyncFlowControlling: AnyObject {
     func close()
 }
 
+enum EncryptedByUserPasswordSyncType {
+    enum Next {
+        case removePassword
+        case changePassword
+    }
+    case enterPassword
+    case verifyPassword
+}
+
 final class EncryptedByUserPasswordSyncFlowController: FlowController {
     private weak var parent: EncryptedByUserPasswordSyncFlowControllerParent?
 

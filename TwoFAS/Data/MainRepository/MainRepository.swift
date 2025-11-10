@@ -166,6 +166,7 @@ protocol MainRepository: AnyObject {
     func cloudSetMissingUserPassword(_ password: String)
     func cloudMigrateToSystemPassword()
     func cloudSwitchLocallyToUseSystemPassword()
+    func cloudVerifyUserPassword(_ password: String) -> Bool
     
     // MARK: - Import
     var fileURL: URL? { get set }

@@ -21,20 +21,40 @@ import Foundation
 
 extension BackupManageEncryptionPresenter {
     func buildMenu() -> [BackupManageEncryptionSection] {
-        if true {
+        if false {
             return [
-                .init(title: "Sync management", cells: [
-                    .init(title: "Set password", action: .encrypt),
-                    .init(title: "Clear contents", action: .clear),
-                ])
+                .init(
+                    title: "Encryption",
+                    cells: [
+                        .init(title: "Set password", action: .encrypt)
+                    ],
+                    footer: T.Backup.encryptionPasswordDescription
+                ),
+                .init(
+                    title: T.Backup.backupRemoval,
+                    cells: [
+                        .init(title: T.Backup.delete2fasBackup, action: .clear)
+                    ],
+                    footer: T.Backup.warningIntroduction
+                )
             ]
         } else {
             return [
-                .init(title: "Sync management", cells: [
-                    .init(title: "Remove password", action: .decrypt),
-                    .init(title: "Change password", action: .recrypt),
-                    .init(title: "Clear contents", action: .clear),
-                ])
+                .init(
+                    title: "Encryption",
+                    cells: [
+                        .init(title: "Remove password", action: .decrypt),
+                        .init(title: "Change password", action: .recrypt)
+                    ],
+                    footer: T.Backup.encryptionPasswordDescription
+                ),
+                .init(
+                    title: T.Backup.backupRemoval,
+                    cells: [
+                        .init(title: T.Backup.delete2fasBackup, action: .clear)
+                    ],
+                    footer: T.Backup.warningIntroduction
+                )
             ]
         }
     }

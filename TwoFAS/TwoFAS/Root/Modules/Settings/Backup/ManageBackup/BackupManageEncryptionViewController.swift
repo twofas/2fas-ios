@@ -24,10 +24,11 @@ protocol BackupManageEncryptionViewControlling: AnyObject {
 }
 
 final class BackupManageEncryptionViewController: UIViewController {
+    private let iconSize: CGFloat = 20
+    
     var presenter: BackupManageEncryptionPresenter!
     
     private let tableView = SettingsMenuTableView()
-    private let footer = BackupManageEncryptionFooter()
     
     private var tableViewAdapter: TableViewAdapter<BackupManageEncryptionSection, BackupManageEncryptionCell>!
     
@@ -54,12 +55,10 @@ final class BackupManageEncryptionViewController: UIViewController {
         
         setupTableViewLayout()
         
-        title = T.Settings.BackupManageEncryption
+        title = "Manage Backup"
         
         hidesBottomBarWhenPushed = false
         navigationItem.backButtonDisplayMode = .minimal
-        
-        setupFooter()
     }
     
     private func setupTableViewLayout() {
@@ -73,11 +72,6 @@ final class BackupManageEncryptionViewController: UIViewController {
         ])
     }
     
-    private func setupFooter() {
-        footer.setText(T.Settings.version(presenter.appVersion))
-        tableView.tableFooterView = footer
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -86,49 +80,32 @@ final class BackupManageEncryptionViewController: UIViewController {
 }
 
 extension BackupManageEncryptionViewController {
-    func cell(for data: BackupManageEncryptionCell, in tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell? {
+    func cell(
+        for data: BackupManageEncryptionCell,
+        in tableView: UITableView,
+        at indexPath: IndexPath
+    ) -> UITableViewCell? {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: SettingsMenuTableViewCell.identifier,
             for: indexPath
         ) as? SettingsMenuTableViewCell else { return nil }
-        
-        let accessory: SettingsMenuTableViewCell.AccessoryType = {
-            if let image = data.accessory.icon {
-                let imageView = UIImageView(image: image)
-                imageView.tintColor = Theme.Colors.Icon.theme
-                return .customView(customView: imageView)
-            }
-            if case BackupManageEncryptionCell.AccessoryKind.toggle(let isOn) = data.accessory {
-                return .toggle(isEnabled: isOn) { [weak self] _, _ in
-                    self?.presenter.handleToogle()
-                }
-            }
-            
-            return .none
-        }()
-        
-        let decorateText: SettingsMenuTableViewCell.TextDecoration = {
-            if case SettingsMenuTableViewCell.AccessoryType.none = accessory {
-                return .action
-            }
-            return .none
-        }()
-        if data.action == nil {
-            cell.selectionStyle = .none
-        } else {
-            cell.selectionStyle = .default
-        }
-        let icon: UIImage? = {
-            guard let img = data.icon else { return nil }
+        cell.selectionStyle = .default
+        let icon: UIImage = {
             let traitCollection = UITraitCollection(userInterfaceStyle: .light)
-            return img.withConfiguration(traitCollection.imageConfiguration)
+            return data.icon.withConfiguration(traitCollection.imageConfiguration)
+                .scalePreservingAspectRatio(targetSize: .init(width: iconSize, height: iconSize))
+                .withTintColor(Theme.Colors.Icon.theme)
         }()
         
-        cell.update(icon: icon, title: data.title, kind: accessory, decorateText: decorateText)
+        cell.update(icon: icon, title: data.title, kind: .none, decorateText: .action)
         return cell
     }
     
-    func titleForHeader(offset: Int, snapshot: TableViewDataSnapshot<BackupManageEncryptionSection, BackupManageEncryptionCell>) -> String? {
+    func titleForHeader(
+        offset: Int,
+        snapshot: TableViewDataSnapshot<BackupManageEncryptionSection,
+        BackupManageEncryptionCell>
+    ) -> String? {
         let section = snapshot.section(at: offset)
         return section.title
     }

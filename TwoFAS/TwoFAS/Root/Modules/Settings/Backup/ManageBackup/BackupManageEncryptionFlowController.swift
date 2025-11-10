@@ -20,11 +20,12 @@
 import UIKit
 
 protocol BackupManageEncryptionFlowControllerParent: AnyObject {
-    func BackupManageEncryptionClose()
+    func backupManageEncryptionClose()
 }
 
 protocol BackupManageEncryptionFlowControlling: AnyObject {
     func close()
+    func toDeleteBackup()
 }
 
 final class BackupManageEncryptionFlowController: FlowController {
@@ -33,7 +34,7 @@ final class BackupManageEncryptionFlowController: FlowController {
     
     static func push(
         in navigationController: UINavigationController,
-        parent: AppleWatchFlowControllerParent
+        parent: BackupManageEncryptionFlowControllerParent
     ) {
         let viewController = BackupManageEncryptionViewController()
         let flowController = BackupManageEncryptionFlowController(viewController: viewController)
@@ -41,13 +42,30 @@ final class BackupManageEncryptionFlowController: FlowController {
         flowController.navigationController = navigationController
         let presenter = BackupManageEncryptionPresenter(flowController: flowController)
         viewController.presenter = presenter
+        presenter.view = viewController
         
-        navigationController.pushRootViewController(viewController, animated: true)
+        navigationController.pushViewController(viewController, animated: true)
     }
 }
 
 extension BackupManageEncryptionFlowController: BackupManageEncryptionFlowControlling {
     func close() {
-        parent?.BackupManageEncryptionClose()
+        parent?.backupManageEncryptionClose()
+    }
+    
+    func toDeleteBackup() {
+        BackupDeleteFlowController.present(on: viewController, parent: self)
+    }
+}
+
+extension BackupManageEncryptionFlowController: BackupDeleteFlowControllerParent {
+    func hideDeleteBackup() {
+        viewController.dismiss(animated: true)
+    }
+}
+
+extension BackupManageEncryptionFlowController {
+    var viewController: BackupManageEncryptionViewController {
+        _viewController as! BackupManageEncryptionViewController
     }
 }

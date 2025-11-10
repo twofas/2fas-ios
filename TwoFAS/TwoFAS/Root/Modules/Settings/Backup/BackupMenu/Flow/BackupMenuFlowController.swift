@@ -30,6 +30,7 @@ protocol BackupMenuFlowControlling: AnyObject {
     func toDeleteCloudBackup()
     func toChangeEncryption()
     func toManageAppleWatch()
+    func toManageBackup()
 }
 
 final class BackupMenuFlowController: FlowController {
@@ -98,6 +99,18 @@ extension BackupMenuFlowController: BackupMenuFlowControlling {
     func toManageAppleWatch() {
         ManageWatchFlowController.present(on: viewController, parent: self)
     }
+    
+    func toManageBackup() {
+        guard let navigationController = viewController.navigationController else { return }
+//        BackupManageEncryptionFlowController.push(in: navigationController, parent: self)
+        _ = EncryptedByUserPasswordSyncFlowController.showAsRoot(in: navigationController, parent: self)
+    }
+}
+
+extension BackupMenuFlowController: EncryptedByUserPasswordSyncFlowControllerParent {
+    func closeEncryptedByUser() {
+        viewController.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension BackupMenuFlowController: BackupChangeEncryptionFlowControllerParent {
@@ -137,6 +150,12 @@ extension BackupMenuFlowController: ExporterMainScreenFlowControllerParent {
 extension BackupMenuFlowController: BackupDeleteFlowControllerParent {
     func hideDeleteBackup() {
         viewController.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension BackupMenuFlowController: BackupManageEncryptionFlowControllerParent {
+    func backupManageEncryptionClose() {
+        viewController.navigationController?.popViewController(animated: true)
     }
 }
 

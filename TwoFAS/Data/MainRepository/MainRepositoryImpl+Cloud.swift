@@ -153,4 +153,8 @@ extension MainRepositoryImpl {
     var cloudCurrentEncryption: CloudEncryptionType? {
         syncMigration.currentEncryption
     }
+    
+    func cloudVerifyUserPassword(_ password: String) -> Bool {
+        syncMigration.verifyUserPassword(password)
+    }
 }

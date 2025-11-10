@@ -21,11 +21,11 @@ import UIKit
 import Data
 
 struct BackupManageEncryptionSection: TableViewSection {
-    let title: String
+    let title: String?
     var cells: [BackupManageEncryptionCell]
     let footer: String?
     
-    init(title: String, cells: [BackupManageEncryptionCell], footer: String? = nil) {
+    init(title: String? = nil, cells: [BackupManageEncryptionCell], footer: String? = nil) {
         self.title = title
         self.cells = cells
         self.footer = footer
@@ -41,23 +41,24 @@ struct BackupManageEncryptionCell: Hashable {
     }
     
     let title: String
-    let action: Action?
-    let icon: UIImage?
+    let action: Action
+    var icon: UIImage {
+        action.icon
+    }
     
-    init(title: String, action: Action?, icon: UIImage? = nil) {
+    init(title: String, action: Action) {
         self.title = title
         self.action = action
-        self.icon = icon
     }
 }
 
 extension BackupManageEncryptionCell.Action {
     var icon: UIImage {
         switch self {
-        case .encrypt: UIImage(systemName: "lock.icloud")!
-        case .decrypt: UIImage(systemName: "lock.open")!
+        case .encrypt: UIImage(systemName: "lock.icloud.fill")!
+        case .decrypt: UIImage(systemName: "lock.open.fill")!
         case .recrypt: UIImage(systemName: "lock.open.rotation")!
-        case .clear: UIImage(systemName: "xmark.icloud")!
+        case .clear: UIImage(systemName: "xmark.icloud.fill")!
         }
     }
 }

@@ -69,6 +69,8 @@ final class BackupMenuPresenter {
             flowController.toManageAppleWatch()
         case .debugEraseCloudBackup:
             interactor.debugErase()
+        case .manageBackup:
+            flowController.toManageBackup()
         }
     }
     

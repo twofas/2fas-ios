@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct PasswordInput: View {
     let label: LocalizedStringKey
@@ -32,7 +33,12 @@ struct PasswordInput: View {
     private var isColorized = false
     private var onSubmit: (() -> Void)?
     
-    init(label: LocalizedStringKey, password: Binding<String>, reveal: Binding<Bool>? = nil, onSubmit: (() -> Void)? = nil) {
+    init(
+        label: LocalizedStringKey,
+        password: Binding<String>,
+        reveal: Binding<Bool>? = nil,
+        onSubmit: (() -> Void)? = nil
+    ) {
         self.label = label
         self.bindingReveal = reveal
         self._password = password
@@ -268,7 +274,7 @@ private struct _SecureContainerView<ID: Hashable, Content: View>: UIViewRepresen
     }
 }
 
-private struct Constants {
+private enum Constants {
     static let focusedPlaceholderScale: CGFloat = 0.7
     static let focusedPlaceholderVerticalOffset: CGFloat = -10
 }
@@ -276,22 +282,31 @@ private struct Constants {
 struct FloatingField<Label>: View where Label: View {
     
     let placeholder: Text
-    let isEmpty: Bool
+    @Binding
+    var isEmpty: Bool
+    @Binding
+    var isFocused: Bool
+    let focusOnField: Callback
     
     @ViewBuilder var label: () -> Label
-    
-    @FocusState var isFocused: Bool
-    
+        
     var body: some View {
         ZStack(alignment: .leading) {
             placeholder
                 .foregroundStyle(Color(Theme.Colors.Text.inactive))
-                .scaleEffect(isFocused || isEmpty == false ? Constants.focusedPlaceholderScale : 1, anchor: .topLeading)
+                .scaleEffect(
+                    isFocused || isEmpty == false ? Constants.focusedPlaceholderScale : 1,
+                    anchor: .topLeading
+                )
                 .offset(y: isFocused || isEmpty == false ? Constants.focusedPlaceholderVerticalOffset : 0)
                 .animation(.default, value: isFocused)
+                .onTapGesture {
+                    if !isFocused {
+                        focusOnField()
+                    }
+                }
             
             label()
-                .focused($isFocused)
                 .padding(.top, 20)
         }
     }

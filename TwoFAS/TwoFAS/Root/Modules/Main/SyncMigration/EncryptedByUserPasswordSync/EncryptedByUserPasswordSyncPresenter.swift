@@ -22,11 +22,10 @@ import Common
 import Data
 
 final class EncryptedByUserPasswordSyncPresenter: ObservableObject {
-    @Published var firstInputReveal = false
     @Published var isCheckingPassword = false
     @Published var wrongPassword = false
     @Published var isDone = false
-    @Published var migrationFailureReason: CloudState.NotAvailableReason?
+    @Published var migrationFailureReason: CloudState.NotAvailableReason? = .cloudEncryptedSystem
     @Published var password: String = "" {
         didSet {
             checkPasswordEnabled = password.count >= Config.minSyncPasswordLength &&
@@ -43,13 +42,23 @@ final class EncryptedByUserPasswordSyncPresenter: ObservableObject {
     }
     private let flowController: EncryptedByUserPasswordSyncFlowControlling
     private let interactor: EncryptedByUserPasswordSyncModuleInteracting
+    private let flowType: EncryptedByUserPasswordSyncType
+    
+    var isVerifyingPassword: Bool {
+        switch flowType {
+        case .enterPassword: false
+        case .verifyPassword: true
+        }
+    }
     
     init(
         flowController: EncryptedByUserPasswordSyncFlowControlling,
-        interactor: EncryptedByUserPasswordSyncModuleInteracting
+        interactor: EncryptedByUserPasswordSyncModuleInteracting,
+        flowType: EncryptedByUserPasswordSyncType
     ) {
         self.flowController = flowController
         self.interactor = interactor
+        self.flowType = flowType
     }
 }
 
@@ -59,8 +68,23 @@ extension EncryptedByUserPasswordSyncPresenter {
     }
     
     func onCheckPassword() {
-        isCheckingPassword = true
-        interactor.setPassword(password)
+        if isVerifyingPassword {
+            if interactor.verifyPassword(password) {
+                switch flowType {
+                case .enterPassword: break
+                case .verifyPassword(let next):
+                    switch next {
+                    case .changePassword:
+                        flowController.toChangePassword()
+                    case .removePassword:
+                        flowController.toRemovePassword()
+                    }
+                }
+            }
+        } else {
+            isCheckingPassword = true
+            interactor.setPassword(password)
+        }
     }
 }
 

@@ -35,7 +35,7 @@ enum EncryptedByUserPasswordSyncType {
         case changePassword
     }
     case enterPassword
-    case verifyPassword
+    case verifyPassword(Next)
 }
 
 final class EncryptedByUserPasswordSyncFlowController: FlowController {
@@ -51,11 +51,12 @@ final class EncryptedByUserPasswordSyncFlowController: FlowController {
         flowController.parent = parent
         let presenter = EncryptedByUserPasswordSyncPresenter(
             flowController: flowController,
-            interactor: interactor
+            interactor: interactor,
+            flowType: .enterPassword
         )
         view.presenter = presenter
 
-        view.configureAsPhoneFullscreenModal()
+        view.configureAsModal()
         viewController.present(view, animated: true)
         
         return presenter.callback

@@ -23,114 +23,110 @@ import Common
 struct EncryptedByUserPasswordSyncView: View {
     @ObservedObject
     var presenter: EncryptedByUserPasswordSyncPresenter
-    
-    @FocusState
-    private var focusedField: FocusedField?
+
+    @State
+    private var isFocused = false
     
     @State
     private var height: CGFloat = 0
     
-    private enum FocusedField {
-        case password
-    }
-    
     var body: some View {
         ScrollView {
-            Section {
-                VStack(alignment: .center) {
-                    VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-                        VStack(spacing: Theme.Metrics.standardSpacing) {
-                            Asset.cloudBackup.swiftUIImage
-                            Spacer()
-                                .frame(height: Theme.Metrics.doubleMargin)
-                            Text(verbatim: T.Commons.icloudBackupPassword)
-                                .font(.title2)
-                                .multilineTextAlignment(.center)
-                            Text(verbatim: T.Backup.enterPasswordDescription)
-                                .font(.caption)
-                                .minimumScaleFactor(0.5)
-                                .multilineTextAlignment(.center)
-                            Spacer()
-                                .frame(height: Theme.Metrics.doubleMargin)
-                            
+            VStack(alignment: .center) {
+                VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+                    VStack(spacing: Theme.Metrics.standardSpacing) {
+                        Spacer()
+                            .frame(height: Theme.Metrics.doubleMargin)
+                        Text(verbatim: T.Commons.icloudBackupPassword)
+                            .font(.title2)
+                            .multilineTextAlignment(.center)
+                        Text(verbatim: presenter.isCheckingPassword ? "iCloud backup is encrypted with your password. Enter it to apply changes." : T.Backup.enterPasswordDescription)
+                            .font(.caption)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Spacer()
+                            .frame(height: Theme.Metrics.doubleMargin)
+                        
+                        if !presenter.isCheckingPassword {
                             input()
                                 .padding(.bottom, Theme.Metrics.halfSpacing)
                         }
+                    }
+                    Spacer()
+                        .frame(maxHeight: .infinity)
+                    if presenter.isCheckingPassword {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .tint(Color(ThemeColor.theme))
+                            .scaleEffect(1.5)
                         Spacer()
-                        if presenter.isCheckingPassword {
-                            ProgressView()
-                                .progressViewStyle(.circular)
-                                .tint(Color(ThemeColor.theme))
-                                .scaleEffect(1.5)
-                        } else {
-                            VStack {
-                                if let migrationFailureReason = presenter.migrationFailureReason {
-                                    Label(
-                                        T.Backup.enterPasswordFailure(migrationFailureReason.description),
-                                        systemImage: "xmark.circle.fill"
-                                    )
-                                    .font(.caption)
-                                    .fontWeight(.bold)
-                                    .foregroundStyle(Color(Theme.Colors.Text.theme))
-                                } else {
-                                    if presenter.wrongPassword {
-                                        Label(T.Backup.enterPasswordWrongPassword, systemImage: "xmark.circle.fill")
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .foregroundStyle(Color(Theme.Colors.Text.theme))
-                                    } else if presenter.isDone {
-                                        Label(T.Commons.successEx, systemImage: "checkmark.circle.fill")
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .foregroundStyle(Color.green)
-                                    }
+                            .frame(maxHeight: .infinity)
+                    } else {
+                        VStack {
+                            if let migrationFailureReason = presenter.migrationFailureReason {
+                                Label(
+                                    T.Backup.enterPasswordFailure(migrationFailureReason.description),
+                                    systemImage: "xmark.circle.fill"
+                                )
+                                .font(.caption)
+                                .fontWeight(.bold)
+                                .foregroundStyle(Color(Theme.Colors.Text.theme))
+                            } else {
+                                if presenter.wrongPassword {
+                                    Label(T.Backup.enterPasswordWrongPassword, systemImage: "xmark.circle.fill")
+                                        .font(.caption)
+                                        .fontWeight(.bold)
+                                        .foregroundStyle(Color(Theme.Colors.Text.theme))
+                                } else if presenter.isDone {
+                                    Label(T.Commons.successEx, systemImage: "checkmark.circle.fill")
+                                        .font(.caption)
+                                        .fontWeight(.bold)
+                                        .foregroundStyle(Color.green)
                                 }
-                                Spacer()
-                                VStack {
-                                    Button {
-                                        if presenter.isDone {
-                                            presenter.close()
-                                        } else {
-                                            presenter.onCheckPassword()
-                                        }
-                                    } label: {
-                                        Text(presenter.isDone ? T.Commons.done : T.Backup.checkPassword)
-                                            .frame(minWidth: 0, maxWidth: .infinity)
-                                    }
-                                    .modify {
-                                        if presenter.checkPasswordEnabled {
-                                            $0.buttonStyle(RoundedFilledButtonStyle())
-                                        } else {
-                                            $0.buttonStyle(RoundedFilledInactiveButtonStyle())
-                                        }
-                                    }
-                                    Button {
-                                        presenter.close()
-                                    } label: {
-                                        Text(T.Commons.close)
-                                    }
-                                    .buttonStyle(LinkButtonStyle())
-                                    .isHidden(presenter.isDone)
-                                }
-                                .padding(.top, Theme.Metrics.doubleMargin)
                             }
+                            VStack {
+                                Button {
+                                    if presenter.isDone {
+                                        presenter.close()
+                                    } else {
+                                        presenter.onCheckPassword()
+                                    }
+                                } label: {
+                                    Text(doneLabel())
+                                        .frame(minWidth: 0, maxWidth: .infinity)
+                                }
+                                .modify {
+                                    if presenter.checkPasswordEnabled {
+                                        $0.buttonStyle(RoundedFilledButtonStyle())
+                                    } else {
+                                        $0.buttonStyle(RoundedFilledInactiveButtonStyle())
+                                    }
+                                }
+                                Button {
+                                    presenter.close()
+                                } label: {
+                                    Text(T.Commons.close)
+                                }
+                                .buttonStyle(LinkButtonStyle())
+                                .isHidden(presenter.isDone)
+                            }
+                            .padding(.top, Theme.Metrics.doubleMargin)
                         }
                     }
-                    .background(Color(Theme.Colors.Fill.background))
-                    .frame(maxWidth: Theme.Metrics.componentWidth)
-                    .padding(.top, Theme.Metrics.doubleMargin)
                 }
-                .frame(height: height)
-                .frame(maxWidth: .infinity)
                 .background(Color(Theme.Colors.Fill.background))
+                .frame(maxWidth: Theme.Metrics.componentWidth)
+                .padding(.top, Theme.Metrics.doubleMargin)
             }
-            .listRowBackground(Color(Theme.Colors.Fill.background))
+            .frame(height: height)
+            .frame(maxWidth: .infinity)
+            .background(Color(Theme.Colors.Fill.background))
         }
         .scrollContentBackground(.hidden)
         .background(Color(Theme.Colors.Fill.background))
         .frame(maxHeight: .infinity)
         .observeHeight { height in
-            if focusedField == nil {
+            if !isFocused {
                 self.height = height
             }
         }
@@ -139,27 +135,13 @@ struct EncryptedByUserPasswordSyncView: View {
     @ViewBuilder
     private func input() -> some View {
         VStack(spacing: Theme.Metrics.quaterSpacing) {
-            HStack {
-                FloatingField(placeholder: Text(T.Backup.password), isEmpty: presenter.password.isEmpty) {
-                    PasswordContentInput(
-                        label: "",
-                        password: $presenter.password,
-                        isReveal: presenter.firstInputReveal
-                    )
-                }
-                .focused($focusedField, equals: .password)
+            PasswordTextField(title: T.Backup.password, text: $presenter.password, isFocused: $isFocused)
                 .onSubmit {
                     if presenter.checkPasswordEnabled {
                         presenter.onCheckPassword()
                     }
                 }
                 .submitLabel(presenter.checkPasswordEnabled ? .send : .return)
-                
-                Spacer()
-                
-                Toggle(isOn: $presenter.firstInputReveal, label: {})
-                    .toggleStyle(RevealToggleStyle())
-            }
             Divider()
                 .overlay {
                     Rectangle()
@@ -169,5 +151,18 @@ struct EncryptedByUserPasswordSyncView: View {
                 }
         }
         .disabled(presenter.isCheckingPassword)
+        .frame(height: 20)
+    }
+    
+    private func doneLabel() -> String {
+        if presenter.isDone {
+            return T.Commons.done
+        } else {
+            if presenter.isVerifyingPassword {
+                return T.Commons.continue
+            } else {
+                return T.Backup.checkPassword
+            }
+        }
     }
 }

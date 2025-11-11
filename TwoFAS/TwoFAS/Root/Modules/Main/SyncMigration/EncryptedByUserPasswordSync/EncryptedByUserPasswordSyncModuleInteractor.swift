@@ -22,6 +22,7 @@ import Data
 
 protocol EncryptedByUserPasswordSyncModuleInteracting: AnyObject {
     func setPassword(_ password: String)
+    func verifyPassword(_ password: String) -> Bool
 }
 
 final class EncryptedByUserPasswordSyncModuleInteractor {
@@ -35,5 +36,9 @@ final class EncryptedByUserPasswordSyncModuleInteractor {
 extension EncryptedByUserPasswordSyncModuleInteractor: EncryptedByUserPasswordSyncModuleInteracting {
     func setPassword(_ password: String) {
         syncMigrationInteractor.setMissingUserPassword(password)
+    }
+    
+    func verifyPassword(_ password: String) -> Bool {
+        syncMigrationInteractor.ver
     }
 }

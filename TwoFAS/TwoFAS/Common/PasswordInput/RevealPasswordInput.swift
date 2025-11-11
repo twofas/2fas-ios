@@ -64,7 +64,7 @@ final class RevealPasswordInput: UIView {
     private let lineHeight: CGFloat = 25
     
     private let titleLabel = TitleLabel()
-    private let input = PasswordTextField()
+    private let input = PasswordTextFieldUIKit()
     private let line = FormLine()
     private let errorLabel = ErrorLabel()
     private let showButton = ShowButton()
@@ -269,3 +269,55 @@ private final class ShowButton: UIView {
     
     override var intrinsicContentSize: CGSize { size }
 }
+
+private final class PasswordTextFieldUIKit: LimitedTextField {
+    typealias TextDidChange = (String) -> Void
+    var didBecomeFirstResponder: Callback?
+    
+    var notAllowedCharacter: Callback?
+    var isActive: Callback?
+    var textDidChange: TextDidChange?
+    var didResign: Callback?
+    var verifyPassword = true
+    
+    override func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        let currentString = textField.text! as NSString
+        let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+        
+        let should = newString.length <= maxLength
+        
+        guard should else { return false }
+        
+        let matches = string.matches(ExportFileRules.regExp) || string.isBackspace
+        
+        if !matches && verifyPassword {
+            notAllowedCharacter?()
+        } else {
+            textDidChange?(newString as String)
+        }
+        
+        return matches || !verifyPassword
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        let value = super.resignFirstResponder()
+        if value {
+            didResign?()
+        }
+        return value
+    }
+    
+    @discardableResult
+    override func becomeFirstResponder() -> Bool {
+        let value = super.becomeFirstResponder()
+        if value {
+            isActive?()
+        }
+        return value
+    }
+}
+

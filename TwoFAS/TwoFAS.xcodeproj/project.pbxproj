@@ -357,6 +357,7 @@
 		C24E3E692AB8F15A008A7158 /* discord.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E612AB8F159008A7158 /* discord.json */; };
 		C24E3E6A2AB8F15A008A7158 /* amazon.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E622AB8F15A008A7158 /* amazon.json */; };
 		C24E3E6B2AB8F15A008A7158 /* linkedin.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E632AB8F15A008A7158 /* linkedin.json */; };
+		C24EE7972EC3A5810065B452 /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EE7962EC3A5780065B452 /* PasswordTextField.swift */; };
 		C24EECEC268772B600C6ABAA /* RecordType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECEB268772B600C6ABAA /* RecordType.swift */; };
 		C24EECF12687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECEF2687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift */; };
 		C24EECF22687772800C6ABAA /* SectionCacheEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF02687772800C6ABAA /* SectionCacheEntity+CoreDataProperties.swift */; };
@@ -469,7 +470,6 @@
 		C264B6542E8C84D200CA8648 /* VaultVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C264B6532E8C84CE00CA8648 /* VaultVersion.swift */; };
 		C264B6552E8C84D200CA8648 /* VaultVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C264B6532E8C84CE00CA8648 /* VaultVersion.swift */; };
 		C26618A026126A8200ED52CB /* LabelComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C266189F26126A8200ED52CB /* LabelComposeViewController.swift */; };
-		C26654292725D6EA00DC3A3C /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26654282725D6EA00DC3A3C /* PasswordTextField.swift */; };
 		C266542B2725EF7B00DC3A3C /* ExportFileRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */; };
 		C267315A299AC9C40031DE09 /* LargeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2673159299AC9C40031DE09 /* LargeNavigationController.swift */; };
 		C2673BE223D46F5D00A2CBA8 /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C257FD0E1FDC3B0F00CF6898 /* TokenStorage.swift */; };
@@ -2352,6 +2352,7 @@
 		C24E3E612AB8F159008A7158 /* discord.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = discord.json; sourceTree = "<group>"; };
 		C24E3E622AB8F15A008A7158 /* amazon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amazon.json; sourceTree = "<group>"; };
 		C24E3E632AB8F15A008A7158 /* linkedin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = linkedin.json; sourceTree = "<group>"; };
+		C24EE7962EC3A5780065B452 /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		C24EECEB268772B600C6ABAA /* RecordType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordType.swift; sourceTree = "<group>"; };
 		C24EECEF2687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionCacheEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C24EECF02687772800C6ABAA /* SectionCacheEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionCacheEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -2469,7 +2470,6 @@
 		C264B6502E8C80FE00CA8648 /* ZoneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoneManager.swift; sourceTree = "<group>"; };
 		C264B6532E8C84CE00CA8648 /* VaultVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultVersion.swift; sourceTree = "<group>"; };
 		C266189F26126A8200ED52CB /* LabelComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelComposeViewController.swift; sourceTree = "<group>"; };
-		C26654282725D6EA00DC3A3C /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileRules.swift; sourceTree = "<group>"; };
 		C2671C892A51C5A60002C4BB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/TwoFASWidget.strings"; sourceTree = "<group>"; };
 		C2671C8A2A51C5A60002C4BB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -5145,7 +5145,6 @@
 			isa = PBXGroup;
 			children = (
 				C2823B1526F3E84F00583586 /* RevealPasswordInput.swift */,
-				C26654282725D6EA00DC3A3C /* PasswordTextField.swift */,
 			);
 			path = PasswordInput;
 			sourceTree = "<group>";
@@ -5548,6 +5547,13 @@
 				C24E3E5E2AB8F159008A7158 /* universal.json */,
 			);
 			path = Guides;
+			sourceTree = "<group>";
+		};
+		C24EE6F92EC29A6F0065B452 /* BackupVerifyPassword */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BackupVerifyPassword;
 			sourceTree = "<group>";
 		};
 		C24EECED2687757100C6ABAA /* Log */ = {
@@ -6817,6 +6823,7 @@
 		C2AC21FB27660E0200271402 /* Backup */ = {
 			isa = PBXGroup;
 			children = (
+				C24EE6F92EC29A6F0065B452 /* BackupVerifyPassword */,
 				C21930E82EC10441001354C9 /* ManageBackup */,
 				C2EF7B222DA9A47E00BAA559 /* ManageWatch */,
 				C29B42BC2D98900500F49DCE /* BackupChangeEncryption */,
@@ -8580,6 +8587,7 @@
 		C2FDEE55279C8FE8002CAB9E /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				C24EE7962EC3A5780065B452 /* PasswordTextField.swift */,
 				C29492DF2EA3EF2700474B84 /* PasswordInput.swift */,
 				C2FDEE56279C8FF8002CAB9E /* SwiftUIButtons.swift */,
 				C206CACE27A35ABE0068284C /* View+.swift */,
@@ -10004,7 +10012,6 @@
 				C2147CD1205D7B520001D011 /* LoginView.swift in Sources */,
 				C2DDEB1F289ED4A300011712 /* IntroductionDots.swift in Sources */,
 				C20CD53C2A1CF03F00A7F324 /* TokensViewController+Layout.swift in Sources */,
-				C26654292725D6EA00DC3A3C /* PasswordTextField.swift in Sources */,
 				C25BB2CC2DAAE3FF00BEC626 /* ManageWatchView.swift in Sources */,
 				C21930F22EC11439001354C9 /* BackupManageEncryptionModels.swift in Sources */,
 				C25B221627C181690052AAC4 /* ComposeServiceInputCellKind.swift in Sources */,
@@ -10058,6 +10065,7 @@
 				C2147CE5205D7B790001D011 /* PINPadKey.swift in Sources */,
 				C26764AC287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift in Sources */,
 				C2B077C8292A938D0074517F /* UploadLogsModuleInteractorError+.swift in Sources */,
+				C24EE7972EC3A5810065B452 /* PasswordTextField.swift in Sources */,
 				C24D8B3A29BDEED200C3E11E /* NewsNavigationFlowController.swift in Sources */,
 				C2B39E5029F5841700EC31F6 /* TokensEditCell.swift in Sources */,
 				C2EBE0042AC44DC3008FD744 /* GuideMenuView.swift in Sources */,

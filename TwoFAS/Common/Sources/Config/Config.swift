@@ -54,13 +54,14 @@ public enum Config {
     public static let vaultV2 = "Vault2"
     public static let containerIdentifier = "iCloud.com.twofas.org.Vault"
     
-    enum PasswordCharacterSet {
-        static let digits = (48...57).map { String(UnicodeScalar($0)!) }
-        static let uppercase = (65...90).map { String(UnicodeScalar($0)!) }
-        static let special = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_"]
-        static let lowercase = (97...122).map { String(UnicodeScalar($0)!) }
-        static let letters = uppercase + lowercase
-        static let complete = digits + special + letters
-        static let characterSet = CharacterSet(charactersIn: complete.joined())
+    public enum PasswordCharacterSet {
+        private static let space = [String(UnicodeScalar(32)!)]
+        private static let digits = (48...57).map { String(UnicodeScalar($0)!) }
+        private static let uppercase = (65...90).map { String(UnicodeScalar($0)!) }
+        private static let special = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_"]
+        private static let lowercase = (97...122).map { String(UnicodeScalar($0)!) }
+        private static let letters = uppercase + lowercase
+        private static let complete = digits + special + letters + space
+        public static let characterSet = CharacterSet(charactersIn: complete.joined())
     }
 }

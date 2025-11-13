@@ -227,6 +227,11 @@
 		C230A898275AC99C00FB83AE /* SettingsMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C230A897275AC99C00FB83AE /* SettingsMenuTableViewCell.swift */; };
 		C230A89A275AE1A800FB83AE /* SettingsMenuToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C230A899275AE1A800FB83AE /* SettingsMenuToggle.swift */; };
 		C230DB8C274710E5005E7060 /* icon_64.png in Resources */ = {isa = PBXBuildFile; fileRef = C230DB8A274710E5005E7060 /* icon_64.png */; };
+		C23185642EC648E300DD1ABE /* BackupSetPasswordFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23185632EC648DD00DD1ABE /* BackupSetPasswordFlowController.swift */; };
+		C23185662EC648E900DD1ABE /* BackupSetPasswordPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23185652EC648E700DD1ABE /* BackupSetPasswordPresenter.swift */; };
+		C23185682EC648F100DD1ABE /* BackupSetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23185672EC648EC00DD1ABE /* BackupSetPasswordViewController.swift */; };
+		C231856A2EC648F700DD1ABE /* BackupSetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23185692EC648F500DD1ABE /* BackupSetPasswordView.swift */; };
+		C231856C2EC678CA00DD1ABE /* BackupSetPasswordModalInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C231856B2EC678C400DD1ABE /* BackupSetPasswordModalInteractor.swift */; };
 		C2323C4C276B521200038B76 /* AppLockFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2323C4B276B521200038B76 /* AppLockFlowController.swift */; };
 		C2323C4E276B52A100038B76 /* AppLockModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2323C4D276B52A100038B76 /* AppLockModuleInteractor.swift */; };
 		C2323C50276B530D00038B76 /* AppLockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2323C4F276B530D00038B76 /* AppLockPresenter.swift */; };
@@ -2204,6 +2209,11 @@
 		C230A899275AE1A800FB83AE /* SettingsMenuToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuToggle.swift; sourceTree = "<group>"; };
 		C230DB8A274710E5005E7060 /* icon_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_64.png; sourceTree = "<group>"; };
 		C230DB8B274710E5005E7060 /* icon_320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_320.png; sourceTree = "<group>"; };
+		C23185632EC648DD00DD1ABE /* BackupSetPasswordFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSetPasswordFlowController.swift; sourceTree = "<group>"; };
+		C23185652EC648E700DD1ABE /* BackupSetPasswordPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSetPasswordPresenter.swift; sourceTree = "<group>"; };
+		C23185672EC648EC00DD1ABE /* BackupSetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSetPasswordViewController.swift; sourceTree = "<group>"; };
+		C23185692EC648F500DD1ABE /* BackupSetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSetPasswordView.swift; sourceTree = "<group>"; };
+		C231856B2EC678C400DD1ABE /* BackupSetPasswordModalInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSetPasswordModalInteractor.swift; sourceTree = "<group>"; };
 		C2323C4B276B521200038B76 /* AppLockFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockFlowController.swift; sourceTree = "<group>"; };
 		C2323C4D276B52A100038B76 /* AppLockModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModuleInteractor.swift; sourceTree = "<group>"; };
 		C2323C4F276B530D00038B76 /* AppLockPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockPresenter.swift; sourceTree = "<group>"; };
@@ -4632,6 +4642,18 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
+		C23185622EC6477F00DD1ABE /* BackupSetPassword */ = {
+			isa = PBXGroup;
+			children = (
+				C23185632EC648DD00DD1ABE /* BackupSetPasswordFlowController.swift */,
+				C231856B2EC678C400DD1ABE /* BackupSetPasswordModalInteractor.swift */,
+				C23185652EC648E700DD1ABE /* BackupSetPasswordPresenter.swift */,
+				C23185692EC648F500DD1ABE /* BackupSetPasswordView.swift */,
+				C23185672EC648EC00DD1ABE /* BackupSetPasswordViewController.swift */,
+			);
+			path = BackupSetPassword;
+			sourceTree = "<group>";
+		};
 		C2323C46276B500400038B76 /* AppLock */ = {
 			isa = PBXGroup;
 			children = (
@@ -5547,13 +5569,6 @@
 				C24E3E5E2AB8F159008A7158 /* universal.json */,
 			);
 			path = Guides;
-			sourceTree = "<group>";
-		};
-		C24EE6F92EC29A6F0065B452 /* BackupVerifyPassword */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BackupVerifyPassword;
 			sourceTree = "<group>";
 		};
 		C24EECED2687757100C6ABAA /* Log */ = {
@@ -6823,7 +6838,7 @@
 		C2AC21FB27660E0200271402 /* Backup */ = {
 			isa = PBXGroup;
 			children = (
-				C24EE6F92EC29A6F0065B452 /* BackupVerifyPassword */,
+				C23185622EC6477F00DD1ABE /* BackupSetPassword */,
 				C21930E82EC10441001354C9 /* ManageBackup */,
 				C2EF7B222DA9A47E00BAA559 /* ManageWatch */,
 				C29B42BC2D98900500F49DCE /* BackupChangeEncryption */,
@@ -10049,6 +10064,7 @@
 				C2EA566D285696FE00026BFE /* AskForAuthViewController.swift in Sources */,
 				C2AC221527661C0600271402 /* ExporterPasswordProtectionPresenter.swift in Sources */,
 				C284991B27CC28810092098D /* ComposeServiceCounterPresenter.swift in Sources */,
+				C23185682EC648F100DD1ABE /* BackupSetPasswordViewController.swift in Sources */,
 				C2B1208D29D767B10020281E /* AppearancePresenter.swift in Sources */,
 				C2AB92E32766956F00698382 /* SettingsViewFooter.swift in Sources */,
 				C2508E1D2753AFBD0072C564 /* TableViewDataSnapshot.swift in Sources */,
@@ -10063,6 +10079,7 @@
 				C2C56D4027C98140003B4C43 /* ComposeServiceAdvancedSummaryViewController.swift in Sources */,
 				C2AF5F7D28B18CCC00A30DCF /* IconSelectorCollectionViewDelegatee.swift in Sources */,
 				C2147CE5205D7B790001D011 /* PINPadKey.swift in Sources */,
+				C23185662EC648E900DD1ABE /* BackupSetPasswordPresenter.swift in Sources */,
 				C26764AC287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift in Sources */,
 				C2B077C8292A938D0074517F /* UploadLogsModuleInteractorError+.swift in Sources */,
 				C24EE7972EC3A5810065B452 /* PasswordTextField.swift in Sources */,
@@ -10085,6 +10102,7 @@
 				C2823B1626F3E84F00583586 /* RevealPasswordInput.swift in Sources */,
 				C26764B22872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift in Sources */,
 				C2E7C3472ADB021500478D89 /* CameraControllerDelegate.swift in Sources */,
+				C231856A2EC648F700DD1ABE /* BackupSetPasswordView.swift in Sources */,
 				C2D6731B25DB2C5D004BD697 /* KeyboardObserver.swift in Sources */,
 				C2E948AB23B64DB1003BDCC1 /* LoadingContentButton.swift in Sources */,
 				C23B899727C287480028FE34 /* NavigationFlowController.swift in Sources */,
@@ -10331,6 +10349,7 @@
 				C2B39E5429F5880600EC31F6 /* TokensCellKind.swift in Sources */,
 				C2323C4E276B52A100038B76 /* AppLockModuleInteractor.swift in Sources */,
 				C2AB92CD276655EF00698382 /* ExporterPINPresenter.swift in Sources */,
+				C231856C2EC678CA00DD1ABE /* BackupSetPasswordModalInteractor.swift in Sources */,
 				C2B077C4292A921D0074517F /* UploadLogsFailureView.swift in Sources */,
 				C2FDEE54279C8F39002CAB9E /* CameraGoogleAuth.swift in Sources */,
 				C21B3A1B27AF12BF005C603B /* ColorPickerViewController.swift in Sources */,
@@ -10440,6 +10459,7 @@
 				C2FA3E8C280B628D0097ED71 /* AuthRequestsModuleInteractor.swift in Sources */,
 				C26764AE287246F300D468B2 /* ComposeServiceCategorySelectionModuleInteractor.swift in Sources */,
 				C20524C32807620500B2B20C /* NavigationBarHiddenHostingController.swift in Sources */,
+				C23185642EC648E300DD1ABE /* BackupSetPasswordFlowController.swift in Sources */,
 				C2FDEE57279C8FF8002CAB9E /* SwiftUIButtons.swift in Sources */,
 				C22E6FA121E2666B00A2E66B /* CircularShape.swift in Sources */,
 				C25BB2CA2DAAE35000BEC626 /* ManageWatchPresenter.swift in Sources */,

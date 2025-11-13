@@ -40,7 +40,9 @@ struct EncryptedByUserPasswordSyncView: View {
                         Text(verbatim: T.Commons.icloudBackupPassword)
                             .font(.title2)
                             .multilineTextAlignment(.center)
-                        Text(verbatim: presenter.isCheckingPassword ? "iCloud backup is encrypted with your password. Enter it to apply changes." : T.Backup.enterPasswordDescription)
+                        Text(
+                            verbatim: presenter.isVerifyingPassword ? "iCloud backup is encrypted with your password. Enter it to apply changes." : T.Backup.enterPasswordDescription
+                        )
                             .font(.caption)
                             .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)

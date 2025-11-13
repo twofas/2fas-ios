@@ -17,28 +17,21 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
-import Data
+import UIKit
+import SwiftUI
 
-protocol EncryptedByUserPasswordSyncModuleInteracting: AnyObject {
-    func setPassword(_ password: String)
-    func verifyPassword(_ password: String) -> Bool
-}
-
-final class EncryptedByUserPasswordSyncModuleInteractor {
-    private let syncMigrationInteractor: SyncMigrationInteracting
+final class BackupSetPasswordViewController: UIViewController {
+    var presenter: BackupSetPasswordPresenter!
     
-    init(syncMigrationInteractor: SyncMigrationInteracting) {
-        self.syncMigrationInteractor = syncMigrationInteractor
-    }
-}
-
-extension EncryptedByUserPasswordSyncModuleInteractor: EncryptedByUserPasswordSyncModuleInteracting {
-    func setPassword(_ password: String) {
-        syncMigrationInteractor.setMissingUserPassword(password)
-    }
-    
-    func verifyPassword(_ password: String) -> Bool {
-        syncMigrationInteractor.verifyPassword(password)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = Theme.Colors.Fill.background
+        let vc = UIHostingController(rootView: BackupSetPasswordView(presenter: presenter))
+        vc.willMove(toParent: self)
+        addChild(vc)
+        view.addSubview(vc.view)
+        vc.view.pinToParent()
+        vc.view.backgroundColor = Theme.Colors.Fill.background
+        vc.didMove(toParent: self)
     }
 }

@@ -70,6 +70,14 @@ struct PasswordTextField: View {
         }
         .frame(height: 40)
         .animation(.easeInOut(duration: 0.3), value: reveal)
+        .onChange(of: isFocused) { newValue in
+            guard newValue else { return }
+            if reveal {
+                isPlainFieldFocused = true
+            } else {
+                isSecureFieldFocused = true
+            }
+        }
     }
     
     @ViewBuilder

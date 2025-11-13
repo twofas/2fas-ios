@@ -21,53 +21,47 @@ import UIKit
 import Common
 import Data
 
-protocol EncryptedByUserPasswordSyncFlowControllerParent: AnyObject {
-    func closeEncryptedByUser()
+protocol BackupSetPasswordFlowControllerParent: AnyObject {
+    func closeSetPassword()
 }
 
-protocol EncryptedByUserPasswordSyncFlowControlling: AnyObject {
+protocol BackupSetPasswordFlowControlling: AnyObject {
     func close()
     func toChangePassword()
     func toRemovePassword()
 }
 
-enum EncryptedByUserPasswordSyncType {
-    enum Next {
-        case removePassword
-        case changePassword
-    }
-    case enterPassword
-    case verifyPassword(Next)
+enum BackupSetPasswordType {
+    case setPassword
+    case changePassword
 }
 
-final class EncryptedByUserPasswordSyncFlowController: FlowController {
-    private weak var parent: EncryptedByUserPasswordSyncFlowControllerParent?
-
+final class BackupSetPasswordFlowController: FlowController {
+    private weak var parent: BackupSetPasswordFlowControllerParent?
+    
     static func showAsRoot(
         in viewController: UIViewController,
-        parent: EncryptedByUserPasswordSyncFlowControllerParent
-    ) -> (MigrationResult) -> Void {
-        let view = EncryptedByUserPasswordSyncViewController()
-        let flowController = EncryptedByUserPasswordSyncFlowController(viewController: view)
-        let interactor = ModuleInteractorFactory.shared.encryptedByUserPasswordSyncModuleInteractor()
+        parent: BackupSetPasswordFlowControllerParent,
+        flowType: BackupSetPasswordType
+    ) {
+        let view = BackupSetPasswordViewController()
+        let flowController = BackupSetPasswordFlowController(viewController: view)
         flowController.parent = parent
-        let presenter = EncryptedByUserPasswordSyncPresenter(
+        let presenter = BackupSetPasswordPresenter(
             flowController: flowController,
-            interactor: interactor,
-            flowType: .enterPassword
+            interactor: ModuleInteractorFactory.shared.backupSetPasswordModuleInteractor(),
+            flowType: flowType
         )
         view.presenter = presenter
-
+        
         view.configureAsModal()
         viewController.present(view, animated: true)
-        
-        return presenter.callback
     }
 }
 
-extension EncryptedByUserPasswordSyncFlowController: EncryptedByUserPasswordSyncFlowControlling {
+extension BackupSetPasswordFlowController: BackupSetPasswordFlowControlling {
     func close() {
-        parent?.closeEncryptedByUser()
+        parent?.closeSetPassword()
     }
     
     func toChangePassword() {

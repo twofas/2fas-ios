@@ -440,4 +440,8 @@ final class ModuleInteractorFactory {
     func manageWatchModuleInteractor() -> ManageWatchModuleInteracting {
         ManageWatchModuleInteractor(manageWatch: InteractorFactory.shared.watchPairingInteractor())
     }
+    
+    func backupSetPasswordModuleInteractor() -> BackupSetPasswordModalInteracting {
+        BackupSetPasswordModalInteractor(syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor())
+    }
 }

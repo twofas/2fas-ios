@@ -19,26 +19,49 @@
 
 import Foundation
 import Data
+import Common
 
-protocol EncryptedByUserPasswordSyncModuleInteracting: AnyObject {
+protocol BackupSetPasswordModalInteracting: AnyObject {
+    var syncSuccess: (() -> Void)? { get set }
+    var syncFailure: ((CloudState.NotAvailableReason) -> Void)? { get set }
+    
     func setPassword(_ password: String)
-    func verifyPassword(_ password: String) -> Bool
 }
 
-final class EncryptedByUserPasswordSyncModuleInteractor {
+final class BackupSetPasswordModalInteractor {
+    var syncSuccess: (() -> Void)?
+    var syncFailure: ((CloudState.NotAvailableReason) -> Void)?
+    
     private let syncMigrationInteractor: SyncMigrationInteracting
+    private let notificationCenter: NotificationCenter
     
     init(syncMigrationInteractor: SyncMigrationInteracting) {
         self.syncMigrationInteractor = syncMigrationInteractor
+        notificationCenter = .default
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(syncStateChanged),
+            name: .syncStateChanged,
+            object: nil
+        )
     }
 }
 
-extension EncryptedByUserPasswordSyncModuleInteractor: EncryptedByUserPasswordSyncModuleInteracting {
+extension BackupSetPasswordModalInteractor: BackupSetPasswordModalInteracting {
     func setPassword(_ password: String) {
-        syncMigrationInteractor.setMissingUserPassword(password)
+        syncMigrationInteractor.changePassword(password)
     }
     
-    func verifyPassword(_ password: String) -> Bool {
-        syncMigrationInteractor.verifyPassword(password)
+    @objc
+    private func syncStateChanged() {
+        switch syncMigrationInteractor.currentCloudState {
+        case .disabledNotAvailable(let reason): syncFailure?(reason)
+        case .enabled(let sync):
+            switch sync {
+            case .synced: syncSuccess?()
+            default: break
+            }
+        default: break
+        }
     }
 }

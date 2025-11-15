@@ -21,41 +21,45 @@ import Foundation
 
 extension BackupManageEncryptionPresenter {
     func buildMenu() -> [BackupManageEncryptionSection] {
-        if false {
-            return [
+        var menu: [BackupManageEncryptionSection] = []
+        let modificationEnabled = interactor.isCloudBackupSynced
+        let canDelete = interactor.canDelete
+        if interactor.encryptionTypeIsUser {
+            menu.append(contentsOf: [
                 .init(
                     title: "Encryption",
                     cells: [
-                        .init(title: "Set password", action: .encrypt)
+                        .init(title: "Remove password", action: .decrypt, isEnabled: modificationEnabled),
+                        .init(title: "Change password", action: .recrypt, isEnabled: modificationEnabled)
                     ],
                     footer: T.Backup.encryptionPasswordDescription
                 ),
                 .init(
                     title: T.Backup.backupRemoval,
                     cells: [
-                        .init(title: T.Backup.delete2fasBackup, action: .clear)
+                        .init(title: T.Backup.delete2fasBackup, action: .clear, isEnabled: canDelete)
                     ],
                     footer: T.Backup.warningIntroduction
                 )
-            ]
+            ])
         } else {
-            return [
+            menu.append(contentsOf: [
                 .init(
                     title: "Encryption",
                     cells: [
-                        .init(title: "Remove password", action: .decrypt),
-                        .init(title: "Change password", action: .recrypt)
+                        .init(title: "Set password", action: .encrypt, isEnabled: modificationEnabled)
                     ],
                     footer: T.Backup.encryptionPasswordDescription
                 ),
                 .init(
                     title: T.Backup.backupRemoval,
                     cells: [
-                        .init(title: T.Backup.delete2fasBackup, action: .clear)
+                        .init(title: T.Backup.delete2fasBackup, action: .clear, isEnabled: canDelete)
                     ],
                     footer: T.Backup.warningIntroduction
                 )
-            ]
+            ])
         }
+        return menu
     }
 }

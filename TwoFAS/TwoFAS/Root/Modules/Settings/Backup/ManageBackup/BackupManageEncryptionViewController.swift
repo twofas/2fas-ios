@@ -55,8 +55,6 @@ final class BackupManageEncryptionViewController: UIViewController {
         
         setupTableViewLayout()
         
-        title = "Manage Backup"
-        
         hidesBottomBarWhenPushed = false
         navigationItem.backButtonDisplayMode = .minimal
     }
@@ -97,7 +95,7 @@ extension BackupManageEncryptionViewController {
                 .withTintColor(Theme.Colors.Icon.theme)
         }()
         
-        cell.update(icon: icon, title: data.title, kind: .none, decorateText: .action)
+        cell.update(icon: icon, title: data.title, kind: .none, decorateText: .none)
         return cell
     }
     
@@ -126,6 +124,7 @@ extension BackupManageEncryptionViewController {
 
 extension BackupManageEncryptionViewController: BackupManageEncryptionViewControlling {
     func reload(with data: [BackupManageEncryptionSection]) {
+        title = presenter.isSyncing ? "Syncing ..." : "Manage Backup"
         let snapshot = TableViewDataSnapshot<BackupManageEncryptionSection, BackupManageEncryptionCell>()
         data.forEach { snapshot.appendSection($0) }
         tableViewAdapter.apply(snapshot: snapshot)

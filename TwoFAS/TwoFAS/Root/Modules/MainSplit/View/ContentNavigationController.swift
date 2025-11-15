@@ -21,7 +21,7 @@ import UIKit
 
 protocol ContentNavigationControllerHideNavibar: AnyObject {}
 
-final class ContentNavigationController: CommonNavigationController {
+class ContentNavigationController: CommonNavigationController {
     private var navigationBarObserver: NSKeyValueObservation?
 
     private var shouldHide: Bool {

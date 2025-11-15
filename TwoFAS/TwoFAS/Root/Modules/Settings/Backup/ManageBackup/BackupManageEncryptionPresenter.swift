@@ -19,15 +19,22 @@
 
 import Foundation
 
-final class BackupManageEncryptionPresenter {
+final class BackupManageEncryptionPresenter: ObservableObject {
     weak var view: BackupManageEncryptionViewControlling?
     
     private let flowController: BackupManageEncryptionFlowControlling
-//    let interactor: BackupManageEncryptionModuleInteracting
+    let interactor: BackupManageEncryptionModuleInteracting
     
-    init(flowController: BackupManageEncryptionFlowControlling/*, interactor: BackupManageEncryptionModuleInteracting*/) {
+    var isSyncing: Bool {
+        interactor.isSyncing
+    }
+    
+    init(flowController: BackupManageEncryptionFlowControlling, interactor: BackupManageEncryptionModuleInteracting) {
         self.flowController = flowController
-//        self.interactor = interactor
+        self.interactor = interactor
+        interactor.reload = { [weak self] in
+            self?.reload()
+        }
     }
 }
 
@@ -46,9 +53,9 @@ extension BackupManageEncryptionPresenter {
         }
         
         switch cell.action {
-        case .encrypt: print(">>> encrypt")
-        case .decrypt: print(">>> decrypt")
-        case .recrypt: print(">>> recrypt")
+        case .encrypt: flowController.toSetPassword()
+        case .decrypt: flowController.toRemovePassword()
+        case .recrypt: flowController.toChangePassword()
         case .clear: flowController.toDeleteBackup()
         }
     }

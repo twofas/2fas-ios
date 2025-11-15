@@ -22,6 +22,7 @@ import Data
 import Common
 
 protocol EncryptedByUserPasswordSyncModuleInteracting: AnyObject {
+    
     var syncSuccess: (() -> Void)? { get set }
     var syncFailure: ((CloudState.NotAvailableReason) -> Void)? { get set }
     
@@ -32,20 +33,27 @@ protocol EncryptedByUserPasswordSyncModuleInteracting: AnyObject {
 
 final class EncryptedByUserPasswordSyncModuleInteractor {
     private let syncMigrationInteractor: SyncMigrationInteracting
+    private let cloudBackup: CloudBackupStateInteracting
     private let notificationCenter: NotificationCenter
     
     var syncSuccess: (() -> Void)?
     var syncFailure: ((CloudState.NotAvailableReason) -> Void)?
     
-    init(syncMigrationInteractor: SyncMigrationInteracting) {
+    init(syncMigrationInteractor: SyncMigrationInteracting, cloudBackup: CloudBackupStateInteracting) {
         self.syncMigrationInteractor = syncMigrationInteractor
+        self.cloudBackup = cloudBackup
         notificationCenter = .default
+        
         notificationCenter.addObserver(
             self,
             selector: #selector(syncStateChanged),
             name: .syncStateChanged,
             object: nil
         )
+    }
+    
+    deinit {
+        notificationCenter.removeObserver(self)
     }
 }
 

@@ -27,8 +27,6 @@ protocol BackupSetPasswordFlowControllerParent: AnyObject {
 
 protocol BackupSetPasswordFlowControlling: AnyObject {
     func close()
-    func toChangePassword()
-    func toRemovePassword()
 }
 
 enum BackupSetPasswordType {
@@ -39,7 +37,7 @@ enum BackupSetPasswordType {
 final class BackupSetPasswordFlowController: FlowController {
     private weak var parent: BackupSetPasswordFlowControllerParent?
     
-    static func showAsRoot(
+    static func present(
         in viewController: UIViewController,
         parent: BackupSetPasswordFlowControllerParent,
         flowType: BackupSetPasswordType
@@ -57,18 +55,29 @@ final class BackupSetPasswordFlowController: FlowController {
         view.configureAsModal()
         viewController.present(view, animated: true)
     }
+    
+    static func push(
+        in navigationController: UINavigationController,
+        parent: BackupSetPasswordFlowControllerParent,
+        flowType: BackupSetPasswordType
+    ) {
+        let view = BackupSetPasswordViewController()
+        let flowController = BackupSetPasswordFlowController(viewController: view)
+        flowController.parent = parent
+        let presenter = BackupSetPasswordPresenter(
+            flowController: flowController,
+            interactor: ModuleInteractorFactory.shared.backupSetPasswordModuleInteractor(),
+            flowType: flowType
+        )
+        view.presenter = presenter
+        view.navigationItem.setHidesBackButton(true, animated: false)
+        
+        navigationController.pushViewController(view, animated: true)
+    }
 }
 
 extension BackupSetPasswordFlowController: BackupSetPasswordFlowControlling {
     func close() {
         parent?.closeSetPassword()
-    }
-    
-    func toChangePassword() {
-        
-    }
-    
-    func toRemovePassword() {
-        
     }
 }

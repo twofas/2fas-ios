@@ -42,13 +42,15 @@ struct BackupManageEncryptionCell: Hashable {
     
     let title: String
     let action: Action
+    let isEnabled: Bool
     var icon: UIImage {
         action.icon
     }
     
-    init(title: String, action: Action) {
+    init(title: String, action: Action, isEnabled: Bool) {
         self.title = title
         self.action = action
+        self.isEnabled = isEnabled
     }
 }
 

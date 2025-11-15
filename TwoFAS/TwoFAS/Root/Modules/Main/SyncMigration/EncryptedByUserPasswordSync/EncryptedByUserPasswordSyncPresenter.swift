@@ -25,7 +25,7 @@ final class EncryptedByUserPasswordSyncPresenter: ObservableObject {
     @Published var isWorking = false
     @Published var wrongPassword = false
     @Published var isDone = false
-    @Published var migrationFailureReason: CloudState.NotAvailableReason? = .cloudEncryptedSystem
+    @Published var migrationFailureReason: CloudState.NotAvailableReason?
     @Published var password: String = "" {
         didSet {
             checkPasswordEnabled = password.count >= Config.minSyncPasswordLength &&
@@ -84,6 +84,7 @@ extension EncryptedByUserPasswordSyncPresenter {
     func onCheckPassword() {
         if isVerifyingPassword {
             if interactor.verifyPassword(password) {
+                wrongPassword = false
                 switch flowType {
                 case .enterPassword: break
                 case .verifyPassword(let next):
@@ -95,8 +96,11 @@ extension EncryptedByUserPasswordSyncPresenter {
                         interactor.removePassword()
                     }
                 }
+            } else {
+                wrongPassword = true
             }
         } else {
+            wrongPassword = false
             isWorking = true
             interactor.setPassword(password)
         }

@@ -20,11 +20,11 @@
 import UIKit
 
 protocol BackupDeleteFlowControllerParent: AnyObject {
-    func hideDeleteBackup()
+    func closeDeleteBackup(didDelete: Bool)
 }
 
 protocol BackupDeleteFlowControlling: AnyObject {
-    func toClose()
+    func toClose(didDelete: Bool)
 }
 
 final class BackupDeleteFlowController: FlowController {
@@ -51,7 +51,7 @@ final class BackupDeleteFlowController: FlowController {
 }
 
 extension BackupDeleteFlowController: BackupDeleteFlowControlling {
-    func toClose() {
-        parent?.hideDeleteBackup()
+    func toClose(didDelete: Bool) {
+        parent?.closeDeleteBackup(didDelete: didDelete)
     }
 }

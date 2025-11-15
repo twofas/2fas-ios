@@ -45,9 +45,7 @@ final class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presenter.viewWillAppear()
-        
-        BackupSetPasswordFlowController.showAsRoot(in: self, parent: self, flowType: .changePassword)
+        presenter.viewWillAppear()        
     }
     
     deinit {

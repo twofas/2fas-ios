@@ -32,6 +32,6 @@ final class EncryptedByUserPasswordSyncViewController: UIViewController {
         view.addSubview(vc.view)
         vc.view.pinToParent()
         vc.view.backgroundColor = Theme.Colors.Fill.background
-        vc.didMove(toParent: self)
+        vc.didMove(toParent: self)        
     }
 }

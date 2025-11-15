@@ -132,7 +132,7 @@ struct PasswordContentInput: View {
         .textInputAutocapitalization(.never)
         .frame(maxWidth: .infinity)
         .onChange(of: isReveal) { newValue in
-            if newValue, (focusedField == .secure || focusedField == nil) {
+            if newValue, focusedField == .secure || focusedField == nil {
                 Task {
                     focusedField = .unsecure
                 }

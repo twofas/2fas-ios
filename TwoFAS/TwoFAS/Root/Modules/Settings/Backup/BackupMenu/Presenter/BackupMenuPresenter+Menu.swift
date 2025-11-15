@@ -31,32 +31,39 @@ extension BackupMenuPresenter {
         }()
         footer.append("\n\n\(T.Backup.state) \(state)\n\(T.backupSettingsSyncTitle): \(dateStr)")
         
+        var mainCells: [BackupMenuCell] = [
+            .init(
+                icon: nil,
+                title: T.Backup.icloudSync,
+                accessory: .init(
+                    kind: .backup,
+                    isOn: interactor.isBackupOn,
+                    isActive: interactor.isBackupAvailable
+                )
+            )
+        ]
+        
+        if interactor.isCloudBackupSynced || interactor.canDelete {
+            mainCells.append(
+                .init(title: "Manage Backup", action: .manageBackup)
+            )
+        }
+        
         let cloudBackup = BackupMenuSection(
             title: T.Backup.cloudBackup,
-            cells: [
-                .init(
-                    icon: nil,
-                    title: T.Backup.icloudSync,
-                    accessory: .init(
-                        kind: .backup,
-                        isOn: interactor.isBackupOn,
-                        isActive: interactor.isBackupAvailable
-                    )
-                ),
-                .init(title: "Manage Backup", action: .manageBackup)
-            ],
+            cells: mainCells,
             footer: footer
         )
         
         let exportEnabled = interactor.exportEnabled
-        var cells: [BackupMenuCell] = [
+        var fileCells: [BackupMenuCell] = [
             .init(
                 title: T.Backup.import,
                 action: .importFile
             )
         ]
         if interactor.isBackupAllowed {
-            cells.append(
+            fileCells.append(
                 .init(
                     title: T.Backup.export,
                     action: .exportFile,
@@ -66,19 +73,8 @@ extension BackupMenuPresenter {
         }
         let fileBackup = BackupMenuSection(
             title: T.Backup.fileBackup,
-            cells: cells,
+            cells: fileCells,
             footer: T.Backup.fileBackupOfflineTitle
-        )
-        
-        let cloudBackupDeletition = BackupMenuSection(
-            title: T.Backup.backupRemoval,
-            cells: [
-                .init(
-                    title: T.Backup.delete2fasBackup,
-                    action: .deleteCloudBackup
-                )
-            ],
-            footer: T.Backup.warningIntroduction
         )
         
         let cloudBackupNuke = BackupMenuSection(
@@ -89,17 +85,6 @@ extension BackupMenuPresenter {
                     action: .debugEraseCloudBackup
                 )
             ]
-        )
-        
-        let cloudBackupChangePassword = BackupMenuSection(
-            title: T.Backup.encryptionChangeTitle,
-            cells: [
-                .init(
-                    title: T.Backup.encryptionChangePassword,
-                    action: .changeCloudBackupPassword
-                )
-            ],
-            footer: T.Backup.encryptionMethodFooter
         )
         
         let cloudBackupPairWatch = BackupMenuSection(
@@ -122,16 +107,10 @@ extension BackupMenuPresenter {
         menu.append(fileBackup)
                 
         if interactor.isCloudBackupConnected && interactor.isBackupAllowed {
-            if /*interactor.encryptionTypeIsUser && */interactor.isCloudBackupSynced {
-                menu.append(cloudBackupChangePassword)
-            }
-            menu.append(cloudBackupDeletition)
             menu.append(cloudBackupNuke)
             if interactor.encryptionTypeIsUser && interactor.isCloudBackupSynced {
                 menu.append(cloudBackupPairWatch)
             }
-        } else if interactor.canDelete {
-            menu.append(cloudBackupDeletition)
         }
 
         return menu

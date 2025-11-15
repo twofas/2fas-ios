@@ -19,25 +19,12 @@
 
 import UIKit
 
-final class BackupDeletePresenter {
-    weak var view: BackupDeleteViewControlling?
+final class ContentNavigationControllerFlow<T: NavigationFlowController>: ContentNavigationController {
+    private(set) var flowController: T!
     
-    private let flowController: BackupDeleteFlowControlling
-    private let interactor: BackupDeleteModuleInteracting
-    
-    init(flowController: BackupDeleteFlowControlling, interactor: BackupDeleteModuleInteracting) {
+    convenience init(flowController: T) {
+        self.init()
         self.flowController = flowController
-        self.interactor = interactor
-    }
-}
-
-extension BackupDeletePresenter {
-    func handleCancel() {
-        flowController.toClose(didDelete: false)
-    }
-    
-    func handleDeleteBackup() {
-        interactor.deleteBackup()
-        flowController.toClose(didDelete: true)
+        self.setNavigationBarHidden(true, animated: false)
     }
 }

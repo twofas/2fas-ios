@@ -1111,6 +1111,8 @@
 		C2DF710E2B5DD31200D85D87 /* DataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DF710D2B5DD31200D85D87 /* DataTests.swift */; };
 		C2DF710F2B5DD31200D85D87 /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E7C3822ADB19F300478D89 /* Data.framework */; platformFilter = ios; };
 		C2DFE5BD264C851700F828C0 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DFE5BC264C851700F828C0 /* CircleView.swift */; };
+		C2E2364E2EC9230300676709 /* EncryptedByUserPasswordSyncNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2364D2EC922F400676709 /* EncryptedByUserPasswordSyncNavigationFlowController.swift */; };
+		C2E236502EC936B900676709 /* ContentNavigationControlllerFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2364F2EC936B900676709 /* ContentNavigationControlllerFlow.swift */; };
 		C2E2C80927B0377B00F04B70 /* IconSelectorFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2C80827B0377B00F04B70 /* IconSelectorFlowController.swift */; };
 		C2E2C80B27B038DC00F04B70 /* IconSelectorModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2C80A27B038DC00F04B70 /* IconSelectorModuleInteractor.swift */; };
 		C2E2C80D27B0392D00F04B70 /* IconSelectorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2C80C27B0392D00F04B70 /* IconSelectorPresenter.swift */; };
@@ -3038,6 +3040,8 @@
 		C2DF710B2B5DD31200D85D87 /* DataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2DF710D2B5DD31200D85D87 /* DataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTests.swift; sourceTree = "<group>"; };
 		C2DFE5BC264C851700F828C0 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		C2E2364D2EC922F400676709 /* EncryptedByUserPasswordSyncNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedByUserPasswordSyncNavigationFlowController.swift; sourceTree = "<group>"; };
+		C2E2364F2EC936B900676709 /* ContentNavigationControlllerFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentNavigationControlllerFlow.swift; sourceTree = "<group>"; };
 		C2E2C80827B0377B00F04B70 /* IconSelectorFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorFlowController.swift; sourceTree = "<group>"; };
 		C2E2C80A27B038DC00F04B70 /* IconSelectorModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorModuleInteractor.swift; sourceTree = "<group>"; };
 		C2E2C80C27B0392D00F04B70 /* IconSelectorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorPresenter.swift; sourceTree = "<group>"; };
@@ -4220,6 +4224,7 @@
 		C21347802D98785000D325F6 /* EncryptedByUserPasswordSync */ = {
 			isa = PBXGroup;
 			children = (
+				C2E2364D2EC922F400676709 /* EncryptedByUserPasswordSyncNavigationFlowController.swift */,
 				C21347872D98799600D325F6 /* EncryptedByUserPasswordSyncFlowController.swift */,
 				C213478B2D9885C700D325F6 /* EncryptedByUserPasswordSyncModuleInteractor.swift */,
 				C21347832D98789600D325F6 /* EncryptedByUserPasswordSyncPresenter.swift */,
@@ -7852,6 +7857,7 @@
 				C2A283342186071200967022 /* AlertControllerPromptFactory.swift */,
 				C2ABF3C82002A01A003F2CBA /* CommonNavigationControlller.swift */,
 				C23B899827C292C30028FE34 /* CommonNavigationControlllerFlow.swift */,
+				C2E2364F2EC936B900676709 /* ContentNavigationControlllerFlow.swift */,
 				C2FE36292517FF8D00035643 /* VoiceOver.swift */,
 				C22E6F9E21E21A1E00A2E66B /* NotificationIcon.swift */,
 				C217E16D23D7913E00EE6C08 /* HUDNotification.swift */,
@@ -10010,6 +10016,7 @@
 				C2A74FE62610D510007E5AB3 /* ColorGridSelector.swift in Sources */,
 				C2C0A7FC2DA2B46D000A1772 /* CloudState+.swift in Sources */,
 				C25C661428BADAB0008EC66A /* AboutFlowController.swift in Sources */,
+				C2E2364E2EC9230300676709 /* EncryptedByUserPasswordSyncNavigationFlowController.swift in Sources */,
 				C20E60FB2818971300AB002E /* PushNotificationPermissionPresenter.swift in Sources */,
 				C29492E02EA3EF2800474B84 /* PasswordInput.swift in Sources */,
 				C2F134B0246844B10014FB4E /* MainContainerActionButton.swift in Sources */,
@@ -10507,6 +10514,7 @@
 				C2C66F951FE068CC00AD5A1C /* TokensViewController.swift in Sources */,
 				C2EBDFFC2AC44750008FD744 /* GuideMenuViewController.swift in Sources */,
 				8F43E7032C4C511A0006D380 /* AppleWatchFlowController.swift in Sources */,
+				C2E236502EC936B900676709 /* ContentNavigationControlllerFlow.swift in Sources */,
 				C240487C27656DB40076376E /* ImporterFileErrorFlowController.swift in Sources */,
 				C2A74FD72610D3A8007E5AB3 /* TintColor.swift in Sources */,
 				C2CC0A3A29D0580B00677A7B /* TransferViewController.swift in Sources */,

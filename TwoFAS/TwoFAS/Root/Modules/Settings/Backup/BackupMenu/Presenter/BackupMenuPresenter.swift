@@ -61,10 +61,6 @@ final class BackupMenuPresenter {
         case .exportFile:
             guard interactor.exportEnabled else { return }
             flowController.toFileExport()
-        case .deleteCloudBackup:
-            flowController.toDeleteCloudBackup()
-        case .changeCloudBackupPassword:
-            flowController.toChangeEncryption()
         case .manageAppleWatch:
             flowController.toManageAppleWatch()
         case .debugEraseCloudBackup:

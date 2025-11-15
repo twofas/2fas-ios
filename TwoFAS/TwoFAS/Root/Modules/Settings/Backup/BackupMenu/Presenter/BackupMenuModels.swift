@@ -64,8 +64,6 @@ struct BackupMenuCell: Hashable {
 enum BackupNavigationAction: Hashable {
     case importFile
     case exportFile
-    case deleteCloudBackup
-    case changeCloudBackupPassword
     case manageAppleWatch
     case debugEraseCloudBackup
     case manageBackup

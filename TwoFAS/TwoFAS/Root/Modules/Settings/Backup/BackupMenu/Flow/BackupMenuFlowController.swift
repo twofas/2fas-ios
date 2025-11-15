@@ -27,8 +27,6 @@ protocol BackupMenuFlowControlling: AnyObject {
     func toFAQ()
     func toFileImport()
     func toFileExport()
-    func toDeleteCloudBackup()
-    func toChangeEncryption()
     func toManageAppleWatch()
     func toManageBackup()
 }
@@ -88,34 +86,13 @@ extension BackupMenuFlowController: BackupMenuFlowControlling {
         ExporterMainScreenFlowController.present(on: viewController, parent: self)
     }
     
-    func toDeleteCloudBackup() {
-        BackupDeleteFlowController.present(on: viewController, parent: self)
-    }
-    
-    func toChangeEncryption() {
-        BackupChangeEncryptionFlowController.present(on: viewController, parent: self)
-    }
-    
     func toManageAppleWatch() {
         ManageWatchFlowController.present(on: viewController, parent: self)
     }
     
     func toManageBackup() {
         guard let navigationController = viewController.navigationController else { return }
-//        BackupManageEncryptionFlowController.push(in: navigationController, parent: self)
-        _ = EncryptedByUserPasswordSyncFlowController.showAsRoot(in: navigationController, parent: self)
-    }
-}
-
-extension BackupMenuFlowController: EncryptedByUserPasswordSyncFlowControllerParent {
-    func closeEncryptedByUser() {
-        viewController.dismiss(animated: true, completion: nil)
-    }
-}
-
-extension BackupMenuFlowController: BackupChangeEncryptionFlowControllerParent {
-    func closeChangeEncryption() {
-        viewController.dismiss(animated: true, completion: nil)
+        BackupManageEncryptionFlowController.push(in: navigationController, parent: self)
     }
 }
 
@@ -143,12 +120,6 @@ extension BackupMenuFlowController: ImporterOpenFileHeadlessFlowControllerParent
 
 extension BackupMenuFlowController: ExporterMainScreenFlowControllerParent {
     func closeExporter() {
-        viewController.dismiss(animated: true, completion: nil)
-    }
-}
-
-extension BackupMenuFlowController: BackupDeleteFlowControllerParent {
-    func hideDeleteBackup() {
         viewController.dismiss(animated: true, completion: nil)
     }
 }

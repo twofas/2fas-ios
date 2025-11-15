@@ -34,8 +34,9 @@ struct EncryptedByUserPasswordSyncView: View {
         ScrollView {
             VStack(alignment: .center) {
                 VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+                    if !presenter.isWorking && !presenter.isDone {
                     VStack(spacing: Theme.Metrics.standardSpacing) {
-                        if !presenter.isWorking {
+                        
                             Spacer()
                                 .frame(height: Theme.Metrics.doubleMargin)
                             Text(verbatim: T.Commons.icloudBackupPassword)
@@ -52,16 +53,19 @@ struct EncryptedByUserPasswordSyncView: View {
                             input()
                                 .padding(.bottom, Theme.Metrics.halfSpacing)
                         }
+                        Spacer()
+                            .frame(maxHeight: .infinity)
                     }
-                    Spacer()
-                        .frame(maxHeight: .infinity)
+
                     if presenter.isWorking {
+                        Spacer()
+                            .frame(maxHeight: .infinity)
                         VStack(spacing: Theme.Metrics.doubleSpacing) {
                             ProgressView()
                                 .progressViewStyle(.circular)
                                 .tint(Color(ThemeColor.theme))
                                 .scaleEffect(1.5)
-                            Text(verbatim: presenter.isVerifyingPassword ? "Verifying password" : "Removing Password")
+                            Text(verbatim: presenter.isRemovingPassword ? "Removing Password" : "Verifying password")
                                 .font(.body)
                                 .multilineTextAlignment(.center)
                         }
@@ -84,10 +88,14 @@ struct EncryptedByUserPasswordSyncView: View {
                                         .fontWeight(.bold)
                                         .foregroundStyle(Color(Theme.Colors.Text.theme))
                                 } else if presenter.isDone {
+                                    Spacer()
+                                        .frame(maxHeight: .infinity)
                                     Label(T.Commons.successEx, systemImage: "checkmark.circle.fill")
-                                        .font(.caption)
-                                        .fontWeight(.bold)
+                                        .font(.title3)
+                                        .multilineTextAlignment(.center)
                                         .foregroundStyle(Color.green)
+                                    Spacer()
+                                        .frame(maxHeight: .infinity)
                                 }
                             }
                             VStack {

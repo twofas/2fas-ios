@@ -33,24 +33,14 @@ struct BackupSetPasswordView: View {
                 VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
                     VStack(spacing: Theme.Metrics.standardSpacing) {
                         if presenter.isDone {
+                            Spacer()
+                                .frame(maxHeight: .infinity)
                             Label("Password set successfully", systemImage: "checkmark.circle.fill")
                                 .font(.title3)
                                 .multilineTextAlignment(.center)
                                 .foregroundStyle(Color.green)
-                            
                         } else if !presenter.isApplyingChanges {
-                            Spacer()
-                                .frame(height: Theme.Metrics.doubleMargin)
-                            Text(verbatim: presenter.isSettingPassword ? "Set your password" : "Change your password")
-                                .font(.title2)
-                                .multilineTextAlignment(.center)
-                            Text(verbatim: "Enter password to additionaly protect contents of your backup. If you forget your password, you will need to remove the backup and start over.")
-                                .font(.caption)
-                                .multilineTextAlignment(.center)
-                                .fixedSize(horizontal: false, vertical: true)
-                            Spacer()
-                                .frame(height: 2 * Theme.Metrics.doubleSpacing)
-                            
+                            header()
                             inputs()
                                 .padding(.bottom, Theme.Metrics.halfSpacing)
                         }
@@ -79,7 +69,11 @@ struct BackupSetPasswordView: View {
                             }
                             VStack {
                                 Button {
-                                    presenter.applyChanges()
+                                    if presenter.isDone {
+                                        presenter.close()
+                                    } else {
+                                        presenter.applyChanges()
+                                    }
                                 } label: {
                                     Text(verbatim: T.Commons.continue)
                                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -119,6 +113,21 @@ struct BackupSetPasswordView: View {
                 self.height = height
             }
         }
+    }
+    
+    @ViewBuilder
+    private func header() -> some View {
+        Spacer()
+            .frame(height: Theme.Metrics.doubleMargin)
+        Text(verbatim: presenter.isSettingPassword ? "Set your password" : "Change your password")
+            .font(.title2)
+            .multilineTextAlignment(.center)
+        Text(verbatim: "Enter password to additionaly protect contents of your backup. If you forget your password, you will need to remove the backup and start over.")
+            .font(.caption)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+        Spacer()
+            .frame(height: 2 * Theme.Metrics.doubleSpacing)
     }
     
     @ViewBuilder
@@ -169,4 +178,3 @@ struct BackupSetPasswordView: View {
         .disabled(presenter.isApplyingChanges)
     }
 }
-

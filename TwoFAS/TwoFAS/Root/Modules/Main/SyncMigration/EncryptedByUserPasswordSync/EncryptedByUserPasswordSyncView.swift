@@ -35,32 +35,36 @@ struct EncryptedByUserPasswordSyncView: View {
             VStack(alignment: .center) {
                 VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
                     VStack(spacing: Theme.Metrics.standardSpacing) {
-                        Spacer()
-                            .frame(height: Theme.Metrics.doubleMargin)
-                        Text(verbatim: T.Commons.icloudBackupPassword)
-                            .font(.title2)
-                            .multilineTextAlignment(.center)
-                        Text(
-                            verbatim: presenter.isVerifyingPassword ? "iCloud backup is encrypted with your password. Enter it to apply changes." : T.Backup.enterPasswordDescription
-                        )
+                        if !presenter.isWorking {
+                            Spacer()
+                                .frame(height: Theme.Metrics.doubleMargin)
+                            Text(verbatim: T.Commons.icloudBackupPassword)
+                                .font(.title2)
+                                .multilineTextAlignment(.center)
+                            Text(
+                                verbatim: presenter.isVerifyingPassword ? "iCloud backup is encrypted with your password. Enter it to apply changes." : T.Backup.enterPasswordDescription
+                            )
                             .font(.caption)
                             .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)
-                        Spacer()
-                            .frame(height: Theme.Metrics.doubleMargin)
-                        
-                        if !presenter.isCheckingPassword {
+                            Spacer()
+                                .frame(height: Theme.Metrics.doubleMargin)
                             input()
                                 .padding(.bottom, Theme.Metrics.halfSpacing)
                         }
                     }
                     Spacer()
                         .frame(maxHeight: .infinity)
-                    if presenter.isCheckingPassword {
-                        ProgressView()
-                            .progressViewStyle(.circular)
-                            .tint(Color(ThemeColor.theme))
-                            .scaleEffect(1.5)
+                    if presenter.isWorking {
+                        VStack(spacing: Theme.Metrics.doubleSpacing) {
+                            ProgressView()
+                                .progressViewStyle(.circular)
+                                .tint(Color(ThemeColor.theme))
+                                .scaleEffect(1.5)
+                            Text(verbatim: presenter.isVerifyingPassword ? "Verifying password" : "Removing Password")
+                                .font(.body)
+                                .multilineTextAlignment(.center)
+                        }
                         Spacer()
                             .frame(maxHeight: .infinity)
                     } else {
@@ -147,12 +151,12 @@ struct EncryptedByUserPasswordSyncView: View {
             Divider()
                 .overlay {
                     Rectangle()
-                        .foregroundStyle(presenter.isCheckingPassword ?
+                        .foregroundStyle(presenter.isWorking ?
                                          Color(Theme.Colors.Text.inactive) :
                                             Color(Theme.Colors.Line.primaryLine))
                 }
         }
-        .disabled(presenter.isCheckingPassword)
+        .disabled(presenter.isWorking)
         .frame(height: 20)
     }
     
@@ -160,7 +164,9 @@ struct EncryptedByUserPasswordSyncView: View {
         if presenter.isDone {
             return T.Commons.done
         } else {
-            if presenter.isVerifyingPassword {
+            if presenter.isRemovingPassword {
+                return "Remove password"
+            } else if presenter.isVerifyingPassword {
                 return T.Commons.continue
             } else {
                 return T.Backup.checkPassword

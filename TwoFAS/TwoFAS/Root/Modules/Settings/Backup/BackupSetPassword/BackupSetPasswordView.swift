@@ -33,9 +33,11 @@ struct BackupSetPasswordView: View {
                 VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
                     VStack(spacing: Theme.Metrics.standardSpacing) {
                         if presenter.isDone {
-                            Text(verbatim: "Password set successfully")
+                            Label("Password set successfully", systemImage: "checkmark.circle.fill")
                                 .font(.title3)
                                 .multilineTextAlignment(.center)
+                                .foregroundStyle(Color.green)
+                            
                         } else if !presenter.isApplyingChanges {
                             Spacer()
                                 .frame(height: Theme.Metrics.doubleMargin)

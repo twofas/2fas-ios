@@ -28,7 +28,6 @@ protocol EncryptedByUserPasswordSyncFlowControllerParent: AnyObject {
 protocol EncryptedByUserPasswordSyncFlowControlling: AnyObject {
     func close()
     func toChangePassword()
-    func toRemovePassword()
 }
 
 enum EncryptedByUserPasswordSyncType {
@@ -71,10 +70,6 @@ extension EncryptedByUserPasswordSyncFlowController: EncryptedByUserPasswordSync
     }
     
     func toChangePassword() {
-        
-    }
-    
-    func toRemovePassword() {
         
     }
 }

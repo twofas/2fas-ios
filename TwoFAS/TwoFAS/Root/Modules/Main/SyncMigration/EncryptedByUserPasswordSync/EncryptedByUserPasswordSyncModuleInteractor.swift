@@ -19,17 +19,33 @@
 
 import Foundation
 import Data
+import Common
 
 protocol EncryptedByUserPasswordSyncModuleInteracting: AnyObject {
+    var syncSuccess: (() -> Void)? { get set }
+    var syncFailure: ((CloudState.NotAvailableReason) -> Void)? { get set }
+    
     func setPassword(_ password: String)
     func verifyPassword(_ password: String) -> Bool
+    func removePassword()
 }
 
 final class EncryptedByUserPasswordSyncModuleInteractor {
     private let syncMigrationInteractor: SyncMigrationInteracting
+    private let notificationCenter: NotificationCenter
+    
+    var syncSuccess: (() -> Void)?
+    var syncFailure: ((CloudState.NotAvailableReason) -> Void)?
     
     init(syncMigrationInteractor: SyncMigrationInteracting) {
         self.syncMigrationInteractor = syncMigrationInteractor
+        notificationCenter = .default
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(syncStateChanged),
+            name: .syncStateChanged,
+            object: nil
+        )
     }
 }
 
@@ -40,5 +56,24 @@ extension EncryptedByUserPasswordSyncModuleInteractor: EncryptedByUserPasswordSy
     
     func verifyPassword(_ password: String) -> Bool {
         syncMigrationInteractor.verifyPassword(password)
+    }
+    
+    func removePassword() {
+        syncMigrationInteractor.migrateToSystemPassword()
+    }
+}
+
+private extension EncryptedByUserPasswordSyncModuleInteractor {
+    @objc
+    func syncStateChanged() {
+        switch syncMigrationInteractor.currentCloudState {
+        case .disabledNotAvailable(let reason): syncFailure?(reason)
+        case .enabled(let sync):
+            switch sync {
+            case .synced: syncSuccess?()
+            default: break
+            }
+        default: break
+        }
     }
 }

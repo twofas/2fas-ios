@@ -22,7 +22,7 @@ import Common
 import Data
 
 final class EncryptedByUserPasswordSyncPresenter: ObservableObject {
-    @Published var isCheckingPassword = false
+    @Published var isWorking = false
     @Published var wrongPassword = false
     @Published var isDone = false
     @Published var migrationFailureReason: CloudState.NotAvailableReason? = .cloudEncryptedSystem
@@ -51,6 +51,17 @@ final class EncryptedByUserPasswordSyncPresenter: ObservableObject {
         }
     }
     
+    var isRemovingPassword: Bool {
+        switch flowType {
+        case .enterPassword: false
+        case .verifyPassword(let reason):
+            switch reason {
+            case .changePassword: false
+            case .removePassword: true
+            }
+        }
+    }
+    
     init(
         flowController: EncryptedByUserPasswordSyncFlowControlling,
         interactor: EncryptedByUserPasswordSyncModuleInteracting,
@@ -59,6 +70,9 @@ final class EncryptedByUserPasswordSyncPresenter: ObservableObject {
         self.flowController = flowController
         self.interactor = interactor
         self.flowType = flowType
+        
+        interactor.syncSuccess = { [weak self] in self?.toSuccess() }
+        interactor.syncFailure = { [weak self] in self?.toFailure($0) }
     }
 }
 
@@ -77,12 +91,13 @@ extension EncryptedByUserPasswordSyncPresenter {
                     case .changePassword:
                         flowController.toChangePassword()
                     case .removePassword:
-                        flowController.toRemovePassword()
+                        isWorking = true
+                        interactor.removePassword()
                     }
                 }
             }
         } else {
-            isCheckingPassword = true
+            isWorking = true
             interactor.setPassword(password)
         }
     }
@@ -92,7 +107,7 @@ private extension EncryptedByUserPasswordSyncPresenter {
     func toSuccess() {
         migrationFailureReason = nil
         wrongPassword = false
-        isCheckingPassword = false
+        isWorking = false
         isDone = true
     }
     
@@ -100,13 +115,13 @@ private extension EncryptedByUserPasswordSyncPresenter {
         if reason == .cloudEncryptedUser {
             migrationFailureReason = nil
             wrongPassword = true
-            isCheckingPassword = false
+            isWorking = false
             return
         }
         
         migrationFailureReason = reason
         wrongPassword = false
         
-        isCheckingPassword = false
+        isWorking = false
     }
 }

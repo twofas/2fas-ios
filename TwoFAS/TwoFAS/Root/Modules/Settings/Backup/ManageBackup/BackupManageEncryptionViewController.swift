@@ -124,7 +124,7 @@ extension BackupManageEncryptionViewController {
 
 extension BackupManageEncryptionViewController: BackupManageEncryptionViewControlling {
     func reload(with data: [BackupManageEncryptionSection]) {
-        title = presenter.isSyncing ? "Syncing ..." : "Manage Backup"
+        title = presenter.isSyncing ? T.Backup.syncStatusProgress : T.Backup.manageTitle
         let snapshot = TableViewDataSnapshot<BackupManageEncryptionSection, BackupManageEncryptionCell>()
         data.forEach { snapshot.appendSection($0) }
         tableViewAdapter.apply(snapshot: snapshot)

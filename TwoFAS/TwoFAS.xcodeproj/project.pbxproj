@@ -791,11 +791,6 @@
 		C2997AA92454D767006D5943 /* SelectPINLengthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2997AA82454D767006D5943 /* SelectPINLengthController.swift */; };
 		C299B7D2236DE78700224F51 /* StackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C299B7D1236DE78700224F51 /* StackView+.swift */; };
 		C29B2B7929982E4900EDE75B /* MainSplitModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B2B7829982E4900EDE75B /* MainSplitModuleInteractor.swift */; };
-		C29B42C22D98905700F49DCE /* BackupChangeEncryptionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42BD2D98905700F49DCE /* BackupChangeEncryptionFlowController.swift */; };
-		C29B42C32D98905700F49DCE /* BackupChangeEncryptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42C02D98905700F49DCE /* BackupChangeEncryptionViewController.swift */; };
-		C29B42C42D98905700F49DCE /* BackupChangeEncryptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42C12D98905700F49DCE /* BackupChangeEncryptionView.swift */; };
-		C29B42C52D98905700F49DCE /* BackupChangeEncryptionModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42BE2D98905700F49DCE /* BackupChangeEncryptionModuleInteractor.swift */; };
-		C29B42C62D98905700F49DCE /* BackupChangeEncryptionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42BF2D98905700F49DCE /* BackupChangeEncryptionPresenter.swift */; };
 		C29B42C92D98943100F49DCE /* CloudEncryptionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42C72D9892C600F49DCE /* CloudEncryptionType.swift */; };
 		C29B42CA2D98B24800F49DCE /* CloudEncryptionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42C72D9892C600F49DCE /* CloudEncryptionType.swift */; };
 		C29B9ADA2B1E859D00255A2C /* google.json in Resources */ = {isa = PBXBuildFile; fileRef = C29B9AD62B1E859D00255A2C /* google.json */; };
@@ -2700,11 +2695,6 @@
 		C2997AA82454D767006D5943 /* SelectPINLengthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPINLengthController.swift; sourceTree = "<group>"; };
 		C299B7D1236DE78700224F51 /* StackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView+.swift"; sourceTree = "<group>"; };
 		C29B2B7829982E4900EDE75B /* MainSplitModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitModuleInteractor.swift; sourceTree = "<group>"; };
-		C29B42BD2D98905700F49DCE /* BackupChangeEncryptionFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupChangeEncryptionFlowController.swift; sourceTree = "<group>"; };
-		C29B42BE2D98905700F49DCE /* BackupChangeEncryptionModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupChangeEncryptionModuleInteractor.swift; sourceTree = "<group>"; };
-		C29B42BF2D98905700F49DCE /* BackupChangeEncryptionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupChangeEncryptionPresenter.swift; sourceTree = "<group>"; };
-		C29B42C02D98905700F49DCE /* BackupChangeEncryptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupChangeEncryptionViewController.swift; sourceTree = "<group>"; };
-		C29B42C12D98905700F49DCE /* BackupChangeEncryptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupChangeEncryptionView.swift; sourceTree = "<group>"; };
 		C29B42C72D9892C600F49DCE /* CloudEncryptionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudEncryptionType.swift; sourceTree = "<group>"; };
 		C29B9AD62B1E859D00255A2C /* google.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = google.json; sourceTree = "<group>"; };
 		C29B9AD72B1E859D00255A2C /* paypal.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = paypal.json; sourceTree = "<group>"; };
@@ -6637,18 +6627,6 @@
 			path = Interactor;
 			sourceTree = "<group>";
 		};
-		C29B42BC2D98900500F49DCE /* BackupChangeEncryption */ = {
-			isa = PBXGroup;
-			children = (
-				C29B42BD2D98905700F49DCE /* BackupChangeEncryptionFlowController.swift */,
-				C29B42BE2D98905700F49DCE /* BackupChangeEncryptionModuleInteractor.swift */,
-				C29B42BF2D98905700F49DCE /* BackupChangeEncryptionPresenter.swift */,
-				C29B42C12D98905700F49DCE /* BackupChangeEncryptionView.swift */,
-				C29B42C02D98905700F49DCE /* BackupChangeEncryptionViewController.swift */,
-			);
-			path = BackupChangeEncryption;
-			sourceTree = "<group>";
-		};
 		C29E56792809A18400141238 /* Spinner */ = {
 			isa = PBXGroup;
 			children = (
@@ -6846,7 +6824,6 @@
 				C23185622EC6477F00DD1ABE /* BackupSetPassword */,
 				C21930E82EC10441001354C9 /* ManageBackup */,
 				C2EF7B222DA9A47E00BAA559 /* ManageWatch */,
-				C29B42BC2D98900500F49DCE /* BackupChangeEncryption */,
 				C2ADD6132752DF590010F5E7 /* BackupMenu */,
 				C284AF6C2760112900FEE810 /* BackupDelete */,
 				C2AC21FA27660DEA00271402 /* Importer */,
@@ -10275,11 +10252,6 @@
 				C2AD653527F25F24008997DB /* BrowserExtensionFailedViewController.swift in Sources */,
 				C2FCB28E282589AC00AF8A37 /* NewsViewEmptyScreen.swift in Sources */,
 				C20E2DF32A7C4A7500DB64BB /* AddingServiceViewController.swift in Sources */,
-				C29B42C22D98905700F49DCE /* BackupChangeEncryptionFlowController.swift in Sources */,
-				C29B42C32D98905700F49DCE /* BackupChangeEncryptionViewController.swift in Sources */,
-				C29B42C42D98905700F49DCE /* BackupChangeEncryptionView.swift in Sources */,
-				C29B42C52D98905700F49DCE /* BackupChangeEncryptionModuleInteractor.swift in Sources */,
-				C29B42C62D98905700F49DCE /* BackupChangeEncryptionPresenter.swift in Sources */,
 				C2508E152753AAFD0072C564 /* SettingsMenuModuleInteractor.swift in Sources */,
 				C2F6BB08264886B7002A9747 /* IntroductionPresenter.swift in Sources */,
 				C27A54A127F0CAFC00321D2B /* BrowserExtensionIntroFlowController.swift in Sources */,

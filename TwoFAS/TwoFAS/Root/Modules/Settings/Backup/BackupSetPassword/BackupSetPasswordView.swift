@@ -35,10 +35,11 @@ struct BackupSetPasswordView: View {
                         if presenter.isDone {
                             Spacer()
                                 .frame(maxHeight: .infinity)
-                            Label("Password set successfully", systemImage: "checkmark.circle.fill")
-                                .font(.title3)
-                                .multilineTextAlignment(.center)
-                                .foregroundStyle(Color.green)
+                            Label(T.Backup.passwordSet, systemImage: "checkmark.circle.fill"
+                            )
+                            .font(.title3)
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(Color.green)
                         } else if !presenter.isApplyingChanges {
                             header()
                             inputs()
@@ -53,9 +54,13 @@ struct BackupSetPasswordView: View {
                                 .progressViewStyle(.circular)
                                 .tint(Color(ThemeColor.theme))
                                 .scaleEffect(1.5)
-                            Text(verbatim: presenter.isSettingPassword ? "Setting password" : "Changing password")
-                                .font(.body)
-                                .multilineTextAlignment(.center)
+                            Text(
+                                verbatim: presenter.isSettingPassword ?
+                                T.Backup.settingPassword :
+                                    T.Backup.changingPassword
+                            )
+                            .font(.body)
+                            .multilineTextAlignment(.center)
                         }
                         Spacer()
                             .frame(maxHeight: .infinity)
@@ -119,10 +124,10 @@ struct BackupSetPasswordView: View {
     private func header() -> some View {
         Spacer()
             .frame(height: Theme.Metrics.doubleMargin)
-        Text(verbatim: presenter.isSettingPassword ? "Set your password" : "Change your password")
+        Text(verbatim: presenter.isSettingPassword ? T.Backup.setPassword : T.Backup.changePassword)
             .font(.title2)
             .multilineTextAlignment(.center)
-        Text(verbatim: "Enter password to additionaly protect contents of your backup. If you forget your password, you will need to remove the backup and start over.")
+        Text(verbatim: T.Backup.passwordSetDescription)
             .font(.caption)
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
@@ -134,14 +139,18 @@ struct BackupSetPasswordView: View {
     private func inputs() -> some View {
         VStack(spacing: Theme.Metrics.standardSpacing) {
             VStack(spacing: Theme.Metrics.quaterSpacing) {
-                PasswordTextField(title: "Enter password", text: $presenter.password1, isFocused: $presenter.isFocused1)
-                    .onSubmit {
-                        DispatchQueue.main.async {
-                            presenter.isFocused1 = false
-                            presenter.isFocused2 = true
-                        }
+                PasswordTextField(
+                    title: T.Backup.encryptionEnterPassword,
+                    text: $presenter.password1,
+                    isFocused: $presenter.isFocused1
+                )
+                .onSubmit {
+                    DispatchQueue.main.async {
+                        presenter.isFocused1 = false
+                        presenter.isFocused2 = true
                     }
-                    .submitLabel(.next)
+                }
+                .submitLabel(.next)
                 Divider()
                     .overlay {
                         Rectangle()
@@ -149,20 +158,24 @@ struct BackupSetPasswordView: View {
                     }
             }
             VStack(spacing: Theme.Metrics.quaterSpacing) {
-                PasswordTextField(title: "Repeat password", text: $presenter.password2, isFocused: $presenter.isFocused2)
-                    .onSubmit {
-                        if presenter.continueButtonEnabled {
-                            presenter.applyChanges()
-                        }
+                PasswordTextField(
+                    title: T.Backup.repeatPassword,
+                    text: $presenter.password2,
+                    isFocused: $presenter.isFocused2
+                )
+                .onSubmit {
+                    if presenter.continueButtonEnabled {
+                        presenter.applyChanges()
                     }
-                    .submitLabel(.return)
+                }
+                .submitLabel(.return)
                 Divider()
                     .overlay {
                         Rectangle()
                             .foregroundStyle(Color(Theme.Colors.Line.primaryLine))
                     }
             }
-            Text("Only letters, digits, space and special characters (!@#$%^&*()-_) are allowed.")
+            Text(verbatim: T.Backup.passwordRulesDescription)
                 .font(.caption)
                 .foregroundStyle(Color(Theme.Colors.Text.subtitle))
                 .multilineTextAlignment(.leading)

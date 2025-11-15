@@ -43,7 +43,9 @@ struct EncryptedByUserPasswordSyncView: View {
                                 .font(.title2)
                                 .multilineTextAlignment(.center)
                             Text(
-                                verbatim: presenter.isVerifyingPassword ? "iCloud backup is encrypted with your password. Enter it to apply changes." : T.Backup.enterPasswordDescription
+                                verbatim: presenter.isVerifyingPassword ?
+                                T.Backup.verifyPasswordDescription :
+                                    T.Backup.enterPasswordDescription
                             )
                             .font(.caption)
                             .multilineTextAlignment(.center)
@@ -65,7 +67,11 @@ struct EncryptedByUserPasswordSyncView: View {
                                 .progressViewStyle(.circular)
                                 .tint(Color(ThemeColor.theme))
                                 .scaleEffect(1.5)
-                            Text(verbatim: presenter.isRemovingPassword ? "Removing Password" : "Verifying password")
+                            Text(
+                                verbatim: presenter.isRemovingPassword ?
+                                T.Backup.removingPassword :
+                                    T.Backup.veryfingPassword
+                            )
                                 .font(.body)
                                 .multilineTextAlignment(.center)
                         }
@@ -173,7 +179,7 @@ struct EncryptedByUserPasswordSyncView: View {
             return T.Commons.done
         } else {
             if presenter.isRemovingPassword {
-                return "Remove password"
+                return T.backupSettingsPasswordRemoveTitle
             } else if presenter.isVerifyingPassword {
                 return T.Commons.continue
             } else {

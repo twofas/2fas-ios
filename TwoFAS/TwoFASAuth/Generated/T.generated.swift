@@ -322,6 +322,10 @@ internal enum T {
     internal static let backupRemoval = T.tr("Localizable", "backup__backup_removal", fallback: "Backup removal")
     /// Can't read this file. It can be damaged, or there was an error while trying to access it. Please choose another one
     internal static let cantReadFileError = T.tr("Localizable", "backup__cant_read_file_error", fallback: "Can't read this file. It can be damaged, or there was an error while trying to access it. Please choose another one")
+    /// Change your password
+    internal static let changePassword = T.tr("Localizable", "backup__change_password", fallback: "Change your password")
+    /// Changing password
+    internal static let changingPassword = T.tr("Localizable", "backup__changing_password", fallback: "Changing password")
     /// Check password
     internal static let checkPassword = T.tr("Localizable", "backup__check_password", fallback: "Check password")
     /// Checking...
@@ -372,6 +376,8 @@ internal enum T {
     internal static let encryptionPasswordDescription = T.tr("Localizable", "backup__encryption_password_description", fallback: "Password is used to encrypt your data. If you lose it, you won't be able to recover data from the Cloud backup.")
     /// Select encryption type
     internal static let encryptionSelect = T.tr("Localizable", "backup__encryption_select", fallback: "Select encryption type")
+    /// Encryption
+    internal static let encryptionTitle = T.tr("Localizable", "backup__encryption_title", fallback: "Encryption")
     /// Encryption type
     internal static let encryptionType = T.tr("Localizable", "backup__encryption_type", fallback: "Encryption type")
     /// Enter Cloud backup password
@@ -468,6 +474,8 @@ internal enum T {
     internal static let managePairedWatchesTitle = T.tr("Localizable", "backup__manage_paired_watches_title", fallback: "Manage paired Apple Watches")
     /// Manage Watches
     internal static let managePairedWatchesTitleShort = T.tr("Localizable", "backup__manage_paired_watches_title_short", fallback: "Manage Watches")
+    /// Manage Backup
+    internal static let manageTitle = T.tr("Localizable", "backup__manage_title", fallback: "Manage Backup")
     /// Your backup is encrypted with a System key. This key will be shared amongst your apps that use iCloud Keychain. Remember to have that option turned on. If you want to use your password, you can do that in the Cloud backup settings after migration.
     internal static let migrationDescription = T.tr("Localizable", "backup__migration_description", fallback: "Your backup is encrypted with a System key. This key will be shared amongst your apps that use iCloud Keychain. Remember to have that option turned on. If you want to use your password, you can do that in the Cloud backup settings after migration.")
     /// Don't turn off the app!
@@ -486,14 +494,30 @@ internal enum T {
     internal static let noNewServicesError = T.tr("Localizable", "backup__no_new_services_error", fallback: "Either this file is empty, or all the services within are already available in the app")
     /// Password
     internal static let password = T.tr("Localizable", "backup__password", fallback: "Password")
+    /// Password may only contain letters, numbers, space and symbols.
+    internal static let passwordCharactersError = T.tr("Localizable", "backup__password_characters_error", fallback: "Password may only contain letters, numbers, space and symbols.")
+    /// Password must be %d-%d characters long.
+    internal static func passwordLengthError(_ p1: Int, _ p2: Int) -> String {
+      return T.tr("Localizable", "backup__password_length_error", p1, p2, fallback: "Password must be %d-%d characters long.")
+    }
+    /// Passwords do not match.
+    internal static let passwordMatchError = T.tr("Localizable", "backup__password_match_error", fallback: "Passwords do not match.")
+    /// Only letters, digits, space and special characters (!@#$%^&*()-_) are allowed.
+    internal static let passwordRulesDescription = T.tr("Localizable", "backup__password_rules_description", fallback: "Only letters, digits, space and special characters (!@#$%^&*()-_) are allowed.")
+    /// Password set successfully
+    internal static let passwordSet = T.tr("Localizable", "backup__password_set", fallback: "Password set successfully")
+    /// Enter password to additionaly protect contents of your backup. If you forget your password, you will need to remove the backup and start over.
+    internal static let passwordSetDescription = T.tr("Localizable", "backup__password_set_description", fallback: "Enter password to additionaly protect contents of your backup. If you forget your password, you will need to remove the backup and start over.")
     /// Passwords don't match
     internal static let passwordsDontMatch = T.tr("Localizable", "backup__passwords_dont_match", fallback: "Passwords don't match")
     /// Go to backup settings
     internal static let reminderCta = T.tr("Localizable", "backup__reminder_cta", fallback: "Go to backup settings")
     /// Google Drive not synced.
     internal static let reminderMsg = T.tr("Localizable", "backup__reminder_msg", fallback: "Google Drive not synced.")
-    /// Enter the backup password to proceed with remove.
-    internal static let removePasswordMsg = T.tr("Localizable", "backup__remove_password_msg", fallback: "Enter the backup password to proceed with remove.")
+    /// Enter the backup password to proceed with removal.
+    internal static let removePasswordMsg = T.tr("Localizable", "backup__remove_password_msg", fallback: "Enter the backup password to proceed with removal.")
+    /// Removing Password
+    internal static let removingPassword = T.tr("Localizable", "backup__removing_password", fallback: "Removing Password")
     /// Repeat password
     internal static let repeatPassword = T.tr("Localizable", "backup__repeat_password", fallback: "Repeat password")
     /// Enter the backup password to proceed with revoking access to Google.
@@ -512,8 +536,12 @@ internal enum T {
     }
     /// Services from the file will be merged with the ones in your app
     internal static let servicesMergeTitle = T.tr("Localizable", "backup__services_merge_title", fallback: "Services from the file will be merged with the ones in your app")
+    /// Set your password
+    internal static let setPassword = T.tr("Localizable", "backup__set_password", fallback: "Set your password")
     /// To increase the protection of your backup file, please set the password
     internal static let setPasswordTitle = T.tr("Localizable", "backup__set_password_title", fallback: "To increase the protection of your backup file, please set the password")
+    /// Setting password
+    internal static let settingPassword = T.tr("Localizable", "backup__setting_password", fallback: "Setting password")
     /// Could not share file!
     internal static let shareResultFailure = T.tr("Localizable", "backup__share_result_failure", fallback: "Could not share file!")
     /// State:
@@ -542,8 +570,12 @@ internal enum T {
     internal static let updateRequiredToImportTitle2 = T.tr("Localizable", "backup__update_required_to_import_title_2", fallback: "You'll need a new version of the app to import the contents of this file. You can find the newest version in the Google Store")
     /// User is over quota on iCloud
     internal static let userOverQuotaIcloud = T.tr("Localizable", "backup__user_over_quota_icloud", fallback: "User is over quota on iCloud")
+    /// iCloud backup is encrypted with your password. Enter it to apply changes.
+    internal static let verifyPasswordDescription = T.tr("Localizable", "backup__verify_password_description", fallback: "iCloud backup is encrypted with your password. Enter it to apply changes.")
     /// Verify PIN
     internal static let verifyPin = T.tr("Localizable", "backup__verify_pin", fallback: "Verify PIN")
+    /// Verifying password
+    internal static let veryfingPassword = T.tr("Localizable", "backup__veryfing_password", fallback: "Verifying password")
     /// Warning! If you delete 2FAS Backup, you will also erase all tokens from other devices synced with this account. To preserve the tokens on other devices, please ensure that you've turned off the 2FAS Backup before the deletion.
     internal static let warningIntroduction = T.tr("Localizable", "backup__warning_introduction", fallback: "Warning! If you delete 2FAS Backup, you will also erase all tokens from other devices synced with this account. To preserve the tokens on other devices, please ensure that you've turned off the 2FAS Backup before the deletion.")
     /// Go to 2FAS Backup settings in 2FAS Auth on your iPhone/iPad and navigate to "Managed Paired Apple Watches". This option will be visible if the backup is synced. Scan the QR code from there.

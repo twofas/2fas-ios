@@ -432,12 +432,6 @@ final class ModuleInteractorFactory {
         )
     }
     
-    func backupChangeEncryptionModuleInteractor() -> BackupChangeEncryptionModuleInteracting {
-        BackupChangeEncryptionModuleInteractor(
-            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor()
-        )
-    }
-    
     func manageWatchModuleInteractor() -> ManageWatchModuleInteracting {
         ManageWatchModuleInteractor(manageWatch: InteractorFactory.shared.watchPairingInteractor())
     }

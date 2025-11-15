@@ -106,15 +106,19 @@ private extension BackupSetPasswordPresenter {
         }
         
         if !checkLength(password1) || !checkLength(password2) {
-            validationError = "Password must be \(Config.minSyncPasswordLength)-\(Config.maxSyncPasswordLength) characters long"
+            validationError = T.Backup
+                .passwordLengthError(
+                    Config.minSyncPasswordLength,
+                    Config.maxSyncPasswordLength
+                )
             return
         }
         if !validCharacters(password1) || !validCharacters(password2) {
-            validationError = "Password may only contain letters, numbers, space and symbols."
+            validationError = T.Backup.passwordCharactersError
             return
         }
         if password1 != password2 {
-            validationError = "Passwords do not match"
+            validationError = T.Backup.passwordMatchError
             return
         }
         continueButtonEnabled = true

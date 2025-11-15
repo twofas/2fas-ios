@@ -27,10 +27,18 @@ extension BackupManageEncryptionPresenter {
         if interactor.encryptionTypeIsUser {
             menu.append(contentsOf: [
                 .init(
-                    title: "Encryption",
+                    title: T.Backup.encryptionTitle,
                     cells: [
-                        .init(title: "Remove password", action: .decrypt, isEnabled: modificationEnabled),
-                        .init(title: "Change password", action: .recrypt, isEnabled: modificationEnabled)
+                        .init(
+                            title: T.backupSettingsPasswordRemoveTitle,
+                            action: .decrypt,
+                            isEnabled: modificationEnabled
+                        ),
+                        .init(
+                            title: T.Backup.encryptionChangePassword,
+                            action: .recrypt,
+                            isEnabled: modificationEnabled
+                        )
                     ],
                     footer: T.Backup.encryptionPasswordDescription
                 ),
@@ -41,13 +49,18 @@ extension BackupManageEncryptionPresenter {
                     ],
                     footer: T.Backup.warningIntroduction
                 )
-            ])
+            ]
+)
         } else {
             menu.append(contentsOf: [
                 .init(
-                    title: "Encryption",
+                    title: T.Backup.encryptionTitle,
                     cells: [
-                        .init(title: "Set password", action: .encrypt, isEnabled: modificationEnabled)
+                        .init(
+                            title: T.backupSettingsPasswordSetTitle,
+                            action: .encrypt,
+                            isEnabled: modificationEnabled
+                        )
                     ],
                     footer: T.Backup.encryptionPasswordDescription
                 ),
@@ -58,7 +71,8 @@ extension BackupManageEncryptionPresenter {
                     ],
                     footer: T.Backup.warningIntroduction
                 )
-            ])
+            ]
+)
         }
         return menu
     }

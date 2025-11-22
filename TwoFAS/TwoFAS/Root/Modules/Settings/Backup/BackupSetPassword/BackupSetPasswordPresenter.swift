@@ -83,7 +83,9 @@ extension BackupSetPasswordPresenter {
     }
     
     func applyChanges() {
+        guard continueButtonEnabled else { return }
         isApplyingChanges = true
+        interactor.setApplayinChanges()
         interactor.setPassword(password1)
     }
 }

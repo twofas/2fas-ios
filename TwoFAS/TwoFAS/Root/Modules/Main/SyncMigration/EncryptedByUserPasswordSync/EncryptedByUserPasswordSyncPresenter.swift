@@ -82,6 +82,7 @@ extension EncryptedByUserPasswordSyncPresenter {
     }
     
     func onCheckPassword() {
+        guard checkPasswordEnabled else { return }
         if isVerifyingPassword {
             if interactor.verifyPassword(password) {
                 wrongPassword = false
@@ -93,6 +94,7 @@ extension EncryptedByUserPasswordSyncPresenter {
                         flowController.toChangePassword()
                     case .removePassword:
                         isWorking = true
+                        interactor.setApplayinChanges()
                         interactor.removePassword()
                     }
                 }
@@ -102,6 +104,7 @@ extension EncryptedByUserPasswordSyncPresenter {
         } else {
             wrongPassword = false
             isWorking = true
+            interactor.setApplayinChanges()
             interactor.setPassword(password)
         }
     }

@@ -26,6 +26,7 @@ protocol BackupSetPasswordModalInteracting: AnyObject {
     var syncFailure: ((CloudState.NotAvailableReason) -> Void)? { get set }
     
     func setPassword(_ password: String)
+    func setApplayinChanges()
 }
 
 final class BackupSetPasswordModalInteractor {
@@ -34,6 +35,8 @@ final class BackupSetPasswordModalInteractor {
     
     private let syncMigrationInteractor: SyncMigrationInteracting
     private let notificationCenter: NotificationCenter
+    
+    private var applyingChanges = false
     
     init(syncMigrationInteractor: SyncMigrationInteracting) {
         self.syncMigrationInteractor = syncMigrationInteractor
@@ -54,14 +57,24 @@ extension BackupSetPasswordModalInteractor: BackupSetPasswordModalInteracting {
     
     @objc
     private func syncStateChanged() {
+        guard applyingChanges else { return }
+        
         switch syncMigrationInteractor.currentCloudState {
-        case .disabledNotAvailable(let reason): syncFailure?(reason)
+        case .disabledNotAvailable(let reason):
+            applyingChanges = false
+            syncFailure?(reason)
         case .enabled(let sync):
             switch sync {
-            case .synced: syncSuccess?()
+            case .synced:
+                applyingChanges = false
+                syncSuccess?()
             default: break
             }
         default: break
         }
+    }
+    
+    func setApplayinChanges() {
+        applyingChanges = true
     }
 }

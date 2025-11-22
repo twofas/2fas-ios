@@ -29,6 +29,7 @@ protocol EncryptedByUserPasswordSyncModuleInteracting: AnyObject {
     func setPassword(_ password: String)
     func verifyPassword(_ password: String) -> Bool
     func removePassword()
+    func setApplayinChanges()
 }
 
 final class EncryptedByUserPasswordSyncModuleInteractor {
@@ -38,6 +39,8 @@ final class EncryptedByUserPasswordSyncModuleInteractor {
     
     var syncSuccess: (() -> Void)?
     var syncFailure: ((CloudState.NotAvailableReason) -> Void)?
+    
+    private var applyingChanges = false
     
     init(syncMigrationInteractor: SyncMigrationInteracting, cloudBackup: CloudBackupStateInteracting) {
         self.syncMigrationInteractor = syncMigrationInteractor
@@ -69,16 +72,26 @@ extension EncryptedByUserPasswordSyncModuleInteractor: EncryptedByUserPasswordSy
     func removePassword() {
         syncMigrationInteractor.migrateToSystemPassword()
     }
+    
+    func setApplayinChanges() {
+        applyingChanges = true
+    }
 }
 
 private extension EncryptedByUserPasswordSyncModuleInteractor {
     @objc
     func syncStateChanged() {
+        guard applyingChanges else { return }
+        
         switch syncMigrationInteractor.currentCloudState {
-        case .disabledNotAvailable(let reason): syncFailure?(reason)
+        case .disabledNotAvailable(let reason):
+            applyingChanges = false
+            syncFailure?(reason)
         case .enabled(let sync):
             switch sync {
-            case .synced: syncSuccess?()
+            case .synced:
+                applyingChanges = false
+                syncSuccess?()
             default: break
             }
         default: break

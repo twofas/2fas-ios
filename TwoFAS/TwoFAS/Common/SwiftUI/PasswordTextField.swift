@@ -66,10 +66,9 @@ struct PasswordTextField: View {
             }
             .padding(0)
             .clipShape(Rectangle())
-            placeholder()
         }
         .frame(height: 40)
-        .animation(.easeInOut(duration: 0.3), value: reveal)
+        .animation(.easeInOut(duration: Theme.Animations.Timing.quick), value: reveal)
         .onChange(of: isFocused) { newValue in
             guard newValue else { return }
             if reveal {
@@ -82,19 +81,20 @@ struct PasswordTextField: View {
     
     @ViewBuilder
     private func textField() -> some View {
-        TextField(isEditing ? "" : title, text: $text, onEditingChanged: { edit in
-            isFocused = edit
-            withAnimation {
-                isEditing = edit
-            }
-        })
+        TextField(isEditing ? "" : title, text: $text, prompt: Text(verbatim: title))
         .focused($isPlainFieldFocused)
         .modifier(FormatInputModifier(isPasswordNew: isPasswordNew))
+        .onChange(of: isPlainFieldFocused) { newValue in
+            isFocused = newValue
+            withAnimation {
+                isEditing = newValue
+            }
+        }
     }
     
     @ViewBuilder
     private func secureTextField() -> some View {
-        SecureField(title, text: $text, prompt: prompt != nil ? promptText(prompt: prompt!) : nil)
+        SecureField(title, text: $text, prompt: Text(verbatim: title))
             .modifier(FormatInputModifier(isPasswordNew: isPasswordNew))
             .focused($isSecureFieldFocused)
             .onChange(of: isSecureFieldFocused) { focused in
@@ -103,12 +103,6 @@ struct PasswordTextField: View {
                     isEditing = focused
                 }
             }
-    }
-    
-    @ViewBuilder
-    private func promptText(prompt: String) -> Text {
-        Text(verbatim: prompt)
-            .bold()
     }
     
     @ViewBuilder
@@ -130,14 +124,6 @@ struct PasswordTextField: View {
                 .padding(.leading, Theme.Metrics.standardMargin)
         }
     }
-    
-    @ViewBuilder
-    private func placeholder() -> some View {
-        Text(!isEditing && reveal && text.isEmpty ? " " + title + " " : "")
-            .foregroundColor(Color.secondary)
-            .background(Color(UIColor.systemBackground))
-            .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 0))
-    }
 }
 
 private struct FormatInputModifier: ViewModifier {
@@ -150,7 +136,7 @@ private struct FormatInputModifier: ViewModifier {
             .keyboardType(.asciiCapable)
             .textContentType(isPasswordNew ? .newPassword : .password)
             .accentColor(Color(Theme.Colors.Text.theme))
-            .animation(Animation.easeInOut(duration: 0.4), value: EdgeInsets())
+            .animation(Animation.easeInOut(duration: Theme.Animations.Timing.quick), value: EdgeInsets())
             .frame(alignment: .leading)
     }
 }

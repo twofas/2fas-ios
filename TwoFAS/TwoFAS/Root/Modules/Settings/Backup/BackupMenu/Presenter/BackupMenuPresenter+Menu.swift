@@ -45,7 +45,7 @@ extension BackupMenuPresenter {
         
         if interactor.isCloudBackupSynced || interactor.canDelete {
             mainCells.append(
-                .init(title: "Manage Backup", action: .manageBackup)
+                .init(title: T.Backup.manageTitle, action: .manageBackup)
             )
         }
         

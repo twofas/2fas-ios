@@ -460,8 +460,8 @@ internal enum T {
     internal static let localFileTitle = T.tr("Localizable", "backup__local_file_title", fallback: "Local file")
     /// List is empty. Pair Watch using + button
     internal static let managePairedWatchesEmptyList = T.tr("Localizable", "backup__manage_paired_watches_empty_list", fallback: "List is empty. Pair Watch using + button")
-    /// Add, remove or rename Apple Watches with access to this Cloud backup.
-    internal static let managePairedWatchesFooter = T.tr("Localizable", "backup__manage_paired_watches_footer", fallback: "Add, remove or rename Apple Watches with access to this Cloud backup.")
+    /// Add, remove or rename Apple Watches that have access to this Cloud backup.
+    internal static let managePairedWatchesFooter = T.tr("Localizable", "backup__manage_paired_watches_footer", fallback: "Add, remove or rename Apple Watches that have access to this Cloud backup.")
     /// Rename
     internal static let managePairedWatchesRenameAction = T.tr("Localizable", "backup__manage_paired_watches_rename_action", fallback: "Rename")
     /// Enter new device name
@@ -472,10 +472,10 @@ internal enum T {
     internal static let managePairedWatchesSyncing = T.tr("Localizable", "backup__manage_paired_watches_syncing", fallback: "Cloud backup is syncing...")
     /// Manage paired Apple Watches
     internal static let managePairedWatchesTitle = T.tr("Localizable", "backup__manage_paired_watches_title", fallback: "Manage paired Apple Watches")
-    /// Manage Watches
-    internal static let managePairedWatchesTitleShort = T.tr("Localizable", "backup__manage_paired_watches_title_short", fallback: "Manage Watches")
-    /// Manage Backup
-    internal static let manageTitle = T.tr("Localizable", "backup__manage_title", fallback: "Manage Backup")
+    /// Apple Watches
+    internal static let managePairedWatchesTitleShort = T.tr("Localizable", "backup__manage_paired_watches_title_short", fallback: "Apple Watches")
+    /// Manage backup
+    internal static let manageTitle = T.tr("Localizable", "backup__manage_title", fallback: "Manage backup")
     /// Your backup is encrypted with a System key. This key will be shared amongst your apps that use iCloud Keychain. Remember to have that option turned on. If you want to use your password, you can do that in the Cloud backup settings after migration.
     internal static let migrationDescription = T.tr("Localizable", "backup__migration_description", fallback: "Your backup is encrypted with a System key. This key will be shared amongst your apps that use iCloud Keychain. Remember to have that option turned on. If you want to use your password, you can do that in the Cloud backup settings after migration.")
     /// Don't turn off the app!
@@ -494,20 +494,20 @@ internal enum T {
     internal static let noNewServicesError = T.tr("Localizable", "backup__no_new_services_error", fallback: "Either this file is empty, or all the services within are already available in the app")
     /// Password
     internal static let password = T.tr("Localizable", "backup__password", fallback: "Password")
-    /// Password may only contain letters, numbers, space and symbols.
-    internal static let passwordCharactersError = T.tr("Localizable", "backup__password_characters_error", fallback: "Password may only contain letters, numbers, space and symbols.")
+    /// Password may only contain letters, numbers, spaces and symbols.
+    internal static let passwordCharactersError = T.tr("Localizable", "backup__password_characters_error", fallback: "Password may only contain letters, numbers, spaces and symbols.")
     /// Password must be %d-%d characters long.
     internal static func passwordLengthError(_ p1: Int, _ p2: Int) -> String {
       return T.tr("Localizable", "backup__password_length_error", p1, p2, fallback: "Password must be %d-%d characters long.")
     }
     /// Passwords do not match.
     internal static let passwordMatchError = T.tr("Localizable", "backup__password_match_error", fallback: "Passwords do not match.")
-    /// Only letters, digits, space and special characters (!@#$%^&*()-_) are allowed.
-    internal static let passwordRulesDescription = T.tr("Localizable", "backup__password_rules_description", fallback: "Only letters, digits, space and special characters (!@#$%^&*()-_) are allowed.")
+    /// Only letters, digits, spaces and special characters (!@#$%^&*()-_) are allowed.
+    internal static let passwordRulesDescription = T.tr("Localizable", "backup__password_rules_description", fallback: "Only letters, digits, spaces and special characters (!@#$%^&*()-_) are allowed.")
     /// Password set successfully
     internal static let passwordSet = T.tr("Localizable", "backup__password_set", fallback: "Password set successfully")
-    /// Enter password to additionaly protect contents of your backup. If you forget your password, you will need to remove the backup and start over.
-    internal static let passwordSetDescription = T.tr("Localizable", "backup__password_set_description", fallback: "Enter password to additionaly protect contents of your backup. If you forget your password, you will need to remove the backup and start over.")
+    /// Enter your password to additionally protect the contents of your backup. If you forget your password, you will need to remove the backup and start over.
+    internal static let passwordSetDescription = T.tr("Localizable", "backup__password_set_description", fallback: "Enter your password to additionally protect the contents of your backup. If you forget your password, you will need to remove the backup and start over.")
     /// Passwords don't match
     internal static let passwordsDontMatch = T.tr("Localizable", "backup__passwords_dont_match", fallback: "Passwords don't match")
     /// Go to backup settings
@@ -516,8 +516,8 @@ internal enum T {
     internal static let reminderMsg = T.tr("Localizable", "backup__reminder_msg", fallback: "Google Drive not synced.")
     /// Enter the backup password to proceed with removal.
     internal static let removePasswordMsg = T.tr("Localizable", "backup__remove_password_msg", fallback: "Enter the backup password to proceed with removal.")
-    /// Removing Password
-    internal static let removingPassword = T.tr("Localizable", "backup__removing_password", fallback: "Removing Password")
+    /// Removing password
+    internal static let removingPassword = T.tr("Localizable", "backup__removing_password", fallback: "Removing password")
     /// Repeat password
     internal static let repeatPassword = T.tr("Localizable", "backup__repeat_password", fallback: "Repeat password")
     /// Enter the backup password to proceed with revoking access to Google.
@@ -590,8 +590,8 @@ internal enum T {
     internal static let watchPairingDefaultName = T.tr("Localizable", "backup__watch_pairing_default_name", fallback: "Apple Watch")
     /// Do you want to pair an Apple Watch with your iCloud backup? Enter the name for your device:
     internal static let watchPairingDescription = T.tr("Localizable", "backup__watch_pairing_description", fallback: "Do you want to pair an Apple Watch with your iCloud backup? Enter the name for your device:")
-    /// Can't pair with the Watch now. Ensure the Cloud backup is enabled and synced using a password.
-    internal static let watchPairingError = T.tr("Localizable", "backup__watch_pairing_error", fallback: "Can't pair with the Watch now. Ensure the Cloud backup is enabled and synced using a password.")
+    /// Can't pair with the Watch now. Ensure the iCloud backup is enabled and synced using a password.
+    internal static let watchPairingError = T.tr("Localizable", "backup__watch_pairing_error", fallback: "Can't pair with the Watch now. Ensure the iCloud backup is enabled and synced using a password.")
     /// Pairing with Apple Watch
     internal static let watchPairingTitle = T.tr("Localizable", "backup__watch_pairing_title", fallback: "Pairing with Apple Watch")
   }
@@ -776,8 +776,8 @@ internal enum T {
     internal static let fileCreationError = T.tr("Localizable", "commons__file_creation_error", fallback: "File creation failed")
     /// Got it!
     internal static let gotIt = T.tr("Localizable", "commons__got_it", fallback: "Got it!")
-    /// iCloud Backup Password
-    internal static let icloudBackupPassword = T.tr("Localizable", "commons__icloud_backup_password", fallback: "iCloud Backup Password")
+    /// iCloud Backup password
+    internal static let icloudBackupPassword = T.tr("Localizable", "commons__icloud_backup_password", fallback: "iCloud Backup password")
     /// Info
     internal static let info = T.tr("Localizable", "commons__info", fallback: "Info")
     /// Next
@@ -1058,10 +1058,10 @@ internal enum T {
     internal static let page3Content = T.tr("Localizable", "introduction__page_3_content", fallback: "2FAS respects and protects your privacy. This app will never collect, process, or use any of your personal data.")
     /// Private
     internal static let page3Title = T.tr("Localizable", "introduction__page_3_title", fallback: "Private")
-    /// Your Tokens are stored offline via the device storage, so remember to back up your services! Use Google Drive Sync and PIN password to protect against unauthorized access and device damage.
-    internal static let page4ContentAndroid = T.tr("Localizable", "introduction__page_4_content_android", fallback: "Your Tokens are stored offline via the device storage, so remember to back up your services! Use Google Drive Sync and PIN password to protect against unauthorized access and device damage.")
-    /// Your Tokens are stored offline via the device storage, so remember to back up your services! Use iCloud Sync and a PIN password to protect against unauthorized access and device damage.
-    internal static let page4ContentIos = T.tr("Localizable", "introduction__page_4_content_ios", fallback: "Your Tokens are stored offline via the device storage, so remember to back up your services! Use iCloud Sync and a PIN password to protect against unauthorized access and device damage.")
+    /// Your Tokens are stored offline via the device storage, so remember to back up your services! Use Google Drive Sync and PIN to protect against unauthorized access and device damage.
+    internal static let page4ContentAndroid = T.tr("Localizable", "introduction__page_4_content_android", fallback: "Your Tokens are stored offline via the device storage, so remember to back up your services! Use Google Drive Sync and PIN to protect against unauthorized access and device damage.")
+    /// Your Tokens are stored offline via the device storage, so remember to back up your services! Use iCloud Sync and a PIN to protect against unauthorized access and device damage.
+    internal static let page4ContentIos = T.tr("Localizable", "introduction__page_4_content_ios", fallback: "Your Tokens are stored offline via the device storage, so remember to back up your services! Use iCloud Sync and a PIN to protect against unauthorized access and device damage.")
     /// Secure
     internal static let page4Title = T.tr("Localizable", "introduction__page_4_title", fallback: "Secure")
     /// Pair new service
@@ -1389,8 +1389,8 @@ internal enum T {
     internal static let tooManyAttemptsHeader = T.tr("Localizable", "settings__too_many_attempts_header", fallback: "Block after X failed attempts:")
     /// Touch ID
     internal static let touchId = T.tr("Localizable", "settings__touch_id", fallback: "Touch ID")
-    /// Transfer Tokens
-    internal static let transfer = T.tr("Localizable", "settings__transfer", fallback: "Transfer Tokens")
+    /// Transfer tokens
+    internal static let transfer = T.tr("Localizable", "settings__transfer", fallback: "Transfer tokens")
     /// Trash
     internal static let trash = T.tr("Localizable", "settings__trash", fallback: "Trash")
     /// Trash is Empty

@@ -43,9 +43,13 @@ extension BackupMenuPresenter {
             )
         ]
         
-        if interactor.isCloudBackupSynced || interactor.canDelete {
+        if interactor.isBackupOn {
             mainCells.append(
-                .init(title: T.Backup.manageTitle, action: .manageBackup)
+                .init(
+                    title: T.Backup.manageTitle,
+                    action: .manageBackup,
+                    isEnabled: interactor.isCloudBackupSynced || interactor.canDelete
+                )
             )
         }
         

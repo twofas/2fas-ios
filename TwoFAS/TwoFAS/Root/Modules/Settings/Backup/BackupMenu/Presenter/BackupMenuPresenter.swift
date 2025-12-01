@@ -66,6 +66,7 @@ final class BackupMenuPresenter {
         case .debugEraseCloudBackup:
             interactor.debugErase()
         case .manageBackup:
+            guard interactor.isCloudBackupSynced || interactor.canDelete else { return }
             flowController.toManageBackup()
         }
     }

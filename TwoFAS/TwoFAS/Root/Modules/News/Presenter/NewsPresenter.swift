@@ -54,6 +54,7 @@ final class NewsPresenter {
     
     func handleSelection(at row: Int) {
         interactor.fetchList { [weak self] list in
+            let list = list.sorted { $0.createdAt > $1.createdAt }
             guard let entry = list[safe: row] else { return }
             self?.interactor.markAsRead(newsEntry: entry)
             if let type = entry.localNotificationType {

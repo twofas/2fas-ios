@@ -148,13 +148,6 @@ extension SettingsMenuPresenter {
                     title: T.Settings.about,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .about)
-                ),
-                .init(
-                    icon: Asset.settingsDonate.image,
-                    title: T.Settings.donateTwofas,
-                    accessory: .donate,
-                    action: .navigation(navigatesTo: .donate),
-                    rememberPosition: false
                 )
             ],
             footer: T.Settings.infoFooter

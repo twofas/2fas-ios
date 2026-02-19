@@ -103,11 +103,6 @@ extension LocalNotification {
             link = URL(string: "https://2fas.com/browser-extension/")
             message = T.periodicNotificationBrowserExtension
             internalLink = nil
-        case .donation:
-            icon = .features
-            link = URL(string: "https://2fas.com/donate/")
-            message = T.periodicNotificationDonate
-            internalLink = nil
         }
         
         return .init(

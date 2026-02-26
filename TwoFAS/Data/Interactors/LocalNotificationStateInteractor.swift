@@ -33,7 +33,7 @@ final class LocalNotificationStateInteractor {
     
     private let notificationCenter = NotificationCenter.default
     
-    private let cycleDays: Int = 30
+    private let cycleDays: Int = 45
     private let firstNotificationDays: Int = 2
     
     private var backupStateKnown = false
@@ -98,12 +98,6 @@ extension LocalNotificationStateInteractor: LocalNotificationStateInteracting {
         }
         case 1: if canDisplayBrowserExtension() {
             startNotification(next)
-        } else {
-            setInactiveNotification(next)
-        }
-        markLocalNotificationsAsHandled()
-        case 2: if canDisplayDonation() {
-            startNotification(3)
         } else {
             setInactiveNotification(next)
         }
@@ -205,8 +199,7 @@ private extension LocalNotificationStateInteractor {
         case -2: -1
         case -1: 0
         case 0: 1
-        case 1: 2
-        case 2: 0
+        case 1: 0
         default: 0
         }
     }

@@ -27,6 +27,7 @@ public enum ListNews {
         let lang: String
         let group: String
         let noCompanionAppFrom: String?
+        let appVersion: String?
         
         let method: HTTPMethod = .GET
         
@@ -46,6 +47,9 @@ public enum ListNews {
             }
             if let group = group.addingPercentEncoding(withAllowedCharacters: .alphanumerics) {
                 params.append("group=\(group)")
+            }
+            if let appVersion = appVersion?.addingPercentEncoding(withAllowedCharacters: .alphanumerics) {
+                params.append("version=\(appVersion)")
             }
             if let noCompanionAppFrom = noCompanionAppFrom?.addingPercentEncoding(
                 withAllowedCharacters: .alphanumerics

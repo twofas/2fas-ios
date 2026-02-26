@@ -143,6 +143,7 @@ extension MainRepositoryImpl {
                 lang: lang,
                 group: group,
                 noCompanionAppFrom: noCompanionAppFrom,
+                appVersion: appVersion,
                 completion: completion
             )
     }

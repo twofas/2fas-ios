@@ -50,7 +50,7 @@ extension SettingsMenuPresenter {
         case .transfer: .transfer
         case .appearance: .appearance
         case .appleWatch: .appleWatch
-        case .faq, .donate, .appStorePass, .openPass: nil
+        case .faq, .appStorePass, .openPass: nil
         default: nil
         }
     }
@@ -207,8 +207,6 @@ private extension SettingsMenuPresenter {
             flowController.toFAQ()
         case .about:
             flowController.toAbout()
-        case .donate:
-            flowController.toDonate()
         case .transfer:
             flowController.toTransfer()
         case .appearance:
@@ -255,7 +253,7 @@ private extension SettingsMenuPresenter {
         case .transfer: .transfer
         case .appearance: .appearance
         case .appleWatch: .appleWatch
-        case .faq, .donate, .appStorePass, .openPass: nil
+        case .faq, .appStorePass, .openPass: nil
         @unknown default: nil
         }
     }

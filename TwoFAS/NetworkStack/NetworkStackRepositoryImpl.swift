@@ -137,6 +137,7 @@ extension NetworkStackRepositoryImpl: NetworkStackRepository {
         lang: String,
         group: String,
         noCompanionAppFrom: String?,
+        appVersion: String?,
         completion: @escaping (Result<[ListNews.NewsEntry], NetworkError>) -> Void
     ) {
         let req = ListNews.Request(
@@ -145,7 +146,8 @@ extension NetworkStackRepositoryImpl: NetworkStackRepository {
             publishedAfter: publishedAfter,
             lang: lang,
             group: group,
-            noCompanionAppFrom: noCompanionAppFrom
+            noCompanionAppFrom: noCompanionAppFrom,
+            appVersion: appVersion
         )
         networkCall.handleNotificationsCall(with: req, completion: completion)
     }

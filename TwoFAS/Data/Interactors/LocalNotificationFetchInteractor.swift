@@ -25,14 +25,12 @@ public struct LocalNotification: Hashable {
         case tipsNTricks
         case backup
         case browserExtension
-        case donation
         
         static func kindFromCycle(_ cycle: Int) -> NotificationKind {
             switch cycle {
             case -1: .tipsNTricks
             case 0: .backup
-            case 1: .browserExtension
-            default: .donation
+            default: .browserExtension
             }
         }
     }

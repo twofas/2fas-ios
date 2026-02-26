@@ -72,6 +72,7 @@ public protocol NetworkStackRepository {
         lang: String,
         group: String,
         noCompanionAppFrom: String?,
+        appVersion: String?,
         completion: @escaping (Result<[ListNews.NewsEntry], NetworkError>) -> Void
     )
     func uploadLogs(

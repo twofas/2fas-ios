@@ -38,6 +38,8 @@ public protocol SyncMigrationInteracting: AnyObject {
     func switchLocallyToUseSystemPassword()
     func migrateToSystemPassword()
     func setMissingUserPassword(_ password: String)
+    
+    func verifyPassword(_ password: String) -> Bool
 }
 
 final class SyncMigrationInteractor {
@@ -138,6 +140,10 @@ extension SyncMigrationInteractor: SyncMigrationInteracting {
     
     func setMissingUserPassword(_ password: String) {
         mainRepository.cloudSetMissingUserPassword(password)
+    }
+    
+    func verifyPassword(_ password: String) -> Bool {
+        mainRepository.cloudVerifyUserPassword(password)
     }
     
     @objc

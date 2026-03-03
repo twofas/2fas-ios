@@ -34,6 +34,8 @@ public protocol SyncMigrationHandling: AnyObject {
     func migrateToSystemPassword()
     func switchLocallyToUseSystemPassword()
     func setMissingUserPassword(_ password: String)
+    
+    func verifyUserPassword(_ password: String) -> Bool
 }
 
 final class SyncMigrationHandler {
@@ -183,6 +185,10 @@ extension SyncMigrationHandler: SyncMigrationHandling {
                  }
             }
         }
+    }
+    
+    func verifyUserPassword(_ password: String) -> Bool {
+        syncEncryptionHandler.verifyUserPassword(password)
     }
 }
 

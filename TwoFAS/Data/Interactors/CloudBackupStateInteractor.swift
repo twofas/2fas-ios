@@ -44,6 +44,7 @@ public protocol CloudBackupStateInteracting: AnyObject {
     func disableBackup()
     
     func clearBackup()
+    func debugErase()
     
     func synchronizeBackup()
     
@@ -153,6 +154,14 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
         stateChanged?()
         
         mainRepository.clearBackup()
+    }
+    
+    func debugErase() {
+        Log("CloudBackupStateInteractor - debug erase", module: .interactor)
+        isEnabled = false
+        stateChanged?()
+        
+        mainRepository.debugEraseCloudBackup()
     }
     
     func synchronizeBackup() {

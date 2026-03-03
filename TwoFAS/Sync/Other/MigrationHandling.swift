@@ -26,10 +26,12 @@ import CommonWatch
 
 protocol MigrationHandling: AnyObject {
     var clearCloudState: Callback? { get set }
+    var setFirstStart: Callback? { get set }
     var isMigratingToV3: Callback? { get set }
     var finishedMigratingToV3: Callback? { get set }
     
     var isMigrating: Bool { get }
+    var isMigratingInV1Zone: Bool { get }
     
     func checkIfMigrationNeeded() async
     func migrateIfNeeded() -> Bool

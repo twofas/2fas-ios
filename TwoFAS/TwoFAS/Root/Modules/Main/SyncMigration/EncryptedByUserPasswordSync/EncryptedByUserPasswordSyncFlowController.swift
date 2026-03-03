@@ -27,6 +27,16 @@ protocol EncryptedByUserPasswordSyncFlowControllerParent: AnyObject {
 
 protocol EncryptedByUserPasswordSyncFlowControlling: AnyObject {
     func close()
+    func toChangePassword()
+}
+
+enum EncryptedByUserPasswordSyncType {
+    enum Next {
+        case removePassword
+        case changePassword
+    }
+    case enterPassword
+    case verifyPassword(Next)
 }
 
 final class EncryptedByUserPasswordSyncFlowController: FlowController {
@@ -42,7 +52,8 @@ final class EncryptedByUserPasswordSyncFlowController: FlowController {
         flowController.parent = parent
         let presenter = EncryptedByUserPasswordSyncPresenter(
             flowController: flowController,
-            interactor: interactor
+            interactor: interactor,
+            flowType: .enterPassword
         )
         view.presenter = presenter
 
@@ -51,10 +62,46 @@ final class EncryptedByUserPasswordSyncFlowController: FlowController {
         
         return presenter.callback
     }
+    
+    static func setAsRoot(
+        in navigationController: UINavigationController,
+        parent: EncryptedByUserPasswordSyncFlowControllerParent,
+        actionType: EncryptedByUserPasswordSyncType
+    ) {
+        let view = EncryptedByUserPasswordSyncViewController()
+        let flowController = EncryptedByUserPasswordSyncFlowController(viewController: view)
+        let interactor = ModuleInteractorFactory.shared.encryptedByUserPasswordSyncModuleInteractor()
+        flowController.parent = parent
+        let presenter = EncryptedByUserPasswordSyncPresenter(
+            flowController: flowController,
+            interactor: interactor,
+            flowType: actionType
+        )
+        view.presenter = presenter
+        
+        navigationController.pushRootViewController(view, animated: false)
+    }
+}
+
+extension EncryptedByUserPasswordSyncFlowController {
+    var viewController: EncryptedByUserPasswordSyncViewController {
+        _viewController as! EncryptedByUserPasswordSyncViewController
+    }
 }
 
 extension EncryptedByUserPasswordSyncFlowController: EncryptedByUserPasswordSyncFlowControlling {
     func close() {
+        parent?.closeEncryptedByUser()
+    }
+    
+    func toChangePassword() {
+        guard let navi = viewController.navigationController else { return }
+        BackupSetPasswordFlowController.push(in: navi, parent: self, flowType: .changePassword)
+    }
+}
+
+extension EncryptedByUserPasswordSyncFlowController: BackupSetPasswordFlowControllerParent {
+    func closeSetPassword() {
         parent?.closeEncryptedByUser()
     }
 }

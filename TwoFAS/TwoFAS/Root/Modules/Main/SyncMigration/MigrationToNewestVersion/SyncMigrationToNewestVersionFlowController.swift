@@ -44,7 +44,7 @@ final class SyncMigrationToNewestVersionFlowController: FlowController {
         )
         view.presenter = presenter
 
-        view.modalPresentationStyle = .fullScreen
+        view.configureAsPhoneFullscreenModal()
         viewController.present(view, animated: true)
         
         return presenter.callback

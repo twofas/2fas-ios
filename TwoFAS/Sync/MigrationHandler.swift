@@ -23,6 +23,7 @@ import Common
 
 final class MigrationHandler {
     var isMigratingToV3: Callback?
+    var setFirstStart: Callback?
     var finishedMigratingToV3: Callback?
     var clearCloudState: Callback?
     
@@ -41,6 +42,10 @@ final class MigrationHandler {
 }
 
 extension MigrationHandler: MigrationHandling {
+    var isMigratingInV1Zone: Bool {
+        zoneManager.currentZoneID.zoneName == Config.vaultV1 && isMigrating
+    }
+    
     func checkIfMigrationNeeded() async {
         guard !ConstStorage.cloudMigratedToV3 else {
             Log("MigrationHandler: cached value - already migrated", module: .cloudSync)
@@ -55,29 +60,42 @@ extension MigrationHandler: MigrationHandling {
                     continuation.resume(with: result)
                 }
             }
-            if result.contains(where: { $0 == .v3 }) || result.isEmpty {
+            if result.contains(where: { $0 == .v3 }) {
                 Log("MigrationHandler: probed value - already migrated", module: .cloudSync)
+                zoneManager.setCurrentZoneID(Config.vaultV2)
+                ConstStorage.cloudMigratedToV3 = true
+                Task { @MainActor in
+                    clearCloudState?()
+                }
+                return
+            }
+            if result.isEmpty {
+                Log("MigrationHandler: probed value - clean iCloud", module: .cloudSync)
                 zoneManager.setCurrentZoneID(Config.vaultV2)
                 ConstStorage.cloudMigratedToV3 = true
                 return
             }
+            
             Log("MigrationHandler: awaiting migration to v3", module: .cloudSync)
             zoneManager.setCurrentZoneID(Config.vaultV1)
             isMigrating = true
             Task { @MainActor in
+                setFirstStart?()
                 isMigratingToV3?()
             }
         } catch {
             Log("MigrationHandler - can't probe cloud", module: .cloudSync, severity: .error)
             zoneManager.setCurrentZoneID(Config.vaultV2)
-            clearCloudState?()
+            Task { @MainActor in
+                clearCloudState?()
+            }
             return
         }
     }
         
     func migrateIfNeeded() -> Bool {
         guard isMigrating else { return false }
-        if zoneManager.currentZoneID.zoneName == Config.vaultV1 {
+        if zoneManager.inOldVault {
             Log("MigrationHandler: migration to v3 from older Vault", module: .cloudSync)
             zoneManager.setCurrentZoneID(Config.vaultV2)
             return true
@@ -87,6 +105,7 @@ extension MigrationHandler: MigrationHandling {
             ConstStorage.cloudMigratedToV3 = true
             Task { @MainActor in
                 finishedMigratingToV3?()
+                NotificationCenter.default.post(name: .vaultWasMigrated, object: nil)
             }
             return false
         }

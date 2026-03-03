@@ -89,6 +89,10 @@ final class SyncEncryptionWatchHandler {
 }
 
 extension SyncEncryptionWatchHandler: SyncEncryptionHandling {
+    func verifyUserPassword(_ password: String) -> Bool {
+        false // not used in this context
+    }
+    
     func setEncryptedUserKey(_ encryptedKey: Data) {
         if let cachedEncrypted = encryptedUserKeyCached, cachedEncrypted == encryptedKey {
             return

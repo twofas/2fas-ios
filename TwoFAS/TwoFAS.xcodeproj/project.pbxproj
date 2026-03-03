@@ -160,6 +160,12 @@
 		C218513E2A1A8EF600A8352A /* TokensNextTokenLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */; };
 		C21851402A1AB01600A8352A /* TokensTOTPCompactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */; };
 		C21851422A1AC77900A8352A /* TokensHOTPCompactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21851412A1AC77900A8352A /* TokensHOTPCompactCell.swift */; };
+		C21930EA2EC1045B001354C9 /* BackupManageEncryptionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21930E92EC1044A001354C9 /* BackupManageEncryptionFlowController.swift */; };
+		C21930EC2EC105ED001354C9 /* BackupManageEncryptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21930EB2EC105DF001354C9 /* BackupManageEncryptionViewController.swift */; };
+		C21930EE2EC1094F001354C9 /* BackupManageEncryptionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21930ED2EC10947001354C9 /* BackupManageEncryptionPresenter.swift */; };
+		C21930F02EC111DF001354C9 /* BackupManageEncryptionPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21930EF2EC111D1001354C9 /* BackupManageEncryptionPresenter+Menu.swift */; };
+		C21930F22EC11439001354C9 /* BackupManageEncryptionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21930F12EC11436001354C9 /* BackupManageEncryptionModels.swift */; };
+		C21930F42EC12DFB001354C9 /* BackupManageEncryptionModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21930F32EC12DF8001354C9 /* BackupManageEncryptionModuleInteractor.swift */; };
 		C21987C727961BF600724E63 /* CameraErrorTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21987C627961BF600724E63 /* CameraErrorTemplate.swift */; };
 		C219CDBB278E270F00CBBF09 /* SettingsEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C219CDBA278E270F00CBBF09 /* SettingsEventController.swift */; };
 		C21A9E8227CBF55500FE4CC4 /* ComposeServiceNumberOfDigitsFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21A9E8127CBF55400FE4CC4 /* ComposeServiceNumberOfDigitsFlowController.swift */; };
@@ -221,6 +227,11 @@
 		C230A898275AC99C00FB83AE /* SettingsMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C230A897275AC99C00FB83AE /* SettingsMenuTableViewCell.swift */; };
 		C230A89A275AE1A800FB83AE /* SettingsMenuToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C230A899275AE1A800FB83AE /* SettingsMenuToggle.swift */; };
 		C230DB8C274710E5005E7060 /* icon_64.png in Resources */ = {isa = PBXBuildFile; fileRef = C230DB8A274710E5005E7060 /* icon_64.png */; };
+		C23185642EC648E300DD1ABE /* BackupSetPasswordFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23185632EC648DD00DD1ABE /* BackupSetPasswordFlowController.swift */; };
+		C23185662EC648E900DD1ABE /* BackupSetPasswordPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23185652EC648E700DD1ABE /* BackupSetPasswordPresenter.swift */; };
+		C23185682EC648F100DD1ABE /* BackupSetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23185672EC648EC00DD1ABE /* BackupSetPasswordViewController.swift */; };
+		C231856A2EC648F700DD1ABE /* BackupSetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23185692EC648F500DD1ABE /* BackupSetPasswordView.swift */; };
+		C231856C2EC678CA00DD1ABE /* BackupSetPasswordModalInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C231856B2EC678C400DD1ABE /* BackupSetPasswordModalInteractor.swift */; };
 		C2323C4C276B521200038B76 /* AppLockFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2323C4B276B521200038B76 /* AppLockFlowController.swift */; };
 		C2323C4E276B52A100038B76 /* AppLockModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2323C4D276B52A100038B76 /* AppLockModuleInteractor.swift */; };
 		C2323C50276B530D00038B76 /* AppLockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2323C4F276B530D00038B76 /* AppLockPresenter.swift */; };
@@ -351,6 +362,7 @@
 		C24E3E692AB8F15A008A7158 /* discord.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E612AB8F159008A7158 /* discord.json */; };
 		C24E3E6A2AB8F15A008A7158 /* amazon.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E622AB8F15A008A7158 /* amazon.json */; };
 		C24E3E6B2AB8F15A008A7158 /* linkedin.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E632AB8F15A008A7158 /* linkedin.json */; };
+		C24EE7972EC3A5810065B452 /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EE7962EC3A5780065B452 /* PasswordTextField.swift */; };
 		C24EECEC268772B600C6ABAA /* RecordType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECEB268772B600C6ABAA /* RecordType.swift */; };
 		C24EECF12687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECEF2687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift */; };
 		C24EECF22687772800C6ABAA /* SectionCacheEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF02687772800C6ABAA /* SectionCacheEntity+CoreDataProperties.swift */; };
@@ -463,7 +475,6 @@
 		C264B6542E8C84D200CA8648 /* VaultVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C264B6532E8C84CE00CA8648 /* VaultVersion.swift */; };
 		C264B6552E8C84D200CA8648 /* VaultVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C264B6532E8C84CE00CA8648 /* VaultVersion.swift */; };
 		C26618A026126A8200ED52CB /* LabelComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C266189F26126A8200ED52CB /* LabelComposeViewController.swift */; };
-		C26654292725D6EA00DC3A3C /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26654282725D6EA00DC3A3C /* PasswordTextField.swift */; };
 		C266542B2725EF7B00DC3A3C /* ExportFileRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */; };
 		C267315A299AC9C40031DE09 /* LargeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2673159299AC9C40031DE09 /* LargeNavigationController.swift */; };
 		C2673BE223D46F5D00A2CBA8 /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C257FD0E1FDC3B0F00CF6898 /* TokenStorage.swift */; };
@@ -760,6 +771,7 @@
 		C29378382BD1BF15008D5125 /* SecurityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29378372BD1BF15008D5125 /* SecurityPresenter.swift */; };
 		C293783A2BD1BF23008D5125 /* SecurityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29378392BD1BF23008D5125 /* SecurityInteractor.swift */; };
 		C293783D2BD1C24A008D5125 /* PINTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C293783C2BD1C24A008D5125 /* PINTypeView.swift */; };
+		C29492E02EA3EF2800474B84 /* PasswordInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29492DF2EA3EF2700474B84 /* PasswordInput.swift */; };
 		C2959627267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2959626267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift */; };
 		C295962B267F79190086DEB1 /* TokensSectionHeader+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C295962A267F79190086DEB1 /* TokensSectionHeader+.swift */; };
 		C29626B8236F80A200C133BC /* Animate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29626B7236F80A200C133BC /* Animate.swift */; };
@@ -779,11 +791,6 @@
 		C2997AA92454D767006D5943 /* SelectPINLengthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2997AA82454D767006D5943 /* SelectPINLengthController.swift */; };
 		C299B7D2236DE78700224F51 /* StackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C299B7D1236DE78700224F51 /* StackView+.swift */; };
 		C29B2B7929982E4900EDE75B /* MainSplitModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B2B7829982E4900EDE75B /* MainSplitModuleInteractor.swift */; };
-		C29B42C22D98905700F49DCE /* BackupChangeEncryptionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42BD2D98905700F49DCE /* BackupChangeEncryptionFlowController.swift */; };
-		C29B42C32D98905700F49DCE /* BackupChangeEncryptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42C02D98905700F49DCE /* BackupChangeEncryptionViewController.swift */; };
-		C29B42C42D98905700F49DCE /* BackupChangeEncryptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42C12D98905700F49DCE /* BackupChangeEncryptionView.swift */; };
-		C29B42C52D98905700F49DCE /* BackupChangeEncryptionModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42BE2D98905700F49DCE /* BackupChangeEncryptionModuleInteractor.swift */; };
-		C29B42C62D98905700F49DCE /* BackupChangeEncryptionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42BF2D98905700F49DCE /* BackupChangeEncryptionPresenter.swift */; };
 		C29B42C92D98943100F49DCE /* CloudEncryptionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42C72D9892C600F49DCE /* CloudEncryptionType.swift */; };
 		C29B42CA2D98B24800F49DCE /* CloudEncryptionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42C72D9892C600F49DCE /* CloudEncryptionType.swift */; };
 		C29B9ADA2B1E859D00255A2C /* google.json in Resources */ = {isa = PBXBuildFile; fileRef = C29B9AD62B1E859D00255A2C /* google.json */; };
@@ -1001,8 +1008,8 @@
 		C2C02244297F224700D596A8 /* MainModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C02243297F224700D596A8 /* MainModuleInteractor.swift */; };
 		C2C0A7FC2DA2B46D000A1772 /* CloudState+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A7FB2DA2B469000A1772 /* CloudState+.swift */; };
 		C2C0A7FE2DA2E8C9000A1772 /* SyncEncryptionWatchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A7FD2DA2E8C9000A1772 /* SyncEncryptionWatchHandler.swift */; };
-		C2C0A8002DA2EF8A000A1772 /* RequirmentCheckHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A7FF2DA2EF82000A1772 /* RequirmentCheckHandling.swift */; };
-		C2C0A8012DA2EF8A000A1772 /* RequirmentCheckHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A7FF2DA2EF82000A1772 /* RequirmentCheckHandling.swift */; };
+		C2C0A8002DA2EF8A000A1772 /* RequirementCheckHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A7FF2DA2EF82000A1772 /* RequirementCheckHandling.swift */; };
+		C2C0A8012DA2EF8A000A1772 /* RequirementCheckHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A7FF2DA2EF82000A1772 /* RequirementCheckHandling.swift */; };
 		C2C0A8042DA2F027000A1772 /* RequirementCheckWatchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A8022DA2F00A000A1772 /* RequirementCheckWatchHandler.swift */; };
 		C2C0A97F2DA31ADD000A1772 /* DeviceCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A97E2DA31AD5000A1772 /* DeviceCode.swift */; };
 		C2C0A9802DA31ADD000A1772 /* DeviceCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A97E2DA31AD5000A1772 /* DeviceCode.swift */; };
@@ -1099,6 +1106,8 @@
 		C2DF710E2B5DD31200D85D87 /* DataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DF710D2B5DD31200D85D87 /* DataTests.swift */; };
 		C2DF710F2B5DD31200D85D87 /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E7C3822ADB19F300478D89 /* Data.framework */; platformFilter = ios; };
 		C2DFE5BD264C851700F828C0 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DFE5BC264C851700F828C0 /* CircleView.swift */; };
+		C2E2364E2EC9230300676709 /* EncryptedByUserPasswordSyncNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2364D2EC922F400676709 /* EncryptedByUserPasswordSyncNavigationFlowController.swift */; };
+		C2E236502EC936B900676709 /* ContentNavigationControlllerFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2364F2EC936B900676709 /* ContentNavigationControlllerFlow.swift */; };
 		C2E2C80927B0377B00F04B70 /* IconSelectorFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2C80827B0377B00F04B70 /* IconSelectorFlowController.swift */; };
 		C2E2C80B27B038DC00F04B70 /* IconSelectorModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2C80A27B038DC00F04B70 /* IconSelectorModuleInteractor.swift */; };
 		C2E2C80D27B0392D00F04B70 /* IconSelectorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2C80C27B0392D00F04B70 /* IconSelectorPresenter.swift */; };
@@ -2111,6 +2120,12 @@
 		C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNextTokenLabel.swift; sourceTree = "<group>"; };
 		C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensTOTPCompactCell.swift; sourceTree = "<group>"; };
 		C21851412A1AC77900A8352A /* TokensHOTPCompactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensHOTPCompactCell.swift; sourceTree = "<group>"; };
+		C21930E92EC1044A001354C9 /* BackupManageEncryptionFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupManageEncryptionFlowController.swift; sourceTree = "<group>"; };
+		C21930EB2EC105DF001354C9 /* BackupManageEncryptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupManageEncryptionViewController.swift; sourceTree = "<group>"; };
+		C21930ED2EC10947001354C9 /* BackupManageEncryptionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupManageEncryptionPresenter.swift; sourceTree = "<group>"; };
+		C21930EF2EC111D1001354C9 /* BackupManageEncryptionPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackupManageEncryptionPresenter+Menu.swift"; sourceTree = "<group>"; };
+		C21930F12EC11436001354C9 /* BackupManageEncryptionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupManageEncryptionModels.swift; sourceTree = "<group>"; };
+		C21930F32EC12DF8001354C9 /* BackupManageEncryptionModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupManageEncryptionModuleInteractor.swift; sourceTree = "<group>"; };
 		C21987C627961BF600724E63 /* CameraErrorTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraErrorTemplate.swift; sourceTree = "<group>"; };
 		C219CDBA278E270F00CBBF09 /* SettingsEventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEventController.swift; sourceTree = "<group>"; };
 		C21A9E8127CBF55400FE4CC4 /* ComposeServiceNumberOfDigitsFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceNumberOfDigitsFlowController.swift; sourceTree = "<group>"; };
@@ -2191,6 +2206,11 @@
 		C230A899275AE1A800FB83AE /* SettingsMenuToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuToggle.swift; sourceTree = "<group>"; };
 		C230DB8A274710E5005E7060 /* icon_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_64.png; sourceTree = "<group>"; };
 		C230DB8B274710E5005E7060 /* icon_320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_320.png; sourceTree = "<group>"; };
+		C23185632EC648DD00DD1ABE /* BackupSetPasswordFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSetPasswordFlowController.swift; sourceTree = "<group>"; };
+		C23185652EC648E700DD1ABE /* BackupSetPasswordPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSetPasswordPresenter.swift; sourceTree = "<group>"; };
+		C23185672EC648EC00DD1ABE /* BackupSetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSetPasswordViewController.swift; sourceTree = "<group>"; };
+		C23185692EC648F500DD1ABE /* BackupSetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSetPasswordView.swift; sourceTree = "<group>"; };
+		C231856B2EC678C400DD1ABE /* BackupSetPasswordModalInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSetPasswordModalInteractor.swift; sourceTree = "<group>"; };
 		C2323C4B276B521200038B76 /* AppLockFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockFlowController.swift; sourceTree = "<group>"; };
 		C2323C4D276B52A100038B76 /* AppLockModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockModuleInteractor.swift; sourceTree = "<group>"; };
 		C2323C4F276B530D00038B76 /* AppLockPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockPresenter.swift; sourceTree = "<group>"; };
@@ -2339,6 +2359,7 @@
 		C24E3E612AB8F159008A7158 /* discord.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = discord.json; sourceTree = "<group>"; };
 		C24E3E622AB8F15A008A7158 /* amazon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amazon.json; sourceTree = "<group>"; };
 		C24E3E632AB8F15A008A7158 /* linkedin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = linkedin.json; sourceTree = "<group>"; };
+		C24EE7962EC3A5780065B452 /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		C24EECEB268772B600C6ABAA /* RecordType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordType.swift; sourceTree = "<group>"; };
 		C24EECEF2687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionCacheEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C24EECF02687772800C6ABAA /* SectionCacheEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionCacheEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -2456,7 +2477,6 @@
 		C264B6502E8C80FE00CA8648 /* ZoneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoneManager.swift; sourceTree = "<group>"; };
 		C264B6532E8C84CE00CA8648 /* VaultVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultVersion.swift; sourceTree = "<group>"; };
 		C266189F26126A8200ED52CB /* LabelComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelComposeViewController.swift; sourceTree = "<group>"; };
-		C26654282725D6EA00DC3A3C /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileRules.swift; sourceTree = "<group>"; };
 		C2671C892A51C5A60002C4BB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/TwoFASWidget.strings"; sourceTree = "<group>"; };
 		C2671C8A2A51C5A60002C4BB /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -2654,6 +2674,7 @@
 		C29378372BD1BF15008D5125 /* SecurityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityPresenter.swift; sourceTree = "<group>"; };
 		C29378392BD1BF23008D5125 /* SecurityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityInteractor.swift; sourceTree = "<group>"; };
 		C293783C2BD1C24A008D5125 /* PINTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINTypeView.swift; sourceTree = "<group>"; };
+		C29492DF2EA3EF2700474B84 /* PasswordInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInput.swift; sourceTree = "<group>"; };
 		C2959626267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDiffableDataSourceSnapshot+.swift"; sourceTree = "<group>"; };
 		C295962A267F79190086DEB1 /* TokensSectionHeader+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensSectionHeader+.swift"; sourceTree = "<group>"; };
 		C29626B7236F80A200C133BC /* Animate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animate.swift; sourceTree = "<group>"; };
@@ -2674,11 +2695,6 @@
 		C2997AA82454D767006D5943 /* SelectPINLengthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPINLengthController.swift; sourceTree = "<group>"; };
 		C299B7D1236DE78700224F51 /* StackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView+.swift"; sourceTree = "<group>"; };
 		C29B2B7829982E4900EDE75B /* MainSplitModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitModuleInteractor.swift; sourceTree = "<group>"; };
-		C29B42BD2D98905700F49DCE /* BackupChangeEncryptionFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupChangeEncryptionFlowController.swift; sourceTree = "<group>"; };
-		C29B42BE2D98905700F49DCE /* BackupChangeEncryptionModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupChangeEncryptionModuleInteractor.swift; sourceTree = "<group>"; };
-		C29B42BF2D98905700F49DCE /* BackupChangeEncryptionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupChangeEncryptionPresenter.swift; sourceTree = "<group>"; };
-		C29B42C02D98905700F49DCE /* BackupChangeEncryptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupChangeEncryptionViewController.swift; sourceTree = "<group>"; };
-		C29B42C12D98905700F49DCE /* BackupChangeEncryptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupChangeEncryptionView.swift; sourceTree = "<group>"; };
 		C29B42C72D9892C600F49DCE /* CloudEncryptionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudEncryptionType.swift; sourceTree = "<group>"; };
 		C29B9AD62B1E859D00255A2C /* google.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = google.json; sourceTree = "<group>"; };
 		C29B9AD72B1E859D00255A2C /* paypal.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = paypal.json; sourceTree = "<group>"; };
@@ -2897,7 +2913,7 @@
 		C2C02243297F224700D596A8 /* MainModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModuleInteractor.swift; sourceTree = "<group>"; };
 		C2C0A7FB2DA2B469000A1772 /* CloudState+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudState+.swift"; sourceTree = "<group>"; };
 		C2C0A7FD2DA2E8C9000A1772 /* SyncEncryptionWatchHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncEncryptionWatchHandler.swift; sourceTree = "<group>"; };
-		C2C0A7FF2DA2EF82000A1772 /* RequirmentCheckHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequirmentCheckHandling.swift; sourceTree = "<group>"; };
+		C2C0A7FF2DA2EF82000A1772 /* RequirementCheckHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequirementCheckHandling.swift; sourceTree = "<group>"; };
 		C2C0A8022DA2F00A000A1772 /* RequirementCheckWatchHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequirementCheckWatchHandler.swift; sourceTree = "<group>"; };
 		C2C0A97E2DA31AD5000A1772 /* DeviceCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCode.swift; sourceTree = "<group>"; };
 		C2C0A9812DA321F4000A1772 /* SyncEncryptionHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncEncryptionHandling.swift; sourceTree = "<group>"; };
@@ -3014,6 +3030,8 @@
 		C2DF710B2B5DD31200D85D87 /* DataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2DF710D2B5DD31200D85D87 /* DataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTests.swift; sourceTree = "<group>"; };
 		C2DFE5BC264C851700F828C0 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		C2E2364D2EC922F400676709 /* EncryptedByUserPasswordSyncNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedByUserPasswordSyncNavigationFlowController.swift; sourceTree = "<group>"; };
+		C2E2364F2EC936B900676709 /* ContentNavigationControlllerFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentNavigationControlllerFlow.swift; sourceTree = "<group>"; };
 		C2E2C80827B0377B00F04B70 /* IconSelectorFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorFlowController.swift; sourceTree = "<group>"; };
 		C2E2C80A27B038DC00F04B70 /* IconSelectorModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorModuleInteractor.swift; sourceTree = "<group>"; };
 		C2E2C80C27B0392D00F04B70 /* IconSelectorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorPresenter.swift; sourceTree = "<group>"; };
@@ -4196,6 +4214,7 @@
 		C21347802D98785000D325F6 /* EncryptedByUserPasswordSync */ = {
 			isa = PBXGroup;
 			children = (
+				C2E2364D2EC922F400676709 /* EncryptedByUserPasswordSyncNavigationFlowController.swift */,
 				C21347872D98799600D325F6 /* EncryptedByUserPasswordSyncFlowController.swift */,
 				C213478B2D9885C700D325F6 /* EncryptedByUserPasswordSyncModuleInteractor.swift */,
 				C21347832D98789600D325F6 /* EncryptedByUserPasswordSyncPresenter.swift */,
@@ -4316,6 +4335,19 @@
 				C21675C42808C71E00D43EDD /* ShortDateFormatter.swift */,
 			);
 			path = DateFormatters;
+			sourceTree = "<group>";
+		};
+		C21930E82EC10441001354C9 /* ManageBackup */ = {
+			isa = PBXGroup;
+			children = (
+				C21930E92EC1044A001354C9 /* BackupManageEncryptionFlowController.swift */,
+				C21930F32EC12DF8001354C9 /* BackupManageEncryptionModuleInteractor.swift */,
+				C21930ED2EC10947001354C9 /* BackupManageEncryptionPresenter.swift */,
+				C21930EF2EC111D1001354C9 /* BackupManageEncryptionPresenter+Menu.swift */,
+				C21930F12EC11436001354C9 /* BackupManageEncryptionModels.swift */,
+				C21930EB2EC105DF001354C9 /* BackupManageEncryptionViewController.swift */,
+			);
+			path = ManageBackup;
 			sourceTree = "<group>";
 		};
 		C219CDB9278E26FE00CBBF09 /* SettingsEventController */ = {
@@ -4603,6 +4635,18 @@
 				C2D44E67275C10850043F5D6 /* SettingsMenuTableView.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		C23185622EC6477F00DD1ABE /* BackupSetPassword */ = {
+			isa = PBXGroup;
+			children = (
+				C23185632EC648DD00DD1ABE /* BackupSetPasswordFlowController.swift */,
+				C231856B2EC678C400DD1ABE /* BackupSetPasswordModalInteractor.swift */,
+				C23185652EC648E700DD1ABE /* BackupSetPasswordPresenter.swift */,
+				C23185692EC648F500DD1ABE /* BackupSetPasswordView.swift */,
+				C23185672EC648EC00DD1ABE /* BackupSetPasswordViewController.swift */,
+			);
+			path = BackupSetPassword;
 			sourceTree = "<group>";
 		};
 		C2323C46276B500400038B76 /* AppLock */ = {
@@ -5118,7 +5162,6 @@
 			isa = PBXGroup;
 			children = (
 				C2823B1526F3E84F00583586 /* RevealPasswordInput.swift */,
-				C26654282725D6EA00DC3A3C /* PasswordTextField.swift */,
 			);
 			path = PasswordInput;
 			sourceTree = "<group>";
@@ -5468,10 +5511,10 @@
 		C24D1C1B253C744E0029D27D /* Sync */ = {
 			isa = PBXGroup;
 			children = (
-				C264B6502E8C80FE00CA8648 /* ZoneManager.swift */,
-				C264B64D2E8C7A5900CA8648 /* CloudProbe.swift */,
 				C2F5443425685C2100611716 /* SyncInstance.swift */,
 				C2D507B5256477DA00151359 /* CloudHandler.swift */,
+				C264B6502E8C80FE00CA8648 /* ZoneManager.swift */,
+				C264B64D2E8C7A5900CA8648 /* CloudProbe.swift */,
 				C22FFC3C2DA5C01900A68ABD /* WatchPairHandler.swift */,
 				C245877F2D8B917100F28B22 /* SyncMigrationHandler.swift */,
 				C25CB3C22D878BC80099FAFD /* SyncEncryptionHandler.swift */,
@@ -6584,18 +6627,6 @@
 			path = Interactor;
 			sourceTree = "<group>";
 		};
-		C29B42BC2D98900500F49DCE /* BackupChangeEncryption */ = {
-			isa = PBXGroup;
-			children = (
-				C29B42BD2D98905700F49DCE /* BackupChangeEncryptionFlowController.swift */,
-				C29B42BE2D98905700F49DCE /* BackupChangeEncryptionModuleInteractor.swift */,
-				C29B42BF2D98905700F49DCE /* BackupChangeEncryptionPresenter.swift */,
-				C29B42C12D98905700F49DCE /* BackupChangeEncryptionView.swift */,
-				C29B42C02D98905700F49DCE /* BackupChangeEncryptionViewController.swift */,
-			);
-			path = BackupChangeEncryption;
-			sourceTree = "<group>";
-		};
 		C29E56792809A18400141238 /* Spinner */ = {
 			isa = PBXGroup;
 			children = (
@@ -6790,8 +6821,9 @@
 		C2AC21FB27660E0200271402 /* Backup */ = {
 			isa = PBXGroup;
 			children = (
+				C23185622EC6477F00DD1ABE /* BackupSetPassword */,
+				C21930E82EC10441001354C9 /* ManageBackup */,
 				C2EF7B222DA9A47E00BAA559 /* ManageWatch */,
-				C29B42BC2D98900500F49DCE /* BackupChangeEncryption */,
 				C2ADD6132752DF590010F5E7 /* BackupMenu */,
 				C284AF6C2760112900FEE810 /* BackupDelete */,
 				C2AC21FA27660DEA00271402 /* Importer */,
@@ -7802,6 +7834,7 @@
 				C2A283342186071200967022 /* AlertControllerPromptFactory.swift */,
 				C2ABF3C82002A01A003F2CBA /* CommonNavigationControlller.swift */,
 				C23B899827C292C30028FE34 /* CommonNavigationControlllerFlow.swift */,
+				C2E2364F2EC936B900676709 /* ContentNavigationControlllerFlow.swift */,
 				C2FE36292517FF8D00035643 /* VoiceOver.swift */,
 				C22E6F9E21E21A1E00A2E66B /* NotificationIcon.swift */,
 				C217E16D23D7913E00EE6C08 /* HUDNotification.swift */,
@@ -8384,7 +8417,7 @@
 				C2CCEB5C2D822AF30067FDCB /* ModificationQueue.swift */,
 				C2A7ABF1286328E60085CFEF /* SyncTokenHandler.swift */,
 				C25CB23A2D87442E0099FAFD /* MigrationHandling.swift */,
-				C2C0A7FF2DA2EF82000A1772 /* RequirmentCheckHandling.swift */,
+				C2C0A7FF2DA2EF82000A1772 /* RequirementCheckHandling.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -8552,6 +8585,8 @@
 		C2FDEE55279C8FE8002CAB9E /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				C24EE7962EC3A5780065B452 /* PasswordTextField.swift */,
+				C29492DF2EA3EF2700474B84 /* PasswordInput.swift */,
 				C2FDEE56279C8FF8002CAB9E /* SwiftUIButtons.swift */,
 				C206CACE27A35ABE0068284C /* View+.swift */,
 				C20524C22807620500B2B20C /* NavigationBarHiddenHostingController.swift */,
@@ -9931,6 +9966,7 @@
 				C23387042781068E00F8DBC3 /* TrashPresenter.swift in Sources */,
 				C25D5E782A64908200CA359B /* CameraLastPass.swift in Sources */,
 				C21247F827B70D420044D9F2 /* LabelComposeFlowController.swift in Sources */,
+				C21930F02EC111DF001354C9 /* BackupManageEncryptionPresenter+Menu.swift in Sources */,
 				C27205592E7C8EC6004FB39A /* ExportQuestionViewController.swift in Sources */,
 				C2E2C81127B03E7300F04B70 /* SearchResultEmptyView.swift in Sources */,
 				C27205602E7C9279004FB39A /* ExportQuestionPINVerificationModuleInteractor.swift in Sources */,
@@ -9957,7 +9993,9 @@
 				C2A74FE62610D510007E5AB3 /* ColorGridSelector.swift in Sources */,
 				C2C0A7FC2DA2B46D000A1772 /* CloudState+.swift in Sources */,
 				C25C661428BADAB0008EC66A /* AboutFlowController.swift in Sources */,
+				C2E2364E2EC9230300676709 /* EncryptedByUserPasswordSyncNavigationFlowController.swift in Sources */,
 				C20E60FB2818971300AB002E /* PushNotificationPermissionPresenter.swift in Sources */,
+				C29492E02EA3EF2800474B84 /* PasswordInput.swift in Sources */,
 				C2F134B0246844B10014FB4E /* MainContainerActionButton.swift in Sources */,
 				C2C1DDE427CAD37D002C7867 /* SelectOption.swift in Sources */,
 				C2508E102753A59F0072C564 /* SettingsMenuViewController.swift in Sources */,
@@ -9973,8 +10011,8 @@
 				C2147CD1205D7B520001D011 /* LoginView.swift in Sources */,
 				C2DDEB1F289ED4A300011712 /* IntroductionDots.swift in Sources */,
 				C20CD53C2A1CF03F00A7F324 /* TokensViewController+Layout.swift in Sources */,
-				C26654292725D6EA00DC3A3C /* PasswordTextField.swift in Sources */,
 				C25BB2CC2DAAE3FF00BEC626 /* ManageWatchView.swift in Sources */,
+				C21930F22EC11439001354C9 /* BackupManageEncryptionModels.swift in Sources */,
 				C25B221627C181690052AAC4 /* ComposeServiceInputCellKind.swift in Sources */,
 				C2A7946027F9071F00E5C641 /* BrowserExtensionServicePresenter.swift in Sources */,
 				C267315A299AC9C40031DE09 /* LargeNavigationController.swift in Sources */,
@@ -10010,6 +10048,7 @@
 				C2EA566D285696FE00026BFE /* AskForAuthViewController.swift in Sources */,
 				C2AC221527661C0600271402 /* ExporterPasswordProtectionPresenter.swift in Sources */,
 				C284991B27CC28810092098D /* ComposeServiceCounterPresenter.swift in Sources */,
+				C23185682EC648F100DD1ABE /* BackupSetPasswordViewController.swift in Sources */,
 				C2B1208D29D767B10020281E /* AppearancePresenter.swift in Sources */,
 				C2AB92E32766956F00698382 /* SettingsViewFooter.swift in Sources */,
 				C2508E1D2753AFBD0072C564 /* TableViewDataSnapshot.swift in Sources */,
@@ -10024,8 +10063,10 @@
 				C2C56D4027C98140003B4C43 /* ComposeServiceAdvancedSummaryViewController.swift in Sources */,
 				C2AF5F7D28B18CCC00A30DCF /* IconSelectorCollectionViewDelegatee.swift in Sources */,
 				C2147CE5205D7B790001D011 /* PINPadKey.swift in Sources */,
+				C23185662EC648E900DD1ABE /* BackupSetPasswordPresenter.swift in Sources */,
 				C26764AC287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift in Sources */,
 				C2B077C8292A938D0074517F /* UploadLogsModuleInteractorError+.swift in Sources */,
+				C24EE7972EC3A5810065B452 /* PasswordTextField.swift in Sources */,
 				C24D8B3A29BDEED200C3E11E /* NewsNavigationFlowController.swift in Sources */,
 				C2B39E5029F5841700EC31F6 /* TokensEditCell.swift in Sources */,
 				C2EBE0042AC44DC3008FD744 /* GuideMenuView.swift in Sources */,
@@ -10045,6 +10086,7 @@
 				C2823B1626F3E84F00583586 /* RevealPasswordInput.swift in Sources */,
 				C26764B22872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift in Sources */,
 				C2E7C3472ADB021500478D89 /* CameraControllerDelegate.swift in Sources */,
+				C231856A2EC648F700DD1ABE /* BackupSetPasswordView.swift in Sources */,
 				C2D6731B25DB2C5D004BD697 /* KeyboardObserver.swift in Sources */,
 				C2E948AB23B64DB1003BDCC1 /* LoadingContentButton.swift in Sources */,
 				C23B899727C287480028FE34 /* NavigationFlowController.swift in Sources */,
@@ -10068,6 +10110,7 @@
 				C248DDAD2B799BB8004712E3 /* CopyTokenAppIntent.swift in Sources */,
 				C240487827656AB50076376E /* ImporterFileErrorViewController.swift in Sources */,
 				C2FCB28C2825819000AF8A37 /* NewsViewController.swift in Sources */,
+				C21930EA2EC1045B001354C9 /* BackupManageEncryptionFlowController.swift in Sources */,
 				C20E2E002A7C4EF200DB64BB /* AddingServiceMainViewController.swift in Sources */,
 				C21247F427B7062F0044D9F2 /* LabelComposeColorSelector.swift in Sources */,
 				C2B39C7527A58F0E00D3B579 /* SelectFromGalleryPresenter.swift in Sources */,
@@ -10209,11 +10252,6 @@
 				C2AD653527F25F24008997DB /* BrowserExtensionFailedViewController.swift in Sources */,
 				C2FCB28E282589AC00AF8A37 /* NewsViewEmptyScreen.swift in Sources */,
 				C20E2DF32A7C4A7500DB64BB /* AddingServiceViewController.swift in Sources */,
-				C29B42C22D98905700F49DCE /* BackupChangeEncryptionFlowController.swift in Sources */,
-				C29B42C32D98905700F49DCE /* BackupChangeEncryptionViewController.swift in Sources */,
-				C29B42C42D98905700F49DCE /* BackupChangeEncryptionView.swift in Sources */,
-				C29B42C52D98905700F49DCE /* BackupChangeEncryptionModuleInteractor.swift in Sources */,
-				C29B42C62D98905700F49DCE /* BackupChangeEncryptionPresenter.swift in Sources */,
 				C2508E152753AAFD0072C564 /* SettingsMenuModuleInteractor.swift in Sources */,
 				C2F6BB08264886B7002A9747 /* IntroductionPresenter.swift in Sources */,
 				C27A54A127F0CAFC00321D2B /* BrowserExtensionIntroFlowController.swift in Sources */,
@@ -10278,16 +10316,19 @@
 				C2DFE5BD264C851700F828C0 /* CircleView.swift in Sources */,
 				C27D543D275D38E0001E9ABF /* BackupMenuViewController.swift in Sources */,
 				C2F6BB00264869B7002A9747 /* IntroductionCommons.swift in Sources */,
+				C21930F42EC12DFB001354C9 /* BackupManageEncryptionModuleInteractor.swift in Sources */,
 				C274BDC62769428700EE28BC /* AppSecurityModels.swift in Sources */,
 				C205CE042CD1717300B69B62 /* RevealTokenAppIntent.swift in Sources */,
 				C24048872765723C0076376E /* ImporterPreimportSummaryFlowController.swift in Sources */,
 				C2A7B98E26B706B000055738 /* TwoFASWidget.intentdefinition in Sources */,
 				C2508E1F2753B00D0072C564 /* TableViewDelegatee.swift in Sources */,
 				C2EA566B2856925B00026BFE /* AskForAuthView.swift in Sources */,
+				C21930EC2EC105ED001354C9 /* BackupManageEncryptionViewController.swift in Sources */,
 				C2830D7C293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift in Sources */,
 				C2B39E5429F5880600EC31F6 /* TokensCellKind.swift in Sources */,
 				C2323C4E276B52A100038B76 /* AppLockModuleInteractor.swift in Sources */,
 				C2AB92CD276655EF00698382 /* ExporterPINPresenter.swift in Sources */,
+				C231856C2EC678CA00DD1ABE /* BackupSetPasswordModalInteractor.swift in Sources */,
 				C2B077C4292A921D0074517F /* UploadLogsFailureView.swift in Sources */,
 				C2FDEE54279C8F39002CAB9E /* CameraGoogleAuth.swift in Sources */,
 				C21B3A1B27AF12BF005C603B /* ColorPickerViewController.swift in Sources */,
@@ -10369,6 +10410,7 @@
 				C2323C50276B530D00038B76 /* AppLockPresenter.swift in Sources */,
 				C2CC80D627B99AF700294CF2 /* ComposeServicePresenter+Menu.swift in Sources */,
 				C2F5F9E528611DB300F778E1 /* BrowserExtensionPairingAlreadyPairedPresenter.swift in Sources */,
+				C21930EE2EC1094F001354C9 /* BackupManageEncryptionPresenter.swift in Sources */,
 				C2F6BB0626488349002A9747 /* IntroductionPage2View.swift in Sources */,
 				C219CDBB278E270F00CBBF09 /* SettingsEventController.swift in Sources */,
 				C284991127CC0FC70092098D /* ComposeServiceAlgorithmPresenter.swift in Sources */,
@@ -10396,6 +10438,7 @@
 				C2FA3E8C280B628D0097ED71 /* AuthRequestsModuleInteractor.swift in Sources */,
 				C26764AE287246F300D468B2 /* ComposeServiceCategorySelectionModuleInteractor.swift in Sources */,
 				C20524C32807620500B2B20C /* NavigationBarHiddenHostingController.swift in Sources */,
+				C23185642EC648E300DD1ABE /* BackupSetPasswordFlowController.swift in Sources */,
 				C2FDEE57279C8FF8002CAB9E /* SwiftUIButtons.swift in Sources */,
 				C22E6FA121E2666B00A2E66B /* CircularShape.swift in Sources */,
 				C25BB2CA2DAAE35000BEC626 /* ManageWatchPresenter.swift in Sources */,
@@ -10443,6 +10486,7 @@
 				C2C66F951FE068CC00AD5A1C /* TokensViewController.swift in Sources */,
 				C2EBDFFC2AC44750008FD744 /* GuideMenuViewController.swift in Sources */,
 				8F43E7032C4C511A0006D380 /* AppleWatchFlowController.swift in Sources */,
+				C2E236502EC936B900676709 /* ContentNavigationControlllerFlow.swift in Sources */,
 				C240487C27656DB40076376E /* ImporterFileErrorFlowController.swift in Sources */,
 				C2A74FD72610D3A8007E5AB3 /* TintColor.swift in Sources */,
 				C2CC0A3A29D0580B00677A7B /* TransferViewController.swift in Sources */,
@@ -10496,7 +10540,7 @@
 				C2F5443525685C2100611716 /* SyncInstance.swift in Sources */,
 				C24EECF12687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift in Sources */,
 				C2058E09277D24940015F17E /* LogDataChange.swift in Sources */,
-				C2C0A8002DA2EF8A000A1772 /* RequirmentCheckHandling.swift in Sources */,
+				C2C0A8002DA2EF8A000A1772 /* RequirementCheckHandling.swift in Sources */,
 				C27E6FB828FC995100AC9FD1 /* ServiceCacheEntity+toServiceData.swift in Sources */,
 				C23BAB142545AEF5009B1EF8 /* ConstStorage.swift in Sources */,
 				C207C11F2559F1CB0053975E /* CloudKitErrorParser.swift in Sources */,
@@ -10601,7 +10645,7 @@
 				C25CB2412D8758700099FAFD /* ServiceRecordEncryptionHandler.swift in Sources */,
 				C274C9B82BAB89C7008E7212 /* LogEntity+CoreDataClass.swift in Sources */,
 				C274C9BA2BAB89C7008E7212 /* InfoRecord.swift in Sources */,
-				C2C0A8012DA2EF8A000A1772 /* RequirmentCheckHandling.swift in Sources */,
+				C2C0A8012DA2EF8A000A1772 /* RequirementCheckHandling.swift in Sources */,
 				C274C9BB2BAB89C7008E7212 /* InfoHandler.swift in Sources */,
 				C274C9BC2BAB89C7008E7212 /* Info.swift in Sources */,
 				C274C9BD2BAB89C7008E7212 /* RecordIDGenerator.swift in Sources */,

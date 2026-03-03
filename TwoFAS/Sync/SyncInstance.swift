@@ -59,7 +59,8 @@ public enum SyncInstance {
             commonSectionHandler: commonSectionHandler,
             commonServiceHandler: commonServiceHandler,
             infoHandler: infoHandler,
-            logHandler: logHandler
+            logHandler: logHandler,
+            zoneManager: zoneManager
         )
         
         let itemHandler = ItemHandler(
@@ -68,7 +69,8 @@ public enum SyncInstance {
             infoHandler: infoHandler,
             logHandler: logHandler,
             serviceRecordEncryptionHandler: serviceRecordEncryptionHandler,
-            syncEncryptionHandler: syncEncryptionHandler
+            syncEncryptionHandler: syncEncryptionHandler,
+            zoneManager: zoneManager
         )
         let mergeHandler = MergeHandler(
             logHandler: logHandler,

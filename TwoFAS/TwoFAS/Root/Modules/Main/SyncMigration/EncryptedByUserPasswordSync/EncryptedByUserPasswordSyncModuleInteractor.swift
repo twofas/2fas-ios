@@ -19,21 +19,82 @@
 
 import Foundation
 import Data
+import Common
 
 protocol EncryptedByUserPasswordSyncModuleInteracting: AnyObject {
+    
+    var syncSuccess: (() -> Void)? { get set }
+    var syncFailure: ((CloudState.NotAvailableReason) -> Void)? { get set }
+    
     func setPassword(_ password: String)
+    func verifyPassword(_ password: String) -> Bool
+    func removePassword()
+    func setApplayinChanges()
 }
 
 final class EncryptedByUserPasswordSyncModuleInteractor {
     private let syncMigrationInteractor: SyncMigrationInteracting
+    private let cloudBackup: CloudBackupStateInteracting
+    private let notificationCenter: NotificationCenter
     
-    init(syncMigrationInteractor: SyncMigrationInteracting) {
+    var syncSuccess: (() -> Void)?
+    var syncFailure: ((CloudState.NotAvailableReason) -> Void)?
+    
+    private var applyingChanges = false
+    
+    init(syncMigrationInteractor: SyncMigrationInteracting, cloudBackup: CloudBackupStateInteracting) {
         self.syncMigrationInteractor = syncMigrationInteractor
+        self.cloudBackup = cloudBackup
+        notificationCenter = .default
+        
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(syncStateChanged),
+            name: .syncStateChanged,
+            object: nil
+        )
+    }
+    
+    deinit {
+        notificationCenter.removeObserver(self)
     }
 }
 
 extension EncryptedByUserPasswordSyncModuleInteractor: EncryptedByUserPasswordSyncModuleInteracting {
     func setPassword(_ password: String) {
         syncMigrationInteractor.setMissingUserPassword(password)
+    }
+    
+    func verifyPassword(_ password: String) -> Bool {
+        syncMigrationInteractor.verifyPassword(password)
+    }
+    
+    func removePassword() {
+        syncMigrationInteractor.migrateToSystemPassword()
+    }
+    
+    func setApplayinChanges() {
+        applyingChanges = true
+    }
+}
+
+private extension EncryptedByUserPasswordSyncModuleInteractor {
+    @objc
+    func syncStateChanged() {
+        guard applyingChanges else { return }
+        
+        switch syncMigrationInteractor.currentCloudState {
+        case .disabledNotAvailable(let reason):
+            applyingChanges = false
+            syncFailure?(reason)
+        case .enabled(let sync):
+            switch sync {
+            case .synced:
+                applyingChanges = false
+                syncSuccess?()
+            default: break
+            }
+        default: break
+        }
     }
 }

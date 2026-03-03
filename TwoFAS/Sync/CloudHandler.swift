@@ -115,6 +115,7 @@ public protocol CloudHandlerType: AnyObject {
     func clearBackup()
     func setTimeOffset(_ offset: Int)
     func resetStateBeforeSync()
+    func debugErase()
 }
 
 final class CloudHandler: CloudHandlerType {
@@ -273,6 +274,15 @@ final class CloudHandler: CloudHandlerType {
         }
     }
     
+    func debugErase() {
+        isClearing = true
+        if isSynced ||
+            currentState == .disabledNotAvailable(reason: .cloudEncryptedSystem) ||
+            currentState == .disabledNotAvailable(reason: .cloudEncryptedUser) {
+            debugEraseBackupForSyncedState()
+        }
+    }
+    
     func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (BackgroundFetchResult) -> Void
@@ -281,6 +291,10 @@ final class CloudHandler: CloudHandlerType {
         case .enabled:
             Log("Cloud Handler - we have a notification and we're in enabled state!", module: .cloudSync)
             syncHandler.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
+#if os(watchOS)
+        case .disabledNotAvailable(reason: .cloudEncryptedUser), .disabledNotAvailable(reason: .cloudEncryptedSystem):
+            synchronize()
+#endif
         default:
             Log("Cloud Handler - we have a notification but we're in a state \(currentState)", module: .cloudSync)
             return
@@ -397,10 +411,20 @@ final class CloudHandler: CloudHandlerType {
             Log("Cloud Handler - error recreating info record for cloud clearing", module: .cloudSync)
             return
         }
+        itemHandler.purge()
 
         disable(notify: false)
         
         clearHandler.clear(recordIDs: recordIDs, infoRecord: infoRecord)
+    }
+    
+    private func debugEraseBackupForSyncedState() {
+        Log("Cloud Handler - debugEraseBackupForSyncedState", module: .cloudSync)
+        disable(notify: false)
+        setSystemEncryption?()
+        ConstStorage.cloudMigratedToV3 = false
+        
+        clearHandler.erase()
     }
     
     // MARK: -
@@ -459,7 +483,8 @@ final class CloudHandler: CloudHandlerType {
     
     private func cloudIsEncrypted(_ encryptionType: Info.Encryption?) {
         Log("Cloud Handler - cloud is encrypted", module: .cloudSync)
-        clearAll()
+        setDisabled()
+        cloudAvailability.clear()
         switch encryptionType {
         case .system, .none:
             currentState = .disabledNotAvailable(reason: .cloudEncryptedSystem)

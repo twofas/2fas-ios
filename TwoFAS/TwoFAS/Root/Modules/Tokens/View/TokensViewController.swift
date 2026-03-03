@@ -192,6 +192,12 @@ private extension TokensViewController {
         )
         center.addObserver(
             self,
+            selector: #selector(vaultWasMigrated),
+            name: .vaultWasMigrated,
+            object: nil
+        )
+        center.addObserver(
+            self,
             selector: #selector(tokensScreenIsVisible),
             name: .tokensScreenIsVisible,
             object: nil

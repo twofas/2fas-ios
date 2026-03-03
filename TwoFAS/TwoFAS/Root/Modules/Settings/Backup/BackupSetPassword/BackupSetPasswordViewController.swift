@@ -20,13 +20,13 @@
 import UIKit
 import SwiftUI
 
-final class BackupChangeEncryptionViewController: UIViewController {
-    var presenter: BackupChangeEncryptionPresenter!
+final class BackupSetPasswordViewController: UIViewController {
+    var presenter: BackupSetPasswordPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let vc = UIHostingController(rootView: BackupChangeEncryptionView(presenter: presenter))
+        view.backgroundColor = Theme.Colors.Fill.background
+        let vc = UIHostingController(rootView: BackupSetPasswordView(presenter: presenter))
         vc.willMove(toParent: self)
         addChild(vc)
         view.addSubview(vc.view)

@@ -427,17 +427,23 @@ final class ModuleInteractorFactory {
     }
     func encryptedByUserPasswordSyncModuleInteractor() -> EncryptedByUserPasswordSyncModuleInteracting {
         EncryptedByUserPasswordSyncModuleInteractor(
-            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor()
-        )
-    }
-    
-    func backupChangeEncryptionModuleInteractor() -> BackupChangeEncryptionModuleInteracting {
-        BackupChangeEncryptionModuleInteractor(
-            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor()
+            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor(),
+            cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "")
         )
     }
     
     func manageWatchModuleInteractor() -> ManageWatchModuleInteracting {
         ManageWatchModuleInteractor(manageWatch: InteractorFactory.shared.watchPairingInteractor())
+    }
+    
+    func backupSetPasswordModuleInteractor() -> BackupSetPasswordModalInteracting {
+        BackupSetPasswordModalInteractor(syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor())
+    }
+    
+    func backupManageEncryptionModuleInteractor() -> BackupManageEncryptionModuleInteracting {
+        BackupManageEncryptionModuleInteractor(
+            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor(),
+            cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "")
+        )
     }
 }

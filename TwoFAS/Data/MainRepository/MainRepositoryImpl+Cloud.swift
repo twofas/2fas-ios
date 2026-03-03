@@ -59,6 +59,10 @@ extension MainRepositoryImpl {
         cloudHandler.clearBackup()
     }
     
+    func debugEraseCloudBackup() {
+        cloudHandler.debugErase()
+    }
+    
     func synchronizeBackup() {
         cloudHandler.synchronize()
     }
@@ -148,5 +152,9 @@ extension MainRepositoryImpl {
     
     var cloudCurrentEncryption: CloudEncryptionType? {
         syncMigration.currentEncryption
+    }
+    
+    func cloudVerifyUserPassword(_ password: String) -> Bool {
+        syncMigration.verifyUserPassword(password)
     }
 }

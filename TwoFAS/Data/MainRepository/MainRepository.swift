@@ -147,6 +147,7 @@ protocol MainRepository: AnyObject {
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     )
+    func debugEraseCloudBackup()
     func saveSuccessSyncDate(_ date: Date?)
     // MARK: Watch Pair
     func watchPairingList() -> [PairedWatch]
@@ -165,6 +166,7 @@ protocol MainRepository: AnyObject {
     func cloudSetMissingUserPassword(_ password: String)
     func cloudMigrateToSystemPassword()
     func cloudSwitchLocallyToUseSystemPassword()
+    func cloudVerifyUserPassword(_ password: String) -> Bool
     
     // MARK: - Import
     var fileURL: URL? { get set }

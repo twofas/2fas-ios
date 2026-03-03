@@ -85,7 +85,7 @@ extension MergeHandler {
                     if let cloudEntry = itemHandler.findItemForEntryID(newLogEntry.entityID, type: type, in: currentCache) {
                         Log("MergeHandler: Creation: Item already exists - merging", module: .cloudSync)
                         guard let currentEntry = itemHandler.findItemForEntryID(newLogEntry.entityID, type: type, in: current) else {
-                            Log("SyncHandler - Creation: Can't find new entry in local database!", module: .cloudSync)
+                            Log("MergeHandler - Creation: Can't find new entry in local database!", module: .cloudSync)
                             return
                         }
                         guard currentEntry != cloudEntry else {
@@ -110,7 +110,7 @@ extension MergeHandler {
                     } else {
                         Log("MergeHandler: Creation: Couldn't find entity \(type) in current cache - trying to create one to send to cloud", module: .cloudSync)
                         guard let entry = itemHandler.findItemForEntryID(newLogEntry.entityID, type: type, in: current) else {
-                            Log("SyncHandler - Creation: Can't find new entry in local database which should be added!", module: .cloudSync, severity: .error)
+                            Log("MergeHandler - Creation: Can't find new entry in local database which should be added!", module: .cloudSync, severity: .error)
                             return
                         }
                         Log("MergeHandler: Creation: Creating new item at index: \(entry.index)", module: .cloudSync)
@@ -164,7 +164,7 @@ extension MergeHandler {
                         Log("MergeHandler: Preparation: element has diffrent content or index. Creating from exisiting one", module: .cloudSync)
                         
                         guard let record = itemHandler.record(for: type, item: item, modifiedData: current) else {
-                            Log("MergeHandler: Preparation: couldn't create record from exisiting service", module: .cloudSync)
+                            Log("MergeHandler: Preparation:MergeHandler: Preparation: element has diffrent content or index. Creating from exisiting one couldn't create record from exisiting service", module: .cloudSync)
                             continue
                         }
                         recordsToModify.append(record)

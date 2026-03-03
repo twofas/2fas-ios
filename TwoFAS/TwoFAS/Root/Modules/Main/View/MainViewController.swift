@@ -45,11 +45,17 @@ final class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presenter.viewWillAppear()
+        presenter.viewWillAppear()        
     }
     
     deinit {
         notificationCenter.removeObserver(self)
+    }
+}
+
+extension MainViewController: BackupSetPasswordFlowControllerParent {
+    func closeSetPassword() {
+        dismiss(animated: true)
     }
 }
 

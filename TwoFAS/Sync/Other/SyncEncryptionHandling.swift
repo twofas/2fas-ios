@@ -23,4 +23,5 @@ protocol SyncEncryptionHandling: AnyObject {
     var encryptionReference: Data? { get }
     func encrypt(_ data: Data) -> Data?
     func decrypt(_ data: Data) -> Data?
+    func verifyUserPassword(_ password: String) -> Bool
 }

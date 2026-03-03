@@ -29,6 +29,7 @@ final class CommonItemHandler {
     private let commonServiceHandler: CommonServiceHandler
     private let infoHandler: InfoHandler
     private let logHandler: LogHandler
+    private let zoneManager: ZoneManaging
     
     private var itemsToAppend: [ServiceData] = []
     
@@ -36,12 +37,14 @@ final class CommonItemHandler {
         commonSectionHandler: CommonSectionHandler,
         commonServiceHandler: CommonServiceHandler,
         infoHandler: InfoHandler,
-        logHandler: LogHandler
+        logHandler: LogHandler,
+        zoneManager: ZoneManaging
     ) {
         self.commonSectionHandler = commonSectionHandler
         self.commonServiceHandler = commonServiceHandler
         self.infoHandler = infoHandler
         self.logHandler = logHandler
+        self.zoneManager = zoneManager
         
         commonSectionHandler.commonDidCreate = { [weak self] sectionID in
             Log("CommonItemHandler - commonSectionHandler - commonDidCreate", module: .cloudSync)
@@ -75,8 +78,9 @@ final class CommonItemHandler {
     }
     
     func logFirstImport() {
+        let recordType: RecordType = zoneManager.inOldVault ? .service2 : .service3
         logHandler.logFirstImport(entityIDs: commonSectionHandler.getAllSections().map { $0.sectionID }, kind: .section)
-        logHandler.logFirstImport(entityIDs: commonServiceHandler.getAllServices().map { $0.secret }, kind: .service3)
+        logHandler.logFirstImport(entityIDs: commonServiceHandler.getAllServices().map { $0.secret }, kind: recordType)
         logHandler.logFirstImport(entityIDs: [Info.id], kind: .info)
     }
     
@@ -91,7 +95,10 @@ final class CommonItemHandler {
         
         if let services = items[.service3] as? [ServiceData] {
             Log("CommonItemHandler: services (\(services.count))")
-            let value = commonServiceHandler.setServices(services)
+            let sortedServices = services.sortedBySection.reduce(into: [ServiceData]()) { result, element in
+                result += element.value
+            }
+            let value = commonServiceHandler.setServices(sortedServices)
             newDataWasSet = newDataWasSet || value
         }
         
@@ -109,7 +116,8 @@ final class CommonItemHandler {
         itemsToAppend = []
         var value = [RecordType: [Any]]()
         value[.section] = sections
-        value[.service3] = services
+        let recordType: RecordType = zoneManager.inOldVault ? .service2 : .service3
+        value[recordType] = services
         value[.info] = infoHandler.prepareForSendoff()
         return value
     }

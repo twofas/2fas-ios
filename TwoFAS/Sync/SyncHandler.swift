@@ -106,7 +106,15 @@ final class SyncHandler {
             self?.useriCloudProblem?()
         }
         cloudKit.deleteAllEntries = { [weak self] in self?.itemHandler.purge() }
-        migrationHandler.clearCloudState = { [weak self] in self?.resetStack() }
+        migrationHandler.clearCloudState = { [weak self] in
+            self?.resetStack()
+            self?.commonItemHandler.logFirstImport()
+        }
+        migrationHandler.setFirstStart = { [weak self] in
+            self?.resetStack()
+            self?.isSyncing = true
+            self?.commonItemHandler.logFirstImport()
+        }
     }
     
     func didReceiveRemoteNotification(
@@ -157,12 +165,14 @@ final class SyncHandler {
         }
     }
     
-    func clearCacheAndDisable() {
+    func clearCacheAndDisable(skipItemsPurge: Bool = false) {
         Log("SyncHandler - Sync Handler: clearCacheAndDisable", module: .cloudSync)
         isSyncing = false
         applyingChanges = false
         logHandler.deleteAll()
-        itemHandler.purge()
+        if !skipItemsPurge {
+            itemHandler.purge()
+        }
         ConstStorage.clearZone()
         cloudKit.clear()
     }
@@ -193,7 +203,8 @@ final class SyncHandler {
             migrationPending: migrationHandler.isMigrating,
             encryptionPending: reencryptionHandler.willReencrypt
         ) else {
-            clearCacheAndDisable()
+            itemHandler.commitInfo()
+            clearCacheAndDisable(skipItemsPurge: true)
             return
         }
         
@@ -243,6 +254,7 @@ final class SyncHandler {
     private func migrateIfNeeded() {
         applyingChanges = false
         if migrationHandler.migrateIfNeeded() {
+            saveCloudDataToLocalDatabase()                  
             resetStack()
             commonItemHandler.logFirstImport()
             synchronize()
@@ -278,11 +290,7 @@ final class SyncHandler {
             return
         }
         
-        Log("SyncHandler - Sending current cloud state to local database", module: .cloudSync)
-        let cloudData = itemHandler.listAllCommonItems()
-        let didSetNewData = commonItemHandler.setItems(cloudData)
-        Log("SyncHandler - Sync completed! Did set new data: \(didSetNewData)", module: .cloudSync)
-        Log("SyncHandler - The data: \(cloudData)", module: .cloudSync, save: false)
+        let didSetNewData = saveCloudDataToLocalDatabase()
         
         if logHandler.countNotApplied() > 0 {
             applyingChanges = true
@@ -323,6 +331,16 @@ final class SyncHandler {
     private func abortSync() {
         isSyncing = false
         applyingChanges = false
+    }
+    
+    @discardableResult
+    private func saveCloudDataToLocalDatabase() -> Bool {
+        Log("SyncHandler - Sending current cloud state to local database", module: .cloudSync)
+        let cloudData = itemHandler.listAllCommonItems()
+        let didSetNewData = commonItemHandler.setItems(cloudData)
+        Log("SyncHandler - Sync completed! Did set new data: \(didSetNewData)", module: .cloudSync)
+        Log("SyncHandler - The data: \(cloudData)", module: .cloudSync, save: false)
+        return didSetNewData
     }
     
     // swiftlint:enable line_length

@@ -23,9 +23,11 @@ import CommonWatch
 final class MigrationHandlerWatchPlaceholder: MigrationHandling {
     var clearCloudState: Callback?
     var isMigratingToV3: Callback?
+    var setFirstStart: Callback?
     var finishedMigratingToV3: Callback?
     
     var isMigrating: Bool { false }
+    var isMigratingInV1Zone: Bool { false }
     
     func checkIfMigrationNeeded() async {}
     func migrateIfNeeded() -> Bool { false }

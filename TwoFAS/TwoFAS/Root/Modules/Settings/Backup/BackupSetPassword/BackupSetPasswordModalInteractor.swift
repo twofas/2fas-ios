@@ -21,21 +21,22 @@ import Foundation
 import Data
 import Common
 
-protocol BackupChangeEncryptionModuleInteracting: AnyObject {
+protocol BackupSetPasswordModalInteracting: AnyObject {
     var syncSuccess: (() -> Void)? { get set }
     var syncFailure: ((CloudState.NotAvailableReason) -> Void)? { get set }
     
-    var currentEncryption: CloudEncryptionType { get }
-    func setSystemEncryption()
-    func setCustomPassword(_ password: String)
+    func setPassword(_ password: String)
+    func setApplayinChanges()
 }
 
-final class BackupChangeEncryptionModuleInteractor {
+final class BackupSetPasswordModalInteractor {
     var syncSuccess: (() -> Void)?
     var syncFailure: ((CloudState.NotAvailableReason) -> Void)?
     
     private let syncMigrationInteractor: SyncMigrationInteracting
     private let notificationCenter: NotificationCenter
+    
+    private var applyingChanges = false
     
     init(syncMigrationInteractor: SyncMigrationInteracting) {
         self.syncMigrationInteractor = syncMigrationInteractor
@@ -49,29 +50,31 @@ final class BackupChangeEncryptionModuleInteractor {
     }
 }
 
-extension BackupChangeEncryptionModuleInteractor: BackupChangeEncryptionModuleInteracting {
-    var currentEncryption: CloudEncryptionType {
-        syncMigrationInteractor.currentEncryption
-    }
-    
-    func setSystemEncryption() {
-        syncMigrationInteractor.migrateToSystemPassword()
-    }
-    
-    func setCustomPassword(_ password: String) {
+extension BackupSetPasswordModalInteractor: BackupSetPasswordModalInteracting {
+    func setPassword(_ password: String) {
         syncMigrationInteractor.changePassword(password)
     }
     
     @objc
     private func syncStateChanged() {
+        guard applyingChanges else { return }
+        
         switch syncMigrationInteractor.currentCloudState {
-        case .disabledNotAvailable(let reason): syncFailure?(reason)
+        case .disabledNotAvailable(let reason):
+            applyingChanges = false
+            syncFailure?(reason)
         case .enabled(let sync):
             switch sync {
-            case .synced: syncSuccess?()
+            case .synced:
+                applyingChanges = false
+                syncSuccess?()
             default: break
             }
         default: break
         }
+    }
+    
+    func setApplayinChanges() {
+        applyingChanges = true
     }
 }

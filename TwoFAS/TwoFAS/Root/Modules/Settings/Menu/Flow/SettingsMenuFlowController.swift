@@ -43,7 +43,6 @@ protocol SettingsMenuFlowControllerParent: AnyObject {
     func toAbout()
     func toSocialChannel(_ socialChannel: SocialChannel)
     func toBrowserExtension()
-    func toDonate()
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func toTransfer()
     func toAppearance()
@@ -59,7 +58,6 @@ protocol SettingsMenuFlowControlling: AnyObject {
     func toSocialChannel(_ socialChannel: SocialChannel)
     func toBrowserExtension()
     func toAbout()
-    func toDonate()
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func toTransfer()
     func toAppearance()
@@ -104,7 +102,6 @@ extension SettingsMenuFlowController: SettingsMenuFlowControlling {
     func toFAQ() { parent?.toFAQ() }
     func toTrash() { parent?.toTrash() }
     func toAbout() { parent?.toAbout() }
-    func toDonate() { parent?.toDonate() }
     func toWidgetEnablingWarning() {
         WidgetWarningFlowController.present(on: viewController, parent: self)
     }

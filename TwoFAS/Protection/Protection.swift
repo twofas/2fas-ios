@@ -36,7 +36,9 @@ public final class Protection {
         let PINvalue: PIN
         let codeType: CodeType
     }
+    public let reference = Keys.Reference.dataValue
     #if os(iOS)
+    public let localEncryptionKeyData: Data = Keys.LocalEncryptionKey.dataValue
     private let encryptedStorage: LocalEncryptedStorage
     
     public let biometricAuth: BiometricAuth
@@ -58,14 +60,11 @@ public final class Protection {
         migrationHandler.migrateIfNeeded()
     }
     #elseif os(watchOS)
-//    private let encryptedStorage: LocalEncryptedStorage
-//    public let codeStorage: CodeStorage
-      public let localKeyEncryption: CommonLocalKeyEncryption
-//
+    public let localKeyEncryption: CommonLocalKeyEncryption
+    public let localEncryptionKeyData: Data
     public init() {
-//        encryptedStorage = LocalEncryptedStorage(defaults: UserDefaults(suiteName: Config.suiteName)!)
-//        codeStorage = CodeStorage(storage: encryptedStorage)
         localKeyEncryption = LocalKeyEncryption()
+        localEncryptionKeyData = Keys.LocalEncryptionKey.dataValue
     }
     #endif
 }

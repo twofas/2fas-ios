@@ -51,6 +51,8 @@ protocol AddingServiceMainFlowControlling: AnyObject {
     func toSendLogs(auditID: UUID)
     func toPushPermissions(for extensionID: ExtensionID)
     func toRename(currentName: String, secret: String)
+    func toPairWatchQuestion(_ deviceCodePath: DeviceCodePath)
+    func toCantPairWatch()
 }
 
 final class AddingServiceMainFlowController: FlowController {
@@ -181,5 +183,36 @@ extension AddingServiceMainFlowController: AddingServiceMainFlowControlling {
     
     func toSendLogs(auditID: UUID) {
         parent?.mainToSendLogs(auditID: auditID)
+    }
+    
+    func toPairWatchQuestion(_ deviceCodePath: DeviceCodePath) {
+        let alert = AlertControllerPromptFactory.create(
+            title: T.Backup.watchPairingTitle,
+            message: T.Backup.watchPairingDescription,
+            actionName: T.Backup.watchPairingAction,
+            defaultText: T.Backup.watchPairingDefaultName,
+            inputConfiguration: .name,
+            action: { [weak self] deviceName in
+                self?.viewController.presenter.handleAppleWatchPairing(
+                    deviceCodePath: deviceCodePath,
+                    deviceName: deviceName
+                )
+            },
+            cancel: {},
+            verify: { deviceName in
+                ServiceRules.isAppleWatchNameValid(deviceName: deviceName)
+            }
+        )
+        
+        viewController.present(alert, animated: true, completion: nil)
+    }
+    
+    func toCantPairWatch() {
+        let alert = AlertController.makeSimple(
+            with: T.Commons.error,
+            message: T.Backup.watchPairingError,
+            buttonTitle: T.Commons.ok
+        )
+        viewController.present(alert, animated: true, completion: nil)
     }
 }

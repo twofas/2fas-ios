@@ -78,7 +78,6 @@ enum SettingsNavigationModule: Hashable {
     case trash
     case faq
     case about
-    case donate
     case transfer
     case appearance
     case appleWatch

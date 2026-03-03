@@ -23,7 +23,7 @@ extension MainRepositoryImpl {
     func handleURL(_ url: URL) -> (canHandle: Bool, shouldSave: Bool) {
         switch Code.parse(with: url.absoluteString) {
         case .unknown, .appStore, .googleAuth, .twoFASWebExtension, .lastPass: (canHandle: false, shouldSave: false)
-        case .support, .service:  (canHandle: true, shouldSave: true)
+        case .support, .service, .pairWatch:  (canHandle: true, shouldSave: true)
         case .open: (canHandle: true, shouldSave: false)
         }
     }

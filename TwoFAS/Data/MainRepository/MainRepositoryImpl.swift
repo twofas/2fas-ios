@@ -54,6 +54,8 @@ final class MainRepositoryImpl: MainRepository {
     let iconDescriptionDatabase: IconDescriptionDatabase = IconDescriptionDatabaseImpl()
     let initialPermissionStateDataController = PermissionsStateDataController()
     let mdmRepository: MDMRepository = MDMRepositoryImpl()
+    let syncMigration: SyncMigrationHandling
+    let watchPairing: WatchPairHandling
     
     let serviceNameTranslation: String
     let notificationCenter = NotificationCenter.default
@@ -114,7 +116,12 @@ final class MainRepositoryImpl: MainRepository {
         
         let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
         
-        SyncInstance.initialize(commonSectionHandler: storage.section, commonServiceHandler: storage.service) {
+        SyncInstance.initialize(
+            commonSectionHandler: storage.section,
+            commonServiceHandler: storage.service,
+            reference: protection.reference,
+            localEncryptionKeyData: protection.localEncryptionKeyData
+        ) {
             DebugLog("Sync: \($0)")
         }
         SyncInstance.migrateStoreIfNeeded()
@@ -133,7 +140,9 @@ final class MainRepositoryImpl: MainRepository {
             timeVerificationController: TimeVerificationController(),
             cloudHandler: SyncInstance.getCloudHandler(),
             logDataChange: SyncInstance.logDataChange,
-            serviceNameTranslation: serviceNameTranslation
+            serviceNameTranslation: serviceNameTranslation,
+            syncMigration: SyncInstance.getSyncMigrationHandler(),
+            watchPairing: SyncInstance.getWatchPairHandler()
         )
     }
     
@@ -148,7 +157,9 @@ final class MainRepositoryImpl: MainRepository {
         timeVerificationController: TimeVerificationController,
         cloudHandler: CloudHandlerType,
         logDataChange: LogDataChange,
-        serviceNameTranslation: String
+        serviceNameTranslation: String,
+        syncMigration: SyncMigrationHandling,
+        watchPairing: WatchPairHandling
     ) {
         self.service = storage.service
         self.pushNotifications = pushNotifications
@@ -166,6 +177,8 @@ final class MainRepositoryImpl: MainRepository {
         self.userDefaultsRepository = UserDefaultsRepositoryImpl()
         self.logDataChange = logDataChange
         self.serviceNameTranslation = serviceNameTranslation
+        self.syncMigration = syncMigration
+        self.watchPairing = watchPairing
         
         storageRepository = storage.storageRepository
         timeVerificationController.log = { value in Log(value, module: .counter) }

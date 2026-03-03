@@ -25,6 +25,7 @@ import StorageWatch
 import ContentWatch
 
 protocol MainRepository: AnyObject {
+    var deviceCode: DeviceCode { get }
     func saveStorage()
     func service(for secret: String) -> ServiceData?
     func listAllServicesWithingCategories(
@@ -114,7 +115,12 @@ final class MainRepositoryImpl: MainRepository {
         let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
         serviceMigration.serviceNameTranslation = T.Commons.service
         
-        SyncInstanceWatch.initialize(commonSectionHandler: storage.section, commonServiceHandler: storage.service) {
+        SyncInstanceWatch.initialize(
+            commonSectionHandler: storage.section,
+            commonServiceHandler: storage.service,
+            reference: protection.reference,
+            localEncryptionKeyData: protection.localEncryptionKeyData
+        ) {
             Log("Sync: \($0)")
         }
         SyncInstanceWatch.migrateStoreIfNeeded()
@@ -151,14 +157,29 @@ final class MainRepositoryImpl: MainRepository {
         storageRepository = storage.storageRepository
         isAppLocked = userDefaultsRepository.pin != nil
         MainRepositoryImpl._shared = self
-        
+                
         storage.addUserPresentableError { [weak self] error in
             self?.storageError?(error)
         }
+        
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(cloudStateChange),
+            name: .syncStateChanged,
+            object: nil
+        )
+    }
+    
+    deinit {
+        notificationCenter.removeObserver(self)
     }
 }
 
 extension MainRepositoryImpl {
+    var deviceCode: DeviceCode {
+        SyncInstanceWatch.getDeviceCode()
+    }
+    
     func saveStorage() {
         storage.save()
     }
@@ -317,6 +338,14 @@ extension MainRepositoryImpl {
             return
         }
         userDefaultsRepository.setFavoriteServices(favoriteServicesCache)
+    }
+    
+    @objc
+    private func cloudStateChange() {
+        if cloudHandler.currentState == .disabledNotAvailable(reason: .cloudEncryptedSystem) ||
+        cloudHandler.currentState == .disabledNotAvailable(reason: .cloudEncryptedUser) {
+            storage.reset()
+        }
     }
 }
 

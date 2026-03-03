@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import CloudKit
 #if os(iOS)
 import Common
 #elseif os(watchOS)
@@ -39,9 +40,9 @@ extension CommonSectionData {
     }
 }
 
-extension Info {
+extension InfoRecord {
     var comparisionDate: Date {
-        Date(timeIntervalSince1970: 1665947380)
+        modificationDate
     }
 }
 
@@ -52,7 +53,15 @@ struct CommonDataIndex: Equatable {
         case .section: return (lhs.item as? CommonSectionData) == (rhs.item as? CommonSectionData)
         case .service1: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
         case .service2: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
-        case .info: return (lhs.item as? Info) == (rhs.item as? Info)
+        case .service3: return (lhs.item as? ServiceData) == (rhs.item as? ServiceData)
+        case .info:
+            guard let lhsCKRecord = lhs.item as? CKRecord, let rhsCKRecord = rhs.item as? CKRecord,
+                  lhsCKRecord.recordType == rhsCKRecord.recordType,
+                  RecordType(rawValue: lhsCKRecord.recordType) == .info
+            else { return false }
+            let lhsInfoRecord = InfoRecord(record: lhsCKRecord)
+            let rhsInfoRecord = InfoRecord(record: rhsCKRecord)
+            return lhsInfoRecord == rhsInfoRecord
         }
     }
     
@@ -66,7 +75,11 @@ struct CommonDataIndex: Equatable {
         case .section: date = (item as? CommonSectionData)?.comparisionDate
         case .service1: date = (item as? ServiceData)?.comparisionDate
         case .service2: date = (item as? ServiceData)?.comparisionDate
-        case .info: date = (item as? Info)?.comparisionDate
+        case .service3: date = (item as? ServiceData)?.comparisionDate
+        case .info: date = {
+            guard let record = item as? CKRecord, RecordType(rawValue: record.recordType) == .info else { return nil }
+            return InfoRecord(record: record).modificationDate
+        }()
         }
         return date ?? Date.distantPast
     }
@@ -76,7 +89,15 @@ struct CommonDataIndex: Equatable {
         case .section: return (item as? CommonSectionData) == (other as? CommonSectionData)
         case .service1: return (item as? ServiceData) == (other as? ServiceData)
         case .service2: return (item as? ServiceData) == (other as? ServiceData)
-        case .info:  return (item as? Info) == (other as? Info)
+        case .service3: return (item as? ServiceData) == (other as? ServiceData)
+        case .info:
+            guard let lhsCKRecord = item as? CKRecord, let rhsCKRecord = other as? CKRecord,
+                  lhsCKRecord.recordType == rhsCKRecord.recordType,
+                  RecordType(rawValue: lhsCKRecord.recordType) == .info
+            else { return false }
+            let lhsInfoRecord = InfoRecord(record: lhsCKRecord)
+            let rhsInfoRecord = InfoRecord(record: rhsCKRecord)
+            return lhsInfoRecord == rhsInfoRecord
         }
     }
 }

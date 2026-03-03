@@ -64,7 +64,9 @@ struct BackupMenuCell: Hashable {
 enum BackupNavigationAction: Hashable {
     case importFile
     case exportFile
-    case deleteCloudBackup
+    case manageAppleWatch
+    case debugEraseCloudBackup
+    case manageBackup
 }
 
 enum BackupNavigationToggle: Hashable {
@@ -81,20 +83,5 @@ extension Array where Element == BackupMenuSection {
             }
         }
         return nil
-    }
-}
-
-extension CloudState.NotAvailableReason {
-    var errorText: String? {
-        switch self {
-        case .disabledByUser: return T.Backup.icloudDisabledTitle
-        case .other: return T.Backup.icloudNotAvailable
-        case .error(let error): return error?.localizedDescription
-        case .overQuota: return T.Backup.userOverQuotaIcloud
-        case .incorrectService(let serviceName): return T.Backup.incorrectSecret(serviceName)
-        case .useriCloudProblem: return T.Backup.icloudProblem
-        case .newerVersion: return T.Error.cloudBackupNewerVersion
-        case .cloudEncrypted: return T.Error.cloudBackupEncryptedNotSupported
-        }
     }
 }

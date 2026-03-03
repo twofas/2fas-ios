@@ -89,6 +89,12 @@ struct MainView: View {
             .navigationTitle(T.Commons._2fasToolbar)
             .navigationBarTitleDisplayMode(.automatic)
             .listItemTint(.clear)
+            .alert(T.Backup.missingSystemKey, isPresented: $presenter.showSystemKeyError) {
+                Button(action: {}, label: { Text(T.Commons.ok) })
+            } message: {
+                Text(verbatim: T.Backup.cloudErrorMissingSystemKeyContent)
+            }
+            .fullScreenCover(isPresented: $presenter.showPairQRCode, content: PairQRCodeView.init)
         }
     }
 }

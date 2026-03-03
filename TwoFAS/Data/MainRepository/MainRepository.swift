@@ -134,6 +134,7 @@ protocol MainRepository: AnyObject {
     // MARK: - Cloud
     var secretSyncError: ((String) -> Void)? { get set }
     var isCloudBackupConnected: Bool { get }
+    var isCloudBackupSynced: Bool { get }
     var successSyncDate: Date? { get }
     var cloudCurrentState: CloudState { get }
     func registerForCloudStateChanges(_ listener: @escaping CloudStateListener, id: CloudStateListenerID)
@@ -146,7 +147,26 @@ protocol MainRepository: AnyObject {
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     )
+    func debugEraseCloudBackup()
     func saveSuccessSyncDate(_ date: Date?)
+    // MARK: Watch Pair
+    func watchPairingList() -> [PairedWatch]
+    func watchPairingUnpair(_ pairedWatch: PairedWatch)
+    func watchPairingRename(_ pairedWatch: PairedWatch, newName: String)
+    func watchPairingPair(deviceCodePath: DeviceCodePath, deviceName: String)
+    // MARK: Migration
+    var cloudShowMigrationToNewestVersion: (() -> Void)? { get set }
+    var cloudMigrationEndedSuccessfuly: (() -> Void)? { get set }
+    var cloudReencryptionEndedSuccessfuly: (() -> Void)? { get set }
+    var cloudShowiCloudIsEncryptedByUser: (() -> Void)? { get set }
+    var cloudShowiCloudIsEncryptedBySystem: (() -> Void)? { get set }
+    var cloudShowNeverVersionOfiCloud: (() -> Void)? { get set }
+    var cloudCurrentEncryption: CloudEncryptionType? { get }
+    func cloudChangePassword(_ password: String)
+    func cloudSetMissingUserPassword(_ password: String)
+    func cloudMigrateToSystemPassword()
+    func cloudSwitchLocallyToUseSystemPassword()
+    func cloudVerifyUserPassword(_ password: String) -> Bool
     
     // MARK: - Import
     var fileURL: URL? { get set }

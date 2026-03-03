@@ -35,6 +35,7 @@ extension MainRepositoryImpl {
         }
     }
     var isCloudBackupConnected: Bool { cloudHandler.isConnected }
+    var isCloudBackupSynced: Bool { cloudHandler.isSynced }
     var cloudCurrentState: CloudState { cloudHandler.currentState.toCloudState }
     
     func registerForCloudStateChanges(_ listener: @escaping CloudStateListener, id: CloudStateListenerID) {
@@ -58,6 +59,10 @@ extension MainRepositoryImpl {
         cloudHandler.clearBackup()
     }
     
+    func debugEraseCloudBackup() {
+        cloudHandler.debugErase()
+    }
+    
     func synchronizeBackup() {
         cloudHandler.synchronize()
     }
@@ -71,5 +76,85 @@ extension MainRepositoryImpl {
     
     func saveSuccessSyncDate(_ date: Date?) {
         userDefaultsRepository.saveSuccessSyncDate(date)
+    }
+    
+    // Migration
+    
+    var cloudShowMigrationToNewestVersion: (() -> Void)? {
+        get {
+            syncMigration.showMigrationToNewestVersion
+        }
+        set {
+            syncMigration.showMigrationToNewestVersion = newValue
+        }
+    }
+    
+    var cloudMigrationEndedSuccessfuly: (() -> Void)? {
+        get {
+            syncMigration.migrationEndedSuccessfuly
+        }
+        set {
+            syncMigration.migrationEndedSuccessfuly = newValue
+        }
+    }
+    
+    var cloudReencryptionEndedSuccessfuly: (() -> Void)? {
+        get {
+            syncMigration.reencryptionEndedSuccessfuly
+        }
+        set {
+            syncMigration.reencryptionEndedSuccessfuly = newValue
+        }
+    }
+    
+    var cloudShowiCloudIsEncryptedByUser: (() -> Void)? {
+        get {
+            syncMigration.showiCloudIsEncryptedByUser
+        }
+        set {
+            syncMigration.showiCloudIsEncryptedByUser = newValue
+        }
+    }
+    
+    var cloudShowiCloudIsEncryptedBySystem: (() -> Void)? {
+        get {
+            syncMigration.showiCloudIsEncryptedBySystem
+        }
+        set {
+            syncMigration.showiCloudIsEncryptedBySystem = newValue
+        }
+    }
+    
+    var cloudShowNeverVersionOfiCloud: (() -> Void)? {
+        get {
+            syncMigration.showNeverVersionOfiCloud
+        }
+        set {
+            syncMigration.showNeverVersionOfiCloud = newValue
+        }
+    }
+    
+    func cloudChangePassword(_ password: String) {
+        syncMigration.changePassword(password)
+    }
+    
+    func cloudMigrateToSystemPassword() {
+        syncMigration.migrateToSystemPassword()
+    }
+    
+    func cloudSwitchLocallyToUseSystemPassword() {
+        syncMigration.switchLocallyToUseSystemPassword()
+    }
+    
+    func cloudSetMissingUserPassword(_ password: String) {
+        syncMigration.setMissingUserPassword(password)
+    }
+    
+    var cloudCurrentEncryption: CloudEncryptionType? {
+        syncMigration.currentEncryption
+    }
+    
+    func cloudVerifyUserPassword(_ password: String) -> Bool {
+        syncMigration.verifyUserPassword(password)
     }
 }

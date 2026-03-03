@@ -25,13 +25,18 @@ protocol BackupMenuModuleInteracting: AnyObject {
     func startMonitoring()
     func stopMonitoring()
     
+    func debugErase()
+    
     var isBackupAllowed: Bool { get }
     var isBackupOn: Bool { get }
+    var canDelete: Bool { get }
     var exportEnabled: Bool { get }
     var isBackupAvailable: Bool { get }
     var isCloudBackupConnected: Bool { get }
     var reload: Callback? { get set }
-    var error: CloudState.NotAvailableReason? { get }
+    var iCloudState: CloudState { get }
+    var isCloudBackupSynced: Bool { get }
+    var encryptionTypeIsUser: Bool { get }
     
     func toggleBackup()
     func clearBackup()
@@ -60,6 +65,10 @@ extension BackupMenuModuleInteractor: BackupMenuModuleInteracting {
         !mdmInteractor.isBackupBlocked
     }
     
+    func debugErase() {
+        cloudBackup.debugErase()
+    }
+    
     var reload: Callback? {
         get {
             cloudBackup.stateChanged
@@ -69,8 +78,20 @@ extension BackupMenuModuleInteractor: BackupMenuModuleInteracting {
         }
     }
     
-    var error: CloudState.NotAvailableReason? {
-        cloudBackup.error
+    var canDelete: Bool {
+        cloudBackup.canDelete
+    }
+    
+    var iCloudState: CloudState {
+        cloudBackup.iCloudState
+    }
+    
+    var isCloudBackupSynced: Bool {
+        cloudBackup.isCloudBackupSynced
+    }
+    
+    var encryptionTypeIsUser: Bool {
+        cloudBackup.encryptionTypeIsUser
     }
     
     var isBackupOn: Bool {

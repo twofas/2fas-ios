@@ -43,16 +43,19 @@ final class MDMInteractor {
     init(
         mainRepository: MainRepository,
         pairingInteractor: PairingWebExtensionInteracting,
-        cloudBackupStateInteractor: CloudBackupStateInteracting
+        cloudBackupStateInteractor: CloudBackupStateInteracting,
+        monitorCloudState: Bool
     ) {
         self.mainRepository = mainRepository
         self.pairingInteractor = pairingInteractor
         self.cloudBackupStateInteractor = cloudBackupStateInteractor
         
-        cloudBackupStateInteractor.stateChanged = { [weak self] in self?.syncStateDetermined() }
-        cloudBackupStateInteractor.startMonitoring()
-        if cloudBackupStateInteractor.isBackupEnabled {
-            syncStateDetermined()
+        if monitorCloudState {
+            cloudBackupStateInteractor.stateChanged = { [weak self] in self?.syncStateDetermined() }
+            cloudBackupStateInteractor.startMonitoring()
+            if cloudBackupStateInteractor.isBackupEnabled {
+                syncStateDetermined()
+            }
         }
     }
 }

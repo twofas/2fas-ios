@@ -40,11 +40,28 @@ public enum Config {
     
     public static let maxIdentifierLength: Int = 128
     
-    public static let minQRCodeSize: CGFloat = 280
-    
+    public static let maxSyncPasswordLength = 32
+    public static let minSyncPasswordLength = 9
+
+    public static let minQRCodeSize: CGFloat = 280    
     public static let twofasAuthOldScheme = "twofas"
     public static let twofasAuthNewScheme = "twofasauth"
     public static let twofasPassCheckLink = URL(string: "twofaspass://")!
     public static let twofasPassOpenLink = URL(string: "twofaspass://open")!
     public static let twofasPassAppStoreLink = URL(string: "itms-apps://itunes.apple.com/app/id6504464955")!
+    
+    public static let vaultV1 = "Vault1"
+    public static let vaultV2 = "Vault2"
+    public static let containerIdentifier = "iCloud.com.twofas.org.Vault"
+    
+    public enum PasswordCharacterSet {
+        private static let space = [String(UnicodeScalar(32)!)]
+        private static let digits = (48...57).map { String(UnicodeScalar($0)!) }
+        private static let uppercase = (65...90).map { String(UnicodeScalar($0)!) }
+        private static let special = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_"]
+        private static let lowercase = (97...122).map { String(UnicodeScalar($0)!) }
+        private static let letters = uppercase + lowercase
+        private static let complete = digits + special + letters + space
+        public static let characterSet = CharacterSet(charactersIn: complete.joined())
+    }
 }

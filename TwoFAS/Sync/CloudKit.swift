@@ -47,10 +47,7 @@ final class CloudKit {
     
     var fetchFinishedSuccessfuly: Callback?
     var changesSavedSuccessfuly: Callback?
-    
-    let zoneID = CKRecordZone.ID(zoneName: "Vault1", ownerName: CKCurrentUserDefaultName)
-    
-    private let containerIdentifier = "iCloud.com.twofas.org.Vault"
+        
     private let notificationIdentifier = "Vault1Modified"
     private let errorParser = CloudKitErrorParser()
     
@@ -66,9 +63,14 @@ final class CloudKit {
     private var collectedActions: [CloudKitAction] = []
     
     private let syncTokenHandler = SyncTokenHandler()
+    private let zoneManager: ZoneManaging
+    
+    init(zoneManager: ZoneManaging) {
+        self.zoneManager = zoneManager
+    }
     
     func initialize() {
-        container = CKContainer(identifier: containerIdentifier)
+        container = CKContainer(identifier: Config.containerIdentifier)
         database = container.privateCloudDatabase
     }
     
@@ -94,7 +96,7 @@ final class CloudKit {
         guard !ConstStorage.zoneInitiated else { continueOperation(); return }
         Log("CloudKit - creating zone", module: .cloudSync)
         
-        let zone = CKRecordZone(zoneID: zoneID)
+        let zone = CKRecordZone(zoneID: zoneManager.currentZoneID)
         let operation = CKModifyRecordZonesOperation(recordZonesToSave: [zone], recordZoneIDsToDelete: [])
         
         operation.perRecordZoneSaveBlock = { [weak self] _, result in
@@ -226,15 +228,17 @@ final class CloudKit {
         Log("CloudKit - clearing record changes", module: .cloudSync)
         clearRecordChanges()
         
+        // swiftlint:disable line_length
         Log(
-            "CloudKit - fetching zone changes, token is set: \(ConstStorage.zoneChangeToken != nil)",
+            "CloudKit - fetching zone changes, token is set: \(ConstStorage.zoneChangeToken != nil), current zone: \(zoneManager.currentZoneID)",
             module: .cloudSync
         )
+        // swiftlint:enable line_length
         
         let operation = CKFetchRecordZoneChangesOperation(
-            recordZoneIDs: [zoneID],
+            recordZoneIDs: [zoneManager.currentZoneID],
             configurationsByRecordZoneID: [
-                zoneID: CKFetchRecordZoneChangesOperation.ZoneConfiguration(
+                zoneManager.currentZoneID: CKFetchRecordZoneChangesOperation.ZoneConfiguration(
                     previousServerChangeToken: ConstStorage.zoneChangeToken,
                     resultsLimit: nil,
                     desiredKeys: nil
@@ -302,7 +306,6 @@ final class CloudKit {
         operation.qualityOfService = .userInitiated
         
         operation.perRecordDeleteBlock = { [weak self] recordID, result in
-            Log("CloudKit - perRecordDeleteBlock", module: .cloudSync)
             switch result {
             case .success:
                 Log("CloudKit - perRecordDeleteBlock - success", module: .cloudSync)
@@ -313,7 +316,6 @@ final class CloudKit {
             }
         }
         operation.perRecordSaveBlock = { [weak self] recordID, result in
-            Log("CloudKit - perRecordSaveBlock", module: .cloudSync)
             switch result {
             case .success(let record):
                 Log("CloudKit - perRecordSaveBlock - success", module: .cloudSync)
@@ -331,7 +333,6 @@ final class CloudKit {
             }
         }
         operation.modifyRecordsResultBlock = { [weak self] result in
-            Log("CloudKit - modifyRecordsResultBlock", module: .cloudSync)
             switch result {
             case .success:
                 Log("CloudKit - modifyRecordsResultBlock - success", module: .cloudSync)
@@ -361,7 +362,7 @@ final class CloudKit {
     private func zoneChanged(with zoneID: CKRecordZone.ID) {
         Log("CloudKit - Zone changed with ID: \(zoneID)", module: .cloudSync)
         
-        if zoneID == self.zoneID {
+        if zoneID == zoneManager.currentZoneID {
             Log("CloudKit - zoneUpdated = true", module: .cloudSync)
             zoneUpdated = true
         }
@@ -370,7 +371,7 @@ final class CloudKit {
     private func zoneWasPurged(with zoneID: CKRecordZone.ID) {
         Log("CloudKit - Zone purged with ID: \(zoneID)", module: .cloudSync)
         
-        if zoneID == self.zoneID {
+        if zoneID == zoneManager.currentZoneID {
             Log("CloudKit - zoneID == self.zoneID -> purgeCache", module: .cloudSync)
             purgeCache()
         }
@@ -379,7 +380,7 @@ final class CloudKit {
     private func zoneWasDeleted(with zoneID: CKRecordZone.ID) {
         Log("CloudKit - Zone DELETED with ID: \(zoneID)", module: .cloudSync)
         
-        if zoneID == self.zoneID {
+        if zoneID == zoneManager.currentZoneID {
             Log("CloudKit - zoneID == self.zoneID -> purgeCache", module: .cloudSync)
             purgeCache()
             DispatchQueue.main.async {

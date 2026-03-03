@@ -26,24 +26,92 @@ import CommonWatch
 import CloudKit
 
 final class ClearHandler {
-    private let cloudKit = CloudKit()
+    private let cloudKit: CloudKit
     private var isClearing = false
+    private var batchCount: Int = 0
+    private let batchElementLimit = 399
 
     var didClear: Callback?
     
-    func clear(recordIDs: [CKRecord.ID]) {
+    init(zoneManager: ZoneManaging) {
+        cloudKit = CloudKit(zoneManager: zoneManager)
+    }
+    
+    func clear(recordIDs: [CKRecord.ID], infoRecord: CKRecord) {
         guard !isClearing else { return }
-        Log("ClearHandler - Deleting 2FAS Backup", module: .cloudSync)
+        Log("ClearHandler: Deleting 2FAS Backup", module: .cloudSync)
         isClearing = true
         cloudKit.initialize()
-        cloudKit.changesSavedSuccessfuly = { [weak self] in self?.changesSavedSuccessfuly() }
-        cloudKit.modifyRecord(recordsToSave: nil, recordIDsToDelete: recordIDs)
+        cloudKit.changesSavedSuccessfuly = { [weak self] in
+            guard let self, batchCount > 0, isClearing else { return }
+            batchCount -= 1
+            Log("ClearHandler: Batch Delete Saved Successfuly", module: .cloudSync)
+            if batchCount == 0 {
+                Log("ClearHandler: All Entries Deleted Successfuly", module: .cloudSync)
+                changesSavedSuccessfuly()
+            }
+        }
+        
+        let batch = recordIDs.grouped(by: batchElementLimit)
+        batchCount = batch.count + 1 // info modification
+        cloudKit.modifyRecord(recordsToSave: [infoRecord], recordIDsToDelete: nil)
+        for i in 0..<batch.count {
+            cloudKit.modifyRecord(recordsToSave: nil, recordIDsToDelete: batch[i])
+        }
     }
     
     private func changesSavedSuccessfuly() {
         isClearing = false
-        Log("ClearHandler - Deletition of 2FAS Backup was successful", module: .cloudSync)
+        Log("ClearHandler: Deletition of 2FAS Backup was successful", module: .cloudSync)
         cloudKit.clear()
         didClear?()
+    }
+    
+    func erase() {
+        cloudKit.clear()
+        var zoneIDs: [CKRecordZone.ID] = []
+        let database = CKContainer(identifier: Config.containerIdentifier).privateCloudDatabase
+        let fetchZones = CKFetchRecordZonesOperation.fetchAllRecordZonesOperation()
+        fetchZones.perRecordZoneResultBlock = { recordZoneID, _ in
+            zoneIDs.append(recordZoneID)
+        }
+        fetchZones.fetchRecordZonesResultBlock = { [weak self] result in
+            switch result {
+            case .success:
+                if zoneIDs.isEmpty {
+                    self?.didClear?()
+                    return
+                }
+                self?.removeZones(zoneIDs, database: database)
+            case .failure(let error):
+                Log(
+                    "ClearHandler: Erase error in fetchRecordZonesResultBlock: \(error)",
+                    module: .cloudSync,
+                    severity: .error
+                )
+                self?.didClear?()
+            }
+        }
+        database.add(fetchZones)
+    }
+    
+    private func removeZones(_ zoneIDs: [CKRecordZone.ID], database: CKDatabase) {
+        Log("ClearHandler: erasing: \(zoneIDs)", module: .cloudSync)
+       
+        let modifyOp = CKModifyRecordZonesOperation(recordZonesToSave: nil, recordZoneIDsToDelete: zoneIDs)
+        modifyOp.modifyRecordZonesResultBlock = { [weak self] result in
+            switch result {
+            case .success:
+                self?.didClear?()
+            case .failure(let error):
+                Log(
+                    "ClearHandler: Erase error in modifyRecordZonesResultBlock: \(error)",
+                    module: .cloudSync,
+                    severity: .error
+                )
+                self?.didClear?()
+            }
+        }
+        database.add(modifyOp)
     }
 }

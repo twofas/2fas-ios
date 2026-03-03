@@ -61,9 +61,9 @@ public final class CoreDataStack {
                     self?.parseError(with: error.userInfo)
                     fatalError(err)
                 }
+                container.viewContext.automaticallyMergesChangesFromParent = true
             }
         }
-        container.viewContext.automaticallyMergesChangesFromParent = true
         return container
     }()
     

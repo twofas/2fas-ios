@@ -34,6 +34,30 @@ final class MainPresenter {
         self.flowController = flowController
         self.interactor = interactor
         interactor.secretSyncError = { [weak flowController] in flowController?.toSecretSyncError($0) }
+        
+        interactor.showMigrationToNewestVersion = { [weak flowController] in
+            flowController?.toMigrationToNewestVersion()
+        }
+        interactor.showiCloudIsEncryptedByUser = { [weak flowController] in
+            flowController?.toiCloudIsEncryptedByUser()
+        }
+        interactor.showiCloudIsEncryptedBySystemError = { [weak flowController] in
+            flowController?.toiCloudIsEncryptedBySystemError()
+        }
+        interactor.showiCloudIsEncryptedBySystemSwitch = { [weak self, weak flowController] in
+            flowController?.toiCloudIsEncryptedBySystemSwitch { [weak self] in
+                self?.interactor.switchCloudEncryptionToSystemKey()
+            }
+        }
+        interactor.showNeverVersionOfiCloud = { [weak flowController] in
+            flowController?.toNeverVersionOfiCloud()
+        }
+        interactor.migrationEndedSuccessfuly = { [weak flowController] in
+            flowController?.toMigrationEndedSuccessfuly()
+        }
+        interactor.migrationError = { [weak flowController] error in
+            flowController?.toMigrationError(error)
+        }
     }
     
     func viewDidLoad() {
@@ -42,7 +66,7 @@ final class MainPresenter {
     }
     
     func viewWillAppear() {
-       viewIsVisible()
+       viewIsVisible()        
     }
     
     func handleSwitchToSetupPIN() {

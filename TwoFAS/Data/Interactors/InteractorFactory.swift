@@ -243,11 +243,12 @@ public final class InteractorFactory {
         AppStateInteractor(mainRepository: MainRepositoryImpl.shared)
     }
     
-    public func mdmInteractor() -> MDMInteracting {
+    public func mdmInteractor(monitorCloudState: Bool = false) -> MDMInteracting {
         MDMInteractor(
             mainRepository: MainRepositoryImpl.shared,
             pairingInteractor: pairingWebExtensionInteractor(),
-            cloudBackupStateInteractor: cloudBackupStateInteractor(listenerID: "MDMInteractor")
+            cloudBackupStateInteractor: cloudBackupStateInteractor(listenerID: "MDMInteractor"),
+            monitorCloudState: monitorCloudState
         )
     }
     
@@ -270,8 +271,16 @@ public final class InteractorFactory {
     public func qrCodeGeneratorInteractor() -> QRCodeGeneratorInteracting {
         QRCodeGeneratorInteractor()
     }
+
+    public func syncMigrationInteractor() -> SyncMigrationInteracting {
+        SyncMigrationInteractor(mainRepository: MainRepositoryImpl.shared)
+    }
     
     public func compressionInteractor() -> CompressionInteracting {
         CompressionInteractor()
+    }
+
+    public func watchPairingInteractor() -> WatchPairingInteracting {
+        WatchPairingInteractor(mainRepository: MainRepositoryImpl.shared)
     }
 }

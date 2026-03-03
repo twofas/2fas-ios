@@ -24,53 +24,132 @@ import Common
 public enum SyncInstance {
     private static var cloudHandler: CloudHandlerType!
     private static var logDataChangeImpl: LogDataChangeImpl!
+    private static var syncMigrationHandler: SyncMigrationHandling!
+    private static var watchPairHandler: WatchPairHandling!
     
     public static func initialize(
         commonSectionHandler: CommonSectionHandler,
         commonServiceHandler: CommonServiceHandler,
+        reference: Data,
+        localEncryptionKeyData: Data,
         errorLog: @escaping (String) -> Void
     ) {
         coreDataStack.logError = { errorLog($0) }
-        
+        let zoneManager = ZoneManager()
+        let cloudKit = CloudKit(zoneManager: zoneManager)
+        let syncEncryptionHandler = SyncEncryptionHandler(
+            reference: reference,
+            localEncryptionKeyData: localEncryptionKeyData
+        )
+        let serviceRecordEncryptionHandler = ServiceRecordEncryptionHandler(
+            zoneManager: zoneManager,
+            encryptionHandler: syncEncryptionHandler
+        )
         let logHandler = LogHandler(coreDataStack: coreDataStack)
         let sectionHandler = SectionHandler(coreDataStack: coreDataStack)
-        let serviceHandler = ServiceHandler(coreDataStack: coreDataStack)
-        let infoHandler = InfoHandler()
+        let serviceHandler = ServiceHandler(
+            coreDataStack: coreDataStack,
+            serviceRecordEncryptionHandler: serviceRecordEncryptionHandler
+        )
+        let infoHandler = InfoHandler(
+            zoneManager: zoneManager,
+            syncEncryptionHandler: syncEncryptionHandler
+        )
         let commonItemHandler = CommonItemHandler(
             commonSectionHandler: commonSectionHandler,
             commonServiceHandler: commonServiceHandler,
-            logHandler: logHandler
+            infoHandler: infoHandler,
+            logHandler: logHandler,
+            zoneManager: zoneManager
         )
-        let cloudKit = CloudKit()
         
         let itemHandler = ItemHandler(
             sectionHandler: sectionHandler,
             serviceHandler: serviceHandler,
             infoHandler: infoHandler,
-            logHandler: logHandler
+            logHandler: logHandler,
+            serviceRecordEncryptionHandler: serviceRecordEncryptionHandler,
+            syncEncryptionHandler: syncEncryptionHandler,
+            zoneManager: zoneManager
         )
-        let itemHandlerMigrationProxy = ItemHandlerMigrationProxy(
+        let mergeHandler = MergeHandler(
+            logHandler: logHandler,
+            commonItemHandler: commonItemHandler,
             itemHandler: itemHandler,
-            commonServiceHandler: commonServiceHandler,
-            logHandler: logHandler
+            cloudKit: cloudKit,
+            zoneManager: zoneManager
+        )
+        let modificationQueue = ModificationQueue()
+        let requirementCheck = RequirementCheckHandler(
+            encryptionHandler: syncEncryptionHandler,
+            infoHandler: infoHandler
+        )
+        let migrationHandler = MigrationHandler(
+            zoneManager: zoneManager,
+            cloudProbe: CloudProbe()
+        )
+        let reencryptionHandler = ReencryptionHandler(
+            serviceHandler: serviceHandler,
+            serviceRecordEncryptionHandler: serviceRecordEncryptionHandler,
+            syncEncryptionHandler: syncEncryptionHandler,
+            infoHandler: infoHandler
         )
         let syncHandler = SyncHandler(
-            itemHandler: itemHandlerMigrationProxy,
+            itemHandler: itemHandler,
             commonItemHandler: commonItemHandler,
             logHandler: logHandler,
-            cloudKit: cloudKit
+            cloudKit: cloudKit,
+            modificationQueue: modificationQueue,
+            mergeHandler: mergeHandler,
+            migrationHandler: migrationHandler,
+            requirementCheck: requirementCheck,
+            reencryptionHandler: reencryptionHandler
         )
+        let watchPairHandlerInstance = WatchPairHandler(
+            syncEncryptionHandler: syncEncryptionHandler,
+            infoHandler: infoHandler
+        )
+        syncEncryptionHandler.keyDidChange = { watchPairHandlerInstance.clearList() }
+        
         let cloudAvailability = CloudAvailability(container: syncHandler.container)
         cloudHandler = CloudHandler(
             cloudAvailability: cloudAvailability,
             syncHandler: syncHandler,
             itemHandler: itemHandler,
-            itemHandlerMigrationProxy: itemHandlerMigrationProxy,
-            cloudKit: cloudKit
+            cloudKit: cloudKit,
+            mergeHandler: mergeHandler,
+            migrationHandler: migrationHandler,
+            requirementCheckHandler: requirementCheck,
+            zoneManager: zoneManager,
+            infoHandler: infoHandler
         )
+        let syncMigrationHandlerInstance = SyncMigrationHandler(
+            migrationHandler: migrationHandler,
+            reencryptionHandler: reencryptionHandler,
+            syncEncryptionHandler: syncEncryptionHandler
+        )
+        watchPairHandlerInstance.synchronize = { cloudHandler.synchronize() }
+        watchPairHandlerInstance.logInfoModification = { logHandler.log(
+            entityID: Info.id,
+            actionType: .modified,
+            kind: .info
+        ) }
+        cloudHandler.registerForStateChange({ cloudState in
+            syncMigrationHandlerInstance.cloudStateChange(cloudState)
+        }, with: "syncMigrationHandler")
+        syncMigrationHandlerInstance.synchronize = { syncHandler.synchronize() }
+        syncMigrationHandlerInstance.enable = { cloudHandler.enable() }
+        cloudHandler.purgeUserEncryptionKey = { syncEncryptionHandler.purge() }
+        cloudHandler.setSystemEncryption = { syncEncryptionHandler.setSystemKey() }
+        syncEncryptionHandler.initialize()
+        
+        syncMigrationHandler = syncMigrationHandlerInstance
         logDataChangeImpl = LogDataChangeImpl(logHandler: logHandler)
+        watchPairHandler = watchPairHandlerInstance
     }
     public static func getCloudHandler() -> CloudHandlerType { cloudHandler }
+    public static func getSyncMigrationHandler() -> SyncMigrationHandling { syncMigrationHandler }
+    public static func getWatchPairHandler() -> WatchPairHandling { watchPairHandler }
     
     public static func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],

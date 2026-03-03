@@ -23,11 +23,19 @@ import SwiftUI
 
 final class MainPresenter: ObservableObject {
     @Published var favoriteList: [Service] = []
+    @Published var showPairQRCode: Bool = false
+    @Published var showSystemKeyError: Bool = false
     
     private let interactor: MainInteracting
     
     init(interactor: MainInteracting) {
         self.interactor = interactor
+        interactor.showPairQRCode = { [weak self] in
+            self?.showPairQRCode = $0
+        }
+        interactor.showSystemKeyError = { [weak self] in
+            self?.showSystemKeyError = $0
+        }
     }
     
     func onAppear() {

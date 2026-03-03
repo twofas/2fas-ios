@@ -144,6 +144,15 @@ extension CameraScannerPresenter {
             flowController.toSendLogs(auditID: auditID)
         case .open:
             Log("CameraScannerPresenter: Found 2FAS open request")
+        case .pairWatch(let deviceCodePath):
+            Log("CameraScannerPresenter: Found Device Code Path: \(deviceCodePath.codePath)")
+            view?.enableOverlay()
+            view?.feedback()
+            if interactor.canPairWatch {
+                flowController.toPairWatchQuestion(deviceCodePath)
+            } else {
+                flowController.toCantPairWatch()
+            }
         case .unknown:
             Log("CameraScannerPresenter: Found wrong code: \(codeType)", save: false)
             Log("CameraScannerPresenter: General wrong code")
@@ -171,6 +180,11 @@ extension CameraScannerPresenter {
     
     func handleCancelRename(secret: String) {
         interactor.cancelRenaming(secret: secret)
+    }
+    
+    func handleAppleWatchPairing(deviceCodePath: DeviceCodePath, deviceName: String) {
+        interactor.pairAppleWatch(deviceCodePath: deviceCodePath, deviceName: deviceName)
+        flowController.toFinish()
     }
 }
 

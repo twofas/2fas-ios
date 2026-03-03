@@ -30,9 +30,13 @@ public protocol CloudBackupStateInteracting: AnyObject {
     
     var isBackupEnabled: Bool { get }
     var isBackupAvailable: Bool { get }
-    var error: CloudState.NotAvailableReason? { get }
+    var canDelete: Bool { get }
+    var iCloudState: CloudState { get }
     
     var stateChanged: Callback? { get set }
+    
+    var isCloudBackupSynced: Bool { get }
+    var encryptionTypeIsUser: Bool { get }
     
     func toggleBackup()
     
@@ -40,6 +44,7 @@ public protocol CloudBackupStateInteracting: AnyObject {
     func disableBackup()
     
     func clearBackup()
+    func debugErase()
     
     func synchronizeBackup()
     
@@ -57,7 +62,9 @@ final class CloudBackupStateInteractor {
     private var isEnabled = false
     private var isAvailable = false
     
-    private(set) var error: CloudState.NotAvailableReason?
+    var iCloudState: CloudState {
+        mainRepository.cloudCurrentState
+    }
     
     var stateChanged: Callback?
     
@@ -83,9 +90,16 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
     
     var isBackupEnabled: Bool { isEnabled }
     var isBackupAvailable: Bool { isAvailable }
+    var isCloudBackupSynced: Bool { mainRepository.isCloudBackupSynced }
+    var encryptionTypeIsUser: Bool { mainRepository.cloudCurrentEncryption == .user }
     
     var successSyncDate: Date? {
         mainRepository.successSyncDate
+    }
+    
+    var canDelete: Bool {
+        mainRepository.cloudCurrentState == .disabledNotAvailable(reason: .cloudEncryptedSystem) ||
+        mainRepository.cloudCurrentState == .disabledNotAvailable(reason: .cloudEncryptedUser)
     }
     
     func startMonitoring() {
@@ -142,6 +156,14 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
         mainRepository.clearBackup()
     }
     
+    func debugErase() {
+        Log("CloudBackupStateInteractor - debug erase", module: .interactor)
+        isEnabled = false
+        stateChanged?()
+        
+        mainRepository.debugEraseCloudBackup()
+    }
+    
     func synchronizeBackup() {
         Log("CloudBackupStateInteractor - synchronizeBackup", module: .interactor)
         mainRepository.synchronizeBackup()
@@ -173,7 +195,7 @@ private extension CloudBackupStateInteractor {
         isEnabled = mainRepository.isCloudBackupConnected
         isAvailable = isAvailableCheck()
         previousState = mainRepository.cloudCurrentState
-        error = checkError()
+        let error = checkError()
         Log("""
             CloudBackupStateInteractor - saveStates:
             isEnable: \(isEnabled)

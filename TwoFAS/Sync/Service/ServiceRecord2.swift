@@ -25,7 +25,7 @@ import Common
 import CommonWatch
 #endif
 
-enum ServiceEntryKey2: String {
+private enum ServiceEntryKey2: String {
     case name
     case secret
     case serviceTypeID
@@ -308,7 +308,7 @@ final class ServiceRecord2 {
 
 extension ServiceRecord2: RecordIDGenerator {
     static func recordID(with identifier: String, zoneID: CKRecordZone.ID) -> CKRecord.ID {
-        CKRecord.ID(recordName: "\(iCloudIdentifier.generate(from: identifier))".encrypt(), zoneID: zoneID)
+        CKRecord.ID(recordName: "\(iCloudIdentifier.generateV2(from: identifier))".encrypt(), zoneID: zoneID)
     }
 }
 

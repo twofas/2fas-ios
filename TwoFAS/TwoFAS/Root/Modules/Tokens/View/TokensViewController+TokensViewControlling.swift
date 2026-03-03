@@ -376,6 +376,11 @@ extension TokensViewController {
     }
     
     @objc
+    func vaultWasMigrated() {
+        presenter.vaultWasMigrated()
+    }
+    
+    @objc
     func notificationAppDidBecomeActive() {
         presenter.handleAppDidBecomeActive()
     }

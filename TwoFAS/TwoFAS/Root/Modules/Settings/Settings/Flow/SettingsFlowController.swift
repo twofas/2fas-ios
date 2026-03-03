@@ -207,10 +207,6 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
         }
     }
     
-    func toDonate() {
-        UIApplication.shared.open(URL(string: "https://2fas.com/donate")!, options: [:], completionHandler: nil)
-    }
-    
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
         parent?.settingsToUpdateCurrentPosition(viewPath)
     }

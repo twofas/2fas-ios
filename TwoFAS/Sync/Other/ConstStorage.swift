@@ -27,6 +27,7 @@ enum ConstStorage {
     private static let KeyNotificationsInitiated = "KeyNotificationsInitiated"
     private static let KeyUsername = "KeyCloudUsername"
     private static let KeyCloudEnabled = "KeyCloudEnabled"
+    private static let KeyCloudMigratedToV3 = "KeyCloudMigratedToV3"
     
     private static let userDefaults = UserDefaults.standard
     
@@ -111,6 +112,14 @@ enum ConstStorage {
         
         set {
             userDefaults.set(newValue, forKey: KeyUsername)
+            userDefaults.synchronize()
+        }
+    }
+    
+    static var cloudMigratedToV3: Bool {
+        get { userDefaults.bool(forKey: KeyCloudMigratedToV3) }
+        set {
+            userDefaults.set(newValue, forKey: KeyCloudMigratedToV3)
             userDefaults.synchronize()
         }
     }

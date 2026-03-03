@@ -176,7 +176,8 @@ final class ModuleInteractorFactory {
         CameraScannerModuleInteractor(
             newCodeInteractor: InteractorFactory.shared.newCodeInteractor(),
             pushNotificationPermission: InteractorFactory.shared.pushNotificationRegistrationInteractor(),
-            cameraPermissionInteractor: InteractorFactory.shared.cameraPermissionInteractor()
+            cameraPermissionInteractor: InteractorFactory.shared.cameraPermissionInteractor(),
+            watchPairing: InteractorFactory.shared.watchPairingInteractor()
         )
     }
     
@@ -344,8 +345,9 @@ final class ModuleInteractorFactory {
             networkStatusInteractor: InteractorFactory.shared.networkStatusInteractor(),
             appInfoInteractor: InteractorFactory.shared.appInfoInteractor(),
             rootInteractor: InteractorFactory.shared.rootInteractor(),
-            mdmInteractor: InteractorFactory.shared.mdmInteractor(),
-            protectionInteractor: InteractorFactory.shared.protectionInteractor()
+            mdmInteractor: InteractorFactory.shared.mdmInteractor(monitorCloudState: true),
+            protectionInteractor: InteractorFactory.shared.protectionInteractor(),
+            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor()
         )
     }
     
@@ -367,7 +369,8 @@ final class ModuleInteractorFactory {
             cameraPermissionInteractor: InteractorFactory.shared.cameraPermissionInteractor(),
             newCodeInteractor: InteractorFactory.shared.newCodeInteractor(),
             pushNotificationPermission: InteractorFactory.shared.pushNotificationRegistrationInteractor(),
-            notificationInteractor: InteractorFactory.shared.notificationInteractor()
+            notificationInteractor: InteractorFactory.shared.notificationInteractor(),
+            watchPairing: InteractorFactory.shared.watchPairingInteractor()
         )
     }
     
@@ -420,6 +423,27 @@ final class ModuleInteractorFactory {
     func exportQuestionPINVerificationModuleInteractor() -> ExportQuestionPINVerificationModuleInteracting {
         ExportQuestionPINVerificationModuleInteractor(
             protectionInteractor: InteractorFactory.shared.protectionInteractor()
+        )
+    }
+    func encryptedByUserPasswordSyncModuleInteractor() -> EncryptedByUserPasswordSyncModuleInteracting {
+        EncryptedByUserPasswordSyncModuleInteractor(
+            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor(),
+            cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "")
+        )
+    }
+    
+    func manageWatchModuleInteractor() -> ManageWatchModuleInteracting {
+        ManageWatchModuleInteractor(manageWatch: InteractorFactory.shared.watchPairingInteractor())
+    }
+    
+    func backupSetPasswordModuleInteractor() -> BackupSetPasswordModalInteracting {
+        BackupSetPasswordModalInteractor(syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor())
+    }
+    
+    func backupManageEncryptionModuleInteractor() -> BackupManageEncryptionModuleInteracting {
+        BackupManageEncryptionModuleInteractor(
+            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor(),
+            cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "")
         )
     }
 }

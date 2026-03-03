@@ -94,6 +94,11 @@ extension TokensPresenter {
         appActiveActions()
     }
     
+    func vaultWasMigrated() {
+        Log("TokensPresenter - vaultWasMigrated")
+        appActiveActions()
+    }
+    
     func handleAppUnlocked() {
         Log("TokensPresenter - handleAppUnlocked")
         appActiveActions()

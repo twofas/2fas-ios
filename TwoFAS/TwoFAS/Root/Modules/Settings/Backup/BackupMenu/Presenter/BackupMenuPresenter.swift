@@ -61,8 +61,13 @@ final class BackupMenuPresenter {
         case .exportFile:
             guard interactor.exportEnabled else { return }
             flowController.toFileExport()
-        case .deleteCloudBackup:
-            flowController.toDeleteCloudBackup()
+        case .manageAppleWatch:
+            flowController.toManageAppleWatch()
+        case .debugEraseCloudBackup:
+            interactor.debugErase()
+        case .manageBackup:
+            guard interactor.isCloudBackupSynced || interactor.canDelete else { return }
+            flowController.toManageBackup()
         }
     }
     
@@ -90,10 +95,5 @@ private extension BackupMenuPresenter {
     func reload() {
         let menu = buildMenu()
         view?.reload(with: menu)
-        if let error = interactor.error?.errorText {
-            view?.showError(error)
-        } else {
-            view?.clearError()
-        }
     }
 }

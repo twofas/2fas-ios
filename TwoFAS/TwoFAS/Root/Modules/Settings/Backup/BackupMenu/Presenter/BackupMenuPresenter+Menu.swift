@@ -22,39 +22,52 @@ import Foundation
 extension BackupMenuPresenter {
     func buildMenu() -> [BackupMenuSection] {
         var footer = T.Backup.sectionDescription
+        let state = interactor.iCloudState.description
         let dateStr: String = {
             if let date = interactor.syncSuccessDate {
                 return dateFormatter.string(from: date)
             }
             return "-"
         }()
-        footer.append("\n\n\(T.backupSettingsSyncTitle): \(dateStr)")
+        footer.append("\n\n\(T.Backup.state) \(state)\n\(T.backupSettingsSyncTitle): \(dateStr)")
+        
+        var mainCells: [BackupMenuCell] = [
+            .init(
+                icon: nil,
+                title: T.Backup.icloudSync,
+                accessory: .init(
+                    kind: .backup,
+                    isOn: interactor.isBackupOn,
+                    isActive: interactor.isBackupAvailable
+                )
+            )
+        ]
+        
+        if interactor.isBackupOn {
+            mainCells.append(
+                .init(
+                    title: T.Backup.manageTitle,
+                    action: .manageBackup,
+                    isEnabled: interactor.isCloudBackupSynced || interactor.canDelete
+                )
+            )
+        }
         
         let cloudBackup = BackupMenuSection(
             title: T.Backup.cloudBackup,
-            cells: [
-                .init(
-                    icon: nil,
-                    title: T.Backup.icloudSync,
-                    accessory: .init(
-                        kind: .backup,
-                        isOn: interactor.isBackupOn,
-                        isActive: interactor.isBackupAvailable
-                    )
-                )
-            ],
+            cells: mainCells,
             footer: footer
         )
         
         let exportEnabled = interactor.exportEnabled
-        var cells: [BackupMenuCell] = [
+        var fileCells: [BackupMenuCell] = [
             .init(
                 title: T.Backup.import,
                 action: .importFile
             )
         ]
         if interactor.isBackupAllowed {
-            cells.append(
+            fileCells.append(
                 .init(
                     title: T.Backup.export,
                     action: .exportFile,
@@ -64,19 +77,30 @@ extension BackupMenuPresenter {
         }
         let fileBackup = BackupMenuSection(
             title: T.Backup.fileBackup,
-            cells: cells,
+            cells: fileCells,
             footer: T.Backup.fileBackupOfflineTitle
         )
         
-        let cloudBackupDeletition = BackupMenuSection(
-            title: T.Backup.backupRemoval,
+        // TODO: Add TestFlight detection
+//        let cloudBackupNuke = BackupMenuSection(
+//            title: "DEBUG: Completely erase iCloud backup",
+//            cells: [
+//                .init(
+//                    title: "<ERASE>",
+//                    action: .debugEraseCloudBackup
+//                )
+//            ]
+//        )
+        
+        let cloudBackupPairWatch = BackupMenuSection(
+            title: T.Backup.managePairedWatchesTitle,
             cells: [
                 .init(
-                    title: T.Backup.delete2fasBackup,
-                    action: .deleteCloudBackup
+                    title: T.Backup.managePairedWatchesTitleShort,
+                    action: .manageAppleWatch
                 )
             ],
-            footer: T.Backup.warningIntroduction
+            footer: T.Backup.managePairedWatchesFooter
         )
         
         var menu: [BackupMenuSection] = []
@@ -88,7 +112,10 @@ extension BackupMenuPresenter {
         menu.append(fileBackup)
                 
         if interactor.isCloudBackupConnected && interactor.isBackupAllowed {
-            menu.append(cloudBackupDeletition)
+//            menu.append(cloudBackupNuke)
+            if interactor.encryptionTypeIsUser && interactor.isCloudBackupSynced {
+                menu.append(cloudBackupPairWatch)
+            }
         }
 
         return menu

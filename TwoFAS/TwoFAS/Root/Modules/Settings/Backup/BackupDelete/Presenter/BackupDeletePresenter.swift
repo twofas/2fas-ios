@@ -33,11 +33,11 @@ final class BackupDeletePresenter {
 
 extension BackupDeletePresenter {
     func handleCancel() {
-        flowController.toClose()
+        flowController.toClose(didDelete: false)
     }
     
     func handleDeleteBackup() {
         interactor.deleteBackup()
-        flowController.toClose()
+        flowController.toClose(didDelete: true)
     }
 }

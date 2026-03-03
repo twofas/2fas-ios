@@ -289,12 +289,4 @@ struct AddingServiceManuallyView: View {
             AddingServiceErrorTextView(text: secretError)
         }
     }
-    
-    func dismissKeyboard() {
-        guard let window = UIApplication.shared.connectedScenes
-            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
-              let keyWindow = window.windows.first(where: { $0.isKeyWindow })
-        else { return }
-        keyWindow.endEditing(true)
-    }
 }

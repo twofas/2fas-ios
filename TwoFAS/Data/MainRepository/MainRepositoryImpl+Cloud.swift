@@ -134,6 +134,60 @@ extension MainRepositoryImpl {
         }
     }
     
+    var cloudShowiCloudOverQuota: (() -> Void)? {
+        get {
+            syncMigration.showiCloudOverQuota
+        }
+        set {
+            syncMigration.showiCloudOverQuota = newValue
+        }
+    }
+    
+    var cloudShowMigrationGeneralError: (() -> Void)? {
+        get {
+            syncMigration.showMigrationGeneralError
+        }
+        set {
+            syncMigration.showMigrationGeneralError = newValue
+        }
+    }
+    
+    var cloudShowiCloudDisabledByUser: (() -> Void)? {
+        get {
+            syncMigration.showiCloudDisabledByUser
+        }
+        set {
+            syncMigration.showiCloudDisabledByUser = newValue
+        }
+    }
+    
+    var cloudShowiCloudUserProblem: (() -> Void)? {
+        get {
+            syncMigration.showiCloudUserProblem
+        }
+        set {
+            syncMigration.showiCloudUserProblem = newValue
+        }
+    }
+    
+    var cloudShowiCloudError: ((NSError?) -> Void)? {
+        get {
+            syncMigration.showiCloudError
+        }
+        set {
+            syncMigration.showiCloudError = newValue
+        }
+    }
+    
+    var cloudShowiCloudIncorrectService: ((String) -> Void)? {
+        get {
+            syncMigration.showiCloudIncorrectSerice
+        }
+        set {
+            syncMigration.showiCloudIncorrectSerice = newValue
+        }
+    }
+    
     func cloudChangePassword(_ password: String) {
         syncMigration.changePassword(password)
     }

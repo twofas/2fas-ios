@@ -66,9 +66,14 @@ final class SyncEncryptionHandler {
         if let savedSystemKey = keychain[data: systemKeyKey] {
             cachedSystemKey = SymmetricKey(data: savedSystemKey)
         } else {
-            let randomStr = String.random(length: 128)
-            guard let createdSystemKey = generateKey(for: randomStr) else {
-                Log("SyncEncryptionHandler: Can't create system key!", module: .cloudSync, severity: .error)
+            let randomStr = String.random(length: 256)
+            guard let hexPassword = normalizeStringIntoHEXData(randomStr) else {
+                Log("SyncEncryptionHandler: Can't create HEX from randomStr", module: .cloudSync, severity: .error)
+                return
+            }
+            
+            guard let createdSystemKey = Data(hexString: hexPassword) else {
+                Log("SyncEncryptionHandler: Can't create HEX from Key", module: .cloudSync, severity: .error)
                 return
             }
             keychain[data: systemKeyKey] = createdSystemKey

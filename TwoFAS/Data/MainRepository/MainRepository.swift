@@ -161,6 +161,12 @@ protocol MainRepository: AnyObject {
     var cloudShowiCloudIsEncryptedByUser: (() -> Void)? { get set }
     var cloudShowiCloudIsEncryptedBySystem: (() -> Void)? { get set }
     var cloudShowNeverVersionOfiCloud: (() -> Void)? { get set }
+    var cloudShowiCloudOverQuota: (() -> Void)? { get set }
+    var cloudShowMigrationGeneralError: (() -> Void)? { get set }
+    var cloudShowiCloudDisabledByUser: (() -> Void)? { get set }
+    var cloudShowiCloudUserProblem: (() -> Void)? { get set }
+    var cloudShowiCloudError: ((NSError?) -> Void)? { get set }
+    var cloudShowiCloudIncorrectService: ((String) -> Void)? { get set }
     var cloudCurrentEncryption: CloudEncryptionType? { get }
     func cloudChangePassword(_ password: String)
     func cloudSetMissingUserPassword(_ password: String)

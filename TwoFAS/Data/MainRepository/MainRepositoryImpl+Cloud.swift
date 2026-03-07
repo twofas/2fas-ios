@@ -78,6 +78,10 @@ extension MainRepositoryImpl {
         userDefaultsRepository.saveSuccessSyncDate(date)
     }
     
+    func syncDebugReloadAllKeys() {
+        SyncInstance.debugReloadAllKeys()
+    }
+    
     // Migration
     
     var cloudShowMigrationToNewestVersion: (() -> Void)? {

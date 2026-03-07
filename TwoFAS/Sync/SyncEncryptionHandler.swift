@@ -95,6 +95,14 @@ final class SyncEncryptionHandler {
         
         cachedEncryptionReference = encrypt(reference)
     }
+    
+    func debugReloadAllKeys() {
+        keychain[data: saltKey] = nil
+        keychain[data: systemKeyKey] = nil
+        userDefaults.removeObject(forKey: userKeyKey)
+        setUsedKey(.system)
+        initialize()
+    }
 }
 
 extension SyncEncryptionHandler: SyncEncryptionHandling {

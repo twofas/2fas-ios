@@ -26,6 +26,7 @@ public enum SyncInstance {
     private static var logDataChangeImpl: LogDataChangeImpl!
     private static var syncMigrationHandler: SyncMigrationHandling!
     private static var watchPairHandler: WatchPairHandling!
+    private static var syncEncryptionHandler: SyncEncryptionHandler!
     
     public static func initialize(
         commonSectionHandler: CommonSectionHandler,
@@ -146,10 +147,15 @@ public enum SyncInstance {
         syncMigrationHandler = syncMigrationHandlerInstance
         logDataChangeImpl = LogDataChangeImpl(logHandler: logHandler)
         watchPairHandler = watchPairHandlerInstance
+        Self.syncEncryptionHandler = syncEncryptionHandler
     }
     public static func getCloudHandler() -> CloudHandlerType { cloudHandler }
     public static func getSyncMigrationHandler() -> SyncMigrationHandling { syncMigrationHandler }
     public static func getWatchPairHandler() -> WatchPairHandling { watchPairHandler }
+    
+    public static func debugReloadAllKeys() {
+        syncEncryptionHandler.debugReloadAllKeys()
+    }
     
     public static func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],

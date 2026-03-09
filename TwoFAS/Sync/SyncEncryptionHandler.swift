@@ -66,13 +66,17 @@ final class SyncEncryptionHandler {
         if let savedSystemKey = keychain[data: systemKeyKey] {
             cachedSystemKey = SymmetricKey(data: savedSystemKey)
         } else {
-            let randomStr = String.random(length: 128)
-            guard let createdSystemKey = generateKey(for: randomStr) else {
+            var keyData = Data(count: 32)
+            let result = keyData.withUnsafeMutableBytes {
+                SecRandomCopyBytes(kSecRandomDefault, 32, $0.baseAddress!)
+            }
+            guard result == errSecSuccess else {
                 Log("SyncEncryptionHandler: Can't create system key!", module: .cloudSync, severity: .error)
                 return
             }
-            keychain[data: systemKeyKey] = createdSystemKey
-            cachedSystemKey = SymmetricKey(data: createdSystemKey)
+            
+            keychain[data: systemKeyKey] = keyData
+            cachedSystemKey = SymmetricKey(data: keyData)
         }
         
         if var usedKeyValue = usedKey() {
@@ -90,6 +94,14 @@ final class SyncEncryptionHandler {
         }
         
         cachedEncryptionReference = encrypt(reference)
+    }
+    
+    func debugReloadAllKeys() {
+        keychain[data: saltKey] = nil
+        keychain[data: systemKeyKey] = nil
+        userDefaults.removeObject(forKey: userKeyKey)
+        setUsedKey(.system)
+        initialize()
     }
 }
 

@@ -439,8 +439,6 @@
 		C25CB3BE2D877A390099FAFD /* RequirementCheckHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB3BC2D877A2C0099FAFD /* RequirementCheckHandler.swift */; };
 		C25CB3C12D8785020099FAFD /* MigrationHandlerWatchPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB3BF2D8784EF0099FAFD /* MigrationHandlerWatchPlaceholder.swift */; };
 		C25CB3C32D878BCD0099FAFD /* SyncEncryptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25CB3C22D878BC80099FAFD /* SyncEncryptionHandler.swift */; };
-		C25CB3C62D878C010099FAFD /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C25CB3C52D878C010099FAFD /* KeychainAccess */; };
-		C25CB3C92D878EA60099FAFD /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C25CB3C82D878EA60099FAFD /* KeychainAccess */; };
 		C25D5E782A64908200CA359B /* CameraLastPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25D5E772A64908200CA359B /* CameraLastPass.swift */; };
 		C25DCB2E2B8030B200871035 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25DCB2D2B8030B200871035 /* AccessManager.swift */; };
 		C25DCB2F2B80318C00871035 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25DCB2D2B8030B200871035 /* AccessManager.swift */; };
@@ -450,6 +448,11 @@
 		C25E8995266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E8993266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift */; };
 		C25F4FDB2622207F008F7755 /* TokensViewEmptySearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25F4FDA2622207F008F7755 /* TokensViewEmptySearchScreen.swift */; };
 		C260DCC22BC885F1007807CC /* ServiceCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C260DCC12BC885F1007807CC /* ServiceCellView.swift */; };
+		C260DF4C2F5B07D4009A0357 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C260DF4B2F5B07D4009A0357 /* KeychainAccess */; };
+		C260DF4E2F5B07DF009A0357 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C260DF4D2F5B07DF009A0357 /* KeychainAccess */; };
+		C260DF502F5B07EA009A0357 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C260DF4F2F5B07EA009A0357 /* KeychainAccess */; };
+		C260DF522F5B07F1009A0357 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C260DF512F5B07F1009A0357 /* KeychainAccess */; };
+		C260DF542F5B0806009A0357 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C260DF532F5B0806009A0357 /* KeychainAccess */; };
 		C2625F8C28BB853D00D84C5C /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F8B28BB853D00D84C5C /* AboutViewController.swift */; };
 		C2625F8E28BB858600D84C5C /* AboutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F8D28BB858600D84C5C /* AboutPresenter.swift */; };
 		C2625F9028BB85B100D84C5C /* AboutModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F8F28BB85B100D84C5C /* AboutModuleInteractor.swift */; };
@@ -460,7 +463,6 @@
 		C2627F3C2BC72EA0009F93A9 /* ServiceInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2627F3B2BC72EA0009F93A9 /* ServiceInteractor.swift */; };
 		C2633F1F265B045F0034B836 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2633F1E265B045F0034B836 /* UIApplication.swift */; };
 		C263E9C22D87901E00E98298 /* SignalArgon2 in Frameworks */ = {isa = PBXBuildFile; productRef = C263E9C12D87901E00E98298 /* SignalArgon2 */; };
-		C263E9C42D87902900E98298 /* SignalArgon2 in Frameworks */ = {isa = PBXBuildFile; productRef = C263E9C32D87902900E98298 /* SignalArgon2 */; };
 		C263E9C62D8791D100E98298 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263E9C52D8791CE00E98298 /* Data+.swift */; };
 		C263E9C72D8791D100E98298 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263E9C52D8791CE00E98298 /* Data+.swift */; };
 		C263F45A29900DED009B0837 /* MainMenuModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C263F45929900DED009B0837 /* MainMenuModels.swift */; };
@@ -502,7 +504,6 @@
 		C26B19362D90C6DE006FDDE0 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C26B19352D90C6DE006FDDE0 /* FirebaseMessaging */; };
 		C26B19382D90C73B006FDDE0 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C26B19372D90C73B006FDDE0 /* FirebaseCrashlytics */; };
 		C26B193A2D90CE04006FDDE0 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = C26B19392D90CE04006FDDE0 /* FirebaseCore */; };
-		C26B193C2D90D02B006FDDE0 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C26B193B2D90D02B006FDDE0 /* KeychainAccess */; };
 		C26BCE01281010A000CA6A9A /* SelectServiceModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE00281010A000CA6A9A /* SelectServiceModuleInteractor.swift */; };
 		C26BCE03281013A700CA6A9A /* SelectServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE02281013A700CA6A9A /* SelectServiceFlowController.swift */; };
 		C26BCE0528101E2D00CA6A9A /* SelectServiceNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE0428101E2D00CA6A9A /* SelectServiceNavigationFlowController.swift */; };
@@ -797,6 +798,7 @@
 		C29B9ADB2B1E859D00255A2C /* paypal.json in Resources */ = {isa = PBXBuildFile; fileRef = C29B9AD72B1E859D00255A2C /* paypal.json */; };
 		C29B9ADC2B1E859D00255A2C /* reddit.json in Resources */ = {isa = PBXBuildFile; fileRef = C29B9AD82B1E859D00255A2C /* reddit.json */; };
 		C29B9ADD2B1E859D00255A2C /* instagram.json in Resources */ = {isa = PBXBuildFile; fileRef = C29B9AD92B1E859D00255A2C /* instagram.json */; };
+		C29C5F9D2F5AFCA40096BF65 /* SignalArgon2 in Frameworks */ = {isa = PBXBuildFile; productRef = C29C5F9C2F5AFCA40096BF65 /* SignalArgon2 */; };
 		C29FEFF92756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FEFF82756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift */; };
 		C29FEFFB2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FEFFA2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift */; };
 		C2A026B32AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A026B22AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift */; };
@@ -1067,7 +1069,6 @@
 		C2CCEB612D8237AD0067FDCB /* MergeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CCEB5F2D8237A90067FDCB /* MergeHandler.swift */; };
 		C2CD687325FEC94400EFEFCF /* FormLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CD687225FEC94400EFEFCF /* FormLine.swift */; };
 		C2CE84A12814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CE84A02814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift */; };
-		C2CF23FE23623DE000B759DD /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = C2CF23FD23623DE000B759DD /* KeychainAccess */; };
 		C2CFA6A42AEEE9D500E574FC /* RootFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CFA6A32AEEE9D500E574FC /* RootFlowController.swift */; };
 		C2CFA6A62AEEF0CB00E574FC /* RootModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CFA6A52AEEF0CB00E574FC /* RootModuleInteractor.swift */; };
 		C2CFFCDD2007FDD600600AC6 /* CircleProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CFFCDC2007FDD600600AC6 /* CircleProgress.swift */; };
@@ -3273,7 +3274,7 @@
 			files = (
 				C2E53BA12B62DE45008E1E70 /* Common.framework in Frameworks */,
 				C278121F27F9F4C000F31453 /* SwCrypt in Frameworks */,
-				C2CF23FE23623DE000B759DD /* KeychainAccess in Frameworks */,
+				C260DF4E2F5B07DF009A0357 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3306,7 +3307,7 @@
 				C26B19322D90C5D8006FDDE0 /* FirebaseCrashlytics in Frameworks */,
 				C26B19302D90C5D8006FDDE0 /* FirebaseCore in Frameworks */,
 				C21F05C11FC761450038E28F /* PushNotifications.framework in Frameworks */,
-				C26B193C2D90D02B006FDDE0 /* KeychainAccess in Frameworks */,
+				C260DF4C2F5B07D4009A0357 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3323,10 +3324,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C25AAA3C290455B2005747C5 /* Protection.framework in Frameworks */,
-				C25CB3C62D878C010099FAFD /* KeychainAccess in Frameworks */,
 				C2E53BC42B62DF74008E1E70 /* Content.framework in Frameworks */,
 				C263E9C22D87901E00E98298 /* SignalArgon2 in Frameworks */,
 				C2E53BA62B62DE49008E1E70 /* Common.framework in Frameworks */,
+				C260DF502F5B07EA009A0357 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3342,10 +3343,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C274CA4F2BAB8C35008E7212 /* CommonWatch.framework in Frameworks */,
-				C25CB3C92D878EA60099FAFD /* KeychainAccess in Frameworks */,
-				C263E9C42D87902900E98298 /* SignalArgon2 in Frameworks */,
 				C274CA832BAB8C70008E7212 /* ProtectionWatch.framework in Frameworks */,
 				C274CA532BAB8C35008E7212 /* ContentWatch.framework in Frameworks */,
+				C29C5F9D2F5AFCA40096BF65 /* SignalArgon2 in Frameworks */,
+				C260DF542F5B0806009A0357 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3357,6 +3358,7 @@
 				C274CA882BAB8CBD008E7212 /* CommonWatch.framework in Frameworks */,
 				C2A4D3492BC0B6C00001587C /* Base32Watch.framework in Frameworks */,
 				C274CA902BAB8CC5008E7212 /* ProtectionWatch.framework in Frameworks */,
+				C260DF522F5B07F1009A0357 /* KeychainAccess in Frameworks */,
 				C274C9DF2BAB8B2E008E7212 /* SyncWatch.framework in Frameworks */,
 				C213BC5B2BAC3DBF000794C9 /* StorageWatch.framework in Frameworks */,
 				C274CA8C2BAB8CC0008E7212 /* ContentWatch.framework in Frameworks */,
@@ -8831,8 +8833,8 @@
 			);
 			name = Protection;
 			packageProductDependencies = (
-				C2CF23FD23623DE000B759DD /* KeychainAccess */,
 				C278121E27F9F4C000F31453 /* SwCrypt */,
+				C260DF4D2F5B07DF009A0357 /* KeychainAccess */,
 			);
 			productName = Protection;
 			productReference = C2147CB5205D78600001D011 /* Protection.framework */;
@@ -8898,7 +8900,7 @@
 				C26B192F2D90C5D8006FDDE0 /* FirebaseCore */,
 				C26B19312D90C5D8006FDDE0 /* FirebaseCrashlytics */,
 				C26B19332D90C5D8006FDDE0 /* FirebaseMessaging */,
-				C26B193B2D90D02B006FDDE0 /* KeychainAccess */,
+				C260DF4B2F5B07D4009A0357 /* KeychainAccess */,
 			);
 			productName = TwoFAS;
 			productReference = C23666731FB2644900989ACA /* TwoFAS.app */;
@@ -8943,8 +8945,8 @@
 			);
 			name = Sync;
 			packageProductDependencies = (
-				C25CB3C52D878C010099FAFD /* KeychainAccess */,
 				C263E9C12D87901E00E98298 /* SignalArgon2 */,
+				C260DF4F2F5B07EA009A0357 /* KeychainAccess */,
 			);
 			productName = Sync;
 			productReference = C24D1C1A253C744E0029D27D /* Sync.framework */;
@@ -8986,8 +8988,8 @@
 			);
 			name = SyncWatch;
 			packageProductDependencies = (
-				C25CB3C82D878EA60099FAFD /* KeychainAccess */,
-				C263E9C32D87902900E98298 /* SignalArgon2 */,
+				C29C5F9C2F5AFCA40096BF65 /* SignalArgon2 */,
+				C260DF532F5B0806009A0357 /* KeychainAccess */,
 			);
 			productName = Sync;
 			productReference = C274C9C62BAB89C7008E7212 /* SyncWatch.framework */;
@@ -12081,7 +12083,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 5.4.0;
+				MARKETING_VERSION = 5.4.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
@@ -12143,7 +12145,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 5.4.0;
+				MARKETING_VERSION = 5.4.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
@@ -14202,22 +14204,32 @@
 			package = C23EBF102651276800FA9E81 /* XCRemoteSwiftPackageReference "Kronos" */;
 			productName = Kronos;
 		};
-		C25CB3C52D878C010099FAFD /* KeychainAccess */ = {
+		C260DF4B2F5B07D4009A0357 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C27ABAD423297F470008F9B5 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
 		};
-		C25CB3C82D878EA60099FAFD /* KeychainAccess */ = {
+		C260DF4D2F5B07DF009A0357 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C27ABAD423297F470008F9B5 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		C260DF4F2F5B07EA009A0357 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C27ABAD423297F470008F9B5 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		C260DF512F5B07F1009A0357 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C27ABAD423297F470008F9B5 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		C260DF532F5B0806009A0357 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C27ABAD423297F470008F9B5 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
 		};
 		C263E9C12D87901E00E98298 /* SignalArgon2 */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C25CB3C72D878E2B0099FAFD /* XCRemoteSwiftPackageReference "Argon2" */;
-			productName = SignalArgon2;
-		};
-		C263E9C32D87902900E98298 /* SignalArgon2 */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C25CB3C72D878E2B0099FAFD /* XCRemoteSwiftPackageReference "Argon2" */;
 			productName = SignalArgon2;
@@ -14252,11 +14264,6 @@
 			package = C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCore;
 		};
-		C26B193B2D90D02B006FDDE0 /* KeychainAccess */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C27ABAD423297F470008F9B5 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
-			productName = KeychainAccess;
-		};
 		C278121E27F9F4C000F31453 /* SwCrypt */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */;
@@ -14266,6 +14273,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C28FD19D2E4028450053B0BE /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
+		};
+		C29C5F9C2F5AFCA40096BF65 /* SignalArgon2 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C25CB3C72D878E2B0099FAFD /* XCRemoteSwiftPackageReference "Argon2" */;
+			productName = SignalArgon2;
 		};
 		C2AE5F622ADC395800AED670 /* PKHUD */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -14286,11 +14298,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C2C0A9862DA33A72000A1772 /* XCRemoteSwiftPackageReference "EFQRCode" */;
 			productName = EFQRCode;
-		};
-		C2CF23FD23623DE000B759DD /* KeychainAccess */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C27ABAD423297F470008F9B5 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
-			productName = KeychainAccess;
 		};
 /* End XCSwiftPackageProductDependency section */
 

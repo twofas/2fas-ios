@@ -162,6 +162,7 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
         stateChanged?()
         
         mainRepository.debugEraseCloudBackup()
+        mainRepository.syncDebugReloadAllKeys()
     }
     
     func synchronizeBackup() {

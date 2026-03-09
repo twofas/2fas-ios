@@ -29,6 +29,12 @@ public protocol SyncMigrationHandling: AnyObject {
     var showiCloudIsEncryptedBySystem: (() -> Void)? { get set }
     var showNeverVersionOfiCloud: (() -> Void)? { get set }
     var currentEncryption: CloudEncryptionType? { get }
+    var showiCloudOverQuota: (() -> Void)? { get set }
+    var showMigrationGeneralError: (() -> Void)? { get set }
+    var showiCloudDisabledByUser: (() -> Void)? { get set }
+    var showiCloudUserProblem: (() -> Void)? { get set }
+    var showiCloudError: ((NSError?) -> Void)? { get set }
+    var showiCloudIncorrectSerice: ((String) -> Void)? { get set }
     
     func changePassword(_ password: String)
     func migrateToSystemPassword()
@@ -52,6 +58,12 @@ final class SyncMigrationHandler {
     var showiCloudIsEncryptedByUser: (() -> Void)?
     var showiCloudIsEncryptedBySystem: (() -> Void)?
     var showNeverVersionOfiCloud: (() -> Void)?
+    var showiCloudOverQuota: (() -> Void)?
+    var showMigrationGeneralError: (() -> Void)?
+    var showiCloudDisabledByUser: (() -> Void)?
+    var showiCloudUserProblem: (() -> Void)?
+    var showiCloudError: ((NSError?) -> Void)?
+    var showiCloudIncorrectSerice: ((String) -> Void)?
     var synchronize: (() -> Void)?
     var enable: (() -> Void)?
     
@@ -164,7 +176,24 @@ extension SyncMigrationHandler: SyncMigrationHandling {
             case .cloudEncryptedSystem:
                 canChangePassword = true
                 showiCloudIsEncryptedBySystem?()
-            default: break
+            case .overQuota:
+                canChangePassword = false
+                showiCloudOverQuota?()
+            case .disabledByUser:
+                canChangePassword = false
+                showiCloudDisabledByUser?()
+            case .useriCloudProblem:
+                canChangePassword = false
+                showiCloudUserProblem?()
+            case .error(let error):
+                canChangePassword = false
+                showiCloudError?(error)
+            case .incorrectService(let serviceName):
+                canChangePassword = false
+                showiCloudIncorrectSerice?(serviceName)
+            default:
+                canChangePassword = false
+                showMigrationGeneralError?()
             }
         case .disabledAvailable:
             canChangePassword = false

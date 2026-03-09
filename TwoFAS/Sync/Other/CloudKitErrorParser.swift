@@ -75,23 +75,34 @@ final class CloudKitErrorParser {
             return .retry(after: seconds)
         }
         
-        guard let errorCode = CKError.Code(rawValue: error.code) else {
+        guard var errorCode = CKError.Code(rawValue: error.code) else {
             Log("Can't get error code from \(error). Purging and retrying", module: .cloudSync)
             return .purgeAndRetry(after: minSecondsToRetry)
         }
         
         Log("Error code: \(errorCode)", module: .cloudSync)
         
+        if let ckError = error as? CKError,
+           case .partialFailure = ckError.code,
+           let partials = ckError.partialErrorsByItemID {
+            if partials.values.contains(where: { ($0 as? CKError)?.code == .quotaExceeded }) {
+                return .stop(reason: .quotaExceeded)
+            }
+            if let first = partials.values.first as? CKError  {
+                errorCode = first.code
+            }
+        }
+        
         switch errorCode {
         case .internalError, .zoneNotFound, .serverResponseLost:
             return .purgeAndRetry(after: minSecondsToRetry)
             
         case .networkUnavailable,
-            .networkFailure,
-            .serviceUnavailable,
-            .requestRateLimited,
-            .limitExceeded,
-            .zoneBusy:
+                .networkFailure,
+                .serviceUnavailable,
+                .requestRateLimited,
+                .limitExceeded,
+                .zoneBusy:
             let seconds = TimeInterval.random(in: minSecondsToRetry...maxSecondsToRetry)
             return .purgeAndRetry(after: seconds)
             
@@ -101,7 +112,7 @@ final class CloudKitErrorParser {
             
         case .changeTokenExpired, .serverRecordChanged:
             return .purgeAndRetry(after: minSecondsToRetry)
-        
+            
         case .unknownItem, .constraintViolation, .invalidArguments:
             return .resetAndRetry(after: minSecondsToRetry)
             
@@ -109,12 +120,12 @@ final class CloudKitErrorParser {
             return nil
             
         case .missingEntitlement,
-            .serverRejectedRequest,
-            .managedAccountRestricted,
-            .badContainer,
-            .incompatibleVersion,
-            .badDatabase,
-            .accountTemporarilyUnavailable:
+                .serverRejectedRequest,
+                .managedAccountRestricted,
+                .badContainer,
+                .incompatibleVersion,
+                .badDatabase,
+                .accountTemporarilyUnavailable:
             return .stop(reason: .iCloudProblem)
             
         case .quotaExceeded:

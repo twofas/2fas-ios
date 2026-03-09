@@ -12,6 +12,10 @@ import Foundation
 internal enum T {
   /// Open source licenses
   internal static let aboutLicenses = T.tr("Localizable", "about_licenses", fallback: "Open source licenses")
+  /// Dynamic Colors
+  internal static let appearanceDynamicColors = T.tr("Localizable", "appearance_dynamic_colors", fallback: "Dynamic Colors")
+  /// Dynamically change the app colors based on your wallpaper.
+  internal static let appearanceDynamicColorsDescription = T.tr("Localizable", "appearance_dynamic_colors_description", fallback: "Dynamically change the app colors based on your wallpaper.")
   /// There was a problem with your Google Drive account permissions. Try to turn the sync on and off.
   internal static let backupErrorAuth = T.tr("Localizable", "backup_error_auth", fallback: "There was a problem with your Google Drive account permissions. Try to turn the sync on and off.")
   /// An error occurred during backup decryption. Please set your password again.
@@ -157,6 +161,14 @@ internal enum T {
   internal static let nsCameraUsageDescription = T.tr("Localizable", "NSCameraUsageDescription", fallback: "Used for scanning QR-codes")
   /// You can unlock the application using Face ID
   internal static let nsFaceIDUsageDescription = T.tr("Localizable", "NSFaceIDUsageDescription", fallback: "You can unlock the application using Face ID")
+  /// A secure, local-first **Password Manager – 2FAS Pass**, designed to work alongside 2FAS Auth, keeping your Authenticator exactly as it is.
+  internal static let passPromoBannerMsg = T.tr("Localizable", "pass_promo_banner_msg", fallback: "A secure, local-first **Password Manager – 2FAS Pass**, designed to work alongside 2FAS Auth, keeping your Authenticator exactly as it is.")
+  /// Don't show again
+  internal static let passPromoBannerNegativeCta = T.tr("Localizable", "pass_promo_banner_negative_cta", fallback: "Don't show again")
+  /// Go to Store
+  internal static let passPromoBannerPositiveCta = T.tr("Localizable", "pass_promo_banner_positive_cta", fallback: "Go to Store")
+  /// We built something new for you!
+  internal static let passPromoBannerTitle = T.tr("Localizable", "pass_promo_banner_title", fallback: "We built something new for you!")
   /// %d day ago
   internal static func pastDurationDays(_ p1: Int) -> String {
     return T.tr("Localizable", "past_duration_days", p1, fallback: "%d day ago")
@@ -372,8 +384,8 @@ internal enum T {
     internal static let encryptionEnterPassword = T.tr("Localizable", "backup__encryption_enter_password", fallback: "Enter password")
     /// Select System or Custom password
     internal static let encryptionMethodFooter = T.tr("Localizable", "backup__encryption_method_footer", fallback: "Select System or Custom password")
-    /// Password is used to encrypt your data. If you lose it, you won't be able to recover data from the Cloud backup.
-    internal static let encryptionPasswordDescription = T.tr("Localizable", "backup__encryption_password_description", fallback: "Password is used to encrypt your data. If you lose it, you won't be able to recover data from the Cloud backup.")
+    /// This password is used to encrypt your data. If you lose it, you won't be able to recover data from the iCloud backup.
+    internal static let encryptionPasswordDescription = T.tr("Localizable", "backup__encryption_password_description", fallback: "This password is used to encrypt your data. If you lose it, you won't be able to recover data from the iCloud backup.")
     /// Select encryption type
     internal static let encryptionSelect = T.tr("Localizable", "backup__encryption_select", fallback: "Select encryption type")
     /// Encryption
@@ -474,14 +486,14 @@ internal enum T {
     internal static let managePairedWatchesTitle = T.tr("Localizable", "backup__manage_paired_watches_title", fallback: "Manage paired Apple Watches")
     /// Apple Watches
     internal static let managePairedWatchesTitleShort = T.tr("Localizable", "backup__manage_paired_watches_title_short", fallback: "Apple Watches")
-    /// Manage backup
-    internal static let manageTitle = T.tr("Localizable", "backup__manage_title", fallback: "Manage backup")
-    /// Your backup is encrypted with a System key. This key will be shared amongst your apps that use iCloud Keychain. Remember to have that option turned on. If you want to use your password, you can do that in the Cloud backup settings after migration.
-    internal static let migrationDescription = T.tr("Localizable", "backup__migration_description", fallback: "Your backup is encrypted with a System key. This key will be shared amongst your apps that use iCloud Keychain. Remember to have that option turned on. If you want to use your password, you can do that in the Cloud backup settings after migration.")
-    /// Don't turn off the app!
-    internal static let migrationSubtitle = T.tr("Localizable", "backup__migration_subtitle", fallback: "Don't turn off the app!")
-    /// Migrating Cloud backup
-    internal static let migrationTitle = T.tr("Localizable", "backup__migration_title", fallback: "Migrating Cloud backup")
+    /// Manage Backup
+    internal static let manageTitle = T.tr("Localizable", "backup__manage_title", fallback: "Manage Backup")
+    /// We're upgrading the app to bring you new awesome security features.
+    internal static let migrationDescription = T.tr("Localizable", "backup__migration_description", fallback: "We're upgrading the app to bring you new awesome security features.")
+    /// Please wait...
+    internal static let migrationSubtitle = T.tr("Localizable", "backup__migration_subtitle", fallback: "Please wait...")
+    /// Upgrade in progress
+    internal static let migrationTitle = T.tr("Localizable", "backup__migration_title", fallback: "Upgrade in progress")
     /// Missing System Key
     internal static let missingSystemKey = T.tr("Localizable", "backup__missing_system_key", fallback: "Missing System Key")
     /// %d new services
@@ -506,8 +518,8 @@ internal enum T {
     internal static let passwordRulesDescription = T.tr("Localizable", "backup__password_rules_description", fallback: "Only letters, digits, spaces and special characters (!@#$%^&*()-_) are allowed.")
     /// Password set successfully
     internal static let passwordSet = T.tr("Localizable", "backup__password_set", fallback: "Password set successfully")
-    /// Enter your password to additionally protect the contents of your backup. If you forget your password, you will need to remove the backup and start over.
-    internal static let passwordSetDescription = T.tr("Localizable", "backup__password_set_description", fallback: "Enter your password to additionally protect the contents of your backup. If you forget your password, you will need to remove the backup and start over.")
+    /// Enter your password to additionally protect the contents of your backup. If you forget this password, you will need to remove the backup and start over.
+    internal static let passwordSetDescription = T.tr("Localizable", "backup__password_set_description", fallback: "Enter your password to additionally protect the contents of your backup. If you forget this password, you will need to remove the backup and start over.")
     /// Passwords don't match
     internal static let passwordsDontMatch = T.tr("Localizable", "backup__passwords_dont_match", fallback: "Passwords don't match")
     /// Go to backup settings
@@ -660,8 +672,8 @@ internal enum T {
     internal static let pairingDate = T.tr("Localizable", "browser__pairing_date", fallback: "Date paired")
     /// This QR code wasn’t recognized, and 2FAS could not pair this device with the browser extension. Please try again.
     internal static let pairingFailedDescription = T.tr("Localizable", "browser__pairing_failed_description", fallback: "This QR code wasn’t recognized, and 2FAS could not pair this device with the browser extension. Please try again.")
-    /// Pairing failed :(
-    internal static let pairingFailedTitle = T.tr("Localizable", "browser__pairing_failed_title", fallback: "Pairing failed :(")
+    /// Pairing failed
+    internal static let pairingFailedTitle = T.tr("Localizable", "browser__pairing_failed_title", fallback: "Pairing failed")
     /// 2FAS will send you a Push Notification whenever you log in to your online services using this web browser. You will no longer need to re-type your tokens for each use.
     internal static let pairingSuccessfulDescription = T.tr("Localizable", "browser__pairing_successful_description", fallback: "2FAS will send you a Push Notification whenever you log in to your online services using this web browser. You will no longer need to re-type your tokens for each use.")
     /// Pairing successful!

@@ -542,6 +542,8 @@ internal enum T {
     internal static let sectionDescription = T.tr("Localizable", "backup__section_description", fallback: "RECOMMENDED: iCloud Sync keeps your Tokens secure in Apple iCloud in case of loss or damage to your device. Keep it turned on.")
     /// RECOMMENDED: Google Drive Sync keeps your Tokens secure in Google Drive in case of loss or damage to your device. Keep it turned on.
     internal static let sectionDescriptionGoogle = T.tr("Localizable", "backup__section_description_google", fallback: "RECOMMENDED: Google Drive Sync keeps your Tokens secure in Google Drive in case of loss or damage to your device. Keep it turned on.")
+    /// NOTE: iCloud Sync stores encryption keys in iCloud Keychain. If iCloud Keychain is disabled, please export your keys manually. Without doing so, restoring your data or syncing to other devices will not be possible.
+    internal static let sectionNote = T.tr("Localizable", "backup__section_note", fallback: "NOTE: iCloud Sync stores encryption keys in iCloud Keychain. If iCloud Keychain is disabled, please export your keys manually. Without doing so, restoring your data or syncing to other devices will not be possible.")
     /// %d Services imported.
     internal static func servicesImportedCount(_ p1: Int) -> String {
       return T.tr("Localizable", "backup__services_imported_count", p1, fallback: "%d Services imported.")

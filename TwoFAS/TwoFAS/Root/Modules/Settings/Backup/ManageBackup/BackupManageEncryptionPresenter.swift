@@ -57,6 +57,32 @@ extension BackupManageEncryptionPresenter {
         case .decrypt: flowController.toRemovePassword()
         case .recrypt: flowController.toChangePassword()
         case .clear: flowController.toDeleteBackup()
+        case .exportKeys:
+            interactor.exportKeys { [weak self] result in
+                guard let self else { return }
+                switch result {
+                case .success:
+                    self.flowController.toExportKeys(result)
+                case .failure(let error):
+                    self.flowController.toKeysError(error.localizedDescription)
+                }
+            }
+        case .importKeys:
+            flowController.toImportKeysWarning { [weak self] in
+                guard let self else { return }
+                self.flowController.toImportKeys { [weak self] url in
+                    guard let self else { return }
+                    self.interactor.importKeys(url: url) { [weak self] result in
+                        guard let self else { return }
+                        switch result {
+                        case .success:
+                            self.flowController.importKeysSuccess()
+                        case .failure:
+                            self.flowController.toKeysImportError()
+                        }
+                    }
+                }
+            }
         }
     }
 }

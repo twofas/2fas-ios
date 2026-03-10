@@ -27,6 +27,8 @@ protocol BackupManageEncryptionModuleInteracting: AnyObject {
     var canDelete: Bool { get }
     var isCloudBackupSynced: Bool { get }
     var encryptionTypeIsUser: Bool { get }
+    func exportKeys(completion: @escaping (Result<URL, Error>) -> Void)
+    func importKeys(url: URL, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 final class BackupManageEncryptionModuleInteractor {
@@ -68,6 +70,12 @@ extension BackupManageEncryptionModuleInteractor: BackupManageEncryptionModuleIn
     
     var encryptionTypeIsUser: Bool {
         cloudBackup.encryptionTypeIsUser
+    }
+    
+    func exportKeys(completion: @escaping (Result<URL, Error>) -> Void) {
+    }
+    
+    func importKeys(url: URL, completion: @escaping (Result<Void, Error>) -> Void) {
     }
 }
 

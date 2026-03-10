@@ -21,7 +21,7 @@ import Foundation
 
 extension BackupMenuPresenter {
     func buildMenu() -> [BackupMenuSection] {
-        var footer = T.Backup.sectionDescription
+        var footer = "\(T.Backup.sectionDescription)\n\n\(T.Backup.sectionNote)"
         let state = interactor.iCloudState.description
         let dateStr: String = {
             if let date = interactor.syncSuccessDate {

@@ -96,6 +96,18 @@ final class SyncEncryptionHandler {
         cachedEncryptionReference = encrypt(reference)
     }
     
+    func exportKeys() -> (salt: Data, systemKey: Data)? {
+        guard let salt = cachedSalt, let systemKey = cachedSystemKey else {
+            Log("SyncEncryptionHandler: Cannot export keys – salt or system key missing", module: .cloudSync, severity: .error)
+            return nil
+        }
+        let systemKeyData = systemKey.withUnsafeBytes { Data($0) }
+        return (salt, systemKeyData)
+    }
+    
+    func importKeys(salt: Data, systemKey: Data) {
+    }
+    
     func debugReloadAllKeys() {
         keychain[data: saltKey] = nil
         keychain[data: systemKeyKey] = nil

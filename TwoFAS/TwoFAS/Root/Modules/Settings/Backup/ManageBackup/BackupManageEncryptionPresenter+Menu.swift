@@ -49,8 +49,7 @@ extension BackupManageEncryptionPresenter {
                     ],
                     footer: T.Backup.warningIntroduction
                 )
-            ]
-)
+            ])
         } else {
             menu.append(contentsOf: [
                 .init(
@@ -71,8 +70,7 @@ extension BackupManageEncryptionPresenter {
                     ],
                     footer: T.Backup.warningIntroduction
                 )
-            ]
-)
+            ])
         }
         return menu
     }

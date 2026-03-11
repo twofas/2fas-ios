@@ -51,6 +51,9 @@ public protocol CloudBackupStateInteracting: AnyObject {
     var successSyncDate: Date? { get }
     func saveSuccessSyncDate()
     func clearSaveSuccessSync()
+    
+    func exportKeys() -> (salt: Data, systemKey: Data)?
+    func importKeys(salt: Data, systemKey: Data, password: String?)
 }
 
 /// Use one instance per use case
@@ -178,6 +181,14 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
     func clearSaveSuccessSync() {
         Log("CloudBackupStateInteractor - clearSavesuccessSync", module: .interactor)
         mainRepository.saveSuccessSyncDate(nil)
+    }
+    
+    func exportKeys() -> (salt: Data, systemKey: Data)? {
+        mainRepository.cloudExportKeys()
+    }
+    
+    func importKeys(salt: Data, systemKey: Data, password: String?) {
+        mainRepository.cloudImportKeys(salt: salt, systemKey: systemKey, password: password)
     }
 }
 

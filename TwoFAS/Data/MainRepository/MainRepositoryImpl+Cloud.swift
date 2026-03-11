@@ -215,4 +215,14 @@ extension MainRepositoryImpl {
     func cloudVerifyUserPassword(_ password: String) -> Bool {
         syncMigration.verifyUserPassword(password)
     }
+    
+    // Encryption
+    
+    func cloudExportKeys() -> (salt: Data, systemKey: Data)? {
+        SyncInstance.exportKeys()
+    }
+    
+    func cloudImportKeys(salt: Data, systemKey: Data, password: String?) {
+        SyncInstance.importKeys(salt: salt, systemKey: systemKey, password: password)
+    }
 }

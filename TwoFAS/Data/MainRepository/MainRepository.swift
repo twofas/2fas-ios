@@ -177,6 +177,8 @@ protocol MainRepository: AnyObject {
     // MARK: Encryption
     func cloudExportKeys() -> (salt: Data, systemKey: Data)?
     func cloudImportKeys(salt: Data, systemKey: Data, password: String?)
+    func cloudPackKeys(salt: Data, systemKey: Data) -> Data?
+    func cloudUnpackKeys(from jsonData: Data) -> (salt: Data, systemKey: Data)?
     
     // MARK: - Import
     var fileURL: URL? { get set }

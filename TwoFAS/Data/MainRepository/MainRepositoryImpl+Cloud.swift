@@ -225,4 +225,21 @@ extension MainRepositoryImpl {
     func cloudImportKeys(salt: Data, systemKey: Data, password: String?) {
         SyncInstance.importKeys(salt: salt, systemKey: systemKey, password: password)
     }
+    
+    func cloudPackKeys(salt: Data, systemKey: Data) -> Data? {
+        let exchange = CloudKeysExchange(salt: salt, systemKey: systemKey)
+        guard let jsonData = try? JSONEncoder().encode(exchange) else {
+            Log("Can't create CloudKeysExchange json format", severity: .error)
+            return nil
+        }
+        return jsonData
+    }
+    
+    func cloudUnpackKeys(from jsonData: Data) -> (salt: Data, systemKey: Data)? {
+        guard let exchange = try? JSONDecoder().decode(CloudKeysExchange.self, from: jsonData) else {
+            Log("Can't unpack CloudKeysExchange from data file", severity: .error)
+            return nil
+        }
+        return (salt: exchange.salt, systemKey: exchange.systemKey)
+    }
 }

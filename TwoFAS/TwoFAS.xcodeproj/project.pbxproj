@@ -498,6 +498,7 @@
 		C2698B702986CA3C00EBC179 /* MainTabFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B6F2986CA3C00EBC179 /* MainTabFlowController.swift */; };
 		C2698B722986F6E800EBC179 /* UITabBarController+addTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2698B712986F6E800EBC179 /* UITabBarController+addTab.swift */; };
 		C26A5FE3290475EA00A5A620 /* Sync4-Sync5.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C26A5FE2290475EA00A5A620 /* Sync4-Sync5.xcmappingmodel */; };
+		C26AC9322F6217A000ADFE62 /* CloudKeysExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26AC9312F62179600ADFE62 /* CloudKeysExchange.swift */; };
 		C26B19302D90C5D8006FDDE0 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = C26B192F2D90C5D8006FDDE0 /* FirebaseCore */; };
 		C26B19322D90C5D8006FDDE0 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C26B19312D90C5D8006FDDE0 /* FirebaseCrashlytics */; };
 		C26B19342D90C5D8006FDDE0 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C26B19332D90C5D8006FDDE0 /* FirebaseMessaging */; };
@@ -2501,6 +2502,7 @@
 		C2698B6F2986CA3C00EBC179 /* MainTabFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabFlowController.swift; sourceTree = "<group>"; };
 		C2698B712986F6E800EBC179 /* UITabBarController+addTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController+addTab.swift"; sourceTree = "<group>"; };
 		C26A5FE2290475EA00A5A620 /* Sync4-Sync5.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = "Sync4-Sync5.xcmappingmodel"; sourceTree = "<group>"; };
+		C26AC9312F62179600ADFE62 /* CloudKeysExchange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKeysExchange.swift; sourceTree = "<group>"; };
 		C26BCE00281010A000CA6A9A /* SelectServiceModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServiceModuleInteractor.swift; sourceTree = "<group>"; };
 		C26BCE02281013A700CA6A9A /* SelectServiceFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServiceFlowController.swift; sourceTree = "<group>"; };
 		C26BCE0428101E2D00CA6A9A /* SelectServiceNavigationFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectServiceNavigationFlowController.swift; sourceTree = "<group>"; };
@@ -5141,6 +5143,7 @@
 		C240485627652E170076376E /* DataTypes */ = {
 			isa = PBXGroup;
 			children = (
+				C26AC9312F62179600ADFE62 /* CloudKeysExchange.swift */,
 				C2AF24782E7B5A9C001475AF /* AppState.swift */,
 				C2A2D23228F7513400B5D91E /* ExchangeDataFormat.swift */,
 				C21BC51C25B3660E00B15F99 /* ExchangeData.swift */,
@@ -11046,6 +11049,7 @@
 				C2E7C3C42ADB2B9C00478D89 /* MainRepository.swift in Sources */,
 				C2E7C3EE2ADB2BB400478D89 /* FileInteractor.swift in Sources */,
 				C2AE5F5F2ADC370F00AED670 /* ShortDateTimeFormatter.swift in Sources */,
+				C26AC9322F6217A000ADFE62 /* CloudKeysExchange.swift in Sources */,
 				C2CACFC02AFFB7F7001E0F8E /* LoginInteractor.swift in Sources */,
 				C274C76F2ADD3C9C00B8AAC1 /* TokenHandler.swift in Sources */,
 				C2EF7B1A2DA99BE700BAA559 /* MainRepositoryImpl+WatchPair.swift in Sources */,

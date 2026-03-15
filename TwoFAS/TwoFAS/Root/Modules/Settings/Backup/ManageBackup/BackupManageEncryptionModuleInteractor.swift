@@ -120,8 +120,11 @@ extension BackupManageEncryptionModuleInteractor: BackupManageEncryptionModuleIn
         password: String?,
         completion: @escaping (Result<Void, BackupManageEncryptionImportError>) -> Void
     ) {
-        guard let data = try? Data(contentsOf: url) else {
-            completion(.failure(.cannotOpenFile))
+        let dataResult = readFileAt(url: url)
+        guard case .success(let data) = dataResult else {
+            if case .failure(let error) = dataResult {
+                completion(.failure(error))
+            }
             return
         }
         guard let keys = cloudBackup.unpackKeys(from: data) else {
@@ -134,6 +137,37 @@ extension BackupManageEncryptionModuleInteractor: BackupManageEncryptionModuleIn
 }
 
 private extension BackupManageEncryptionModuleInteractor {
+    func readFileAt(url: URL) -> Result<Data, BackupManageEncryptionImportError> {
+        if url.startAccessingSecurityScopedResource() {
+            defer { url.stopAccessingSecurityScopedResource() }
+            var readData: Data?
+            var readError: Error?
+            let coordinator = NSFileCoordinator()
+            coordinator.coordinate(readingItemAt: url, options: [.withoutChanges], error: nil) { coordinatedURL in
+                do {
+                    readData = try Data(contentsOf: coordinatedURL)
+                } catch {
+                    readError = error
+                }
+            }
+            if let error = readError {
+                Log("BackupManageEncryptionModuleInteractor: Cannot read file from iCloud/document provider: \(error)", module: .interactor, severity: .error)
+                return .failure(.cannotOpenFile)
+            }
+            guard let data = readData else {
+                return .failure(.cannotOpenFile)
+            }
+            return .success(data)
+        }
+        do {
+            let data = try Data(contentsOf: url)
+            return .success(data)
+        } catch {
+            Log("BackupManageEncryptionModuleInteractor: Cannot read file: \(error)", module: .interactor, severity: .error)
+            return .failure(.cannotOpenFile)
+        }
+    }
+    
     @objc
     func syncStateChanged() {
         reload?()

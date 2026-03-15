@@ -61,8 +61,8 @@ extension BackupManageEncryptionPresenter {
             interactor.exportKeys { [weak self] result in
                 guard let self else { return }
                 switch result {
-                case .success:
-                    self.flowController.toExportKeys(result)
+                case .success(let url):
+                    self.flowController.toExportKeys(url: url)
                 case .failure(let error):
                     self.flowController.toKeysError(error.localizedDescription)
                 }
@@ -70,15 +70,21 @@ extension BackupManageEncryptionPresenter {
         case .importKeys:
             flowController.toImportKeysWarning { [weak self] in
                 guard let self else { return }
-                self.flowController.toImportKeys { [weak self] url in
+                self.flowController.toAskEncryptionTypeForImport { [weak self] choice in
                     guard let self else { return }
-                    self.interactor.importKeys(url: url) { [weak self] result in
-                        guard let self else { return }
-                        switch result {
-                        case .success:
-                            self.flowController.importKeysSuccess()
-                        case .failure:
-                            self.flowController.toKeysImportError()
+                    switch choice {
+                    case .systemKey:
+                        self.flowController.toImportKeys { [weak self] url in
+                            guard let self else { return }
+                            self.runImportKeys(url: url, password: nil)
+                        }
+                    case .customPassword:
+                        self.flowController.toCollectPasswordForImport { [weak self] password in
+                            guard let self else { return }
+                            self.flowController.toImportKeys { [weak self] url in
+                                guard let self else { return }
+                                self.runImportKeys(url: url, password: password)
+                            }
                         }
                     }
                 }
@@ -91,5 +97,17 @@ private extension BackupManageEncryptionPresenter {
     func reload() {
         let menu = buildMenu()
         view?.reload(with: menu)
+    }
+    
+    func runImportKeys(url: URL, password: String?) {
+        interactor.importKeys(url: url, password: password) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success:
+                self.flowController.importKeysSuccess()
+            case .failure:
+                self.flowController.toKeysImportError()
+            }
+        }
     }
 }

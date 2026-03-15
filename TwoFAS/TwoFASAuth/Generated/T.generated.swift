@@ -468,6 +468,12 @@ internal enum T {
     internal static func incorrectSecret(_ p1: Any) -> String {
       return T.tr("Localizable", "backup__incorrect_secret", String(describing: p1), fallback: "Couldn't backup Tokens because \"%@\" secret contains invalid characters. Remove it from list and try again")
     }
+    /// System Key
+    internal static let keyImportSystemKey = T.tr("Localizable", "backup__key_import_system_key", fallback: "System Key")
+    /// Failed to import keys.
+    internal static let keysImportError = T.tr("Localizable", "backup__keys_import_error", fallback: "Failed to import keys.")
+    /// Importing keys will overwrite your current encryption keys. Continue?
+    internal static let keysImportWarning = T.tr("Localizable", "backup__keys_import_warning", fallback: "Importing keys will overwrite your current encryption keys. Continue?")
     /// Local file
     internal static let localFileTitle = T.tr("Localizable", "backup__local_file_title", fallback: "Local file")
     /// List is empty. Pair Watch using + button
@@ -542,8 +548,8 @@ internal enum T {
     internal static let sectionDescription = T.tr("Localizable", "backup__section_description", fallback: "RECOMMENDED: iCloud Sync keeps your Tokens secure in Apple iCloud in case of loss or damage to your device. Keep it turned on.")
     /// RECOMMENDED: Google Drive Sync keeps your Tokens secure in Google Drive in case of loss or damage to your device. Keep it turned on.
     internal static let sectionDescriptionGoogle = T.tr("Localizable", "backup__section_description_google", fallback: "RECOMMENDED: Google Drive Sync keeps your Tokens secure in Google Drive in case of loss or damage to your device. Keep it turned on.")
-    /// NOTE: iCloud Sync stores encryption keys in iCloud Keychain. If iCloud Keychain is disabled, please export your keys manually. Without doing so, restoring your data or syncing to other devices will not be possible.
-    internal static let sectionNote = T.tr("Localizable", "backup__section_note", fallback: "NOTE: iCloud Sync stores encryption keys in iCloud Keychain. If iCloud Keychain is disabled, please export your keys manually. Without doing so, restoring your data or syncing to other devices will not be possible.")
+    /// NOTE: iCloud Sync stores encryption keys in iCloud Keychain. If iCloud Keychain is disabled, please export your keys manually from Manage Backup section. Without doing so, restoring your data or syncing to other devices will not be possible.
+    internal static let sectionNote = T.tr("Localizable", "backup__section_note", fallback: "NOTE: iCloud Sync stores encryption keys in iCloud Keychain. If iCloud Keychain is disabled, please export your keys manually from Manage Backup section. Without doing so, restoring your data or syncing to other devices will not be possible.")
     /// %d Services imported.
     internal static func servicesImportedCount(_ p1: Int) -> String {
       return T.tr("Localizable", "backup__services_imported_count", p1, fallback: "%d Services imported.")

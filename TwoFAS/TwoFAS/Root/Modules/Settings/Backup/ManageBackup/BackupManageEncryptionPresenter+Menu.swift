@@ -72,6 +72,26 @@ extension BackupManageEncryptionPresenter {
                 )
             ])
         }
+        
+        menu.append(contentsOf: [
+            .init(
+                title: "Encryption keys",
+                cells: [
+                    .init(
+                        title: "Export",
+                        action: .exportKeys,
+                        isEnabled: true
+                    ),
+                    .init(
+                        title: "Import",
+                        action: .importKeys,
+                        isEnabled: true
+                    )
+                ],
+                footer: "iCloud Sync stores encryption keys in iCloud Keychain. If iCloud Keychain is disabled, export your keys manually — otherwise, restoring your data or syncing to other devices will not be possible. Note that importing keys will overwrite your current keys. If you are experiencing sync issues on multiple devices, export the keys from a device where sync is working and import them manually on the affected devices."
+            )
+        ])
+        
         return menu
     }
 }

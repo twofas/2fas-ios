@@ -51,6 +51,13 @@ extension BackupMenuPresenter {
                     isEnabled: interactor.isCloudBackupSynced || interactor.canDelete
                 )
             )
+            mainCells.append(
+                .init(
+                    title: T.Backup.encryptionTitle,
+                    action: .manageKeys,
+                    isEnabled: true
+                )
+            )
         }
         
         let cloudBackup = BackupMenuSection(

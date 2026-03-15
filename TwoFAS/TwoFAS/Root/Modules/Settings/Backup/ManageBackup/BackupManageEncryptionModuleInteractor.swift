@@ -21,36 +21,18 @@ import Foundation
 import Data
 import Common
 
-enum BackupManageEncryptionExportError: Error {
-    case noKeys
-    case fileWriteError(Error)
-}
-
-enum BackupManageEncryptionImportError: Error {
-    case cannotOpenFile
-    case cannotParseFile
-}
-
-
 protocol BackupManageEncryptionModuleInteracting: AnyObject {
     var isSyncing: Bool { get }
     var reload: Callback? { get set }
     var canDelete: Bool { get }
     var isCloudBackupSynced: Bool { get }
     var encryptionTypeIsUser: Bool { get }
-    func exportKeys(completion: @escaping (Result<URL, BackupManageEncryptionExportError>) -> Void)
-    func importKeys(
-        url: URL,
-        password: String?,
-        completion: @escaping (Result<Void, BackupManageEncryptionImportError>) -> Void
-    )
 }
 
 final class BackupManageEncryptionModuleInteractor {
     private let syncMigrationInteractor: SyncMigrationInteracting
     private let cloudBackup: CloudBackupStateInteracting
     private let notificationCenter: NotificationCenter
-    private let filenameKeys = "twofas_keys_"
     
     var reload: Callback?
     
@@ -87,87 +69,9 @@ extension BackupManageEncryptionModuleInteractor: BackupManageEncryptionModuleIn
     var encryptionTypeIsUser: Bool {
         cloudBackup.encryptionTypeIsUser
     }
-    
-    func exportKeys(completion: @escaping (Result<URL, BackupManageEncryptionExportError>) -> Void) {
-        guard let keys = cloudBackup.exportKeys(),
-              let fileContents = cloudBackup.packKeys(salt: keys.salt, systemKey: keys.systemKey)
-        else {
-            completion(.failure(.noKeys))
-            return
-        }
-        
-        let fileManager = FileManager.default
-        let tempDirectory = fileManager.temporaryDirectory
-        let filename = "\(filenameKeys)\(Date.timeIntervalSinceReferenceDate)"
-        let fileURL = URL(fileURLWithPath: tempDirectory.appendingPathComponent(filename).path())
-        
-        do {
-            try fileContents.write(to: fileURL, options: .atomic)
-        } catch {
-            Log("BackupManageEncryptionModuleInteractor: Failed to create temporary file \(filename): \(error)")
-            let errorCode = (error as NSError).code
-            let domain = (error as NSError).domain
-            Log("BackupManageEncryptionModuleInteractor: Error details - code: \(errorCode), domain: \(domain)")
-            completion(.failure(.fileWriteError(error)))
-            return
-        }
-        
-        completion(.success(fileURL))
-    }
-    
-    func importKeys(
-        url: URL,
-        password: String?,
-        completion: @escaping (Result<Void, BackupManageEncryptionImportError>) -> Void
-    ) {
-        let dataResult = readFileAt(url: url)
-        guard case .success(let data) = dataResult else {
-            if case .failure(let error) = dataResult {
-                completion(.failure(error))
-            }
-            return
-        }
-        guard let keys = cloudBackup.unpackKeys(from: data) else {
-            completion(.failure(.cannotParseFile))
-            return
-        }
-        cloudBackup.importKeys(salt: keys.salt, systemKey: keys.systemKey, password: password)
-        completion(.success(()))
-    }
 }
 
 private extension BackupManageEncryptionModuleInteractor {
-    func readFileAt(url: URL) -> Result<Data, BackupManageEncryptionImportError> {
-        if url.startAccessingSecurityScopedResource() {
-            defer { url.stopAccessingSecurityScopedResource() }
-            var readData: Data?
-            var readError: Error?
-            let coordinator = NSFileCoordinator()
-            coordinator.coordinate(readingItemAt: url, options: [.withoutChanges], error: nil) { coordinatedURL in
-                do {
-                    readData = try Data(contentsOf: coordinatedURL)
-                } catch {
-                    readError = error
-                }
-            }
-            if let error = readError {
-                Log("BackupManageEncryptionModuleInteractor: Cannot read file from iCloud/document provider: \(error)", module: .interactor, severity: .error)
-                return .failure(.cannotOpenFile)
-            }
-            guard let data = readData else {
-                return .failure(.cannotOpenFile)
-            }
-            return .success(data)
-        }
-        do {
-            let data = try Data(contentsOf: url)
-            return .success(data)
-        } catch {
-            Log("BackupManageEncryptionModuleInteractor: Cannot read file: \(error)", module: .interactor, severity: .error)
-            return .failure(.cannotOpenFile)
-        }
-    }
-    
     @objc
     func syncStateChanged() {
         reload?()

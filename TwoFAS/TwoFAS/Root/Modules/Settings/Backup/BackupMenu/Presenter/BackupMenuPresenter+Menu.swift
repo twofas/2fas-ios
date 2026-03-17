@@ -51,14 +51,15 @@ extension BackupMenuPresenter {
                     isEnabled: interactor.isCloudBackupSynced || interactor.canDelete
                 )
             )
-            mainCells.append(
-                .init(
-                    title: T.Backup.encryptionTitle,
-                    action: .manageKeys,
-                    isEnabled: true
-                )
-            )
         }
+        
+//        mainCells.append(
+//            .init(
+//                title: T.Backup.encryptionTitle,
+//                action: .manageKeys,
+//                isEnabled: true
+//            )
+//        )
         
         let cloudBackup = BackupMenuSection(
             title: T.Backup.cloudBackup,
@@ -89,15 +90,15 @@ extension BackupMenuPresenter {
         )
         
         // TODO: Add TestFlight detection
-//        let cloudBackupNuke = BackupMenuSection(
-//            title: "DEBUG: Completely erase iCloud backup",
-//            cells: [
-//                .init(
-//                    title: "<ERASE>",
-//                    action: .debugEraseCloudBackup
-//                )
-//            ]
-//        )
+        let cloudBackupNuke = BackupMenuSection(
+            title: "DEBUG: Completely erase iCloud backup",
+            cells: [
+                .init(
+                    title: "<ERASE>",
+                    action: .debugEraseCloudBackup
+                )
+            ]
+        )
         
         let cloudBackupPairWatch = BackupMenuSection(
             title: T.Backup.managePairedWatchesTitle,
@@ -117,6 +118,7 @@ extension BackupMenuPresenter {
         }
         
         menu.append(fileBackup)
+//        menu.append(cloudBackupNuke)
                 
         if interactor.isCloudBackupConnected && interactor.isBackupAllowed {
 //            menu.append(cloudBackupNuke)

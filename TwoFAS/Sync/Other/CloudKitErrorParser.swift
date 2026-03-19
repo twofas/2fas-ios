@@ -25,8 +25,8 @@ import Common
 import CommonWatch
 #endif
 
-enum CloudKitAction {
-    enum Reason {
+enum CloudKitAction: Equatable {
+    enum Reason: Equatable {
         case iCloudProblem
         case quotaExceeded
         case userDisablediCloud
@@ -45,6 +45,13 @@ enum CloudKitAction {
         case .stop: return 4
         }
     }
+    
+    var shoudStop: Bool {
+        switch self {
+        case .stop: true
+        default: false
+        }
+    }
 }
 
 extension Collection where Element == CloudKitAction {
@@ -59,40 +66,7 @@ final class CloudKitErrorParser {
     private let maxSecondsToRetry: TimeInterval = 1800
     private let midSecondsToRetry: TimeInterval = 600
     
-    func handle(error: NSError) -> CloudKitAction? {
-        let userInfo = error.userInfo
-        
-        Log("Handling error \(error)", module: .cloudSync)
-        
-        if error.isOffline {
-            Log("iCloud is offline, retrying in \(midSecondsToRetry)s", module: .cloudSync)
-            return .retry(after: midSecondsToRetry)
-        }
-        
-        if let retry = userInfo[CKErrorRetryAfterKey] as? NSNumber {
-            let seconds = TimeInterval(retry.doubleValue)
-            Log("Should retry in \(seconds) because of error: \(error). Purging and retrying", module: .cloudSync)
-            return .retry(after: seconds)
-        }
-        
-        guard var errorCode = CKError.Code(rawValue: error.code) else {
-            Log("Can't get error code from \(error). Purging and retrying", module: .cloudSync)
-            return .purgeAndRetry(after: minSecondsToRetry)
-        }
-        
-        Log("Error code: \(errorCode)", module: .cloudSync)
-        
-        if let ckError = error as? CKError,
-           case .partialFailure = ckError.code,
-           let partials = ckError.partialErrorsByItemID {
-            if partials.values.contains(where: { ($0 as? CKError)?.code == .quotaExceeded }) {
-                return .stop(reason: .quotaExceeded)
-            }
-            if let first = partials.values.first as? CKError  {
-                errorCode = first.code
-            }
-        }
-        
+    fileprivate func parseErrorCode(_ errorCode: CKError.Code, retryIn: TimeInterval?) -> CloudKitAction? {
         switch errorCode {
         case .internalError, .zoneNotFound, .serverResponseLost:
             return .purgeAndRetry(after: minSecondsToRetry)
@@ -103,7 +77,12 @@ final class CloudKitErrorParser {
                 .requestRateLimited,
                 .limitExceeded,
                 .zoneBusy:
-            let seconds = TimeInterval.random(in: minSecondsToRetry...maxSecondsToRetry)
+            let seconds = {
+                if let retryIn {
+                    return retryIn
+                }
+                return TimeInterval.random(in: minSecondsToRetry...maxSecondsToRetry)
+            }()
             return .purgeAndRetry(after: seconds)
             
         case .operationCancelled:
@@ -138,9 +117,45 @@ final class CloudKitErrorParser {
             return .stop(reason: .userDisablediCloud)
             
         default:
-            Log("No handler for error \(error)", module: .cloudSync)
+            Log("No handler for error code \(errorCode)", module: .cloudSync)
             return nil
         }
+    }
+    
+    func handle(error: NSError) -> CloudKitAction? {
+        let userInfo = error.userInfo
+        
+        Log("Handling error \(error)", module: .cloudSync)
+        
+        if error.isOffline {
+            Log("iCloud is offline, retrying in \(midSecondsToRetry)s", module: .cloudSync)
+            return .retry(after: midSecondsToRetry)
+        }
+        
+        guard var errorCode = CKError.Code(rawValue: error.code) else {
+            Log("Can't get error code from \(error). Purging and retrying", module: .cloudSync)
+            return .purgeAndRetry(after: minSecondsToRetry)
+        }
+        
+        let retryIn: TimeInterval? = {
+            guard let retry = userInfo[CKErrorRetryAfterKey] as? NSNumber else { return nil }
+            return TimeInterval(retry.doubleValue)
+        }()
+        
+        Log("Error code: \(errorCode), retry in: \(String(describing: retryIn))", module: .cloudSync)
+        
+        if let ckError = error as? CKError,
+           case .partialFailure = ckError.code,
+           let partials = ckError.partialErrorsByItemID {
+            if partials.values.contains(where: { ($0 as? CKError)?.code == .quotaExceeded }) {
+                return .stop(reason: .quotaExceeded)
+            }
+            if let first = partials.values.first as? CKError  {
+                errorCode = first.code
+            }
+        }
+        
+        return parseErrorCode(errorCode, retryIn: retryIn)
     }
 }
 // swiftlint:enable legacy_objc_type

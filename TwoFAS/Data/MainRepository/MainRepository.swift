@@ -174,6 +174,11 @@ protocol MainRepository: AnyObject {
     func cloudMigrateToSystemPassword()
     func cloudSwitchLocallyToUseSystemPassword()
     func cloudVerifyUserPassword(_ password: String) -> Bool
+    // MARK: Encryption
+    func cloudExportKeys() -> (salt: Data, systemKey: Data)?
+    func cloudImportKeys(salt: Data, systemKey: Data, password: String?)
+    func cloudPackKeys(salt: Data, systemKey: Data) -> Data?
+    func cloudUnpackKeys(from jsonData: Data) -> (salt: Data, systemKey: Data)?
     
     // MARK: - Import
     var fileURL: URL? { get set }

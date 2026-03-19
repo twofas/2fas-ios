@@ -157,6 +157,14 @@ public enum SyncInstance {
         syncEncryptionHandler.debugReloadAllKeys()
     }
     
+    public static func exportKeys() -> (salt: Data, systemKey: Data)? {
+        syncEncryptionHandler.exportKeys()
+    }
+    
+    public static func importKeys(salt: Data, systemKey: Data, password: String?) {
+        syncEncryptionHandler.importKeys(salt: salt, systemKey: systemKey, password: password)
+    }
+    
     public static func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void

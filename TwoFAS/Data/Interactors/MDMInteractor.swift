@@ -133,7 +133,7 @@ private extension MDMInteractor {
         if isBackupBlocked && cloudBackupStateInteractor.isBackupEnabled && !syncDisabled {
             Log("MDMInteractor - disableSyncIfNecessary - Clearing", module: .interactor)
             syncDisabled = true
-            mainRepository.clearBackup()
+            mainRepository.erase(completion: { _ in })
         }
     }
 }

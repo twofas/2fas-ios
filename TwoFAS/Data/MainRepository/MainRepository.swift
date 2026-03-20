@@ -135,19 +135,19 @@ protocol MainRepository: AnyObject {
     var secretSyncError: ((String) -> Void)? { get set }
     var isCloudBackupConnected: Bool { get }
     var isCloudBackupSynced: Bool { get }
+    var isCloudBackupSyncing: Bool { get }
     var successSyncDate: Date? { get }
     var cloudCurrentState: CloudState { get }
     func registerForCloudStateChanges(_ listener: @escaping CloudStateListener, id: CloudStateListenerID)
     func unregisterForCloudStageChanges(with id: CloudStateListenerID)
     func enableCloudBackup()
     func disableCloudBackup()
-    func clearBackup()
     func synchronizeBackup()
     func syncDidReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     )
-    func debugEraseCloudBackup()
+    func erase(completion: @escaping ResultCallback)
     func syncDebugReloadAllKeys()
     func saveSuccessSyncDate(_ date: Date?)
     // MARK: Watch Pair

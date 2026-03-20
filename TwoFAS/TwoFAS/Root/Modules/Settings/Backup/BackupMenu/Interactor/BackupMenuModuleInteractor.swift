@@ -25,21 +25,20 @@ protocol BackupMenuModuleInteracting: AnyObject {
     func startMonitoring()
     func stopMonitoring()
     
-    func debugErase()
+    func erase(completion: @escaping ResultCallback)
     
     var isBackupAllowed: Bool { get }
     var isBackupOn: Bool { get }
-    var canDelete: Bool { get }
     var exportEnabled: Bool { get }
     var isBackupAvailable: Bool { get }
     var isCloudBackupConnected: Bool { get }
+    var isCloudBackupSynced: Bool { get }
+    var isCloudBackupSyncing: Bool { get }
     var reload: Callback? { get set }
     var iCloudState: CloudState { get }
-    var isCloudBackupSynced: Bool { get }
     var encryptionTypeIsUser: Bool { get }
     
     func toggleBackup()
-    func clearBackup()
     
     var syncSuccessDate: Date? { get }
 }
@@ -65,8 +64,8 @@ extension BackupMenuModuleInteractor: BackupMenuModuleInteracting {
         !mdmInteractor.isBackupBlocked
     }
     
-    func debugErase() {
-        cloudBackup.debugErase()
+    func erase(completion: @escaping ResultCallback) {
+        cloudBackup.erase(completion: completion)
     }
     
     var reload: Callback? {
@@ -78,16 +77,16 @@ extension BackupMenuModuleInteractor: BackupMenuModuleInteracting {
         }
     }
     
-    var canDelete: Bool {
-        cloudBackup.canDelete
-    }
-    
     var iCloudState: CloudState {
         cloudBackup.iCloudState
     }
     
     var isCloudBackupSynced: Bool {
         cloudBackup.isCloudBackupSynced
+    }
+    
+    var isCloudBackupSyncing: Bool {
+        cloudBackup.isCloudBackupSyncing
     }
     
     var encryptionTypeIsUser: Bool {
@@ -120,10 +119,6 @@ extension BackupMenuModuleInteractor: BackupMenuModuleInteracting {
     
     func toggleBackup() {
         cloudBackup.toggleBackup()
-    }
-    
-    func clearBackup() {
-        cloudBackup.clearBackup()
     }
     
     var syncSuccessDate: Date? {

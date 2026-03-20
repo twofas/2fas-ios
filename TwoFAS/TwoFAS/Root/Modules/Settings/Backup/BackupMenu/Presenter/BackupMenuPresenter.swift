@@ -63,13 +63,13 @@ final class BackupMenuPresenter {
             flowController.toFileExport()
         case .manageAppleWatch:
             flowController.toManageAppleWatch()
-        case .debugEraseCloudBackup:
-            interactor.debugErase()
         case .manageBackup:
-            guard interactor.isCloudBackupSynced || interactor.canDelete else { return }
+            guard interactor.isCloudBackupSynced else { return }
             flowController.toManageBackup()
         case .manageKeys:
             flowController.toManageKeys()
+        case .advanced:
+            flowController.toAdvanced()
         }
     }
     

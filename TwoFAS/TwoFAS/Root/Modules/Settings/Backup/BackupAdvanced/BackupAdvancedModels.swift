@@ -20,32 +20,32 @@
 import UIKit
 import Data
 
-struct BackupManageEncryptionSection: TableViewSection {
+struct BackupAdvancedSection: TableViewSection {
     let title: String?
-    var cells: [BackupManageEncryptionCell]
+    var cells: [BackupAdvancedCell]
     let footer: String?
-    
-    init(title: String? = nil, cells: [BackupManageEncryptionCell], footer: String? = nil) {
+
+    init(title: String? = nil, cells: [BackupAdvancedCell], footer: String? = nil) {
         self.title = title
         self.cells = cells
         self.footer = footer
     }
 }
 
-struct BackupManageEncryptionCell: Hashable {
+struct BackupAdvancedCell: Hashable {
     enum Action: Hashable {
-        case encrypt
-        case decrypt
-        case recrypt
+        case exportKeys
+        case importKeys
+        case deleteBackup
     }
-    
+
     let title: String
     let action: Action
     let isEnabled: Bool
     var icon: UIImage {
         action.icon
     }
-    
+
     init(title: String, action: Action, isEnabled: Bool) {
         self.title = title
         self.action = action
@@ -53,12 +53,12 @@ struct BackupManageEncryptionCell: Hashable {
     }
 }
 
-extension BackupManageEncryptionCell.Action {
+extension BackupAdvancedCell.Action {
     var icon: UIImage {
         switch self {
-        case .encrypt: UIImage(systemName: "lock.icloud.fill")!
-        case .decrypt: UIImage(systemName: "lock.open.fill")!
-        case .recrypt: UIImage(systemName: "lock.open.rotation")!
+        case .exportKeys: UIImage(systemName: "arrow.up.document.fill")!
+        case .importKeys: UIImage(systemName: "square.and.arrow.down.on.square.fill")!
+        case .deleteBackup: UIImage(systemName: "xmark.icloud.fill")!
         }
     }
 }

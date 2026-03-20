@@ -23,9 +23,8 @@ extension BackupManageEncryptionPresenter {
     func buildMenu() -> [BackupManageEncryptionSection] {
         var menu: [BackupManageEncryptionSection] = []
         let modificationEnabled = interactor.isCloudBackupSynced
-        let canDelete = interactor.canDelete
         if interactor.encryptionTypeIsUser {
-            menu.append(contentsOf: [
+            menu.append(
                 .init(
                     title: T.Backup.encryptionTitle,
                     cells: [
@@ -41,17 +40,10 @@ extension BackupManageEncryptionPresenter {
                         )
                     ],
                     footer: T.Backup.encryptionPasswordDescription
-                ),
-                .init(
-                    title: T.Backup.backupRemoval,
-                    cells: [
-                        .init(title: T.Backup.delete2fasBackup, action: .clear, isEnabled: canDelete)
-                    ],
-                    footer: T.Backup.warningIntroduction
                 )
-            ])
+            )
         } else {
-            menu.append(contentsOf: [
+            menu.append(
                 .init(
                     title: T.Backup.encryptionTitle,
                     cells: [
@@ -62,15 +54,8 @@ extension BackupManageEncryptionPresenter {
                         )
                     ],
                     footer: T.Backup.encryptionPasswordDescription
-                ),
-                .init(
-                    title: T.Backup.backupRemoval,
-                    cells: [
-                        .init(title: T.Backup.delete2fasBackup, action: .clear, isEnabled: canDelete)
-                    ],
-                    footer: T.Backup.warningIntroduction
                 )
-            ])
+            )
         }
         
         return menu

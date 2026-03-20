@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 protocol BackupDeleteFlowControllerParent: AnyObject {
     func closeDeleteBackup(didDelete: Bool)
@@ -25,6 +26,7 @@ protocol BackupDeleteFlowControllerParent: AnyObject {
 
 protocol BackupDeleteFlowControlling: AnyObject {
     func toClose(didDelete: Bool)
+    func toError(_ error: Error, completion: @escaping Callback)
 }
 
 final class BackupDeleteFlowController: FlowController {
@@ -53,5 +55,15 @@ final class BackupDeleteFlowController: FlowController {
 extension BackupDeleteFlowController: BackupDeleteFlowControlling {
     func toClose(didDelete: Bool) {
         parent?.closeDeleteBackup(didDelete: didDelete)
+    }
+    
+    func toError(_ error: Error, completion: @escaping Callback) {
+        let alert = UIAlertController(
+            title: T.Commons.error,
+            message: error.localizedDescription,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: T.Commons.ok, style: .default, handler: { _ in completion() }))
+        _viewController.present(alert, animated: true)
     }
 }

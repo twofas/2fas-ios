@@ -36,6 +36,7 @@ extension MainRepositoryImpl {
     }
     var isCloudBackupConnected: Bool { cloudHandler.isConnected }
     var isCloudBackupSynced: Bool { cloudHandler.isSynced }
+    var isCloudBackupSyncing: Bool { cloudHandler.isSyncing }
     var cloudCurrentState: CloudState { cloudHandler.currentState.toCloudState }
     
     func registerForCloudStateChanges(_ listener: @escaping CloudStateListener, id: CloudStateListenerID) {
@@ -55,12 +56,8 @@ extension MainRepositoryImpl {
         cloudHandler.disable(notify: true)
     }
     
-    func clearBackup() {
-        cloudHandler.clearBackup()
-    }
-    
-    func debugEraseCloudBackup() {
-        cloudHandler.debugErase()
+    func erase(completion: @escaping ResultCallback) {
+        cloudHandler.erase(completion: completion)
     }
     
     func synchronizeBackup() {

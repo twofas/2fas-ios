@@ -59,6 +59,7 @@ final class BackupMenuViewController: UIViewController {
         }
         
         view.backgroundColor = Theme.Colors.Table.background
+        navigationItem.backButtonDisplayMode = .minimal
         
         setupViewLayout()
                 

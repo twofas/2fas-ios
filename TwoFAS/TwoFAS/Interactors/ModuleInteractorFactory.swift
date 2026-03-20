@@ -452,4 +452,11 @@ final class ModuleInteractorFactory {
             cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "")
         )
     }
+
+    func backupAdvancedModuleInteractor() -> BackupAdvancedModuleInteracting {
+        BackupAdvancedModuleInteractor(
+            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor(),
+            cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "")
+        )
+    }
 }

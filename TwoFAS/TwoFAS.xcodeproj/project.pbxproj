@@ -172,6 +172,12 @@
 		C21931012EC12E03001354C9 /* BackupManageKeysPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21930FA2EC12E03001354C9 /* BackupManageKeysPresenter+Menu.swift */; };
 		C21931022EC12E04001354C9 /* BackupManageKeysModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21930FB2EC12E04001354C9 /* BackupManageKeysModels.swift */; };
 		C21931032EC12E05001354C9 /* BackupManageKeysModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21930FC2EC12E05001354C9 /* BackupManageKeysModuleInteractor.swift */; };
+		F359D064687935A24E141C3F /* BackupAdvancedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E918664AADE7F5DD559327 /* BackupAdvancedModels.swift */; };
+		6806E49D6D5E4129B7F5EC5F /* BackupAdvancedModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036C032DDB742CE60E5E5CED /* BackupAdvancedModuleInteractor.swift */; };
+		689BFDC04760BA4D88CC5754 /* BackupAdvancedPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457CB80D24D195EAE61078D1 /* BackupAdvancedPresenter.swift */; };
+		37D4E0A4779DA4A4A8EE9456 /* BackupAdvancedPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611EC89669C2A22EFC379597 /* BackupAdvancedPresenter+Menu.swift */; };
+		4CE561F22B1C3401C6C8910A /* BackupAdvancedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE37A2D2B9FF92AF3C436DC /* BackupAdvancedViewController.swift */; };
+		640506B23BFADE99A62F57C6 /* BackupAdvancedFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C201B53DF56E466612F9BA2 /* BackupAdvancedFlowController.swift */; };
 		C21987C727961BF600724E63 /* CameraErrorTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21987C627961BF600724E63 /* CameraErrorTemplate.swift */; };
 		C219CDBB278E270F00CBBF09 /* SettingsEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C219CDBA278E270F00CBBF09 /* SettingsEventController.swift */; };
 		C21A9E8227CBF55500FE4CC4 /* ComposeServiceNumberOfDigitsFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21A9E8127CBF55400FE4CC4 /* ComposeServiceNumberOfDigitsFlowController.swift */; };
@@ -2140,6 +2146,12 @@
 		C21930FA2EC12E03001354C9 /* BackupManageKeysPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackupManageKeysPresenter+Menu.swift"; sourceTree = "<group>"; };
 		C21930FB2EC12E04001354C9 /* BackupManageKeysModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupManageKeysModels.swift; sourceTree = "<group>"; };
 		C21930FC2EC12E05001354C9 /* BackupManageKeysModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupManageKeysModuleInteractor.swift; sourceTree = "<group>"; };
+		27E918664AADE7F5DD559327 /* BackupAdvancedModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupAdvancedModels.swift; sourceTree = "<group>"; };
+		036C032DDB742CE60E5E5CED /* BackupAdvancedModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupAdvancedModuleInteractor.swift; sourceTree = "<group>"; };
+		457CB80D24D195EAE61078D1 /* BackupAdvancedPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupAdvancedPresenter.swift; sourceTree = "<group>"; };
+		611EC89669C2A22EFC379597 /* BackupAdvancedPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackupAdvancedPresenter+Menu.swift"; sourceTree = "<group>"; };
+		2AE37A2D2B9FF92AF3C436DC /* BackupAdvancedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupAdvancedViewController.swift; sourceTree = "<group>"; };
+		5C201B53DF56E466612F9BA2 /* BackupAdvancedFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupAdvancedFlowController.swift; sourceTree = "<group>"; };
 		C21987C627961BF600724E63 /* CameraErrorTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraErrorTemplate.swift; sourceTree = "<group>"; };
 		C219CDBA278E270F00CBBF09 /* SettingsEventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsEventController.swift; sourceTree = "<group>"; };
 		C21A9E8127CBF55400FE4CC4 /* ComposeServiceNumberOfDigitsFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceNumberOfDigitsFlowController.swift; sourceTree = "<group>"; };
@@ -6848,9 +6860,23 @@
 			path = Importer;
 			sourceTree = "<group>";
 		};
+		DF9C0340C08C047D376083EC /* BackupAdvanced */ = {
+			isa = PBXGroup;
+			children = (
+				5C201B53DF56E466612F9BA2 /* BackupAdvancedFlowController.swift */,
+				036C032DDB742CE60E5E5CED /* BackupAdvancedModuleInteractor.swift */,
+				457CB80D24D195EAE61078D1 /* BackupAdvancedPresenter.swift */,
+				611EC89669C2A22EFC379597 /* BackupAdvancedPresenter+Menu.swift */,
+				27E918664AADE7F5DD559327 /* BackupAdvancedModels.swift */,
+				2AE37A2D2B9FF92AF3C436DC /* BackupAdvancedViewController.swift */,
+			);
+			path = BackupAdvanced;
+			sourceTree = "<group>";
+		};
 		C2AC21FB27660E0200271402 /* Backup */ = {
 			isa = PBXGroup;
 			children = (
+				DF9C0340C08C047D376083EC /* BackupAdvanced */,
 				C23185622EC6477F00DD1ABE /* BackupSetPassword */,
 				C21930E82EC10441001354C9 /* ManageBackup */,
 				C21930FD2EC12E06001354C9 /* ManageKeys */,
@@ -10329,6 +10355,12 @@
 				C2CA2B7D258699DA009FB700 /* FirstCodeAddedStatsController.swift in Sources */,
 				C2F9E1612D983A85004B7DFA /* SyncMigrationToNewestVersionViewController.swift in Sources */,
 				C284AF77276016EB00FEE810 /* BackupDeleteModuleInteractor.swift in Sources */,
+				F359D064687935A24E141C3F /* BackupAdvancedModels.swift in Sources */,
+				6806E49D6D5E4129B7F5EC5F /* BackupAdvancedModuleInteractor.swift in Sources */,
+				689BFDC04760BA4D88CC5754 /* BackupAdvancedPresenter.swift in Sources */,
+				37D4E0A4779DA4A4A8EE9456 /* BackupAdvancedPresenter+Menu.swift in Sources */,
+				4CE561F22B1C3401C6C8910A /* BackupAdvancedViewController.swift in Sources */,
+				640506B23BFADE99A62F57C6 /* BackupAdvancedFlowController.swift in Sources */,
 				C2EA566F28569A5E00026BFE /* AskForAuthPresenter.swift in Sources */,
 				C20E2DE52A7C27A500DB64BB /* GlobalState.swift in Sources */,
 				C2BDC6C41FC1AC0A00967D0E /* RootPresenter.swift in Sources */,

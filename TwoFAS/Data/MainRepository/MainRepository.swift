@@ -179,6 +179,7 @@ protocol MainRepository: AnyObject {
     func cloudImportKeys(salt: Data, systemKey: Data, password: String?)
     func cloudPackKeys(salt: Data, systemKey: Data) -> Data?
     func cloudUnpackKeys(from jsonData: Data) -> (salt: Data, systemKey: Data)?
+    func cloudReloadKeys()
     
     // MARK: - Import
     var fileURL: URL? { get set }

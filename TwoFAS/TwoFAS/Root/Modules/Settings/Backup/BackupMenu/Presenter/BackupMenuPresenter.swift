@@ -70,6 +70,8 @@ final class BackupMenuPresenter {
             flowController.toManageKeys()
         case .advanced:
             flowController.toAdvanced()
+        case .reloadKeys:
+            interactor.reloadKeys()
         }
     }
     

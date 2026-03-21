@@ -68,6 +68,7 @@ enum BackupNavigationAction: Hashable {
     case manageBackup
     case manageKeys
     case advanced
+    case reloadKeys
 }
 
 enum BackupNavigationToggle: Hashable {

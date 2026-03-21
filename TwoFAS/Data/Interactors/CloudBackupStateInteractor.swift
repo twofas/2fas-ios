@@ -55,6 +55,7 @@ public protocol CloudBackupStateInteracting: AnyObject {
     func importKeys(salt: Data, systemKey: Data, password: String?)
     func packKeys(salt: Data, systemKey: Data) -> Data?
     func unpackKeys(from jsonData: Data) -> (salt: Data, systemKey: Data)?
+    func reloadKeys()
 }
 
 /// Use one instance per use case
@@ -185,6 +186,10 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
     
     func unpackKeys(from jsonData: Data) -> (salt: Data, systemKey: Data)? {
         mainRepository.cloudUnpackKeys(from: jsonData)
+    }
+    
+    func reloadKeys() {
+        mainRepository.cloudReloadKeys()
     }
 }
 

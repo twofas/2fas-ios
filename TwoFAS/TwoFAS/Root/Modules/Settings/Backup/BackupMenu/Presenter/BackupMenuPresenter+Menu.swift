@@ -106,7 +106,7 @@ extension BackupMenuPresenter {
             }
         }
         
-        let advancedSection = BackupMenuSection(
+        var advancedSection = BackupMenuSection(
             cells: [
                 .init(
                     title: T.Settings.advanced,
@@ -116,8 +116,10 @@ extension BackupMenuPresenter {
             ],
         )
         
+        advancedSection.cells.append(.init(title: "[DEBUG] Reload Keys", action: .reloadKeys))
+
         menu.append(advancedSection)
-        
+                
         return menu
     }
 }

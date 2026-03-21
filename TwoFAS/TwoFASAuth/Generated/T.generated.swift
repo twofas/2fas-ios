@@ -352,8 +352,8 @@ internal enum T {
     internal static let cloudEncryptedUser = T.tr("Localizable", "backup__cloud_encrypted_user", fallback: "iCloud is encrypted with a custom password. Enter the password and enable sync.")
     /// Can't decrypt Cloud backup because it's encrypted using System Key, and you're using a custom password. Would you like to switch?
     internal static let cloudErrorMismatchKeyContent = T.tr("Localizable", "backup__cloud_error_mismatch_key_content", fallback: "Can't decrypt Cloud backup because it's encrypted using System Key, and you're using a custom password. Would you like to switch?")
-    /// Can't decrypt Cloud backup because there's no System Key. Check if iCloud Keychain sync is enabled and works correctly.
-    internal static let cloudErrorMissingSystemKeyContent = T.tr("Localizable", "backup__cloud_error_missing_system_key_content", fallback: "Can't decrypt Cloud backup because there's no System Key. Check if iCloud Keychain sync is enabled and works correctly.")
+    /// Cannot decrypt the iCloud Backup because no System Key was found. Make sure iCloud Keychain sync is enabled and working correctly. If you have a copy of the System Key that was used to create the Backup, you can import it manually in the Advanced section. You can also delete the Backup and start over.
+    internal static let cloudErrorMissingSystemKeyContent = T.tr("Localizable", "backup__cloud_error_missing_system_key_content", fallback: "Cannot decrypt the iCloud Backup because no System Key was found. Make sure iCloud Keychain sync is enabled and working correctly. If you have a copy of the System Key that was used to create the Backup, you can import it manually in the Advanced section. You can also delete the Backup and start over.")
     /// Can't sync with Cloud backup because it was migrated to a newer version of the app. Update the app to continue using Cloud backup.
     internal static let cloudErrorNewVersionContent = T.tr("Localizable", "backup__cloud_error_new_version_content", fallback: "Can't sync with Cloud backup because it was migrated to a newer version of the app. Update the app to continue using Cloud backup.")
     /// Cloud backup error
@@ -408,8 +408,8 @@ internal enum T {
     internal static let enterPasswordGoogleDriveMsg2 = T.tr("Localizable", "backup__enter_password_google_drive_msg2", fallback: "tap here to see how")
     /// Type in a password for this backup file to proceed with the import process
     internal static let enterPasswordTitle = T.tr("Localizable", "backup__enter_password_title", fallback: "Type in a password for this backup file to proceed with the import process")
-    /// Wrong password! Please try again
-    internal static let enterPasswordWrongPassword = T.tr("Localizable", "backup__enter_password_wrong_password", fallback: "Wrong password! Please try again")
+    /// Wrong password! Please try again. Also, check if iCloud Keychain is enabled, or import the required keys manually from the device that created this backup.
+    internal static let enterPasswordWrongPassword = T.tr("Localizable", "backup__enter_password_wrong_password", fallback: "Wrong password! Please try again. Also, check if iCloud Keychain is enabled, or import the required keys manually from the device that created this backup.")
     /// Error while exporting the file
     internal static let errorWhileExportingFile = T.tr("Localizable", "backup__error_while_exporting_file", fallback: "Error while exporting the file")
     /// Export
@@ -472,8 +472,8 @@ internal enum T {
     internal static let keyImportSystemKey = T.tr("Localizable", "backup__key_import_system_key", fallback: "System Key")
     /// Failed to import keys.
     internal static let keysImportError = T.tr("Localizable", "backup__keys_import_error", fallback: "Failed to import keys.")
-    /// Importing keys will overwrite your current encryption keys. Continue?
-    internal static let keysImportWarning = T.tr("Localizable", "backup__keys_import_warning", fallback: "Importing keys will overwrite your current encryption keys. Continue?")
+    /// Importing keys will overwrite your current encryption keys. Do you want to continue?
+    internal static let keysImportWarning = T.tr("Localizable", "backup__keys_import_warning", fallback: "Importing keys will overwrite your current encryption keys. Do you want to continue?")
     /// Local file
     internal static let localFileTitle = T.tr("Localizable", "backup__local_file_title", fallback: "Local file")
     /// List is empty. Pair Watch using + button
@@ -548,8 +548,8 @@ internal enum T {
     internal static let sectionDescription = T.tr("Localizable", "backup__section_description", fallback: "RECOMMENDED: iCloud Sync keeps your Tokens secure in Apple iCloud in case of loss or damage to your device. Keep it turned on.")
     /// RECOMMENDED: Google Drive Sync keeps your Tokens secure in Google Drive in case of loss or damage to your device. Keep it turned on.
     internal static let sectionDescriptionGoogle = T.tr("Localizable", "backup__section_description_google", fallback: "RECOMMENDED: Google Drive Sync keeps your Tokens secure in Google Drive in case of loss or damage to your device. Keep it turned on.")
-    /// NOTE: iCloud Sync stores encryption keys in iCloud Keychain. If iCloud Keychain is disabled, please export your keys manually from Manage Backup section. Without doing so, restoring your data or syncing to other devices will not be possible.
-    internal static let sectionNote = T.tr("Localizable", "backup__section_note", fallback: "NOTE: iCloud Sync stores encryption keys in iCloud Keychain. If iCloud Keychain is disabled, please export your keys manually from Manage Backup section. Without doing so, restoring your data or syncing to other devices will not be possible.")
+    /// NOTE: iCloud Sync stores encryption keys in iCloud Keychain. If iCloud Keychain is disabled, please export your keys manually from the Manage Backup section. Without doing so, restoring your data or syncing to other devices will not be possible.
+    internal static let sectionNote = T.tr("Localizable", "backup__section_note", fallback: "NOTE: iCloud Sync stores encryption keys in iCloud Keychain. If iCloud Keychain is disabled, please export your keys manually from the Manage Backup section. Without doing so, restoring your data or syncing to other devices will not be possible.")
     /// %d Services imported.
     internal static func servicesImportedCount(_ p1: Int) -> String {
       return T.tr("Localizable", "backup__services_imported_count", p1, fallback: "%d Services imported.")

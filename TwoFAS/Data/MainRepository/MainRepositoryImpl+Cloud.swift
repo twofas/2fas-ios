@@ -239,4 +239,8 @@ extension MainRepositoryImpl {
         }
         return (salt: exchange.salt, systemKey: exchange.systemKey)
     }
+    
+    func cloudReloadKeys() {
+        SyncInstance.debugReloadAllKeys()
+    }
 }

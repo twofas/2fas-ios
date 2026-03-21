@@ -306,7 +306,7 @@ final class CloudHandler: CloudHandlerType {
     var isSyncing: Bool {
         switch currentState {
         case .unknown: false
-        case .disabledNotAvailable(let reason): false
+        case .disabledNotAvailable: false
         case .disabledAvailable: false
         case .enabled(let sync):
             switch sync {

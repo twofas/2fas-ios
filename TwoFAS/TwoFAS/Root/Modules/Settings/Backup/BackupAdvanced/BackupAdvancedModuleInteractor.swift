@@ -78,7 +78,11 @@ extension BackupAdvancedModuleInteractor: BackupAdvancedModuleInteracting {
         do {
             try fileContents.write(to: fileURL, options: .atomic)
         } catch {
-            Log("BackupAdvancedModuleInteractor: Failed to create temporary file \(filename): \(error)", module: .interactor, severity: .error)
+            Log(
+                "BackupAdvancedModuleInteractor: Failed to create temporary file \(filename): \(error)",
+                module: .interactor,
+                severity: .error
+            )
             completion(.failure(.fileWriteError(error)))
             return
         }
@@ -127,7 +131,11 @@ private extension BackupAdvancedModuleInteractor {
                 }
             }
             if let error = readError {
-                Log("BackupAdvancedModuleInteractor: Cannot read file from iCloud/document provider: \(error)", module: .interactor, severity: .error)
+                Log(
+                    "BackupAdvancedModuleInteractor: Cannot read file from iCloud/document provider: \(error)",
+                    module: .interactor,
+                    severity: .error
+                )
                 return .failure(.cannotOpenFile)
             }
             guard let data = readData else {

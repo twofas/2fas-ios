@@ -40,7 +40,7 @@ protocol BackupAdvancedFlowControlling: AnyObject {
 final class BackupAdvancedFlowController: FlowController {
     private weak var parent: BackupAdvancedFlowControllerParent?
     private weak var navigationController: UINavigationController?
-    private var importKeysPickerDelegate: BackupAdvancedImportKeysDocumentPickerDelegate?
+    private weak var importKeysPickerDelegate: BackupAdvancedImportKeysDocumentPickerDelegate?
 
     static func push(
         in navigationController: UINavigationController,

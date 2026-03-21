@@ -150,7 +150,7 @@ final class CloudKitErrorParser {
             if partials.values.contains(where: { ($0 as? CKError)?.code == .quotaExceeded }) {
                 return .stop(reason: .quotaExceeded)
             }
-            if let first = partials.values.first as? CKError  {
+            if let first = partials.values.first as? CKError {
                 errorCode = first.code
             }
         }

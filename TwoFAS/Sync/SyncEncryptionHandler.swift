@@ -98,7 +98,11 @@ final class SyncEncryptionHandler {
     
     func exportKeys() -> (salt: Data, systemKey: Data)? {
         guard let salt = keychain[data: saltKey], let systemKey = keychain[data: systemKeyKey]  else {
-            Log("SyncEncryptionHandler: Cannot export keys – salt or system key missing", module: .cloudSync, severity: .error)
+            Log(
+                "SyncEncryptionHandler: Cannot export keys – salt or system key missing",
+                module: .cloudSync,
+                severity: .error
+            )
             return nil
         }
         return (salt, systemKey)

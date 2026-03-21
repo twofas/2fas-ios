@@ -124,7 +124,7 @@ extension RootFlowController: RootFlowControlling {
 }
 
 extension RootFlowController: IntroductionNavigationFlowControllerParent {
-    func introductionHasFinished (introViewController: UIViewController) {
+    func introductionHasFinished(introViewController: UIViewController) {
         UIView.animate(withDuration: Theme.Animations.Timing.quick, delay: 0, options: .curveEaseInOut) {
             introViewController.view.alpha = 0
         } completion: { _ in

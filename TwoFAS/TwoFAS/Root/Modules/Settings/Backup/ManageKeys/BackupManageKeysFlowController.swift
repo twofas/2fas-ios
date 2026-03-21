@@ -31,7 +31,7 @@ protocol BackupManageKeysFlowControlling: AnyObject {
 final class BackupManageKeysFlowController: FlowController {
     private weak var parent: BackupManageKeysFlowControllerParent?
     private weak var navigationController: UINavigationController?
-    private var importKeysPickerDelegate: ImportKeysDocumentPickerDelegate?
+    private weak var importKeysPickerDelegate: ImportKeysDocumentPickerDelegate?
     
     static func push(
         in navigationController: UINavigationController,
@@ -96,7 +96,12 @@ extension BackupManageKeysFlowController: BackupManageKeysFlowControlling {
         alert.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel))
         if let popover = alert.popoverPresentationController {
             popover.sourceView = viewController.view
-            popover.sourceRect = CGRect(x: viewController.view.bounds.midX, y: viewController.view.bounds.midY, width: 0, height: 0)
+            popover.sourceRect = CGRect(
+                x: viewController.view.bounds.midX,
+                y: viewController.view.bounds.midY,
+                width: 0,
+                height: 0
+            )
             popover.permittedArrowDirections = []
         }
         viewController.present(alert, animated: true)

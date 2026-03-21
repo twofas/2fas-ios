@@ -53,7 +53,11 @@ extension BackupManageKeysModuleInteractor: BackupManageKeysModuleInteracting {
         do {
             try fileContents.write(to: fileURL, options: .atomic)
         } catch {
-            Log("BackupManageKeysModuleInteractor: Failed to create temporary file \(filename): \(error)", module: .interactor, severity: .error)
+            Log(
+                "BackupManageKeysModuleInteractor: Failed to create temporary file \(filename): \(error)",
+                module: .interactor,
+                severity: .error
+            )
             completion(.failure(.fileWriteError(error)))
             return
         }
@@ -97,7 +101,11 @@ private extension BackupManageKeysModuleInteractor {
                 }
             }
             if let error = readError {
-                Log("BackupManageKeysModuleInteractor: Cannot read file from iCloud/document provider: \(error)", module: .interactor, severity: .error)
+                Log(
+                    "BackupManageKeysModuleInteractor: Cannot read file from iCloud/document provider: \(error)",
+                    module: .interactor,
+                    severity: .error
+                )
                 return .failure(.cannotOpenFile)
             }
             guard let data = readData else {

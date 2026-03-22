@@ -109,6 +109,7 @@ final class SyncEncryptionHandler {
     }
     
     func importKeys(salt: Data, systemKey: Data, password: String?) {
+        Log("SyncEncryptionHandler: importing keys, has password: \(password != nil)")
         keychain[data: saltKey] = salt
         cachedSalt = salt
         keychain[data: systemKeyKey] = systemKey

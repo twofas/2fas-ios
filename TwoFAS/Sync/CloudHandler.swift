@@ -328,17 +328,22 @@ final class CloudHandler: CloudHandlerType {
         disable(notify: false)
         
         clearHandler.erase { [weak self] result in
-            switch result {
-            case .success:
-                self?.setSystemEncryption?()
-                ConstStorage.cloudMigratedToV3 = true
-                
-                completion(.success(()))
-            case .failure(let error):
-                completion(.failure(error))
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    Log("Cloud Handler - did erase", module: .cloudSync)
+
+                    self?.setSystemEncryption?()
+                    ConstStorage.cloudMigratedToV3 = true
+                    
+                    completion(.success(()))
+                case .failure(let error):
+                    Log("Cloud Handler - error while erasing: \(error)", module: .cloudSync)
+                    
+                    completion(.failure(error))
+                }
+                self?.isClearing = false
             }
-            self?.isClearing = false
-            Log("Cloud Handler - did erase", module: .cloudSync)
         }
     }
     

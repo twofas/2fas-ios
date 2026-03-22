@@ -30,7 +30,7 @@ protocol BackupAdvancedFlowControlling: AnyObject {
     func toExportKeys(url: URL)
     func toKeysError(_ message: String)
     func toImportKeysWarning(confirm: @escaping () -> Void)
-    func toAskEncryptionTypeForImport(completion: @escaping (ImportEncryptionType) -> Void)
+    func toAskEncryptionTypeForImport(completion: @escaping (BackupAdvancedImportEncryptionType) -> Void)
     func toCollectPasswordForImport(completion: @escaping (String) -> Void)
     func toImportKeys(completion: @escaping (URL) -> Void)
     func importKeysSuccess()
@@ -40,7 +40,7 @@ protocol BackupAdvancedFlowControlling: AnyObject {
 final class BackupAdvancedFlowController: FlowController {
     private weak var parent: BackupAdvancedFlowControllerParent?
     private weak var navigationController: UINavigationController?
-    private weak var importKeysPickerDelegate: BackupAdvancedImportKeysDocumentPickerDelegate?
+    private var importKeysPickerDelegateHandler: BackupAdvancedImportKeysDocumentPickerDelegate?
 
     static func push(
         in navigationController: UINavigationController,
@@ -94,7 +94,7 @@ extension BackupAdvancedFlowController: BackupAdvancedFlowControlling {
         viewController.present(alert, animated: true)
     }
 
-    func toAskEncryptionTypeForImport(completion: @escaping (ImportEncryptionType) -> Void) {
+    func toAskEncryptionTypeForImport(completion: @escaping (BackupAdvancedImportEncryptionType) -> Void) {
         let alert = UIAlertController(
             title: T.Backup.encryptionTitle,
             message: T.Backup.encryptionMethodFooter,
@@ -140,9 +140,9 @@ extension BackupAdvancedFlowController: BackupAdvancedFlowControlling {
 
     func toImportKeys(completion: @escaping (URL) -> Void) {
         let delegate = BackupAdvancedImportKeysDocumentPickerDelegate(completion: completion) { [weak self] in
-            self?.importKeysPickerDelegate = nil
+            self?.importKeysPickerDelegateHandler = nil
         }
-        importKeysPickerDelegate = delegate
+        importKeysPickerDelegateHandler = delegate
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.data, .item])
         picker.delegate = delegate
         picker.allowsMultipleSelection = false

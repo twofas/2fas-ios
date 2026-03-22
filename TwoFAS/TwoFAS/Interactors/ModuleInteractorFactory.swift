@@ -446,12 +446,6 @@ final class ModuleInteractorFactory {
             cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "")
         )
     }
-    
-    func backupManageKeysModuleInteractor() -> BackupManageKeysModuleInteracting {
-        BackupManageKeysModuleInteractor(
-            cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "")
-        )
-    }
 
     func backupAdvancedModuleInteractor() -> BackupAdvancedModuleInteracting {
         BackupAdvancedModuleInteractor(

@@ -66,7 +66,6 @@ enum BackupNavigationAction: Hashable {
     case exportFile
     case manageAppleWatch
     case manageBackup
-    case manageKeys
     case advanced
     case reloadKeys
 }

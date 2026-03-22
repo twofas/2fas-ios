@@ -27,6 +27,7 @@ final class BackupDeleteViewController: UIViewController {
     private let spacer1 = UIView()
     
     private var deleteButton: LoadingContentButton?
+    private var cancelButton: LoadingContentButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +69,9 @@ final class BackupDeleteViewController: UIViewController {
                 .filledButton(
                     text: T.Commons.delete,
                     callback: { [weak self] in
+                        self?.deleteButton?.setState(.inactive)
+                        self?.cancelButton?.setState(.inactive)
+                        
                         self?.presenter.handleDeleteBackup()
                     },
                     created: { [weak self] button in
@@ -87,8 +91,9 @@ final class BackupDeleteViewController: UIViewController {
                 callback: { [weak self] in
                     self?.presenter.handleCancel()
                 },
-                created: { button in
+                created: { [weak self] button in
                     button.apply(MainContainerButtonStyling.textOnDark.value)
+                    self?.cancelButton = button
                 }
             )
         ])

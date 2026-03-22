@@ -66,8 +66,6 @@ final class BackupMenuPresenter {
         case .manageBackup:
             guard interactor.isCloudBackupSynced else { return }
             flowController.toManageBackup()
-        case .manageKeys:
-            flowController.toManageKeys()
         case .advanced:
             flowController.toAdvanced()
         case .reloadKeys:

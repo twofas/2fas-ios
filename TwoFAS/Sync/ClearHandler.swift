@@ -91,6 +91,7 @@ final class ClearHandler {
     }
     
     private func didFinish(_ error: Error?) {
+        isClearing = false
         if let error {
             callback?(.failure(error))
         } else {

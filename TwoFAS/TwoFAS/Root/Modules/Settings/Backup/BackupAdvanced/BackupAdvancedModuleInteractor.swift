@@ -21,14 +21,29 @@ import Foundation
 import Data
 import Common
 
+enum BackupAdvancedImportEncryptionType {
+    case systemKey
+    case customPassword
+}
+
+enum BackupAdvancedKeysExportError: Error {
+    case noKeys
+    case fileWriteError(Error)
+}
+
+enum BackupAdvancedKeysImportError: Error {
+    case cannotOpenFile
+    case cannotParseFile
+}
+
 protocol BackupAdvancedModuleInteracting: AnyObject {
     var isSyncing: Bool { get }
     var reload: Callback? { get set }
-    func exportKeys(completion: @escaping (Result<URL, BackupManageKeysExportError>) -> Void)
+    func exportKeys(completion: @escaping (Result<URL, BackupAdvancedKeysExportError>) -> Void)
     func importKeys(
         url: URL,
         password: String?,
-        completion: @escaping (Result<Void, BackupManageKeysImportError>) -> Void
+        completion: @escaping (Result<Void, BackupAdvancedKeysImportError>) -> Void
     )
 }
 
@@ -62,7 +77,7 @@ extension BackupAdvancedModuleInteractor: BackupAdvancedModuleInteracting {
         syncMigrationInteractor.currentCloudState == .enabled(sync: .syncing)
     }
 
-    func exportKeys(completion: @escaping (Result<URL, BackupManageKeysExportError>) -> Void) {
+    func exportKeys(completion: @escaping (Result<URL, BackupAdvancedKeysExportError>) -> Void) {
         guard let keys = cloudBackup.exportKeys(),
               let fileContents = cloudBackup.packKeys(salt: keys.salt, systemKey: keys.systemKey)
         else {
@@ -93,7 +108,7 @@ extension BackupAdvancedModuleInteractor: BackupAdvancedModuleInteracting {
     func importKeys(
         url: URL,
         password: String?,
-        completion: @escaping (Result<Void, BackupManageKeysImportError>) -> Void
+        completion: @escaping (Result<Void, BackupAdvancedKeysImportError>) -> Void
     ) {
         let dataResult = readFileAt(url: url)
         guard case .success(let data) = dataResult else {
@@ -117,7 +132,7 @@ private extension BackupAdvancedModuleInteractor {
         reload?()
     }
 
-    func readFileAt(url: URL) -> Result<Data, BackupManageKeysImportError> {
+    func readFileAt(url: URL) -> Result<Data, BackupAdvancedKeysImportError> {
         if url.startAccessingSecurityScopedResource() {
             defer { url.stopAccessingSecurityScopedResource() }
             var readData: Data?

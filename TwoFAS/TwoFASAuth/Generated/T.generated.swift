@@ -1868,6 +1868,18 @@ internal enum T {
     /// 
     /// Please remember to donate so we can further improve the 2FAS platform!
     internal static let intro = T.tr("Localizable", "watch__intro", fallback: "2FAS watchOS app is a companion app for the 2FAS iOS application. It will present services backed up using iCloud sync.\n\nFor quick access, add them to Favorite Services.\n\nPlease remember to donate so we can further improve the 2FAS platform!")
+    /// Follow this instruction to pair your watch app.
+    internal static let introStep1 = T.tr("Localizable", "watch__intro_step1", fallback: "Follow this instruction to pair your watch app.")
+    /// Go to "2FAS Backup" settings in 2FAS Auth app on your iPhone.
+    internal static let introStep2 = T.tr("Localizable", "watch__intro_step2", fallback: "Go to \"2FAS Backup\" settings in 2FAS Auth app on your iPhone.")
+    /// Ensure iCloud Backup is synced and iCloud Keychain is enabled in iOS system settings.
+    internal static let introStep3 = T.tr("Localizable", "watch__intro_step3", fallback: "Ensure iCloud Backup is synced and iCloud Keychain is enabled in iOS system settings.")
+    /// Select "Managed Paired Apple Watches".
+    internal static let introStep4 = T.tr("Localizable", "watch__intro_step4", fallback: "Select \"Managed Paired Apple Watches\".")
+    /// Tap "+" and scan QR Code from next page.
+    internal static let introStep5 = T.tr("Localizable", "watch__intro_step5", fallback: "Tap \"+\" and scan QR Code from next page.")
+    /// You can now close this window. Sync can take some time.
+    internal static let introStep6 = T.tr("Localizable", "watch__intro_step6", fallback: "You can now close this window. Sync can take some time.")
   }
   internal enum Widget {
     /// My secured account

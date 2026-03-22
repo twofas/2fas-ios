@@ -48,36 +48,41 @@ struct PairQRCodeView: View {
             TabView(selection: $currentPage) {
                 instructionPage(
                     icon: "applewatch.and.arrow.forward",
-                    text: "Follow this instruction to pair your watch app"
+                    text: T.Watch.introStep1
                 )
                 .tag(0)
 
                 instructionPage(
                     icon: "gearshape",
-                    text: "Go to 2FAS Backup settings in 2FAS Auth on your iPhone/iPad"
+                    text: T.Watch.introStep2
                 )
                 .tag(1)
 
                 instructionPage(
                     icon: "icloud",
-                    text: "Ensure iCloud Backup is synced and iCloud Keychain is enabled in system settings"
+                    text: T.Watch.introStep3
                 )
                 .tag(2)
 
                 instructionPage(
                     icon: "applewatch",
-                    text: "Select Managed Paired Apple Watches"
+                    text: T.Watch.introStep4
                 )
                 .tag(3)
 
                 instructionPage(
                     icon: "qrcode.viewfinder",
-                    text: "Select \"+\" and scan QR Code from next page"
+                    text: T.Watch.introStep5
                 )
                 .tag(4)
 
                 qrCodePage()
                     .tag(5)
+                
+                instructionPage(
+                    icon: "checkmark.circle.fill",
+                    text: T.Watch.introStep6
+                )
             }
             .tabViewStyle(.verticalPage)
         }

@@ -20,7 +20,8 @@
 import SwiftUI
 
 struct ServiceListView: View {
-    @ObservedObject var presenter: ServiceListPresenter
+    @Bindable
+    var presenter: ServiceListPresenter
     
     var body: some View {
         Group {

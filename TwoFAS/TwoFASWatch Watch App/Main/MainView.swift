@@ -95,7 +95,9 @@ struct MainView: View {
             } message: {
                 Text(verbatim: T.Backup.cloudErrorMissingSystemKeyContent)
             }
-            .fullScreenCover(isPresented: $presenter.showPairQRCode, onDismiss: {
+            .fullScreenCover(
+                isPresented: $presenter.showPairQRCode,
+                onDismiss: {
                 presenter.sync()
             }, content: PairQRCodeView.init)
         }

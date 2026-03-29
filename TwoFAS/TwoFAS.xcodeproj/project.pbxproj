@@ -159,6 +159,7 @@
 		C2153BC31FE9ABA6005FD297 /* CameraViewModelProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2153BBF1FE9ABA6005FD297 /* CameraViewModelProtocols.swift */; };
 		C2153BC51FE9B2BF005FD297 /* CameraActiveArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2153BC41FE9B2BF005FD297 /* CameraActiveArea.swift */; };
 		C21675C52808C71F00D43EDD /* ShortDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21675C42808C71E00D43EDD /* ShortDateFormatter.swift */; };
+		C217B90C2F79CDD9000EAA7C /* TokensPassCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217B90B2F79CDD9000EAA7C /* TokensPassCell.swift */; };
 		C217E17023D7953000EE6C08 /* NotificationBottomOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217E16F23D7953000EE6C08 /* NotificationBottomOffset.swift */; };
 		C217E17223D79D8800EE6C08 /* ToastNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217E17123D79D8800EE6C08 /* ToastNotification.swift */; };
 		C218513C2A1A873F00A8352A /* TokensHOTPCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513B2A1A873F00A8352A /* TokensHOTPCell.swift */; };
@@ -2127,6 +2128,7 @@
 		C2153BBF1FE9ABA6005FD297 /* CameraViewModelProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewModelProtocols.swift; sourceTree = "<group>"; };
 		C2153BC41FE9B2BF005FD297 /* CameraActiveArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraActiveArea.swift; sourceTree = "<group>"; };
 		C21675C42808C71E00D43EDD /* ShortDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortDateFormatter.swift; sourceTree = "<group>"; };
+		C217B90B2F79CDD9000EAA7C /* TokensPassCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensPassCell.swift; sourceTree = "<group>"; };
 		C217E16D23D7913E00EE6C08 /* HUDNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDNotification.swift; sourceTree = "<group>"; };
 		C217E16F23D7953000EE6C08 /* NotificationBottomOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBottomOffset.swift; sourceTree = "<group>"; };
 		C217E17123D79D8800EE6C08 /* ToastNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastNotification.swift; sourceTree = "<group>"; };
@@ -5358,6 +5360,7 @@
 		C244F9DF22762955009992D3 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				C217B90B2F79CDD9000EAA7C /* TokensPassCell.swift */,
 				C2B39E5529F5880D00EC31F6 /* Types */,
 				C2B39E4F29F5841700EC31F6 /* TokensEditCell.swift */,
 				C209E9B8267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift */,
@@ -10417,6 +10420,7 @@
 				C2CC0A3C29D05DC900677A7B /* TransferPresenter.swift in Sources */,
 				C2FF3EEC27B1CF0100642FA4 /* IconSelectorModels.swift in Sources */,
 				C2FF3EEA27B1A81100642FA4 /* CollectionViewDelegatee.swift in Sources */,
+				C217B90C2F79CDD9000EAA7C /* TokensPassCell.swift in Sources */,
 				C24590FC280F54B30079C21C /* SelectServiceTableViewCell.swift in Sources */,
 				C2CC0A4A29D0CACC00677A7B /* ExternalImportInstructionsPresenter.swift in Sources */,
 				C2B077C6292A922B0074517F /* UploadLogsFailureViewController.swift in Sources */,

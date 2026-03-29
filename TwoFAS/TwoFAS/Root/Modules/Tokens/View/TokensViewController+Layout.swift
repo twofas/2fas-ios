@@ -39,12 +39,21 @@ extension TokensViewController {
             return getHOTPCell(for: collectionView, indexPath: indexPath, item: item)
         case .placeholder:
             return placeholderCell(for: collectionView, indexPath: indexPath)
+        case .pass:
+            return passCell(for: collectionView, indexPath: indexPath)
         }
     }
     
     func placeholderCell(for collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
         collectionView.dequeueReusableCell(
             withReuseIdentifier: TokensEmptyDropSpaceCell.reuseIdentifier,
+            for: indexPath
+        )
+    }
+
+    func passCell(for collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
+        collectionView.dequeueReusableCell(
+            withReuseIdentifier: TokensPassCell.reuseIdentifier,
             for: indexPath
         )
     }
@@ -152,6 +161,25 @@ extension TokensViewController {
     }
     
     func getLayout(sectionOffset: Int, enviroment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
+        let snapshot = self.dataSource.snapshot()
+        if let section = snapshot.sectionIdentifiers[safe: sectionOffset],
+           let item = snapshot.itemIdentifiers(inSection: section).first,
+           item.cellType == .pass {
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(177)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(177)
+            )
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = .zero
+            return section
+        }
+
         let minimumCellWidth: CGFloat = {
             guard presenter.listStyle == .default else { return Theme.Metrics.compactCellWidth }
             return Theme.Metrics.defaultCellWidth

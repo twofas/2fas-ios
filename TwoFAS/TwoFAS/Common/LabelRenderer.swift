@@ -106,6 +106,8 @@ final class LabelRenderer: UIView {
             titleLabel.font = Theme.Fonts.iconLabelSmall
         case .normal:
             titleLabel.font = Theme.Fonts.iconLabel
+        case .pass:
+            break
         }
         circleWidthConstraint?.constant = dimension
         circleHeightConstraint?.constant = dimension

@@ -61,6 +61,8 @@ final class TokensServiceName: UIView {
         case .normal:
             label.font = UIFontMetrics(forTextStyle: .headline)
                 .scaledFont(for: .systemFont(ofSize: 17, weight: .bold))
+        case .pass:
+            break
         }
     }
     

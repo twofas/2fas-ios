@@ -18,9 +18,21 @@
 //
 
 import UIKit
+import Common
 
 final class TokensPassCell: UICollectionViewCell {
+    var cancelAction: Callback?
+    var gotoStoreAction: Callback?
+    
     static let reuseIdentifier = "TokensPassCell"
+    static let height: CGFloat = 185
+    private static let cornerRadius: CGFloat = 16
+    
+    private let contentMargin: CGFloat = 22
+    private let buttonVerticalMargin: CGFloat = 4
+    private let buttonHorizontalMargin: CGFloat = 10
+    private let pressedAnimDuration: CGFloat = 0.1
+    private let releaseAnimDuration: CGFloat = 0.15
     
     private let size = CGSize(width: 328, height: 163)
     private let imageFrame = UIImage(asset: Asset.passFrameLight)
@@ -63,6 +75,37 @@ final class TokensPassCell: UICollectionViewCell {
         return label
     }()
     
+    private let cancelButtonLabel: UILabel = {
+        let label = UILabel()
+        label.text = T.passPromoBannerNegativeCta
+        label.textColor = Theme.Colors.Text.main
+        label.font = UIFontMetrics(forTextStyle: .body)
+            .scaledFont(for: .systemFont(ofSize: 13, weight: .bold))
+        return label
+    }()
+    
+    private let cancelButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.applyRoundedBorder(withBorderColor: Theme.Colors.Text.main, width: 1, cornerRadius: cornerRadius)
+        return button
+    }()
+    
+    private let gotoStoreButtonLabel: UILabel = {
+        let label = UILabel()
+        label.text = T.passPromoBannerPositiveCta
+        label.textColor = Theme.Colors.Text.light
+        label.font = UIFontMetrics(forTextStyle: .body)
+            .scaledFont(for: .systemFont(ofSize: 13, weight: .bold))
+        return label
+    }()
+    
+    private let gotoStoreButton: UIButton = {
+        let button = UIButton()
+        button.applyRoundedCorners(withBackgroundColor: .blue, cornerRadius: cornerRadius)
+        return button
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -85,29 +128,149 @@ final class TokensPassCell: UICollectionViewCell {
         let decoration = UIImageView(image: imageDecoration)
         contentView.addSubview(decoration, with: [
             decoration.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            decoration.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 22)
+            decoration.topAnchor.constraint(equalTo: contentView.topAnchor, constant: contentMargin)
         ])
         
         contentView.addSubview(titleLabel, with: [
             titleLabel.topAnchor.constraint(equalTo: decoration.bottomAnchor, constant: 7),
-            titleLabel.leadingAnchor.constraint(equalTo: img.leadingAnchor, constant: 18),
-            titleLabel.trailingAnchor.constraint(equalTo: img.trailingAnchor, constant: -18)
+            titleLabel.leadingAnchor.constraint(equalTo: img.leadingAnchor, constant: contentMargin),
+            titleLabel.trailingAnchor.constraint(equalTo: img.trailingAnchor, constant: -contentMargin)
         ])
-        titleLabel.text = "We built something new for you!"
+        titleLabel.text = T.passPromoBannerTitle
         
         contentView.addSubview(descriptionLabel, with: [
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
-            descriptionLabel.leadingAnchor.constraint(equalTo: img.leadingAnchor, constant: 18),
-            descriptionLabel.trailingAnchor.constraint(equalTo: img.trailingAnchor, constant: -18)
+            descriptionLabel.leadingAnchor.constraint(equalTo: img.leadingAnchor, constant: contentMargin),
+            descriptionLabel.trailingAnchor.constraint(equalTo: img.trailingAnchor, constant: -contentMargin)
         ])
         
-        descriptionLabel.attributedText = NSAttributedString
-            .create(
-                text: "A secure, local-first Password Manager – 2FAS Pass, designed to work alongside 2FAS Auth, keeping your Authenticator exactly as it is.",
-                emphasis: "Password Manager – 2FAS Pass",
-                standardAttributes: [:],
-                emphasisAttributes: [NSAttributedString.Key.font: UIFontMetrics(forTextStyle: .body).scaledFont(for: .systemFont(ofSize: 12, weight: .bold))]
+        let attrString = try? AttributedString(
+            markdown: T.passPromoBannerMsg,
+            options: .init(),
+            baseURL: nil
+        )
+        if let attrString {
+            descriptionLabel.attributedText = NSAttributedString(attrString)
+        } else {
+            descriptionLabel.text = T.passPromoBannerMsg
+        }
+        cancelButton.addSubview(cancelButtonLabel, with: [
+            cancelButtonLabel.topAnchor.constraint(
+                equalTo: cancelButton.topAnchor,
+                constant: buttonVerticalMargin
+            ),
+            cancelButtonLabel.bottomAnchor.constraint(
+                equalTo: cancelButton.bottomAnchor,
+                constant: -buttonVerticalMargin
+            ),
+            cancelButtonLabel.leadingAnchor.constraint(
+                equalTo: cancelButton.leadingAnchor,
+                constant: buttonHorizontalMargin
+            ),
+            cancelButtonLabel.trailingAnchor.constraint(
+                equalTo: cancelButton.trailingAnchor,
+                constant: -buttonHorizontalMargin
             )
+        ])
+        cancelButton.addTarget(self, action: #selector(cancelButtonPressed), for: .touchDown)
+        cancelButton.addTarget(
+            self,
+            action: #selector(cancelButtonReleased),
+            for: [
+                .touchUpInside,
+                .touchUpOutside,
+                .touchCancel
+            ]
+        )
         
+        gotoStoreButton.addSubview(gotoStoreButtonLabel, with: [
+            gotoStoreButtonLabel.topAnchor.constraint(
+                equalTo: gotoStoreButton.topAnchor,
+                constant: buttonVerticalMargin
+            ),
+            gotoStoreButtonLabel.bottomAnchor.constraint(
+                equalTo: gotoStoreButton.bottomAnchor,
+                constant: -buttonVerticalMargin
+            ),
+            gotoStoreButtonLabel.leadingAnchor.constraint(
+                equalTo: gotoStoreButton.leadingAnchor,
+                constant: buttonHorizontalMargin
+            ),
+            gotoStoreButtonLabel.trailingAnchor.constraint(
+                equalTo: gotoStoreButton.trailingAnchor,
+                constant: -buttonHorizontalMargin
+            )
+        ])
+        gotoStoreButton.addTarget(self, action: #selector(gotoStoreButtonPressed), for: .touchDown)
+        gotoStoreButton.addTarget(
+            self,
+            action: #selector(gotoStoreButtonReleased),
+            for: [
+                .touchUpInside,
+                .touchUpOutside,
+                .touchCancel
+            ]
+        )
+        
+        let stackView = UIStackView(arrangedSubviews: [cancelButton, gotoStoreButton])
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        contentView.addSubview(stackView, with: [
+            stackView.topAnchor.constraint(
+                greaterThanOrEqualTo: descriptionLabel.bottomAnchor,
+                constant: buttonHorizontalMargin
+            ),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -contentMargin),
+            stackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+        ])
+        
+        cancelButton.alpha = 0
+        UIView.animate(
+            withDuration: Theme.Animations.Timing.quick,
+            delay: Theme.Animations.Timing.quick
+        ) { [weak self] in
+            self?.cancelButton.alpha = 1
+        }
+        
+        gotoStoreButton.alpha = 0
+        gotoStoreButton.transform = CGAffineTransform(scaleX: 0, y: 0)
+        UIView.animate(
+            withDuration: Theme.Animations.Timing.quick,
+            delay: 2 * Theme.Animations.Timing.quick,
+            options: [.curveEaseInOut]
+        ) { [weak self] in
+            self?.gotoStoreButton.alpha = 1
+            self?.gotoStoreButton.transform = CGAffineTransform.identity
+        }
+    }
+    
+    @objc private func cancelButtonPressed() {
+        UIView.animate(withDuration: pressedAnimDuration) {
+            self.cancelButton.backgroundColor = Theme.Colors.Text.main
+            self.cancelButtonLabel.textColor = Theme.Colors.Fill.background
+            self.cancelAction?()
+        }
+    }
+    
+    @objc private func cancelButtonReleased() {
+        UIView.animate(withDuration: releaseAnimDuration) {
+            self.cancelButton.backgroundColor = .clear
+            self.cancelButtonLabel.textColor = Theme.Colors.Text.main
+        }
+    }
+    
+    @objc private func gotoStoreButtonPressed() {
+        UIView.animate(withDuration: pressedAnimDuration) {
+            self.gotoStoreButton.backgroundColor = .white
+            self.gotoStoreButtonLabel.textColor = .blue
+            self.gotoStoreAction?()
+        }
+    }
+    
+    @objc private func gotoStoreButtonReleased() {
+        UIView.animate(withDuration: releaseAnimDuration) {
+            self.gotoStoreButton.backgroundColor = .blue
+            self.gotoStoreButtonLabel.textColor = Theme.Colors.Text.light
+        }
     }
 }

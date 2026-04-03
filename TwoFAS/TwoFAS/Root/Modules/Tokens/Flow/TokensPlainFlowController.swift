@@ -57,6 +57,8 @@ protocol TokensPlainFlowControlling: AnyObject {
     func toNotifications()
     // MARK: Import
     func toShowSummmary(count: Int)
+    // MARK: Pass cell
+    func toPassStore()
 }
 
 final class TokensPlainFlowController: FlowController, TokensNavigationFlowControllerParent {
@@ -338,6 +340,11 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         dismiss(actions: [.finishedFlow, .newData, .sync]) { [weak self] in
             self?.showSummary(count: count)
         }
+    }
+    
+    // MARK: - Pass cell
+    func toPassStore() {
+        UIApplication.shared.open(URL(string: "https://apps.apple.com/app/id6504464955")!)
     }
 }
 

@@ -85,6 +85,8 @@ protocol TokensModuleInteracting: AnyObject {
     func canServiceMoveDown(serviceData: ServiceData) -> Bool
     func moveServiceUp(serviceData: ServiceData)
     func moveServiceDown(serviceData: ServiceData)
+    // MARK: Pass promo cell
+    func markPassPromoCellAsSeen()
 }
 
 final class TokensModuleInteractor {
@@ -99,6 +101,8 @@ final class TokensModuleInteractor {
         case current(TokenValue)
         case next(TokenValue)
     }
+    
+    private let daysTillPassCellPresentation = 90
     
     private let appearanceInteractor: AppearanceInteracting
     private let serviceDefinitionsInteractor: ServiceDefinitionInteracting
@@ -116,6 +120,7 @@ final class TokensModuleInteractor {
     private let newsInteractor: NewsInteracting
     private let rootInteractor: RootInteracting
     private let localNotificationFetchInteractor: LocalNotificationFetchInteracting
+    private let appInfoInteractor: AppInfoInteracting
     
     private(set) var categoryData: [CategoryData] = []
     
@@ -139,7 +144,8 @@ final class TokensModuleInteractor {
         newCodeInteractor: NewCodeInteracting,
         newsInteractor: NewsInteracting,
         rootInteractor: RootInteracting,
-        localNotificationFetchInteractor: LocalNotificationFetchInteracting
+        localNotificationFetchInteractor: LocalNotificationFetchInteracting,
+        appInfoInteractor: AppInfoInteracting
     ) {
         self.appearanceInteractor = appearanceInteractor
         self.serviceDefinitionsInteractor = serviceDefinitionsInteractor
@@ -157,6 +163,7 @@ final class TokensModuleInteractor {
         self.newsInteractor = newsInteractor
         self.rootInteractor = rootInteractor
         self.localNotificationFetchInteractor = localNotificationFetchInteractor
+        self.appInfoInteractor = appInfoInteractor
         
         setupLinkInteractor()
     }
@@ -412,22 +419,22 @@ extension TokensModuleInteractor: TokensModuleInteracting {
             sectionInteractor.setSectionZeroIsCollapsed(false)
         }
     }
-
+    
     func moveDown(_ section: TokensSection) {
         guard let sectionData = section.sectionData else { return }
         sectionInteractor.moveDown(sectionData)
     }
-
+    
     func moveUp(_ section: TokensSection) {
         guard let sectionData = section.sectionData else { return }
         sectionInteractor.moveUp(sectionData)
     }
-
+    
     func rename(_ section: TokensSection, with title: String) {
         guard let sectionData = section.sectionData else { return }
         sectionInteractor.rename(sectionData, newTitle: title)
     }
-
+    
     func delete(_ section: TokensSection) {
         guard let sectionData = section.sectionData else { return }
         AppEventLog(.groupRemove)
@@ -539,6 +546,22 @@ extension TokensModuleInteractor: TokensModuleInteracting {
             completion()
         }
     }
+    
+    // MARK: Pass promo cell
+    func markPassPromoCellAsSeen() {
+        appInfoInteractor.markPassPromoAsSeen()
+    }
+    
+    private var showPassPromoCell: Bool {
+        guard !appInfoInteractor.wasPassPromoSeen else { return false }
+        if appInfoInteractor.is2FASPASSInstalled {
+            appInfoInteractor.markPassPromoAsSeen()
+            return false
+        }
+        let date = appInfoInteractor.dateOfPassPromoFirstRun
+//        return date.days(from: .now) >= daysTillPassCellPresentation
+        return abs(date.minutes(to: .now)) >= 3
+    }
 }
 
 private extension TokensModuleInteractor {
@@ -557,6 +580,20 @@ private extension TokensModuleInteractor {
     private func createNormalSnapshot(isSearching: Bool) -> NSDiffableDataSourceSnapshot<TokensSection, TokenCell> {
         var snapshot = NSDiffableDataSourceSnapshot<TokensSection, TokenCell>()
         var sections: [TokensSection] = []
+        
+        let showPassCell = showPassPromoCell
+        let passSection = TokensSection(
+            title: nil,
+            sectionID: UUID(),
+            sectionData: nil,
+            isCollapsed: false,
+            elementCount: 1,
+            isSearching: false,
+            position: .first
+        )
+        if showPassCell {
+            sections.append(passSection)
+        }
         
         var startIndex: Int = 0
         var currentIndex: Int = 0
@@ -600,9 +637,31 @@ private extension TokensModuleInteractor {
         data.forEach { key, value in
             snapshot.appendItems(value, toSection: key)
         }
+        
+        if showPassCell {
+            snapshot
+                .appendItems(
+                    [
+                        .init(
+                            name: "",
+                            secret: "",
+                            cellType: .pass,
+                            serviceTypeName: "",
+                            additionalInfo: nil,
+                            logoType: .label("", .brown),
+                            category: .brown,
+                            serviceData: nil,
+                            canBeDragged: false,
+                            useNextToken: false
+                        )
+                    ],
+                    toSection: passSection
+                )
+        }
+        
         return snapshot
     }
-
+    
     private func createEditSnapshot(isSearching: Bool) -> NSDiffableDataSourceSnapshot<TokensSection, TokenCell> {
         var snapshot = NSDiffableDataSourceSnapshot<TokensSection, TokenCell>()
         
@@ -659,7 +718,7 @@ private extension TokensModuleInteractor {
         }
         return snapshot
     }
-
+    
     private func createCell(with serviceData: ServiceData) -> TokenCell {
         let cellType: TokenCell.CellType = {
             switch serviceData.tokenType {
@@ -681,7 +740,7 @@ private extension TokensModuleInteractor {
             useNextToken: appearanceInteractor.isNextTokenEnabled
         )
     }
-
+    
     private func createEmptyCell() -> TokenCell {
         .init(
             name: "",
@@ -723,7 +782,7 @@ private extension TokensModuleInteractor {
         guard let token = tokenInteractor.HOTPToken(for: secret) else { return nil }
         return .current(token)
     }
-
+    
     private func copyToken(_ token: String) {
         notificationsInteractor.copyWithSuccess(value: token.removeWhitespaces())
     }

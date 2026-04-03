@@ -276,6 +276,10 @@ protocol MainRepository: AnyObject {
     var appBundleIdentifier: String? { get }
     var dateOfFirstRun: Date? { get }
     func saveDateOfFirstRun(_ date: Date)
+    var passPromoDateFirstRun: Date? { get }
+    func savePassPromoDateFirstRun(_ date: Date)
+    var wasPassPromoSeen: Bool { get }
+    func markPassPromoAsSeen()
     
     // MARK: - Lock Screen
     var isLockScreenActive: Bool { get }

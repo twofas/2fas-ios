@@ -42,7 +42,8 @@ final class TokensPresenter {
     
     var isMainOnlyCategory: Bool { interactor.isMainOnlyCategory }
     var hasUnreadNews: Bool { interactor.hasUnreadNews }
-    
+    var showPassCell: Bool = false
+
     var listStyle: ListStyle {
         interactor.currentListStyle
     }
@@ -472,6 +473,17 @@ extension TokensPresenter {
     
     func handleRefreshNewsStatus() {
         updateNewsIcon()
+    }
+}
+
+extension TokensPresenter {
+    func passCellCancel() {
+        interactor.markPassPromoCellAsSeen()
+        reloadData()
+    }
+    
+    func passCellGoToStore() {
+        flowController.toPassStore()
     }
 }
 

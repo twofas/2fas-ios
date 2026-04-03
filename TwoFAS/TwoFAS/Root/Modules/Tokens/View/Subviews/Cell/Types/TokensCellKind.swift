@@ -31,7 +31,7 @@ extension TokensCellKind {
         switch self {
         case .normal: return 40
         case .compact, .edit: return 32
-        case .pass: return 177
+        case .pass: return TokensPassCell.height
         }
     }
 }

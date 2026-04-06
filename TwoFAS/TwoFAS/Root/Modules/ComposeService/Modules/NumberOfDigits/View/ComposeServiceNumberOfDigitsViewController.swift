@@ -57,6 +57,10 @@ final class ComposeServiceNumberOfDigitsViewController: UIViewController {
         setupViewLayout()
         
         title = T.Tokens.numberOfDigits
+        
+        registerForTraitChanges([UITraitHorizontalSizeClass.self]) { (self: Self, _) in
+            self.setupConstraints()
+        }
     }
     
     private func setupViewLayout() {
@@ -73,11 +77,6 @@ final class ComposeServiceNumberOfDigitsViewController: UIViewController {
         trailingCompact = tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         trailingRegular = tableView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor)
         
-        setupConstraints()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
         setupConstraints()
     }
     

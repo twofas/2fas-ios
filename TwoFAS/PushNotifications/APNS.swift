@@ -140,7 +140,7 @@ final class APNS: NSObject, UNUserNotificationCenterDelegate, NotificationStateP
 
     private func clearNotifications() {
         center.removeAllDeliveredNotifications()
-        app.applicationIconBadgeNumber = 0
+        center.setBadgeCount(0)
     }
 
     private func notifyAboutRefreshAuthList() {

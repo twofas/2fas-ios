@@ -63,12 +63,10 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
         presenter.viewDidLoad()
         
         setupSplit()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
         
-        setInitialTrait()
+        registerForTraitChanges([UITraitHorizontalSizeClass.self]) { (self: Self, _) in
+            self.setInitialTrait()
+        }
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -137,23 +135,12 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     }
     
     private func updateSize(width: CGFloat) {
-        var current: UITraitCollection = split.traitCollection
-        
-        if width < minimumSecondaryColumnWidth {
-            Log("SettingsViewController - setting: compact")
-            current = UITraitCollection(
-                traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .compact)]
-            )
-        } else {
-            Log("SettingsViewController - setting: regular")
-            current = UITraitCollection(
-                traitsFrom: [traitCollection, UITraitCollection(horizontalSizeClass: .regular)]
-            )
-        }
-        
-        guard current != split.traitCollection else { return }
-        
-        setOverrideTraitCollection(current, forChild: split)
+        let newSizeClass: UIUserInterfaceSizeClass = width < minimumSecondaryColumnWidth ? .compact : .regular
+
+        guard newSizeClass != split.traitCollection.horizontalSizeClass else { return }
+
+        Log("SettingsViewController - setting: \(newSizeClass == .compact ? "compact" : "regular")")
+        split.traitOverrides.horizontalSizeClass = newSizeClass
         split.reload()
     }
     

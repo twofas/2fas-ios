@@ -22,7 +22,6 @@ import AppIntents
 import Common
 import CommonUIKit
 
-@available(iOS 16.4, macOS 13.0, watchOS 9.0, tvOS 16.0, *)
 struct ServiceAppEntity: AppEntity {
     static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Service")
     static var defaultQuery = ServiceAppEntityQuery()

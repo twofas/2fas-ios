@@ -58,10 +58,8 @@ struct TwoFASWidgetRectangular: View {
     }
     
     func isRedacted() -> Bool {
-        if #available(iOS 17.0, *) {
-            if reasons.contains(.invalidated) {
-                return true
-            }
+        if reasons.contains(.invalidated) {
+            return true
         }
         
         if reasons.contains(.placeholder) || reasons.contains(.privacy) {

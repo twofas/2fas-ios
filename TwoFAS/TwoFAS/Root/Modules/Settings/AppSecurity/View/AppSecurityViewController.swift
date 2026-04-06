@@ -62,6 +62,10 @@ final class AppSecurityViewController: UIViewController {
         navigationItem.backButtonDisplayMode = .minimal
         
         presenter.viewDidLoad()
+        
+        registerForTraitChanges([UITraitHorizontalSizeClass.self]) { (self: Self, _) in
+            self.setupConstraints()
+        }
     }
     
     private func setupViewLayout() {
@@ -78,11 +82,6 @@ final class AppSecurityViewController: UIViewController {
         trailingCompact = tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         trailingRegular = tableView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor)
         
-        setupConstraints()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
         setupConstraints()
     }
     

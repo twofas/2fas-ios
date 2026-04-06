@@ -23,7 +23,7 @@ import AppIntents
 struct CopyIntentButton<Content>: View where Content: View {
     private let appIntent: (any AppIntent)?
     private let content: () -> Content
-
+    
     // TODO: Add support for NIL app intent - ios 16
     
     init(
@@ -38,7 +38,7 @@ struct CopyIntentButton<Content>: View where Content: View {
                 digits: rawEntry.digits,
                 algorithm: rawEntry.algorithm,
                 tokenType: rawEntry.tokenType
-            )  
+            )
         } else if let secret {
             self.appIntent = RevealTokenAppIntent(secret: secret)
         } else {
@@ -49,15 +49,11 @@ struct CopyIntentButton<Content>: View where Content: View {
     
     @ViewBuilder
     var body: some View {
-        if #available(iOS 17.0, *) {
-            if let appIntent {
-                Button(intent: appIntent, label: {
-                    content()
-                })
-                .buttonStyle(.plain)
-            } else {
+        if let appIntent {
+            Button(intent: appIntent, label: {
                 content()
-            }
+            })
+            .buttonStyle(.plain)
         } else {
             content()
         }

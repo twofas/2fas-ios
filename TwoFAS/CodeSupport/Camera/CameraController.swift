@@ -60,14 +60,12 @@ final class CameraController {
         let captureSession = AVCaptureSession()
         captureSession.sessionPreset = .high
         
-        if #available(iOS 17, *) {
-            notificationCenter.addObserver(
-                self,
-                selector: #selector(updateOrientation),
-                name: UIDevice.orientationDidChangeNotification,
-                object: nil
-            )
-        }
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(updateOrientation),
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil
+        )
         
         self.outputs = outputs
         
@@ -128,9 +126,7 @@ final class CameraController {
         guard !isRunning else { return }
         Log("CameraController - startPreview. Starting!", module: .camera)
         updateOrientation()
-        if #available(iOS 17, *) {
-            UIDevice.current.beginGeneratingDeviceOrientationNotifications()
-        }
+        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         DispatchQueue.global(qos: .userInitiated).async {
             self.captureSession?.startRunning()
             DispatchQueue.main.async {
@@ -142,9 +138,7 @@ final class CameraController {
     func stopPreview() {
         guard isRunning else { return }
         Log("CameraController - stopPreview. Stopping!", module: .camera)
-        if #available(iOS 17, *) {
-            UIDevice.current.endGeneratingDeviceOrientationNotifications()
-        }
+        UIDevice.current.endGeneratingDeviceOrientationNotifications()
         DispatchQueue.main.async {
             self.captureSession?.stopRunning()
             self.delegate?.cameraStoppedPreview()
@@ -178,15 +172,6 @@ final class CameraController {
     
     @objc
     func updateOrientation() {
-        if #available(iOS 17, *) {
-            modernUpdateOrientation()
-        } else {
-            legacyUpdateOrientation()
-        }
-    }
-    
-    @available(iOS 17, *)
-    private func modernUpdateOrientation() {
         guard
             let layer,
             let connection = layer.connection,
@@ -204,29 +189,6 @@ final class CameraController {
         guard connection.isVideoRotationAngleSupported(angle) else { return }
         
         connection.videoRotationAngle = angle
-    }
-    
-    private func legacyUpdateOrientation() {
-        guard let layer,
-              let connection = layer.connection,
-              let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              connection.isVideoOrientationSupported
-        else { return }
-        
-        Log("CameraController - updateOrientation", module: .camera)
-        
-        let avOrientation: AVCaptureVideoOrientation = {
-            switch scene.interfaceOrientation {
-            case .landscapeLeft: return .landscapeLeft
-            case .landscapeRight: return .landscapeRight
-            case .portrait: return .portrait
-            case .portraitUpsideDown: return .portraitUpsideDown
-            case .unknown: return .portrait
-            @unknown default:
-                return .portrait
-            }
-        }()
-        connection.videoOrientation = avOrientation
     }
     
     // MARK: - Private

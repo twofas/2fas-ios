@@ -227,7 +227,7 @@ open class ToastView: UIView {
             height = containerSize.width
             y = self.bottomOffsetLandscape
         }
-        if #available(iOS 11.0, *), useSafeAreaForBottomOffset {
+        if useSafeAreaForBottomOffset {
             y += ToastWindow.shared.safeAreaInsets.bottom
         }
         

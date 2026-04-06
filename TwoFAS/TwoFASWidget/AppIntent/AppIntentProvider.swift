@@ -27,7 +27,6 @@ import Protection
 import Storage
 import TimeVerification
 
-@available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
 struct AppIntentProvider: AppIntentTimelineProvider {
     private let defaults = UserDefaults(suiteName: "group.twofas.com")
     private let calendar = Calendar.current
@@ -206,7 +205,6 @@ struct AppIntentProvider: AppIntentTimelineProvider {
     }
 }
 
-@available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
 extension AppIntentProvider {
     private func clearDefaults() {
         defaults?.removeObject(forKey: CommonKeys.tapDate)

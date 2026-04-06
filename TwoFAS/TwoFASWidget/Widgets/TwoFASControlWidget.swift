@@ -21,7 +21,6 @@ import WidgetKit
 import SwiftUI
 import AppIntents
 
-@available(iOS 18.0, *)
 struct TwoFASControlWidget: ControlWidget {
     var body: some ControlWidgetConfiguration {
         StaticControlConfiguration(kind: "TwoFASControlWidget") {

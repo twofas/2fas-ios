@@ -402,7 +402,6 @@
 		C2529CB92E5C6AE200515AB7 /* TwoFASWidgetCircular.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CAC2E5C6AE200515AB7 /* TwoFASWidgetCircular.swift */; };
 		C2529CBB2E5C6B6F00515AB7 /* TwoFASControlIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */; };
 		C2529CBC2E5C6B6F00515AB7 /* TwoFASControlIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */; };
-		C2529CBE2E5C6B8F00515AB7 /* WidgetContentMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CBD2E5C6B8F00515AB7 /* WidgetContentMargins.swift */; };
 		C2529CC02E5C757D00515AB7 /* TwoFASControlWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CAB2E5C6AE200515AB7 /* TwoFASControlWidget.swift */; };
 		C252B3892981CE0800C2074D /* BrowserExtenionServiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C252B3882981CE0800C2074D /* BrowserExtenionServiceTableViewCell.swift */; };
 		C252B38C2981D45200C2074D /* MainContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C252B38B2981D45200C2074D /* MainContent.swift */; };
@@ -421,6 +420,7 @@
 		C25860B628247B87009AE54F /* NewsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25860B528247B87009AE54F /* NewsPresenter.swift */; };
 		C25860B828247CB7009AE54F /* NewsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25860B728247CB6009AE54F /* NewsModels.swift */; };
 		C258EC6E227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = C258EC6D227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift */; };
+		C25A18B82F844A94004FDA47 /* CommonUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E7C3552ADB02FE00478D89 /* CommonUIKit.framework */; };
 		C25AAA3C290455B2005747C5 /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
 		C25B221027C174EF0052AAC4 /* ComposeServiceModels+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25B220F27C174EF0052AAC4 /* ComposeServiceModels+Extensions.swift */; };
 		C25B221227C177170052AAC4 /* ComposeServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25B221127C177170052AAC4 /* ComposeServiceFlowController.swift */; };
@@ -716,7 +716,7 @@
 		C27C03C327F4FF0D0020DB5E /* BrowserExtensionMainPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27C03C227F4FF0D0020DB5E /* BrowserExtensionMainPresenter+Menu.swift */; };
 		C27C03C527F4FF1E0020DB5E /* BrowserExtensionMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27C03C427F4FF1E0020DB5E /* BrowserExtensionMainViewController.swift */; };
 		C27CDA7729A2A01600DC7C98 /* NetworkNotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27CDA7629A2A01600DC7C98 /* NetworkNotificationName.swift */; };
-		C27CDA7B29A2CFA200DC7C98 /* BiometryFingerprintStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27CDA7A29A2CFA200DC7C98 /* BiometryFingerprintStorage.swift */; };
+		C27CDA7B29A2CFA200DC7C98 /* BiometryStateHashStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27CDA7A29A2CFA200DC7C98 /* BiometryStateHashStorage.swift */; };
 		C27D543D275D38E0001E9ABF /* BackupMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27D543C275D38E0001E9ABF /* BackupMenuViewController.swift */; };
 		C27D543F275D393D001E9ABF /* BackupMenuPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27D543E275D393D001E9ABF /* BackupMenuPresenter.swift */; };
 		C27D5441275D462D001E9ABF /* BackupMenuViewController+TableCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27D5440275D462D001E9ABF /* BackupMenuViewController+TableCellHandling.swift */; };
@@ -1549,6 +1549,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = C251EDD42AE87150007722F2;
 			remoteInfo = Base32;
+		};
+		C25A18BA2F844A94004FDA47 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C236666B1FB2644900989ACA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2E7C3542ADB02FE00478D89;
+			remoteInfo = CommonUIKit;
 		};
 		C25AAA3E290455B2005747C5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2404,7 +2411,6 @@
 		C2529CB02E5C6AE200515AB7 /* TwoFASWidgetRectangular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetRectangular.swift; sourceTree = "<group>"; };
 		C2529CB12E5C6AE200515AB7 /* TwoFASWidgetSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetSquareView.swift; sourceTree = "<group>"; };
 		C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASControlIntent.swift; sourceTree = "<group>"; };
-		C2529CBD2E5C6B8F00515AB7 /* WidgetContentMargins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetContentMargins.swift; sourceTree = "<group>"; };
 		C252B3882981CE0800C2074D /* BrowserExtenionServiceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserExtenionServiceTableViewCell.swift; sourceTree = "<group>"; };
 		C252B38B2981D45200C2074D /* MainContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContent.swift; sourceTree = "<group>"; };
 		C25371A1281DCF56005FB118 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
@@ -2608,7 +2614,7 @@
 		C27CCE9B279DF8DC00C3D88F /* MainRepositoryImpl+Code.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Code.swift"; sourceTree = "<group>"; };
 		C27CDA7629A2A01600DC7C98 /* NetworkNotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkNotificationName.swift; sourceTree = "<group>"; };
 		C27CDA7829A2A55100DC7C98 /* NetworkStatusInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusInteractor.swift; sourceTree = "<group>"; };
-		C27CDA7A29A2CFA200DC7C98 /* BiometryFingerprintStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometryFingerprintStorage.swift; sourceTree = "<group>"; };
+		C27CDA7A29A2CFA200DC7C98 /* BiometryStateHashStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometryStateHashStorage.swift; sourceTree = "<group>"; };
 		C27D543C275D38E0001E9ABF /* BackupMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupMenuViewController.swift; sourceTree = "<group>"; };
 		C27D543E275D393D001E9ABF /* BackupMenuPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupMenuPresenter.swift; sourceTree = "<group>"; };
 		C27D5440275D462D001E9ABF /* BackupMenuViewController+TableCellHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackupMenuViewController+TableCellHandling.swift"; sourceTree = "<group>"; };
@@ -3464,6 +3470,7 @@
 			files = (
 				C2D07ED726A45BBD00AF8E7B /* Storage.framework in Frameworks */,
 				C2C3AE27269E274700506ACF /* Intents.framework in Frameworks */,
+				C25A18B82F844A94004FDA47 /* CommonUIKit.framework in Frameworks */,
 				C2D07EE626A45C0400AF8E7B /* IntentsUI.framework in Frameworks */,
 				C2D07EDC26A45BC700AF8E7B /* Protection.framework in Frameworks */,
 			);
@@ -3549,7 +3556,6 @@
 				8F0FFF062D051AD10064B0D3 /* RevealTokenOverlayView.swift */,
 				8F0FFF012D04D74D0064B0D3 /* CountdownTimerText.swift */,
 				8F0FFEFF2D04D73D0064B0D3 /* RevealTokenImage.swift */,
-				C2529CBD2E5C6B8F00515AB7 /* WidgetContentMargins.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -4284,7 +4290,7 @@
 				C278121B27F9F3E600F31453 /* ExportPublicKey.swift */,
 				C278122027F9FA9900F31453 /* RSAEncryption.swift */,
 				C278122227FA16BC00F31453 /* RSAKeyStorage.swift */,
-				C27CDA7A29A2CFA200DC7C98 /* BiometryFingerprintStorage.swift */,
+				C27CDA7A29A2CFA200DC7C98 /* BiometryStateHashStorage.swift */,
 				C2C1513F294E831300F8B511 /* Keys.swift */,
 				C274CA942BAB8F92008E7212 /* Protection+.swift */,
 			);
@@ -9229,6 +9235,7 @@
 			dependencies = (
 				C2D07EDA26A45BBD00AF8E7B /* PBXTargetDependency */,
 				C2D07EDF26A45BC700AF8E7B /* PBXTargetDependency */,
+				C25A18BB2F844A94004FDA47 /* PBXTargetDependency */,
 			);
 			name = TwoFASServiceIntent;
 			packageProductDependencies = (
@@ -9375,7 +9382,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 2630;
 				ORGANIZATIONNAME = "Two Factor Authentication Service, Inc.";
 				TargetAttributes = {
 					C200E4991FB3911B00D7C748 = {
@@ -9878,7 +9885,7 @@
 				C2147CC7205D787A0001D011 /* Protection.swift in Sources */,
 				C274CA952BAB8F92008E7212 /* Protection+.swift in Sources */,
 				C2673BE223D46F5D00A2CBA8 /* TokenStorage.swift in Sources */,
-				C27CDA7B29A2CFA200DC7C98 /* BiometryFingerprintStorage.swift in Sources */,
+				C27CDA7B29A2CFA200DC7C98 /* BiometryStateHashStorage.swift in Sources */,
 				C2C15140294E831300F8B511 /* Keys.swift in Sources */,
 				C20F00DE25698F0A0026FBB2 /* LocalKeyEncryption.swift in Sources */,
 				C273ADF125E05D02007C5711 /* MigrationHandler.swift in Sources */,
@@ -10922,7 +10929,6 @@
 				C2C32A312AB7198C00DDB944 /* IconRenderer.swift in Sources */,
 				C248DDAC2B7998DA004712E3 /* CopyTokenAppIntent.swift in Sources */,
 				C2A7B98F26B706B000055738 /* TwoFASWidget.intentdefinition in Sources */,
-				C2529CBE2E5C6B8F00515AB7 /* WidgetContentMargins.swift in Sources */,
 				C254D12226ACB7D8005FEBD4 /* CodeRedaction.swift in Sources */,
 				C254D12026ACB777005FEBD4 /* Provider.swift in Sources */,
 				8F0FFF072D051AD40064B0D3 /* RevealTokenOverlayView.swift in Sources */,
@@ -11306,6 +11312,11 @@
 			isa = PBXTargetDependency;
 			target = C251EDD42AE87150007722F2 /* Base32 */;
 			targetProxy = C251EDF32AE8729C007722F2 /* PBXContainerItemProxy */;
+		};
+		C25A18BB2F844A94004FDA47 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C2E7C3542ADB02FE00478D89 /* CommonUIKit */;
+			targetProxy = C25A18BA2F844A94004FDA47 /* PBXContainerItemProxy */;
 		};
 		C25AAA3F290455B2005747C5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

@@ -72,7 +72,7 @@ struct AddingServiceTokenView: View {
         .observeHeight(onChange: { height in
             changeHeight(height)
         })
-        .onChange(of: presenter.part) { newValue in
+        .onChange(of: presenter.part) { _, newValue in
             withAnimation(animation) {
                 animationProgress = newValue
             }

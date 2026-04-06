@@ -56,6 +56,10 @@ final class BrowserExtensionServiceViewController: UIViewController {
         
         hidesBottomBarWhenPushed = false
         navigationItem.backButtonDisplayMode = .minimal
+        
+        registerForTraitChanges([UITraitHorizontalSizeClass.self]) { (self: Self, _) in
+            self.setupConstraints()
+        }
     }
     
     private func setupTableViewLayout() {
@@ -72,11 +76,6 @@ final class BrowserExtensionServiceViewController: UIViewController {
         trailingCompact = tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         trailingRegular = tableView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor)
         
-        setupConstraints()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
         setupConstraints()
     }
     

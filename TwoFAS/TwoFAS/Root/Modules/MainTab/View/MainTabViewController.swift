@@ -41,21 +41,18 @@ final class MainTabViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
+            self.changeStyling()
+        }
+        
         delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         presenter.viewWillAppear()
-        changeStyling()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
         
-        if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
-            changeStyling()
-        }
+        changeStyling()
     }
     
     private func changeStyling() {

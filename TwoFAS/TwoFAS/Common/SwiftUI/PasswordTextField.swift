@@ -69,7 +69,7 @@ struct PasswordTextField: View {
         }
         .frame(height: 40)
         .animation(.easeInOut(duration: Theme.Animations.Timing.quick), value: reveal)
-        .onChange(of: isFocused) { newValue in
+        .onChange(of: isFocused) { _, newValue in
             guard newValue else { return }
             if reveal {
                 isPlainFieldFocused = true
@@ -84,7 +84,7 @@ struct PasswordTextField: View {
         TextField(isEditing ? "" : title, text: $text, prompt: Text(verbatim: title))
         .focused($isPlainFieldFocused)
         .modifier(FormatInputModifier(isPasswordNew: isPasswordNew))
-        .onChange(of: isPlainFieldFocused) { newValue in
+        .onChange(of: isPlainFieldFocused) { _, newValue in
             isFocused = newValue
             withAnimation {
                 isEditing = newValue
@@ -97,7 +97,7 @@ struct PasswordTextField: View {
         SecureField(title, text: $text, prompt: Text(verbatim: title))
             .modifier(FormatInputModifier(isPasswordNew: isPasswordNew))
             .focused($isSecureFieldFocused)
-            .onChange(of: isSecureFieldFocused) { focused in
+            .onChange(of: isSecureFieldFocused) { _, focused in
                 isFocused = focused
                 withAnimation {
                     isEditing = focused

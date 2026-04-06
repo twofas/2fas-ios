@@ -44,7 +44,7 @@ final class CameraScannerViewController: UIViewController {
         notificationCenter.addObserver(
             self,
             selector: #selector(cameraStateChanged),
-            name: NSNotification.Name.AVCaptureSessionWasInterrupted,
+            name: AVCaptureSession.wasInterruptedNotification,
             object: nil
         )
         

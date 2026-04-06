@@ -113,14 +113,11 @@ struct TwoFASWidgetSquareView: View {
             .widgetAccentable()
             .opacity(0.4)
             .unredacted()
-            .addWidgetContentMargins()
     }
     
     func showLogo() -> Bool {
-        if #available(iOS 17.0, *) {
-            if redactionReasons.contains(.invalidated) {
-                return true
-            }
+        if redactionReasons.contains(.invalidated) {
+            return true
         }
 
         return false

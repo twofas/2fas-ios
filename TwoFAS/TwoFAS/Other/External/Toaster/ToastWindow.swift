@@ -64,7 +64,7 @@ final class ToastWindow: UIWindow {
         let requiresFullScreen = (info?["UIRequiresFullScreen"] as? NSNumber)?.boolValue == true
         let hasLaunchStoryboard = info?["UILaunchStoryboardName"] != nil
         
-        if #available(iOS 9, *), iPad && supportsAllOrientations && !requiresFullScreen && hasLaunchStoryboard {
+        if iPad && supportsAllOrientations && !requiresFullScreen && hasLaunchStoryboard {
             return false
         }
         return true

@@ -61,6 +61,12 @@ final class CircleProgress: UIView {
         
         isAccessibilityElement = false
         accessibilityElements = [valueLabel]
+        
+        registerForTraitChanges([UITraitUserInterfaceIdiom.self]) { (self: Self, previousTraitCollection) in
+            if self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
+                self.setCircleColor(marked: self.marked, animated: false)
+            }
+        }
     }
     
     func setPeriod(_ period: Int) {
@@ -103,15 +109,7 @@ final class CircleProgress: UIView {
     func setClearBackground() {
         circle.setClearBackground()
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
-            setCircleColor(marked: marked, animated: false)
-        }
-    }
-    
+
     private func setCircleColor(marked: Bool, animated: Bool) {
         
         let color = marked ? Theme.Colors.Line.theme : Theme.Colors.Line.primaryLine

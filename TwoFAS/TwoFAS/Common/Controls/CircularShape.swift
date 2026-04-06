@@ -71,6 +71,12 @@ final class CircularShape: UIView {
         shape.lineCap = .square
         layer.addSublayer(shape)
         configurePath()
+        
+        registerForTraitChanges([UITraitUserInterfaceIdiom.self]) { (self: Self, previousTraitCollection) in
+            if self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
+                self.shape.fillColor = Theme.Colors.Fill.background.cgColor
+            }
+        }
     }
     
     func setClearBackground() {
@@ -193,13 +199,5 @@ final class CircularShape: UIView {
         )
         shape.path = circle.cgPath
         shape.strokeEnd = 0
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
-            shape.fillColor = Theme.Colors.Fill.background.cgColor
-        }
     }
 }

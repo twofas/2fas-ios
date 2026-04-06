@@ -72,6 +72,10 @@ final class TransferViewController: UIViewController {
         setupViewLayout()
                 
         title = T.Settings.transfer
+        
+        registerForTraitChanges([UITraitHorizontalSizeClass.self]) { (self: Self, _) in
+            self.setupConstraints()
+        }
     }
     
     private func setupViewLayout() {
@@ -90,12 +94,7 @@ final class TransferViewController: UIViewController {
         
         setupConstraints()
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        setupConstraints()
-    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(

@@ -559,8 +559,7 @@ extension TokensModuleInteractor: TokensModuleInteracting {
             return false
         }
         let date = appInfoInteractor.dateOfPassPromoFirstRun
-//        return date.days(from: .now) >= daysTillPassCellPresentation
-        return abs(date.minutes(to: .now)) >= 3
+        return date.days(from: .now) >= daysTillPassCellPresentation
     }
 }
 

@@ -26,6 +26,7 @@ protocol TokensPlainFlowControllerParent: AnyObject {
     func tokensSwitchToTokensTab()
     func tokensSwitchToSettingsExternalImport()
     func tokensSwitchToSettingsBackup()
+    func tokensSwitchToSettingsTrash()
 }
 
 protocol TokensPlainFlowControlling: AnyObject {
@@ -45,6 +46,7 @@ protocol TokensPlainFlowControlling: AnyObject {
     func toFileImport()
     func toShowGallery()
     func toHelp()
+    func toTrash()
     // MARK: Link actions
     func toIncorrectCode()
     func toDuplicatedCode(forceAdd: @escaping Callback, cancel: @escaping Callback)
@@ -238,6 +240,10 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
             options: [:],
             completionHandler: nil
         )
+    }
+    
+    func toTrash() {
+        parent?.tokensSwitchToSettingsTrash()
     }
     
     // MARK: - Link actions

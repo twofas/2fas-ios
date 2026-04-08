@@ -156,6 +156,7 @@ private extension TokensViewController {
             self?.presenter.handleImportExternalFile()
         }
         emptyListScreenView.help = { [weak self] in self?.presenter.handleShowHelp() }
+        emptyListScreenView.goToTrashAction = { [weak self] in self?.presenter.goToTrash() }
     }
     
     func setupNotificationsListeners() {

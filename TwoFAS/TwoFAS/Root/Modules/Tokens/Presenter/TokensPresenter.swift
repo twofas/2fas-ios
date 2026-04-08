@@ -485,6 +485,10 @@ extension TokensPresenter {
     func passCellGoToStore() {
         flowController.toPassStore()
     }
+    
+    func goToTrash() {
+        flowController.toTrash()
+    }
 }
 
 private extension TokensPresenter {

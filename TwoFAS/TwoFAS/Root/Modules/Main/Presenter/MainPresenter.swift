@@ -89,6 +89,10 @@ final class MainPresenter {
         view?.navigateToViewPath(.settings(option: .backup))
     }
     
+    func handleSwitchToTrash() {
+        view?.navigateToViewPath(.settings(option: .trash))
+    }
+    
     func handleSwitchedToSettings() {
         view?.settingsTabActive()
     }

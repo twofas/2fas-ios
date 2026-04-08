@@ -77,6 +77,7 @@ final class CloudKit {
     func cloudSync() {
         Log("CloudKit - cloudSync()", module: .cloudSync)
         collectedActions = []
+        zoneUpdated = false
 
         DispatchQueue.global(qos: .utility).async {
             self.syncTokenHandler.prepare()
@@ -219,8 +220,8 @@ final class CloudKit {
         guard zoneUpdated else {
             Log("CloudKit - NO zone changes - exiting", module: .cloudSync)
             DispatchQueue.main.async {
-                self.syncTokenHandler.commitChanges()
                 self.fetchFinishedSuccessfuly?()
+                self.syncTokenHandler.commitChanges()
             }
             return
         }
@@ -512,9 +513,9 @@ final class CloudKit {
             }
             
             self.clearRecordChanges()
-            
-            self.syncTokenHandler.commitChanges()
+
             self.fetchFinishedSuccessfuly?()
+            self.syncTokenHandler.commitChanges()
         }
     }
     
@@ -538,6 +539,7 @@ final class CloudKit {
         Log("CloudKit - Purging cache", module: .cloudSync)
         syncTokenHandler.clearZone()
         clearRecordChanges()
+        zoneUpdated = false
         Log("CloudKit - Deleting all entries in sync cache", module: .cloudSync)
         DispatchQueue.main.async {
             self.deleteAllEntries?()

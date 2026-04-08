@@ -45,10 +45,11 @@ final class ClearHandler {
         isClearing = true
 
         var zoneIDs: [CKRecordZone.ID] = []
+        let zoneIDsLock = NSLock()
         let database = CKContainer(identifier: Config.containerIdentifier).privateCloudDatabase
         let fetchZones = CKFetchRecordZonesOperation.fetchAllRecordZonesOperation()
         fetchZones.perRecordZoneResultBlock = { recordZoneID, _ in
-            zoneIDs.append(recordZoneID)
+            zoneIDsLock.withLock { zoneIDs.append(recordZoneID) }
         }
         fetchZones.fetchRecordZonesResultBlock = { [weak self] result in
             switch result {

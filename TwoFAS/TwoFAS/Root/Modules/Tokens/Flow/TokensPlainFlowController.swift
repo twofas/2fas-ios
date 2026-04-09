@@ -61,6 +61,8 @@ protocol TokensPlainFlowControlling: AnyObject {
     func toShowSummmary(count: Int)
     // MARK: Pass cell
     func toPassStore()
+    // MARK: Sync alerts
+    func toAllServicesRemoved(completion: @escaping Callback)
 }
 
 final class TokensPlainFlowController: FlowController, TokensNavigationFlowControllerParent {
@@ -351,6 +353,16 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     // MARK: - Pass cell
     func toPassStore() {
         UIApplication.shared.open(URL(string: "https://apps.apple.com/app/id6504464955")!)
+    }
+
+    func toAllServicesRemoved(completion: @escaping Callback) {
+        let alert = UIAlertController(
+            title: T.Backup.movedToTrashTitle,
+            message: T.Backup.movedToTrashMessage,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: T.Commons.ok, style: .default, handler: { _ in completion() }))
+        presentAlertOnMainSplitViewController(alert)
     }
 }
 

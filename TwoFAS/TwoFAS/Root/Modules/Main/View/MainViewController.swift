@@ -133,6 +133,12 @@ extension MainViewController {
             name: .clearSyncCompletedSuccessfuly,
             object: nil
         )
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(allServicesRemoved),
+            name: .allServicesRemoved,
+            object: nil
+        )
     }
 
     @objc
@@ -190,6 +196,11 @@ extension MainViewController {
     @objc
     private func clearSyncCompletedSuccessfuly() {
         presenter.handleClearSyncCompletedSuccessfuly()
+    }
+
+    @objc
+    private func allServicesRemoved() {
+        presenter.handleAllServicesRemoved()
     }
 }
 

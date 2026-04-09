@@ -602,8 +602,8 @@ internal enum T {
     internal static let veryfingPassword = T.tr("Localizable", "backup__veryfing_password", fallback: "Verifying password")
     /// Warning! If you delete 2FAS Backup, you will also erase all tokens from other devices synced with this account. To preserve the tokens on other devices, please ensure that you've turned off the 2FAS Backup before the deletion.
     internal static let warningIntroduction = T.tr("Localizable", "backup__warning_introduction", fallback: "Warning! If you delete 2FAS Backup, you will also erase all tokens from other devices synced with this account. To preserve the tokens on other devices, please ensure that you've turned off the 2FAS Backup before the deletion.")
-    /// Go to 2FAS Backup settings in 2FAS Auth on your iPhone/iPad and navigate to "Managed Paired Apple Watches". This option will be visible if the backup is synced. Scan the QR code from there.
-    internal static let watchPairDescription = T.tr("Localizable", "backup__watch_pair_description", fallback: "Go to 2FAS Backup settings in 2FAS Auth on your iPhone/iPad and navigate to \"Managed Paired Apple Watches\". This option will be visible if the backup is synced. Scan the QR code from there.")
+    /// Go to 2FAS Backup settings in 2FAS Auth on your iPhone/iPad and navigate to "Manage Paired Apple Watches". This option will be visible if the backup is synced. Scan the QR code from there.
+    internal static let watchPairDescription = T.tr("Localizable", "backup__watch_pair_description", fallback: "Go to 2FAS Backup settings in 2FAS Auth on your iPhone/iPad and navigate to \"Manage Paired Apple Watches\". This option will be visible if the backup is synced. Scan the QR code from there.")
     /// Error while generating QR Code
     internal static let watchPairQrError = T.tr("Localizable", "backup__watch_pair_qr_error", fallback: "Error while generating QR Code")
     /// Pair your Apple Watch
@@ -1882,8 +1882,8 @@ internal enum T {
     internal static let introStep2 = T.tr("Localizable", "watch__intro_step2", fallback: "Go to \"2FAS Backup\" settings in 2FAS Auth app on your iPhone.")
     /// Ensure that iCloud Backup is synced and iCloud Keychain is enabled in iOS system settings.
     internal static let introStep3 = T.tr("Localizable", "watch__intro_step3", fallback: "Ensure that iCloud Backup is synced and iCloud Keychain is enabled in iOS system settings.")
-    /// Select "Managed Paired Apple Watches".
-    internal static let introStep4 = T.tr("Localizable", "watch__intro_step4", fallback: "Select \"Managed Paired Apple Watches\".")
+    /// Select "Manage Paired Apple Watches".
+    internal static let introStep4 = T.tr("Localizable", "watch__intro_step4", fallback: "Select \"Manage Paired Apple Watches\".")
     /// Tap "+" and scan the QR Code from the next page.
     internal static let introStep5 = T.tr("Localizable", "watch__intro_step5", fallback: "Tap \"+\" and scan the QR Code from the next page.")
     /// You can now close this window. Sync can take some time.

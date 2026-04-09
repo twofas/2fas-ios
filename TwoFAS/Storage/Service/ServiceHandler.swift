@@ -130,8 +130,9 @@ extension ServiceHandler: CommonServiceHandler {
     @discardableResult
     public func setServices(_ newServices: [ServiceData]) -> Bool {
         let currentServices = getAllServices()
+        let currentServicesCount = currentServices.count
         // swiftlint:disable line_length
-        Log("ServiceHandler in Storage: Current services count before merge: \(currentServices.count)", module: .storage)
+        Log("ServiceHandler in Storage: Current services count before merge: \(currentServicesCount)", module: .storage)
         Log("ServiceHandler in Storage: Current trashed services count before merge: \(getAllTrashedServices().count)", module: .storage)
         guard currentServices != newServices else {
             Log("ServiceHandler in Storage: Nothing new to import", module: .storage)
@@ -168,6 +169,9 @@ extension ServiceHandler: CommonServiceHandler {
                 Notification.UserInfoKey.deleted: changes.deleted
             ]
         )
+        if currentServicesCount == changes.deleted.count { // all services removed
+            NotificationCenter.default.post(name: .allServicesRemoved, object: nil)
+        }
         Log("ServiceHandler in Storage: Data imported. Current service count after merge: \(count())", module: .storage)
         Log("ServiceHandler in Storage: Current trashed services count after merge: \(getAllTrashedServices().count)", module: .storage)
         if !reorderedWhileAdded.isEmpty {

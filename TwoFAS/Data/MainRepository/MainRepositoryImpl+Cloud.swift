@@ -74,6 +74,18 @@ extension MainRepositoryImpl {
     func saveSuccessSyncDate(_ date: Date?) {
         userDefaultsRepository.saveSuccessSyncDate(date)
     }
+
+    var allServicesRemovedPending: Bool {
+        userDefaultsRepository.allServicesRemovedPending
+    }
+
+    func markAllServicesRemovedAsPending() {
+        userDefaultsRepository.markAllServicesRemovedAsPending()
+    }
+
+    func clearAllServicesRemovedPending() {
+        userDefaultsRepository.clearAllServicesRemovedPending()
+    }
     
     func syncDebugReloadAllKeys() {
         SyncInstance.debugReloadAllKeys()

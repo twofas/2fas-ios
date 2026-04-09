@@ -144,10 +144,13 @@ final class TokensViewEmptyListScreen: UIView {
     func setItemsInTrashCount(_ count: Int) {
         if count > 0 {
             trashWarning.setCount(count)
-            mainStackView.insertArrangedSubview(trashWarning, at: 0)
+            if !mainStackView.arrangedSubviews.contains(trashWarning) {
+                mainStackView.insertArrangedSubview(trashWarning, at: 0)
+            }
         } else {
             if mainStackView.arrangedSubviews.contains(trashWarning) {
                 mainStackView.removeArrangedSubview(trashWarning)
+                trashWarning.removeFromSuperview()
             }
         }
     }

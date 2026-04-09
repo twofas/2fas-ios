@@ -150,6 +150,9 @@ protocol MainRepository: AnyObject {
     func erase(completion: @escaping ResultCallback)
     func syncDebugReloadAllKeys()
     func saveSuccessSyncDate(_ date: Date?)
+    var allServicesRemovedPending: Bool { get }
+    func markAllServicesRemovedAsPending()
+    func clearAllServicesRemovedPending()
     // MARK: Watch Pair
     func watchPairingList() -> [PairedWatch]
     func watchPairingUnpair(_ pairedWatch: PairedWatch)

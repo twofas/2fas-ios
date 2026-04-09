@@ -209,5 +209,11 @@ private extension TokensViewController {
             name: .userLoggedIn,
             object: nil
         )
+        center.addObserver(
+            self,
+            selector: #selector(allServicesRemovedAlertShouldBeShown),
+            name: .allServicesRemovedAlertShouldBeShown,
+            object: nil
+        )
     }
 }

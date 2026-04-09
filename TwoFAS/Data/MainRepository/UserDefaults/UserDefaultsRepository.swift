@@ -129,4 +129,8 @@ protocol UserDefaultsRepository: AnyObject {
     
     var runCount: Int { get }
     func saveRunCount(_ count: Int)
+
+    var allServicesRemovedPending: Bool { get }
+    func markAllServicesRemovedAsPending()
+    func clearAllServicesRemovedPending()
 }

@@ -61,6 +61,7 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case registrationDate
         case noCompanionAppDate
         case notificationGroupID
+        case allServicesRemovedPending
     }
     private let userDefaults = UserDefaults()
     private let sharedDefaults = UserDefaults(suiteName: Config.suiteName)!
@@ -446,8 +447,24 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         userDefaults.synchronize()
     }
     
+    // MARK: - All Services Removed
+
+    var allServicesRemovedPending: Bool {
+        userDefaults.bool(forKey: Keys.allServicesRemovedPending.rawValue)
+    }
+
+    func markAllServicesRemovedAsPending() {
+        userDefaults.set(true, forKey: Keys.allServicesRemovedPending.rawValue)
+        userDefaults.synchronize()
+    }
+
+    func clearAllServicesRemovedPending() {
+        userDefaults.set(false, forKey: Keys.allServicesRemovedPending.rawValue)
+        userDefaults.synchronize()
+    }
+
     // MARK: - Clear all
-    
+
     func clearAll() {
         Keys.allCases.forEach { key in
             userDefaults.removeObject(forKey: key.rawValue)

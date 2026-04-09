@@ -129,6 +129,11 @@ final class MainPresenter {
         interactor.clearSavesuccessSync()
     }
 
+    func handleAllServicesRemoved() {
+        interactor.markAllServicesRemovedAsPending()
+        NotificationCenter.default.post(name: .allServicesRemovedAlertShouldBeShown, object: nil)
+    }
+
     func handleSavePIN(_ PIN: String, pinType: PINType) {
         interactor.savePIN(PIN, ofType: pinType)
     }

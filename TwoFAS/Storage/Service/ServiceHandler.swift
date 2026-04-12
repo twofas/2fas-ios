@@ -169,7 +169,7 @@ extension ServiceHandler: CommonServiceHandler {
                 Notification.UserInfoKey.deleted: changes.deleted
             ]
         )
-        if currentServicesCount == changes.deleted.count { // all services removed
+        if currentServicesCount == changes.deleted.count && currentServicesCount > 0 { // all services removed
             NotificationCenter.default.post(name: .allServicesRemoved, object: nil)
         }
         Log("ServiceHandler in Storage: Data imported. Current service count after merge: \(count())", module: .storage)

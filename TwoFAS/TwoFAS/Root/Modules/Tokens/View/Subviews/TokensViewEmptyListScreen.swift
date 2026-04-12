@@ -27,6 +27,8 @@ final class TokensViewEmptyListScreen: UIView {
     var help: Callback?
     
     private let trashWarning = TrashWarning(frame: .zero)
+    private var mainStackTopFromSafeArea: NSLayoutConstraint!
+    private var mainStackTopFromTrashWarning: NSLayoutConstraint!
     
     private let iconImage: UIImageView = {
         let img = UIImageView(image: Asset.introductionEmptyHeader.image)
@@ -108,16 +110,29 @@ final class TokensViewEmptyListScreen: UIView {
     private func commonInit() {
         backgroundColor = Theme.Colors.Fill.background
         
+        addSubview(trashWarning, with: [
+            trashWarning.topAnchor.constraint(equalTo: safeTopAnchor, constant: Theme.Metrics.doubleMargin),
+            trashWarning.centerXAnchor.constraint(equalTo: centerXAnchor),
+            trashWarning.widthAnchor.constraint(equalToConstant: Theme.Metrics.componentWidth)
+        ])
+        trashWarning.isHidden = true
+
         addSubview(mainStackView, with: [
             mainStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             mainStackView.widthAnchor.constraint(equalToConstant: Theme.Metrics.componentWidth),
-            mainStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            mainStackView.topAnchor.constraint(
-                greaterThanOrEqualTo: safeTopAnchor,
-                constant: Theme.Metrics.standardMargin
-            )
+            mainStackView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
-        
+
+        mainStackTopFromSafeArea = mainStackView.topAnchor.constraint(
+            greaterThanOrEqualTo: safeTopAnchor,
+            constant: Theme.Metrics.standardMargin
+        )
+        mainStackTopFromTrashWarning = mainStackView.topAnchor.constraint(
+            greaterThanOrEqualTo: trashWarning.bottomAnchor,
+            constant: Theme.Metrics.doubleMargin
+        )
+        mainStackTopFromSafeArea.isActive = true
+
         mainStackView.addArrangedSubviews([headerStackView, buttonsStackView])
         headerStackView.addArrangedSubviews([iconImage, headerLabel])
         buttonsStackView.addArrangedSubviews([pairNewServiceButton, importButton])
@@ -138,53 +153,86 @@ final class TokensViewEmptyListScreen: UIView {
         pairNewServiceButton.action = { [weak self] in self?.pairNewService?() }
         importButton.action = { [weak self] in self?.importFromExternalService?() }
         helpButton.action = { [weak self] in self?.help?() }
-        trashWarning.goToTrashAction = { [weak self] in self?.goToTrashAction?() }
+        
+        trashWarning.addTarget(self, action: #selector(trashWarningAction), for: .touchUpInside)
+    }
+
+    func setItemsInTrashCount(_ count: Int) {
+        let show = count > 0
+        if show { trashWarning.setCount(count) }
+        trashWarning.isHidden = !show
+        mainStackTopFromSafeArea.isActive = !show
+        mainStackTopFromTrashWarning.isActive = show
     }
     
-    func setItemsInTrashCount(_ count: Int) {
-        if count > 0 {
-            trashWarning.setCount(count)
-            if !mainStackView.arrangedSubviews.contains(trashWarning) {
-                mainStackView.insertArrangedSubview(trashWarning, at: 0)
-            }
-        } else {
-            if mainStackView.arrangedSubviews.contains(trashWarning) {
-                mainStackView.removeArrangedSubview(trashWarning)
-                trashWarning.removeFromSuperview()
-            }
-        }
+    @objc
+    private func trashWarningAction() {
+        goToTrashAction?()
     }
 }
 
-private final class TrashWarning: UIView {
-    var goToTrashAction: Callback?
+private final class TrashWarning: UIButton {
+    private let horizontalMargin: CGFloat = Theme.Metrics.doubleMargin
+    private let verticalMargin: CGFloat = Theme.Metrics.mediumMargin
+    private static let fontSize: CGFloat = 16
     
-    private let goToTrash: LoadingContentButton = {
-        let button = LoadingContentButton()
-        button.apply(MainContainerButtonStyling.borderOnly.value)
-        button.update(title: T.Commons.goToTrash)
-        return button
+    private let trashIcon: UIImageView = {
+        let config = UIImage.SymbolConfiguration(pointSize: fontSize, weight: .semibold)
+        let img = UIImageView(image: UIImage(systemName: "trash"))
+        img.tintColor = Theme.Colors.Text.main
+        img.translatesAutoresizingMaskIntoConstraints = false
+        return img
     }()
     
-    private let label: UILabel = {
+    private let arrowIcon: UIImageView = {
+        let config = UIImage.SymbolConfiguration(pointSize: fontSize, weight: .regular)
+        let img = UIImageView(image: UIImage(systemName: "arrow.up.forward"))
+        img.tintColor = Theme.Colors.Text.theme
+        img.translatesAutoresizingMaskIntoConstraints = false
+        return img
+    }()
+    
+    private let summaryLabel: UILabel = {
         let label = UILabel()
         label.font = UIFontMetrics(forTextStyle: .headline)
-            .scaledFont(for: .systemFont(ofSize: 18, weight: .regular))
+            .scaledFont(for: .systemFont(ofSize: fontSize, weight: .semibold))
         label.adjustsFontForContentSizeCategory = true
-        label.numberOfLines = 5
-        label.minimumScaleFactor = 0.7
+        label.numberOfLines = 2
+        label.minimumScaleFactor = 0.6
         label.allowsDefaultTighteningForTruncation = true
         label.lineBreakMode = .byWordWrapping
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.textColor = Theme.Colors.Text.main
         label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
         label.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
         label.accessibilityTraits = .staticText
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
+    private let linkLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFontMetrics(forTextStyle: .headline)
+            .scaledFont(for: .systemFont(ofSize: fontSize, weight: .regular))
+        label.adjustsFontForContentSizeCategory = true
+        label.numberOfLines = 1
+        label.minimumScaleFactor = 0.7
+        label.allowsDefaultTighteningForTruncation = true
+        label.lineBreakMode = .byTruncatingTail
+        label.textAlignment = .left
+        label.textColor = Theme.Colors.Text.theme
+        label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
+        label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
+        label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
+        label.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+        label.accessibilityTraits = .staticText
+        label.text = T.Commons.goToTrash
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -196,42 +244,49 @@ private final class TrashWarning: UIView {
     }
     
     private func commonInit() {
-        refreshBorder()
+        refreshBackground()
         
-        addSubview(label, with: [
-            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ThemeMetrics.margin),
-            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -ThemeMetrics.margin),
-            label.topAnchor.constraint(equalTo: topAnchor, constant: ThemeMetrics.margin)
-        ])
-        addSubview(goToTrash, with: [
-            goToTrash.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ThemeMetrics.margin),
-            goToTrash.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -ThemeMetrics.margin),
-            goToTrash.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 2 * ThemeMetrics.margin),
-            goToTrash.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -ThemeMetrics.margin)
-        ])
+        let linkStack = UIStackView(arrangedSubviews: [linkLabel, arrowIcon, UIView()])
+        linkStack.spacing = ThemeMetrics.spacing
+        linkStack.alignment = .leading
+        linkStack.axis = .horizontal
         
-        goToTrash.action = { [weak self] in
-            self?.goToTrashAction?()
-        }
+        let verticalStack = UIStackView(arrangedSubviews: [summaryLabel, linkStack])
+        verticalStack.spacing = ThemeMetrics.spacing
+        verticalStack.alignment = .leading
+        verticalStack.axis = .vertical
+        
+        let containerStack = UIStackView(arrangedSubviews: [trashIcon, verticalStack])
+        containerStack.spacing = ThemeMetrics.spacing
+        containerStack.alignment = .leading
+        containerStack.axis = .horizontal
+        
+        addSubview(containerStack, with: [
+            containerStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
+            containerStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
+            containerStack.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin),
+            containerStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin)
+        ])
+        containerStack.isUserInteractionEnabled = false
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        refreshBorder()
+        refreshBackground()
     }
     
     func setCount(_ count: Int) {
         let baseFont = UIFontMetrics(forTextStyle: .headline)
-            .scaledFont(for: .systemFont(ofSize: 18, weight: .regular))
+            .scaledFont(for: .systemFont(ofSize: Self.fontSize, weight: .semibold))
         let boldFont = UIFontMetrics(forTextStyle: .headline)
-            .scaledFont(for: .systemFont(ofSize: 18, weight: .bold))
+            .scaledFont(for: .systemFont(ofSize: Self.fontSize, weight: .bold))
 
         guard let attrString = try? AttributedString(
             markdown: T.Tokens.emptyScreenInTrash(count),
             options: .init(),
             baseURL: nil
         ) else {
-            label.text = T.Tokens.emptyScreenInTrash(count)
+            summaryLabel.text = T.Tokens.emptyScreenInTrash(count)
             return
         }
 
@@ -247,14 +302,10 @@ private final class TrashWarning: UIView {
             mutable.addAttribute(.font, value: boldFont, range: range)
         }
 
-        label.attributedText = mutable
+        summaryLabel.attributedText = mutable
     }
     
-    private func refreshBorder() {
-        applyRoundedBorder(
-            withBorderColor: Theme.Colors.Line.theme.withAlphaComponent(0.5),
-            width: 1,
-            cornerRadius: Theme.Metrics.cornerRadius
-        )
+    private func refreshBackground() {
+        applyRoundedCorners(withBackgroundColor: ThemeColor.infoField, cornerRadius: 2 * Theme.Metrics.cornerRadius)
     }
 }

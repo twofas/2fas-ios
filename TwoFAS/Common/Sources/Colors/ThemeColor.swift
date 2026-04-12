@@ -56,5 +56,6 @@ public enum ThemeColor {
     public static let labelTextBackground = UIColor(named: "ColorLabelTextBackground", in: bundle, compatibleWith: nil)!
     public static let pageIndicator = UIColor(named: "ColorPageIndicator", in: bundle, compatibleWith: nil)!
     public static let secondaryDivider = UIColor(named: "ColorSecondaryDivider", in: bundle, compatibleWith: nil)!
+    public static let infoField = UIColor(named: "ColorInfoField", in: bundle, compatibleWith: nil)!
 }
 // swiftlint:enable all

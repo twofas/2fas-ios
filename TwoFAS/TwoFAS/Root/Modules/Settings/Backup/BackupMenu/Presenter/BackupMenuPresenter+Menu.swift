@@ -116,7 +116,7 @@ extension BackupMenuPresenter {
             ],
         )
         
-        advancedSection.cells.append(.init(title: "[DEBUG] Reload Keys", action: .reloadKeys))
+//        advancedSection.cells.append(.init(title: "[DEBUG] Reload Keys", action: .reloadKeys))
 
         menu.append(advancedSection)
                 

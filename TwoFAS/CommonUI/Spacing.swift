@@ -1,3 +1,22 @@
+//
+//  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
+//  Copyright © 2026 Two Factor Authentication Service, Inc.
+//  Contributed by Zbigniew Cisiński. All rights reserved.
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
+//
+
 import SwiftUI
 
 // MARK: - Spacing
@@ -13,17 +32,27 @@ import SwiftUI
 /// VStack(spacing: Spacing.M.value) { ... }
 /// EdgeInsets(vertical: .L, horizontal: .M)
 /// ```
+@frozen
 public enum Spacing: CGFloat, CaseIterable {
-    case XS     = 2
-    case S      = 4
-    case M      = 8
-    case L      = 12
-    case XL     = 16
-    case XXL    = 20
-    case XXXL   = 24
-    case XXXXL  = 28
+    /// 2
+    case XS = 2
+    /// 4
+    case S = 4
+    /// 8
+    case M = 8
+    /// 12
+    case L = 12
+    /// 16
+    case XL = 16
+    /// 20
+    case XXL = 20
+    /// 24
+    case XXXL = 24
+    /// 28
+    case XXXXL = 28
+    /// 32
     case XXXXXL = 32
-
+    
     /// Raw `CGFloat` value — use when a plain number is required,
     /// e.g. `VStack(spacing: Spacing.M.value)`.
     public var value: CGFloat { rawValue }
@@ -32,22 +61,21 @@ public enum Spacing: CGFloat, CaseIterable {
 // MARK: - View + padding
 
 public extension View {
-
     /// Applies equal padding on all edges.
     func padding(_ spacing: Spacing) -> some View {
         padding(spacing.value)
     }
-
+    
     /// Applies padding to the specified edges.
     func padding(_ edges: Edge.Set, _ spacing: Spacing) -> some View {
         padding(edges, spacing.value)
     }
-
+    
     /// Applies equal margin (padding) on all edges.
     func margin(_ spacing: Spacing) -> some View {
         padding(spacing.value)
     }
-
+    
     /// Applies margin (padding) to the specified edges.
     func margin(_ edges: Edge.Set, _ spacing: Spacing) -> some View {
         padding(edges, spacing.value)
@@ -83,13 +111,12 @@ public extension LazyHStack {
 // MARK: - EdgeInsets
 
 public extension EdgeInsets {
-
     /// Uniform insets on all sides.
     init(_ spacing: Spacing) {
         let v = spacing.value
         self.init(top: v, leading: v, bottom: v, trailing: v)
     }
-
+    
     /// Separate vertical and horizontal insets.
     init(vertical: Spacing, horizontal: Spacing) {
         self.init(
@@ -99,7 +126,7 @@ public extension EdgeInsets {
             trailing: horizontal.value
         )
     }
-
+    
     /// Independent insets per axis.
     init(top: Spacing, leading: Spacing, bottom: Spacing, trailing: Spacing) {
         self.init(

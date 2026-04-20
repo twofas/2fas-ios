@@ -32,6 +32,8 @@ import SwiftUI
 public enum TFCornerRadius: CGFloat, CaseIterable {
     /// 12 pt — default rounded button / card radius.
     case medium = 12
+    /// 20 pt — badge / logo frame radius.
+    case badge = 20
     /// 24 pt — info frame / card radius.
     case large = 24
 

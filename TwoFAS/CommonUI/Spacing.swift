@@ -40,6 +40,8 @@ public enum Spacing: CGFloat, CaseIterable {
     case S = 4
     /// 8
     case M = 8
+    /// 10
+    case ML = 10
     /// 12
     case L = 12
     /// 16

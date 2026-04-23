@@ -19,41 +19,49 @@
 
 import SwiftUI
 
-// MARK: - TFCloseButton
-
-/// A 44 × 44 pt liquid-glass dismiss button displaying the `xmark` SF Symbol.
-///
-/// Intended for sheet and modal toolbars — matches the close-button pattern
-/// from the 2FAS Design System.
-///
-/// The label colour adapts automatically to light / dark mode via
-/// `labelsVibrantPrimary`. A rigid impact haptic fires on press-down.
-///
-/// ```swift
-/// TFCloseButton { dismiss() }
-/// ```
-public struct TFCloseButton: View {
-    private let size: CGFloat = 44
-    private let fontSize: CGFloat = 20
-    
+public struct TFLiquidGlassTextButton: View {
+    private let label: String
     private let action: () -> Void
 
-    public init(action: @escaping () -> Void) {
+    @GestureState
+    private var isPressed = false
+    
+    public init(
+        _ label: String,
+        action: @escaping () -> Void
+    ) {
+        self.label = label
         self.action = action
     }
 
     public var body: some View {
         Button(action: action) {
-            Image(systemName: "xmark")
-                .font(.system(size: fontSize, weight: .regular))
+            Text(label)
+                .textStyle(.body, .medium)
                 .foregroundStyle(AppColor.labelsVibrantPrimary)
-                .frame(width: size, height: size)
-                .background(
-                    Circle()
-                        .fill(AnyShapeStyle(.ultraThinMaterial))
-                        .shadow(.glass)
-                )
+                .padding(.S)
         }
-        .buttonStyle(_TFPressStyle())
+        .modify {
+            if #available(iOS 26, *) {
+                $0.tint(nil)
+                    .buttonStyle(.glass)
+                    .buttonBorderShape(.capsule)
+                    .shadow(.glass)
+            } else {
+                $0.buttonStyle(ButtonFeedbackStyle())
+            }
+        }
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .updating($isPressed) { _, state, _ in state = true }
+        )
+        .sensoryFeedback(.impact(flexibility: .rigid, intensity: 0.6), trigger: isPressed) { _, new in new }
+    }
+}
+
+extension View {
+    @inlinable
+    func modify<T: View>(@ViewBuilder modifier: (Self) -> T) -> T {
+        modifier(self)
     }
 }

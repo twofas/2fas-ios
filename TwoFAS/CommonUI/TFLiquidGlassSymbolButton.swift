@@ -19,35 +19,45 @@
 
 import SwiftUI
 
-// MARK: - TFBackButton
-
-/// A 44 × 44 pt liquid-glass back button displaying the `chevron.left` SF Symbol.
-///
-/// ```swift
-/// TFBackButton { navigationPath.removeLast() }
-/// ```
-public struct TFBackButton: View {
-    private let size: CGFloat = 44
+public struct TFLiquidGlassSymbolButton: View {
+    public enum Symbol: String {
+        case close = "xmark"
+        case back = "chevron.left"
+    }
+    
     private let fontSize: CGFloat = 20
-
+    
+    @GestureState
+    private var isPressed = false
     private let action: () -> Void
-
-    public init(action: @escaping () -> Void) {
+    private let symbol: Symbol
+    
+    public init(symbol: Symbol, action: @escaping () -> Void) {
+        self.symbol = symbol
         self.action = action
     }
-
+    
     public var body: some View {
         Button(action: action) {
-            Image(systemName: "chevron.left")
+            Image(systemName: symbol.rawValue)
                 .font(.system(size: fontSize, weight: .regular))
                 .foregroundStyle(AppColor.labelsVibrantPrimary)
-                .frame(width: size, height: size)
-                .background(
-                    Circle()
-                        .fill(AnyShapeStyle(.ultraThinMaterial))
-                        .shadow(.glass)
-                )
+                .padding(.S)
         }
-        .buttonStyle(_TFPressStyle())
+        .modify {
+            if #available(iOS 26, *) {
+                $0.tint(nil)
+                    .buttonStyle(.glass)
+                    .buttonBorderShape(.circle)
+                    .shadow(.glass)
+            } else {
+                $0.buttonStyle(ButtonFeedbackStyle())
+            }
+        }
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .updating($isPressed) { _, state, _ in state = true }
+        )
+        .sensoryFeedback(.impact(flexibility: .rigid, intensity: 0.6), trigger: isPressed) { _, new in new }
     }
 }

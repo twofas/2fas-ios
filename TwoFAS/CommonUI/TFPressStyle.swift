@@ -40,3 +40,14 @@ struct _TFPressStyle: ButtonStyle {
             ) { _, new in new }
     }
 }
+
+struct ButtonFeedbackStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .sensoryFeedback(
+                .impact(flexibility: .rigid, intensity: 0.6),
+                trigger: configuration.isPressed
+            ) { _, new in new }
+    }
+}
+

@@ -27,6 +27,7 @@ struct TokenCell: Hashable {
         case serviceHOTP
         case serviceSteam
         case placeholder
+        case pass
     }
     let name: String
     let secret: String

@@ -23,6 +23,7 @@ import StorageWatch
 protocol ServiceListInteracting: AnyObject {
     var hasServices: Bool { get }
     func listAllServices() -> [CategoryData]
+    func sync()
 }
 
 final class ServiceListInteractor {
@@ -30,6 +31,10 @@ final class ServiceListInteractor {
     
     init(mainRepository: MainRepository) {
         self.mainRepository = mainRepository
+    }
+    
+    func sync() {
+        mainRepository.synchronizeCloudBackup()
     }
 }
 

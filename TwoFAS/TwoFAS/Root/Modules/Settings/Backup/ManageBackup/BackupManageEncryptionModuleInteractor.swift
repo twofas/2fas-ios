@@ -24,7 +24,6 @@ import Common
 protocol BackupManageEncryptionModuleInteracting: AnyObject {
     var isSyncing: Bool { get }
     var reload: Callback? { get set }
-    var canDelete: Bool { get }
     var isCloudBackupSynced: Bool { get }
     var encryptionTypeIsUser: Bool { get }
 }
@@ -56,10 +55,6 @@ final class BackupManageEncryptionModuleInteractor {
 extension BackupManageEncryptionModuleInteractor: BackupManageEncryptionModuleInteracting {
     var isSyncing: Bool {
         syncMigrationInteractor.currentCloudState == .enabled(sync: .syncing)
-    }
-    
-    var canDelete: Bool {
-        cloudBackup.canDelete
     }
     
     var isCloudBackupSynced: Bool {

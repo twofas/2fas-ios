@@ -3,73 +3,86 @@
 //  Copyright © 2025 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
+//
 
 import UIKit
 import UniformTypeIdentifiers
 import Common
 
-protocol BackupManageKeysFlowControllerParent: AnyObject {
-    func backupManageKeysClose()
+protocol BackupAdvancedFlowControllerParent: AnyObject {
+    func backupAdvancedClose()
 }
 
-enum ImportEncryptionType {
-    case systemKey
-    case customPassword
-}
-
-protocol BackupManageKeysFlowControlling: AnyObject {
+protocol BackupAdvancedFlowControlling: AnyObject {
+    func toDeleteBackup()
     func toExportKeys(url: URL)
     func toKeysError(_ message: String)
     func toImportKeysWarning(confirm: @escaping () -> Void)
-    func toAskEncryptionTypeForImport(completion: @escaping (ImportEncryptionType) -> Void)
+    func toAskEncryptionTypeForImport(completion: @escaping (BackupAdvancedImportEncryptionType) -> Void)
     func toCollectPasswordForImport(completion: @escaping (String) -> Void)
     func toImportKeys(completion: @escaping (URL) -> Void)
     func importKeysSuccess()
     func toKeysImportError()
 }
 
-final class BackupManageKeysFlowController: FlowController {
-    private weak var parent: BackupManageKeysFlowControllerParent?
+final class BackupAdvancedFlowController: FlowController {
+    private weak var parent: BackupAdvancedFlowControllerParent?
     private weak var navigationController: UINavigationController?
-    private var importKeysPickerDelegate: ImportKeysDocumentPickerDelegate?
-    
+    private var importKeysPickerDelegateHandler: BackupAdvancedImportKeysDocumentPickerDelegate?
+
     static func push(
         in navigationController: UINavigationController,
-        parent: BackupManageKeysFlowControllerParent
+        parent: BackupAdvancedFlowControllerParent
     ) {
-        let viewController = BackupManageKeysViewController()
-        let flowController = BackupManageKeysFlowController(viewController: viewController)
+        let viewController = BackupAdvancedViewController()
+        let flowController = BackupAdvancedFlowController(viewController: viewController)
         flowController.parent = parent
         flowController.navigationController = navigationController
-        let presenter = BackupManageKeysPresenter(
+        let presenter = BackupAdvancedPresenter(
             flowController: flowController,
-            interactor: ModuleInteractorFactory.shared.backupManageKeysModuleInteractor()
+            interactor: ModuleInteractorFactory.shared.backupAdvancedModuleInteractor()
         )
         viewController.presenter = presenter
         presenter.view = viewController
-        
+
         navigationController.pushViewController(viewController, animated: true)
     }
 }
 
-extension BackupManageKeysFlowController {
-    var viewController: BackupManageKeysViewController {
-        _viewController as! BackupManageKeysViewController
+extension BackupAdvancedFlowController {
+    var viewController: BackupAdvancedViewController {
+        _viewController as! BackupAdvancedViewController
     }
 }
 
-extension BackupManageKeysFlowController: BackupManageKeysFlowControlling {
+extension BackupAdvancedFlowController: BackupAdvancedFlowControlling {
+    func toDeleteBackup() {
+        BackupDeleteFlowController.present(on: viewController, parent: self)
+    }
+
     func toExportKeys(url: URL) {
         let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         viewController.present(activityVC, animated: true)
     }
-    
+
     func toKeysError(_ message: String) {
         let alert = UIAlertController(title: T.Commons.error, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: T.Commons.ok, style: .default))
         viewController.present(alert, animated: true)
     }
-    
+
     func toImportKeysWarning(confirm: @escaping () -> Void) {
         let alert = UIAlertController(
             title: T.Backup.cloudBackup,
@@ -80,8 +93,8 @@ extension BackupManageKeysFlowController: BackupManageKeysFlowControlling {
         alert.addAction(UIAlertAction(title: T.Commons.ok, style: .destructive) { _ in confirm() })
         viewController.present(alert, animated: true)
     }
-    
-    func toAskEncryptionTypeForImport(completion: @escaping (ImportEncryptionType) -> Void) {
+
+    func toAskEncryptionTypeForImport(completion: @escaping (BackupAdvancedImportEncryptionType) -> Void) {
         let alert = UIAlertController(
             title: T.Backup.encryptionTitle,
             message: T.Backup.encryptionMethodFooter,
@@ -96,12 +109,17 @@ extension BackupManageKeysFlowController: BackupManageKeysFlowControlling {
         alert.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel))
         if let popover = alert.popoverPresentationController {
             popover.sourceView = viewController.view
-            popover.sourceRect = CGRect(x: viewController.view.bounds.midX, y: viewController.view.bounds.midY, width: 0, height: 0)
+            popover.sourceRect = CGRect(
+                x: viewController.view.bounds.midX,
+                y: viewController.view.bounds.midY,
+                width: 0,
+                height: 0
+            )
             popover.permittedArrowDirections = []
         }
         viewController.present(alert, animated: true)
     }
-    
+
     func toCollectPasswordForImport(completion: @escaping (String) -> Void) {
         let alert = UIAlertController(
             title: T.Backup.enterPasswordDialogTitle,
@@ -119,18 +137,18 @@ extension BackupManageKeysFlowController: BackupManageKeysFlowControlling {
         })
         viewController.present(alert, animated: true)
     }
-    
+
     func toImportKeys(completion: @escaping (URL) -> Void) {
-        let delegate = ImportKeysDocumentPickerDelegate(completion: completion) { [weak self] in
-            self?.importKeysPickerDelegate = nil
+        let delegate = BackupAdvancedImportKeysDocumentPickerDelegate(completion: completion) { [weak self] in
+            self?.importKeysPickerDelegateHandler = nil
         }
-        importKeysPickerDelegate = delegate
+        importKeysPickerDelegateHandler = delegate
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.data, .item])
         picker.delegate = delegate
         picker.allowsMultipleSelection = false
         viewController.present(picker, animated: true)
     }
-    
+
     func importKeysSuccess() {
         let alert = UIAlertController(
             title: nil,
@@ -140,13 +158,22 @@ extension BackupManageKeysFlowController: BackupManageKeysFlowControlling {
         alert.addAction(UIAlertAction(title: T.Commons.ok, style: .default))
         viewController.present(alert, animated: true)
     }
-    
+
     func toKeysImportError() {
         toKeysError(T.Backup.keysImportError)
     }
 }
 
-private final class ImportKeysDocumentPickerDelegate: NSObject, UIDocumentPickerDelegate {
+extension BackupAdvancedFlowController: BackupDeleteFlowControllerParent {
+    func closeDeleteBackup(didDelete: Bool) {
+        viewController.dismiss(animated: true)
+        if didDelete {
+            navigationController?.popViewController(animated: true)
+        }
+    }
+}
+
+private final class BackupAdvancedImportKeysDocumentPickerDelegate: NSObject, UIDocumentPickerDelegate {
     private let completion: (URL) -> Void
     private let onDone: () -> Void
     init(completion: @escaping (URL) -> Void, onDone: @escaping () -> Void) {

@@ -42,3 +42,4 @@ public extension TokenValue {
 }
 
 public typealias Callback = () -> Void
+public typealias ResultCallback = (Result<Void, Error>) -> Void

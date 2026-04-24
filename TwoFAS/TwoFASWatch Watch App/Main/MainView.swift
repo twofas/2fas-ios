@@ -20,9 +20,12 @@
 import SwiftUI
 
 struct MainView: View {
-    @ObservedObject var presenter: MainPresenter
+    @Bindable var presenter: MainPresenter
     @State private var selectedService: Service?
     @State private var path = NavigationPath()
+    @State private var listPresenter = ServiceListPresenter(
+        interactor: InteractorFactory.shared.serviceListInteractor()
+    )
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -69,9 +72,7 @@ struct MainView: View {
             .navigationDestination(for: MainPath.self) { route in
                 switch route {
                 case .settings: SettingsView(path: $path)
-                case .tokens: ServiceListView(presenter: ServiceListPresenter(
-                    interactor: InteractorFactory.shared.serviceListInteractor()
-                ))
+                case .tokens: ServiceListView(presenter: listPresenter)
                 case .favorite(let service):
                     ServiceView(
                         presenter: ServicePresenter(
@@ -94,7 +95,11 @@ struct MainView: View {
             } message: {
                 Text(verbatim: T.Backup.cloudErrorMissingSystemKeyContent)
             }
-            .fullScreenCover(isPresented: $presenter.showPairQRCode, content: PairQRCodeView.init)
+            .fullScreenCover(
+                isPresented: $presenter.showPairQRCode,
+                onDismiss: {
+                presenter.sync()
+            }, content: PairQRCodeView.init)
         }
     }
 }

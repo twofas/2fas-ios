@@ -331,7 +331,9 @@ final class ModuleInteractorFactory {
             newCodeInteractor: InteractorFactory.shared.newCodeInteractor(),
             newsInteractor: InteractorFactory.shared.newsInteractor(),
             rootInteractor: InteractorFactory.shared.rootInteractor(),
-            localNotificationFetchInteractor: InteractorFactory.shared.localNotificationFetchInteractor()
+            localNotificationFetchInteractor: InteractorFactory.shared.localNotificationFetchInteractor(),
+            appInfoInteractor: InteractorFactory.shared.appInfoInteractor(),
+            trashInteractor: InteractorFactory.shared.trashingServiceInteractor()
         )
     }
     
@@ -446,9 +448,10 @@ final class ModuleInteractorFactory {
             cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "")
         )
     }
-    
-    func backupManageKeysModuleInteractor() -> BackupManageKeysModuleInteracting {
-        BackupManageKeysModuleInteractor(
+
+    func backupAdvancedModuleInteractor() -> BackupAdvancedModuleInteracting {
+        BackupAdvancedModuleInteractor(
+            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor(),
             cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "")
         )
     }

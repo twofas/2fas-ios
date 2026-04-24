@@ -65,9 +65,9 @@ enum BackupNavigationAction: Hashable {
     case importFile
     case exportFile
     case manageAppleWatch
-    case debugEraseCloudBackup
     case manageBackup
-    case manageKeys
+    case advanced
+    case reloadKeys
 }
 
 enum BackupNavigationToggle: Hashable {

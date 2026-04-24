@@ -23,6 +23,9 @@ import SwiftUI
 struct TwoFASWatch_Watch_AppApp: App {
     @WKApplicationDelegateAdaptor var appDelegate: AppDelegateInteractor
     @State var locked = false
+    @State var mainPresenter = MainPresenter(
+        interactor: InteractorFactory.shared.mainInteractor()
+    )
     @ObservedObject var presenter = AppPresenter(mainRepository: MainRepositoryImpl.shared)
     var body: some Scene {
         WindowGroup {
@@ -47,11 +50,7 @@ struct TwoFASWatch_Watch_AppApp: App {
                     }
                     .transition(.opacity)
                 } else {
-                    MainView(
-                        presenter: MainPresenter(
-                            interactor: InteractorFactory.shared.mainInteractor()
-                        )
-                    )
+                    MainView(presenter: mainPresenter)
                     .containerBackground(.red.gradient, for: .navigation)
                 }
             }

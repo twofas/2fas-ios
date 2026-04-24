@@ -167,7 +167,7 @@ extension MainFlowController: MainFlowControlling {
     
     func toiCloudIsEncryptedBySystemError() {
         let alertTitle = T.Backup.cloudErrorTitle
-        let alertMessage = T.Backup.cloudErrorMismatchKeyContent
+        let alertMessage = T.Backup.cloudErrorMissingSystemKeyContent
         
         let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         let okButton = UIAlertAction(title: T.Commons.ok, style: .default)
@@ -303,6 +303,10 @@ extension MainFlowController: MainSplitFlowControllerParent {
     
     func navigationSwitchedToSettingsBackup() {
         viewController.presenter.handleSwitchToBackup()
+    }
+    
+    func navigationSwitchedToSettingsTrash() {
+        viewController.presenter.handleSwitchToTrash()
     }
 }
 

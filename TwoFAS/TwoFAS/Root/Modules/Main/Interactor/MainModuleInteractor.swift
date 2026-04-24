@@ -45,6 +45,7 @@ protocol MainModuleInteracting: AnyObject {
     func savePIN(_ PIN: String, ofType pinType: PINType)
     func saveSuccessSync()
     func clearSavesuccessSync()
+    func markAllServicesRemovedAsPending()
     
     func checkForCompanionApp()
     func setNotificationGroupID()
@@ -163,6 +164,10 @@ extension MainModuleInteractor: MainModuleInteracting {
     
     func clearSavesuccessSync() {
         cloudBackupStateInteractor.clearSaveSuccessSync()
+    }
+
+    func markAllServicesRemovedAsPending() {
+        cloudBackupStateInteractor.markAllServicesRemovedAsPending()
     }
     
     func checkForCompanionApp() {

@@ -135,21 +135,24 @@ protocol MainRepository: AnyObject {
     var secretSyncError: ((String) -> Void)? { get set }
     var isCloudBackupConnected: Bool { get }
     var isCloudBackupSynced: Bool { get }
+    var isCloudBackupSyncing: Bool { get }
     var successSyncDate: Date? { get }
     var cloudCurrentState: CloudState { get }
     func registerForCloudStateChanges(_ listener: @escaping CloudStateListener, id: CloudStateListenerID)
     func unregisterForCloudStageChanges(with id: CloudStateListenerID)
     func enableCloudBackup()
     func disableCloudBackup()
-    func clearBackup()
     func synchronizeBackup()
     func syncDidReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     )
-    func debugEraseCloudBackup()
+    func erase(completion: @escaping ResultCallback)
     func syncDebugReloadAllKeys()
     func saveSuccessSyncDate(_ date: Date?)
+    var allServicesRemovedPending: Bool { get }
+    func markAllServicesRemovedAsPending()
+    func clearAllServicesRemovedPending()
     // MARK: Watch Pair
     func watchPairingList() -> [PairedWatch]
     func watchPairingUnpair(_ pairedWatch: PairedWatch)
@@ -179,6 +182,7 @@ protocol MainRepository: AnyObject {
     func cloudImportKeys(salt: Data, systemKey: Data, password: String?)
     func cloudPackKeys(salt: Data, systemKey: Data) -> Data?
     func cloudUnpackKeys(from jsonData: Data) -> (salt: Data, systemKey: Data)?
+    func cloudReloadKeys()
     
     // MARK: - Import
     var fileURL: URL? { get set }
@@ -275,6 +279,10 @@ protocol MainRepository: AnyObject {
     var appBundleIdentifier: String? { get }
     var dateOfFirstRun: Date? { get }
     func saveDateOfFirstRun(_ date: Date)
+    var passPromoDateFirstRun: Date? { get }
+    func savePassPromoDateFirstRun(_ date: Date)
+    var wasPassPromoSeen: Bool { get }
+    func markPassPromoAsSeen()
     
     // MARK: - Lock Screen
     var isLockScreenActive: Bool { get }

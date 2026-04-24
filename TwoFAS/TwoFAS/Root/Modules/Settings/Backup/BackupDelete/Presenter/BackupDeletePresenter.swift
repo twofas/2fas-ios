@@ -37,7 +37,15 @@ extension BackupDeletePresenter {
     }
     
     func handleDeleteBackup() {
-        interactor.deleteBackup()
-        flowController.toClose(didDelete: true)
+        interactor.erase(completion: { [weak self] result in
+            switch result {
+            case .success:
+                self?.flowController.toClose(didDelete: true)
+            case .failure(let error):
+                self?.flowController.toError(error) { [weak self] in
+                    self?.flowController.toClose(didDelete: false)
+                }
+            }
+        })
     }
 }

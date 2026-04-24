@@ -20,7 +20,7 @@
 import Foundation
 
 // swiftlint:disable static_operator
-func + <K, V> (left: [K: V], right: [K: V]) -> [K: V] {
+func + <K, V>(left: [K: V], right: [K: V]) -> [K: V] {
     var tmp = left
     for (k, v) in right {
         tmp[k] = v

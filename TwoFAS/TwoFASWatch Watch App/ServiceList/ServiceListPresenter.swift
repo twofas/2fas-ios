@@ -20,23 +20,45 @@
 import Foundation
 import CommonWatch
 
-final class ServiceListPresenter: ObservableObject {
-    @Published var list: [Category] = []
+@Observable
+final class ServiceListPresenter {
+    var list: [Category] = []
     
     private let interactor: ServiceListInteracting
+    private let notificationCenter: NotificationCenter
     
     init(interactor: ServiceListInteracting) {
         self.interactor = interactor
+        self.notificationCenter = .default
+        
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(notificationRefresh),
+            name: .syncCompletedSuccessfuly,
+            object: nil
+        )
+    }
+    
+    deinit {
+        notificationCenter.removeObserver(self)
     }
 }
 
 extension ServiceListPresenter {
     func onAppear() {
         refresh()
+        sync()
     }
     
     private func refresh() {
         list = interactor.listAllServices()
             .toCategories()
+    }
+    
+    @objc
+    private func notificationRefresh() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            self.refresh()
+        }
     }
 }

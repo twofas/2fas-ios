@@ -26,6 +26,7 @@ protocol TokensPlainFlowControllerParent: AnyObject {
     func tokensSwitchToTokensTab()
     func tokensSwitchToSettingsExternalImport()
     func tokensSwitchToSettingsBackup()
+    func tokensSwitchToSettingsTrash()
 }
 
 protocol TokensPlainFlowControlling: AnyObject {
@@ -45,6 +46,7 @@ protocol TokensPlainFlowControlling: AnyObject {
     func toFileImport()
     func toShowGallery()
     func toHelp()
+    func toTrash()
     // MARK: Link actions
     func toIncorrectCode()
     func toDuplicatedCode(forceAdd: @escaping Callback, cancel: @escaping Callback)
@@ -57,6 +59,10 @@ protocol TokensPlainFlowControlling: AnyObject {
     func toNotifications()
     // MARK: Import
     func toShowSummmary(count: Int)
+    // MARK: Pass cell
+    func toPassStore()
+    // MARK: Sync alerts
+    func toAllServicesRemoved(completion: @escaping Callback)
 }
 
 final class TokensPlainFlowController: FlowController, TokensNavigationFlowControllerParent {
@@ -238,6 +244,10 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         )
     }
     
+    func toTrash() {
+        parent?.tokensSwitchToSettingsTrash()
+    }
+    
     // MARK: - Link actions
     func toDuplicatedCode(forceAdd: @escaping Callback, cancel: @escaping Callback) {
         let alert = UIAlertController(
@@ -338,6 +348,21 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         dismiss(actions: [.finishedFlow, .newData, .sync]) { [weak self] in
             self?.showSummary(count: count)
         }
+    }
+    
+    // MARK: - Pass cell
+    func toPassStore() {
+        UIApplication.shared.open(URL(string: "https://apps.apple.com/app/id6504464955")!)
+    }
+
+    func toAllServicesRemoved(completion: @escaping Callback) {
+        let alert = UIAlertController(
+            title: T.Backup.movedToTrashTitle,
+            message: T.Backup.movedToTrashMessage,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: T.Commons.ok, style: .default, handler: { _ in completion() }))
+        presentAlertOnMainSplitViewController(alert)
     }
 }
 

@@ -107,15 +107,15 @@ public protocol CloudHandlerType: AnyObject {
     var setSystemEncryption: SetSystemEncryption? { get set }
     var isConnected: Bool { get }
     var isSynced: Bool { get }
+    var isSyncing: Bool { get }
     var secretSyncError: SecretSyncError? { get set }
     func checkState()
     func synchronize()
     func enable()
     func disable(notify: Bool)
-    func clearBackup()
     func setTimeOffset(_ offset: Int)
     func resetStateBeforeSync()
-    func debugErase()
+    func erase(completion: @escaping ResultCallback)
 }
 
 final class CloudHandler: CloudHandlerType {
@@ -173,8 +173,8 @@ final class CloudHandler: CloudHandlerType {
         self.migrationHandler = migrationHandler
         self.requirementCheckHandler = requirementCheckHandler
         self.zoneManager = zoneManager
-        self.clearHandler = ClearHandler(zoneManager: zoneManager)
         self.infoHandler = infoHandler
+        self.clearHandler = ClearHandler()
         
         cloudAvailability.availabilityCheckResult = { [weak self] resultStatus in
             self?.availabilityCheckResult(resultStatus)
@@ -193,8 +193,6 @@ final class CloudHandler: CloudHandlerType {
         
         requirementCheckHandler.newerVersion = { [weak self] in self?.newerVersionOfCloud() }
         requirementCheckHandler.cloudEncrypted = { [weak self] in self?.cloudIsEncrypted($0) }
-        
-        clearHandler.didClear = { [weak self] in self?.didClear() }
     }
     
     func registerForStateChange(_ listener: @escaping CloudHandlerStateListener, with id: String) {
@@ -265,24 +263,6 @@ final class CloudHandler: CloudHandlerType {
         }
     }
     
-    func clearBackup() {
-        isClearing = true
-        if isSynced ||
-            currentState == .disabledNotAvailable(reason: .cloudEncryptedSystem) ||
-            currentState == .disabledNotAvailable(reason: .cloudEncryptedUser) {
-            clearBackupForSyncedState()
-        }
-    }
-    
-    func debugErase() {
-        isClearing = true
-        if isSynced ||
-            currentState == .disabledNotAvailable(reason: .cloudEncryptedSystem) ||
-            currentState == .disabledNotAvailable(reason: .cloudEncryptedUser) {
-            debugEraseBackupForSyncedState()
-        }
-    }
-    
     func didReceiveRemoteNotification(
         userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (BackgroundFetchResult) -> Void
@@ -323,8 +303,48 @@ final class CloudHandler: CloudHandlerType {
         }
     }
     
+    var isSyncing: Bool {
+        switch currentState {
+        case .unknown: false
+        case .disabledNotAvailable: false
+        case .disabledAvailable: false
+        case .enabled(let sync):
+            switch sync {
+            case .syncing: true
+            case .synced: false
+            }
+        }
+    }
+    
     func setTimeOffset(_ offset: Int) {
         mergeHandler.setTimeOffset(offset)
+    }
+
+    // MARK: - Erasing
+    
+    func erase(completion: @escaping ResultCallback) {
+        Log("Cloud Handler - erase", module: .cloudSync)
+        isClearing = true
+        disable(notify: false)
+        
+        clearHandler.erase { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    Log("Cloud Handler - did erase", module: .cloudSync)
+
+                    self?.setSystemEncryption?()
+                    ConstStorage.cloudMigratedToV3 = true
+                    
+                    completion(.success(()))
+                case .failure(let error):
+                    Log("Cloud Handler - error while erasing: \(error)", module: .cloudSync)
+                    
+                    completion(.failure(error))
+                }
+                self?.isClearing = false
+            }
+        }
     }
     
     // MARK: - Private
@@ -395,38 +415,6 @@ final class CloudHandler: CloudHandlerType {
     
     private var isEnabled: Bool { ConstStorage.cloudEnabled }
     
-    // MARK: - Clearing
-    
-    private func didClear() {
-        Log("Cloud Handler - didClear", module: .cloudSync)
-        isClearing = false
-    }
-    
-    private func clearBackupForSyncedState() {
-        Log("Cloud Handler - clearBackupForSyncedState", module: .cloudSync)
-        let recordIDs = itemHandler.allEntityRecordIDs(zoneID: zoneManager.currentZoneID)
-        setSystemEncryption?()
-        infoHandler.clear()
-        guard let infoRecord = infoHandler.recreateCached() else {
-            Log("Cloud Handler - error recreating info record for cloud clearing", module: .cloudSync)
-            return
-        }
-        itemHandler.purge()
-
-        disable(notify: false)
-        
-        clearHandler.clear(recordIDs: recordIDs, infoRecord: infoRecord)
-    }
-    
-    private func debugEraseBackupForSyncedState() {
-        Log("Cloud Handler - debugEraseBackupForSyncedState", module: .cloudSync)
-        disable(notify: false)
-        setSystemEncryption?()
-        ConstStorage.cloudMigratedToV3 = false
-        
-        clearHandler.erase()
-    }
-    
     // MARK: -
     
     private func startedSync() {
@@ -439,7 +427,7 @@ final class CloudHandler: CloudHandlerType {
         currentState = .enabled(sync: .synced)
         
         if isClearing {
-            clearBackup()
+            return
         } else {
             notificationCenter.post(name: .syncCompletedSuccessfuly, object: nil)
         }

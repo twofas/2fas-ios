@@ -21,10 +21,11 @@ import Foundation
 import CommonWatch
 import SwiftUI
 
-final class MainPresenter: ObservableObject {
-    @Published var favoriteList: [Service] = []
-    @Published var showPairQRCode: Bool = false
-    @Published var showSystemKeyError: Bool = false
+@Observable
+final class MainPresenter {
+    var favoriteList: [Service] = []
+    var showPairQRCode = false
+    var showSystemKeyError = false
     
     private let interactor: MainInteracting
     
@@ -40,6 +41,11 @@ final class MainPresenter: ObservableObject {
     
     func onAppear() {
         refresh()
+        sync()
+    }
+    
+    func sync() {
+        interactor.sync()
     }
     
     private func refresh() {

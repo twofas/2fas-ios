@@ -43,6 +43,7 @@ final class TokensView: UICollectionView {
             TokensEmptyDropSpaceCell.self,
             forCellWithReuseIdentifier: TokensEmptyDropSpaceCell.reuseIdentifier
         )
+        register(TokensPassCell.self, forCellWithReuseIdentifier: TokensPassCell.reuseIdentifier)
         register(
             TokensSectionHeader.self,
             forSupplementaryViewOfKind: TokensSectionHeader.reuseIdentifier,

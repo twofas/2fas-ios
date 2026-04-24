@@ -30,11 +30,11 @@ public protocol CloudBackupStateInteracting: AnyObject {
     
     var isBackupEnabled: Bool { get }
     var isBackupAvailable: Bool { get }
-    var canDelete: Bool { get }
     var iCloudState: CloudState { get }
     
     var stateChanged: Callback? { get set }
     
+    var isCloudBackupSyncing: Bool { get }
     var isCloudBackupSynced: Bool { get }
     var encryptionTypeIsUser: Bool { get }
     
@@ -43,8 +43,7 @@ public protocol CloudBackupStateInteracting: AnyObject {
     func enableBackup()
     func disableBackup()
     
-    func clearBackup()
-    func debugErase()
+    func erase(completion: @escaping ResultCallback)
     
     func synchronizeBackup()
     
@@ -56,6 +55,11 @@ public protocol CloudBackupStateInteracting: AnyObject {
     func importKeys(salt: Data, systemKey: Data, password: String?)
     func packKeys(salt: Data, systemKey: Data) -> Data?
     func unpackKeys(from jsonData: Data) -> (salt: Data, systemKey: Data)?
+    func reloadKeys()
+
+    var allServicesRemovedPending: Bool { get }
+    func markAllServicesRemovedAsPending()
+    func clearAllServicesRemovedPending()
 }
 
 /// Use one instance per use case
@@ -96,15 +100,11 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
     var isBackupEnabled: Bool { isEnabled }
     var isBackupAvailable: Bool { isAvailable }
     var isCloudBackupSynced: Bool { mainRepository.isCloudBackupSynced }
+    var isCloudBackupSyncing: Bool { mainRepository.isCloudBackupSyncing }
     var encryptionTypeIsUser: Bool { mainRepository.cloudCurrentEncryption == .user }
     
     var successSyncDate: Date? {
         mainRepository.successSyncDate
-    }
-    
-    var canDelete: Bool {
-        mainRepository.cloudCurrentState == .disabledNotAvailable(reason: .cloudEncryptedSystem) ||
-        mainRepository.cloudCurrentState == .disabledNotAvailable(reason: .cloudEncryptedUser)
     }
     
     func startMonitoring() {
@@ -153,21 +153,12 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
         mainRepository.disableCloudBackup()
     }
     
-    func clearBackup() {
-        Log("CloudBackupStateInteractor - clearBackup", module: .interactor)
-        isEnabled = false
-        stateChanged?()
-        
-        mainRepository.clearBackup()
-    }
-    
-    func debugErase() {
+    func erase(completion: @escaping ResultCallback) {
         Log("CloudBackupStateInteractor - debug erase", module: .interactor)
         isEnabled = false
         stateChanged?()
         
-        mainRepository.debugEraseCloudBackup()
-        mainRepository.syncDebugReloadAllKeys()
+        mainRepository.erase(completion: completion)
     }
     
     func synchronizeBackup() {
@@ -199,6 +190,22 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
     
     func unpackKeys(from jsonData: Data) -> (salt: Data, systemKey: Data)? {
         mainRepository.cloudUnpackKeys(from: jsonData)
+    }
+    
+    func reloadKeys() {
+        mainRepository.cloudReloadKeys()
+    }
+
+    var allServicesRemovedPending: Bool {
+        mainRepository.allServicesRemovedPending
+    }
+
+    func markAllServicesRemovedAsPending() {
+        mainRepository.markAllServicesRemovedAsPending()
+    }
+
+    func clearAllServicesRemovedPending() {
+        mainRepository.clearAllServicesRemovedPending()
     }
 }
 

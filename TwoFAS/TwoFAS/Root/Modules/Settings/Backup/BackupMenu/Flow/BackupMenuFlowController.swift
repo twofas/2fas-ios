@@ -29,7 +29,7 @@ protocol BackupMenuFlowControlling: AnyObject {
     func toFileExport()
     func toManageAppleWatch()
     func toManageBackup()
-    func toManageKeys()
+    func toAdvanced()
 }
 
 final class BackupMenuFlowController: FlowController {
@@ -96,9 +96,9 @@ extension BackupMenuFlowController: BackupMenuFlowControlling {
         BackupManageEncryptionFlowController.push(in: navigationController, parent: self)
     }
     
-    func toManageKeys() {
+    func toAdvanced() {
         guard let navigationController = viewController.navigationController else { return }
-        BackupManageKeysFlowController.push(in: navigationController, parent: self)
+        BackupAdvancedFlowController.push(in: navigationController, parent: self)
     }
 }
 
@@ -136,8 +136,8 @@ extension BackupMenuFlowController: BackupManageEncryptionFlowControllerParent {
     }
 }
 
-extension BackupMenuFlowController: BackupManageKeysFlowControllerParent {
-    func backupManageKeysClose() {
+extension BackupMenuFlowController: BackupAdvancedFlowControllerParent {
+    func backupAdvancedClose() {
         viewController.navigationController?.popViewController(animated: true)
     }
 }

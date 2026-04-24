@@ -159,9 +159,13 @@ extension UIView {
         layer.masksToBounds = true
     }
     
-    func applyRoundedBorder(withBorderColor color: UIColor, width borderWidth: CGFloat? = nil) {
+    func applyRoundedBorder(
+        withBorderColor color: UIColor,
+        width borderWidth: CGFloat? = nil,
+        cornerRadius: CGFloat = Theme.Metrics.cornerRadius
+    ) {
         backgroundColor = UIColor.clear
-        layer.cornerRadius = Theme.Metrics.cornerRadius
+        layer.cornerRadius = cornerRadius
         layer.masksToBounds = true
         layer.borderWidth = borderWidth ?? Theme.Metrics.lineWidth
         layer.borderColor = color.cgColor

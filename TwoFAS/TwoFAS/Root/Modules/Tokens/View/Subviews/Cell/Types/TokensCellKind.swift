@@ -23,6 +23,7 @@ enum TokensCellKind {
     case compact
     case normal
     case edit
+    case pass
 }
 
 extension TokensCellKind {
@@ -30,6 +31,7 @@ extension TokensCellKind {
         switch self {
         case .normal: return 40
         case .compact, .edit: return 32
+        case .pass: return TokensPassCell.height
         }
     }
 }

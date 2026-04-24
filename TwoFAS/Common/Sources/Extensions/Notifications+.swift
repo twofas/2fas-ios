@@ -27,6 +27,8 @@ public extension Notification.Name {
     static let clearSyncCompletedSuccessfuly = Notification.Name("clearSyncCompletedSuccessfuly")
     static let localNotificationsHandled = Notification.Name("localNotificationsHandled")
     static let vaultWasMigrated = Notification.Name("vaultWasMigrated")
+    static let allServicesRemoved = Notification.Name("allServicesRemoved")
+    static let allServicesRemovedAlertShouldBeShown = Notification.Name("allServicesRemovedAlertShouldBeShown")
 }
 
 public extension Notification {

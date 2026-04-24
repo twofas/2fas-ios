@@ -19,9 +19,10 @@
 
 import Foundation
 import Data
+import Common
 
 protocol BackupDeleteModuleInteracting: AnyObject {
-    func deleteBackup()
+    func erase(completion: @escaping ResultCallback)
 }
 
 final class BackupDeleteModuleInteractor {
@@ -33,7 +34,7 @@ final class BackupDeleteModuleInteractor {
 }
 
 extension BackupDeleteModuleInteractor: BackupDeleteModuleInteracting {
-    func deleteBackup() {
-        cloudBackupStateInteractor.clearBackup()
+    func erase(completion: @escaping ResultCallback) {
+        cloudBackupStateInteractor.erase(completion: completion)
     }
 }

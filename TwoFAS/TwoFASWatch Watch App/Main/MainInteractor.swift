@@ -24,6 +24,7 @@ protocol MainInteracting: AnyObject {
     var showPairQRCode: ((Bool) -> Void)? { get set }
     var showSystemKeyError: ((Bool) -> Void)? { get set }
     func listFavoriteServices() -> [ServiceData]
+    func sync()
 }
 
 final class MainInteractor {
@@ -52,6 +53,10 @@ final class MainInteractor {
 extension MainInteractor: MainInteracting {
     func listFavoriteServices() -> [ServiceData] {
         mainRepository.listFavoriteServices()
+    }
+    
+    func sync() {
+        mainRepository.synchronizeCloudBackup()
     }
 }
 

@@ -56,7 +56,6 @@ extension BackupManageEncryptionPresenter {
         case .encrypt: flowController.toSetPassword()
         case .decrypt: flowController.toRemovePassword()
         case .recrypt: flowController.toChangePassword()
-        case .clear: flowController.toDeleteBackup()
         }
     }
 }

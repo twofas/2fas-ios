@@ -49,6 +49,7 @@ final class TokensNextTokenView: UIView {
         switch kind {
         case .compact, .edit: return -lineWidth
         case .normal: return -lineHeight
+        case .pass: return 0
         }
     }
     

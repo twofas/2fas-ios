@@ -48,18 +48,10 @@ extension BackupMenuPresenter {
                 .init(
                     title: T.Backup.manageTitle,
                     action: .manageBackup,
-                    isEnabled: interactor.isCloudBackupSynced || interactor.canDelete
+                    isEnabled: interactor.isCloudBackupSynced
                 )
             )
         }
-        
-//        mainCells.append(
-//            .init(
-//                title: T.Backup.encryptionTitle,
-//                action: .manageKeys,
-//                isEnabled: true
-//            )
-//        )
         
         let cloudBackup = BackupMenuSection(
             title: T.Backup.cloudBackup,
@@ -89,17 +81,6 @@ extension BackupMenuPresenter {
             footer: T.Backup.fileBackupOfflineTitle
         )
         
-        // TODO: Add TestFlight detection
-        let cloudBackupNuke = BackupMenuSection(
-            title: "DEBUG: Completely erase iCloud backup",
-            cells: [
-                .init(
-                    title: "<ERASE>",
-                    action: .debugEraseCloudBackup
-                )
-            ]
-        )
-        
         let cloudBackupPairWatch = BackupMenuSection(
             title: T.Backup.managePairedWatchesTitle,
             cells: [
@@ -118,15 +99,27 @@ extension BackupMenuPresenter {
         }
         
         menu.append(fileBackup)
-//        menu.append(cloudBackupNuke)
-                
+        
         if interactor.isCloudBackupConnected && interactor.isBackupAllowed {
-//            menu.append(cloudBackupNuke)
             if interactor.encryptionTypeIsUser && interactor.isCloudBackupSynced {
                 menu.append(cloudBackupPairWatch)
             }
         }
+        
+        var advancedSection = BackupMenuSection(
+            cells: [
+                .init(
+                    title: T.Settings.advanced,
+                    action: .advanced,
+                    isEnabled: true
+                )
+            ],
+        )
+        
+//        advancedSection.cells.append(.init(title: "[DEBUG] Reload Keys", action: .reloadKeys))
 
+        menu.append(advancedSection)
+                
         return menu
     }
 }

@@ -3,26 +3,46 @@
 //  Copyright © 2025 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
+//
 
 import Foundation
 
-final class BackupManageKeysPresenter: ObservableObject {
-    weak var view: BackupManageKeysViewControlling?
-    
-    private let flowController: BackupManageKeysFlowControlling
-    let interactor: BackupManageKeysModuleInteracting
-    
-    init(flowController: BackupManageKeysFlowControlling, interactor: BackupManageKeysModuleInteracting) {
+final class BackupAdvancedPresenter: ObservableObject {
+    weak var view: BackupAdvancedViewControlling?
+
+    private let flowController: BackupAdvancedFlowControlling
+    let interactor: BackupAdvancedModuleInteracting
+
+    var isSyncing: Bool {
+        interactor.isSyncing
+    }
+
+    init(flowController: BackupAdvancedFlowControlling, interactor: BackupAdvancedModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
+        interactor.reload = { [weak self] in
+            self?.reload()
+        }
     }
 }
 
-extension BackupManageKeysPresenter {
+extension BackupAdvancedPresenter {
     func viewWillAppear() {
         reload()
     }
-    
+
     func handleSelection(at indexPath: IndexPath) {
         let menu = buildMenu()
         guard let section = menu[safe: indexPath.section],
@@ -31,7 +51,9 @@ extension BackupManageKeysPresenter {
             reload()
             return
         }
-        
+
+        guard cell.isEnabled else { return }
+
         switch cell.action {
         case .exportKeys:
             interactor.exportKeys { [weak self] result in
@@ -65,16 +87,18 @@ extension BackupManageKeysPresenter {
                     }
                 }
             }
+        case .deleteBackup:
+            flowController.toDeleteBackup()
         }
     }
 }
 
-private extension BackupManageKeysPresenter {
+private extension BackupAdvancedPresenter {
     func reload() {
         let menu = buildMenu()
         view?.reload(with: menu)
     }
-    
+
     func runImportKeys(url: URL, password: String?) {
         interactor.importKeys(url: url, password: password) { [weak self] result in
             guard let self else { return }

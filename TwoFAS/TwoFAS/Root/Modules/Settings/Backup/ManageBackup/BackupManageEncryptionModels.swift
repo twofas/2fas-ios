@@ -37,7 +37,6 @@ struct BackupManageEncryptionCell: Hashable {
         case encrypt
         case decrypt
         case recrypt
-        case clear
     }
     
     let title: String
@@ -60,7 +59,6 @@ extension BackupManageEncryptionCell.Action {
         case .encrypt: UIImage(systemName: "lock.icloud.fill")!
         case .decrypt: UIImage(systemName: "lock.open.fill")!
         case .recrypt: UIImage(systemName: "lock.open.rotation")!
-        case .clear: UIImage(systemName: "xmark.icloud.fill")!
         }
     }
 }

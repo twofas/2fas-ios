@@ -35,4 +35,20 @@ extension MainRepositoryImpl {
     var dateOfFirstRun: Date? {
         userDefaultsRepository.dateOfFirstRun
     }
+    
+    var passPromoDateFirstRun: Date? {
+        userDefaultsRepository.passPromoDateFirstRun
+    }
+    
+    func savePassPromoDateFirstRun(_ date: Date) {
+        userDefaultsRepository.savePassPromoDateFirstRun(date)
+    }
+    
+    var wasPassPromoSeen: Bool {
+        userDefaultsRepository.wasPassPromoSeen
+    }
+    
+    func markPassPromoAsSeen() {
+        userDefaultsRepository.markPassPromoAsSeen()
+    }
 }

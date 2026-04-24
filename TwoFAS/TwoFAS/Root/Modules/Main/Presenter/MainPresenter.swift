@@ -89,6 +89,10 @@ final class MainPresenter {
         view?.navigateToViewPath(.settings(option: .backup))
     }
     
+    func handleSwitchToTrash() {
+        view?.navigateToViewPath(.settings(option: .trash))
+    }
+    
     func handleSwitchedToSettings() {
         view?.settingsTabActive()
     }
@@ -123,6 +127,11 @@ final class MainPresenter {
     
     func handleClearSyncCompletedSuccessfuly() {
         interactor.clearSavesuccessSync()
+    }
+
+    func handleAllServicesRemoved() {
+        interactor.markAllServicesRemovedAsPending()
+        NotificationCenter.default.post(name: .allServicesRemovedAlertShouldBeShown, object: nil)
     }
 
     func handleSavePIN(_ PIN: String, pinType: PINType) {

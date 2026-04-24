@@ -42,9 +42,14 @@ final class TokensPresenter {
     
     var isMainOnlyCategory: Bool { interactor.isMainOnlyCategory }
     var hasUnreadNews: Bool { interactor.hasUnreadNews }
-    
+    var showPassCell: Bool = false
+
     var listStyle: ListStyle {
         interactor.currentListStyle
+    }
+    
+    var trashedServicesCount: Int {
+        interactor.trashedServicesCount
     }
     
     init(flowController: TokensPlainFlowControlling, interactor: TokensModuleInteracting) {
@@ -87,11 +92,13 @@ extension TokensPresenter {
         interactor.sync()
         appActiveActions()
         updateNewsIcon()
+        checkPendingAllServicesRemovedAlert()
     }
     
     func handleAppDidBecomeActive() {
         Log("TokensPresenter - handleAppDidBecomeActive")
         appActiveActions()
+        checkPendingAllServicesRemovedAlert()
     }
     
     func vaultWasMigrated() {
@@ -102,6 +109,13 @@ extension TokensPresenter {
     func handleAppUnlocked() {
         Log("TokensPresenter - handleAppUnlocked")
         appActiveActions()
+        checkPendingAllServicesRemovedAlert()
+    }
+
+    func handleAllServicesRemovedAlert() {
+        flowController.toAllServicesRemoved { [weak self] in
+            self?.interactor.clearAllServicesRemovedPending()
+        }
     }
     
     func handleAppBecomesInactive() {
@@ -475,7 +489,27 @@ extension TokensPresenter {
     }
 }
 
+extension TokensPresenter {
+    func passCellCancel() {
+        interactor.markPassPromoCellAsSeen()
+        reloadData()
+    }
+    
+    func passCellGoToStore() {
+        flowController.toPassStore()
+    }
+    
+    func goToTrash() {
+        flowController.toTrash()
+    }
+}
+
 private extension TokensPresenter {
+    func checkPendingAllServicesRemovedAlert() {
+        guard interactor.allServicesRemovedPending else { return }
+        NotificationCenter.default.post(name: .allServicesRemovedAlertShouldBeShown, object: nil)
+    }
+
     func appActiveActions() {
         updateEditStateButton()
         updateNewsIcon()

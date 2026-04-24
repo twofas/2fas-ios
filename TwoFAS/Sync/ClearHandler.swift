@@ -26,60 +26,36 @@ import CommonWatch
 import CloudKit
 
 final class ClearHandler {
-    private let cloudKit: CloudKit
+    enum ClearError: Error {
+        case inProgress
+    }
+    
     private var isClearing = false
-    private var batchCount: Int = 0
-    private let batchElementLimit = 399
+    private var callback: ResultCallback?
+    
+    func erase(complete callback: @escaping ResultCallback) {
+        guard !isClearing else {
+            callback(.failure(ClearError.inProgress))
+            return
+        }
 
-    var didClear: Callback?
-    
-    init(zoneManager: ZoneManaging) {
-        cloudKit = CloudKit(zoneManager: zoneManager)
-    }
-    
-    func clear(recordIDs: [CKRecord.ID], infoRecord: CKRecord) {
-        guard !isClearing else { return }
-        Log("ClearHandler: Deleting 2FAS Backup", module: .cloudSync)
-        isClearing = true
-        cloudKit.initialize()
-        cloudKit.changesSavedSuccessfuly = { [weak self] in
-            guard let self, batchCount > 0, isClearing else { return }
-            batchCount -= 1
-            Log("ClearHandler: Batch Delete Saved Successfuly", module: .cloudSync)
-            if batchCount == 0 {
-                Log("ClearHandler: All Entries Deleted Successfuly", module: .cloudSync)
-                changesSavedSuccessfuly()
-            }
-        }
+        Log("ClearHandler: Erasing iCloud contents", module: .cloudSync)
         
-        let batch = recordIDs.grouped(by: batchElementLimit)
-        batchCount = batch.count + 1 // info modification
-        cloudKit.modifyRecord(recordsToSave: [infoRecord], recordIDsToDelete: nil)
-        for i in 0..<batch.count {
-            cloudKit.modifyRecord(recordsToSave: nil, recordIDsToDelete: batch[i])
-        }
-    }
-    
-    private func changesSavedSuccessfuly() {
-        isClearing = false
-        Log("ClearHandler: Deletition of 2FAS Backup was successful", module: .cloudSync)
-        cloudKit.clear()
-        didClear?()
-    }
-    
-    func erase() {
-        cloudKit.clear()
+        self.callback = callback
+        isClearing = true
+
         var zoneIDs: [CKRecordZone.ID] = []
+        let zoneIDsLock = NSLock()
         let database = CKContainer(identifier: Config.containerIdentifier).privateCloudDatabase
         let fetchZones = CKFetchRecordZonesOperation.fetchAllRecordZonesOperation()
         fetchZones.perRecordZoneResultBlock = { recordZoneID, _ in
-            zoneIDs.append(recordZoneID)
+            zoneIDsLock.withLock { zoneIDs.append(recordZoneID) }
         }
         fetchZones.fetchRecordZonesResultBlock = { [weak self] result in
             switch result {
             case .success:
                 if zoneIDs.isEmpty {
-                    self?.didClear?()
+                    self?.didFinish(nil)
                     return
                 }
                 self?.removeZones(zoneIDs, database: database)
@@ -89,7 +65,7 @@ final class ClearHandler {
                     module: .cloudSync,
                     severity: .error
                 )
-                self?.didClear?()
+                self?.didFinish(error)
             }
         }
         database.add(fetchZones)
@@ -102,16 +78,26 @@ final class ClearHandler {
         modifyOp.modifyRecordZonesResultBlock = { [weak self] result in
             switch result {
             case .success:
-                self?.didClear?()
+                self?.didFinish(nil)
             case .failure(let error):
                 Log(
                     "ClearHandler: Erase error in modifyRecordZonesResultBlock: \(error)",
                     module: .cloudSync,
                     severity: .error
                 )
-                self?.didClear?()
+                self?.didFinish(error)
             }
         }
         database.add(modifyOp)
+    }
+    
+    private func didFinish(_ error: Error?) {
+        isClearing = false
+        if let error {
+            callback?(.failure(error))
+        } else {
+            Log("ClearHandler: contents cleared successfully", module: .cloudSync)
+            callback?(.success(()))
+        }
     }
 }

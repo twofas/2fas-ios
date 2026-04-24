@@ -91,6 +91,11 @@ protocol UserDefaultsRepository: AnyObject {
     var dateOfFirstRun: Date? { get }
     func saveDateOfFirstRun(_ date: Date)
     
+    var passPromoDateFirstRun: Date? { get }
+    func savePassPromoDateFirstRun(_ date: Date)
+    var wasPassPromoSeen: Bool { get }
+    func markPassPromoAsSeen()
+    
     var exchangeToken: String? { get }
     func setExchangeToken(_ key: String)
     func clearExchangeToken()
@@ -124,4 +129,8 @@ protocol UserDefaultsRepository: AnyObject {
     
     var runCount: Int { get }
     func saveRunCount(_ count: Int)
+
+    var allServicesRemovedPending: Bool { get }
+    func markAllServicesRemovedAsPending()
+    func clearAllServicesRemovedPending()
 }

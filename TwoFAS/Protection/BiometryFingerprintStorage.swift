@@ -19,9 +19,10 @@
 
 import Foundation
 import KeychainAccess
+import Common
 
 enum BiometryFingerprintStorage {
-    private static let keychainTokens = Keychain(service: "TWOFAS")
+    private static let keychainTokens = Keychain(service: Config.keychain)
         .synchronizable(false)
         .accessibility(.afterFirstUnlockThisDeviceOnly)
     

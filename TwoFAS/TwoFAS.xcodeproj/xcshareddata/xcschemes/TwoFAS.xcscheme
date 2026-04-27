@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C23666721FB2644900989ACA"
-               BuildableName = "TwoFAS.app"
+               BuildableName = "TwoFAS Dev.app"
                BlueprintName = "TwoFAS"
                ReferencedContainer = "container:TwoFAS.xcodeproj">
             </BuildableReference>
@@ -31,7 +31,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C23666721FB2644900989ACA"
-            BuildableName = "TwoFAS.app"
+            BuildableName = "TwoFAS Dev.app"
             BlueprintName = "TwoFAS"
             ReferencedContainer = "container:TwoFAS.xcodeproj">
          </BuildableReference>
@@ -76,7 +76,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C23666721FB2644900989ACA"
-            BuildableName = "TwoFAS.app"
+            BuildableName = "TwoFAS Dev.app"
             BlueprintName = "TwoFAS"
             ReferencedContainer = "container:TwoFAS.xcodeproj">
          </BuildableReference>
@@ -99,17 +99,18 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C23666721FB2644900989ACA"
-            BuildableName = "TwoFAS.app"
+            BuildableName = "TwoFAS Dev.app"
             BlueprintName = "TwoFAS"
             ReferencedContainer = "container:TwoFAS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
-      buildConfiguration = "Debug">
+      buildConfiguration = "Release">
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "TwoFAS Dev Release"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

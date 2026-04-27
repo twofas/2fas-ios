@@ -63,7 +63,7 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case allServicesRemovedPending
     }
     private let userDefaults = UserDefaults()
-    private let sharedDefaults = UserDefaults(suiteName: Config.suiteName)!
+    private let sharedDefaults = UserDefaults(suiteName: Config.groupIdentifier)!
     
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()

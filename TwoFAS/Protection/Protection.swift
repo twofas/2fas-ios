@@ -50,7 +50,7 @@ public final class Protection {
     private let migrationHandler: MigrationHandler
     
     public init() {
-        encryptedStorage = LocalEncryptedStorage(defaults: UserDefaults(suiteName: Config.suiteName)!)
+        encryptedStorage = LocalEncryptedStorage(defaults: UserDefaults(suiteName: Config.groupIdentifier)!)
         biometricAuth = BiometricAuth(storage: encryptedStorage)
         codeStorage = CodeStorage(storage: encryptedStorage)
         tokenStorage = TokenStorage(storage: encryptedStorage)

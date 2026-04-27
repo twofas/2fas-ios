@@ -32,7 +32,7 @@ public final class CoreDataStack {
     
     private lazy var storeDescription: NSPersistentStoreDescription = {
         guard let name else { fatalError("Trying to run persistentContainer without name!") }
-        let storeUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.twofas.com")!
+        let storeUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Config.groupIdentifier)!
             .appendingPathComponent("\(name).sqlite")
         
         let description = NSPersistentStoreDescription()

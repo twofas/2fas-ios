@@ -577,7 +577,7 @@ extension TokensModuleInteractor: TokensModuleInteracting {
             appInfoInteractor.markPassPromoAsSeen()
             return false
         }
-        let date = appInfoInteractor.dateOfPassPromoFirstRun
+        let date = appInfoInteractor.dateOfFirstRun
         return date.days(from: .now) >= daysTillPassCellPresentation
     }
 }

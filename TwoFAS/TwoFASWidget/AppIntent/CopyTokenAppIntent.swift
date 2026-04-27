@@ -66,7 +66,7 @@ struct CopyTokenIntent: AppIntent {
             tokenType: tokenType
         )
         let token = generator.token
-        let defaults = UserDefaults(suiteName: Config.suiteName)!
+        let defaults = UserDefaults(suiteName: Config.groupIdentifier)!
         defaults.set(token, forKey: Config.exchangeTokenKey)
         defaults.synchronize()
         

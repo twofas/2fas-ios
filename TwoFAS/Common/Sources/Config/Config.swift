@@ -22,9 +22,7 @@ import Foundation
 public enum Config {
     public static let tosURL = URL(string: "https://2fas.com/terms-of-service/")!
     public static let allowedTimeIntervalDifference: Int = 5
-        
-    public static let suiteName = "group.twofas.com"
-    
+            
     public static let exchangeTokenKey = "exchangeTokenKey"
     
     public static let hiddenSecret = "[hidden]"
@@ -52,7 +50,34 @@ public enum Config {
     
     public static let vaultV1 = "Vault1"
     public static let vaultV2 = "Vault2"
-    public static let containerIdentifier = "iCloud.com.twofas.org.Vault"
+    public static var containerIdentifier: String {
+        #if DEV
+            "iCloud.com.twofas.org.dev.Vault"
+        #else
+            "iCloud.com.twofas.org.Vault"
+        #endif
+    }
+    public static var groupIdentifier: String {
+        #if DEV
+            "group.dev.twofas.com"
+        #else
+            "group.twofas.com"
+        #endif
+    }
+    public static var keychainSync: String {
+#if DEV
+        "TWOFASSyncDev"
+#else
+        "TWOFASSync"
+#endif
+    }
+    public static var keychain: String {
+#if DEV
+        "TWOFASDev"
+#else
+        "TWOFAS"
+#endif
+    }
     
     public enum PasswordCharacterSet {
         private static let space = [String(UnicodeScalar(32)!)]

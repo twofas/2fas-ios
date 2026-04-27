@@ -23,7 +23,7 @@ import Common
 public enum TimeOffsetStorage {
     private static let keyExists = "com.2fas.TimeOffsetStorageExists"
     private static let keyOffset = "com.2fas.TimeOffsetStorageOffset"
-    private static let userDefaults = UserDefaults(suiteName: Config.suiteName)!
+    private static let userDefaults = UserDefaults(suiteName: Config.groupIdentifier)!
     
     private static var offsetIsStored: Bool { userDefaults.bool(forKey: keyExists) }
     

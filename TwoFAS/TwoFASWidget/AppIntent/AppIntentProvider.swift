@@ -29,7 +29,7 @@ import TimeVerification
 
 @available(iOS 17.0, macOS 14.0, watchOS 10.0, *)
 struct AppIntentProvider: AppIntentTimelineProvider {
-    private let defaults = UserDefaults(suiteName: "group.twofas.com")
+    private let defaults = UserDefaults(suiteName: Config.groupIdentifier)
     private let calendar = Calendar.current
     typealias Intent = SelectService
     

@@ -24,7 +24,7 @@ import CryptoKit
 import CommonWatch
 
 final class SyncEncryptionWatchHandler {
-    private let keychain = Keychain(service: "TWOFASSync")
+    private let keychain = Keychain(service: Config.keychainSync)
         .synchronizable(true)
         .accessibility(.afterFirstUnlock)
     private let userDefaults = UserDefaults.standard

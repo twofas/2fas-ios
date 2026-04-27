@@ -22,13 +22,13 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>NSExtension</key>
 	<dict>
+		<key>NSExtensionAttributes</key>
+		<dict>
+			<key>WKWidgetDiscoverability</key>
+			<string>always</string>
+		</dict>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.widgetkit-extension</string>
-        <key>NSExtensionAttributes</key>
-        <dict>
-            <key>WKWidgetDiscoverability</key>
-            <string>always</string>
-        </dict>
 	</dict>
 </dict>
 </plist>

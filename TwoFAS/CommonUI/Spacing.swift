@@ -99,13 +99,23 @@ public extension HStack {
 }
 
 public extension LazyVStack {
-    init(alignment: HorizontalAlignment = .center, spacing: Spacing, pinnedViews: PinnedScrollableViews = .init(), @ViewBuilder content: () -> Content) {
+    init(
+        alignment: HorizontalAlignment = .center,
+        spacing: Spacing,
+        pinnedViews: PinnedScrollableViews = .init(),
+        @ViewBuilder content: () -> Content
+    ) {
         self.init(alignment: alignment, spacing: spacing.value, pinnedViews: pinnedViews, content: content)
     }
 }
 
 public extension LazyHStack {
-    init(alignment: VerticalAlignment = .center, spacing: Spacing, pinnedViews: PinnedScrollableViews = .init(), @ViewBuilder content: () -> Content) {
+    init(
+        alignment: VerticalAlignment = .center,
+        spacing: Spacing,
+        pinnedViews: PinnedScrollableViews = .init(),
+        @ViewBuilder content: () -> Content
+    ) {
         self.init(alignment: alignment, spacing: spacing.value, pinnedViews: pinnedViews, content: content)
     }
 }

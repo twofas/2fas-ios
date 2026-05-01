@@ -20,9 +20,6 @@
 import SwiftUI
 import UIKit
 
-import SwiftUI
-import UIKit
-
 struct AdaptiveReadableContainer<Content: View>: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     

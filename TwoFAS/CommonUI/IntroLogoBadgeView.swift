@@ -86,7 +86,7 @@ public struct IntroLogoBadgeView: View {
                     .init(
                         color: Color(white: BadgeMetrics.glassMidWhite).opacity(BadgeMetrics.glassOpacity),
                         location: 1
-                    ),
+                    )
                 ],
                 startPoint: glassGradientStart,
                 endPoint: glassGradientEnd

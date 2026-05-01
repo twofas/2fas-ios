@@ -18,37 +18,25 @@
 //
 
 import Foundation
+import KeychainAccess
+import Common
 
-extension MainRepositoryImpl {
-    var appVersion: String? {
-        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+enum BiometryFingerprintStorage {
+    private static let keychainTokens = Keychain(service: Config.keychain)
+        .synchronizable(false)
+        .accessibility(.afterFirstUnlockThisDeviceOnly)
+    
+    private static let key = "com.2fas.biometryFingerprintStorage"
+        
+    static func save(fingerprint: Data) {
+        keychainTokens[data: key] = fingerprint
     }
     
-    var appBundleIdentifier: String? {
-        Bundle.main.bundleIdentifier
+    static func clear() {
+        keychainTokens[data: key] = nil
     }
     
-    func saveDateOfFirstRun(_ date: Date) {
-        userDefaultsRepository.saveDateOfFirstRun(date)
-    }
-    
-    var dateOfFirstRun: Date? {
-        userDefaultsRepository.dateOfFirstRun
-    }
-    
-    var wasPassPromoSeen: Bool {
-        userDefaultsRepository.wasPassPromoSeen
-    }
-    
-    func markPassPromoAsSeen() {
-        userDefaultsRepository.markPassPromoAsSeen()
-    }
-    
-    var passPromoDateNavigatedToAppStore: Date? {
-        userDefaultsRepository.passPromoDateNavigatedToAppStore
-    }
-    
-    func markPassPromoDateNavigatedToAppStore() {
-        userDefaultsRepository.markPassPromoDateNavigatedToAppStore()
+    static var fingerprint: Data? {
+        keychainTokens[data: key]
     }
 }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -1942,9 +1942,8 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		C200E4941FB38E8E00D7C748 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 10;
+			dstSubfolder = Frameworks;
 			files = (
 				C2AE5F782ADC8A1500AED670 /* NetworkStack.framework in Embed Frameworks */,
 				C2E7C3892ADB19F300478D89 /* Data.framework in Embed Frameworks */,
@@ -1960,24 +1959,20 @@
 				C24D1C30253C744F0029D27D /* Sync.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274C9DE2BAB8ABC008E7212 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
-			dstSubfolderSpec = 16;
+			dstSubfolder = Product;
 			files = (
 				C274C9DA2BAB8ABC008E7212 /* TwoFASWatch Watch App.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274C9E32BAB8B2E008E7212 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 10;
+			dstSubfolder = Frameworks;
 			files = (
 				C274C9E02BAB8B2E008E7212 /* SyncWatch.framework in Embed Frameworks */,
 				C274CA892BAB8CBD008E7212 /* CommonWatch.framework in Embed Frameworks */,
@@ -1987,20 +1982,17 @@
 				C213BC5C2BAC3DBF000794C9 /* StorageWatch.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C28633DD1FFABD2200C8F4B4 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 13;
+			dstSubfolder = PlugIns;
 			files = (
 				C2C3AE3F269E274700506ACF /* TwoFASServiceIntent.appex in Embed Foundation Extensions */,
 				C2C3AE1D269E224B00506ACF /* TwoFASWidgetExtension.appex in Embed Foundation Extensions */,
 				C28633D91FFABD2200C8F4B4 /* TwoFASAuth.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -2057,14 +2049,6 @@
 		C205A8B7261B761500E00286 /* Sync2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sync2.xcdatamodel; sourceTree = "<group>"; };
 		C205CE012CD170F100B69B62 /* RevealTokenAppIntent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevealTokenAppIntent.swift; sourceTree = "<group>"; };
 		C20629FB2AF98684003BFC21 /* LoginFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowController.swift; sourceTree = "<group>"; };
-		C2068DE12F9C0182000A735F /* TwoFASWatch Watch AppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TwoFASWatch Watch AppDebug.entitlements"; sourceTree = "<group>"; };
-		C2068DE22F9C01BA000A735F /* TwoFASWatch Watch AppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TwoFASWatch Watch AppRelease.entitlements"; sourceTree = "<group>"; };
-		C2068DE32F9C0537000A735F /* TwoFASServiceIntentRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASServiceIntentRelease.entitlements; sourceTree = "<group>"; };
-		C2068DE42F9C054B000A735F /* TwoFASServiceIntentDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASServiceIntentDebug.entitlements; sourceTree = "<group>"; };
-		C2068DE52F9C0577000A735F /* TwoFASWidgetExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASWidgetExtensionRelease.entitlements; sourceTree = "<group>"; };
-		C2068DE62F9C0582000A735F /* TwoFASWidgetExtensionDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASWidgetExtensionDebug.entitlements; sourceTree = "<group>"; };
-		C2068DE72F9C05B1000A735F /* TwoFASAuthDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASAuthDebug.entitlements; sourceTree = "<group>"; };
-		C2068DE82F9C05D5000A735F /* TwoFASAuthRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASAuthRelease.entitlements; sourceTree = "<group>"; };
 		C2069C8E28C2866900321E44 /* MainRepositoryImpl+Import.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Import.swift"; sourceTree = "<group>"; };
 		C2069C9028C2922A00321E44 /* AEGISData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AEGISData.swift; sourceTree = "<group>"; };
 		C206AACF29636A3E0032B85E /* Configs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configs.swift; sourceTree = "<group>"; };
@@ -2082,8 +2066,6 @@
 		C20935DC29214FA7000F5AA7 /* IconInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconInteractor.swift; sourceTree = "<group>"; };
 		C20935E2292152FA000F5AA7 /* PushNotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationInteractor.swift; sourceTree = "<group>"; };
 		C20935E529215453000F5AA7 /* AppInfoInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoInteractor.swift; sourceTree = "<group>"; };
-		C2099DE22F9BEF0300490BC3 /* TwoFASDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASDebug.entitlements; sourceTree = "<group>"; };
-		C2099DE32F9BEF2B00490BC3 /* TwoFASRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASRelease.entitlements; sourceTree = "<group>"; };
 		C209E9B8267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensEmptyDropSpaceCell.swift; sourceTree = "<group>"; };
 		C20A3B8226E6A7D90020D8C5 /* MainContainerCenteredImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerCenteredImage.swift; sourceTree = "<group>"; };
 		C20CD53B2A1CF03F00A7F324 /* TokensViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+Layout.swift"; sourceTree = "<group>"; };
@@ -2491,6 +2473,20 @@
 		C25E8992266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C25E8993266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C25F4FDA2622207F008F7755 /* TokensViewEmptySearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensViewEmptySearchScreen.swift; sourceTree = "<group>"; };
+		C25F68202FA5418E00A0E87C /* TwoFASDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASDebug.entitlements; sourceTree = "<group>"; };
+		C25F68212FA5418E00A0E87C /* TwoFASRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASRelease.entitlements; sourceTree = "<group>"; };
+		C25F68222FA5420A00A0E87C /* TwoFASAuthDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASAuthDebug.entitlements; sourceTree = "<group>"; };
+		C25F68232FA5420A00A0E87C /* TwoFASAuthProduction.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASAuthProduction.entitlements; sourceTree = "<group>"; };
+		C25F68242FA5420A00A0E87C /* TwoFASAuthRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASAuthRelease.entitlements; sourceTree = "<group>"; };
+		C25F68252FA542A200A0E87C /* TwoFASWidgetExtensionDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASWidgetExtensionDebug.entitlements; sourceTree = "<group>"; };
+		C25F68262FA542A200A0E87C /* TwoFASWidgetExtensionProduction.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASWidgetExtensionProduction.entitlements; sourceTree = "<group>"; };
+		C25F68272FA542A200A0E87C /* TwoFASWidgetExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASWidgetExtensionRelease.entitlements; sourceTree = "<group>"; };
+		C25F68282FA542CF00A0E87C /* TwoFASServiceIntentDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASServiceIntentDebug.entitlements; sourceTree = "<group>"; };
+		C25F68292FA542CF00A0E87C /* TwoFASServiceIntentProduction.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASServiceIntentProduction.entitlements; sourceTree = "<group>"; };
+		C25F682A2FA542CF00A0E87C /* TwoFASServiceIntentRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASServiceIntentRelease.entitlements; sourceTree = "<group>"; };
+		C25F682B2FA5430400A0E87C /* TwoFASWatch Watch AppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TwoFASWatch Watch AppDebug.entitlements"; sourceTree = "<group>"; };
+		C25F682C2FA5430400A0E87C /* TwoFASWatch Watch AppProduction.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TwoFASWatch Watch AppProduction.entitlements"; sourceTree = "<group>"; };
+		C25F682D2FA5430400A0E87C /* TwoFASWatch Watch AppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TwoFASWatch Watch AppRelease.entitlements"; sourceTree = "<group>"; };
 		C260DCC02BC882AD007807CC /* TwoFASWatch-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TwoFASWatch-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C260DCC12BC885F1007807CC /* ServiceCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCellView.swift; sourceTree = "<group>"; };
 		C261A1212A12BECC00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
@@ -2586,7 +2582,6 @@
 		C274CA7C2BAB8C3F008E7212 /* ProtectionWatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ProtectionWatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C274CA942BAB8F92008E7212 /* Protection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Protection+.swift"; sourceTree = "<group>"; };
 		C274CA992BAB94B3008E7212 /* SyncInstanceWatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncInstanceWatch.swift; sourceTree = "<group>"; };
-		C274CAA02BAB98A5008E7212 /* TwoFASWatch Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TwoFASWatch Watch App.entitlements"; sourceTree = "<group>"; };
 		C276D1702B9A672C008C9CD4 /* LocalNotificationStateInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationStateInteractor.swift; sourceTree = "<group>"; };
 		C277C32B245C3FD6009214F3 /* MainContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerViewController.swift; sourceTree = "<group>"; };
 		C278121B27F9F3E600F31453 /* ExportPublicKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPublicKey.swift; sourceTree = "<group>"; };
@@ -2629,8 +2624,6 @@
 		C27C03C027F4FF010020DB5E /* BrowserExtensionMainPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserExtensionMainPresenter.swift; sourceTree = "<group>"; };
 		C27C03C227F4FF0D0020DB5E /* BrowserExtensionMainPresenter+Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BrowserExtensionMainPresenter+Menu.swift"; sourceTree = "<group>"; };
 		C27C03C427F4FF1E0020DB5E /* BrowserExtensionMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserExtensionMainViewController.swift; sourceTree = "<group>"; };
-		C27C104826AE093200F00191 /* TwoFASWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASWidgetExtension.entitlements; sourceTree = "<group>"; };
-		C27C104926AE093E00F00191 /* TwoFASServiceIntent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASServiceIntent.entitlements; sourceTree = "<group>"; };
 		C27CCE99279DDAB000C3D88F /* NewCodeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCodeInteractor.swift; sourceTree = "<group>"; };
 		C27CCE9B279DF8DC00C3D88F /* MainRepositoryImpl+Code.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Code.swift"; sourceTree = "<group>"; };
 		C27CDA7629A2A01600DC7C98 /* NetworkNotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkNotificationName.swift; sourceTree = "<group>"; };
@@ -2686,7 +2679,6 @@
 		C28633CE1FFABD2200C8F4B4 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		C28633D11FFABD2200C8F4B4 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		C28633D61FFABD2200C8F4B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C28633E01FFAC69D00C8F4B4 /* TwoFASAuth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TwoFASAuth.entitlements; sourceTree = "<group>"; };
 		C28681E62891D41F00BE0CA7 /* TimerInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerInteractor.swift; sourceTree = "<group>"; };
 		C286E9A92E377CED0019CF79 /* Code+Open.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Code+Open.swift"; sourceTree = "<group>"; };
 		C286ED4D25F4365000F92EDE /* ComposeServiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceViewController.swift; sourceTree = "<group>"; };
@@ -3303,46 +3295,37 @@
 /* Begin PBXFrameworksBuildPhase section */
 		C200E4961FB3911B00D7C748 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E53BBA2B62DF27008E1E70 /* Content.framework in Frameworks */,
 				C2E53B932B62DE3A008E1E70 /* Common.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C213BC492BAC3C82000794C9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C213BC562BAC3C97000794C9 /* ContentWatch.framework in Frameworks */,
 				C213BC522BAC3C97000794C9 /* CommonWatch.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2147CB1205D78600001D011 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E53BA12B62DE45008E1E70 /* Common.framework in Frameworks */,
 				C278121F27F9F4C000F31453 /* SwCrypt in Frameworks */,
 				C260DF4E2F5B07DF009A0357 /* KeychainAccess in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C21F05B61FC761450038E28F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E53B982B62DE3E008E1E70 /* Common.framework in Frameworks */,
 				C26B19382D90C73B006FDDE0 /* FirebaseCrashlytics in Frameworks */,
 				C26B193A2D90CE04006FDDE0 /* FirebaseCore in Frameworks */,
 				C26B19362D90C6DE006FDDE0 /* FirebaseMessaging in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C23666701FB2644900989ACA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E53ACB2B62DD6C008E1E70 /* Common.framework in Frameworks */,
 				C2E7C35B2ADB02FE00478D89 /* CommonUIKit.framework in Frameworks */,
@@ -3361,26 +3344,20 @@
 				C21F05C11FC761450038E28F /* PushNotifications.framework in Frameworks */,
 				C260DF4C2F5B07D4009A0357 /* KeychainAccess in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C241D442278B9E0E00D7C604 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E53BAB2B62DE4D008E1E70 /* Common.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2447ED42F8FFE0C0067AEAF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C24D1C17253C744E0029D27D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C25AAA3C290455B2005747C5 /* Protection.framework in Frameworks */,
 				C2E53BC42B62DF74008E1E70 /* Content.framework in Frameworks */,
@@ -3388,18 +3365,14 @@
 				C2E53BA62B62DE49008E1E70 /* Common.framework in Frameworks */,
 				C260DF502F5B07EA009A0357 /* KeychainAccess in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C251EDD22AE87150007722F2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274C9BE2BAB89C7008E7212 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C274CA4F2BAB8C35008E7212 /* CommonWatch.framework in Frameworks */,
 				C274CA832BAB8C70008E7212 /* ProtectionWatch.framework in Frameworks */,
@@ -3407,11 +3380,9 @@
 				C29C5F9D2F5AFCA40096BF65 /* SignalArgon2 in Frameworks */,
 				C260DF542F5B0806009A0357 /* KeychainAccess in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274C9CA2BAB8ABB008E7212 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2C0A9882DA33A72000A1772 /* EFQRCode in Frameworks */,
 				C274CA882BAB8CBD008E7212 /* CommonWatch.framework in Frameworks */,
@@ -3422,34 +3393,26 @@
 				C213BC5B2BAC3DBF000794C9 /* StorageWatch.framework in Frameworks */,
 				C274CA8C2BAB8CC0008E7212 /* ContentWatch.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274CA1C2BAB8B92008E7212 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274CA422BAB8BE3008E7212 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C274CA4A2BAB8C23008E7212 /* CommonWatch.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274CA742BAB8C3F008E7212 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C274CA7E2BAB8C5B008E7212 /* CommonWatch.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C28633C81FFABD2200C8F4B4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2B90EF1281EC622004B8AEC /* NetworkStack.framework in Frameworks */,
 				C264AE6826D2DF4200AE61E7 /* TimeVerification.framework in Frameworks */,
@@ -3460,34 +3423,26 @@
 				C28633CF1FFABD2200C8F4B4 /* UserNotificationsUI.framework in Frameworks */,
 				C28633CD1FFABD2200C8F4B4 /* UserNotifications.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C29626D32370BD7F00C133BC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C23EBF122651276800FA9E81 /* Kronos in Frameworks */,
 				C2E53BB52B62DEF3008E1E70 /* Common.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2A4D3432BC0B6B00001587C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2ACF9E120A8A918003E0987 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2C3AE0A269E224A00506ACF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C23827692B7D3BE1005DD234 /* Data.framework in Frameworks */,
 				C264AE6326D2DF3A00AE61E7 /* TimeVerification.framework in Frameworks */,
@@ -3499,11 +3454,9 @@
 				C2379D1026B6DF720010C6B1 /* IntentsUI.framework in Frameworks */,
 				C2379D0726B6D6CC0010C6B1 /* Protection.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2C3AE22269E274700506ACF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2D07ED726A45BBD00AF8E7B /* Storage.framework in Frameworks */,
 				C2C3AE27269E274700506ACF /* Intents.framework in Frameworks */,
@@ -3511,44 +3464,34 @@
 				C2D07EE626A45C0400AF8E7B /* IntentsUI.framework in Frameworks */,
 				C2D07EDC26A45BC700AF8E7B /* Protection.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2DF71082B5DD31200D85D87 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2DF710F2B5DD31200D85D87 /* Data.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E53AC22B62DD6C008E1E70 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E53B482B62DDCB008E1E70 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E53BB02B62DE51008E1E70 /* Common.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E7C3522ADB02FE00478D89 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2AE5F632ADC395800AED670 /* PKHUD in Frameworks */,
 				C2E53BBF2B62DF36008E1E70 /* Content.framework in Frameworks */,
 				C2E53B9D2B62DE41008E1E70 /* Common.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E7C37F2ADB19F300478D89 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E53B8A2B62DE33008E1E70 /* Common.framework in Frameworks */,
 				C2E7C3AC2ADB21B400478D89 /* TimeVerification.framework in Frameworks */,
@@ -3564,15 +3507,12 @@
 				C28FD19F2E4028450053B0BE /* ZIPFoundation in Frameworks */,
 				C2AE5F882ADC8B2300AED670 /* SwiftProtobuf in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2FA85762426BB7300AACFC9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2FA857E2426BB7300AACFC9 /* Protection.framework in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -4934,8 +4874,6 @@
 		C236666A1FB2644900989ACA = {
 			isa = PBXGroup;
 			children = (
-				C2068DE62F9C0582000A735F /* TwoFASWidgetExtensionDebug.entitlements */,
-				C2068DE52F9C0577000A735F /* TwoFASWidgetExtensionRelease.entitlements */,
 				C23666751FB2644900989ACA /* TwoFAS */,
 				C2E7C3832ADB19F300478D89 /* Data */,
 				C200E49B1FB3911B00D7C748 /* Storage */,
@@ -6209,16 +6147,16 @@
 		C274C9CE2BAB8ABB008E7212 /* TwoFASWatch Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				C2068DE22F9C01BA000A735F /* TwoFASWatch Watch AppRelease.entitlements */,
-				C2068DE12F9C0182000A735F /* TwoFASWatch Watch AppDebug.entitlements */,
 				8F7952502C01D1770053F776 /* CommonSwiftUI */,
 				C274C9D52BAB8ABC008E7212 /* Preview Content */,
 				C27D99DD2BD52A690008203F /* Data */,
 				C260DCC02BC882AD007807CC /* TwoFASWatch-Watch-App-Info.plist */,
-				C274CAA02BAB98A5008E7212 /* TwoFASWatch Watch App.entitlements */,
 				C274C9CF2BAB8ABB008E7212 /* TwoFASWatchApp.swift */,
 				C27D99DC2BD52A5E0008203F /* App */,
 				C274C9D32BAB8ABC008E7212 /* Assets.xcassets */,
+				C25F682B2FA5430400A0E87C /* TwoFASWatch Watch AppDebug.entitlements */,
+				C25F682C2FA5430400A0E87C /* TwoFASWatch Watch AppProduction.entitlements */,
+				C25F682D2FA5430400A0E87C /* TwoFASWatch Watch AppRelease.entitlements */,
 				C281A2762BD489590068451C /* IntroductionView.swift */,
 				C26983832BCC8F6B009B3BE2 /* Main */,
 				C244BE492BD07AA000F7E566 /* Settings */,
@@ -6570,10 +6508,10 @@
 		C28633D01FFABD2200C8F4B4 /* TwoFASAuth */ = {
 			isa = PBXGroup;
 			children = (
-				C2068DE82F9C05D5000A735F /* TwoFASAuthRelease.entitlements */,
-				C2068DE72F9C05B1000A735F /* TwoFASAuthDebug.entitlements */,
 				C2E3CBF3292102ED006A1522 /* Generated */,
-				C28633E01FFAC69D00C8F4B4 /* TwoFASAuth.entitlements */,
+				C25F68222FA5420A00A0E87C /* TwoFASAuthDebug.entitlements */,
+				C25F68232FA5420A00A0E87C /* TwoFASAuthProduction.entitlements */,
+				C25F68242FA5420A00A0E87C /* TwoFASAuthRelease.entitlements */,
 				C2E3CBF429210320006A1522 /* Localizable.strings */,
 				C28633D11FFABD2200C8F4B4 /* NotificationViewController.swift */,
 				C2B90EFD281EDE80004B8AEC /* NotificationPresenter.swift */,
@@ -7407,16 +7345,15 @@
 				C2CB5D1125DB1B7E00A362A9 /* External */,
 				C2355B4A2221D33300BA001D /* GoogleService-Info.plist */,
 				C225E617241CFCE90041C238 /* Localizable.strings */,
+				C2BDC6DE1FC1F66F00967D0E /* TwoFAS.entitlements */,
+				C25F68202FA5418E00A0E87C /* TwoFASDebug.entitlements */,
+				C25F68212FA5418E00A0E87C /* TwoFASRelease.entitlements */,
 				C2D291DB2955FC9E0084FE1E /* Settings.bundle */,
 				C23666801FB2644900989ACA /* Assets.xcassets */,
 				C23666821FB2644900989ACA /* LaunchScreen.storyboard */,
 				C23666851FB2644900989ACA /* Info.plist */,
 				C225E614241CFCD10041C238 /* InfoPlist.strings */,
 				C206AACF29636A3E0032B85E /* Configs.swift */,
-				C27C104826AE093200F00191 /* TwoFASWidgetExtension.entitlements */,
-				C2BDC6DE1FC1F66F00967D0E /* TwoFAS.entitlements */,
-				C2099DE32F9BEF2B00490BC3 /* TwoFASRelease.entitlements */,
-				C2099DE22F9BEF0300490BC3 /* TwoFASDebug.entitlements */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -7516,6 +7453,9 @@
 			isa = PBXGroup;
 			children = (
 				C2C3AE18269E224B00506ACF /* Info.plist */,
+				C25F68252FA542A200A0E87C /* TwoFASWidgetExtensionDebug.entitlements */,
+				C25F68262FA542A200A0E87C /* TwoFASWidgetExtensionProduction.entitlements */,
+				C25F68272FA542A200A0E87C /* TwoFASWidgetExtensionRelease.entitlements */,
 				C25DCB2D2B8030B200871035 /* AccessManager.swift */,
 				C2D07EE926A475F400AF8E7B /* CodeEntry.swift */,
 				C254D12126ACB7D8005FEBD4 /* CodeRedaction.swift */,
@@ -7537,11 +7477,11 @@
 		C2C3AE28269E274700506ACF /* TwoFASServiceIntent */ = {
 			isa = PBXGroup;
 			children = (
-				C2068DE42F9C054B000A735F /* TwoFASServiceIntentDebug.entitlements */,
-				C2068DE32F9C0537000A735F /* TwoFASServiceIntentRelease.entitlements */,
 				C2A7B99226B706B000055738 /* TwoFASWidget.intentdefinition */,
-				C27C104926AE093E00F00191 /* TwoFASServiceIntent.entitlements */,
 				C2C3AE29269E274700506ACF /* IntentHandler.swift */,
+				C25F68282FA542CF00A0E87C /* TwoFASServiceIntentDebug.entitlements */,
+				C25F68292FA542CF00A0E87C /* TwoFASServiceIntentProduction.entitlements */,
+				C25F682A2FA542CF00A0E87C /* TwoFASServiceIntentRelease.entitlements */,
 				C2C3AE2B269E274700506ACF /* Info.plist */,
 				C239DE8F26CC5366002301E2 /* Localizable.strings */,
 			);
@@ -8721,148 +8661,112 @@
 /* Begin PBXHeadersBuildPhase section */
 		C200E4971FB3911B00D7C748 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C200E49E1FB3911B00D7C748 /* Storage.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C213BC1F2BAC3C82000794C9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C213BC202BAC3C82000794C9 /* Storage.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2147CB2205D78600001D011 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2147CB9205D78600001D011 /* Protection.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C21F05B71FC761450038E28F /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C21F05BE1FC761450038E28F /* PushNotifications.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C241D440278B9E0E00D7C604 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C241D448278B9E0E00D7C604 /* NetworkStack.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2447ED22F8FFE0C0067AEAF /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C24D1C15253C744E0029D27D /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C24D1C2C253C744F0029D27D /* Sync.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C251EDD02AE87150007722F2 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C251EDD82AE87150007722F2 /* Base32.h in Headers */,
 				C251EDE22AE871A2007722F2 /* MF_Base32Additions.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274C9932BAB89C7008E7212 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C274C9942BAB89C7008E7212 /* Sync.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274C9E52BAB8B92008E7212 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C274C9E62BAB8B92008E7212 /* Common.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274CA272BAB8BE3008E7212 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C274CA282BAB8BE3008E7212 /* Content.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274CA5F2BAB8C3F008E7212 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C274CA602BAB8C3F008E7212 /* Protection.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C29626D12370BD7F00C133BC /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C29626DA2370BD7F00C133BC /* TimeVerification.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2A4D33E2BC0B6B00001587C /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2A4D34F2BC0B9640001587C /* Base32Watch.h in Headers */,
 				C2A4D3402BC0B6B00001587C /* MF_Base32Additions.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E53AC02B62DD6C008E1E70 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E53AC82B62DD6C008E1E70 /* Common.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E53B462B62DDCB008E1E70 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E53B4E2B62DDCB008E1E70 /* Content.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E7C3502ADB02FE00478D89 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E7C3582ADB02FE00478D89 /* CommonUIKit.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E7C37D2ADB19F300478D89 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E7C3852ADB19F300478D89 /* Data.h in Headers */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
@@ -8883,8 +8787,6 @@
 				C2E53BBD2B62DF27008E1E70 /* PBXTargetDependency */,
 			);
 			name = Storage;
-			packageProductDependencies = (
-			);
 			productName = Storage;
 			productReference = C200E49A1FB3911B00D7C748 /* Storage.framework */;
 			productType = "com.apple.product-type.framework";
@@ -8905,8 +8807,6 @@
 				C213BC592BAC3C97000794C9 /* PBXTargetDependency */,
 			);
 			name = StorageWatch;
-			packageProductDependencies = (
-			);
 			productName = Storage;
 			productReference = C213BC502BAC3C82000794C9 /* StorageWatch.framework */;
 			productType = "com.apple.product-type.framework";
@@ -9016,8 +8916,6 @@
 				C2E53BAE2B62DE4D008E1E70 /* PBXTargetDependency */,
 			);
 			name = NetworkStack;
-			packageProductDependencies = (
-			);
 			productName = NetworkStack;
 			productReference = C241D445278B9E0E00D7C604 /* NetworkStack.framework */;
 			productType = "com.apple.product-type.framework";
@@ -9033,14 +8931,10 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			fileSystemSynchronizedGroups = (
 				C2447ED82F8FFE0C0067AEAF /* CommonUI */,
 			);
 			name = CommonUI;
-			packageProductDependencies = (
-			);
 			productName = CommonUI;
 			productReference = C2447ED72F8FFE0C0067AEAF /* CommonUI.framework */;
 			productType = "com.apple.product-type.framework";
@@ -9080,8 +8974,6 @@
 				C251EDD32AE87150007722F2 /* Resources */,
 			);
 			buildRules = (
-			);
-			dependencies = (
 			);
 			name = Base32;
 			productName = Base32;
@@ -9148,8 +9040,6 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			name = CommonWatch;
 			productName = Common;
 			productReference = C274CA232BAB8B92008E7212 /* CommonWatch.framework */;
@@ -9189,8 +9079,6 @@
 				C274CA812BAB8C5B008E7212 /* PBXTargetDependency */,
 			);
 			name = ProtectionWatch;
-			packageProductDependencies = (
-			);
 			productName = Protection;
 			productReference = C274CA7C2BAB8C3F008E7212 /* ProtectionWatch.framework */;
 			productType = "com.apple.product-type.framework";
@@ -9213,8 +9101,6 @@
 				C251EDF42AE8729C007722F2 /* PBXTargetDependency */,
 			);
 			name = TwoFASAuth;
-			packageProductDependencies = (
-			);
 			productName = TwoFASAuth;
 			productReference = C28633CB1FFABD2200C8F4B4 /* TwoFASAuth.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -9251,8 +9137,6 @@
 				C2A4D3442BC0B6B00001587C /* Resources */,
 			);
 			buildRules = (
-			);
-			dependencies = (
 			);
 			name = Base32Watch;
 			productName = Base32;
@@ -9296,8 +9180,6 @@
 				C238276C2B7D3BE1005DD234 /* PBXTargetDependency */,
 			);
 			name = TwoFASWidgetExtension;
-			packageProductDependencies = (
-			);
 			productName = TwoFASWidgetExtension;
 			productReference = C2C3AE0D269E224A00506ACF /* TwoFASWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -9318,8 +9200,6 @@
 				C25A18BB2F844A94004FDA47 /* PBXTargetDependency */,
 			);
 			name = TwoFASServiceIntent;
-			packageProductDependencies = (
-			);
 			productName = TwoFASServiceIntent;
 			productReference = C2C3AE25269E274700506ACF /* TwoFASServiceIntent.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -9352,8 +9232,6 @@
 				C2E53AC32B62DD6C008E1E70 /* Resources */,
 			);
 			buildRules = (
-			);
-			dependencies = (
 			);
 			name = Common;
 			productName = Common;
@@ -9601,7 +9479,7 @@
 				C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C2C0A9862DA33A72000A1772 /* XCRemoteSwiftPackageReference "EFQRCode" */,
 			);
-			preferredProjectObjectVersion = 77;
+			preferredProjectObjectVersion = 90;
 			productRefGroup = C23666741FB2644900989ACA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -9639,35 +9517,26 @@
 /* Begin PBXResourcesBuildPhase section */
 		C200E4981FB3911B00D7C748 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C213BC4C2BAC3C82000794C9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2147CB3205D78600001D011 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C21F05B81FC761450038E28F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C23666711FB2644900989ACA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C29B9ADA2B1E859D00255A2C /* google.json in Resources */,
 				C230DB8C274710E5005E7060 /* icon_64.png in Resources */,
@@ -9689,168 +9558,125 @@
 				C29B9ADB2B1E859D00255A2C /* paypal.json in Resources */,
 				C24E3E642AB8F15A008A7158 /* facebook.json in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C241D443278B9E0E00D7C604 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2447ED52F8FFE0C0067AEAF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C24D1C18253C744E0029D27D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C251EDD32AE87150007722F2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274C9C22BAB89C7008E7212 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274C9CB2BAB8ABB008E7212 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C274C9D72BAB8ABC008E7212 /* Preview Assets.xcassets in Resources */,
 				C281A2782BD48A930068451C /* Localizable.strings in Resources */,
 				C274C9D42BAB8ABC008E7212 /* Assets.xcassets in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274CA1D2BAB8B92008E7212 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C274CA1E2BAB8B92008E7212 /* TintColor.xcassets in Resources */,
 				C274CA1F2BAB8B92008E7212 /* ThemeColor.xcassets in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274CA442BAB8BE3008E7212 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C23FC6312BCD49BB0040FE5C /* Assets.car in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274CA782BAB8C3F008E7212 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C28633C91FFABD2200C8F4B4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2DB8E5D21F8FE33002F124B /* Assets.xcassets in Resources */,
 				C2E3CBF629210320006A1522 /* Localizable.strings in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C29626D42370BD7F00C133BC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2A4D3442BC0B6B00001587C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2ACF9E220A8A918003E0987 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2C3AE0B269E224A00506ACF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2C3AE17269E224B00506ACF /* Assets.xcassets in Resources */,
 				C2BBD2382B8130B0009A91FB /* Localizable.strings in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2C3AE23269E274700506ACF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C239DE9026CC5366002301E2 /* Localizable.strings in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2DF71092B5DD31200D85D87 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E53AC32B62DD6C008E1E70 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E53B452B62DDAF008E1E70 /* TintColor.xcassets in Resources */,
 				C2E53B442B62DDAF008E1E70 /* ThemeColor.xcassets in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E53B492B62DDCB008E1E70 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E53B892B62DE14008E1E70 /* Assets.car in Resources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E7C3532ADB02FE00478D89 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E7C3802ADB19F300478D89 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2FA85772426BB7300AACFC9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
@@ -9858,28 +9684,23 @@
 		C2035D422938143C00B94834 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
 			name = SwiftLint;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = (
+				"export PATH=\"$PATH:/opt/homebrew/bin\"",
+				"if which swiftlint >/dev/null; then",
+				"    swiftlint",
+				"else",
+				"    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"",
+				"fi",
+				"",
+			);
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C200E4951FB3911B00D7C748 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C20F00A0256946550026FBB2 /* TwoFas-TwoFas2.xcmappingmodel in Sources */,
 				C2BDF4532868B39800D46FA4 /* StorageRepositoryImpl+CategoriesSections.swift in Sources */,
@@ -9921,11 +9742,9 @@
 				C258594728034E85002DC749 /* PairingEntity+CoreDataProperties.swift in Sources */,
 				C2BDC65D1FBB87C200967D0E /* ServiceData+Extensions.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C213BC212BAC3C82000794C9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C213BC232BAC3C82000794C9 /* StorageRepositoryImpl+CategoriesSections.swift in Sources */,
 				C213BC242BAC3C82000794C9 /* CategoryData.swift in Sources */,
@@ -9963,11 +9782,9 @@
 				C213BC472BAC3C82000794C9 /* PairingEntity+CoreDataProperties.swift in Sources */,
 				C213BC482BAC3C82000794C9 /* ServiceData+Extensions.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2147CB0205D78600001D011 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C23443DE26B08EAA00C9F645 /* ExtensionsStorage.swift in Sources */,
 				C2147CC8205D787A0001D011 /* CodeStorage.swift in Sources */,
@@ -9989,11 +9806,9 @@
 				C22E418825DF07B300105195 /* KeyEncryption.swift in Sources */,
 				C2F6AF40273056010015BC59 /* ExchangeFileEncryption.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C21F05B51FC761450038E28F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2A6E7041FC7664800C83DCE /* PushNotifications.swift in Sources */,
 				C2044D83224EC6A8003940AA /* FCM.swift in Sources */,
@@ -10001,11 +9816,9 @@
 				C2A6E7081FC9D14500C83DCE /* APNS.swift in Sources */,
 				C2FDAE901FD0B42B004BABE4 /* NotificationStateProtocol.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C236666F1FB2644900989ACA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C21A9E9227CC0A5F00FE4CC4 /* ComposeServiceRefreshTimePresenter.swift in Sources */,
 				C2FC4CE828AC461000AA6A79 /* IconSelectorOrderIconReusableView.swift in Sources */,
@@ -10633,11 +10446,9 @@
 				C2529CBC2E5C6B6F00515AB7 /* TwoFASControlIntent.swift in Sources */,
 				C2B6D78E260BB024005B599E /* ColorPickerButton.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C241D441278B9E0E00D7C604 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2A8584227FB8D6400CBD9ED /* HTTPMethod.swift in Sources */,
 				C27CDA7729A2A01600DC7C98 /* NetworkNotificationName.swift in Sources */,
@@ -10665,18 +10476,14 @@
 				C2B950F929259ADA00F1C069 /* NSMutableData.swift in Sources */,
 				C2A8584E27FB95FA00CBD9ED /* NetworkError.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2447ED32F8FFE0C0067AEAF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C24D1C16253C744E0029D27D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2FA266B2E91B3650003BCF0 /* ReencryptionHandling.swift in Sources */,
 				C23BAB042545A861009B1EF8 /* CloudKit.swift in Sources */,
@@ -10733,19 +10540,15 @@
 				C27E6FB628FC8B0000AC9FD1 /* Info.swift in Sources */,
 				C2C4F64928FE002F00285B81 /* RecordIDGenerator.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C251EDD12AE87150007722F2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C251EDE32AE871A2007722F2 /* MF_Base32Additions.m in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274C9952BAB89C7008E7212 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2C0A8042DA2F027000A1772 /* RequirementCheckWatchHandler.swift in Sources */,
 				8F5C0C6F2BFFACA900D73ADE /* Sync.xcdatamodeld in Sources */,
@@ -10797,11 +10600,9 @@
 				C274C9BD2BAB89C7008E7212 /* RecordIDGenerator.swift in Sources */,
 				C274CA9B2BAB94B8008E7212 /* SyncInstanceWatch.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274C9C92BAB8ABB008E7212 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2A4D3302BC0B1B80001587C /* Crypto.swift in Sources */,
 				C2B86D2E2BC3498D00AAAC63 /* MainView.swift in Sources */,
@@ -10851,11 +10652,9 @@
 				C2C0A9852DA33995000A1772 /* PairQRCodeView.swift in Sources */,
 				C2627F3C2BC72EA0009F93A9 /* ServiceInteractor.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274C9E72BAB8B92008E7212 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C274C9E82BAB8B92008E7212 /* Collection+.swift in Sources */,
 				C2EF7B1E2DA99D1000BAA559 /* PairedWatch.swift in Sources */,
@@ -10916,11 +10715,9 @@
 				C274CA1A2BAB8B92008E7212 /* ServiceType.swift in Sources */,
 				C274CA1B2BAB8B92008E7212 /* ServiceSource.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274CA292BAB8BE3008E7212 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C274CA2A2BAB8BE3008E7212 /* IconDescriptionDatabaseImpl+Database5.swift in Sources */,
 				C274CA2B2BAB8BE3008E7212 /* IconDescriptionDatabaseImpl+Database7.swift in Sources */,
@@ -10947,11 +10744,9 @@
 				C274CA402BAB8BE3008E7212 /* ServiceDefinitionDatabaseImpl+Database1.swift in Sources */,
 				C274CA412BAB8BE3008E7212 /* ServiceDefinitionDatabaseImpl+Database0.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274CA612BAB8C3F008E7212 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C274CA622BAB8C3F008E7212 /* ExtensionsStorage.swift in Sources */,
 				C274CA632BAB8C3F008E7212 /* CodeStorage.swift in Sources */,
@@ -10966,11 +10761,9 @@
 				C274CA722BAB8C3F008E7212 /* KeyEncryption.swift in Sources */,
 				C274CA982BAB91E3008E7212 /* ExchangeFileEncryption.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C28633C71FFABD2200C8F4B4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E3CBF829210624006A1522 /* T.generated.swift in Sources */,
 				C2B90F02281EE901004B8AEC /* NotificationViewError.swift in Sources */,
@@ -10981,40 +10774,32 @@
 				C2B90EEE281EB3CF004B8AEC /* MainRepositoryImpl.swift in Sources */,
 				C28633D21FFABD2200C8F4B4 /* NotificationViewController.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C29626D22370BD7F00C133BC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C29626E52370BE0000C133BC /* TimeVerificator.swift in Sources */,
 				C2B90EF9281ED0DC004B8AEC /* TimeVerificationController.swift in Sources */,
 				C2F9038626BFF77B008DBC4A /* TimeOffsetStorage.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2A4D3412BC0B6B00001587C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2A4D3422BC0B6B00001587C /* MF_Base32Additions.m in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2ACF9E020A8A918003E0987 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2ACF9E720A8A918003E0987 /* TwoFASTests.swift in Sources */,
 				C2726DAD214D731B00F17977 /* DateTests.swift in Sources */,
 				C2726DAF214D8DCD00F17977 /* RatingControllerTests.swift in Sources */,
 				C2035D412938129000B94834 /* Mock.generated.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2C3AE09269E224A00506ACF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C248DDAF2B799CD3004712E3 /* CopyIntentButton.swift in Sources */,
 				C2529CB32E5C6AE200515AB7 /* TwoFASWidgetSquareView.swift in Sources */,
@@ -11045,28 +10830,22 @@
 				C2404F792B72E61B00EBD8DC /* SelectService.swift in Sources */,
 				C205CE032CD1716600B69B62 /* RevealTokenAppIntent.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2C3AE21269E274700506ACF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2A7B99026B706B000055738 /* TwoFASWidget.intentdefinition in Sources */,
 				C2C3AE2A269E274700506ACF /* IntentHandler.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2DF71072B5DD31200D85D87 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2DF710E2B5DD31200D85D87 /* DataTests.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E53AC12B62DD6C008E1E70 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E53B382B62DDAF008E1E70 /* Collection+.swift in Sources */,
 				C2E53B3A2B62DDAF008E1E70 /* String+.swift in Sources */,
@@ -11128,11 +10907,9 @@
 				C2E53B182B62DDAF008E1E70 /* ServiceType.swift in Sources */,
 				C2E53B202B62DDAF008E1E70 /* ServiceSource.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E53B472B62DDCB008E1E70 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E53B7D2B62DDFB008E1E70 /* IconDescriptionDatabaseImpl+Database5.swift in Sources */,
 				C2E53B7E2B62DDFB008E1E70 /* IconDescriptionDatabaseImpl+Database7.swift in Sources */,
@@ -11159,11 +10936,9 @@
 				C2E53B7A2B62DDFB008E1E70 /* ServiceDefinitionDatabaseImpl+Database1.swift in Sources */,
 				C2E53B702B62DDFB008E1E70 /* ServiceDefinitionDatabaseImpl+Database0.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E7C3512ADB02FE00478D89 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E7C37A2ADB179800478D89 /* ServiceDefinition.swift in Sources */,
 				C2E7C37C2ADB17C000478D89 /* IconDescription+.swift in Sources */,
@@ -11179,11 +10954,9 @@
 				C2E7C3692ADB0C8E00478D89 /* UIColor+.swift in Sources */,
 				C2E7C3702ADB0D6E00478D89 /* ServiceData+.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2E7C37E2ADB19F300478D89 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C2E7C3E42ADB2BB400478D89 /* ListNewsNetworkInteractor.swift in Sources */,
 				C2E7C3C42ADB2B9C00478D89 /* MainRepository.swift in Sources */,
@@ -11328,15 +11101,12 @@
 				C2E7C4002ADB2BB400478D89 /* PushNotificationRegistrationInteractor.swift in Sources */,
 				C2E7C3CD2ADB2B9C00478D89 /* MainRepositoryImpl+Extensions.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C2FA85752426BB7300AACFC9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				C20F012A25699C000026FBB2 /* LocalKeyEncryptionTests.swift in Sources */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -11833,7 +11603,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		C200E4A41FB3911B00D7C748 /* Debug */ = {
+		C200E4A41FB3911B00D7C748 /* Debug configuration for PBXNativeTarget "Storage" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -11876,7 +11646,7 @@
 			};
 			name = Debug;
 		};
-		C200E4A51FB3911B00D7C748 /* Release */ = {
+		C200E4A51FB3911B00D7C748 /* Release configuration for PBXNativeTarget "Storage" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -11917,7 +11687,7 @@
 			};
 			name = Release;
 		};
-		C2099DC82F9BEECD00490BC3 /* Production */ = {
+		C2099DC82F9BEECD00490BC3 /* Production configuration for PBXProject "TwoFAS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -11968,8 +11738,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 5.4.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MARKETING_VERSION = 6.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
@@ -11981,14 +11751,14 @@
 			};
 			name = Production;
 		};
-		C2099DC92F9BEECD00490BC3 /* Production */ = {
+		C2099DC92F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "TwoFAS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				CODE_SIGN_ENTITLEMENTS = TwoFAS/Other/TwoFAS.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEPLOYMENT_POSTPROCESSING = YES;
@@ -11996,7 +11766,7 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = TwoFAS/Other/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -12026,7 +11796,7 @@
 			};
 			name = Production;
 		};
-		C2099DCA2F9BEECD00490BC3 /* Production */ = {
+		C2099DCA2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "Data" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -12071,7 +11841,7 @@
 			};
 			name = Production;
 		};
-		C2099DCB2F9BEECD00490BC3 /* Production */ = {
+		C2099DCB2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "Storage" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -12112,7 +11882,7 @@
 			};
 			name = Production;
 		};
-		C2099DCC2F9BEECD00490BC3 /* Production */ = {
+		C2099DCC2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "PushNotifications" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -12155,7 +11925,7 @@
 			};
 			name = Production;
 		};
-		C2099DCD2F9BEECD00490BC3 /* Production */ = {
+		C2099DCD2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "CommonUIKit" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -12200,7 +11970,7 @@
 			};
 			name = Production;
 		};
-		C2099DCE2F9BEECD00490BC3 /* Production */ = {
+		C2099DCE2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "Protection" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -12242,7 +12012,7 @@
 			};
 			name = Production;
 		};
-		C2099DCF2F9BEECD00490BC3 /* Production */ = {
+		C2099DCF2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "TimeVerification" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -12285,7 +12055,7 @@
 			};
 			name = Production;
 		};
-		C2099DD02F9BEECD00490BC3 /* Production */ = {
+		C2099DD02F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "CommonUI" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -12327,52 +12097,7 @@
 			};
 			name = Production;
 		};
-		C2099DD12F9BEECD00490BC3 /* Production */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = "$(MARKETING_VERSION)";
-				MERGEABLE_LIBRARY = NO;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.NetworkStack;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Production;
-		};
-		C2099DD22F9BEECD00490BC3 /* Production */ = {
+		C2099DD22F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "Base32" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -12416,7 +12141,7 @@
 			};
 			name = Production;
 		};
-		C2099DD32F9BEECD00490BC3 /* Production */ = {
+		C2099DD32F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "Common" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -12462,7 +12187,7 @@
 			};
 			name = Production;
 		};
-		C2099DD42F9BEECD00490BC3 /* Production */ = {
+		C2099DD42F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "Content" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -12506,11 +12231,11 @@
 			};
 			name = Production;
 		};
-		C2099DD52F9BEECD00490BC3 /* Production */ = {
+		C2099DD52F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "TwoFASAuth" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
-				CODE_SIGN_ENTITLEMENTS = TwoFASAuth/TwoFASAuth.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TwoFASAuth/TwoFASAuthProduction.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -12539,7 +12264,7 @@
 			};
 			name = Production;
 		};
-		C2099DD62F9BEECD00490BC3 /* Production */ = {
+		C2099DD62F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "TwoFASTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -12567,7 +12292,7 @@
 			};
 			name = Production;
 		};
-		C2099DD72F9BEECD00490BC3 /* Production */ = {
+		C2099DD72F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "ProtectionTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -12595,13 +12320,13 @@
 			};
 			name = Production;
 		};
-		C2099DD82F9BEECD00490BC3 /* Production */ = {
+		C2099DD82F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "TwoFASWidgetExtension" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = TwoFAS/Other/TwoFASWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TwoFASWidget/TwoFASWidgetExtensionProduction.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -12629,7 +12354,7 @@
 			};
 			name = Production;
 		};
-		C2099DD92F9BEECD00490BC3 /* Production */ = {
+		C2099DD92F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "TwoFASServiceIntent" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -12661,7 +12386,7 @@
 			};
 			name = Production;
 		};
-		C2099DDA2F9BEECD00490BC3 /* Production */ = {
+		C2099DDA2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "DataTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -12688,14 +12413,14 @@
 			};
 			name = Production;
 		};
-		C2099DDB2F9BEECD00490BC3 /* Production */ = {
+		C2099DDB2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "TwoFASWatch Watch App" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = "TwoFASWatch Watch App/TwoFASWatch Watch App.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "TwoFASWatch Watch App/TwoFASWatch Watch AppProduction.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -12728,7 +12453,7 @@
 			};
 			name = Production;
 		};
-		C2099DDC2F9BEECD00490BC3 /* Production */ = {
+		C2099DDC2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "SyncWatch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -12772,7 +12497,7 @@
 			};
 			name = Production;
 		};
-		C2099DDD2F9BEECD00490BC3 /* Production */ = {
+		C2099DDD2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "CommonWatch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -12818,7 +12543,7 @@
 			};
 			name = Production;
 		};
-		C2099DDE2F9BEECD00490BC3 /* Production */ = {
+		C2099DDE2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "ContentWatch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -12864,7 +12589,7 @@
 			};
 			name = Production;
 		};
-		C2099DDF2F9BEECD00490BC3 /* Production */ = {
+		C2099DDF2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "ProtectionWatch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -12908,7 +12633,7 @@
 			};
 			name = Production;
 		};
-		C2099DE02F9BEECD00490BC3 /* Production */ = {
+		C2099DE02F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "StorageWatch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -12951,7 +12676,7 @@
 			};
 			name = Production;
 		};
-		C2099DE12F9BEECD00490BC3 /* Production */ = {
+		C2099DE12F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "Base32Watch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -12997,7 +12722,7 @@
 			};
 			name = Production;
 		};
-		C213BC4E2BAC3C82000794C9 /* Debug */ = {
+		C213BC4E2BAC3C82000794C9 /* Debug configuration for PBXNativeTarget "StorageWatch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -13042,7 +12767,7 @@
 			};
 			name = Debug;
 		};
-		C213BC4F2BAC3C82000794C9 /* Release */ = {
+		C213BC4F2BAC3C82000794C9 /* Release configuration for PBXNativeTarget "StorageWatch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -13085,7 +12810,7 @@
 			};
 			name = Release;
 		};
-		C2147CBE205D78600001D011 /* Debug */ = {
+		C2147CBE205D78600001D011 /* Debug configuration for PBXNativeTarget "Protection" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -13129,7 +12854,7 @@
 			};
 			name = Debug;
 		};
-		C2147CBF205D78600001D011 /* Release */ = {
+		C2147CBF205D78600001D011 /* Release configuration for PBXNativeTarget "Protection" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -13171,7 +12896,7 @@
 			};
 			name = Release;
 		};
-		C21F05C31FC761450038E28F /* Debug */ = {
+		C21F05C31FC761450038E28F /* Debug configuration for PBXNativeTarget "PushNotifications" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -13216,7 +12941,7 @@
 			};
 			name = Debug;
 		};
-		C21F05C41FC761450038E28F /* Release */ = {
+		C21F05C41FC761450038E28F /* Release configuration for PBXNativeTarget "PushNotifications" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -13259,7 +12984,7 @@
 			};
 			name = Release;
 		};
-		C23666861FB2644900989ACA /* Debug */ = {
+		C23666861FB2644900989ACA /* Debug configuration for PBXProject "TwoFAS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -13317,7 +13042,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				MARKETING_VERSION = 6.0.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -13329,7 +13054,7 @@
 			};
 			name = Debug;
 		};
-		C23666871FB2644900989ACA /* Release */ = {
+		C23666871FB2644900989ACA /* Release configuration for PBXProject "TwoFAS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -13380,7 +13105,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				MARKETING_VERSION = 6.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
@@ -13393,7 +13118,7 @@
 			};
 			name = Release;
 		};
-		C23666891FB2644900989ACA /* Debug */ = {
+		C23666891FB2644900989ACA /* Debug configuration for PBXNativeTarget "TwoFAS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
@@ -13409,8 +13134,8 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = TwoFAS/Other/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13439,7 +13164,7 @@
 			};
 			name = Debug;
 		};
-		C236668A1FB2644900989ACA /* Release */ = {
+		C236668A1FB2644900989ACA /* Release configuration for PBXNativeTarget "TwoFAS" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
@@ -13453,7 +13178,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFAS/Other/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -13482,7 +13207,7 @@
 			};
 			name = Release;
 		};
-		C241D44E278B9E0E00D7C604 /* Debug */ = {
+		C241D44E278B9E0E00D7C604 /* Debug configuration for PBXNativeTarget "NetworkStack" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -13529,7 +13254,7 @@
 			};
 			name = Debug;
 		};
-		C241D44F278B9E0E00D7C604 /* Release */ = {
+		C241D44F278B9E0E00D7C604 /* Release configuration for PBXNativeTarget "NetworkStack" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -13574,13 +13299,13 @@
 			};
 			name = Release;
 		};
-		C2447EDF2F8FFE0C0067AEAF /* Debug */ = {
+		C2447EDF2F8FFE0C0067AEAF /* Debug configuration for PBXNativeTarget "CommonUI" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -13625,13 +13350,13 @@
 			};
 			name = Debug;
 		};
-		C2447EE02F8FFE0C0067AEAF /* Release */ = {
+		C2447EE02F8FFE0C0067AEAF /* Release configuration for PBXNativeTarget "CommonUI" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -13674,7 +13399,7 @@
 			};
 			name = Release;
 		};
-		C24D1C32253C744F0029D27D /* Debug */ = {
+		C24D1C32253C744F0029D27D /* Debug configuration for PBXNativeTarget "Sync" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -13718,7 +13443,7 @@
 			};
 			name = Debug;
 		};
-		C24D1C33253C744F0029D27D /* Release */ = {
+		C24D1C33253C744F0029D27D /* Release configuration for PBXNativeTarget "Sync" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -13760,7 +13485,7 @@
 			};
 			name = Release;
 		};
-		C251EDDD2AE87150007722F2 /* Debug */ = {
+		C251EDDD2AE87150007722F2 /* Debug configuration for PBXNativeTarget "Base32" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -13805,7 +13530,7 @@
 			};
 			name = Debug;
 		};
-		C251EDDE2AE87150007722F2 /* Release */ = {
+		C251EDDE2AE87150007722F2 /* Release configuration for PBXNativeTarget "Base32" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -13849,7 +13574,7 @@
 			};
 			name = Release;
 		};
-		C274C9C42BAB89C7008E7212 /* Debug */ = {
+		C274C9C42BAB89C7008E7212 /* Debug configuration for PBXNativeTarget "SyncWatch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -13895,7 +13620,7 @@
 			};
 			name = Debug;
 		};
-		C274C9C52BAB89C7008E7212 /* Release */ = {
+		C274C9C52BAB89C7008E7212 /* Release configuration for PBXNativeTarget "SyncWatch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -13939,10 +13664,10 @@
 			};
 			name = Release;
 		};
-		C274C9DC2BAB8ABC008E7212 /* Debug */ = {
+		C274C9DC2BAB8ABC008E7212 /* Debug configuration for PBXNativeTarget "TwoFASWatch Watch App" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -13982,7 +13707,7 @@
 			};
 			name = Debug;
 		};
-		C274C9DD2BAB8ABC008E7212 /* Release */ = {
+		C274C9DD2BAB8ABC008E7212 /* Release configuration for PBXNativeTarget "TwoFASWatch Watch App" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
@@ -14004,7 +13729,6 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.twofas.org.dev;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14023,7 +13747,7 @@
 			};
 			name = Release;
 		};
-		C274CA212BAB8B92008E7212 /* Debug */ = {
+		C274CA212BAB8B92008E7212 /* Debug configuration for PBXNativeTarget "CommonWatch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -14071,7 +13795,7 @@
 			};
 			name = Debug;
 		};
-		C274CA222BAB8B92008E7212 /* Release */ = {
+		C274CA222BAB8B92008E7212 /* Release configuration for PBXNativeTarget "CommonWatch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -14117,7 +13841,7 @@
 			};
 			name = Release;
 		};
-		C274CA472BAB8BE3008E7212 /* Debug */ = {
+		C274CA472BAB8BE3008E7212 /* Debug configuration for PBXNativeTarget "ContentWatch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -14165,7 +13889,7 @@
 			};
 			name = Debug;
 		};
-		C274CA482BAB8BE3008E7212 /* Release */ = {
+		C274CA482BAB8BE3008E7212 /* Release configuration for PBXNativeTarget "ContentWatch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -14211,7 +13935,7 @@
 			};
 			name = Release;
 		};
-		C274CA7A2BAB8C3F008E7212 /* Debug */ = {
+		C274CA7A2BAB8C3F008E7212 /* Debug configuration for PBXNativeTarget "ProtectionWatch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -14257,7 +13981,7 @@
 			};
 			name = Debug;
 		};
-		C274CA7B2BAB8C3F008E7212 /* Release */ = {
+		C274CA7B2BAB8C3F008E7212 /* Release configuration for PBXNativeTarget "ProtectionWatch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -14301,7 +14025,7 @@
 			};
 			name = Release;
 		};
-		C28633DA1FFABD2200C8F4B4 /* Debug */ = {
+		C28633DA1FFABD2200C8F4B4 /* Debug configuration for PBXNativeTarget "TwoFASAuth" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -14334,7 +14058,7 @@
 			};
 			name = Debug;
 		};
-		C28633DB1FFABD2200C8F4B4 /* Release */ = {
+		C28633DB1FFABD2200C8F4B4 /* Release configuration for PBXNativeTarget "TwoFASAuth" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -14367,7 +14091,7 @@
 			};
 			name = Release;
 		};
-		C29626E02370BD7F00C133BC /* Debug */ = {
+		C29626E02370BD7F00C133BC /* Debug configuration for PBXNativeTarget "TimeVerification" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -14412,7 +14136,7 @@
 			};
 			name = Debug;
 		};
-		C29626E12370BD7F00C133BC /* Release */ = {
+		C29626E12370BD7F00C133BC /* Release configuration for PBXNativeTarget "TimeVerification" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -14455,7 +14179,7 @@
 			};
 			name = Release;
 		};
-		C2A4D3462BC0B6B00001587C /* Debug */ = {
+		C2A4D3462BC0B6B00001587C /* Debug configuration for PBXNativeTarget "Base32Watch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -14502,7 +14226,7 @@
 			};
 			name = Debug;
 		};
-		C2A4D3472BC0B6B00001587C /* Release */ = {
+		C2A4D3472BC0B6B00001587C /* Release configuration for PBXNativeTarget "Base32Watch" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -14548,7 +14272,7 @@
 			};
 			name = Release;
 		};
-		C2ACF9EC20A8A918003E0987 /* Debug */ = {
+		C2ACF9EC20A8A918003E0987 /* Debug configuration for PBXNativeTarget "TwoFASTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -14577,7 +14301,7 @@
 			};
 			name = Debug;
 		};
-		C2ACF9ED20A8A918003E0987 /* Release */ = {
+		C2ACF9ED20A8A918003E0987 /* Release configuration for PBXNativeTarget "TwoFASTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -14605,13 +14329,13 @@
 			};
 			name = Release;
 		};
-		C2C3AE1F269E224B00506ACF /* Debug */ = {
+		C2C3AE1F269E224B00506ACF /* Debug configuration for PBXNativeTarget "TwoFASWidgetExtension" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = TwoFASWidgetExtensionDebug.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TwoFASWidget/TwoFASWidgetExtensionDebug.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -14640,13 +14364,13 @@
 			};
 			name = Debug;
 		};
-		C2C3AE20269E224B00506ACF /* Release */ = {
+		C2C3AE20269E224B00506ACF /* Release configuration for PBXNativeTarget "TwoFASWidgetExtension" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = TwoFASWidgetExtensionRelease.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TwoFASWidget/TwoFASWidgetExtensionRelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -14674,7 +14398,7 @@
 			};
 			name = Release;
 		};
-		C2C3AE44269E274700506ACF /* Debug */ = {
+		C2C3AE44269E274700506ACF /* Debug configuration for PBXNativeTarget "TwoFASServiceIntent" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -14707,7 +14431,7 @@
 			};
 			name = Debug;
 		};
-		C2C3AE45269E274700506ACF /* Release */ = {
+		C2C3AE45269E274700506ACF /* Release configuration for PBXNativeTarget "TwoFASServiceIntent" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -14739,7 +14463,7 @@
 			};
 			name = Release;
 		};
-		C2DF71132B5DD31300D85D87 /* Debug */ = {
+		C2DF71132B5DD31300D85D87 /* Debug configuration for PBXNativeTarget "DataTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -14768,7 +14492,7 @@
 			};
 			name = Debug;
 		};
-		C2DF71142B5DD31300D85D87 /* Release */ = {
+		C2DF71142B5DD31300D85D87 /* Release configuration for PBXNativeTarget "DataTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -14795,7 +14519,7 @@
 			};
 			name = Release;
 		};
-		C2E53ACE2B62DD6C008E1E70 /* Debug */ = {
+		C2E53ACE2B62DD6C008E1E70 /* Debug configuration for PBXNativeTarget "Common" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -14842,7 +14566,7 @@
 			};
 			name = Debug;
 		};
-		C2E53ACF2B62DD6C008E1E70 /* Release */ = {
+		C2E53ACF2B62DD6C008E1E70 /* Release configuration for PBXNativeTarget "Common" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -14886,7 +14610,7 @@
 			};
 			name = Release;
 		};
-		C2E53B542B62DDCB008E1E70 /* Debug */ = {
+		C2E53B542B62DDCB008E1E70 /* Debug configuration for PBXNativeTarget "Content" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -14932,7 +14656,7 @@
 			};
 			name = Debug;
 		};
-		C2E53B552B62DDCB008E1E70 /* Release */ = {
+		C2E53B552B62DDCB008E1E70 /* Release configuration for PBXNativeTarget "Content" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -14976,7 +14700,7 @@
 			};
 			name = Release;
 		};
-		C2E7C35E2ADB02FE00478D89 /* Debug */ = {
+		C2E7C35E2ADB02FE00478D89 /* Debug configuration for PBXNativeTarget "CommonUIKit" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -15023,7 +14747,7 @@
 			};
 			name = Debug;
 		};
-		C2E7C35F2ADB02FE00478D89 /* Release */ = {
+		C2E7C35F2ADB02FE00478D89 /* Release configuration for PBXNativeTarget "CommonUIKit" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -15068,7 +14792,7 @@
 			};
 			name = Release;
 		};
-		C2E7C38B2ADB19F300478D89 /* Debug */ = {
+		C2E7C38B2ADB19F300478D89 /* Debug configuration for PBXNativeTarget "Data" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -15115,7 +14839,7 @@
 			};
 			name = Debug;
 		};
-		C2E7C38C2ADB19F300478D89 /* Release */ = {
+		C2E7C38C2ADB19F300478D89 /* Release configuration for PBXNativeTarget "Data" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -15160,7 +14884,7 @@
 			};
 			name = Release;
 		};
-		C2FA85822426BB7300AACFC9 /* Debug */ = {
+		C2FA85822426BB7300AACFC9 /* Debug configuration for PBXNativeTarget "ProtectionTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -15190,7 +14914,7 @@
 			};
 			name = Debug;
 		};
-		C2FA85832426BB7300AACFC9 /* Release */ = {
+		C2FA85832426BB7300AACFC9 /* Release configuration for PBXNativeTarget "ProtectionTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -15224,270 +14948,244 @@
 		C200E4A31FB3911B00D7C748 /* Build configuration list for PBXNativeTarget "Storage" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C200E4A41FB3911B00D7C748 /* Debug */,
-				C200E4A51FB3911B00D7C748 /* Release */,
-				C2099DCB2F9BEECD00490BC3 /* Production */,
+				C200E4A41FB3911B00D7C748 /* Debug configuration for PBXNativeTarget "Storage" */,
+				C200E4A51FB3911B00D7C748 /* Release configuration for PBXNativeTarget "Storage" */,
+				C2099DCB2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "Storage" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C213BC4D2BAC3C82000794C9 /* Build configuration list for PBXNativeTarget "StorageWatch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C213BC4E2BAC3C82000794C9 /* Debug */,
-				C213BC4F2BAC3C82000794C9 /* Release */,
-				C2099DE02F9BEECD00490BC3 /* Production */,
+				C213BC4E2BAC3C82000794C9 /* Debug configuration for PBXNativeTarget "StorageWatch" */,
+				C213BC4F2BAC3C82000794C9 /* Release configuration for PBXNativeTarget "StorageWatch" */,
+				C2099DE02F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "StorageWatch" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C2147CC0205D78600001D011 /* Build configuration list for PBXNativeTarget "Protection" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C2147CBE205D78600001D011 /* Debug */,
-				C2147CBF205D78600001D011 /* Release */,
-				C2099DCE2F9BEECD00490BC3 /* Production */,
+				C2147CBE205D78600001D011 /* Debug configuration for PBXNativeTarget "Protection" */,
+				C2147CBF205D78600001D011 /* Release configuration for PBXNativeTarget "Protection" */,
+				C2099DCE2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "Protection" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C21F05C51FC761450038E28F /* Build configuration list for PBXNativeTarget "PushNotifications" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C21F05C31FC761450038E28F /* Debug */,
-				C21F05C41FC761450038E28F /* Release */,
-				C2099DCC2F9BEECD00490BC3 /* Production */,
+				C21F05C31FC761450038E28F /* Debug configuration for PBXNativeTarget "PushNotifications" */,
+				C21F05C41FC761450038E28F /* Release configuration for PBXNativeTarget "PushNotifications" */,
+				C2099DCC2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "PushNotifications" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C236666E1FB2644900989ACA /* Build configuration list for PBXProject "TwoFAS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C23666861FB2644900989ACA /* Debug */,
-				C23666871FB2644900989ACA /* Release */,
-				C2099DC82F9BEECD00490BC3 /* Production */,
+				C23666861FB2644900989ACA /* Debug configuration for PBXProject "TwoFAS" */,
+				C23666871FB2644900989ACA /* Release configuration for PBXProject "TwoFAS" */,
+				C2099DC82F9BEECD00490BC3 /* Production configuration for PBXProject "TwoFAS" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C23666881FB2644900989ACA /* Build configuration list for PBXNativeTarget "TwoFAS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C23666891FB2644900989ACA /* Debug */,
-				C236668A1FB2644900989ACA /* Release */,
-				C2099DC92F9BEECD00490BC3 /* Production */,
+				C23666891FB2644900989ACA /* Debug configuration for PBXNativeTarget "TwoFAS" */,
+				C236668A1FB2644900989ACA /* Release configuration for PBXNativeTarget "TwoFAS" */,
+				C2099DC92F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "TwoFAS" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C241D44D278B9E0E00D7C604 /* Build configuration list for PBXNativeTarget "NetworkStack" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C241D44E278B9E0E00D7C604 /* Debug */,
-				C241D44F278B9E0E00D7C604 /* Release */,
+				C241D44E278B9E0E00D7C604 /* Debug configuration for PBXNativeTarget "NetworkStack" */,
+				C241D44F278B9E0E00D7C604 /* Release configuration for PBXNativeTarget "NetworkStack" */,
+				C2099DC92F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "TwoFAS" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C2447EE12F8FFE0C0067AEAF /* Build configuration list for PBXNativeTarget "CommonUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C2447EDF2F8FFE0C0067AEAF /* Debug */,
-				C2447EE02F8FFE0C0067AEAF /* Release */,
-				C2099DD12F9BEECD00490BC3 /* Production */,
+				C2447EDF2F8FFE0C0067AEAF /* Debug configuration for PBXNativeTarget "CommonUI" */,
+				C2447EE02F8FFE0C0067AEAF /* Release configuration for PBXNativeTarget "CommonUI" */,
+				C2099DD02F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "CommonUI" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C24D1C31253C744F0029D27D /* Build configuration list for PBXNativeTarget "Sync" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C24D1C32253C744F0029D27D /* Debug */,
-				C24D1C33253C744F0029D27D /* Release */,
-				C2099DD02F9BEECD00490BC3 /* Production */,
+				C24D1C32253C744F0029D27D /* Debug configuration for PBXNativeTarget "Sync" */,
+				C24D1C33253C744F0029D27D /* Release configuration for PBXNativeTarget "Sync" */,
+				C2099DD02F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "CommonUI" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C251EDDF2AE87150007722F2 /* Build configuration list for PBXNativeTarget "Base32" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C251EDDD2AE87150007722F2 /* Debug */,
-				C251EDDE2AE87150007722F2 /* Release */,
-				C2099DD22F9BEECD00490BC3 /* Production */,
+				C251EDDD2AE87150007722F2 /* Debug configuration for PBXNativeTarget "Base32" */,
+				C251EDDE2AE87150007722F2 /* Release configuration for PBXNativeTarget "Base32" */,
+				C2099DD22F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "Base32" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C274C9C32BAB89C7008E7212 /* Build configuration list for PBXNativeTarget "SyncWatch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C274C9C42BAB89C7008E7212 /* Debug */,
-				C274C9C52BAB89C7008E7212 /* Release */,
-				C2099DDC2F9BEECD00490BC3 /* Production */,
+				C274C9C42BAB89C7008E7212 /* Debug configuration for PBXNativeTarget "SyncWatch" */,
+				C274C9C52BAB89C7008E7212 /* Release configuration for PBXNativeTarget "SyncWatch" */,
+				C2099DDC2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "SyncWatch" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C274C9DB2BAB8ABC008E7212 /* Build configuration list for PBXNativeTarget "TwoFASWatch Watch App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C274C9DC2BAB8ABC008E7212 /* Debug */,
-				C274C9DD2BAB8ABC008E7212 /* Release */,
-				C2099DDB2F9BEECD00490BC3 /* Production */,
+				C274C9DC2BAB8ABC008E7212 /* Debug configuration for PBXNativeTarget "TwoFASWatch Watch App" */,
+				C274C9DD2BAB8ABC008E7212 /* Release configuration for PBXNativeTarget "TwoFASWatch Watch App" */,
+				C2099DDB2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "TwoFASWatch Watch App" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C274CA202BAB8B92008E7212 /* Build configuration list for PBXNativeTarget "CommonWatch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C274CA212BAB8B92008E7212 /* Debug */,
-				C274CA222BAB8B92008E7212 /* Release */,
-				C2099DDD2F9BEECD00490BC3 /* Production */,
+				C274CA212BAB8B92008E7212 /* Debug configuration for PBXNativeTarget "CommonWatch" */,
+				C274CA222BAB8B92008E7212 /* Release configuration for PBXNativeTarget "CommonWatch" */,
+				C2099DDD2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "CommonWatch" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C274CA462BAB8BE3008E7212 /* Build configuration list for PBXNativeTarget "ContentWatch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C274CA472BAB8BE3008E7212 /* Debug */,
-				C274CA482BAB8BE3008E7212 /* Release */,
-				C2099DDE2F9BEECD00490BC3 /* Production */,
+				C274CA472BAB8BE3008E7212 /* Debug configuration for PBXNativeTarget "ContentWatch" */,
+				C274CA482BAB8BE3008E7212 /* Release configuration for PBXNativeTarget "ContentWatch" */,
+				C2099DDE2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "ContentWatch" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C274CA792BAB8C3F008E7212 /* Build configuration list for PBXNativeTarget "ProtectionWatch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C274CA7A2BAB8C3F008E7212 /* Debug */,
-				C274CA7B2BAB8C3F008E7212 /* Release */,
-				C2099DDF2F9BEECD00490BC3 /* Production */,
+				C274CA7A2BAB8C3F008E7212 /* Debug configuration for PBXNativeTarget "ProtectionWatch" */,
+				C274CA7B2BAB8C3F008E7212 /* Release configuration for PBXNativeTarget "ProtectionWatch" */,
+				C2099DDF2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "ProtectionWatch" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C28633DC1FFABD2200C8F4B4 /* Build configuration list for PBXNativeTarget "TwoFASAuth" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C28633DA1FFABD2200C8F4B4 /* Debug */,
-				C28633DB1FFABD2200C8F4B4 /* Release */,
-				C2099DD52F9BEECD00490BC3 /* Production */,
+				C28633DA1FFABD2200C8F4B4 /* Debug configuration for PBXNativeTarget "TwoFASAuth" */,
+				C28633DB1FFABD2200C8F4B4 /* Release configuration for PBXNativeTarget "TwoFASAuth" */,
+				C2099DD52F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "TwoFASAuth" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C29626DF2370BD7F00C133BC /* Build configuration list for PBXNativeTarget "TimeVerification" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C29626E02370BD7F00C133BC /* Debug */,
-				C29626E12370BD7F00C133BC /* Release */,
-				C2099DCF2F9BEECD00490BC3 /* Production */,
+				C29626E02370BD7F00C133BC /* Debug configuration for PBXNativeTarget "TimeVerification" */,
+				C29626E12370BD7F00C133BC /* Release configuration for PBXNativeTarget "TimeVerification" */,
+				C2099DCF2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "TimeVerification" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C2A4D3452BC0B6B00001587C /* Build configuration list for PBXNativeTarget "Base32Watch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C2A4D3462BC0B6B00001587C /* Debug */,
-				C2A4D3472BC0B6B00001587C /* Release */,
-				C2099DE12F9BEECD00490BC3 /* Production */,
+				C2A4D3462BC0B6B00001587C /* Debug configuration for PBXNativeTarget "Base32Watch" */,
+				C2A4D3472BC0B6B00001587C /* Release configuration for PBXNativeTarget "Base32Watch" */,
+				C2099DE12F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "Base32Watch" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C2ACF9EB20A8A918003E0987 /* Build configuration list for PBXNativeTarget "TwoFASTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C2ACF9EC20A8A918003E0987 /* Debug */,
-				C2ACF9ED20A8A918003E0987 /* Release */,
-				C2099DD62F9BEECD00490BC3 /* Production */,
+				C2ACF9EC20A8A918003E0987 /* Debug configuration for PBXNativeTarget "TwoFASTests" */,
+				C2ACF9ED20A8A918003E0987 /* Release configuration for PBXNativeTarget "TwoFASTests" */,
+				C2099DD62F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "TwoFASTests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C2C3AE1E269E224B00506ACF /* Build configuration list for PBXNativeTarget "TwoFASWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C2C3AE1F269E224B00506ACF /* Debug */,
-				C2C3AE20269E224B00506ACF /* Release */,
-				C2099DD82F9BEECD00490BC3 /* Production */,
+				C2C3AE1F269E224B00506ACF /* Debug configuration for PBXNativeTarget "TwoFASWidgetExtension" */,
+				C2C3AE20269E224B00506ACF /* Release configuration for PBXNativeTarget "TwoFASWidgetExtension" */,
+				C2099DD82F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "TwoFASWidgetExtension" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C2C3AE43269E274700506ACF /* Build configuration list for PBXNativeTarget "TwoFASServiceIntent" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C2C3AE44269E274700506ACF /* Debug */,
-				C2C3AE45269E274700506ACF /* Release */,
-				C2099DD92F9BEECD00490BC3 /* Production */,
+				C2C3AE44269E274700506ACF /* Debug configuration for PBXNativeTarget "TwoFASServiceIntent" */,
+				C2C3AE45269E274700506ACF /* Release configuration for PBXNativeTarget "TwoFASServiceIntent" */,
+				C2099DD92F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "TwoFASServiceIntent" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C2DF71122B5DD31300D85D87 /* Build configuration list for PBXNativeTarget "DataTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C2DF71132B5DD31300D85D87 /* Debug */,
-				C2DF71142B5DD31300D85D87 /* Release */,
-				C2099DDA2F9BEECD00490BC3 /* Production */,
+				C2DF71132B5DD31300D85D87 /* Debug configuration for PBXNativeTarget "DataTests" */,
+				C2DF71142B5DD31300D85D87 /* Release configuration for PBXNativeTarget "DataTests" */,
+				C2099DDA2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "DataTests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C2E53ACD2B62DD6C008E1E70 /* Build configuration list for PBXNativeTarget "Common" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C2E53ACE2B62DD6C008E1E70 /* Debug */,
-				C2E53ACF2B62DD6C008E1E70 /* Release */,
-				C2099DD32F9BEECD00490BC3 /* Production */,
+				C2E53ACE2B62DD6C008E1E70 /* Debug configuration for PBXNativeTarget "Common" */,
+				C2E53ACF2B62DD6C008E1E70 /* Release configuration for PBXNativeTarget "Common" */,
+				C2099DD32F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "Common" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C2E53B532B62DDCB008E1E70 /* Build configuration list for PBXNativeTarget "Content" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C2E53B542B62DDCB008E1E70 /* Debug */,
-				C2E53B552B62DDCB008E1E70 /* Release */,
-				C2099DD42F9BEECD00490BC3 /* Production */,
+				C2E53B542B62DDCB008E1E70 /* Debug configuration for PBXNativeTarget "Content" */,
+				C2E53B552B62DDCB008E1E70 /* Release configuration for PBXNativeTarget "Content" */,
+				C2099DD42F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "Content" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C2E7C35D2ADB02FE00478D89 /* Build configuration list for PBXNativeTarget "CommonUIKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C2E7C35E2ADB02FE00478D89 /* Debug */,
-				C2E7C35F2ADB02FE00478D89 /* Release */,
-				C2099DCD2F9BEECD00490BC3 /* Production */,
+				C2E7C35E2ADB02FE00478D89 /* Debug configuration for PBXNativeTarget "CommonUIKit" */,
+				C2E7C35F2ADB02FE00478D89 /* Release configuration for PBXNativeTarget "CommonUIKit" */,
+				C2099DCD2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "CommonUIKit" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C2E7C38A2ADB19F300478D89 /* Build configuration list for PBXNativeTarget "Data" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C2E7C38B2ADB19F300478D89 /* Debug */,
-				C2E7C38C2ADB19F300478D89 /* Release */,
-				C2099DCA2F9BEECD00490BC3 /* Production */,
+				C2E7C38B2ADB19F300478D89 /* Debug configuration for PBXNativeTarget "Data" */,
+				C2E7C38C2ADB19F300478D89 /* Release configuration for PBXNativeTarget "Data" */,
+				C2099DCA2F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "Data" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C2FA85812426BB7300AACFC9 /* Build configuration list for PBXNativeTarget "ProtectionTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C2FA85822426BB7300AACFC9 /* Debug */,
-				C2FA85832426BB7300AACFC9 /* Release */,
-				C2099DD72F9BEECD00490BC3 /* Production */,
+				C2FA85822426BB7300AACFC9 /* Debug configuration for PBXNativeTarget "ProtectionTests" */,
+				C2FA85832426BB7300AACFC9 /* Release configuration for PBXNativeTarget "ProtectionTests" */,
+				C2099DD72F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "ProtectionTests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */

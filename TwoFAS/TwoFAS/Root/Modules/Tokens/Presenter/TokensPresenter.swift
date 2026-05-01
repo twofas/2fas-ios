@@ -496,6 +496,7 @@ extension TokensPresenter {
     }
     
     func passCellGoToStore() {
+        interactor.markPassPromoCellAsNavigated()
         flowController.toPassStore()
     }
     

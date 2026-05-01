@@ -93,6 +93,8 @@ protocol UserDefaultsRepository: AnyObject {
 
     var wasPassPromoSeen: Bool { get }
     func markPassPromoAsSeen()
+    var passPromoDateNavigatedToAppStore: Date? { get }
+    func markPassPromoDateNavigatedToAppStore()
     
     var exchangeToken: String? { get }
     func setExchangeToken(_ key: String)

@@ -88,6 +88,7 @@ protocol TokensModuleInteracting: AnyObject {
     func moveServiceDown(serviceData: ServiceData)
     // MARK: Pass promo cell
     func markPassPromoCellAsSeen()
+    func markPassPromoCellAsNavigated()
     // MARK: Sync alerts
     var allServicesRemovedPending: Bool { get }
     func clearAllServicesRemovedPending()
@@ -562,6 +563,10 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     func markPassPromoCellAsSeen() {
         appInfoInteractor.markPassPromoAsSeen()
     }
+    
+    func markPassPromoCellAsNavigated() {
+        appInfoInteractor.markPassPromoDateNavigatedToAppStore()
+    }
 
     var allServicesRemovedPending: Bool {
         cloudBackupInteractor.allServicesRemovedPending
@@ -574,10 +579,16 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     private var showPassPromoCell: Bool {
         guard !appInfoInteractor.wasPassPromoSeen else { return false }
         if appInfoInteractor.is2FASPASSInstalled {
-            appInfoInteractor.markPassPromoAsSeen()
             return false
         }
-        let date = appInfoInteractor.dateOfFirstRun
+        let markDate = appInfoInteractor.passPromoDateNavigatedToAppStore
+        let firstRunDate = appInfoInteractor.dateOfFirstRun
+        let date: Date = {
+            if let markDate {
+                return markDate
+            }
+            return firstRunDate
+        }()
         return date.days(from: .now) >= daysTillPassCellPresentation
     }
 }

@@ -109,7 +109,7 @@
       buildConfiguration = "Release">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Production"
       customArchiveName = "TwoFAS Dev Release"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>

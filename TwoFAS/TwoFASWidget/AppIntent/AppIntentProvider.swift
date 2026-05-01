@@ -28,7 +28,7 @@ import Storage
 import TimeVerification
 
 struct AppIntentProvider: AppIntentTimelineProvider {
-    private let defaults = UserDefaults(suiteName: "group.twofas.com")
+    private let defaults = UserDefaults(suiteName: Config.groupIdentifier)
     private let calendar = Calendar.current
     typealias Intent = SelectService
     

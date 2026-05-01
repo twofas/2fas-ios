@@ -27,7 +27,6 @@ public protocol AppInfoInteracting: AnyObject {
     func update2FASPassMissingDate()
     func setNotificationGroupID()
     
-    var dateOfPassPromoFirstRun: Date { get }
     var wasPassPromoSeen: Bool { get }
     func markPassPromoAsSeen()
 }
@@ -49,10 +48,6 @@ extension AppInfoInteractor: AppInfoInteracting {
         mainRepository.dateOfFirstRun ?? Date.now
     }
     
-    var dateOfPassPromoFirstRun: Date {
-        mainRepository.passPromoDateFirstRun ?? Date.now
-    }
-    
     var wasPassPromoSeen: Bool {
         mainRepository.wasPassPromoSeen
     }
@@ -60,9 +55,6 @@ extension AppInfoInteractor: AppInfoInteracting {
     func markDateOfFirstRunIfNeeded() {
         if mainRepository.dateOfFirstRun == nil {
             mainRepository.saveDateOfFirstRun(Date.now)
-        }
-        if mainRepository.passPromoDateFirstRun == nil {
-            mainRepository.savePassPromoDateFirstRun(Date.now)
         }
     }
     

@@ -502,6 +502,10 @@ internal enum T {
     internal static let migrationTitle = T.tr("Localizable", "backup__migration_title", fallback: "Upgrade in progress")
     /// Missing System Key
     internal static let missingSystemKey = T.tr("Localizable", "backup__missing_system_key", fallback: "Missing System Key")
+    /// The last iCloud sync has moved all your services to the Trash. You can restore them at any time.
+    internal static let movedToTrashMessage = T.tr("Localizable", "backup__moved_to_trash_message", fallback: "The last iCloud sync has moved all your services to the Trash. You can restore them at any time.")
+    /// iCloud Sync result
+    internal static let movedToTrashTitle = T.tr("Localizable", "backup__moved_to_trash_title", fallback: "iCloud Sync result")
     /// %d new services
     internal static func newServices(_ p1: Int) -> String {
       return T.tr("Localizable", "backup__new_services", p1, fallback: "%d new services")
@@ -598,8 +602,8 @@ internal enum T {
     internal static let veryfingPassword = T.tr("Localizable", "backup__veryfing_password", fallback: "Verifying password")
     /// Warning! If you delete 2FAS Backup, you will also erase all tokens from other devices synced with this account. To preserve the tokens on other devices, please ensure that you've turned off the 2FAS Backup before the deletion.
     internal static let warningIntroduction = T.tr("Localizable", "backup__warning_introduction", fallback: "Warning! If you delete 2FAS Backup, you will also erase all tokens from other devices synced with this account. To preserve the tokens on other devices, please ensure that you've turned off the 2FAS Backup before the deletion.")
-    /// Go to 2FAS Backup settings in 2FAS Auth on your iPhone/iPad and navigate to "Managed Paired Apple Watches". This option will be visible if the backup is synced. Scan the QR code from there.
-    internal static let watchPairDescription = T.tr("Localizable", "backup__watch_pair_description", fallback: "Go to 2FAS Backup settings in 2FAS Auth on your iPhone/iPad and navigate to \"Managed Paired Apple Watches\". This option will be visible if the backup is synced. Scan the QR code from there.")
+    /// Go to 2FAS Backup settings in 2FAS Auth on your iPhone/iPad and navigate to "Manage Paired Apple Watches". This option will be visible if the backup is synced. Scan the QR code from there.
+    internal static let watchPairDescription = T.tr("Localizable", "backup__watch_pair_description", fallback: "Go to 2FAS Backup settings in 2FAS Auth on your iPhone/iPad and navigate to \"Manage Paired Apple Watches\". This option will be visible if the backup is synced. Scan the QR code from there.")
     /// Error while generating QR Code
     internal static let watchPairQrError = T.tr("Localizable", "backup__watch_pair_qr_error", fallback: "Error while generating QR Code")
     /// Pair your Apple Watch
@@ -794,6 +798,8 @@ internal enum T {
     internal static let error = T.tr("Localizable", "commons__error", fallback: "Error")
     /// File creation failed
     internal static let fileCreationError = T.tr("Localizable", "commons__file_creation_error", fallback: "File creation failed")
+    /// Go to Trash
+    internal static let goToTrash = T.tr("Localizable", "commons__go_to_trash", fallback: "Go to Trash")
     /// Got it!
     internal static let gotIt = T.tr("Localizable", "commons__got_it", fallback: "Got it!")
     /// iCloud Backup password
@@ -1553,6 +1559,10 @@ internal enum T {
     internal static let doYouReallyWantToRemoveAllDevices = T.tr("Localizable", "tokens__do_you_really_want_to_remove_all_devices", fallback: "Do you want to permanently delete this 2FA service?")
     /// Duplicated Secret Key
     internal static let duplicatedPrivateKey = T.tr("Localizable", "tokens__duplicated_private_key", fallback: "Duplicated Secret Key")
+    /// You have **%d** services in your Trash.
+    internal static func emptyScreenInTrash(_ p1: Int) -> String {
+      return T.tr("Localizable", "tokens__empty_screen_in_trash", p1, fallback: "You have **%d** services in your Trash.")
+    }
     /// Enter Service Name
     internal static let enterServiceName = T.tr("Localizable", "tokens__enter_service_name", fallback: "Enter Service Name")
     /// Add manually
@@ -1872,8 +1882,8 @@ internal enum T {
     internal static let introStep2 = T.tr("Localizable", "watch__intro_step2", fallback: "Go to \"2FAS Backup\" settings in 2FAS Auth app on your iPhone.")
     /// Ensure that iCloud Backup is synced and iCloud Keychain is enabled in iOS system settings.
     internal static let introStep3 = T.tr("Localizable", "watch__intro_step3", fallback: "Ensure that iCloud Backup is synced and iCloud Keychain is enabled in iOS system settings.")
-    /// Select "Managed Paired Apple Watches".
-    internal static let introStep4 = T.tr("Localizable", "watch__intro_step4", fallback: "Select \"Managed Paired Apple Watches\".")
+    /// Select "Manage Paired Apple Watches".
+    internal static let introStep4 = T.tr("Localizable", "watch__intro_step4", fallback: "Select \"Manage Paired Apple Watches\".")
     /// Tap "+" and scan the QR Code from the next page.
     internal static let introStep5 = T.tr("Localizable", "watch__intro_step5", fallback: "Tap \"+\" and scan the QR Code from the next page.")
     /// You can now close this window. Sync can take some time.

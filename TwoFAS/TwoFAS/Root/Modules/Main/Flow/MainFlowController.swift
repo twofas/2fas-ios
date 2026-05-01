@@ -304,6 +304,10 @@ extension MainFlowController: MainSplitFlowControllerParent {
     func navigationSwitchedToSettingsBackup() {
         viewController.presenter.handleSwitchToBackup()
     }
+    
+    func navigationSwitchedToSettingsTrash() {
+        viewController.presenter.handleSwitchToTrash()
+    }
 }
 
 extension MainFlowController: NewPINNavigationFlowControllerParent {

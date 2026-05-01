@@ -30,7 +30,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C23666721FB2644900989ACA"
-               BuildableName = "TwoFAS.app"
+               BuildableName = "TwoFAS Dev.app"
                BlueprintName = "TwoFAS"
                ReferencedContainer = "container:TwoFAS.xcodeproj">
             </BuildableReference>
@@ -61,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C23666721FB2644900989ACA"
-            BuildableName = "TwoFAS.app"
+            BuildableName = "TwoFAS Dev.app"
             BlueprintName = "TwoFAS"
             ReferencedContainer = "container:TwoFAS.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C23666721FB2644900989ACA"
-            BuildableName = "TwoFAS.app"
+            BuildableName = "TwoFAS Dev.app"
             BlueprintName = "TwoFAS"
             ReferencedContainer = "container:TwoFAS.xcodeproj">
          </BuildableReference>

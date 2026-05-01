@@ -30,6 +30,7 @@ enum TokensModuleInteractorState {
 
 protocol TokensModuleInteracting: AnyObject {
     var emptySnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell> { get }
+    var trashedServicesCount: Int { get }
     var isiPhone: Bool { get }
     var canBeDragged: Bool { get }
     var hasServices: Bool { get }
@@ -87,6 +88,9 @@ protocol TokensModuleInteracting: AnyObject {
     func moveServiceDown(serviceData: ServiceData)
     // MARK: Pass promo cell
     func markPassPromoCellAsSeen()
+    // MARK: Sync alerts
+    var allServicesRemovedPending: Bool { get }
+    func clearAllServicesRemovedPending()
 }
 
 final class TokensModuleInteractor {
@@ -121,6 +125,7 @@ final class TokensModuleInteractor {
     private let rootInteractor: RootInteracting
     private let localNotificationFetchInteractor: LocalNotificationFetchInteracting
     private let appInfoInteractor: AppInfoInteracting
+    private let trashInteractor: TrashingServiceInteracting
     
     private(set) var categoryData: [CategoryData] = []
     
@@ -145,7 +150,8 @@ final class TokensModuleInteractor {
         newsInteractor: NewsInteracting,
         rootInteractor: RootInteracting,
         localNotificationFetchInteractor: LocalNotificationFetchInteracting,
-        appInfoInteractor: AppInfoInteracting
+        appInfoInteractor: AppInfoInteracting,
+        trashInteractor: TrashingServiceInteracting
     ) {
         self.appearanceInteractor = appearanceInteractor
         self.serviceDefinitionsInteractor = serviceDefinitionsInteractor
@@ -164,6 +170,7 @@ final class TokensModuleInteractor {
         self.rootInteractor = rootInteractor
         self.localNotificationFetchInteractor = localNotificationFetchInteractor
         self.appInfoInteractor = appInfoInteractor
+        self.trashInteractor = trashInteractor
         
         setupLinkInteractor()
     }
@@ -172,6 +179,10 @@ final class TokensModuleInteractor {
 extension TokensModuleInteractor: TokensModuleInteracting {
     var emptySnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell> {
         NSDiffableDataSourceSnapshot<TokensSection, TokenCell>()
+    }
+    
+    var trashedServicesCount: Int {
+        trashInteractor.listTrashedServices().count
     }
     
     var isiPhone: Bool {
@@ -551,16 +562,23 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     func markPassPromoCellAsSeen() {
         appInfoInteractor.markPassPromoAsSeen()
     }
-    
+
+    var allServicesRemovedPending: Bool {
+        cloudBackupInteractor.allServicesRemovedPending
+    }
+
+    func clearAllServicesRemovedPending() {
+        cloudBackupInteractor.clearAllServicesRemovedPending()
+    }
+
     private var showPassPromoCell: Bool {
         guard !appInfoInteractor.wasPassPromoSeen else { return false }
         if appInfoInteractor.is2FASPASSInstalled {
             appInfoInteractor.markPassPromoAsSeen()
             return false
         }
-        let date = appInfoInteractor.dateOfPassPromoFirstRun
-//        return date.days(from: .now) >= daysTillPassCellPresentation
-        return abs(date.minutes(to: .now)) >= 3
+        let date = appInfoInteractor.dateOfFirstRun
+        return date.days(from: .now) >= daysTillPassCellPresentation
     }
 }
 

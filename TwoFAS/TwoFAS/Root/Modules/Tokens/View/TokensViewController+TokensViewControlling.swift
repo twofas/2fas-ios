@@ -91,6 +91,7 @@ extension TokensViewController: TokensViewControlling {
     func showEmptyScreen() {
         removeSearchBar()
         VoiceOver.say(T.Voiceover.useAddServiceButtonTitle)
+        emptyListScreenView.setItemsInTrashCount(presenter.trashedServicesCount)
         guard emptyListScreenView.isHidden else { return }
         emptyListScreenView.alpha = 0
         emptyListScreenView.isHidden = false
@@ -410,6 +411,11 @@ extension TokensViewController {
     @objc
     func userLoggedIn() {
         presenter.handleAppUnlocked()
+    }
+
+    @objc
+    func allServicesRemovedAlertShouldBeShown() {
+        presenter.handleAllServicesRemovedAlert()
     }
 }
 

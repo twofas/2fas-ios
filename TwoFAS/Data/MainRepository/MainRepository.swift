@@ -150,6 +150,9 @@ protocol MainRepository: AnyObject {
     func erase(completion: @escaping ResultCallback)
     func syncDebugReloadAllKeys()
     func saveSuccessSyncDate(_ date: Date?)
+    var allServicesRemovedPending: Bool { get }
+    func markAllServicesRemovedAsPending()
+    func clearAllServicesRemovedPending()
     // MARK: Watch Pair
     func watchPairingList() -> [PairedWatch]
     func watchPairingUnpair(_ pairedWatch: PairedWatch)
@@ -276,8 +279,6 @@ protocol MainRepository: AnyObject {
     var appBundleIdentifier: String? { get }
     var dateOfFirstRun: Date? { get }
     func saveDateOfFirstRun(_ date: Date)
-    var passPromoDateFirstRun: Date? { get }
-    func savePassPromoDateFirstRun(_ date: Date)
     var wasPassPromoSeen: Bool { get }
     func markPassPromoAsSeen()
     

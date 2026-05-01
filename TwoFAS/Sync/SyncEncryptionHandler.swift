@@ -26,7 +26,7 @@ import Common
 final class SyncEncryptionHandler {
     var keyDidChange: Callback?
     
-    private let keychain = Keychain(service: "TWOFASSync")
+    private let keychain = Keychain(service: Config.keychainSync)
         .synchronizable(true)
         .accessibility(.afterFirstUnlock)
     private let userDefaults = UserDefaults.standard

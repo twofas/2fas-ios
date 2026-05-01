@@ -332,7 +332,8 @@ final class ModuleInteractorFactory {
             newsInteractor: InteractorFactory.shared.newsInteractor(),
             rootInteractor: InteractorFactory.shared.rootInteractor(),
             localNotificationFetchInteractor: InteractorFactory.shared.localNotificationFetchInteractor(),
-            appInfoInteractor: InteractorFactory.shared.appInfoInteractor()
+            appInfoInteractor: InteractorFactory.shared.appInfoInteractor(),
+            trashInteractor: InteractorFactory.shared.trashingServiceInteractor()
         )
     }
     

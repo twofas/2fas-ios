@@ -56,7 +56,7 @@ struct BackupAdvancedCell: Hashable {
 extension BackupAdvancedCell.Action {
     var icon: UIImage {
         switch self {
-        case .exportKeys: UIImage(systemName: "arrow.up.document.fill")!
+        case .exportKeys: UIImage(systemName: "arrow.up.doc.fill")!
         case .importKeys: UIImage(systemName: "square.and.arrow.down.on.square.fill")!
         case .deleteBackup: UIImage(systemName: "xmark.icloud.fill")!
         }

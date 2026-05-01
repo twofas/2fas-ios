@@ -50,7 +50,6 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case mainMenuPortraitCollapsed
         case mainMenuLandscapeCollapsed
         case dateOfFirstRun
-        case passPromoDateFirstRun
         case wasPassPromoSeen
         case syncSuccessDate
         case localNotificationPublicationDate
@@ -61,9 +60,10 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case registrationDate
         case noCompanionAppDate
         case notificationGroupID
+        case allServicesRemovedPending
     }
     private let userDefaults = UserDefaults()
-    private let sharedDefaults = UserDefaults(suiteName: Config.suiteName)!
+    private let sharedDefaults = UserDefaults(suiteName: Config.groupIdentifier)!
     
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
@@ -269,17 +269,6 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         userDefaults.synchronize()
     }
     
-    var passPromoDateFirstRun: Date? {
-        guard userDefaults.object(forKey: Keys.passPromoDateFirstRun.rawValue) != nil else { return nil }
-        let value = userDefaults.double(forKey: Keys.passPromoDateFirstRun.rawValue)
-        return Date(timeIntervalSince1970: value)
-    }
-    
-    func savePassPromoDateFirstRun(_ date: Date) {
-        userDefaults.set(date.timeIntervalSince1970, forKey: Keys.passPromoDateFirstRun.rawValue)
-        userDefaults.synchronize()
-    }
-    
     var wasPassPromoSeen: Bool {
         userDefaults.bool(forKey: Keys.wasPassPromoSeen.rawValue)
     }
@@ -446,8 +435,24 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         userDefaults.synchronize()
     }
     
+    // MARK: - All Services Removed
+
+    var allServicesRemovedPending: Bool {
+        userDefaults.bool(forKey: Keys.allServicesRemovedPending.rawValue)
+    }
+
+    func markAllServicesRemovedAsPending() {
+        userDefaults.set(true, forKey: Keys.allServicesRemovedPending.rawValue)
+        userDefaults.synchronize()
+    }
+
+    func clearAllServicesRemovedPending() {
+        userDefaults.set(false, forKey: Keys.allServicesRemovedPending.rawValue)
+        userDefaults.synchronize()
+    }
+
     // MARK: - Clear all
-    
+
     func clearAll() {
         Keys.allCases.forEach { key in
             userDefaults.removeObject(forKey: key.rawValue)

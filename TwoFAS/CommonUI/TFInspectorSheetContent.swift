@@ -22,15 +22,15 @@ import SwiftUI
 // MARK: - Private metrics
 
 private enum SheetMetrics {
-    static let detentHeight:     CGFloat = 491
-    static let cornerRadius:     CGFloat = 34   // sheet top-corner radius
-    static let iconFontSize:     CGFloat = 41   // SF Symbol icon size
-    static let sectionGap:       CGFloat = 40   // gap between icon+text and footnote+button
+    static let detentHeight: CGFloat = 491
+    static let cornerRadius: CGFloat = 34   // sheet top-corner radius
+    static let iconFontSize: CGFloat = 41   // SF Symbol icon size
+    static let sectionGap: CGFloat = 40   // gap between icon+text and footnote+button
     static let toolbarBottomPad: CGFloat = 10
-    static let grabberWidth:     CGFloat = 36
-    static let grabberHeight:    CGFloat = 5
-    static let grabberTopPad:    CGFloat = 5
-    static let grabberFrameH:    CGFloat = 16
+    static let grabberWidth: CGFloat = 36
+    static let grabberHeight: CGFloat = 5
+    static let grabberTopPad: CGFloat = 5
+    static let grabberFrameH: CGFloat = 16
 }
 
 // MARK: - TFInspectorSheetContent
@@ -57,20 +57,20 @@ public struct TFInspectorSheetContent: View {
 
     @Environment(\.dismiss) private var dismiss
 
-    public let systemImage:  String
-    public let title:        String
-    public let description:  String
-    public let footnote:     String?
-    public let actionTitle:  String
-    public let action:       () -> Void
+    public let systemImage: String
+    public let title: String
+    public let description: String
+    public let footnote: String?
+    public let actionTitle: String
+    public let action: () -> Void
 
     public init(
-        systemImage:  String,
-        title:        String,
-        description:  String,
-        footnote:     String?  = nil,
-        actionTitle:  String,
-        action:       @escaping () -> Void = {}
+        systemImage: String,
+        title: String,
+        description: String,
+        footnote: String? = nil,
+        actionTitle: String,
+        action: @escaping () -> Void = {}
     ) {
         self.systemImage  = systemImage
         self.title        = title
@@ -166,7 +166,7 @@ public extension View {
         systemImage: String,
         title: String,
         description: String,
-        footnote: String?  = nil,
+        footnote: String? = nil,
         actionTitle: String,
         action: @escaping () -> Void = {}
     ) -> some View {

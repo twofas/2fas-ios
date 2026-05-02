@@ -59,4 +59,3 @@ struct AdaptiveReadableContainer<Content: View>: View {
         }
     }
 }
-

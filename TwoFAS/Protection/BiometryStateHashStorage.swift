@@ -19,7 +19,11 @@
 
 import Foundation
 import KeychainAccess
+#if os(iOS)
 import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 enum BiometryStateHashStorage {
     private static let keychainTokens = Keychain(service: Config.keychain)

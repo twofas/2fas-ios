@@ -124,26 +124,36 @@ private extension TextStyle {
                 size: 34,
                 lineHeight: 41 + pad,
                 tracking: 0.40,
-                weight: titleWeight( variant, emphasized: .bold),
-                isItalic: false, semanticStyle: .largeTitle
+                weight: titleWeight(variant, emphasized: .bold),
+                isItalic: false,
+                semanticStyle: .largeTitle
             )
         case .title1:
             return TextStyleAttributes(
-                size: 28, lineHeight: 34 + pad, tracking: 0.38,
+                size: 28,
+                lineHeight: 34 + pad,
+                tracking: 0.38,
                 weight: titleWeight(variant, emphasized: .bold),
-                isItalic: false, semanticStyle: .title
+                isItalic: false,
+                semanticStyle: .title
             )
         case .title2:
             return TextStyleAttributes(
-                size: 22, lineHeight: 28 + pad, tracking: -0.26,
+                size: 22,
+                lineHeight: 28 + pad,
+                tracking: -0.26,
                 weight: titleWeight(variant, emphasized: .semibold),
-                isItalic: false, semanticStyle: .title2
+                isItalic: false,
+                semanticStyle: .title2
             )
         case .title3:
             return TextStyleAttributes(
-                size: 20, lineHeight: 25 + pad, tracking: -0.45,
+                size: 20,
+                lineHeight: 25 + pad,
+                tracking: -0.45,
                 weight: titleWeight(variant, emphasized: .semibold),
-                isItalic: false, semanticStyle: .title3
+                isItalic: false,
+                semanticStyle: .title3
             )
             
             // ── Body-level ───────────────────────────────────────────────────────
@@ -151,28 +161,36 @@ private extension TextStyle {
         case .headline:
             // Headline is always semibold; variant only toggles italic.
             return TextStyleAttributes(
-                size: 17, lineHeight: 22 + pad, tracking: -0.43,
+                size: 17,
+                lineHeight: 22 + pad,
+                tracking: -0.43,
                 weight: .semibold,
                 isItalic: variant == .italic || variant == .emphasizedItalic,
                 semanticStyle: .headline
             )
         case .body:
             return TextStyleAttributes(
-                size: 17, lineHeight: 22 + pad, tracking: -0.43,
+                size: 17,
+                lineHeight: 22 + pad,
+                tracking: -0.43,
                 weight: bodyWeight(variant),
                 isItalic: variant == .italic || variant == .emphasizedItalic,
                 semanticStyle: .body
             )
         case .callout:
             return TextStyleAttributes(
-                size: 16, lineHeight: 21 + pad, tracking: -0.31,
+                size: 16,
+                lineHeight: 21 + pad,
+                tracking: -0.31,
                 weight: smallWeight(variant),
                 isItalic: variant == .italic || variant == .emphasizedItalic,
                 semanticStyle: .callout
             )
         case .subheadline:
             return TextStyleAttributes(
-                size: 15, lineHeight: 20 + pad, tracking: -0.23,
+                size: 15,
+                lineHeight: 20 + pad,
+                tracking: -0.23,
                 weight: smallWeight(variant),
                 isItalic: variant == .italic || variant == .emphasizedItalic,
                 semanticStyle: .subheadline
@@ -182,7 +200,9 @@ private extension TextStyle {
             
         case .footnote:
             return TextStyleAttributes(
-                size: 13, lineHeight: 18 + pad, tracking: -0.08,
+                size: 13,
+                lineHeight: 18 + pad,
+                tracking: -0.08,
                 weight: smallWeight(variant),
                 isItalic: variant == .italic || variant == .emphasizedItalic,
                 semanticStyle: .footnote
@@ -193,7 +213,9 @@ private extension TextStyle {
             : (leading == .tight && variant == .emphasizedItalic) ? .medium
             : smallWeight(variant)
             return TextStyleAttributes(
-                size: 12, lineHeight: 16 + pad, tracking: 0,
+                size: 12,
+                lineHeight: 16 + pad,
+                tracking: 0,
                 weight: w,
                 isItalic: variant == .italic || variant == .emphasizedItalic,
                 semanticStyle: .caption
@@ -201,7 +223,9 @@ private extension TextStyle {
         case .caption2:
             // Tight frame: lineHeight equals fontSize (11pt) — no breathing room.
             return TextStyleAttributes(
-                size: 11, lineHeight: 13 + pad, tracking: 0.06,
+                size: 11,
+                lineHeight: 13 + pad,
+                tracking: 0.06,
                 weight: smallWeight(variant),
                 isItalic: variant == .italic || variant == .emphasizedItalic,
                 semanticStyle: .caption2
@@ -253,9 +277,9 @@ private struct TextStyleModifier: ViewModifier {
         // Loose adds +2 pt; tight subtracts −2 pt (may be clamped to 0 on older OS).
         let lineSpacingDelta: CGFloat
         switch leading {
-        case .tight:    lineSpacingDelta = -2
-        case .standard: lineSpacingDelta =  0
-        case .loose:    lineSpacingDelta =  2
+        case .tight: lineSpacingDelta = -2
+        case .standard: lineSpacingDelta = 0
+        case .loose: lineSpacingDelta = 2
         }
         
         return content

@@ -235,7 +235,7 @@ private struct _TFButtonLabel: View {
         guard isEnabled else { return .labelsTertiary }
         switch variant {
         case .borderedProminent: return .graysWhite
-        case .bordered,  .borderless: return .accentsBrand
+        case .bordered, .borderless: return .accentsBrand
         case .borderedSecondary, .borderlessNeutral: return .labelsPrimary
         }
     }

@@ -21,6 +21,7 @@ import Foundation
 import Sync
 import Storage
 import Common
+import NetworkStack
 
 public enum LogUploadingInteractorError: Error {
     case notExists

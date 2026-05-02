@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Protection
 
 extension MainRepositoryImpl {
     // MARK: - DeviceID

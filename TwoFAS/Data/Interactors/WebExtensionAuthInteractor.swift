@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import NetworkStack
 
 public struct WebExtensionAwaitingAuth: Equatable {
     public let tokenRequestID: String

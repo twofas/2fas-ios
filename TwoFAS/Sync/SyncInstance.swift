@@ -20,6 +20,7 @@
 import UIKit
 import CloudKit
 import Common
+import CoreData
 
 public enum SyncInstance {
     private static var cloudHandler: CloudHandlerType!

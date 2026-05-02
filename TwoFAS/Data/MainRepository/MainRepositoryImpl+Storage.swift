@@ -20,6 +20,7 @@
 import Foundation
 import Storage
 import Common
+import Sync
 
 extension MainRepositoryImpl {
     func saveStorage() {

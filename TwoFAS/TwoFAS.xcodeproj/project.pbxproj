@@ -696,6 +696,8 @@
 		C278122127F9FA9A00F31453 /* RSAEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278122027F9FA9900F31453 /* RSAEncryption.swift */; };
 		C278122327FA16BC00F31453 /* RSAKeyStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278122227FA16BC00F31453 /* RSAKeyStorage.swift */; };
 		C2787C3F28FB613000E6C989 /* TwoFas6-TwoFas7.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C2787C3E28FB613000E6C989 /* TwoFas6-TwoFas7.xcmappingmodel */; };
+		C279C0E92FA6393B006CC971 /* CommonUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C279C0E32FA6393B006CC971 /* CommonUI.framework */; };
+		C279C0EA2FA6393B006CC971 /* CommonUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C279C0E32FA6393B006CC971 /* CommonUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C27A1EB529127C8D00702DB9 /* AlertController+Ready.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB429127C8D00702DB9 /* AlertController+Ready.swift */; };
 		C27A549927F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549827F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift */; };
 		C27A549B27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549A27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift */; };
@@ -1641,6 +1643,13 @@
 			remoteGlobalIDString = C274CA582BAB8C3F008E7212;
 			remoteInfo = ProtectionWatch;
 		};
+		C279C0E72FA6393B006CC971 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C236666B1FB2644900989ACA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C279C0E22FA6393B006CC971;
+			remoteInfo = CommonUI;
+		};
 		C28633D71FFABD2200C8F4B4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C236666B1FB2644900989ACA /* Project object */;
@@ -1939,6 +1948,7 @@
 				C29626DE2370BD7F00C133BC /* TimeVerification.framework in Embed Frameworks */,
 				C2147CBD205D78600001D011 /* Protection.framework in Embed Frameworks */,
 				C2E53ACC2B62DD6C008E1E70 /* Common.framework in Embed Frameworks */,
+				C279C0EA2FA6393B006CC971 /* CommonUI.framework in Embed Frameworks */,
 				C21F05C21FC761450038E28F /* PushNotifications.framework in Embed Frameworks */,
 				C24D1C30253C744F0029D27D /* Sync.framework in Embed Frameworks */,
 			);
@@ -2584,6 +2594,7 @@
 		C2787C3E28FB613000E6C989 /* TwoFas6-TwoFas7.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = "TwoFas6-TwoFas7.xcmappingmodel"; sourceTree = "<group>"; };
 		C2794BAC2774EB7000301F1A /* Sync4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sync4.xcdatamodel; sourceTree = "<group>"; };
 		C279BD51286509F8000FD69D /* SectionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionInteractor.swift; sourceTree = "<group>"; };
+		C279C0E32FA6393B006CC971 /* CommonUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C27A1EA92912791100702DB9 /* ExternalLinks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExternalLinks.swift; sourceTree = "<group>"; };
 		C27A1EAB2912797200702DB9 /* MainRepositoryImpl+Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Camera.swift"; sourceTree = "<group>"; };
 		C27A1EB0291279E400702DB9 /* AppEventController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppEventController.swift; sourceTree = "<group>"; };
@@ -3275,6 +3286,14 @@
 		C2FF3EEB27B1CF0100642FA4 /* IconSelectorModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorModels.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		C279C0E42FA6393B006CC971 /* CommonUI */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CommonUI;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		C200E4961FB3911B00D7C748 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -3324,6 +3343,7 @@
 				C2E53B512B62DDCB008E1E70 /* Content.framework in Frameworks */,
 				C200E4A11FB3911B00D7C748 /* Storage.framework in Frameworks */,
 				C29626DD2370BD7F00C133BC /* TimeVerification.framework in Frameworks */,
+				C279C0E92FA6393B006CC971 /* CommonUI.framework in Frameworks */,
 				C26B19342D90C5D8006FDDE0 /* FirebaseMessaging in Frameworks */,
 				C2E7C3882ADB19F300478D89 /* Data.framework in Frameworks */,
 				C24D1C2F253C744F0029D27D /* Sync.framework in Frameworks */,
@@ -3411,6 +3431,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C274CA7E2BAB8C5B008E7212 /* CommonWatch.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C279C0E02FA6393B006CC971 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4922,6 +4949,7 @@
 				C2E53AC62B62DD6C008E1E70 /* Common */,
 				C2E53B4C2B62DDCB008E1E70 /* Content */,
 				C274C9CE2BAB8ABB008E7212 /* TwoFASWatch Watch App */,
+				C279C0E42FA6393B006CC971 /* CommonUI */,
 				C23666741FB2644900989ACA /* Products */,
 				C200E46A1FB38E6200D7C748 /* Frameworks */,
 			);
@@ -4955,6 +4983,7 @@
 				C274CA7C2BAB8C3F008E7212 /* ProtectionWatch.framework */,
 				C213BC502BAC3C82000794C9 /* StorageWatch.framework */,
 				C2A4D3482BC0B6B00001587C /* Base32Watch.framework */,
+				C279C0E32FA6393B006CC971 /* CommonUI.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -8773,6 +8802,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C279C0DE2FA6393B006CC971 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C29626D12370BD7F00C133BC /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -8946,6 +8982,7 @@
 				C2E53ACA2B62DD6C008E1E70 /* PBXTargetDependency */,
 				C2E53B502B62DDCB008E1E70 /* PBXTargetDependency */,
 				C274C9D92BAB8ABC008E7212 /* PBXTargetDependency */,
+				C279C0E82FA6393B006CC971 /* PBXTargetDependency */,
 			);
 			name = TwoFAS;
 			packageProductDependencies = (
@@ -9127,6 +9164,29 @@
 			);
 			productName = Protection;
 			productReference = C274CA7C2BAB8C3F008E7212 /* ProtectionWatch.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C279C0E22FA6393B006CC971 /* CommonUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C279C0EB2FA6393B006CC971 /* Build configuration list for PBXNativeTarget "CommonUI" */;
+			buildPhases = (
+				C279C0DE2FA6393B006CC971 /* Headers */,
+				C279C0DF2FA6393B006CC971 /* Sources */,
+				C279C0E02FA6393B006CC971 /* Frameworks */,
+				C279C0E12FA6393B006CC971 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C279C0E42FA6393B006CC971 /* CommonUI */,
+			);
+			name = CommonUI;
+			packageProductDependencies = (
+			);
+			productName = CommonUI;
+			productReference = C279C0E32FA6393B006CC971 /* CommonUI.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		C28633CA1FFABD2200C8F4B4 /* TwoFASAuth */ = {
@@ -9394,8 +9454,8 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1640;
+				LastSwiftUpdateCheck = 2630;
+				LastUpgradeCheck = 2630;
 				ORGANIZATIONNAME = "Two Factor Authentication Service, Inc.";
 				TargetAttributes = {
 					C200E4991FB3911B00D7C748 = {
@@ -9444,6 +9504,9 @@
 					};
 					C274C9CC2BAB8ABB008E7212 = {
 						CreatedOnToolsVersion = 15.3;
+					};
+					C279C0E22FA6393B006CC971 = {
+						CreatedOnToolsVersion = 26.3;
 					};
 					C28633CA1FFABD2200C8F4B4 = {
 						CreatedOnToolsVersion = 9.2;
@@ -9548,6 +9611,7 @@
 				C251EDD42AE87150007722F2 /* Base32 */,
 				C2E53AC42B62DD6C008E1E70 /* Common */,
 				C2E53B4A2B62DDCB008E1E70 /* Content */,
+				C279C0E22FA6393B006CC971 /* CommonUI */,
 				C28633CA1FFABD2200C8F4B4 /* TwoFASAuth */,
 				C2ACF9E320A8A918003E0987 /* TwoFASTests */,
 				C2FA85782426BB7300AACFC9 /* ProtectionTests */,
@@ -9676,6 +9740,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C274CA782BAB8C3F008E7212 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C279C0E12FA6393B006CC971 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -10883,6 +10954,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C279C0DF2FA6393B006CC971 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C28633C71FFABD2200C8F4B4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -11392,6 +11470,11 @@
 			target = C274CA582BAB8C3F008E7212 /* ProtectionWatch */;
 			targetProxy = C274CA922BAB8CC5008E7212 /* PBXContainerItemProxy */;
 		};
+		C279C0E82FA6393B006CC971 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C279C0E22FA6393B006CC971 /* CommonUI */;
+			targetProxy = C279C0E72FA6393B006CC971 /* PBXContainerItemProxy */;
+		};
 		C28633D81FFABD2200C8F4B4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C28633CA1FFABD2200C8F4B4 /* TwoFASAuth */;
@@ -11752,16 +11835,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = Storage/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -11770,11 +11856,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Storage;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "${inherited}";
+				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -11795,16 +11885,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = Storage/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -11812,10 +11905,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Storage;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -11873,16 +11969,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 5.4.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MARKETING_VERSION = 6.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = "";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Production;
@@ -11902,8 +11998,8 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = TwoFAS/Other/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11944,19 +12040,21 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -11965,11 +12063,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Data;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -11990,16 +12090,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = Storage/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -12007,10 +12110,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Storage;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -12034,14 +12140,17 @@
 				ENABLE_MODULE_VERIFIER = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = PushNotifications/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -12050,10 +12159,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.PushNotifications;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -12073,19 +12185,21 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -12094,11 +12208,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.CommonUIKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -12119,17 +12235,20 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Protection/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -12137,10 +12256,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Protection;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -12162,16 +12284,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = TimeVerification/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -12180,10 +12305,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TimeVerification;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -12204,16 +12332,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = Sync/Other/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -12222,10 +12353,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Sync;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -12248,16 +12382,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -12266,11 +12403,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.NetworkStack;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -12295,15 +12434,17 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -12311,11 +12452,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Base32;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -12334,20 +12477,22 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -12355,12 +12500,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Common;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -12380,19 +12527,21 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -12400,11 +12549,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Content;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -12423,8 +12574,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFASAuth/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12453,8 +12604,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = TwoFASTests/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12480,8 +12631,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = ProtectionTests/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12513,8 +12664,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = TwoFASWidget/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12545,8 +12696,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = TwoFASServiceIntent/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12577,8 +12728,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MTL_FAST_MATH = YES;
@@ -12612,7 +12763,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TwoFASWatch-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "2FAS Auth";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.twofas.org;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -12630,7 +12781,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.2;
 			};
 			name = Production;
 		};
@@ -12649,7 +12800,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12674,7 +12825,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Production;
 		};
@@ -12694,7 +12845,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12720,7 +12871,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Production;
 		};
@@ -12740,7 +12891,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12766,7 +12917,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Production;
 		};
@@ -12786,7 +12937,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12810,7 +12961,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Production;
 		};
@@ -12829,7 +12980,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12853,7 +13004,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Production;
 		};
@@ -12873,7 +13024,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12899,7 +13050,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Production;
 		};
@@ -12918,7 +13069,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12944,7 +13095,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Debug;
 		};
@@ -12963,7 +13114,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -12987,7 +13138,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Release;
 		};
@@ -13004,17 +13155,20 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Protection/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -13023,11 +13177,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Protection;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "${inherited}";
+				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -13048,17 +13206,20 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Protection/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -13066,10 +13227,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Protection;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -13093,14 +13257,17 @@
 				ENABLE_MODULE_VERIFIER = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = PushNotifications/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -13110,11 +13277,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.PushNotifications;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "${inherited}";
+				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -13138,14 +13309,17 @@
 				ENABLE_MODULE_VERIFIER = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = PushNotifications/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -13154,10 +13328,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.PushNotifications;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -13222,16 +13399,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 5.4.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MARKETING_VERSION = 6.0.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = "";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -13285,16 +13462,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 5.4.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MARKETING_VERSION = 6.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEV;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = "";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -13315,8 +13492,8 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = TwoFAS/Other/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13359,8 +13536,8 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFAS/Other/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13403,16 +13580,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -13422,12 +13602,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.NetworkStack;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "${inherited}";
+				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -13450,16 +13633,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -13468,11 +13654,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.NetworkStack;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -13493,16 +13681,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = Sync/Other/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -13512,11 +13703,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Sync;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "${inherited}";
+				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -13537,16 +13732,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = Sync/Other/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -13555,10 +13753,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Sync;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -13583,15 +13784,17 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -13600,11 +13803,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Base32;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "${inherited}";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -13628,15 +13834,17 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -13644,11 +13852,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Base32;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -13670,7 +13880,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13697,7 +13907,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Debug;
 		};
@@ -13716,7 +13926,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13741,7 +13951,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Release;
 		};
@@ -13763,7 +13973,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TwoFASWatch-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "2FAS Auth";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.twofas.org.dev;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -13783,7 +13993,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.2;
 			};
 			name = Debug;
 		};
@@ -13805,7 +14015,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TwoFASWatch-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "2FAS Auth";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.twofas.org.dev;
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -13823,7 +14033,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.2;
 			};
 			name = Release;
 		};
@@ -13843,7 +14053,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13871,7 +14081,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Debug;
 		};
@@ -13891,7 +14101,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13917,7 +14127,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Release;
 		};
@@ -13937,7 +14147,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -13965,7 +14175,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Debug;
 		};
@@ -13985,7 +14195,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -14011,7 +14221,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Release;
 		};
@@ -14031,7 +14241,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -14057,7 +14267,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Debug;
 		};
@@ -14077,7 +14287,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -14101,9 +14311,162 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Release;
+		};
+		C279C0EC2FA6393B006CC971 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_PREPROCESSOR_DEFINITIONS = "${inherited}";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
+				MARKETING_VERSION = "${inherited}";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.CommonUI;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "${inherited}";
+				SWIFT_APPROACHABLE_CONCURRENCY = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C279C0ED2FA6393B006CC971 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
+				MARKETING_VERSION = "${inherited}";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.CommonUI;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		C279C0EE2FA6393B006CC971 /* Production */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
+				MARKETING_VERSION = "${inherited}";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.CommonUI;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Production;
 		};
 		C28633DA1FFABD2200C8F4B4 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -14116,8 +14479,8 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFASAuth/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14149,8 +14512,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TwoFASAuth/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14185,16 +14548,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = TimeVerification/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -14204,11 +14570,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TimeVerification;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "${inherited}";
+				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -14230,16 +14600,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = TimeVerification/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -14248,10 +14621,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.TimeVerification;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -14275,7 +14651,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -14302,7 +14678,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Debug;
 		};
@@ -14322,7 +14698,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -14348,7 +14724,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 10.4;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Release;
 		};
@@ -14361,8 +14737,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = TwoFASTests/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14389,8 +14765,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = TwoFASTests/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14421,8 +14797,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = TwoFASWidget/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14456,8 +14832,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = TwoFASWidget/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14488,8 +14864,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = TwoFASServiceIntent/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14521,8 +14897,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = TwoFASServiceIntent/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14553,8 +14929,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -14582,8 +14958,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MTL_FAST_MATH = YES;
@@ -14611,20 +14987,22 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -14633,12 +15011,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Common;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "${inherited}";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -14658,19 +15038,21 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -14678,11 +15060,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Common;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -14702,19 +15086,22 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -14723,12 +15110,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Content;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "${inherited}";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -14748,19 +15137,21 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -14768,11 +15159,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Content;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -14792,19 +15185,21 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -14814,12 +15209,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.CommonUIKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "${inherited}";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -14839,19 +15236,21 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -14860,11 +15259,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.CommonUIKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -14884,19 +15285,21 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -14906,12 +15309,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Data;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "${inherited}";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -14931,19 +15336,21 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_MODULE_VERIFIER = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				LOCALIZATION_EXPORT_SUPPORTED = NO;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MARKETING_VERSION = "$(MARKETING_VERSION)";
 				MERGEABLE_LIBRARY = NO;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c";
@@ -14952,11 +15359,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.Data;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -14972,8 +15381,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = ProtectionTests/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -15001,8 +15410,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = ProtectionTests/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Two Factor Authentication Service, Inc. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
+				IPHONEOS_DEPLOYMENT_TARGET = "${inherited}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -15161,6 +15570,16 @@
 				C274CA7A2BAB8C3F008E7212 /* Debug */,
 				C274CA7B2BAB8C3F008E7212 /* Release */,
 				C2099DDF2F9BEECD00490BC3 /* Production */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C279C0EB2FA6393B006CC971 /* Build configuration list for PBXNativeTarget "CommonUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C279C0EC2FA6393B006CC971 /* Debug */,
+				C279C0ED2FA6393B006CC971 /* Release */,
+				C279C0EE2FA6393B006CC971 /* Production */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

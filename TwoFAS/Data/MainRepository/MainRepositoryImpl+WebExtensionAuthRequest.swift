@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Storage
 
 extension MainRepositoryImpl {
     func addIgnoredTokenRequestIDs(_ id: String) {

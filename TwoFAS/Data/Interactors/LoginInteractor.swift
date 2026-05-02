@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Protection
 
 public protocol LoginInteracting: AnyObject {
     var lock: Callback? { get set }

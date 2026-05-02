@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import SwiftProtobuf
 
 extension Code {
     /// Chech if path is parsable: otpauth-migration://offline?data=...

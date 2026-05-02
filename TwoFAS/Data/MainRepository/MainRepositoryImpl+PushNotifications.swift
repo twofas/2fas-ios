@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import PushNotifications
 
 extension MainRepositoryImpl {
     var notificationState: PushNotificationState {

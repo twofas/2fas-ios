@@ -20,6 +20,7 @@
 import UIKit
 import CommonUIKit
 import Common
+import Content
 
 extension MainRepositoryImpl {
     func iconTypeID(for serviceTypeID: ServiceTypeID?) -> UIImage {

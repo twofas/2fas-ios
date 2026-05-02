@@ -29,6 +29,9 @@ public protocol AppInfoInteracting: AnyObject {
     
     var wasPassPromoSeen: Bool { get }
     func markPassPromoAsSeen()
+    
+    var passPromoDateNavigatedToAppStore: Date? { get }
+    func markPassPromoDateNavigatedToAppStore()
 }
 
 final class AppInfoInteractor {
@@ -82,5 +85,13 @@ extension AppInfoInteractor: AppInfoInteracting {
         if mainRepository.notificationGroupID == nil {
             mainRepository.createNotificationGroupID()
         }
+    }
+    
+    var passPromoDateNavigatedToAppStore: Date? {
+        mainRepository.passPromoDateNavigatedToAppStore
+    }
+    
+    func markPassPromoDateNavigatedToAppStore() {
+        mainRepository.markPassPromoDateNavigatedToAppStore()
     }
 }

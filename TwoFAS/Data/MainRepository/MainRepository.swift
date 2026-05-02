@@ -281,6 +281,8 @@ protocol MainRepository: AnyObject {
     func saveDateOfFirstRun(_ date: Date)
     var wasPassPromoSeen: Bool { get }
     func markPassPromoAsSeen()
+    var passPromoDateNavigatedToAppStore: Date? { get }
+    func markPassPromoDateNavigatedToAppStore()
     
     // MARK: - Lock Screen
     var isLockScreenActive: Bool { get }

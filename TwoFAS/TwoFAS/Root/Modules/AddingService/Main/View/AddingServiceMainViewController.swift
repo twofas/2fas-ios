@@ -34,14 +34,12 @@ final class AddingServiceMainViewController: UIViewController {
         presenter.handleCameraAvailability { [weak self] isCameraAvailable in
             self?.setupView(cameraUnavailable: !isCameraAvailable)
         }
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
         
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        let isDark = userInterfaceStyle == .dark
-        view.backgroundColor = isDark ? ThemeColor.buttonCloseBackground : Theme.Colors.Fill.System.third
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
+            let userInterfaceStyle = self.traitCollection.userInterfaceStyle
+            let isDark = userInterfaceStyle == .dark
+            self.view.backgroundColor = isDark ? ThemeColor.buttonCloseBackground : Theme.Colors.Fill.System.third
+        }
     }
     
     private func setupView(cameraUnavailable: Bool) {

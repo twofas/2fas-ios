@@ -66,6 +66,10 @@ final class ComposeServiceCategorySelectionViewController: UIViewController {
         )
         buttonSection.accessibilityLabel = T.Voiceover.addGroup
         navigationItem.rightBarButtonItem = buttonSection
+        
+        registerForTraitChanges([UITraitHorizontalSizeClass.self]) { (self: Self, _) in
+            self.setupConstraints()
+        }
     }
     
     private func setupViewLayout() {
@@ -82,11 +86,6 @@ final class ComposeServiceCategorySelectionViewController: UIViewController {
         trailingCompact = tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         trailingRegular = tableView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor)
         
-        setupConstraints()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
         setupConstraints()
     }
     

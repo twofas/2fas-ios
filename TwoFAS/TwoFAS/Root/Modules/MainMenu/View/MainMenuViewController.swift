@@ -46,7 +46,7 @@ final class MainMenuViewController: UIViewController {
         .CellRegistration<MenuCell, MainMenuCell> { cell, _, item in
             let badgeSymbol = "●"
             
-            var contentConfiguration = UIListContentConfiguration.sidebarCell()
+            var contentConfiguration = UIListContentConfiguration.cell()
             
             cell.normalImage = item.icon
             cell.selectedImage = item.selectedIcon

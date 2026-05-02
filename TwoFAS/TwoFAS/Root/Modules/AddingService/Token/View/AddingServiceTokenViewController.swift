@@ -65,14 +65,12 @@ final class AddingServiceTokenViewController: UIViewController, AddingServiceTok
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
         
-        let userInterfaceStyle = traitCollection.userInterfaceStyle
-        let isDark = userInterfaceStyle == .dark
-        view.backgroundColor = isDark ? ThemeColor.buttonCloseBackground : Theme.Colors.Fill.System.third
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
+            let userInterfaceStyle = self.traitCollection.userInterfaceStyle
+            let isDark = userInterfaceStyle == .dark
+            self.view.backgroundColor = isDark ? ThemeColor.buttonCloseBackground : Theme.Colors.Fill.System.third
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

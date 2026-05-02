@@ -98,6 +98,20 @@ final class TokensCircleProgress: UIView {
         
         isAccessibilityElement = false
         accessibilityElements = [valueLabel]
+        
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, previousTraitCollection) in
+            if self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
+                self.setCircleColor(marked: self.marked, animated: false)
+            }
+        }
+        
+        registerForTraitChanges([UITraitPreferredContentSizeCategory.self]) { (self: Self, previousTraitCollection) in
+            if self.traitCollection.preferredContentSizeCategory !=
+                previousTraitCollection.preferredContentSizeCategory {
+                self.setLineWidth()
+                self.setMargins()
+            }
+        }
     }
     
     func setPeriod(_ period: Int) {
@@ -139,19 +153,6 @@ final class TokensCircleProgress: UIView {
     
     func setClearBackground() {
         circle.setClearBackground()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
-            setCircleColor(marked: marked, animated: false)
-        }
-        
-        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
-            setLineWidth()
-            setMargins()
-        }
     }
     
     func setKind(_ kind: TokensCellKind) {

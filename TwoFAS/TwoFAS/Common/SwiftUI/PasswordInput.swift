@@ -59,12 +59,12 @@ struct PasswordInput: View {
                 .toggleStyle(RevealToggleStyle())
                 .frame(width: 22)
         }
-        .onChange(of: isReveal) { newValue in
+        .onChange(of: isReveal) { _, newValue in
             if let bindingReveal, newValue != bindingReveal.wrappedValue {
                 bindingReveal.wrappedValue = newValue
             }
         }
-        .onChange(of: bindingReveal?.wrappedValue ?? false) { newValue in
+        .onChange(of: bindingReveal?.wrappedValue ?? false) { _, newValue in
             if newValue != isReveal {
                 isReveal = newValue
             }
@@ -131,7 +131,7 @@ struct PasswordContentInput: View {
         .autocorrectionDisabled()
         .textInputAutocapitalization(.never)
         .frame(maxWidth: .infinity)
-        .onChange(of: isReveal) { newValue in
+        .onChange(of: isReveal) { _, newValue in
             if newValue, focusedField == .secure || focusedField == nil {
                 Task {
                     focusedField = .unsecure

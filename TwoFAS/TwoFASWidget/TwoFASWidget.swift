@@ -37,7 +37,7 @@ struct TwoFASWidgetEntryView: View {
                 )
             
             Spacer()
-
+            
             Text(T.Widget.noSelectedServices)
                 .foregroundStyle(.textAccent)
                 .multilineTextAlignment(.leading)
@@ -47,10 +47,9 @@ struct TwoFASWidgetEntryView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .padding(4)
-        .addWidgetContentMargins()
         .widgetBackground(backgroundView: Color.accent)
     }
-
+    
     @ViewBuilder
     var body: some View {
         if entry.entries.isEmpty || entry.entries.filter({ $0.kind != .placeholder }).isEmpty {
@@ -77,7 +76,6 @@ struct TwoFASWidgetEntryView: View {
                 }
             }
             .widgetBackground(backgroundView: Color.widgetBackground)
-            .addWidgetContentMargins()
         }
     }
 }
@@ -88,10 +86,7 @@ struct TwoFASWidgetEntryView: View {
 struct TwoFASWidgetBundle: WidgetBundle {
     var body: some Widget {
         TwoFASWidget()
-        
-        if #available(iOS 18.0, macOS 15.0, watchOS 11.0, *) {
-            TwoFASControlWidget()
-        }
+        TwoFASControlWidget()
     }
 }
 
@@ -101,47 +96,29 @@ struct TwoFASWidget: Widget {
     let kind: String = "TwoFASWidget"
     
     var supportedFamilies: [WidgetFamily] {
-        if #available(iOS 17.0, macOS 14.0, watchOS 10.0, *) {
-            [
-                .systemSmall,
-                .systemMedium,
-                .systemLarge,
-                .systemExtraLarge,
-                .accessoryCircular,
-                .accessoryRectangular,
-                .accessoryInline
-            ]
-        } else {
-            [
-                .systemSmall,
-                .systemMedium,
-                .systemLarge,
-                .systemExtraLarge
-            ]
-        }
+        [
+            .systemSmall,
+            .systemMedium,
+            .systemLarge,
+            .systemExtraLarge,
+            .accessoryCircular,
+            .accessoryRectangular,
+            .accessoryInline
+        ]
     }
     
     @MainActor
     var body: some WidgetConfiguration {
-        if #available(iOS 17.0, macOS 14.0, watchOS 10.0, *) {
-            return AppIntentConfiguration(
-                kind: kind,
-                intent: SelectService.self,
-                provider: AppIntentProvider()
-            ) { entry in
-                TwoFASWidgetEntryView(entry: entry)
-            }
-            .configurationDisplayName("2FAS")
-            .description("widget__settings_description")
-            .supportedFamilies(supportedFamilies)
-        } else {
-            return IntentConfiguration(kind: kind, intent: SelectServiceIntent.self, provider: Provider()) { entry in
-                TwoFASWidgetEntryView(entry: entry)
-            }
-            .configurationDisplayName("2FAS")
-            .description("widget__settings_description")
-            .supportedFamilies(supportedFamilies)
+        AppIntentConfiguration(
+            kind: kind,
+            intent: SelectService.self,
+            provider: AppIntentProvider()
+        ) { entry in
+            TwoFASWidgetEntryView(entry: entry)
         }
+        .configurationDisplayName("2FAS")
+        .description("widget__settings_description")
+        .supportedFamilies(supportedFamilies)
     }
 }
 
@@ -158,22 +135,14 @@ struct TwoFASWidget_Previews: PreviewProvider {
 
 extension View {
     func widgetBackground(backgroundView: some View) -> some View {
-        if #available(iOSApplicationExtension 17.0, *) {
-            return containerBackground(for: .widget) {
-                backgroundView
-            }
-        } else {
-            return background(backgroundView)
+        containerBackground(for: .widget) {
+            backgroundView
         }
     }
 }
 
 extension WidgetConfiguration {
     func widgetNotInStandBy() -> some WidgetConfiguration {
-        if #available(iOSApplicationExtension 17.0, *) {
-            return self.disfavoredLocations([.standBy, .iPhoneWidgetsOnMac], for: [.systemSmall, .systemMedium])
-        } else {
-            return self
-        }
+        self.disfavoredLocations([.standBy, .iPhoneWidgetsOnMac], for: [.systemSmall, .systemMedium])
     }
 }

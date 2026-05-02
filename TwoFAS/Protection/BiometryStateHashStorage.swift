@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2024 Two Factor Authentication Service, Inc.
+//  Copyright © 2023 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -17,23 +17,26 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import SwiftUI
+import Foundation
+import KeychainAccess
+import Common
 
-struct WidgetContentMarginsModifier: ViewModifier {
-    let standard: Double
-
-    func body(content: Content) -> some View {
-        content
-            .padding(standard)
+enum BiometryStateHashStorage {
+    private static let keychainTokens = Keychain(service: Config.keychain)
+        .synchronizable(false)
+        .accessibility(.afterFirstUnlockThisDeviceOnly)
+    
+    private static let key = "com.2fas.biometryStateHashStorage"
+        
+    static func save(stateHash: Data) {
+        keychainTokens[data: key] = stateHash
     }
-}
-
-extension View {
-    @ViewBuilder func addWidgetContentMargins(standard: Double = 16.0) -> some View {
-        if #available(iOS 17, *) {
-            self
-        } else {
-            modifier(WidgetContentMarginsModifier(standard: standard))
-        }
+    
+    static func clear() {
+        keychainTokens[data: key] = nil
+    }
+    
+    static var stateHash: Data? {
+        keychainTokens[data: key]
     }
 }

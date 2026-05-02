@@ -17,26 +17,14 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
-import KeychainAccess
-import Common
+#import <UIKit/UIKit.h>
 
-enum BiometryFingerprintStorage {
-    private static let keychainTokens = Keychain(service: Config.keychain)
-        .synchronizable(false)
-        .accessibility(.afterFirstUnlockThisDeviceOnly)
-    
-    private static let key = "com.2fas.biometryFingerprintStorage"
-        
-    static func save(fingerprint: Data) {
-        keychainTokens[data: key] = fingerprint
-    }
-    
-    static func clear() {
-        keychainTokens[data: key] = nil
-    }
-    
-    static var fingerprint: Data? {
-        keychainTokens[data: key]
-    }
-}
+//! Project version number for CommonUI.
+FOUNDATION_EXPORT double CommonUIVersionNumber;
+
+//! Project version string for CommonUI.
+FOUNDATION_EXPORT const unsigned char CommonUIVersionString[];
+
+// In this header, you should import all the public headers of your framework using statements like #import <CommonUI/PublicHeader.h>
+
+

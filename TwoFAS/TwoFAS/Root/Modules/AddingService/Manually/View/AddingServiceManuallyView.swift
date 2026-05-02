@@ -94,7 +94,7 @@ struct AddingServiceManuallyView: View {
                 .padding(.bottom, 10)
                 .accessibilityHidden(true)
             TextField("", text: $additionalInfo)
-                .onChange(of: additionalInfo) { newValue in
+                .onChange(of: additionalInfo) { _, newValue in
                     additionalInfoError = presenter.validateAdditionalInfo(newValue).error
                 }
                 .textInputAutocapitalization(.never)
@@ -229,7 +229,7 @@ struct AddingServiceManuallyView: View {
                     .padding(.bottom, 10)
                     .accessibilityHidden(true)
                 TextField("", text: $serviceName)
-                    .onChange(of: serviceName) { newValue in
+                    .onChange(of: serviceName) { _, newValue in
                         serviceNameError = presenter.validateServiceName(newValue.trim()).error
                     }
                     .textInputAutocapitalization(.sentences)
@@ -264,7 +264,7 @@ struct AddingServiceManuallyView: View {
                 .padding(.bottom, 10)
                 .accessibilityHidden(true)
             TextField("", text: $secret)
-                .onChange(of: secret) { newValue in
+                .onChange(of: secret) { _, newValue in
                     let trimmed = newValue.sanitazeSecret()
                     if trimmed != newValue {
                         secret = trimmed

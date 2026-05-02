@@ -60,12 +60,10 @@ final class MainSplitViewController: UIViewController {
         setupSplit()
         presenter.viewDidLoad()
         menu?.loadViewIfNeeded()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
         
-        setInitialTrait()
+        registerForTraitChanges([UITraitHorizontalSizeClass.self]) { (self: Self, _) in
+            self.setInitialTrait()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

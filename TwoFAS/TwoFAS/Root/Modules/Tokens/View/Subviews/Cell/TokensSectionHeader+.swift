@@ -238,6 +238,13 @@ extension TokensSectionHeader {
                 label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
                 label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin)
             ])
+            
+            registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, previousTraitCollection) in
+                guard self.traitCollection.userInterfaceStyle !=
+                        previousTraitCollection.userInterfaceStyle else { return }
+                
+                self.applyBorder()
+            }
         }
         
         func setCount(_ count: String) {
@@ -246,14 +253,6 @@ extension TokensSectionHeader {
         
         override func layoutSubviews() {
             super.layoutSubviews()
-            applyBorder()
-        }
-        
-        override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-            super.traitCollectionDidChange(previousTraitCollection)
-            
-            guard traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle else { return }
-
             applyBorder()
         }
         

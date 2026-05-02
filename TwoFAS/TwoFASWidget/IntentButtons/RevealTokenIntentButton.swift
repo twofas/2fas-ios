@@ -31,13 +31,9 @@ struct RevealTokenIntentButton<Content>: View where Content: View {
     
     @ViewBuilder
     var body: some View {
-        if #available(iOS 17.0, *) {
-            Button(intent: appIntent, label: {
-                content()
-            })
-            .buttonStyle(.plain)
-        } else {
+        Button(intent: appIntent, label: {
             content()
-        }
+        })
+        .buttonStyle(.plain)
     }
 }

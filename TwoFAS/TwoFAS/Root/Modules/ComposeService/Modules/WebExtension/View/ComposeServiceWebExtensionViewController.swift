@@ -62,6 +62,10 @@ final class ComposeServiceWebExtensionViewController: UIViewController {
         setupTableViewLayout()
         
         title = T.Browser.browserExtension
+        
+        registerForTraitChanges([UITraitHorizontalSizeClass.self]) { (self: Self, _) in
+            self.setupConstraints()
+        }
     }
     
     private func setupTableViewLayout() {
@@ -78,11 +82,6 @@ final class ComposeServiceWebExtensionViewController: UIViewController {
         trailingCompact = tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         trailingRegular = tableView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor)
         
-        setupConstraints()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
         setupConstraints()
     }
     

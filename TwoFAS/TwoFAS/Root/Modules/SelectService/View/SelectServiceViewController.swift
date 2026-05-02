@@ -102,6 +102,10 @@ final class SelectServiceViewController: UIViewController {
         setupViewLayout()
         
         tableHeaderView.configure(for: presenter.browserName, domain: presenter.domain)
+        
+        registerForTraitChanges([UITraitHorizontalSizeClass.self]) { (self: Self, _) in
+            self.setupConstraints()
+        }
     }
     
     private func setupViewLayout() {
@@ -124,11 +128,6 @@ final class SelectServiceViewController: UIViewController {
     @objc
     private func cancel() {
         presenter.handleCancel()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        setupConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {

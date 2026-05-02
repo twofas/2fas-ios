@@ -59,6 +59,10 @@ final class AppLockViewController: UIViewController {
         setupViewLayout()
         
         title = T.Settings.appBlocking
+        
+        registerForTraitChanges([UITraitHorizontalSizeClass.self]) { (self: Self, _) in
+            self.setupConstraints()
+        }
     }
     
     private func setupViewLayout() {
@@ -77,12 +81,7 @@ final class AppLockViewController: UIViewController {
         
         setupConstraints()
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        setupConstraints()
-    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

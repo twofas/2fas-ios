@@ -42,7 +42,7 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
             notificationCenter.addObserver(
                 self,
                 selector: #selector(cameraStateChanged),
-                name: NSNotification.Name.AVCaptureSessionWasInterrupted,
+                name: AVCaptureSession.wasInterruptedNotification,
                 object: nil
             )
             notificationCenter.addObserver(

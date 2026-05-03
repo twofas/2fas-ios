@@ -20,20 +20,21 @@
 import SwiftUI
 import UIKit
 
-struct AdaptiveReadableContainer<Content: View>: View {
+public struct AdaptiveReadableContainer<Content: View>: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
-    let iphoneMaxWidth: CGFloat
-    let ipadMaxWidth: CGFloat
-    let horizontalMargin: CGFloat
-    let verticalMargin: CGFloat
-    @ViewBuilder let content: Content
+    private let iphoneMaxWidth: CGFloat
+    private let ipadMaxWidth: CGFloat
+    private let horizontalMargin: CGFloat
+    private let verticalMargin: CGFloat
+    @ViewBuilder
+    private let content: Content
     
-    init(
+    public init(
         iphoneMaxWidth: CGFloat = .infinity,
         ipadMaxWidth: CGFloat = 720,
-        horizontalMargin: CGFloat = 20,
-        verticalMargin: CGFloat = 16,
+        horizontalMargin: CGFloat = Spacing.XXXL.value,
+        verticalMargin: CGFloat = Spacing.XL.value,
         @ViewBuilder content: () -> Content
     ) {
         self.iphoneMaxWidth = iphoneMaxWidth
@@ -47,15 +48,12 @@ struct AdaptiveReadableContainer<Content: View>: View {
         horizontalSizeClass == .compact ? iphoneMaxWidth : ipadMaxWidth
     }
     
-    var body: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                content
-                    .frame(maxWidth: maxWidth, alignment: .leading)
-                    .frame(maxWidth: .infinity, alignment: .center)
-            }
-            .contentMargins(.horizontal, horizontalMargin, for: .scrollContent)
-            .contentMargins(.vertical, verticalMargin, for: .scrollContent)
+    public var body: some View {
+        VStack(spacing: .zero) {
+            content
+                .frame(maxWidth: maxWidth, alignment: .center)
+                .padding(.horizontal, horizontalMargin)
+                .padding(.vertical, verticalMargin)
         }
     }
 }

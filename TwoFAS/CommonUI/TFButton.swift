@@ -30,6 +30,8 @@ public enum TFButtonSize {
     case medium
     /// 48 pt hit target, 17 pt medium label
     case large
+    /// large + wide
+    case largeWide
 }
 
 // MARK: - TFButtonVariant
@@ -83,11 +85,13 @@ public enum TFButtonVariant {
 ///     .disabled(true)
 /// ```
 public struct TFButton: View {
-
+    @Environment(\.colorScheme)
+    private var colorScheme
     private let label: String?
     private let systemImage: String?
     private let variant: TFButtonVariant
     private let size: TFButtonSize
+    private let applyGlass: Bool
     private let action: () -> Void
 
     // MARK: Init – text only
@@ -96,12 +100,14 @@ public struct TFButton: View {
         _ label: String,
         variant: TFButtonVariant,
         size: TFButtonSize,
+        applyGlass: Bool = false,
         action: @escaping () -> Void
     ) {
         self.label = label
         self.systemImage = nil
         self.variant = variant
         self.size = size
+        self.applyGlass = applyGlass
         self.action = action
     }
 
@@ -111,12 +117,14 @@ public struct TFButton: View {
         systemImage: String,
         variant: TFButtonVariant,
         size: TFButtonSize,
+        applyGlass: Bool = false,
         action: @escaping () -> Void
     ) {
         self.label = nil
         self.systemImage = systemImage
         self.variant = variant
         self.size = size
+        self.applyGlass = applyGlass
         self.action = action
     }
 
@@ -127,16 +135,19 @@ public struct TFButton: View {
         _ label: String,
         variant: TFButtonVariant,
         size: TFButtonSize,
+        applyGlass: Bool = false,
         action: @escaping () -> Void
     ) {
         self.label = label
         self.systemImage = systemImage
         self.variant = variant
         self.size = size
+        self.applyGlass = applyGlass
         self.action = action
     }
 
-    // MARK: Body
+    @GestureState
+    private var isPressed = false
 
     public var body: some View {
         Button(action: action) {
@@ -147,7 +158,26 @@ public struct TFButton: View {
                 size: size
             )
         }
-        .buttonStyle(_TFPressStyle())
+        .modify {
+            if #available(iOS 26, *) {
+                $0.tint(AppColor.accentsBrand.color(for: colorScheme).opacity(0.7))
+                    .buttonStyle(.glassProminent)
+                    .buttonBorderShape(.capsule)
+                    .overlay {
+                        if !isPressed {
+                            Capsule()
+                                .stroke(.white.opacity(0.2), lineWidth: 1)
+                        }
+                    }
+            } else {
+                $0.buttonStyle(ButtonFeedbackStyle())
+            }
+        }
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .updating($isPressed) { _, state, _ in state = true }
+        )
+        .sensoryFeedback(.impact(flexibility: .rigid, intensity: 0.6), trigger: isPressed) { _, new in new }
     }
 }
 
@@ -189,11 +219,13 @@ private struct _TFButtonLabel: View {
     @ViewBuilder
     private func textOnly(_ text: String) -> some View {
         Text(text)
+            .frame(maxWidth: size == .largeWide ? .infinity : nil)
             .textStyle(textStyleSize, textStyleWeight)
             .foregroundStyle(labelColor)
+            .lineLimit(1)
             .padding(.horizontal, hPad)
             .padding(.vertical, vPad)
-            .background(textBackground)
+//            .background(textBackground)
     }
 
     // MARK: Symbol + text
@@ -205,6 +237,7 @@ private struct _TFButtonLabel: View {
                 .font(symbolFont)
             Text(text)
                 .textStyle(textStyleSize, textStyleWeight)
+                .lineLimit(1)
         }
         .foregroundStyle(labelColor)
         .padding(.horizontal, hPad)
@@ -260,29 +293,29 @@ private struct _TFButtonLabel: View {
         switch size {
         case .small: 28
         case .medium: 34
-        case .large: 48
+        case .large, .largeWide: 48
         }
     }
 
     /// Font used for the SF Symbol in standalone (icon-only) buttons.
     private var symbolFont: Font {
         switch size {
-        case .small, .medium: return .system(size: 15, weight: .regular)
-        case .large: return .system(size: 17, weight: .regular)
+        case .small, .medium: .system(size: 15, weight: .regular)
+        case .large, .largeWide: .system(size: 17, weight: .regular)
         }
     }
 
     private var textStyleSize: TextStyle {
         switch size {
         case .small: .subheadline
-        case .medium, .large: .body
+        case .medium, .large, .largeWide: .body
         }
     }
 
     private var textStyleWeight: TextStyleVariant {
         switch size {
         case .small: .emphasized // semibold
-        case .medium, .large: .medium
+        case .medium, .large, .largeWide: .medium
         }
     }
 
@@ -290,7 +323,7 @@ private struct _TFButtonLabel: View {
         switch size {
         case .small: .M // 8  (nearest to design 10)
         case .medium: .L // 12 (nearest to design 14)
-        case .large: .XXL
+        case .large, .largeWide: .XXL
         }
     }
 
@@ -298,14 +331,14 @@ private struct _TFButtonLabel: View {
         switch size {
         case .small: .S
         case .medium: .M // 8  (nearest to design 7)
-        case .large: .L // 12 (nearest to design 14)
+        case .large, .largeWide: .L // 12 (nearest to design 14)
         }
     }
 
     private var iconSpacing: Spacing {
         switch size {
         case .small: .XS  // 2 (nearest to design 3)
-        case .medium, .large: .S
+        case .medium, .large, .largeWide: .S
         }
     }
 }

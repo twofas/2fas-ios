@@ -49,6 +49,7 @@ public struct TFLiquidGlassSymbolButton: View {
                 $0.tint(nil)
                     .buttonStyle(.glass)
                     .buttonBorderShape(.circle)
+                    .clipShape(Circle())
                     .shadow(.glass)
             } else {
                 $0.buttonStyle(ButtonFeedbackStyle())

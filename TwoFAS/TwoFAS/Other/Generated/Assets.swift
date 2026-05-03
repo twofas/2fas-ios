@@ -107,6 +107,7 @@ internal enum Asset {
   internal static let introductionPage0 = ImageAsset(name: "IntroductionPage0")
   internal static let introductionPage1 = ImageAsset(name: "IntroductionPage1")
   internal static let introductionPage2 = ImageAsset(name: "IntroductionPage2")
+  internal static let introductionaryLogo = ImageAsset(name: "IntroductionaryLogo")
   internal static let logoGrid = ImageAsset(name: "LogoGrid")
   internal static let naviIconAdd = ImageAsset(name: "NaviIconAdd")
   internal static let naviIconAddFirst = ImageAsset(name: "NaviIconAddFirst")

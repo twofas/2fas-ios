@@ -36,12 +36,21 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         DataExternalTranslations.setTranslations(serviceNameTranslation: T.Commons.service)
         
         window = UIWindow(frame: UIScreen.main.bounds)
+
+        // MARK: - TEST: IncredibleGlow shader preview — remove before shipping
+        if true {
+            window?.rootViewController = IncredibleGlowTestViewController()
+            window?.makeKeyAndVisible()
+            return true
+        }
+        // END TEST
+
         rootViewController = RootFlowController.setAsRoot(
             in: window,
             parent: self
         )
         window?.makeKeyAndVisible()
-        
+
         rootViewController?.presenter.initialize()
         
         return true

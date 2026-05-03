@@ -46,6 +46,7 @@ public struct TFLiquidGlassTextButton: View {
                 $0.tint(nil)
                     .buttonStyle(.glass)
                     .buttonBorderShape(.capsule)
+                    .clipShape(Capsule())
                     .shadow(.glass)
             } else {
                 $0.buttonStyle(ButtonFeedbackStyle())

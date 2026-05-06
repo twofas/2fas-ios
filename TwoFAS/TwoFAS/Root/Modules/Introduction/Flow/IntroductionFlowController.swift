@@ -27,7 +27,6 @@ protocol IntroductionFlowControllerParent: AnyObject {
 
 protocol IntroductionFlowControlling: AnyObject {
     func toClose()
-    func toCloudInfo()
     func toTOS()
 }
 
@@ -49,7 +48,6 @@ final class IntroductionFlowController: FlowController {
             interactor: interactor
         )
         view.presenter = presenter
-        presenter.view = view
         
         navigationController.setViewControllers([view], animated: false)
     }
@@ -58,16 +56,6 @@ final class IntroductionFlowController: FlowController {
 extension IntroductionFlowController: IntroductionFlowControlling {
     func toClose() {
         parent?.introductionHasFinished()
-    }
-    
-    func toCloudInfo() {
-        let vc = IntroductionCloudInfoViewController()
-        vc.close = { [weak self] in
-            self?._viewController.dismiss(animated: true)
-        }
-        vc.configureAsModal()
-        
-        _viewController.present(vc, animated: true)
     }
     
     func toTOS() {

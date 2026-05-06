@@ -22,7 +22,8 @@ import CommonUI
 import Common
 
 struct IntroductionView: View {
-    var close: Callback
+    @Bindable
+    var presenter: IntroductionPresenter
     
     @State
     private var position = ScrollPosition(idType: Int.self)
@@ -48,7 +49,7 @@ struct IntroductionView: View {
             backAction: {
                 prevPage()
             }, skipAction: {
-                close()
+                presenter.close()
             }
         )
         .frame(alignment: .top)
@@ -113,10 +114,21 @@ struct IntroductionView: View {
             ) {
                 nextPage()
             }
-            .sheet(isPresented: $showInfo, content: {
-                IntroductionInfoSheetContent()
-            })
+            TFButton(
+                T.Introduction.tos,
+                variant: .borderlessNeutral,
+                size: .small,
+                applyGlass: false
+            ) {
+                presenter.onTOS()
+            }
+            .isHidden((position.viewID as? Int ?? 0) != 0, remove: true)
+            .animation(.easeInOut, value: position)
         }
+        .sheet(isPresented: $showInfo, content: {
+            IntroductionInfoSheetContent()
+        })
+        .toolbarVisibility(.hidden, for: .navigationBar)
     }
     
     private func nextPage() {
@@ -126,7 +138,7 @@ struct IntroductionView: View {
                 position.scrollTo(id: id + 1)
             }
         } else {
-            close()
+            presenter.close()
         }
     }
     
@@ -160,10 +172,10 @@ private struct IntroductionPage0: View {
             VStack {
                 Spacer()
                 VStack(spacing: .L) {
-                    Text("Just know you're")
+                    Text(T.Introduction.call1)
                         .textStyle(.body, .emphasized)
                         .foregroundStyle(.labelsPrimary)
-                    IntroWelcomeView(text: "Incredible!")
+                    IntroWelcomeView(text: T.Introduction.call2)
                     Text(T.Introduction.page1Content)
                         .textStyle(.body)
                         .foregroundStyle(.labelsSecondary)

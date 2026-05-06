@@ -19,212 +19,22 @@
 
 import UIKit
 import Common
-
-protocol IntroductionViewControlling: AnyObject {
-    func moveToPage(_ num: Int)
-}
+import SwiftUI
 
 final class IntroductionViewController: UIViewController {
-    private let doubleMargin = Theme.Metrics.doubleMargin
-    private let singleMargin = Theme.Metrics.standardMargin
-    private let naviContainer = NaviContainer()
-    private let mainActionButton = LoadingContentButton()
-    private let additionalActionButton = LoadingContentButton()
-    private let scrollView = IntroductionScrollView()
-    private let backButton = CustomBackButton()
-    
-    private let notificationCenter = NotificationCenter.default
-    
-    private var mainButtonAdditionalAction: Callback?
-    
     var presenter: IntroductionPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        view.layer.contentsFormat = .RGBA16Float                
         view.backgroundColor = Theme.Colors.Fill.background
         
-        view.addSubview(scrollView, with: [
-            scrollView.topAnchor.constraint(equalTo: view.safeTopAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-        
-        view.addSubview(naviContainer, with: [
-            naviContainer.topAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            naviContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            naviContainer.heightAnchor.constraint(equalToConstant: 52)
-        ])
-        
-        view.addSubview(mainActionButton, with: [
-            mainActionButton.topAnchor.constraint(equalTo: naviContainer.bottomAnchor, constant: singleMargin),
-            mainActionButton.leadingAnchor.constraint(
-                greaterThanOrEqualTo: view.leadingAnchor,
-                constant: 2 * doubleMargin
-            ),
-            mainActionButton.trailingAnchor.constraint(
-                lessThanOrEqualTo: view.trailingAnchor,
-                constant: -2 * doubleMargin
-            ),
-            mainActionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            mainActionButton.heightAnchor.constraint(equalToConstant: Theme.Metrics.buttonHeight)
-        ])
-        
-        view.addSubview(additionalActionButton, with: [
-            additionalActionButton.topAnchor.constraint(equalTo: mainActionButton.bottomAnchor, constant: singleMargin),
-            additionalActionButton.leadingAnchor.constraint(
-                greaterThanOrEqualTo: view.leadingAnchor,
-                constant: 2 * doubleMargin
-            ),
-            additionalActionButton.trailingAnchor.constraint(
-                lessThanOrEqualTo: view.trailingAnchor,
-                constant: -2 * doubleMargin
-            ),
-            additionalActionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            additionalActionButton.heightAnchor.constraint(equalToConstant: Theme.Metrics.buttonHeight),
-            additionalActionButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -singleMargin)
-        ])
-        
-        naviContainer.alpha = 1
-        naviContainer.configure(pagesNum: IntroductionCommons.pageCount)
-        naviContainer.openTOS = { [weak self] in self?.presenter.handleTOSPressed() }
-        
-        mainActionButton.apply(MainContainerButtonStyling.filledInDecoratedContainerLightText.value)
-        mainActionButton.alpha = 1
-        mainActionButton.action = { [weak self] in self?.mainActionButtonAction() }
-        
-        additionalActionButton.apply(MainContainerButtonStyling.textOnly.value)
-        additionalActionButton.alpha = 0
-        additionalActionButton.action = { [weak self] in self?.additionalActionButtonAction() }
-        
-        scrollView.didChangePage = { [weak self] in
-            self?.presenter.handleDidMoveToPage($0)
-            self?.didChangePage($0)
-        }
-        
-        backButton.addTarget(self, action: #selector(prevAction), for: .touchUpInside)
-        
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(refresh),
-            name: UIApplication.didBecomeActiveNotification,
-            object: nil
-        )
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        presenter.viewDidAppear()
-    }
-    
-    @objc
-    private func skipAction() {
-        presenter.handleSkipPressed()
-    }
-    
-    @objc
-    private func prevAction() {
-        presenter.handlePreviousButtonPressed()
-    }
-    
-    @objc
-    private func refresh() {
-        presenter.handleRefresh()
-    }
-    
-    private func mainActionButtonAction() {
-        mainButtonAdditionalAction?()
-        presenter.handleButtonPressed()
-    }
-    
-    private func additionalActionButtonAction() {
-        presenter.handleAdditionalButtonPressed()
-    }
-    
-    deinit {
-        notificationCenter.removeObserver(self)
-    }
-}
-
-extension IntroductionViewController: IntroductionViewControlling {
-    func moveToPage(_ num: Int) {
-        scrollView.moveToPage(num: num)
-        didChangePage(num)
-    }
-    
-    private func didChangePage(_ num: Int) {
-        mainActionButton.update(title: scrollView.container.mainButtonTitle(for: num))
-        mainButtonAdditionalAction = scrollView.container.mainButtonAdditionalAction(for: num)
-        
-        if let additionalButtonTitle = scrollView.container.additionalButtonTitle(for: num) {
-            additionalActionButton.update(title: additionalButtonTitle)
-            UIView.animate(withDuration: IntroductionCommons.shortAnimationTiming) {
-                self.additionalActionButton.alpha = 1
-            }
-        } else {
-            UIView.animate(withDuration: IntroductionCommons.shortAnimationTiming) {
-                self.additionalActionButton.alpha = 0
-            }
-        }
-        
-        naviContainer.navigateToPage(num)
-        if scrollView.container.showSkip(for: num) {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
-                title: T.Commons.skip,
-                style: .plain,
-                target: self,
-                action: #selector(skipAction)
-            )
-        } else {
-            navigationItem.rightBarButtonItem = nil
-        }
-        
-        if scrollView.container.showBack(for: num) {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-        } else {
-            navigationItem.leftBarButtonItem = nil
-        }
-    }
-}
-
-private final class CustomBackButton: UIButton {
-    private let spacing: CGFloat = 4
-    private let imgView: UIImageView = {
-        let img = UIImage(
-            systemName: "chevron.backward",
-            withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .medium)
-        )
-        let image = UIImageView(image: img)
-        image.contentMode = .left
-        return image
-    }()
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
-    
-    private func commonInit() {
-        addSubview(imgView, with: [
-            imgView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: -spacing),
-            imgView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -spacing),
-            imgView.topAnchor.constraint(equalTo: topAnchor),
-            imgView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
-    }
-    
-    override var isHighlighted: Bool {
-        didSet {
-            if isHighlighted {
-                imgView.tintColor = Theme.Colors.Controls.highlighed
-            } else {
-                imgView.tintColor = Theme.Colors.Controls.active
-            }
-        }
+        let vc = NavigationBarHiddenHostingController(rootView: IntroductionView(presenter: presenter))
+        vc.willMove(toParent: self)
+        addChild(vc)
+        view.addSubview(vc.view)
+        vc.view.pinToParent()
+        vc.view.backgroundColor = Theme.Colors.Fill.background
+        vc.didMove(toParent: self)
     }
 }

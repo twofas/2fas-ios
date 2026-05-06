@@ -55,14 +55,19 @@ struct IntroductionInfoSheetContent: View {
                             Spacer()
                                 .frame(height: Spacing.XXXXXL.rawValue)
                             
-                            Text("It is enabled by default and can be turned off at any time in the backup settings in the app.")
+                            Text(T.Introduction.backupIcloudDescriptionNote)
                                 .textStyle(.footnote)
                                 .foregroundStyle(AppColor.labelsSecondary)
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal, Spacing.XXXXXL)
                                 .padding(.bottom, .M)
                             
-                            TFButton("Understood", variant: .borderedProminent, size: .largeWide, applyGlass: true) {
+                            TFButton(
+                                T.Commons.understood,
+                                variant: .borderedProminent,
+                                size: .largeWide,
+                                applyGlass: true
+                            ) {
                                 dismiss()
                             }
                         }

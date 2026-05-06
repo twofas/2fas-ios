@@ -866,6 +866,8 @@ internal enum T {
     internal static let tokens = T.tr("Localizable", "commons__tokens", fallback: "Tokens")
     /// Try again
     internal static let tryAgain = T.tr("Localizable", "commons__try_again", fallback: "Try again")
+    /// Understood
+    internal static let understood = T.tr("Localizable", "commons__understood", fallback: "Understood")
     /// Unknown error occurred! Try again!
     internal static let unknownError = T.tr("Localizable", "commons__unknown_error", fallback: "Unknown error occurred! Try again!")
     /// Warning
@@ -1050,16 +1052,20 @@ internal enum T {
     internal static let backupDescription = T.tr("Localizable", "introduction__backup_description", fallback: "In the next step, you'll be asked to choose your Google Drive account, where the 2FA Tokens will be stored safely.")
     /// Learn more about backup
     internal static let backupIcloudCta = T.tr("Localizable", "introduction__backup_icloud_cta", fallback: "Learn more about backup")
-    /// 2FAS uses iCloud for secure backup and sync of your 2FA Tokens. The **encrypted** backup data is stored in iCloud, accessible **only by the 2FAS app**. Additionally, this feature aids with Token **recovery and syncing** across iOS devices.
-    /// 
+    /// 2FAS uses iCloud for secure backup and sync of your 2FA Tokens. The encrypted backup data is stored in iCloud, accessible only by the 2FAS app. Additionally, this feature aids with Token recovery and syncing across iOS devices.
+    internal static let backupIcloudDescription = T.tr("Localizable", "introduction__backup_icloud_description", fallback: "2FAS uses iCloud for secure backup and sync of your 2FA Tokens. The encrypted backup data is stored in iCloud, accessible only by the 2FAS app. Additionally, this feature aids with Token recovery and syncing across iOS devices.")
     /// It's enabled by default and can be disabled at any time in the app's backup settings.
-    internal static let backupIcloudDescription = T.tr("Localizable", "introduction__backup_icloud_description", fallback: "2FAS uses iCloud for secure backup and sync of your 2FA Tokens. The **encrypted** backup data is stored in iCloud, accessible **only by the 2FAS app**. Additionally, this feature aids with Token **recovery and syncing** across iOS devices.\n\nIt's enabled by default and can be disabled at any time in the app's backup settings.")
+    internal static let backupIcloudDescriptionNote = T.tr("Localizable", "introduction__backup_icloud_description_note", fallback: "It's enabled by default and can be disabled at any time in the app's backup settings.")
     /// Secure sync and backup
     internal static let backupIcloudTitle = T.tr("Localizable", "introduction__backup_icloud_title", fallback: "Secure sync and backup")
     /// Google Drive sync turned on successfully!
     internal static let backupSuccess = T.tr("Localizable", "introduction__backup_success", fallback: "Google Drive sync turned on successfully!")
     /// I'll take the risk, no backup
     internal static let backupTakeRiskCta = T.tr("Localizable", "introduction__backup_take_risk_cta", fallback: "I'll take the risk, no backup")
+    /// Just know you're
+    internal static let call1 = T.tr("Localizable", "introduction__call_1", fallback: "Just know you're")
+    /// Incredible!
+    internal static let call2 = T.tr("Localizable", "introduction__call_2", fallback: "Incredible!")
     /// Choose QR code
     internal static let chooseQrCode = T.tr("Localizable", "introduction__choose_qr_code", fallback: "Choose QR code")
     /// Pair your online service account with 2FAS or import your Tokens

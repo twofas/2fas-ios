@@ -20,9 +20,8 @@
 import UIKit
 import Common
 
+@Observable
 final class IntroductionPresenter {
-    weak var view: IntroductionViewControlling?
-    
     private let flowController: IntroductionFlowControlling
     private let interactor: IntroductionModuleInteracting
     
@@ -34,55 +33,12 @@ final class IntroductionPresenter {
         self.interactor = interactor
     }
     
-    private var currentPage: Int = 0
-    
-    func viewDidAppear() {
-        view?.moveToPage(currentPage)
-    }
-    
-    func handleButtonPressed() {
-        let next = currentPage + 1
-        if next < IntroductionCommons.pageCount {
-            currentPage = next
-            view?.moveToPage(next)
-            return
-        }
-        
-        close()
-    }
-    
-    func handleAdditionalButtonPressed() {
-        flowController.toCloudInfo()
-    }
-    
-    func handleDidMoveToPage(_ page: Int) {
-        currentPage = page
-    }
-    
-    func handleTOSPressed() {
-        flowController.toTOS()
-    }
-    
-    func handlePreviousButtonPressed() {
-        let prev = currentPage - 1
-        if prev >= 0 {
-            currentPage = prev
-            view?.moveToPage(prev)
-        }
-    }
-    
-    func handleSkipPressed() {
-        close()
-    }
-    
-    func handleRefresh() {
-        view?.moveToPage(currentPage)
-    }
-}
-
-private extension IntroductionPresenter {
     func close() {
         interactor.markIntroAsShown()
         flowController.toClose()
+    }
+    
+    func onTOS() {
+        flowController.toTOS()
     }
 }

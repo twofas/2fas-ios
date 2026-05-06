@@ -34,19 +34,6 @@ public enum TFButtonSize {
     case largeWide
 }
 
-// MARK: - TFButtonVariant
-
-/// Visual style of the button.
-///
-/// | Variant | Background (enabled) | Label (enabled) |
-/// |---|---|---|
-/// | `borderedProminent` | `accentsBrand` | `graysWhite` |
-/// | `bordered` | `fillsTertiary` | `accentsBrand` |
-/// | `borderedSecondary` | `fillsTertiary` | `labelsPrimary` |
-/// | `borderless` | clear | `accentsBrand` |
-/// | `borderlessNeutral` | clear | `labelsPrimary` |
-///
-/// Disabled state: label → `labelsTertiary`; filled-variant background → `fillsTertiary`.
 @frozen
 public enum TFButtonVariant {
     case borderedProminent
@@ -87,6 +74,10 @@ public enum TFButtonVariant {
 public struct TFButton: View {
     @Environment(\.colorScheme)
     private var colorScheme
+    
+    @Environment(\.isEnabled)
+    private var isEnabled
+    
     private let label: String?
     private let systemImage: String?
     private let variant: TFButtonVariant
@@ -151,24 +142,22 @@ public struct TFButton: View {
 
     public var body: some View {
         Button(action: action) {
-            _TFButtonLabel(
-                label: label,
-                systemImage: systemImage,
-                variant: variant,
-                size: size
-            )
+            switch (systemImage, label) {
+            case (let img?, nil): symbolOnly(img)
+            case (nil, let lbl?): textOnly(lbl)
+            case (let img?, let lbl?): symbolAndText(img, lbl)
+            default: EmptyView()
+            }
         }
         .modify {
             if #available(iOS 26, *) {
-                $0.tint(AppColor.accentsBrand.color(for: colorScheme).opacity(0.7))
-                    .buttonStyle(.glassProminent)
-                    .buttonBorderShape(.capsule)
-                    .overlay {
-                        if !isPressed {
-                            Capsule()
-                                .stroke(.white.opacity(0.2), lineWidth: 1)
-                        }
-                    }
+                if let backgroundColor {
+                    $0.tint(backgroundColor.color(for: colorScheme))
+                        .buttonStyle(.glassProminent)
+                        .buttonBorderShape(.capsule)
+                } else {
+                    $0
+                }
             } else {
                 $0.buttonStyle(ButtonFeedbackStyle())
             }
@@ -179,29 +168,7 @@ public struct TFButton: View {
         )
         .sensoryFeedback(.impact(flexibility: .rigid, intensity: 0.6), trigger: isPressed) { _, new in new }
     }
-}
-
-// MARK: - _TFButtonLabel
-
-private struct _TFButtonLabel: View {
-    let label: String?
-    let systemImage: String?
-    let variant: TFButtonVariant
-    let size: TFButtonSize
-
-    @Environment(\.isEnabled) private var isEnabled
-
-    var body: some View {
-        switch (systemImage, label) {
-        case (let img?, nil): symbolOnly(img)
-        case (nil, let lbl?): textOnly(lbl)
-        case (let img?, let lbl?): symbolAndText(img, lbl)
-        default: EmptyView()
-        }
-    }
-
-    // MARK: Symbol-only (circular)
-
+    
     @ViewBuilder
     private func symbolOnly(_ imageName: String) -> some View {
         Image(systemName: imageName)
@@ -213,9 +180,7 @@ private struct _TFButtonLabel: View {
                     .fill(backgroundStyle)
             }
     }
-
-    // MARK: Text-only
-
+    
     @ViewBuilder
     private func textOnly(_ text: String) -> some View {
         Text(text)
@@ -225,11 +190,8 @@ private struct _TFButtonLabel: View {
             .lineLimit(1)
             .padding(.horizontal, hPad)
             .padding(.vertical, vPad)
-//            .background(textBackground)
     }
-
-    // MARK: Symbol + text
-
+    
     @ViewBuilder
     private func symbolAndText(_ imageName: String, _ text: String) -> some View {
         HStack(spacing: iconSpacing) {
@@ -247,9 +209,7 @@ private struct _TFButtonLabel: View {
                 .fill(backgroundStyle)
         }
     }
-
-    // MARK: Background helpers
-
+    
     /// Borderless/Large uses a rounded rect; every other combination uses a capsule.
     @ViewBuilder
     private var textBackground: some View {
@@ -261,9 +221,7 @@ private struct _TFButtonLabel: View {
                 .fill(backgroundStyle)
         }
     }
-
-    // MARK: Colors
-
+    
     private var labelColor: AppColor {
         guard isEnabled else { return .labelsTertiary }
         switch variant {
@@ -272,23 +230,31 @@ private struct _TFButtonLabel: View {
         case .borderedSecondary, .borderlessNeutral: return .labelsPrimary
         }
     }
-
+    
     private var backgroundStyle: AnyShapeStyle {
+        if let backgroundColor {
+            AnyShapeStyle(backgroundColor)
+        } else {
+            AnyShapeStyle(Color.clear)
+        }
+    }
+    
+    private var backgroundColor: AppColor? {
         guard isEnabled else {
             switch variant {
-            case .borderless, .borderlessNeutral: return AnyShapeStyle(Color.clear)
-            default: return AnyShapeStyle(AppColor.fillsTertiary)
+            case .borderless, .borderlessNeutral: return nil
+            default: return AppColor.fillsTertiary
             }
         }
         switch variant {
-        case .borderedProminent: return AnyShapeStyle(AppColor.accentsBrand)
-        case .bordered, .borderedSecondary: return AnyShapeStyle(AppColor.fillsTertiary)
-        case .borderless, .borderlessNeutral: return AnyShapeStyle(Color.clear)
+        case .borderedProminent: return AppColor.accentsBrand
+        case .bordered, .borderedSecondary: return AppColor.fillsTertiary
+        case .borderless, .borderlessNeutral: return nil
         }
     }
-
+    
     // MARK: Metrics
-
+    
     private var symbolDimension: CGFloat {
         switch size {
         case .small: 28
@@ -296,7 +262,7 @@ private struct _TFButtonLabel: View {
         case .large, .largeWide: 48
         }
     }
-
+    
     /// Font used for the SF Symbol in standalone (icon-only) buttons.
     private var symbolFont: Font {
         switch size {
@@ -304,21 +270,21 @@ private struct _TFButtonLabel: View {
         case .large, .largeWide: .system(size: 17, weight: .regular)
         }
     }
-
+    
     private var textStyleSize: TextStyle {
         switch size {
         case .small: .subheadline
         case .medium, .large, .largeWide: .body
         }
     }
-
+    
     private var textStyleWeight: TextStyleVariant {
         switch size {
         case .small: .emphasized // semibold
         case .medium, .large, .largeWide: .medium
         }
     }
-
+    
     private var hPad: Spacing {
         switch size {
         case .small: .M // 8  (nearest to design 10)
@@ -326,7 +292,7 @@ private struct _TFButtonLabel: View {
         case .large, .largeWide: .XXL
         }
     }
-
+    
     private var vPad: Spacing {
         switch size {
         case .small: .S
@@ -334,7 +300,7 @@ private struct _TFButtonLabel: View {
         case .large, .largeWide: .L // 12 (nearest to design 14)
         }
     }
-
+    
     private var iconSpacing: Spacing {
         switch size {
         case .small: .XS  // 2 (nearest to design 3)

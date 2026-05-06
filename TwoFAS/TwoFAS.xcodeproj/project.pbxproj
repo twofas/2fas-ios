@@ -787,7 +787,6 @@
 		C29492E02EA3EF2800474B84 /* PasswordInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29492DF2EA3EF2700474B84 /* PasswordInput.swift */; };
 		C2959627267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2959626267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift */; };
 		C295962B267F79190086DEB1 /* TokensSectionHeader+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C295962A267F79190086DEB1 /* TokensSectionHeader+.swift */; };
-		C29626B8236F80A200C133BC /* Animate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29626B7236F80A200C133BC /* Animate.swift */; };
 		C29626DA2370BD7F00C133BC /* TimeVerification.h in Headers */ = {isa = PBXBuildFile; fileRef = C29626D82370BD7F00C133BC /* TimeVerification.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C29626DD2370BD7F00C133BC /* TimeVerification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C29626D62370BD7F00C133BC /* TimeVerification.framework */; };
 		C29626DE2370BD7F00C133BC /* TimeVerification.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C29626D62370BD7F00C133BC /* TimeVerification.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1444,6 +1443,8 @@
 		C2FDEE5F279CC316002CAB9E /* CameraScannerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FDEE5E279CC316002CAB9E /* CameraScannerPresenter.swift */; };
 		C2FDEE61279CC36C002CAB9E /* CameraScannerModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FDEE60279CC36C002CAB9E /* CameraScannerModuleInteractor.swift */; };
 		C2FDEE63279CC37E002CAB9E /* CameraScannerFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FDEE62279CC37E002CAB9E /* CameraScannerFlowController.swift */; };
+		C2FF03022FAB6D5400362B88 /* AppReset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF03012FAB6D5200362B88 /* AppReset.swift */; };
+		C2FF03042FAB6DD800362B88 /* BorderShield.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF03032FAB6DD500362B88 /* BorderShield.swift */; };
 		C2FF3EEA27B1A81100642FA4 /* CollectionViewDelegatee.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF3EE927B1A81100642FA4 /* CollectionViewDelegatee.swift */; };
 		C2FF3EEC27B1CF0100642FA4 /* IconSelectorModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF3EEB27B1CF0100642FA4 /* IconSelectorModels.swift */; };
 		F359D064687935A24E141C3F /* BackupAdvancedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E918664AADE7F5DD559327 /* BackupAdvancedModels.swift */; };
@@ -2710,7 +2711,6 @@
 		C29492DF2EA3EF2700474B84 /* PasswordInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInput.swift; sourceTree = "<group>"; };
 		C2959626267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDiffableDataSourceSnapshot+.swift"; sourceTree = "<group>"; };
 		C295962A267F79190086DEB1 /* TokensSectionHeader+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensSectionHeader+.swift"; sourceTree = "<group>"; };
-		C29626B7236F80A200C133BC /* Animate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animate.swift; sourceTree = "<group>"; };
 		C29626D62370BD7F00C133BC /* TimeVerification.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TimeVerification.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C29626D82370BD7F00C133BC /* TimeVerification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeVerification.h; sourceTree = "<group>"; };
 		C29626D92370BD7F00C133BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -3269,6 +3269,8 @@
 		C2FDEE60279CC36C002CAB9E /* CameraScannerModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScannerModuleInteractor.swift; sourceTree = "<group>"; };
 		C2FDEE62279CC37E002CAB9E /* CameraScannerFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScannerFlowController.swift; sourceTree = "<group>"; };
 		C2FE36292517FF8D00035643 /* VoiceOver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceOver.swift; sourceTree = "<group>"; };
+		C2FF03012FAB6D5200362B88 /* AppReset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReset.swift; sourceTree = "<group>"; };
+		C2FF03032FAB6DD500362B88 /* BorderShield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderShield.swift; sourceTree = "<group>"; };
 		C2FF3EE927B1A81100642FA4 /* CollectionViewDelegatee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDelegatee.swift; sourceTree = "<group>"; };
 		C2FF3EEB27B1CF0100642FA4 /* IconSelectorModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorModels.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -3665,6 +3667,7 @@
 		C20629F72AF98373003BFC21 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C2FF03012FAB6D5200362B88 /* AppReset.swift */,
 				C2147CCE205D7B510001D011 /* LoginView.swift */,
 				C233DCAC2B04285E008E41D8 /* LoginViewController.swift */,
 			);
@@ -7358,7 +7361,6 @@
 				C2D6731625DB2C5C004BD697 /* KeyboardObserver.swift */,
 				C28633AC1FF57C8600C8F4B4 /* Types.swift */,
 				C2CFFCDC2007FDD600600AC6 /* CircleProgress.swift */,
-				C29626B7236F80A200C133BC /* Animate.swift */,
 				C217E16F23D7953000EE6C08 /* NotificationBottomOffset.swift */,
 				C2CB5D3925DB1C9300A362A9 /* Orientation.swift */,
 				C24018AA26188E2800800DBF /* RingMask.swift */,
@@ -8569,6 +8571,7 @@
 		C2FDEE55279C8FE8002CAB9E /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				C2FF03032FAB6DD500362B88 /* BorderShield.swift */,
 				C24EE7962EC3A5780065B452 /* PasswordTextField.swift */,
 				C29492DF2EA3EF2700474B84 /* PasswordInput.swift */,
 				C2FDEE56279C8FF8002CAB9E /* SwiftUIButtons.swift */,
@@ -9809,6 +9812,7 @@
 				C2F4D9392A8D33FA00608F63 /* AddServiceAdvancedWarningView.swift in Sources */,
 				C26764B02872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift in Sources */,
 				C28633AD1FF57C8600C8F4B4 /* Types.swift in Sources */,
+				C2FF03022FAB6D5400362B88 /* AppReset.swift in Sources */,
 				C2ABA1CC24B24B7F008426D1 /* TokensViewController+ContextMenu.swift in Sources */,
 				C2A70682276D390500885D79 /* NewPINPresenter.swift in Sources */,
 				C2E948AD23B666BD003BDCC1 /* UnderscoredInput.swift in Sources */,
@@ -10199,6 +10203,7 @@
 				C2F9E1632D98607B004B7DFA /* SyncMigrationToNewestVersionView.swift in Sources */,
 				C2F4D93B2A8D470100608F63 /* AddingServiceServiceTypeButton.swift in Sources */,
 				C266542B2725EF7B00DC3A3C /* ExportFileRules.swift in Sources */,
+				C2FF03042FAB6DD800362B88 /* BorderShield.swift in Sources */,
 				C2C56D4627C98AA3003B4C43 /* ComposeServiceAdvancedSummaryModuleInteractor.swift in Sources */,
 				C263F46029903B51009B0837 /* MainMenuFlowController.swift in Sources */,
 				C2035AF3245DE60D00C482D2 /* MainContainerButtonStyling.swift in Sources */,
@@ -10343,7 +10348,6 @@
 				C2AE5F672ADC3A4200AED670 /* NotificationIcon.swift in Sources */,
 				C21675C52808C71F00D43EDD /* ShortDateFormatter.swift in Sources */,
 				C271B64827BAE67500D0D743 /* ComposeServiceModuleInteractor.swift in Sources */,
-				C29626B8236F80A200C133BC /* Animate.swift in Sources */,
 				C21A9E8427CBF75E00FE4CC4 /* ComposeServiceNumberOfDigitsPresenter.swift in Sources */,
 				C2830D7E293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegate.swift in Sources */,
 				C2CACFBE2AFEC905001E0F8E /* LoginType.swift in Sources */,

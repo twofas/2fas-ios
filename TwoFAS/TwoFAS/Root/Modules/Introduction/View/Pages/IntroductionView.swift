@@ -157,14 +157,7 @@ private struct IntroductionPage0: View {
         ZStack {
             VStack {
                 ZStack {
-                    if #available(iOS 26.0, *) {
-                        VStack {
-                            Asset.introductionaryLogo.swiftUIImage
-                        }
-                            .frame(width: 72, height: 72)
-                            .glassEffect(.regular, in: RoundedRectangle(cornerRadius: TFCornerRadius.badge.rawValue))
-                            .padding(.top, .XL)
-                    }
+                    BorderShield()
                 }
                 .frame(alignment: .top)
                 Spacer()
@@ -269,6 +262,7 @@ private struct IntroductionPage3: View {
                                     .foregroundStyle(.fillsTertiary)
                             }
                     }
+                    .padding(.top, .M)
                 }
                 .frame(alignment: .top)
                 Spacer()

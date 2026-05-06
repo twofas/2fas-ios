@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2026 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -17,18 +17,18 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
+import SwiftUI
+import CommonUI
 
-enum Animate {
-    static func pulse(_ view: UIView) {
-        let pulseAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
-        pulseAnimation.duration = 1
-        pulseAnimation.fromValue = 0
-        pulseAnimation.toValue = 1
-        pulseAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        pulseAnimation.autoreverses = true
-        pulseAnimation.repeatCount = .greatestFiniteMagnitude
-        pulseAnimation.isRemovedOnCompletion = false
-        view.layer.add(pulseAnimation, forKey: "animateOpacity")
+struct BorderShield: View {
+    var body: some View {
+        if #available(iOS 26.0, *) {
+            VStack {
+                Asset.introductionaryLogo.swiftUIImage
+            }
+            .frame(width: 72, height: 72)
+            .glassEffect(.regular, in: RoundedRectangle(cornerRadius: TFCornerRadius.badge.rawValue))
+            .padding(.top, .XL)
+        }
     }
 }

@@ -1166,6 +1166,10 @@ internal enum T {
     internal static let howToRestore = T.tr("Localizable", "restore__how_to_restore", fallback: "How to restore 2FAS app?")
     /// If you have forgotten the PIN or want to reset the 2FAS app, you have to reinstall the app.
     internal static let resetPinTitle = T.tr("Localizable", "restore__reset_Pin_title", fallback: "If you have forgotten the PIN or want to reset the 2FAS app, you have to reinstall the app.")
+    internal enum Reset {
+      /// Restoring the app
+      internal static let title = T.tr("Localizable", "restore__reset__title", fallback: "Restoring the app")
+    }
   }
   internal enum Security {
     /// Change PIN

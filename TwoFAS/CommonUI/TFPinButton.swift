@@ -51,7 +51,10 @@ public enum TFPinKey: Equatable, Hashable {
 /// TFPinButton(.delete)   { handleDelete() }
 /// ```
 public struct TFPinButton: View {
-    private let size: CGFloat = 64
+    public static let size: CGFloat = 64
+    
+    @GestureState
+    private var isPressed = false
     
     private let key: TFPinKey
     private let action: () -> Void
@@ -65,14 +68,26 @@ public struct TFPinButton: View {
         Button(action: action) {
             keyLabel
                 .foregroundStyle(AppColor.labelsPrimary)
-                .frame(width: size, height: size)
-                .background(
-                    Circle()
-                        .fill(AnyShapeStyle(.ultraThinMaterial))
-                        .shadow(.glass)
-                )
+                .frame(width: Self.size, height: Self.size)
         }
-        .buttonStyle(_TFPressStyle())
+        .modify {
+            if #available(iOS 26, *) {
+                $0.background {
+                    Circle()
+                        .fill(AnyShapeStyle(.clear))
+                }
+                .glassEffect(.clear.interactive())
+                    .shadow(.glass)
+            } else {
+                $0.buttonStyle(ButtonFeedbackStyle())
+            }
+        }
+        .frame(width: Self.size, height: Self.size)
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .updating($isPressed) { _, state, _ in state = true }
+        )
+        .sensoryFeedback(.impact(flexibility: .rigid, intensity: 0.6), trigger: isPressed) { _, new in new }
     }
 
     // MARK: Content

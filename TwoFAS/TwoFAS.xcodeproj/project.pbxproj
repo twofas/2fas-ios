@@ -196,6 +196,7 @@
 		C21B3A1B27AF12BF005C603B /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21B3A1A27AF12BF005C603B /* ColorPickerViewController.swift */; };
 		C21B40DC28C520E400348E04 /* ImporterOpenFileError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21B40DB28C520E400348E04 /* ImporterOpenFileError.swift */; };
 		C21C38A21FE30E62000EC252 /* LimitedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21C38A11FE30E62000EC252 /* LimitedTextField.swift */; };
+		C21DBE952FAD055600C0E857 /* PINKeypadLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21DBE942FAD055600C0E857 /* PINKeypadLayout.swift */; };
 		C21E0B3E2299F2190063EE7C /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21E0B3D2299F2190063EE7C /* UIDevice+.swift */; };
 		C21EB2EE2A7FC55800FA8AA1 /* AddingServiceMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21EB2ED2A7FC55800FA8AA1 /* AddingServiceMetrics.swift */; };
 		C21EB2F12A7FD77000FA8AA1 /* AddingServiceTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21EB2F02A7FD77000FA8AA1 /* AddingServiceTitleView.swift */; };
@@ -1445,6 +1446,7 @@
 		C2FDEE63279CC37E002CAB9E /* CameraScannerFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FDEE62279CC37E002CAB9E /* CameraScannerFlowController.swift */; };
 		C2FF03022FAB6D5400362B88 /* AppReset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF03012FAB6D5200362B88 /* AppReset.swift */; };
 		C2FF03042FAB6DD800362B88 /* BorderShield.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF03032FAB6DD500362B88 /* BorderShield.swift */; };
+		C2FF03062FAB975A00362B88 /* PINView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF03052FAB973E00362B88 /* PINView.swift */; };
 		C2FF3EEA27B1A81100642FA4 /* CollectionViewDelegatee.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF3EE927B1A81100642FA4 /* CollectionViewDelegatee.swift */; };
 		C2FF3EEC27B1CF0100642FA4 /* IconSelectorModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF3EEB27B1CF0100642FA4 /* IconSelectorModels.swift */; };
 		F359D064687935A24E141C3F /* BackupAdvancedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E918664AADE7F5DD559327 /* BackupAdvancedModels.swift */; };
@@ -2181,6 +2183,7 @@
 		C21BF26B2B5B340100915507 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C21BF26C2B5B340100915507 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		C21C38A11FE30E62000EC252 /* LimitedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedTextField.swift; sourceTree = "<group>"; };
+		C21DBE942FAD055600C0E857 /* PINKeypadLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINKeypadLayout.swift; sourceTree = "<group>"; };
 		C21E0B3D2299F2190063EE7C /* UIDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
 		C21EB2ED2A7FC55800FA8AA1 /* AddingServiceMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceMetrics.swift; sourceTree = "<group>"; };
 		C21EB2F02A7FD77000FA8AA1 /* AddingServiceTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceTitleView.swift; sourceTree = "<group>"; };
@@ -3271,6 +3274,7 @@
 		C2FE36292517FF8D00035643 /* VoiceOver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceOver.swift; sourceTree = "<group>"; };
 		C2FF03012FAB6D5200362B88 /* AppReset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReset.swift; sourceTree = "<group>"; };
 		C2FF03032FAB6DD500362B88 /* BorderShield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderShield.swift; sourceTree = "<group>"; };
+		C2FF03052FAB973E00362B88 /* PINView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINView.swift; sourceTree = "<group>"; };
 		C2FF3EE927B1A81100642FA4 /* CollectionViewDelegatee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDelegatee.swift; sourceTree = "<group>"; };
 		C2FF3EEB27B1CF0100642FA4 /* IconSelectorModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorModels.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -3667,6 +3671,8 @@
 		C20629F72AF98373003BFC21 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C2FF03052FAB973E00362B88 /* PINView.swift */,
+				C21DBE942FAD055600C0E857 /* PINKeypadLayout.swift */,
 				C2FF03012FAB6D5200362B88 /* AppReset.swift */,
 				C2147CCE205D7B510001D011 /* LoginView.swift */,
 				C233DCAC2B04285E008E41D8 /* LoginViewController.swift */,
@@ -9817,6 +9823,7 @@
 				C2A70682276D390500885D79 /* NewPINPresenter.swift in Sources */,
 				C2E948AD23B666BD003BDCC1 /* UnderscoredInput.swift in Sources */,
 				C21B1B2D2A8827D30021CAF1 /* AddingServiceTokenValueView.swift in Sources */,
+				C2FF03062FAB975A00362B88 /* PINView.swift in Sources */,
 				C21247FB27B7181A0044D9F2 /* ComposeServiceModels.swift in Sources */,
 				C2D6731D25DB2C5D004BD697 /* ToastCenter.swift in Sources */,
 				C25860B628247B87009AE54F /* NewsPresenter.swift in Sources */,
@@ -10055,6 +10062,7 @@
 				C21347882D98799A00D325F6 /* EncryptedByUserPasswordSyncFlowController.swift in Sources */,
 				C2AD653B27F261CC008997DB /* BrowserExtensionSuccessViewController.swift in Sources */,
 				C2AB92CB2766543700698382 /* ExporterPINModuleInteractor.swift in Sources */,
+				C21DBE952FAD055600C0E857 /* PINKeypadLayout.swift in Sources */,
 				C286200229D5BCDF00217AF9 /* UUIDInputContainer.swift in Sources */,
 				C27BE515275D4EE70090CA12 /* BackupMenuModels.swift in Sources */,
 				C2B077B8292A8F980074517F /* UploadLogsSuccessView.swift in Sources */,

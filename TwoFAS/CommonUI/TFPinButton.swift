@@ -33,6 +33,27 @@ public enum TFPinKey: Equatable, Hashable {
     case digit(Int)
     /// The backspace / delete key.
     case delete
+    
+    public var isNumber: Bool {
+        switch self {
+        case .digit: true
+        case .delete: false
+        }
+    }
+    
+    public var isDelete: Bool {
+        switch self {
+        case .digit: false
+        case .delete: true
+        }
+    }
+    
+    public var number: Int? {
+        switch self {
+        case .digit(let int): int
+        case .delete: nil
+        }
+    }
 }
 
 // MARK: - TFPinButton
@@ -57,15 +78,15 @@ public struct TFPinButton: View {
     private var isPressed = false
     
     private let key: TFPinKey
-    private let action: () -> Void
+    private let action: (TFPinKey) -> Void
 
-    public init(_ key: TFPinKey, action: @escaping () -> Void) {
+    public init(_ key: TFPinKey, action: @escaping (TFPinKey) -> Void) {
         self.key = key
         self.action = action
     }
 
     public var body: some View {
-        Button(action: action) {
+        Button(action: { action(key) }) {
             keyLabel
                 .foregroundStyle(AppColor.labelsPrimary)
                 .frame(width: Self.size, height: Self.size)

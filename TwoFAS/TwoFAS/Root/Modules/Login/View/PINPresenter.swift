@@ -20,28 +20,40 @@
 import SwiftUI
 import CommonUI
 
-struct PINView: View {
-    @Bindable
-    var presenter: PINPresenter
+@Observable
+class PINPresenter {
+    var totalDigits: Int = 0
+    var enteredDigitCount: Int = 0
     
-    let header: AnyView?
-    let footer: AnyView?
+    var isBlocked = false
     
-    var body: some View {
-        VStack(spacing: .XL) {
-            if let header {
-                header
-            }
- 
-            PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
-            
-            PINKeyboard(action: presenter.onKeyPressed)
-
-            if let footer {
-                Spacer()
-                footer
-            }
+    private var pin: [Int] = [] {
+        didSet {
+            enteredDigitCount = pin.count
         }
-        .background(AppColor.backgroundsPrimary)
+    }
+    
+    func onKeyPressed(_ digit: TFPinKey) {
+        guard !isBlocked else { return }
+        if let number = digit.number, pin.count < totalDigits {
+            pin.append(number)
+            if pin.count >= totalDigits {
+                allEntered()
+            }
+        } else if digit.isDelete {
+            _ = pin.popLast()
+        }
+    }
+    
+    func onAppear() {
+        setup()
+    }
+    
+    func allEntered() {
+        
+    }
+    
+    func setup() {
+        
     }
 }

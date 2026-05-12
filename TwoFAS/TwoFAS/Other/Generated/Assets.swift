@@ -119,6 +119,7 @@ internal enum Asset {
   internal static let notificationUpdates = ImageAsset(name: "NotificationUpdates")
   internal static let notificationYoutube = ImageAsset(name: "NotificationYoutube")
   internal static let openGallery = ImageAsset(name: "OpenGallery")
+  internal static let pinLogo = ImageAsset(name: "PINLogo")
   internal static let passFrameLight = ImageAsset(name: "PassFrameLight")
   internal static let passwordHide = ImageAsset(name: "PasswordHide")
   internal static let passwordReveal = ImageAsset(name: "PasswordReveal")

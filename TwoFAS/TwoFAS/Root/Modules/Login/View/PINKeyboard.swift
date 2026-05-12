@@ -20,28 +20,29 @@
 import SwiftUI
 import CommonUI
 
-struct PINView: View {
-    @Bindable
-    var presenter: PINPresenter
-    
-    let header: AnyView?
-    let footer: AnyView?
+struct PINKeyboard: View {
+    let action: (TFPinKey) -> Void
     
     var body: some View {
         VStack(spacing: .XL) {
-            if let header {
-                header
+            PINKeypadLayout {
+                TFPinButton(.digit(1), action: action)
+                TFPinButton(.digit(2), action: action)
+                TFPinButton(.digit(3), action: action)
+                TFPinButton(.digit(4), action: action)
+                TFPinButton(.digit(5), action: action)
+                TFPinButton(.digit(6), action: action)
+                TFPinButton(.digit(7), action: action)
+                TFPinButton(.digit(8), action: action)
+                TFPinButton(.digit(9), action: action)
+                TFPinButton(.delete, action: action)
+                    .isHidden(true, remove: false)
+                TFPinButton(.digit(0), action: action)
+                TFPinButton(.delete, action: action)
             }
- 
-            PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
-            
-            PINKeyboard(action: presenter.onKeyPressed)
-
-            if let footer {
-                Spacer()
-                footer
-            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.XL)
         }
-        .background(AppColor.backgroundsPrimary)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

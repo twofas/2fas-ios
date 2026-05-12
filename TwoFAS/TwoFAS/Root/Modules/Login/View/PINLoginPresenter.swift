@@ -18,30 +18,11 @@
 //
 
 import SwiftUI
-import CommonUI
 
-struct PINView: View {
-    @Bindable
-    var presenter: PINPresenter
+@Observable
+final class PINLoginPresenter: PINPresenter {
     
-    let header: AnyView?
-    let footer: AnyView?
-    
-    var body: some View {
-        VStack(spacing: .XL) {
-            if let header {
-                header
-            }
- 
-            PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
-            
-            PINKeyboard(action: presenter.onKeyPressed)
-
-            if let footer {
-                Spacer()
-                footer
-            }
-        }
-        .background(AppColor.backgroundsPrimary)
+    override func setup() {
+        totalDigits = 4
     }
 }

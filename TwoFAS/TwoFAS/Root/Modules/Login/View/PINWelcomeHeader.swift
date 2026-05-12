@@ -18,30 +18,25 @@
 //
 
 import SwiftUI
-import CommonUI
 
-struct PINView: View {
-    @Bindable
-    var presenter: PINPresenter
-    
-    let header: AnyView?
-    let footer: AnyView?
-    
+struct PINWelcomeHeader: View {
     var body: some View {
-        VStack(spacing: .XL) {
-            if let header {
-                header
+        VStack(spacing: .zero) {
+            Spacer()
+            VStack(spacing: .S) {
+                Asset.pinLogo.swiftUIImage
+                    .padding(.bottom, .M)
+                
+                Text(T.Login.helloHeader)
+                    .textStyle(.title2, .emphasized)
+                    .foregroundStyle(.labelsPrimary)
+                
+                Text(T.Security.enterPinShort)
+                    .textStyle(.body)
+                    .foregroundStyle(.labelsSecondary)
             }
- 
-            PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
-            
-            PINKeyboard(action: presenter.onKeyPressed)
-
-            if let footer {
-                Spacer()
-                footer
-            }
+            Spacer()
         }
-        .background(AppColor.backgroundsPrimary)
+        .frame(maxHeight: .infinity)
     }
 }

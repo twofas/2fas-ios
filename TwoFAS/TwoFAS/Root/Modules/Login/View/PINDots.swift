@@ -18,30 +18,21 @@
 //
 
 import SwiftUI
-import CommonUI
 
-struct PINView: View {
-    @Bindable
-    var presenter: PINPresenter
-    
-    let header: AnyView?
-    let footer: AnyView?
+struct PINDots: View {
+    private let size: CGFloat = 16
+    let count: Int
+    @Binding
+    var enteredCount: Int
     
     var body: some View {
-        VStack(spacing: .XL) {
-            if let header {
-                header
-            }
- 
-            PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
-            
-            PINKeyboard(action: presenter.onKeyPressed)
-
-            if let footer {
-                Spacer()
-                footer
+        HStack(spacing: .XXXL) {
+            ForEach(0..<count, id: \.self) { index in
+                Circle()
+                    .frame(width: size, height: size)
+                    .foregroundStyle(index < enteredCount ? .labelsPrimary : .labelsQuaternary )
             }
         }
-        .background(AppColor.backgroundsPrimary)
+        .padding(.XXXXXL)
     }
 }

@@ -18,30 +18,21 @@
 //
 
 import SwiftUI
-import CommonUI
 
-struct PINView: View {
-    @Bindable
-    var presenter: PINPresenter
+enum PINBuilder {
+    enum PINType {
+        case login
+    }
     
-    let header: AnyView?
-    let footer: AnyView?
-    
-    var body: some View {
-        VStack(spacing: .XL) {
-            if let header {
-                header
-            }
- 
-            PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
-            
-            PINKeyboard(action: presenter.onKeyPressed)
-
-            if let footer {
-                Spacer()
-                footer
-            }
+    static func build(type: PINType) -> some View {
+        switch type {
+        case .login: buildLogin()
         }
-        .background(AppColor.backgroundsPrimary)
+    }
+    
+    private static func buildLogin() -> some View {
+        let presenter = PINLoginPresenter()
+        let header = AnyView(PINWelcomeHeader())
+        return PINView(presenter: presenter, header: header, footer: nil)
     }
 }

@@ -37,13 +37,13 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
 
-//        // MARK: - TEST: IncredibleGlow shader preview — remove before shipping
-//        if true {
-//            window?.rootViewController = IncredibleGlowTestViewController()
-//            window?.makeKeyAndVisible()
-//            return true
-//        }
-//        // END TEST
+        // MARK: - TEST: IncredibleGlow shader preview — remove before shipping
+        if true {
+            window?.rootViewController = NavigationBarHiddenHostingController(rootView: PINBuilder.build(type: .login))
+            window?.makeKeyAndVisible()
+            return true
+        }
+        // END TEST
 
         rootViewController = RootFlowController.setAsRoot(
             in: window,

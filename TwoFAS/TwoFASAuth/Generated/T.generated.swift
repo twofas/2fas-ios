@@ -1107,6 +1107,10 @@ internal enum T {
     /// Not sure what to do?
     internal static let whatToDo = T.tr("Localizable", "introduction__what_to_do", fallback: "Not sure what to do?")
   }
+  internal enum Login {
+    /// Hello again!
+    internal static let helloHeader = T.tr("Localizable", "login__hello_header", fallback: "Hello again!")
+  }
   internal enum NewVersion {
     /// A new version of 2FAS is available on Google Store. Update now!
     internal static let newVersionMessageAndroid = T.tr("Localizable", "new_version__new_version_message_android", fallback: "A new version of 2FAS is available on Google Store. Update now!")

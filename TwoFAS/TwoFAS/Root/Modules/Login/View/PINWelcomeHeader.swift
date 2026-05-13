@@ -22,21 +22,26 @@ import SwiftUI
 struct PINWelcomeHeader: View {
     var body: some View {
         VStack(spacing: .zero) {
-            Spacer()
+            Asset.pinLogo.swiftUIImage
+                .padding(.bottom, .M)
+            
             VStack(spacing: .S) {
-                Asset.pinLogo.swiftUIImage
-                    .padding(.bottom, .M)
-                
                 Text(T.Login.helloHeader)
                     .textStyle(.title2, .emphasized)
                     .foregroundStyle(.labelsPrimary)
+                    .alignmentGuide(.centerAlign) { d in d[VerticalAlignment.center] }
                 
                 Text(T.Security.enterPinShort)
                     .textStyle(.body)
                     .foregroundStyle(.labelsSecondary)
+                    .alignmentGuide(.centerAlign) { d in d[VerticalAlignment.top] }
             }
-            Spacer()
+            .padding(.top, .S)
         }
-        .frame(maxHeight: .infinity)
     }
 }
+
+private struct CenterAlignID: AlignmentID {
+    static func defaultValue(in d: ViewDimensions) -> CGFloat { d[VerticalAlignment.center] }
+}
+extension VerticalAlignment { static let centerAlign = VerticalAlignment(CenterAlignID.self) }

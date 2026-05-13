@@ -18,41 +18,13 @@
 //
 
 import SwiftUI
+import Common
 import CommonUI
 
-struct PINView: View {
-    @Bindable
-    var presenter: PINPresenter
-    
-    let header: AnyView?
-    let footer: AnyView?
-    
+struct PINWelcomeFooter: View {
+    let action: Callback
     var body: some View {
-        VStack(spacing: .S) {
-            if let header {
-                Spacer()
-                    .containerRelativeFrame(.vertical) { length, _ in
-                        length * 0.06
-                    }
-                header
-                Spacer()
-                    .containerRelativeFrame(.vertical) { length, _ in
-                        length * 0.04
-                    }
-            }
- 
-            PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
-            
-            PINKeyboard(action: presenter.onKeyPressed)
-
-            if let footer {
-                Spacer()
-                footer
-            }
-        }
-        .background(AppColor.backgroundsPrimary)
-        .onAppear {
-            presenter.onAppear()
-        }
+        TFButton(T.Restore.howToRestore, variant: .borderless, size: .large, action: action)
+            .padding(.L)
     }
 }

@@ -30,9 +30,12 @@ struct PINDots: View {
             ForEach(0..<count, id: \.self) { index in
                 Circle()
                     .frame(width: size, height: size)
-                    .foregroundStyle(index < enteredCount ? .labelsPrimary : .labelsQuaternary )
+                    .foregroundStyle(index < enteredCount ? .labelsPrimary : .labelsQuaternary)
             }
         }
-        .padding(.XXXXXL)
+        .animation(.easeInOut, value: enteredCount)
+        .frame(maxWidth: .infinity)
+        .frame(height: size)
+        .padding(.top, .XXXXXL)
     }
 }

@@ -33,6 +33,9 @@ enum PINBuilder {
     private static func buildLogin() -> some View {
         let presenter = PINLoginPresenter()
         let header = AnyView(PINWelcomeHeader())
-        return PINView(presenter: presenter, header: header, footer: nil)
+        let footer = AnyView(PINWelcomeFooter(action: {
+            print("go")
+        }))
+        return PINView(presenter: presenter, header: header, footer: footer)
     }
 }

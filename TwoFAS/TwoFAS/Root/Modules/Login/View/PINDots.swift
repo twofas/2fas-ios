@@ -37,5 +37,6 @@ struct PINDots: View {
         .frame(maxWidth: .infinity)
         .frame(height: size)
         .padding(.top, .XXXXXL)
+        .padding(.bottom, .L)
     }
 }

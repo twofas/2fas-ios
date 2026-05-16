@@ -23,40 +23,18 @@ import Data
 
 protocol LoginModuleInteracting: AnyObject {
     var isLocked: Bool { get }
-    var isAfterWrongPIN: Bool { get }
     var lockTime: Int? { get }
-    
-    func checkState()
-    func checkBio()
-    
-    var updateState: Callback? { get set }
-    var userWasAuthenticated: Callback? { get set }
-    
     var codeLength: Int { get }
-    var hasInput: Bool { get }
-    var inputCount: Int { get }
     
-    func reset()
-    func addNumber(_ number: Int)
-    func deleteNumber()
+    func verify(numbers: [Int]) -> Bool
+    func verifyUsingBiometry(reason: String, completion: @escaping (Bool) -> Void)
 }
 
 final class LoginModuleInteractor {
-    var updateState: Callback?
-    var userWasAuthenticated: Callback?
-    
-    private var numbers: [Int] = []
-    private(set) var isLocked = false
-    private(set) var isAfterWrongPIN = false
-
-    private let textChangeTime: Int = 3
-    
-    private let timer = CountdownTimer()
-    
     private let loginInteractor: LoginInteracting
     private let appLockStateInteractor: AppLockStateInteracting
     private let appStateInteractor: AppStateInteracting
-
+    
     init(
         loginInteractor: LoginInteracting,
         appLockStateInteractor: AppLockStateInteracting,
@@ -65,37 +43,14 @@ final class LoginModuleInteractor {
         self.loginInteractor = loginInteractor
         self.appLockStateInteractor = appLockStateInteractor
         self.appStateInteractor = appStateInteractor
-                
-        timer.timerFinished = { [weak self] in
-            DispatchQueue.main.async {
-                self?.timerFinished()
-            }
-        }
-        
-        loginInteractor.bioAuth = { [weak self] in self?.checkBio() }
-        loginInteractor.lock = { [weak self] in self?.lock() }
-        loginInteractor.unlock = { [weak self] in self?.unlock() }
-        loginInteractor.userWasAuthenticated = { [weak self] in self?.userWasAuthenticated?() }
-    }
-    
-    func checkState() {
-        isLocked = loginInteractor.isLocked
-    }
-    
-    func checkBio() {
-        guard !loginInteractor.isLocked && UIApplication.shared.applicationState != .background else { return }
-        if appStateInteractor.willURLBeHandled {
-            appStateInteractor.clearURLWillBeHandled()
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-                self.useBiometry()
-            }
-        } else {
-            useBiometry()
-        }
     }
 }
 
 extension LoginModuleInteractor: LoginModuleInteracting {
+    var isLocked: Bool {
+        loginInteractor.isLocked
+    }
+    
     var lockTime: Int? {
         appLockStateInteractor.appLockRemainingSeconds
     }
@@ -104,71 +59,30 @@ extension LoginModuleInteractor: LoginModuleInteracting {
         loginInteractor.codeLength
     }
     
-    var hasInput: Bool {
-        !numbers.isEmpty
-    }
-    
-    var inputCount: Int {
-        numbers.count
-    }
-    
-    func reset() {
-        clear()
-    }
-    
-    func addNumber(_ number: Int) {
-        numbers.append(number)
-        if numbers.count == codeLength {
-            verify()
-        }
-    }
-    
-    func deleteNumber() {
-        _ = numbers.popLast()
-    }
-}
-
-private extension LoginModuleInteractor {
-    func useBiometry() {
-        loginInteractor.authenticateUsingBioAuthIfPossible(reason: T.Security.confirmYouAreDeviceOwner)
-    }
-    
-    func clear() {
-        numbers = []
-    }
-    
-    func verify() {
+    func verify(numbers: [Int]) -> Bool {
         let code = PIN.create(with: numbers)
         let codeIsCorrect = loginInteractor.verifyPIN(code)
         if codeIsCorrect {
             loginInteractor.authSuccessfully()
-            userWasAuthenticated?()
+            return true
         } else {
-            clear()
-            isAfterWrongPIN = true
-            timer.start(with: textChangeTime)
-            updateState?()
             loginInteractor.authFailed()
+            return false
         }
     }
     
-    func lock() {
-        clear()
-        isAfterWrongPIN = false
-        isLocked = true
-        updateState?()
-    }
-    
-    func unlock() {
-        clear()
-        isAfterWrongPIN = false
-        isLocked = false
-        updateState?()
-    }
-    
-    func timerFinished() {
-        isAfterWrongPIN = false
-        guard !isLocked else { return }
-        updateState?()
+    func verifyUsingBiometry(reason: String, completion: @escaping (Bool) -> Void) {
+        guard !loginInteractor.isLocked && UIApplication.shared.applicationState != .background else {
+            completion(false)
+            return
+        }
+        if appStateInteractor.willURLBeHandled {
+            appStateInteractor.clearURLWillBeHandled()
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                self.loginInteractor.authenticateUsingBiometry(reason: reason, completion: completion)
+            }
+        } else {
+            loginInteractor.authenticateUsingBiometry(reason: reason, completion: completion)
+        }
     }
 }

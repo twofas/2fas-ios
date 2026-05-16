@@ -20,19 +20,7 @@
 import Foundation
 import Protection
 
-public protocol SecurityDelegate: AnyObject {
-    
-    func securityBioAuthSuccess()
-    func securityBioAuthFailure()
-    func securityLockUI()
-    func securityUnlockUI()
-    func retryBioAuthIfNecessary()
-}
-
 public protocol SecurityProtocol: AnyObject {
-    
-    var delegate: SecurityDelegate? { get set }
-    
     var isAuthenticationRequired: Bool { get }
     
     // auth
@@ -56,7 +44,7 @@ public protocol SecurityProtocol: AnyObject {
     var isBioAuthAvailable: Bool { get }
     var isBioAuthEnabled: Bool { get }
     
-    func authenticateUsingBioAuthIfPossible(reason: String)
+    func authenticateUsingBiometry(reason: String, completion: @escaping (BiometryAuthenticationResult) -> Void)
     
     //
     func applicationWillEnterForeground()

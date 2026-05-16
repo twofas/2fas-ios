@@ -31,11 +31,10 @@ enum PINBuilder {
     }
     
     private static func buildLogin() -> some View {
-        let presenter = PINLoginPresenter()
-        let header = AnyView(PINWelcomeHeader())
-        let footer = AnyView(PINWelcomeFooter(action: {
-            print("go")
-        }))
-        return PINView(presenter: presenter, header: header, footer: footer)
+        let presenter = PINLoginPresenter(
+            flowController: LoginFlowController(viewController: UIViewController()),
+            interactor: ModuleInteractorFactory.shared.loginModuleInteractor()
+        )
+        return PINLoginView(presenter: presenter)
     }
 }

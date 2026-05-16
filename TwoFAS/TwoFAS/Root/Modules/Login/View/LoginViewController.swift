@@ -18,29 +18,29 @@
 //
 
 import UIKit
-
-final class LoginViewController: UIViewController {
-    var presenter: LoginPresenter! {
-        didSet {
-            presenter.view = loginView
-            loginView?.presenter = presenter
-        }
-    }
-    private var loginView: LoginView? {
-        view as? LoginView
-    }
-    
-    override func loadView() {
-        view = LoginView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        presenter.viewWillAppear()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        presenter.viewDidAppear()
-    }
-}
+//
+//final class LoginViewController: UIViewController {
+//    var presenter: LoginPresenter! {
+//        didSet {
+//            presenter.view = loginView
+//            loginView?.presenter = presenter
+//        }
+//    }
+//    private var loginView: LoginView? {
+//        view as? LoginView
+//    }
+//    
+//    override func loadView() {
+//        view = LoginView()
+//    }
+//    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        presenter.viewWillAppear()
+//    }
+//    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        presenter.viewDidAppear()
+//    }
+//}

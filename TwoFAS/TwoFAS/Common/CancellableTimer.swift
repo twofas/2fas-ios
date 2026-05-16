@@ -17,43 +17,32 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import SwiftUI
-import CommonUI
+import Foundation
 
-@Observable
-class PINPresenter {
-    var totalDigits: Int = 0
-    var enteredDigitCount: Int = 0
-    
-    var isBlocked = false
-    
-    private var pin: [Int] = [] {
-        didSet {
-            enteredDigitCount = pin.count
-        }
-    }
-    
-    func onKeyPressed(_ digit: TFPinKey) {
-        guard !isBlocked else { return }
-        if let number = digit.number, pin.count < totalDigits {
-            pin.append(number)
-            if pin.count >= totalDigits {
-                allEntered()
+final class CancellableTimer {
+    private var task: Task<Void, Never>?
+
+    func start(interval: Duration = .seconds(1), action: @escaping @Sendable () async -> Void) {
+        cancel() // cancel previous one
+
+        task = Task {
+            do {
+                while !Task.isCancelled {
+                    try await Task.sleep(for: interval)
+                    await action()
+                }
+            } catch {
+                // Task.sleep throws CancellationError when cancelled
             }
-        } else if digit.isDelete {
-            _ = pin.popLast()
         }
     }
-    
-    func onAppear() {
-        setup()
+
+    func cancel() {
+        task?.cancel()
+        task = nil
     }
-    
-    func allEntered() {
-        
-    }
-    
-    func setup() {
-        
+
+    deinit {
+        cancel()
     }
 }

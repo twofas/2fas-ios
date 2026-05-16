@@ -377,6 +377,8 @@
 		C24EECF6268787B400C6ABAA /* SectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF5268787B400C6ABAA /* SectionHandler.swift */; };
 		C24EECF8268789DE00C6ABAA /* ItemHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF7268789DE00C6ABAA /* ItemHandler.swift */; };
 		C24EECFA26878C5C00C6ABAA /* CommonItemHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF926878C5C00C6ABAA /* CommonItemHandler.swift */; };
+		C24F81762FB90DFF00339C8B /* CancellableTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24F81752FB90DFF00339C8B /* CancellableTimer.swift */; };
+		C24F81782FB90FC600339C8B /* Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24F81772FB90FC300339C8B /* Shake.swift */; };
 		C2508E102753A59F0072C564 /* SettingsMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2508E0F2753A59F0072C564 /* SettingsMenuViewController.swift */; };
 		C2508E132753AABF0072C564 /* SettingsMenuPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2508E122753AABF0072C564 /* SettingsMenuPresenter.swift */; };
 		C2508E152753AAFD0072C564 /* SettingsMenuModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2508E142753AAFD0072C564 /* SettingsMenuModuleInteractor.swift */; };
@@ -1017,7 +1019,7 @@
 		C2BE80582811DF03009CBC4A /* AuthRequestsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BE80572811DF03009CBC4A /* AuthRequestsPresenter.swift */; };
 		C2BE805B2811DF3D009CBC4A /* AuthRequestsFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BE805A2811DF3D009CBC4A /* AuthRequestsFlowController.swift */; };
 		C2BF61142D95D5F900E308BF /* SyncMigrationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BF61132D95D5F000E308BF /* SyncMigrationInteractor.swift */; };
-		C2C022212FAE28010045DDBC /* PINView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C022202FAE27FE0045DDBC /* PINView.swift */; };
+		C2C022212FAE28010045DDBC /* PINLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C022202FAE27FE0045DDBC /* PINLoginView.swift */; };
 		C2C02242297F222100D596A8 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C02241297F222100D596A8 /* MainPresenter.swift */; };
 		C2C02244297F224700D596A8 /* MainModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C02243297F224700D596A8 /* MainModuleInteractor.swift */; };
 		C2C0A7FC2DA2B46D000A1772 /* CloudState+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A7FB2DA2B469000A1772 /* CloudState+.swift */; };
@@ -1098,7 +1100,6 @@
 		C2D4777A2FB3C30A0057CA25 /* PINDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D477792FB3C3060057CA25 /* PINDots.swift */; };
 		C2D4777C2FB3C33D0057CA25 /* PINBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D4777B2FB3C3380057CA25 /* PINBuilder.swift */; };
 		C2D4777E2FB3C41C0057CA25 /* PINLoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D4777D2FB3C4130057CA25 /* PINLoginPresenter.swift */; };
-		C2D477802FB3C44B0057CA25 /* PINPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D4777F2FB3C4450057CA25 /* PINPresenter.swift */; };
 		C2D507B6256477DA00151359 /* CloudHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D507B5256477DA00151359 /* CloudHandler.swift */; };
 		C2D61E4125602F5000C5BE3A /* LogEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E2F25602F4100C5BE3A /* LogEntity+CoreDataClass.swift */; };
 		C2D61E4225602F5000C5BE3A /* LogEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E3025602F4100C5BE3A /* LogEntity+CoreDataProperties.swift */; };
@@ -2401,6 +2402,8 @@
 		C24EECF5268787B400C6ABAA /* SectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SectionHandler.swift; path = Sync/Section/SectionHandler.swift; sourceTree = SOURCE_ROOT; };
 		C24EECF7268789DE00C6ABAA /* ItemHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemHandler.swift; sourceTree = "<group>"; };
 		C24EECF926878C5C00C6ABAA /* CommonItemHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonItemHandler.swift; sourceTree = "<group>"; };
+		C24F81752FB90DFF00339C8B /* CancellableTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTimer.swift; sourceTree = "<group>"; };
+		C24F81772FB90FC300339C8B /* Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shake.swift; sourceTree = "<group>"; };
 		C2508E0F2753A59F0072C564 /* SettingsMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuViewController.swift; sourceTree = "<group>"; };
 		C2508E122753AABF0072C564 /* SettingsMenuPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuPresenter.swift; sourceTree = "<group>"; };
 		C2508E142753AAFD0072C564 /* SettingsMenuModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuModuleInteractor.swift; sourceTree = "<group>"; };
@@ -2950,7 +2953,7 @@
 		C2BE80572811DF03009CBC4A /* AuthRequestsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestsPresenter.swift; sourceTree = "<group>"; };
 		C2BE805A2811DF3D009CBC4A /* AuthRequestsFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestsFlowController.swift; sourceTree = "<group>"; };
 		C2BF61132D95D5F000E308BF /* SyncMigrationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationInteractor.swift; sourceTree = "<group>"; };
-		C2C022202FAE27FE0045DDBC /* PINView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINView.swift; sourceTree = "<group>"; };
+		C2C022202FAE27FE0045DDBC /* PINLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINLoginView.swift; sourceTree = "<group>"; };
 		C2C02241297F222100D596A8 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		C2C02243297F224700D596A8 /* MainModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModuleInteractor.swift; sourceTree = "<group>"; };
 		C2C0A7FB2DA2B469000A1772 /* CloudState+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudState+.swift"; sourceTree = "<group>"; };
@@ -3043,7 +3046,6 @@
 		C2D477792FB3C3060057CA25 /* PINDots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINDots.swift; sourceTree = "<group>"; };
 		C2D4777B2FB3C3380057CA25 /* PINBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINBuilder.swift; sourceTree = "<group>"; };
 		C2D4777D2FB3C4130057CA25 /* PINLoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINLoginPresenter.swift; sourceTree = "<group>"; };
-		C2D4777F2FB3C4450057CA25 /* PINPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINPresenter.swift; sourceTree = "<group>"; };
 		C2D507B5256477DA00151359 /* CloudHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudHandler.swift; sourceTree = "<group>"; };
 		C2D50B5525C71A0900CBB959 /* CameraOutputQRScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraOutputQRScanner.swift; sourceTree = "<group>"; };
 		C2D50B5625C71A0900CBB959 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
@@ -3686,12 +3688,11 @@
 			isa = PBXGroup;
 			children = (
 				C2A496AC2FB4F749004EAFBA /* PINWelcomeFooter.swift */,
-				C2D4777F2FB3C4450057CA25 /* PINPresenter.swift */,
 				C2D4777D2FB3C4130057CA25 /* PINLoginPresenter.swift */,
 				C2D4777B2FB3C3380057CA25 /* PINBuilder.swift */,
 				C2D477792FB3C3060057CA25 /* PINDots.swift */,
 				C2D477772FB3BE4C0057CA25 /* PINWelcomeHeader.swift */,
-				C2C022202FAE27FE0045DDBC /* PINView.swift */,
+				C2C022202FAE27FE0045DDBC /* PINLoginView.swift */,
 				C2FF03052FAB973E00362B88 /* PINKeyboard.swift */,
 				C21DBE942FAD055600C0E857 /* PINKeypadLayout.swift */,
 				C2FF03012FAB6D5200362B88 /* AppReset.swift */,
@@ -7371,6 +7372,7 @@
 		C2BDC6CD1FC1CBB700967D0E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C24F81752FB90DFF00339C8B /* CancellableTimer.swift */,
 				C2147CCC205D7B430001D011 /* PINPad */,
 				C2D50B5325C719EC00CBB959 /* Camera */,
 				C2C1513E294E6AAF00F8B511 /* DEPRECATED */,
@@ -8598,6 +8600,7 @@
 		C2FDEE55279C8FE8002CAB9E /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				C24F81772FB90FC300339C8B /* Shake.swift */,
 				C2FF03032FAB6DD500362B88 /* BorderShield.swift */,
 				C24EE7962EC3A5780065B452 /* PasswordTextField.swift */,
 				C29492DF2EA3EF2700474B84 /* PasswordInput.swift */,
@@ -9838,7 +9841,7 @@
 				C245702828A0500E008E99F4 /* GridViewGAImportNavigationFlowController.swift in Sources */,
 				C2F4D9392A8D33FA00608F63 /* AddServiceAdvancedWarningView.swift in Sources */,
 				C26764B02872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift in Sources */,
-				C2C022212FAE28010045DDBC /* PINView.swift in Sources */,
+				C2C022212FAE28010045DDBC /* PINLoginView.swift in Sources */,
 				C28633AD1FF57C8600C8F4B4 /* Types.swift in Sources */,
 				C2FF03022FAB6D5400362B88 /* AppReset.swift in Sources */,
 				C2ABA1CC24B24B7F008426D1 /* TokensViewController+ContextMenu.swift in Sources */,
@@ -10126,6 +10129,7 @@
 				C284991F27CC2C6D0092098D /* ComposeServiceCounterPresenter+Menu.swift in Sources */,
 				C2B077A6292A75CA0074517F /* UploadLogsFlowController.swift in Sources */,
 				C21111EE274ABBD900CA7C78 /* SettingsFlowController.swift in Sources */,
+				C24F81762FB90DFF00339C8B /* CancellableTimer.swift in Sources */,
 				C217E17023D7953000EE6C08 /* NotificationBottomOffset.swift in Sources */,
 				C284AF732760159D00FEE810 /* BackupDeletePresenter.swift in Sources */,
 				C23B899927C292C30028FE34 /* CommonNavigationControlllerFlow.swift in Sources */,
@@ -10138,7 +10142,6 @@
 				C2D97E842E2455F400E213A7 /* QRCodeDisplayPresenter.swift in Sources */,
 				C23B899527C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift in Sources */,
 				C2404F7E2B72FC6000EBD8DC /* SelectService.swift in Sources */,
-				C2D477802FB3C44B0057CA25 /* PINPresenter.swift in Sources */,
 				C2FCB29028258B3A00AF8A37 /* NewsPlainFlowController.swift in Sources */,
 				C21B1B312A882A920021CAF1 /* AddingServiceTOTPTimerView.swift in Sources */,
 				C27BE517275D6ACC0090CA12 /* BackupMenuModuleInteractor.swift in Sources */,
@@ -10147,6 +10150,7 @@
 				C27D543F275D393D001E9ABF /* BackupMenuPresenter.swift in Sources */,
 				C25C91CF2B08E84800E58729 /* AddingServiceManuallyNavigationFlowController.swift in Sources */,
 				C23FD51228146E2E00E4E9C5 /* ComposeServiceWebExtensionPresenter.swift in Sources */,
+				C24F81782FB90FC600339C8B /* Shake.swift in Sources */,
 				C2E7C38F2ADB1A3300478D89 /* ModuleInteractorFactory.swift in Sources */,
 				C24D8B3C29BE41CA00C3E11E /* ContentNavigationController.swift in Sources */,
 				C287D4FF276A9B5C0001B272 /* AppSecurityViewController.swift in Sources */,

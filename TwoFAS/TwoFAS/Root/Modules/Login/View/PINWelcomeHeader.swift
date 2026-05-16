@@ -20,22 +20,28 @@
 import SwiftUI
 
 struct PINWelcomeHeader: View {
+    @Binding
+    var info: String?
+    
     var body: some View {
         VStack(spacing: .zero) {
             Asset.pinLogo.swiftUIImage
                 .padding(.bottom, .M)
+                .alignmentGuide(.centerAlign) { d in d[VerticalAlignment.center] }
             
             VStack(spacing: .S) {
                 Text(T.Login.helloHeader)
                     .textStyle(.title2, .emphasized)
                     .foregroundStyle(.labelsPrimary)
-                    .alignmentGuide(.centerAlign) { d in d[VerticalAlignment.center] }
+                    .isHidden(info != nil, remove: false)
+                    .animation(.easeInOut, value: info)
                 
-                Text(T.Security.enterPinShort)
+                Text(info ?? T.Security.enterPinShort)
                     .textStyle(.body)
+                    .multilineTextAlignment(.center)
                     .foregroundStyle(.labelsSecondary)
-                    .alignmentGuide(.centerAlign) { d in d[VerticalAlignment.top] }
             }
+            .alignmentGuide(.centerAlign) { d in d[VerticalAlignment.top] }
             .padding(.top, .S)
         }
     }
@@ -44,4 +50,4 @@ struct PINWelcomeHeader: View {
 private struct CenterAlignID: AlignmentID {
     static func defaultValue(in d: ViewDimensions) -> CGFloat { d[VerticalAlignment.center] }
 }
-extension VerticalAlignment { static let centerAlign = VerticalAlignment(CenterAlignID.self) }
+private extension VerticalAlignment { static let centerAlign = VerticalAlignment(CenterAlignID.self) }

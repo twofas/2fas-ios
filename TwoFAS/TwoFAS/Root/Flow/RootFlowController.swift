@@ -35,6 +35,7 @@ protocol RootFlowControlling: AnyObject {
 final class RootFlowController: FlowController {
     private weak var parent: RootFlowControllerParent?
     private weak var coverView: UIView?
+    private weak var loginView: UIViewController?
     private weak var window: UIWindow?
     
     private var mainViewController: MainViewController?
@@ -96,7 +97,7 @@ extension RootFlowController: RootFlowControlling {
             in: window,
             parent: self
         )
-        coverView = cover.view
+        loginView = cover.view
         events(cover.viewWillAppear, cover.viewDidAppear)
     }
     

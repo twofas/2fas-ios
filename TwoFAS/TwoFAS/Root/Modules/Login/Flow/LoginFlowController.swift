@@ -17,9 +17,13 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
+import SwiftUI
 import Data
 import Common
+
+extension UIWindow.Level {
+    static let login = UIWindow.Level.normal + 2
+}
 
 protocol LoginFlowControllerParent: AnyObject {
     func loginClose()
@@ -37,33 +41,39 @@ final class LoginFlowController: FlowController {
     static func setAsCover(
         in window: UIWindow,
         parent: LoginFlowControllerParent
-    ) -> (view: UIView, viewWillAppear: Callback, viewDidAppear: Callback) {
-        let view = LoginView()
+    ) -> (view: UIViewController, viewWillAppear: Callback, viewDidAppear: Callback) {
         let flowController = LoginFlowController(viewController: UIViewController())
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.loginModuleInteractor()
-        let presenter = LoginPresenter(
-            loginType: .login,
-            flowController: flowController,
-            interactor: interactor
-        )
-        presenter.view = view
-        view.presenter = presenter
-        
-        window.addSubview(view)
-        view.pinToParent()
-        
-        let viewWillAppear: Callback = { [weak view] in
-            view?.presenter.viewWillAppear()
+        let presenter = PINLoginPresenter(flowController: flowController, interactor: interactor)
+        let view = UIHostingController(rootView: PINLoginView(presenter: presenter))
+        let newWindow = UIWindow()
+        newWindow.rootViewController = view
+//        let view = LoginView()
+//        let presenter = LoginPresenter(
+//            loginType: .login,
+//            flowController: flowController,
+//            interactor: interactor
+//        )
+//        presenter.view = view
+//        view.presenter = presenter
+//
+        newWindow.windowLevel = .login
+        newWindow.backgroundColor = .clear
+//        newWindow.pinToParent()
+        newWindow.makeKeyAndVisible()
+//
+        let viewWillAppear: Callback = {// [weak view] in
+//            view?.presenter.viewWillAppear()
         }
-        
-        let viewDidAppear: Callback = { [weak view] in
-            view?.presenter.viewDidAppear()
-            if view?.isFirstResponder == false {
-                view?.becomeFirstResponder()
-            }
+//        
+        let viewDidAppear: Callback = {// [weak view] in
+//            view?.presenter.viewDidAppear()
+//            if view?.isFirstResponder == false {
+//                view?.becomeFirstResponder()
+//            }
         }
-        
+//        
         return (view: view, viewWillAppear: viewWillAppear, viewDidAppear: viewDidAppear)
     }
     
@@ -71,18 +81,23 @@ final class LoginFlowController: FlowController {
         on viewController: UIViewController,
         parent: LoginFlowControllerParent
     ) {
-        let view = LoginViewController()
-        let flowController = LoginFlowController(viewController: view)
+        let flowController = LoginFlowController(viewController: UIViewController())
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.loginModuleInteractor()
-        let presenter = LoginPresenter(
-            loginType: .verify,
-            flowController: flowController,
-            interactor: interactor
-        )
-        view.presenter = presenter
-        view.configureAsModal()
+        let presenter = PINLoginPresenter(flowController: flowController, interactor: interactor)
+        let view = UIHostingController(rootView: PINLoginView(presenter: presenter))
         
+//        let view = LoginViewController()
+//        let flowController = LoginFlowController(viewController: view)
+//        flowController.parent = parent
+//        let interactor = ModuleInteractorFactory.shared.loginModuleInteractor()
+//        let presenter = LoginPresenter(
+//            loginType: .verify,
+//            flowController: flowController,
+//            interactor: interactor
+//        )
+//        view.presenter = presenter
+        view.configureAsModal()
         viewController.present(view, animated: true, completion: nil)
     }
 }

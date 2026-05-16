@@ -18,8 +18,12 @@
 //
 
 import SwiftUI
+import CommonUI
 
 struct PINDots: View {
+    @Environment(\.isEnabled)
+    private var isEnabled
+    
     private let size: CGFloat = 16
     let count: Int
     @Binding
@@ -30,7 +34,17 @@ struct PINDots: View {
             ForEach(0..<count, id: \.self) { index in
                 Circle()
                     .frame(width: size, height: size)
-                    .foregroundStyle(index < enteredCount ? .labelsPrimary : .labelsQuaternary)
+                    .foregroundStyle({ () -> AppColor in
+                        if isEnabled {
+                            if index < enteredCount {
+                                return .labelsPrimary
+                            } else {
+                                return .labelsQuaternary
+                            }
+                        } else {
+                            return AppColor.graysGray5
+                        }
+                    }())
             }
         }
         .animation(.easeInOut, value: enteredCount)

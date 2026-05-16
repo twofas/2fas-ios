@@ -18,11 +18,124 @@
 //
 
 import SwiftUI
+import CommonUI
 
 @Observable
-final class PINLoginPresenter: PINPresenter {
+final class PINLoginPresenter {
+    private let flowController: LoginFlowControlling
+    private let interactor: LoginModuleInteracting
     
-    override func setup() {
-        totalDigits = 4
+    private let reason = T.Security.confirmYouAreDeviceOwner
+    
+    private let minute = 60
+    private let twoMinutes = 120
+    private let textChangeTime = 3
+        
+    private let timer: CancellableTimer
+    
+    var info: String?
+    var shake = false
+    var totalDigits: Int = 0
+    var enteredDigitCount: Int = 0
+    var isBlocked = false
+    
+    private var pin: [Int] = [] {
+        didSet {
+            enteredDigitCount = pin.count
+        }
+    }
+        
+    init(flowController: LoginFlowControlling, interactor: LoginModuleInteracting) {
+        self.flowController = flowController
+        self.interactor = interactor
+        
+        timer = CancellableTimer()
+                
+        totalDigits = interactor.codeLength
+    }
+    
+    func onAppear() {
+        if interactor.isLocked {
+            lockedState()
+        } 
+        biometry()
+    }
+    
+    func onKeyPressed(_ digit: TFPinKey) {
+        guard !isBlocked else { return }
+        if let number = digit.number, pin.count < totalDigits {
+            pin.append(number)
+            if pin.count >= totalDigits {
+                allEntered()
+            }
+        } else if digit.isDelete {
+            _ = pin.popLast()
+        }
+    }
+}
+
+private extension PINLoginPresenter {
+    func biometry() {
+        interactor.verifyUsingBiometry(reason: reason) { [weak self] result in
+            if result {
+                self?.userLoggedIn()
+            }
+        }
+    }
+    
+    func allEntered() {
+        guard pin.count == totalDigits else { return }
+        if interactor.verify(numbers: pin) {
+            userLoggedIn()
+        } else {
+            shake.toggle()
+            userFailedToLogin()
+        }
+    }
+    
+    func userLoggedIn() {
+        clearPIN()
+        NotificationCenter.default.post(name: .userLoggedIn, object: nil)
+        flowController.toLoggedIn()
+    }
+    
+    func userFailedToLogin() {
+        clearPIN()
+        if interactor.isLocked {
+            lockedState()
+        } else {
+            info = T.Security.incorrectPIN
+            timer.start(interval: .seconds(textChangeTime)) { [weak self] in
+                self?.info = nil
+                self?.timer.cancel()
+            }
+        }
+    }
+    
+    func clearPIN() {
+        pin = []
+    }
+    
+    func lockedState() {
+        isBlocked = true
+        info = lockTimeMessage
+        timer.start(interval: .seconds(1)) { [weak self] in
+            if self?.interactor.isLocked == false {
+                self?.info = nil
+                self?.timer.cancel()
+            } else {
+                self?.info = self?.lockTimeMessage ?? ""
+            }
+        }
+    }
+    
+    var lockTimeMessage: String {
+        if let lockTime = interactor.lockTime {
+            if lockTime < twoMinutes {
+                return T.Security.tooManyAttemptsError2
+            }
+            return T.Security.tooManyAttemptsTryAgainAfter("\(lockTime / minute)")
+        }
+        return T.Security.tooManyAttemptsError
     }
 }

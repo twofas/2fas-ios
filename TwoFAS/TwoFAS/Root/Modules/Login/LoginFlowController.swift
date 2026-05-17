@@ -48,9 +48,9 @@ final class LoginFlowController: FlowController {
             interactor: interactor
         )
         
-        let viewController = UIHostingController(rootView: LoginView(presenter: presenter))
+        let viewController = LoginViewController(presenter: presenter)
         window.rootViewController = viewController
-        
+
         return viewController
     }
     
@@ -66,8 +66,8 @@ final class LoginFlowController: FlowController {
             flowController: flowController,
             interactor: interactor
         )
-        let view = UIHostingController(rootView: LoginView(presenter: presenter))
-       
+        let view = LoginViewController(presenter: presenter)
+
         view.configureAsModal()
         viewController.present(view, animated: true, completion: nil)
     }

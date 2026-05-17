@@ -59,31 +59,6 @@ struct LoginView: View {
                 .sensoryFeedback(.error, trigger: presenter.shake) { _, new in new }
             
             PINKeyboard(action: presenter.onKeyPressed)
-                .focusable()
-                .onKeyPress(keys: [
-                    .delete,
-                    .deleteForward,
-                    .init("0"),
-                    .init("1"),
-                    .init("2"),
-                    .init("3"),
-                    .init("4"),
-                    .init("5"),
-                    .init("6"),
-                    .init("7"),
-                    .init("8"),
-                    .init("9")
-                ]) { press in
-                    let lastKey = press.key
-                    if lastKey == .delete || lastKey == .deleteForward {
-                        presenter.onKeyPressed(.delete)
-                        return .handled
-                    } else if lastKey.character.isNumber, let value = Int(String(lastKey.character)) {
-                        presenter.onKeyPressed(.digit(value))
-                        return .handled
-                    }
-                    return .ignored
-                }
                 .disabled(presenter.isBlocked)
             
             Spacer()

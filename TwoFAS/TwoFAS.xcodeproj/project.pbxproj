@@ -52,6 +52,7 @@
 		C206CACF27A35ABE0068284C /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C206CACE27A35ABE0068284C /* View+.swift */; };
 		C207324929F724AB00FB294E /* TokensAdditionalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207324829F724AB00FB294E /* TokensAdditionalInfo.swift */; };
 		C207324B29F725DE00FB294E /* TokensDragIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207324A29F725DE00FB294E /* TokensDragIcon.swift */; };
+		C207766A2FBA361900F5ABC9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20776692FBA361900F5ABC9 /* LoginViewController.swift */; };
 		C2079B56298EF621003FA86D /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2079B55298EF621003FA86D /* MainMenuViewController.swift */; };
 		C207C11F2559F1CB0053975E /* CloudKitErrorParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207C11E2559F1CB0053975E /* CloudKitErrorParser.swift */; };
 		C209E9B9267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C209E9B8267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift */; };
@@ -2060,6 +2061,7 @@
 		C206CACE27A35ABE0068284C /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		C207324829F724AB00FB294E /* TokensAdditionalInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensAdditionalInfo.swift; sourceTree = "<group>"; };
 		C207324A29F725DE00FB294E /* TokensDragIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensDragIcon.swift; sourceTree = "<group>"; };
+		C20776692FBA361900F5ABC9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C2079B55298EF621003FA86D /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		C207C11E2559F1CB0053975E /* CloudKitErrorParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitErrorParser.swift; sourceTree = "<group>"; };
 		C208101327948DFD0035E339 /* Code+GoogleAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Code+GoogleAuth.swift"; sourceTree = "<group>"; };
@@ -4283,6 +4285,7 @@
 				C20629FB2AF98684003BFC21 /* LoginFlowController.swift */,
 				C2147CEF205D8C6B0001D011 /* LoginModuleInteractor.swift */,
 				C2D4777D2FB3C4130057CA25 /* LoginPresenter.swift */,
+				C20776692FBA361900F5ABC9 /* LoginViewController.swift */,
 				C2C022202FAE27FE0045DDBC /* LoginView.swift */,
 			);
 			path = Login;
@@ -10331,6 +10334,7 @@
 				C237369C2AC0990900792054 /* GuideSelectorNavigationFlowController.swift in Sources */,
 				C2997AA92454D767006D5943 /* SelectPINLengthController.swift in Sources */,
 				C2323C50276B530D00038B76 /* AppLockPresenter.swift in Sources */,
+				C207766A2FBA361900F5ABC9 /* LoginViewController.swift in Sources */,
 				C2CC80D627B99AF700294CF2 /* ComposeServicePresenter+Menu.swift in Sources */,
 				C2F5F9E528611DB300F778E1 /* BrowserExtensionPairingAlreadyPairedPresenter.swift in Sources */,
 				C21930EE2EC1094F001354C9 /* BackupManageEncryptionPresenter.swift in Sources */,

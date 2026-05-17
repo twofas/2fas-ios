@@ -106,24 +106,27 @@ struct IntroductionView: View {
                 activePage: Binding(get: { abs((position.viewID as? Int ?? 0) - 1) }, set: { _ in }),
                 dotsCount: totalPages - 1
             )
-            TFButton(
-                (position.viewID as? Int ?? 0) == totalPages - 1 ? T.Introduction.title : T.Commons.continue,
-                variant: .borderedProminent,
-                size: .largeWide,
-                applyGlass: true
-            ) {
-                nextPage()
+            VStack(spacing: .XL) {
+                TFButton(
+                    (position.viewID as? Int ?? 0) == totalPages - 1 ? T.Introduction.title : T.Commons.continue,
+                    variant: .borderedProminent,
+                    size: .largeWide,
+                    applyGlass: true
+                ) {
+                    nextPage()
+                }
+                TFButton(
+                    T.Introduction.tos,
+                    variant: .borderlessNeutral,
+                    size: .small,
+                    applyGlass: false
+                ) {
+                    presenter.onTOS()
+                }
+                .padding(.bottom, .XL)
+                .isHidden((position.viewID as? Int ?? 0) != 0, remove: true)
+                .animation(.easeInOut, value: position)
             }
-            TFButton(
-                T.Introduction.tos,
-                variant: .borderlessNeutral,
-                size: .small,
-                applyGlass: false
-            ) {
-                presenter.onTOS()
-            }
-            .isHidden((position.viewID as? Int ?? 0) != 0, remove: true)
-            .animation(.easeInOut, value: position)
         }
         .sheet(isPresented: $showInfo, content: {
             IntroductionInfoSheetContent()
@@ -157,7 +160,7 @@ private struct IntroductionPage0: View {
         ZStack {
             VStack {
                 ZStack {
-                    BorderShield()
+                    BorderShield(showDeleteIcon: false)
                 }
                 .frame(alignment: .top)
                 Spacer()

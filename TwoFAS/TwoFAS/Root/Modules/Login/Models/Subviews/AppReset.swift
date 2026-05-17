@@ -53,7 +53,7 @@ struct AppReset: View {
             
             VStack(spacing: 0) {
                 VStack(spacing: .XXXL) {
-                    BorderShield()
+                    BorderShield(showDeleteIcon: true)
                     VStack(spacing: .M) {
                         Text(T.Restore.Reset.title)
                             .textStyle(.title2, .emphasized)
@@ -96,10 +96,11 @@ struct AppReset: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.XL)
-        .background(.backgroundsPrimaryElevated)
+        .background(.backgroundsSecondaryElevated)
         .cornerRadius(TFCornerRadius.large)
         .overlay(
             RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue)
+                .inset(by: 1)
                 .stroke(AppColor.bordersPrimary, lineWidth: 1)
         )
     }

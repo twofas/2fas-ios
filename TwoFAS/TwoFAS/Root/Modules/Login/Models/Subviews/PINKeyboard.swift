@@ -18,23 +18,28 @@
 //
 
 import SwiftUI
+import CommonUI
 
-enum PINBuilder {
-    enum PINType {
-        case login
-    }
+struct PINKeyboard: View {
+    let action: (TFPinKey) -> Void
     
-    static func build(type: PINType) -> some View {
-        switch type {
-        case .login: buildLogin()
+    var body: some View {
+        PINKeypadLayout {
+            TFPinButton(.digit(1), action: action)
+            TFPinButton(.digit(2), action: action)
+            TFPinButton(.digit(3), action: action)
+            TFPinButton(.digit(4), action: action)
+            TFPinButton(.digit(5), action: action)
+            TFPinButton(.digit(6), action: action)
+            TFPinButton(.digit(7), action: action)
+            TFPinButton(.digit(8), action: action)
+            TFPinButton(.digit(9), action: action)
+            TFPinButton(.delete, action: action)
+                .isHidden(true, remove: false)
+            TFPinButton(.digit(0), action: action)
+            TFPinButton(.delete, action: action)
         }
-    }
-    
-    private static func buildLogin() -> some View {
-        let presenter = PINLoginPresenter(
-            flowController: LoginFlowController(viewController: UIViewController()),
-            interactor: ModuleInteractorFactory.shared.loginModuleInteractor()
-        )
-        return PINLoginView(presenter: presenter)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.XL)
     }
 }

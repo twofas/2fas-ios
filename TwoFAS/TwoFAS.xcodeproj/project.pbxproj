@@ -148,9 +148,7 @@
 		C2147CC8205D787A0001D011 /* CodeStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CC3205D78790001D011 /* CodeStorage.swift */; };
 		C2147CC9205D787A0001D011 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CC4205D78790001D011 /* Extensions.swift */; };
 		C2147CCA205D787A0001D011 /* BiometricAuthDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CC5205D78790001D011 /* BiometricAuthDelegate.swift */; };
-		C2147CD1205D7B520001D011 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CCE205D7B510001D011 /* LoginView.swift */; };
 		C2147CDA205D7B630001D011 /* PINPadCodeDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CD5205D7B630001D011 /* PINPadCodeDots.swift */; };
-		C2147CDD205D7B630001D011 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CD8205D7B630001D011 /* LoginPresenter.swift */; };
 		C2147CE4205D7B790001D011 /* PINPadCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CE0205D7B780001D011 /* PINPadCircleView.swift */; };
 		C2147CE5205D7B790001D011 /* PINPadKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CE1205D7B780001D011 /* PINPadKey.swift */; };
 		C2147CE6205D7B790001D011 /* PINPadKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CE2205D7B780001D011 /* PINPadKeyboard.swift */; };
@@ -255,7 +253,6 @@
 		C233870627810C2E00F8DBC3 /* TrashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C233870527810C2E00F8DBC3 /* TrashViewController.swift */; };
 		C233870827810D1A00F8DBC3 /* TrashModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C233870727810D1A00F8DBC3 /* TrashModels.swift */; };
 		C233870A2781113800F8DBC3 /* TrashViewController+TableCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23387092781113800F8DBC3 /* TrashViewController+TableCellHandling.swift */; };
-		C233DCAD2B04285E008E41D8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C233DCAC2B04285E008E41D8 /* LoginViewController.swift */; };
 		C2340CB227BC4C6500746676 /* ComposeServiceViewController+TableCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2340CB127BC4C6500746676 /* ComposeServiceViewController+TableCellHandling.swift */; };
 		C234433A2A8C021100005F33 /* AddingServiceErrorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23443392A8C021100005F33 /* AddingServiceErrorTextView.swift */; };
 		C234433C2A8C087600005F33 /* AddingServiceRequriedTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234433B2A8C087600005F33 /* AddingServiceRequriedTitleView.swift */; };
@@ -1019,7 +1016,7 @@
 		C2BE80582811DF03009CBC4A /* AuthRequestsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BE80572811DF03009CBC4A /* AuthRequestsPresenter.swift */; };
 		C2BE805B2811DF3D009CBC4A /* AuthRequestsFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BE805A2811DF3D009CBC4A /* AuthRequestsFlowController.swift */; };
 		C2BF61142D95D5F900E308BF /* SyncMigrationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BF61132D95D5F000E308BF /* SyncMigrationInteractor.swift */; };
-		C2C022212FAE28010045DDBC /* PINLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C022202FAE27FE0045DDBC /* PINLoginView.swift */; };
+		C2C022212FAE28010045DDBC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C022202FAE27FE0045DDBC /* LoginView.swift */; };
 		C2C02242297F222100D596A8 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C02241297F222100D596A8 /* MainPresenter.swift */; };
 		C2C02244297F224700D596A8 /* MainModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C02243297F224700D596A8 /* MainModuleInteractor.swift */; };
 		C2C0A7FC2DA2B46D000A1772 /* CloudState+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C0A7FB2DA2B469000A1772 /* CloudState+.swift */; };
@@ -1098,8 +1095,7 @@
 		C2D44E68275C10850043F5D6 /* SettingsMenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D44E67275C10850043F5D6 /* SettingsMenuTableView.swift */; };
 		C2D477782FB3BE550057CA25 /* PINWelcomeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D477772FB3BE4C0057CA25 /* PINWelcomeHeader.swift */; };
 		C2D4777A2FB3C30A0057CA25 /* PINDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D477792FB3C3060057CA25 /* PINDots.swift */; };
-		C2D4777C2FB3C33D0057CA25 /* PINBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D4777B2FB3C3380057CA25 /* PINBuilder.swift */; };
-		C2D4777E2FB3C41C0057CA25 /* PINLoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D4777D2FB3C4130057CA25 /* PINLoginPresenter.swift */; };
+		C2D4777E2FB3C41C0057CA25 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D4777D2FB3C4130057CA25 /* LoginPresenter.swift */; };
 		C2D507B6256477DA00151359 /* CloudHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D507B5256477DA00151359 /* CloudHandler.swift */; };
 		C2D61E4125602F5000C5BE3A /* LogEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E2F25602F4100C5BE3A /* LogEntity+CoreDataClass.swift */; };
 		C2D61E4225602F5000C5BE3A /* LogEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E3025602F4100C5BE3A /* LogEntity+CoreDataProperties.swift */; };
@@ -2133,9 +2129,7 @@
 		C2147CC3205D78790001D011 /* CodeStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeStorage.swift; sourceTree = "<group>"; };
 		C2147CC4205D78790001D011 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C2147CC5205D78790001D011 /* BiometricAuthDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricAuthDelegate.swift; sourceTree = "<group>"; };
-		C2147CCE205D7B510001D011 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C2147CD5205D7B630001D011 /* PINPadCodeDots.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINPadCodeDots.swift; sourceTree = "<group>"; };
-		C2147CD8205D7B630001D011 /* LoginPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		C2147CE0205D7B780001D011 /* PINPadCircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINPadCircleView.swift; sourceTree = "<group>"; };
 		C2147CE1205D7B780001D011 /* PINPadKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINPadKey.swift; sourceTree = "<group>"; };
 		C2147CE2205D7B780001D011 /* PINPadKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PINPadKeyboard.swift; sourceTree = "<group>"; };
@@ -2267,7 +2261,6 @@
 		C233BD242801D6F900A9CFF2 /* WebExtensionDeviceNameInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebExtensionDeviceNameInteractor.swift; sourceTree = "<group>"; };
 		C233BD262801D97F00A9CFF2 /* RegisterDeviceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterDeviceInteractor.swift; sourceTree = "<group>"; };
 		C233BD282801E5A200A9CFF2 /* PushNotificationRegistrationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationRegistrationInteractor.swift; sourceTree = "<group>"; };
-		C233DCAC2B04285E008E41D8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C2340CB127BC4C6500746676 /* ComposeServiceViewController+TableCellHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComposeServiceViewController+TableCellHandling.swift"; sourceTree = "<group>"; };
 		C23443392A8C021100005F33 /* AddingServiceErrorTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceErrorTextView.swift; sourceTree = "<group>"; };
 		C234433B2A8C087600005F33 /* AddingServiceRequriedTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceRequriedTitleView.swift; sourceTree = "<group>"; };
@@ -2953,7 +2946,7 @@
 		C2BE80572811DF03009CBC4A /* AuthRequestsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestsPresenter.swift; sourceTree = "<group>"; };
 		C2BE805A2811DF3D009CBC4A /* AuthRequestsFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequestsFlowController.swift; sourceTree = "<group>"; };
 		C2BF61132D95D5F000E308BF /* SyncMigrationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationInteractor.swift; sourceTree = "<group>"; };
-		C2C022202FAE27FE0045DDBC /* PINLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINLoginView.swift; sourceTree = "<group>"; };
+		C2C022202FAE27FE0045DDBC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C2C02241297F222100D596A8 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		C2C02243297F224700D596A8 /* MainModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModuleInteractor.swift; sourceTree = "<group>"; };
 		C2C0A7FB2DA2B469000A1772 /* CloudState+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudState+.swift"; sourceTree = "<group>"; };
@@ -3044,8 +3037,7 @@
 		C2D44E74275C1FF40043F5D6 /* MainRepositoryImpl+General.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+General.swift"; sourceTree = "<group>"; };
 		C2D477772FB3BE4C0057CA25 /* PINWelcomeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINWelcomeHeader.swift; sourceTree = "<group>"; };
 		C2D477792FB3C3060057CA25 /* PINDots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINDots.swift; sourceTree = "<group>"; };
-		C2D4777B2FB3C3380057CA25 /* PINBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINBuilder.swift; sourceTree = "<group>"; };
-		C2D4777D2FB3C4130057CA25 /* PINLoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINLoginPresenter.swift; sourceTree = "<group>"; };
+		C2D4777D2FB3C4130057CA25 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		C2D507B5256477DA00151359 /* CloudHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudHandler.swift; sourceTree = "<group>"; };
 		C2D50B5525C71A0900CBB959 /* CameraOutputQRScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraOutputQRScanner.swift; sourceTree = "<group>"; };
 		C2D50B5625C71A0900CBB959 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
@@ -3684,48 +3676,6 @@
 			path = Generated;
 			sourceTree = "<group>";
 		};
-		C20629F72AF98373003BFC21 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C2A496AC2FB4F749004EAFBA /* PINWelcomeFooter.swift */,
-				C2D4777D2FB3C4130057CA25 /* PINLoginPresenter.swift */,
-				C2D4777B2FB3C3380057CA25 /* PINBuilder.swift */,
-				C2D477792FB3C3060057CA25 /* PINDots.swift */,
-				C2D477772FB3BE4C0057CA25 /* PINWelcomeHeader.swift */,
-				C2C022202FAE27FE0045DDBC /* PINLoginView.swift */,
-				C2FF03052FAB973E00362B88 /* PINKeyboard.swift */,
-				C21DBE942FAD055600C0E857 /* PINKeypadLayout.swift */,
-				C2FF03012FAB6D5200362B88 /* AppReset.swift */,
-				C2147CCE205D7B510001D011 /* LoginView.swift */,
-				C233DCAC2B04285E008E41D8 /* LoginViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C20629F82AF9860A003BFC21 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2147CD8205D7B630001D011 /* LoginPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C20629F92AF98611003BFC21 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2147CEF205D8C6B0001D011 /* LoginModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C20629FA2AF98617003BFC21 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C20629FB2AF98684003BFC21 /* LoginFlowController.swift */,
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
 		C2079B50298EB352003FA86D /* MainMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -4330,10 +4280,10 @@
 			isa = PBXGroup;
 			children = (
 				C2CACFBC2AFEC8EB001E0F8E /* Models */,
-				C20629FA2AF98617003BFC21 /* Flow */,
-				C20629F92AF98611003BFC21 /* Interactor */,
-				C20629F82AF9860A003BFC21 /* Presenter */,
-				C20629F72AF98373003BFC21 /* View */,
+				C20629FB2AF98684003BFC21 /* LoginFlowController.swift */,
+				C2147CEF205D8C6B0001D011 /* LoginModuleInteractor.swift */,
+				C2D4777D2FB3C4130057CA25 /* LoginPresenter.swift */,
+				C2C022202FAE27FE0045DDBC /* LoginView.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -7080,6 +7030,19 @@
 			path = Flow;
 			sourceTree = "<group>";
 		};
+		C2AE55472FBA2E8F00CF3643 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				C2A496AC2FB4F749004EAFBA /* PINWelcomeFooter.swift */,
+				C2D477792FB3C3060057CA25 /* PINDots.swift */,
+				C2D477772FB3BE4C0057CA25 /* PINWelcomeHeader.swift */,
+				C2FF03052FAB973E00362B88 /* PINKeyboard.swift */,
+				C21DBE942FAD055600C0E857 /* PINKeypadLayout.swift */,
+				C2FF03012FAB6D5200362B88 /* AppReset.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		C2AE5F7B2ADC8AF800AED670 /* CodeSupport */ = {
 			isa = PBXGroup;
 			children = (
@@ -7585,6 +7548,7 @@
 		C2CACFBC2AFEC8EB001E0F8E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C2AE55472FBA2E8F00CF3643 /* Subviews */,
 				C2CACFBD2AFEC905001E0F8E /* LoginType.swift */,
 			);
 			path = Models;
@@ -9841,7 +9805,7 @@
 				C245702828A0500E008E99F4 /* GridViewGAImportNavigationFlowController.swift in Sources */,
 				C2F4D9392A8D33FA00608F63 /* AddServiceAdvancedWarningView.swift in Sources */,
 				C26764B02872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift in Sources */,
-				C2C022212FAE28010045DDBC /* PINLoginView.swift in Sources */,
+				C2C022212FAE28010045DDBC /* LoginView.swift in Sources */,
 				C28633AD1FF57C8600C8F4B4 /* Types.swift in Sources */,
 				C2FF03022FAB6D5400362B88 /* AppReset.swift in Sources */,
 				C2ABA1CC24B24B7F008426D1 /* TokensViewController+ContextMenu.swift in Sources */,
@@ -9884,7 +9848,6 @@
 				C23736A22AC09D0E00792054 /* GuideSelectorViewController.swift in Sources */,
 				C2E7C34B2ADB021500478D89 /* CameraOutputQRScanner.swift in Sources */,
 				C2BDC6C31FC1AC0A00967D0E /* RootViewController.swift in Sources */,
-				C2147CDD205D7B630001D011 /* LoginPresenter.swift in Sources */,
 				C2F9D60A2A1FEC700085B65A /* TokensRevealButton.swift in Sources */,
 				C27A54A827F0F3C700321D2B /* BrowserExtensionPairingPlainFlowController.swift in Sources */,
 				C2BDC6D51FC1CBE100967D0E /* Theme.swift in Sources */,
@@ -9941,8 +9904,7 @@
 				C2B1209129D76FA60020281E /* AppearanceModuleInteractor.swift in Sources */,
 				C2E7C3482ADB021500478D89 /* CameraPreview.swift in Sources */,
 				C2D44E68275C10850043F5D6 /* SettingsMenuTableView.swift in Sources */,
-				C2D4777E2FB3C41C0057CA25 /* PINLoginPresenter.swift in Sources */,
-				C233DCAD2B04285E008E41D8 /* LoginViewController.swift in Sources */,
+				C2D4777E2FB3C41C0057CA25 /* LoginPresenter.swift in Sources */,
 				C2A74FE62610D510007E5AB3 /* ColorGridSelector.swift in Sources */,
 				C2C0A7FC2DA2B46D000A1772 /* CloudState+.swift in Sources */,
 				C25C661428BADAB0008EC66A /* AboutFlowController.swift in Sources */,
@@ -9961,7 +9923,6 @@
 				C2E2C81427B0702300F04B70 /* CollectionViewAdapter.swift in Sources */,
 				C2C8F9302CD6E535001179C0 /* CommonKeys.swift in Sources */,
 				C2C02242297F222100D596A8 /* MainPresenter.swift in Sources */,
-				C2147CD1205D7B520001D011 /* LoginView.swift in Sources */,
 				C20CD53C2A1CF03F00A7F324 /* TokensViewController+Layout.swift in Sources */,
 				C25BB2CC2DAAE3FF00BEC626 /* ManageWatchView.swift in Sources */,
 				C21930F22EC11439001354C9 /* BackupManageEncryptionModels.swift in Sources */,
@@ -9971,7 +9932,6 @@
 				C2147CF2205D8C6C0001D011 /* LoginModuleInteractor.swift in Sources */,
 				C2AB92E127668DE700698382 /* ShareActivityController.swift in Sources */,
 				C2AC22062766152C00271402 /* ExporterMainScreenViewController.swift in Sources */,
-				C2D4777C2FB3C33D0057CA25 /* PINBuilder.swift in Sources */,
 				C23FD50A2814635400E4E9C5 /* ComposeServiceWebExtensionFlowController.swift in Sources */,
 				C26618A026126A8200ED52CB /* LabelComposeViewController.swift in Sources */,
 				C2B1209529D773770020281E /* AppearanceFlowController.swift in Sources */,

@@ -18,8 +18,11 @@
 //
 
 import SwiftUI
+import CommonUI
 
 struct PINWelcomeHeader: View {
+    let loginType: LoginType
+    
     @Binding
     var info: String?
     
@@ -28,18 +31,25 @@ struct PINWelcomeHeader: View {
             Asset.pinLogo.swiftUIImage
                 .padding(.bottom, .M)
                 .alignmentGuide(.centerAlign) { d in d[VerticalAlignment.center] }
-            
             VStack(spacing: .S) {
-                Text(T.Login.helloHeader)
-                    .textStyle(.title2, .emphasized)
-                    .foregroundStyle(.labelsPrimary)
-                    .isHidden(info != nil, remove: false)
-                    .animation(.easeInOut, value: info)
-                
-                Text(info ?? T.Security.enterPinShort)
+                if loginType == .login {
+                    Text(T.Login.helloHeader)
+                        .textStyle(.title2, .emphasized)
+                        .foregroundStyle(.labelsPrimary)
+                        .isHidden(info != nil, remove: false)
+                        .animation(.easeInOut, value: info)
+                } else {
+                    Spacer()
+                        .frame(height: Spacing.XL.rawValue)
+                }
+                let text = info ?? T.Security.enterPinShort
+                Text(text)
                     .textStyle(.body)
                     .multilineTextAlignment(.center)
+                    .lineLimit(nil)
                     .foregroundStyle(.labelsSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .animation(.easeInOut, value: text)
             }
             .alignmentGuide(.centerAlign) { d in d[VerticalAlignment.top] }
             .padding(.top, .S)

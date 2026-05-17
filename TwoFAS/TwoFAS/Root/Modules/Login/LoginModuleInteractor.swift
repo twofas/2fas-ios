@@ -72,6 +72,16 @@ extension LoginModuleInteractor: LoginModuleInteracting {
     }
     
     func verifyUsingBiometry(reason: String, completion: @escaping (Bool) -> Void) {
+        func checkResult(_ result: Bool) {
+            switch result {
+            case true:
+                loginInteractor.authSuccessfully()
+                completion(true)
+            case false:
+                completion(false)
+            }
+        }
+        
         guard !loginInteractor.isLocked && UIApplication.shared.applicationState != .background else {
             completion(false)
             return
@@ -79,10 +89,10 @@ extension LoginModuleInteractor: LoginModuleInteracting {
         if appStateInteractor.willURLBeHandled {
             appStateInteractor.clearURLWillBeHandled()
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-                self.loginInteractor.authenticateUsingBiometry(reason: reason, completion: completion)
+                self.loginInteractor.authenticateUsingBiometry(reason: reason) { checkResult($0) }
             }
         } else {
-            loginInteractor.authenticateUsingBiometry(reason: reason, completion: completion)
+            loginInteractor.authenticateUsingBiometry(reason: reason) { checkResult($0) }
         }
     }
 }

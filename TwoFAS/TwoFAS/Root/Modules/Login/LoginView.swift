@@ -20,9 +20,9 @@
 import SwiftUI
 import CommonUI
 
-struct PINLoginView: View {
+struct LoginView: View {
     @Bindable
-    var presenter: PINLoginPresenter
+    var presenter: LoginPresenter
     
     @Environment(\.scenePhase)
     private var scenePhase
@@ -32,21 +32,31 @@ struct PINLoginView: View {
     
     var body: some View {
         VStack(spacing: .S) {
-            Spacer()
-                .containerRelativeFrame(.vertical) { length, _ in
-                    length * 0.06
+            if presenter.loginType == .verify {
+                HStack {
+                    TFLiquidGlassSymbolButton(symbol: .close) {
+                        presenter.onClose()
+                    }
+                    Spacer()
                 }
-            AdaptiveReadableContainer {
-                PINWelcomeHeader(info: $presenter.info)
+                .padding(.XL)
             }
-            Spacer()
-                .containerRelativeFrame(.vertical) { length, _ in
-                    length * 0.04
+            
+            VStack(spacing: .zero) {
+                Spacer()
+                AdaptiveReadableContainer {
+                    PINWelcomeHeader(loginType: presenter.loginType, info: $presenter.info)
                 }
+                Spacer()
+            }
+            .containerRelativeFrame(.vertical) { length, _ in
+                length * (presenter.loginType == .verify ? 0.20 : 0.25)
+            }
             
             PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
                 .disabled(presenter.isBlocked)
                 .shake(on: presenter.shake)
+                .sensoryFeedback(.error, trigger: presenter.shake) { _, new in new }
             
             PINKeyboard(action: presenter.onKeyPressed)
                 .focusable()
@@ -77,10 +87,15 @@ struct PINLoginView: View {
                 .disabled(presenter.isBlocked)
             
             Spacer()
-            PINWelcomeFooter {
-                aboutWindow = true
+            if presenter.loginType == .login {
+                PINWelcomeFooter {
+                    aboutWindow = true
+                }
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .sensoryFeedback(.success, trigger: presenter.success) { _, new in new }
+        .sensoryFeedback(.start, trigger: presenter.unlock)
         .background(AppColor.backgroundsPrimary)
         .onAppear {
             presenter.onAppear()

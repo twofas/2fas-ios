@@ -30,17 +30,22 @@ struct PINKeypadLayout: Layout {
     private static let maxWidthFactor: CGFloat = 7
     private static let maxHeightFactor: CGFloat = 8
     
+    private static let minSpacing: CGFloat = 16
+    
     private var maxWidth: CGFloat { Self.buttonSize * Self.maxWidthFactor }
     private var maxHeight: CGFloat { Self.buttonSize * Self.maxHeightFactor }
+    private var minHeight: CGFloat { Self.buttonSize * CGFloat(Self.rows) + Self.minSpacing * CGFloat(Self.rows - 1) }
 
     // MARK: Layout
 
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
         let availableW = proposal.width ?? maxWidth
         let availableH = proposal.height ?? maxHeight
+        let height = max(min(availableH, maxHeight), minHeight)
+
         return CGSize(
             width: min(availableW, maxWidth),
-            height: min(availableH, maxHeight)
+            height: height
         )
     }
 
@@ -50,7 +55,7 @@ struct PINKeypadLayout: Layout {
         let rows = Self.rows
 
         let layoutW = min(bounds.width, maxWidth)
-        let layoutH = min(bounds.height, maxHeight)
+        let layoutH = max(min(bounds.height, maxHeight), minHeight)
 
         // Equal horizontal gaps: left edge + gaps between cols + right edge = cols+1 slots
         let hGap = (layoutW - btn * CGFloat(cols)) / CGFloat(cols + 1)

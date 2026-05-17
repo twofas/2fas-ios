@@ -39,9 +39,6 @@ final class RootPresenter {
 
     private var isCoverActive = false
     
-    private var viewWillAppearEvent: Callback?
-    private var viewDidAppearEvent: Callback?
-    
     private let flowController: RootFlowControlling
     private let interactor: RootModuleInteracting
     
@@ -77,7 +74,6 @@ final class RootPresenter {
             self?.removeCover()
             self?.presentLogin(immediately: true)
         }
-        viewWillAppearEvent?()
     }
     
     func applicationWillEnterForeground() {
@@ -96,7 +92,6 @@ final class RootPresenter {
             self?.view?.tokenCopied()
         }
         removeCover(animated: true)
-        viewDidAppearEvent?()
         view?.rateApp()
     }
     
@@ -133,8 +128,6 @@ final class RootPresenter {
     }
     
     func handleUserWasLoggedIn() {
-        viewWillAppearEvent = nil
-        viewDidAppearEvent = nil
         interactor.lockScreenInactive()
         handleViewFlow()
     }
@@ -173,8 +166,7 @@ final class RootPresenter {
     private func removeCover(animated: Bool = false) {
         guard isCoverActive else { return }
         isCoverActive = false
-        guard  currentState != .login else { return }
-        flowController.toRemoveCover(animated: animated)
+        flowController.toRemoveCover()
     }
     
     private func presentIntroduction() {
@@ -198,10 +190,7 @@ final class RootPresenter {
         
         interactor.lockScreenActive()
         Log("Presenting Login")
-        flowController.toLogin { [weak self] viewWillAppearEvent, viewDidAppearEvent in
-            self?.viewWillAppearEvent = viewWillAppearEvent
-            self?.viewDidAppearEvent = viewDidAppearEvent
-        }
+        flowController.toLogin()
     }
     
     private func changeState(_ newState: State) {

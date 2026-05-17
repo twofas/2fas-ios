@@ -29,7 +29,9 @@ final class CancellableTimer {
             do {
                 while !Task.isCancelled {
                     try await Task.sleep(for: interval)
-                    await action()
+                    Task { @MainActor in
+                        await action()
+                    }
                 }
             } catch {
                 // Task.sleep throws CancellationError when cancelled

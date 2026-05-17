@@ -21,9 +21,11 @@ import SwiftUI
 import CommonUI
 
 @Observable
-final class PINLoginPresenter {
+final class LoginPresenter {
     private let flowController: LoginFlowControlling
     private let interactor: LoginModuleInteracting
+    private let notificationCenter: NotificationCenter
+    let loginType: LoginType
     
     private let reason = T.Security.confirmYouAreDeviceOwner
     
@@ -35,6 +37,8 @@ final class PINLoginPresenter {
     
     var info: String?
     var shake = false
+    var success = false
+    var unlock = false
     var totalDigits: Int = 0
     var enteredDigitCount: Int = 0
     var isBlocked = false
@@ -45,20 +49,26 @@ final class PINLoginPresenter {
         }
     }
         
-    init(flowController: LoginFlowControlling, interactor: LoginModuleInteracting) {
+    init(loginType: LoginType, flowController: LoginFlowControlling, interactor: LoginModuleInteracting) {
+        self.loginType = loginType
         self.flowController = flowController
         self.interactor = interactor
+        self.notificationCenter = .default
         
         timer = CancellableTimer()
-                
+
+        notificationCenter
+            .addObserver(
+                self,
+                selector: #selector(didBecomeActive),
+                name: UIApplication.didBecomeActiveNotification,
+                object: nil
+            )
         totalDigits = interactor.codeLength
     }
     
     func onAppear() {
-        if interactor.isLocked {
-            lockedState()
-        } 
-        biometry()
+        isVisible()
     }
     
     func onKeyPressed(_ digit: TFPinKey) {
@@ -72,9 +82,13 @@ final class PINLoginPresenter {
             _ = pin.popLast()
         }
     }
+    
+    func onClose() {
+        flowController.toClose()
+    }
 }
 
-private extension PINLoginPresenter {
+private extension LoginPresenter {
     func biometry() {
         interactor.verifyUsingBiometry(reason: reason) { [weak self] result in
             if result {
@@ -88,18 +102,19 @@ private extension PINLoginPresenter {
         if interactor.verify(numbers: pin) {
             userLoggedIn()
         } else {
-            shake.toggle()
             userFailedToLogin()
         }
     }
     
     func userLoggedIn() {
+        success.toggle()
         clearPIN()
         NotificationCenter.default.post(name: .userLoggedIn, object: nil)
         flowController.toLoggedIn()
     }
     
     func userFailedToLogin() {
+        shake.toggle()
         clearPIN()
         if interactor.isLocked {
             lockedState()
@@ -122,7 +137,9 @@ private extension PINLoginPresenter {
         timer.start(interval: .seconds(1)) { [weak self] in
             if self?.interactor.isLocked == false {
                 self?.info = nil
+                self?.unlock.toggle()
                 self?.timer.cancel()
+                self?.isBlocked = false
             } else {
                 self?.info = self?.lockTimeMessage ?? ""
             }
@@ -137,5 +154,18 @@ private extension PINLoginPresenter {
             return T.Security.tooManyAttemptsTryAgainAfter("\(lockTime / minute)")
         }
         return T.Security.tooManyAttemptsError
+    }
+    
+    @objc
+    func didBecomeActive() {
+        isVisible()
+    }
+    
+    func isVisible() {
+        if interactor.isLocked {
+            lockedState()
+        } else {
+            biometry()
+        }
     }
 }

@@ -21,10 +21,6 @@ import SwiftUI
 import Data
 import Common
 
-extension UIWindow.Level {
-    static let login = UIWindow.Level.normal + 2
-}
-
 protocol LoginFlowControllerParent: AnyObject {
     func loginClose()
     func loginLoggedIn()
@@ -41,40 +37,21 @@ final class LoginFlowController: FlowController {
     static func setAsCover(
         in window: UIWindow,
         parent: LoginFlowControllerParent
-    ) -> (view: UIViewController, viewWillAppear: Callback, viewDidAppear: Callback) {
+    ) -> UIViewController {
         let flowController = LoginFlowController(viewController: UIViewController())
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.loginModuleInteractor()
-        let presenter = PINLoginPresenter(flowController: flowController, interactor: interactor)
-        let view = UIHostingController(rootView: PINLoginView(presenter: presenter))
-        let newWindow = UIWindow()
-        newWindow.rootViewController = view
-//        let view = LoginView()
-//        let presenter = LoginPresenter(
-//            loginType: .login,
-//            flowController: flowController,
-//            interactor: interactor
-//        )
-//        presenter.view = view
-//        view.presenter = presenter
-//
-        newWindow.windowLevel = .login
-        newWindow.backgroundColor = .clear
-//        newWindow.pinToParent()
-        newWindow.makeKeyAndVisible()
-//
-        let viewWillAppear: Callback = {// [weak view] in
-//            view?.presenter.viewWillAppear()
-        }
-//        
-        let viewDidAppear: Callback = {// [weak view] in
-//            view?.presenter.viewDidAppear()
-//            if view?.isFirstResponder == false {
-//                view?.becomeFirstResponder()
-//            }
-        }
-//        
-        return (view: view, viewWillAppear: viewWillAppear, viewDidAppear: viewDidAppear)
+        
+        let presenter = LoginPresenter(
+            loginType: .login,
+            flowController: flowController,
+            interactor: interactor
+        )
+        
+        let viewController = UIHostingController(rootView: LoginView(presenter: presenter))
+        window.rootViewController = viewController
+        
+        return viewController
     }
     
     static func present(
@@ -84,19 +61,13 @@ final class LoginFlowController: FlowController {
         let flowController = LoginFlowController(viewController: UIViewController())
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.loginModuleInteractor()
-        let presenter = PINLoginPresenter(flowController: flowController, interactor: interactor)
-        let view = UIHostingController(rootView: PINLoginView(presenter: presenter))
-        
-//        let view = LoginViewController()
-//        let flowController = LoginFlowController(viewController: view)
-//        flowController.parent = parent
-//        let interactor = ModuleInteractorFactory.shared.loginModuleInteractor()
-//        let presenter = LoginPresenter(
-//            loginType: .verify,
-//            flowController: flowController,
-//            interactor: interactor
-//        )
-//        view.presenter = presenter
+        let presenter = LoginPresenter(
+            loginType: .verify,
+            flowController: flowController,
+            interactor: interactor
+        )
+        let view = UIHostingController(rootView: LoginView(presenter: presenter))
+       
         view.configureAsModal()
         viewController.present(view, animated: true, completion: nil)
     }

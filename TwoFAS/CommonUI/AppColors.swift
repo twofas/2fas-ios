@@ -272,7 +272,7 @@ private extension AppColor {
         case .overlaysActivityViewController: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.2)
         case .overlaysLGFill: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.02)
         // Borders
-        case .bordersPrimary: Color(.sRGB, red: 1, green: 1, blue: 1, opacity: 0.16)
+        case .bordersPrimary: Color(.sRGB, red: 0.93, green: 0.93, blue: 0.93, opacity: 1.0)
         case .bordersVibrant: Color(.sRGB, red: 1, green: 1, blue: 1, opacity: 0.2)
         }
     }

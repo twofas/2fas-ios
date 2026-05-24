@@ -23,10 +23,11 @@ import AVFoundation
 
 struct AddingServiceCameraViewport: UIViewRepresentable {
     private let height = AddingServiceMetrics.cameraActiveAreaHeight
-        
+    @Binding
+    var cameraFreeze: Bool
+    
     var didRegisterError: (String?) -> Void
     var didFoundCode: (CodeType) -> Void
-    @Binding var cameraFreeze: Bool
     
     final class Coordinator {
         private weak var camera: CameraScanningView?
@@ -96,8 +97,6 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: CameraScanningView, context: Context) {
-        uiView.updateOrientation()
-        
         if cameraFreeze {
             uiView.freeze()
         } else {

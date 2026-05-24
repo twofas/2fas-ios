@@ -42,9 +42,19 @@ final class CameraController {
     private let notificationCenter = NotificationCenter.default
     
     weak var delegate: CameraControllerDelegate?
-    
+
     var isRunning: Bool { captureSession?.isRunning ?? false }
     private var isClearing = false
+
+    /// On iPhone we lock the preview to portrait; on iPad we keep the dynamic
+    /// orientation tracking based on device rotation notifications.
+    private var tracksDeviceOrientation: Bool {
+        UIDevice.current.userInterfaceIdiom == .pad
+    }
+
+    /// Fixed angle for back camera when the preview is locked to portrait.
+    /// (Back camera sensor is mounted landscape, so 90° rotates it upright.)
+    private let portraitVideoRotationAngle: CGFloat = 90
     
     private func initializationFailed(_ error: CameraError) {
         Log("CameraController - initializationFailed \(error)", module: .camera)
@@ -59,13 +69,15 @@ final class CameraController {
         Log("CameraController - initialize", module: .camera)
         let captureSession = AVCaptureSession()
         captureSession.sessionPreset = .high
-        
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(updateOrientation),
-            name: UIDevice.orientationDidChangeNotification,
-            object: nil
-        )
+
+        if tracksDeviceOrientation {
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(updateOrientation),
+                name: UIDevice.orientationDidChangeNotification,
+                object: nil
+            )
+        }
         
         self.outputs = outputs
         
@@ -117,8 +129,9 @@ final class CameraController {
         else { fatalError("CameraController: Passed view doesn't have a AVCaptureVideoPreviewLayer backing layer") }
         layer.session = captureSession
         layer.videoGravity = .resizeAspectFill
-        
+
         self.layer = layer
+        updateOrientation()
         Log("CameraController - setPreview with view: \(view)", module: .camera)
     }
     
@@ -126,7 +139,9 @@ final class CameraController {
         guard !isRunning else { return }
         Log("CameraController - startPreview. Starting!", module: .camera)
         updateOrientation()
-        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+        if tracksDeviceOrientation {
+            UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+        }
         DispatchQueue.global(qos: .userInitiated).async {
             self.captureSession?.startRunning()
             DispatchQueue.main.async {
@@ -134,11 +149,13 @@ final class CameraController {
             }
         }
     }
-    
+
     func stopPreview() {
         guard isRunning else { return }
         Log("CameraController - stopPreview. Stopping!", module: .camera)
-        UIDevice.current.endGeneratingDeviceOrientationNotifications()
+        if tracksDeviceOrientation {
+            UIDevice.current.endGeneratingDeviceOrientationNotifications()
+        }
         DispatchQueue.main.async {
             self.captureSession?.stopRunning()
             self.delegate?.cameraStoppedPreview()
@@ -177,17 +194,24 @@ final class CameraController {
             let connection = layer.connection,
             let device = self.captureDevice
         else { return }
-        
+
         Log("CameraController - updateOrientation", module: .camera)
-        
-        let rotationCoordinator = AVCaptureDevice.RotationCoordinator(
-            device: device,
-            previewLayer: layer
-        )
-        let angle = rotationCoordinator.videoRotationAngleForHorizonLevelPreview
-        
+
+        let angle: CGFloat
+        if tracksDeviceOrientation {
+            // iPad: follow device rotation through RotationCoordinator.
+            let rotationCoordinator = AVCaptureDevice.RotationCoordinator(
+                device: device,
+                previewLayer: layer
+            )
+            angle = rotationCoordinator.videoRotationAngleForHorizonLevelPreview
+        } else {
+            // iPhone: locked to portrait, ignore device orientation.
+            angle = portraitVideoRotationAngle
+        }
+
         guard connection.isVideoRotationAngleSupported(angle) else { return }
-        
+
         connection.videoRotationAngle = angle
     }
     

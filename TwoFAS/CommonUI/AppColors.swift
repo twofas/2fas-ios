@@ -126,6 +126,7 @@ public enum AppColor: CaseIterable {
     // MARK: Borders
     case bordersPrimary
     case bordersVibrant
+    case bordersWhite
 }
 
 // MARK: - ShapeStyle
@@ -274,6 +275,7 @@ private extension AppColor {
         // Borders
         case .bordersPrimary: Color(.sRGB, red: 0.93, green: 0.93, blue: 0.93, opacity: 1.0)
         case .bordersVibrant: Color(.sRGB, red: 1, green: 1, blue: 1, opacity: 0.2)
+        case .bordersWhite: Color(.sRGB, red: 1, green: 1, blue: 1, opacity: 1)
         }
     }
 
@@ -349,6 +351,7 @@ private extension AppColor {
         // Borders
         case .bordersPrimary: Color(.sRGB, red: 1, green: 1, blue: 1, opacity: 0.12)
         case .bordersVibrant: Color(.sRGB, red: 1, green: 1, blue: 1, opacity: 0.2)
+        case .bordersWhite: Color(.sRGB, red: 1, green: 1, blue: 1, opacity: 1)
         }
     }
 }

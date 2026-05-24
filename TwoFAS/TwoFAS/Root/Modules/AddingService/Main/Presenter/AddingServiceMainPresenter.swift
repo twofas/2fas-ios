@@ -21,10 +21,10 @@ import Foundation
 import Data
 import Common
 
-final class AddingServiceMainPresenter: ObservableObject {
-    weak var view: AddingServiceMainViewControlling?
-    
-    @Published var freezeCamera = false
+@Observable
+final class AddingServiceMainPresenter {
+    var freezeCamera = false
+    var isCameraUnavailable = false
         
     private let flowController: AddingServiceMainFlowControlling
     private let interactor: AddingServiceMainModuleInteracting
@@ -35,6 +35,9 @@ final class AddingServiceMainPresenter: ObservableObject {
         
         interactor.shouldRename = { [weak self] in self?.handleShouldRename(currentName: $0, secret: $1) }
         interactor.serviceWasCreated = { [weak self] in self?.handleServiceWasCreated(serviceData: $0) }
+        interactor.checkCameraPermission { [weak self] available in
+            self?.isCameraUnavailable = !available
+        }
     }
 }
 
@@ -121,12 +124,6 @@ extension AddingServiceMainPresenter {
     
     func handleToAppSettings() {
         flowController.toAppSettings()
-    }
-    
-    func handleCameraAvailability(callback: @escaping (Bool) -> Void) {
-        interactor.checkCameraPermission { available in
-            callback(available)
-        }
     }
     
     func handleRename(newName: String, secret: String) {

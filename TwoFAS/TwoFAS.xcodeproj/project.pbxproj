@@ -65,7 +65,6 @@
 		C20E2DF52A7C4A8000DB64BB /*  AddingServicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2DF42A7C4A8000DB64BB /*  AddingServicePresenter.swift */; };
 		C20E2DF72A7C4AC900DB64BB /* AddingServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2DF62A7C4AC900DB64BB /* AddingServiceFlowController.swift */; };
 		C20E2DFE2A7C4DE000DB64BB /* AddingServiceMainFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2DFD2A7C4DE000DB64BB /* AddingServiceMainFlowController.swift */; };
-		C20E2E002A7C4EF200DB64BB /* AddingServiceMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2DFF2A7C4EF200DB64BB /* AddingServiceMainViewController.swift */; };
 		C20E2E072A7C51E700DB64BB /* AddingServiceTokenFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2E062A7C51E700DB64BB /* AddingServiceTokenFlowController.swift */; };
 		C20E2E092A7C51F500DB64BB /* AddingServiceTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2E082A7C51F500DB64BB /* AddingServiceTokenViewController.swift */; };
 		C20E2E0B2A7C52AA00DB64BB /* AddingServiceMainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2E0A2A7C52AA00DB64BB /* AddingServiceMainPresenter.swift */; };
@@ -813,6 +812,9 @@
 		C29C5F9D2F5AFCA40096BF65 /* SignalArgon2 in Frameworks */ = {isa = PBXBuildFile; productRef = C29C5F9C2F5AFCA40096BF65 /* SignalArgon2 */; };
 		C29CF8E82FA7A6EA0058E3A0 /* IntroductionPaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29CF8E72FA7A6DD0058E3A0 /* IntroductionPaging.swift */; };
 		C29CF8EA2FA7B7200058E3A0 /* IntroductionInfoSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29CF8E92FA7B71A0058E3A0 /* IntroductionInfoSheet.swift */; };
+		C29E83392FC07A9B00CBE671 /* GenieModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E83332FC07A9B00CBE671 /* GenieModal.swift */; };
+		C29E833A2FC07A9B00CBE671 /* GenieWindow.metal in Sources */ = {isa = PBXBuildFile; fileRef = C29E83352FC07A9B00CBE671 /* GenieWindow.metal */; };
+		C29E833D2FC0BB4400CBE671 /* AddingServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E833C2FC0BB3A00CBE671 /* AddingServiceView.swift */; };
 		C29FEFF92756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FEFF82756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift */; };
 		C29FEFFB2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FEFFA2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift */; };
 		C2A026B32AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A026B22AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift */; };
@@ -2083,7 +2085,6 @@
 		C20E2DF42A7C4A8000DB64BB /*  AddingServicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " AddingServicePresenter.swift"; sourceTree = "<group>"; };
 		C20E2DF62A7C4AC900DB64BB /* AddingServiceFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceFlowController.swift; sourceTree = "<group>"; };
 		C20E2DFD2A7C4DE000DB64BB /* AddingServiceMainFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceMainFlowController.swift; sourceTree = "<group>"; };
-		C20E2DFF2A7C4EF200DB64BB /* AddingServiceMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceMainViewController.swift; sourceTree = "<group>"; };
 		C20E2E062A7C51E700DB64BB /* AddingServiceTokenFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceTokenFlowController.swift; sourceTree = "<group>"; };
 		C20E2E082A7C51F500DB64BB /* AddingServiceTokenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceTokenViewController.swift; sourceTree = "<group>"; };
 		C20E2E0A2A7C52AA00DB64BB /* AddingServiceMainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceMainPresenter.swift; sourceTree = "<group>"; };
@@ -2750,6 +2751,9 @@
 		C29E567A2809A19B00141238 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		C29E567C2809B78000141238 /* SpinnerDisplaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerDisplaying.swift; sourceTree = "<group>"; };
 		C29E567E2809B83300141238 /* SpinnerBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerBackground.swift; sourceTree = "<group>"; };
+		C29E83332FC07A9B00CBE671 /* GenieModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenieModal.swift; sourceTree = "<group>"; };
+		C29E83352FC07A9B00CBE671 /* GenieWindow.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = GenieWindow.metal; sourceTree = "<group>"; };
+		C29E833C2FC0BB3A00CBE671 /* AddingServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceView.swift; sourceTree = "<group>"; };
 		C29FEFF82756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsMenuPresenter+Menu.swift"; sourceTree = "<group>"; };
 		C29FEFFA2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsMenuViewController+TableCellHandling.swift"; sourceTree = "<group>"; };
 		C2A026B22AF7C42500DB2E52 /* MainRepositoryImpl+TimeVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+TimeVerification.swift"; sourceTree = "<group>"; };
@@ -3783,7 +3787,8 @@
 		C20E2DF92A7C4D9D00DB64BB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C20E2DFF2A7C4EF200DB64BB /* AddingServiceMainViewController.swift */,
+				C29E83372FC07A9B00CBE671 /* GenieModalEffect */,
+				C29E833C2FC0BB3A00CBE671 /* AddingServiceView.swift */,
 				C2FBF12F2A7EBCCB00CA80CE /* AddingServiceCameraViewport.swift */,
 			);
 			path = View;
@@ -6608,6 +6613,15 @@
 				C29E567E2809B83300141238 /* SpinnerBackground.swift */,
 			);
 			path = Spinner;
+			sourceTree = "<group>";
+		};
+		C29E83372FC07A9B00CBE671 /* GenieModalEffect */ = {
+			isa = PBXGroup;
+			children = (
+				C29E83332FC07A9B00CBE671 /* GenieModal.swift */,
+				C29E83352FC07A9B00CBE671 /* GenieWindow.metal */,
+			);
+			path = GenieModalEffect;
 			sourceTree = "<group>";
 		};
 		C2A277AC26DBCFFC00A18F25 /* SelectFromGallery */ = {
@@ -9929,6 +9943,7 @@
 				C20CD53C2A1CF03F00A7F324 /* TokensViewController+Layout.swift in Sources */,
 				C25BB2CC2DAAE3FF00BEC626 /* ManageWatchView.swift in Sources */,
 				C21930F22EC11439001354C9 /* BackupManageEncryptionModels.swift in Sources */,
+				C29E833D2FC0BB4400CBE671 /* AddingServiceView.swift in Sources */,
 				C25B221627C181690052AAC4 /* ComposeServiceInputCellKind.swift in Sources */,
 				C2A7946027F9071F00E5C641 /* BrowserExtensionServicePresenter.swift in Sources */,
 				C267315A299AC9C40031DE09 /* LargeNavigationController.swift in Sources */,
@@ -10027,7 +10042,6 @@
 				C240487827656AB50076376E /* ImporterFileErrorViewController.swift in Sources */,
 				C2FCB28C2825819000AF8A37 /* NewsViewController.swift in Sources */,
 				C21930EA2EC1045B001354C9 /* BackupManageEncryptionFlowController.swift in Sources */,
-				C20E2E002A7C4EF200DB64BB /* AddingServiceMainViewController.swift in Sources */,
 				C21247F427B7062F0044D9F2 /* LabelComposeColorSelector.swift in Sources */,
 				C242C6D22F9AABA00080E0DB /* IntroductionView.swift in Sources */,
 				C2B39C7527A58F0E00D3B579 /* SelectFromGalleryPresenter.swift in Sources */,
@@ -10251,6 +10265,8 @@
 				C2B39E5429F5880600EC31F6 /* TokensCellKind.swift in Sources */,
 				C2323C4E276B52A100038B76 /* AppLockModuleInteractor.swift in Sources */,
 				C2AB92CD276655EF00698382 /* ExporterPINPresenter.swift in Sources */,
+				C29E83392FC07A9B00CBE671 /* GenieModal.swift in Sources */,
+				C29E833A2FC07A9B00CBE671 /* GenieWindow.metal in Sources */,
 				C231856C2EC678CA00DD1ABE /* BackupSetPasswordModalInteractor.swift in Sources */,
 				C2B077C4292A921D0074517F /* UploadLogsFailureView.swift in Sources */,
 				C2FDEE54279C8F39002CAB9E /* CameraGoogleAuth.swift in Sources */,
@@ -11737,6 +11753,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 26.2;
 			};
 			name = Production;
 		};
@@ -11782,6 +11799,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_WORKSPACE = NO;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Production;
 		};
@@ -12543,7 +12561,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 26.2;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Production;
 		};
@@ -13175,6 +13193,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				WATCHOS_DEPLOYMENT_TARGET = 26.2;
 			};
 			name = Debug;
 		};
@@ -13239,6 +13258,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 26.2;
 			};
 			name = Release;
 		};
@@ -13285,6 +13305,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_WORKSPACE = NO;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Debug;
 		};
@@ -13328,6 +13349,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_WORKSPACE = NO;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Release;
 		};
@@ -13761,7 +13783,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 26.2;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Debug;
 		};
@@ -13801,7 +13823,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 26.2;
+				WATCHOS_DEPLOYMENT_TARGET = "${inherited}";
 			};
 			name = Release;
 		};

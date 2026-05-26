@@ -1,0 +1,26 @@
+/* 
+  InfoPlist.strings
+  TwoFAS
+
+  Tento súbor je súčasťou aplikácie 2FAS pre iOS (https://github.com/twofas/2fas-ios)
+  Copyright © 2023 Two Factor Authentication Service, Inc.
+  Autor: Zbigniew Cisiński. Všetky práva vyhradené.
+  
+  Tento program je slobodný softvér: môžete ho šíriť a/alebo upravovať
+  podľa podmienok GNU General Public License, ktorú zverejnila
+  Free Software Foundation, a to buď podľa verzie 3 tejto licencie, alebo
+  podľa akejkoľvek neskoršej verzie.
+  
+  Tento program je distribuovaný v nádeji, že bude užitočný,
+  avšak BEZ AKEJKOĽVEK ZÁRUKY; a to ani bez implicitnej záruky
+  OBCHODOVATEĽNOSTI alebo VHODNOSTI NA URČITÝ ÚČEL. Ďalšie podrobnosti nájdete v
+  GNU General Public License.
+  
+  Spolu s týmto programom ste mali dostať kópiu GNU General Public License.
+  Ak tomu tak nie je, pozrite si <https://www.gnu.org/licenses/>
+
+*/
+
+"NSCameraUsageDescription" = "Slúži na skenovanie QR kódov";
+"NSFaceIDUsageDescription" = "Aplikáciu môžete odomknúť pomocou funkcie Face ID";
+"CFBundleSpokenName" = "2 F A S";

@@ -22,14 +22,14 @@ import Data
 import Common
 
 @Observable
-final class AddingServiceMainPresenter {
+final class AddingServicePresenter {
     var freezeCamera = false
     var isCameraUnavailable = false
         
-    private let flowController: AddingServiceMainFlowControlling
-    private let interactor: AddingServiceMainModuleInteracting
+    private let flowController: AddingServiceFlowControlling
+    private let interactor: AddingServiceModuleInteracting
     
-    init(flowController: AddingServiceMainFlowControlling, interactor: AddingServiceMainModuleInteracting) {
+    init(flowController: AddingServiceFlowControlling, interactor: AddingServiceModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
         
@@ -41,7 +41,7 @@ final class AddingServiceMainPresenter {
     }
 }
 
-extension AddingServiceMainPresenter {
+extension AddingServicePresenter {
     func handleFoundCode(codeType: CodeType) {
         guard !freezeCamera else { return }
         freezeCamera = true
@@ -152,7 +152,7 @@ extension AddingServiceMainPresenter {
     }
 }
 
-private extension AddingServiceMainPresenter {
+private extension AddingServicePresenter {
     func handleShouldRename(currentName: String, secret: String) {
         flowController.toRename(currentName: currentName, secret: secret)
     }

@@ -366,8 +366,8 @@ final class ModuleInteractorFactory {
         AppearanceModuleInteractor(appearanceInteractor: InteractorFactory.shared.appearanceInteractor())
     }
     
-    func addingServiceMainModuleInteractor() -> AddingServiceMainModuleInteracting {
-        AddingServiceMainModuleInteractor(
+    func addingServiceModuleInteractor() -> AddingServiceModuleInteracting {
+        AddingServiceModuleInteractor(
             cameraPermissionInteractor: InteractorFactory.shared.cameraPermissionInteractor(),
             newCodeInteractor: InteractorFactory.shared.newCodeInteractor(),
             pushNotificationPermission: InteractorFactory.shared.pushNotificationRegistrationInteractor(),

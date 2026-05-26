@@ -32,12 +32,12 @@ struct AddingServiceView: View {
     private var isVisible = false
     
     @Bindable
-    var presenter: AddingServiceMainPresenter
+    var presenter: AddingServicePresenter
     
     let onClose: () -> Void
 
     init(
-        presenter: AddingServiceMainPresenter,
+        presenter: AddingServicePresenter,
         onClose: @escaping () -> Void
     ) {
         self.presenter = presenter

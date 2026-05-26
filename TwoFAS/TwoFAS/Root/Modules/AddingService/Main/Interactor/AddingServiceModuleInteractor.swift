@@ -21,7 +21,7 @@ import Foundation
 import Common
 import Data
 
-protocol AddingServiceMainModuleInteracting: AnyObject {
+protocol AddingServiceModuleInteracting: AnyObject {
     func checkCameraPermission(completion: @escaping (Bool) -> Void)
     var canPairWatch: Bool { get }
     
@@ -42,7 +42,7 @@ protocol AddingServiceMainModuleInteracting: AnyObject {
     func pairAppleWatch(deviceCodePath: DeviceCodePath, deviceName: String)
 }
 
-final class AddingServiceMainModuleInteractor {
+final class AddingServiceModuleInteractor {
     private let newCodeInteractor: NewCodeInteracting
     private let pushNotificationPermission: PushNotificationRegistrationInteracting
     private let cameraPermissionInteractor: CameraPermissionInteracting
@@ -73,7 +73,7 @@ final class AddingServiceMainModuleInteractor {
     }
 }
 
-extension AddingServiceMainModuleInteractor: AddingServiceMainModuleInteracting {
+extension AddingServiceModuleInteractor: AddingServiceModuleInteracting {
     // MARK: - Camera permissions
     
     func checkCameraPermission(completion: @escaping (Bool) -> Void) {

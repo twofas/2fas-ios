@@ -131,6 +131,8 @@ final class CameraController {
         layer.videoGravity = .resizeAspectFill
 
         self.layer = layer
+        // Apply orientation immediately so the very first frames render correctly,
+        // before startPreview() runs.
         updateOrientation()
         Log("CameraController - setPreview with view: \(view)", module: .camera)
     }

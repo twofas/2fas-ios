@@ -114,6 +114,44 @@ struct AddingServiceView: View {
                 .stroke(.bordersVibrant, lineWidth: 1)
         }
         .environment(\.colorScheme, .dark)
+        .alert(item: $presenter.alert) { alert in
+            switch alert {
+            case .cantPairWatch:
+                Alert(
+                    title: Text(T.Commons.error),
+                    message: Text(T.Backup.watchPairingError),
+                    dismissButton: .default(Text(T.Commons.ok))
+                )
+            case .appStore:
+                Alert(
+                    title: Text(T.Tokens.qrCodeLeadsToAppStore),
+                    message: Text(T.Tokens.scanQrCodeTitle),
+                    dismissButton: .default(Text(T.Commons.ok), action: {
+                        presenter.handleResumeCamera()
+                    })
+                )
+            case .generalError:
+                Alert(
+                    title: Text(T.Tokens.thisQrCodeIsInavlid),
+                    message: Text(T.Tokens.scanQrCodeTitle),
+                    dismissButton: .default(Text(T.Commons.ok), action: {
+                        presenter.handleResumeCamera()
+                    })
+                )
+            case .duplicatedCode(let code):
+                Alert(
+                    title: Text(T.Commons.warning),
+                    message: Text(T.Tokens.serviceAlreadyExists),
+                    primaryButton: .destructive(Text(T.Commons.yes), action: {
+                        presenter.onForceAddCode(code)
+                        presenter.handleResumeCamera()
+                    }),
+                    secondaryButton: .cancel(Text(T.Commons.no), action: {
+                        presenter.handleResumeCamera()
+                    })
+                )
+            }
+        }
     }
     
     @ViewBuilder

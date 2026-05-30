@@ -41,9 +41,6 @@ protocol AddingServiceFlowControlling: AnyObject {
     func toAppSettings()
     func toGuides()
     
-    func toGeneralError()
-    func toDuplicatedCode(forceAdd: @escaping Callback)
-    func toAppStore()
     func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
     func toLastPassSummary(importable: Int, total: Int, codes: [Code])
     func toGallery()
@@ -52,7 +49,6 @@ protocol AddingServiceFlowControlling: AnyObject {
     func toPushPermissions(for extensionID: ExtensionID)
     func toRename(currentName: String, secret: String)
     func toPairWatchQuestion(_ deviceCodePath: DeviceCodePath)
-    func toCantPairWatch()
 }
 
 final class AddingServiceFlowController: FlowController {
@@ -155,43 +151,6 @@ extension AddingServiceFlowController: AddingServiceFlowControlling {
         parent?.addingServiceToGuides()
     }
     
-    func toGeneralError() {
-//        let alert = UIAlertController.makeSimple(
-//            with: T.Tokens.thisQrCodeIsInavlid,
-//            message: T.Tokens.scanQrCodeTitle,
-//            buttonTitle: T.Commons.ok,
-//            finished: { [weak self] in self?.viewController.presenter.handleResumeCamera() }
-//        )
-//        viewController.present(alert, animated: true, completion: nil)
-    }
-    
-    func toDuplicatedCode(forceAdd: @escaping Callback) {
-//        let alert = UIAlertController(
-//            title: T.Commons.warning,
-//            message: T.Tokens.serviceAlreadyExists,
-//            preferredStyle: .alert
-//        )
-//        alert.addAction(UIAlertAction(title: T.Commons.yes, style: .destructive, handler: { [weak self] _ in
-//            forceAdd()
-//            self?.viewController.presenter.handleResumeCamera()
-//        }))
-//        alert.addAction(UIAlertAction(title: T.Commons.no, style: .cancel, handler: { [weak self] _ in
-//            self?.viewController.presenter.handleResumeCamera()
-//        }))
-
-//        viewController.present(alert, animated: true, completion: nil)
-    }
-    
-    func toAppStore() {
-//        let alert = UIAlertController.makeSimple(
-//            with: T.Tokens.qrCodeLeadsToAppStore,
-//            message: T.Tokens.scanQrCodeTitle,
-//            buttonTitle: T.Commons.ok,
-//            finished: { [weak self] in self?.viewController.presenter.handleResumeCamera() }
-//        )
-//        viewController.present(alert, animated: true, completion: nil)
-    }
-    
     func toGallery() {
         parent?.addingServiceToGallery()
     }
@@ -253,15 +212,6 @@ extension AddingServiceFlowController: AddingServiceFlowControlling {
 //            }
 //        )
 //        
-//        viewController.present(alert, animated: true, completion: nil)
-    }
-    
-    func toCantPairWatch() {
-//        let alert = AlertController.makeSimple(
-//            with: T.Commons.error,
-//            message: T.Backup.watchPairingError,
-//            buttonTitle: T.Commons.ok
-//        )
 //        viewController.present(alert, animated: true, completion: nil)
     }
 }

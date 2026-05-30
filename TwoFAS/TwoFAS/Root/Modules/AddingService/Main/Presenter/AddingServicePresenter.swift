@@ -21,10 +21,20 @@ import Foundation
 import Data
 import Common
 
+enum AddingServiceAlert: Identifiable, Hashable {
+    var id: Self { self }
+
+    case cantPairWatch
+    case appStore
+    case generalError
+    case duplicatedCode(code: Code)
+}
+
 @Observable
 final class AddingServicePresenter {
     var freezeCamera = false
     var isCameraUnavailable = false
+    var alert: AddingServiceAlert?
         
     private let flowController: AddingServiceFlowControlling
     private let interactor: AddingServiceModuleInteracting
@@ -53,9 +63,7 @@ extension AddingServicePresenter {
                 guard let description = interactor.serviceDescription(for: code) else { return }
                 Log("AddingServiceMainPresenter: Found code: \(code) which is a duplicate of: \(description)")
                 interactor.warning()
-                flowController.toDuplicatedCode { [weak self] in
-                    self?.interactor.addCode(code, force: true)
-                }
+                alert = .duplicatedCode(code: code)
             } else {
                 Log("AddingServiceMainPresenter: Adding unique code: \(code)")
                 interactor.addCode(code, force: false)
@@ -78,7 +86,7 @@ extension AddingServicePresenter {
             Log("AddingServiceMainPresenter: Found wrong code: \(codeType)", save: false)
             Log("AddingServiceMainPresenter: It's an app store link!")
             interactor.warning()
-            flowController.toAppStore()
+            alert = .appStore
         case .twoFASWebExtension(let extensionID):
             Log("AddingServiceMainPresenter: Found 2FAS Web Extension code for: \(codeType)", save: false)
             Log("AddingServiceMainPresenter: It's a 2FAS Web Extension!")
@@ -94,7 +102,7 @@ extension AddingServicePresenter {
             if interactor.canPairWatch {
                 flowController.toPairWatchQuestion(deviceCodePath)
             } else {
-                flowController.toCantPairWatch()
+                alert = .cantPairWatch
             }
         case .support(let auditID):
             Log("AddingServiceMainPresenter: Found 2FAS support request. AuditID: \(auditID)")
@@ -106,8 +114,12 @@ extension AddingServicePresenter {
             Log("AddingServiceMainPresenter: Found wrong code: \(codeType)", save: false)
             Log("AddingServiceMainPresenter: General wrong code")
             interactor.warning()
-            flowController.toGeneralError()
+            alert = .generalError
         }
+    }
+    
+    func onForceAddCode(_ code: Code) {
+        interactor.addCode(code, force: true)
     }
         
     func handleToGallery() {

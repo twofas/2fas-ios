@@ -23,7 +23,6 @@ import Common
 enum AlertControllerPromptFactory {
     enum InputConfiguration {
         case name
-        case intNumber
     }
     static func create(
         title: String,
@@ -51,7 +50,6 @@ enum AlertControllerPromptFactory {
         alert.addAction(textAction, type: .textAction)
         switch inputConfiguration {
         case .name: alert.configureTextFieldName(defaultText: defaultText)
-        case .intNumber: alert.configureTextFieldIntNumber(defaultText: defaultText)
         }
         
         return alert

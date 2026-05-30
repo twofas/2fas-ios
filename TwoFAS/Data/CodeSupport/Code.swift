@@ -32,7 +32,9 @@ public enum CodeType: Hashable {
     case unknown
 }
 
-public struct Code: Hashable {
+public struct Code: Hashable, Identifiable {
+    public var id: String { secret }
+    
     public let issuer: String?
     public let label: String?
     public let secret: String

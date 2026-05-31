@@ -19,6 +19,7 @@
 
 import SwiftUI
 import CommonUI
+import Common
 
 struct AddingServiceView: View {
     private let viewportHeight: CGFloat = 220
@@ -152,6 +153,34 @@ struct AddingServiceView: View {
                 )
             }
         }
+        .getName(
+            $presenter.showRename,
+            title: T.Tokens.enterServiceName,
+            message: nil,
+            placeholder: presenter.currentName,
+            confirmTitle: T.Commons.rename
+        ) { newName in
+            presenter.handleRename(newName: newName)
+        } onCancel: {
+            presenter.handleCancelRename()
+        } onVerify: { value in
+            ServiceRules.isServiceNameValid(serviceName: value)
+        }
+        .getName(
+            $presenter.showPairWatchQuestion,
+            title: T.Backup.watchPairingTitle,
+            message: T.Backup.watchPairingDescription,
+            placeholder: T.Backup.watchPairingDefaultName,
+            defaultText: T.Backup.watchPairingDefaultName,
+            confirmTitle: T.Backup.watchPairingAction) { deviceName in
+                if let deviceCodePath = presenter.deviceCodePath {
+                    presenter.handleAppleWatchPairing(
+                        deviceName: deviceName
+                    )
+                }
+            } onVerify: { deviceName in
+                ServiceRules.isAppleWatchNameValid(deviceName: deviceName)
+            }
     }
     
     @ViewBuilder

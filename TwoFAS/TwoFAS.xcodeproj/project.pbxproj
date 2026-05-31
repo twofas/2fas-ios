@@ -1087,6 +1087,7 @@
 		C2D07EDC26A45BC700AF8E7B /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
 		C2D07EE626A45C0400AF8E7B /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE31269E274700506ACF /* IntentsUI.framework */; };
 		C2D07EEB26A47B8100AF8E7B /* CodeEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D07EE926A475F400AF8E7B /* CodeEntry.swift */; };
+		C2D18D702FCC685300FD6DE1 /* GetNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D18D6F2FCC67E600FD6DE1 /* GetNameView.swift */; };
 		C2D291DC2955FC9E0084FE1E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C2D291DB2955FC9E0084FE1E /* Settings.bundle */; };
 		C2D39DDD28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDB28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift */; };
 		C2D39DDE28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDC28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift */; };
@@ -3013,6 +3014,7 @@
 		C2CFFCDC2007FDD600600AC6 /* CircleProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgress.swift; sourceTree = "<group>"; };
 		C2D07EE726A468D000AF8E7B /* LabelImageRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelImageRenderer.swift; sourceTree = "<group>"; };
 		C2D07EE926A475F400AF8E7B /* CodeEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEntry.swift; sourceTree = "<group>"; };
+		C2D18D6F2FCC67E600FD6DE1 /* GetNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNameView.swift; sourceTree = "<group>"; };
 		C2D291DB2955FC9E0084FE1E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		C2D316692E6648730044056F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C2D3166A2E6648730044056F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -3735,46 +3737,14 @@
 		C20E2DF82A7C4D7700DB64BB /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				C20E2DFC2A7C4DB000DB64BB /* Flow */,
-				C20E2DFB2A7C4DA900DB64BB /* Interactor */,
-				C20E2DFA2A7C4DA300DB64BB /* Presenter */,
-				C20E2DF92A7C4D9D00DB64BB /* View */,
-			);
-			path = Main;
-			sourceTree = "<group>";
-		};
-		C20E2DF92A7C4D9D00DB64BB /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C20E2DFD2A7C4DE000DB64BB /* AddingServiceFlowController.swift */,
+				C21EB2F92A800E7200FA8AA1 /* AddingServiceModuleInteractor.swift */,
+				C20E2E0A2A7C52AA00DB64BB /* AddingServicePresenter.swift */,
 				C29E83372FC07A9B00CBE671 /* GenieModalEffect */,
 				C29E833C2FC0BB3A00CBE671 /* AddingServiceView.swift */,
 				C2FBF12F2A7EBCCB00CA80CE /* AddingServiceCameraViewport.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C20E2DFA2A7C4DA300DB64BB /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C20E2E0A2A7C52AA00DB64BB /* AddingServicePresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C20E2DFB2A7C4DA900DB64BB /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C21EB2F92A800E7200FA8AA1 /* AddingServiceModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C20E2DFC2A7C4DB000DB64BB /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C20E2DFD2A7C4DE000DB64BB /* AddingServiceFlowController.swift */,
-			);
-			path = Flow;
+			path = Main;
 			sourceTree = "<group>";
 		};
 		C20E2E012A7C519A00DB64BB /* Token */ = {
@@ -8540,6 +8510,7 @@
 		C2FDEE55279C8FE8002CAB9E /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				C2D18D6F2FCC67E600FD6DE1 /* GetNameView.swift */,
 				C24F81772FB90FC300339C8B /* Shake.swift */,
 				C2FF03032FAB6DD500362B88 /* BorderShield.swift */,
 				C24EE7962EC3A5780065B452 /* PasswordTextField.swift */,
@@ -10031,6 +10002,7 @@
 				C27205622E7C930B004FB39A /* ExportQuestionPINVerificationFlowController.swift in Sources */,
 				C2035AF1245DE59700C482D2 /* MainContainerTextStyling.swift in Sources */,
 				C2F4D9372A8D24EE00608F63 /* AddingServiceAdvancedRevealView.swift in Sources */,
+				C2D18D702FCC685300FD6DE1 /* GetNameView.swift in Sources */,
 				C2AC2208276615FB00271402 /* ExporterMainScreenPresenter.swift in Sources */,
 				C2FC422323AA960400320ABE /* Module.swift in Sources */,
 				C2BDC6D91FC1CBE100967D0E /* String+Extensions.swift in Sources */,

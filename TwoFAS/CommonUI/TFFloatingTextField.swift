@@ -23,6 +23,11 @@ import Common
 public struct TFFormTextFieldSubmit {
     let buttonType: SubmitLabel
     let action: Callback?
+
+    public init(buttonType: SubmitLabel, action: Callback?) {
+        self.buttonType = buttonType
+        self.action = action
+    }
 }
 
 public struct TFFloatingTextField: View {
@@ -47,6 +52,10 @@ public struct TFFloatingTextField: View {
     private var errorMessage: String?
     @State
     private var isEditing = false
+    @State
+    private var clearTapped = false
+    @Environment(\.colorScheme)
+    private var colorScheme
     
     @FocusState
     private var textFieldInFocus: Bool
@@ -92,6 +101,7 @@ public struct TFFloatingTextField: View {
         } trailingAccessory: {
             if shouldPlaceHolderMove && !text.isEmpty && isEnabled {
                 Button {
+                    clearTapped.toggle()
                     clearTextField()
                 } label: {
                     Image(systemName: "xmark.circle.fill")
@@ -100,6 +110,7 @@ public struct TFFloatingTextField: View {
                         .aspectRatio(contentMode: .fit)
                         .tint(.labelsTertiary)
                 }
+                .sensoryFeedback(.impact(flexibility: .rigid, intensity: 0.6), trigger: clearTapped) { _, new in new }
             }
         }
         .contentShape(Rectangle())
@@ -116,7 +127,7 @@ public struct TFFloatingTextField: View {
         .focused($textFieldInFocus)
         .modifier(FormatInputModifier(inputType))
         .foregroundStyle(isEnabled ? .labelsPrimary : .labelsTertiary)
-        .accentColor(.accentColor)
+        .accentColor(AppColor.accentsBrand.color(for: colorScheme))
         .keyboardType(keyboardType)
         .textStyle(.body, .medium)
         .textInputAutocapitalization(autocapitalization)

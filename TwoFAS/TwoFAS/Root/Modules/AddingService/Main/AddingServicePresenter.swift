@@ -35,6 +35,15 @@ final class AddingServicePresenter {
     var freezeCamera = false
     var isCameraUnavailable = false
     var alert: AddingServiceAlert?
+    
+    // Renaming
+    var showRename = false
+    var currentName = ""
+    var secret = ""
+    
+    // PairWatchQuestion
+    var showPairWatchQuestion = false
+    var deviceCodePath: DeviceCodePath?
         
     private let flowController: AddingServiceFlowControlling
     private let interactor: AddingServiceModuleInteracting
@@ -100,7 +109,8 @@ extension AddingServicePresenter {
             Log("AddingServiceMainPresenter: Found Device Code Path: \(deviceCodePath.codePath)")
             interactor.warning()
             if interactor.canPairWatch {
-                flowController.toPairWatchQuestion(deviceCodePath)
+                self.deviceCodePath = deviceCodePath
+                showPairWatchQuestion = true
             } else {
                 alert = .cantPairWatch
             }
@@ -138,15 +148,22 @@ extension AddingServicePresenter {
         flowController.toAppSettings()
     }
     
-    func handleRename(newName: String, secret: String) {
+    func handleRename(newName: String) {
+        guard secret.isEmpty == false else { return }
         interactor.renameService(newName: newName, secret: secret)
         guard let serviceData = interactor.service(for: secret) else { return }
+        self.currentName = ""
+        self.secret = ""
         flowController.toToken(serviceData: serviceData)
     }
     
-    func handleCancelRename(secret: String) {
-        interactor.cancelRenaming(secret: secret)
-        guard let serviceData = interactor.service(for: secret) else { return }
+    func handleCancelRename() {
+        guard secret.isEmpty == false else { return }
+        let secretValue = secret
+        interactor.cancelRenaming(secret: secretValue)
+        self.currentName = ""
+        self.secret = ""
+        guard let serviceData = interactor.service(for: secretValue) else { return }
         flowController.toToken(serviceData: serviceData)
     }
     
@@ -158,7 +175,8 @@ extension AddingServicePresenter {
         flowController.close()
     }
     
-    func handleAppleWatchPairing(deviceCodePath: DeviceCodePath, deviceName: String) {
+    func handleAppleWatchPairing(deviceName: String) {
+        guard let deviceCodePath else { return }
         interactor.pairAppleWatch(deviceCodePath: deviceCodePath, deviceName: deviceName)
         flowController.close()
     }
@@ -166,7 +184,9 @@ extension AddingServicePresenter {
 
 private extension AddingServicePresenter {
     func handleShouldRename(currentName: String, secret: String) {
-        flowController.toRename(currentName: currentName, secret: secret)
+        self.currentName = currentName
+        self.secret = secret
+        showRename = true
     }
     
     func handleServiceWasCreated(serviceData: ServiceData) {

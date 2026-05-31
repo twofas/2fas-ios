@@ -47,13 +47,15 @@ protocol AddingServiceFlowControlling: AnyObject {
     func toTwoFASWebExtensionPairing(for extensionID: ExtensionID)
     func toSendLogs(auditID: UUID)
     func toPushPermissions(for extensionID: ExtensionID)
-    func toRename(currentName: String, secret: String)
-    func toPairWatchQuestion(_ deviceCodePath: DeviceCodePath)
 }
 
 final class AddingServiceFlowController: FlowController {
     private weak var parent: AddingServiceFlowControllerParent?
-    
+
+    static func isPresented(on viewController: UIViewController) -> Bool {
+        viewController.presentedViewController is UIHostingController<AddServiceHostingView>
+    }
+
     static func present(
         on viewController: UIViewController,
         parent: AddingServiceFlowControllerParent
@@ -171,47 +173,7 @@ extension AddingServiceFlowController: AddingServiceFlowControlling {
         parent?.addingServiceToTwoFASWebExtensionPairing(for: extensionID)
     }
     
-    func toRename(currentName: String, secret: String) {
-//        let alert = AlertControllerPromptFactory.create(
-//            title: T.Tokens.enterServiceName,
-//            message: nil,
-//            actionName: T.Commons.rename,
-//            defaultText: currentName,
-//            inputConfiguration: .name,
-//            action: { [weak self] newName in
-//                self?.viewController.presenter.handleRename(newName: newName, secret: secret)
-//            }, cancel: { [weak self] in
-//                self?.viewController.presenter.handleCancelRename(secret: secret)
-//            }, verify: { serviceName in
-//                ServiceRules.isServiceNameValid(serviceName: serviceName)
-//            })
-//
-//        viewController.present(alert, animated: true, completion: nil)
-    }
-    
     func toSendLogs(auditID: UUID) {
         parent?.addingServiceToSendLogs(auditID: auditID)
-    }
-    
-    func toPairWatchQuestion(_ deviceCodePath: DeviceCodePath) {
-//        let alert = AlertControllerPromptFactory.create(
-//            title: T.Backup.watchPairingTitle,
-//            message: T.Backup.watchPairingDescription,
-//            actionName: T.Backup.watchPairingAction,
-//            defaultText: T.Backup.watchPairingDefaultName,
-//            inputConfiguration: .name,
-//            action: { [weak self] deviceName in
-//                self?.viewController.presenter.handleAppleWatchPairing(
-//                    deviceCodePath: deviceCodePath,
-//                    deviceName: deviceName
-//                )
-//            },
-//            cancel: {},
-//            verify: { deviceName in
-//                ServiceRules.isAppleWatchNameValid(deviceName: deviceName)
-//            }
-//        )
-//        
-//        viewController.present(alert, animated: true, completion: nil)
     }
 }

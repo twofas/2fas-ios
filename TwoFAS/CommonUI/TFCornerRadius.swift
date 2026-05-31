@@ -36,6 +36,8 @@ public enum TFCornerRadius: CGFloat, CaseIterable {
     case badge = 20
     /// 24 pt — info frame / card radius.
     case large = 24
+    /// 34 pt — alert.
+    case alert = 34
     /// 40 pt — add service frame.
     case extraLarge = 40
 

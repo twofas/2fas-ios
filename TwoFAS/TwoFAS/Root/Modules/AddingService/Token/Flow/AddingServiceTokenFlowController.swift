@@ -31,58 +31,33 @@ protocol AddingServiceTokenFlowControlling: AnyObject {
 final class AddingServiceTokenFlowController: FlowController {
     private weak var parent: AddingServiceTokenFlowControllerParent?
     
-    static func embed(
-        in viewController: UIViewController & AddingServiceViewControlling,
-        parent: AddingServiceTokenFlowControllerParent,
-        serviceData: ServiceData
-    ) {
-        let view = AddingServiceTokenViewController()
-        let flowController = AddingServiceTokenFlowController(viewController: view)
-        flowController.parent = parent
-        
-        view.heightChange = { [weak viewController] height in
-            viewController?.updateHeight(height)
-        }
-        
-        let interactor = ModuleInteractorFactory.shared.addingServiceTokenModuleInteractor(serviceData: serviceData)
-        
-        let presenter = AddingServiceTokenPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-        view.presenter = presenter
-        presenter.view = view
-        
-        viewController.embedViewController(view)
-    }
-    
     static func present(
         on viewController: UIViewController,
         parent: AddingServiceTokenFlowControllerParent,
         serviceData: ServiceData
     ) {
-        let view = AddingServiceTokenViewController()
-        let flowController = AddingServiceTokenFlowController(viewController: view)
-        flowController.parent = parent
-        
-        let containerView = AddingServiceViewController()
-        
-        view.heightChange = { [weak containerView] height in
-            containerView?.updateHeight(height)
-        }
-        
-        let interactor = ModuleInteractorFactory.shared.addingServiceTokenModuleInteractor(serviceData: serviceData)
-        
-        let presenter = AddingServiceTokenPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-        view.presenter = presenter
-        presenter.view = view
-        
-        containerView.embedViewController(view)
-        
-        viewController.present(containerView, animated: true)
+//        let view = AddingServiceTokenViewController()
+//        let flowController = AddingServiceTokenFlowController(viewController: view)
+//        flowController.parent = parent
+//        
+//        let containerView = AddingServiceViewController()
+//        
+//        view.heightChange = { [weak containerView] height in
+//            containerView?.updateHeight(height)
+//        }
+//        
+//        let interactor = ModuleInteractorFactory.shared.addingServiceTokenModuleInteractor(serviceData: serviceData)
+//        
+//        let presenter = AddingServiceTokenPresenter(
+//            flowController: flowController,
+//            interactor: interactor
+//        )
+//        view.presenter = presenter
+//        presenter.view = view
+//        
+//        containerView.embedViewController(view)
+//        
+//        viewController.present(containerView, animated: true)
     }
 }
 

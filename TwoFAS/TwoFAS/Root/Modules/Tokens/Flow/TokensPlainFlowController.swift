@@ -107,9 +107,9 @@ final class TokensPlainFlowController: FlowController, TokensNavigationFlowContr
     private func presentAlertOnMainSplitViewController(_ alert: UIAlertController) {
         guard let mainSplitViewController else { return }
 
-        if let presentedViewController = mainSplitViewController.presentedViewController,
-           presentedViewController is AddingServiceViewController {
-            presentedViewController.dismiss(animated: false) {
+        if AddingServiceFlowController.isPresented(on: mainSplitViewController),
+           let presentedViewController = mainSplitViewController.presentedViewController {
+            presentedViewController.dismiss(animated: true) {
                 mainSplitViewController.present(alert, animated: true)
             }
         } else {

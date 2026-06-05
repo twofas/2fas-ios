@@ -19,7 +19,6 @@
 
 import SwiftUI
 import Common
-import CommonUI
 
 struct PINWelcomeFooter: View {
     let action: Callback

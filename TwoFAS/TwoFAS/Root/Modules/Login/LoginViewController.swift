@@ -19,7 +19,6 @@
 
 import UIKit
 import SwiftUI
-import CommonUI
 
 final class LoginViewController: UIHostingController<LoginView> {
     private let presenter: LoginPresenter

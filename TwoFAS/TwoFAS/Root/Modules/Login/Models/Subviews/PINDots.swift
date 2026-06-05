@@ -18,7 +18,7 @@
 //
 
 import SwiftUI
-import CommonUI
+import Common
 
 struct PINDots: View {
     @Environment(\.isEnabled)

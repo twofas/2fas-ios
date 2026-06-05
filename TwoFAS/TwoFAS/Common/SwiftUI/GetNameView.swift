@@ -18,7 +18,7 @@
 //
 
 import SwiftUI
-import CommonUI
+import Common
 
 private struct GetNameView: View {
     let title: String

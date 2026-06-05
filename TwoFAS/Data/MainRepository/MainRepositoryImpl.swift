@@ -26,7 +26,6 @@ import Sync
 import NetworkStack
 import TimeVerification
 import Content
-import CommonUIKit
 
 final class MainRepositoryImpl: MainRepository {
     let service: ServiceHandler

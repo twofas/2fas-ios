@@ -19,7 +19,6 @@
 
 import UIKit
 import Common
-import CommonUIKit
 
 extension MainRepositoryImpl {
     func copy(_ str: String) {

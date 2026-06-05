@@ -18,7 +18,7 @@
 //
 
 import SwiftUI
-import CommonUI
+import Common
 
 struct AppReset: View {
     @Environment(\.dismiss)

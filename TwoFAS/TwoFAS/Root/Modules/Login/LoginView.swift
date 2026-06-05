@@ -18,7 +18,7 @@
 //
 
 import SwiftUI
-import CommonUI
+import Common
 
 struct LoginView: View {
     @Bindable

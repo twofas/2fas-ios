@@ -20,7 +20,7 @@
 import UIKit
 import Data
 import Common
-import CommonUIKit
+import Content
 
 final class ComposeServiceIconTypeSelection: UITableViewCell {
     static let identifier = "ComposeServiceIconTypeSelection"

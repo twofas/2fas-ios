@@ -18,27 +18,38 @@
 //
 
 import UIKit
-import Common
 
-public protocol ServiceIconDefinition {
-    var serviceTypeID: ServiceTypeID? { get }
-    var iconType: IconType { get }
-    var iconTypeID: IconTypeID { get }
-    var labelTitle: String { get }
-    var labelColor: TintColor { get }
-    var icon: UIImage { get }
-}
-
-public extension ServiceIconDefinition {
-    var icon: UIImage {
-        switch iconType {
-        case .brand:
-            return ServiceIcon.for(iconTypeID: iconTypeID)
-        case .label:
-            return LabelImageRenderer.render(
-                with: labelTitle,
-                tintColor: labelColor
-            )
-        }
+#if os(iOS)
+final class SpinnerBackground: UIView {
+    private var isAnimating = false
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        backgroundColor = ThemeColor.overlay
+        alpha = 0
+        isUserInteractionEnabled = false
+        isAccessibilityElement = false
+    }
+    
+    func startAnimating() {
+        guard !isAnimating else { return }
+        isAnimating = true
+        alpha = 0
+        UIView.animate(
+            withDuration: ThemeMetrics.animationTime,
+            delay: 0,
+            options: .curveEaseInOut,
+            animations: { self.alpha = 1 },
+            completion: { _ in self.isAnimating = false }
+        )
     }
 }
+#endif

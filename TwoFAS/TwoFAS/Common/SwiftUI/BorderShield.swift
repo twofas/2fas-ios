@@ -18,7 +18,7 @@
 //
 
 import SwiftUI
-import CommonUI
+import Common
 
 struct BorderShield: View {
     let showDeleteIcon: Bool

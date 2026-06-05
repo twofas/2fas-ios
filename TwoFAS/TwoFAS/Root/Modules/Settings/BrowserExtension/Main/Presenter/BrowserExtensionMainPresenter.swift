@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import CommonUIKit
 
 final class BrowserExtensionMainPresenter {
     weak var view: BrowserExtensionMainViewControlling?

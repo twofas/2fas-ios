@@ -19,6 +19,7 @@
 
 import UIKit
 
+#if os(iOS)
 public protocol SpinnerDisplaying {
     func showSpinner()
     func hideSpinner()
@@ -92,3 +93,4 @@ public extension UIView {
         }
     }
 }
+#endif

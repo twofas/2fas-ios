@@ -18,8 +18,8 @@
 //
 
 import UIKit
-import Common
 
+#if os(iOS)
 public enum SpinnerViewLocalizations {
     public static var voiceOverSpinner: String?
 }
@@ -153,3 +153,4 @@ final class SpinnerView: UIView {
     
     override var intrinsicContentSize: CGSize { CGSize(width: sizeOuter, height: sizeOuter) }
 }
+#endif

@@ -18,7 +18,6 @@
 //
 
 import UIKit
-import CommonUIKit
 import Common
 
 protocol RootViewControlling: AnyObject {

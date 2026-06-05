@@ -18,8 +18,8 @@
 //
 
 import UIKit
-import Common
 
+#if os(iOS)
 public enum LabelImageRenderer {
     public enum Variant {
         case standard
@@ -93,3 +93,4 @@ public enum LabelImageRenderer {
         return NSAttributedString(string: title, attributes: attrs)
     }
 }
+#endif

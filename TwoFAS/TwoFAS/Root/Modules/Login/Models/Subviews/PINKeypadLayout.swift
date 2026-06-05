@@ -18,7 +18,7 @@
 //
 
 import SwiftUI
-import CommonUI
+import Common
 
 struct PINKeypadLayout: Layout {
     static let buttonSize: CGFloat = TFPinButton.size

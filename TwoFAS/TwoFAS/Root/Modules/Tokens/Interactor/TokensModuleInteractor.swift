@@ -19,9 +19,9 @@
 
 import Foundation
 import Common
-import CommonUIKit
 import Storage
 import Data
+import Content
 
 enum TokensModuleInteractorState {
     case normal

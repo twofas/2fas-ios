@@ -19,7 +19,7 @@
 
 import UIKit
 import Common
-import CommonUIKit
+import Content
 
 public struct GuideDescription: Identifiable, Hashable {
     public static func == (lhs: GuideDescription, rhs: GuideDescription) -> Bool {

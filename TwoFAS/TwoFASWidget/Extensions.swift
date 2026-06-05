@@ -21,6 +21,7 @@ import WidgetKit
 import SwiftUI
 import Intents
 import Common
+import Content
 
 extension CodeEntry {
     static func placeholder(with serviceCount: Int) -> CodeEntry {

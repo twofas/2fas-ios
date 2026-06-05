@@ -21,7 +21,6 @@ import WidgetKit
 import Data
 import Intents
 import Common
-import CommonUIKit
 import IntentsUI
 import Protection
 import Storage

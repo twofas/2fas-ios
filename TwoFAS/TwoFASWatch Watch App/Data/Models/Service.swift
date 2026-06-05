@@ -39,9 +39,9 @@ extension ServiceData {
             additionalInfo: additionalInfo,
             iconType: iconType,
             iconTypeID: iconTypeID,
-            labelColor: Color(labelColor.color),
+            labelColor: labelColor.color(for: .dark),
             labelTitle: labelTitle,
-            badgeColor: Color(badgeColor?.color ?? TintColor.default.color)
+            badgeColor: badgeColor?.color(for: .dark) ?? TintColor.default.color(for: .dark)
         )
     }
 }

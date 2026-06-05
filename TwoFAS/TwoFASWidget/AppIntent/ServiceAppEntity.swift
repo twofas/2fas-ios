@@ -20,7 +20,6 @@
 import Foundation
 import AppIntents
 import Common
-import CommonUIKit
 
 struct ServiceAppEntity: AppEntity {
     static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Service")

@@ -20,7 +20,6 @@
 import WidgetKit
 import UIKit
 import Common
-import CommonUIKit
 
 struct CodeEntry: TimelineEntry, Encodable {
     let date: Date

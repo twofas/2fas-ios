@@ -19,7 +19,7 @@
 
 import SwiftUI
 import Common
-import CommonUIKit
+import Content
 
 struct IconRenderer: View {
     let entry: CodeEntry.Entry

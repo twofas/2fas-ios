@@ -19,7 +19,6 @@
 
 import UIKit
 import Common
-import CommonUIKit
 
 final class LabelRenderer: UIView {
     private var currentKind: TokensCellKind = .normal

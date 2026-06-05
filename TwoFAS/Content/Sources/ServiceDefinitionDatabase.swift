@@ -172,3 +172,9 @@ extension ServiceDefinitionDatabaseImpl: ServiceDefinitionDatabase {
         })
     }
 }
+
+public extension ServiceDefinition {
+    var icon: UIImage {
+        ServiceIcon.for(iconTypeID: iconTypeID)
+    }
+}

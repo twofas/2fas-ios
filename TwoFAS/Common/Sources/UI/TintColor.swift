@@ -17,10 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-#if os(watchOS)
 import SwiftUI
-#endif
 
 public enum TintColor: String, Hashable, CaseIterable, Codable {
     case `default`
@@ -111,39 +108,37 @@ public extension TintColor {
         }
     }
     
-    #if os(iOS)
+#if os(iOS)
     var color: UIColor {
-        let bundle = Bundle(for: CountdownTimer.self)
         switch self {
-        case .`default`: return UIColor(named: "tintDefaultColor", in: bundle, compatibleWith: nil)!
-        case .lightBlue: return UIColor(named: "tintLightBlueColor", in: bundle, compatibleWith: nil)!
-        case .indigo: return UIColor(named: "tintIndigoColor", in: bundle, compatibleWith: nil)!
-        case .purple: return UIColor(named: "tintPurpleColor", in: bundle, compatibleWith: nil)!
-        case .turquoise: return UIColor(named: "tintTurquoiseColor", in: bundle, compatibleWith: nil)!
-        case .green: return UIColor(named: "tintGreenColor", in: bundle, compatibleWith: nil)!
-        case .red: return UIColor(named: "tintRedColor", in: bundle, compatibleWith: nil)!
-        case .orange: return UIColor(named: "tintOrangeColor", in: bundle, compatibleWith: nil)!
-        case .yellow: return UIColor(named: "tintYellowColor", in: bundle, compatibleWith: nil)!
-        case .pink: return UIColor(named: "tintPinkColor", in: bundle, compatibleWith: nil)!
-        case .brown: return UIColor(named: "tintBrownColor", in: bundle, compatibleWith: nil)!
+        case .`default`: AppColor.accentsDefault.uiColor
+        case .lightBlue: AppColor.accentsTeal.uiColor
+        case .indigo: AppColor.accentsIndigo.uiColor
+        case .purple: AppColor.accentsPurple.uiColor
+        case .turquoise: AppColor.accentsTeal.uiColor
+        case .green: AppColor.accentsGreen.uiColor
+        case .red: AppColor.accentsBrand.uiColor
+        case .orange: AppColor.accentsOrange.uiColor
+        case .yellow: AppColor.accentsYellow.uiColor
+        case .pink: AppColor.accentsPink.uiColor
+        case .brown: AppColor.accentsBrown.uiColor
         }
     }
-    #elseif os(watchOS)
-    var color: Color {
-        let bundle = Bundle(for: CoreDataStack.self)
+#endif
+    
+    func color(for colorScheme: ColorScheme) -> Color {
         switch self {
-        case .`default`: return Color("tintDefaultColor", bundle: bundle)
-        case .lightBlue: return Color("tintLightBlueColor", bundle: bundle)
-        case .indigo: return Color("tintIndigoColor", bundle: bundle)
-        case .purple: return Color("tintPurpleColor", bundle: bundle)
-        case .turquoise: return Color("tintTurquoiseColor", bundle: bundle)
-        case .green: return Color("tintGreenColor", bundle: bundle)
-        case .red: return Color("tintRedColor", bundle: bundle)
-        case .orange: return Color("tintOrangeColor", bundle: bundle)
-        case .yellow: return Color("tintYellowColor", bundle: bundle)
-        case .pink: return Color("tintPinkColor", bundle: bundle)
-        case .brown: return Color("tintBrownColor", bundle: bundle)
+        case .`default`: AppColor.accentsDefault.color(for: colorScheme)
+        case .lightBlue: AppColor.accentsTeal.color(for: colorScheme)
+        case .indigo: AppColor.accentsIndigo.color(for: colorScheme)
+        case .purple: AppColor.accentsPurple.color(for: colorScheme)
+        case .turquoise: AppColor.accentsTeal.color(for: colorScheme)
+        case .green: AppColor.accentsGreen.color(for: colorScheme)
+        case .red: AppColor.accentsBrand.color(for: colorScheme)
+        case .orange: AppColor.accentsOrange.color(for: colorScheme)
+        case .yellow: AppColor.accentsYellow.color(for: colorScheme)
+        case .pink: AppColor.accentsPink.color(for: colorScheme)
+        case .brown: AppColor.accentsBrown.color(for: colorScheme)
         }
     }
-    #endif
 }

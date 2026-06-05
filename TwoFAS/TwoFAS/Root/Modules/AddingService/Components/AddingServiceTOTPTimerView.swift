@@ -21,17 +21,40 @@ import SwiftUI
 import Common
 
 struct AddingServiceTOTPTimerView: View {
-    @Binding var text: String
-    @Binding var willChangeSoon: Bool
+    @Binding
+    var text: String
+    @Binding
+    var willChangeSoon: Bool
+    @Binding
+    var animationProgress: CGFloat
+    
+    private let animation = Animation
+        .linear(duration: 1)
+        .repeatCount(1)
+    private let style = StrokeStyle(lineWidth: 1, lineCap: .round)
     
     var body: some View {
-        Text(text)
-            .font(Font(Theme.Fonts.Controls.counter))
-            .lineLimit(1)
-            .multilineTextAlignment(.center)
-            .fontWeight(.medium)
-            .foregroundColor(Color(
-                willChangeSoon ? ThemeColor.theme : ThemeColor.primary
-            ))
+        let color = Color(willChangeSoon ?
+                        AppColor.accentsBrand.color(for: .dark) :
+                        AppColor.labelsPrimary.color(for: .dark)
+        )
+        
+        ZStack(alignment: .center) {
+            Text(text)
+                .font(Font(Theme.Fonts.Controls.counter))
+                .lineLimit(1)
+                .multilineTextAlignment(.center)
+                .foregroundColor(color)
+                .animation(nil, value: text)
+
+            Circle()
+                .trim(from: 0, to: $animationProgress.animation(animation).wrappedValue)
+                .stroke(color, style: style)
+                .rotationEffect(.degrees(-90))
+                .padding(0.5)
+                .frame(width: 36, height: 36)
+        }
+        .animation(.linear(duration: 1), value: animationProgress)
+        .animation(.easeInOut(duration: 0.5), value: willChangeSoon)
     }
 }

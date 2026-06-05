@@ -28,7 +28,7 @@ protocol AddingServiceTokenModuleInteracting: AnyObject {
     var serviceData: ServiceData { get }
     var serviceName: String { get }
     var serviceAdditionalInfo: String? { get }
-    var serviceIcon: UIImage { get }
+    var serviceIcon: IconDetails { get }
     var serviceTypeName: String? { get }
     var secret: String { get }
     var serviceTokenType: TokenType { get }
@@ -65,7 +65,7 @@ final class AddingServiceTokenModuleInteractor {
 extension AddingServiceTokenModuleInteractor: AddingServiceTokenModuleInteracting {
     var serviceName: String { serviceData.name }
     var serviceAdditionalInfo: String? { serviceData.additionalInfo }
-    var serviceIcon: UIImage { serviceData.icon }
+    var serviceIcon: IconDetails { serviceData.iconDetails }
     var serviceTypeName: String? { serviceDefinitionInteractor.serviceName(for: serviceData.serviceTypeID) }
     var secret: String { serviceData.secret }
 

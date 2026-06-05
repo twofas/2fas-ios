@@ -18,13 +18,11 @@
 //
 
 import SwiftUI
-import CommonUI
 import Common
 
 struct AddingServiceView: View {
     private let viewportHeight: CGFloat = 220
     private let viewportRatio: CGFloat = 0.63
-    private let ipadMaxWidth: CGFloat = 480
     
     @State
     private var errorReason: String?
@@ -46,39 +44,28 @@ struct AddingServiceView: View {
     }
     
     var body: some View {
-        AdaptiveReadableContainer(
-            ipadMaxWidth: ipadMaxWidth,
-            horizontalMargin: Spacing.XL.rawValue,
-            verticalMargin: Spacing.XL.rawValue
+        MainScreenModalView(
+            onClose: onClose,
+            title: "Pair service with 2FAS",
+            subtitle: "Point your camera to the screen to capture the QR code."
         ) {
-            VStack(spacing: .L) {
-                HStack(spacing: .zero) {
-                    Spacer()
-                    TFLiquidGlassSymbolButton(symbol: .close) {
-                        onClose()
+            if errorReason != nil || presenter.isCameraUnavailable {
+                ErrorTextView(errorReason: errorReason)
+                    .onTapGesture {
+                        guard presenter.isCameraUnavailable else { return }
+                        presenter.handleToAppSettings()
                     }
-                }
-                
-                header()
-                
+            } else {
                 VStack(spacing: .zero) {
-                    if errorReason != nil || presenter.isCameraUnavailable {
-                        ErrorTextView(errorReason: errorReason)
-                            .onTapGesture {
-                                guard presenter.isCameraUnavailable else { return }
-                                presenter.handleToAppSettings()
-                            }
-                    } else {
-                        AddingServiceCameraViewport(
-                            cameraFreeze: $presenter.freezeCamera,
-                            didRegisterError: { error in
-                                self.errorReason = error
-                            },
-                            didFoundCode: { codeType in
-                                presenter.handleFoundCode(codeType: codeType)
-                            }
-                        )
-                    }
+                    AddingServiceCameraViewport(
+                        cameraFreeze: $presenter.freezeCamera,
+                        didRegisterError: { error in
+                            self.errorReason = error
+                        },
+                        didFoundCode: { codeType in
+                            presenter.handleFoundCode(codeType: codeType)
+                        }
+                    )
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: AddingServiceMetrics.cameraActiveAreaHeight)
@@ -87,7 +74,9 @@ struct AddingServiceView: View {
                     RoundedRectangle(.badge)
                         .stroke(.bordersWhite, lineWidth: 1)
                 }
-                
+            }
+        } footer: {
+            VStack(spacing: .L) {
                 Text("or")
                     .textStyle(.subheadline)
                     .foregroundStyle(.labelsPrimary)
@@ -105,16 +94,6 @@ struct AddingServiceView: View {
                 }
             }
         }
-        .background {
-            RoundedRectangle(.extraLarge)
-                .foregroundStyle(.backgroundsPrimary)
-                .shadow(.glass)
-        }
-        .overlay {
-            RoundedRectangle(.extraLarge)
-                .stroke(.bordersVibrant, lineWidth: 1)
-        }
-        .environment(\.colorScheme, .dark)
         .alert(item: $presenter.alert) { alert in
             switch alert {
             case .cantPairWatch:
@@ -173,29 +152,12 @@ struct AddingServiceView: View {
             placeholder: T.Backup.watchPairingDefaultName,
             defaultText: T.Backup.watchPairingDefaultName,
             confirmTitle: T.Backup.watchPairingAction) { deviceName in
-                if let deviceCodePath = presenter.deviceCodePath {
-                    presenter.handleAppleWatchPairing(
-                        deviceName: deviceName
-                    )
-                }
+                presenter.handleAppleWatchPairing(
+                    deviceName: deviceName
+                )
             } onVerify: { deviceName in
                 ServiceRules.isAppleWatchNameValid(deviceName: deviceName)
             }
-    }
-    
-    @ViewBuilder
-    private func header() -> some View {
-        VStack(spacing: .XS) {
-            Text("Pair service with 2FAS")
-                .textStyle(.headline)
-                .foregroundStyle(.labelsPrimary)
-            
-            Text("Point your camera to the screen to capture the QR code.")
-                .multilineTextAlignment(.center)
-                .textStyle(.subheadline)
-                .foregroundStyle(.labelsPrimary)
-        }
-        .padding(.bottom, .XXXXXL)
     }
 }
 

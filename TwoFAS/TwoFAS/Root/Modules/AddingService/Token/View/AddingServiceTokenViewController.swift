@@ -38,13 +38,9 @@ final class AddingServiceTokenViewController: UIViewController, AddingServiceTok
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let token = AddingServiceTokenView(
-            presenter: presenter,
-            changeHeight: { [weak self] height in
-                self?.heightChange?(height)
-            }) { [weak self] in
-                self?.presentingViewController?.dismiss(animated: true)
-            }
+        let token = AddingServiceTokenView(presenter: presenter) { [weak self] in
+            self?.presentingViewController?.dismiss(animated: true)
+        }
         
         let vc = UIHostingController(rootView: token)
         vc.willMove(toParent: self)
@@ -65,12 +61,6 @@ final class AddingServiceTokenViewController: UIViewController, AddingServiceTok
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
-        
-        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
-            let userInterfaceStyle = self.traitCollection.userInterfaceStyle
-            let isDark = userInterfaceStyle == .dark
-            self.view.backgroundColor = isDark ? ThemeColor.buttonCloseBackground : Theme.Colors.Fill.System.third
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -23,7 +23,7 @@ import Common
 final class AddingServiceTokenPresenter: ObservableObject {
     weak var view: AddingServiceTokenViewControlling?
     
-    var serviceIcon: UIImage {
+    var serviceIcon: IconDetails {
         interactor.serviceIcon
     }
     

@@ -154,7 +154,7 @@ enum Theme {
     
     enum Fonts {
         private static let syncCounter = UIFont.systemFont(ofSize: 60, weight: .thin)
-        private static let counter = UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular)
+        private static let counter = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: .semibold)
         private static let privateKey = UIFont.monospacedDigitSystemFont(ofSize: 50, weight: .thin)
         private static let privateKeyMask = UIFont.monospacedSystemFont(ofSize: 43, weight: .regular)
         private static let title = UIFont.systemFont(ofSize: 32, weight: .light)

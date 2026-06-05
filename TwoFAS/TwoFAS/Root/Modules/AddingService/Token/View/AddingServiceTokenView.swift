@@ -21,134 +21,52 @@ import SwiftUI
 import Common
 
 struct AddingServiceTokenView: View {
-    @Environment(\.colorScheme) private var colorScheme
-    @State private var rotationAngle = 0.0
-    @State private var animationProgress: CGFloat = 0
-    
     @ObservedObject var presenter: AddingServiceTokenPresenter
-    let changeHeight: (CGFloat) -> Void
     let dismiss: () -> Void
     
-    private let animation = Animation
-        .linear(duration: 1)
-        .repeatCount(1)
-    
     var body: some View {
-        VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-            VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-                VStack(spacing: 0) {
-                    AddingServiceCloseButtonView {
-                        dismiss()
-                    }
-                    .frame(maxWidth: .infinity)
-                    HStack {
-                        Spacer()
-                            .frame(maxWidth: .infinity)
-                        VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-                            AddingServiceTitleView(text: T.Tokens.addSuccessTitle)
-                            AddingServiceTextContentView(text: T.Tokens.addSuccessDescription)
-                            AddingServiceLargeSpacing()
-                            tokenView()
-                        }
-                        .frame(minWidth: 310, alignment: .center)
-                        Spacer()
-                            .frame(maxWidth: .infinity)
-                    }
-                    .frame(maxWidth: .infinity)
-                }
-            }
-            .padding(.horizontal, Theme.Metrics.doubleMargin)
-            
-            AddingServiceLargeSpacing()
-            
-            AddingServiceFullWidthButtonWithImage(
-                text: T.Tokens.copyToken,
-                icon: Asset.copyIcon.swiftUIImage
-            ) {
+        MainScreenModalView(
+            onClose: dismiss,
+            title: T.Tokens.addSuccessTitle,
+            subtitle: T.Tokens.addSuccessDescription
+        ) {
+            tokenView()
+        } footer: {
+            TFButton(T.Tokens.copyToken, variant: .borderedSecondary, size: .largeWide, applyGlass: false) {
                 presenter.handleCopyCode()
             }
         }
-        .padding(.horizontal, Theme.Metrics.doubleMargin)
-        .observeHeight(onChange: { height in
-            changeHeight(height)
-        })
-        .onChange(of: presenter.part) { _, newValue in
-            withAnimation(animation) {
-                animationProgress = newValue
-            }
-        }
-        .background(Color(colorScheme == .dark ? ThemeColor.buttonCloseBackground : Theme.Colors.Fill.System.third))
     }
     
     @ViewBuilder
     private func tokenView() -> some View {
-        VStack(spacing: 6) {
-            HStack(spacing: 12) {
-                Image(uiImage: presenter.serviceIcon)
-                    .accessibilityHidden(true)
-                
-                VStack(spacing: 4) {
-                    AddingServiceTitleView(text: presenter.serviceName, alignToLeading: true)
-                        .lineLimit(1)
-                    if let serviceAdditionalInfo = presenter.serviceAdditionalInfo {
-                        AddingServiceAdditionalInfoView(text: serviceAdditionalInfo)
-                    }
-                }
+        VStack(spacing: .M) {
+            HStack(spacing: .L) {
+                AddingServiceIcon(icon: presenter.serviceIcon)
+                AddingServiceTitleView(text: presenter.serviceName)
             }
-            HStack(alignment: .center, spacing: 2 * ThemeMetrics.spacing) {
+            HStack(alignment: .center, spacing: .XXL) {
                 AddingServiceTokenValueView(text: $presenter.token, willChangeSoon: $presenter.willChangeSoon)
                 
                 switch presenter.serviceTokenType {
-                case .steam:
-                    totpTokenView()
-                case .totp:
-                    totpTokenView()
+                case .steam, .totp:
+                    AddingServiceTOTPTimerView(
+                        text: $presenter.time,
+                        willChangeSoon: $presenter.willChangeSoon,
+                        animationProgress: $presenter.part
+                    )
                 case .hotp:
-                    Button {
-                            withAnimation(
-                                .linear(duration: 1)
-                                .speed(5)
-                                .repeatCount(1, autoreverses: false)
-                            ) {
-                                rotationAngle = 360.0
-                            }
-                    } label: {
-                        Asset.refreshTokenCounter.swiftUIImage
-                            .tint(Color(presenter.refreshTokenLocked ? ThemeColor.inactive : ThemeColor.theme))
-                            .rotationEffect(.degrees(rotationAngle))
-                    }
-                    .disabled(presenter.refreshTokenLocked)
-                    .onAnimationCompleted(for: rotationAngle) {
-                        rotationAngle = 0
-                        presenter.handleRefresh()
-                    }
+                    AddingServiceHOTPView(
+                        refreshTokenLocked: $presenter.refreshTokenLocked,
+                        handleRefresh: presenter.handleRefresh
+                    )
                 }
             }
         }
-        .padding(.init(top: 16, leading: 20, bottom: 12, trailing: 20))
+        .padding(EdgeInsets(top: .XXL, leading: .XL, bottom: .XXL, trailing: .XL))
         .overlay(
             RoundedRectangle(cornerRadius: Theme.Metrics.modalCornerRadius)
                 .stroke(Color(Theme.Colors.Line.selectionBorder), lineWidth: 1)
         )
-    }
-    
-    private func totpTokenView() -> some View {
-        ZStack(alignment: .center) {
-            AddingServiceTOTPTimerView(
-                text: $presenter.time,
-                willChangeSoon: $presenter.willChangeSoon
-            )
-            
-            Circle()
-                .trim(from: 0, to: $animationProgress.animation(animation).wrappedValue)
-                .stroke(Color(presenter.willChangeSoon ? ThemeColor.theme : ThemeColor.primary),
-                        style: StrokeStyle(
-                            lineWidth: 1,
-                            lineCap: .round
-                        ))
-                .rotationEffect(.degrees(-90))
-                .padding(0.5)
-                .frame(width: 30, height: 30)
-        }
     }
 }

@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2026 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -19,16 +19,14 @@
 
 import SwiftUI
 
-struct AddingServiceTitleView: View {
-    let text: String
-    
-    var body: some View {
-        Text(text)
-            .lineLimit(1)
-            .textStyle(.headline)
-            .foregroundStyle(.labelsPrimary)
-            .multilineTextAlignment(.leading)
-            .allowsTightening(true)
-            .frame(maxWidth: .infinity, alignment: .leading)
+extension View {
+    @ViewBuilder func isHidden(_ hidden: Bool, remove: Bool = false) -> some View {
+        if hidden {
+            if !remove {
+                self.hidden()
+            }
+        } else {
+            self
+        }
     }
 }

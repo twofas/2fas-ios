@@ -31,7 +31,7 @@ struct AddingServiceTOTPTimerView: View {
     private let animation = Animation
         .linear(duration: 1)
         .repeatCount(1)
-    private let style = StrokeStyle(lineWidth: 1, lineCap: .round)
+    private let style = StrokeStyle(lineWidth: 2, lineCap: .round)
     
     var body: some View {
         let color = Color(willChangeSoon ?

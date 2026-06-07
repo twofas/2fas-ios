@@ -40,33 +40,33 @@ struct AddingServiceTokenView: View {
     
     @ViewBuilder
     private func tokenView() -> some View {
-        VStack(spacing: .M) {
-            HStack(spacing: .L) {
-                AddingServiceIcon(icon: presenter.serviceIcon)
+        HStack(spacing: .L) {
+            AddingServiceIcon(icon: presenter.serviceIcon)
+            VStack(alignment: .leading, spacing: .SM) {
                 AddingServiceTitleView(text: presenter.serviceName)
-            }
-            HStack(alignment: .center, spacing: .XXL) {
                 AddingServiceTokenValueView(text: $presenter.token, willChangeSoon: $presenter.willChangeSoon)
-                
-                switch presenter.serviceTokenType {
-                case .steam, .totp:
-                    AddingServiceTOTPTimerView(
-                        text: $presenter.time,
-                        willChangeSoon: $presenter.willChangeSoon,
-                        animationProgress: $presenter.part
-                    )
-                case .hotp:
-                    AddingServiceHOTPView(
-                        refreshTokenLocked: $presenter.refreshTokenLocked,
-                        handleRefresh: presenter.handleRefresh
-                    )
-                }
+            }
+            
+            switch presenter.serviceTokenType {
+            case .steam, .totp:
+                AddingServiceTOTPTimerView(
+                    text: $presenter.time,
+                    willChangeSoon: $presenter.willChangeSoon,
+                    animationProgress: $presenter.part
+                )
+            case .hotp:
+                AddingServiceHOTPView(
+                    refreshTokenLocked: $presenter.refreshTokenLocked,
+                    handleRefresh: presenter.handleRefresh
+                )
             }
         }
         .padding(EdgeInsets(top: .XXL, leading: .XL, bottom: .XXL, trailing: .XL))
         .overlay(
             RoundedRectangle(cornerRadius: Theme.Metrics.modalCornerRadius)
-                .stroke(Color(Theme.Colors.Line.selectionBorder), lineWidth: 1)
+                .inset(by: 0.5)
+                .stroke(.bordersVibrant, lineWidth: 1)
         )
+        .padding(.vertical, .XL)
     }
 }

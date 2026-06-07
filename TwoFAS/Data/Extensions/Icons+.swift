@@ -51,8 +51,8 @@ public extension ServiceIconDefinition {
     }
 }
 
-extension IconDetails {
-    public var iconImage: UIImage? {
+public extension IconDetails {
+     var iconImage: UIImage? {
         guard case .brand(let iconTypeID) = self else { return nil }
         return ServiceIcon.for(iconTypeID: iconTypeID)
     }

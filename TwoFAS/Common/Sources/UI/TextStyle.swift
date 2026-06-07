@@ -53,6 +53,8 @@ public enum TextStyle {
     case caption1
     /// SF Pro 11pt — maps to `Font.TextStyle.caption2`
     case caption2
+    /// SF Pro 32pt — maps to `Font.TextStyle.body`
+    case counter
 }
 
 // MARK: - TextStyleVariant
@@ -229,6 +231,15 @@ private extension TextStyle {
                 weight: smallWeight(variant),
                 isItalic: variant == .italic || variant == .emphasizedItalic,
                 semanticStyle: .caption2
+            )
+        case .counter:
+            return TextStyleAttributes(
+                size: 32,
+                lineHeight: 32 + pad,
+                tracking: 0.4,
+                weight: .regular,
+                isItalic: false,
+                semanticStyle: .body
             )
         }
     }

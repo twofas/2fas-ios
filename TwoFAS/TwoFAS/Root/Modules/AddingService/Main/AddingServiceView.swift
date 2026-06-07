@@ -34,7 +34,7 @@ struct AddingServiceView: View {
     var presenter: AddingServicePresenter
     
     let onClose: () -> Void
-
+    
     init(
         presenter: AddingServicePresenter,
         onClose: @escaping () -> Void
@@ -49,14 +49,14 @@ struct AddingServiceView: View {
             title: "Pair service with 2FAS",
             subtitle: "Point your camera to the screen to capture the QR code."
         ) {
-            if errorReason != nil || presenter.isCameraUnavailable {
-                ErrorTextView(errorReason: errorReason)
-                    .onTapGesture {
-                        guard presenter.isCameraUnavailable else { return }
-                        presenter.handleToAppSettings()
-                    }
-            } else {
-                VStack(spacing: .zero) {
+            VStack(spacing: .zero) {
+                if errorReason != nil || presenter.isCameraUnavailable {
+                    ErrorTextView(errorReason: errorReason)
+                        .onTapGesture {
+                            guard presenter.isCameraUnavailable else { return }
+                            presenter.handleToAppSettings()
+                        }
+                } else {
                     AddingServiceCameraViewport(
                         cameraFreeze: $presenter.freezeCamera,
                         didRegisterError: { error in
@@ -67,14 +67,15 @@ struct AddingServiceView: View {
                         }
                     )
                 }
-                .frame(maxWidth: .infinity)
-                .frame(height: AddingServiceMetrics.cameraActiveAreaHeight)
-                .clipShape(RoundedRectangle(.badge))
-                .overlay {
-                    RoundedRectangle(.badge)
-                        .stroke(.bordersWhite, lineWidth: 1)
-                }
             }
+            .frame(maxWidth: .infinity)
+            .frame(height: AddingServiceMetrics.cameraActiveAreaHeight)
+            .clipShape(RoundedRectangle(.badge))
+            .overlay {
+                RoundedRectangle(.badge)
+                    .stroke(.bordersWhite, lineWidth: 1)
+            }
+            .padding(.top, .XL)
         } footer: {
             VStack(spacing: .L) {
                 Text("or")
@@ -169,7 +170,7 @@ private struct ErrorTextView: View {
             if let errorReason {
                 return AttributedString(errorReason)
             }
-
+            
             var result = AttributedString(T.Tokens.cameraIsUnavailableAppPermission)
             if let range = result.range(of: T.Tokens.cameraIsUnavailableAppPermissionUnderline) {
                 result[range].underlineStyle = .single

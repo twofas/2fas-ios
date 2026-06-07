@@ -3744,7 +3744,6 @@
 		C20E2DF82A7C4D7700DB64BB /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				C295AF832FD1DE8A000DF064 /* MainScreenModalView.swift */,
 				C20E2DFD2A7C4DE000DB64BB /* AddingServiceFlowController.swift */,
 				C21EB2F92A800E7200FA8AA1 /* AddingServiceModuleInteractor.swift */,
 				C20E2E0A2A7C52AA00DB64BB /* AddingServicePresenter.swift */,
@@ -4468,6 +4467,7 @@
 				C2F4D93A2A8D470100608F63 /* AddingServiceServiceTypeButton.swift */,
 				C2F4D93C2A8D549000608F63 /* AddingServiceServiceTypeSelector.swift */,
 				C20418612ABB969300874654 /* AddingServiceCloseButtonView.swift */,
+				C295AF832FD1DE8A000DF064 /* MainScreenModalView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";

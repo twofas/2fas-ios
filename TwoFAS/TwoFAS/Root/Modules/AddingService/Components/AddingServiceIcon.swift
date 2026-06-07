@@ -32,7 +32,7 @@ struct AddingServiceIcon: View {
     var body: some View {
         ZStack {
             switch icon {
-            case .brand(let iconTypeID):
+            case .brand:
                 Circle()
                     .frame(width: circleSize, height: circleSize)
                     .foregroundStyle(.backgroundsSecondary)

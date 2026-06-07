@@ -26,11 +26,10 @@ struct AddingServiceTokenValueView: View {
     
     var body: some View {
         Text(text)
-            .foregroundColor(Color(
-                willChangeSoon ? ThemeColor.theme : ThemeColor.primary
-            ))
-            .font(Font(Theme.Fonts.Counter.syncCounter))
-            .minimumScaleFactor(0.5)
+            .foregroundStyle(
+                willChangeSoon ? AppColor.accentsBrand : AppColor.labelsPrimary
+            )
+            .textStyle(.counter)
             .lineLimit(1)
             .frame(maxWidth: .infinity, alignment: .leading)
     }

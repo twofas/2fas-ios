@@ -71,6 +71,7 @@ final class AddingServiceFlowController: FlowController {
         hosting.view.backgroundColor = .clear
         // Keep the presenting VC in the hierarchy so the background shows through.
         hosting.modalPresentationStyle = .overFullScreen
+        hosting.modalTransitionStyle = .crossDissolve
         hosting.isModalInPresentation = true
         hosting.definesPresentationContext = true
         // Prevents UIKit from snapshotting the full focus environment on present(),

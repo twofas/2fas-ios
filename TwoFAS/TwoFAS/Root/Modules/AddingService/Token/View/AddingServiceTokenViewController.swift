@@ -37,11 +37,13 @@ final class AddingServiceTokenViewController: UIViewController, AddingServiceTok
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        view.backgroundColor = .clear
+
         let token = AddingServiceTokenView(presenter: presenter) { [weak self] in
             self?.presentingViewController?.dismiss(animated: true)
         }
-        
+
         let vc = UIHostingController(rootView: token)
         vc.willMove(toParent: self)
         addChild(vc)

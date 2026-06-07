@@ -25,15 +25,20 @@ struct AddingServiceTokenView: View {
     let dismiss: () -> Void
     
     var body: some View {
-        MainScreenModalView(
-            onClose: dismiss,
-            title: T.Tokens.addSuccessTitle,
-            subtitle: T.Tokens.addSuccessDescription
-        ) {
-            tokenView()
-        } footer: {
-            TFButton(T.Tokens.copyToken, variant: .borderedSecondary, size: .largeWide, applyGlass: false) {
-                presenter.handleCopyCode()
+        ZStack {
+            Color.black.opacity(0.4)
+                .ignoresSafeArea()
+
+            MainScreenModalView(
+                onClose: dismiss,
+                title: T.Tokens.addSuccessTitle,
+                subtitle: T.Tokens.addSuccessDescription
+            ) {
+                tokenView()
+            } footer: {
+                TFButton(T.Tokens.copyToken, variant: .borderedSecondary, size: .largeWide, applyGlass: false) {
+                    presenter.handleCopyCode()
+                }
             }
         }
     }

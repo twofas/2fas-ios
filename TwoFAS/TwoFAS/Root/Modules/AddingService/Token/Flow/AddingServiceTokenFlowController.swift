@@ -49,8 +49,11 @@ final class AddingServiceTokenFlowController: FlowController {
         view.presenter = presenter
         presenter.view = view
         
-        view.configureAsPhoneFullscreenModal()
-        
+        view.modalPresentationStyle = .overFullScreen
+        view.modalTransitionStyle = .crossDissolve
+        view.isModalInPresentation = true
+        view.definesPresentationContext = true
+
         viewController.present(view, animated: true)
     }
 }

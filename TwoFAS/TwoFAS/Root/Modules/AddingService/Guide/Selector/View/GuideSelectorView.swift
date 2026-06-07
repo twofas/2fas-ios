@@ -22,25 +22,40 @@ import Data
 import Common
 
 struct GuideSelectorView: View {
-    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.colorScheme)
+    private var colorScheme
+    
     private static let itemWidth: CGFloat = 148
     private static let itemHeight: CGFloat = 118
+    
     private let columns = [GridItem(.fixed(Self.itemWidth)), GridItem(.fixed(Self.itemWidth))]
+    
     let presenter: GuideSelectorPresenter
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .center, spacing: .zero) {
+            ZStack {
+                HStack(spacing: .zero) {
+                    TFLiquidGlassSymbolButton(symbol: .close) {
+                        presenter.handleClose()
+                    }
+                    Spacer()
+                    TFLiquidGlassTextButton("Zgłoś się") {
+                        UIApplication.shared.open(URL(string: "https://2fas.com/your-2fa-guide/")!)
+                    }
+                }
+                TFTitleView(title: "Guides")
+            }
             ScrollView(.vertical) {
-                VStack(spacing: Theme.Metrics.standardSpacing) {
+                VStack(spacing: .L) {
                     Text(T.Guides.selectDescription)
-                        .font(.footnote)
-                        .textCase(.uppercase)
-                        .foregroundStyle(
-                            Color(colorScheme == .dark ? ThemeColor.pageIndicator : Theme.Colors.inactiveInverted)
-                        )
-                        .padding(.vertical, Theme.Metrics.doubleMargin)
+                        .textStyle(.title2, .emphasized)
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.labelsPrimary)
                         .accessibilityAddTraits(.isHeader)
-                    LazyVGrid(columns: columns, spacing: Theme.Metrics.doubleMargin) {
+                        .padding(.vertical, .XXXXXL)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    LazyVGrid(columns: columns, spacing: Spacing.L.rawValue) {
                         ForEach(presenter.guides.chunked(into: 2), id: \.self) { values in
                             if let first = values.first {
                                 serviceGuide(first)
@@ -50,52 +65,34 @@ struct GuideSelectorView: View {
                             }
                         }
                     }
-                    .padding(.bottom, Theme.Metrics.doubleMargin)
                 }
             }
-            VStack(alignment: .center) {
-                Text(verbatim: T.Guides.selectProvideGuide)
-                    .font(.footnote)
-                    .foregroundStyle(Color(colorScheme == .dark ? ThemeColor.pageIndicator : Theme.Colors.Line.active))
-                    .padding(.vertical, Theme.Metrics.doubleMargin)
-                    .accessibilityAddTraits(.isHeader)
-                Link(destination: URL(string: "https://2fas.com/your-2fa-guide/")!) {
-                    HStack(spacing: Theme.Metrics.halfSpacing) {
-                        Text(verbatim: T.Guides.selectProvideGuideCta)
-                            .font(.body)
-                            .fontWeight(.medium)
-                            .foregroundStyle(Color(Theme.Colors.Text.theme))
-                        Asset.externalLinkIcon.swiftUIImage
-                            .foregroundStyle(Color(Theme.Colors.Text.theme))
-                    }
-                }
-            }
-            .padding(.bottom, Theme.Metrics.doubleMargin)
-            .frame(maxWidth: .infinity)
-            .background(Color(colorScheme == .dark ? ThemeColor.buttonCloseBackground : Theme.Colors.Fill.notification))
         }
+        .padding(.horizontal, .XL)
+        .padding(.top, .XL)
     }
     
     @ViewBuilder
     private func serviceGuide(_ guide: GuideDescription) -> some View {
-        VStack(alignment: .center, spacing: Theme.Metrics.mediumMargin) {
+        VStack(alignment: .center, spacing: .M) {
             Image(uiImage: guide.serviceIcon)
                 .accessibilityHidden(true)
             Text(verbatim: guide.serviceName)
-                .foregroundStyle(Color(Theme.Colors.Text.main))
-                .font(.footnote)
-                .padding(.horizontal, Theme.Metrics.doubleMargin)
+                .textStyle(.body, .medium)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .foregroundStyle(.labelsPrimary)
+                .padding(.horizontal, .XL)
         }
         .accessibilityAddTraits(.isButton)
         .padding(.vertical, Theme.Metrics.doubleMargin)
-        .frame(width: Self.itemWidth, height: Self.itemHeight)
-        .background {
-            let size = CGSize(width: Theme.Metrics.modalCornerRadius, height: Theme.Metrics.modalCornerRadius)
-            RoundedRectangle(cornerSize: size)
-                .stroke(
-                    Color(colorScheme == .dark ? ThemeColor.tableSeparator : Theme.Colors.Line.secondarySeparator),
-                    lineWidth: 1
-                )
+        .frame(height: Self.itemHeight)
+        .frame(minWidth: Self.itemWidth, maxWidth: .infinity)
+        .background(.backgroundsPrimaryElevated)
+        .overlay {
+            RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue)
+                .inset(by: 0.75)
+                .stroke(.bordersPrimary, lineWidth: 1.5)
         }
         .onTapGesture {
             presenter.handleShowGuideMenu(guide)

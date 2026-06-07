@@ -17,8 +17,8 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
 import SwiftUI
+import Common
 
 final class GuideSelectorViewController: UIViewController {
     var presenter: GuideSelectorPresenter!
@@ -26,30 +26,28 @@ final class GuideSelectorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = T.Guides.selectTitle
-        navigationItem.backButtonDisplayMode = .minimal
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: T.Commons.close,
-            style: .done,
-            target: self,
-            action: #selector(closeAction)
-        )
+        navigationController?.navigationBar.isHidden = true
         
-        let selector = GuideSelectorView(presenter: presenter)
-        
-        let vc = UIHostingController(rootView: selector)
+        let vc = UIHostingController(rootView: GuideSelectorView(presenter: presenter))
         vc.willMove(toParent: self)
         addChild(vc)
         view.addSubview(vc.view)
         vc.view.pinToParent()
-        vc.view.backgroundColor = Theme.Colors.Fill.background
+        vc.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
         vc.didMove(toParent: self)
         
         presenter.viewDidLoad()
     }
     
-    @objc
-    private func closeAction() {
-        presenter.handleClose()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 }

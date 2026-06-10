@@ -49,7 +49,9 @@ protocol AddingServiceFlowControlling: AnyObject {
 
 final class AddingServiceFlowController: FlowController {
     private weak var parent: AddingServiceFlowControllerParent?
+    // swiftlint:disable weak_delegate
     private var zoomTransitioningDelegate: ZoomFromRectTransitioningDelegate?
+    // swiftlint:enable weak_delegate
 
     static func isPresented(on viewController: UIViewController) -> Bool {
         viewController.presentedViewController is UIHostingController<AddServiceHostingView>
@@ -90,6 +92,20 @@ final class AddingServiceFlowController: FlowController {
 
     private static let zoomSourceTag = 0xADD5_E70C
 
+    private enum DynamicIsland {
+        /// Value of `safeAreaInsets.top` above which we're determining device has Dynamic Island.
+        static let detectionThreshold: CGFloat = 51
+        static let width: CGFloat = 124
+        static let height: CGFloat = 37
+        /// Spacing between Dynamic Island and `safeAreaInsets.top`.
+        static let bottomMargin: CGFloat = 4
+    }
+
+    private enum Fallback {
+        /// Point size when no Dynamic Island
+        static let pointSize: CGFloat = 1
+    }
+
     private static func zoomSourceView(in viewController: UIViewController) -> UIView {
         if let existing = viewController.view.viewWithTag(zoomSourceTag) {
             return existing
@@ -104,25 +120,26 @@ final class AddingServiceFlowController: FlowController {
         viewController.view.addSubview(marker)
 
         let topInset = viewController.view.safeAreaInsets.top
-        let hasDynamicIsland = topInset >= 51
-
-        if hasDynamicIsland {
-            // Dynamic Island: ~124×37
-            // Bottom marker = safeAreaTop - 4
-            NSLayoutConstraint.activate([
+        let constraints: [NSLayoutConstraint] = if topInset >= DynamicIsland.detectionThreshold {
+            [
                 marker.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor),
-                marker.widthAnchor.constraint(equalToConstant: 124),
-                marker.heightAnchor.constraint(equalToConstant: 37),
-                marker.bottomAnchor.constraint(equalTo: viewController.view.topAnchor, constant: topInset - 4)
-            ])
+                marker.widthAnchor.constraint(equalToConstant: DynamicIsland.width),
+                marker.heightAnchor.constraint(equalToConstant: DynamicIsland.height),
+                marker.bottomAnchor.constraint(
+                    equalTo: viewController.view.topAnchor,
+                    constant: topInset - DynamicIsland.bottomMargin
+                )
+            ]
         } else {
-            NSLayoutConstraint.activate([
+            // Notch / iPad / older devices
+            [
                 marker.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor),
                 marker.topAnchor.constraint(equalTo: viewController.view.topAnchor),
-                marker.widthAnchor.constraint(equalToConstant: 1),
-                marker.heightAnchor.constraint(equalToConstant: 1)
-            ])
+                marker.widthAnchor.constraint(equalToConstant: Fallback.pointSize),
+                marker.heightAnchor.constraint(equalToConstant: Fallback.pointSize)
+            ]
         }
+        NSLayoutConstraint.activate(constraints)
 
         return marker
     }
@@ -273,6 +290,15 @@ extension AddingServiceFlowController: SelectFromGalleryFlowControllerParent {
 private final class ZoomFromRectAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     enum Direction { case present, dismiss }
 
+    private enum Constants {
+        static let duration: TimeInterval = 0.35
+        static let springDamping: CGFloat = 0.85
+        static let springVelocity: CGFloat = 0
+        static let curve: UIView.AnimationOptions = .curveEaseInOut
+        /// Fallback source rect when `sourceProvider` returns nil
+        static let fallbackRectSize: CGFloat = 1
+    }
+
     private let direction: Direction
     private let sourceProvider: () -> UIView?
 
@@ -283,113 +309,120 @@ private final class ZoomFromRectAnimator: NSObject, UIViewControllerAnimatedTran
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        switch direction {
-        case .present: 0.45
-        case .dismiss: 0.35
-        }
+        Constants.duration
     }
 
     func animateTransition(using context: UIViewControllerContextTransitioning) {
-        let container = context.containerView
-        let sourceRect = computeSourceRect(in: container)
-
         switch direction {
-        case .present:
-            animatePresent(context: context, container: container, sourceRect: sourceRect)
-        case .dismiss:
-            animateDismiss(context: context, container: container, sourceRect: sourceRect)
+        case .present: animatePresent(context: context)
+        case .dismiss: animateDismiss(context: context)
         }
     }
 
-    private func animatePresent(
-        context: UIViewControllerContextTransitioning,
-        container: UIView,
-        sourceRect: CGRect
-    ) {
+    // MARK: - Animations
+
+    private func animatePresent(context: UIViewControllerContextTransitioning) {
         guard let toVC = context.viewController(forKey: .to),
               let toView = context.view(forKey: .to) else {
             context.completeTransition(false)
             return
         }
 
+        let container = context.containerView
         let finalFrame = context.finalFrame(for: toVC)
+        let sourceRect = computeSourceRect(in: container)
+
         container.addSubview(toView)
         toView.frame = finalFrame
         toView.layoutIfNeeded()
 
-        let startTransform = transform(from: sourceRect, to: finalFrame)
-        let startRadius = min(sourceRect.height, sourceRect.width) / 2
+        applyZoomedState(to: toView, sourceRect: sourceRect, finalFrame: finalFrame)
 
-        toView.transform = startTransform
-        toView.layer.cornerRadius = startRadius
-        toView.layer.masksToBounds = true
-        toView.alpha = 0
-
-        UIView.animate(
-            withDuration: transitionDuration(using: context),
-            delay: 0,
-            usingSpringWithDamping: 0.85,
-            initialSpringVelocity: 0,
-            options: [.curveEaseInOut]
-        ) {
-            toView.transform = .identity
-            toView.layer.cornerRadius = 0
-            toView.alpha = 1
-        } completion: { _ in
-            toView.transform = .identity
-            toView.layer.cornerRadius = 0
-            toView.layer.masksToBounds = false
-            context.completeTransition(!context.transitionWasCancelled)
-        }
+        runAnimation(
+            animations: { [self] in
+                applyIdentityState(to: toView)
+            },
+            completion: { _ in
+                self.applyIdentityState(to: toView)
+                toView.layer.masksToBounds = false
+                context.completeTransition(!context.transitionWasCancelled)
+            }
+        )
     }
 
-    private func animateDismiss(
-        context: UIViewControllerContextTransitioning,
-        container: UIView,
-        sourceRect: CGRect
-    ) {
+    private func animateDismiss(context: UIViewControllerContextTransitioning) {
         guard let fromView = context.view(forKey: .from) else {
             context.completeTransition(false)
             return
         }
 
+        let sourceRect = computeSourceRect(in: context.containerView)
         let initialFrame = fromView.frame
-        let endTransform = transform(from: sourceRect, to: initialFrame)
-        let endRadius = min(sourceRect.height, sourceRect.width) / 2
 
-        fromView.layer.cornerRadius = 0
         fromView.layer.masksToBounds = true
 
-        UIView.animate(
-            withDuration: transitionDuration(using: context),
-            delay: 0,
-            options: [.curveEaseInOut]
-        ) {
-            fromView.transform = endTransform
-            fromView.layer.cornerRadius = endRadius
-            fromView.alpha = 0
-        } completion: { _ in
-            fromView.transform = .identity
-            fromView.removeFromSuperview()
-            context.completeTransition(!context.transitionWasCancelled)
-        }
+        runAnimation(
+            animations: { [self] in
+                applyZoomedState(to: fromView, sourceRect: sourceRect, finalFrame: initialFrame)
+            },
+            completion: { _ in
+                fromView.transform = .identity
+                fromView.removeFromSuperview()
+                context.completeTransition(!context.transitionWasCancelled)
+            }
+        )
     }
+
+    private func runAnimation(
+        animations: @escaping () -> Void,
+        completion: @escaping (Bool) -> Void
+    ) {
+        UIView.animate(
+            withDuration: Constants.duration,
+            delay: 0,
+            usingSpringWithDamping: Constants.springDamping,
+            initialSpringVelocity: Constants.springVelocity,
+            options: Constants.curve,
+            animations: animations,
+            completion: completion
+        )
+    }
+
+    // MARK: - View state
+
+    private func applyZoomedState(to view: UIView, sourceRect: CGRect, finalFrame: CGRect) {
+        view.transform = zoomedTransform(from: sourceRect, to: finalFrame)
+        view.layer.cornerRadius = pillRadius(for: sourceRect)
+        view.alpha = 0
+    }
+
+    private func applyIdentityState(to view: UIView) {
+        view.transform = .identity
+        view.layer.cornerRadius = 0
+        view.alpha = 1
+    }
+
+    // MARK: - Geometry
 
     private func computeSourceRect(in container: UIView) -> CGRect {
         if let source = sourceProvider() {
             return source.convert(source.bounds, to: container)
         }
-        // Fallback
-        return CGRect(x: container.bounds.midX - 0.5, y: 0, width: 1, height: 1)
+        let size = Constants.fallbackRectSize
+        return CGRect(x: container.bounds.midX - size / 2, y: 0, width: size, height: size)
     }
 
-    private func transform(from sourceRect: CGRect, to finalRect: CGRect) -> CGAffineTransform {
+    private func zoomedTransform(from sourceRect: CGRect, to finalRect: CGRect) -> CGAffineTransform {
         let scaleX = sourceRect.width / finalRect.width
         let scaleY = sourceRect.height / finalRect.height
         let translateX = sourceRect.midX - finalRect.midX
         let translateY = sourceRect.midY - finalRect.midY
         return CGAffineTransform(translationX: translateX, y: translateY)
             .scaledBy(x: scaleX, y: scaleY)
+    }
+
+    private func pillRadius(for rect: CGRect) -> CGFloat {
+        min(rect.height, rect.width) / 2
     }
 }
 

@@ -126,15 +126,6 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         AddingServiceFlowController.present(on: mainSplitViewController, parent: self)
     }
     
-    func toAddServiceManually(_ name: String?) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
-        AddingServiceManuallyNavigationFlowController.present(
-            on: mainSplitViewController,
-            parent: self,
-            name: name
-        )
-    }
-    
     func toDeleteService(serviceData: ServiceData) {
         guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
         TrashServiceFlowController.present(on: mainSplitViewController, parent: self, serviceData: serviceData)
@@ -508,73 +499,48 @@ extension TokensPlainFlowController: UploadLogsNavigationFlowControllerParent {
     }
 }
 
-extension TokensPlainFlowController: AddingServiceManuallyNavigationFlowControllerParent {
-    func addingServiceManuallyToClose(_ serviceData: ServiceData) {
-        dismiss(actions: [.newData, .refreshImmidiately, .sync]) { [weak self] in
-            self?.toServiceWasCreated(serviceData)
-        }
-    }
-    
-    func addingServiceManuallyToCancel() {
-        dismiss(actions: [.continuesFlow]) { [weak self] in
-            self?.toAddService()
-        }
-    }
-}
-
 extension TokensPlainFlowController: AddingServiceFlowControllerParent {
-    func addingServiceToManual(_ name: String?) {
-        dismiss(actions: [.continuesFlow]) { [weak self] in
-            self?.toAddServiceManually(name)
-        }
-    }
-    
     func addingServiceDismiss() {
         dismiss()
     }
-    
-    func addingServiceToGallery() {
-        dismiss(actions: [.continuesFlow]) { [weak self] in
-            self?.toShowGallery()
+
+    func addingServiceGalleryDidImport(count: Int) {
+        dismiss(actions: [.finishedFlow, .newData, .sync]) { [weak self] in
+            self?.galleryViewController = nil
+            self?.showSummary(count: count)
         }
     }
-    
+
     func addingServiceToGoogleAuthSummary(importable: Int, total: Int, codes: [Code]) {
         dismiss(actions: [.continuesFlow]) { [weak self] in
             self?.showGoogleAuthSummary(importable: importable, total: total, codes: codes)
         }
     }
-    
+
     func addingServiceToLastPassSummary(importable: Int, total: Int, codes: [Code]) {
         dismiss(actions: [.continuesFlow]) { [weak self] in
             self?.showLastPassSummary(importable: importable, total: total, codes: codes)
         }
     }
-    
+
     func addingServiceToSendLogs(auditID: UUID) {
         dismiss(actions: [.continuesFlow]) { [weak self] in
             self?.toSendLogs(auditID: auditID)
         }
     }
-    
+
     func addingServiceToPushPermissions(for extensionID: ExtensionID) {
         dismiss(actions: [.continuesFlow]) { [weak self] in
             self?.showPushPermission(for: extensionID)
         }
     }
-    
+
     func addingServiceToTwoFASWebExtensionPairing(for extensionID: ExtensionID) {
         dismiss(actions: [.continuesFlow]) { [weak self] in
             self?.showWebPairing(for: extensionID)
         }
     }
-    
-    func addingServiceToGuides() {
-        dismiss(actions: [.continuesFlow]) { [weak self] in
-            self?.showGuides()
-        }
-    }
-    
+
     func addingServiceToToken(_ serviceData: ServiceData) {
         dismiss(actions: [.newData, .refreshImmidiately, .sync]) { [weak self] in
             self?.toServiceWasCreated(serviceData)
@@ -645,14 +611,6 @@ private extension TokensPlainFlowController {
         )
     }
     
-    func showGuides() {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
-        GuideSelectorNavigationFlowController.show(
-            on: mainSplitViewController,
-            parent: self
-        )
-    }
-    
     func showSummary(count: Int) {
         guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
         let alert = AlertControllerDismissFlow(
@@ -694,23 +652,5 @@ extension TokensPlainFlowController: NewsNavigationFlowControllerParent {
         dismiss { [weak self] in
             self?.parent?.tokensSwitchToSettingsBackup()
         }
-    }
-}
-
-extension TokensPlainFlowController: GuideSelectorNavigationFlowControllerParent {
-    func guideToAddManually(with name: String?) {
-        dismiss(actions: [.continuesFlow]) { [weak self] in
-            self?.toAddServiceManually(name)
-        }
-    }
-    
-    func guideToCodeScanner() {
-        dismiss(actions: [.continuesFlow]) { [weak self] in
-            self?.toAddService()
-        }
-    }
-    
-    func closeGuideSelector() {
-        dismiss(actions: [.finishedFlow])
     }
 }

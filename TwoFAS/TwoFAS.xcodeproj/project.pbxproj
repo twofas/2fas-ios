@@ -873,8 +873,6 @@
 		C29C5F9D2F5AFCA40096BF65 /* SignalArgon2 in Frameworks */ = {isa = PBXBuildFile; productRef = C29C5F9C2F5AFCA40096BF65 /* SignalArgon2 */; };
 		C29CF8E82FA7A6EA0058E3A0 /* IntroductionPaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29CF8E72FA7A6DD0058E3A0 /* IntroductionPaging.swift */; };
 		C29CF8EA2FA7B7200058E3A0 /* IntroductionInfoSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29CF8E92FA7B71A0058E3A0 /* IntroductionInfoSheet.swift */; };
-		C29E83392FC07A9B00CBE671 /* GenieModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E83332FC07A9B00CBE671 /* GenieModal.swift */; };
-		C29E833A2FC07A9B00CBE671 /* GenieWindow.metal in Sources */ = {isa = PBXBuildFile; fileRef = C29E83352FC07A9B00CBE671 /* GenieWindow.metal */; };
 		C29E833D2FC0BB4400CBE671 /* AddingServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E833C2FC0BB3A00CBE671 /* AddingServiceView.swift */; };
 		C29FEFF92756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FEFF82756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift */; };
 		C29FEFFB2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FEFFA2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift */; };
@@ -2782,8 +2780,6 @@
 		C29E567A2809A19B00141238 /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		C29E567C2809B78000141238 /* SpinnerDisplaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerDisplaying.swift; sourceTree = "<group>"; };
 		C29E567E2809B83300141238 /* SpinnerBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerBackground.swift; sourceTree = "<group>"; };
-		C29E83332FC07A9B00CBE671 /* GenieModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenieModal.swift; sourceTree = "<group>"; };
-		C29E83352FC07A9B00CBE671 /* GenieWindow.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = GenieWindow.metal; sourceTree = "<group>"; };
 		C29E833C2FC0BB3A00CBE671 /* AddingServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceView.swift; sourceTree = "<group>"; };
 		C29FEFF82756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsMenuPresenter+Menu.swift"; sourceTree = "<group>"; };
 		C29FEFFA2756DDA7002FC523 /* SettingsMenuViewController+TableCellHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsMenuViewController+TableCellHandling.swift"; sourceTree = "<group>"; };
@@ -3750,7 +3746,6 @@
 				C20E2DFD2A7C4DE000DB64BB /* AddingServiceFlowController.swift */,
 				C21EB2F92A800E7200FA8AA1 /* AddingServiceModuleInteractor.swift */,
 				C20E2E0A2A7C52AA00DB64BB /* AddingServicePresenter.swift */,
-				C29E83372FC07A9B00CBE671 /* GenieModalEffect */,
 				C29E833C2FC0BB3A00CBE671 /* AddingServiceView.swift */,
 				C2FBF12F2A7EBCCB00CA80CE /* AddingServiceCameraViewport.swift */,
 			);
@@ -6594,15 +6589,6 @@
 				C29E567E2809B83300141238 /* SpinnerBackground.swift */,
 			);
 			path = Spinner;
-			sourceTree = "<group>";
-		};
-		C29E83372FC07A9B00CBE671 /* GenieModalEffect */ = {
-			isa = PBXGroup;
-			children = (
-				C29E83332FC07A9B00CBE671 /* GenieModal.swift */,
-				C29E83352FC07A9B00CBE671 /* GenieWindow.metal */,
-			);
-			path = GenieModalEffect;
 			sourceTree = "<group>";
 		};
 		C2A277AC26DBCFFC00A18F25 /* SelectFromGallery */ = {
@@ -10159,8 +10145,6 @@
 				C2B39E5429F5880600EC31F6 /* TokensCellKind.swift in Sources */,
 				C2323C4E276B52A100038B76 /* AppLockModuleInteractor.swift in Sources */,
 				C2AB92CD276655EF00698382 /* ExporterPINPresenter.swift in Sources */,
-				C29E83392FC07A9B00CBE671 /* GenieModal.swift in Sources */,
-				C29E833A2FC07A9B00CBE671 /* GenieWindow.metal in Sources */,
 				C231856C2EC678CA00DD1ABE /* BackupSetPasswordModalInteractor.swift in Sources */,
 				C2B077C4292A921D0074517F /* UploadLogsFailureView.swift in Sources */,
 				C2FDEE54279C8F39002CAB9E /* CameraGoogleAuth.swift in Sources */,

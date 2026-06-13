@@ -70,8 +70,7 @@ final class AddingServiceFlowController: FlowController {
         let hosting = UIHostingController(rootView: rootView)
 
         hosting.view.backgroundColor = .clear
-        // Keep the presenting VC in the hierarchy so the background shows through.
-        hosting.modalPresentationStyle = .overFullScreen
+        hosting.modalPresentationStyle = .custom
         hosting.isModalInPresentation = true
         hosting.definesPresentationContext = true
         // Prevents UIKit from snapshotting the full focus environment on present(),
@@ -155,7 +154,8 @@ private struct AddServiceHostingView: View {
 
     var body: some View {
         ZStack {
-            Color.black.opacity(0.4)
+            Color.clear
+                .contentShape(Rectangle())
                 .ignoresSafeArea()
                 .onTapGesture(perform: onFullyDismissed)
 
@@ -444,5 +444,73 @@ private final class ZoomFromRectTransitioningDelegate: NSObject, UIViewControlle
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         ZoomFromRectAnimator(direction: .dismiss, sourceProvider: sourceProvider)
+    }
+
+    func presentationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController?,
+        source: UIViewController
+    ) -> UIPresentationController? {
+        DimmingPresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
+
+// MARK: - Dimming Presentation Controller
+
+private final class DimmingPresentationController: UIPresentationController {
+    private enum Constants {
+        static let dimColor: UIColor = .black
+        static let maxAlpha: CGFloat = 0.4
+        static let durationShow: TimeInterval = 0.15
+        static let durationHide: TimeInterval = 0.35
+        static let curve: UIView.AnimationOptions = .curveLinear
+    }
+
+    private let dimView: UIView = {
+        let view = UIView()
+        view.backgroundColor = Constants.dimColor
+        view.alpha = 0
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    override var shouldRemovePresentersView: Bool { false }
+
+    override func presentationTransitionWillBegin() {
+        super.presentationTransitionWillBegin()
+        guard let container = containerView else { return }
+
+        container.insertSubview(dimView, at: 0)
+        NSLayoutConstraint.activate([
+            dimView.topAnchor.constraint(equalTo: container.topAnchor),
+            dimView.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+            dimView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            dimView.trailingAnchor.constraint(equalTo: container.trailingAnchor)
+        ])
+
+        UIView.animate(
+            withDuration: Constants.durationShow,
+            delay: 0,
+            options: Constants.curve,
+            animations: { [self] in
+                dimView.alpha = Constants.maxAlpha
+            }
+        )
+    }
+
+    override func dismissalTransitionWillBegin() {
+        super.dismissalTransitionWillBegin()
+
+        UIView.animate(
+            withDuration: Constants.durationHide,
+            delay: 0,
+            options: Constants.curve,
+            animations: { [self] in
+                dimView.alpha = 0
+            },
+            completion: { [weak self] _ in
+                self?.dimView.removeFromSuperview()
+            }
+        )
     }
 }

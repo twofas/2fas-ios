@@ -31,6 +31,7 @@ protocol GuidePagesFlowControlling: AnyObject {
     func toAddManually(with data: String?)
     func toCodeScanner()
     func toMenu()
+    func back()
 }
 
 final class GuidePagesFlowController: FlowController {
@@ -66,5 +67,9 @@ extension GuidePagesFlowController: GuidePagesFlowControlling {
     
     func toMenu() {
         parent?.guideToMenu()
+    }
+    
+    func back() {
+        _viewController.navigationController?.popViewController(animated: true)
     }
 }

@@ -23,9 +23,11 @@ import UIKit
 import Data
 
 struct GuidePagesView: View {
-    @ObservedObject var presenter: GuidePagesPresenter
+    @ObservedObject
+    var presenter: GuidePagesPresenter
     
-    @State private var panelWidth: CGFloat = 0
+    @State
+    private var panelWidth: CGFloat = 0
     
     var body: some View {
         VStack {

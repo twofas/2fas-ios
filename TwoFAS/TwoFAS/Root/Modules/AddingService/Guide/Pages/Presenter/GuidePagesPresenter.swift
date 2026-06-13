@@ -20,7 +20,13 @@
 import UIKit
 import Data
 
-final class GuidePagesPresenter: ObservableObject {
+final class GuidePagesPresenter {
+    enum Action: Equatable {
+        case manually(String?)
+        case scanner
+        case next
+    }
+    
     var totalPages: Int {
         content.pages.count
     }
@@ -28,53 +34,48 @@ final class GuidePagesPresenter: ObservableObject {
     var pages: [GuideDescription.Page] {
         content.pages
     }
-
-    var buttonTitle: String {
-        switch buttonType {
-        case .manually(let title, _): return title
-        case .scanner(let title): return title
-        case .next: return T.Commons.next
-        }
-    }
     
     var serviceName: String {
         content.serviceName
     }
     
-    var buttonIcon: UIImage? {
-        switch buttonType {
-        case .scanner: return Asset.smallQRCodeIcon.image
-        default: return nil
-        }
-    }
-        
-    private var buttonType: GuideDescription.Page.CTA {
-        content.pages[currentPage].cta
-    }
-    
     private let flowController: GuidePagesFlowControlling
     private let content: GuideDescription.MenuPosition
-    @Published var currentPage: Int = 0
     
     init(flowController: GuidePagesFlowControlling, content: GuideDescription.MenuPosition) {
         self.flowController = flowController
         self.content = content
     }
     
-    func handleAction() {
-        switch buttonType {
-        case .manually(_, let data):
-            flowController.toAddManually(with: data)
-        case .scanner:
-            flowController.toCodeScanner()
-        case .next:
-            let nextPageNumber = currentPage + 1
-            guard nextPageNumber < totalPages else { return }
-            currentPage = nextPageNumber
+    func buttonAction(for pageNumber: Int) -> Action {
+        switch content.pages[pageNumber].cta {
+        case .manually(_, let data): .manually(data)
+        case .scanner: .scanner
+        case .next: .next
         }
     }
     
-    func handleGoBack() {
+    func buttonTitle(for pageNumber: Int) -> String {
+        switch content.pages[pageNumber].cta {
+        case .manually(let title, _): return title
+        case .scanner(let title): return title
+        case .next: return T.Commons.next
+        }
+    }
+    
+    func onBack() {
         flowController.toMenu()
+    }
+    
+    func onClose() {
+        flowController.close()
+    }
+    
+    func onManually(data: String?) {
+        flowController.toAddManually(with: data)
+    }
+    
+    func onScanner() {
+        flowController.toCodeScanner()
     }
 }

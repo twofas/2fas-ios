@@ -19,16 +19,22 @@
 
 import SwiftUI
 
-struct IntroductionPaging: View {
+public struct ScrollPagingView: View {
     @Binding
-    var showPaging: Bool
+    private var showPaging: Bool
     @Binding
-    var activePage: Int
-    let dotsCount: Int
+    private var activePage: Int
+    private let dotsCount: Int
     
     private let circleSize: CGFloat = 8
     
-    var body: some View {
+    public init(showPaging: Binding<Bool>, activePage: Binding<Int>, dotsCount: Int) {
+        _showPaging = showPaging
+        _activePage = activePage
+        self.dotsCount = dotsCount
+    }
+    
+    public var body: some View {
         HStack(spacing: .M) {
             ForEach(0..<dotsCount, id: \.self) { index in
                 dot(isActive: activePage == index)

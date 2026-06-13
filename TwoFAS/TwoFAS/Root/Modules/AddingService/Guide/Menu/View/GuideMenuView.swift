@@ -24,19 +24,23 @@ struct GuideMenuView: View {
     let presenter: GuideMenuPresenter
     
     var body: some View {
-        AdaptiveReadableContainer {
-            VStack(alignment: .center, spacing: .zero) {
-                ZStack {
-                    HStack(spacing: .zero) {
-                        TFLiquidGlassSymbolButton(symbol: .back) {
-                            presenter.onBack()
-                        }
-                        Spacer()
+        VStack(alignment: .center, spacing: .zero) {
+            ZStack {
+                HStack(spacing: .zero) {
+                    TFLiquidGlassSymbolButton(symbol: .back) {
+                        presenter.onBack()
                     }
-                    TFTitleView(title: "2FAS for \(presenter.serviceName)")
+                    Spacer()
                 }
-                .frame(alignment: .top)
-                Spacer()
+                TFTitleView(title: "2FAS for \(presenter.serviceName)")
+            }
+            .padding(.horizontal, .XXXL)
+            .padding(.top, .XL)
+            .frame(alignment: .top)
+            
+            Spacer()
+            
+            AdaptiveReadableContainer {
                 VStack(spacing: .XL) {
                     Image(uiImage: presenter.serviceIcon)
                         .accessibilityHidden(true)
@@ -52,7 +56,11 @@ struct GuideMenuView: View {
                             .padding(.horizontal, .XL)
                     }
                 }
-                Spacer()
+            }
+            
+            Spacer()
+            
+            AdaptiveReadableContainer {
                 VStack(spacing: .L) {
                     ForEach(presenter.menuPositions, id: \.self) { menuPosition in
                         TFButton(menuPosition.title, variant: .borderedSecondary, size: .medium) {

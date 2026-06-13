@@ -871,7 +871,7 @@
 		C29B9ADC2B1E859D00255A2C /* reddit.json in Resources */ = {isa = PBXBuildFile; fileRef = C29B9AD82B1E859D00255A2C /* reddit.json */; };
 		C29B9ADD2B1E859D00255A2C /* instagram.json in Resources */ = {isa = PBXBuildFile; fileRef = C29B9AD92B1E859D00255A2C /* instagram.json */; };
 		C29C5F9D2F5AFCA40096BF65 /* SignalArgon2 in Frameworks */ = {isa = PBXBuildFile; productRef = C29C5F9C2F5AFCA40096BF65 /* SignalArgon2 */; };
-		C29CF8E82FA7A6EA0058E3A0 /* IntroductionPaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29CF8E72FA7A6DD0058E3A0 /* IntroductionPaging.swift */; };
+		C29CF8E82FA7A6EA0058E3A0 /* ScrollPagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29CF8E72FA7A6DD0058E3A0 /* ScrollPagingView.swift */; };
 		C29CF8EA2FA7B7200058E3A0 /* IntroductionInfoSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29CF8E92FA7B71A0058E3A0 /* IntroductionInfoSheet.swift */; };
 		C29E833D2FC0BB4400CBE671 /* AddingServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E833C2FC0BB3A00CBE671 /* AddingServiceView.swift */; };
 		C29FEFF92756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FEFF82756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift */; };
@@ -2771,7 +2771,7 @@
 		C29B9AD72B1E859D00255A2C /* paypal.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = paypal.json; sourceTree = "<group>"; };
 		C29B9AD82B1E859D00255A2C /* reddit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = reddit.json; sourceTree = "<group>"; };
 		C29B9AD92B1E859D00255A2C /* instagram.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = instagram.json; sourceTree = "<group>"; };
-		C29CF8E72FA7A6DD0058E3A0 /* IntroductionPaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionPaging.swift; sourceTree = "<group>"; };
+		C29CF8E72FA7A6DD0058E3A0 /* ScrollPagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollPagingView.swift; sourceTree = "<group>"; };
 		C29CF8E92FA7B71A0058E3A0 /* IntroductionInfoSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionInfoSheet.swift; sourceTree = "<group>"; };
 		C29DD5801FE84514007ECEEE /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		C29DD5831FE84575007ECEEE /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -6450,6 +6450,7 @@
 		C295AF8D2FD1F6B2000DF064 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				C29CF8E72FA7A6DD0058E3A0 /* ScrollPagingView.swift */,
 				C28AF2D22FD5D28F0036DB9F /* TFTitleView.swift */,
 				C295AF512FD1DA07000DF064 /* AdaptiveReadableContainer.swift */,
 				C295AF522FD1DA07000DF064 /* AnimationTiming.swift */,
@@ -8422,7 +8423,6 @@
 			isa = PBXGroup;
 			children = (
 				C29CF8E92FA7B71A0058E3A0 /* IntroductionInfoSheet.swift */,
-				C29CF8E72FA7A6DD0058E3A0 /* IntroductionPaging.swift */,
 				C279C1672FA66F08006CC971 /* IntroductionNavigationbar.swift */,
 				C242C6D12F9AAB9A0080E0DB /* IntroductionView.swift */,
 			);
@@ -10154,7 +10154,7 @@
 				C2F51EFD27DAABD300A67C73 /* BrowserExtensionPairingSuccessfulView.swift in Sources */,
 				C2625F9228BBB87700D84C5C /* AboutModels.swift in Sources */,
 				C299B7D2236DE78700224F51 /* StackView+.swift in Sources */,
-				C29CF8E82FA7A6EA0058E3A0 /* IntroductionPaging.swift in Sources */,
+				C29CF8E82FA7A6EA0058E3A0 /* ScrollPagingView.swift in Sources */,
 				C2698B6E2986C03600EBC179 /* MainTabPresenter.swift in Sources */,
 				C248B1532AC4C77100E6B897 /* GuidePagesView.swift in Sources */,
 				C23FD5102814648C00E4E9C5 /* ComposeServiceWebExtensionModuleInteractor.swift in Sources */,

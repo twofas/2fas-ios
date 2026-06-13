@@ -78,4 +78,8 @@ extension GuideSelectorNavigationFlowController: GuidePagesFlowControllerParent 
     func guideToMenu() {
         navigationController?.popViewController(animated: true)
     }
+    
+    func guideClose() {
+        parent?.closeGuideSelector()
+    }
 }

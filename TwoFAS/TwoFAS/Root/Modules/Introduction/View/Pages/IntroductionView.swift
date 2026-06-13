@@ -52,55 +52,58 @@ struct IntroductionView: View {
             }
         )
         .frame(alignment: .top)
+
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 0) {
+                ForEach(0..<totalPages, id: \.self) { index in
+                    PageView(page: index) {
+                        showInfo = true
+                    }
+                    .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
+                    .id(index)
+                }
+            }
+            .scrollTargetLayout()
+        }
+        .scrollDisabled(true)
+        .scrollPosition($position)
+        .scrollTargetBehavior(.viewAligned)
+        .scrollTransition(transition: { content, phase in
+            content
+                .blur(radius: phase.isIdentity ? 10 : 0)
+        })
+        .onScrollPhaseChange { _, newPhase in
+            guard !newPhase.isScrolling else { return }
+            withAnimation {
+                switch position.viewID as? Int {
+                case 0:
+                    showBackButton = false
+                    showSkipButton = false
+                    showPaging = false
+                case 1:
+                    showBackButton = false
+                    showSkipButton = true
+                    showPaging = true
+                case 2:
+                    showBackButton = true
+                    showSkipButton = true
+                    showPaging = true
+                case 3:
+                    showBackButton = true
+                    showSkipButton = false
+                    showPaging = true
+                default:
+                    break
+                }
+            }
+        }
+        .frame(maxHeight: .infinity)
+        .onAppear {
+            position.scrollTo(id: 0)
+        }
+
         AdaptiveReadableContainer {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 0) {
-                    ForEach(0..<totalPages, id: \.self) { index in
-                        PageView(page: index) {
-                            showInfo = true
-                        }
-                            .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
-                            .id(index)
-                    }
-                }
-                .scrollTargetLayout()
-            }
-            .scrollPosition($position)
-            .scrollTargetBehavior(.viewAligned)
-            .scrollTransition(transition: { content, phase in
-                content
-                    .blur(radius: phase.isIdentity ? 10 : 0)
-            })
-            .onScrollPhaseChange { _, newPhase in
-                guard !newPhase.isScrolling else { return }
-                withAnimation {
-                    switch position.viewID as? Int {
-                    case 0:
-                        showBackButton = false
-                        showSkipButton = false
-                        showPaging = false
-                    case 1:
-                        showBackButton = false
-                        showSkipButton = true
-                        showPaging = true
-                    case 2:
-                        showBackButton = true
-                        showSkipButton = true
-                        showPaging = true
-                    case 3:
-                        showBackButton = true
-                        showSkipButton = false
-                        showPaging = true
-                    default:
-                        break
-                    }
-                }
-            }
-            .frame(maxHeight: .infinity)
-            .onAppear {
-                position.scrollTo(id: 0)
-            }
-            IntroductionPaging(
+            ScrollPagingView(
                 showPaging: $showPaging,
                 activePage: Binding(get: { abs((position.viewID as? Int ?? 0) - 1) }, set: { _ in }),
                 dotsCount: totalPages - 1
@@ -285,14 +288,16 @@ private struct IntroductionPage3: View {
 private struct PageView: View {
     let page: Int
     let showInfo: Callback
-    
+
     var body: some View {
-        switch page {
-        case 0: IntroductionPage0()
-        case 1: IntroductionPage1()
-        case 2: IntroductionPage2()
-        case 3: IntroductionPage3(showInfo: showInfo)
-        default: EmptyView()
+        AdaptiveReadableContainer {
+            switch page {
+            case 0: IntroductionPage0()
+            case 1: IntroductionPage1()
+            case 2: IntroductionPage2()
+            case 3: IntroductionPage3(showInfo: showInfo)
+            default: EmptyView()
+            }
         }
     }
 }

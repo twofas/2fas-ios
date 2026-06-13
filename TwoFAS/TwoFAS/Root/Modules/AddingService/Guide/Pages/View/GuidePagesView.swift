@@ -23,177 +23,117 @@ import UIKit
 import Data
 
 struct GuidePagesView: View {
-    @ObservedObject
-    var presenter: GuidePagesPresenter
+    let presenter: GuidePagesPresenter
     
     @State
-    private var panelWidth: CGFloat = 0
+    private var position = ScrollPosition(idType: Int.self)
     
     var body: some View {
-        VStack {
-            Spacer()
-            
-            PagingViewController(pages: presenter.pages.map { $0.toPage() }, currentPage: $presenter.currentPage)
-
-            Spacer()
-            
-            VStack(spacing: Theme.Metrics.doubleMargin) {
-                PageIndicator(totalPages: presenter.totalPages, pageNumber: $presenter.currentPage)
-                Button {
-                    presenter.handleAction()
-                } label: {
-                    if let buttonIcon = presenter.buttonIcon {
-                        HStack {
-                            Image(uiImage: buttonIcon)
-                                .tint(.white)
-                                .accessibilityHidden(true)
-                            Text(verbatim: presenter.buttonTitle)
+        VStack(alignment: .center, spacing: .zero) {
+            ZStack {
+                HStack(spacing: .zero) {
+                    let pageNumber = position.viewID as? Int ?? 0
+                    TFLiquidGlassSymbolButton(symbol: .back) {
+                        if pageNumber > 0 {
+                            withAnimation {
+                                position.scrollTo(id: pageNumber - 1)
+                            }
+                        } else {
+                            presenter.onBack()
                         }
-                    } else {
-                        Text(verbatim: presenter.buttonTitle)
+                    }
+                    Spacer()
+                    TFLiquidGlassSymbolButton(symbol: .close) {
+                        presenter.onClose()
                     }
                 }
-                .buttonStyle(RoundedFilledConstantWidthButtonStyle())
+                TFTitleView(title: "2FAS for \(presenter.serviceName)")
             }
-            .padding(.bottom, 2 * Theme.Metrics.doubleMargin)
-            .frame(maxWidth: .infinity, alignment: .bottom)
+            .padding(.horizontal, .XXXL)
+            .padding(.top, .XL)
+            .frame(alignment: .top)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 0) {
+                    ForEach(0..<presenter.totalPages, id: \.self) { index in
+                        let page = presenter.pages[index]
+                        PageView(description: page.content, pageNumber: index)
+                        .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
+                        .id(index)
+                    }
+                }
+                .scrollTargetLayout()
+            }
+            .scrollDisabled(true)
+            .scrollPosition($position)
+            .scrollTargetBehavior(.viewAligned)
+            .scrollTransition(transition: { content, phase in
+                content
+                    .blur(radius: phase.isIdentity ? 10 : 0)
+            })
+            .frame(maxHeight: .infinity)
+            .onAppear {
+                position.scrollTo(id: 0)
+            }
+            
+            AdaptiveReadableContainer {
+                let pageNumber = position.viewID as? Int ?? 0
+
+                ScrollPagingView(
+                    showPaging: .constant(true),
+                    activePage: Binding(get: { pageNumber }, set: { _ in }),
+                    dotsCount: presenter.totalPages
+                )
+                VStack(spacing: .XL) {
+                    TFButton(
+                        presenter.buttonTitle(for: pageNumber),
+                        variant: .borderedProminent,
+                        size: .medium,
+                        applyGlass: true
+                    ) {
+                        switch presenter.buttonAction(for: pageNumber) {
+                        case .manually(let data): presenter.onManually(data: data)
+                        case .scanner: presenter.onScanner()
+                        case .next:
+                            if pageNumber < presenter.totalPages - 1 {
+                                withAnimation {
+                                    position.scrollTo(id: pageNumber + 1)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
-private struct Page: View {
-    let icon: UIImage
+private struct PageView: View {
+    @Environment(\.colorScheme)
+    private var colorScheme
+    
     let description: AttributedString
+    let pageNumber: Int
+    
     var body: some View {
-        VStack(alignment: .center, spacing: 3 * Theme.Metrics.doubleMargin) {
-            Image(uiImage: icon)
-                .accessibilityHidden(true)
-            Text(attrString(with: description))
-                .font(.body)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(Color(Theme.Colors.Text.main))
-                .frame(maxWidth: Theme.Metrics.componentWidth)
-                .padding(2 * Theme.Metrics.doubleMargin)
+        AdaptiveReadableContainer {
+            VStack(alignment: .center, spacing: .L) {
+                Text("Step \(pageNumber + 1)")
+                    .textStyle(.title1, .emphasized)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.labelsPrimary)
+                Text(attrString(with: description))
+                    .textStyle(.callout)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.labelsSecondary)
+                Spacer()
+            }
         }
-        .background(Color(Theme.Colors.Fill.System.third))
     }
     
     private func attrString(with attrString: AttributedString) -> AttributedString {
         var str = attrString
-        str.foregroundColor = Theme.Colors.Text.main
+        str.foregroundColor = AppColor.labelsSecondary.color(for: colorScheme)
         return str
-    }
-}
-
-private extension GuideDescription.Page {
-    func toPage() -> Page {
-        Page(icon: image.icon, description: content)
-    }
-}
-
-private struct PageIndicator: View {
-    private let dotSize: CGFloat = 6
-    
-    // Settings
-    let totalPages: Int
-    @Binding var pageNumber: Int
-    
-    var body: some View {
-        HStack(alignment: .center, spacing: Theme.Metrics.halfSpacing) {
-            ForEach(0 ..< totalPages, id: \.self) {
-                Circle()
-                    .accessibilityLabel(T.Commons.pageOfPageTitle($0 + 1, totalPages))
-                    .accessibilityAddTraits(pageNumber == $0 ? .isSelected : .isStaticText)
-                    .foregroundColor(
-                        pageNumber == $0 ? Color(Theme.Colors.Fill.theme) : Color(Theme.Colors.Controls.pageIndicator)
-                    )
-                    .frame(width: dotSize, height: dotSize)
-            }
-        }
-    }
-}
-
-private struct PagingViewController: UIViewControllerRepresentable {
-    var pages: [Page]
-    @Binding var currentPage: Int
-
-    func makeUIViewController(context: Context) -> UIPageViewController {
-        let pageController = UIPageViewController(
-            transitionStyle: .scroll,
-            navigationOrientation: .horizontal)
-        pageController.dataSource = context.coordinator
-        pageController.delegate = context.coordinator
-        pageController.view.backgroundColor = Theme.Colors.Fill.System.third
-        pageController.edgesForExtendedLayout = []
-
-        return pageController
-    }
-
-    func updateUIViewController(_ pageController: UIPageViewController, context: Context) {
-        pageController.setViewControllers(
-            [context.coordinator.controllers[currentPage]],
-            direction: .forward,
-            animated: true
-        )
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    final class Coordinator: NSObject, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-        var parent: PagingViewController
-        var controllers = [UIViewController]()
-
-        init(_ pageController: PagingViewController) {
-            parent = pageController
-            controllers = parent.pages.map {
-                let vc = UIHostingController(rootView: $0)
-                vc.view.backgroundColor = Theme.Colors.Fill.System.third
-                return vc
-            }
-        }
-
-        func pageViewController(
-            _ pageController: UIPageViewController,
-            viewControllerBefore viewController: UIViewController
-        ) -> UIViewController? {
-            guard let index = controllers.firstIndex(of: viewController) else {
-                return nil
-            }
-            
-            if index == 0 {
-                return nil
-            }
-            
-            return controllers[index - 1]
-        }
-
-        func pageViewController(
-            _ pageController: UIPageViewController,
-            viewControllerAfter viewController: UIViewController
-        ) -> UIViewController? {
-            guard let index = controllers.firstIndex(of: viewController) else {
-                return nil
-            }
-            
-            if index + 1 == controllers.count {
-                return nil
-            }
-            
-            return controllers[index + 1]
-        }
-
-        func pageViewController(
-            _ pageController: UIPageViewController,
-            didFinishAnimating finished: Bool,
-            previousViewControllers: [UIViewController],
-            transitionCompleted completed: Bool
-        ) {
-            if let visibleViewController = pageController.viewControllers?.first,
-               let index = controllers.firstIndex(of: visibleViewController) {
-                parent.currentPage = index
-            }
-        }
     }
 }

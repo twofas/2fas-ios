@@ -57,7 +57,7 @@ struct GuidePagesView: View {
                 HStack(spacing: 0) {
                     ForEach(0..<presenter.totalPages, id: \.self) { index in
                         let page = presenter.pages[index]
-                        PageView(description: page.content, pageNumber: index)
+                        PageView(icon: page.image.icon, description: page.content, pageNumber: index)
                         .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
                         .id(index)
                     }
@@ -112,6 +112,7 @@ private struct PageView: View {
     @Environment(\.colorScheme)
     private var colorScheme
     
+    let icon: UIImage
     let description: AttributedString
     let pageNumber: Int
     
@@ -126,6 +127,9 @@ private struct PageView: View {
                     .textStyle(.callout)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.labelsSecondary)
+                Spacer()
+                Image(uiImage: icon)
+                    .accessibilityHidden(true)
                 Spacer()
             }
         }

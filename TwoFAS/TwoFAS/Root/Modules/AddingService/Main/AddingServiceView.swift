@@ -82,15 +82,15 @@ struct AddingServiceView: View {
                     .textStyle(.subheadline)
                     .foregroundStyle(.labelsPrimary)
                 
-                TFButton("Enter secret key", variant: .borderedSecondary, size: .largeWide, applyGlass: false) {
+                TFButton("Enter secret key", variant: .borderedSecondary, size: .large, applyGlass: false) {
                     presenter.handleToAddManually()
                 }
                 
-                TFButton("Upload image with QR code", variant: .borderedSecondary, size: .largeWide) {
+                TFButton("Upload image with QR code", variant: .borderedSecondary, size: .large) {
                     presenter.handleToGallery()
                 }
                 
-                TFButton("Guide me", variant: .borderlessNeutral, size: .largeWide) {
+                TFButton("Guide me", variant: .borderlessNeutral, size: .large) {
                     presenter.handleToGuides()
                 }
             }

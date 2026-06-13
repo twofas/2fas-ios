@@ -27,6 +27,7 @@ protocol GuideMenuFlowControllerParent: AnyObject {
 
 protocol GuideMenuFlowControlling: AnyObject {
     func toMenuPosition(_ menu: GuideDescription.MenuPosition)
+    func back()
 }
 
 final class GuideMenuFlowController: FlowController {
@@ -51,8 +52,18 @@ final class GuideMenuFlowController: FlowController {
     }
 }
 
+extension GuideMenuFlowController {
+    var viewController: GuideMenuViewController {
+        _viewController as! GuideMenuViewController
+    }
+}
+
 extension GuideMenuFlowController: GuideMenuFlowControlling {
     func toMenuPosition(_ menu: GuideDescription.MenuPosition) {
         parent?.guideMenuToMenuPosition(menu)
+    }
+    
+    func back() {
+        viewController.navigationController?.popViewController(animated: true)
     }
 }

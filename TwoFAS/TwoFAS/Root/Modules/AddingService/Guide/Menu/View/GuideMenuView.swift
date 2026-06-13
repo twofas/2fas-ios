@@ -18,67 +18,49 @@
 //
 
 import SwiftUI
+import Common
 
 struct GuideMenuView: View {
     let presenter: GuideMenuPresenter
     
     var body: some View {
-        VStack {
-            VStack(alignment: .center, spacing: 2 * Theme.Metrics.doubleMargin) {
-                Image(uiImage: presenter.serviceIcon)
-                    .accessibilityHidden(true)
-                Text(verbatim: presenter.serviceName)
-                    .font(Font(Theme.Fonts.Text.title))
-                    .foregroundStyle(Color(Theme.Colors.Text.main))
-                    .accessibilityAddTraits(.isHeader)
-                Text(verbatim: presenter.header)
-                    .font(.body)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(Color(Theme.Colors.Text.main))
-                    .frame(maxWidth: Theme.Metrics.componentWidth, alignment: .center)
-            }
-            .padding(2 * Theme.Metrics.doubleMargin)
-            .padding(.top, 4 * Theme.Metrics.doubleMargin)
-            .frame(alignment: .top)
-            
-            Spacer()
-            
-            VStack {
-                Text(verbatim: presenter.menuTitle)
-                    .font(.footnote)
-                    .textCase(.uppercase)
-                    .foregroundStyle(Color(Theme.Colors.inactiveInverted))
-                    .padding(.horizontal, Theme.Metrics.doubleMargin)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .accessibilityAddTraits(.isHeader)
-                AddingServiceDividerView()
-                VStack {
+        AdaptiveReadableContainer {
+            VStack(alignment: .center, spacing: .zero) {
+                ZStack {
+                    HStack(spacing: .zero) {
+                        TFLiquidGlassSymbolButton(symbol: .back) {
+                            presenter.onBack()
+                        }
+                        Spacer()
+                    }
+                    TFTitleView(title: "2FAS for \(presenter.serviceName)")
+                }
+                .frame(alignment: .top)
+                Spacer()
+                VStack(spacing: .XL) {
+                    Image(uiImage: presenter.serviceIcon)
+                        .accessibilityHidden(true)
+                    VStack(spacing: .M) {
+                        Text(verbatim: presenter.serviceName)
+                            .textStyle(.title1, .emphasized)
+                            .foregroundStyle(.labelsPrimary)
+                            .accessibilityAddTraits(.isHeader)
+                        Text(verbatim: presenter.header)
+                            .textStyle(.callout)
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(.labelsSecondary)
+                            .padding(.horizontal, .XL)
+                    }
+                }
+                Spacer()
+                VStack(spacing: .L) {
                     ForEach(presenter.menuPositions, id: \.self) { menuPosition in
-                        Button(action: {
+                        TFButton(menuPosition.title, variant: .borderedSecondary, size: .medium) {
                             presenter.handleSelectedMenuPosition(menuPosition)
-                        }, label: {
-                            VStack {
-                                HStack {
-                                    Text(verbatim: menuPosition.title)
-                                        .font(.body)
-                                        .foregroundStyle(Color(Theme.Colors.Text.main))
-                                        .padding(.leading, Theme.Metrics.doubleMargin)
-                                        .padding(.vertical, Theme.Metrics.doubleMargin)
-                                    Spacer()
-                                    Image(systemName: "chevron.right")
-                                        .foregroundStyle(Color(Theme.Colors.Line.secondarySeparator))
-                                        .font(.system(size: 18))
-                                        .padding(.trailing, Theme.Metrics.doubleMargin)
-                                        .frame(alignment: .trailing)
-                                        .accessibilityHidden(true)
-                                }
-                                AddingServiceDividerView()
-                            }
-                        })
+                        }
                     }
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .bottom)
         }
     }
 }

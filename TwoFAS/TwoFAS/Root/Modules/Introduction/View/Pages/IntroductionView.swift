@@ -109,7 +109,7 @@ struct IntroductionView: View {
                 TFButton(
                     (position.viewID as? Int ?? 0) == totalPages - 1 ? T.Introduction.title : T.Commons.continue,
                     variant: .borderedProminent,
-                    size: .largeWide,
+                    size: .large,
                     applyGlass: true
                 ) {
                     nextPage()

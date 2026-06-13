@@ -30,8 +30,6 @@ public enum TFButtonSize {
     case medium
     /// 48 pt hit target, 17 pt medium label
     case large
-    /// large + wide
-    case largeWide
 }
 
 @frozen
@@ -83,6 +81,7 @@ public struct TFButton: View {
     private let variant: TFButtonVariant
     private let size: TFButtonSize
     private let applyGlass: Bool
+    private let useWideLayout: Bool
     private let action: () -> Void
 
     // MARK: Init – text only
@@ -92,6 +91,7 @@ public struct TFButton: View {
         variant: TFButtonVariant,
         size: TFButtonSize,
         applyGlass: Bool = false,
+        useWideLayout: Bool = true,
         action: @escaping () -> Void
     ) {
         self.label = label
@@ -99,6 +99,7 @@ public struct TFButton: View {
         self.variant = variant
         self.size = size
         self.applyGlass = applyGlass
+        self.useWideLayout = useWideLayout
         self.action = action
     }
 
@@ -109,6 +110,7 @@ public struct TFButton: View {
         variant: TFButtonVariant,
         size: TFButtonSize,
         applyGlass: Bool = false,
+        useWideLayout: Bool = true,
         action: @escaping () -> Void
     ) {
         self.label = nil
@@ -116,6 +118,7 @@ public struct TFButton: View {
         self.variant = variant
         self.size = size
         self.applyGlass = applyGlass
+        self.useWideLayout = useWideLayout
         self.action = action
     }
 
@@ -127,6 +130,7 @@ public struct TFButton: View {
         variant: TFButtonVariant,
         size: TFButtonSize,
         applyGlass: Bool = false,
+        useWideLayout: Bool = true,
         action: @escaping () -> Void
     ) {
         self.label = label
@@ -134,6 +138,7 @@ public struct TFButton: View {
         self.variant = variant
         self.size = size
         self.applyGlass = applyGlass
+        self.useWideLayout = useWideLayout
         self.action = action
     }
 
@@ -184,7 +189,7 @@ public struct TFButton: View {
     @ViewBuilder
     private func textOnly(_ text: String) -> some View {
         Text(text)
-            .frame(maxWidth: size == .largeWide ? .infinity : nil)
+            .frame(maxWidth: useWideLayout ? .infinity : nil)
             .textStyle(textStyleSize, textStyleWeight)
             .foregroundStyle(labelColor)
             .lineLimit(1)
@@ -259,7 +264,7 @@ public struct TFButton: View {
         switch size {
         case .small: 28
         case .medium: 34
-        case .large, .largeWide: 48
+        case .large: 48
         }
     }
     
@@ -267,21 +272,21 @@ public struct TFButton: View {
     private var symbolFont: Font {
         switch size {
         case .small, .medium: .system(size: 15, weight: .regular)
-        case .large, .largeWide: .system(size: 17, weight: .regular)
+        case .large: .system(size: 17, weight: .regular)
         }
     }
     
     private var textStyleSize: TextStyle {
         switch size {
         case .small: .subheadline
-        case .medium, .large, .largeWide: .body
+        case .medium, .large: .body
         }
     }
     
     private var textStyleWeight: TextStyleVariant {
         switch size {
         case .small: .emphasized // semibold
-        case .medium, .large, .largeWide: .medium
+        case .medium, .large: .medium
         }
     }
     
@@ -289,7 +294,7 @@ public struct TFButton: View {
         switch size {
         case .small: .M // 8  (nearest to design 10)
         case .medium: .L // 12 (nearest to design 14)
-        case .large, .largeWide: .XXL
+        case .large: .XXL
         }
     }
     
@@ -297,14 +302,14 @@ public struct TFButton: View {
         switch size {
         case .small: .S
         case .medium: .M // 8  (nearest to design 7)
-        case .large, .largeWide: .L // 12 (nearest to design 14)
+        case .large: .L // 12 (nearest to design 14)
         }
     }
     
     private var iconSpacing: Spacing {
         switch size {
         case .small: .XS  // 2 (nearest to design 3)
-        case .medium, .large, .largeWide: .S
+        case .medium, .large: .S
         }
     }
 }

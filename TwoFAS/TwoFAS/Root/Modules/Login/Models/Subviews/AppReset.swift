@@ -42,7 +42,7 @@ struct AppReset: View {
                     TFButton(
                         T.Commons.dismiss,
                         variant: .borderedProminent,
-                        size: .largeWide,
+                        size: .large,
                         applyGlass: true
                     ) {
                         dismiss()

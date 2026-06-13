@@ -36,7 +36,7 @@ struct AddingServiceTokenView: View {
             ) {
                 tokenView()
             } footer: {
-                TFButton(T.Tokens.copyToken, variant: .borderedSecondary, size: .largeWide, applyGlass: false) {
+                TFButton(T.Tokens.copyToken, variant: .borderedSecondary, size: .large, applyGlass: false) {
                     presenter.handleCopyCode()
                 }
             }

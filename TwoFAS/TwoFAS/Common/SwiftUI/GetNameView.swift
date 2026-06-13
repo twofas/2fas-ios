@@ -107,12 +107,12 @@ private struct GetNameView: View {
         .background(AppColor.fillsTertiary, in: .rect(cornerRadius: TFCornerRadius.large.rawValue))
 
         HStack(spacing: .XL) {
-            TFButton(cancelTitle, variant: .borderedSecondary, size: .largeWide) {
+            TFButton(cancelTitle, variant: .borderedSecondary, size: .large) {
                 onCancel?()
             }
             .frame(maxWidth: .infinity)
 
-            TFButton(confirmTitle, variant: .borderedProminent, size: .largeWide) {
+            TFButton(confirmTitle, variant: .borderedProminent, size: .large) {
                 onConfirmAction()
             }
             .disabled(!isConfirmEnabled)

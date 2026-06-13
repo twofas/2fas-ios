@@ -17,8 +17,8 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
 import SwiftUI
+import Common
 
 final class GuideMenuViewController: UIViewController {
     var presenter: GuideMenuPresenter!
@@ -26,22 +26,28 @@ final class GuideMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = T.Guides.guideInitTitle
-        navigationItem.backButtonDisplayMode = .minimal
-        view.backgroundColor = Theme.Colors.Fill.System.third
+        navigationController?.navigationBar.isHidden = true
         
         let menu = GuideMenuView(presenter: presenter)
         
         let vc = UIHostingController(rootView: menu)
         vc.willMove(toParent: self)
         addChild(vc)
-        view.addSubview(vc.view, with: [
-            vc.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            vc.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            vc.view.topAnchor.constraint(equalTo: view.topAnchor),
-            vc.view.bottomAnchor.constraint(equalTo: view.safeBottomAnchor)
-        ])
-        vc.view.backgroundColor = Theme.Colors.Fill.System.third
-        vc.didMove(toParent: self)        
+        view.addSubview(vc.view)
+        vc.view.pinToParent()
+        vc.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+        vc.didMove(toParent: self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 }

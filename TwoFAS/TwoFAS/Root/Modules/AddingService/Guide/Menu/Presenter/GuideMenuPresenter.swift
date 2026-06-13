@@ -52,4 +52,8 @@ final class GuideMenuPresenter: ObservableObject {
     func handleSelectedMenuPosition(_ menuPosition: GuideDescription.MenuPosition) {
         flowController.toMenuPosition(menuPosition)
     }
+
+    func onBack() {
+        flowController.back()
+    }
 }

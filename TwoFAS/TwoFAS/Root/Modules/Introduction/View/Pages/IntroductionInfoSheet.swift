@@ -65,7 +65,7 @@ struct IntroductionInfoSheetContent: View {
                             TFButton(
                                 T.Commons.understood,
                                 variant: .borderedProminent,
-                                size: .largeWide,
+                                size: .large,
                                 applyGlass: true
                             ) {
                                 dismiss()

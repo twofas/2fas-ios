@@ -74,17 +74,19 @@ struct TFInputFloatingContainer<Content: View, TrailingAccessory: View>: View {
             HStack(spacing: .S) {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .resizable()
-                    .frame(width: Size.smallIconSize, height: Size.smallIconSize)
+                    .frame(width: Size.extraSmallIconSize, height: Size.extraSmallIconSize)
                     .aspectRatio(contentMode: .fit)
                     .foregroundStyle(.accentsBrand)
-                
+
                 Text(errorMessage ?? "")
                     .textStyle(.caption2)
                     .foregroundStyle(.accentsBrand)
             }
             .padding(.bottom, .S)
-            .isHidden(errorMessage == nil, remove: true)
-            .animation(Animation.easeInOut(duration: AnimationTiming.duration), value: isEditing)
+            .opacity(errorMessage == nil ? 0 : 1)
+            .frame(height: errorMessage == nil ? 0 : nil, alignment: .leading)
+            .clipped()
+            .animation(Animation.easeInOut(duration: AnimationTiming.duration), value: errorMessage)
         }
         .frame(minHeight: Size.textFieldHeight)
     }

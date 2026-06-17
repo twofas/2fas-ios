@@ -22,54 +22,35 @@ import SwiftUI
 import Common
 import Data
 
-protocol AddingServiceManuallyViewControlling: AnyObject {}
-
-final class AddingServiceManuallyViewController: UIViewController, AddingServiceManuallyViewControlling {
-    private lazy var pairButton = UIBarButtonItem(
-        title: T.Commons.pair,
-        style: .done,
-        target: self,
-        action: #selector(pairAction)
-    )
-    
+final class AddingServiceManuallyViewController: UIViewController {
     var presenter: AddingServiceManuallyPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: T.Commons.cancel,
-            style: .done,
-            target: self,
-            action: #selector(cancelAction)
-        )
+        navigationController?.navigationBar.isHidden = true
         
-        navigationItem.rightBarButtonItem = pairButton
-        navigationItem.title = T.Tokens.addManualTitle
-        navigationItem.backButtonDisplayMode = .minimal
+        let vc = UIHostingController(rootView: AddingServiceManuallyView(presenter: presenter))
         
-        let manually = AddingServiceManuallyView(presenter: presenter) { [weak self] enable in
-            self?.pairButton.isEnabled = enable
-        }
-        
-        let vc = UIHostingController(rootView: manually)
         vc.willMove(toParent: self)
         addChild(vc)
         view.addSubview(vc.view)
         vc.view.pinToParent()
-        vc.view.backgroundColor = Theme.Colors.Fill.System.third
+        vc.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
         vc.didMove(toParent: self)
         
         presenter.viewDidLoad()
     }
     
-    @objc
-    private func cancelAction() {
-        presenter.handleCancel()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    @objc
-    private func pairAction() {
-        presenter.handlePair()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 }

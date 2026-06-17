@@ -20,7 +20,13 @@
 import SwiftUI
 
 public struct TFLiquidGlassTextButton: View {
+    @Environment(\.colorScheme)
+    private var colorScheme
+    @Environment(\.isEnabled)
+    private var isEnabled
+    
     private let label: String
+    private let color: AppColor?
     private let action: () -> Void
 
     @GestureState
@@ -28,9 +34,11 @@ public struct TFLiquidGlassTextButton: View {
     
     public init(
         _ label: String,
+        color: AppColor? = nil,
         action: @escaping () -> Void
     ) {
         self.label = label
+        self.color = color
         self.action = action
     }
 
@@ -38,16 +46,32 @@ public struct TFLiquidGlassTextButton: View {
         Button(action: action) {
             Text(label)
                 .textStyle(.body, .medium)
-                .foregroundStyle(AppColor.labelsVibrantPrimary)
+                .foregroundStyle(
+                    isEnabled ?
+                    color != nil ? AppColor.graysWhite : AppColor.labelsVibrantPrimary
+                    : AppColor.labelsVibrantTertiary
+                )
                 .padding(.S)
         }
         .modify {
             if #available(iOS 26, *) {
-                $0.tint(nil)
-                    .buttonStyle(.glass)
-                    .buttonBorderShape(.capsule)
-                    .clipShape(Capsule())
-                    .shadow(.glass)
+                if color != nil {
+                    if isEnabled {
+                        $0.tint(color)
+                            .buttonStyle(.glassProminent)
+                            .buttonBorderShape(.capsule)
+                            .shadow(.glass)
+                    } else {
+                        $0.tint(nil)
+                            .buttonStyle(.glass)
+                            .buttonBorderShape(.capsule)
+                            .shadow(.glass)
+                    }
+                } else {
+                    $0.buttonStyle(.glass)
+                        .buttonBorderShape(.capsule)
+                        .shadow(.glass)
+                }
             } else {
                 $0.buttonStyle(ButtonFeedbackStyle())
             }

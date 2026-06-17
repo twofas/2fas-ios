@@ -46,19 +46,28 @@ final class AddingServiceManuallyPresenter: ObservableObject {
     
     private var iconTypeID: IconTypeID?
     
-    @Published var serviceName: String = ""
+    @Published var serviceName: String = "" {
+        didSet { handleServiceNameChange() }
+    }
+    @Published var serviceNameError: String?
     @Published var serviceIcon: UIImage?
-    @Published var secret: String = ""
+    @Published var secret: String = "" {
+        didSet { handleSecretChange() }
+    }
+    @Published var secretError: String?
     @Published var advancedShown = false
-    @Published var additionalInfo: String = ""
+    @Published var additionalInfo: String = "" {
+        didSet { handleAdditionalInfoChange() }
+    }
+    @Published var additionalInfoError: String?
     @Published var selectedTokenType: TokenType = .totp
     @Published var selectedAlgorithm: Algorithm = .defaultValue
     @Published var selectedRefreshTime: Period = .defaultValue
     @Published var selectedDigits: Digits = .defaultValue
     @Published var initialCounter: Int = 0
-    
-    weak var view: AddingServiceManuallyViewControlling?
-    
+    @Published var isInitialCounterAlertPresented: Bool = false
+    @Published var initialCounterInput: String = ""
+        
     private let flowController: AddingServiceManuallyFlowControlling
     private let interactor: AddingServiceManuallyModuleInteracting
     private let providedName: String?
@@ -94,7 +103,7 @@ extension AddingServiceManuallyPresenter {
         guard isAddServiceEnabled else { return }
         guard let serviceData = interactor.addService(
             name: serviceName.trim(),
-            secret: secret,
+            secret: secret.uppercased(),
             additionalInfo: additionalInfo,
             tokenPeriod: tokenPeriod,
             tokenLength: tokenLength,
@@ -134,15 +143,12 @@ extension AddingServiceManuallyPresenter {
         if trimmed.count >= ServiceRules.serviceNameMinLength &&
             trimmed.count <= ServiceRules.serviceNameMaxLength {
             isCorrectServiceName = true
-            self.serviceName = serviceName
             checkForServiceIcon()
             value = .correct
         } else if trimmed.isEmpty {
-            self.serviceName = ""
             serviceIcon = nil
             value = .tooShort
         } else {
-            self.serviceName = ""
             serviceIcon = nil
             value = .tooLong
         }
@@ -174,19 +180,14 @@ extension AddingServiceManuallyPresenter {
         
         if ServiceRules.isPrivateKeyTooShort(privateKey: secret) {
             value = .tooShort
-            self.secret = ""
         } else if ServiceRules.isPrivateKeyTooLong(privateKey: secret) {
             value = .tooLong
-            self.secret = ""
         } else if !ServiceRules.isPrivateKeyValid(privateKey: secret) {
             value = .incorrect
-            self.secret = ""
         } else if interactor.isPrivateKeyUsed(secret) {
             value = .duplicated
-            self.secret = ""
         } else {
             isCorrectSecret = true
-            self.secret = secret.uppercased()
             value = .correct
         }
         
@@ -212,10 +213,8 @@ extension AddingServiceManuallyPresenter {
         
         if additionalInfo.count > ServiceRules.additionalInfoMaxLength {
             value = .tooLong
-            self.additionalInfo = ""
         } else {
             isCorrectAdditionalInfo = true
-            self.additionalInfo = additionalInfo
             value = .correct
         }
         
@@ -243,39 +242,37 @@ extension AddingServiceManuallyPresenter {
         isFirstAppear = false
     }
     
-    // MARK: - To external input
-    
-    func handleSelectAlgorithm() {
-        flowController.toAlgorithmSelection(selectedOption: selectedAlgorithm)
-    }
-    
-    func handleSelectRefreshTime() {
-        flowController.toRefreshTimeSelection(selectedOption: selectedRefreshTime)
-    }
-    
-    func handleSelectDigits() {
-        flowController.toDigitsSelection(selectedOption: selectedDigits)
-    }
-    
-    func handleShowInitialCounterInput() {
-        flowController.toInitialCounterInput(currentValue: initialCounter)
-    }
-    
-    // MARK: - From External input
-    
-    func handleAlgorithmSelection(_ algorithm: Algorithm) {
-        self.selectedAlgorithm = algorithm
-    }
-    
-    func handleRefreshTimeSelection(_ time: Period) {
-        self.selectedRefreshTime = time
-    }
-    
-    func handleDigitsSelection(_ digits: Digits) {
-        self.selectedDigits = digits
-    }
-
     func handleInitialCounter(_ counter: Int) {
         self.initialCounter = counter
+    }
+
+    func handleShowInitialCounterAlert() {
+        initialCounterInput = "\(initialCounter)"
+        isInitialCounterAlertPresented = true
+    }
+
+    func handleSaveInitialCounterFromAlert() {
+        if let value = Int(initialCounterInput), value >= 0 {
+            handleInitialCounter(value)
+        }
+    }
+}
+
+private extension AddingServiceManuallyPresenter {
+    func handleServiceNameChange() {
+        serviceNameError = validateServiceName(serviceName.trim()).error
+    }
+
+    func handleSecretChange() {
+        let sanitized = secret.sanitazeSecret()
+        if sanitized != secret {
+            secret = sanitized
+            return
+        }
+        secretError = validateSecret(secret).error
+    }
+
+    func handleAdditionalInfoChange() {
+        additionalInfoError = validateAdditionalInfo(additionalInfo).error
     }
 }

@@ -33,12 +33,14 @@ protocol AddingServiceFlowControllerParent: AnyObject {
 }
 
 protocol AddingServiceFlowControlling: AnyObject {
+    var onOverlayDismissed: (() -> Void)? { get set }
+
     func toToken(serviceData: ServiceData)
     func close()
     func toAddManually()
     func toAppSettings()
     func toGuides()
-    
+
     func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
     func toLastPassSummary(importable: Int, total: Int, codes: [Code])
     func toGallery()
@@ -48,6 +50,8 @@ protocol AddingServiceFlowControlling: AnyObject {
 }
 
 final class AddingServiceFlowController: FlowController {
+    var onOverlayDismissed: (() -> Void)?
+
     private weak var parent: AddingServiceFlowControllerParent?
     // swiftlint:disable weak_delegate
     private var zoomTransitioningDelegate: ZoomFromRectTransitioningDelegate?
@@ -244,12 +248,14 @@ extension AddingServiceFlowController: AddingServiceManuallyNavigationFlowContro
 
     func addingServiceManuallyToCancel() {
         _viewController?.dismiss(animated: true)
+        onOverlayDismissed?()
     }
 }
 
 extension AddingServiceFlowController: GuideSelectorNavigationFlowControllerParent {
     func closeGuideSelector() {
         _viewController?.dismiss(animated: true)
+        onOverlayDismissed?()
     }
 
     func guideToAddManually(with data: String?) {
@@ -260,12 +266,13 @@ extension AddingServiceFlowController: GuideSelectorNavigationFlowControllerPare
 
     func guideToCodeScanner() {
         _viewController?.dismiss(animated: true)
+        onOverlayDismissed?()
     }
 }
 
 extension AddingServiceFlowController: SelectFromGalleryFlowControllerParent {
     func galleryDidFinish() {
-        _viewController?.dismiss(animated: true)
+        onOverlayDismissed?()
     }
 
     func galleryDidImport(count: Int) {
@@ -273,7 +280,7 @@ extension AddingServiceFlowController: SelectFromGalleryFlowControllerParent {
     }
 
     func galleryDidCancel() {
-        _viewController?.dismiss(animated: true)
+        onOverlayDismissed?()
     }
 
     func galleryServiceWasCreated(serviceData: ServiceData) {

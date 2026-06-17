@@ -30,24 +30,27 @@ public struct TFFormTextFieldSubmit {
     }
 }
 
-public struct TFFloatingTextField: View {
-    public enum InputType {
-        case name
-        case email
-        case other
-    }
+public enum TFFloatingTextFieldInputType {
+    case name
+    case email
+    case secret
+    case other
+}
+
+public struct TFFloatingTextField<FocusValue: Hashable>: View {
+    public typealias InputType = TFFloatingTextFieldInputType
     // MARK: - Variable
     private let textFieldHeight: CGFloat = Size.textFieldHeight
     private let placeHolderText: String
     private let submit: TFFormTextFieldSubmit?
-    
+
     @Environment(\.isEnabled)
     private var isEnabled
-    
+
     @Binding
     private var text: String
-    @Binding
-    private var isFocused: Bool
+    private let focused: FocusState<FocusValue?>.Binding
+    private let focusValue: FocusValue
     @Binding
     private var errorMessage: String?
     @State
@@ -56,18 +59,19 @@ public struct TFFloatingTextField: View {
     private var clearTapped = false
     @Environment(\.colorScheme)
     private var colorScheme
-    
-    @FocusState
-    private var textFieldInFocus: Bool
-    
+
     private let inputType: InputType
     private let keyboardType: UIKeyboardType
     private let autocapitalization: TextInputAutocapitalization
-    
+
+    private var isFocused: Bool {
+        focused.wrappedValue == focusValue
+    }
+
     private var shouldPlaceHolderMove: Bool {
         isEditing || !text.isEmpty
     }
-    
+
     // MARK: - init
     public init(
         placeHolder: String,
@@ -75,7 +79,8 @@ public struct TFFloatingTextField: View {
         inputType: InputType,
         keyboardType: UIKeyboardType = .default,
         autocapitalization: TextInputAutocapitalization = .sentences,
-        isFocused: Binding<Bool> = .constant(false),
+        focused: FocusState<FocusValue?>.Binding,
+        focusValue: FocusValue,
         errorMessage: Binding<String?> = .constant(nil),
         submit: TFFormTextFieldSubmit? = nil
     ) {
@@ -84,11 +89,12 @@ public struct TFFloatingTextField: View {
         self.inputType = inputType
         self.keyboardType = keyboardType
         self.autocapitalization = autocapitalization
-        _isFocused = isFocused
+        self.focused = focused
+        self.focusValue = focusValue
         _errorMessage = errorMessage
         self.submit = submit
     }
-    
+
     public var body: some View {
         TFInputFloatingContainer(
             isEditing: $isEditing,
@@ -115,7 +121,7 @@ public struct TFFloatingTextField: View {
         }
         .contentShape(Rectangle())
     }
-    
+
     @ViewBuilder
     private func textField() -> some View {
         TextField(
@@ -124,7 +130,7 @@ public struct TFFloatingTextField: View {
             prompt: isEditing || (!isEnabled && !text.isEmpty) ? nil : Text(placeHolderText)
                 .foregroundStyle(AppColor.labelsSecondary)
         )
-        .focused($textFieldInFocus)
+        .focused(focused, equals: focusValue)
         .modifier(FormatInputModifier(inputType))
         .foregroundStyle(isEnabled ? .labelsPrimary : .labelsTertiary)
         .accentColor(AppColor.accentsBrand.color(for: colorScheme))
@@ -133,17 +139,11 @@ public struct TFFloatingTextField: View {
         .textInputAutocapitalization(autocapitalization)
         .animation(Animation.easeInOut(duration: AnimationTiming.duration), value: EdgeInsets())
         .frame(alignment: .leading)
-        .onChange(of: textFieldInFocus) { _, newValue in
-            if isFocused != newValue {
-                isFocused = newValue
-            }
+        .accessibilityLabel(placeHolderText)
+        .onChange(of: isFocused) { _, newValue in
             withAnimation {
                 isEditing = newValue
             }
-        }
-        .onChange(of: isFocused) { _, newValue in
-            guard textFieldInFocus != newValue else { return }
-            textFieldInFocus = newValue
         }
         .submitLabel(submit?.buttonType ?? .return)
         .onSubmit {
@@ -152,19 +152,19 @@ public struct TFFloatingTextField: View {
             }
         }
     }
-    
+
     private func clearTextField() {
         text = ""
     }
 }
 
 private struct FormatInputModifier: ViewModifier {
-    let inputType: TFFloatingTextField.InputType
-    
-    init(_ inputType: TFFloatingTextField.InputType) {
+    let inputType: TFFloatingTextFieldInputType
+
+    init(_ inputType: TFFloatingTextFieldInputType) {
         self.inputType = inputType
     }
-    
+
     @ViewBuilder
     func body(content: Content) -> some View {
         switch inputType {
@@ -179,6 +179,12 @@ private struct FormatInputModifier: ViewModifier {
                 .keyboardType(.asciiCapable)
                 .textContentType(.name)
                 .textInputAutocapitalization(.words)
+        case .secret:
+            content
+                .keyboardType(.alphabet)
+                .textContentType(nil)
+                .textInputAutocapitalization(.characters)
+                .autocorrectionDisabled()
         case .other:
             content
         }
@@ -192,13 +198,13 @@ private struct FormatInputModifier: ViewModifier {
 private struct Test: View {
     @State
     private var text: String = "Test"
-    
-    @State
-    private var isFocused = false
-    
+
+    @FocusState
+    private var isFocused: Bool?
+
     @State
     private var errorMessage: String?// = "Błąd"
-    
+
     var body: some View {
         VStack(spacing: .zero) {
             Divider()
@@ -208,7 +214,8 @@ private struct Test: View {
                 inputType: .name,
                 keyboardType: .asciiCapable,
                 autocapitalization: .never,
-                isFocused: $isFocused,
+                focused: $isFocused,
+                focusValue: true,
                 errorMessage: $errorMessage,
                 submit: nil
             )

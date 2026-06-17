@@ -27,13 +27,23 @@ struct AddingServiceServiceIconView: View {
     var body: some View {
         image()
             .frame(width: dimension, height: dimension)
+            .clipShape(Circle())
+            .background {
+                Circle()
+                    .foregroundStyle(.backgroundsPrimary)
+                    .frame(width: dimension, height: dimension)
+                    .shadow(.glass)
+            }
     }
     
-    func image() -> Image {
+    @ViewBuilder
+    func image() -> some View {
         if let serviceImage {
-            return Image(uiImage: serviceImage)
+            Image(uiImage: serviceImage)
+                .scaleEffect(0.65)
         } else {
-            return Asset.addServiceIconPlaceholder.swiftUIImage
+            Image(systemName: "photo")
+                .foregroundStyle(.labelsSecondary)
         }
     }
 }

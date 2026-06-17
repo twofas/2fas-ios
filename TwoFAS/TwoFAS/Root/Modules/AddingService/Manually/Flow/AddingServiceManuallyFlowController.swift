@@ -28,10 +28,6 @@ protocol AddingServiceManuallyFlowControllerParent: AnyObject {
 protocol AddingServiceManuallyFlowControlling: AnyObject {
     func toClose(_ serviceData: ServiceData)
     func toClose()
-    func toAlgorithmSelection(selectedOption: Algorithm?)
-    func toRefreshTimeSelection(selectedOption: Period?)
-    func toDigitsSelection(selectedOption: Digits?)
-    func toInitialCounterInput(currentValue: Int?)
 }
 
 final class AddingServiceManuallyFlowController: FlowController {
@@ -54,7 +50,6 @@ final class AddingServiceManuallyFlowController: FlowController {
             providedName: name
         )
         view.presenter = presenter
-        presenter.view = view
                 
         navigationController.setViewControllers([view], animated: true)
     }
@@ -71,69 +66,5 @@ extension AddingServiceManuallyFlowController: AddingServiceManuallyFlowControll
     
     func toClose() {
         parent?.addingServiceManuallyToCancel()
-    }
-    
-    func toAlgorithmSelection(selectedOption: Algorithm?) {
-        guard let navi = viewController.navigationController else { return }
-        ComposeServiceAlgorithmFlowController.push(
-            on: navi,
-            parent: self,
-            selectedOption: selectedOption
-        )
-    }
-    
-    func toRefreshTimeSelection(selectedOption: Period?) {
-        guard let navi = viewController.navigationController else { return }
-        ComposeServiceRefreshTimeFlowController.push(
-            on: navi,
-            parent: self,
-            selectedOption: selectedOption
-        )
-    }
-    
-    func toDigitsSelection(selectedOption: Digits?) {
-        guard let navi = viewController.navigationController else { return }
-        ComposeServiceNumberOfDigitsFlowController.push(
-            on: navi,
-            parent: self,
-            selectedOption: selectedOption
-        )
-    }
-    
-    func toInitialCounterInput(currentValue: Int?) {
-        guard let navi = viewController.navigationController else { return }
-        ComposeServiceCounterFlowController.push(
-            on: navi,
-            parent: self,
-            currentValue: currentValue
-        )
-    }
-}
-
-extension AddingServiceManuallyFlowController: ComposeServiceNumberOfDigitsFlowControllerParent {
-    func didChangeNumberOfDigits(_ digits: Digits) {
-        viewController.presenter.handleDigitsSelection(digits)
-        viewController.navigationController?.popViewController(animated: true)
-    }
-}
-
-extension AddingServiceManuallyFlowController: ComposeServiceCounterFlowControllerParent {
-    func didChangeCounter(_ counter: Int) {
-        viewController.presenter.handleInitialCounter(counter)
-        viewController.navigationController?.popViewController(animated: true)
-    }
-}
-
-extension AddingServiceManuallyFlowController: ComposeServiceAlgorithmFlowControllerParent {
-    func didChangeAlgorithm(_ algorithm: Algorithm) {
-        viewController.presenter.handleAlgorithmSelection(algorithm)
-        viewController.navigationController?.popViewController(animated: true)
-    }
-}
-
-extension AddingServiceManuallyFlowController: ComposeServiceRefreshTimeFlowControllerParent {
-    func didChangeRefreshTime(_ refreshTime: Period) {
-        viewController.presenter.handleRefreshTimeSelection(refreshTime)
-        viewController.navigationController?.popViewController(animated: true)
     }
 }

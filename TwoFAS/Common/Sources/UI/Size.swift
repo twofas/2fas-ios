@@ -22,5 +22,6 @@ import SwiftUI
 enum Size {
     static let textFieldHeight: CGFloat = 55
     static let smallIconSize: CGFloat = 14
+    static let extraSmallIconSize: CGFloat = 11
     static let mediumIconSize: CGFloat = 20
 }

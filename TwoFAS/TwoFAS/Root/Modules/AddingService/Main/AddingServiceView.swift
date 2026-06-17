@@ -81,20 +81,21 @@ struct AddingServiceView: View {
                 Text("or")
                     .textStyle(.subheadline)
                     .foregroundStyle(.labelsPrimary)
-                
+
                 TFButton("Enter secret key", variant: .borderedSecondary, size: .large, applyGlass: false) {
                     presenter.handleToAddManually()
                 }
-                
+
                 TFButton("Upload image with QR code", variant: .borderedSecondary, size: .large) {
                     presenter.handleToGallery()
                 }
-                
+
                 TFButton("Guide me", variant: .borderlessNeutral, size: .large) {
                     presenter.handleToGuides()
                 }
             }
         }
+        .opacity(presenter.isOverlayPresented ? 0 : 1)
         .alert(item: $presenter.alert) { alert in
             switch alert {
             case .cantPairWatch:

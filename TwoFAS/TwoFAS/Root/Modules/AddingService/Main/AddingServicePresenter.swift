@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import SwiftUI
 import Data
 import Common
 
@@ -35,28 +36,30 @@ final class AddingServicePresenter {
     var freezeCamera = false
     var isCameraUnavailable = false
     var alert: AddingServiceAlert?
-    
+    var isOverlayPresented = false
+
     // Renaming
     var showRename = false
     var currentName = ""
     var secret = ""
-    
+
     // PairWatchQuestion
     var showPairWatchQuestion = false
     var deviceCodePath: DeviceCodePath?
-        
+
     private let flowController: AddingServiceFlowControlling
     private let interactor: AddingServiceModuleInteracting
-    
+
     init(flowController: AddingServiceFlowControlling, interactor: AddingServiceModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
-        
+
         interactor.shouldRename = { [weak self] in self?.handleShouldRename(currentName: $0, secret: $1) }
         interactor.serviceWasCreated = { [weak self] in self?.handleServiceWasCreated(serviceData: $0) }
         interactor.checkCameraPermission { [weak self] available in
             self?.isCameraUnavailable = !available
         }
+        flowController.onOverlayDismissed = { [weak self] in self?.handleOverlayDismissed() }
     }
 }
 
@@ -133,14 +136,17 @@ extension AddingServicePresenter {
     }
         
     func handleToGallery() {
+        presentOverlay()
         flowController.toGallery()
     }
-    
+
     func handleToAddManually() {
+        presentOverlay()
         flowController.toAddManually()
     }
-    
+
     func handleToGuides() {
+        presentOverlay()
         flowController.toGuides()
     }
     
@@ -188,8 +194,22 @@ private extension AddingServicePresenter {
         self.secret = secret
         showRename = true
     }
-    
+
     func handleServiceWasCreated(serviceData: ServiceData) {
         flowController.toToken(serviceData: serviceData)
+    }
+
+    func presentOverlay() {
+        freezeCamera = true
+        withAnimation(.easeInOut(duration: 0.15)) {
+            isOverlayPresented = true
+        }
+    }
+
+    func handleOverlayDismissed() {
+        freezeCamera = false
+        withAnimation(.easeInOut(duration: 0.15)) {
+            isOverlayPresented = false
+        }
     }
 }

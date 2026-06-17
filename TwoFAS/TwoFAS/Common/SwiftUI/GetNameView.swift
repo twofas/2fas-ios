@@ -36,9 +36,9 @@ private struct GetNameView: View {
     
     @State
     private var isConfirmEnabled = false
-    
-    @State
-    private var isFocused = false
+
+    @FocusState
+    private var isFocused: Bool?
     
     var body: some View {
         container
@@ -98,7 +98,8 @@ private struct GetNameView: View {
             placeHolder: placeholder,
             text: $text,
             inputType: .name,
-            isFocused: $isFocused,
+            focused: $isFocused,
+            focusValue: true,
             submit: TFFormTextFieldSubmit(buttonType: .done, action: {
                 onConfirmAction()
             })

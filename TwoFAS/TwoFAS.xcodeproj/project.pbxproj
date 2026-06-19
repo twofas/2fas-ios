@@ -858,6 +858,7 @@
 		C2A283352186071200967022 /* AlertControllerPromptFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A283342186071200967022 /* AlertControllerPromptFactory.swift */; };
 		C2A2AF6F23D8EA710059094D /* UIActivityIndicator+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A2AF6E23D8EA710059094D /* UIActivityIndicator+.swift */; };
 		C2A2DA5C2FE548F1004FD390 /* NewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A2DA5B2FE548EE004FD390 /* NewsView.swift */; };
+		C2A2DA5E2FE5BAEE004FD390 /* TrashServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A2DA5D2FE5BAEE004FD390 /* TrashServiceView.swift */; };
 		C2A496AD2FB4F74E004EAFBA /* PINWelcomeFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A496AC2FB4F749004EAFBA /* PINWelcomeFooter.swift */; };
 		C2A4C8352A10F13800AFD67C /* TokensTOTPCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4C8342A10F13800AFD67C /* TokensTOTPCell.swift */; };
 		C2A4C8372A11141D00AFD67C /* TokensNextTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A4C8362A11141D00AFD67C /* TokensNextTokenView.swift */; };
@@ -2732,6 +2733,7 @@
 		C2A2AF6E23D8EA710059094D /* UIActivityIndicator+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicator+.swift"; sourceTree = "<group>"; };
 		C2A2D23228F7513400B5D91E /* ExchangeDataFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeDataFormat.swift; sourceTree = "<group>"; };
 		C2A2DA5B2FE548EE004FD390 /* NewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsView.swift; sourceTree = "<group>"; };
+		C2A2DA5D2FE5BAEE004FD390 /* TrashServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashServiceView.swift; sourceTree = "<group>"; };
 		C2A496AC2FB4F749004EAFBA /* PINWelcomeFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINWelcomeFooter.swift; sourceTree = "<group>"; };
 		C2A4C8342A10F13800AFD67C /* TokensTOTPCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTOTPCell.swift; sourceTree = "<group>"; };
 		C2A4C8362A11141D00AFD67C /* TokensNextTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNextTokenView.swift; sourceTree = "<group>"; };
@@ -5112,6 +5114,7 @@
 			isa = PBXGroup;
 			children = (
 				C249773B277F62B100DC872C /* TrashServiceViewController.swift */,
+				C2A2DA5D2FE5BAEE004FD390 /* TrashServiceView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5357,45 +5360,13 @@
 		C25860AE28246D87009AE54F /* News */ = {
 			isa = PBXGroup;
 			children = (
-				C25860B128246D9D009AE54F /* Flow */,
-				C25860B228246DA3009AE54F /* Interactor */,
-				C25860B028246D97009AE54F /* Presenter */,
-				C25860AF28246D92009AE54F /* View */,
-			);
-			path = News;
-			sourceTree = "<group>";
-		};
-		C25860AF28246D92009AE54F /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C2A2DA5B2FE548EE004FD390 /* NewsView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C25860B028246D97009AE54F /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
+				C2FCB28F28258B3A00AF8A37 /* NewsPlainFlowController.swift */,
+				C25860B328246DC9009AE54F /* NewsModuleInteractor.swift */,
 				C25860B528247B87009AE54F /* NewsPresenter.swift */,
 				C25860B728247CB6009AE54F /* NewsModels.swift */,
+				C2A2DA5B2FE548EE004FD390 /* NewsView.swift */,
 			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C25860B128246D9D009AE54F /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2FCB28F28258B3A00AF8A37 /* NewsPlainFlowController.swift */,
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
-		C25860B228246DA3009AE54F /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C25860B328246DC9009AE54F /* NewsModuleInteractor.swift */,
-			);
-			path = Interactor;
+			path = News;
 			sourceTree = "<group>";
 		};
 		C25B221727C1993B0052AAC4 /* Components */ = {
@@ -9442,6 +9413,7 @@
 				C2C02242297F222100D596A8 /* MainPresenter.swift in Sources */,
 				C20CD53C2A1CF03F00A7F324 /* TokensViewController+Layout.swift in Sources */,
 				C25BB2CC2DAAE3FF00BEC626 /* ManageWatchView.swift in Sources */,
+				C2A2DA5E2FE5BAEE004FD390 /* TrashServiceView.swift in Sources */,
 				C21930F22EC11439001354C9 /* BackupManageEncryptionModels.swift in Sources */,
 				C29E833D2FC0BB4400CBE671 /* AddingServiceView.swift in Sources */,
 				C25B221627C181690052AAC4 /* ComposeServiceInputCellKind.swift in Sources */,

@@ -20,36 +20,32 @@
 import Foundation
 import Common
 
-final class TrashServicePresenter {
-    weak var view: TrashServiceViewControlling?
-    
+final class TrashServicePresenter: ObservableObject {
+    private let serviceData: ServiceData
     private let flowController: TrashServiceFlowControlling
     private let interactor: TrashServiceInteracting
     
-    var serviceData: ServiceData?
+    @Published var serviceName: String
     
-    init(flowController: TrashServiceFlowControlling, interactor: TrashServiceInteracting) {
+    init(
+        serviceData: ServiceData,
+        flowController: TrashServiceFlowControlling,
+        interactor: TrashServiceInteracting
+    ) {
+        self.serviceData = serviceData
         self.flowController = flowController
         self.interactor = interactor
+        
+        self.serviceName = serviceData.name
     }
 }
 
 extension TrashServicePresenter {
-    func viewDidLoad() {
-        guard let serviceData else { return }
-        
-        view?.setupView(with: serviceData.name)
-    }
-    
     func handleCancel() {
-        view?.dismissing()
         flowController.toClose()
     }
     
     func handleTrashing() {
-        guard let serviceData else { return }
-        
-        view?.deleted()
         interactor.trashService(serviceData)
         flowController.toTrashService()
     }

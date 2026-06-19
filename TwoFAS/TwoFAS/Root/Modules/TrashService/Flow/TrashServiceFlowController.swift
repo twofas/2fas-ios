@@ -32,7 +32,7 @@ protocol TrashServiceFlowControlling: AnyObject {
 
 final class TrashServiceFlowController: FlowController {
     private weak var parent: TrashServiceFlowControllerParent?
-    
+
     static func present(
         on viewController: UIViewController,
         parent: TrashServiceFlowControllerParent,
@@ -41,19 +41,16 @@ final class TrashServiceFlowController: FlowController {
         let view = TrashServiceViewController()
         let flowController = TrashServiceFlowController(viewController: view)
         flowController.parent = parent
-        
+
         let interactor = ModuleInteractorFactory.shared.trashServiceInteractor()
         let presenter = TrashServicePresenter(
+            serviceData: serviceData,
             flowController: flowController,
             interactor: interactor
         )
-        presenter.serviceData = serviceData
-        presenter.view = view
-        
         view.presenter = presenter
-        view.configureAsModal()
 
-        viewController.present(view, animated: true, completion: nil)
+        flowController.presentAsHalfModal(on: viewController, view: view)
     }
 }
 
@@ -61,8 +58,27 @@ extension TrashServiceFlowController: TrashServiceFlowControlling {
     func toClose() {
         parent?.closeTrashService()
     }
-    
+
     func toTrashService() {
         parent?.didTrashService()
+    }
+}
+
+private extension TrashServiceFlowController {
+    func presentAsHalfModal(on parentViewController: UIViewController, view: TrashServiceViewController) {
+        view.modalPresentationStyle = .pageSheet
+
+        if let sheet = view.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.selectedDetentIdentifier = .medium
+            sheet.prefersGrabberVisible = false
+            if #available(iOS 26.1, *) {
+                sheet.backgroundEffect = UIBlurEffect(style: .systemMaterial)
+            }
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.preferredCornerRadius = TFCornerRadius.large.rawValue
+        }
+
+        parentViewController.present(view, animated: true, completion: nil)
     }
 }

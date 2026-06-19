@@ -18,71 +18,23 @@
 //
 
 import UIKit
-
-protocol TrashServiceViewControlling: AnyObject {
-    func setupView(with name: String)
-    func dismissing()
-    func deleted()
-}
+import SwiftUI
+import Common
 
 final class TrashServiceViewController: UIViewController {
     var presenter: TrashServicePresenter!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter.viewDidLoad()
-    }
-    
-    func generate(with serviceName: String) -> UIViewController {
-        let contentTop = MainContainerTopContentGenerator(placement: .centerHorizontallyLimitWidth, elements: [
-            .text(text: T.Tokens.deleteToken, style: MainContainerTextStyling.content),
-            .text(text: serviceName, style: MainContainerTextStyling.boldTitleOneLine)
-        ])
-        
-        let contentMiddle = MainContainerMiddleContentGenerator(placement: .centerHorizontallyLimitWidth, elements: [
-            .centeredImage(image: Asset.deleteScreenIcon.image),
-            .extraSpacing,
-            .text(
-                text: T.Tokens.signInNotPossibleTitle(serviceName, serviceName),
-                style: MainContainerTextStyling.content
-            )
-        ])
-        
-        let contentBottom = MainContainerBottomContentGenerator(elements: [
-            .filledButton(text: T.Tokens.moveToTrash, callback: { [weak self] in self?.presenter.handleTrashing() }),
-            .textButton(text: T.Commons.cancel, callback: { [weak self] in self?.presenter.handleCancel() })
-        ])
-        
-        let config = MainContainerViewController.Configuration(
-            barConfiguration: MainContainerBarConfiguration.statusBar(.hide),
-            contentTop: contentTop,
-            contentMiddle: contentMiddle,
-            contentBottom: contentBottom,
-            generalConfiguration: MainContainerNonScrollable()
-        )
-        
-        let vc = MainContainerViewController()
-        vc.configure(with: config)
-        vc.view.backgroundColor = Theme.Colors.Fill.background
-        
-        return vc
-    }
-}
 
-extension TrashServiceViewController: TrashServiceViewControlling {
-    func setupView(with name: String) {
-        let vc = generate(with: name)
-        addChild(vc)
-        view.addSubview(vc.view)
-        vc.view.pinToParent()
-        vc.didMove(toParent: self)
-    }
-    
-    func dismissing() {
-        VoiceOver.say(T.Voiceover.dismissing)
-    }
-    
-    func deleted() {
-        VoiceOver.say(T.Voiceover.serviceDeleted)
+        view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+
+        let hosting = UIHostingController(rootView: TrashServiceView(presenter: presenter))
+        hosting.view.backgroundColor = .clear
+
+        addChild(hosting)
+        view.addSubview(hosting.view)
+        hosting.view.pinToParent()
+        hosting.didMove(toParent: self)
     }
 }

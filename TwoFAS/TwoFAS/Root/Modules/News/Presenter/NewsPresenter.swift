@@ -20,57 +20,54 @@
 import UIKit
 import Data
 
+@Observable
 final class NewsPresenter {
-    weak var view: NewsViewControlling?
-    
+    var list: [NewsCell] = []
+
     private let flowController: NewsPlainFlowControlling
     private let interactor: NewsModuleInteracting
+    private let notificationCenter: NotificationCenter
     private let dateFormatter = RelativeDateTimeFormatter()
-    
-    private var viewIsLoaded = false
-    
+
     init(flowController: NewsPlainFlowControlling, interactor: NewsModuleInteracting) {
         self.interactor = interactor
         self.flowController = flowController
-    }
-    
-    func viewDidLoad() {
-        viewIsLoaded = true
-        NotificationCenter.default.addObserver(
+        self.notificationCenter = .default
+        notificationCenter.addObserver(
             self,
             selector: #selector(willEnterForeground),
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
     }
-    
-    func viewWillAppear() {
+
+    deinit {
+        notificationCenter.removeObserver(self)
+    }
+
+    func viewDidAppear() {
         refreshView()
     }
-    
-    func handleRefreshView() {
-        refreshView()
-    }
-    
+
     func handleSelection(at row: Int) {
-        interactor.fetchList { [weak self] list in
-            let list = list.sorted { $0.createdAt > $1.createdAt }
-            guard let entry = list[safe: row] else { return }
-            self?.interactor.markAsRead(newsEntry: entry)
-            if let type = entry.localNotificationType {
-                AppEventLog(.localNotificationRead(type))
-            } else {
-                AppEventLog(.articleRead(entry.newsID))
-            }
-            
-            if let internalLink = entry.internalLink {
-                self?.flowController.toInternalLink(internalLink)
-            } else if let link = entry.link {
-                self?.flowController.openWeb(with: link)
-            }
+        guard var entry = list[safe: row] else { return }
+        entry.markAsRead()
+        list[row] = entry
+
+        interactor.markAsRead(newsEntry: entry.newsItem)
+        if let type = entry.newsItem.localNotificationType {
+            AppEventLog(.localNotificationRead(type))
+        } else {
+            AppEventLog(.articleRead(entry.id))
+        }
+
+        if let internalLink = entry.newsItem.internalLink {
+            flowController.toInternalLink(internalLink)
+        } else if let link = entry.newsItem.link {
+            flowController.openWeb(with: link)
         }
     }
-    
+
     func close() {
         interactor.markAllAsRead()
         flowController.toClose()
@@ -81,15 +78,8 @@ private extension NewsPresenter {
     @objc func willEnterForeground() {
         refreshView()
     }
-    
+
     func refreshView() {
-        reload()
-        interactor.fetchList { [weak self] _ in
-            self?.reload()
-        }
-    }
-    
-    func reload() {
         let now = Date()
         interactor.fetchList { [weak self] news in
             let sortedNews = news.sorted { $0.createdAt > $1.createdAt }
@@ -103,14 +93,8 @@ private extension NewsPresenter {
                     newsItem: entry
                 )
             }
-            
-            guard self?.viewIsLoaded == true else { return }
-            
-            if cells.isEmpty {
-                self?.view?.showEmptyScreen()
-            } else {
-                self?.view?.reload(with: NewsSection(cells: cells))
-            }
+
+            self?.list = cells
         }
     }
 }

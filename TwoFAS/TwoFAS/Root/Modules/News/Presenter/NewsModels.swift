@@ -25,13 +25,18 @@ struct NewsSection: TableViewSection {
     var cells: [NewsCell]
 }
 
-struct NewsCell: Hashable {
+struct NewsCell: Hashable, Identifiable {
+    var id: String { newsItem.newsID }
     let icon: UIImage
     let title: String
-    let wasRead: Bool
+    var wasRead: Bool
     let publishedAgo: String
     let hasURL: Bool
     let newsItem: ListNewsEntry
+
+    mutating func markAsRead() {
+        wasRead = true
+    }
 }
 
 extension ListNewsEntry.Icon {

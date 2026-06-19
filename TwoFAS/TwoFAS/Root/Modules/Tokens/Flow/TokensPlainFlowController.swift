@@ -331,7 +331,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     
     // MARK: - Notifications
     func toNotifications() {
-        NewsNavigationFlowController.present(on: viewController, parent: self)
+        NewsPlainFlowController.present(on: viewController, parent: self)
     }
     
     // MARK: - Import
@@ -641,7 +641,7 @@ extension TokensPlainFlowController: AddingServiceTokenFlowControllerParent {
     }
 }
 
-extension TokensPlainFlowController: NewsNavigationFlowControllerParent {
+extension TokensPlainFlowController: NewsPlainFlowControllerParent {
     func newsClose() {
         viewController.presenter.handleRefreshNewsStatus()
         dismiss()

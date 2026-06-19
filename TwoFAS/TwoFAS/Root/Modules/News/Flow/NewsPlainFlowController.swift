@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 
 protocol NewsPlainFlowControllerParent: AnyObject {
@@ -33,40 +34,39 @@ protocol NewsPlainFlowControlling: AnyObject {
 
 final class NewsPlainFlowController: FlowController {
     private weak var parent: NewsPlainFlowControllerParent?
-    private weak var navigationController: UINavigationController?
-    
-    static func showAsRoot(
-        in navigationController: UINavigationController,
+
+    static func present(
+        on viewController: UIViewController,
         parent: NewsPlainFlowControllerParent
     ) {
-        let view = NewsViewController()
-        let flowController = NewsPlainFlowController(viewController: view)
+        let hosting = create(parent: parent)
+        hosting.configureAsLargeModal()
+        viewController.present(hosting, animated: true)
+    }
+
+    static func create(parent: NewsPlainFlowControllerParent) -> UIViewController {
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
+        let flowController = NewsPlainFlowController(viewController: hosting)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.newsModuleInteractor()
         let presenter = NewsPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        presenter.view = view
-        view.presenter = presenter
-        
-        navigationController.setViewControllers([view], animated: false)
+        hosting.rootView = AnyView(NewsView(presenter: presenter))
+        return hosting
     }
-}
-
-extension NewsPlainFlowController {
-    var viewController: NewsViewController { _viewController as! NewsViewController }
 }
 
 extension NewsPlainFlowController: NewsPlainFlowControlling {
     func openWeb(with url: URL) {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
-    
+
     func toClose() {
         parent?.newsClose()
     }
-    
+
     func toInternalLink(_ internalLink: ListNewsEntry.InternalLink) {
         switch internalLink {
         case .backup:

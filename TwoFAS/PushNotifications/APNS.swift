@@ -52,9 +52,9 @@ final class APNS: NSObject, UNUserNotificationCenterDelegate, NotificationStateP
                     completion(.notDetermined)
                 case .ephemeral:
                     completion(.notDetermined)
-                    assertionFailure("This Push Notification state shouldn't be used in app!")
+                    assertionFailure("APNS: This Push Notification state shouldn't be used in app!")
                 @unknown default:
-                        print("Unknown status for Push Notifications auth")
+                        Log("APNS: Unknown status for Push Notifications auth")
                 }
             }
         }
@@ -88,15 +88,15 @@ final class APNS: NSObject, UNUserNotificationCenterDelegate, NotificationStateP
         let tokenParts = deviceToken.map { String(format: "%02.2hhx", $0) }
         let token = tokenParts.joined()
 
-        Log("Did obtain Device Token")
-        Log("Device Token: \(token)", save: false)
+        Log("APNS: Did obtain Device Token")
+        Log("APNS: Device Token: \(token)", save: false)
         
         registrationCompletion?(.succesful(deviceToken: token))
         registrationCompletion = nil
     }
 
     func didFailToRegisterForRemoteNotifications(with error: Error) {
-        Log("Error registering for Push Notifications: \(error)")
+        Log("APNS: Error registering for Push Notifications: \(error)")
 
         registrationCompletion?(.failed(error: error))
         registrationCompletion = nil
@@ -109,6 +109,8 @@ final class APNS: NSObject, UNUserNotificationCenterDelegate, NotificationStateP
     ) {
         clearNotifications()
 
+        Log("APNS: Notification response: \(response.notification.request.content.userInfo)", save: false)
+        
         let r = response.notification.request.content
 
         if r.categoryIdentifier == PushNotificationConfig.categoryID {
@@ -129,9 +131,12 @@ final class APNS: NSObject, UNUserNotificationCenterDelegate, NotificationStateP
     ) {
         clearNotifications()
         
+        Log("APNS: Notification received: \(notification.request.content.userInfo)", save: false)
+        
         let r = notification.request.content
         
         if r.categoryIdentifier == PushNotificationConfig.categoryID {
+            Log("APNS: Notification: refresh auth list")
             notifyAboutRefreshAuthList()
         }
 

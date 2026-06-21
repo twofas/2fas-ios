@@ -156,10 +156,12 @@ extension MainViewController {
         guard let tokenRequestID = notification.userInfo?[
             Notification.pushNotificationAuthorizeFromAppData
         ] as? String else {
+            Log("MainViewController: refreshing auth list, no token request ID")
             presenter.handleRefreshAuthList()
             return
         }
         
+        Log("MainViewController: handling authorization with token request ID")
         presenter.handleAuthorize(for: tokenRequestID)
     }
     

@@ -34,6 +34,7 @@ final class AuthRequestsPresenter {
 
 extension AuthRequestsPresenter {
     func handleRefresh() {
+        guard UIApplication.shared.applicationState == .active else { return }
         if let last = interactor.lastSavedNotification() {
             switch last {
             case .refreshList:
@@ -85,6 +86,7 @@ extension AuthRequestsPresenter {
     }
     
     func handleAuthorizeFromApp(for tokenRequestID: String) {
+        Log("AuthRequestPresenter: handleAuthorizeFromApp")
         interactor.clearLastSavedNotification()
         interactor.fetchAuthRequests(authFromAppFor: tokenRequestID)
     }

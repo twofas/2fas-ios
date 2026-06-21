@@ -107,6 +107,7 @@ final class MainPresenter {
     }
     
     func handleAuthorize(for tokenRequestID: String) {
+        Log("Main Presenter: handling authorize action for token request ID")
         guard !interactor.isAppLocked && interactor.isBrowserExtensionAllowed else { return }
         flowController.toAuthorize(for: tokenRequestID)
     }

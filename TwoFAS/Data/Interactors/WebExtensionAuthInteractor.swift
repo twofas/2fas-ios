@@ -25,6 +25,12 @@ public struct WebExtensionAwaitingAuth: Equatable {
     public let tokenRequestID: String
     public let domain: String
     public let extensionID: ExtensionID
+    
+    public init(tokenRequestID: String, domain: String, extensionID: ExtensionID) {
+        self.tokenRequestID = tokenRequestID
+        self.domain = domain
+        self.extensionID = extensionID
+    }
 }
 
 public enum WebExtensionAwaitingAuthError: Error {

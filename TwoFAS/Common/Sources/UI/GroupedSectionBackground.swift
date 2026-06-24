@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2026 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -17,31 +17,24 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import Common
+import SwiftUI
 
-struct SelectServiceSection: TableViewSection {
-    enum TitleType: Hashable {
-        case noTitle
-        case bestMatch
-        case title(String)
+public struct GroupedSectionBackgroundModifier: ViewModifier {
+    public init() {}
+
+    public func body(content: Content) -> some View {
+        content
+            .padding(.horizontal, .XL)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
+            .background {
+                RoundedRectangle(.large)
+                    .foregroundStyle(AppColor.backgroundsGroupedTertiary)
+            }
     }
-    let title: TitleType
-    var cells: [SelectServiceCell]
 }
 
-struct SelectServiceCell: Hashable {
-    var icon: UIImage {
-        serviceData.icon
+public extension View {
+    func groupedSectionBackground() -> some View {
+        modifier(GroupedSectionBackgroundModifier())
     }
-    
-    var title: String {
-        serviceData.name
-    }
-    
-    var subtitle: String? {
-        serviceData.additionalInfo
-    }
-    
-    let serviceData: ServiceData
 }

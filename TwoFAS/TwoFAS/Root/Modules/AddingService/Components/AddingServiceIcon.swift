@@ -28,21 +28,32 @@ struct AddingServiceIcon: View {
     private let iconSize: CGFloat = 32
     
     let icon: IconDetails
+    let showBackground: Bool
+    
+    init(icon: IconDetails, showBackground: Bool = true) {
+        self.icon = icon
+        self.showBackground = showBackground
+    }
     
     var body: some View {
         ZStack {
             switch icon {
             case .brand:
-                Circle()
-                    .frame(width: circleSize, height: circleSize)
-                    .foregroundStyle(.backgroundsSecondary)
-                
-                if let iconImage = icon.iconImage {
-                    Image(uiImage: iconImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: iconSize, height: iconSize)
+                ZStack {
+                    if showBackground {
+                        Circle()
+                            .frame(width: circleSize, height: circleSize)
+                            .foregroundStyle(.backgroundsSecondary)
+                    }
+                    
+                    if let iconImage = icon.iconImage {
+                        Image(uiImage: iconImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: iconSize, height: iconSize)
+                    }
                 }
+                .frame(width: circleSize, height: circleSize)
             case .label(let title, let tintColor):
                 Circle()
                     .frame(width: circleSize, height: circleSize)

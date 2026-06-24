@@ -419,20 +419,3 @@ private struct AddServiceAdvancedWarningView: View {
     }
 }
 
-private struct GroupedSectionBackgroundModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .padding(.horizontal, .XL)
-            .frame(maxWidth: .infinity, alignment: .topLeading)
-            .background {
-                RoundedRectangle(.large)
-                    .foregroundStyle(.backgroundsGroupedTertiary)
-            }
-    }
-}
-
-private extension View {
-    func groupedSectionBackground() -> some View {
-        modifier(GroupedSectionBackgroundModifier())
-    }
-}

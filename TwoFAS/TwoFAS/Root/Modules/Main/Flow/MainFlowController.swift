@@ -256,11 +256,11 @@ extension MainFlowController: AuthRequestsFlowControllerParent {
     
     func authRequestShowServiceSelection(auth: WebExtensionAwaitingAuth) {
         guard viewController.presentedViewController == nil else { return }
-        SelectServiceNavigationFlowController.present(on: viewController, parent: self, authRequest: auth)
+        SelectServiceFlowController.present(on: viewController, parent: self, authRequest: auth)
     }
 }
 
-extension MainFlowController: SelectServiceNavigationFlowControllerParent {
+extension MainFlowController: SelectServiceFlowControllerParent {
     func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool) {
         viewController.dismiss(animated: true) { [weak self] in
             self?.authRequestsFlowController?.didSelectService(serviceData, auth: authRequest, save: save)

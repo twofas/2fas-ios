@@ -18,46 +18,52 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 import Data
 
-protocol SelectServiceNavigationFlowControllerParent: AnyObject {
+protocol SelectServiceFlowControllerParent: AnyObject {
     func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool)
     func serviceSelectionCancelled(for tokenRequestID: String)
 }
 
-final class SelectServiceNavigationFlowController: NavigationFlowController {
-    private weak var parent: SelectServiceNavigationFlowControllerParent?
-    
+protocol SelectServiceFlowControlling: AnyObject {
+    func toServiceSelection(with serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool)
+    func toCancel(for tokenRequestID: String)
+}
+
+final class SelectServiceFlowController: FlowController {
+    private weak var parent: SelectServiceFlowControllerParent?
+
     static func present(
         on viewController: UIViewController,
-        parent: SelectServiceNavigationFlowControllerParent,
+        parent: SelectServiceFlowControllerParent,
         authRequest: WebExtensionAwaitingAuth
     ) {
-        let flowController = SelectServiceNavigationFlowController()
+        let interactor = ModuleInteractorFactory.shared.selectServiceModuleInteractor()
+        let hostingController = UIHostingController(rootView: AnyView(EmptyView()))
+        let flowController = SelectServiceFlowController(viewController: hostingController)
         flowController.parent = parent
 
-        let navi = CommonNavigationControllerFlow(flowController: flowController)
-        navi.configureAsLargeModal()
-        
-        flowController.navigationController = navi
-        
-        SelectServiceFlowController.showAsRoot(
-            in: navi,
-            parent: flowController,
+        let presenter = SelectServicePresenter(
+            interactor: interactor,
+            flowController: flowController,
             authRequest: authRequest
         )
-        
-        viewController.present(navi, animated: true, completion: nil)
+
+        hostingController.rootView = AnyView(SelectServiceView(presenter: presenter))
+        hostingController.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+        hostingController.configureAsLargeModal()
+        viewController.present(hostingController, animated: true, completion: nil)
     }
 }
 
-extension SelectServiceNavigationFlowController: SelectServiceFlowControllerParent {
-    func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool) {
+extension SelectServiceFlowController: SelectServiceFlowControlling {
+    func toServiceSelection(with serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool) {
         parent?.serviceSelectionDidSelect(serviceData, authRequest: authRequest, save: save)
     }
-    
-    func serviceSelectionCancelled(for tokenRequestID: String) {
+
+    func toCancel(for tokenRequestID: String) {
         parent?.serviceSelectionCancelled(for: tokenRequestID)
     }
 }

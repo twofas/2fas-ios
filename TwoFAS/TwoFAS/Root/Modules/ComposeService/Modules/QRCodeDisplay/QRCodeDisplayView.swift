@@ -28,26 +28,23 @@ struct QRCodeDisplayView: View {
             Color.white
                 .ignoresSafeArea()
             
-            VStack(spacing: 0) {
+            VStack(spacing: .zero) {
                 HStack {
-                    Spacer()
-                    Button(action: {
+                    TFLiquidGlassSymbolButton(symbol: .close) {
                         presenter.onClose()
-                    }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.system(size: 32))
-                            .foregroundColor(.black)
                     }
-                    .padding(.trailing, 20)
-                    .padding(.top, 20)
+
+                    Spacer()
                 }
+                .padding(.XL)
+                .frame(alignment: .top)
                 
                 Spacer()
                 
                 Image(uiImage: presenter.qrCodeImage)
                     .frame(width: presenter.qrCodeImage.size.width, height: presenter.qrCodeImage.size.height)
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 70)
+                    .padding(.horizontal, .XXL)
+                    .padding(.bottom, .XXXXXL)
                 
                 Spacer()
             }
@@ -55,8 +52,5 @@ struct QRCodeDisplayView: View {
         .onAppear {
             presenter.viewDidAppear()
         }
-//        .onDisappear {
-//            presenter.viewWillDisappear()
-//        }
     }
 }

@@ -17,41 +17,37 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import SwiftUI
 
-final class ComposeServiceAdvancedSummaryPresenter {
-    weak var view: ComposeServiceAdvancedSummaryViewControlling?
-    
+final class ComposeServiceAdvancedSummaryPresenter: ObservableObject {
+    @Published var menu: ComposeServiceAdvancedSummaryMenuSection
+
     private let flowController: ComposeServiceAdvancedSummaryFlowControlling
     let interactor: ComposeServiceAdvancedSummaryModuleInteracting
-    
+
     init(
         flowController: ComposeServiceAdvancedSummaryFlowControlling,
         interactor: ComposeServiceAdvancedSummaryModuleInteracting
     ) {
         self.flowController = flowController
         self.interactor = interactor
+        self.menu = ComposeServiceAdvancedSummaryMenuSection(title: "", cells: [])
     }
 }
 
 extension ComposeServiceAdvancedSummaryPresenter {
     func viewWillAppear() {
-        reload()
+        menu = buildMenu()
     }
-    
-    func handleSelection(at indexPath: IndexPath) {
-        let menu = buildMenu()
-        guard let cell = menu.cells[safe: indexPath.row] else { return }
-        if cell.copyValue {
-            interactor.copyCounter()
-            view?.copySuccess()
-        }
-    }
-}
 
-private extension ComposeServiceAdvancedSummaryPresenter {
-    func reload() {
-        let menu = buildMenu()
-        view?.reload(with: menu)
+    func handleSelection(of cell: ComposeServiceAdvancedSummaryMenuCell) {
+        guard cell.copyValue else { return }
+        interactor.copyCounter()
+        VoiceOver.say(T.Notifications.counterCopied)
+        HUDNotification.presentSuccess(title: T.Notifications.counterCopied)
+    }
+
+    func handleBack() {
+        flowController.close()
     }
 }

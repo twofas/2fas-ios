@@ -18,25 +18,31 @@
 //
 
 import UIKit
+import SwiftUI
+import Common
 
 protocol ComposeServiceAdvancedSummaryFlowControllerParent: AnyObject {
     func advancedSummaryDidFinish()
 }
 
-protocol ComposeServiceAdvancedSummaryFlowControlling: AnyObject {}
+protocol ComposeServiceAdvancedSummaryFlowControlling: AnyObject {
+    func close()
+}
 
 final class ComposeServiceAdvancedSummaryFlowController: FlowController {
     private weak var parent: ComposeServiceAdvancedSummaryFlowControllerParent?
-    
+    private weak var navigationController: UINavigationController?
+
     static func present(
         in navigationController: UINavigationController,
         parent: ComposeServiceAdvancedSummaryFlowControllerParent,
         settings: ComposeServiceAdvancedSettings
     ) {
-        let view = ComposeServiceAdvancedSummaryViewController()
-        let flowController = ComposeServiceAdvancedSummaryFlowController(viewController: view)
+        let hostingController = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = ComposeServiceAdvancedSummaryFlowController(viewController: hostingController)
         flowController.parent = parent
-        
+        flowController.navigationController = navigationController
+
         let interactor = ModuleInteractorFactory
             .shared
             .composeServiceAdvancedSummaryModuleInteractor(settings: settings)
@@ -44,18 +50,16 @@ final class ComposeServiceAdvancedSummaryFlowController: FlowController {
             flowController: flowController,
             interactor: interactor
         )
-        presenter.view = view
-        
-        view.presenter = presenter
 
-        navigationController.pushViewController(view, animated: true)
+        hostingController.rootView = AnyView(ComposeServiceAdvancedSummaryView(presenter: presenter))
+        hostingController.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+
+        navigationController.pushViewController(hostingController, animated: true)
     }
 }
 
-extension ComposeServiceAdvancedSummaryFlowController {
-    var viewController: ComposeServiceAdvancedSummaryViewController {
-        _viewController as! ComposeServiceAdvancedSummaryViewController
+extension ComposeServiceAdvancedSummaryFlowController: ComposeServiceAdvancedSummaryFlowControlling {
+    func close() {
+        navigationController?.popViewController(animated: true)
     }
 }
-
-extension ComposeServiceAdvancedSummaryFlowController: ComposeServiceAdvancedSummaryFlowControlling {}

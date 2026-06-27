@@ -1069,7 +1069,6 @@
 		C2C4F64928FE002F00285B81 /* RecordIDGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C4F64828FE002F00285B81 /* RecordIDGenerator.swift */; };
 		C2C4F64B28FE08EB00285B81 /* InfoHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C4F64A28FE08EB00285B81 /* InfoHandler.swift */; };
 		C2C56D3927C96743003B4C43 /* ComposeServiceAdvancedSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C56D3827C96743003B4C43 /* ComposeServiceAdvancedSettings.swift */; };
-		C2C56D4027C98140003B4C43 /* ComposeServiceAdvancedSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C56D3F27C98140003B4C43 /* ComposeServiceAdvancedSummaryViewController.swift */; };
 		C2C56D4227C98243003B4C43 /* ComposeServiceAdvancedSummaryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C56D4127C98243003B4C43 /* ComposeServiceAdvancedSummaryPresenter.swift */; };
 		C2C56D4427C98316003B4C43 /* ComposeServiceAdvancedSummaryPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C56D4327C98316003B4C43 /* ComposeServiceAdvancedSummaryPresenter+Menu.swift */; };
 		C2C56D4627C98AA3003B4C43 /* ComposeServiceAdvancedSummaryModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C56D4527C98AA3003B4C43 /* ComposeServiceAdvancedSummaryModuleInteractor.swift */; };
@@ -1121,6 +1120,7 @@
 		C2D2F7082FF02E8B0008FE4D /* LabelComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D2F7072FF02E8B0008FE4D /* LabelComposeView.swift */; };
 		C2D2F70A2FF02EA00008FE4D /* LabelComposePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D2F7092FF02EA00008FE4D /* LabelComposePresenter.swift */; };
 		C2D2F70C2FF02EAC0008FE4D /* LabelComposeFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D2F70B2FF02EAC0008FE4D /* LabelComposeFlowController.swift */; };
+		C2D2F7112FF042CF0008FE4D /* ComposeServiceAdvancedSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D2F7102FF042CF0008FE4D /* ComposeServiceAdvancedSummaryView.swift */; };
 		C2D39DDD28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDB28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift */; };
 		C2D39DDE28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDC28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift */; };
 		C2D39DE32823302200E864E9 /* StorageRepositoryImpl+News.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DE22823302200E864E9 /* StorageRepositoryImpl+News.swift */; };
@@ -2934,7 +2934,6 @@
 		C2C4F64828FE002F00285B81 /* RecordIDGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordIDGenerator.swift; sourceTree = "<group>"; };
 		C2C4F64A28FE08EB00285B81 /* InfoHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHandler.swift; sourceTree = "<group>"; };
 		C2C56D3827C96743003B4C43 /* ComposeServiceAdvancedSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedSettings.swift; sourceTree = "<group>"; };
-		C2C56D3F27C98140003B4C43 /* ComposeServiceAdvancedSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedSummaryViewController.swift; sourceTree = "<group>"; };
 		C2C56D4127C98243003B4C43 /* ComposeServiceAdvancedSummaryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedSummaryPresenter.swift; sourceTree = "<group>"; };
 		C2C56D4327C98316003B4C43 /* ComposeServiceAdvancedSummaryPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComposeServiceAdvancedSummaryPresenter+Menu.swift"; sourceTree = "<group>"; };
 		C2C56D4527C98AA3003B4C43 /* ComposeServiceAdvancedSummaryModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedSummaryModuleInteractor.swift; sourceTree = "<group>"; };
@@ -2983,6 +2982,7 @@
 		C2D2F7072FF02E8B0008FE4D /* LabelComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelComposeView.swift; sourceTree = "<group>"; };
 		C2D2F7092FF02EA00008FE4D /* LabelComposePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelComposePresenter.swift; sourceTree = "<group>"; };
 		C2D2F70B2FF02EAC0008FE4D /* LabelComposeFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelComposeFlowController.swift; sourceTree = "<group>"; };
+		C2D2F7102FF042CF0008FE4D /* ComposeServiceAdvancedSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceAdvancedSummaryView.swift; sourceTree = "<group>"; };
 		C2D316692E6648730044056F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C2D3166A2E6648730044056F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		C2D3166B2E6648E90044056F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "TwoFAS/Other/zh-Hant.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
@@ -7034,7 +7034,7 @@
 		C2C56D3B27C97896003B4C43 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C2C56D3F27C98140003B4C43 /* ComposeServiceAdvancedSummaryViewController.swift */,
+				C2D2F7102FF042CF0008FE4D /* ComposeServiceAdvancedSummaryView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -9314,7 +9314,6 @@
 				C24471D125F51F760024B4C5 /* ComposeServiceFormError.swift in Sources */,
 				C245702428A04CBA008E99F4 /* GridViewGAImportPresenter.swift in Sources */,
 				C2A74FC82610CBAF007E5AB3 /* ColorPickerButtonWithName.swift in Sources */,
-				C2C56D4027C98140003B4C43 /* ComposeServiceAdvancedSummaryViewController.swift in Sources */,
 				C2147CE5205D7B790001D011 /* PINPadKey.swift in Sources */,
 				C23185662EC648E900DD1ABE /* BackupSetPasswordPresenter.swift in Sources */,
 				C26764AC287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift in Sources */,
@@ -9349,6 +9348,7 @@
 				C23B899D27C2B4950028FE34 /* ComposeServiceBadgeColorView.swift in Sources */,
 				C240485E27654C5F0076376E /* ImporterEnterPasswordFlowController.swift in Sources */,
 				C2A7944D27F795E900E5C641 /* BrowserExtensionPairedService.swift in Sources */,
+				C2D2F7112FF042CF0008FE4D /* ComposeServiceAdvancedSummaryView.swift in Sources */,
 				C287D4FB276A92460001B272 /* AppSecurityExtensions.swift in Sources */,
 				C2CC0A4C29D0D4FC00677A7B /* ExternalImportService.swift in Sources */,
 				C244718825F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift in Sources */,

@@ -112,7 +112,7 @@ public extension TintColor {
     var color: UIColor {
         switch self {
         case .`default`: AppColor.accentsDefault.uiColor
-        case .lightBlue: AppColor.accentsTeal.uiColor
+        case .lightBlue: AppColor.accentsBlue.uiColor
         case .indigo: AppColor.accentsIndigo.uiColor
         case .purple: AppColor.accentsPurple.uiColor
         case .turquoise: AppColor.accentsTeal.uiColor
@@ -129,7 +129,7 @@ public extension TintColor {
     func color(for colorScheme: ColorScheme) -> Color {
         switch self {
         case .`default`: AppColor.accentsDefault.color(for: colorScheme)
-        case .lightBlue: AppColor.accentsTeal.color(for: colorScheme)
+        case .lightBlue: AppColor.accentsBlue.color(for: colorScheme)
         case .indigo: AppColor.accentsIndigo.color(for: colorScheme)
         case .purple: AppColor.accentsPurple.color(for: colorScheme)
         case .turquoise: AppColor.accentsTeal.color(for: colorScheme)

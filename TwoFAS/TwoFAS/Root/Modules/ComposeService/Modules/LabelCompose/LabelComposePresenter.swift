@@ -25,8 +25,6 @@ final class LabelComposePresenter: ObservableObject {
     @Published var title: String
     @Published var color: TintColor
 
-    let titleMaxLength = 2
-
     var isSaveEnabled: Bool {
         !title.isEmpty && (title != initialTitle || color != initialColor)
     }
@@ -56,5 +54,13 @@ extension LabelComposePresenter {
 
     func handleBack() {
         flowController.close()
+    }
+
+    func sanitize(_ value: String) -> String {
+        let filtered = value.filter { char in
+            char.isASCII || char.isLetter || char.isNumber || char.isSymbol || char.isEmoji
+        }
+        return String(filtered.prefix(ServiceRules.labelMaxLength))
+            .uppercased()
     }
 }

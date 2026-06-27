@@ -63,7 +63,7 @@ struct LabelComposeView: View {
                                 placeHolder: T.Tokens.labelCharactersTitle,
                                 text: $presenter.title,
                                 inputType: .other,
-                                keyboardType: .asciiCapable,
+                                keyboardType: .default,
                                 autocapitalization: .characters,
                                 focused: $isTitleFocused,
                                 focusValue: true
@@ -82,8 +82,9 @@ struct LabelComposeView: View {
         }
         .background(.backgroundsPrimaryElevated)
         .onChange(of: presenter.title) { _, newValue in
-            if newValue.count > presenter.titleMaxLength {
-                presenter.title = String(newValue.prefix(presenter.titleMaxLength))
+            let sanitized = presenter.sanitize(newValue)
+            if sanitized != newValue {
+                presenter.title = sanitized
             }
         }
         .onAppear {

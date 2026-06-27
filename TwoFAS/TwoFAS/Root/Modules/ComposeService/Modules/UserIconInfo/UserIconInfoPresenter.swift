@@ -17,12 +17,12 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import SwiftUI
 import Data
 
-final class UserIconInfoPresenter {
+final class UserIconInfoPresenter: ObservableObject {
     private let flowController: UserIconInfoFlowControlling
-    
+
     init(flowController: UserIconInfoFlowControlling) {
         self.flowController = flowController
     }
@@ -33,9 +33,13 @@ extension UserIconInfoPresenter {
         AppEventLog(.orderIconDiscord)
         flowController.toSocial()
     }
-    
+
     func handleShare() {
         AppEventLog(.orderIconShare)
         flowController.toShare()
+    }
+
+    func handleBack() {
+        flowController.close()
     }
 }

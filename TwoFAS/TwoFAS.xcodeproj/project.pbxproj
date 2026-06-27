@@ -820,9 +820,6 @@
 		C29626DE2370BD7F00C133BC /* TimeVerification.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C29626D62370BD7F00C133BC /* TimeVerification.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C29626E52370BE0000C133BC /* TimeVerificator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29626E42370BE0000C133BC /* TimeVerificator.swift */; };
 		C29646DC257421D2007FD35F /* ActiveEditingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29646DB257421D2007FD35F /* ActiveEditingProtocol.swift */; };
-		C296D1EA28B2D4AF001F026D /* UserIconInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D1E928B2D4AF001F026D /* UserIconInfoViewController.swift */; };
-		C296D1EC28B2D4CA001F026D /* UserIconInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D1EB28B2D4CA001F026D /* UserIconInfoPresenter.swift */; };
-		C296D1EE28B2D52C001F026D /* UserIconInfoFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D1ED28B2D52C001F026D /* UserIconInfoFlowController.swift */; };
 		C296D4D22A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D4D12A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift */; };
 		C296D4D42A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D4D32A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift */; };
 		C29803C0245EE05C0066DFE0 /* MainContainerElementsStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29803BF245EE05C0066DFE0 /* MainContainerElementsStyling.swift */; };
@@ -1122,6 +1119,9 @@
 		C2D18D702FCC685300FD6DE1 /* GetNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D18D6F2FCC67E600FD6DE1 /* GetNameView.swift */; };
 		C2D278002FE9B55F00ACB9FA /* SelectServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D277FF2FE9B55A00ACB9FA /* SelectServiceView.swift */; };
 		C2D291DC2955FC9E0084FE1E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C2D291DB2955FC9E0084FE1E /* Settings.bundle */; };
+		C2D2F7022FF0250F0008FE4D /* UserIconInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D2F7012FF0250F0008FE4D /* UserIconInfoView.swift */; };
+		C2D2F7042FF0254B0008FE4D /* UserIconInfoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D2F7032FF0254B0008FE4D /* UserIconInfoPresenter.swift */; };
+		C2D2F7062FF025570008FE4D /* UserIconInfoFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D2F7052FF025570008FE4D /* UserIconInfoFlowController.swift */; };
 		C2D39DDD28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDB28232A4E00E864E9 /* NewsEntity+CoreDataClass.swift */; };
 		C2D39DDE28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDC28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift */; };
 		C2D39DE32823302200E864E9 /* StorageRepositoryImpl+News.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DE22823302200E864E9 /* StorageRepositoryImpl+News.swift */; };
@@ -2687,9 +2687,6 @@
 		C29626E42370BE0000C133BC /* TimeVerificator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeVerificator.swift; sourceTree = "<group>"; };
 		C29626E62370C22100C133BC /* TimeVerificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeVerificationController.swift; sourceTree = "<group>"; };
 		C29646DB257421D2007FD35F /* ActiveEditingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveEditingProtocol.swift; sourceTree = "<group>"; };
-		C296D1E928B2D4AF001F026D /* UserIconInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIconInfoViewController.swift; sourceTree = "<group>"; };
-		C296D1EB28B2D4CA001F026D /* UserIconInfoPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIconInfoPresenter.swift; sourceTree = "<group>"; };
-		C296D1ED28B2D52C001F026D /* UserIconInfoFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIconInfoFlowController.swift; sourceTree = "<group>"; };
 		C296D4D12A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionNavigationFlowController.swift; sourceTree = "<group>"; };
 		C296D4D32A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionPairingNavigationFlowController.swift; sourceTree = "<group>"; };
 		C29803BF245EE05C0066DFE0 /* MainContainerElementsStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerElementsStyling.swift; sourceTree = "<group>"; };
@@ -2985,6 +2982,9 @@
 		C2D18D6F2FCC67E600FD6DE1 /* GetNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNameView.swift; sourceTree = "<group>"; };
 		C2D277FF2FE9B55A00ACB9FA /* SelectServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServiceView.swift; sourceTree = "<group>"; };
 		C2D291DB2955FC9E0084FE1E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		C2D2F7012FF0250F0008FE4D /* UserIconInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIconInfoView.swift; sourceTree = "<group>"; };
+		C2D2F7032FF0254B0008FE4D /* UserIconInfoPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIconInfoPresenter.swift; sourceTree = "<group>"; };
+		C2D2F7052FF025570008FE4D /* UserIconInfoFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIconInfoFlowController.swift; sourceTree = "<group>"; };
 		C2D316692E6648730044056F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C2D3166A2E6648730044056F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		C2D3166B2E6648E90044056F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "TwoFAS/Other/zh-Hant.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
@@ -6121,35 +6121,11 @@
 		C296D1E528B2D20D001F026D /* UserIconInfo */ = {
 			isa = PBXGroup;
 			children = (
-				C296D1E828B2D285001F026D /* Flow */,
-				C296D1E728B2D27D001F026D /* Presenter */,
-				C296D1E628B2D279001F026D /* View */,
+				C2D2F7012FF0250F0008FE4D /* UserIconInfoView.swift */,
+				C2D2F7032FF0254B0008FE4D /* UserIconInfoPresenter.swift */,
+				C2D2F7052FF025570008FE4D /* UserIconInfoFlowController.swift */,
 			);
 			path = UserIconInfo;
-			sourceTree = "<group>";
-		};
-		C296D1E628B2D279001F026D /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C296D1E928B2D4AF001F026D /* UserIconInfoViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C296D1E728B2D27D001F026D /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C296D1EB28B2D4CA001F026D /* UserIconInfoPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C296D1E828B2D285001F026D /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C296D1ED28B2D52C001F026D /* UserIconInfoFlowController.swift */,
-			);
-			path = Flow;
 			sourceTree = "<group>";
 		};
 		C297DF1B2ADD6D65004C272C /* Token */ = {
@@ -9237,7 +9213,6 @@
 				C213478C2D9885CB00D325F6 /* EncryptedByUserPasswordSyncModuleInteractor.swift in Sources */,
 				C2C56D4A27C99314003B4C43 /* ComposeServiceAdvancedSummaryFlowController.swift in Sources */,
 				C245702228A04BAB008E99F4 /* GridViewGAImportViewController.swift in Sources */,
-				C296D1EC28B2D4CA001F026D /* UserIconInfoPresenter.swift in Sources */,
 				C28FC6E02E4011580053B0BE /* TransferModuleInteractor.swift in Sources */,
 				C2CC0A3E29D0603000677A7B /* TransferPresenter+Menu.swift in Sources */,
 				C25371A2281DCF56005FB118 /* UINavigationController+.swift in Sources */,
@@ -9255,6 +9230,7 @@
 				C2BDC6C31FC1AC0A00967D0E /* RootViewController.swift in Sources */,
 				C2F9D60A2A1FEC700085B65A /* TokensRevealButton.swift in Sources */,
 				C27A54A827F0F3C700321D2B /* BrowserExtensionPairingPlainFlowController.swift in Sources */,
+				C2D2F7022FF0250F0008FE4D /* UserIconInfoView.swift in Sources */,
 				C2BDC6D51FC1CBE100967D0E /* Theme.swift in Sources */,
 				C20629FC2AF98684003BFC21 /* LoginFlowController.swift in Sources */,
 				C2872DDA27A6B9C2000F5AE9 /* SortType+.swift in Sources */,
@@ -9394,7 +9370,6 @@
 				C240484A2765218C0076376E /* WidgetWarningPresenter.swift in Sources */,
 				C2F5F9E328611D6200F778E1 /* BrowserExtensionPairingAlreadyPairedFlowController.swift in Sources */,
 				C28356232897098300421882 /* SelectFromGalleryAdvice.swift in Sources */,
-				C296D1EE28B2D52C001F026D /* UserIconInfoFlowController.swift in Sources */,
 				C228603226697250005E88E3 /* TokensSection.swift in Sources */,
 				C2823B1626F3E84F00583586 /* RevealPasswordInput.swift in Sources */,
 				C26764B22872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift in Sources */,
@@ -9573,6 +9548,7 @@
 				C2DDEB25289F3D5200011712 /* TokensViewEmptyListScreen.swift in Sources */,
 				C2A496AD2FB4F74E004EAFBA /* PINWelcomeFooter.swift in Sources */,
 				C26D4F542A856F590025E5BA /* AddingServiceTokenPresenter.swift in Sources */,
+				C2D2F7042FF0254B0008FE4D /* UserIconInfoPresenter.swift in Sources */,
 				C2C02244297F224700D596A8 /* MainModuleInteractor.swift in Sources */,
 				C24590FA280F54400079C21C /* SelectServiceModels.swift in Sources */,
 				C274BDC42769425900EE28BC /* AppSecurityPresenter+Menu.swift in Sources */,
@@ -9699,7 +9675,6 @@
 				C2A7946227F9072800E5C641 /* BrowserExtensionServicePresenter+Menu.swift in Sources */,
 				C27A1EB529127C8D00702DB9 /* AlertController+Ready.swift in Sources */,
 				C21C38A21FE30E62000EC252 /* LimitedTextField.swift in Sources */,
-				C296D1EA28B2D4AF001F026D /* UserIconInfoViewController.swift in Sources */,
 				C2A4C8372A11141D00AFD67C /* TokensNextTokenView.swift in Sources */,
 				C2BE80582811DF03009CBC4A /* AuthRequestsPresenter.swift in Sources */,
 				C274BDC2276941FB00EE28BC /* AppSecurityPresenter.swift in Sources */,
@@ -9731,6 +9706,7 @@
 				C2CD687325FEC94400EFEFCF /* FormLine.swift in Sources */,
 				C2C93FA12603F87100E10981 /* MainContainerDecoratedVerticalContainer.swift in Sources */,
 				C2FA3E8C280B628D0097ED71 /* AuthRequestsModuleInteractor.swift in Sources */,
+				C2D2F7062FF025570008FE4D /* UserIconInfoFlowController.swift in Sources */,
 				C26764AE287246F300D468B2 /* ComposeServiceCategorySelectionModuleInteractor.swift in Sources */,
 				C20524C32807620500B2B20C /* NavigationBarHiddenHostingController.swift in Sources */,
 				C23185642EC648E300DD1ABE /* BackupSetPasswordFlowController.swift in Sources */,

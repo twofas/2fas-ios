@@ -132,7 +132,7 @@ private struct SelectServiceRow: View {
     var body: some View {
         VStack(spacing: .zero) {
             HStack(spacing: .L) {
-                AddingServiceIcon(icon: cell.icon, showBackground: false)
+                ServiceIconView(icon: cell.icon, showBackground: false)
                 VStack(alignment: .leading, spacing: .SM) {
                     AddingServiceTitleView(text: cell.title)
                     if let subtitle = cell.subtitle, !subtitle.isEmpty {

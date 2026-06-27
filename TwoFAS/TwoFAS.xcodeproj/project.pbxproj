@@ -1172,7 +1172,7 @@
 		C2E5248B2FD3348A00C5E875 /* IconDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248A2FD3347400C5E875 /* IconDetails.swift */; };
 		C2E5248C2FD3348A00C5E875 /* IconDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248A2FD3347400C5E875 /* IconDetails.swift */; };
 		C2E5248E2FD337AB00C5E875 /* AddingServiceHOTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248D2FD3379F00C5E875 /* AddingServiceHOTPView.swift */; };
-		C2E524902FD33D7E00C5E875 /* AddingServiceIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248F2FD33D7400C5E875 /* AddingServiceIcon.swift */; };
+		C2E524902FD33D7E00C5E875 /* ServiceIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248F2FD33D7400C5E875 /* ServiceIconView.swift */; };
 		C2E53AC82B62DD6C008E1E70 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = C2E53AC72B62DD6C008E1E70 /* Common.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2E53ACB2B62DD6C008E1E70 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E53AC52B62DD6C008E1E70 /* Common.framework */; };
 		C2E53ACC2B62DD6C008E1E70 /* Common.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C2E53AC52B62DD6C008E1E70 /* Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -3055,7 +3055,7 @@
 		C2E520662FD2F65600C5E875 /* Icons+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Icons+.swift"; sourceTree = "<group>"; };
 		C2E5248A2FD3347400C5E875 /* IconDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconDetails.swift; sourceTree = "<group>"; };
 		C2E5248D2FD3379F00C5E875 /* AddingServiceHOTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceHOTPView.swift; sourceTree = "<group>"; };
-		C2E5248F2FD33D7400C5E875 /* AddingServiceIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceIcon.swift; sourceTree = "<group>"; };
+		C2E5248F2FD33D7400C5E875 /* ServiceIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceIconView.swift; sourceTree = "<group>"; };
 		C2E53AC52B62DD6C008E1E70 /* Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2E53AC72B62DD6C008E1E70 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		C2E53AD22B62DDAF008E1E70 /* ServiceRules.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceRules.swift; sourceTree = "<group>"; };
@@ -4231,7 +4231,6 @@
 		C21EB2EF2A7FD73D00FA8AA1 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				C2E5248F2FD33D7400C5E875 /* AddingServiceIcon.swift */,
 				C2E5248D2FD3379F00C5E875 /* AddingServiceHOTPView.swift */,
 				C21EB2ED2A7FC55800FA8AA1 /* AddingServiceMetrics.swift */,
 				C21EB2F02A7FD77000FA8AA1 /* AddingServiceTitleView.swift */,
@@ -6063,6 +6062,7 @@
 		C295AF8D2FD1F6B2000DF064 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				C2E5248F2FD33D7400C5E875 /* ServiceIconView.swift */,
 				C29CF8E72FA7A6DD0058E3A0 /* ScrollPagingView.swift */,
 				C28AF2D22FD5D28F0036DB9F /* TFTitleView.swift */,
 				C295AF512FD1DA07000DF064 /* AdaptiveReadableContainer.swift */,
@@ -9244,7 +9244,7 @@
 				C2E3D55927D94ECB0050AF48 /* BrowserExtensionIntroView.swift in Sources */,
 				C2AD653727F26139008997DB /* BrowserExtensionPairingSuccessFlowController.swift in Sources */,
 				C2248BB12277935200AC231C /* GridViewState.swift in Sources */,
-				C2E524902FD33D7E00C5E875 /* AddingServiceIcon.swift in Sources */,
+				C2E524902FD33D7E00C5E875 /* ServiceIconView.swift in Sources */,
 				C25E898E2663DF9700A60CE5 /* TokensSectionHeader.swift in Sources */,
 				C2AB92C227664B9200698382 /* PINKeyboardPresenter.swift in Sources */,
 				C263F45E29901C4F009B0837 /* MainSplitFlowController.swift in Sources */,

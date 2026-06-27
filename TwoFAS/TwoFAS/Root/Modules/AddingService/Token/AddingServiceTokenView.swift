@@ -46,7 +46,7 @@ struct AddingServiceTokenView: View {
     @ViewBuilder
     private func tokenView() -> some View {
         HStack(spacing: .L) {
-            AddingServiceIcon(icon: presenter.serviceIcon)
+            ServiceIconView(icon: presenter.serviceIcon)
             VStack(alignment: .leading, spacing: .SM) {
                 AddingServiceTitleView(text: presenter.serviceName)
                 AddingServiceTokenValueView(text: $presenter.token, willChangeSoon: $presenter.willChangeSoon)

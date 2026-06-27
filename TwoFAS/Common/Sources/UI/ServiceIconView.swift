@@ -20,22 +20,22 @@
 import SwiftUI
 import Common
 
-struct AddingServiceIcon: View {
+public struct ServiceIconView: View {
     @Environment(\.colorScheme)
     private var colorScheme
     
     private let circleSize: CGFloat = 52
     private let iconSize: CGFloat = 32
     
-    let icon: IconDetails
-    let showBackground: Bool
+    public let icon: IconDetails
+    public let showBackground: Bool
     
-    init(icon: IconDetails, showBackground: Bool = true) {
+    public init(icon: IconDetails, showBackground: Bool = true) {
         self.icon = icon
         self.showBackground = showBackground
     }
     
-    var body: some View {
+    public var body: some View {
         ZStack {
             switch icon {
             case .brand:
@@ -58,6 +58,17 @@ struct AddingServiceIcon: View {
                 Circle()
                     .frame(width: circleSize, height: circleSize)
                     .foregroundStyle(tintColor.color(for: colorScheme))
+                    .overlay {
+                        LinearGradient(
+                            stops: [
+                                Gradient.Stop(color: .black.opacity(0), location: 0.00),
+                                Gradient.Stop(color: .black.opacity(0.1), location: 1.00)
+                            ],
+                            startPoint: UnitPoint(x: 0.5, y: 0),
+                            endPoint: UnitPoint(x: 0.5, y: 1)
+                        )
+                        .clipShape(Circle())
+                    }
                 Text(title)
                     .textStyle(.title3)
                     .multilineTextAlignment(.center)

@@ -17,9 +17,9 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
-import Common
 import UIKit
+import SwiftUI
+import Common
 
 protocol LabelComposeFlowControllerParent: AnyObject {
     func labelComposeSave(title: String, color: TintColor)
@@ -27,10 +27,12 @@ protocol LabelComposeFlowControllerParent: AnyObject {
 
 protocol LabelComposeFlowControlling: AnyObject {
     func toSave(title: String, color: TintColor)
+    func close()
 }
 
 final class LabelComposeFlowController: FlowController {
     private weak var parent: LabelComposeFlowControllerParent?
+    private weak var navigationController: UINavigationController?
 
     static func present(
         title: String,
@@ -38,24 +40,30 @@ final class LabelComposeFlowController: FlowController {
         on navigationController: UINavigationController,
         parent: LabelComposeFlowControllerParent
     ) {
-        let view = LabelComposeViewController()
-        let flowController = LabelComposeFlowController(viewController: view)
+        let hostingController = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = LabelComposeFlowController(viewController: hostingController)
         flowController.parent = parent
-        
+        flowController.navigationController = navigationController
+
         let presenter = LabelComposePresenter(
             flowController: flowController,
             title: title,
             color: color
         )
-        view.presenter = presenter
-        presenter.view = view
-        
-        navigationController.pushViewController(view, animated: true)
+
+        hostingController.rootView = AnyView(LabelComposeView(presenter: presenter))
+        hostingController.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+
+        navigationController.pushViewController(hostingController, animated: true)
     }
 }
 
 extension LabelComposeFlowController: LabelComposeFlowControlling {
     func toSave(title: String, color: TintColor) {
         parent?.labelComposeSave(title: title, color: color)
-    }    
+    }
+
+    func close() {
+        navigationController?.popViewController(animated: true)
+    }
 }

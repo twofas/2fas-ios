@@ -17,64 +17,44 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import SwiftUI
 import Common
 import Data
 
-final class LabelComposePresenter {
-    weak var view: LabelComposeViewControlling?
-    
+final class LabelComposePresenter: ObservableObject {
+    @Published var title: String
+    @Published var color: TintColor
+
+    let titleMaxLength = 2
+
+    var isSaveEnabled: Bool {
+        !title.isEmpty && (title != initialTitle || color != initialColor)
+    }
+
+    private let initialTitle: String
+    private let initialColor: TintColor
     private let flowController: LabelComposeFlowControlling
-    
-    private var activeSet = false
-    
-    private var title: String
-    private var color: TintColor
-    
+
     init(flowController: LabelComposeFlowControlling, title: String, color: TintColor) {
         self.flowController = flowController
         self.title = title
         self.color = color
+        self.initialTitle = title
+        self.initialColor = color
     }
 }
 
 extension LabelComposePresenter {
-    func viewWillAppear() {
-        view?.setTitle(title)
-        view?.setColor(color)
-        view?.setInitialColor(color)
-        updateSaveButtonState()
-    }
-    
-    func viewDidLayoutSubviews() {
-        guard !activeSet else { return }
-        activeSet = true
-        view?.scrollToActiveColor()
-    }
-    
     func handleSave() {
         AppEventLog(.codeDetailsLabelSet)
         flowController.toSave(title: title, color: color)
     }
-    
+
     func handleSetColor(_ color: TintColor) {
         self.color = color
-        view?.setColor(color)
     }
-    
-    func handleSetTitle(_ title: String) {
-        self.title = title
-        updateSaveButtonState()
-        view?.updateTitle(title)
-    }
-}
 
-private extension LabelComposePresenter {
-    func updateSaveButtonState() {
-        if title.isEmpty {
-            view?.disableSaveButton()
-        } else {
-            view?.enableSaveButton()
-        }
+    func handleBack() {
+        flowController.close()
     }
 }

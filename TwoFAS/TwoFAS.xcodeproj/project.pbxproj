@@ -257,6 +257,7 @@
 		C2379D1026B6DF720010C6B1 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE31269E274700506ACF /* IntentsUI.framework */; };
 		C23827692B7D3BE1005DD234 /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E7C3822ADB19F300478D89 /* Data.framework */; };
 		C239DE9026CC5366002301E2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C239DE8F26CC5366002301E2 /* Localizable.strings */; };
+		C239DEA62FEEB7B3007C75A3 /* IconSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C239DEA52FEEB7B3007C75A3 /* IconSelectorView.swift */; };
 		C23B33F12A48DF6A0014B804 /* ImporterOpenFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */; };
 		C23B899527C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B899427C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift */; };
 		C23B899727C287480028FE34 /* NavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23B899627C287480028FE34 /* NavigationFlowController.swift */; };
@@ -272,9 +273,6 @@
 		C23FD51228146E2E00E4E9C5 /* ComposeServiceWebExtensionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23FD51128146E2E00E4E9C5 /* ComposeServiceWebExtensionPresenter.swift */; };
 		C23FD51428146FAB00E4E9C5 /* ComposeServiceWebExtensionPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23FD51328146FAB00E4E9C5 /* ComposeServiceWebExtensionPresenter+Menu.swift */; };
 		C23FD51628148F9A00E4E9C5 /* ComposeServiceWebExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23FD51528148F9A00E4E9C5 /* ComposeServiceWebExtensionViewController.swift */; };
-		C240186F2618685500800DBF /* IconSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240186E2618685500800DBF /* IconSelectorViewController.swift */; };
-		C240188D2618740200800DBF /* IconSelectorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240188C2618740200800DBF /* IconSelectorCollectionViewCell.swift */; };
-		C240189C26187BEE00800DBF /* IconSelectorHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240189B26187BEE00800DBF /* IconSelectorHeaderReusableView.swift */; };
 		C24018AB26188E2800800DBF /* RingMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24018AA26188E2800800DBF /* RingMask.swift */; };
 		C24018BA2618BCF300800DBF /* CommonSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24018B92618BCF300800DBF /* CommonSearchController.swift */; };
 		C24018C92618DE8100800DBF /* ComposeServiceIconTypeSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24018C82618DE8100800DBF /* ComposeServiceIconTypeSelection.swift */; };
@@ -406,7 +404,6 @@
 		C25BB2CA2DAAE35000BEC626 /* ManageWatchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BB2C92DAAE34C00BEC626 /* ManageWatchPresenter.swift */; };
 		C25BB2CC2DAAE3FF00BEC626 /* ManageWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BB2CB2DAAE3E500BEC626 /* ManageWatchView.swift */; };
 		C25BB2CE2DAAE45700BEC626 /* ManageWatchModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BB2CD2DAAE44C00BEC626 /* ManageWatchModuleInteractor.swift */; };
-		C25BDA0A27B59DB700514161 /* IconSelectorViewController+CollectionViewCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BDA0927B59DB700514161 /* IconSelectorViewController+CollectionViewCellHandling.swift */; };
 		C25C661428BADAB0008EC66A /* AboutFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C661328BADAB0008EC66A /* AboutFlowController.swift */; };
 		C25C91CF2B08E84800E58729 /* AddingServiceManuallyNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C91CE2B08E84800E58729 /* AddingServiceManuallyNavigationFlowController.swift */; };
 		C25C91D52B0A632500E58729 /* IntroductionNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25C91D42B0A632500E58729 /* IntroductionNavigationFlowController.swift */; };
@@ -969,7 +966,6 @@
 		C2AF24822E7C5FBB001475AF /* ExportQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AF24802E7C5FBB001475AF /* ExportQuestionView.swift */; };
 		C2AF24832E7C5FBB001475AF /* ExportQuestionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AF247F2E7C5FBB001475AF /* ExportQuestionPresenter.swift */; };
 		C2AF24842E7C5FBB001475AF /* ExportQuestionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AF247D2E7C5FBB001475AF /* ExportQuestionFlowController.swift */; };
-		C2AF5F7D28B18CCC00A30DCF /* IconSelectorCollectionViewDelegatee.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AF5F7C28B18CCC00A30DCF /* IconSelectorCollectionViewDelegatee.swift */; };
 		C2B0779D292A35730074517F /* UUIDGroupInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B0779C292A35730074517F /* UUIDGroupInput.swift */; };
 		C2B077A1292A75320074517F /* UploadLogsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077A0292A75320074517F /* UploadLogsPresenter.swift */; };
 		C2B077A4292A75810074517F /* UploadLogsModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077A3292A75810074517F /* UploadLogsModuleInteractor.swift */; };
@@ -1457,7 +1453,6 @@
 		C2FBF1302A7EBCCB00CA80CE /* AddingServiceCameraViewport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FBF12F2A7EBCCB00CA80CE /* AddingServiceCameraViewport.swift */; };
 		C2FC422123AA902700320ABE /* PresentableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FC422023AA902700320ABE /* PresentableType.swift */; };
 		C2FC422323AA960400320ABE /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FC422223AA960400320ABE /* Module.swift */; };
-		C2FC4CE828AC461000AA6A79 /* IconSelectorOrderIconReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FC4CE728AC461000AA6A79 /* IconSelectorOrderIconReusableView.swift */; };
 		C2FCB29028258B3A00AF8A37 /* NewsPlainFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FCB28F28258B3A00AF8A37 /* NewsPlainFlowController.swift */; };
 		C2FDAE901FD0B42B004BABE4 /* NotificationStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FDAE8F1FD0B42B004BABE4 /* NotificationStateProtocol.swift */; };
 		C2FDEE54279C8F39002CAB9E /* CameraGoogleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FDEE53279C8F39002CAB9E /* CameraGoogleAuth.swift */; };
@@ -2248,6 +2243,7 @@
 		C23736A12AC09D0E00792054 /* GuideSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorViewController.swift; sourceTree = "<group>"; };
 		C23736A32AC09DB200792054 /* GuideSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorView.swift; sourceTree = "<group>"; };
 		C239DE8F26CC5366002301E2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		C239DEA52FEEB7B3007C75A3 /* IconSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorView.swift; sourceTree = "<group>"; };
 		C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileViewController.swift; sourceTree = "<group>"; };
 		C23B899427C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceNavigationFlowController.swift; sourceTree = "<group>"; };
 		C23B899627C287480028FE34 /* NavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationFlowController.swift; sourceTree = "<group>"; };
@@ -2262,9 +2258,6 @@
 		C23FD51128146E2E00E4E9C5 /* ComposeServiceWebExtensionPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionPresenter.swift; sourceTree = "<group>"; };
 		C23FD51328146FAB00E4E9C5 /* ComposeServiceWebExtensionPresenter+Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeServiceWebExtensionPresenter+Menu.swift"; sourceTree = "<group>"; };
 		C23FD51528148F9A00E4E9C5 /* ComposeServiceWebExtensionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionViewController.swift; sourceTree = "<group>"; };
-		C240186E2618685500800DBF /* IconSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorViewController.swift; sourceTree = "<group>"; };
-		C240188C2618740200800DBF /* IconSelectorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorCollectionViewCell.swift; sourceTree = "<group>"; };
-		C240189B26187BEE00800DBF /* IconSelectorHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorHeaderReusableView.swift; sourceTree = "<group>"; };
 		C24018AA26188E2800800DBF /* RingMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingMask.swift; sourceTree = "<group>"; };
 		C24018B92618BCF300800DBF /* CommonSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSearchController.swift; sourceTree = "<group>"; };
 		C24018C82618DE8100800DBF /* ComposeServiceIconTypeSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceIconTypeSelection.swift; sourceTree = "<group>"; };
@@ -2411,7 +2404,6 @@
 		C25BB2C92DAAE34C00BEC626 /* ManageWatchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchPresenter.swift; sourceTree = "<group>"; };
 		C25BB2CB2DAAE3E500BEC626 /* ManageWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchView.swift; sourceTree = "<group>"; };
 		C25BB2CD2DAAE44C00BEC626 /* ManageWatchModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchModuleInteractor.swift; sourceTree = "<group>"; };
-		C25BDA0927B59DB700514161 /* IconSelectorViewController+CollectionViewCellHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IconSelectorViewController+CollectionViewCellHandling.swift"; sourceTree = "<group>"; };
 		C25C318C2881BC5A002C9044 /* NotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationInteractor.swift; sourceTree = "<group>"; };
 		C25C318E2881CDA4002C9044 /* LinkInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkInteractor.swift; sourceTree = "<group>"; };
 		C25C661328BADAB0008EC66A /* AboutFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutFlowController.swift; sourceTree = "<group>"; };
@@ -2814,7 +2806,6 @@
 		C2AF247D2E7C5FBB001475AF /* ExportQuestionFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportQuestionFlowController.swift; sourceTree = "<group>"; };
 		C2AF247F2E7C5FBB001475AF /* ExportQuestionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportQuestionPresenter.swift; sourceTree = "<group>"; };
 		C2AF24802E7C5FBB001475AF /* ExportQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportQuestionView.swift; sourceTree = "<group>"; };
-		C2AF5F7C28B18CCC00A30DCF /* IconSelectorCollectionViewDelegatee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorCollectionViewDelegatee.swift; sourceTree = "<group>"; };
 		C2B0779C292A35730074517F /* UUIDGroupInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDGroupInput.swift; sourceTree = "<group>"; };
 		C2B077A0292A75320074517F /* UploadLogsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogsPresenter.swift; sourceTree = "<group>"; };
 		C2B077A3292A75810074517F /* UploadLogsModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogsModuleInteractor.swift; sourceTree = "<group>"; };
@@ -3236,7 +3227,6 @@
 		C2FBF12F2A7EBCCB00CA80CE /* AddingServiceCameraViewport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceCameraViewport.swift; sourceTree = "<group>"; };
 		C2FC422023AA902700320ABE /* PresentableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableType.swift; sourceTree = "<group>"; };
 		C2FC422223AA960400320ABE /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
-		C2FC4CE728AC461000AA6A79 /* IconSelectorOrderIconReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorOrderIconReusableView.swift; sourceTree = "<group>"; };
 		C2FCB28F28258B3A00AF8A37 /* NewsPlainFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsPlainFlowController.swift; sourceTree = "<group>"; };
 		C2FDAE8F1FD0B42B004BABE4 /* NotificationStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStateProtocol.swift; sourceTree = "<group>"; };
 		C2FDC8B329B5379A00623145 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/TwoFASWidget.strings"; sourceTree = "<group>"; };
@@ -7488,58 +7478,13 @@
 		C2E2C80227B0303F00F04B70 /* IconSelector */ = {
 			isa = PBXGroup;
 			children = (
-				C2E2C80627B0309300F04B70 /* Flow */,
-				C2E2C80527B0308C00F04B70 /* Interactor */,
-				C2E2C80427B0308300F04B70 /* Presenter */,
-				C2E2C80327B0307D00F04B70 /* View */,
-			);
-			path = IconSelector;
-			sourceTree = "<group>";
-		};
-		C2E2C80327B0307D00F04B70 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C240186E2618685500800DBF /* IconSelectorViewController.swift */,
-				C25BDA0927B59DB700514161 /* IconSelectorViewController+CollectionViewCellHandling.swift */,
-				C2AF5F7C28B18CCC00A30DCF /* IconSelectorCollectionViewDelegatee.swift */,
-				C2E2C80727B0343200F04B70 /* Subviews */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2E2C80427B0308300F04B70 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
+				C2E2C80827B0377B00F04B70 /* IconSelectorFlowController.swift */,
+				C2E2C80A27B038DC00F04B70 /* IconSelectorModuleInteractor.swift */,
 				C2E2C80C27B0392D00F04B70 /* IconSelectorPresenter.swift */,
 				C2FF3EEB27B1CF0100642FA4 /* IconSelectorModels.swift */,
+				C239DEA52FEEB7B3007C75A3 /* IconSelectorView.swift */,
 			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2E2C80527B0308C00F04B70 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2E2C80A27B038DC00F04B70 /* IconSelectorModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2E2C80627B0309300F04B70 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2E2C80827B0377B00F04B70 /* IconSelectorFlowController.swift */,
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
-		C2E2C80727B0343200F04B70 /* Subviews */ = {
-			isa = PBXGroup;
-			children = (
-				C240188C2618740200800DBF /* IconSelectorCollectionViewCell.swift */,
-				C240189B26187BEE00800DBF /* IconSelectorHeaderReusableView.swift */,
-				C2FC4CE728AC461000AA6A79 /* IconSelectorOrderIconReusableView.swift */,
-			);
-			path = Subviews;
+			path = IconSelector;
 			sourceTree = "<group>";
 		};
 		C2E2C81227B0701100F04B70 /* CollectionView */ = {
@@ -9255,7 +9200,6 @@
 		C236666F1FB2644900989ACA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
-				C2FC4CE828AC461000AA6A79 /* IconSelectorOrderIconReusableView.swift in Sources */,
 				C2CC0A4029D067EF00677A7B /* TransferFlowController.swift in Sources */,
 				C21111EA274ABA4300CA7C78 /* SettingsPresenter.swift in Sources */,
 				C27A54AA27F0FAC500321D2B /* BrowserExtensionPairingModuleInteractor.swift in Sources */,
@@ -9432,7 +9376,6 @@
 				C245702428A04CBA008E99F4 /* GridViewGAImportPresenter.swift in Sources */,
 				C2A74FC82610CBAF007E5AB3 /* ColorPickerButtonWithName.swift in Sources */,
 				C2C56D4027C98140003B4C43 /* ComposeServiceAdvancedSummaryViewController.swift in Sources */,
-				C2AF5F7D28B18CCC00A30DCF /* IconSelectorCollectionViewDelegatee.swift in Sources */,
 				C2147CE5205D7B790001D011 /* PINPadKey.swift in Sources */,
 				C23185662EC648E900DD1ABE /* BackupSetPasswordPresenter.swift in Sources */,
 				C26764AC287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift in Sources */,
@@ -9471,7 +9414,6 @@
 				C287D4FB276A92460001B272 /* AppSecurityExtensions.swift in Sources */,
 				C2CC0A4C29D0D4FC00677A7B /* ExternalImportService.swift in Sources */,
 				C244718825F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift in Sources */,
-				C25BDA0A27B59DB700514161 /* IconSelectorViewController+CollectionViewCellHandling.swift in Sources */,
 				C2BDC6D61FC1CBE100967D0E /* UIView+Extensions.swift in Sources */,
 				C2AB92BB27662CC800698382 /* ExporterPasswordProtectionFlowController.swift in Sources */,
 				C248DDAD2B799BB8004712E3 /* CopyTokenAppIntent.swift in Sources */,
@@ -9563,7 +9505,6 @@
 				C287D4FF276A9B5C0001B272 /* AppSecurityViewController.swift in Sources */,
 				C2AD653127F258B3008997DB /* BrowserExtensionFailureFlowController.swift in Sources */,
 				C248B14D2AC4C01600E6B897 /* GuidePagesFlowController.swift in Sources */,
-				C240188D2618740200800DBF /* IconSelectorCollectionViewCell.swift in Sources */,
 				C21347842D98789900D325F6 /* EncryptedByUserPasswordSyncPresenter.swift in Sources */,
 				C24590F8280F52620079C21C /* SelectServicePresenter.swift in Sources */,
 				C2340CB227BC4C6500746676 /* ComposeServiceViewController+TableCellHandling.swift in Sources */,
@@ -9593,7 +9534,6 @@
 				C27205642E7C9765004FB39A /* ExportQuestionType.swift in Sources */,
 				C2F9E15F2D983938004B7DFA /* SyncMigrationToNewestVersionPresenter.swift in Sources */,
 				C2AC220C276618AD00271402 /* ExporterMainScreenFlowController.swift in Sources */,
-				C240186F2618685500800DBF /* IconSelectorViewController.swift in Sources */,
 				C237369E2AC09ABE00792054 /* GuideSelectorModuleInteractor.swift in Sources */,
 				C2A4C83B2A11736200AFD67C /* TokensCircleProgress.swift in Sources */,
 				C21EB2EE2A7FC55800FA8AA1 /* AddingServiceMetrics.swift in Sources */,
@@ -9609,6 +9549,7 @@
 				C2AD653527F25F24008997DB /* BrowserExtensionFailedViewController.swift in Sources */,
 				C2508E152753AAFD0072C564 /* SettingsMenuModuleInteractor.swift in Sources */,
 				C2F6BB08264886B7002A9747 /* IntroductionPresenter.swift in Sources */,
+				C239DEA62FEEB7B3007C75A3 /* IconSelectorView.swift in Sources */,
 				C27A54A127F0CAFC00321D2B /* BrowserExtensionIntroFlowController.swift in Sources */,
 				C2625F8E28BB858600D84C5C /* AboutPresenter.swift in Sources */,
 				C207324929F724AB00FB294E /* TokensAdditionalInfo.swift in Sources */,
@@ -9704,7 +9645,6 @@
 				C23666771FB2644900989ACA /* AppDelegate.swift in Sources */,
 				C21E0B3E2299F2190063EE7C /* UIDevice+.swift in Sources */,
 				C23736A02AC09AF100792054 /* GuideSelectorPresenter.swift in Sources */,
-				C240189C26187BEE00800DBF /* IconSelectorHeaderReusableView.swift in Sources */,
 				C27C03C127F4FF010020DB5E /* BrowserExtensionMainPresenter.swift in Sources */,
 				C2C56D3927C96743003B4C43 /* ComposeServiceAdvancedSettings.swift in Sources */,
 				C272055C2E7C9113004FB39A /* ExportQuestionPINVerificationViewController.swift in Sources */,

@@ -20,14 +20,18 @@
 import UIKit
 import Common
 
-struct IconSelectorSection: CollectionViewSection {
+struct IconSelectorSection: Hashable, Identifiable {
+    var id: String { title }
+    
     let title: String
     var cells: [IconSelectorCell]
 }
 
-struct IconSelectorCell: Hashable {
+struct IconSelectorCell: Hashable, Identifiable {
     let icon: UIImage
     let title: String
     let iconTypeID: IconTypeID
     let showTitle: Bool
+
+    var id: IconTypeID { iconTypeID }
 }

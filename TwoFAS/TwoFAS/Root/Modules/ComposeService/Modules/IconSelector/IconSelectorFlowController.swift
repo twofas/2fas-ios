@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 import Data
 
@@ -27,8 +28,9 @@ protocol IconSelectorFlowControllerParent: AnyObject {
 
 protocol IconSelectorFlowControlling: AnyObject {
     func toSelection(iconTypeID: IconTypeID)
-    func toOrderIcon(sourceView: UIView)
-    func toUserIconInfo()
+    func toUserIcon()
+    func toCompanyIcon()
+    func close()
 }
 
 final class IconSelectorFlowController: FlowController {
@@ -42,24 +44,26 @@ final class IconSelectorFlowController: FlowController {
         parent: IconSelectorFlowControllerParent,
         animated: Bool
     ) {
-        let view = IconSelectorViewController()
-        let flowController = IconSelectorFlowController(viewController: view)
-        flowController.parent = parent
-        
         let interactor = ModuleInteractorFactory.shared.iconSelectorModuleInteractor(
             defaultIcon: defaultIcon,
             selectedIcon: selectedIcon
         )
+
+        let hostingController = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = IconSelectorFlowController(viewController: hostingController)
+        flowController.parent = parent
+        flowController.navigationController = navigationController
+
         let presenter = IconSelectorPresenter(
             flowController: flowController,
-            interactor: interactor
+            interactor: interactor,
+            selectedIconTypeID: selectedIcon
         )
-        view.presenter = presenter
-        presenter.view = view
-        
-        flowController.navigationController = navigationController
-        
-        navigationController.pushViewController(view, animated: animated)
+
+        hostingController.rootView = AnyView(IconSelectorView(presenter: presenter))
+        hostingController.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+
+        navigationController.pushViewController(hostingController, animated: animated)
     }
 }
 
@@ -67,44 +71,26 @@ extension IconSelectorFlowController: IconSelectorFlowControlling {
     func toSelection(iconTypeID: IconTypeID) {
         parent?.iconSelectorDidSelect(iconTypeID: iconTypeID)
     }
-    
-    func toOrderIcon(sourceView: UIView) {
+
+    func toUserIcon() {
         AppEventLog(.orderIconClick)
-        
-        let actionSheet = UIAlertController(title: T.Tokens.orderMenuTitle, message: nil, preferredStyle: .actionSheet)
-        if let popover = actionSheet.popoverPresentationController {
-            popover.sourceView = sourceView
-        }
-        let cancelActionButton = UIAlertAction(title: T.Commons.cancel, style: .cancel, handler: nil)
-        actionSheet.addAction(cancelActionButton)
-
-        let user = UIAlertAction(title: T.Tokens.orderMenuOptionUser, style: .default) { [weak self] _ in
-            AppEventLog(.orderIconAsUser)
-            self?.toUserIconInfo()
-        }
-        user.setValue(Asset.iconRequestUser.image, forKey: "image")
-        user.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-        actionSheet.addAction(user)
-        
-        let company = UIAlertAction(title: T.Tokens.orderMenuOptionCompany, style: .default) { _ in
-            AppEventLog(.orderIconAsCompany)
-            UIApplication.shared.open(
-                URL(string: "https://2fas.com/your-branding/")!,
-                options: [:],
-                completionHandler: nil
-            )
-        }
-        company.setValue(Asset.iconRequestCompany.image, forKey: "image")
-        company.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-        actionSheet.addAction(company)
-
-        actionSheet.view.tintColor = Theme.Colors.Icon.theme
-        _viewController.present(actionSheet, animated: true, completion: nil)
-    }
-    
-    func toUserIconInfo() {
+        AppEventLog(.orderIconAsUser)
         guard let navigationController else { return }
         UserIconInfoFlowController.push(on: navigationController, parent: self)
+    }
+
+    func toCompanyIcon() {
+        AppEventLog(.orderIconClick)
+        AppEventLog(.orderIconAsCompany)
+        UIApplication.shared.open(
+            URL(string: "https://2fas.com/your-branding/")!,
+            options: [:],
+            completionHandler: nil
+        )
+    }
+
+    func close() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

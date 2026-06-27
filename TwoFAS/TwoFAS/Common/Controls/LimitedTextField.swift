@@ -27,7 +27,6 @@ class LimitedTextField: UITextField, UITextFieldDelegate {
         case email
         case number
         case key
-        case label
         case password
     }
     // swiftlint:enable discouraged_none_name
@@ -124,17 +123,6 @@ class LimitedTextField: UITextField, UITextFieldDelegate {
             } else {
                 return string.isBackspace
             }
-        case .label:
-            let s = string.uppercased()
-            
-            if s.isValidLabel {
-                text = (text ?? "") + s
-                sendActions(for: .editingChanged)
-                textDidChange(newString: (text ?? ""))
-                return false
-            } else {
-                return string.isBackspace
-            }
         default:
             textDidChange(newString: newString as String)
         }
@@ -196,13 +184,6 @@ class LimitedTextField: UITextField, UITextFieldDelegate {
             canPaste = true
             shouldUppercase = true
             keyboardType = .asciiCapable
-        case .label:
-            maxLengthOfText = ServiceRules.labelMaxLength
-            returnKeyType = .done
-            autocapitalizationType = .allCharacters
-            canPaste = false
-            shouldUppercase = true
-            keyboardType = .default
         case .password:
             autocapitalizationType = .none
             canPaste = true

@@ -23,15 +23,10 @@ import Common
 struct LabelComposeView: View {
     @ObservedObject
     var presenter: LabelComposePresenter
-    
-    @Environment(\.colorScheme)
-    private var colorScheme: ColorScheme
-    
+
     @FocusState
     private var isTitleFocused: Bool?
-    
-    private let circleSize: CGFloat = 20
-    
+
     var body: some View {
         VStack(alignment: .center, spacing: .zero) {
             ZStack {
@@ -72,7 +67,10 @@ struct LabelComposeView: View {
                             Divider()
                                 .foregroundStyle(.separatorsNonOpaque)
 
-                            colorMenu
+                            TFColorPickerMenu(
+                                title: T.Tokens.pickBackgroundColor,
+                                selectedColor: $presenter.color
+                            )
                         }
                         .groupedSectionBackground()
                     }
@@ -93,48 +91,6 @@ struct LabelComposeView: View {
                     isTitleFocused = true
                 }
             }
-        }
-    }
-    
-    @ViewBuilder
-    private var colorMenu: some View {
-        Menu {
-            ForEach(TintColor.labelList, id: \.self) { color in
-                Button {
-                    presenter.handleSetColor(color)
-                } label: {
-                    Label {
-                        Text(color.localizedName)
-                    } icon: {
-                        Image(uiImage: UIImage(systemName: "circle.fill")!
-                            .withTintColor(color.color, renderingMode: .alwaysOriginal))
-                    }
-                }
-            }
-        } label: {
-            HStack(spacing: .ML) {
-                Text(T.Tokens.pickBackgroundColor)
-                    .textStyle(.body)
-                    .foregroundStyle(.labelsPrimary)
-                    .minimumScaleFactor(0.9)
-                    .allowsTightening(true)
-                    .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Circle()
-                    .fill(presenter.color.color(for: colorScheme))
-                    .frame(width: circleSize, height: circleSize)
-                
-                Text(presenter.color.localizedName)
-                    .textStyle(.body)
-                    .foregroundStyle(.labelsSecondary)
-                
-                Image(systemName: "chevron.up.chevron.down")
-                    .textStyle(.body)
-                    .foregroundStyle(.labelsSecondary)
-                    .accessibilityHidden(true)
-            }
-            .padding(.vertical, .XL)
         }
     }
 }

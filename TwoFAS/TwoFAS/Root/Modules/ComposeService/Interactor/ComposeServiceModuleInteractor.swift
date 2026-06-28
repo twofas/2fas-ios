@@ -64,6 +64,7 @@ protocol ComposeServiceModuleInteracting: AnyObject {
     var badgeColor: TintColor { get }
     
     var isDataValid: Bool { get }
+    var hasChanges: Bool { get }
     var isPINSet: Bool { get }
     
     var serviceData: ServiceData? { get }
@@ -197,14 +198,15 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
     }
     
     func setServiceName(_ newServiceName: String?) {
-        serviceName = newServiceName
+        serviceName = newServiceName?.trim()
         validate()
     }
-    
+
     func setAdditionalInfo(_ newAdditionalInfo: String?) {
+        let trimmed = newAdditionalInfo?.trim()
         additionalInfo = {
-            if let newAdditionalInfo, !newAdditionalInfo.isEmpty {
-                return newAdditionalInfo
+            if let trimmed, !trimmed.isEmpty {
+                return trimmed
             }
             return nil
         }()
@@ -241,7 +243,20 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
     var isDataValid: Bool {
         isServiceNameCorrect && isAdditionalInfoCorrect
     }
-    
+
+    var hasChanges: Bool {
+        guard let serviceData else { return false }
+        if (serviceName ?? "") != serviceData.name.trim() { return true }
+        if (additionalInfo ?? "") != (serviceData.additionalInfo?.trim() ?? "") { return true }
+        if iconType != serviceData.iconType { return true }
+        if iconTypeID != serviceData.iconTypeID { return true }
+        if labelTitle != serviceData.labelTitle { return true }
+        if labelColor != serviceData.labelColor { return true }
+        if badgeColor != (serviceData.badgeColor ?? .default) { return true }
+        if sectionState.isDifferent { return true }
+        return false
+    }
+
     var isPINSet: Bool {
         protectionInteractor.isPINSet
     }
@@ -363,8 +378,8 @@ private extension ComposeServiceModuleInteractor {
         
         guard let serviceData else { return }
         
-        serviceName = serviceData.name
-        additionalInfo = serviceData.additionalInfo
+        serviceName = serviceData.name.trim()
+        additionalInfo = serviceData.additionalInfo?.trim()
         privateKey = serviceData.secret
         
         iconType = serviceData.iconType

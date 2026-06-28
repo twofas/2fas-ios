@@ -17,19 +17,33 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import SwiftUI
 import Common
 import Storage
 
-final class ComposeServicePresenter {
-    weak var view: ComposeServiceViewControlling?
-    
+final class ComposeServicePresenter: ObservableObject {
+    @Published var serviceName = ""
+    @Published var additionalInfo = ""
+    @Published var iconType: IconType = .brand
+    @Published var iconTypeID: IconTypeID = .default
+    @Published var labelTitle = ServiceRules.defaultTwoLetters
+    @Published var labelColor: TintColor = .lightBlue
+    @Published var badgeColor: TintColor = .default
+    @Published var sectionTitle = ""
+    @Published var iconTypeName = ""
+    @Published var isSaveEnabled = false
+    @Published var isWebExtensionActive = false
+    @Published var revealedSecret: String?
+    @Published var isSetPINAlertPresented = false
+    @Published var isRevealMenuPresented = false
+    @Published var serviceNameError: String?
+    @Published var additionalInfoError: String?
+
     private var isLocked = true
-    
     private let flowController: ComposeServiceFlowControlling
     let interactor: ComposeServiceModuleInteracting
     private let freshlyAdded: Bool
-    
+
     init(
         flowController: ComposeServiceFlowControlling,
         interactor: ComposeServiceModuleInteracting,
@@ -38,103 +52,119 @@ final class ComposeServicePresenter {
         self.flowController = flowController
         self.interactor = interactor
         self.freshlyAdded = freshlyAdded
-        
+
         interactor.isDataCorrectNotifier = { [weak self] _ in self?.refreshStatus() }
     }
 }
 
 extension ComposeServicePresenter {
+    var secretKeyMode: ComposeServiceSecretKeyMode {
+        if let revealedSecret {
+            return .revealed(revealedSecret)
+        }
+        if interactor.privateKey == nil {
+            return .empty
+        }
+        if interactor.isSecretCopyingBlocked {
+            return .hiddenNonCopyable
+        }
+        return .hidden
+    }
+
+    var isBrowserExtensionAllowed: Bool {
+        interactor.isBrowserExtensionAllowed
+    }
+
+    var isBrandIconRowEnabled: Bool {
+        interactor.isBrandIconEnabled
+    }
+
+    var isLabelRowEnabled: Bool {
+        interactor.isLabelEnabled
+    }
+
     func viewWillAppear() {
         reload()
     }
-    
-    func handleSelection(at indexPath: IndexPath, cell: ComposeServiceSectionCell) {
-        switch cell.kind {
-        case .privateKey, .input, .icon: return
-        case .action(let config):
-            switch config.kind {
-            case .delete: handleAskForDeletition()
-            }
-        case .navigate(let config):
-            switch config.kind {
-            case .label:
-                guard interactor.iconType == .label else { return }
-                flowController.toLabelEditor(title: interactor.labelTitle, color: interactor.labelColor)
-            case .badgeColor: flowController.toBadgeEditor(currentColor: interactor.badgeColor)
-            case .brandIcon:
-                guard interactor.iconType == .brand else { return }
-                flowController.toBrandIconSelection(
-                    defaultIcon: .default,
-                    selectedIcon: interactor.iconTypeID,
-                    animated: true
-                )
-            case .advanced:
-                flowController.toAdvancedSummary(settings: interactor.advancedSettings)
-            case .browserExtension:
-                guard let secret = interactor.serviceData?.secret, interactor.webExtensionActive else { return }
-                flowController.toBrowserExtension(with: secret)
-            case .category:
-                let sectionID = interactor.sectionID
-                flowController.toCategorySelection(with: sectionID)
-            }
-        }
-    }
-    
+
     func handleCancel() {
         flowController.toClose()
     }
-    
+
     func handleSave() {
         guard interactor.isDataValid else { return }
         interactor.save()
         flowController.toClose()
     }
-    
-    func handleActionButton(for kind: ComposeServiceInputKind) {
-        switch kind {
-        case .serviceName:
-            view?.becomeFirstResponder(for: .additionalInfo)
-        case .privateKey:
-            view?.becomeFirstResponder(for: .additionalInfo)
-        case .additionalInfo:
-            view?.endEditing()
-        }
+
+    func handleServiceNameUpdate(_ value: String) {
+        interactor.setServiceName(value)
+        validateServiceName()
     }
-    
-    func handleValueUpdate(for kind: ComposeServiceInputKind, value: String?) {
-        switch kind {
-        case .serviceName:
-            interactor.setServiceName(value)
-        case .privateKey:
-            return
-        case .additionalInfo:
-            interactor.setAdditionalInfo(value)
-        }
-        refreshStatus()
+
+    func handleAdditionalInfoUpdate(_ value: String) {
+        interactor.setAdditionalInfo(value)
+        validateAdditionalInfo()
     }
-    
-    func handleReveal(shareButton: UIView) {
-        if interactor.isPINSet {
-            if isLocked {
-                flowController.toLogin()
-            } else {
-                flowController.toRevealMenu(shareButton: shareButton)
-            }
-        } else {
-            flowController.toSetPIN()
-        }
-    }
-    
-    func handleAskForDeletition() {
-        guard let serviceData = interactor.serviceData else { return }
-        flowController.toDelete(serviceData: serviceData)
-    }
-    
+
     func handleIconType(_ iconType: IconType) {
         interactor.setIconType(iconType)
         reload()
     }
-    
+
+    func handleBadgeColor(_ color: TintColor) {
+        interactor.setBadgeColor(color)
+        reload()
+    }
+
+    func handleLabel() {
+        guard interactor.iconType == .label else { return }
+        flowController.toLabelEditor(title: interactor.labelTitle, color: interactor.labelColor)
+    }
+
+    func handleBrandIcon() {
+        guard interactor.iconType == .brand else { return }
+        flowController.toBrandIconSelection(
+            defaultIcon: .default,
+            selectedIcon: interactor.iconTypeID,
+            animated: true
+        )
+    }
+
+    func handleAdvanced() {
+        flowController.toAdvancedSummary(settings: interactor.advancedSettings)
+    }
+
+    func handleBrowserExtension() {
+        guard let secret = interactor.serviceData?.secret, interactor.webExtensionActive else { return }
+        flowController.toBrowserExtension(with: secret)
+    }
+
+    func handleCategory() {
+        flowController.toCategorySelection(with: interactor.sectionID)
+    }
+
+    func handleAskForDeletition() {
+        guard let serviceData = interactor.serviceData else { return }
+        flowController.toDelete(serviceData: serviceData)
+    }
+
+    func handleReveal() {
+        if interactor.isPINSet {
+            if isLocked {
+                flowController.toLogin()
+            } else {
+                isRevealMenuPresented = true
+            }
+        } else {
+            isSetPINAlertPresented = true
+        }
+    }
+
+    func handleShare() {
+        isRevealMenuPresented = true
+    }
+
     func handleServicesWereUpdated(modified: [Secret]?, deleted: [Secret]?) {
         guard let secret = interactor.serviceData?.secret else { return }
         if let deleted, deleted.first(where: { $0 == secret }) != nil {
@@ -144,45 +174,44 @@ extension ComposeServicePresenter {
             flowController.toServiceWasModified()
         }
     }
-    
+
     // MARK: - External controllers
-    
+
     func handleSwitchToSetupPIN() {
         flowController.toSetupPIN()
     }
-    
+
     func handleAuthorized() {
         guard let privateKey = interactor.privateKey else { return }
         isLocked = false
-        
-        view?.revealCode(privateKey)
+        revealedSecret = privateKey
     }
-    
+
     func handleDeletition() {
         interactor.trashService()
         flowController.toClose()
     }
-    
+
     func handlColorPickerDidSelectColor(_ color: TintColor) {
         interactor.setBadgeColor(color)
         reload()
     }
-    
+
     func handleIconSelectorDidSelect(selectedIconTypeID: IconTypeID) {
         interactor.setIconTypeID(selectedIconTypeID)
         reload()
     }
-    
+
     func handleLabelComposeSave(title: String, color: TintColor) {
         interactor.setLabel(title, labelColor: color)
         reload()
     }
-    
+
     func handleSectionSelected(_ sectionID: SectionID?) {
         interactor.setSectionID(sectionID)
         reload()
     }
-    
+
     // MARK: Reveal menu
     func handleShowQRCode() {
         Task {
@@ -190,34 +219,36 @@ extension ComposeServicePresenter {
                 Log("ComposeServicePresenter: Error while generating QR Code", severity: .error)
                 return
             }
-            Task { @MainActor  in
+            Task { @MainActor in
                 flowController.toShowQRCode(code: code)
             }
         }
     }
-    
+
     func handleShareQRCode() {
         Task {
             guard let code = await interactor.createQRCode(size: Config.minQRCodeSize, margin: 0) else {
                 Log("ComposeServicePresenter: Error while generating QR Code", severity: .error)
                 return
             }
-            Task { @MainActor  in
+            Task { @MainActor in
                 flowController.toShareQRCode(code: code)
             }
         }
     }
-    
+
     func handleCopySecret() {
         interactor.copySecret()
-        view?.copySecret()
+        VoiceOver.say(T.Notifications.serviceKeyCopied)
+        HUDNotification.presentSuccess(title: T.Notifications.serviceKeyCopied)
     }
-    
+
     func handleCopyLink() {
         interactor.copyLink()
-        view?.copyLink()
+        VoiceOver.say(T.Notifications.linkCopied)
+        HUDNotification.presentSuccess(title: T.Notifications.linkCopied)
     }
-    
+
     // MARK: - Start editing
     func handleToIconEditFromStart() {
         flowController.toBrandIconSelection(defaultIcon: .default, selectedIcon: interactor.iconTypeID, animated: false)
@@ -226,15 +257,39 @@ extension ComposeServicePresenter {
 
 private extension ComposeServicePresenter {
     func reload() {
-        let menu = buildMenu()
-        view?.reload(with: menu)
+        serviceName = interactor.serviceName ?? ""
+        additionalInfo = interactor.additionalInfo ?? ""
+        iconType = interactor.iconType
+        iconTypeID = interactor.iconTypeID
+        labelTitle = interactor.labelTitle
+        labelColor = interactor.labelColor
+        badgeColor = interactor.badgeColor
+        sectionTitle = interactor.selectedSectionTitle ?? T.Tokens.myTokens
+        iconTypeName = interactor.iconTypeName
+        isWebExtensionActive = interactor.webExtensionActive
+        refreshStatus()
     }
-    
+
     func refreshStatus() {
-        if interactor.isDataValid {
-            view?.enableSave()
+        isSaveEnabled = interactor.isDataValid && interactor.hasChanges
+    }
+
+    func validateServiceName() {
+        let trimmed = serviceName.trim()
+        if trimmed.isEmpty {
+            serviceNameError = T.Commons.textShortTitle(ServiceRules.serviceNameMinLength)
+        } else if trimmed.count > ServiceRules.serviceNameMaxLength {
+            serviceNameError = T.Commons.textLongTitle(ServiceRules.serviceNameMaxLength)
         } else {
-            view?.disableSave()
+            serviceNameError = nil
+        }
+    }
+
+    func validateAdditionalInfo() {
+        if additionalInfo.count > ServiceRules.additionalInfoMaxLength {
+            additionalInfoError = T.Commons.textLongTitle(ServiceRules.additionalInfoMaxLength)
+        } else {
+            additionalInfoError = nil
         }
     }
 }

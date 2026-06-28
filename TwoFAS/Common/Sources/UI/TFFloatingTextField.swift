@@ -105,7 +105,7 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
             textField()
                 .frame(maxWidth: .infinity)
         } trailingAccessory: {
-            if shouldPlaceHolderMove && !text.isEmpty && isEnabled {
+            if isFocused && !text.isEmpty && isEnabled {
                 Button {
                     clearTapped.toggle()
                     clearTextField()
@@ -120,6 +120,10 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
             }
         }
         .contentShape(Rectangle())
+        .onTapGesture {
+            guard isEnabled else { return }
+            focused.wrappedValue = focusValue
+        }
     }
 
     @ViewBuilder

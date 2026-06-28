@@ -188,10 +188,6 @@ final class ModuleInteractorFactory {
         )
     }
     
-    func colorPickerModuleInteractor() -> ColorPickerModuleInteracting {
-        ColorPickerModuleInteractor()
-    }
-    
     func iconSelectorModuleInteractor(
         defaultIcon: IconTypeID?,
         selectedIcon: IconTypeID?

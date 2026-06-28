@@ -48,10 +48,6 @@ extension LabelComposePresenter {
         flowController.toSave(title: title, color: color)
     }
 
-    func handleSetColor(_ color: TintColor) {
-        self.color = color
-    }
-
     func handleBack() {
         flowController.close()
     }

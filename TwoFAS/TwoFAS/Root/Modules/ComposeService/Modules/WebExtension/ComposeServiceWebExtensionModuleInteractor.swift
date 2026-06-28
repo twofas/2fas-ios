@@ -27,7 +27,6 @@ struct ComposeServiceWebExtensionModuleInteractorData {
 }
 
 protocol ComposeServiceWebExtensionModuleInteracting: AnyObject {
-    func hasMultipleExtensions() -> Bool
     func listAll() -> [ComposeServiceWebExtensionModuleInteractorData]
     func removePairing(_ pairing: PairedAuthRequest)
 }
@@ -49,11 +48,6 @@ final class ComposeServiceWebExtensionModuleInteractor {
 }
 
 extension ComposeServiceWebExtensionModuleInteractor: ComposeServiceWebExtensionModuleInteracting {
-    func hasMultipleExtensions() -> Bool {
-        let extensionIDList = webExtensionAuthInteracting.pairings(for: secret).map({ $0.extensionID })
-        return Set<ExtensionID>(extensionIDList).count > 1
-    }
-    
     func listAll() -> [ComposeServiceWebExtensionModuleInteractorData] {
         Dictionary(grouping: webExtensionAuthInteracting.pairings(for: secret), by: { $0.extensionID })
             .map { key, value in

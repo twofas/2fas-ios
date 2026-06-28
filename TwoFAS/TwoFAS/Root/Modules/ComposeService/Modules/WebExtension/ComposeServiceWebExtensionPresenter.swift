@@ -20,12 +20,27 @@
 import Foundation
 import Common
 
-final class ComposeServiceWebExtensionPresenter {
-    weak var view: ComposeServiceWebExtensionViewControlling?
+struct ComposeServiceWebExtensionSection: Identifiable, Hashable {
+    struct Row: Identifiable, Hashable {
+        var id: PairedAuthRequest { authRequest }
+        let authRequest: PairedAuthRequest
+        
+        var title: String { authRequest.domain }
+    }
     
+    let id = UUID()
+    let title: String
+    let cells: [Row]
+}
+
+final class ComposeServiceWebExtensionPresenter: ObservableObject {
+    @Published var sections: [ComposeServiceWebExtensionSection] = []
+    @Published var pendingDeletion: ComposeServiceWebExtensionSection.Row?
+    @Published var isDeleteAlertPresented: Bool = false
+
     private let flowController: ComposeServiceWebExtensionFlowControlling
-    let interactor: ComposeServiceWebExtensionModuleInteracting
-    
+    private let interactor: ComposeServiceWebExtensionModuleInteracting
+
     init(
         flowController: ComposeServiceWebExtensionFlowControlling,
         interactor: ComposeServiceWebExtensionModuleInteracting
@@ -39,15 +54,20 @@ extension ComposeServiceWebExtensionPresenter {
     func viewWillAppear() {
         reload()
     }
-    
-    func handleSelection(at indexPath: IndexPath) {
-        let sections = buildMenu()
-        guard let cell = sections[safe: indexPath.section]?.cells[safe: indexPath.row] else { return }
-        flowController.toQuestion(with: cell.authRequest)
+
+    func handleBack() {
+        flowController.close()
     }
-    
-    func handleDeletition(of authRequest: PairedAuthRequest) {
-        interactor.removePairing(authRequest)
+
+    func handleSelection(_ row: ComposeServiceWebExtensionSection.Row) {
+        pendingDeletion = row
+        isDeleteAlertPresented = true
+    }
+
+    func handleConfirmDeletion() {
+        guard let row = pendingDeletion else { return }
+        pendingDeletion = nil
+        interactor.removePairing(row.authRequest)
         guard !interactor.listAll().isEmpty else {
             flowController.toFinish()
             return
@@ -58,7 +78,11 @@ extension ComposeServiceWebExtensionPresenter {
 
 private extension ComposeServiceWebExtensionPresenter {
     func reload() {
-        let menu = buildMenu()
-        view?.reload(with: menu)
+        sections = interactor.listAll().map { data in
+            ComposeServiceWebExtensionSection(
+                title: data.extensionName,
+                cells: data.pairings.map { ComposeServiceWebExtensionSection.Row(authRequest: $0) }
+            )
+        }
     }
 }

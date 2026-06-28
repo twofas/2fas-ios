@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 
 protocol ComposeServiceWebExtensionFlowControllerParent: AnyObject {
@@ -25,57 +26,43 @@ protocol ComposeServiceWebExtensionFlowControllerParent: AnyObject {
 }
 
 protocol ComposeServiceWebExtensionFlowControlling: AnyObject {
-    func toQuestion(with authRequest: PairedAuthRequest)
     func toFinish()
+    func close()
 }
 
 final class ComposeServiceWebExtensionFlowController: FlowController {
     private weak var parent: ComposeServiceWebExtensionFlowControllerParent?
-    
+    private weak var navigationController: UINavigationController?
+
     static func present(
         in navigationController: UINavigationController,
         parent: ComposeServiceWebExtensionFlowControllerParent,
         secret: String
     ) {
-        let view = ComposeServiceWebExtensionViewController()
-        let flowController = ComposeServiceWebExtensionFlowController(viewController: view)
+        let hostingController = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = ComposeServiceWebExtensionFlowController(viewController: hostingController)
         flowController.parent = parent
-        
+        flowController.navigationController = navigationController
+
         let interactor = ModuleInteractorFactory.shared.composeServiceWebExtensionModuleInteractor(secret: secret)
         let presenter = ComposeServiceWebExtensionPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        presenter.view = view
-        
-        view.presenter = presenter
 
-        navigationController.pushViewController(view, animated: true)
-    }
-}
+        hostingController.rootView = AnyView(ComposeServiceWebExtensionView(presenter: presenter))
+        hostingController.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
 
-extension ComposeServiceWebExtensionFlowController {
-    var viewController: ComposeServiceWebExtensionViewController {
-        _viewController as! ComposeServiceWebExtensionViewController
+        navigationController.pushViewController(hostingController, animated: true)
     }
 }
 
 extension ComposeServiceWebExtensionFlowController: ComposeServiceWebExtensionFlowControlling {
-    func toQuestion(with authRequest: PairedAuthRequest) {
-        let alert = UIAlertController(
-            title: T.Browser.deletingExtensionPairingTitle,
-            message: T.Browser.deletingExtensionPairingContent(authRequest.domain),
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: T.Commons.delete, style: .destructive, handler: { [weak self] _ in
-            self?.viewController.presenter.handleDeletition(of: authRequest)
-        }))
-        
-        viewController.present(alert, animated: true, completion: nil)
-    }
-    
     func toFinish() {
         parent?.webExtensionDidFinish()
+    }
+
+    func close() {
+        navigationController?.popViewController(animated: true)
     }
 }

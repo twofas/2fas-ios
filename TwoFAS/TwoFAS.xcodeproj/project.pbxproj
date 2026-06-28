@@ -268,8 +268,6 @@
 		C23FD50A2814635400E4E9C5 /* ComposeServiceWebExtensionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23FD5092814635400E4E9C5 /* ComposeServiceWebExtensionFlowController.swift */; };
 		C23FD5102814648C00E4E9C5 /* ComposeServiceWebExtensionModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23FD50F2814648C00E4E9C5 /* ComposeServiceWebExtensionModuleInteractor.swift */; };
 		C23FD51228146E2E00E4E9C5 /* ComposeServiceWebExtensionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23FD51128146E2E00E4E9C5 /* ComposeServiceWebExtensionPresenter.swift */; };
-		C23FD51428146FAB00E4E9C5 /* ComposeServiceWebExtensionPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23FD51328146FAB00E4E9C5 /* ComposeServiceWebExtensionPresenter+Menu.swift */; };
-		C23FD51628148F9A00E4E9C5 /* ComposeServiceWebExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23FD51528148F9A00E4E9C5 /* ComposeServiceWebExtensionViewController.swift */; };
 		C24018AB26188E2800800DBF /* RingMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24018AA26188E2800800DBF /* RingMask.swift */; };
 		C24018BA2618BCF300800DBF /* CommonSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24018B92618BCF300800DBF /* CommonSearchController.swift */; };
 		C24018C92618DE8100800DBF /* ComposeServiceIconTypeSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24018C82618DE8100800DBF /* ComposeServiceIconTypeSelection.swift */; };
@@ -1000,6 +998,7 @@
 		C2B5BF5529460E9C00E5092D /* TokensExternalAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BF5429460E9C00E5092D /* TokensExternalAction.swift */; };
 		C2B5BF572946169D00E5092D /* TokensLinkAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BF562946169D00E5092D /* TokensLinkAction.swift */; };
 		C2B5BF592946616900E5092D /* TokensNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BF582946616900E5092D /* TokensNavigationFlowController.swift */; };
+		C2B6CCC82FF148A200C4C73D /* ComposeServiceWebExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B6CCC72FF148A200C4C73D /* ComposeServiceWebExtensionView.swift */; };
 		C2B6D78E260BB024005B599E /* ColorPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B6D78D260BB024005B599E /* ColorPickerButton.swift */; };
 		C2B86D222BC3058A00AAAC63 /* UserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B86D212BC3058A00AAAC63 /* UserDefaultsRepository.swift */; };
 		C2B86D242BC3070F00AAAC63 /* AppPIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B86D232BC3070F00AAAC63 /* AppPIN.swift */; };
@@ -1103,7 +1102,6 @@
 		C2CCEB602D8237AD0067FDCB /* MergeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CCEB5F2D8237A90067FDCB /* MergeHandler.swift */; };
 		C2CCEB612D8237AD0067FDCB /* MergeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CCEB5F2D8237A90067FDCB /* MergeHandler.swift */; };
 		C2CD687325FEC94400EFEFCF /* FormLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CD687225FEC94400EFEFCF /* FormLine.swift */; };
-		C2CE84A12814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CE84A02814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift */; };
 		C2CFA6A42AEEE9D500E574FC /* RootFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CFA6A32AEEE9D500E574FC /* RootFlowController.swift */; };
 		C2CFA6A62AEEF0CB00E574FC /* RootModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CFA6A52AEEF0CB00E574FC /* RootModuleInteractor.swift */; };
 		C2CFFCDD2007FDD600600AC6 /* CircleProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CFFCDC2007FDD600600AC6 /* CircleProgress.swift */; };
@@ -2252,8 +2250,6 @@
 		C23FD5092814635400E4E9C5 /* ComposeServiceWebExtensionFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionFlowController.swift; sourceTree = "<group>"; };
 		C23FD50F2814648C00E4E9C5 /* ComposeServiceWebExtensionModuleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionModuleInteractor.swift; sourceTree = "<group>"; };
 		C23FD51128146E2E00E4E9C5 /* ComposeServiceWebExtensionPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionPresenter.swift; sourceTree = "<group>"; };
-		C23FD51328146FAB00E4E9C5 /* ComposeServiceWebExtensionPresenter+Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeServiceWebExtensionPresenter+Menu.swift"; sourceTree = "<group>"; };
-		C23FD51528148F9A00E4E9C5 /* ComposeServiceWebExtensionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionViewController.swift; sourceTree = "<group>"; };
 		C24018AA26188E2800800DBF /* RingMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingMask.swift; sourceTree = "<group>"; };
 		C24018B92618BCF300800DBF /* CommonSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSearchController.swift; sourceTree = "<group>"; };
 		C24018C82618DE8100800DBF /* ComposeServiceIconTypeSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceIconTypeSelection.swift; sourceTree = "<group>"; };
@@ -2842,6 +2838,7 @@
 		C2B5BF5429460E9C00E5092D /* TokensExternalAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensExternalAction.swift; sourceTree = "<group>"; };
 		C2B5BF562946169D00E5092D /* TokensLinkAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensLinkAction.swift; sourceTree = "<group>"; };
 		C2B5BF582946616900E5092D /* TokensNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNavigationFlowController.swift; sourceTree = "<group>"; };
+		C2B6CCC72FF148A200C4C73D /* ComposeServiceWebExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionView.swift; sourceTree = "<group>"; };
 		C2B6D78D260BB024005B599E /* ColorPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerButton.swift; sourceTree = "<group>"; };
 		C2B71D1C23DDEEEE007C5896 /* MainContainerPaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerPaging.swift; sourceTree = "<group>"; };
 		C2B86D212BC3058A00AAAC63 /* UserDefaultsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepository.swift; sourceTree = "<group>"; };
@@ -2966,7 +2963,6 @@
 		C2CCEB5F2D8237A90067FDCB /* MergeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeHandler.swift; sourceTree = "<group>"; };
 		C2CD687225FEC94400EFEFCF /* FormLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormLine.swift; path = TwoFAS/Common/Controls/FormLine.swift; sourceTree = SOURCE_ROOT; };
 		C2CE0E152793471E007DB667 /* GoogleAuth.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAuth.pb.swift; sourceTree = "<group>"; };
-		C2CE84A02814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionTableViewHeader.swift; sourceTree = "<group>"; };
 		C2CF16A42AB6506F00E2D7FF /* LabelShapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelShapes.swift; sourceTree = "<group>"; };
 		C2CFA6A32AEEE9D500E574FC /* RootFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootFlowController.swift; sourceTree = "<group>"; };
 		C2CFA6A52AEEF0CB00E574FC /* RootModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootModuleInteractor.swift; sourceTree = "<group>"; };
@@ -4629,46 +4625,12 @@
 		C23FD50828144A4B00E4E9C5 /* WebExtension */ = {
 			isa = PBXGroup;
 			children = (
-				C23FD50E2814637F00E4E9C5 /* Flow */,
-				C23FD50D2814637700E4E9C5 /* Interactor */,
-				C23FD50C2814637000E4E9C5 /* Presenter */,
-				C23FD50B2814636B00E4E9C5 /* View */,
+				C23FD5092814635400E4E9C5 /* ComposeServiceWebExtensionFlowController.swift */,
+				C23FD50F2814648C00E4E9C5 /* ComposeServiceWebExtensionModuleInteractor.swift */,
+				C23FD51128146E2E00E4E9C5 /* ComposeServiceWebExtensionPresenter.swift */,
+				C2B6CCC72FF148A200C4C73D /* ComposeServiceWebExtensionView.swift */,
 			);
 			path = WebExtension;
-			sourceTree = "<group>";
-		};
-		C23FD50B2814636B00E4E9C5 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C23FD51528148F9A00E4E9C5 /* ComposeServiceWebExtensionViewController.swift */,
-				C2CE84A02814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C23FD50C2814637000E4E9C5 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C23FD51128146E2E00E4E9C5 /* ComposeServiceWebExtensionPresenter.swift */,
-				C23FD51328146FAB00E4E9C5 /* ComposeServiceWebExtensionPresenter+Menu.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C23FD50D2814637700E4E9C5 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C23FD50F2814648C00E4E9C5 /* ComposeServiceWebExtensionModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C23FD50E2814637F00E4E9C5 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C23FD5092814635400E4E9C5 /* ComposeServiceWebExtensionFlowController.swift */,
-			);
-			path = Flow;
 			sourceTree = "<group>";
 		};
 		C2404840276520200076376E /* WidgetWarning */ = {
@@ -9299,7 +9261,6 @@
 				C2B39C7327A58E0800D3B579 /* SelectFromGalleryView.swift in Sources */,
 				C206CACF27A35ABE0068284C /* View+.swift in Sources */,
 				C21111F0274ABCAB00CA7C78 /* FlowController.swift in Sources */,
-				C23FD51628148F9A00E4E9C5 /* ComposeServiceWebExtensionViewController.swift in Sources */,
 				C2ABF3CD2003DB23003F2CBA /* ContentButton.swift in Sources */,
 				C2EA566D285696FE00026BFE /* AskForAuthViewController.swift in Sources */,
 				C2AC221527661C0600271402 /* ExporterPasswordProtectionPresenter.swift in Sources */,
@@ -9381,6 +9342,7 @@
 				C21347882D98799A00D325F6 /* EncryptedByUserPasswordSyncFlowController.swift in Sources */,
 				C2AD653B27F261CC008997DB /* BrowserExtensionSuccessViewController.swift in Sources */,
 				C2AB92CB2766543700698382 /* ExporterPINModuleInteractor.swift in Sources */,
+				C2B6CCC82FF148A200C4C73D /* ComposeServiceWebExtensionView.swift in Sources */,
 				C21DBE952FAD055600C0E857 /* PINKeypadLayout.swift in Sources */,
 				C286200229D5BCDF00217AF9 /* UUIDInputContainer.swift in Sources */,
 				C27BE515275D4EE70090CA12 /* BackupMenuModels.swift in Sources */,
@@ -9401,7 +9363,6 @@
 				C2AD653927F26196008997DB /* BrowserExtensionSuccessPresenter.swift in Sources */,
 				C2B3D1AA267E91E9009E6DE0 /* TokensView.swift in Sources */,
 				C2F33940214AB53F0072FE80 /* RatingController.swift in Sources */,
-				C2CE84A12814AA4C0020B91E /* ComposeServiceWebExtensionTableViewHeader.swift in Sources */,
 				C26D1AC52600041400D3D868 /* UIImage+.swift in Sources */,
 				C2B5BF53294601BE00E5092D /* TokensPlainFlowController.swift in Sources */,
 				C2633F1F265B045F0034B836 /* UIApplication.swift in Sources */,
@@ -9587,7 +9548,6 @@
 				C27C03C127F4FF010020DB5E /* BrowserExtensionMainPresenter.swift in Sources */,
 				C2C56D3927C96743003B4C43 /* ComposeServiceAdvancedSettings.swift in Sources */,
 				C272055C2E7C9113004FB39A /* ExportQuestionPINVerificationViewController.swift in Sources */,
-				C23FD51428146FAB00E4E9C5 /* ComposeServiceWebExtensionPresenter+Menu.swift in Sources */,
 				C295962B267F79190086DEB1 /* TokensSectionHeader+.swift in Sources */,
 				C21B3A1727AF122B005C603B /* ColorPickerModuleInteractor.swift in Sources */,
 				C2A7945E27F9071000E5C641 /* BrowserExtensionServiceFlowController.swift in Sources */,

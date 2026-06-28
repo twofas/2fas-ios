@@ -20,12 +20,14 @@
 import Foundation
 import Common
 
-final class ComposeServiceCategorySelectionPresenter {
-    weak var view: ComposeServiceCategorySelectionViewControlling?
-    
+final class ComposeServiceCategorySelectionPresenter: ObservableObject {
+    @Published var rows: [ComposeServiceCategorySelectionRow] = []
+    @Published var isAddSectionAlertPresented: Bool = false
+    @Published var newSectionName: String = ""
+
     private let flowController: ComposeServiceCategorySelectionFlowControlling
-    let interactor: ComposeServiceCategorySelectionModuleInteracting
-    
+    private let interactor: ComposeServiceCategorySelectionModuleInteracting
+
     init(
         flowController: ComposeServiceCategorySelectionFlowControlling,
         interactor: ComposeServiceCategorySelectionModuleInteracting
@@ -33,33 +35,58 @@ final class ComposeServiceCategorySelectionPresenter {
         self.flowController = flowController
         self.interactor = interactor
     }
-    
+}
+
+extension ComposeServiceCategorySelectionPresenter {
+    var isNewSectionNameValid: Bool {
+        ServiceRules.isSectionNameValid(sectionName: newSectionName.trim())
+    }
+
     func viewWillAppear() {
         reload()
     }
-        
-    func handleSelection(at indexPath: IndexPath) {
-        let menu = buildMenu()
-        guard let option = menu.cells[safe: indexPath.row] else { return }
-        let sectionID = option.sectionID
-        flowController.toChangeSection(sectionID)
-        interactor.setSelection(sectionID)
-        reload()
+
+    func handleBack() {
+        flowController.close()
     }
-    
-    func handleSectionAdded(with title: String) {
-        interactor.addSection(with: title)
-        reload()
+
+    func handleSelection(_ row: ComposeServiceCategorySelectionRow) {
+        interactor.setSelection(row.sectionID)
+        flowController.toChangeSection(row.sectionID)
+        flowController.close()
     }
-    
-    func handleAddSection() {
-        flowController.toCreateSection()
+
+    func handleShowAddSection() {
+        newSectionName = ""
+        isAddSectionAlertPresented = true
+    }
+
+    func handleConfirmAddSection() {
+        let trimmed = newSectionName.trim()
+        guard ServiceRules.isSectionNameValid(sectionName: trimmed) else { return }
+        interactor.addSection(with: trimmed)
+        reload()
     }
 }
 
 private extension ComposeServiceCategorySelectionPresenter {
     func reload() {
-        let menu = buildMenu()
-        view?.reload(with: menu)
+        let selectedSectionID = interactor.selectedSection
+        var list: [ComposeServiceCategorySelectionRow] = interactor.listSections().map {
+            ComposeServiceCategorySelectionRow(
+                title: $0.title,
+                sectionID: $0.sectionID,
+                checkmark: $0.sectionID == selectedSectionID
+            )
+        }
+        list.insert(
+            ComposeServiceCategorySelectionRow(
+                title: T.Tokens.myTokens,
+                sectionID: nil,
+                checkmark: selectedSectionID == nil
+            ),
+            at: 0
+        )
+        rows = list
     }
 }

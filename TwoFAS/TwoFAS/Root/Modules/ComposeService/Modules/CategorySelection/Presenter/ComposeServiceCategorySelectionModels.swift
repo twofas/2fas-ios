@@ -20,28 +20,9 @@
 import Foundation
 import Common
 
-struct ComposeServiceCategorySelectionMenuSection: TableViewSection {
-    var cells: [ComposeServiceCategorySelectionMenuCell]
-}
-
-struct ComposeServiceCategorySelectionMenuCell: Hashable {
+struct ComposeServiceCategorySelectionRow: Identifiable, Hashable {
+    var id: String { sectionID?.uuidString ?? "__default__" }
     let title: String
     let sectionID: SectionID?
     let checkmark: Bool
-}
-
-extension ComposeServiceCategorySelectionPresenter {
-    func buildMenu() -> ComposeServiceCategorySelectionMenuSection {
-        let selectedSectionID = interactor.selectedSection
-        var list: [ComposeServiceCategorySelectionMenuCell] = interactor.listSections().map {
-            ComposeServiceCategorySelectionMenuCell(
-                title: $0.title,
-                sectionID: $0.sectionID,
-                checkmark: $0.sectionID == selectedSectionID
-            )
-        }
-        list.insert(.init(title: T.Tokens.myTokens, sectionID: nil, checkmark: selectedSectionID == nil), at: 0)
-        
-        return .init(cells: list)
-    }
 }

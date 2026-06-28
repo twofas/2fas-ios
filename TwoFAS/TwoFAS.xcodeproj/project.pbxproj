@@ -455,8 +455,7 @@
 		C26764AC287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26764AB287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift */; };
 		C26764AE287246F300D468B2 /* ComposeServiceCategorySelectionModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26764AD287246F300D468B2 /* ComposeServiceCategorySelectionModuleInteractor.swift */; };
 		C26764B02872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26764AF2872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift */; };
-		C26764B22872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26764B12872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift */; };
-		C26764B428724A4200D468B2 /* ComposeServiceCategorySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26764B328724A4200D468B2 /* ComposeServiceCategorySelectionViewController.swift */; };
+		C26764B22872494100D468B2 /* ComposeServiceCategorySelectionModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26764B12872494100D468B2 /* ComposeServiceCategorySelectionModels.swift */; };
 		C268918A2BC4960600713078 /* ServiceListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26891892BC4960600713078 /* ServiceListPresenter.swift */; };
 		C268918D2BC4962300713078 /* ServiceListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268918C2BC4962300713078 /* ServiceListInteractor.swift */; };
 		C268918F2BC4974800713078 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = C268918E2BC4974800713078 /* Category.swift */; };
@@ -999,6 +998,7 @@
 		C2B5BF572946169D00E5092D /* TokensLinkAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BF562946169D00E5092D /* TokensLinkAction.swift */; };
 		C2B5BF592946616900E5092D /* TokensNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BF582946616900E5092D /* TokensNavigationFlowController.swift */; };
 		C2B6CCC82FF148A200C4C73D /* ComposeServiceWebExtensionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B6CCC72FF148A200C4C73D /* ComposeServiceWebExtensionView.swift */; };
+		C2B6D0E42FF1729300C4C73D /* ComposeServiceCategorySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B6D0E32FF1729300C4C73D /* ComposeServiceCategorySelectionView.swift */; };
 		C2B6D78E260BB024005B599E /* ColorPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B6D78D260BB024005B599E /* ColorPickerButton.swift */; };
 		C2B86D222BC3058A00AAAC63 /* UserDefaultsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B86D212BC3058A00AAAC63 /* UserDefaultsRepository.swift */; };
 		C2B86D242BC3070F00AAAC63 /* AppPIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B86D232BC3070F00AAAC63 /* AppPIN.swift */; };
@@ -2454,8 +2454,7 @@
 		C26764AB287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceCategorySelectionFlowController.swift; sourceTree = "<group>"; };
 		C26764AD287246F300D468B2 /* ComposeServiceCategorySelectionModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceCategorySelectionModuleInteractor.swift; sourceTree = "<group>"; };
 		C26764AF2872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceCategorySelectionPresenter.swift; sourceTree = "<group>"; };
-		C26764B12872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ComposeServiceCategorySelectionPresenter+Menu.swift"; sourceTree = "<group>"; };
-		C26764B328724A4200D468B2 /* ComposeServiceCategorySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeServiceCategorySelectionViewController.swift; sourceTree = "<group>"; };
+		C26764B12872494100D468B2 /* ComposeServiceCategorySelectionModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceCategorySelectionModels.swift; sourceTree = "<group>"; };
 		C26891892BC4960600713078 /* ServiceListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListPresenter.swift; sourceTree = "<group>"; };
 		C268918C2BC4962300713078 /* ServiceListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListInteractor.swift; sourceTree = "<group>"; };
 		C268918E2BC4974800713078 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -2839,6 +2838,7 @@
 		C2B5BF562946169D00E5092D /* TokensLinkAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensLinkAction.swift; sourceTree = "<group>"; };
 		C2B5BF582946616900E5092D /* TokensNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNavigationFlowController.swift; sourceTree = "<group>"; };
 		C2B6CCC72FF148A200C4C73D /* ComposeServiceWebExtensionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceWebExtensionView.swift; sourceTree = "<group>"; };
+		C2B6D0E32FF1729300C4C73D /* ComposeServiceCategorySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceCategorySelectionView.swift; sourceTree = "<group>"; };
 		C2B6D78D260BB024005B599E /* ColorPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerButton.swift; sourceTree = "<group>"; };
 		C2B71D1C23DDEEEE007C5896 /* MainContainerPaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContainerPaging.swift; sourceTree = "<group>"; };
 		C2B86D212BC3058A00AAAC63 /* UserDefaultsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepository.swift; sourceTree = "<group>"; };
@@ -5437,7 +5437,7 @@
 		C26764A7287244A200D468B2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C26764B328724A4200D468B2 /* ComposeServiceCategorySelectionViewController.swift */,
+				C2B6D0E32FF1729300C4C73D /* ComposeServiceCategorySelectionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5446,7 +5446,7 @@
 			isa = PBXGroup;
 			children = (
 				C26764AF2872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift */,
-				C26764B12872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift */,
+				C26764B12872494100D468B2 /* ComposeServiceCategorySelectionModels.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -9271,7 +9271,6 @@
 				C2BD85E426403EE80087D087 /* IntroductionViewController.swift in Sources */,
 				C2625F9628BBC86B00D84C5C /* AboutFooter.swift in Sources */,
 				C2B39C7727A5908F00D3B579 /* SelectFromGalleryModuleInteractor.swift in Sources */,
-				C26764B428724A4200D468B2 /* ComposeServiceCategorySelectionViewController.swift in Sources */,
 				C24471D125F51F760024B4C5 /* ComposeServiceFormError.swift in Sources */,
 				C245702428A04CBA008E99F4 /* GridViewGAImportPresenter.swift in Sources */,
 				C2A74FC82610CBAF007E5AB3 /* ColorPickerButtonWithName.swift in Sources */,
@@ -9295,7 +9294,7 @@
 				C28356232897098300421882 /* SelectFromGalleryAdvice.swift in Sources */,
 				C228603226697250005E88E3 /* TokensSection.swift in Sources */,
 				C2823B1626F3E84F00583586 /* RevealPasswordInput.swift in Sources */,
-				C26764B22872494100D468B2 /* ComposeServiceCategorySelectionPresenter+Menu.swift in Sources */,
+				C26764B22872494100D468B2 /* ComposeServiceCategorySelectionModels.swift in Sources */,
 				C2E7C3472ADB021500478D89 /* CameraControllerDelegate.swift in Sources */,
 				C231856A2EC648F700DD1ABE /* BackupSetPasswordView.swift in Sources */,
 				C2D6731B25DB2C5D004BD697 /* KeyboardObserver.swift in Sources */,
@@ -9573,6 +9572,7 @@
 				C2AF24842E7C5FBB001475AF /* ExportQuestionFlowController.swift in Sources */,
 				C240486027654E370076376E /* ImporterEnterPasswordModuleInteractor.swift in Sources */,
 				C235A013298FE785008F4FD0 /* MainMenuPresenter.swift in Sources */,
+				C2B6D0E42FF1729300C4C73D /* ComposeServiceCategorySelectionView.swift in Sources */,
 				C2EA567128569ADD00026BFE /* AskForAuthFlowController.swift in Sources */,
 				C20E2E0B2A7C52AA00DB64BB /* AddingServicePresenter.swift in Sources */,
 				C2A74FF52610DDF5007E5AB3 /* Array+.swift in Sources */,

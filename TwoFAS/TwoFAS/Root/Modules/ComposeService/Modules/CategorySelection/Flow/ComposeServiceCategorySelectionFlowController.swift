@@ -17,7 +17,8 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
+import SwiftUI
 import Storage
 import Common
 
@@ -27,37 +28,35 @@ protocol ComposeServiceCategorySelectionFlowControllerParent: AnyObject {
 
 protocol ComposeServiceCategorySelectionFlowControlling: AnyObject {
     func toChangeSection(_ sectionID: SectionID?)
-    func toCreateSection()
+    func close()
 }
 
 final class ComposeServiceCategorySelectionFlowController: FlowController {
     private weak var parent: ComposeServiceCategorySelectionFlowControllerParent?
-    
+    private weak var navigationController: UINavigationController?
+
     static func push(
         on navigationController: UINavigationController,
         parent: ComposeServiceCategorySelectionFlowControllerParent,
         selectedSection: SectionID?
     ) {
-        let view = ComposeServiceCategorySelectionViewController()
-        let flowController = ComposeServiceCategorySelectionFlowController(viewController: view)
+        let hostingController = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = ComposeServiceCategorySelectionFlowController(viewController: hostingController)
+        flowController.parent = parent
+        flowController.navigationController = navigationController
+
         let interactor = ModuleInteractorFactory
             .shared
             .composeServiceCategorySelectionModuleInteractor(with: selectedSection)
-        flowController.parent = parent
         let presenter = ComposeServiceCategorySelectionPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        presenter.view = view
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: true)
-    }
-}
 
-extension ComposeServiceCategorySelectionFlowController {
-    var viewController: ComposeServiceCategorySelectionViewController {
-        _viewController as! ComposeServiceCategorySelectionViewController
+        hostingController.rootView = AnyView(ComposeServiceCategorySelectionView(presenter: presenter))
+        hostingController.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+
+        navigationController.pushViewController(hostingController, animated: true)
     }
 }
 
@@ -65,22 +64,8 @@ extension ComposeServiceCategorySelectionFlowController: ComposeServiceCategoryS
     func toChangeSection(_ sectionID: SectionID?) {
         parent?.didChangeSectionID(sectionID)
     }
-    
-    func toCreateSection() {
-        let alert = AlertControllerPromptFactory.create(
-            title: T.Tokens.addGroup,
-            message: T.Tokens.groupName,
-            actionName: T.Commons.add,
-            defaultText: "",
-            inputConfiguration: .name,
-            action: { [weak self] title in
-                self?.viewController.presenter.handleSectionAdded(with: title.trim())
-        },
-            cancel: nil,
-            verify: { sectionName in
-                ServiceRules.isSectionNameValid(sectionName: sectionName.trim())
-        })
-        
-        viewController.present(alert, animated: true, completion: nil)
+
+    func close() {
+        navigationController?.popViewController(animated: true)
     }
 }

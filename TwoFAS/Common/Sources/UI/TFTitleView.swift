@@ -31,5 +31,6 @@ public struct TFTitleView: View {
             .textStyle(.headline)
             .multilineTextAlignment(.center)
             .foregroundStyle(.labelsVibrantPrimary)
+            .accessibilityAddTraits(.isHeader)
     }
 }

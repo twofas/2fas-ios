@@ -23,6 +23,7 @@ public struct TFSymbolButton: View {
     public enum Symbol: String {
         case close = "xmark"
         case back = "chevron.left"
+        case add = "plus"
     }
 
     private let fontSize: CGFloat = 20

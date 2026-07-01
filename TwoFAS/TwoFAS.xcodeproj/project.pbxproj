@@ -1133,6 +1133,8 @@
 		C2D97E892E2469EA00E213A7 /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E872E2469BD00E213A7 /* T.generated.swift */; };
 		C2D97E8A2E246A0F00E213A7 /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E872E2469BD00E213A7 /* T.generated.swift */; };
 		C2DB8E5D21F8FE33002F124B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2DB8E5C21F8FE33002F124B /* Assets.xcassets */; };
+		C2DCAA802FF554B100FAB19D /* TFInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DCAA7F2FF5549E00FAB19D /* TFInfoView.swift */; };
+		C2DCAA812FF554B100FAB19D /* TFInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DCAA7F2FF5549E00FAB19D /* TFInfoView.swift */; };
 		C2DDEB25289F3D5200011712 /* TokensViewEmptyListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */; };
 		C2DEC7A326767B28006DB1E6 /* SectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DEC7A226767B28006DB1E6 /* SectionHandler.swift */; };
 		C2DF710E2B5DD31200D85D87 /* DataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DF710D2B5DD31200D85D87 /* DataTests.swift */; };
@@ -3004,6 +3006,7 @@
 		C2D97E832E2455F400E213A7 /* QRCodeDisplayPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDisplayPresenter.swift; sourceTree = "<group>"; };
 		C2D97E872E2469BD00E213A7 /* T.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = T.generated.swift; path = TwoFASAuth/Generated/T.generated.swift; sourceTree = SOURCE_ROOT; };
 		C2DB8E5C21F8FE33002F124B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C2DCAA7F2FF5549E00FAB19D /* TFInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFInfoView.swift; sourceTree = "<group>"; };
 		C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensViewEmptyListScreen.swift; sourceTree = "<group>"; };
 		C2DEC7A226767B28006DB1E6 /* SectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHandler.swift; sourceTree = "<group>"; };
 		C2DF245F29859F9700762A26 /* MainRepositoryImpl+ViewPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+ViewPath.swift"; sourceTree = "<group>"; };
@@ -5903,6 +5906,7 @@
 		C295AF8D2FD1F6B2000DF064 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				C2DCAA7F2FF5549E00FAB19D /* TFInfoView.swift */,
 				C2E5248F2FD33D7400C5E875 /* ServiceIconView.swift */,
 				C29CF8E72FA7A6DD0058E3A0 /* ScrollPagingView.swift */,
 				C28AF2D22FD5D28F0036DB9F /* TFTitleView.swift */,
@@ -9850,6 +9854,7 @@
 				C274CA012BAB8B92008E7212 /* ServiceExistenceStatus.swift in Sources */,
 				C295AFA62FD1F6F8000DF064 /* View+.swift in Sources */,
 				C295AFA72FD1F6F8000DF064 /* AdaptiveReadableContainer.swift in Sources */,
+				C2DCAA812FF554B100FAB19D /* TFInfoView.swift in Sources */,
 				C295AFA82FD1F6F8000DF064 /* TFCornerRadius.swift in Sources */,
 				C295AFA92FD1F6F8000DF064 /* TFShadow.swift in Sources */,
 				C295AFAA2FD1F6F8000DF064 /* TFFloatingTextField.swift in Sources */,
@@ -10101,6 +10106,7 @@
 				C2E53B2F2B62DDAF008E1E70 /* ServiceDefinition.swift in Sources */,
 				C2E53B232B62DDAF008E1E70 /* Period.swift in Sources */,
 				C2E53B242B62DDAF008E1E70 /* IconType.swift in Sources */,
+				C2DCAA802FF554B100FAB19D /* TFInfoView.swift in Sources */,
 				C2E53B2D2B62DDAF008E1E70 /* LastNotification.swift in Sources */,
 				C2E53B322B62DDAF008E1E70 /* HOTPDefaultValue.swift in Sources */,
 				C2E53B1C2B62DDAF008E1E70 /* CoreDataStack.swift in Sources */,

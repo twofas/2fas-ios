@@ -30,3 +30,26 @@ extension View {
         }
     }
 }
+
+#if os(iOS)
+public extension View {
+    @ViewBuilder
+    func dismissKeyboardOnTapOutside() -> some View {
+        self.background(
+            Color.clear
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    dismissKeyboard()
+                }
+        )
+    }
+    
+    func dismissKeyboard() {
+        guard let window = UIApplication.shared.connectedScenes
+            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
+              let keyWindow = window.windows.first(where: { $0.isKeyWindow })
+        else { return }
+        keyWindow.endEditing(true)
+    }
+}
+#endif

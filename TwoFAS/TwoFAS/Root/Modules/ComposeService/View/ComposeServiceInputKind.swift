@@ -24,9 +24,3 @@ enum ComposeServiceInputKind: String {
     case privateKey
     case additionalInfo
 }
-
-enum ComposeServicePrivateKeyKind {
-    case empty
-    case hidden
-    case hiddenNonCopyable
-}

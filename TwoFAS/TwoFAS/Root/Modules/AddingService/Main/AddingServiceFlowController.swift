@@ -53,6 +53,7 @@ final class AddingServiceFlowController: FlowController {
     var onOverlayDismissed: (() -> Void)?
 
     private weak var parent: AddingServiceFlowControllerParent?
+    private var galleryViewController: UIViewController?
     // swiftlint:disable weak_delegate
     private var zoomTransitioningDelegate: ZoomFromRectTransitioningDelegate?
     // swiftlint:enable weak_delegate
@@ -202,7 +203,7 @@ extension AddingServiceFlowController: AddingServiceFlowControlling {
 
     func toGallery() {
         guard let _viewController else { return }
-        _ = SelectFromGalleryFlowController.present(
+        galleryViewController = SelectFromGalleryFlowController.present(
             on: _viewController,
             applyOverlay: true,
             parent: self
@@ -272,22 +273,27 @@ extension AddingServiceFlowController: GuideSelectorNavigationFlowControllerPare
 
 extension AddingServiceFlowController: SelectFromGalleryFlowControllerParent {
     func galleryDidFinish() {
+        galleryViewController = nil
         onOverlayDismissed?()
     }
 
     func galleryDidImport(count: Int) {
+        galleryViewController = nil
         parent?.addingServiceGalleryDidImport(count: count)
     }
 
     func galleryDidCancel() {
+        galleryViewController = nil
         onOverlayDismissed?()
     }
 
     func galleryServiceWasCreated(serviceData: ServiceData) {
+        galleryViewController = nil
         parent?.addingServiceToToken(serviceData)
     }
 
     func galleryToSendLogs(auditID: UUID) {
+        galleryViewController = nil
         parent?.addingServiceToSendLogs(auditID: auditID)
     }
 }

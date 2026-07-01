@@ -17,21 +17,20 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
 import SwiftUI
+import Common
 
 final class EncryptedByUserPasswordSyncViewController: UIViewController {
     var presenter: EncryptedByUserPasswordSyncPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Theme.Colors.Fill.background
+        view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
         let vc = UIHostingController(rootView: EncryptedByUserPasswordSyncView(presenter: presenter))
         vc.willMove(toParent: self)
         addChild(vc)
         view.addSubview(vc.view)
         vc.view.pinToParent()
-        vc.view.backgroundColor = Theme.Colors.Fill.background
-        vc.didMove(toParent: self)        
+        vc.didMove(toParent: self)
     }
 }

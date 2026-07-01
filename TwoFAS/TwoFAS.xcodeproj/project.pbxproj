@@ -1421,7 +1421,6 @@
 		C2F9D60A2A1FEC700085B65A /* TokensRevealButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F9D6092A1FEC700085B65A /* TokensRevealButton.swift */; };
 		C2F9E15D2D982D9C004B7DFA /* SyncMigrationToNewestVersionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F9E15C2D982D8A004B7DFA /* SyncMigrationToNewestVersionFlowController.swift */; };
 		C2F9E15F2D983938004B7DFA /* SyncMigrationToNewestVersionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F9E15E2D983936004B7DFA /* SyncMigrationToNewestVersionPresenter.swift */; };
-		C2F9E1612D983A85004B7DFA /* SyncMigrationToNewestVersionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F9E1602D983A83004B7DFA /* SyncMigrationToNewestVersionViewController.swift */; };
 		C2F9E1632D98607B004B7DFA /* SyncMigrationToNewestVersionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F9E1622D986079004B7DFA /* SyncMigrationToNewestVersionView.swift */; };
 		C2FA26692E9189230003BCF0 /* ReencryptionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA26672E91891B0003BCF0 /* ReencryptionHandler.swift */; };
 		C2FA266B2E91B3650003BCF0 /* ReencryptionHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FA266A2E91B3650003BCF0 /* ReencryptionHandling.swift */; };
@@ -3178,7 +3177,6 @@
 		C2F9D6092A1FEC700085B65A /* TokensRevealButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensRevealButton.swift; sourceTree = "<group>"; };
 		C2F9E15C2D982D8A004B7DFA /* SyncMigrationToNewestVersionFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationToNewestVersionFlowController.swift; sourceTree = "<group>"; };
 		C2F9E15E2D983936004B7DFA /* SyncMigrationToNewestVersionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationToNewestVersionPresenter.swift; sourceTree = "<group>"; };
-		C2F9E1602D983A83004B7DFA /* SyncMigrationToNewestVersionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationToNewestVersionViewController.swift; sourceTree = "<group>"; };
 		C2F9E1622D986079004B7DFA /* SyncMigrationToNewestVersionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationToNewestVersionView.swift; sourceTree = "<group>"; };
 		C2FA26672E91891B0003BCF0 /* ReencryptionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReencryptionHandler.swift; sourceTree = "<group>"; };
 		C2FA266A2E91B3650003BCF0 /* ReencryptionHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReencryptionHandling.swift; sourceTree = "<group>"; };
@@ -7843,7 +7841,6 @@
 				C2F9E1622D986079004B7DFA /* SyncMigrationToNewestVersionView.swift */,
 				C2F9E15C2D982D8A004B7DFA /* SyncMigrationToNewestVersionFlowController.swift */,
 				C2F9E15E2D983936004B7DFA /* SyncMigrationToNewestVersionPresenter.swift */,
-				C2F9E1602D983A83004B7DFA /* SyncMigrationToNewestVersionViewController.swift */,
 			);
 			path = MigrationToNewestVersion;
 			sourceTree = "<group>";
@@ -9412,7 +9409,6 @@
 				C2323C52276B535D00038B76 /* AppLockViewController.swift in Sources */,
 				C2C66F9B1FE06A4500AD5A1C /* GridViewModelDelegate.swift in Sources */,
 				C2CA2B7D258699DA009FB700 /* FirstCodeAddedStatsController.swift in Sources */,
-				C2F9E1612D983A85004B7DFA /* SyncMigrationToNewestVersionViewController.swift in Sources */,
 				C284AF77276016EB00FEE810 /* BackupDeleteModuleInteractor.swift in Sources */,
 				F359D064687935A24E141C3F /* BackupAdvancedModels.swift in Sources */,
 				6806E49D6D5E4129B7F5EC5F /* BackupAdvancedModuleInteractor.swift in Sources */,

@@ -30,15 +30,20 @@ public struct TFFormTextFieldSubmit {
     }
 }
 
-public enum TFFloatingTextFieldInputType {
-    case name
-    case email
-    case secret
-    case other
-}
-
 public struct TFFloatingTextField<FocusValue: Hashable>: View {
-    public typealias InputType = TFFloatingTextFieldInputType
+    public enum InputType {
+        case name
+        case email
+        case secret
+        case password
+        case other
+    }
+    
+    private enum SecureFieldKind: Hashable {
+        case secure
+        case plain
+    }
+
     // MARK: - Variable
     private let textFieldHeight: CGFloat = Size.textFieldHeight
     private let placeHolderText: String
@@ -51,12 +56,16 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
     private var text: String
     private let focused: FocusState<FocusValue?>.Binding
     private let focusValue: FocusValue
+    @FocusState
+    private var internalFocus: SecureFieldKind?
     @Binding
     private var errorMessage: String?
     @State
     private var isEditing = false
     @State
     private var clearTapped = false
+    @State
+    private var isPasswordRevealed = false
     @Environment(\.colorScheme)
     private var colorScheme
 
@@ -65,7 +74,15 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
     private let autocapitalization: TextInputAutocapitalization
 
     private var isFocused: Bool {
-        focused.wrappedValue == focusValue
+        internalFocus != nil
+    }
+
+    private var isSecure: Bool {
+        inputType == .password
+    }
+
+    private var showAsSecure: Bool {
+        isSecure && !isPasswordRevealed
     }
 
     private var shouldPlaceHolderMove: Bool {
@@ -105,7 +122,19 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
             textField()
                 .frame(maxWidth: .infinity)
         } trailingAccessory: {
-            if isFocused && !text.isEmpty && isEnabled {
+            if isSecure {
+                if isEnabled {
+                    Button {
+                        isPasswordRevealed.toggle()
+                    } label: {
+                        Image(systemName: isPasswordRevealed ? "eye.slash" : "eye")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: Size.mediumIconSize)
+                            .tint(.labelsTertiary)
+                    }
+                }
+            } else if isFocused && !text.isEmpty && isEnabled {
                 Button {
                     clearTapped.toggle()
                     clearTextField()
@@ -128,13 +157,23 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
 
     @ViewBuilder
     private func textField() -> some View {
-        TextField(
-            "",
-            text: $text,
-            prompt: isEditing || (!isEnabled && !text.isEmpty) ? nil : Text(placeHolderText)
-                .foregroundStyle(AppColor.labelsSecondary)
-        )
-        .focused(focused, equals: focusValue)
+        ZStack {
+            SecureField("", text: $text, prompt: promptText)
+                .focused($internalFocus, equals: .secure)
+                .focused(focused, equals: focusValue)
+                .opacity(showAsSecure ? 1 : 0)
+                .accessibilityHidden(!showAsSecure)
+                .allowsHitTesting(showAsSecure)
+                .transition(.opacity.animation(.easeInOut(duration: AnimationTiming.duration)))
+
+            TextField("", text: $text, prompt: promptText)
+                .focused($internalFocus, equals: .plain)
+                .focused(focused, equals: focusValue)
+                .opacity(showAsSecure ? 0 : 1)
+                .accessibilityHidden(showAsSecure)
+                .allowsHitTesting(!showAsSecure)
+                .transition(.opacity.animation(.easeInOut(duration: AnimationTiming.duration)))
+        }
         .modifier(FormatInputModifier(inputType))
         .foregroundStyle(isEnabled ? .labelsPrimary : .labelsTertiary)
         .accentColor(AppColor.accentsBrand.color(for: colorScheme))
@@ -142,55 +181,70 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
         .textStyle(.body, .medium)
         .textInputAutocapitalization(autocapitalization)
         .animation(Animation.easeInOut(duration: AnimationTiming.duration), value: EdgeInsets())
+        .animation(Animation.easeInOut(duration: AnimationTiming.duration), value: focused.wrappedValue)
         .frame(alignment: .leading)
         .accessibilityLabel(placeHolderText)
-        .onChange(of: isFocused) { _, newValue in
-            withAnimation {
-                isEditing = newValue
-            }
-        }
         .submitLabel(submit?.buttonType ?? .return)
         .onSubmit {
             DispatchQueue.main.async {
                 submit?.action?()
             }
         }
+        .onChange(of: internalFocus) { _, newValue in
+            withAnimation {
+                isEditing = newValue != nil
+            }
+        }
+        .onChange(of: showAsSecure) { _, newShowAsSecure in
+            guard internalFocus != nil else { return }
+            internalFocus = newShowAsSecure ? .secure : .plain
+        }
+    }
+
+    private var promptText: Text? {
+        isEditing || (!isEnabled && !text.isEmpty) ? nil : Text(placeHolderText)
+            .foregroundStyle(AppColor.labelsSecondary)
     }
 
     private func clearTextField() {
         text = ""
     }
-}
 
-private struct FormatInputModifier: ViewModifier {
-    let inputType: TFFloatingTextFieldInputType
+    private struct FormatInputModifier: ViewModifier {
+        let inputType: InputType
 
-    init(_ inputType: TFFloatingTextFieldInputType) {
-        self.inputType = inputType
-    }
+        init(_ inputType: InputType) {
+            self.inputType = inputType
+        }
 
-    @ViewBuilder
-    func body(content: Content) -> some View {
-        switch inputType {
-        case .email:
-            content
-                .keyboardType(.emailAddress)
-                .textContentType(.emailAddress)
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.never)
-        case .name:
-            content
-                .keyboardType(.asciiCapable)
-                .textContentType(.name)
-                .textInputAutocapitalization(.words)
-        case .secret:
-            content
-                .keyboardType(.alphabet)
-                .textContentType(nil)
-                .textInputAutocapitalization(.characters)
-                .autocorrectionDisabled()
-        case .other:
-            content
+        @ViewBuilder
+        func body(content: Content) -> some View {
+            switch inputType {
+            case .email:
+                content
+                    .keyboardType(.emailAddress)
+                    .textContentType(.emailAddress)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
+            case .name:
+                content
+                    .keyboardType(.asciiCapable)
+                    .textContentType(.name)
+                    .textInputAutocapitalization(.words)
+            case .secret:
+                content
+                    .keyboardType(.alphabet)
+                    .textContentType(nil)
+                    .textInputAutocapitalization(.characters)
+                    .autocorrectionDisabled()
+            case .password:
+                content
+                    .textContentType(.password)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
+            case .other:
+                content
+            }
         }
     }
 }
@@ -207,7 +261,7 @@ private struct Test: View {
     private var isFocused: Bool?
 
     @State
-    private var errorMessage: String?// = "Błąd"
+    private var errorMessage: String?
 
     var body: some View {
         VStack(spacing: .zero) {

@@ -68,7 +68,7 @@ protocol ComposeServiceModuleInteracting: AnyObject {
     var isPINSet: Bool { get }
     
     var serviceData: ServiceData? { get }
-        
+    
     var isBrowserExtensionAllowed: Bool { get }
     
     var isSecretCopyingBlocked: Bool { get }
@@ -90,7 +90,7 @@ protocol ComposeServiceModuleInteracting: AnyObject {
     func initialize()
     
     var advancedSettings: ComposeServiceAdvancedSettings { get }
-        
+    
     var sectionID: SectionID? { get }
     var selectedSectionTitle: String? { get }
     
@@ -130,7 +130,7 @@ final class ComposeServiceModuleInteractor {
     private var sectionState: ComposeServiceModuleInteractorSectionState = .none
     
     private(set) var badgeColor: TintColor = .default
-        
+    
     private let isServiceNameValid = ServiceRules.isServiceNameValid
     private let isPrivateKeyValid = ServiceRules.isPrivateKeyValid
     private let isPrivateKeyTooShort = ServiceRules.isPrivateKeyTooShort
@@ -188,7 +188,7 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
     var isLabelEnabled: Bool {
         iconType == .label
     }
-
+    
     var iconTypeName: String {
         serviceDefinitionInteractor.name(for: iconTypeID) ?? ""
     }
@@ -201,7 +201,7 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
         serviceName = newServiceName?.trim()
         validate()
     }
-
+    
     func setAdditionalInfo(_ newAdditionalInfo: String?) {
         let trimmed = newAdditionalInfo?.trim()
         additionalInfo = {
@@ -225,25 +225,26 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
         validate()
         guard isDataValid, let serviceData, let serviceName else { return }
         
-            modifyInteractor.updateService(
-                serviceData,
-                name: serviceName,
-                additionalInfo: additionalInfo,
-                badgeColor: badgeColor,
-                iconType: iconType,
-                iconTypeID: iconTypeID,
-                labelColor: labelColor,
-                labelTitle: labelTitle
-            )
-            if sectionState.isDifferent {
-                sectionInteractor.moveServiceToSection(move: serviceData.secret, to: sectionID)
-            }
+        modifyInteractor.updateService(
+            serviceData,
+            name: serviceName,
+            additionalInfo: additionalInfo,
+            badgeColor: badgeColor,
+            iconType: iconType,
+            iconTypeID: iconTypeID,
+            labelColor: labelColor,
+            labelTitle: labelTitle
+        )
+        if sectionState.isDifferent {
+            sectionInteractor.moveServiceToSection(move: serviceData.secret, to: sectionID)
+        }
+        logSave()
     }
     
     var isDataValid: Bool {
         isServiceNameCorrect && isAdditionalInfoCorrect
     }
-
+    
     var hasChanges: Bool {
         guard let serviceData else { return false }
         if (serviceName ?? "") != serviceData.name.trim() { return true }
@@ -256,7 +257,7 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
         if sectionState.isDifferent { return true }
         return false
     }
-
+    
     var isPINSet: Bool {
         protectionInteractor.isPINSet
     }

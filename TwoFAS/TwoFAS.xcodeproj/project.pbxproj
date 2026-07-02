@@ -298,10 +298,6 @@
 		C24471D125F51F760024B4C5 /* ComposeServiceFormError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24471D025F51F760024B4C5 /* ComposeServiceFormError.swift */; };
 		C244EF11268674650040A58F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C244EF10268674650040A58F /* Extensions.swift */; };
 		C244EF14268685BC0040A58F /* Sync2-Sync3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C244EF13268685BC0040A58F /* Sync2-Sync3.xcmappingmodel */; };
-		C245702228A04BAB008E99F4 /* GridViewGAImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C245702128A04BAB008E99F4 /* GridViewGAImportViewController.swift */; };
-		C245702428A04CBA008E99F4 /* GridViewGAImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C245702328A04CBA008E99F4 /* GridViewGAImportPresenter.swift */; };
-		C245702628A04DF6008E99F4 /* GridViewGAImportFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C245702528A04DF6008E99F4 /* GridViewGAImportFlowController.swift */; };
-		C245702828A0500E008E99F4 /* GridViewGAImportNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C245702728A0500E008E99F4 /* GridViewGAImportNavigationFlowController.swift */; };
 		C24587812D8B918B00F28B22 /* SyncMigrationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C245877F2D8B917100F28B22 /* SyncMigrationHandler.swift */; };
 		C24590F8280F52620079C21C /* SelectServicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24590F7280F52620079C21C /* SelectServicePresenter.swift */; };
 		C24590FA280F54400079C21C /* SelectServiceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24590F9280F54400079C21C /* SelectServiceModels.swift */; };
@@ -2273,10 +2269,6 @@
 		C244EF12268680F70040A58F /* Sync3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sync3.xcdatamodel; sourceTree = "<group>"; };
 		C244EF13268685BC0040A58F /* Sync2-Sync3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = "Sync2-Sync3.xcmappingmodel"; sourceTree = "<group>"; };
 		C244F9DA2275E62B009992D3 /* TokenState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenState.swift; sourceTree = "<group>"; };
-		C245702128A04BAB008E99F4 /* GridViewGAImportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewGAImportViewController.swift; sourceTree = "<group>"; };
-		C245702328A04CBA008E99F4 /* GridViewGAImportPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewGAImportPresenter.swift; sourceTree = "<group>"; };
-		C245702528A04DF6008E99F4 /* GridViewGAImportFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewGAImportFlowController.swift; sourceTree = "<group>"; };
-		C245702728A0500E008E99F4 /* GridViewGAImportNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewGAImportNavigationFlowController.swift; sourceTree = "<group>"; };
 		C245877F2D8B917100F28B22 /* SyncMigrationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationHandler.swift; sourceTree = "<group>"; };
 		C24590F7280F52620079C21C /* SelectServicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServicePresenter.swift; sourceTree = "<group>"; };
 		C24590F9280F54400079C21C /* SelectServiceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServiceModels.swift; sourceTree = "<group>"; };
@@ -4870,41 +4862,6 @@
 			path = Tokens;
 			sourceTree = "<group>";
 		};
-		C245701D28A048D1008E99F4 /* GAImport */ = {
-			isa = PBXGroup;
-			children = (
-				C245702028A048E5008E99F4 /* Flow */,
-				C245701F28A048DF008E99F4 /* Presenter */,
-				C245701E28A048DA008E99F4 /* View */,
-			);
-			path = GAImport;
-			sourceTree = "<group>";
-		};
-		C245701E28A048DA008E99F4 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C245702128A04BAB008E99F4 /* GridViewGAImportViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C245701F28A048DF008E99F4 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C245702328A04CBA008E99F4 /* GridViewGAImportPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C245702028A048E5008E99F4 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C245702728A0500E008E99F4 /* GridViewGAImportNavigationFlowController.swift */,
-				C245702528A04DF6008E99F4 /* GridViewGAImportFlowController.swift */,
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
 		C24590F0280F44DF0079C21C /* SelectService */ = {
 			isa = PBXGroup;
 			children = (
@@ -5303,7 +5260,6 @@
 		C25F4FD92622206F008F7755 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				C245701D28A048D1008E99F4 /* GAImport */,
 				C2B3D1A9267E91E9009E6DE0 /* TokensView.swift */,
 				C25F4FDA2622207F008F7755 /* TokensViewEmptySearchScreen.swift */,
 				C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */,
@@ -9036,7 +8992,6 @@
 				C27A54AE27F0FD0C00321D2B /* BrowserExtensionPairingViewController.swift in Sources */,
 				C2B077CD292A98AD0074517F /* UploadLogsNavigationFlowController.swift in Sources */,
 				C270365C293E9DDC00659CBF /* TokensModuleInteractor.swift in Sources */,
-				C245702828A0500E008E99F4 /* GridViewGAImportNavigationFlowController.swift in Sources */,
 				C26764B02872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift in Sources */,
 				C2C022212FAE28010045DDBC /* LoginView.swift in Sources */,
 				C28633AD1FF57C8600C8F4B4 /* Types.swift in Sources */,
@@ -9063,7 +9018,6 @@
 				C20E60F928188AA500AB002E /* PushNotificationPermissionViewController.swift in Sources */,
 				C213478C2D9885CB00D325F6 /* EncryptedByUserPasswordSyncModuleInteractor.swift in Sources */,
 				C2C56D4A27C99314003B4C43 /* ComposeServiceAdvancedSummaryFlowController.swift in Sources */,
-				C245702228A04BAB008E99F4 /* GridViewGAImportViewController.swift in Sources */,
 				C28FC6E02E4011580053B0BE /* TransferModuleInteractor.swift in Sources */,
 				C2CC0A3E29D0603000677A7B /* TransferPresenter+Menu.swift in Sources */,
 				C25371A2281DCF56005FB118 /* UINavigationController+.swift in Sources */,
@@ -9194,7 +9148,6 @@
 				C2625F9628BBC86B00D84C5C /* AboutFooter.swift in Sources */,
 				C2B39C7727A5908F00D3B579 /* SelectFromGalleryModuleInteractor.swift in Sources */,
 				C24471D125F51F760024B4C5 /* ComposeServiceFormError.swift in Sources */,
-				C245702428A04CBA008E99F4 /* GridViewGAImportPresenter.swift in Sources */,
 				C2147CE5205D7B790001D011 /* PINPadKey.swift in Sources */,
 				C23185662EC648E900DD1ABE /* BackupSetPasswordPresenter.swift in Sources */,
 				C26764AC287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift in Sources */,
@@ -9567,7 +9520,6 @@
 				C26BCE01281010A000CA6A9A /* SelectServiceModuleInteractor.swift in Sources */,
 				C2508E222753D1EE0072C564 /* SettingsMenuModels.swift in Sources */,
 				C23386F72780E54200F8DBC3 /* DeleteServicePresenter.swift in Sources */,
-				C245702628A04DF6008E99F4 /* GridViewGAImportFlowController.swift in Sources */,
 				C28705F42980776300745459 /* MainFlowController.swift in Sources */,
 				C21987C727961BF600724E63 /* CameraErrorTemplate.swift in Sources */,
 				C2D2F70C2FF02EAC0008FE4D /* LabelComposeFlowController.swift in Sources */,

@@ -434,24 +434,6 @@ extension TokensPlainFlowController: SelectFromGalleryFlowControllerParent {
     }
 }
 
-extension TokensPlainFlowController: GridViewGAImportNavigationFlowControllerParent {
-    func gaImportDidFinish() {
-        dismiss(actions: [.finishedFlow, .newData, .sync])
-    }
-    
-    func gaChooseQR() {
-        dismiss(actions: [.continuesFlow]) { [weak self] in
-            self?.toShowGallery()
-        }
-    }
-    
-    func gaScanQR() {
-        dismiss(actions: [.continuesFlow]) { [weak self] in
-            self?.viewController.presenter.handleShowCamera()
-        }
-    }
-}
-
 extension TokensPlainFlowController: TrashServiceFlowControllerParent {
     func didTrashService() {
         dismiss(actions: [.finishedFlow, .newData, .sync])

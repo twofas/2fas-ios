@@ -256,7 +256,6 @@ private struct IconSelectorOrderCell: View {
     let onCompanyIcon: () -> Void
 
     private let iconSize: CGFloat = 64
-    private let separatorWidth: CGFloat = 1
     
     var body: some View {
         HStack(spacing: .zero) {

@@ -48,13 +48,6 @@ public enum ImportFromFileTwoFASCheck {
     case unencrypted
 }
 
-public enum ImportFromFileAEGISParse {
-    case newerSchema
-    case encrypted
-    case error
-    case success([ServiceData])
-}
-
 public enum ImportFromFileTwoFASDecrypt {
     case success(ExchangeDataServices)
     case wrongPassword

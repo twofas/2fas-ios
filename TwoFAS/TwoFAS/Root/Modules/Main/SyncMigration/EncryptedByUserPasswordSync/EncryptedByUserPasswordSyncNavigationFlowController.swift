@@ -18,8 +18,6 @@
 //
 
 import UIKit
-import Data
-import Common
 
 protocol EncryptedByUserPasswordSyncNavigationFlowControllerParent: AnyObject {
     func closeEncryptedByUserPasswordSync()

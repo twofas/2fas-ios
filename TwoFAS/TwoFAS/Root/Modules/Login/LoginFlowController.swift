@@ -18,8 +18,6 @@
 //
 
 import SwiftUI
-import Data
-import Common
 
 protocol LoginFlowControllerParent: AnyObject {
     func loginClose()

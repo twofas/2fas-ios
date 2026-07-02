@@ -19,28 +19,6 @@
 
 import SwiftUI
 
-// MARK: - _TFPressStyle
-
-/// Shared press-interaction style for all 2FAS buttons.
-///
-/// On press-down:
-/// - Scale: 1.0 → 0.95
-/// - Opacity: 1.0 → 0.85
-/// - Animation: easeInOut 0.1 s
-/// - Haptic: rigid impact, intensity 0.6
-struct _TFPressStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-            .opacity(configuration.isPressed ? 0.85 : 1.0)
-            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
-            .sensoryFeedback(
-                .impact(flexibility: .rigid, intensity: 0.6),
-                trigger: configuration.isPressed
-            ) { _, new in new }
-    }
-}
-
 struct ButtonFeedbackStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label

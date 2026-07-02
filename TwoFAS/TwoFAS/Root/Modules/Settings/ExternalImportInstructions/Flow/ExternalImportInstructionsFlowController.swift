@@ -18,7 +18,6 @@
 //
 
 import UIKit
-import Data
 
 protocol ExternalImportInstructionsFlowControllerParent: AnyObject {
     func instructionsClose()

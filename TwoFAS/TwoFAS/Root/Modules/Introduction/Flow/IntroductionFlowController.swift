@@ -18,7 +18,6 @@
 //
 
 import UIKit
-import Data
 import Common
 
 protocol IntroductionFlowControllerParent: AnyObject {

@@ -19,7 +19,6 @@
 
 import UIKit
 import SwiftUI
-import Common
 
 final class ExportQuestionViewController: UIViewController {
     var presenter: ExportQuestionPresenter!

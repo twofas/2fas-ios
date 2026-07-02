@@ -18,7 +18,6 @@
 //
 
 import UIKit
-import Common
 import SwiftUI
 
 final class IntroductionViewController: UIViewController {

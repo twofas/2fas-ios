@@ -43,9 +43,3 @@ extension UIView {
         style.apply(to: view)
     }
 }
-
-final class ViewStyle: Style<UIView> { }
-
-extension UIView {
-    func apply(_ style: ViewStyle) { style.apply(to: self) }
-}

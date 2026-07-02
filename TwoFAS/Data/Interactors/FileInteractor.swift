@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Common
 
 public protocol FileInteracting: AnyObject {
     var url: URL? { get }

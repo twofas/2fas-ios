@@ -19,7 +19,6 @@
 
 import Foundation
 import Common
-import Storage
 
 public final class InteractorFactory {
     public static let shared = InteractorFactory()

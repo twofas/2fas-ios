@@ -18,8 +18,6 @@
 //
 
 import UIKit
-import Common
-import Data
 
 protocol BackupSetPasswordFlowControllerParent: AnyObject {
     func closeSetPassword()

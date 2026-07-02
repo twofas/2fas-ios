@@ -20,7 +20,6 @@
 import UIKit
 import SwiftUI
 import Common
-import Data
 
 protocol SyncMigrationToNewestVersionFlowControllerParent: AnyObject {
     func closeMigrationToNewestVersion()

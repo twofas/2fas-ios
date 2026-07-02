@@ -21,10 +21,6 @@ import Foundation
 import UIKit
 import Common
 
-struct NewsSection: TableViewSection {
-    var cells: [NewsCell]
-}
-
 struct NewsCell: Hashable, Identifiable {
     var id: String { newsItem.newsID }
     let icon: UIImage

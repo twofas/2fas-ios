@@ -52,16 +52,6 @@ struct MainContainerBottomContentGenerator: MainContainerContentGeneratable {
     func generate() -> UIView { MainContainerBottomNavigationGenerator.generate(from: elements) }
 }
 
-struct MainContainerForceLightMode: MainContainerGeneralConfigurable {
-    var interfaceStyle: UIUserInterfaceStyle { .light }
-    var userDidUseEnterKey: Callback?
-}
-
-struct MainContainerForceDarkMode: MainContainerGeneralConfigurable {
-    var interfaceStyle: UIUserInterfaceStyle { .dark }
-    var userDidUseEnterKey: Callback?
-}
-
 struct MainContainerNonScrollable: MainContainerGeneralConfigurable {
     var interfaceStyle: UIUserInterfaceStyle { .unspecified }
     var userDidUseEnterKey: Callback?

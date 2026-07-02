@@ -18,7 +18,6 @@
 //
 
 import UIKit
-import Common
 
 @Observable
 final class IntroductionPresenter {

@@ -18,7 +18,6 @@
 //
 
 import UIKit
-import Common
 import Data
 
 protocol EncryptedByUserPasswordSyncFlowControllerParent: AnyObject {

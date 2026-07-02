@@ -19,7 +19,6 @@
 
 import Foundation
 import Common
-import Sync
 
 public protocol SyncMigrationInteracting: AnyObject {
     var showMigrationToNewestVersion: (() -> Void)? { get set }

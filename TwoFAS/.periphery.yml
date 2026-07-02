@@ -1,20 +1,10 @@
 project: TwoFAS.xcodeproj
-retain_objc_accessible: true
 schemes:
 - TwoFAS
-targets:
-- CodeSupport
-- Common
-- NetworkStack
-- Protection
-- ProtectionTests
-- PushNotifications
-- Storage
-- Sync
-- TimeVerification
-- Token
-- TwoFAS
-- TwoFASAuth
-- TwoFASServiceIntent
-- TwoFASTests
-- TwoFASWidgetExtension
+retain_objc_accessible: true
+retain_swift_ui_previews: true
+report_exclude:
+- "**/*+Generated.swift"
+- "**/Generated/**"
+- "**/SourcePackages/**"
+- "**/*.pb.swift"

@@ -66,12 +66,6 @@ final class SettingsFlowController: FlowController {
         presenter.view = view
         view.presenter = presenter
         
-        view.tabBarItem = UITabBarItem(
-            title: T.Settings.settings,
-            image: Asset.tabBarIconSettingsInactive.image,
-            selectedImage: Asset.tabBarIconSettingsActive.image
-        )
-        
         return view
     }
     

@@ -32,14 +32,7 @@ final class TokensNavigationFlowController: NavigationFlowController {
         flowController.parent = parent
         
         let navi = CommonNavigationControllerFlow(flowController: flowController)
-        navi.tabBarItem = UITabBarItem(
-            title: T.Commons.tokens,
-            image: Asset.tabBarIconServicesInactive.image,
-            selectedImage: Asset.tabBarIconServicesActive.image
-        )
         flowController.navigationController = navi
-                
-        tabBarController.addTab(navi)
         
         return navi
     }

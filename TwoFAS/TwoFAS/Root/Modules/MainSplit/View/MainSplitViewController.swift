@@ -161,9 +161,22 @@ final class MainSplitViewController: UIViewController {
     }
     
     private func updateDisplayMode() {
+        if #available(iOS 26.0, *), !isAppNearFullScreen {
+            // Split-screen / stage-manager mode on iOS 26: menu only as overlay
+            split.preferredSplitBehavior = .overlay
+            if presenter.isMenuPortraitOverlayCollapsed {
+                guard split.preferredDisplayMode != .secondaryOnly else { return }
+                split.preferredDisplayMode = .secondaryOnly
+            } else {
+                guard split.preferredDisplayMode != .oneOverSecondary else { return }
+                split.preferredDisplayMode = .oneOverSecondary
+            }
+            return
+        }
+
         if UIApplication.isLandscape {
             split.preferredSplitBehavior = .tile
-            
+
             if presenter.isMenuLandscapeCollapsed {
                 guard split.preferredDisplayMode != .secondaryOnly else { return }
                 split.preferredDisplayMode = .secondaryOnly
@@ -173,18 +186,25 @@ final class MainSplitViewController: UIViewController {
             }
         } else {
             split.preferredSplitBehavior = .overlay
-            
+
             guard
                 split.preferredDisplayMode != .oneOverSecondary &&
                 split.preferredDisplayMode != .secondaryOnly
             else { return }
-            
+
             if presenter.isMenuPortraitOverlayCollapsed {
                 split.preferredDisplayMode = .secondaryOnly
             } else {
                 split.preferredDisplayMode = .oneOverSecondary
             }
         }
+    }
+
+    private var isAppNearFullScreen: Bool {
+        guard let window = view.window,
+              let screenBounds = window.windowScene?.screen.bounds else { return true }
+        let widthRatio = window.frame.width / screenBounds.width
+        return widthRatio > 0.85
     }
     
     deinit {

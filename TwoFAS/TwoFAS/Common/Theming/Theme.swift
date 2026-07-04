@@ -22,29 +22,30 @@ import Common
 
 enum Theme {
     static func applyAppearance() {
+        if #unavailable(iOS 26.0) {
+            let bgImage = Asset.barsBackground.image
+                .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
+            let shadowLine = Asset.shadowLine.image
+                .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+            
+            let navibarAppearance = UINavigationBar.appearance()
+            navibarAppearance.isTranslucent = false
+            navibarAppearance.setBackgroundImage(bgImage, for: .any, barMetrics: .default)
+            navibarAppearance.shadowImage = shadowLine
+            navibarAppearance.backgroundColor = Theme.Colors.Fill.background
+            navibarAppearance.tintColor = Theme.Colors.Fill.theme
+            navibarAppearance.barTintColor = Theme.Colors.Fill.theme
 
-        let bgImage = Asset.barsBackground.image
-            .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
-        let shadowLine = Asset.shadowLine.image
-            .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
-
-        let navibarAppearance = UINavigationBar.appearance()
-        navibarAppearance.isTranslucent = false
-        navibarAppearance.setBackgroundImage(bgImage, for: .any, barMetrics: .default)
-        navibarAppearance.shadowImage = shadowLine
-        navibarAppearance.backgroundColor = Theme.Colors.Fill.background
-        navibarAppearance.tintColor = Theme.Colors.Fill.theme
-        navibarAppearance.barTintColor = Theme.Colors.Fill.theme
-
-        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = Theme.Colors.Fill.theme
-        
-        let tabBarAppearance = UITabBar.appearance()
-        tabBarAppearance.backgroundColor = Theme.Colors.Fill.background
-        tabBarAppearance.tintColor = Colors.Controls.active
-        tabBarAppearance.unselectedItemTintColor = Colors.Controls.inactive
-        tabBarAppearance.shadowImage = shadowLine
-        tabBarAppearance.backgroundImage = bgImage
-        tabBarAppearance.isTranslucent = true
+            UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = Theme.Colors.Fill.theme
+            
+            let tabBarAppearance = UITabBar.appearance()
+            tabBarAppearance.backgroundColor = Theme.Colors.Fill.background
+            tabBarAppearance.tintColor = Colors.Controls.active
+            tabBarAppearance.unselectedItemTintColor = Colors.Controls.inactive
+            tabBarAppearance.shadowImage = shadowLine
+            tabBarAppearance.backgroundImage = bgImage
+            tabBarAppearance.isTranslucent = true
+        }
     }
     
     enum Colors {

@@ -213,19 +213,30 @@ extension SettingsViewController: UISplitViewControllerDelegate {
         Log("Settings Split View collapsing into: primary: \(proposedTopColumn == UISplitViewController.Column.primary), secondary: \(proposedTopColumn == UISplitViewController.Column.secondary), compact: \(proposedTopColumn == UISplitViewController.Column.compact)", module: .ui)
         // swiftlint:enable line_length
         presenter.handleCollapse()
-        
+
         return .primary
     }
-    
+
     func splitViewController(
         _ svc: UISplitViewController,
         displayModeForExpandingToProposedDisplayMode proposedDisplayMode: UISplitViewController.DisplayMode
     ) -> UISplitViewController.DisplayMode {
         Log("Settings Split View expanding into into: \(proposedDisplayMode.rawValue)", module: .ui)
-        
+
         presenter.handleExpansion()
-        
-        return proposedDisplayMode
+
+        return .oneBesideSecondary
+    }
+
+    func splitViewController(
+        _ svc: UISplitViewController,
+        willChangeTo displayMode: UISplitViewController.DisplayMode
+    ) {
+        if !svc.isCollapsed, displayMode != .oneBesideSecondary {
+            DispatchQueue.main.async {
+                svc.preferredDisplayMode = .oneBesideSecondary
+            }
+        }
     }
 }
 

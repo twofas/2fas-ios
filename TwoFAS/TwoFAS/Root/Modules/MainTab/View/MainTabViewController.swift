@@ -28,24 +28,173 @@ protocol MainTabViewControlling: AnyObject {
 
 final class MainTabViewController: UITabBarController {
     var presenter: MainTabPresenter!
+    weak var tokensNavi: UINavigationController?
+    weak var settingsView: SettingsViewController?
+    private let settingsContainer = UIViewController()
     
+    private var internalTabs: [UITab] = []
+
+    private static let transparentPixelImage: UIImage = {
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1))
+        return renderer.image { context in
+            UIColor.clear.setFill()
+            context.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        }
+        .withRenderingMode(.alwaysOriginal)
+    }()
+
+    private let plusButton = UIButton(type: .system)
+    private var plusButtonCenterXConstraint: NSLayoutConstraint?
+    private var plusButtonCenterYConstraint: NSLayoutConstraint?
+    private var plusButtonWidthConstraint: NSLayoutConstraint?
+    private var plusButtonHeightConstraint: NSLayoutConstraint?
+
+    private var didSetupTabs = false
+
     private var tokensVC: TokensViewController? {
         (viewControllers?[safe: ViewPath.main.index] as? UINavigationController)?
             .viewControllers.first as? TokensViewController
     }
-    
+
     private var settingsVC: SettingsViewController? {
-        viewControllers?[safe: ViewPath.settings(option: nil).index] as? SettingsViewController
+        settingsView
+    }
+
+    func attachSettings(_ settings: SettingsViewController) {
+        settingsView = settings
+        guard settings.parent !== settingsContainer else { return }
+        if settings.parent != nil {
+            settings.willMove(toParent: nil)
+            settings.view.removeFromSuperview()
+            settings.removeFromParent()
+        }
+        settingsContainer.addChild(settings)
+        settings.view.frame = settingsContainer.view.bounds
+        settings.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        settingsContainer.view.addSubview(settings.view)
+        settings.didMove(toParent: settingsContainer)
+    }
+
+    func detachSettings() {
+        guard let settings = settingsView, settings.parent === settingsContainer else { return }
+        settings.willMove(toParent: nil)
+        settings.view.removeFromSuperview()
+        settings.removeFromParent()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
             self.changeStyling()
         }
-        
+
         delegate = self
+    }
+    
+    func setup() {
+        guard !didSetupTabs else { return }
+        didSetupTabs = true
+
+        let tokensTab = UITab(
+            title: T.Commons.tokens,
+            image: UIImage(systemName: "lock.badge.clock.fill"),
+            identifier: "tokens"
+        ) { [weak self] _ in
+            self?.tokensNavi ?? UIViewController()
+        }
+
+        let settingsTab = UITab(
+            title: T.Settings.settings,
+            image: UIImage(systemName: "gearshape.fill"),
+            identifier: "settings"
+        ) { [weak self] _ in
+            self?.settingsContainer ?? UIViewController()
+        }
+
+        if #available(iOS 26.0, *) {
+            let spacerTab = UISearchTab { _ in UIViewController() }
+            spacerTab.title = ""
+            spacerTab.image = Self.transparentPixelImage
+            spacerTab.automaticallyActivatesSearch = false
+            spacerTab.isEnabled = false
+            internalTabs = [tokensTab, settingsTab, spacerTab]
+        } else {
+            internalTabs = [tokensTab, settingsTab]
+        }
+        tabs = internalTabs
+
+        tabBar.tintColor = .systemRed
+
+        if #available(iOS 26.0, *) {
+            setupPlusButton()
+        }
+    }
+
+    @available(iOS 26.0, *)
+    private func setupPlusButton() {
+        var config = UIButton.Configuration.prominentGlass()
+        config.image = UIImage(systemName: "plus")
+        config.preferredSymbolConfigurationForImage = .init(pointSize: 22, weight: .semibold)
+
+        plusButton.configuration = config
+        plusButton.tintColor = .systemRed
+        plusButton.addAction(UIAction { [weak self] _ in
+            self?.handleAddTabTapped()
+        }, for: .touchUpInside)
+
+        plusButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(plusButton)
+
+        let centerX = plusButton.centerXAnchor.constraint(equalTo: view.leadingAnchor)
+        let centerY = plusButton.centerYAnchor.constraint(equalTo: view.topAnchor)
+        let width = plusButton.widthAnchor.constraint(equalToConstant: 56)
+        let height = plusButton.heightAnchor.constraint(equalToConstant: 56)
+        plusButtonCenterXConstraint = centerX
+        plusButtonCenterYConstraint = centerY
+        plusButtonWidthConstraint = width
+        plusButtonHeightConstraint = height
+
+        NSLayoutConstraint.activate([width, height, centerX, centerY])
+
+        plusButton.isHidden = true
+    }
+
+    @available(iOS 26.0, *)
+    private func alignPlusButtonToSpacerTab() {
+        guard tabBar.window != nil,
+              let auxiliary = findSubview(in: tabBar, classNameContains: "AuxiliaryView") else {
+            plusButton.isHidden = true
+            return
+        }
+        let target = findSubview(in: auxiliary, classNameContains: "TabButton") ?? auxiliary
+        let frameInTabBar = target.convert(target.bounds, to: tabBar)
+        guard frameInTabBar.width > 0, frameInTabBar.height > 0 else {
+            plusButton.isHidden = true
+            return
+        }
+        let center = view.convert(CGPoint(x: frameInTabBar.midX, y: frameInTabBar.midY), from: tabBar)
+        plusButtonCenterXConstraint?.constant = center.x
+        plusButtonCenterYConstraint?.constant = center.y
+        plusButtonWidthConstraint?.constant = frameInTabBar.width
+        plusButtonHeightConstraint?.constant = frameInTabBar.height
+        plusButton.isHidden = false
+    }
+
+    private func findSubview(in root: UIView, classNameContains needle: String) -> UIView? {
+        for sub in root.subviews {
+            if String(describing: type(of: sub)).contains(needle) {
+                return sub
+            }
+            if let match = findSubview(in: sub, classNameContains: needle) {
+                return match
+            }
+        }
+        return nil
+    }
+
+    private func handleAddTabTapped() {
+        // TODO: wire to presenter
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,12 +205,14 @@ final class MainTabViewController: UITabBarController {
     }
     
     private func changeStyling() {
+        guard #unavailable(iOS 26.0) else { return }
+
         let app = tabBar.standardAppearance.copy()
         app.backgroundColor = Theme.Colors.Fill.background
         app.shadowColor = Theme.Colors.Line.secondaryLine
         app.shadowImage = Asset.shadowLine.image
             .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
-        
+
         let tabBarItemAppearance = UITabBarItemAppearance()
         tabBarItemAppearance.normal.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: Theme.Colors.Controls.inactive,
@@ -75,26 +226,30 @@ final class MainTabViewController: UITabBarController {
             NSAttributedString.Key.foregroundColor: Theme.Colors.Controls.active,
             NSAttributedString.Key.font: Theme.Fonts.tabBar
         ]
-        
+
         tabBarItemAppearance.normal.badgeTextAttributes = [.foregroundColor: Theme.Colors.Fill.theme]
         tabBarItemAppearance.selected.badgeTextAttributes = [.foregroundColor: Theme.Colors.Fill.theme]
         tabBarItemAppearance.focused.badgeTextAttributes = [.foregroundColor: Theme.Colors.Fill.theme]
-        
+
         tabBarItemAppearance.normal.badgeBackgroundColor = .clear
         tabBarItemAppearance.selected.badgeBackgroundColor = .clear
         tabBarItemAppearance.focused.badgeBackgroundColor = .clear
-        
+
         app.compactInlineLayoutAppearance = tabBarItemAppearance
         app.inlineLayoutAppearance = tabBarItemAppearance
         app.stackedLayoutAppearance = tabBarItemAppearance
-        
+
         tabBar.standardAppearance = app
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        NotificationBottomOffset.offset = tabBar.frame.height
+
+        if #available(iOS 26.0, *) {
+            alignPlusButtonToSpacerTab()
+        } else {
+            NotificationBottomOffset.offset = tabBar.frame.height
+        }
     }
     
     override func willMove(toParent parent: UIViewController?) {
@@ -114,11 +269,21 @@ final class MainTabViewController: UITabBarController {
 
 extension MainTabViewController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if #available(iOS 26.0, *), selectedTab is UISearchTab {
+            return
+        }
         let viewPath: ViewPath = {
-            if selectedIndex == 0 {
-                return .main
+            if #available(iOS 26.0, *) {
+                if let selected = selectedTab, selected === internalTabs.first {
+                    return .main
+                }
+                return .settings(option: settingsVC?.currentView)
+            } else {
+                if selectedIndex == 0 {
+                    return .main
+                }
+                return .settings(option: settingsVC?.currentView)
             }
-            return .settings(option: settingsVC?.currentView)
         }()
         presenter.handleDidSelectViewPath(viewPath)
     }
@@ -126,7 +291,15 @@ extension MainTabViewController: UITabBarControllerDelegate {
 
 extension MainTabViewController: MainTabViewControlling {
     func setView(_ viewPath: ViewPath) {
-        selectedIndex = viewPath.index
+        if #available(iOS 26.0, *), internalTabs.indices.contains(viewPath.index) {
+            let tab = internalTabs[viewPath.index]
+            selectedTab = tab
+            DispatchQueue.main.async { [weak self] in
+                self?.selectedTab = tab
+            }
+        } else {
+            selectedIndex = viewPath.index
+        }
     }
     
     func scrollToTokensTop() {

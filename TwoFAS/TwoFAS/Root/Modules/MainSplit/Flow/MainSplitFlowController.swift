@@ -87,19 +87,14 @@ extension MainSplitFlowController: MainSplitFlowControlling {
         let currentViewController = viewController.contentNavi.viewControllers.first
         TokensPlainFlowController.showAsTab(viewController: tokensViewController, in: tokensTabNavi)
         viewController.tabBar?.presenter.resetViewPath()
-        viewController.tabBar?.setViewControllers(
-            [tokensTabNavi, settingsViewController],
-            animated: false
-        )
-        viewController.tabBar?.selectedIndex = {
-            guard let currentViewController else {
-                return 0
-            }
-            if currentViewController == tokensViewController {
-                return 0
-            }
-            return 1
+        viewController.tabBar?.tokensNavi = tokensTabNavi
+        viewController.tabBar?.setup()
+        viewController.tabBar?.attachSettings(settingsViewController)
+        let targetPath: ViewPath = {
+            guard let currentViewController else { return .main }
+            return currentViewController == tokensViewController ? .main : .settings(option: nil)
         }()
+        viewController.tabBar?.setView(targetPath)
         viewController.settingsViewController?.hideRevealButton()
         viewController.contentNavi.setViewControllers([], animated: false)
     }
@@ -111,8 +106,8 @@ extension MainSplitFlowController: MainSplitFlowControlling {
         else { return }
     
         tokensTabNavi.setViewControllers([], animated: false)
-        viewController.tabBar?.setViewControllers([tokensTabNavi], animated: false)
-        
+        viewController.tabBar?.detachSettings()
+
         if selectedViewController == tokensTabNavi {
             mainMenuToMain()
         } else {

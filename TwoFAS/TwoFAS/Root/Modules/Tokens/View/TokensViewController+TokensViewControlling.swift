@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 protocol TokensViewControlling: AnyObject {
     func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>, scrollTo: IndexPath?)
@@ -140,85 +141,40 @@ extension TokensViewController: TokensViewControlling {
                 newsButton = .unread(uiBarButtonItem)
                 return uiBarButtonItem
             } else {
-                let naviButton = UIButton(type: .custom)
-                naviButton.setBackgroundImage(Asset.navibarNewsIcon.image, for: .normal)
-                naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
-                naviButton.translatesAutoresizingMaskIntoConstraints = false
-                naviButton.accessibilityLabel = T.Commons.notifications
-                let uiBarButtonItem = UIBarButtonItem(customView: naviButton)
+                let uiBarButtonItem: UIBarButtonItem
+                if #available(iOS 26.0, *) {
+                    uiBarButtonItem = UIBarButtonItem(
+                        image: Asset.navibarNewsIcon.image,
+                        style: .plain,
+                        target: self,
+                        action: #selector(showNotifications)
+                    )
+                } else {
+                    let naviButton = UIButton(type: .custom)
+                    naviButton.setBackgroundImage(Asset.navibarNewsIcon.image, for: .normal)
+                    naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
+                    naviButton.translatesAutoresizingMaskIntoConstraints = false
+                    uiBarButtonItem = UIBarButtonItem(customView: naviButton)
+                }
+                uiBarButtonItem.accessibilityLabel = T.Commons.notifications
                 newsButton = .read(uiBarButtonItem)
                 return uiBarButtonItem
             }
         }
-        
-        func createAddButton(image: UIImage) -> UIBarButtonItem {
-            let buttonAdd = UIBarButtonItem(
-                image: image,
-                style: .plain,
-                target: self,
-                action: #selector(addServiceAction)
-            )
-            buttonAdd.accessibilityLabel = T.Voiceover.addService
-            return buttonAdd
+
+        func resolvedNewsButton() -> UIBarButtonItem {
+            switch (hasUnreadNews, newsButton) {
+            case (true, .unread(let b)): return b
+            case (false, .read(let b)): return b
+            default: return createNewsButton()
+            }
         }
-            
+
         switch state {
         case .firstTime:
-            switch (hasUnreadNews, newsButton) {
-            case (true, .unread(let unreadNewsButton)):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAddFirst.image),
-                    unreadNewsButton
-                ]
-            case (false, .unread):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAddFirst.image),
-                    createNewsButton()
-                ]
-            case (true, .read):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAddFirst.image),
-                    createNewsButton()
-                ]
-            case (false, .read(let readNewsButton)):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAddFirst.image),
-                    readNewsButton
-                ]
-            case (_, .none):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAddFirst.image),
-                    createNewsButton()
-                ]
-            }
+            navigationItem.rightBarButtonItems = [resolvedNewsButton()]
         case .normal:
-            switch (hasUnreadNews, newsButton) {
-            case (true, .unread(let unreadNewsButton)):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAdd.image),
-                    unreadNewsButton
-                ]
-            case (false, .unread):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAdd.image),
-                    createNewsButton()
-                ]
-            case (true, .read):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAdd.image),
-                    createNewsButton()
-                ]
-            case (false, .read(let readNewsButton)):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAdd.image),
-                    readNewsButton
-                ]
-            case (_, .none):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAdd.image),
-                    createNewsButton()
-                ]
-            }
+            navigationItem.rightBarButtonItems = [makeMoreMenuButton(), resolvedNewsButton()]
         case .none:
             let buttonSection = UIBarButtonItem(
                 image: Asset.addCategory.image,
@@ -227,28 +183,61 @@ extension TokensViewController: TokensViewControlling {
                 action: #selector(addSectionAction)
             )
             buttonSection.accessibilityLabel = T.Voiceover.addGroup
-            let buttonSort = UIBarButtonItem(
-                image: Asset.naviSortIcon.image,
-                style: .plain,
-                target: self,
-                action: #selector(showSortSelection)
-            )
-            buttonSort.accessibilityLabel = T.Voiceover.sortByTitle
-            navigationItem.rightBarButtonItems = [buttonSection, buttonSort]
+            navigationItem.rightBarButtonItems = [buttonSection]
+        }
+    }
+
+    private func makeMoreMenuButton() -> UIBarButtonItem {
+        let editAction = UIAction(
+            title: T.Commons.edit,
+            image: UIImage(systemName: "pencil")
+        ) { [weak self] _ in
+            self?.presenter.handleEnterEditMode()
+        }
+
+        let deferredSortChildren = UIDeferredMenuElement.uncached { [weak self] completion in
+            guard let self else {
+                completion([])
+                return
+            }
+            let selected = self.presenter.selectedSortType
+            let actions: [UIAction] = SortType.allCases.map { sortType in
+                UIAction(
+                    title: sortType.localized,
+                    image: UIImage(systemName: self.sortSystemImageName(for: sortType)),
+                    state: sortType == selected ? .on : .off
+                ) { [weak self] _ in
+                    self?.presenter.handleSetSortType(sortType)
+                }
+            }
+            completion(actions)
+        }
+        let sortMenu = UIMenu(
+            title: T.Tokens.sortBy,
+            image: Asset.naviSortIcon.image,
+            children: [deferredSortChildren]
+        )
+
+        let menu = UIMenu(children: [editAction, sortMenu])
+        let button = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), menu: menu)
+        button.accessibilityLabel = T.Commons.optionsTitle
+        return button
+    }
+
+    private func sortSystemImageName(for sortType: SortType) -> String {
+        switch sortType {
+        case .az: return "arrow.down"
+        case .za: return "arrow.up"
+        case .manual: return "line.3.horizontal"
         }
     }
     
     func updateEditState(using state: TokensViewControllerEditState) {
         let button: UIBarButtonItem?
-        
+
         switch state {
         case .edit:
-            button = UIBarButtonItem(
-                title: T.Commons.edit,
-                style: .plain,
-                target: self,
-                action: #selector(enterEditMode)
-            )
+            button = nil
             tokensView.isEditing = false
         case .cancel:
             button = UIBarButtonItem(
@@ -262,7 +251,7 @@ extension TokensViewController: TokensViewControlling {
             button = nil
             tokensView.isEditing = false
         }
-        
+
         navigationItem.leftBarButtonItem = button
     }
     
@@ -297,16 +286,23 @@ extension TokensViewController: TokensViewControlling {
     func addSearchBar() {
         guard !searchBarAdded else { return }
         searchBarAdded = true
+        if #available(iOS 26.0, *) {
+            navigationItem.preferredSearchBarPlacement = .stacked
+        }
         navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = true
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     func removeSearchBar() {
         guard searchBarAdded else { return }
         searchBarAdded = false
         navigationItem.searchController?.isActive = false
-        navigationItem.largeTitleDisplayMode = .never
         navigationItem.searchController = nil
+        if #available(iOS 26.0, *), traitCollection.horizontalSizeClass == .compact {
+            navigationItem.largeTitleDisplayMode = .always
+        } else {
+            navigationItem.largeTitleDisplayMode = .never
+        }
     }
     
     func stopSearch() {

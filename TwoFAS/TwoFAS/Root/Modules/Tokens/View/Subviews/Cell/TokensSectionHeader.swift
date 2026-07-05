@@ -33,12 +33,6 @@ final class TokensSectionHeader: UICollectionReusableView {
     
     weak var dataSource: TokensSectionHeaderDataSource?
     
-    private let spacingLineView: UIView = {
-        let v = UIView()
-        v.backgroundColor = Theme.Colors.Line.secondaryLine
-        return v
-    }()
-    
     private let titleLabel = StandardLabel()
     private let counter = ElementCounter()
     
@@ -96,17 +90,10 @@ final class TokensSectionHeader: UICollectionReusableView {
 
 private extension TokensSectionHeader {
     func setupBackground() {
-        backgroundColor = Theme.Colors.Fill.System.second
+        backgroundColor = AppColor.backgroundsSecondary.uiColor
     }
     
     func setupLayout() {
-        addSubview(spacingLineView, with: [
-            spacingLineView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            spacingLineView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            spacingLineView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            spacingLineView.heightAnchor.constraint(equalToConstant: Theme.Metrics.lineWidth)
-        ])
-        
         addSubview(counter, with: [
             counter.topAnchor.constraint(equalTo: topAnchor, constant: Spacing.M.rawValue),
             counter.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Spacing.M.rawValue),

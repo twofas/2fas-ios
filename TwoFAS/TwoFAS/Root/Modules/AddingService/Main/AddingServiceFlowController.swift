@@ -112,7 +112,7 @@ final class AddingServiceFlowController: FlowController {
 
     private static func zoomSourceView(in viewController: UIViewController) -> UIView {
         if let existing = viewController.view.viewWithTag(zoomSourceTag) {
-            return existing
+            existing.removeFromSuperview()
         }
 
         let marker = UIView()
@@ -123,25 +123,40 @@ final class AddingServiceFlowController: FlowController {
         marker.translatesAutoresizingMaskIntoConstraints = false
         viewController.view.addSubview(marker)
 
-        let topInset = viewController.view.safeAreaInsets.top
-        let constraints: [NSLayoutConstraint] = if topInset >= DynamicIsland.detectionThreshold {
-            [
-                marker.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor),
-                marker.widthAnchor.constraint(equalToConstant: DynamicIsland.width),
-                marker.heightAnchor.constraint(equalToConstant: DynamicIsland.height),
-                marker.bottomAnchor.constraint(
-                    equalTo: viewController.view.topAnchor,
-                    constant: topInset - DynamicIsland.bottomMargin
-                )
+        let appStateInteractor = InteractorFactory.shared.appStateInteractor()
+        let plusRectInWindow = appStateInteractor.plusButtonRect
+
+        let constraints: [NSLayoutConstraint]
+        if let plusRect = plusRectInWindow,
+           let window = viewController.view.window {
+            let rectInVC = window.convert(plusRect, to: viewController.view)
+            constraints = [
+                marker.leadingAnchor.constraint(equalTo: viewController.view.leadingAnchor, constant: rectInVC.minX),
+                marker.topAnchor.constraint(equalTo: viewController.view.topAnchor, constant: rectInVC.minY),
+                marker.widthAnchor.constraint(equalToConstant: rectInVC.width),
+                marker.heightAnchor.constraint(equalToConstant: rectInVC.height)
             ]
         } else {
-            // Notch / iPad / older devices
-            [
-                marker.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor),
-                marker.topAnchor.constraint(equalTo: viewController.view.topAnchor),
-                marker.widthAnchor.constraint(equalToConstant: Fallback.pointSize),
-                marker.heightAnchor.constraint(equalToConstant: Fallback.pointSize)
-            ]
+            let topInset = viewController.view.safeAreaInsets.top
+            if topInset >= DynamicIsland.detectionThreshold {
+                constraints = [
+                    marker.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor),
+                    marker.widthAnchor.constraint(equalToConstant: DynamicIsland.width),
+                    marker.heightAnchor.constraint(equalToConstant: DynamicIsland.height),
+                    marker.bottomAnchor.constraint(
+                        equalTo: viewController.view.topAnchor,
+                        constant: topInset - DynamicIsland.bottomMargin
+                    )
+                ]
+            } else {
+                // Notch / iPad / older devices
+                constraints = [
+                    marker.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor),
+                    marker.topAnchor.constraint(equalTo: viewController.view.topAnchor),
+                    marker.widthAnchor.constraint(equalToConstant: Fallback.pointSize),
+                    marker.heightAnchor.constraint(equalToConstant: Fallback.pointSize)
+                ]
+            }
         }
         NSLayoutConstraint.activate(constraints)
 
@@ -326,9 +341,14 @@ private final class ZoomFromRectAnimator: NSObject, UIViewControllerAnimatedTran
     }
 
     func animateTransition(using context: UIViewControllerContextTransitioning) {
+        let interactor = InteractorFactory.shared.appStateInteractor()
         switch direction {
-        case .present: animatePresent(context: context)
-        case .dismiss: animateDismiss(context: context)
+        case .present:
+            interactor.saveIsAddingServiceVisible(true)
+            animatePresent(context: context)
+        case .dismiss:
+            interactor.saveIsAddingServiceVisible(false)
+            animateDismiss(context: context)
         }
     }
 

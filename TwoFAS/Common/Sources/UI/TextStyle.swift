@@ -317,3 +317,66 @@ public extension View {
         modifier(TextStyleModifier(style: style, variant: variant, leading: leading))
     }
 }
+
+// MARK: - UIKit Support
+
+#if os(iOS)
+import UIKit
+
+public extension TextStyle {
+    /// `UIFont` for this style/variant. Fixed size (no Dynamic Type scaling),
+    /// matching the SwiftUI `Font.system(size:weight:design:)` behavior.
+    ///
+    /// ```swift
+    /// label.font = TextStyle.headline.uiFont()
+    /// label.font = TextStyle.body.uiFont(.emphasized)
+    /// ```
+    func uiFont(_ variant: TextStyleVariant = .regular) -> UIFont {
+        let attrs = attributes(variant: variant, leading: .standard)
+        let base = UIFont.systemFont(ofSize: attrs.size, weight: attrs.weight.uiFontWeight)
+        guard attrs.isItalic else { return base }
+        let descriptor = base.fontDescriptor.withSymbolicTraits(.traitItalic) ?? base.fontDescriptor
+        return UIFont(descriptor: descriptor, size: attrs.size)
+    }
+
+    /// `NSAttributedString` attributes for this style — font, kern (tracking),
+    /// and a paragraph style with matching min/max line height.
+    ///
+    /// ```swift
+    /// label.attributedText = NSAttributedString(
+    ///     string: "Hello",
+    ///     attributes: TextStyle.body.attributedStringAttributes(.emphasized, .loose)
+    /// )
+    /// ```
+    func attributedStringAttributes(
+        _ variant: TextStyleVariant = .regular,
+        _ leading: TextStyleLeading = .standard
+    ) -> [NSAttributedString.Key: Any] {
+        let attrs = attributes(variant: variant, leading: leading)
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.minimumLineHeight = attrs.lineHeight
+        paragraph.maximumLineHeight = attrs.lineHeight
+        return [
+            .font: uiFont(variant),
+            .kern: attrs.tracking,
+            .paragraphStyle: paragraph
+        ]
+    }
+}
+
+private extension Font.Weight {
+    var uiFontWeight: UIFont.Weight {
+        switch self {
+        case .ultraLight: .ultraLight
+        case .thin: .thin
+        case .light: .light
+        case .medium: .medium
+        case .semibold: .semibold
+        case .bold: .bold
+        case .heavy: .heavy
+        case .black: .black
+        default: .regular
+        }
+    }
+}
+#endif

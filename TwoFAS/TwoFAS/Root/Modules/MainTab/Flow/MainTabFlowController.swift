@@ -24,12 +24,14 @@ protocol MainTabFlowControllerParent: AnyObject {
     func tabNavigatedToViewPath(_ viewPath: ViewPath)
     func tabReady()
     func tabToTokens()
+    func tabToAddService()
 }
 
 protocol MainTabFlowControlling: AnyObject {
     func toMainChangedViewPath(_ viewPath: ViewPath)
     func toTabIsReady()
     func tokensSwitchToTokensTab()
+    func toAddService()
 }
 
 final class MainTabFlowController: FlowController {
@@ -44,7 +46,8 @@ final class MainTabFlowController: FlowController {
         flowController.parent = parent
                 
         let presenter = MainTabPresenter(
-            flowController: flowController
+            flowController: flowController,
+            interactor: ModuleInteractorFactory.shared.mainTabModuleInteractor()
         )
         view.presenter = presenter
         presenter.view = view
@@ -72,6 +75,10 @@ extension MainTabFlowController: MainTabFlowControlling {
     
     func tokensSwitchToTokensTab() {
         parent?.tabToTokens()
+    }
+
+    func toAddService() {
+        parent?.tabToAddService()
     }
 }
 

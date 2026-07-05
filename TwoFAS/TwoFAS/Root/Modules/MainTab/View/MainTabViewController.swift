@@ -90,6 +90,35 @@ final class MainTabViewController: UITabBarController {
         }
 
         delegate = self
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(addingServiceVisibilityDidChange),
+            name: .addingServiceVisibilityDidChange,
+            object: nil
+        )
+    }
+
+    @objc
+    private func addingServiceVisibilityDidChange() {
+        guard #available(iOS 26.0, *) else { return }
+        animatePlusButton(disabled: presenter.isAddingServiceVisible)
+    }
+
+    @available(iOS 26.0, *)
+    private func animatePlusButton(disabled: Bool) {
+        let targetTint: UIColor = disabled ? .systemGray3 : .systemRed
+        plusButton.isUserInteractionEnabled = !disabled
+        UIView.animate(
+            withDuration: 0.35,
+            delay: 0,
+            usingSpringWithDamping: 0.85,
+            initialSpringVelocity: 0,
+            options: .curveEaseInOut,
+            animations: { [self] in
+                plusButton.tintColor = targetTint
+            }
+        )
     }
     
     func setup() {
@@ -106,7 +135,7 @@ final class MainTabViewController: UITabBarController {
 
         let settingsTab = UITab(
             title: T.Settings.settings,
-            image: UIImage(systemName: "gearshape.fill"),
+            image: UIImage(systemName: "gear"),
             identifier: "settings"
         ) { [weak self] _ in
             self?.settingsContainer ?? UIViewController()
@@ -165,12 +194,14 @@ final class MainTabViewController: UITabBarController {
         guard tabBar.window != nil,
               let auxiliary = findSubview(in: tabBar, classNameContains: "AuxiliaryView") else {
             plusButton.isHidden = true
+            presenter.savePlusButtonRect(nil)
             return
         }
         let target = findSubview(in: auxiliary, classNameContains: "TabButton") ?? auxiliary
         let frameInTabBar = target.convert(target.bounds, to: tabBar)
         guard frameInTabBar.width > 0, frameInTabBar.height > 0 else {
             plusButton.isHidden = true
+            presenter.savePlusButtonRect(nil)
             return
         }
         let center = view.convert(CGPoint(x: frameInTabBar.midX, y: frameInTabBar.midY), from: tabBar)
@@ -178,7 +209,18 @@ final class MainTabViewController: UITabBarController {
         plusButtonCenterYConstraint?.constant = center.y
         plusButtonWidthConstraint?.constant = frameInTabBar.width
         plusButtonHeightConstraint?.constant = frameInTabBar.height
-        plusButton.isHidden = false
+
+        if plusButton.isHidden {
+            let isAddingVisible = presenter.isAddingServiceVisible
+            plusButton.tintColor = isAddingVisible ? .systemGray3 : .systemRed
+            plusButton.isUserInteractionEnabled = !isAddingVisible
+            plusButton.isHidden = false
+        }
+
+        if let window = view.window {
+            let rectInWindow = plusButton.convert(plusButton.bounds, to: window)
+            presenter.savePlusButtonRect(rectInWindow)
+        }
     }
 
     private func findSubview(in root: UIView, classNameContains needle: String) -> UIView? {
@@ -194,7 +236,7 @@ final class MainTabViewController: UITabBarController {
     }
 
     private func handleAddTabTapped() {
-        // TODO: wire to presenter
+        presenter.handleAddService()
     }
     
     override func viewWillAppear(_ animated: Bool) {

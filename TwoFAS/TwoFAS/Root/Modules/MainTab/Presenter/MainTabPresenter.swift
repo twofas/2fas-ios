@@ -19,16 +19,40 @@
 
 import Foundation
 import Data
+import CoreGraphics
+
+protocol MainTabModuleInteracting: AnyObject {
+    var isAddingServiceVisible: Bool { get }
+    func savePlusButtonRect(_ rect: CGRect?)
+}
+
+final class MainTabModuleInteractor: MainTabModuleInteracting {
+    private let appStateInteractor: AppStateInteracting
+
+    init(appStateInteractor: AppStateInteracting) {
+        self.appStateInteractor = appStateInteractor
+    }
+
+    var isAddingServiceVisible: Bool {
+        appStateInteractor.isAddingServiceVisible
+    }
+
+    func savePlusButtonRect(_ rect: CGRect?) {
+        appStateInteractor.savePlusButtonRect(rect)
+    }
+}
 
 final class MainTabPresenter {
     weak var view: MainTabViewControlling?
-    
+
     private var previousSelectedViewPath: ViewPath?
     private let flowController: MainTabFlowControlling
+    private let interactor: MainTabModuleInteracting
     private var isViewLoaded = false
-    
-    init(flowController: MainTabFlowControlling) {
+
+    init(flowController: MainTabFlowControlling, interactor: MainTabModuleInteracting) {
         self.flowController = flowController
+        self.interactor = interactor
     }
 }
 
@@ -71,5 +95,17 @@ extension MainTabPresenter {
     
     func resetViewPath() {
         previousSelectedViewPath = nil
+    }
+
+    func handleAddService() {
+        flowController.toAddService()
+    }
+
+    var isAddingServiceVisible: Bool {
+        interactor.isAddingServiceVisible
+    }
+
+    func savePlusButtonRect(_ rect: CGRect?) {
+        interactor.savePlusButtonRect(rect)
     }
 }

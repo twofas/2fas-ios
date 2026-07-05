@@ -357,6 +357,12 @@ final class ModuleInteractorFactory {
             appStateInteractor: InteractorFactory.shared.appStateInteractor()
         )
     }
+
+    func mainTabModuleInteractor() -> MainTabModuleInteracting {
+        MainTabModuleInteractor(
+            appStateInteractor: InteractorFactory.shared.appStateInteractor()
+        )
+    }
     
     func appearanceModuleInteractor() -> AppearanceModuleInteracting {
         AppearanceModuleInteractor(appearanceInteractor: InteractorFactory.shared.appearanceInteractor())

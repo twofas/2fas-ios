@@ -103,7 +103,7 @@ private extension TokensSectionHeader {
         addSubview(titleLabel, with: [
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: Spacing.M.rawValue),
             titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Spacing.M.rawValue),
-            counter.trailingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -Spacing.XL.rawValue)
+            counter.trailingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -Spacing.M.rawValue)
         ])
         
         setupNormalContainer()

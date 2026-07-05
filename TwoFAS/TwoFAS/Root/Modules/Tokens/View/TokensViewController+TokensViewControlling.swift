@@ -141,17 +141,22 @@ extension TokensViewController: TokensViewControlling {
                 newsButton = .unread(uiBarButtonItem)
                 return uiBarButtonItem
             } else {
+                let cfg = UIImage.SymbolConfiguration(
+                    pointSize: UnreadNewsNaviButton.iconReadPointSize,
+                    weight: UnreadNewsNaviButton.iconWeight
+                )
+                let icon = UIImage(systemName: UnreadNewsNaviButton.iconSymbolName, withConfiguration: cfg)
                 let uiBarButtonItem: UIBarButtonItem
                 if #available(iOS 26.0, *) {
                     uiBarButtonItem = UIBarButtonItem(
-                        image: Asset.navibarNewsIcon.image,
+                        image: icon,
                         style: .plain,
                         target: self,
                         action: #selector(showNotifications)
                     )
                 } else {
                     let naviButton = UIButton(type: .custom)
-                    naviButton.setBackgroundImage(Asset.navibarNewsIcon.image, for: .normal)
+                    naviButton.setImage(icon, for: .normal)
                     naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
                     naviButton.translatesAutoresizingMaskIntoConstraints = false
                     uiBarButtonItem = UIBarButtonItem(customView: naviButton)
@@ -417,10 +422,25 @@ extension TokensViewController {
 
 private extension TokensViewController {
     final class UnreadNewsNaviButton: UIButton {
-        let newsImageView = UIImageView(image: Asset.navibarNewsIcon.image)
-        let badgeImageView = UIImageView(image: Asset.badge.image)
+        // MARK: - Configuration
+        static let iconSymbolName = "bell.fill"
+        static let iconPointSize: CGFloat = 20
+        static let iconReadPointSize: CGFloat = 16
+        static let iconWeight: UIImage.SymbolWeight = .regular
 
-        private let badgeWidth: CGFloat = 3
+        static let badgeSize: CGFloat = 8
+        static let badgeBorderWidth: CGFloat = 1
+        static var badgeFillColor: UIColor { AppColor.accentsBrand.uiColor }
+        static var badgeBorderColor: UIColor { AppColor.backgroundsPrimary.uiColor }
+
+        static let badgeCenterOffsetX: CGFloat = 24
+        static let badgeCenterOffsetY: CGFloat = 11
+
+        static let badgePopScale: CGFloat = 2.0
+        static let badgeSettleScale: CGFloat = 1.0
+
+        let newsImageView = UIImageView()
+        let badgeView = UIView()
 
         override init(frame: CGRect) {
             super.init(frame: frame)
@@ -433,23 +453,44 @@ private extension TokensViewController {
         }
 
         private func setupViews() {
+            let cfg = UIImage.SymbolConfiguration(
+                pointSize: Self.iconPointSize,
+                weight: Self.iconWeight
+            )
+            newsImageView.image = UIImage(systemName: Self.iconSymbolName, withConfiguration: cfg)
+            newsImageView.contentMode = .center
             newsImageView.translatesAutoresizingMaskIntoConstraints = false
+            newsImageView.tintColor = AppColor.labelsPrimary.uiColor
             addSubview(newsImageView)
 
-            badgeImageView.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(badgeImageView)
-            badgeImageView.isHidden = true
+            badgeView.backgroundColor = Self.badgeFillColor
+            badgeView.layer.borderWidth = Self.badgeBorderWidth
+            badgeView.layer.borderColor = Self.badgeBorderColor.cgColor
+            badgeView.layer.cornerRadius = Self.badgeSize / 2
+            badgeView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(badgeView)
+            badgeView.isHidden = true
+
+            registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
+                self.badgeView.layer.borderColor = Self.badgeBorderColor.cgColor
+            }
 
             NSLayoutConstraint.activate([
-                newsImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-                newsImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-                badgeImageView.topAnchor.constraint(equalTo: topAnchor, constant: Spacing.SM.rawValue),
-                badgeImageView.trailingAnchor.constraint(
-                    equalTo: trailingAnchor,
-                    constant: -Spacing.XS.rawValue
+                newsImageView.topAnchor.constraint(equalTo: topAnchor),
+                newsImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+                newsImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                newsImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+
+                badgeView.centerXAnchor.constraint(
+                    equalTo: newsImageView.leadingAnchor,
+                    constant: Self.badgeCenterOffsetX
                 ),
-                badgeImageView.widthAnchor.constraint(equalToConstant: badgeWidth),
-                badgeImageView.heightAnchor.constraint(equalToConstant: badgeWidth)
+                badgeView.centerYAnchor.constraint(
+                    equalTo: newsImageView.topAnchor,
+                    constant: Self.badgeCenterOffsetY
+                ),
+                badgeView.widthAnchor.constraint(equalToConstant: Self.badgeSize),
+                badgeView.heightAnchor.constraint(equalToConstant: Self.badgeSize)
             ])
         }
 
@@ -477,22 +518,24 @@ private extension TokensViewController {
                     UIView.addKeyframe(withRelativeStartTime: 4 * frameDuration, relativeDuration: frameDuration) {
                         newsImageView.transform = CGAffineTransform.identity
                     }
-                }, 
+                },
                 completion: { [weak self] _ in
-                    self?.badgeImageView.isHidden = false
+                    self?.badgeView.isHidden = false
                     self?.animateBadge()
                 }
             )
         }
 
         private func animateBadge() {
+            let popScale = Self.badgePopScale
+            let settleScale = Self.badgeSettleScale
             UIView.animate(
                 withDuration: 0.2,
-                animations: { [badgeImageView, badgeWidth] in
-                    badgeImageView.transform = CGAffineTransform(scaleX: 12.0 / badgeWidth, y: 12.0 / badgeWidth)
-                }, completion: { [badgeImageView, badgeWidth] _ in
+                animations: { [badgeView] in
+                    badgeView.transform = CGAffineTransform(scaleX: popScale, y: popScale)
+                }, completion: { [badgeView] _ in
                     UIView.animate(withDuration: 0.15) {
-                        badgeImageView.transform = CGAffineTransform(scaleX: 8.0 / badgeWidth, y: 8.0 / badgeWidth)
+                        badgeView.transform = CGAffineTransform(scaleX: settleScale, y: settleScale)
                     }
                 }
             )

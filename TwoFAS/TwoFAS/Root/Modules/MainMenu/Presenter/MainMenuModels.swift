@@ -40,22 +40,24 @@ struct MainMenuCell: Hashable {
 
 extension MainMenuPresenter {
     var menu: [MainMenuSection] {
-        [
+        let tokensIcon = UIImage(systemName: "lock.badge.clock.fill") ?? Asset.tabBarIconServicesInactive.image
+        let settingsIcon = UIImage(systemName: "gear") ?? Asset.tabBarIconSettingsInactive.image
+        return [
             MainMenuSection(
                 section: .main,
                 showHeader: false,
                 cells: [
                 MainMenuCell(
-                    icon: Asset.tabBarIconServicesInactive.image,
-                    selectedIcon: Asset.tabBarIconServicesActive.image,
+                    icon: tokensIcon,
+                    selectedIcon: tokensIcon,
                     title: T.Commons.tokens,
                     isSelected: selectedIndexPath?.row == 1,
                     section: nil,
                     hasBadge: false
                 ),
                 MainMenuCell(
-                    icon: Asset.tabBarIconSettingsInactive.image,
-                    selectedIcon: Asset.tabBarIconSettingsActive.image,
+                    icon: settingsIcon,
+                    selectedIcon: settingsIcon,
                     title: T.Settings.settings,
                     isSelected: selectedIndexPath?.row == 2,
                     section: nil,
@@ -63,5 +65,5 @@ extension MainMenuPresenter {
                 )
             ])
         ]
-    }    
+    }
 }

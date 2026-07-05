@@ -19,6 +19,7 @@
 
 import Foundation
 import Data
+import CoreGraphics
 
 final class MainSplitPresenter {
     weak var view: MainSplitViewControlling?
@@ -113,6 +114,18 @@ extension MainSplitPresenter {
     
     func handleLandscapeMenuCollapsed(_ isCollapsed: Bool) {
         interactor.handleLandscapeMenuCollapsed(isCollapsed)
+    }
+
+    var isAddingServiceVisible: Bool {
+        interactor.isAddingServiceVisible
+    }
+
+    func saveInCompact(_ value: Bool) {
+        interactor.saveInCompact(value)
+    }
+
+    func savePlusButtonRect(_ rect: CGRect?) {
+        interactor.savePlusButtonRect(rect)
     }
 }
 

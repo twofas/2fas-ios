@@ -127,6 +127,15 @@ protocol MainRepository: AnyObject {
     var willURLBeHandled: Bool { get }
     func clearURLWillBeHandled()
     func markURLWillBeHandled()
+
+    var plusButtonRect: CGRect? { get }
+    func savePlusButtonRect(_ rect: CGRect?)
+
+    var inCompact: Bool { get }
+    func saveInCompact(_ value: Bool)
+
+    var isAddingServiceVisible: Bool { get }
+    func saveIsAddingServiceVisible(_ value: Bool)
     
     // MARK: - Services
     var hasServices: Bool { get }

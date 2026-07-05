@@ -128,6 +128,10 @@ extension MainSplitFlowController: MainTabFlowControllerParent {
     func tabToTokens() {
         parent?.navigationSwitchedToTokens()
     }
+
+    func tabToAddService() {
+        viewController.tokensViewController?.presenter.handleAddService()
+    }
 }
 
 extension MainSplitFlowController: MainMenuFlowControllerParent {
@@ -139,6 +143,10 @@ extension MainSplitFlowController: MainMenuFlowControllerParent {
         TokensPlainFlowController.showAsRoot(viewController: tokens, in: viewController.contentNavi)
 
         parent?.navigationSwitchedToTokens()
+
+        if #available(iOS 26.0, *) {
+            viewController.updateSmallPlusButtonVisibility()
+        }
     }
     
     func mainMenuToSettings() {
@@ -146,17 +154,21 @@ extension MainSplitFlowController: MainMenuFlowControllerParent {
 
         let settingsPath = viewController.presenter.handleSettingsViewPath()
         viewController.presenter.handlePathWasUpdated(to: .settings(option: settingsPath))
-        
+
         guard viewController.contentNavi.viewControllers.first != settings else {
             settings.navigateToView(settingsPath)
             return
         }
-        
+
         SettingsFlowController.showAsRoot(
             viewController: settings,
             in: viewController.contentNavi,
             navigateToPath: settingsPath
         )
+
+        if #available(iOS 26.0, *) {
+            viewController.updateSmallPlusButtonVisibility()
+        }
     }
     
     func mainMenuIsReady() {

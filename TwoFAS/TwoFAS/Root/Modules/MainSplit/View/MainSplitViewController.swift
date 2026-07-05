@@ -53,34 +53,128 @@ final class MainSplitViewController: UIViewController {
     var tabBar: MainTabViewController? {
         split.viewController(for: .compact) as? MainTabViewController
     }
+
+    private let smallPlusButton = UIButton(type: .system)
+    private static let smallPlusButtonSize: CGFloat = 56
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupSplit()
         presenter.viewDidLoad()
         menu?.loadViewIfNeeded()
-        
+
         registerForTraitChanges([UITraitHorizontalSizeClass.self]) { (self: Self, _) in
             self.setInitialTrait()
+        }
+
+        if #available(iOS 26.0, *) {
+            setupSmallPlusButton()
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(addingServiceVisibilityDidChange),
+                name: .addingServiceVisibilityDidChange,
+                object: nil
+            )
+        }
+    }
+
+    @available(iOS 26.0, *)
+    private func setupSmallPlusButton() {
+        var config = UIButton.Configuration.prominentGlass()
+        config.image = UIImage(systemName: "plus")
+        config.preferredSymbolConfigurationForImage = .init(pointSize: 22, weight: .semibold)
+
+        smallPlusButton.configuration = config
+        smallPlusButton.tintColor = .systemRed
+        smallPlusButton.addAction(UIAction { [weak self] _ in
+            self?.handleSmallPlusTapped()
+        }, for: .touchUpInside)
+
+        smallPlusButton.translatesAutoresizingMaskIntoConstraints = false
+        smallPlusButton.isHidden = true
+        view.addSubview(smallPlusButton)
+
+        NSLayoutConstraint.activate([
+            smallPlusButton.widthAnchor.constraint(equalToConstant: Self.smallPlusButtonSize),
+            smallPlusButton.heightAnchor.constraint(equalToConstant: Self.smallPlusButtonSize),
+            smallPlusButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            smallPlusButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
+        ])
+    }
+
+    @available(iOS 26.0, *)
+    private func handleSmallPlusTapped() {
+        tokensViewController?.presenter.handleAddService()
+    }
+
+    @objc
+    private func addingServiceVisibilityDidChange() {
+        guard #available(iOS 26.0, *) else { return }
+        animateSmallPlusButton(disabled: presenter.isAddingServiceVisible)
+    }
+
+    @available(iOS 26.0, *)
+    private func animateSmallPlusButton(disabled: Bool) {
+        guard !smallPlusButton.isHidden else { return }
+        let targetTint: UIColor = disabled ? .systemGray3 : .systemRed
+        smallPlusButton.isUserInteractionEnabled = !disabled
+        UIView.animate(
+            withDuration: 0.35,
+            delay: 0,
+            usingSpringWithDamping: 0.85,
+            initialSpringVelocity: 0,
+            options: .curveEaseInOut,
+            animations: { [self] in
+                smallPlusButton.tintColor = targetTint
+            }
+        )
+    }
+
+    @available(iOS 26.0, *)
+    func updateSmallPlusButtonVisibility() {
+        let isTokensRoot = tokensViewController != nil
+            && contentNavi.viewControllers.first === tokensViewController
+        let shouldShow = traitCollection.horizontalSizeClass != .compact && isTokensRoot
+        smallPlusButton.isHidden = !shouldShow
+        applyTokensBottomInset(shouldShow: shouldShow)
+        if shouldShow {
+            let isAddingVisible = presenter.isAddingServiceVisible
+            smallPlusButton.tintColor = isAddingVisible ? .systemGray3 : .systemRed
+            smallPlusButton.isUserInteractionEnabled = !isAddingVisible
+            view.layoutIfNeeded()
+            let rectInWindow = smallPlusButton.convert(smallPlusButton.bounds, to: view.window)
+            presenter.savePlusButtonRect(rectInWindow)
+        } else {
+            presenter.savePlusButtonRect(nil)
+        }
+    }
+
+    @available(iOS 26.0, *)
+    private func applyTokensBottomInset(shouldShow: Bool) {
+        guard let tokensVC = tokensViewController else { return }
+        let bottomInset: CGFloat = shouldShow ? Self.smallPlusButtonSize + 24 : 0
+        if tokensVC.additionalSafeAreaInsets.bottom != bottomInset {
+            tokensVC.additionalSafeAreaInsets.bottom = bottomInset
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(
+        let center = NotificationCenter.default
+        center.addObserver(
             self,
             selector: #selector(shouldRefresh),
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
-        NotificationCenter.default.addObserver(
+        center.addObserver(
             self,
             selector: #selector(didBecomeActive),
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
-        NotificationCenter.default.addObserver(
+        center.addObserver(
             self,
             selector: #selector(lockScreenIsInactive),
             name: .lockScreenIsInactive,
@@ -140,7 +234,17 @@ final class MainSplitViewController: UIViewController {
         // swiftlint:enable line_length
         super.willTransition(to: newCollection, with: coordinator)
 
+        if newCollection.horizontalSizeClass != .unspecified {
+            presenter.saveInCompact(newCollection.horizontalSizeClass == .compact)
+        }
+
         updateDisplayMode()
+
+        if #available(iOS 26.0, *) {
+            coordinator.animate(alongsideTransition: nil) { [weak self] _ in
+                self?.updateSmallPlusButtonVisibility()
+            }
+        }
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -151,12 +255,24 @@ final class MainSplitViewController: UIViewController {
     
     private func setInitialTrait() {
         guard traitCollection.horizontalSizeClass != .unspecified, !isInitialConfigRead else { return }
-        
+
         isInitialConfigRead = true
-        if traitCollection.horizontalSizeClass == .compact {
+        let compact = traitCollection.horizontalSizeClass == .compact
+        presenter.saveInCompact(compact)
+        if compact {
             presenter.handleCollapse()
         } else {
             presenter.handleExpansion()
+        }
+        if #available(iOS 26.0, *) {
+            updateSmallPlusButtonVisibility()
+        }
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if #available(iOS 26.0, *) {
+            updateSmallPlusButtonVisibility()
         }
     }
     

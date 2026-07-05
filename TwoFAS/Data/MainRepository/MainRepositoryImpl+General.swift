@@ -29,13 +29,31 @@ extension MainRepositoryImpl {
     }
     
     var willURLBeHandled: Bool { _urlWillBeHandled }
-    
+
     func clearURLWillBeHandled() {
         _urlWillBeHandled = false
     }
-    
+
     func markURLWillBeHandled() {
         _urlWillBeHandled = true
+    }
+
+    var plusButtonRect: CGRect? { _plusButtonRect }
+
+    func savePlusButtonRect(_ rect: CGRect?) {
+        _plusButtonRect = rect
+    }
+
+    var inCompact: Bool { _inCompact }
+
+    func saveInCompact(_ value: Bool) {
+        _inCompact = value
+    }
+
+    var isAddingServiceVisible: Bool { _isAddingServiceVisible }
+
+    func saveIsAddingServiceVisible(_ value: Bool) {
+        _isAddingServiceVisible = value
     }
 
     var currentAppVersion: String {

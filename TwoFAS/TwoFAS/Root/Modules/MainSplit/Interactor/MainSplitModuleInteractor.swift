@@ -19,21 +19,26 @@
 
 import Foundation
 import Data
+import CoreGraphics
 
 protocol MainSplitModuleInteracting: AnyObject {
     func currentSettingsPath() -> ViewPath.Settings?
     func saveCurrentSettingsPath(_ settingsPath: ViewPath.Settings?)
-    
+
     func restoreViewPath() -> ViewPath?
     func setViewPath(_ viewPath: ViewPath)
-    
+
     var isMenuPortraitOverlayCollapsed: Bool { get }
     func handlePortraitMenuOverlayCollapsed(_ isCollapsed: Bool)
     var isMenuLandscapeCollapsed: Bool { get }
     func handleLandscapeMenuCollapsed(_ isCollapsed: Bool)
-    
+
     var hasStoredURL: Bool { get }
     var isLockScreenActive: Bool { get }
+
+    var isAddingServiceVisible: Bool { get }
+    func saveInCompact(_ value: Bool)
+    func savePlusButtonRect(_ rect: CGRect?)
 }
 
 final class MainSplitModuleInteractor {
@@ -96,5 +101,17 @@ extension MainSplitModuleInteractor: MainSplitModuleInteracting {
     
     func handleLandscapeMenuCollapsed(_ isCollapsed: Bool) {
         appearanceInteractor.setIsMenuLandscapeCollapsed(isCollapsed)
+    }
+
+    var isAddingServiceVisible: Bool {
+        appStateInteractor.isAddingServiceVisible
+    }
+
+    func saveInCompact(_ value: Bool) {
+        appStateInteractor.saveInCompact(value)
+    }
+
+    func savePlusButtonRect(_ rect: CGRect?) {
+        appStateInteractor.savePlusButtonRect(rect)
     }
 }

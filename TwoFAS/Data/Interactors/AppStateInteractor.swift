@@ -18,19 +18,29 @@
 //
 
 import Foundation
+import CoreGraphics
 
 public protocol AppStateInteracting: AnyObject {
     var isLockScreenActive: Bool { get }
-    
+
     func lockScreenActive()
     func lockScreenInactive()
-    
+
     var appState: AppState { get }
     func saveAppState(_ appState: AppState)
-    
+
     var willURLBeHandled: Bool { get }
     func clearURLWillBeHandled()
     func markURLWillBeHandled()
+
+    var plusButtonRect: CGRect? { get }
+    func savePlusButtonRect(_ rect: CGRect?)
+
+    var inCompact: Bool { get }
+    func saveInCompact(_ value: Bool)
+
+    var isAddingServiceVisible: Bool { get }
+    func saveIsAddingServiceVisible(_ value: Bool)
 }
 
 final class AppStateInteractor {
@@ -66,12 +76,32 @@ extension AppStateInteractor: AppStateInteracting {
     }
     
     var willURLBeHandled: Bool { mainRepository.willURLBeHandled }
-    
+
     func clearURLWillBeHandled() {
         mainRepository.clearURLWillBeHandled()
     }
-    
+
     func markURLWillBeHandled() {
         mainRepository.markURLWillBeHandled()
+    }
+
+    var plusButtonRect: CGRect? { mainRepository.plusButtonRect }
+
+    func savePlusButtonRect(_ rect: CGRect?) {
+        mainRepository.savePlusButtonRect(rect)
+    }
+
+    var inCompact: Bool { mainRepository.inCompact }
+
+    func saveInCompact(_ value: Bool) {
+        mainRepository.saveInCompact(value)
+    }
+
+    var isAddingServiceVisible: Bool { mainRepository.isAddingServiceVisible }
+
+    func saveIsAddingServiceVisible(_ value: Bool) {
+        guard mainRepository.isAddingServiceVisible != value else { return }
+        mainRepository.saveIsAddingServiceVisible(value)
+        notificationCenter.post(name: .addingServiceVisibilityDidChange, object: nil, userInfo: nil)
     }
 }

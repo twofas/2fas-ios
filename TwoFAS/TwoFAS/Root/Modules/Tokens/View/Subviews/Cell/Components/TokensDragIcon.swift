@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class TokensDragIcon: UIView {
     private var imageView: UIImageView = {
@@ -37,7 +38,7 @@ final class TokensDragIcon: UIView {
     private func commonInit() {
         addSubview(imageView)
         imageView.contentMode = .center
-        imageView.tintColor = Theme.Colors.Line.primaryLine
+        imageView.tintColor = AppColor.backgroundsSecondary.uiColor
         imageView.pinToParent()
         setContentHuggingPriority(.defaultLow - 2, for: .vertical)
     }

@@ -112,7 +112,7 @@ final class TokensNextTokenView: UIView {
         
         isAccessibilityElement = true
        
-        nextTokenLabel.textColor = Theme.Colors.Text.main
+        nextTokenLabel.textColor = AppColor.labelsPrimary.uiColor
         
         if animated {
             currentState = .animating
@@ -192,7 +192,7 @@ final class TokensNextTokenView: UIView {
     }
     
     private func setNextTokenHidden() {
-        nextTokenLabel.textColor = Theme.Colors.Fill.background.withAlphaComponent(0.1)
+        nextTokenLabel.textColor = AppColor.backgroundsPrimary.uiColor.withAlphaComponent(0.1)
         nextTokenLabel.alpha = 0.1
     }
     

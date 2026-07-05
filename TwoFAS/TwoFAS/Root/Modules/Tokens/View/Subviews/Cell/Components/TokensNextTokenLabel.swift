@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class TokensNextTokenLabel: UILabel {
     init() {
@@ -44,10 +45,9 @@ final class TokensNextTokenLabel: UILabel {
     func setKind(_ kind: TokensCellKind) {
         switch kind {
         case .compact:
-            font = UIFont.systemFont(ofSize: 17, weight: .bold)
+            font = TextStyle.smallToken.uiFont()
         case .normal:
-            font = UIFontMetrics(forTextStyle: .headline)
-                .scaledFont(for: .systemFont(ofSize: 17, weight: .bold))
+            font = TextStyle.smallToken.uiFont()
         default:
             break
         }

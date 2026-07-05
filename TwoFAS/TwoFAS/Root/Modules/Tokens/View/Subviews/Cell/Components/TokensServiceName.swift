@@ -18,16 +18,16 @@
 //
 
 import UIKit
+import Common
 
 final class TokensServiceName: UIView {
     private let label: UILabel = {
         let label = UILabel()
-        label.font = UIFontMetrics(forTextStyle: .headline)
-            .scaledFont(for: .systemFont(ofSize: 17, weight: .bold))
+        label.font = TextStyle.headline.uiFont()
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
-        label.textColor = Theme.Colors.Text.main
+        label.textColor = AppColor.labelsPrimary.uiColor
         label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
@@ -54,13 +54,11 @@ final class TokensServiceName: UIView {
     func setKind(_ kind: TokensCellKind) {
         switch kind {
         case .compact:
-            label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+            label.font = TextStyle.subheadline.uiFont(.medium)
         case .edit:
-            label.font = UIFontMetrics(forTextStyle: .headline)
-                .scaledFont(for: .systemFont(ofSize: 13, weight: .bold))
+            label.font = TextStyle.subheadline.uiFont(.medium)
         case .normal:
-            label.font = UIFontMetrics(forTextStyle: .headline)
-                .scaledFont(for: .systemFont(ofSize: 17, weight: .bold))
+            label.font = TextStyle.headline.uiFont()
         case .pass:
             break
         }

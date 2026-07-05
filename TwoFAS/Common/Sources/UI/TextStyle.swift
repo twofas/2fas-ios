@@ -54,6 +54,10 @@ public enum TextStyle {
     /// SF Pro 11pt — maps to `Font.TextStyle.caption2`
     case caption2
     /// SF Pro 32pt — maps to `Font.TextStyle.body`
+    case token
+    /// SF Pro 15pt — maps to `Font.TextStyle.subheadline`
+    case smallToken
+    /// SF Pro 13pt — maps to `Font.TextStyle.footnote
     case counter
 }
 
@@ -103,6 +107,7 @@ private struct TextStyleAttributes {
     let weight: Font.Weight
     let isItalic: Bool
     let semanticStyle: Font.TextStyle
+    let monospacedDigits: Bool
 }
 
 // MARK: - Attributes Resolution
@@ -128,7 +133,8 @@ private extension TextStyle {
                 tracking: 0.40,
                 weight: titleWeight(variant, emphasized: .bold),
                 isItalic: false,
-                semanticStyle: .largeTitle
+                semanticStyle: .largeTitle,
+                monospacedDigits: false
             )
         case .title1:
             return TextStyleAttributes(
@@ -137,7 +143,8 @@ private extension TextStyle {
                 tracking: 0.38,
                 weight: titleWeight(variant, emphasized: .bold),
                 isItalic: false,
-                semanticStyle: .title
+                semanticStyle: .title,
+                monospacedDigits: false
             )
         case .title2:
             return TextStyleAttributes(
@@ -146,7 +153,8 @@ private extension TextStyle {
                 tracking: -0.26,
                 weight: titleWeight(variant, emphasized: .semibold),
                 isItalic: false,
-                semanticStyle: .title2
+                semanticStyle: .title2,
+                monospacedDigits: false
             )
         case .title3:
             return TextStyleAttributes(
@@ -155,7 +163,8 @@ private extension TextStyle {
                 tracking: -0.45,
                 weight: titleWeight(variant, emphasized: .semibold),
                 isItalic: false,
-                semanticStyle: .title3
+                semanticStyle: .title3,
+                monospacedDigits: false
             )
             
             // ── Body-level ───────────────────────────────────────────────────────
@@ -168,7 +177,8 @@ private extension TextStyle {
                 tracking: -0.43,
                 weight: .semibold,
                 isItalic: variant == .italic || variant == .emphasizedItalic,
-                semanticStyle: .headline
+                semanticStyle: .headline,
+                monospacedDigits: false
             )
         case .body:
             return TextStyleAttributes(
@@ -177,7 +187,8 @@ private extension TextStyle {
                 tracking: -0.43,
                 weight: bodyWeight(variant),
                 isItalic: variant == .italic || variant == .emphasizedItalic,
-                semanticStyle: .body
+                semanticStyle: .body,
+                monospacedDigits: false
             )
         case .callout:
             return TextStyleAttributes(
@@ -186,7 +197,8 @@ private extension TextStyle {
                 tracking: -0.31,
                 weight: smallWeight(variant),
                 isItalic: variant == .italic || variant == .emphasizedItalic,
-                semanticStyle: .callout
+                semanticStyle: .callout,
+                monospacedDigits: false
             )
         case .subheadline:
             return TextStyleAttributes(
@@ -195,7 +207,8 @@ private extension TextStyle {
                 tracking: -0.23,
                 weight: smallWeight(variant),
                 isItalic: variant == .italic || variant == .emphasizedItalic,
-                semanticStyle: .subheadline
+                semanticStyle: .subheadline,
+                monospacedDigits: false
             )
             
             // ── Small ─────────────────────────────────────────────────────────────
@@ -207,7 +220,8 @@ private extension TextStyle {
                 tracking: -0.08,
                 weight: smallWeight(variant),
                 isItalic: variant == .italic || variant == .emphasizedItalic,
-                semanticStyle: .footnote
+                semanticStyle: .footnote,
+                monospacedDigits: false
             )
         case .caption1:
             // Tight frame uses Medium for .emphasized (vs Semibold in standard/loose).
@@ -220,7 +234,8 @@ private extension TextStyle {
                 tracking: 0,
                 weight: w,
                 isItalic: variant == .italic || variant == .emphasizedItalic,
-                semanticStyle: .caption
+                semanticStyle: .caption,
+                monospacedDigits: false
             )
         case .caption2:
             // Tight frame: lineHeight equals fontSize (11pt) — no breathing room.
@@ -230,16 +245,38 @@ private extension TextStyle {
                 tracking: 0.06,
                 weight: smallWeight(variant),
                 isItalic: variant == .italic || variant == .emphasizedItalic,
-                semanticStyle: .caption2
+                semanticStyle: .caption2,
+                monospacedDigits: false
             )
-        case .counter:
+        case .token:
             return TextStyleAttributes(
                 size: 32,
                 lineHeight: 32 + pad,
                 tracking: 0.4,
                 weight: .regular,
                 isItalic: false,
-                semanticStyle: .body
+                semanticStyle: .body,
+                monospacedDigits: true
+            )
+        case .smallToken:
+            return TextStyleAttributes(
+                size: 15,
+                lineHeight: 15 + pad,
+                tracking: 0,
+                weight: .semibold,
+                isItalic: false,
+                semanticStyle: .body,
+                monospacedDigits: true
+            )
+        case .counter:
+            return TextStyleAttributes(
+                size: 13,
+                lineHeight: 13 + pad,
+                tracking: 0,
+                weight: .semibold,
+                isItalic: false,
+                semanticStyle: .footnote,
+                monospacedDigits: true
             )
         }
     }
@@ -282,8 +319,10 @@ private struct TextStyleModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         let attrs = style.attributes(variant: variant, leading: leading)
-        let baseFont = Font.system(size: attrs.size, weight: attrs.weight, design: .default)
-        
+        var font = Font.system(size: attrs.size, weight: attrs.weight, design: .default)
+        if attrs.isItalic { font = font.italic() }
+        if attrs.monospacedDigits { font = font.monospacedDigit() }
+
         // Standard leading aligns with SF Pro's natural UIFont.lineHeight (no extra spacing).
         // Loose adds +2 pt; tight subtracts −2 pt (may be clamped to 0 on older OS).
         let lineSpacingDelta: CGFloat
@@ -292,9 +331,9 @@ private struct TextStyleModifier: ViewModifier {
         case .standard: lineSpacingDelta = 0
         case .loose: lineSpacingDelta = 2
         }
-        
+
         return content
-            .font(attrs.isItalic ? baseFont.italic() : baseFont)
+            .font(font)
             .tracking(attrs.tracking)
             .lineSpacing(lineSpacingDelta)
     }
@@ -333,7 +372,12 @@ public extension TextStyle {
     /// ```
     func uiFont(_ variant: TextStyleVariant = .regular) -> UIFont {
         let attrs = attributes(variant: variant, leading: .standard)
-        let base = UIFont.systemFont(ofSize: attrs.size, weight: attrs.weight.uiFontWeight)
+        let base = {
+            if attrs.monospacedDigits {
+                return UIFont.monospacedSystemFont(ofSize: attrs.size, weight: attrs.weight.uiFontWeight)
+            }
+            return UIFont.systemFont(ofSize: attrs.size, weight: attrs.weight.uiFontWeight)
+        }()
         guard attrs.isItalic else { return base }
         let descriptor = base.fontDescriptor.withSymbolicTraits(.traitItalic) ?? base.fontDescriptor
         return UIFont(descriptor: descriptor, size: attrs.size)

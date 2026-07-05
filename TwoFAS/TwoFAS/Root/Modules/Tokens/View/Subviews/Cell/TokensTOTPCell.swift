@@ -191,7 +191,7 @@ private extension TokensTOTPCell {
     }
     
     func setupLayout() {
-        let tokenNegativeMargin = round(hMargin / 4.0)
+        let tokenNegativeMargin = Spacing.SM.rawValue
         let logoViewTopOffset = vMargin + 14.0
         let accessoryContainerTopOffset = vMargin + 16.0
         contentView.addSubview(separator, with: [
@@ -214,27 +214,29 @@ private extension TokensTOTPCell {
         ])
         
         contentView.addSubview(serviceNameLabel, with: [
-            serviceNameLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
+            serviceNameLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: Spacing.L.rawValue),
             serviceNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin)
         ])
         
         contentView.addSubview(additionalInfoLabel, with: [
-            additionalInfoLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
+            additionalInfoLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: Spacing.L.rawValue),
             additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor),
             additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
         ])
         
         contentView.addSubview(tokenLabel, with: [
             additionalInfoLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor, constant: tokenNegativeMargin),
-            tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            tokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
+            tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: Spacing.L.rawValue),
+            tokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor),
+            tokenLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Spacing.XL.rawValue)
         ])
         
         contentView.addSubview(nextTokenLabel, with: [
-            nextTokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            nextTokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor),
-            nextTokenLabel.topAnchor.constraint(equalTo: tokenLabel.bottomAnchor, constant: -tokenNegativeMargin),
-            nextTokenLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
+            nextTokenLabel.leadingAnchor.constraint(equalTo: tokenLabel.trailingAnchor, constant: tokenNegativeMargin),
+//            nextTokenLabel.trailingAnchor
+//                .constraint(lessThanOrEqualTo: accessoryContainer.leadingAnchor, constant: tokenNegativeMargin),
+            nextTokenLabel.topAnchor.constraint(equalTo: tokenLabel.topAnchor),
+            nextTokenLabel.bottomAnchor.constraint(equalTo: tokenLabel.bottomAnchor)
         ])
 
         contentView.addSubview(accessoryContainer, with: [

@@ -233,20 +233,20 @@ private class TokensTokenLabel: UILabel {
     }
     
     func mark() {
-        textColor = Theme.Colors.Text.theme
+        textColor = AppColor.accentsBrand.uiColor
     }
     
     func clearMarking() {
-        textColor = Theme.Colors.Text.main
+        textColor = AppColor.labelsPrimary.uiColor
     }
     
     func setKind(_ kind: TokensCellKind) {
         switch kind {
         case .compact:
-            font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .thin)
+            font = UIFont.monospacedDigitSystemFont(ofSize: 32, weight: .thin)
         case .normal:
             font = UIFontMetrics(forTextStyle: .largeTitle)
-                .scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 50, weight: .thin))
+                .scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 32, weight: .regular))
         default:
             break
         }

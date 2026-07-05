@@ -29,7 +29,7 @@ struct AddingServiceTokenValueView: View {
             .foregroundStyle(
                 willChangeSoon ? AppColor.accentsBrand : AppColor.labelsPrimary
             )
-            .textStyle(.counter)
+            .textStyle(.token)
             .lineLimit(1)
             .frame(maxWidth: .infinity, alignment: .leading)
     }

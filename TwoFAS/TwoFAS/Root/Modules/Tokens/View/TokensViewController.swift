@@ -78,7 +78,21 @@ final class TokensViewController: UIViewController {
         super.viewWillAppear(animated)
         presenter.viewWillAppear()
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        applyLargeTitleIfNeeded()
         startSafeAreaKeyboardAdjustment()
+    }
+
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        applyLargeTitleIfNeeded(sizeClass: newCollection.horizontalSizeClass)
+    }
+
+    private func applyLargeTitleIfNeeded(sizeClass: UIUserInterfaceSizeClass? = nil) {
+        guard #available(iOS 26.0, *) else { return }
+        let horizontal = sizeClass ?? traitCollection.horizontalSizeClass
+        let isCompact = horizontal == .compact
+        navigationController?.navigationBar.prefersLargeTitles = isCompact
+        navigationItem.largeTitleDisplayMode = isCompact ? .always : .never
     }
     
     override func viewWillDisappear(_ animated: Bool) {

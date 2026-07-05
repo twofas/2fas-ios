@@ -24,11 +24,15 @@ final class RootNavigationController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        delegate = self
+
+        guard #unavailable(iOS 26.0) else { return }
+
         let shadowLine = Asset.shadowLine.image
             .withRenderingMode(.alwaysTemplate)
             .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
-        
+
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.shadowImage = shadowLine
@@ -38,7 +42,6 @@ final class RootNavigationController: UINavigationController {
         navBarAppearance.backgroundColor = Theme.Colors.Fill.background
         navigationBar.standardAppearance = navBarAppearance
         navigationBar.scrollEdgeAppearance = navBarAppearance
-        delegate = self
     }
 }
 

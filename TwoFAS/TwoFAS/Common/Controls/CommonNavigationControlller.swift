@@ -22,11 +22,13 @@ import UIKit
 class CommonNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        guard #unavailable(iOS 26.0) else { return }
+
         let shadowLine = Asset.shadowLine.image
             .withRenderingMode(.alwaysTemplate)
             .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
-        
+
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.shadowImage = shadowLine

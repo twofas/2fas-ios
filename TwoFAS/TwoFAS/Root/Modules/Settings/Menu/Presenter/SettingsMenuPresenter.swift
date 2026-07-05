@@ -160,24 +160,24 @@ extension SettingsMenuPresenter {
         reload()
     }
     
-    func handleNavigateToViewPath(_ viewPath: ViewPath.Settings) {
+    func handleNavigateToViewPath(_ viewPath: ViewPath.Settings, force: Bool = false) {
         switch viewPath {
-        case .backup: navigate(to: .backup)
-        case .security: navigate(to: .security)
-        case .browserExtension: navigate(to: .browserExtension)
-        case .trash: navigate(to: .trash)
-        case .about: navigate(to: .about)
-        case .transfer: navigate(to: .transfer)
-        case .appearance: navigate(to: .appearance)
-        case .appleWatch: navigate(to: .appleWatch)
+        case .backup: navigate(to: .backup, force: force)
+        case .security: navigate(to: .security, force: force)
+        case .browserExtension: navigate(to: .browserExtension, force: force)
+        case .trash: navigate(to: .trash, force: force)
+        case .about: navigate(to: .about, force: force)
+        case .transfer: navigate(to: .transfer, force: force)
+        case .appearance: navigate(to: .appearance, force: force)
+        case .appleWatch: navigate(to: .appleWatch, force: force)
         @unknown default: break
         }
     }
 }
 
 private extension SettingsMenuPresenter {
-    func navigate(to navigateTo: SettingsNavigationModule, rememberPosition: Bool = true) {
-        guard rememberPosition == false || navigateTo != selectedModule else { return }
+    func navigate(to navigateTo: SettingsNavigationModule, rememberPosition: Bool = true, force: Bool = false) {
+        guard force || rememberPosition == false || navigateTo != selectedModule else { return }
         let menu = buildMenu()
         guard let indexPath = menu.indexPath(for: navigateTo) else { return }
         if rememberPosition {
@@ -187,10 +187,11 @@ private extension SettingsMenuPresenter {
             selectedModule = nil
             selectedIndex = nil
         }
-        
+
         flowController.toUpdateCurrentPosition(navigateToViewPath(navigateTo: navigateTo))
-        
+
         if !isCollapsed {
+            view?.reload(with: menu)
             view?.setSelection(at: indexPath)
         }
         

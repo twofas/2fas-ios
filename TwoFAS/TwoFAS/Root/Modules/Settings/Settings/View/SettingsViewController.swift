@@ -26,7 +26,8 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     weak var menu: SettingsMenuViewController? {
         didSet {
             if let savedViewPath {
-                menu?.presenter.handleNavigateToViewPath(savedViewPath)
+                let force = !isCollapsed && contentNavi.viewControllers.isEmpty
+                menu?.presenter.handleNavigateToViewPath(savedViewPath, force: force)
                 self.savedViewPath = nil
             }
             if isMenuPositionPending {
@@ -114,7 +115,8 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
             }
         }
         if let menuVC = menu {
-            menuVC.presenter.handleNavigateToViewPath(vp)
+            let force = !isCollapsed && contentNavi.viewControllers.isEmpty
+            menuVC.presenter.handleNavigateToViewPath(vp, force: force)
         } else {
             savedViewPath = vp
         }

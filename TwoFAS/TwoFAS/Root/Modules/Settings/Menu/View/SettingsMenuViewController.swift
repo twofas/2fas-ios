@@ -115,5 +115,8 @@ extension SettingsMenuViewController: SettingsMenuViewControlling {
     
     func setSelection(at indexPath: IndexPath) {
         tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        }
     }
 }

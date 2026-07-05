@@ -86,7 +86,7 @@ final class MainSplitViewController: UIViewController {
         config.preferredSymbolConfigurationForImage = .init(pointSize: 22, weight: .semibold)
 
         smallPlusButton.configuration = config
-        smallPlusButton.tintColor = .systemRed
+        smallPlusButton.tintColor = AppColor.accentsBrand.uiColor
         smallPlusButton.addAction(UIAction { [weak self] _ in
             self?.handleSmallPlusTapped()
         }, for: .touchUpInside)
@@ -117,7 +117,7 @@ final class MainSplitViewController: UIViewController {
     @available(iOS 26.0, *)
     private func animateSmallPlusButton(disabled: Bool) {
         guard !smallPlusButton.isHidden else { return }
-        let targetTint: UIColor = disabled ? .systemGray3 : .systemRed
+        let targetTint: UIColor = disabled ? AppColor.graysGray3.uiColor : AppColor.accentsBrand.uiColor
         smallPlusButton.isUserInteractionEnabled = !disabled
         UIView.animate(
             withDuration: 0.35,
@@ -140,7 +140,7 @@ final class MainSplitViewController: UIViewController {
         applyTokensBottomInset(shouldShow: shouldShow)
         if shouldShow {
             let isAddingVisible = presenter.isAddingServiceVisible
-            smallPlusButton.tintColor = isAddingVisible ? .systemGray3 : .systemRed
+            smallPlusButton.tintColor = isAddingVisible ? AppColor.graysGray3.uiColor : AppColor.accentsBrand.uiColor
             smallPlusButton.isUserInteractionEnabled = !isAddingVisible
             view.layoutIfNeeded()
             let rectInWindow = smallPlusButton.convert(smallPlusButton.bounds, to: view.window)
@@ -223,8 +223,8 @@ final class MainSplitViewController: UIViewController {
         split.setViewController(navigationNavi, for: .primary)
         split.setViewController(contentNavi, for: .secondary)
         
-        split.view.tintColor = Theme.Colors.Fill.theme
-        view.tintColor = Theme.Colors.Fill.theme
+        split.view.tintColor = AppColor.accentsBrand.uiColor
+        view.tintColor = AppColor.accentsBrand.uiColor
         view.backgroundColor = .clear
         split.view.backgroundColor = .clear
     }

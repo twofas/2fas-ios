@@ -38,7 +38,7 @@ enum MainContainerBottomNavigationGenerator {
         case other(view: UIView)
         case noSpacingContainer(elements: [Element])
         case image(name: String, size: CGSize, kind: ImageKind = .normal)
-        case extraSpacing(value: CGFloat = Theme.Metrics.doubleMargin)
+        case extraSpacing(value: CGFloat = Spacing.XL.rawValue)
         case decoratedVerticalContainer(
             elements: [Element],
             created: ((MainContainerDecoratedVerticalContainer) -> Void)? = nil
@@ -50,7 +50,7 @@ enum MainContainerBottomNavigationGenerator {
         let elements: [UIView] = elements.map { elementToView($0) }
         
         return MainContainerElementGenerator.generateHorizontalStackView(
-            spacing: Theme.Metrics.halfSpacing,
+            spacing: Spacing.SM.rawValue,
             arrangedSubviews: elements
         )
     }

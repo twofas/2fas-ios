@@ -61,7 +61,7 @@ final class UploadLogsViewController: UIViewController {
             action: #selector(cancelAction)
         )
         
-        let spacing = Theme.Metrics.doubleSpacing
+        let spacing = Spacing.XL.rawValue
         
         view.addSubview(infoLabel, with: [
             infoLabel.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: spacing),
@@ -70,8 +70,8 @@ final class UploadLogsViewController: UIViewController {
         ])
         view.addSubview(group, with: [
             group.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 2 * spacing),
-            group.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Theme.Metrics.standardSpacing),
-            group.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Theme.Metrics.standardSpacing)
+            group.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Spacing.M.rawValue),
+            group.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Spacing.M.rawValue)
         ])
         view.addSubview(sendButton, with: [
             sendButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),

@@ -27,7 +27,7 @@ struct AppleWatchInstallationStep: Hashable, Identifiable {
 }
 
 struct AppleWatchView<Presenter: AppleWatchPresenting>: View {
-    private let spacing: CGFloat = Theme.Metrics.doubleSpacing
+    private let spacing: CGFloat = Spacing.XL.rawValue
     private let presenter: Presenter
     private let appleWatchImageXOffset: CGFloat = 10
 
@@ -39,7 +39,7 @@ struct AppleWatchView<Presenter: AppleWatchPresenting>: View {
         VStack(spacing: spacing) {
             Image(uiImage: Asset.appleWatch.image)
                 .renderingMode(.original)
-                .padding(.top, Theme.Metrics.standardSpacing)
+                .padding(.top, Spacing.M)
                 .offset(x: appleWatchImageXOffset)
 
             Text(T.AppleWatch.installationInfoTitle)
@@ -57,7 +57,7 @@ struct AppleWatchView<Presenter: AppleWatchPresenting>: View {
                     )
                 }
             }
-            .padding(.horizontal, Theme.Metrics.quadrupleMargin)
+            .padding(.horizontal, Spacing.XXXXXL)
         }
     }
 
@@ -73,14 +73,14 @@ struct AppleWatchView<Presenter: AppleWatchPresenting>: View {
                 .background(Color(Theme.Colors.Fill.tertiary))
                 .clipShape(Circle())
 
-            VStack(alignment: .leading, spacing: Theme.Metrics.halfSpacing) {
+            VStack(alignment: .leading, spacing: Spacing.SM) {
                 Text(step.description)
                     .font(Font(Theme.Fonts.Text.content))
 
                 Button {
                     presenter.handleInstallationStep(number: stepNumber)
                 } label: {
-                    HStack(spacing: Theme.Metrics.halfSpacing) {
+                    HStack(spacing: Spacing.SM) {
                         Text(step.actionTitle)
                             .font(Font(Theme.Fonts.Text.boldContent))
 
@@ -93,7 +93,7 @@ struct AppleWatchView<Presenter: AppleWatchPresenting>: View {
                 if isDividerVisible {
                     Divider()
                         .frame(height: Theme.Metrics.separatorHeight)
-                        .padding(.vertical, Theme.Metrics.standardSpacing)
+                        .padding(.vertical, Spacing.M)
                 }
             }
         }

@@ -18,12 +18,13 @@
 //
 
 import UIKit
+import Common
 
 final class MainContainerToggleWithLabel: UIView {
     var action: ((Bool) -> Void)?
     
     private let horizontalSpacing: CGFloat = 10
-    private let elementsSpacing: CGFloat = Theme.Metrics.standardSpacing
+    private let elementsSpacing: CGFloat = Spacing.M.rawValue
     private let container = UIView()
     private let toggle: UISwitch = {
         let t = UISwitch()

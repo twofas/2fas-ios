@@ -34,6 +34,8 @@ import SwiftUI
 /// ```
 @frozen
 public enum Spacing: CGFloat, CaseIterable {
+    /// 0
+    case zero = 0
     /// 2
     case XS = 2
     /// 4
@@ -56,6 +58,10 @@ public enum Spacing: CGFloat, CaseIterable {
     case XXXXL = 28
     /// 32
     case XXXXXL = 32
+    /// 40
+    case XXXXXXL = 40
+    /// 48
+    case XXXXXXXL = 48
     
     /// Raw `CGFloat` value — use when a plain number is required,
     /// e.g. `VStack(spacing: Spacing.M.value)`.

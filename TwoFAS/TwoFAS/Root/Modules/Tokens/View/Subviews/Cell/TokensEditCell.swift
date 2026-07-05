@@ -23,8 +23,8 @@ import Common
 final class TokensEditCell: UICollectionViewCell {
     static let reuseIdentifier = "TokensEditCell"
     
-    private let hMargin: CGFloat = Theme.Metrics.doubleMargin
-    private let vMargin: CGFloat = Theme.Metrics.mediumMargin
+    private let hMargin: CGFloat = Spacing.XL.rawValue
+    private let vMargin: CGFloat = Spacing.L.rawValue
     private let dragHandlesWidth: CGFloat = 16
     
     private let categoryView = TokensCategory()

@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 protocol PINKeyboardViewControlling: AnyObject {
     func prepareScreen(with screenTitle: String, titleType: PINKeyboardViewController.TitleType)
@@ -261,7 +262,7 @@ extension PINKeyboardViewController: PINKeyboardViewControlling {
         }()
         view.addSubview(bottomButton, with: [
             bottomButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            bottomButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -Theme.Metrics.doubleMargin)
+            bottomButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -Spacing.XL.rawValue)
         ])
         bottomButton.addTarget(self, action: #selector(bottomButtonAction), for: .touchUpInside)
     }

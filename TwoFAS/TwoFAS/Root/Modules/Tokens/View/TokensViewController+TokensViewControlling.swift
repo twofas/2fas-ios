@@ -443,10 +443,10 @@ private extension TokensViewController {
             NSLayoutConstraint.activate([
                 newsImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
                 newsImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-                badgeImageView.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.halfSpacing),
+                badgeImageView.topAnchor.constraint(equalTo: topAnchor, constant: Spacing.SM.rawValue),
                 badgeImageView.trailingAnchor.constraint(
                     equalTo: trailingAnchor,
-                    constant: -Theme.Metrics.quaterSpacing
+                    constant: -Spacing.XS.rawValue
                 ),
                 badgeImageView.widthAnchor.constraint(equalToConstant: badgeWidth),
                 badgeImageView.heightAnchor.constraint(equalToConstant: badgeWidth)

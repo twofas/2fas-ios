@@ -21,10 +21,10 @@ import SwiftUI
 import Common
 
 struct CameraLastPass: View {
-    private let paddingHorizontal: CGFloat = 3 * Theme.Metrics.standardSpacing
-    private let paddingVertical: CGFloat = Theme.Metrics.doubleSpacing
-    private let containerPadding: CGFloat = Theme.Metrics.standardSpacing
-    private let spacing: CGFloat = Theme.Metrics.doubleSpacing
+    private let paddingHorizontal: Spacing = .XXXL
+    private let paddingVertical: Spacing = .XL
+    private let containerPadding: Spacing = .M
+    private let spacing: Spacing = .XL
     
     private let image0 = Asset.externalImportLastPass.image
     private let image1 = Asset.gaImport1.image
@@ -38,7 +38,7 @@ struct CameraLastPass: View {
     
     var body: some View {
         Group {
-            VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+            VStack(alignment: .center, spacing: Spacing.M) {
                 HStack(spacing: spacing) {
                     Image(uiImage: image0)
                         .frame(width: image0.size.width, height: image0.size.height)
@@ -95,7 +95,7 @@ struct CameraLastPass: View {
             .padding(EdgeInsets(
                 top: paddingVertical,
                 leading: paddingHorizontal,
-                bottom: 0,
+                bottom: .zero,
                 trailing: paddingHorizontal)
             )
             .background(Color(Theme.Colors.decoratedContainer))

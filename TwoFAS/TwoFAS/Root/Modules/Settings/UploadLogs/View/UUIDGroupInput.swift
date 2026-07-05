@@ -28,7 +28,7 @@ final class UUIDGroupInput: UIView {
     private let forthTextField = UUIDInputContainer()
     private let fifthTextField = UUIDInputContainer()
     
-    private let spacing = Theme.Metrics.standardSpacing
+    private let spacing = Spacing.M.rawValue
     
     private var containerWidth: CGFloat = 0
     private var containerHeight: CGFloat = 0

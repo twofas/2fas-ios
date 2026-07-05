@@ -21,7 +21,7 @@ import SwiftUI
 import Common
 
 struct UploadLogsSuccessView: View {
-    private let spacing: CGFloat = Theme.Metrics.doubleSpacing
+    private let spacing: CGFloat = Spacing.XL.rawValue
     
     private let image = Asset.successIcon.image
     
@@ -33,7 +33,7 @@ struct UploadLogsSuccessView: View {
     ]
     
     var body: some View {
-        VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+        VStack(alignment: .center, spacing: Spacing.M) {
             HStack(spacing: spacing) {
                 Image(uiImage: image)
                     .renderingMode(.original)

@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class TrashViewTableViewCell: UITableViewCell {
     static let identifier = "TrashViewTableViewCell"
@@ -58,7 +59,7 @@ final class TrashViewTableViewCell: UITableViewCell {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fill
-        stackView.spacing = Theme.Metrics.standardSpacing
+        stackView.spacing = Spacing.M.rawValue
         stackView.alignment = .fill
         return stackView
     }()
@@ -67,7 +68,7 @@ final class TrashViewTableViewCell: UITableViewCell {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fill
-        stackView.spacing = Theme.Metrics.standardSpacing
+        stackView.spacing = Spacing.M.rawValue
         stackView.alignment = .fill
         return stackView
     }()

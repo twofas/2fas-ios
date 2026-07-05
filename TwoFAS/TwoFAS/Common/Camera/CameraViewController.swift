@@ -19,6 +19,7 @@
 
 import UIKit
 import Data
+import Common
 
 protocol CameraViewControllerActivity {
     func overlayOnTop()
@@ -116,9 +117,9 @@ final class CameraViewController: UIViewController {
         view.addSubview(cancelButton, with: [
             cancelButton.leadingAnchor.constraint(
                 equalTo: view.safeLeadingAnchor,
-                constant: Theme.Metrics.doubleMargin
+                constant: Spacing.XL.rawValue
             ),
-            cancelButton.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: Theme.Metrics.standardMargin)
+            cancelButton.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: Spacing.M.rawValue)
         ])
         
         view.addSubview(titleLabel, with: [
@@ -130,7 +131,7 @@ final class CameraViewController: UIViewController {
             descriptionFrame.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             descriptionFrame.topAnchor.constraint(
                 greaterThanOrEqualTo: titleLabel.bottomAnchor,
-                constant: Theme.Metrics.standardMargin
+                constant: Spacing.M.rawValue
             )
         ])
         let breakable = descriptionFrame.bottomAnchor.constraint(
@@ -142,7 +143,7 @@ final class CameraViewController: UIViewController {
             breakable
         ])
         
-        let smallMargin = Theme.Metrics.halfSpacing
+        let smallMargin = Spacing.SM.rawValue
         descriptionFrame.addSubview(descriptionLabel, with: [
             descriptionLabel.topAnchor.constraint(
                 equalTo: descriptionFrame.topAnchor,

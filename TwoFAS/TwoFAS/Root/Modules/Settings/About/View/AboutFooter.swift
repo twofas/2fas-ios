@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class AboutFooter: UIView {
     let height: CGFloat = 80
@@ -56,7 +57,7 @@ final class AboutFooter: UIView {
     }
     
     private func commonInit() {
-        let margin = Theme.Metrics.doubleMargin
+        let margin = Spacing.XL.rawValue
         addSubview(label, with: [
             label.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor, constant: margin),
             label.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 2 * margin),

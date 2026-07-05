@@ -44,10 +44,10 @@ final class UUIDInputContainer: UIView {
         border.pinToParent()
         
         addSubview(input, with: [
-            input.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Theme.Metrics.doubleMargin),
-            input.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Theme.Metrics.doubleMargin),
-            input.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.standardSpacing),
-            input.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Theme.Metrics.standardSpacing)
+            input.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Spacing.XL.rawValue),
+            input.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Spacing.XL.rawValue),
+            input.topAnchor.constraint(equalTo: topAnchor, constant: Spacing.M.rawValue),
+            input.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Spacing.M.rawValue)
         ])
         
         widthConstraint = input.widthAnchor.constraint(equalToConstant: 0)
@@ -62,8 +62,8 @@ final class UUIDInputContainer: UIView {
     override var intrinsicContentSize: CGSize {
         input.layoutIfNeeded()
         return CGSize(
-            width: 2 * Theme.Metrics.doubleMargin + input.frame.width,
-            height: 2 * Theme.Metrics.standardSpacing + input.frame.height
+            width: 2 * Spacing.XL.rawValue + input.frame.width,
+            height: 2 * Spacing.M.rawValue + input.frame.height
         )
     }
 }

@@ -21,7 +21,7 @@ import SwiftUI
 import Common
 
 struct ExternalImportInstructionsView: View {
-    private let spacing: CGFloat = Theme.Metrics.doubleSpacing
+    private let spacing: CGFloat = Spacing.XL.rawValue
     
     let sourceLogo: AnyView
     let sourceName: String
@@ -37,7 +37,7 @@ struct ExternalImportInstructionsView: View {
     private let minIconSpaceHeight: CGFloat = 90
     
     var body: some View {
-        VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+        VStack(alignment: .center, spacing: Spacing.M) {
             VStack(spacing: spacing) {
                 HStack(spacing: spacing) {
                     sourceLogo
@@ -57,7 +57,7 @@ struct ExternalImportInstructionsView: View {
             .frame(maxHeight: .infinity, alignment: .center)
             .layoutPriority(1)
             
-            VStack(spacing: Theme.Metrics.halfSpacing) {
+            VStack(spacing: Spacing.SM) {
                 Button {
                     action()
                 } label: {

@@ -30,8 +30,8 @@ struct BackupSetPasswordView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .center) {
-                VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-                    VStack(spacing: Theme.Metrics.standardSpacing) {
+                VStack(alignment: .center, spacing: Spacing.M) {
+                    VStack(spacing: Spacing.M) {
                         if presenter.isDone {
                             Spacer()
                                 .frame(maxHeight: .infinity)
@@ -43,13 +43,13 @@ struct BackupSetPasswordView: View {
                         } else if !presenter.isApplyingChanges {
                             header()
                             inputs()
-                                .padding(.bottom, Theme.Metrics.halfSpacing)
+                                .padding(.bottom, Spacing.SM)
                         }
                     }
                     Spacer()
                         .frame(maxHeight: .infinity)
                     if presenter.isApplyingChanges {
-                        VStack(spacing: Theme.Metrics.doubleSpacing) {
+                        VStack(spacing: Spacing.XL) {
                             ProgressView()
                                 .progressViewStyle(.circular)
                                 .tint(Color(ThemeColor.theme))
@@ -98,13 +98,13 @@ struct BackupSetPasswordView: View {
                                 .buttonStyle(LinkButtonStyle())
                                 .isHidden(presenter.isDone)
                             }
-                            .padding(.top, Theme.Metrics.doubleMargin)
+                            .padding(.top, Spacing.XL)
                         }
                     }
                 }
                 .background(Color(Theme.Colors.Fill.background))
                 .frame(maxWidth: Theme.Metrics.componentWidth)
-                .padding(.top, Theme.Metrics.doubleMargin)
+                .padding(.top, Spacing.XL)
             }
             .frame(height: height)
             .frame(maxWidth: .infinity)
@@ -123,7 +123,7 @@ struct BackupSetPasswordView: View {
     @ViewBuilder
     private func header() -> some View {
         Spacer()
-            .frame(height: Theme.Metrics.doubleMargin)
+            .frame(height: Spacing.XL.rawValue)
         Text(verbatim: presenter.isSettingPassword ? T.Backup.setPassword : T.Backup.changePassword)
             .font(.title2)
             .multilineTextAlignment(.center)
@@ -132,13 +132,13 @@ struct BackupSetPasswordView: View {
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
         Spacer()
-            .frame(height: 2 * Theme.Metrics.doubleSpacing)
+            .frame(height: Spacing.XXXXXL.rawValue)
     }
     
     @ViewBuilder
     private func inputs() -> some View {
-        VStack(spacing: Theme.Metrics.standardSpacing) {
-            VStack(spacing: Theme.Metrics.quaterSpacing) {
+        VStack(spacing: Spacing.M) {
+            VStack(spacing: Spacing.XS) {
                 PasswordTextField(
                     title: T.Backup.encryptionEnterPassword,
                     text: $presenter.password1,
@@ -157,7 +157,7 @@ struct BackupSetPasswordView: View {
                             .foregroundStyle(Color(Theme.Colors.Line.primaryLine))
                     }
             }
-            VStack(spacing: Theme.Metrics.quaterSpacing) {
+            VStack(spacing: Spacing.XS) {
                 PasswordTextField(
                     title: T.Backup.repeatPassword,
                     text: $presenter.password2,

@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class TrashViewEmptyScreen: UIView {
     private let icon = UIImageView(image: Asset.trashEmptyIcon.image)
@@ -50,16 +51,16 @@ final class TrashViewEmptyScreen: UIView {
             if let height = icon.image?.size.height {
                 return height.half
             }
-            return Theme.Metrics.standardSpacing
+            return Spacing.M.rawValue
         }()
         addSubview(icon, with: [
             icon.centerXAnchor.constraint(equalTo: centerXAnchor),
             icon.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -iconOffset)
         ])
         addSubview(text, with: [
-            text.topAnchor.constraint(equalTo: icon.bottomAnchor, constant: Theme.Metrics.doubleSpacing),
-            text.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Theme.Metrics.standardMargin),
-            text.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Theme.Metrics.standardMargin),
+            text.topAnchor.constraint(equalTo: icon.bottomAnchor, constant: Spacing.XL.rawValue),
+            text.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Spacing.M.rawValue),
+            text.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Spacing.M.rawValue),
             text.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor)
         ])
     }

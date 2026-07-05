@@ -21,7 +21,7 @@ import SwiftUI
 import Common
 
 struct BrowserExtensionPairingFailureView: View {
-    private let spacing: CGFloat = Theme.Metrics.doubleSpacing
+    private let spacing: Spacing = .XL
     
     private let image = Asset.pairingFailed.image
     
@@ -30,7 +30,7 @@ struct BrowserExtensionPairingFailureView: View {
     let contactSupport: Callback
     
     var body: some View {
-        VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+        VStack(alignment: .center, spacing: Spacing.M) {
             HStack(spacing: spacing) {
                 Image(uiImage: image)
                     .renderingMode(.original)

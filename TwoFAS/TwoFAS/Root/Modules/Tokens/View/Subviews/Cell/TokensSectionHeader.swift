@@ -108,15 +108,15 @@ private extension TokensSectionHeader {
         ])
         
         addSubview(counter, with: [
-            counter.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.standardMargin),
-            counter.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Theme.Metrics.standardMargin),
-            counter.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Theme.Metrics.doubleMargin)
+            counter.topAnchor.constraint(equalTo: topAnchor, constant: Spacing.M.rawValue),
+            counter.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Spacing.M.rawValue),
+            counter.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Spacing.XL.rawValue)
         ])
         
         addSubview(titleLabel, with: [
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.standardMargin),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Theme.Metrics.standardMargin),
-            counter.trailingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -Theme.Metrics.doubleMargin)
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: Spacing.M.rawValue),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Spacing.M.rawValue),
+            counter.trailingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -Spacing.XL.rawValue)
         ])
         
         setupNormalContainer()
@@ -124,11 +124,11 @@ private extension TokensSectionHeader {
         
         normalConstraint = titleLabel.trailingAnchor.constraint(
             equalTo: normalContainer.leadingAnchor,
-            constant: -Theme.Metrics.doubleMargin
+            constant: -Spacing.XL.rawValue
         )
         editConstraint = titleLabel.trailingAnchor.constraint(
             equalTo: editContainer.leadingAnchor,
-            constant: -Theme.Metrics.doubleMargin
+            constant: -Spacing.XL.rawValue
         )
         normalConstraint?.isActive = true
         
@@ -154,7 +154,7 @@ private extension TokensSectionHeader {
     }
     
     func setupNormalContainer() {
-        let margin = Theme.Metrics.standardMargin
+        let margin = Spacing.M.rawValue
         addSubview(normalContainer, with: [
             normalContainer.topAnchor.constraint(equalTo: topAnchor, constant: margin),
             normalContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
@@ -174,7 +174,7 @@ private extension TokensSectionHeader {
     }
     
     func setupEditContainer() {
-        let margin = Theme.Metrics.standardMargin
+        let margin = Spacing.M.rawValue
         addSubview(editContainer, with: [
             editContainer.topAnchor.constraint(equalTo: topAnchor, constant: margin),
             editContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),

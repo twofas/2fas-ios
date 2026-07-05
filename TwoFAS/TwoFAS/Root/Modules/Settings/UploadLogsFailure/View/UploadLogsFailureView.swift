@@ -21,7 +21,7 @@ import SwiftUI
 import Common
 
 struct UploadLogsFailureView: View {
-    private let spacing: CGFloat = Theme.Metrics.doubleSpacing
+    private let spacing: CGFloat = Spacing.XL.rawValue
     
     private let image = Asset.errorIcon.image
     
@@ -31,7 +31,7 @@ struct UploadLogsFailureView: View {
     let canRetry: Bool
     
     var body: some View {
-        VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+        VStack(alignment: .center, spacing: Spacing.M) {
             HStack(spacing: spacing) {
                 Image(uiImage: image)
                     .renderingMode(.original)

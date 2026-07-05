@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class ComposeServiceInputCell: UITableViewCell, ComposeServiceInputCellKind {
     static let identifier = "ComposeServiceInputCell"
@@ -41,7 +42,7 @@ final class ComposeServiceInputCell: UITableViewCell, ComposeServiceInputCellKin
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .equalSpacing
-        stack.spacing = Theme.Metrics.halfSpacing
+        stack.spacing = Spacing.SM.rawValue
         stack.alignment = .fill
         return stack
     }()

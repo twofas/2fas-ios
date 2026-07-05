@@ -30,7 +30,7 @@ struct EncryptedByUserPasswordSyncView: View {
     var body: some View {
         AdaptiveReadableContainer {
                 VStack(alignment: .center) {
-                    VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+                    VStack(alignment: .center, spacing: Spacing.M) {
                         if !presenter.isWorking && !presenter.isDone {
                             VStack(spacing: .ML) {
                                 Spacer()
@@ -121,7 +121,7 @@ struct EncryptedByUserPasswordSyncView: View {
                                         }
                                         .isHidden(presenter.isDone)
                                     }
-                                    .padding(.top, Theme.Metrics.doubleMargin)
+                                    .padding(.top, Spacing.XL)
                                 }
                             }
                         }

@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class SettingsMenuViewController: UIViewController {
     var presenter: SettingsMenuPresenter!
@@ -46,7 +47,7 @@ final class SettingsMenuViewController: UIViewController {
             self?.didSelect(tableView: tableView, indexPath: indexPath, data: data)
         }
         
-        view.backgroundColor = Theme.Colors.Table.background
+        view.backgroundColor = AppColor.backgroundsGroupedPrimary.uiColor
         
         setupTableViewLayout()
         
@@ -60,7 +61,7 @@ final class SettingsMenuViewController: UIViewController {
     private func setupTableViewLayout() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.tintColor = Theme.Colors.Fill.theme
+        tableView.tintColor = AppColor.accentsBrand.uiColor
         if #available(iOS 26.0, *) {
             NSLayoutConstraint.activate([
                 tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

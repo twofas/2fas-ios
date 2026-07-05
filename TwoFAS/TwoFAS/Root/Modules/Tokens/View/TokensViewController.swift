@@ -82,7 +82,10 @@ final class TokensViewController: UIViewController {
         startSafeAreaKeyboardAdjustment()
     }
 
-    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func willTransition(
+        to newCollection: UITraitCollection,
+        with coordinator: UIViewControllerTransitionCoordinator
+    ) {
         super.willTransition(to: newCollection, with: coordinator)
         applyLargeTitleIfNeeded(sizeClass: newCollection.horizontalSizeClass)
     }

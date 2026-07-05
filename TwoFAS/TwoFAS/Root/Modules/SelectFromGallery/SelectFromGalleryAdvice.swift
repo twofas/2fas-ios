@@ -21,18 +21,18 @@ import SwiftUI
 import Common
 
 struct SelectFromGalleryAdvice: View {
-    private let paddingHorizontal: CGFloat = 3 * Theme.Metrics.standardSpacing
-    private let paddingVertical: CGFloat = Theme.Metrics.doubleSpacing
-    private let topSpacing: CGFloat = 6 * Theme.Metrics.standardSpacing
-    private let containerPadding: CGFloat = Theme.Metrics.standardSpacing
-    private let spacing: CGFloat = Theme.Metrics.doubleSpacing
+    private let paddingHorizontal: Spacing = .XXXL
+    private let paddingVertical: Spacing = .XL
+    private let topSpacing: Spacing = .XXXXXXXL
+    private let containerPadding: Spacing = .M
+    private let spacing: Spacing = .XL
     
     let action: Callback
     private let image = Asset.selectFromGalleryAdviceIcon.image
     
     var body: some View {
         Group {
-            VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+            VStack(alignment: .center, spacing: Spacing.M) {
                 Group {
                     Image(uiImage: image)
                         .foregroundColor(Color(Theme.Colors.Fill.theme))
@@ -40,7 +40,7 @@ struct SelectFromGalleryAdvice: View {
                 }
                 .frame(maxHeight: .infinity, alignment: .center)
                 
-                VStack(spacing: Theme.Metrics.doubleSpacing) {
+                VStack(spacing: Spacing.XL) {
                     Text(T.Tokens.galleryAdviceTitle)
                         .font(.title)
                         .multilineTextAlignment(.center)
@@ -65,7 +65,7 @@ struct SelectFromGalleryAdvice: View {
                     }
                     .buttonStyle(RoundedFilledButtonStyle())
                 }
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: spacing, trailing: 0))
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: spacing.rawValue, trailing: 0))
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
             }
             .frame(maxWidth: Theme.Metrics.componentWidth)

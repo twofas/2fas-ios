@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct ManageWatchView: View {
     @ObservedObject
@@ -75,7 +76,7 @@ struct ManageWatchView: View {
         List {
             ForEach(presenter.list) { item in
                 Text(item.deviceName)
-                    .padding(.vertical, Theme.Metrics.standardSpacing)
+                    .padding(.vertical, Spacing.M)
                     .font(.body)
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {

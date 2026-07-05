@@ -27,9 +27,9 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
     
     var didTapUnlock: ((TokenTimerConsumer) -> Void)?
     
-    private let hMargin: CGFloat = Theme.Metrics.doubleMargin
-    private let sMargin: CGFloat = Theme.Metrics.standardMargin
-    private let vMargin: CGFloat = Theme.Metrics.mediumMargin
+    private let hMargin: CGFloat = Spacing.XL.rawValue
+    private let sMargin: CGFloat = Spacing.M.rawValue
+    private let vMargin: CGFloat = Spacing.L.rawValue
     
     private var serviceName2TopConstraint: NSLayoutConstraint?
     private var serviceName2AdditionalInfoConstraint: NSLayoutConstraint?

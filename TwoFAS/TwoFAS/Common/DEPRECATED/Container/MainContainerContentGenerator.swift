@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 enum MainContainerContentGenerator {
     enum Element {
@@ -47,8 +48,8 @@ enum MainContainerContentGenerator {
     static func generate(from elements: [Element]) -> UIView {
         let double: Double = 2
         let container = UIView()
-        let extraSpacingValue = double * Theme.Metrics.doubleMargin
-        let standardSpacingValue = Theme.Metrics.standardMargin
+        let extraSpacingValue = double * Spacing.XL.rawValue
+        let standardSpacingValue = Spacing.M.rawValue
         
         var prevTop = container.topAnchor
         

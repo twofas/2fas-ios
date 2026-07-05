@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 extension SettingsMenuViewController {
     func cell(for data: SettingsMenuCell, in tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
@@ -115,7 +116,7 @@ extension SettingsMenuViewController {
                     view.addSubview(img, with: [
                         img.leadingAnchor.constraint(
                             equalTo: donateLabel.trailingAnchor,
-                            constant: Theme.Metrics.standardMargin
+                            constant: Spacing.M.rawValue
                         ),
                         img.topAnchor.constraint(equalTo: view.topAnchor),
                         img.bottomAnchor.constraint(equalTo: view.bottomAnchor),

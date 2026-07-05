@@ -21,7 +21,7 @@ import UIKit
 import Common
 
 final class MainContainerViewController: UIViewController {
-    private let spacing: CGFloat = Theme.Metrics.doubleMargin
+    private let spacing: CGFloat = Spacing.XL.rawValue
     
     private let top = UIView()
     private let middle = CenteringScrollView()

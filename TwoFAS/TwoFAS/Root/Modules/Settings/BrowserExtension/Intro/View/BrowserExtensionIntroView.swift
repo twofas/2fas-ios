@@ -21,7 +21,7 @@ import SwiftUI
 import Common
 
 struct BrowserExtensionIntroView: View {
-    private let spacing: CGFloat = Theme.Metrics.doubleSpacing
+    private let spacing: CGFloat = Spacing.XL.rawValue
     
     private let image = Asset.aboutExtension.image
     
@@ -40,11 +40,11 @@ struct BrowserExtensionIntroView: View {
     ]
     
     var body: some View {
-        VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+        VStack(alignment: .center, spacing: Spacing.M) {
             Group {
                 Image(uiImage: image)
                     .renderingMode(.original)
-                    .padding(.top, Theme.Metrics.standardSpacing)
+                    .padding(.top, Spacing.M)
                     .frame(width: image.size.width, height: image.size.height)
             }
             .frame(maxHeight: .infinity, alignment: .center)
@@ -55,7 +55,7 @@ struct BrowserExtensionIntroView: View {
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.7)
                 
-                LazyVGrid(columns: columns, alignment: .leading, spacing: Theme.Metrics.standardSpacing) {
+                LazyVGrid(columns: columns, alignment: .leading, spacing: Spacing.M.rawValue) {
                     ForEach(data, id: \.self) { item in
                         Group {
                             Text(item)
@@ -66,7 +66,7 @@ struct BrowserExtensionIntroView: View {
                     }
                 }
                 
-                HStack(spacing: Theme.Metrics.halfSpacing) {
+                HStack(spacing: Spacing.SM) {
                     Text(T.Browser.moreInfo)
                         .foregroundColor(Color(Theme.Colors.Text.main))
                         .multilineTextAlignment(.trailing)

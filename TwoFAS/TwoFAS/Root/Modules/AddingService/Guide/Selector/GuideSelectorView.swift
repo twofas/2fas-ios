@@ -85,7 +85,7 @@ struct GuideSelectorView: View {
                 .padding(.horizontal, .XL)
         }
         .accessibilityAddTraits(.isButton)
-        .padding(.vertical, Theme.Metrics.doubleMargin)
+        .padding(.vertical, Spacing.XL)
         .frame(height: Self.itemHeight)
         .frame(minWidth: Self.itemWidth, maxWidth: .infinity)
         .background(.backgroundsPrimaryElevated)

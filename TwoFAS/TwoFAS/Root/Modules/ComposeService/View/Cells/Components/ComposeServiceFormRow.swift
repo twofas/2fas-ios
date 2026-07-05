@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class ComposeServiceFormRow: UIStackView {
     private let height: CGFloat = 40
@@ -35,7 +36,7 @@ final class ComposeServiceFormRow: UIStackView {
     private func commonInit() {
         axis = .horizontal
         distribution = .fill
-        spacing = Theme.Metrics.standardSpacing
+        spacing = Spacing.M.rawValue
         alignment = .fill
     }
     

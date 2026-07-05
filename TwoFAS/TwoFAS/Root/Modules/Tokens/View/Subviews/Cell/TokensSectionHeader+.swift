@@ -229,7 +229,7 @@ extension TokensSectionHeader {
         }
         
         private func commonInit() {
-            let margin = Theme.Metrics.standardMargin / 2.0
+            let margin = Spacing.S.rawValue
             
             addSubview(label, with: [
                 widthAnchor.constraint(equalTo: heightAnchor),

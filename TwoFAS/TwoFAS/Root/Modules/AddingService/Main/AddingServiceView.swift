@@ -183,7 +183,7 @@ private struct ErrorTextView: View {
             .font(.headline)
             .foregroundColor(Color(Theme.Colors.Text.light))
             .multilineTextAlignment(.center)
-            .padding(.horizontal, Theme.Metrics.doubleMargin)
+            .padding(.horizontal, Spacing.XL)
             .frame(maxWidth: .infinity, alignment: .center)
     }
 }

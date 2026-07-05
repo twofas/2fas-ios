@@ -21,7 +21,7 @@ import SwiftUI
 import Common
 
 struct BrowserExtensionPairingSuccessfulView: View {
-    private let spacing: CGFloat = Theme.Metrics.doubleSpacing
+    private let spacing: Spacing = .XL
     
     private let image = Asset.pairingSuccessful.image
     
@@ -33,7 +33,7 @@ struct BrowserExtensionPairingSuccessfulView: View {
     ]
     
     var body: some View {
-        VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+        VStack(alignment: .center, spacing: Spacing.M) {
             HStack(spacing: spacing) {
                 Image(uiImage: image)
                     .renderingMode(.original)
@@ -62,7 +62,7 @@ struct BrowserExtensionPairingSuccessfulView: View {
                         .frame(minWidth: 0, maxWidth: .infinity)
                 }
                 .buttonStyle(RoundedFilledButtonStyle())
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: spacing, trailing: 0))
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: spacing.rawValue, trailing: 0))
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         }

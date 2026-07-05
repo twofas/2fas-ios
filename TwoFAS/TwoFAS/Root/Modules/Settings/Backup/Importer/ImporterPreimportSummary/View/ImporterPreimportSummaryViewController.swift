@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 protocol ImporterPreimportSummaryViewControlling: AnyObject {
     func showImporting()
@@ -110,7 +111,7 @@ final class ImporterPreimportSummaryViewController: UIViewController {
         })
         let stackView = UIStackView(arrangedSubviews: views)
         
-        stackView.spacing = Theme.Metrics.doubleSpacing
+        stackView.spacing = Spacing.XL.rawValue
         stackView.distribution = .fill
         stackView.alignment = .fill
         stackView.axis = .horizontal

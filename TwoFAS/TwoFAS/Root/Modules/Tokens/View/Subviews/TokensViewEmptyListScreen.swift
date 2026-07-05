@@ -75,7 +75,7 @@ final class TokensViewEmptyListScreen: UIView {
         sv.axis = .vertical
         sv.alignment = .fill
         sv.distribution = .fill
-        sv.spacing = Theme.Metrics.mediumSpacing
+        sv.spacing = Spacing.XL.rawValue
         return sv
     }()
     
@@ -84,7 +84,7 @@ final class TokensViewEmptyListScreen: UIView {
         sv.axis = .vertical
         sv.alignment = .fill
         sv.distribution = .fill
-        sv.spacing = Theme.Metrics.mediumSpacing
+        sv.spacing = Spacing.XL.rawValue
         return sv
     }()
     
@@ -93,7 +93,7 @@ final class TokensViewEmptyListScreen: UIView {
         sv.axis = .vertical
         sv.alignment = .fill
         sv.distribution = .fill
-        sv.spacing = 2 * Theme.Metrics.doubleSpacing
+        sv.spacing = Spacing.XXXXXL.rawValue
         return sv
     }()
     
@@ -111,7 +111,7 @@ final class TokensViewEmptyListScreen: UIView {
         backgroundColor = Theme.Colors.Fill.background
         
         addSubview(trashWarning, with: [
-            trashWarning.topAnchor.constraint(equalTo: safeTopAnchor, constant: Theme.Metrics.doubleMargin),
+            trashWarning.topAnchor.constraint(equalTo: safeTopAnchor, constant: Spacing.XL.rawValue),
             trashWarning.centerXAnchor.constraint(equalTo: centerXAnchor),
             trashWarning.widthAnchor.constraint(equalToConstant: Theme.Metrics.componentWidth)
         ])
@@ -125,11 +125,11 @@ final class TokensViewEmptyListScreen: UIView {
 
         mainStackTopFromSafeArea = mainStackView.topAnchor.constraint(
             greaterThanOrEqualTo: safeTopAnchor,
-            constant: Theme.Metrics.standardMargin
+            constant: Spacing.M.rawValue
         )
         mainStackTopFromTrashWarning = mainStackView.topAnchor.constraint(
             greaterThanOrEqualTo: trashWarning.bottomAnchor,
-            constant: Theme.Metrics.doubleMargin
+            constant: Spacing.XL.rawValue
         )
         mainStackTopFromSafeArea.isActive = true
 
@@ -140,13 +140,13 @@ final class TokensViewEmptyListScreen: UIView {
         addSubview(helpButton, with: [
             helpButton.topAnchor.constraint(
                 greaterThanOrEqualTo: mainStackView.bottomAnchor,
-                constant: Theme.Metrics.standardMargin
+                constant: Spacing.M.rawValue
             ),
             helpButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             helpButton.widthAnchor.constraint(equalToConstant: Theme.Metrics.componentWidth),
             helpButton.bottomAnchor.constraint(
                 lessThanOrEqualTo: safeBottomAnchor,
-                constant: -Theme.Metrics.standardMargin
+                constant: -Spacing.M.rawValue
             )
         ])
         
@@ -172,8 +172,8 @@ final class TokensViewEmptyListScreen: UIView {
 }
 
 private final class TrashWarning: UIButton {
-    private let horizontalMargin: CGFloat = Theme.Metrics.doubleMargin
-    private let verticalMargin: CGFloat = Theme.Metrics.mediumMargin
+    private let horizontalMargin: CGFloat = Spacing.XL.rawValue
+    private let verticalMargin: CGFloat = Spacing.L.rawValue
     private static let fontSize: CGFloat = 16
     
     private let trashIcon: UIImageView = {

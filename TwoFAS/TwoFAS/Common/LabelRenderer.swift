@@ -64,7 +64,7 @@ final class LabelRenderer: UIView {
         NSLayoutConstraint.activate([width, height])
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        let margin = Theme.Metrics.standardMargin
+        let margin = Spacing.M.rawValue
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor),
             titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),

@@ -21,14 +21,14 @@ import SwiftUI
 import Common
 
 struct PushNotificationPermissionView: View {
-    private let spacing: CGFloat = Theme.Metrics.doubleSpacing
+    private let spacing: Spacing = .XL
     
     private let image = Asset.permissionsPushNotifications.image
     
     let action: Callback
     
     var body: some View {
-        VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+        VStack(alignment: .center, spacing: Spacing.M) {
             HStack(spacing: spacing) {
                 Image(uiImage: image)
                     .renderingMode(.original)

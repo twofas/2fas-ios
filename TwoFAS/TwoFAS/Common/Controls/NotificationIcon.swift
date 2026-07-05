@@ -115,7 +115,7 @@ final class NotificationIcon: UIView, PKHUDAnimating {
     }
     
     private let stack = UIStackView()
-    private let spacing = Theme.Metrics.standardSpacing
+    private let spacing = Spacing.M.rawValue
     
     override init(frame: CGRect) {
         super.init(frame: frame)

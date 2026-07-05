@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Common
 
 struct PasswordTextField: View {
     // MARK: - Variable
@@ -121,7 +122,7 @@ struct PasswordTextField: View {
         } label: {
             Image(systemName: reveal ? "eye.slash" : "eye")
                 .foregroundColor(Color(Theme.Colors.Icon.theme))
-                .padding(.leading, Theme.Metrics.standardMargin)
+                .padding(.leading, Spacing.M)
         }
     }
 }
@@ -147,5 +148,5 @@ private struct FormatInputModifier: ViewModifier {
         text: Binding(get: { "1234" }, set: { _ in }),
         prompt: "8 chars min"
     )
-    .padding(Theme.Metrics.standardMargin)
+    .padding(Spacing.M)
 }

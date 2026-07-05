@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class SelectionOption: UIView {
     var accessibilityText: String = "" {
@@ -44,7 +45,7 @@ final class SelectionOption: UIView {
         sv.axis = .vertical
         sv.alignment = .center
         sv.distribution = .fill
-        sv.spacing = Theme.Metrics.standardSpacing
+        sv.spacing = Spacing.M.rawValue
         return sv
     }()
     

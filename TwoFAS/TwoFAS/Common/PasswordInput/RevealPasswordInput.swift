@@ -92,9 +92,9 @@ final class RevealPasswordInput: UIView {
     private func commonInit() {
         addSubview(stackView)
         stackView.pinToParent(with: UIEdgeInsets(
-            top: Theme.Metrics.standardMargin,
+            top: Spacing.M.rawValue,
             left: 0,
-            bottom: Theme.Metrics.standardMargin,
+            bottom: Spacing.M.rawValue,
             right: 0
         ))
         
@@ -104,10 +104,10 @@ final class RevealPasswordInput: UIView {
             line,
             errorLabel
         ])
-        stackView.setCustomSpacing(Theme.Metrics.standardMargin, after: titleLabel)
-        stackView.setCustomSpacing(Theme.Metrics.standardMargin, after: line)
+        stackView.setCustomSpacing(Spacing.M.rawValue, after: titleLabel)
+        stackView.setCustomSpacing(Spacing.M.rawValue, after: line)
         
-        let margin = Theme.Metrics.doubleMargin
+        let margin = Spacing.XL.rawValue
         
         horizontalContainer.addSubview(input, with: [
             input.leadingAnchor.constraint(equalTo: horizontalContainer.leadingAnchor),

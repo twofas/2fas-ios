@@ -27,8 +27,8 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
     
     var didTapRefreshCounter: ((Secret) -> Void)?
     
-    private let hMargin: CGFloat = Theme.Metrics.doubleMargin
-    private let vMargin: CGFloat = Theme.Metrics.mediumMargin
+    private let hMargin: CGFloat = Spacing.XL.rawValue
+    private let vMargin: CGFloat = Spacing.L.rawValue
     private let manualOffset: CGFloat = 3
     
     private let tokenLabel: TokensTokenView = {

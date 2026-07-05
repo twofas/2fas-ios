@@ -247,24 +247,6 @@ enum Theme {
     }
     
     enum Metrics {
-        
-        /// 2
-        static let quaterSpacing: CGFloat = 2
-        /// 5
-        static let halfSpacing: CGFloat = 5
-        static let standardSpacing: CGFloat = ThemeMetrics.spacing
-        static let mediumSpacing: CGFloat = 15
-        static let doubleSpacing: CGFloat = 2 * standardSpacing
-        
-        /// 8
-        static let standardMargin: CGFloat = ThemeMetrics.margin
-        /// 12
-        static let mediumMargin: CGFloat = (3 * ThemeMetrics.margin) / 2
-        /// 16
-        static let doubleMargin: CGFloat = 2 * ThemeMetrics.margin
-        /// 32
-        static let quadrupleMargin: CGFloat = 4 * ThemeMetrics.margin
-
         static let lineWidth: CGFloat = ThemeMetrics.lineWidth
         static let separatorHeight: CGFloat = 0.5
         /// 6

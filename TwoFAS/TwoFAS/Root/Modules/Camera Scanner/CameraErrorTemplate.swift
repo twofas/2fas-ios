@@ -21,10 +21,10 @@ import SwiftUI
 import Common
 
 struct CameraErrorTemplate: View {
-    private let paddingHorizontal: CGFloat = 3 * Theme.Metrics.standardSpacing
-    private let paddingVertical: CGFloat = Theme.Metrics.doubleSpacing
-    private let topSpacing: CGFloat = 6 * Theme.Metrics.standardSpacing
-    private let containerPadding: CGFloat = Theme.Metrics.standardSpacing
+    private let paddingHorizontal: Spacing = .XXXL
+    private let paddingVertical: Spacing = .XL
+    private let topSpacing: Spacing = .XXXXXXXL
+    private let containerPadding: Spacing = .M
     
     let title: String
     let subtitle: String
@@ -37,14 +37,14 @@ struct CameraErrorTemplate: View {
     
     var body: some View {
         Group {
-            VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
+            VStack(alignment: .center, spacing: Spacing.M) {
                 Group {
                     Image(uiImage: image)
                         .frame(width: imageSize.width, height: imageSize.height)
                 }
                 .frame(maxHeight: .infinity, alignment: .center)
                 
-                VStack(spacing: Theme.Metrics.doubleSpacing) {
+                VStack(spacing: Spacing.XL) {
                     Text(title)
                         .font(.title)
                         .multilineTextAlignment(.center)

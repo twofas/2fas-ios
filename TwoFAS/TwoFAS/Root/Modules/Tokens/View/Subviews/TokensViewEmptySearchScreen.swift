@@ -18,8 +18,11 @@
 //
 
 import UIKit
+import Common
 
 final class TokensViewEmptySearchScreen: UIView {
+    private let iconSize: CGFloat = 72
+    private let offsetY: CGFloat = 36
     private let spacingIconTitle: CGFloat = 12
     private let spacingTitleDescription: CGFloat = 6
     private let marginHorizontal: CGFloat = 30
@@ -27,10 +30,14 @@ final class TokensViewEmptySearchScreen: UIView {
     private let backgroundImage: UIImageView = {
         let img = UIImageView(image: Asset.emptyScreenBackground.image)
         img.contentMode = .scaleAspectFill
-        img.tintColor = Theme.Colors.Line.secondaryLine
+        img.tintColor = AppColor.fillsTertiary.uiColor
         return img
     }()
-    private let iconImage = UIImageView(image: Asset.emptyScreenSearch.image)
+    private let iconImage: UIImageView = {
+        let img = UIImageView(image: Asset.emptyScreenSearch.image)
+        img.contentMode = .scaleAspectFit
+        return img
+    }()
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -39,8 +46,8 @@ final class TokensViewEmptySearchScreen: UIView {
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
         label.allowsDefaultTighteningForTruncation = true
-        label.textColor = Theme.Colors.Text.main
-        label.font = Theme.Fonts.Text.title
+        label.textColor = AppColor.labelsPrimary.uiColor
+        label.font = TextStyle.title2.uiFont(.emphasized)
         return label
     }()
     
@@ -49,8 +56,8 @@ final class TokensViewEmptySearchScreen: UIView {
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.textColor = Theme.Colors.Text.subtitle
-        label.font = Theme.Fonts.Text.note
+        label.textColor = AppColor.labelsSecondary.uiColor
+        label.font = TextStyle.callout.uiFont()
         return label
     }()
     
@@ -72,7 +79,7 @@ final class TokensViewEmptySearchScreen: UIView {
         backgroundImage.pinToParent()
 
         addSubview(titleLabel, with: [
-            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: offsetY),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: marginHorizontal),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -marginHorizontal)
         ])
@@ -85,7 +92,9 @@ final class TokensViewEmptySearchScreen: UIView {
         
         addSubview(iconImage, with: [
             iconImage.centerXAnchor.constraint(equalTo: centerXAnchor),
-            iconImage.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -spacingIconTitle)
+            iconImage.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -spacingIconTitle),
+            iconImage.widthAnchor.constraint(equalToConstant: iconSize),
+            iconImage.heightAnchor.constraint(equalToConstant: iconSize)
         ])
         
         titleLabel.text = T.Tokens.serviceNotFoundSearch

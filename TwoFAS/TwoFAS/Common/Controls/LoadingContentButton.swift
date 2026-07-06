@@ -111,6 +111,10 @@ final class LoadingContentButton: UIView {
         self.title = title
         button.setTitle(title)
     }
+
+    func applyCornerRadius(_ radius: CGFloat) {
+        button.applyCornerRadius(radius)
+    }
     
     func updateStyle() {
         button.setActiveElement(

@@ -134,6 +134,10 @@ final class ContentButton: UIButton {
         setTitle(title, for: .normal)
         self.title = title
     }
+
+    func applyCornerRadius(_ radius: CGFloat) {
+        backgroundView.layer.cornerRadius = radius
+    }
     
     func enable() {
         animate(with: normalColor)

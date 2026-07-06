@@ -31,43 +31,81 @@ final class TokensViewEmptyListScreen: UIView {
     private var mainStackTopFromTrashWarning: NSLayoutConstraint!
     
     private let iconImage: UIImageView = {
-        let img = UIImageView(image: Asset.introductionEmptyHeader.image)
+        let config = UIImage.SymbolConfiguration(pointSize: 41, weight: .semibold)
+        let img = UIImageView(image: UIImage(systemName: "qrcode", withConfiguration: config))
+        img.tintColor = AppColor.accentsBrand.uiColor
         img.contentMode = .scaleAspectFit
         img.setContentCompressionResistancePriority(.defaultLow - 1, for: .vertical)
         return img
     }()
-    
+
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 1
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        label.allowsDefaultTighteningForTruncation = true
+        label.textColor = AppColor.labelsPrimary.uiColor
+        label.font = TextStyle.title2.uiFont(.emphasized)
+        label.text = "Add first service"
+        return label
+    }()
+
     private let headerLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.textColor = Theme.Colors.Text.main
-        label.font = Theme.Fonts.Text.content
+        label.textColor = AppColor.labelsSecondary.uiColor
+        label.font = TextStyle.callout.uiFont()
         label.text = T.Introduction.descriptionTitle
         return label
     }()
-    
+
     private let pairNewServiceButton: LoadingContentButton = {
         let button = LoadingContentButton()
-        button.apply(MainContainerButtonStyling.filledInDecoratedContainerLightText.value)
+        button.titleColor = AppColor.graysWhite.uiColor
+        button.highlightedTitleColor = AppColor.graysWhite.uiColor
+        button.disabledTitleColor = AppColor.labelsTertiary.uiColor
+        button.normalColor = AppColor.accentsBrand.uiColor
+        button.highlightedColor = AppColor.accentsBrand.uiColor
+        button.inactiveColor = AppColor.fillsTertiary.uiColor
+        button.updateStyle()
         button.update(title: T.Introduction.pairNewService)
+        button.applyCornerRadius(Theme.Metrics.buttonHeight / 2)
         return button
     }()
-    
+
     private let importButton: LoadingContentButton = {
         let button = LoadingContentButton()
-        button.apply(MainContainerButtonStyling.textOnly.value)
+        button.titleColor = AppColor.accentsBrand.uiColor
+        button.highlightedTitleColor = AppColor.accentsBrand.uiColor
+        button.disabledTitleColor = AppColor.labelsTertiary.uiColor
+        button.normalColor = .clear
+        button.highlightedColor = .clear
+        button.inactiveColor = .clear
+        button.updateStyle()
         button.update(title: T.Introduction.importExternalApp)
         return button
     }()
-    
-    private let helpButton: LoadingContentButton = {
-        let button = LoadingContentButton()
-        button.apply(MainContainerButtonStyling.textOnly.value)
-        button.update(title: T.Introduction.whatToDo)
-        button.configure(Theme.Fonts.Controls.smallTitle)
-        return button
+
+    private let helpButton: UIButton = {
+        var config = UIButton.Configuration.filled()
+        config.baseBackgroundColor = AppColor.fillsTertiary.uiColor
+        config.baseForegroundColor = AppColor.labelsPrimary.uiColor
+        config.background.cornerRadius = TFCornerRadius.medium.rawValue
+        config.contentInsets = NSDirectionalEdgeInsets(
+            top: Spacing.M.rawValue,
+            leading: Spacing.ML.rawValue,
+            bottom: Spacing.M.rawValue,
+            trailing: Spacing.ML.rawValue
+        )
+        var container = AttributeContainer()
+        container.font = TextStyle.subheadline.uiFont(.emphasized)
+        config.attributedTitle = AttributedString(T.Introduction.whatToDo, attributes: container)
+        return UIButton(configuration: config)
     }()
     
     private let buttonsStackView: UIStackView = {
@@ -108,8 +146,8 @@ final class TokensViewEmptyListScreen: UIView {
     }
     
     private func commonInit() {
-        backgroundColor = Theme.Colors.Fill.background
-        
+        backgroundColor = AppColor.backgroundsPrimary.uiColor
+
         addSubview(trashWarning, with: [
             trashWarning.topAnchor.constraint(equalTo: safeTopAnchor, constant: Spacing.XL.rawValue),
             trashWarning.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -134,27 +172,33 @@ final class TokensViewEmptyListScreen: UIView {
         mainStackTopFromSafeArea.isActive = true
 
         mainStackView.addArrangedSubviews([headerStackView, buttonsStackView])
-        headerStackView.addArrangedSubviews([iconImage, headerLabel])
+        headerStackView.addArrangedSubviews([iconImage, titleLabel, headerLabel])
+        headerStackView.setCustomSpacing(Spacing.L.rawValue, after: iconImage)
+        headerStackView.setCustomSpacing(Spacing.SM.rawValue, after: titleLabel)
         buttonsStackView.addArrangedSubviews([pairNewServiceButton, importButton])
-        
+
         addSubview(helpButton, with: [
             helpButton.topAnchor.constraint(
                 greaterThanOrEqualTo: mainStackView.bottomAnchor,
                 constant: Spacing.M.rawValue
             ),
             helpButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            helpButton.widthAnchor.constraint(equalToConstant: Theme.Metrics.componentWidth),
             helpButton.bottomAnchor.constraint(
                 lessThanOrEqualTo: safeBottomAnchor,
-                constant: -Spacing.M.rawValue
+                constant: -Spacing.XXXXXXL.rawValue
             )
         ])
-        
+
         pairNewServiceButton.action = { [weak self] in self?.pairNewService?() }
         importButton.action = { [weak self] in self?.importFromExternalService?() }
-        helpButton.action = { [weak self] in self?.help?() }
-        
+        helpButton.addTarget(self, action: #selector(helpButtonAction), for: .touchUpInside)
+
         trashWarning.addTarget(self, action: #selector(trashWarningAction), for: .touchUpInside)
+    }
+
+    @objc
+    private func helpButtonAction() {
+        help?()
     }
 
     func setItemsInTrashCount(_ count: Int) {
@@ -179,7 +223,7 @@ private final class TrashWarning: UIButton {
     private let trashIcon: UIImageView = {
         let config = UIImage.SymbolConfiguration(pointSize: fontSize, weight: .semibold)
         let img = UIImageView(image: UIImage(systemName: "trash"))
-        img.tintColor = Theme.Colors.Text.main
+        img.tintColor = AppColor.labelsPrimary.uiColor
         img.translatesAutoresizingMaskIntoConstraints = false
         return img
     }()
@@ -187,22 +231,21 @@ private final class TrashWarning: UIButton {
     private let arrowIcon: UIImageView = {
         let config = UIImage.SymbolConfiguration(pointSize: fontSize, weight: .regular)
         let img = UIImageView(image: UIImage(systemName: "arrow.up.forward"))
-        img.tintColor = Theme.Colors.Text.theme
+        img.tintColor = AppColor.accentsBrand.uiColor
         img.translatesAutoresizingMaskIntoConstraints = false
         return img
     }()
     
     private let summaryLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFontMetrics(forTextStyle: .headline)
-            .scaledFont(for: .systemFont(ofSize: fontSize, weight: .semibold))
+        label.font = TextStyle.subheadline.uiFont()
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 2
         label.minimumScaleFactor = 0.6
         label.allowsDefaultTighteningForTruncation = true
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .left
-        label.textColor = Theme.Colors.Text.main
+        label.textColor = AppColor.labelsPrimary.uiColor
         label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
@@ -214,15 +257,14 @@ private final class TrashWarning: UIButton {
     
     private let linkLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFontMetrics(forTextStyle: .headline)
-            .scaledFont(for: .systemFont(ofSize: fontSize, weight: .regular))
+        label.font = TextStyle.callout.uiFont()
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 1
         label.minimumScaleFactor = 0.7
         label.allowsDefaultTighteningForTruncation = true
         label.lineBreakMode = .byTruncatingTail
         label.textAlignment = .left
-        label.textColor = Theme.Colors.Text.theme
+        label.textColor = AppColor.accentsBrand.uiColor
         label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
@@ -276,10 +318,8 @@ private final class TrashWarning: UIButton {
     }
     
     func setCount(_ count: Int) {
-        let baseFont = UIFontMetrics(forTextStyle: .headline)
-            .scaledFont(for: .systemFont(ofSize: Self.fontSize, weight: .semibold))
-        let boldFont = UIFontMetrics(forTextStyle: .headline)
-            .scaledFont(for: .systemFont(ofSize: Self.fontSize, weight: .bold))
+        let baseFont = TextStyle.subheadline.uiFont()
+        let boldFont = TextStyle.subheadline.uiFont(.emphasized)
 
         guard let attrString = try? AttributedString(
             markdown: T.Tokens.emptyScreenInTrash(count),
@@ -294,7 +334,7 @@ private final class TrashWarning: UIButton {
         let fullRange = NSRange(location: 0, length: mutable.length)
 
         mutable.addAttribute(.font, value: baseFont, range: fullRange)
-        mutable.addAttribute(.foregroundColor, value: Theme.Colors.Text.main, range: fullRange)
+        mutable.addAttribute(.foregroundColor, value: AppColor.labelsPrimary.uiColor, range: fullRange)
 
         NSAttributedString(attrString).enumerateAttribute(.font, in: fullRange, options: []) { value, range, _ in
             guard let font = value as? UIFont,

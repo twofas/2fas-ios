@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Common
 
 enum MainContainerButtonStyling {
     case filled
@@ -105,9 +106,10 @@ enum MainContainerButtonStyling {
     }
     
     private static let textOnlyValue = Style<LoadingContentButton> {
-        $0.titleColor = Theme.Colors.Text.theme
-        $0.highlightedTitleColor = Theme.Colors.Text.themeHighlighted
-        $0.disabledTitleColor = Theme.Colors.Text.inactive
+        $0.configure(TextStyle.body.uiFont(.medium))
+        $0.titleColor = AppColor.accentsBrand.uiColor
+        $0.highlightedTitleColor = AppColor.accentsBrand.uiColor
+        $0.disabledTitleColor = AppColor.graysGray3.uiColor
         $0.inactiveColor = .clear
         $0.highlightedColor = .clear
         $0.normalColor = .clear

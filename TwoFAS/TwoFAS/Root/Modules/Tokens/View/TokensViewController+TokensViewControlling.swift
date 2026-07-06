@@ -385,6 +385,9 @@ extension TokensViewController {
     @objc
     func notificationAppDidBecomeActive() {
         presenter.handleAppDidBecomeActive()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.tokensScreenIsVisible()
+        }
     }
     
     @objc

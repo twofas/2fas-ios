@@ -40,6 +40,7 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
     private let refreshCounter: RefreshTokenCounter = {
         let view = RefreshTokenCounter()
         view.adjustsImageSizeForAccessibilityContentSizeCategory(true)
+        view.setKind(.normal)
         return view
     }()
     
@@ -72,6 +73,9 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         line.isUserInteractionEnabled = false
         return line
     }()
+
+    private var tokenTopToAdditionalInfoConstraint: NSLayoutConstraint?
+    private var tokenTopToServiceNameConstraint: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -102,12 +106,17 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         serviceNameLabel.setText(name)
         self.secret = secret
         self.serviceTypeName = serviceTypeName
-        if let additionalInfo, !additionalInfo.isEmpty {
+        let trimmedAdditionalInfo = additionalInfo?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !trimmedAdditionalInfo.isEmpty {
             additionalInfoLabel.isHidden = false
-            additionalInfoLabel.setText(additionalInfo)
+            additionalInfoLabel.setText(trimmedAdditionalInfo)
+            tokenTopToServiceNameConstraint?.isActive = false
+            tokenTopToAdditionalInfoConstraint?.isActive = true
         } else {
             additionalInfoLabel.isHidden = true
             additionalInfoLabel.clear()
+            tokenTopToAdditionalInfoConstraint?.isActive = false
+            tokenTopToServiceNameConstraint?.isActive = true
         }
         
         self.shouldAnimate = shouldAnimate
@@ -161,8 +170,8 @@ private extension TokensHOTPCell {
     
     func setupLayout() {
         let tokenNegativeMargin = round(hMargin / 4.0)
-        let logoViewTopOffset = vMargin + 14.0
-        let accessoryContainerTopOffset = vMargin + 16.0
+        let logoViewTopOffset = vMargin
+        let accessoryContainerTopOffset = vMargin
         contentView.addSubview(separator, with: [
             separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -193,8 +202,18 @@ private extension TokensHOTPCell {
             additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
         ])
         
+        let tokenTopToAdditionalInfo = additionalInfoLabel.bottomAnchor.constraint(
+            equalTo: tokenLabel.topAnchor,
+            constant: tokenNegativeMargin
+        )
+        let tokenTopToServiceName = serviceNameLabel.bottomAnchor.constraint(
+            equalTo: tokenLabel.topAnchor,
+            constant: tokenNegativeMargin
+        )
+        tokenTopToAdditionalInfoConstraint = tokenTopToAdditionalInfo
+        tokenTopToServiceNameConstraint = tokenTopToServiceName
         contentView.addSubview(tokenLabel, with: [
-            additionalInfoLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor, constant: tokenNegativeMargin),
+            tokenTopToAdditionalInfo,
             tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
             tokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
         ])
@@ -210,7 +229,7 @@ private extension TokensHOTPCell {
             serviceNameLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
             accessoryContainer.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor,
-                constant: -hMargin - manualOffset
+                constant: -hMargin + 4
             ),
             accessoryContainer.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
@@ -222,10 +241,9 @@ private extension TokensHOTPCell {
         accessoryContainer.addSubview(refreshCounter, with: [
             refreshCounter.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor),
             refreshCounter.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
-            refreshCounter.topAnchor.constraint(greaterThanOrEqualTo: accessoryContainer.topAnchor),
-            refreshCounter.bottomAnchor.constraint(lessThanOrEqualTo: accessoryContainer.bottomAnchor),
             refreshCounter.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor),
-            refreshCounter.widthAnchor.constraint(equalTo: accessoryContainer.widthAnchor)
+            refreshCounter.widthAnchor.constraint(equalToConstant: RefreshTokenCounter.sizeNormal),
+            refreshCounter.heightAnchor.constraint(equalToConstant: RefreshTokenCounter.sizeNormal)
         ])
         
         tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)

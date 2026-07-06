@@ -29,8 +29,16 @@ enum TokensCellKind {
 extension TokensCellKind {
     var iconDimension: CGFloat {
         switch self {
-        case .normal: return 40
-        case .compact, .edit: return 32
+        case .normal: return 52
+        case .compact, .edit: return 40
+        case .pass: return TokensPassCell.height
+        }
+    }
+
+    var iconImageDimension: CGFloat {
+        switch self {
+        case .normal: return 32
+        case .compact, .edit: return 24
         case .pass: return TokensPassCell.height
         }
     }

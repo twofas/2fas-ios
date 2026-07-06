@@ -27,10 +27,6 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
     
     var didTapUnlock: ((TokenTimerConsumer) -> Void)?
     
-    private let hMargin: CGFloat = Spacing.XL.rawValue
-    private let sMargin: CGFloat = Spacing.M.rawValue
-    private let vMargin: CGFloat = Spacing.L.rawValue
-    
     private let tokenLabel: TokensTokenView = {
         let view = TokensTokenView()
         view.setKind(.normal)
@@ -84,6 +80,9 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         line.isUserInteractionEnabled = false
         return line
     }()
+
+    private var tokenTopToAdditionalInfoConstraint: NSLayoutConstraint?
+    private var tokenTopToServiceNameConstraint: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -115,12 +114,17 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         serviceNameLabel.setText(name)
         self.secret = secret
         self.serviceTypeName = serviceTypeName
-        if let additionalInfo, !additionalInfo.isEmpty {
+        let trimmedAdditionalInfo = additionalInfo?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !trimmedAdditionalInfo.isEmpty {
             additionalInfoLabel.isHidden = false
-            additionalInfoLabel.setText(additionalInfo)
+            additionalInfoLabel.setText(trimmedAdditionalInfo)
+            tokenTopToServiceNameConstraint?.isActive = false
+            tokenTopToAdditionalInfoConstraint?.isActive = true
         } else {
             additionalInfoLabel.isHidden = true
             additionalInfoLabel.clear()
+            tokenTopToAdditionalInfoConstraint?.isActive = false
+            tokenTopToServiceNameConstraint?.isActive = true
         }
         
         clearTokenMarking()
@@ -192,8 +196,8 @@ private extension TokensTOTPCell {
     
     func setupLayout() {
         let tokenNegativeMargin = Spacing.SM.rawValue
-        let logoViewTopOffset = vMargin + 14.0
-        let accessoryContainerTopOffset = vMargin + 16.0
+        let hMargin: CGFloat = Spacing.XL.rawValue
+
         contentView.addSubview(separator, with: [
             separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -209,44 +213,53 @@ private extension TokensTOTPCell {
         
         contentView.addSubview(logoView, with: [
             logoView.leadingAnchor.constraint(equalTo: categoryView.trailingAnchor, constant: hMargin),
-            logoView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: logoViewTopOffset),
-            logoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
+            logoView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            logoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         
         contentView.addSubview(serviceNameLabel, with: [
             serviceNameLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: Spacing.L.rawValue),
-            serviceNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin)
+            serviceNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Spacing.XL.rawValue)
         ])
         
+        let additionalInfoMinHeight = additionalInfoLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 16)
+        additionalInfoMinHeight.priority = .defaultHigh
         contentView.addSubview(additionalInfoLabel, with: [
-            additionalInfoLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: Spacing.L.rawValue),
+            additionalInfoLabel.leadingAnchor.constraint(equalTo: serviceNameLabel.leadingAnchor),
             additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor),
-            additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
+            additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor),
+            additionalInfoMinHeight
         ])
         
+        let tokenTopToAdditionalInfo = additionalInfoLabel.bottomAnchor.constraint(
+            equalTo: tokenLabel.topAnchor,
+            constant: -tokenNegativeMargin
+        )
+        let tokenTopToServiceName = serviceNameLabel.bottomAnchor.constraint(
+            equalTo: tokenLabel.topAnchor,
+            constant: -tokenNegativeMargin
+        )
+        tokenTopToAdditionalInfoConstraint = tokenTopToAdditionalInfo
+        tokenTopToServiceNameConstraint = tokenTopToServiceName
         contentView.addSubview(tokenLabel, with: [
-            additionalInfoLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor, constant: tokenNegativeMargin),
-            tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: Spacing.L.rawValue),
-            tokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor),
-            tokenLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Spacing.XL.rawValue)
+            tokenTopToAdditionalInfo,
+            tokenLabel.leadingAnchor.constraint(equalTo: serviceNameLabel.leadingAnchor),
+            tokenLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Spacing.XL.rawValue)
         ])
         
         contentView.addSubview(nextTokenLabel, with: [
-            nextTokenLabel.leadingAnchor.constraint(equalTo: tokenLabel.trailingAnchor, constant: tokenNegativeMargin),
-//            nextTokenLabel.trailingAnchor
-//                .constraint(lessThanOrEqualTo: accessoryContainer.leadingAnchor, constant: tokenNegativeMargin),
+            nextTokenLabel.leadingAnchor.constraint(equalTo: tokenLabel.trailingAnchor, constant: hMargin),
             nextTokenLabel.topAnchor.constraint(equalTo: tokenLabel.topAnchor),
             nextTokenLabel.bottomAnchor.constraint(equalTo: tokenLabel.bottomAnchor)
         ])
 
         contentView.addSubview(accessoryContainer, with: [
             serviceNameLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
-            accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -sMargin),
-            accessoryContainer.topAnchor.constraint(
-                equalTo: contentView.topAnchor,
-                constant: accessoryContainerTopOffset
-            ),
-            accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
+            accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hMargin),
+            accessoryContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
+            accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            nextTokenLabel.trailingAnchor
+                .constraint(lessThanOrEqualTo: accessoryContainer.leadingAnchor, constant: tokenNegativeMargin)
         ])
         
         accessoryContainer.addSubview(circularProgress, with: [
@@ -259,12 +272,8 @@ private extension TokensTOTPCell {
         ])
         
         accessoryContainer.addSubview(revealButton, with: [
-            revealButton.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor),
-            revealButton.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
-            revealButton.topAnchor.constraint(equalTo: accessoryContainer.topAnchor),
-            revealButton.bottomAnchor.constraint(equalTo: accessoryContainer.bottomAnchor),
-            revealButton.heightAnchor.constraint(greaterThanOrEqualToConstant: TokensRevealButton.size),
-            revealButton.widthAnchor.constraint(equalToConstant: TokensRevealButton.size)
+            revealButton.centerXAnchor.constraint(equalTo: accessoryContainer.centerXAnchor),
+            revealButton.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor)
         ])
         
         tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)

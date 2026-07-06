@@ -28,16 +28,16 @@ final class TokensHOTPCompactCell: UICollectionViewCell, TokenCounterConsumer, T
     var didTapRefreshCounter: ((Secret) -> Void)?
     
     private let hMargin: CGFloat = Spacing.XL.rawValue
+    private let sMargin: CGFloat = Spacing.M.rawValue
     private let vMargin: CGFloat = Spacing.L.rawValue
     private let manualOffset: CGFloat = 3
     
-    private var serviceName2TopConstraint: NSLayoutConstraint?
-    private var serviceName2AdditionalInfoConstraint: NSLayoutConstraint?
-    private var serviceName2TokenConstraint: NSLayoutConstraint?
-    private var serviceName2BottomConstraint: NSLayoutConstraint?
-    private var serviceName2CenterYConstraint: NSLayoutConstraint?
-    
-    private var additionalInfo2TokenConstraint: NSLayoutConstraint?
+    private var showTokenWithAdditionalInfoConstraints: [NSLayoutConstraint] = []
+    private var showTokenWithoutAdditionalInfoConstraints: [NSLayoutConstraint] = []
+    private var hideTokenWithAdditionalInfoConstraints: [NSLayoutConstraint] = []
+    private var hideTokenWithoutAdditionalInfoConstraints: [NSLayoutConstraint] = []
+
+    private var hasAdditionalInfo = false
     
     private let tokenLabel: TokensTokenView = {
         let view = TokensTokenView()
@@ -47,6 +47,7 @@ final class TokensHOTPCompactCell: UICollectionViewCell, TokenCounterConsumer, T
     private let refreshCounter: RefreshTokenCounter = {
         let view = RefreshTokenCounter()
         view.adjustsImageSizeForAccessibilityContentSizeCategory(false)
+        view.setKind(.compact)
         return view
     }()
     
@@ -110,12 +111,15 @@ final class TokensHOTPCompactCell: UICollectionViewCell, TokenCounterConsumer, T
         serviceNameLabel.setText(name)
         self.secret = secret
         self.serviceTypeName = serviceTypeName
-        if let additionalInfo, !additionalInfo.isEmpty {
+        let trimmedAdditionalInfo = additionalInfo?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !trimmedAdditionalInfo.isEmpty {
             additionalInfoLabel.isHidden = false
-            additionalInfoLabel.setText(additionalInfo)
+            additionalInfoLabel.setText(trimmedAdditionalInfo)
+            hasAdditionalInfo = true
         } else {
             additionalInfoLabel.isHidden = true
             additionalInfoLabel.clear()
+            hasAdditionalInfo = false
         }
         
         self.shouldAnimate = shouldAnimate
@@ -203,13 +207,11 @@ private extension TokensHOTPCompactCell {
         contentView.addSubview(serviceNameLabel, with: [
             serviceNameLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin)
         ])
-        
+
         contentView.addSubview(additionalInfoLabel, with: [
-            additionalInfoLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor),
-            additionalInfoLabel.heightAnchor.constraint(equalTo: serviceNameLabel.heightAnchor)
+            additionalInfoLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin)
         ])
-        
+
         contentView.addSubview(tokenLabel, with: [
             tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
             tokenLabel.bottomAnchor.constraint(
@@ -217,33 +219,49 @@ private extension TokensHOTPCompactCell {
                 constant: -vMargin + tokenBottomOffset
             )
         ])
-        
-        serviceName2TopConstraint = serviceNameLabel.topAnchor.constraint(
-            equalTo: contentView.topAnchor,
-            constant: vMargin
-        )
-        serviceName2AdditionalInfoConstraint = additionalInfoLabel.topAnchor.constraint(
-            equalTo: serviceNameLabel.bottomAnchor
-        )
-        serviceName2TokenConstraint = tokenLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor)
-        serviceName2BottomConstraint = serviceNameLabel.bottomAnchor.constraint(
+
+        let serviceNameTop = serviceNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin)
+        let serviceNameBottom = serviceNameLabel.bottomAnchor.constraint(
             equalTo: contentView.bottomAnchor,
             constant: -vMargin
         )
-        serviceName2CenterYConstraint = serviceNameLabel.bottomAnchor.constraint(equalTo: contentView.centerYAnchor)
+        let serviceNameCenterY = serviceNameLabel.bottomAnchor.constraint(equalTo: contentView.centerYAnchor)
+        let tokenFromServiceName = tokenLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor)
+        let tokenFromAdditionalInfo = tokenLabel.topAnchor.constraint(equalTo: additionalInfoLabel.bottomAnchor)
+        let additionalInfoTop = additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor)
+        let additionalInfoWidth = additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
+        let additionalInfoHeight = additionalInfoLabel.heightAnchor.constraint(equalTo: serviceNameLabel.heightAnchor)
 
-        additionalInfo2TokenConstraint = tokenLabel.topAnchor.constraint(equalTo: additionalInfoLabel.bottomAnchor)
+        showTokenWithAdditionalInfoConstraints = [
+            serviceNameTop,
+            additionalInfoTop,
+            additionalInfoWidth,
+            additionalInfoHeight,
+            tokenFromAdditionalInfo
+        ]
+        showTokenWithoutAdditionalInfoConstraints = [
+            serviceNameTop,
+            tokenFromServiceName
+        ]
+        hideTokenWithAdditionalInfoConstraints = [
+            serviceNameCenterY,
+            additionalInfoTop,
+            additionalInfoWidth,
+            additionalInfoHeight
+        ]
+        hideTokenWithoutAdditionalInfoConstraints = [
+            serviceNameTop,
+            serviceNameBottom
+        ]
 
-        serviceName2TopConstraint?.isActive = true
-        serviceName2AdditionalInfoConstraint?.isActive = true
-        additionalInfo2TokenConstraint?.isActive = true
+        NSLayoutConstraint.activate(showTokenWithoutAdditionalInfoConstraints)
 
         contentView.addSubview(accessoryContainer, with: [
             tokenLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
             serviceNameLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
             accessoryContainer.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor,
-                constant: -hMargin - manualOffset
+                constant: -hMargin + 4
             ),
             accessoryContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin),
             accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
@@ -252,9 +270,9 @@ private extension TokensHOTPCompactCell {
         accessoryContainer.addSubview(refreshCounter, with: [
             refreshCounter.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor),
             refreshCounter.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
-            refreshCounter.topAnchor.constraint(greaterThanOrEqualTo: accessoryContainer.topAnchor),
-            refreshCounter.bottomAnchor.constraint(lessThanOrEqualTo: accessoryContainer.bottomAnchor),
-            refreshCounter.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor)
+            refreshCounter.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor),
+            refreshCounter.widthAnchor.constraint(equalToConstant: RefreshTokenCounter.sizeCompact),
+            refreshCounter.heightAnchor.constraint(equalToConstant: RefreshTokenCounter.sizeCompact)
         ])
         
         tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
@@ -264,40 +282,29 @@ private extension TokensHOTPCompactCell {
     
     func showToken() {
         tokenLabel.isHidden = false
-        if additionalInfoLabel.isHidden {
-            serviceName2TopConstraint?.isActive = true
-            serviceName2AdditionalInfoConstraint?.isActive = false
-            serviceName2TokenConstraint?.isActive = true
-            serviceName2BottomConstraint?.isActive = false
-            serviceName2CenterYConstraint?.isActive = false
-            additionalInfo2TokenConstraint?.isActive = false
+        deactivateAllVerticalGroups()
+        if hasAdditionalInfo {
+            NSLayoutConstraint.activate(showTokenWithAdditionalInfoConstraints)
         } else {
-            serviceName2TopConstraint?.isActive = true
-            serviceName2AdditionalInfoConstraint?.isActive = true
-            serviceName2TokenConstraint?.isActive = false
-            serviceName2BottomConstraint?.isActive = false
-            serviceName2CenterYConstraint?.isActive = false
-            additionalInfo2TokenConstraint?.isActive = true
+            NSLayoutConstraint.activate(showTokenWithoutAdditionalInfoConstraints)
         }
     }
-    
+
     func hideToken() {
         tokenLabel.isHidden = true
-        if additionalInfoLabel.isHidden {
-            serviceName2TopConstraint?.isActive = true
-            serviceName2AdditionalInfoConstraint?.isActive = false
-            serviceName2TokenConstraint?.isActive = false
-            serviceName2BottomConstraint?.isActive = true
-            serviceName2CenterYConstraint?.isActive = false
-            additionalInfo2TokenConstraint?.isActive = false
+        deactivateAllVerticalGroups()
+        if hasAdditionalInfo {
+            NSLayoutConstraint.activate(hideTokenWithAdditionalInfoConstraints)
         } else {
-            serviceName2TopConstraint?.isActive = false
-            serviceName2AdditionalInfoConstraint?.isActive = true
-            serviceName2TokenConstraint?.isActive = false
-            serviceName2BottomConstraint?.isActive = false
-            serviceName2CenterYConstraint?.isActive = true
-            additionalInfo2TokenConstraint?.isActive = false
+            NSLayoutConstraint.activate(hideTokenWithoutAdditionalInfoConstraints)
         }
+    }
+
+    private func deactivateAllVerticalGroups() {
+        NSLayoutConstraint.deactivate(showTokenWithAdditionalInfoConstraints)
+        NSLayoutConstraint.deactivate(showTokenWithoutAdditionalInfoConstraints)
+        NSLayoutConstraint.deactivate(hideTokenWithAdditionalInfoConstraints)
+        NSLayoutConstraint.deactivate(hideTokenWithoutAdditionalInfoConstraints)
     }
     
     func setupConfiguration() {

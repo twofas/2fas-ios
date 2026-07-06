@@ -49,8 +49,14 @@ final class TokensServiceName: UIView {
     private func commonInit() {
         addSubview(label)
         label.pinToParent()
+        setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
+        setContentHuggingPriority(.defaultLow - 1, for: .vertical)
     }
-    
+
+    override var intrinsicContentSize: CGSize {
+        label.intrinsicContentSize
+    }
+
     func setKind(_ kind: TokensCellKind) {
         switch kind {
         case .compact:
@@ -62,9 +68,11 @@ final class TokensServiceName: UIView {
         case .pass:
             break
         }
+        invalidateIntrinsicContentSize()
     }
-    
+
     func setText(_ text: String) {
         label.text = text
+        invalidateIntrinsicContentSize()
     }
 }

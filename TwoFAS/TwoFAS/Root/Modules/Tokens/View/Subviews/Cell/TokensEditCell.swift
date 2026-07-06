@@ -50,8 +50,8 @@ final class TokensEditCell: UICollectionViewCell {
         return imageView
     }()
     
-    private var bottomNameConstraint: NSLayoutConstraint?
-    private var bottomAdditionalNameConstraint: NSLayoutConstraint?
+    private var withAdditionalInfoConstraints: [NSLayoutConstraint] = []
+    private var withoutAdditionalInfoConstraints: [NSLayoutConstraint] = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -77,15 +77,16 @@ final class TokensEditCell: UICollectionViewCell {
         canBeDragged: Bool
     ) {
         serviceNameLabel.setText(name)
-        if let additionalInfo, !additionalInfo.isEmpty {
-            additionalInfoLabel.setText(additionalInfo)
+        let trimmedAdditionalInfo = additionalInfo?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !trimmedAdditionalInfo.isEmpty {
+            additionalInfoLabel.setText(trimmedAdditionalInfo)
             additionalInfoLabel.isHidden = false
-            bottomNameConstraint?.isActive = false
-            bottomAdditionalNameConstraint?.isActive = true
+            NSLayoutConstraint.deactivate(withoutAdditionalInfoConstraints)
+            NSLayoutConstraint.activate(withAdditionalInfoConstraints)
         } else {
             additionalInfoLabel.isHidden = true
-            bottomNameConstraint?.isActive = true
-            bottomAdditionalNameConstraint?.isActive = false
+            NSLayoutConstraint.deactivate(withAdditionalInfoConstraints)
+            NSLayoutConstraint.activate(withoutAdditionalInfoConstraints)
         }
 
         categoryView.setColor(category)
@@ -104,42 +105,45 @@ final class TokensEditCell: UICollectionViewCell {
             categoryView.topAnchor.constraint(equalTo: contentView.topAnchor),
             categoryView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-        
+
         contentView.addSubview(logoView, with: [
             logoView.leadingAnchor.constraint(equalTo: categoryView.trailingAnchor, constant: hMargin),
-            logoView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin),
-            logoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
+            logoView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            logoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-        
-        contentView.addSubview(serviceNameLabel, with: [
-            serviceNameLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            serviceNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin)
-        ])
-        
-        bottomNameConstraint = serviceNameLabel.bottomAnchor.constraint(
-            equalTo: contentView.bottomAnchor,
-            constant: -vMargin
-        )
-        
-        contentView.addSubview(additionalInfoLabel, with: [
-            additionalInfoLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor),
-            additionalInfoLabel.heightAnchor.constraint(equalTo: serviceNameLabel.heightAnchor),
-            additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
-        ])
-        
-        bottomAdditionalNameConstraint = additionalInfoLabel.bottomAnchor.constraint(
-            equalTo: contentView.bottomAnchor,
-            constant: -vMargin
-        )
-        
+
         contentView.addSubview(dragHandles, with: [
-            dragHandles.leadingAnchor.constraint(equalTo: serviceNameLabel.trailingAnchor, constant: hMargin),
-            dragHandles.leadingAnchor.constraint(equalTo: additionalInfoLabel.trailingAnchor, constant: hMargin),
             dragHandles.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin),
             dragHandles.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin),
             dragHandles.widthAnchor.constraint(equalToConstant: dragHandlesWidth),
             dragHandles.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hMargin)
         ])
+
+        contentView.addSubview(serviceNameLabel, with: [
+            serviceNameLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
+            serviceNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin),
+            serviceNameLabel.trailingAnchor.constraint(equalTo: dragHandles.leadingAnchor, constant: -hMargin)
+        ])
+
+        contentView.addSubview(additionalInfoLabel, with: [
+            additionalInfoLabel.leadingAnchor.constraint(equalTo: serviceNameLabel.leadingAnchor),
+            additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
+        ])
+
+        withAdditionalInfoConstraints = [
+            additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor),
+            additionalInfoLabel.heightAnchor.constraint(equalTo: serviceNameLabel.heightAnchor),
+            additionalInfoLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
+        ]
+
+        withoutAdditionalInfoConstraints = [
+            serviceNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
+        ]
+
+        NSLayoutConstraint.activate(withoutAdditionalInfoConstraints)
+
+        contentView.heightAnchor.constraint(
+            greaterThanOrEqualToConstant: logoView.intrinsicContentSize.height + 2 * vMargin
+        ).isActive = true
     }
 }

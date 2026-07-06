@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class CircularShape: UIView {
     private let angleOffset = -CGFloat.pi / 2.0
@@ -61,20 +62,20 @@ final class CircularShape: UIView {
     }
     
     private func commonInit() {
-        backgroundColor = Theme.Colors.Fill.background
+        backgroundColor = AppColor.backgroundsPrimary.uiColor
         isUserInteractionEnabled = false
-        
+
         shape = CAShapeLayer()
-        shape.fillColor = Theme.Colors.Fill.background.cgColor
-        shape.strokeColor = UIColor.black.cgColor
+        shape.fillColor = AppColor.backgroundsPrimary.uiColor.cgColor
+        shape.strokeColor = AppColor.labelsPrimary.uiColor.cgColor
         shape.lineWidth = lineWidth
         shape.lineCap = .square
         layer.addSublayer(shape)
         configurePath()
-        
-        registerForTraitChanges([UITraitUserInterfaceIdiom.self]) { (self: Self, previousTraitCollection) in
+
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, previousTraitCollection) in
             if self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
-                self.shape.fillColor = Theme.Colors.Fill.background.cgColor
+                self.shape.fillColor = AppColor.backgroundsPrimary.uiColor.cgColor
             }
         }
     }

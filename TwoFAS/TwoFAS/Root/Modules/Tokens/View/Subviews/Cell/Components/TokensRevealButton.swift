@@ -21,9 +21,11 @@ import UIKit
 import Common
 
 final class TokensRevealButton: UIButton {
-    static let size: CGFloat = 50
-    private let imageNormalValue = "eye"
-    private let imageActiveValue = "eye.fill"
+    static let sizeNormal: CGFloat = 34
+    static let sizeCompact: CGFloat = 32
+    private let imageValue = "eye.fill"
+    
+    private var kind: TokensCellKind = .normal
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,9 +39,9 @@ final class TokensRevealButton: UIButton {
     
     private func commonInit() {
         imageView?.contentMode = .scaleAspectFit
-        tintColor = ThemeColor.secondary
         isAccessibilityElement = true
         accessibilityValue = T.Tokens.showServiceKey
+        tintColor = AppColor.labelsPrimary.uiColor
     }
     
     func setKind(_ kind: TokensCellKind) {
@@ -51,36 +53,43 @@ final class TokensRevealButton: UIButton {
         default:
             break
         }
+        
+        self.kind = kind
+        invalidateIntrinsicContentSize()
     }
     
     private func setupCompact() {
-        let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .regular, scale: .medium)
+        let config = UIImage.SymbolConfiguration(font: TextStyle.footnote.uiFont())
         let imageNormal = UIImage(
-            systemName: imageNormalValue,
+            systemName: imageValue,
             withConfiguration: config
         )!
-        
-        let imageActive = UIImage(
-            systemName: imageActiveValue,
-            withConfiguration: config
-        )!
+
         setImage(imageNormal, for: .normal)
-        setImage(imageActive, for: .highlighted)
+
+        applyRoundedCorners(withBackgroundColor: AppColor.fillsTertiary.uiColor, cornerRadius: Self.sizeCompact / 2)
     }
-    
+
     private func setupNormal() {
         adjustsImageSizeForAccessibilityContentSizeCategory = true
-        let config = UIImage.SymbolConfiguration(textStyle: .body)
+        let config = UIImage.SymbolConfiguration(font: TextStyle.subheadline.uiFont())
         let imageNormal = UIImage(
-            systemName: imageNormalValue,
+            systemName: imageValue,
             withConfiguration: config
         )!
         
-        let imageActive = UIImage(
-            systemName: imageActiveValue,
-            withConfiguration: config
-        )!
         setImage(imageNormal, for: .normal)
-        setImage(imageActive, for: .highlighted)
+
+        applyRoundedCorners(withBackgroundColor: AppColor.fillsTertiary.uiColor, cornerRadius: Self.sizeNormal / 2)
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        let value: CGFloat = {
+            if kind == .compact {
+                return Self.sizeCompact
+            }
+            return Self.sizeNormal
+        }()
+        return .init(width: value, height: value)
     }
 }

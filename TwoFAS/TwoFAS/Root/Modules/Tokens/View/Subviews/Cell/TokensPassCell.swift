@@ -87,7 +87,12 @@ final class TokensPassCell: UICollectionViewCell {
     private let cancelButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
-        button.applyRoundedBorder(withBorderColor: Theme.Colors.Text.main, width: 1, cornerRadius: cornerRadius)
+        button
+            .applyRoundedBorder(
+                withBorderColor: AppColor.labelsPrimary.uiColor,
+                width: 1,
+                cornerRadius: cornerRadius
+            )
         return button
     }()
     

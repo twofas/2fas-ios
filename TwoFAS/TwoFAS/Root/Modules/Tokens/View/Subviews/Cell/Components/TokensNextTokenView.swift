@@ -87,8 +87,15 @@ final class TokensNextTokenView: UIView {
         
         nextTokenLabel.text = TokenValue.empty
         setNextTokenHidden()
-        
+
         nextTokenLabel.isAccessibilityElement = false
+
+        setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
+        setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+    }
+
+    override var intrinsicContentSize: CGSize {
+        nextTokenLabel.intrinsicContentSize
     }
     
     func set(nextToken: TokenValue, tokenType: TokenType) {
@@ -98,7 +105,8 @@ final class TokensNextTokenView: UIView {
         nextTokenLabel.text = nextToken.formattedValue(for: tokenType)
         let tokenVO = (nextToken.components(separatedBy: "")).joined(separator: " ")
         accessibilityValue = T.Tokens.nextToken(tokenVO)
-        
+
+        invalidateIntrinsicContentSize()
         updateConsts()
     }
     
@@ -184,6 +192,7 @@ final class TokensNextTokenView: UIView {
             break
         }
         nextTokenLabel.setKind(kind)
+        invalidateIntrinsicContentSize()
     }
     
     override func layoutSubviews() {

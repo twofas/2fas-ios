@@ -943,7 +943,7 @@
 		C2B279CA2FEC554800C41919 /* GroupedSectionBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B279C82FEC554800C41919 /* GroupedSectionBackground.swift */; };
 		C2B2B9AF2AE932BD00AB61FD /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B2B9AE2AE932BD00AB61FD /* String+.swift */; };
 		C2B39C7027A5882D00D3B579 /* SelectFromGalleryFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39C6F27A5882D00D3B579 /* SelectFromGalleryFlowController.swift */; };
-		C2B39C7327A58E0800D3B579 /* SelectFromGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39C7227A58E0800D3B579 /* SelectFromGalleryView.swift */; };
+		C2B39C7327A58E0800D3B579 /* SelectFromGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39C7227A58E0800D3B579 /* SelectFromGalleryViewController.swift */; };
 		C2B39C7527A58F0E00D3B579 /* SelectFromGalleryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39C7427A58F0E00D3B579 /* SelectFromGalleryPresenter.swift */; };
 		C2B39C7727A5908F00D3B579 /* SelectFromGalleryModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39C7627A5908F00D3B579 /* SelectFromGalleryModuleInteractor.swift */; };
 		C2B39E5029F5841700EC31F6 /* TokensEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E4F29F5841700EC31F6 /* TokensEditCell.swift */; };
@@ -1021,6 +1021,8 @@
 		C2C1DDE427CAD37D002C7867 /* SelectOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1DDE327CAD37D002C7867 /* SelectOption.swift */; };
 		C2C32A312AB7198C00DDB944 /* IconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C32A302AB7198C00DDB944 /* IconRenderer.swift */; };
 		C2C357E52FFD5E0200287B49 /* MainTabModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C357E42FFD5E0100287B49 /* MainTabModuleInteractor.swift */; };
+		C2C357E72FFD782B00287B49 /* ArrowIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C357E62FFD781B00287B49 /* ArrowIcon.swift */; };
+		C2C357E82FFD782B00287B49 /* ArrowIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C357E62FFD781B00287B49 /* ArrowIcon.swift */; };
 		C2C3AE0F269E224A00506ACF /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE0E269E224A00506ACF /* WidgetKit.framework */; };
 		C2C3AE11269E224A00506ACF /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE10269E224A00506ACF /* SwiftUI.framework */; };
 		C2C3AE14269E224A00506ACF /* TwoFASWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C3AE13269E224A00506ACF /* TwoFASWidget.swift */; };
@@ -2747,7 +2749,7 @@
 		C2B279C82FEC554800C41919 /* GroupedSectionBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedSectionBackground.swift; sourceTree = "<group>"; };
 		C2B2B9AE2AE932BD00AB61FD /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		C2B39C6F27A5882D00D3B579 /* SelectFromGalleryFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFromGalleryFlowController.swift; sourceTree = "<group>"; };
-		C2B39C7227A58E0800D3B579 /* SelectFromGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFromGalleryView.swift; sourceTree = "<group>"; };
+		C2B39C7227A58E0800D3B579 /* SelectFromGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFromGalleryViewController.swift; sourceTree = "<group>"; };
 		C2B39C7427A58F0E00D3B579 /* SelectFromGalleryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFromGalleryPresenter.swift; sourceTree = "<group>"; };
 		C2B39C7627A5908F00D3B579 /* SelectFromGalleryModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFromGalleryModuleInteractor.swift; sourceTree = "<group>"; };
 		C2B39C7927A5921900D3B579 /* MainRepositoryImpl+Vision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Vision.swift"; sourceTree = "<group>"; };
@@ -2847,6 +2849,7 @@
 		C2C1DDE327CAD37D002C7867 /* SelectOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectOption.swift; sourceTree = "<group>"; };
 		C2C32A302AB7198C00DDB944 /* IconRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconRenderer.swift; sourceTree = "<group>"; };
 		C2C357E42FFD5E0100287B49 /* MainTabModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabModuleInteractor.swift; sourceTree = "<group>"; };
+		C2C357E62FFD781B00287B49 /* ArrowIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowIcon.swift; sourceTree = "<group>"; };
 		C2C3AE0D269E224A00506ACF /* TwoFASWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TwoFASWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2C3AE0E269E224A00506ACF /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		C2C3AE10269E224A00506ACF /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -5036,14 +5039,6 @@
 			path = Widgets;
 			sourceTree = "<group>";
 		};
-		C252B38A2981D44500C2074D /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				C252B38B2981D45200C2074D /* MainContent.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		C257FD161FDC69B600CF6898 /* DataControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -5784,6 +5779,7 @@
 		C295AF8D2FD1F6B2000DF064 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				C2C357E62FFD781B00287B49 /* ArrowIcon.swift */,
 				C2DCAA7F2FF5549E00FAB19D /* TFInfoView.swift */,
 				C2E5248F2FD33D7400C5E875 /* ServiceIconView.swift */,
 				C29CF8E72FA7A6DD0058E3A0 /* ScrollPagingView.swift */,
@@ -6543,7 +6539,7 @@
 		C2B39C7127A58DDA00D3B579 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C2B39C7227A58E0800D3B579 /* SelectFromGalleryView.swift */,
+				C2B39C7227A58E0800D3B579 /* SelectFromGalleryViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -6680,38 +6676,6 @@
 			isa = PBXGroup;
 			children = (
 				C2BE805A2811DF3D009CBC4A /* AuthRequestsFlowController.swift */,
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
-		C2C0223D297F218D00D596A8 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C2C66F8D1FE0684100AD5A1C /* MainViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2C0223E297F219300D596A8 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2C02241297F222100D596A8 /* MainPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2C0223F297F219900D596A8 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2C02243297F224700D596A8 /* MainModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2C02240297F21A400D596A8 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C28705F32980776300745459 /* MainFlowController.swift */,
 			);
 			path = Flow;
 			sourceTree = "<group>";
@@ -7098,11 +7062,11 @@
 			isa = PBXGroup;
 			children = (
 				C2F9E15A2D982D68004B7DFA /* SyncMigration */,
-				C252B38A2981D44500C2074D /* Models */,
-				C2C02240297F21A400D596A8 /* Flow */,
-				C2C0223F297F219900D596A8 /* Interactor */,
-				C2C0223E297F219300D596A8 /* Presenter */,
-				C2C0223D297F218D00D596A8 /* View */,
+				C252B38B2981D45200C2074D /* MainContent.swift */,
+				C28705F32980776300745459 /* MainFlowController.swift */,
+				C2C02243297F224700D596A8 /* MainModuleInteractor.swift */,
+				C2C02241297F222100D596A8 /* MainPresenter.swift */,
+				C2C66F8D1FE0684100AD5A1C /* MainViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -9039,7 +9003,7 @@
 				C2959627267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift in Sources */,
 				C2CC0A4E29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift in Sources */,
 				C2F5A9D9276E233000C422C4 /* SettingsMenuIcon.swift in Sources */,
-				C2B39C7327A58E0800D3B579 /* SelectFromGalleryView.swift in Sources */,
+				C2B39C7327A58E0800D3B579 /* SelectFromGalleryViewController.swift in Sources */,
 				C206CACF27A35ABE0068284C /* View+.swift in Sources */,
 				C21111F0274ABCAB00CA7C78 /* FlowController.swift in Sources */,
 				C2ABF3CD2003DB23003F2CBA /* ContentButton.swift in Sources */,
@@ -9681,6 +9645,7 @@
 				C2E5248C2FD3348A00C5E875 /* IconDetails.swift in Sources */,
 				C264B6542E8C84D200CA8648 /* VaultVersion.swift in Sources */,
 				C274C9F82BAB8B92008E7212 /* ServiceData+.swift in Sources */,
+				C2C357E82FFD782B00287B49 /* ArrowIcon.swift in Sources */,
 				C274C9F92BAB8B92008E7212 /* Notifications+.swift in Sources */,
 				C274C9FA2BAB8B92008E7212 /* Array+.swift in Sources */,
 				C274C9FB2BAB8B92008E7212 /* CommonServiceHandler.swift in Sources */,
@@ -9963,6 +9928,7 @@
 				C2E53B2B2B62DDAF008E1E70 /* PairedWebExtension.swift in Sources */,
 				C2E53B262B62DDAF008E1E70 /* Digits.swift in Sources */,
 				C2E53B332B62DDAF008E1E70 /* SortType.swift in Sources */,
+				C2C357E72FFD782B00287B49 /* ArrowIcon.swift in Sources */,
 				C2E53B2E2B62DDAF008E1E70 /* TypeAliases.swift in Sources */,
 				C2E53B292B62DDAF008E1E70 /* Algorithm.swift in Sources */,
 				C2B279C72FEC52AB00C41919 /* TFSymbolButton.swift in Sources */,

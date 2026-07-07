@@ -83,13 +83,10 @@ final class CameraScannerViewController: UIViewController {
            let reason = AVCaptureSession.InterruptionReason(rawValue: reasonKey) {
             let str: String = {
                 switch reason {
-                case .videoDeviceInUseByAnotherClient:
-                    return T.Camera.cameraUsedByOtherAppTitle
-                case .videoDeviceNotAvailableDueToSystemPressure:
-                    return T.Camera.cameraUnavailableTitle
-                case .videoDeviceNotAvailableWithMultipleForegroundApps:
-                    return T.Camera.cantInitializeCameraSplitView
-                default: return T.Camera.cantInitializeCameraGeneral
+                case .videoDeviceInUseByAnotherClient: T.Camera.cameraUsedByOtherAppTitle
+                case .videoDeviceNotAvailableDueToSystemPressure: T.Camera.cameraUnavailableTitle
+                case .videoDeviceNotAvailableWithMultipleForegroundApps: T.Camera.cantInitializeCameraSplitView
+                default: T.Camera.cantInitializeCameraGeneral
                 }
             }()
             presenter.handleCameraError(str)

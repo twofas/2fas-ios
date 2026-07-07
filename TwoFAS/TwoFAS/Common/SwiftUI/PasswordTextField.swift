@@ -141,12 +141,3 @@ private struct FormatInputModifier: ViewModifier {
             .frame(alignment: .leading)
     }
 }
-
-#Preview {
-    PasswordTextField(
-        title: "Enter password",
-        text: Binding(get: { "1234" }, set: { _ in }),
-        prompt: "8 chars min"
-    )
-    .padding(Spacing.M)
-}

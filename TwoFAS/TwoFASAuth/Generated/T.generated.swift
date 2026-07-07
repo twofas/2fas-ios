@@ -1038,6 +1038,8 @@ internal enum T {
     }
     /// Universal 2FA Guide
     internal static let guideUniversalTitle = T.tr("Localizable", "guides__guide_universal_title", fallback: "Universal 2FA Guide")
+    /// Request
+    internal static let requestService = T.tr("Localizable", "guides__request_service", fallback: "Request")
     /// Select service to pair with the 2FAS app
     internal static let selectDescription = T.tr("Localizable", "guides__select_description", fallback: "Select service to pair with the 2FAS app")
     /// Do you want to provide 2FA guides for your service?
@@ -1046,6 +1048,10 @@ internal enum T {
     internal static let selectProvideGuideCta = T.tr("Localizable", "guides__select_provide_guide_cta", fallback: "Apply now")
     /// Browse services
     internal static let selectTitle = T.tr("Localizable", "guides__select_title", fallback: "Browse services")
+    /// Step %d
+    internal static func stepNumber(_ p1: Int) -> String {
+      return T.tr("Localizable", "guides__step_number", p1, fallback: "Step %d")
+    }
   }
   internal enum Introduction {
     /// In the next step, you'll be asked to choose your Google Drive account, where the 2FA Tokens will be stored safely.
@@ -1110,6 +1116,14 @@ internal enum T {
   internal enum Login {
     /// Hello again!
     internal static let helloHeader = T.tr("Localizable", "login__hello_header", fallback: "Hello again!")
+    /// Hello there!
+    internal static let helloHeader1 = T.tr("Localizable", "login__hello_header_1", fallback: "Hello there!")
+    /// Welcome back!
+    internal static let helloHeader2 = T.tr("Localizable", "login__hello_header_2", fallback: "Welcome back!")
+    /// Good to see you again!
+    internal static let helloHeader3 = T.tr("Localizable", "login__hello_header_3", fallback: "Good to see you again!")
+    /// Hi!
+    internal static let helloHeader4 = T.tr("Localizable", "login__hello_header_4", fallback: "Hi!")
   }
   internal enum NewVersion {
     /// A new version of 2FAS is available on Google Store. Update now!
@@ -1573,6 +1587,8 @@ internal enum T {
     internal static let doYouReallyWantToRemoveAllDevices = T.tr("Localizable", "tokens__do_you_really_want_to_remove_all_devices", fallback: "Do you want to permanently delete this 2FA service?")
     /// Duplicated Secret Key
     internal static let duplicatedPrivateKey = T.tr("Localizable", "tokens__duplicated_private_key", fallback: "Duplicated Secret Key")
+    /// Add first service
+    internal static let emptyListTitle = T.tr("Localizable", "tokens__empty_list_title", fallback: "Add first service")
     /// You have **%d** services in your Trash.
     internal static func emptyScreenInTrash(_ p1: Int) -> String {
       return T.tr("Localizable", "tokens__empty_screen_in_trash", p1, fallback: "You have **%d** services in your Trash.")

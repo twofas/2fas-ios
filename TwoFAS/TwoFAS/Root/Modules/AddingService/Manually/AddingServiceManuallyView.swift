@@ -52,7 +52,7 @@ struct AddingServiceManuallyView: View {
                     }
                     .disabled(!presenter.isAddServiceEnabled)
                 }
-                TFTitleView(title: "Pair the service")
+                TFTitleView(title: T.Tokens.addTitle)
             }
             .padding(.horizontal, .XXXL)
             .padding(.top, .XL)
@@ -97,7 +97,11 @@ struct AddingServiceManuallyView: View {
                                     AddServiceAdvancedWarningView()
                                 }
                             } else {
-                                TFButton("other options", variant: .borderless, size: .small) {
+                                TFButton(
+                                    T.Tokens.addManualAdvanced,
+                                    variant: .borderless,
+                                    size: .small
+                                ) {
                                     if focusedField != nil {
                                         dismissKeyboard()
                                         DispatchQueue.main.async {

@@ -40,11 +40,11 @@ struct GuideSelectorView: View {
                         presenter.handleClose()
                     }
                     Spacer()
-                    TFLiquidGlassTextButton("Zgłoś się") {
+                    TFLiquidGlassTextButton(T.Guides.requestService) {
                         UIApplication.shared.open(URL(string: "https://2fas.com/your-2fa-guide/")!)
                     }
                 }
-                TFTitleView(title: "Guides")
+                TFTitleView(title: T.Guides.selectTitle)
             }
             ScrollView(.vertical) {
                 VStack(spacing: .L) {

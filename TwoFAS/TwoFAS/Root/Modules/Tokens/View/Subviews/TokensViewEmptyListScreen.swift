@@ -49,7 +49,7 @@ final class TokensViewEmptyListScreen: UIView {
         label.allowsDefaultTighteningForTruncation = true
         label.textColor = AppColor.labelsPrimary.uiColor
         label.font = TextStyle.title2.uiFont(.emphasized)
-        label.text = "Add first service"
+        label.text = T.Tokens.emptyListTitle
         return label
     }()
 

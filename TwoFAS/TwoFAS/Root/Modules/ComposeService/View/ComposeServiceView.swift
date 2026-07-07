@@ -98,7 +98,7 @@ struct ComposeServiceView: View {
                 }
                 .disabled(!presenter.isSaveEnabled)
             }
-            TFTitleView(title: "Edit service")
+            TFTitleView(title: T.Commons.edit)
         }
         .padding(.horizontal, .XL)
         .padding(.vertical, .XL)

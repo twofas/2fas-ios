@@ -47,7 +47,7 @@ struct GuidePagesView: View {
                         presenter.onClose()
                     }
                 }
-                TFTitleView(title: "2FAS for \(presenter.serviceName)")
+                TFTitleView(title: T.Guides.guideTitle(presenter.serviceName))
             }
             .padding(.horizontal, .XXXL)
             .padding(.top, .XL)
@@ -119,7 +119,7 @@ private struct PageView: View {
     var body: some View {
         AdaptiveReadableContainer {
             VStack(alignment: .center, spacing: .L) {
-                Text("Step \(pageNumber + 1)")
+                Text(T.Guides.stepNumber(pageNumber + 1))
                     .textStyle(.title1, .emphasized)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.labelsPrimary)

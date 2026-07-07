@@ -46,8 +46,8 @@ struct AddingServiceView: View {
     var body: some View {
         MainScreenModalView(
             onClose: onClose,
-            title: "Pair service with 2FAS",
-            subtitle: "Point your camera to the screen to capture the QR code."
+            title: T.Tokens.addManualTitle,
+            subtitle: T.Tokens.addDescription
         ) {
             VStack(spacing: .zero) {
                 if errorReason != nil || presenter.isCameraUnavailable {
@@ -78,19 +78,23 @@ struct AddingServiceView: View {
             .padding(.top, .XL)
         } footer: {
             VStack(spacing: .L) {
-                Text("or")
+                Text(T.Tokens.requestIconMiddle)
                     .textStyle(.subheadline)
                     .foregroundStyle(.labelsPrimary)
 
-                TFButton("Enter secret key", variant: .borderedSecondary, size: .large, applyGlass: false) {
+                TFButton(T.Tokens.addEnterManual, variant: .borderedSecondary, size: .large, applyGlass: false) {
                     presenter.handleToAddManually()
                 }
 
-                TFButton("Upload image with QR code", variant: .borderedSecondary, size: .large) {
+                TFButton(
+                    T.Tokens.addFromGallery,
+                    variant: .borderedSecondary,
+                    size: .large
+                ) {
                     presenter.handleToGallery()
                 }
 
-                TFButton("Guide me", variant: .borderlessNeutral, size: .large) {
+                TFButton(T.Tokens.addWithGuide, variant: .borderlessNeutral, size: .large) {
                     presenter.handleToGuides()
                 }
             }

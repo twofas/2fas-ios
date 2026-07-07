@@ -83,6 +83,7 @@ extension TokensPresenter {
     func handleSetSortType(_ sortType: SortType) {
         Log("TokensPresenter - handleSetSortType: \(sortType)")
         interactor.setSortType(sortType)
+        reloadData()
     }
     
     // MARK: - App events

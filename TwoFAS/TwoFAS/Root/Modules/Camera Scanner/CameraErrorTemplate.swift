@@ -21,11 +21,6 @@ import SwiftUI
 import Common
 
 struct CameraErrorTemplate: View {
-    private let paddingHorizontal: Spacing = .XXXL
-    private let paddingVertical: Spacing = .XL
-    private let topSpacing: Spacing = .XXXXXXXL
-    private let containerPadding: Spacing = .M
-    
     let title: String
     let subtitle: String
     let image: UIImage
@@ -65,11 +60,10 @@ struct CameraErrorTemplate: View {
                 }
                 return T.Commons.cancel
             }()
-            TFButton(cancelTitleString, variant: .borderedSecondary, size: .large) {
+            TFButton(cancelTitleString, variant: .borderless, size: .large) {
                 cancel?()
             }
             .isHidden(cancel == nil, remove: true)
-
         }
     }
 }

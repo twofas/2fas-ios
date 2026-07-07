@@ -27,7 +27,6 @@ struct CameraLastPass: View {
     private let spacing: Spacing = .XL
     
     private let image0 = Asset.externalImportLastPass.image
-    private let image1 = Asset.gaImport1.image
     private let image2 = Asset.gaImport2.image
     
     let importedCount: Int
@@ -37,71 +36,36 @@ struct CameraLastPass: View {
     let cancel: Callback
     
     var body: some View {
-        Group {
-            VStack(alignment: .center, spacing: Spacing.M) {
-                HStack(spacing: spacing) {
-                    Image(uiImage: image0)
-                        .frame(width: image0.size.width, height: image0.size.height)
-                    Image(uiImage: image1)
-                        .frame(width: image1.size.width, height: image1.size.height)
-                    Image(uiImage: image2)
-                        .frame(width: image2.size.width, height: image2.size.height)
-                }
-                .frame(maxHeight: .infinity, alignment: .center)
-                
-                VStack(spacing: spacing) {
-                    Text(T.Tokens.lastPassImport)
-                        .font(.title)
-                        .multilineTextAlignment(.center)
-                    Text(T.Tokens.lastPassImportSubtitle)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                    Text(T.Tokens.googleAuthOutOfTitle(importedCount, totalCount))
-                        .font(.body.bold())
-                        .multilineTextAlignment(.center)
-                    Text(T.Tokens.googleAuthImportSubtitleEnd)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                }
-                .frame(alignment: .center)
-                .layoutPriority(1)
-                
-                VStack(spacing: 0) {
-                    Button {
-                        action()
-                    } label: {
-                        Text(T.Commons.continue)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                    }
-                    .modify {
-                        if importedCount == 0 {
-                            $0.buttonStyle(RoundedFilledInactiveButtonStyle())
-                        } else {
-                            $0.buttonStyle(RoundedFilledButtonStyle())
-                        }
-                    }
-                    
-                    Button {
-                        cancel()
-                    } label: {
-                        Text(T.Commons.cancel)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                    }
-                    .buttonStyle(LinkButtonStyle())
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+        TFInfoView {
+            HStack(spacing: spacing) {
+                Image(uiImage: image0)
+                    .frame(width: image0.size.width, height: image0.size.height)
+                ArrowIcon()
+                Image(uiImage: image2)
+                    .frame(width: image2.size.width, height: image2.size.height)
             }
-            .frame(maxWidth: Theme.Metrics.componentWidth)
-            .padding(EdgeInsets(
-                top: paddingVertical,
-                leading: paddingHorizontal,
-                bottom: .zero,
-                trailing: paddingHorizontal)
-            )
-            .background(Color(Theme.Colors.decoratedContainer))
-            .cornerRadius(Theme.Metrics.cornerRadius)
+        } texts: {
+            Text(T.Tokens.lastPassImport)
+                .textStyle(.title1, .emphasized)
+                .foregroundStyle(.labelsPrimary)
+                .multilineTextAlignment(.center)
+            Text(T.Tokens.lastPassImportSubtitle)
+                .textStyle(.body)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.labelsPrimary)
+            Text(T.Tokens.googleAuthOutOfTitle(importedCount, totalCount))
+                .textStyle(.body, .emphasized)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.labelsPrimary)
+            Text(T.Tokens.googleAuthImportSubtitleEnd)
+                .textStyle(.body)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.labelsPrimary)
+        } buttons: {
+            TFButton(T.Commons.continue, variant: .borderedProminent, size: .large, action: action)
+                .disabled(importedCount == 0)
+            TFButton(T.Commons.cancel, variant: .borderless, size: .large, action: cancel)
         }
-        .padding(containerPadding)
     }
 }
 

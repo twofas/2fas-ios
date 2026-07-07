@@ -21,13 +21,9 @@ import SwiftUI
 import Common
 
 struct CameraGoogleAuth: View {
-    private let paddingHorizontal: Spacing = .XXXL
-    private let paddingVertical: Spacing = .XL
-    private let containerPadding: Spacing = .M
     private let spacing: Spacing = .XL
     
     private let image0 = Asset.gaImport0.image
-    private let image1 = Asset.gaImport1.image
     private let image2 = Asset.gaImport2.image
     
     let importedCount: Int
@@ -63,27 +59,9 @@ struct CameraGoogleAuth: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.labelsPrimary)
         } buttons: {
-            Button {
-                action()
-            } label: {
-                Text(T.Commons.continue)
-                    .frame(minWidth: 0, maxWidth: .infinity)
-            }
-            .modify {
-                if importedCount == 0 {
-                    $0.buttonStyle(RoundedFilledInactiveButtonStyle())
-                } else {
-                    $0.buttonStyle(RoundedFilledButtonStyle())
-                }
-            }
-            
-            Button {
-                cancel()
-            } label: {
-                Text(T.Commons.cancel)
-                    .frame(minWidth: 0, maxWidth: .infinity)
-            }
-            .buttonStyle(LinkButtonStyle())
+            TFButton(T.Commons.continue, variant: .borderedProminent, size: .large, action: action)
+                .disabled(importedCount == 0)
+            TFButton(T.Commons.cancel, variant: .borderless, size: .large, action: cancel)
         }
     }
 }

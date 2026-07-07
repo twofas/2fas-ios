@@ -20,11 +20,9 @@
 import Foundation
 
 final class WidgetWarningPresenter {
-    weak var view: WidgetWarningViewControlling?
-    
     private let flowController: WidgetWarningFlowControlling
     private let interactor: WidgetWarningModuleInteracting
-    
+
     init(flowController: WidgetWarningFlowControlling, interactor: WidgetWarningModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor

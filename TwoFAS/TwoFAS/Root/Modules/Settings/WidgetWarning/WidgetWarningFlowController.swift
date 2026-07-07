@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol WidgetWarningFlowControllerParent: AnyObject {
     func hideWidgetWarning()
@@ -31,24 +32,29 @@ protocol WidgetWarningFlowControlling: AnyObject {
 
 final class WidgetWarningFlowController: FlowController {
     private weak var parent: WidgetWarningFlowControllerParent?
-    
+
     static func present(
         on viewController: UIViewController,
         parent: WidgetWarningFlowControllerParent
     ) {
-        let view = WidgetWarningViewController()
-        let flowController = WidgetWarningFlowController(viewController: view)
+        let hostingController = UIHostingController(
+            rootView: WidgetWarning(action: {}, cancel: {})
+        )
+        let flowController = WidgetWarningFlowController(viewController: hostingController)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.widgetWarningModuleInteractor()
         let presenter = WidgetWarningPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        presenter.view = view
-        view.presenter = presenter
-        view.configureAsModal()
-        
-        viewController.present(view, animated: true, completion: nil)
+        hostingController.rootView = WidgetWarning(
+            action: { presenter.handleEnableWidgets() },
+            cancel: { presenter.handleCancel() }
+        )
+        hostingController.view.backgroundColor = .clear
+        hostingController.configureAsModal()
+
+        viewController.present(hostingController, animated: true, completion: nil)
     }
 }
 

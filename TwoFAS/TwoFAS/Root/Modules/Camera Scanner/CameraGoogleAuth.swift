@@ -37,71 +37,54 @@ struct CameraGoogleAuth: View {
     let cancel: Callback
     
     var body: some View {
-        Group {
-            VStack(alignment: .center, spacing: Spacing.M) {
-                HStack(spacing: spacing) {
-                    Image(uiImage: image0)
-                        .frame(width: image0.size.width, height: image0.size.height)
-                    Image(uiImage: image1)
-                        .frame(width: image1.size.width, height: image1.size.height)
-                    Image(uiImage: image2)
-                        .frame(width: image2.size.width, height: image2.size.height)
-                }
-                .frame(maxHeight: .infinity, alignment: .center)
-                
-                VStack(spacing: spacing) {
-                    Text(T.Tokens.googleAuthImport)
-                        .font(.title)
-                        .multilineTextAlignment(.center)
-                    Text(T.Tokens.googleAuthImportSubtitle)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                    Text(T.Tokens.googleAuthOutOfTitle(importedCount, totalCount))
-                        .font(.body.bold())
-                        .multilineTextAlignment(.center)
-                    Text(T.Tokens.googleAuthImportSubtitleEnd)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                }
-                .frame(alignment: .center)
-                .layoutPriority(1)
-                
-                VStack(spacing: 0) {
-                    Button {
-                        action()
-                    } label: {
-                        Text(T.Commons.continue)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                    }
-                    .modify {
-                        if importedCount == 0 {
-                            $0.buttonStyle(RoundedFilledInactiveButtonStyle())
-                        } else {
-                            $0.buttonStyle(RoundedFilledButtonStyle())
-                        }
-                    }
-                    
-                    Button {
-                        cancel()
-                    } label: {
-                        Text(T.Commons.cancel)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                    }
-                    .buttonStyle(LinkButtonStyle())
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+        TFInfoView {
+            HStack(spacing: spacing) {
+                Image(uiImage: image0)
+                    .frame(width: image0.size.width, height: image0.size.height)
+                ArrowIcon()
+                Image(uiImage: image2)
+                    .frame(width: image2.size.width, height: image2.size.height)
             }
-            .frame(maxWidth: Theme.Metrics.componentWidth)
-            .padding(EdgeInsets(
-                top: paddingVertical,
-                leading: paddingHorizontal,
-                bottom: .zero,
-                trailing: paddingHorizontal)
-            )
-            .background(Color(Theme.Colors.decoratedContainer))
-            .cornerRadius(Theme.Metrics.cornerRadius)
+        } texts: {
+            Text(T.Tokens.googleAuthImport)
+                .textStyle(.title1, .emphasized)
+                .foregroundStyle(.labelsPrimary)
+                .multilineTextAlignment(.center)
+            Text(T.Tokens.googleAuthImportSubtitle)
+                .textStyle(.body)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.labelsPrimary)
+            Text(T.Tokens.googleAuthOutOfTitle(importedCount, totalCount))
+                .textStyle(.body, .emphasized)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.labelsPrimary)
+            Text(T.Tokens.googleAuthImportSubtitleEnd)
+                .textStyle(.body)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.labelsPrimary)
+        } buttons: {
+            Button {
+                action()
+            } label: {
+                Text(T.Commons.continue)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+            }
+            .modify {
+                if importedCount == 0 {
+                    $0.buttonStyle(RoundedFilledInactiveButtonStyle())
+                } else {
+                    $0.buttonStyle(RoundedFilledButtonStyle())
+                }
+            }
+            
+            Button {
+                cancel()
+            } label: {
+                Text(T.Commons.cancel)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+            }
+            .buttonStyle(LinkButtonStyle())
         }
-        .padding(containerPadding)
     }
 }
 

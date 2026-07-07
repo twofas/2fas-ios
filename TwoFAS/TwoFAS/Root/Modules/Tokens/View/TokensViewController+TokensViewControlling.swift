@@ -295,7 +295,7 @@ extension TokensViewController: TokensViewControlling {
             navigationItem.preferredSearchBarPlacement = .stacked
         }
         navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.hidesSearchBarWhenScrolling = true
     }
     
     func removeSearchBar() {

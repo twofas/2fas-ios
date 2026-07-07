@@ -52,7 +52,7 @@ final class MainTabViewController: UITabBarController {
     private var didSetupTabs = false
 
     private var tokensVC: TokensViewController? {
-        (viewControllers?[safe: ViewPath.main.index] as? UINavigationController)?
+        (tabs[safe: ViewPath.main.index]?.viewController as? UINavigationController)?
             .viewControllers.first as? TokensViewController
     }
 
@@ -310,13 +310,17 @@ final class MainTabViewController: UITabBarController {
 }
 
 extension MainTabViewController: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+    func tabBarController(
+        _ tabBarController: UITabBarController,
+        didSelectTab selectedTab: UITab,
+        previousTab: UITab?
+    ) {
         if #available(iOS 26.0, *), selectedTab is UISearchTab {
             return
         }
         let viewPath: ViewPath = {
             if #available(iOS 26.0, *) {
-                if let selected = selectedTab, selected === internalTabs.first {
+                if selectedTab === internalTabs.first {
                     return .main
                 }
                 return .settings(option: settingsVC?.currentView)
@@ -329,6 +333,26 @@ extension MainTabViewController: UITabBarControllerDelegate {
         }()
         presenter.handleDidSelectViewPath(viewPath)
     }
+//    
+//    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+//        if #available(iOS 26.0, *), selectedTab is UISearchTab {
+//            return
+//        }
+//        let viewPath: ViewPath = {
+//            if #available(iOS 26.0, *) {
+//                if let selected = selectedTab, selected === internalTabs.first {
+//                    return .main
+//                }
+//                return .settings(option: settingsVC?.currentView)
+//            } else {
+//                if selectedIndex == 0 {
+//                    return .main
+//                }
+//                return .settings(option: settingsVC?.currentView)
+//            }
+//        }()
+//        presenter.handleDidSelectViewPath(viewPath)
+//    }
 }
 
 extension MainTabViewController: MainTabViewControlling {

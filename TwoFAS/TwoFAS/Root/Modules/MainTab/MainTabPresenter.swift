@@ -19,28 +19,7 @@
 
 import Foundation
 import Data
-import CoreGraphics
-
-protocol MainTabModuleInteracting: AnyObject {
-    var isAddingServiceVisible: Bool { get }
-    func savePlusButtonRect(_ rect: CGRect?)
-}
-
-final class MainTabModuleInteractor: MainTabModuleInteracting {
-    private let appStateInteractor: AppStateInteracting
-
-    init(appStateInteractor: AppStateInteracting) {
-        self.appStateInteractor = appStateInteractor
-    }
-
-    var isAddingServiceVisible: Bool {
-        appStateInteractor.isAddingServiceVisible
-    }
-
-    func savePlusButtonRect(_ rect: CGRect?) {
-        appStateInteractor.savePlusButtonRect(rect)
-    }
-}
+import Common
 
 final class MainTabPresenter {
     weak var view: MainTabViewControlling?
@@ -98,6 +77,7 @@ extension MainTabPresenter {
     }
 
     func handleAddService() {
+        NotificationCenter.default.post(name: .switchToTokens, object: nil)
         flowController.toAddService()
     }
 

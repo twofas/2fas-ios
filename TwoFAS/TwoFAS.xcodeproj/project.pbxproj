@@ -1020,6 +1020,7 @@
 		C2C15140294E831300F8B511 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1513F294E831300F8B511 /* Keys.swift */; };
 		C2C1DDE427CAD37D002C7867 /* SelectOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C1DDE327CAD37D002C7867 /* SelectOption.swift */; };
 		C2C32A312AB7198C00DDB944 /* IconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C32A302AB7198C00DDB944 /* IconRenderer.swift */; };
+		C2C357E52FFD5E0200287B49 /* MainTabModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C357E42FFD5E0100287B49 /* MainTabModuleInteractor.swift */; };
 		C2C3AE0F269E224A00506ACF /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE0E269E224A00506ACF /* WidgetKit.framework */; };
 		C2C3AE11269E224A00506ACF /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C3AE10269E224A00506ACF /* SwiftUI.framework */; };
 		C2C3AE14269E224A00506ACF /* TwoFASWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C3AE13269E224A00506ACF /* TwoFASWidget.swift */; };
@@ -2845,6 +2846,7 @@
 		C2C1513F294E831300F8B511 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		C2C1DDE327CAD37D002C7867 /* SelectOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectOption.swift; sourceTree = "<group>"; };
 		C2C32A302AB7198C00DDB944 /* IconRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconRenderer.swift; sourceTree = "<group>"; };
+		C2C357E42FFD5E0100287B49 /* MainTabModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabModuleInteractor.swift; sourceTree = "<group>"; };
 		C2C3AE0D269E224A00506ACF /* TwoFASWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TwoFASWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2C3AE0E269E224A00506ACF /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		C2C3AE10269E224A00506ACF /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -5338,35 +5340,12 @@
 		C2698B662986B3E500EBC179 /* MainTab */ = {
 			isa = PBXGroup;
 			children = (
-				C2698B6A2986B40500EBC179 /* Flow */,
-				C2698B682986B3F400EBC179 /* Presenter */,
-				C2698B672986B3EF00EBC179 /* View */,
-			);
-			path = MainTab;
-			sourceTree = "<group>";
-		};
-		C2698B672986B3EF00EBC179 /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C2C357E42FFD5E0100287B49 /* MainTabModuleInteractor.swift */,
+				C2698B6F2986CA3C00EBC179 /* MainTabFlowController.swift */,
+				C2698B6D2986C03600EBC179 /* MainTabPresenter.swift */,
 				C2698B6B2986B42400EBC179 /* MainTabViewController.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2698B682986B3F400EBC179 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2698B6D2986C03600EBC179 /* MainTabPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2698B6A2986B40500EBC179 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2698B6F2986CA3C00EBC179 /* MainTabFlowController.swift */,
-			);
-			path = Flow;
+			path = MainTab;
 			sourceTree = "<group>";
 		};
 		C26B7F0D23CB719900C6AAE2 /* Camera */ = {
@@ -9457,6 +9436,7 @@
 				C27BE513275D4A2A0090CA12 /* BackupMenuPresenter+Menu.swift in Sources */,
 				C2B5BF5529460E9C00E5092D /* TokensExternalAction.swift in Sources */,
 				C2C66F8E1FE0684100AD5A1C /* MainViewController.swift in Sources */,
+				C2C357E52FFD5E0200287B49 /* MainTabModuleInteractor.swift in Sources */,
 				C2F51EFF27DAAD9900A67C73 /* BrowserExtensionPairingFailureView.swift in Sources */,
 				C20E60FF28189E8800AB002E /* PushNotificationPermissionPlainFlowController.swift in Sources */,
 				C2C56D4427C98316003B4C43 /* ComposeServiceAdvancedSummaryPresenter+Menu.swift in Sources */,
@@ -9493,7 +9473,6 @@
 				C2A8584627FB92DB00CBD9ED /* ReturnedError.swift in Sources */,
 				C2E86AC327FF921900C830BB /* UpdateDeviceName.swift in Sources */,
 				C2E86AAE27FF5E5C00C830BB /* NetworkStatusError.swift in Sources */,
-				C2A8584427FB8F4D00CBD9ED /* HTTPResponseStatus.swift in Sources */,
 				C2E86AC727FF97E200C830BB /* Send2FAToken.swift in Sources */,
 				C240FB4027FCD2F900D9E630 /* NetworkCall.swift in Sources */,
 				C2E86AB427FF6CEB00C830BB /* RegisterDevice.swift in Sources */,
@@ -12296,8 +12275,8 @@
 					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.dev;
-				PRODUCT_NAME = "$(TARGET_NAME) Dev";
 				PRODUCT_MODULE_NAME = TwoFAS;
+				PRODUCT_NAME = "$(TARGET_NAME) Dev";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -12341,9 +12320,9 @@
 					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.twofas.org.dev;
+				PRODUCT_MODULE_NAME = TwoFAS;
 				PRODUCT_NAME = "$(TARGET_NAME) Dev";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				PRODUCT_MODULE_NAME = TwoFAS;
 				STRIPFLAGS = "-rSTx";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

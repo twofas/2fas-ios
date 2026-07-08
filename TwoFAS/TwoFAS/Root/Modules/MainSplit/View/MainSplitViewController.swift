@@ -145,8 +145,6 @@ final class MainSplitViewController: UIViewController {
             view.layoutIfNeeded()
             let rectInWindow = smallPlusButton.convert(smallPlusButton.bounds, to: view.window)
             presenter.savePlusButtonRect(rectInWindow)
-        } else {
-            presenter.savePlusButtonRect(nil)
         }
     }
 

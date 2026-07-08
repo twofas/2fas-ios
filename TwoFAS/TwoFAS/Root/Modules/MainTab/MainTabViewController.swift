@@ -173,10 +173,10 @@ final class MainTabViewController: UITabBarController {
         }, for: .touchUpInside)
 
         plusButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(plusButton)
+        tabBar.addSubview(plusButton)
 
-        let centerX = plusButton.centerXAnchor.constraint(equalTo: view.leadingAnchor)
-        let centerY = plusButton.centerYAnchor.constraint(equalTo: view.topAnchor)
+        let centerX = plusButton.centerXAnchor.constraint(equalTo: tabBar.leadingAnchor)
+        let centerY = plusButton.centerYAnchor.constraint(equalTo: tabBar.topAnchor)
         let width = plusButton.widthAnchor.constraint(equalToConstant: 56)
         let height = plusButton.heightAnchor.constraint(equalToConstant: 56)
         plusButtonCenterXConstraint = centerX
@@ -194,21 +194,21 @@ final class MainTabViewController: UITabBarController {
         guard tabBar.window != nil,
               let auxiliary = findSubview(in: tabBar, classNameContains: "AuxiliaryView") else {
             plusButton.isHidden = true
-            presenter.savePlusButtonRect(nil)
             return
         }
         let target = findSubview(in: auxiliary, classNameContains: "TabButton") ?? auxiliary
         let frameInTabBar = target.convert(target.bounds, to: tabBar)
         guard frameInTabBar.width > 0, frameInTabBar.height > 0 else {
             plusButton.isHidden = true
-            presenter.savePlusButtonRect(nil)
             return
         }
-        let center = view.convert(CGPoint(x: frameInTabBar.midX, y: frameInTabBar.midY), from: tabBar)
-        plusButtonCenterXConstraint?.constant = center.x
-        plusButtonCenterYConstraint?.constant = center.y
+        plusButtonCenterXConstraint?.constant = frameInTabBar.midX
+        plusButtonCenterYConstraint?.constant = frameInTabBar.midY
         plusButtonWidthConstraint?.constant = frameInTabBar.width
         plusButtonHeightConstraint?.constant = frameInTabBar.height
+
+        tabBar.bringSubviewToFront(plusButton)
+        tabBar.layoutIfNeeded()
 
         if plusButton.isHidden {
             let isAddingVisible = presenter.isAddingServiceVisible

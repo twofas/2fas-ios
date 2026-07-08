@@ -81,9 +81,6 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         return line
     }()
 
-    private var tokenTopToAdditionalInfoConstraint: NSLayoutConstraint?
-    private var tokenTopToServiceNameConstraint: NSLayoutConstraint?
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -118,13 +115,9 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         if !trimmedAdditionalInfo.isEmpty {
             additionalInfoLabel.isHidden = false
             additionalInfoLabel.setText(trimmedAdditionalInfo)
-            tokenTopToServiceNameConstraint?.isActive = false
-            tokenTopToAdditionalInfoConstraint?.isActive = true
         } else {
             additionalInfoLabel.isHidden = true
             additionalInfoLabel.clear()
-            tokenTopToAdditionalInfoConstraint?.isActive = false
-            tokenTopToServiceNameConstraint?.isActive = true
         }
         
         clearTokenMarking()
@@ -231,18 +224,11 @@ private extension TokensTOTPCell {
             additionalInfoMinHeight
         ])
         
-        let tokenTopToAdditionalInfo = additionalInfoLabel.bottomAnchor.constraint(
-            equalTo: tokenLabel.topAnchor,
-            constant: -tokenNegativeMargin
-        )
-        let tokenTopToServiceName = serviceNameLabel.bottomAnchor.constraint(
-            equalTo: tokenLabel.topAnchor,
-            constant: -tokenNegativeMargin
-        )
-        tokenTopToAdditionalInfoConstraint = tokenTopToAdditionalInfo
-        tokenTopToServiceNameConstraint = tokenTopToServiceName
         contentView.addSubview(tokenLabel, with: [
-            tokenTopToAdditionalInfo,
+            additionalInfoLabel.bottomAnchor.constraint(
+                equalTo: tokenLabel.topAnchor,
+                constant: -tokenNegativeMargin
+            ),
             tokenLabel.leadingAnchor.constraint(equalTo: serviceNameLabel.leadingAnchor),
             tokenLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Spacing.XL.rawValue)
         ])

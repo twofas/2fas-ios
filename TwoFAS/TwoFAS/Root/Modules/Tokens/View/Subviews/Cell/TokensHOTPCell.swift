@@ -74,9 +74,6 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         return line
     }()
 
-    private var tokenTopToAdditionalInfoConstraint: NSLayoutConstraint?
-    private var tokenTopToServiceNameConstraint: NSLayoutConstraint?
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -110,13 +107,9 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         if !trimmedAdditionalInfo.isEmpty {
             additionalInfoLabel.isHidden = false
             additionalInfoLabel.setText(trimmedAdditionalInfo)
-            tokenTopToServiceNameConstraint?.isActive = false
-            tokenTopToAdditionalInfoConstraint?.isActive = true
         } else {
             additionalInfoLabel.isHidden = true
             additionalInfoLabel.clear()
-            tokenTopToAdditionalInfoConstraint?.isActive = false
-            tokenTopToServiceNameConstraint?.isActive = true
         }
         
         self.shouldAnimate = shouldAnimate
@@ -196,24 +189,20 @@ private extension TokensHOTPCell {
             serviceNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin)
         ])
         
+        let additionalInfoMinHeight = additionalInfoLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 16)
+        additionalInfoMinHeight.priority = .defaultHigh
         contentView.addSubview(additionalInfoLabel, with: [
             additionalInfoLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
             additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor),
-            additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
+            additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor),
+            additionalInfoMinHeight
         ])
         
-        let tokenTopToAdditionalInfo = additionalInfoLabel.bottomAnchor.constraint(
-            equalTo: tokenLabel.topAnchor,
-            constant: tokenNegativeMargin
-        )
-        let tokenTopToServiceName = serviceNameLabel.bottomAnchor.constraint(
-            equalTo: tokenLabel.topAnchor,
-            constant: tokenNegativeMargin
-        )
-        tokenTopToAdditionalInfoConstraint = tokenTopToAdditionalInfo
-        tokenTopToServiceNameConstraint = tokenTopToServiceName
         contentView.addSubview(tokenLabel, with: [
-            tokenTopToAdditionalInfo,
+            additionalInfoLabel.bottomAnchor.constraint(
+                equalTo: tokenLabel.topAnchor,
+                constant: tokenNegativeMargin
+            ),
             tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
             tokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
         ])

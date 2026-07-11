@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Data
 
 protocol AboutFlowControllerParent: AnyObject {}
@@ -27,60 +28,55 @@ protocol AboutFlowControlling: AnyObject {
     func toWriteReview()
     func toPrivacyPolicy()
     func toTOS()
-    func toSendReport(with vc: UIViewController)
     func toSendLogs()
     func toAcknowledgements()
     func toSocial(_ channel: SocialChannel)
+    func close()
 }
 
 final class AboutFlowController: FlowController {
     private weak var parent: AboutFlowControllerParent?
-    
+
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: AboutFlowControllerParent
     ) {
-        let view = AboutViewController()
-        let flowController = AboutFlowController(viewController: view)
-        let interactor = ModuleInteractorFactory.shared.aboutModuleInteractor()
-        flowController.parent = parent
-        let presenter = AboutPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-        view.presenter = presenter
-        presenter.view = view
-        
-        navigationController.setViewControllers([view], animated: false)
+        let hosting = create(parent: parent, showsBackButton: false)
+        navigationController.setViewControllers([hosting], animated: false)
     }
-    
+
     static func push(
         in navigationController: UINavigationController,
         parent: AboutFlowControllerParent
     ) {
-        let view = AboutViewController()
-        let flowController = AboutFlowController(viewController: view)
-        let interactor = ModuleInteractorFactory.shared.aboutModuleInteractor()
+        let hosting = create(parent: parent, showsBackButton: true)
+        navigationController.pushRootViewController(hosting, animated: true)
+    }
+
+    private static func create(
+        parent: AboutFlowControllerParent,
+        showsBackButton: Bool
+    ) -> UIViewController {
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = false
+        let flowController = AboutFlowController(viewController: hosting)
         flowController.parent = parent
+        let interactor = ModuleInteractorFactory.shared.aboutModuleInteractor()
         let presenter = AboutPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        view.presenter = presenter
-        presenter.view = view
-        
-        navigationController.pushRootViewController(view, animated: true)
+        presenter.showsBackButton = showsBackButton
+        hosting.rootView = AnyView(AboutView(presenter: presenter))
+        return hosting
     }
-}
-
-extension AboutFlowController {
-    var viewController: AboutViewController { _viewController as! AboutViewController }
 }
 
 extension AboutFlowController: AboutFlowControlling {
     func toShare() {
-        let vc = ShareActivityController.create(T.Settings.recommendation, title: T.Settings.supportAndShare)        
-        viewController.present(vc, animated: true, completion: nil)
+        guard let vc = _viewController else { return }
+        let activity = ShareActivityController.create(T.Settings.recommendation, title: T.Settings.supportAndShare)
+        vc.present(activity, animated: true, completion: nil)
     }
 
     func toWriteReview() {
@@ -109,18 +105,15 @@ extension AboutFlowController: AboutFlowControlling {
         )
     }
 
-    func toSendReport(with vc: UIViewController) {
-        viewController.present(vc, animated: true, completion: nil)
-    }
-    
     func toSendLogs() {
-        UploadLogsNavigationFlowController.present(on: viewController, auditID: nil, parent: self)
+        guard let vc = _viewController else { return }
+        UploadLogsNavigationFlowController.present(on: vc, auditID: nil, parent: self)
     }
-    
+
     func toAcknowledgements() {
         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
     }
-    
+
     func toSocial(_ channel: SocialChannel) {
         UIApplication.shared.open(
             channel.url,
@@ -128,10 +121,14 @@ extension AboutFlowController: AboutFlowControlling {
             completionHandler: nil
         )
     }
+
+    func close() {
+        _viewController?.navigationController?.popViewController(animated: true)
+    }
 }
 
 extension AboutFlowController: UploadLogsNavigationFlowControllerParent {
     func uploadLogsClose() {
-        viewController.dismiss(animated: true)
+        _viewController?.dismiss(animated: true)
     }
 }

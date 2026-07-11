@@ -17,17 +17,23 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 
+@Observable
 final class AboutPresenter {
-    weak var view: AboutViewControlling?
-    
+    var sections: [AboutSection] = []
+    var showsBackButton: Bool = true
+
     private let flowController: AboutFlowControlling
     let interactor: AboutModuleInteracting
-    
+
     init(flowController: AboutFlowControlling, interactor: AboutModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
+    }
+
+    func handleBack() {
+        flowController.close()
     }
 }
 
@@ -35,21 +41,12 @@ extension AboutPresenter {
     var appVersion: String {
         interactor.currentAppVersion
     }
-    
+
     func viewWillAppear() {
         reload()
     }
-    
-    func handleSelection(at indexPath: IndexPath) {
-        let menu = buildMenu()
-        guard let section = menu[safe: indexPath.section],
-              let cell = section.cells[safe: indexPath.row],
-              let action = cell.action
-        else {
-            reload()
-            return
-        }
-        
+
+    func handleSelection(_ action: AboutCell.Action) {
         switch action {
         case .tos:
             flowController.toTOS()
@@ -67,17 +64,15 @@ extension AboutPresenter {
             flowController.toSocial(channel)
         }
     }
-    
-    func handleToogle() {
-        let value = interactor.isCrashlyticsDisabled
-        interactor.setCrashlyticsDisabled(!value)
+
+    func handleToggle() {
+        interactor.setCrashlyticsDisabled(!interactor.isCrashlyticsDisabled)
         reload()
     }
 }
 
 private extension AboutPresenter {
     func reload() {
-        let menu = buildMenu()
-        view?.reload(with: menu)
+        sections = buildMenu()
     }
 }

@@ -20,25 +20,27 @@
 import UIKit
 import Data
 
-struct AboutSection: TableViewSection {
-    let title: String
-    var cells: [AboutCell]
+struct AboutSection: Identifiable {
+    let id = UUID()
+    let title: String?
+    let cells: [AboutCell]
     let footer: String?
-    
-    init(title: String, cells: [AboutCell], footer: String? = nil) {
+
+    init(title: String? = nil, cells: [AboutCell], footer: String? = nil) {
         self.title = title
         self.cells = cells
         self.footer = footer
     }
 }
 
-struct AboutCell: Hashable {
-    enum AccessoryKind: Hashable {
+struct AboutCell: Identifiable {
+    enum Accessory {
         case external
         case share
         case noAccessory
         case toggle(isOn: Bool)
     }
+
     enum Action: Hashable {
         case writeReview
         case privacyPolicy
@@ -48,30 +50,17 @@ struct AboutCell: Hashable {
         case acknowledgements
         case social(SocialChannel)
     }
-    
+
+    let id = UUID()
     let title: String
-    let accessory: AccessoryKind
+    let accessory: Accessory
     let action: Action?
     let icon: UIImage?
-    
-    init(title: String, accessory: AccessoryKind, action: Action?, icon: UIImage? = nil) {
+
+    init(title: String, accessory: Accessory, action: Action?, icon: UIImage? = nil) {
         self.title = title
         self.accessory = accessory
         self.action = action
         self.icon = icon
-    }
-}
-
-extension AboutCell.AccessoryKind {
-    var icon: UIImage? {
-        switch self {
-        case .share: return Asset.shareIcon.image
-                .withRenderingMode(.alwaysTemplate)
-                .withTintColor(Theme.Colors.Icon.theme)
-        case .external: return Asset.externalLinkIcon.image
-                .withRenderingMode(.alwaysTemplate)
-                .withTintColor(Theme.Colors.Icon.theme)
-        case .noAccessory, .toggle: return nil
-        }
     }
 }

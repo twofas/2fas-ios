@@ -22,13 +22,13 @@ import Foundation
 extension AboutPresenter {
     func buildMenu() -> [AboutSection] {
         [
-            .init(title: T.Settings.general, cells: [
+            .init(cells: [
                 .init(title: T.Settings.writeAReview, accessory: .external, action: .writeReview),
                 .init(title: T.Settings.privacyPolicy, accessory: .external, action: .privacyPolicy),
                 .init(title: T.Settings.termsOfService, accessory: .external, action: .tos),
                 .init(title: T.Settings.acknowledgements, accessory: .external, action: .acknowledgements)
             ]),
-            .init(title: T.Settings.shareApp, cells: [
+            .init(cells: [
                 .init(title: T.Settings.tellAFriend, accessory: .share, action: .share)
             ]),
             

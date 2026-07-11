@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol ExportQuestionPINVerificationFlowControllerParent: AnyObject {
     func closePIN()
@@ -31,24 +32,23 @@ protocol ExportQuestionPINVerificationFlowControlling: AnyObject {
 
 final class ExportQuestionPINVerificationFlowController: FlowController {
     private weak var parent: ExportQuestionPINVerificationFlowControllerParent?
-    
+
     static func push(
         in navigationController: UINavigationController,
         parent: ExportQuestionPINVerificationFlowControllerParent
     ) {
-        let view = ExportQuestionPINVerificationViewController()
-        let flowController = ExportQuestionPINVerificationFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = false
+        let flowController = ExportQuestionPINVerificationFlowController(viewController: hosting)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.exportQuestionPINVerificationModuleInteractor()
         let presenter = ExportQuestionPINVerificationPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        presenter.keyboard = view
-        view.presenter = presenter
-        
-        navigationController.isNavigationBarHidden = false
-        navigationController.pushViewController(view, animated: true)
+        hosting.rootView = AnyView(ExportQuestionPINVerificationView(presenter: presenter))
+
+        navigationController.pushViewController(hosting, animated: true)
     }
 }
 
@@ -56,7 +56,7 @@ extension ExportQuestionPINVerificationFlowController: ExportQuestionPINVerifica
     func toClose() {
         parent?.closePIN()
     }
-    
+
     func toSuccess() {
         parent?.PINSuccess()
     }

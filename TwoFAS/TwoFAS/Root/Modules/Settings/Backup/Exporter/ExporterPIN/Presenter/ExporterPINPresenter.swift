@@ -18,23 +18,60 @@
 //
 
 import Foundation
+import Common
 
-final class ExporterPINPresenter: PINKeyboardPresenter {
+@Observable
+final class ExporterPINPresenter {
     private let flowController: ExporterPINFlowControlling
     private let interactor: ExporterPINModuleInteracting
     private let password: String?
-    
+
+    var info: String = ""
+    var isError: Bool = false
+    var shake: Bool = false
+    var totalDigits: Int = 0
+    var enteredDigitCount: Int = 0
+
+    private var pin: [Int] = [] {
+        didSet {
+            enteredDigitCount = pin.count
+        }
+    }
+
+    private let textChangeTime: Int = 3
+    private let timer = CancellableTimer()
+
     init(flowController: ExporterPINFlowControlling, interactor: ExporterPINModuleInteracting, password: String?) {
         self.flowController = flowController
         self.interactor = interactor
         self.password = password
-                
-        super.init()
-        codeLength = interactor.currentCodeLength
+        self.totalDigits = interactor.currentCodeLength
     }
-    
-    override func PINGathered() {
-        if interactor.verifyCode(numbers) {
+
+    func viewWillAppear() {
+        pin = []
+        configureNormalScreen()
+    }
+
+    func onKeyPressed(_ key: TFPinKey) {
+        if let number = key.number, pin.count < totalDigits {
+            pin.append(number)
+            if pin.count >= totalDigits {
+                pinGathered()
+            }
+        } else if key.isDelete {
+            _ = pin.popLast()
+        }
+    }
+
+    func handleCancel() {
+        flowController.toClose()
+    }
+}
+
+private extension ExporterPINPresenter {
+    func pinGathered() {
+        if interactor.verifyCode(pin) {
             interactor.export(with: password) { [weak self] url in
                 if let url {
                     self?.flowController.toExport(with: url)
@@ -46,20 +83,24 @@ final class ExporterPINPresenter: PINKeyboardPresenter {
             invalidInput()
         }
     }
-    
-    override func configureNormalScreen() {
-        guard !isLocked else { return }
-        keyboard?.prepareScreen(with: T.Security.enterCurrentPin, titleType: .normal)
-    }
-    
-    override func configureErrorScreen() {
-        super.configureErrorScreen()
-        keyboard?.prepareScreen(with: T.Security.incorrectPIN, titleType: .error)
-    }
-}
 
-extension ExporterPINPresenter {
-    func handleCancel() {
-        flowController.toClose()
+    func invalidInput() {
+        pin = []
+        shake.toggle()
+        configureErrorScreen()
+    }
+
+    func configureNormalScreen() {
+        isError = false
+        info = T.Security.enterCurrentPin
+    }
+
+    func configureErrorScreen() {
+        isError = true
+        info = T.Security.incorrectPIN
+        timer.start(interval: .seconds(textChangeTime)) { [weak self] in
+            self?.configureNormalScreen()
+            self?.timer.cancel()
+        }
     }
 }

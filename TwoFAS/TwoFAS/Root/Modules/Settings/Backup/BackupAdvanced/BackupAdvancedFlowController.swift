@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import UniformTypeIdentifiers
 import Common
 
@@ -35,6 +36,7 @@ protocol BackupAdvancedFlowControlling: AnyObject {
     func toImportKeys(completion: @escaping (URL) -> Void)
     func importKeysSuccess()
     func toKeysImportError()
+    func close()
 }
 
 final class BackupAdvancedFlowController: FlowController {
@@ -46,54 +48,53 @@ final class BackupAdvancedFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: BackupAdvancedFlowControllerParent
     ) {
-        let viewController = BackupAdvancedViewController()
-        let flowController = BackupAdvancedFlowController(viewController: viewController)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = false
+        let flowController = BackupAdvancedFlowController(viewController: hosting)
         flowController.parent = parent
         flowController.navigationController = navigationController
         let presenter = BackupAdvancedPresenter(
             flowController: flowController,
             interactor: ModuleInteractorFactory.shared.backupAdvancedModuleInteractor()
         )
-        viewController.presenter = presenter
-        presenter.view = viewController
+        presenter.showsBackButton = true
+        hosting.rootView = AnyView(BackupAdvancedView(presenter: presenter))
 
-        navigationController.pushViewController(viewController, animated: true)
-    }
-}
-
-extension BackupAdvancedFlowController {
-    var viewController: BackupAdvancedViewController {
-        _viewController as! BackupAdvancedViewController
+        navigationController.pushViewController(hosting, animated: true)
     }
 }
 
 extension BackupAdvancedFlowController: BackupAdvancedFlowControlling {
     func toDeleteBackup() {
-        BackupDeleteFlowController.present(on: viewController, parent: self)
+        guard let vc = _viewController else { return }
+        BackupDeleteFlowController.present(on: vc, parent: self)
     }
 
     func toExportKeys(url: URL) {
+        guard let vc = _viewController else { return }
         let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         if let popover = activityVC.popoverPresentationController {
-            popover.sourceView = viewController.view
+            popover.sourceView = vc.view
             popover.sourceRect = CGRect(
-                x: viewController.view.bounds.midX,
-                y: viewController.view.bounds.midY,
+                x: vc.view.bounds.midX,
+                y: vc.view.bounds.midY,
                 width: 0,
                 height: 0
             )
             popover.permittedArrowDirections = []
         }
-        viewController.present(activityVC, animated: true)
+        vc.present(activityVC, animated: true)
     }
 
     func toKeysError(_ message: String) {
+        guard let vc = _viewController else { return }
         let alert = UIAlertController(title: T.Commons.error, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: T.Commons.ok, style: .default))
-        viewController.present(alert, animated: true)
+        vc.present(alert, animated: true)
     }
 
     func toImportKeysWarning(confirm: @escaping () -> Void) {
+        guard let vc = _viewController else { return }
         let alert = UIAlertController(
             title: T.Backup.cloudBackup,
             message: T.Backup.keysImportWarning,
@@ -101,10 +102,11 @@ extension BackupAdvancedFlowController: BackupAdvancedFlowControlling {
         )
         alert.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel))
         alert.addAction(UIAlertAction(title: T.Commons.ok, style: .destructive) { _ in confirm() })
-        viewController.present(alert, animated: true)
+        vc.present(alert, animated: true)
     }
 
     func toAskEncryptionTypeForImport(completion: @escaping (BackupAdvancedImportEncryptionType) -> Void) {
+        guard let vc = _viewController else { return }
         let alert = UIAlertController(
             title: T.Backup.encryptionTitle,
             message: T.Backup.encryptionMethodFooter,
@@ -118,19 +120,20 @@ extension BackupAdvancedFlowController: BackupAdvancedFlowControlling {
         })
         alert.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel))
         if let popover = alert.popoverPresentationController {
-            popover.sourceView = viewController.view
+            popover.sourceView = vc.view
             popover.sourceRect = CGRect(
-                x: viewController.view.bounds.midX,
-                y: viewController.view.bounds.midY,
+                x: vc.view.bounds.midX,
+                y: vc.view.bounds.midY,
                 width: 0,
                 height: 0
             )
             popover.permittedArrowDirections = []
         }
-        viewController.present(alert, animated: true)
+        vc.present(alert, animated: true)
     }
 
     func toCollectPasswordForImport(completion: @escaping (String) -> Void) {
+        guard let vc = _viewController else { return }
         let alert = UIAlertController(
             title: T.Backup.enterPasswordDialogTitle,
             message: nil,
@@ -145,10 +148,11 @@ extension BackupAdvancedFlowController: BackupAdvancedFlowControlling {
             let password = alert.textFields?.first?.text ?? ""
             completion(password)
         })
-        viewController.present(alert, animated: true)
+        vc.present(alert, animated: true)
     }
 
     func toImportKeys(completion: @escaping (URL) -> Void) {
+        guard let vc = _viewController else { return }
         let delegate = BackupAdvancedImportKeysDocumentPickerDelegate(completion: completion) { [weak self] in
             self?.importKeysPickerDelegateHandler = nil
         }
@@ -156,27 +160,32 @@ extension BackupAdvancedFlowController: BackupAdvancedFlowControlling {
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.data, .item])
         picker.delegate = delegate
         picker.allowsMultipleSelection = false
-        viewController.present(picker, animated: true)
+        vc.present(picker, animated: true)
     }
 
     func importKeysSuccess() {
+        guard let vc = _viewController else { return }
         let alert = UIAlertController(
             title: nil,
             message: T.Commons.done,
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: T.Commons.ok, style: .default))
-        viewController.present(alert, animated: true)
+        vc.present(alert, animated: true)
     }
 
     func toKeysImportError() {
         toKeysError(T.Backup.keysImportError)
     }
+
+    func close() {
+        _viewController?.navigationController?.popViewController(animated: true)
+    }
 }
 
 extension BackupAdvancedFlowController: BackupDeleteFlowControllerParent {
     func closeDeleteBackup(didDelete: Bool) {
-        viewController.dismiss(animated: true)
+        _viewController?.dismiss(animated: true)
         if didDelete {
             navigationController?.popViewController(animated: true)
         }

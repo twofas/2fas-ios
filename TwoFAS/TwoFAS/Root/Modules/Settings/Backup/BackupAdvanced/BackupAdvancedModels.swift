@@ -17,10 +17,11 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
+import Foundation
 import Data
 
-struct BackupAdvancedSection: TableViewSection {
+struct BackupAdvancedSection: Identifiable {
+    let id = UUID()
     let title: String?
     var cells: [BackupAdvancedCell]
     let footer: String?
@@ -32,33 +33,29 @@ struct BackupAdvancedSection: TableViewSection {
     }
 }
 
-struct BackupAdvancedCell: Hashable {
+struct BackupAdvancedCell: Identifiable {
     enum Action: Hashable {
         case exportKeys
         case importKeys
         case deleteBackup
     }
 
+    let id = UUID()
     let title: String
     let action: Action
     let isEnabled: Bool
-    var icon: UIImage {
-        action.icon
+
+    var iconSystemName: String {
+        switch action {
+        case .exportKeys: return "arrow.up.doc.fill"
+        case .importKeys: return "square.and.arrow.down.on.square.fill"
+        case .deleteBackup: return "xmark.icloud.fill"
+        }
     }
 
     init(title: String, action: Action, isEnabled: Bool) {
         self.title = title
         self.action = action
         self.isEnabled = isEnabled
-    }
-}
-
-extension BackupAdvancedCell.Action {
-    var icon: UIImage {
-        switch self {
-        case .exportKeys: UIImage(systemName: "arrow.up.doc.fill")!
-        case .importKeys: UIImage(systemName: "square.and.arrow.down.on.square.fill")!
-        case .deleteBackup: UIImage(systemName: "xmark.icloud.fill")!
-        }
     }
 }

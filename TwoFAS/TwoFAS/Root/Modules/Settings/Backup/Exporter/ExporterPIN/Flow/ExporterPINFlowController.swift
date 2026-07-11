@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol ExporterPINFlowControllerParent: AnyObject {
     func closePIN()
@@ -33,14 +34,15 @@ protocol ExporterPINFlowControlling: AnyObject {
 
 final class ExporterPINFlowController: FlowController {
     private weak var parent: ExporterPINFlowControllerParent?
-    
+
     static func push(
         in navigationController: UINavigationController,
         parent: ExporterPINFlowControllerParent,
         password: String?
     ) {
-        let view = ExporterPINViewController()
-        let flowController = ExporterPINFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = false
+        let flowController = ExporterPINFlowController(viewController: hosting)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.exporterPINModuleInteractor()
         let presenter = ExporterPINPresenter(
@@ -48,10 +50,9 @@ final class ExporterPINFlowController: FlowController {
             interactor: interactor,
             password: password
         )
-        presenter.keyboard = view
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: true)
+        hosting.rootView = AnyView(ExporterPINView(presenter: presenter))
+
+        navigationController.pushViewController(hosting, animated: true)
     }
 }
 
@@ -59,11 +60,11 @@ extension ExporterPINFlowController: ExporterPINFlowControlling {
     func toClose() {
         parent?.closePIN()
     }
-    
+
     func toExport(with url: URL) {
         parent?.showExport(with: url)
     }
-    
+
     func toExportError() {
         parent?.showExportError()
     }

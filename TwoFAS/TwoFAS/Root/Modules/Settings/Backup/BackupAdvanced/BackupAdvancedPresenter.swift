@@ -19,14 +19,20 @@
 
 import Foundation
 
-final class BackupAdvancedPresenter: ObservableObject {
-    weak var view: BackupAdvancedViewControlling?
+@Observable
+final class BackupAdvancedPresenter {
+    var sections: [BackupAdvancedSection] = []
+    var showsBackButton: Bool = true
 
     private let flowController: BackupAdvancedFlowControlling
     let interactor: BackupAdvancedModuleInteracting
 
     var isSyncing: Bool {
         interactor.isSyncing
+    }
+
+    var title: String {
+        interactor.isSyncing ? T.Backup.syncStatusProgress : T.Settings.advanced
     }
 
     init(flowController: BackupAdvancedFlowControlling, interactor: BackupAdvancedModuleInteracting) {
@@ -36,25 +42,13 @@ final class BackupAdvancedPresenter: ObservableObject {
             self?.reload()
         }
     }
-}
 
-extension BackupAdvancedPresenter {
     func viewWillAppear() {
         reload()
     }
 
-    func handleSelection(at indexPath: IndexPath) {
-        let menu = buildMenu()
-        guard let section = menu[safe: indexPath.section],
-              let cell = section.cells[safe: indexPath.row]
-        else {
-            reload()
-            return
-        }
-
-        guard cell.isEnabled else { return }
-
-        switch cell.action {
+    func handleSelection(_ action: BackupAdvancedCell.Action) {
+        switch action {
         case .exportKeys:
             interactor.exportKeys { [weak self] result in
                 guard let self else { return }
@@ -91,12 +85,15 @@ extension BackupAdvancedPresenter {
             flowController.toDeleteBackup()
         }
     }
+
+    func handleBack() {
+        flowController.close()
+    }
 }
 
 private extension BackupAdvancedPresenter {
     func reload() {
-        let menu = buildMenu()
-        view?.reload(with: menu)
+        sections = buildMenu()
     }
 
     func runImportKeys(url: URL, password: String?) {

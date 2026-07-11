@@ -21,10 +21,21 @@ import SwiftUI
 import Common
 
 struct PINWelcomeHeader: View {
+    private static let helloHeaders: [String] = [
+        T.Login.helloHeader,
+        T.Login.helloHeader1,
+        T.Login.helloHeader2,
+        T.Login.helloHeader3,
+        T.Login.helloHeader4
+    ]
+    
     let loginType: LoginType
     
     @Binding
     var info: String?
+    
+    @State
+    private var helloHeader: String = PINWelcomeHeader.helloHeaders.randomElement() ?? T.Login.helloHeader
     
     var body: some View {
         VStack(spacing: .zero) {
@@ -33,7 +44,7 @@ struct PINWelcomeHeader: View {
                 .alignmentGuide(.centerAlign) { d in d[VerticalAlignment.center] }
             VStack(spacing: .S) {
                 if loginType == .login {
-                    Text(T.Login.helloHeader)
+                    Text(helloHeader)
                         .textStyle(.title2, .emphasized)
                         .foregroundStyle(.labelsPrimary)
                         .isHidden(info != nil, remove: false)

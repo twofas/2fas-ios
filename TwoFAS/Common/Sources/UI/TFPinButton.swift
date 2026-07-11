@@ -97,7 +97,7 @@ public struct TFPinButton: View {
                     Circle()
                         .fill(AnyShapeStyle(.clear))
                 }
-                .glassEffect(.clear.interactive())
+                .glassEffect(.regular.interactive())
                     .shadow(.glass)
             } else {
                 $0.buttonStyle(ButtonFeedbackStyle())

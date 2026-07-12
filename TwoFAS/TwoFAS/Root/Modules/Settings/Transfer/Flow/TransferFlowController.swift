@@ -236,7 +236,6 @@ extension TransferFlowController: SelectFromGalleryFlowControllerParent {
 extension TransferFlowController: ImporterOpenFileHeadlessFlowControllerParent {
     func importerCloseOnSucessfulImport() {
         navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.tabBarController?.tabBar.isHidden = false
         importer = nil
         navigationController?.dismiss(animated: true) { [weak self] in
             self?.navigationController?.popToRootViewController(animated: true)
@@ -253,7 +252,6 @@ private extension TransferFlowController {
     func closeInstructions(animated: Bool = true) {
         navigationController?.popViewController(animated: animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
-        navigationController?.tabBarController?.tabBar.isHidden = false
     }
 
     func endGallery() {

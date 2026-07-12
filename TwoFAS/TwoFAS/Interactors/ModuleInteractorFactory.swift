@@ -139,13 +139,6 @@ final class ModuleInteractorFactory {
         )
     }
     
-    func appLockModuleInteractor() -> AppLockModuleInteracting {
-        AppLockModuleInteractor(
-            appLockInteractor: InteractorFactory.shared.appLockStateInteractor(),
-            mdmInteractor: InteractorFactory.shared.mdmInteractor()
-        )
-    }
-    
     func verifyPINModuleInteractor() -> VerifyPINModuleInteracting {
         VerifyPINModuleInteractor(
             protectionInteractor: InteractorFactory.shared.protectionInteractor(),

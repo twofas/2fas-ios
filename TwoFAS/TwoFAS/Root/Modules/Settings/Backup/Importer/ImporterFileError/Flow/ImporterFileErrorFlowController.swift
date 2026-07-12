@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol ImporterFileErrorFlowControllerParent: AnyObject {
     func hideFileError()
@@ -29,23 +30,28 @@ protocol ImporterFileErrorFlowControlling: AnyObject {
 
 final class ImporterFileErrorFlowController: FlowController {
     private weak var parent: ImporterFileErrorFlowControllerParent?
-    
+
     static func push(
         in navigationController: UINavigationController,
         parent: ImporterFileErrorFlowControllerParent,
         fileError: ImporterOpenFileError,
         animated: Bool = true
     ) {
-        let view = ImporterFileErrorViewController()
-        let flowController = ImporterFileErrorFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = true
+        let flowController = ImporterFileErrorFlowController(viewController: hosting)
         flowController.parent = parent
         let presenter = ImporterFileErrorPresenter(
             flowController: flowController,
             fileError: fileError
         )
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: animated)
+        hosting.rootView = AnyView(
+            ImporterFileErrorView(fileError: fileError, action: {
+                presenter.handleClose()
+            })
+        )
+
+        navigationController.pushViewController(hosting, animated: animated)
     }
 }
 

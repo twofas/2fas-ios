@@ -30,7 +30,7 @@ struct WidgetWarning: View {
         TFInfoView {
             Image(uiImage: icon)
                 .resizable()
-                .frame(width: icon.size.width/2.0, height: icon.size.height/2.0)
+                .frame(width: icon.size.width / 2.0, height: icon.size.height / 2.0)
         } texts: {
             Text("\(T.Commons.warning.uppercased())!")
                 .textStyle(.title1, .emphasized)

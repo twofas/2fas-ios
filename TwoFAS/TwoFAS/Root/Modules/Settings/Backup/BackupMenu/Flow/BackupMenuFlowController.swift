@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol BackupMenuFlowControllerParent: AnyObject {
     func showFAQ()
@@ -30,47 +31,46 @@ protocol BackupMenuFlowControlling: AnyObject {
     func toManageAppleWatch()
     func toManageBackup()
     func toAdvanced()
+    func close()
 }
 
 final class BackupMenuFlowController: FlowController {
     private weak var parent: BackupMenuFlowControllerParent?
-    
+
     private var importer: ImporterOpenFileHeadlessFlowController?
-    
+
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: BackupMenuFlowControllerParent
     ) {
-        let view = BackupMenuViewController()
-        let flowController = BackupMenuFlowController(viewController: view)
-        flowController.parent = parent
-        let interactor = ModuleInteractorFactory.shared.backupMenuModuleInteractor()
-        let presenter = BackupMenuPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-        presenter.view = view
-        view.presenter = presenter
-        
-        navigationController.setViewControllers([view], animated: false)
+        let hosting = create(parent: parent, showsBackButton: false)
+        navigationController.setViewControllers([hosting], animated: false)
     }
-    
+
     static func push(
         in navigationController: UINavigationController,
         parent: BackupMenuFlowControllerParent
     ) {
-        let view = BackupMenuViewController()
-        let flowController = BackupMenuFlowController(viewController: view)
+        let hosting = create(parent: parent, showsBackButton: true)
+        navigationController.pushRootViewController(hosting, animated: true)
+    }
+
+    private static func create(
+        parent: BackupMenuFlowControllerParent,
+        showsBackButton: Bool
+    ) -> UIViewController {
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = false
+        let flowController = BackupMenuFlowController(viewController: hosting)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.backupMenuModuleInteractor()
         let presenter = BackupMenuPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        presenter.view = view
-        view.presenter = presenter
-        
-        navigationController.pushRootViewController(view, animated: true)
+        presenter.showsBackButton = showsBackButton
+        hosting.rootView = AnyView(BackupMenuView(presenter: presenter))
+        return hosting
     }
 }
 
@@ -78,33 +78,40 @@ extension BackupMenuFlowController: BackupMenuFlowControlling {
     func toFAQ() {
         parent?.showFAQ()
     }
-    
+
     func toFileImport() {
-        importer = ImporterOpenFileHeadlessFlowController.present(on: viewController, parent: self, url: nil)
+        guard let vc = _viewController else { return }
+        importer = ImporterOpenFileHeadlessFlowController.present(on: vc, parent: self, url: nil)
     }
-    
+
     func toFileExport() {
-        ExporterMainScreenFlowController.present(on: viewController, parent: self)
+        guard let vc = _viewController else { return }
+        ExporterMainScreenFlowController.present(on: vc, parent: self)
     }
-    
+
     func toManageAppleWatch() {
-        ManageWatchFlowController.present(on: viewController, parent: self)
+        guard let vc = _viewController else { return }
+        ManageWatchFlowController.present(on: vc, parent: self)
     }
-    
+
     func toManageBackup() {
-        guard let navigationController = viewController.navigationController else { return }
+        guard let navigationController = _viewController?.navigationController else { return }
         BackupManageEncryptionFlowController.push(in: navigationController, parent: self)
     }
-    
+
     func toAdvanced() {
-        guard let navigationController = viewController.navigationController else { return }
+        guard let navigationController = _viewController?.navigationController else { return }
         BackupAdvancedFlowController.push(in: navigationController, parent: self)
+    }
+
+    func close() {
+        _viewController?.navigationController?.popViewController(animated: true)
     }
 }
 
 extension BackupMenuFlowController: ManageWatchFlowControllerParent {
     func closeManageFlow() {
-        viewController.dismiss(animated: true, completion: nil)
+        _viewController?.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -112,13 +119,13 @@ extension BackupMenuFlowController: ImporterOpenFileHeadlessFlowControllerParent
     func importerCloseOnSucessfulImport() {
         handleImporterClose()
     }
-    
+
     func importerClose() {
         handleImporterClose()
     }
-    
+
     private func handleImporterClose() {
-        viewController.dismiss(animated: true) { [weak self] in
+        _viewController?.dismiss(animated: true) { [weak self] in
             self?.importer = nil
         }
     }
@@ -126,22 +133,18 @@ extension BackupMenuFlowController: ImporterOpenFileHeadlessFlowControllerParent
 
 extension BackupMenuFlowController: ExporterMainScreenFlowControllerParent {
     func closeExporter() {
-        viewController.dismiss(animated: true, completion: nil)
+        _viewController?.dismiss(animated: true, completion: nil)
     }
 }
 
 extension BackupMenuFlowController: BackupManageEncryptionFlowControllerParent {
     func backupManageEncryptionClose() {
-        viewController.navigationController?.popViewController(animated: true)
+        _viewController?.navigationController?.popViewController(animated: true)
     }
 }
 
 extension BackupMenuFlowController: BackupAdvancedFlowControllerParent {
     func backupAdvancedClose() {
-        viewController.navigationController?.popViewController(animated: true)
+        _viewController?.navigationController?.popViewController(animated: true)
     }
-}
-
-extension BackupMenuFlowController {
-    var viewController: BackupMenuViewController { _viewController as! BackupMenuViewController }
 }

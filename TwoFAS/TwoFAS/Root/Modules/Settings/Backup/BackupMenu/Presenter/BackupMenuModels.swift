@@ -17,15 +17,14 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import Data
-import Common
+import Foundation
 
-struct BackupMenuSection: TableViewSection {
+struct BackupMenuSection: Identifiable {
+    let id = UUID()
     let title: String?
     var cells: [BackupMenuCell]
     let footer: String?
-    
+
     init(title: String? = nil, cells: [BackupMenuCell], footer: String? = nil) {
         self.title = title
         self.cells = cells
@@ -33,27 +32,25 @@ struct BackupMenuSection: TableViewSection {
     }
 }
 
-struct BackupMenuCell: Hashable {
-    struct Toggle: Hashable {
+struct BackupMenuCell: Identifiable {
+    struct Toggle {
         let kind: BackupNavigationToggle
         let isOn: Bool
         let isActive: Bool
     }
-    
-    let icon: UIImage?
+
+    let id = UUID()
     let title: String
     let accessory: Toggle?
     let action: BackupNavigationAction?
     let isEnabled: Bool
-    
+
     init(
-        icon: UIImage? = nil,
         title: String,
         accessory: Toggle? = nil,
         action: BackupNavigationAction? = nil,
         isEnabled: Bool = true
     ) {
-        self.icon = icon
         self.title = title
         self.accessory = accessory
         self.action = action
@@ -72,17 +69,4 @@ enum BackupNavigationAction: Hashable {
 
 enum BackupNavigationToggle: Hashable {
     case backup
-}
-
-extension Array where Element == BackupMenuSection {
-    func indexPath(for action: BackupNavigationAction) -> IndexPath? {
-        for (sectionIndex, section) in self.enumerated() {
-            for (cellIndex, cell) in section.cells.enumerated() {
-                if let cellAction = cell.action, cellAction == action {
-                    return IndexPath(row: cellIndex, section: sectionIndex)
-                }
-            }
-        }
-        return nil
-    }
 }

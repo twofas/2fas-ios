@@ -17,44 +17,57 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 
+@Observable
 final class BackupMenuPresenter {
-    weak var view: BackupMenuViewControlling?
-    
+    var sections: [BackupMenuSection] = []
+    var showsBackButton: Bool = true
+
     private let flowController: BackupMenuFlowControlling
+    let interactor: BackupMenuModuleInteracting
+
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .short
         return dateFormatter
     }()
-    let interactor: BackupMenuModuleInteracting
-    
+
     init(flowController: BackupMenuFlowControlling, interactor: BackupMenuModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
         interactor.reload = { [weak self] in self?.reload() }
+
+        let center = NotificationCenter.default
+        center.addObserver(
+            self,
+            selector: #selector(handleAppBecomeActive),
+            name: .refreshTabContent,
+            object: nil
+        )
+        center.addObserver(
+            self,
+            selector: #selector(handleSyncDate),
+            name: .syncCompletedSuccessfuly,
+            object: nil
+        )
     }
-    
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     func viewWillAppear() {
         interactor.startMonitoring()
         reload()
     }
-    
+
     func viewWillDisappear() {
         interactor.stopMonitoring()
     }
-    
-    func handleNavigateToFAQ() {
-        flowController.toFAQ()
-    }
-    
-    func handleSelection(at indexPath: IndexPath) {
-        let menu = buildMenu()
-        guard let section = menu[safe: indexPath.section],
-              let cell = section.cells[safe: indexPath.row],
-              let action = cell.action else { return }
+
+    func handleSelection(_ action: BackupNavigationAction) {
         switch action {
         case .importFile:
             flowController.toFileImport()
@@ -72,30 +85,29 @@ final class BackupMenuPresenter {
             interactor.reloadKeys()
         }
     }
-    
-    func handleToggle(for indexPath: IndexPath) {
-        let menu = buildMenu()
-        guard let section = menu[safe: indexPath.section],
-              let cell = section.cells[safe: indexPath.row],
-              let accessory = cell.accessory?.kind else { return }
-        switch accessory {
+
+    func handleToggle(_ toggle: BackupNavigationToggle) {
+        switch toggle {
         case .backup:
             interactor.toggleBackup()
         }
     }
-    
-    func handleBecomeActive() {
-        reload()
-    }
-    
-    func handleSyncSuccessDateUpdate() {
-        reload()
+
+    func handleBack() {
+        flowController.close()
     }
 }
 
 private extension BackupMenuPresenter {
     func reload() {
-        let menu = buildMenu()
-        view?.reload(with: menu)
+        sections = buildMenu()
+    }
+
+    @objc func handleAppBecomeActive() {
+        reload()
+    }
+
+    @objc func handleSyncDate() {
+        reload()
     }
 }

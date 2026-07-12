@@ -33,7 +33,6 @@ extension BackupMenuPresenter {
         
         var mainCells: [BackupMenuCell] = [
             .init(
-                icon: nil,
                 title: T.Backup.icloudSync,
                 accessory: .init(
                     kind: .backup,

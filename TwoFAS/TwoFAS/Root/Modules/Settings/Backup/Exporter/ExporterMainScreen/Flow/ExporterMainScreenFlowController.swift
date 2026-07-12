@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol ExporterMainScreenFlowControllerParent: AnyObject {
     func closeExporter()
@@ -39,21 +40,22 @@ final class ExporterMainScreenFlowController: FlowController {
         on viewController: UIViewController,
         parent: ExporterMainScreenFlowControllerParent
     ) {
-        let view = ExporterMainScreenViewController()
-        let flowController = ExporterMainScreenFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = ExporterMainScreenFlowController(viewController: hosting)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.exporterMainScreenModuleInteractor()
         let presenter = ExporterMainScreenPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        view.presenter = presenter
-        
-        let navi = RootNavigationController(rootViewController: view)
+        hosting.rootView = AnyView(ExporterMainScreenView(presenter: presenter))
+
+        let navi = RootNavigationController(rootViewController: hosting)
         navi.configureAsModal()
         navi.rootFlowController = flowController
         navi.isNavigationBarHidden = true
-        
+        navi.keepsFullStack = true
+
         flowController.navigationController = navi
         
         viewController.present(navi, animated: true, completion: nil)

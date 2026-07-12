@@ -19,21 +19,18 @@
 
 import Foundation
 
+@Observable
 final class ExporterMainScreenPresenter {
-    let shouldSetPasswordDefaultValue = true
-    
-    private var setPassword = true
-    
+    var setPassword: Bool = true
+
     private let flowController: ExporterMainScreenFlowControlling
     private let interactor: ExporterMainScreenModuleInteracting
-    
+
     init(flowController: ExporterMainScreenFlowControlling, interactor: ExporterMainScreenModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
     }
-}
 
-extension ExporterMainScreenPresenter {
     func handleExport() {
         if setPassword {
             flowController.toPasswordProtection()
@@ -51,12 +48,8 @@ extension ExporterMainScreenPresenter {
             }
         }
     }
-    
+
     func handleClose() {
         flowController.toClose()
-    }
-    
-    func handleSetPassword(_ setPassword: Bool) {
-        self.setPassword = setPassword
     }
 }

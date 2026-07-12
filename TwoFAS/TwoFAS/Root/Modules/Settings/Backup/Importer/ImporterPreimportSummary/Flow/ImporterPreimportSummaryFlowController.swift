@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 
 protocol ImporterPreimportSummaryFlowControllerParent: AnyObject {
@@ -45,8 +46,9 @@ final class ImporterPreimportSummaryFlowController: FlowController {
         externalImportService: ExternalImportService,
         animated: Bool = true
     ) {
-        let view = ImporterPreimportSummaryViewController()
-        let flowController = ImporterPreimportSummaryFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = true
+        let flowController = ImporterPreimportSummaryFlowController(viewController: hosting)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.importerPreimportSummaryModuleInteractor(
             countNew: countNew,
@@ -59,9 +61,9 @@ final class ImporterPreimportSummaryFlowController: FlowController {
             interactor: interactor,
             externalImportService: externalImportService
         )
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: animated)
+        hosting.rootView = AnyView(ImporterPreimportSummaryView(presenter: presenter))
+
+        navigationController.pushViewController(hosting, animated: animated)
     }
 }
 

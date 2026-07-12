@@ -19,25 +19,26 @@
 
 import UIKit
 
+@Observable
 final class ImporterPreimportSummaryPresenter {
-    weak var view: ImporterPreimportSummaryViewControlling?
-    
+    var isImporting: Bool = false
+
     private let flowController: ImporterPreimportSummaryFlowControlling
     private let interactor: ImporterPreimportSummaryModuleInteracting
     private let externalImportService: ExternalImportService
-    
+
     var countNew: Int {
         interactor.countNew
     }
-    
+
     var countTotal: Int {
         interactor.countTotal
     }
-    
+
     var isBackupFile: Bool {
         externalImportService == .twofas
     }
-    
+
     var additionalIcon: UIImage? {
         switch externalImportService {
         case .aegis: Asset.externalImportAegis.image
@@ -48,7 +49,7 @@ final class ImporterPreimportSummaryPresenter {
         case .googleAuth, .twofas, .otpAuthFile: nil
         }
     }
-    
+
     var title: String {
         switch externalImportService {
         case .aegis: T.Externalimport.aegisTitle
@@ -60,7 +61,7 @@ final class ImporterPreimportSummaryPresenter {
         case .otpAuthFile: T.Backup.import
         }
     }
-    
+
     var subtitle: String {
         switch externalImportService {
         case .aegis: T.Externalimport.aegisSuccessMsg
@@ -72,7 +73,7 @@ final class ImporterPreimportSummaryPresenter {
         case .otpAuthFile: T.Settings.importContentsFile
         }
     }
-    
+
     init(
         flowController: ImporterPreimportSummaryFlowControlling,
         interactor: ImporterPreimportSummaryModuleInteracting,
@@ -82,15 +83,13 @@ final class ImporterPreimportSummaryPresenter {
         self.interactor = interactor
         self.externalImportService = externalImportService
     }
-}
 
-extension ImporterPreimportSummaryPresenter {
     func handleImport() {
-        view?.showImporting()
+        isImporting = true
         let resultCount = interactor.importFromFile()
         flowController.toImportSummary(count: resultCount)
     }
-    
+
     func handleCancel() {
         flowController.toClose()
     }

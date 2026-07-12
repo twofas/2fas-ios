@@ -43,19 +43,20 @@ final class ExportQuestionFlowController: ObservableObject {
         let presenter = ExportQuestionPresenter(
             flowController: flowController
         )
-        let vc = ExportQuestionViewController()
-        vc.presenter = presenter
-        vc.exportType = exportType
-        
-        let navController = CommonNavigationController(rootViewController: vc)
+        let hosting = NavigationBarHiddenHostingController(
+            rootView: AnyView(ExportQuestionView(presenter: presenter, exportType: exportType))
+        )
+        hosting.title = T.Settings.exportTitleTokens
+
+        let navController = CommonNavigationController(rootViewController: hosting)
         navController.isNavigationBarHidden = true
-        
+
         flowController.parent = parent
         flowController.navigationController = navController
         flowController.exportType = exportType
-        
+
         navController.configureAsPhoneFullscreenModal()
-        
+
         viewController.present(navController, animated: true, completion: nil)
     }
 }

@@ -247,7 +247,6 @@
 		C237369C2AC0990900792054 /* GuideSelectorNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C237369B2AC0990900792054 /* GuideSelectorNavigationFlowController.swift */; };
 		C237369E2AC09ABE00792054 /* GuideSelectorModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C237369D2AC09ABE00792054 /* GuideSelectorModuleInteractor.swift */; };
 		C23736A02AC09AF100792054 /* GuideSelectorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C237369F2AC09AF100792054 /* GuideSelectorPresenter.swift */; };
-		C23736A22AC09D0E00792054 /* GuideSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23736A12AC09D0E00792054 /* GuideSelectorViewController.swift */; };
 		C23736A42AC09DB200792054 /* GuideSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23736A32AC09DB200792054 /* GuideSelectorView.swift */; };
 		C2379D0326B6D6C30010C6B1 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C2379D0726B6D6CC0010C6B1 /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
@@ -305,7 +304,6 @@
 		C24590FA280F54400079C21C /* SelectServiceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24590F9280F54400079C21C /* SelectServiceModels.swift */; };
 		C248B14D2AC4C01600E6B897 /* GuidePagesFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B14C2AC4C01600E6B897 /* GuidePagesFlowController.swift */; };
 		C248B14F2AC4C31300E6B897 /* GuidePagesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B14E2AC4C31300E6B897 /* GuidePagesPresenter.swift */; };
-		C248B1512AC4C6BE00E6B897 /* GuidePagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B1502AC4C6BE00E6B897 /* GuidePagesViewController.swift */; };
 		C248B1532AC4C77100E6B897 /* GuidePagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248B1522AC4C77100E6B897 /* GuidePagesView.swift */; };
 		C248DDAC2B7998DA004712E3 /* CopyTokenAppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */; };
 		C248DDAD2B799BB8004712E3 /* CopyTokenAppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */; };
@@ -461,7 +459,6 @@
 		C26D4F542A856F590025E5BA /* AddingServiceTokenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D4F532A856F590025E5BA /* AddingServiceTokenPresenter.swift */; };
 		C270365C293E9DDC00659CBF /* TokensModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C270365B293E9DDC00659CBF /* TokensModuleInteractor.swift */; };
 		C271B64827BAE67500D0D743 /* ComposeServiceModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C271B64727BAE67500D0D743 /* ComposeServiceModuleInteractor.swift */; };
-		C27205592E7C8EC6004FB39A /* ExportQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27205582E7C8EBC004FB39A /* ExportQuestionViewController.swift */; };
 		C272055E2E7C9140004FB39A /* ExportQuestionPINVerificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C272055D2E7C913F004FB39A /* ExportQuestionPINVerificationPresenter.swift */; };
 		C27205602E7C9279004FB39A /* ExportQuestionPINVerificationModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C272055F2E7C9278004FB39A /* ExportQuestionPINVerificationModuleInteractor.swift */; };
 		C27205622E7C930B004FB39A /* ExportQuestionPINVerificationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27205612E7C9301004FB39A /* ExportQuestionPINVerificationFlowController.swift */; };
@@ -906,7 +903,6 @@
 		C2B077BF292A91C80074517F /* UploadLogsFailureFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077BE292A91C80074517F /* UploadLogsFailureFlowController.swift */; };
 		C2B077C2292A920B0074517F /* UploadLogsFailurePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077C1292A920B0074517F /* UploadLogsFailurePresenter.swift */; };
 		C2B077C4292A921D0074517F /* UploadLogsFailureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077C3292A921D0074517F /* UploadLogsFailureView.swift */; };
-		C2B077C6292A922B0074517F /* UploadLogsFailureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077C5292A922B0074517F /* UploadLogsFailureViewController.swift */; };
 		C2B077C8292A938D0074517F /* UploadLogsModuleInteractorError+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077C7292A938D0074517F /* UploadLogsModuleInteractorError+.swift */; };
 		C2B077CD292A98AD0074517F /* UploadLogsNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077CC292A98AD0074517F /* UploadLogsNavigationFlowController.swift */; };
 		C2B1208D29D767B10020281E /* AppearancePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1208C29D767B10020281E /* AppearancePresenter.swift */; };
@@ -1358,7 +1354,6 @@
 		C2F7FE012A8AB099004B2C95 /* AddingServiceManuallyFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F7FE002A8AB099004B2C95 /* AddingServiceManuallyFlowController.swift */; };
 		C2F7FE032A8AB3D2004B2C95 /* AddingServiceManuallyPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F7FE022A8AB3D2004B2C95 /* AddingServiceManuallyPresenter.swift */; };
 		C2F7FE052A8AB70D004B2C95 /* AddingServiceManuallyModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F7FE042A8AB70D004B2C95 /* AddingServiceManuallyModuleInteractor.swift */; };
-		C2F7FE072A8AB7D4004B2C95 /* AddingServiceManuallyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F7FE062A8AB7D4004B2C95 /* AddingServiceManuallyViewController.swift */; };
 		C2F7FE092A8ABA25004B2C95 /* AddingServiceManuallyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F7FE082A8ABA25004B2C95 /* AddingServiceManuallyView.swift */; };
 		C2F9038626BFF77B008DBC4A /* TimeOffsetStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F9038526BFF77B008DBC4A /* TimeOffsetStorage.swift */; };
 		C2F9D60A2A1FEC700085B65A /* TokensRevealButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F9D6092A1FEC700085B65A /* TokensRevealButton.swift */; };
@@ -2159,7 +2154,6 @@
 		C237369B2AC0990900792054 /* GuideSelectorNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorNavigationFlowController.swift; sourceTree = "<group>"; };
 		C237369D2AC09ABE00792054 /* GuideSelectorModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorModuleInteractor.swift; sourceTree = "<group>"; };
 		C237369F2AC09AF100792054 /* GuideSelectorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorPresenter.swift; sourceTree = "<group>"; };
-		C23736A12AC09D0E00792054 /* GuideSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorViewController.swift; sourceTree = "<group>"; };
 		C23736A32AC09DB200792054 /* GuideSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideSelectorView.swift; sourceTree = "<group>"; };
 		C239DE8F26CC5366002301E2 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		C239DEA52FEEB7B3007C75A3 /* IconSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorView.swift; sourceTree = "<group>"; };
@@ -2216,7 +2210,6 @@
 		C24590F9280F54400079C21C /* SelectServiceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServiceModels.swift; sourceTree = "<group>"; };
 		C248B14C2AC4C01600E6B897 /* GuidePagesFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesFlowController.swift; sourceTree = "<group>"; };
 		C248B14E2AC4C31300E6B897 /* GuidePagesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesPresenter.swift; sourceTree = "<group>"; };
-		C248B1502AC4C6BE00E6B897 /* GuidePagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesViewController.swift; sourceTree = "<group>"; };
 		C248B1522AC4C77100E6B897 /* GuidePagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesView.swift; sourceTree = "<group>"; };
 		C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyTokenAppIntent.swift; sourceTree = "<group>"; };
 		C248DDAE2B799CD3004712E3 /* CopyIntentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyIntentButton.swift; sourceTree = "<group>"; };
@@ -2386,7 +2379,6 @@
 		C270365B293E9DDC00659CBF /* TokensModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensModuleInteractor.swift; sourceTree = "<group>"; };
 		C2712217288D607D002F2018 /* ProtectionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectionInteractor.swift; sourceTree = "<group>"; };
 		C271B64727BAE67500D0D743 /* ComposeServiceModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceModuleInteractor.swift; sourceTree = "<group>"; };
-		C27205582E7C8EBC004FB39A /* ExportQuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportQuestionViewController.swift; sourceTree = "<group>"; };
 		C272055D2E7C913F004FB39A /* ExportQuestionPINVerificationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportQuestionPINVerificationPresenter.swift; sourceTree = "<group>"; };
 		C272055F2E7C9278004FB39A /* ExportQuestionPINVerificationModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportQuestionPINVerificationModuleInteractor.swift; sourceTree = "<group>"; };
 		C27205612E7C9301004FB39A /* ExportQuestionPINVerificationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportQuestionPINVerificationFlowController.swift; sourceTree = "<group>"; };
@@ -2676,7 +2668,6 @@
 		C2B077BE292A91C80074517F /* UploadLogsFailureFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadLogsFailureFlowController.swift; sourceTree = "<group>"; };
 		C2B077C1292A920B0074517F /* UploadLogsFailurePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadLogsFailurePresenter.swift; sourceTree = "<group>"; };
 		C2B077C3292A921D0074517F /* UploadLogsFailureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadLogsFailureView.swift; sourceTree = "<group>"; };
-		C2B077C5292A922B0074517F /* UploadLogsFailureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadLogsFailureViewController.swift; sourceTree = "<group>"; };
 		C2B077C7292A938D0074517F /* UploadLogsModuleInteractorError+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UploadLogsModuleInteractorError+.swift"; sourceTree = "<group>"; };
 		C2B077CC292A98AD0074517F /* UploadLogsNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogsNavigationFlowController.swift; sourceTree = "<group>"; };
 		C2B077D0292AA0A00074517F /* ShortDateTimeFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortDateTimeFormatter.swift; sourceTree = "<group>"; };
@@ -3055,7 +3046,6 @@
 		C2F7FE002A8AB099004B2C95 /* AddingServiceManuallyFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceManuallyFlowController.swift; sourceTree = "<group>"; };
 		C2F7FE022A8AB3D2004B2C95 /* AddingServiceManuallyPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceManuallyPresenter.swift; sourceTree = "<group>"; };
 		C2F7FE042A8AB70D004B2C95 /* AddingServiceManuallyModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceManuallyModuleInteractor.swift; sourceTree = "<group>"; };
-		C2F7FE062A8AB7D4004B2C95 /* AddingServiceManuallyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceManuallyViewController.swift; sourceTree = "<group>"; };
 		C2F7FE082A8ABA25004B2C95 /* AddingServiceManuallyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceManuallyView.swift; sourceTree = "<group>"; };
 		C2F9038526BFF77B008DBC4A /* TimeOffsetStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOffsetStorage.swift; sourceTree = "<group>"; };
 		C2F9D6092A1FEC700085B65A /* TokensRevealButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensRevealButton.swift; sourceTree = "<group>"; };
@@ -4323,7 +4313,6 @@
 				C23736992AC08E4800792054 /* GuideSelectorFlowController.swift */,
 				C237369D2AC09ABE00792054 /* GuideSelectorModuleInteractor.swift */,
 				C237369F2AC09AF100792054 /* GuideSelectorPresenter.swift */,
-				C23736A12AC09D0E00792054 /* GuideSelectorViewController.swift */,
 				C23736A32AC09DB200792054 /* GuideSelectorView.swift */,
 			);
 			path = Selector;
@@ -4652,7 +4641,6 @@
 			children = (
 				C248B14C2AC4C01600E6B897 /* GuidePagesFlowController.swift */,
 				C248B14E2AC4C31300E6B897 /* GuidePagesPresenter.swift */,
-				C248B1502AC4C6BE00E6B897 /* GuidePagesViewController.swift */,
 				C248B1522AC4C77100E6B897 /* GuidePagesView.swift */,
 			);
 			path = Pages;
@@ -6165,7 +6153,6 @@
 				C27205632E7C9761004FB39A /* ExportQuestionType.swift */,
 				C2AF247D2E7C5FBB001475AF /* ExportQuestionFlowController.swift */,
 				C2AF247F2E7C5FBB001475AF /* ExportQuestionPresenter.swift */,
-				C27205582E7C8EBC004FB39A /* ExportQuestionViewController.swift */,
 				C2AF24802E7C5FBB001475AF /* ExportQuestionView.swift */,
 			);
 			path = ExportQuestion;
@@ -6219,7 +6206,6 @@
 			isa = PBXGroup;
 			children = (
 				C2B077C3292A921D0074517F /* UploadLogsFailureView.swift */,
-				C2B077C5292A922B0074517F /* UploadLogsFailureViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -7420,7 +7406,6 @@
 				C2F7FE042A8AB70D004B2C95 /* AddingServiceManuallyModuleInteractor.swift */,
 				C2F7FE022A8AB3D2004B2C95 /* AddingServiceManuallyPresenter.swift */,
 				C2F7FE082A8ABA25004B2C95 /* AddingServiceManuallyView.swift */,
-				C2F7FE062A8AB7D4004B2C95 /* AddingServiceManuallyViewController.swift */,
 			);
 			path = Manually;
 			sourceTree = "<group>";
@@ -8657,7 +8642,6 @@
 				C2A283352186071200967022 /* AlertControllerPromptFactory.swift in Sources */,
 				C27A549F27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift in Sources */,
 				C2BDC6FD1FC4BC8A00967D0E /* UIViewController+Extensions.swift in Sources */,
-				C2F7FE072A8AB7D4004B2C95 /* AddingServiceManuallyViewController.swift in Sources */,
 				C2A4D33C2BC0B5ED0001587C /* PINType+.swift in Sources */,
 				C215081E3002E885008B66E2 /* AppSecurityView.swift in Sources */,
 				C2A70680276D36E100885D79 /* NewPINModuleInteractor.swift in Sources */,
@@ -8680,7 +8664,6 @@
 				C2A7945727F9019D00E5C641 /* BrowserExtensionEditNameFlowController.swift in Sources */,
 				C2698B722986F6E800EBC179 /* UITabBarController+addTab.swift in Sources */,
 				C284AF7927601BCF00FEE810 /* BackupDeleteFlowController.swift in Sources */,
-				C23736A22AC09D0E00792054 /* GuideSelectorViewController.swift in Sources */,
 				C2E7C34B2ADB021500478D89 /* CameraOutputQRScanner.swift in Sources */,
 				C2BDC6C31FC1AC0A00967D0E /* RootViewController.swift in Sources */,
 				C2F9D60A2A1FEC700085B65A /* TokensRevealButton.swift in Sources */,
@@ -8713,7 +8696,6 @@
 				C23387042781068E00F8DBC3 /* TrashPresenter.swift in Sources */,
 				C25D5E782A64908200CA359B /* CameraLastPass.swift in Sources */,
 				C21930F02EC111DF001354C9 /* BackupManageEncryptionPresenter+Menu.swift in Sources */,
-				C27205592E7C8EC6004FB39A /* ExportQuestionViewController.swift in Sources */,
 				C27205602E7C9279004FB39A /* ExportQuestionPINVerificationModuleInteractor.swift in Sources */,
 				C29B2B7929982E4900EDE75B /* MainSplitModuleInteractor.swift in Sources */,
 				C2404F7F2B72FC6400EBD8DC /* ServiceAppEntity.swift in Sources */,
@@ -9061,7 +9043,6 @@
 				C279C1682FA66F0F006CC971 /* IntroductionNavigationbar.swift in Sources */,
 				C217B90C2F79CDD9000EAA7C /* TokensPassCell.swift in Sources */,
 				C2CC0A4A29D0CACC00677A7B /* ExternalImportInstructionsPresenter.swift in Sources */,
-				C2B077C6292A922B0074517F /* UploadLogsFailureViewController.swift in Sources */,
 				C27C03BF27F4FD6C0020DB5E /* BrowserExtensionMainModuleInteractor.swift in Sources */,
 				C2A2AF6F23D8EA710059094D /* UIActivityIndicator+.swift in Sources */,
 				C2F7FE052A8AB70D004B2C95 /* AddingServiceManuallyModuleInteractor.swift in Sources */,
@@ -9137,7 +9118,6 @@
 				C2F51EFF27DAAD9900A67C73 /* BrowserExtensionPairingFailureView.swift in Sources */,
 				C20E60FF28189E8800AB002E /* PushNotificationPermissionPlainFlowController.swift in Sources */,
 				C2C56D4427C98316003B4C43 /* ComposeServiceAdvancedSummaryPresenter+Menu.swift in Sources */,
-				C248B1512AC4C6BE00E6B897 /* GuidePagesViewController.swift in Sources */,
 				C215082F3003026A008B66E2 /* ExporterPINView.swift in Sources */,
 				C2AE5F652ADC3A4200AED670 /* VoiceOver.swift in Sources */,
 				C296D4D42A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift in Sources */,

@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 import Data
 
@@ -38,23 +39,24 @@ protocol GuidePagesFlowControlling: AnyObject {
 
 final class GuidePagesFlowController: FlowController {
     private weak var parent: GuidePagesFlowControllerParent?
-    
+
     static func push(
         on navigationController: UINavigationController,
         parent: GuidePagesFlowControllerParent,
         content: GuideDescription.MenuPosition
     ) {
-        let view = GuidePagesViewController()
-        let flowController = GuidePagesFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = GuidePagesFlowController(viewController: hosting)
         flowController.parent = parent
-        
+
         let presenter = GuidePagesPresenter(
             flowController: flowController,
             content: content
         )
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: true)
+        hosting.rootView = AnyView(GuidePagesView(presenter: presenter))
+        hosting.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+
+        navigationController.pushViewController(hosting, animated: true)
     }
 }
 

@@ -80,6 +80,7 @@ final class AddingServiceManuallyPresenter: ObservableObject {
         self.flowController = flowController
         self.interactor = interactor
         self.providedName = providedName
+        self.serviceName = providedName ?? ""
     }
 }
 
@@ -93,11 +94,7 @@ extension AddingServiceManuallyPresenter {
     var tokenLength: Digits {
         selectedTokenType == TokenType.steam ? Digits.digits5 : selectedDigits
     }
-    
-    func viewDidLoad() {
-        serviceName = providedName ?? ""
-    }
-    
+
     func handleAddService() {
         validateAddService()
         guard isAddServiceEnabled else { return }

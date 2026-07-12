@@ -18,6 +18,8 @@
 //
 
 import UIKit
+import SwiftUI
+import Common
 
 protocol UploadLogsFailureFlowControllerParent: AnyObject {
     func uploadLogsFailureClose()
@@ -31,25 +33,31 @@ protocol UploadLogsFailureFlowControlling: AnyObject {
 
 final class UploadLogsFailureFlowController: FlowController {
     private weak var parent: UploadLogsFailureFlowControllerParent?
-    
+
     static func push(
         in navigationController: UINavigationController,
         error: UploadLogsModuleInteractorError,
         canRetry: Bool,
         parent: UploadLogsFailureFlowControllerParent
     ) {
-        let view = UploadLogsFailureViewController()
-        let flowController = UploadLogsFailureFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = UploadLogsFailureFlowController(viewController: hosting)
         flowController.parent = parent
-        
+
         let presenter = UploadLogsFailurePresenter(
             flowController: flowController,
             error: error,
             canRetry: canRetry
         )
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: true)
+        let view = UploadLogsFailureView(
+            close: presenter.handleClose,
+            retry: presenter.handleRetry,
+            reason: presenter.reason,
+            canRetry: presenter.canRetry
+        )
+        hosting.rootView = AnyView(view)
+
+        navigationController.pushViewController(hosting, animated: true)
     }
 }
 

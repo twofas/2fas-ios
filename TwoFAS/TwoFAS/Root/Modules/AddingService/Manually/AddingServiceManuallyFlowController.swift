@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 
 protocol AddingServiceManuallyFlowControllerParent: AnyObject {
@@ -32,31 +33,28 @@ protocol AddingServiceManuallyFlowControlling: AnyObject {
 
 final class AddingServiceManuallyFlowController: FlowController {
     private weak var parent: AddingServiceManuallyFlowControllerParent?
-    
+
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: AddingServiceManuallyFlowControllerParent,
         name: String?
     ) {
-        let view = AddingServiceManuallyViewController()
-        let flowController = AddingServiceManuallyFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = AddingServiceManuallyFlowController(viewController: hosting)
         flowController.parent = parent
-        
+
         let interactor = ModuleInteractorFactory.shared.addingServiceManuallyModuleInteractor()
-        
+
         let presenter = AddingServiceManuallyPresenter(
             flowController: flowController,
             interactor: interactor,
             providedName: name
         )
-        view.presenter = presenter
-                
-        navigationController.setViewControllers([view], animated: true)
-    }
-}
+        hosting.rootView = AnyView(AddingServiceManuallyView(presenter: presenter))
+        hosting.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
 
-extension AddingServiceManuallyFlowController {
-    var viewController: AddingServiceManuallyViewController { _viewController as! AddingServiceManuallyViewController }
+        navigationController.setViewControllers([hosting], animated: true)
+    }
 }
 
 extension AddingServiceManuallyFlowController: AddingServiceManuallyFlowControlling {

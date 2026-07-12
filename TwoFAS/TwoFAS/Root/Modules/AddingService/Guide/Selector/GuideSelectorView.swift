@@ -30,8 +30,9 @@ struct GuideSelectorView: View {
     
     private let columns = [GridItem(.fixed(Self.itemWidth)), GridItem(.fixed(Self.itemWidth))]
     
-    let presenter: GuideSelectorPresenter
-    
+    @ObservedObject
+    var presenter: GuideSelectorPresenter
+
     var body: some View {
         VStack(alignment: .center, spacing: .zero) {
             ZStack {
@@ -70,8 +71,11 @@ struct GuideSelectorView: View {
         }
         .padding(.horizontal, .XL)
         .padding(.top, .XL)
+        .onAppear {
+            presenter.viewDidLoad()
+        }
     }
-    
+
     @ViewBuilder
     private func serviceGuide(_ guide: GuideDescription) -> some View {
         VStack(alignment: .center, spacing: .M) {

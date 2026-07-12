@@ -18,6 +18,8 @@
 //
 
 import UIKit
+import SwiftUI
+import Common
 import Data
 
 protocol GuideSelectorFlowControllerParent: AnyObject {
@@ -32,24 +34,25 @@ protocol GuideSelectorFlowControlling: AnyObject {
 
 final class GuideSelectorFlowController: FlowController {
     private weak var parent: GuideSelectorFlowControllerParent?
-    
+
     static func present(
         in navigationController: UINavigationController,
         parent: GuideSelectorFlowControllerParent
     ) {
-        let view = GuideSelectorViewController()
-        let flowController = GuideSelectorFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = GuideSelectorFlowController(viewController: hosting)
         flowController.parent = parent
-        
+
         let interactor = ModuleInteractorFactory.shared.guideSelectorModuleInteractor()
-        
+
         let presenter = GuideSelectorPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        view.presenter = presenter
-        
-        navigationController.setViewControllers([view], animated: false)
+        hosting.rootView = AnyView(GuideSelectorView(presenter: presenter))
+        hosting.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+
+        navigationController.setViewControllers([hosting], animated: false)
     }
 }
 

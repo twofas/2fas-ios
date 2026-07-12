@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Data
 import Common
 
@@ -26,14 +27,13 @@ protocol AppSecurityFlowControllerParent: AnyObject {
 }
 
 protocol AppSecurityFlowControlling: AnyObject {
-    func toChangeLimit()
-    
     func toRepeatPassword(with PIN: String, typeOfPIN: PINType, action: AppSecurityFlowController.PINAction)
     func toCreatePIN(pinType: PINType)
     func toVerifyPINForDisable()
     func toChangePIN(pinType: PINType)
-    
+
     func toInitialAuthorization()
+    func close()
 }
 
 final class AppSecurityFlowController: FlowController {
@@ -41,63 +41,58 @@ final class AppSecurityFlowController: FlowController {
         case create
         case change
     }
-    
+
     private weak var parent: AppSecurityFlowControllerParent?
     private weak var navigationController: UINavigationController?
-    
+    fileprivate weak var presenter: AppSecurityPresenter?
+
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: AppSecurityFlowControllerParent
     ) {
-        let view = AppSecurityViewController()
-        let flowController = AppSecurityFlowController(viewController: view)
-        flowController.parent = parent
+        let (hosting, flowController) = create(parent: parent, showsBackButton: false)
         flowController.navigationController = navigationController
-        let interactor = ModuleInteractorFactory.shared.appSecurityModuleInteractor()
-        let presenter = AppSecurityPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-        presenter.view = view
-        view.presenter = presenter
-        
-        navigationController.setViewControllers([view], animated: false)
+        navigationController.setViewControllers([hosting], animated: false)
+        flowController.presenter?.viewDidLoad()
     }
-    
+
     static func push(
         in navigationController: UINavigationController,
         parent: AppSecurityFlowControllerParent
     ) {
-        let view = AppSecurityViewController()
-        let flowController = AppSecurityFlowController(viewController: view)
-        flowController.parent = parent
+        let (hosting, flowController) = create(parent: parent, showsBackButton: true)
         flowController.navigationController = navigationController
+        navigationController.pushRootViewController(hosting, animated: true)
+        flowController.presenter?.viewDidLoad()
+    }
+
+    private static func create(
+        parent: AppSecurityFlowControllerParent,
+        showsBackButton: Bool
+    ) -> (UIViewController, AppSecurityFlowController) {
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = false
+        let flowController = AppSecurityFlowController(viewController: hosting)
+        flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.appSecurityModuleInteractor()
         let presenter = AppSecurityPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        presenter.view = view
-        view.presenter = presenter
-        
-        navigationController.pushRootViewController(view, animated: true)
+        presenter.showsBackButton = showsBackButton
+        flowController.presenter = presenter
+        hosting.rootView = AnyView(AppSecurityView(presenter: presenter))
+        return (hosting, flowController)
     }
 }
 
 extension AppSecurityFlowController: AppSecurityFlowControlling {
-    func toChangeLimit() {
-        guard let navigationController else { return }
-        AppLockFlowController.push(on: navigationController, parent: self)
-    }
-    
     func toRepeatPassword(with PIN: String, typeOfPIN: PINType, action: PINAction) {
-        guard let navi = viewController.presentedViewController as? UINavigationController else { return }
+        guard let navi = _viewController?.presentedViewController as? UINavigationController else { return }
         let newAction: NewPINFlowController.Action = {
             switch action {
-            case .create:
-                return .create
-            case .change:
-                return .change
+            case .create: return .create
+            case .change: return .change
             }
         }()
         NewPINFlowController.push(
@@ -108,64 +103,74 @@ extension AppSecurityFlowController: AppSecurityFlowControlling {
             lockNavigation: false
         )
     }
-    
+
     func toCreatePIN(pinType: PINType) {
+        guard let vc = _viewController else { return }
         let navi = navigationControllerForModal()
         NewPINFlowController.setRoot(in: navi, parent: self, pinType: pinType, lockNavigation: false)
-        viewController.present(navi, animated: true, completion: nil)
+        vc.present(navi, animated: true, completion: nil)
     }
-    
+
     func toVerifyPINForDisable() {
+        guard let vc = _viewController else { return }
         let navi = navigationControllerForModal()
         VerifyPINFlowController.setRoot(on: navi, parent: self, for: .disable)
-        viewController.present(navi, animated: true, completion: nil)
+        vc.present(navi, animated: true, completion: nil)
     }
-    
+
     func toChangePIN(pinType: PINType) {
+        guard let vc = _viewController else { return }
         let navi = navigationControllerForModal()
         VerifyPINFlowController.setRoot(on: navi, parent: self, for: .change(currentPINType: pinType))
-        viewController.present(navi, animated: true, completion: nil)
+        vc.present(navi, animated: true, completion: nil)
     }
-    
+
     func toInitialAuthorization() {
-        VerifyPINFlowController.add(to: viewController, parent: self, for: .authorize)
+        guard let vc = _viewController else { return }
+        VerifyPINFlowController.add(to: vc, parent: self, for: .authorize)
+    }
+
+    func close() {
+        _viewController?.navigationController?.popViewController(animated: true)
     }
 }
 
-extension AppSecurityFlowController {
-    var viewController: AppSecurityViewController { _viewController as! AppSecurityViewController }
-    
-    private func navigationControllerForModal() -> UINavigationController {
+private extension AppSecurityFlowController {
+    func navigationControllerForModal() -> UINavigationController {
         let navi = RootNavigationController()
         navi.configureAsModal()
         return navi
     }
-    
-    func dismiss() {
-        viewController.dismiss(animated: true, completion: nil)
-    }
-}
 
-extension AppSecurityFlowController: AppLockFlowControllerParent {
-    func didChangeAppLockValue() {
-        viewController.presenter.handleAppLockValueUpdate()
+    func dismiss() {
+        _viewController?.dismiss(animated: true, completion: nil)
     }
 }
 
 extension AppSecurityFlowController: VerifyPINFlowControllerParent {
-    func hideVerifyPIN() {
-        viewController.presenter.handleDidHidePINVerification()
-        dismiss()
+    func hideVerifyPIN(for action: VerifyPINFlowController.Action) {
+        presenter?.handleDidHidePINVerification()
+        switch action {
+        case .disable, .change:
+            dismiss()
+        case .authorize:
+            guard let vc = _viewController?.children.first else { return }
+            vc.willMove(toParent: nil)
+            vc.view.removeFromSuperview()
+            vc.removeFromParent()
+            vc.didMove(toParent: nil)
+            _viewController?.navigationController?.popViewController(animated: true)
+        }
     }
-    
+
     func pinVerifiedCorrectly(for action: VerifyPINFlowController.Action) {
         switch action {
         case .disable:
-            viewController.presenter.handleDidVerifyPINDisabled()
+            presenter?.handleDidVerifyPINDisabled()
             parent?.appSecurityChaged()
             dismiss()
         case .change(let currentPINType):
-            guard let navi = viewController.presentedViewController as? UINavigationController else { return }
+            guard let navi = _viewController?.presentedViewController as? UINavigationController else { return }
             NewPINFlowController.push(
                 on: navi,
                 parent: self,
@@ -174,8 +179,8 @@ extension AppSecurityFlowController: VerifyPINFlowControllerParent {
                 lockNavigation: false
             )
         case .authorize:
-            viewController.presenter.handleInitialAutorization()
-            guard let vc = viewController.children.first(where: { $0 is VerifyPINViewController }) else { return }
+            presenter?.handleInitialAutorization()
+            guard let vc = _viewController?.children.first else { return }
             UIView.animate(
                 withDuration: Theme.Animations.Timing.quick,
                 delay: 0,
@@ -194,10 +199,10 @@ extension AppSecurityFlowController: VerifyPINFlowControllerParent {
 
 extension AppSecurityFlowController: NewPINFlowControllerParent {
     func hideNewPIN() {
-        viewController.presenter.handleNewPINHidden()
+        presenter?.handleNewPINHidden()
         dismiss()
     }
-    
+
     func pinGathered(
         with PIN: String,
         pinType: PINType,
@@ -206,17 +211,15 @@ extension AppSecurityFlowController: NewPINFlowControllerParent {
     ) {
         let newAction: AppSecurityFlowController.PINAction = {
             switch action {
-            case .create:
-                return .create
-            case .change:
-                return .change
+            case .create: return .create
+            case .change: return .change
             }
         }()
         switch step {
         case .first:
-            viewController.presenter.handleFirstPINCreationInput(with: PIN, typeOfPIN: pinType, action: newAction)
+            presenter?.handleFirstPINCreationInput(with: PIN, typeOfPIN: pinType, action: newAction)
         case .second:
-            viewController.presenter.handlePINCreationInput(with: PIN, typeOfPIN: pinType)
+            presenter?.handlePINCreationInput(with: PIN, typeOfPIN: pinType)
             parent?.appSecurityChaged()
             dismiss()
         }

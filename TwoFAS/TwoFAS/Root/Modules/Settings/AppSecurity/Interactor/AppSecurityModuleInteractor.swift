@@ -18,23 +18,32 @@
 //
 
 import Foundation
+import LocalAuthentication
 import Data
 import Common
 
 public protocol AppSecurityModuleInteracting: AnyObject {
     var isPINSet: Bool { get }
-    var limitOfTrials: AppLockAttempts { get }
     var biometryType: BiometryType { get }
     var isBiometryEnabled: Bool { get }
     var isBiometryAllowed: Bool { get }
     var currentPINType: PINType { get }
     var isPasscodeRequried: Bool { get }
-    
-    func toggleBiometry()
-    
+
+    var selectedAttempts: AppLockAttempts { get }
+    var selectedBlockTime: AppLockBlockTime { get }
+    var isLockoutAttemptsChangeBlocked: Bool { get }
+    var isLockoutBlockTimeChangeBlocked: Bool { get }
+
+    func setAttempts(_ value: AppLockAttempts)
+    func setBlockTime(_ value: AppLockBlockTime)
+
+    func disableBiometry()
+    func requestBiometryEnable(reason: String) async -> Bool
+
     func setPINOff()
     func savePIN(_ PIN: String, typeOfPIN: PINType)
-    
+
     func saveInitialAuthorization()
     var shouldShowInitialAuthorization: Bool { get }
 }
@@ -43,9 +52,9 @@ final class AppSecurityModuleInteractor {
     private let protectionInteractor: ProtectionInteracting
     private let appLockStateInteractor: AppLockStateInteracting
     private let mdmInteractor: MDMInteracting
-    
+
     private var isAuthorized = false
-    
+
     init(
         protectionInteractor: ProtectionInteracting,
         appLockStateInteractor: AppLockStateInteracting,
@@ -59,34 +68,65 @@ final class AppSecurityModuleInteractor {
 
 extension AppSecurityModuleInteractor: AppSecurityModuleInteracting {
     var isPINSet: Bool { protectionInteractor.isPINSet }
-    var limitOfTrials: AppLockAttempts { appLockStateInteractor.appLockAttempts }
     var biometryType: BiometryType { protectionInteractor.biometryType }
     var isBiometryEnabled: Bool { protectionInteractor.isBiometryEnabled }
     var isBiometryAllowed: Bool { !mdmInteractor.isBiometryBlocked }
     var currentPINType: PINType { protectionInteractor.pinType ?? .digits4 }
     var isPasscodeRequried: Bool { mdmInteractor.isPasscodeRequried }
-    
-    func toggleBiometry() {
+
+    var selectedAttempts: AppLockAttempts { appLockStateInteractor.appLockAttempts }
+    var selectedBlockTime: AppLockBlockTime { appLockStateInteractor.appLockBlockTime }
+    var isLockoutAttemptsChangeBlocked: Bool { mdmInteractor.isLockoutAttemptsChangeBlocked }
+    var isLockoutBlockTimeChangeBlocked: Bool { mdmInteractor.isLockoutBlockTimeChangeBlocked }
+
+    func setAttempts(_ value: AppLockAttempts) {
+        guard !isLockoutAttemptsChangeBlocked else { return }
+        appLockStateInteractor.setAppLockAttempts(value)
+    }
+
+    func setBlockTime(_ value: AppLockBlockTime) {
+        guard !isLockoutBlockTimeChangeBlocked else { return }
+        appLockStateInteractor.setAppLockBlockTime(value)
+    }
+
+    func disableBiometry() {
         guard protectionInteractor.isBiometryAvailable else { return }
-        if isBiometryEnabled {
-            protectionInteractor.disableBiometry()
-        } else {
+        protectionInteractor.disableBiometry()
+    }
+
+    func requestBiometryEnable(reason: String) async -> Bool {
+        guard protectionInteractor.isBiometryAvailable else { return false }
+        let context = LAContext()
+        var error: NSError?
+        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
+            return false
+        }
+        let success: Bool = await withCheckedContinuation { continuation in
+            context.evaluatePolicy(
+                .deviceOwnerAuthenticationWithBiometrics,
+                localizedReason: reason
+            ) { success, _ in
+                continuation.resume(returning: success)
+            }
+        }
+        if success {
             protectionInteractor.enableBiometry()
         }
+        return success
     }
-    
+
     func setPINOff() {
         protectionInteractor.setPINOff()
     }
-    
+
     func savePIN(_ PIN: String, typeOfPIN: PINType) {
         protectionInteractor.savePIN(PIN, typeOfPIN: typeOfPIN)
     }
-    
+
     func saveInitialAuthorization() {
         isAuthorized = true
     }
-    
+
     var shouldShowInitialAuthorization: Bool {
         !isAuthorized && isPINSet
     }

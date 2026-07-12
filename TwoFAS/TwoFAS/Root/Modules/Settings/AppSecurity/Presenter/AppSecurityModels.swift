@@ -17,13 +17,15 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
+import Foundation
+import Data
 
-struct AppSecurityMenuSection: TableViewSection {
+struct AppSecurityMenuSection: Identifiable {
+    let id = UUID()
     let title: String?
     var cells: [AppSecurityMenuCell]
     let footer: String?
-    
+
     init(title: String? = nil, cells: [AppSecurityMenuCell], footer: String? = nil) {
         self.title = title
         self.cells = cells
@@ -31,52 +33,50 @@ struct AppSecurityMenuSection: TableViewSection {
     }
 }
 
-struct AppSecurityMenuCell: Hashable {
-    struct Toggle: Hashable {
+struct AppSecurityMenuCell: Identifiable {
+    struct Toggle {
         let kind: ToggleKind
         let isOn: Bool
         let isBlocked: Bool
     }
-    
+
+    struct PickerOption: Identifiable {
+        let id = UUID()
+        let title: String
+        let kind: PickerKind
+        let isSelected: Bool
+    }
+
     // swiftlint:disable discouraged_none_name
-    enum Accessory: Hashable {
+    enum Accessory {
         case none
-        case arrow
-        case info(text: String)
         case toggle(toggle: Toggle)
+        case picker(value: String, options: [PickerOption])
     }
     // swiftlint:enable discouraged_none_name
-    
+
     enum Action: Hashable {
         case changePIN
-        case limit
     }
-    
+
     enum ToggleKind: Hashable {
         case PIN
         case biometry
     }
-    
+
+    enum PickerKind: Hashable {
+        case attempts(AppLockAttempts)
+        case blockTime(AppLockBlockTime)
+    }
+
+    let id = UUID()
     let title: String
     let accessory: Accessory
     let action: Action?
-    
+
     init(title: String, accessory: Accessory, action: Action? = nil) {
         self.title = title
         self.accessory = accessory
         self.action = action
-    }
-}
-
-extension Array where Element == AppSecurityMenuSection {
-    func indexPath(for action: AppSecurityMenuCell.Action) -> IndexPath? {
-        for (sectionIndex, section) in self.enumerated() {
-            for (cellIndex, cell) in section.cells.enumerated() {
-                if let cellAction = cell.action, cellAction == action {
-                    return IndexPath(row: cellIndex, section: sectionIndex)
-                }
-            }
-        }
-        return nil
     }
 }

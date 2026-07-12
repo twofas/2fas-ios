@@ -17,21 +17,34 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 import Data
 import Common
 
+@Observable
 final class AppSecurityPresenter {
-    weak var view: AppSecurityViewControlling?
-    
+    var sections: [AppSecurityMenuSection] = []
+    var showsBackButton: Bool = true
+
     private let flowController: AppSecurityFlowControlling
     let interactor: AppSecurityModuleInteracting
-    
+
     init(flowController: AppSecurityFlowControlling, interactor: AppSecurityModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleAppBecomeActive),
+            name: .refreshTabContent,
+            object: nil
+        )
     }
-    
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     func viewDidLoad() {
         if interactor.shouldShowInitialAuthorization {
             flowController.toInitialAuthorization()
@@ -41,55 +54,48 @@ final class AppSecurityPresenter {
     func viewWillAppear() {
         reload()
     }
-        
-    func handleSelection(at indexPath: IndexPath) {
-        let menu = buildMenu()
-        guard let section = menu[safe: indexPath.section],
-              let cell = section.cells[safe: indexPath.row],
-              let action = cell.action else { return }
+
+    func handleSelection(_ action: AppSecurityMenuCell.Action) {
         switch action {
         case .changePIN:
             changePIN()
-        case .limit:
-            flowController.toChangeLimit()
         }
     }
-    
-    func handleToggle(for indexPath: IndexPath) {
-        let menu = buildMenu()
-        guard let section = menu[safe: indexPath.section],
-              let cell = section.cells[safe: indexPath.row]
-            else { return }
-        let accessory = cell.accessory
-        switch accessory {
-        case .toggle(let toggle):
-            switch toggle.kind {
-            case .PIN: togglePIN()
-            case .biometry: interactor.toggleBiometry()
-            }
-        default: break
+
+    func handleToggle(_ kind: AppSecurityMenuCell.ToggleKind) {
+        switch kind {
+        case .PIN:
+            togglePIN()
+        case .biometry:
+            handleBiometryToggle()
         }
     }
-    
+
+    func handlePickerSelection(_ kind: AppSecurityMenuCell.PickerKind) {
+        switch kind {
+        case .attempts(let value):
+            interactor.setAttempts(value)
+        case .blockTime(let value):
+            interactor.setBlockTime(value)
+        }
+        reload()
+    }
+
     func handleAppLockValueUpdate() {
         reload()
     }
-    
-    func handleBecomeActive() {
-        reload()
-    }
-    
+
     func handleInitialAutorization() {
         interactor.saveInitialAuthorization()
         reload()
     }
-    
+
     // Disable PIN
     func handleDidVerifyPINDisabled() {
         interactor.setPINOff()
         reload()
     }
-    
+
     // Create PIN
     func handleFirstPINCreationInput(
         with PIN: String,
@@ -98,24 +104,28 @@ final class AppSecurityPresenter {
     ) {
         flowController.toRepeatPassword(with: PIN, typeOfPIN: typeOfPIN, action: action)
     }
-    
+
     func handlePINCreationInput(with PIN: String, typeOfPIN: PINType) {
         interactor.savePIN(PIN, typeOfPIN: typeOfPIN)
         reload()
     }
-    
+
     // Change PIN
     func handleChangePINVerifiedPIN() {
         flowController.toCreatePIN(pinType: interactor.currentPINType)
     }
-    
+
     func handleNewPINHidden() {
         reload()
     }
-    
+
     // PIN Enabled
     func handleDidHidePINVerification() {
         reload()
+    }
+
+    func handleBack() {
+        flowController.close()
     }
 }
 
@@ -127,13 +137,36 @@ private extension AppSecurityPresenter {
             flowController.toCreatePIN(pinType: interactor.currentPINType)
         }
     }
-    
+
     func changePIN() {
         flowController.toChangePIN(pinType: interactor.currentPINType)
     }
-    
+
+    func handleBiometryToggle() {
+        if interactor.isBiometryEnabled {
+            interactor.disableBiometry()
+            reload()
+            return
+        }
+        Task { @MainActor in
+            let reason = interactor.biometryType == .faceID
+                ? T.Settings.faceId
+                : T.Settings.touchId
+            let success = await interactor.requestBiometryEnable(reason: reason)
+            if !success {
+                // Ensure UI reflects the unchanged (off) state on failure/cancel.
+                reload()
+            } else {
+                reload()
+            }
+        }
+    }
+
     func reload() {
-        let menu = buildMenu()
-        view?.reload(with: menu)
+        sections = buildMenu()
+    }
+
+    @objc func handleAppBecomeActive() {
+        reload()
     }
 }

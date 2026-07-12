@@ -272,25 +272,7 @@ struct AddingServiceManuallyView: View {
             case .steam:
                 EmptyView()
             case .hotp:
-                Button {
-                    presenter.handleShowInitialCounterAlert()
-                } label: {
-                    advancedMenuPositionBuilder(
-                        title: T.Tokens.initialCounter,
-                        value: "\(presenter.initialCounter)",
-                        systemName: "pencil"
-                    )
-                }
-                .padding(.vertical, .XL)
-                .alert(T.Tokens.initialCounter, isPresented: $presenter.isInitialCounterAlertPresented) {
-                    TextField("", text: $presenter.initialCounterInput)
-                        .keyboardType(.numberPad)
-                    Button(T.Commons.cancel, role: .cancel) {}
-                    Button(T.Commons.save) {
-                        presenter.handleSaveInitialCounterFromAlert()
-                    }
-                    .disabled(Int(presenter.initialCounterInput).map { $0 < 0 } ?? true)
-                }
+                initialCounterRow()
                 separator()
                 advancedMenu(
                     title: T.Tokens.numberOfDigits,
@@ -301,59 +283,57 @@ struct AddingServiceManuallyView: View {
         }
         .groupedSectionBackground()
     }
-    
+
     @ViewBuilder
     private func advancedMenu<Value: Hashable & CaseIterable>(
         title: String,
         selection: Binding<Value>,
         display: @escaping (Value) -> String
     ) -> some View {
-        Menu {
+        TFListMenuRow(title: title, value: display(selection.wrappedValue)) {
             Picker(selection: selection) {
                 ForEach(Array(Value.allCases), id: \.self) { value in
                     Text(display(value)).tag(value)
-                        .textStyle(.body)
-                        .foregroundStyle(.labelsPrimary)
                 }
             } label: {
                 Text(title)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func initialCounterRow() -> some View {
+        Button {
+            presenter.handleShowInitialCounterAlert()
+        } label: {
+            HStack(spacing: .ML) {
+                Text(T.Tokens.initialCounter)
                     .textStyle(.body)
                     .foregroundStyle(.labelsPrimary)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                Text("\(presenter.initialCounter)")
+                    .textStyle(.body)
+                    .foregroundStyle(.labelsSecondary)
+
+                Image(systemName: "pencil")
+                    .textStyle(.body)
+                    .foregroundStyle(.labelsSecondary)
+                    .accessibilityHidden(true)
             }
-        } label: {
-            advancedMenuPositionBuilder(
-                title: title,
-                value: display(selection.wrappedValue),
-                systemName: "chevron.up.chevron.down"
-            )
+            .padding(.vertical, .L)
+            .contentShape(Rectangle())
         }
-        .padding(.vertical, .XL)
-    }
-    
-    @ViewBuilder
-    func advancedMenuPositionBuilder(
-        title: String,
-        value: String,
-        systemName: String
-    ) -> some View {
-        HStack {
-            Text(title)
-                .textStyle(.body)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            Text(value)
-                .textStyle(.body)
-                .foregroundStyle(.labelsSecondary)
-                .frame(alignment: .trailing)
-            
-            Image(systemName: systemName)
-                .textStyle(.body)
-                .foregroundStyle(.labelsSecondary)
-                .frame(alignment: .trailing)
-                .padding(.leading, .ML)
-                .accessibilityHidden(true)
+        .buttonStyle(.plain)
+        .alert(T.Tokens.initialCounter, isPresented: $presenter.isInitialCounterAlertPresented) {
+            TextField("", text: $presenter.initialCounterInput)
+                .keyboardType(.numberPad)
+            Button(T.Commons.cancel, role: .cancel) {}
+            Button(T.Commons.save) {
+                presenter.handleSaveInitialCounterFromAlert()
+            }
+            .disabled(Int(presenter.initialCounterInput).map { $0 < 0 } ?? true)
         }
     }
 }

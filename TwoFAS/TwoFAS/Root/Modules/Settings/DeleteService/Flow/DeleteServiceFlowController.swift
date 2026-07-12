@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 
 protocol DeleteServiceFlowControllerParent: AnyObject {
@@ -32,28 +33,32 @@ protocol DeleteServiceFlowControlling: AnyObject {
 
 final class DeleteServiceFlowController: FlowController {
     private weak var parent: DeleteServiceFlowControllerParent?
-    
+
     static func present(
         on viewController: UIViewController,
         parent: DeleteServiceFlowControllerParent,
         serviceData: ServiceData
     ) {
-        let view = DeleteServiceViewController()
-        let flowController = DeleteServiceFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = DeleteServiceFlowController(viewController: hosting)
         flowController.parent = parent
-        
+
         let interactor = ModuleInteractorFactory.shared.deleteServiceInteractor()
         let presenter = DeleteServicePresenter(
             flowController: flowController,
             interactor: interactor
         )
         presenter.serviceData = serviceData
-        presenter.view = view
-        
-        view.presenter = presenter
-        view.configureAsModal()
 
-        viewController.present(view, animated: true, completion: nil)
+        hosting.rootView = AnyView(
+            DeleteServiceView(
+                action: { presenter.handleDelete() },
+                cancel: { presenter.handleCancel() }
+            )
+        )
+        hosting.configureAsModal()
+
+        viewController.present(hosting, animated: true, completion: nil)
     }
 }
 
@@ -61,7 +66,7 @@ extension DeleteServiceFlowController: DeleteServiceFlowControlling {
     func toDeleteService() {
         parent?.didDeleteService()
     }
-    
+
     func toClose() {
         parent?.closeDeletingService()
     }

@@ -20,34 +20,26 @@
 import Foundation
 import Common
 
+@Observable
 final class DeleteServicePresenter {
-    weak var view: DeleteServiceViewControlling?
-    
     private let flowController: DeleteServiceFlowControlling
     private let interactor: DeleteServiceInteracting
-    
+
     var serviceData: ServiceData?
-    
+
     init(flowController: DeleteServiceFlowControlling, interactor: DeleteServiceInteracting) {
         self.flowController = flowController
         self.interactor = interactor
     }
-}
 
-extension DeleteServicePresenter {
-    func viewDidLoad() {
-        view?.setupView()
-    }
-    
     func handleCancel() {
-        view?.dismissing()
+        VoiceOver.say(T.Voiceover.dismissing)
         flowController.toClose()
     }
-    
+
     func handleDelete() {
         guard let serviceData else { return }
-        
-        view?.deleted()
+        VoiceOver.say(T.Voiceover.serviceDeleted)
         interactor.deleteService(serviceData)
         flowController.toDeleteService()
     }

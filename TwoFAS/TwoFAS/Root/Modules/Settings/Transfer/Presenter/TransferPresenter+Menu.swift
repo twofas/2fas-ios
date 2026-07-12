@@ -19,13 +19,19 @@
 
 import UIKit
 
-struct TransferSection: TableViewSection {
+struct TransferSection: Identifiable {
+    let id = UUID()
     let title: String
     var cells: [TransferCell]
-    let footer: String
+    let footer: String?
 }
 
-struct TransferCell: Hashable {
+struct TransferCell: Identifiable {
+    enum Icon {
+        case brand(UIImage)
+        case symbol(String)
+    }
+
     enum TransferAction: Hashable {
         case aegis
         case raivo
@@ -37,13 +43,14 @@ struct TransferCell: Hashable {
         case otpAuthFileExport
         case exportQRCodes
     }
-    
-    let icon: UIImage?
+
+    let id = UUID()
+    let icon: Icon
     let title: String
     let action: TransferAction
     let isActive: Bool
-    
-    init(icon: UIImage?, title: String, action: TransferAction, isActive: Bool = true) {
+
+    init(icon: Icon, title: String, action: TransferAction, isActive: Bool = true) {
         self.icon = icon
         self.title = title
         self.action = action
@@ -58,37 +65,37 @@ extension TransferPresenter {
                 title: T.Transfer.importSectionTitle,
                 cells: [
                     .init(
-                        icon: Asset.externalImportIconAegis.image,
+                        icon: .brand(Asset.externalImportIconAegis.image),
                         title: T.externalimportAegis,
                         action: .aegis
                     ),
                     .init(
-                        icon: Asset.externalImportIconRaivo.image,
+                        icon: .brand(Asset.externalImportIconRaivo.image),
                         title: T.externalimportRaivo,
                         action: .raivo
                     ),
                     .init(
-                        icon: Asset.externalImportIconLastPass.image,
+                        icon: .brand(Asset.externalImportIconLastPass.image),
                         title: T.externalimportLastpass,
                         action: .lastPass
                     ),
                     .init(
-                        icon: Asset.externalmportIconGoogleAuth.image,
+                        icon: .brand(Asset.externalmportIconGoogleAuth.image),
                         title: T.externalimportGoogleAuthenticator,
                         action: .googleAuth
                     ),
                     .init(
-                        icon: Asset.externalImportIconAndOTP.image,
+                        icon: .brand(Asset.externalImportIconAndOTP.image),
                         title: T.externalimportAndotp,
                         action: .andOTP
                     ),
                     .init(
-                        icon: Asset.externalImportIconAuthenticatorPro.image,
+                        icon: .brand(Asset.externalImportIconAuthenticatorPro.image),
                         title: T.Externalimport.authenticatorpro,
                         action: .authenticatorPro
                     ),
                     .init(
-                        icon: UIImage(systemName: "doc.fill")!,
+                        icon: .symbol("doc.fill"),
                         title: T.Transfer.importOtpauthFile,
                         action: .otpAuthFileImport
                     )
@@ -99,13 +106,13 @@ extension TransferPresenter {
                 title: T.Transfer.exportSectionTitle,
                 cells: [
                     .init(
-                        icon: UIImage(systemName: "doc.fill")!,
+                        icon: .symbol("doc.fill"),
                         title: T.Transfer.exportOtpFile,
                         action: .otpAuthFileExport,
                         isActive: interactor.hasServices
                     ),
                     .init(
-                        icon: UIImage(systemName: "qrcode")!,
+                        icon: .symbol("qrcode"),
                         title: T.Transfer.exportOtpQr,
                         action: .exportQRCodes,
                         isActive: interactor.hasServices

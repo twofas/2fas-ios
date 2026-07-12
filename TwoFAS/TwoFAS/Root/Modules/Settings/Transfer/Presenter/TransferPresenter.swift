@@ -17,31 +17,40 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 
+@Observable
 final class TransferPresenter {
-    weak var view: TransferViewControlling?
-    
+    var sections: [TransferSection] = []
+    var showsBackButton: Bool = true
+    var isExporting: Bool = false
+    var isLocked: Bool = false
+
     private let flowController: TransferFlowControlling
     let interactor: TransferModuleInteracting
-    
+
     init(flowController: TransferFlowControlling, interactor: TransferModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleAppBecomeActive),
+            name: .refreshTabContent,
+            object: nil
+        )
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     func viewWillAppear() {
         reload()
     }
-    
-    func handleSelection(at indexPath: IndexPath) {
-        let menu = buildMenu()
-        guard
-            let section = menu[safe: indexPath.section],
-            let cell = section.cells[safe: indexPath.row]
-        else { return }
-        
-        switch cell.action {
+
+    func handleSelection(_ action: TransferCell.TransferAction) {
+        switch action {
         case .aegis:
             flowController.toAegis()
         case .raivo:
@@ -70,11 +79,11 @@ final class TransferPresenter {
             flowController.toExportQRCodes()
         }
     }
-    
-    func handleBecomeActive() {
-        reload()
+
+    func handleBack() {
+        flowController.close()
     }
-    
+
     func handleSaveOTPAuthFile() {
         guard let url = interactor.createOTPAuthCodesFile() else {
             flowController.toError(T.Commons.fileCreationError)
@@ -84,22 +93,22 @@ final class TransferPresenter {
             self?.interactor.cleanupTemporaryFiles(urls: [url])
         }
     }
-    
+
     func handleExportQRCodes() {
-        view?.exporting()
+        isExporting = true
         Task {
             guard let url = await interactor.createQRCodeFiles() else {
-                Task { @MainActor in
-                    flowController.toError(T.Commons.fileCreationError)
-                    view?.unlock()
+                await MainActor.run {
+                    self.flowController.toError(T.Commons.fileCreationError)
+                    self.isExporting = false
                 }
                 return
             }
-            Task { @MainActor in
-                flowController.toShareQRCodes(url) { [weak self] in
+            await MainActor.run {
+                self.flowController.toShareQRCodes(url) { [weak self] in
                     self?.interactor.cleanupTemporaryFiles(urls: [url])
                 }
-                view?.unlock()
+                self.isExporting = false
             }
         }
     }
@@ -107,7 +116,10 @@ final class TransferPresenter {
 
 private extension TransferPresenter {
     func reload() {
-        let menu = buildMenu()
-        view?.reload(with: menu)
+        sections = buildMenu()
+    }
+
+    @objc func handleAppBecomeActive() {
+        reload()
     }
 }

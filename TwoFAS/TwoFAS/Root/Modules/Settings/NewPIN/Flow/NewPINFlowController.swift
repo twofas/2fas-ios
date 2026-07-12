@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Data
 import Common
 
@@ -49,35 +50,26 @@ final class NewPINFlowController: FlowController {
     private var action: Action?
     private var step: Step?
     private weak var parent: NewPINFlowControllerParent?
-    
+    fileprivate weak var presenter: NewPINPresenter?
+
     static func setRoot(
         in navigationController: UINavigationController,
         parent: NewPINFlowControllerParent,
         pinType: PINType,
         lockNavigation: Bool
     ) {
-        let view = NewPINViewController()
-        let flowController = NewPINFlowController(viewController: view)
-        flowController.parent = parent
-        flowController.action = .create
-        flowController.step = .first(pinType: pinType)
         let interactor = ModuleInteractorFactory.shared.newPINModuleInteractor(lockNavigation: lockNavigation)
         interactor.selectedPINType = pinType
-        
-        let presenter = NewPINPresenter(
-            flowController: flowController,
+
+        let hosting = build(
+            parent: parent,
+            action: .create,
+            step: .first(pinType: pinType),
             interactor: interactor
         )
-        
-        view.presenter = presenter
-        presenter.isSecond = false
-        presenter.action = .create
-        presenter.keyboard = view
-        presenter.view = view
-
-        navigationController.setViewControllers([view], animated: false)
+        navigationController.setViewControllers([hosting], animated: false)
     }
-    
+
     static func push(
         on navigationController: UINavigationController,
         parent: NewPINFlowControllerParent,
@@ -85,61 +77,64 @@ final class NewPINFlowController: FlowController {
         step: Step,
         lockNavigation: Bool
     ) {
-        let view = NewPINViewController()
-        let flowController = NewPINFlowController(viewController: view)
-        flowController.parent = parent
-        flowController.action = action
-        flowController.step = step
-        
-        var isSecond = false
         var selectedPIN: String?
         var selectedPINType: PINType?
-        
+
         if case Step.second(let PIN, let pinType) = step {
-            isSecond = true
             selectedPIN = PIN
             selectedPINType = pinType
         } else if case Step.first(let pinType) = step {
             selectedPIN = nil
             selectedPINType = pinType
         }
-        
+
         let interactor = ModuleInteractorFactory.shared.newPINModuleInteractor(lockNavigation: lockNavigation)
         interactor.selectedPIN = selectedPIN
         interactor.selectedPINType = selectedPINType
-        
-        let presenter = NewPINPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-        presenter.isSecond = isSecond
-        presenter.action = action
-        view.presenter = presenter
-        presenter.keyboard = view
-        presenter.view = view
 
-        navigationController.pushViewController(view, animated: true)
+        let hosting = build(parent: parent, action: action, step: step, interactor: interactor)
+        navigationController.pushViewController(hosting, animated: true)
     }
-}
 
-extension NewPINFlowController {
-    var viewController: NewPINViewController { _viewController as! NewPINViewController }
+    private static func build(
+        parent: NewPINFlowControllerParent,
+        action: Action,
+        step: Step,
+        interactor: NewPINModuleInteracting
+    ) -> UIViewController {
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = false
+        let flowController = NewPINFlowController(viewController: hosting)
+        flowController.parent = parent
+        flowController.action = action
+        flowController.step = step
+
+        let presenter = NewPINPresenter(flowController: flowController, interactor: interactor)
+        presenter.action = action
+        if case .second = step {
+            presenter.isSecond = true
+        }
+        flowController.presenter = presenter
+        hosting.rootView = AnyView(NewPINView(presenter: presenter))
+        return hosting
+    }
 }
 
 extension NewPINFlowController: NewPINFlowControlling {
     func toClose() {
         parent?.hideNewPIN()
     }
-    
+
     func toPINGathered(with PIN: String, pinType: PINType) {
         guard let action, let step else { return }
         parent?.pinGathered(with: PIN, pinType: pinType, action: action, step: step)
     }
-    
+
     func toChangePINType() {
-        let alert = SelectPINLengthController.make(in: viewController.view) { [weak self] pinType in
-            self?.viewController.presenter.handleSelectedPINType(pinType)
+        guard let vc = _viewController else { return }
+        let alert = SelectPINLengthController.make(in: vc.view) { [weak self] pinType in
+            self?.presenter?.handleSelectedPINType(pinType)
         }
-        viewController.present(alert, animated: true)
+        vc.present(alert, animated: true)
     }
 }

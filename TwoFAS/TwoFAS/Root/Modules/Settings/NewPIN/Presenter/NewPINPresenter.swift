@@ -21,45 +21,83 @@ import Foundation
 import Data
 import Common
 
-final class NewPINPresenter: PINKeyboardPresenter {
-    weak var view: NewPINViewControlling?
-    
+@Observable
+final class NewPINPresenter {
     private let flowController: NewPINFlowControlling
     private let interactor: NewPINModuleInteracting
-    
+
     var isSecond = false
     var action: NewPINFlowController.Action?
-    
+
+    var title: String = ""
+    var info: String = ""
+    var isError: Bool = false
+    var shake: Bool = false
+    var totalDigits: Int = 0
+    var enteredDigitCount: Int = 0
+    var showsCancelButton: Bool = false
+    var showsPinLengthButton: Bool = false
+
+    private var pin: [Int] = [] {
+        didSet {
+            enteredDigitCount = pin.count
+        }
+    }
+
+    private let textChangeTime: Int = 3
+    private let timer = CancellableTimer()
+
     init(flowController: NewPINFlowControlling, interactor: NewPINModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
-        
-        super.init()
-        codeLength = interactor.pinType.digits
+        self.totalDigits = interactor.pinType.digits
     }
-    
+
     func viewDidLoad() {
-        if !interactor.lockNavigation {
-            view?.showCancelButton()
+        showsCancelButton = !interactor.lockNavigation
+    }
+
+    func viewWillAppear() {
+        pin = []
+        showsPinLengthButton = !isSecond
+
+        if let action {
+            switch action {
+            case .change: title = T.Security.changePin
+            case .create: title = T.Security.createPin
+            }
+        }
+        configureNormalScreen()
+    }
+
+    func onKeyPressed(_ key: TFPinKey) {
+        if let number = key.number, pin.count < totalDigits {
+            pin.append(number)
+            if pin.count >= totalDigits {
+                pinGathered()
+            }
+        } else if key.isDelete {
+            _ = pin.popLast()
         }
     }
-    
-    override func viewWillAppear() {
-        super.viewWillAppear()
-        
-        if !isSecond {
-            keyboard?.showBottomButton(with: T.Settings.selectPinLength)
-        }
-        
-        guard let action else { return }
-        
-        switch action {
-        case .change: view?.setTitle(T.Security.changePin)
-        case .create: view?.setTitle(T.Security.createPin)
-        }
+
+    func handleCancel() {
+        flowController.toClose()
     }
-    
-    override func PINGathered() {
+
+    func handleChangePINType() {
+        flowController.toChangePINType()
+    }
+
+    func handleSelectedPINType(_ pinType: PINType) {
+        interactor.setPINType(pinType)
+        totalDigits = pinType.digits
+        pin = []
+    }
+}
+
+private extension NewPINPresenter {
+    func pinGathered() {
         if isSecond {
             if interactor.validatePIN(passcode) {
                 flowController.toPINGathered(with: passcode, pinType: interactor.pinType)
@@ -70,33 +108,32 @@ final class NewPINPresenter: PINKeyboardPresenter {
             flowController.toPINGathered(with: passcode, pinType: interactor.pinType)
         }
     }
-    
-    override func configureNormalScreen() {
-        guard !isLocked else { return }
+
+    var passcode: String {
+        pin.concateToPositionString()
+    }
+
+    func invalidInput() {
+        pin = []
+        shake.toggle()
+        configureErrorScreen()
+    }
+
+    func configureNormalScreen() {
+        isError = false
         if isSecond {
-            keyboard?.prepareScreen(with: T.Security.confirmNewPin, titleType: .normal)
+            info = T.Security.confirmNewPin
         } else {
-            keyboard?.prepareScreen(with: T.Security.enterNewPin, titleType: .normal)
+            info = T.Security.enterNewPin
         }
     }
-    
-    override func configureErrorScreen() {
-        super.configureErrorScreen()
-        keyboard?.prepareScreen(with: T.Security.incorrectPIN, titleType: .error)
-    }
-    
-    func handleChangePINType() {
-        flowController.toChangePINType()
-    }
-    
-    func handleSelectedPINType(_ pinType: PINType) {
-        interactor.setPINType(pinType)
-        setNewDotsCount(pinType.digits)
-    }
-}
 
-extension NewPINPresenter {
-    func handleCancel() {
-        flowController.toClose()
+    func configureErrorScreen() {
+        isError = true
+        info = T.Security.incorrectPIN
+        timer.start(interval: .seconds(textChangeTime)) { [weak self] in
+            self?.configureNormalScreen()
+            self?.timer.cancel()
+        }
     }
 }

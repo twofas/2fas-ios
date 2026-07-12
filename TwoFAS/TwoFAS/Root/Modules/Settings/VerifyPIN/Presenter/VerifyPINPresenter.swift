@@ -18,32 +18,71 @@
 //
 
 import Foundation
+import Common
 
-final class VerifyPINPresenter: PINKeyboardPresenter {
+@Observable
+final class VerifyPINPresenter {
     private let flowController: VerifyPINFlowControlling
     private let interactor: VerifyPINModuleInteracting
-    
+
+    var info: String = ""
+    var isError: Bool = false
+    var isLocked: Bool = false
+    var shake: Bool = false
+    var totalDigits: Int = 0
+    var enteredDigitCount: Int = 0
+    var leadingSymbol: TFLiquidGlassSymbolButton.Symbol = .close
+
+    private var pin: [Int] = [] {
+        didSet {
+            enteredDigitCount = pin.count
+        }
+    }
+
     private var incorrectPINCount: Int = 0
-    
+    private let textChangeTime: Int = 3
+    private let timer = CancellableTimer()
+
     init(flowController: VerifyPINFlowControlling, interactor: VerifyPINModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
-        super.init()
-        
+        self.totalDigits = interactor.currentCodeLength
+
         interactor.unlock = { [weak self] in self?.handleUnlock() }
         interactor.updateState = { [weak self] in self?.handleUpdateState() }
-        codeLength = interactor.currentCodeLength
     }
-    
-    override func viewWillAppear() {
-        super.viewWillAppear()
-        
+
+    func viewWillAppear() {
         if interactor.isLocked {
             handleUpdateState()
+        } else {
+            configureNormalScreen()
         }
     }
-    
-    override func PINGathered() {
+
+    func onKeyPressed(_ key: TFPinKey) {
+        guard !isLocked else { return }
+        if let number = key.number, pin.count < totalDigits {
+            pin.append(number)
+            if pin.count >= totalDigits {
+                pinGathered()
+            }
+        } else if key.isDelete {
+            _ = pin.popLast()
+        }
+    }
+
+    func handleCancel() {
+        flowController.toClose()
+    }
+}
+
+private extension VerifyPINPresenter {
+    var passcode: String {
+        pin.concateToPositionString()
+    }
+
+    func pinGathered() {
         if interactor.verifyPIN(passcode) {
             flowController.toPinVerifiedCorrectly()
         } else {
@@ -56,31 +95,49 @@ final class VerifyPINPresenter: PINKeyboardPresenter {
             }
         }
     }
-    
-    override func configureNormalScreen() {
-        guard !isLocked else { return }
-        keyboard?.prepareScreen(with: T.Security.enterCurrentPin, titleType: .normal)
-    }
-    
-    override func configureErrorScreen() {
-        super.configureErrorScreen()
-        keyboard?.prepareScreen(with: T.Security.incorrectPIN, titleType: .error)
-    }
-}
 
-extension VerifyPINPresenter {
-    func handleCancel() {
-        flowController.toClose()
+    func invalidInput() {
+        pin = []
+        shake.toggle()
+        configureErrorScreen()
     }
-}
 
-private extension VerifyPINPresenter {
+    func configureNormalScreen() {
+        isError = false
+        info = T.Security.enterCurrentPin
+    }
+
+    func configureErrorScreen() {
+        isError = true
+        info = T.Security.incorrectPIN
+        timer.start(interval: .seconds(textChangeTime)) { [weak self] in
+            self?.configureNormalScreen()
+            self?.timer.cancel()
+        }
+    }
+
     func handleUnlock() {
-        unlock()
+        isLocked = false
+        pin = []
+        configureNormalScreen()
     }
-    
+
     func handleUpdateState() {
-        lockTime = interactor.secondsTillUnlock
-        lock()
+        isLocked = true
+        pin = []
+        info = lockTimeMessage
+        isError = true
+    }
+
+    var lockTimeMessage: String {
+        let lockTime = interactor.secondsTillUnlock
+        if lockTime <= 0 {
+            return T.Security.tooManyAttemptsError
+        }
+        let minute = 60
+        if lockTime < 2 * minute {
+            return T.Security.tooManyAttemptsError2
+        }
+        return T.Security.tooManyAttemptsTryAgainAfter("\(lockTime / minute)")
     }
 }

@@ -158,6 +158,8 @@
 		C215083F300308A1008B66E2 /* DeleteServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C215083E300308A1008B66E2 /* DeleteServiceView.swift */; };
 		C215084130030ECB008B66E2 /* TFList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C215084030030ECB008B66E2 /* TFList.swift */; };
 		C215084230030ECB008B66E2 /* TFList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C215084030030ECB008B66E2 /* TFList.swift */; };
+		C21508443003C3D6008B66E2 /* TFToggleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21508433003C3D6008B66E2 /* TFToggleRow.swift */; };
+		C21508453003C3D6008B66E2 /* TFToggleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21508433003C3D6008B66E2 /* TFToggleRow.swift */; };
 		C2153BC21FE9ABA6005FD297 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2153BBE1FE9ABA6005FD297 /* CameraViewController.swift */; };
 		C2153BC31FE9ABA6005FD297 /* CameraViewModelProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2153BBF1FE9ABA6005FD297 /* CameraViewModelProtocols.swift */; };
 		C2153BC51FE9B2BF005FD297 /* CameraActiveArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2153BC41FE9B2BF005FD297 /* CameraActiveArea.swift */; };
@@ -2046,6 +2048,7 @@
 		C215083C30030840008B66E2 /* ExporterPasswordProtectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExporterPasswordProtectionView.swift; sourceTree = "<group>"; };
 		C215083E300308A1008B66E2 /* DeleteServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteServiceView.swift; sourceTree = "<group>"; };
 		C215084030030ECB008B66E2 /* TFList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFList.swift; sourceTree = "<group>"; };
+		C21508433003C3D6008B66E2 /* TFToggleRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFToggleRow.swift; sourceTree = "<group>"; };
 		C2153BBE1FE9ABA6005FD297 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		C2153BBF1FE9ABA6005FD297 /* CameraViewModelProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewModelProtocols.swift; sourceTree = "<group>"; };
 		C2153BC41FE9B2BF005FD297 /* CameraActiveArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraActiveArea.swift; sourceTree = "<group>"; };
@@ -5620,6 +5623,7 @@
 				C21508163002CCB4008B66E2 /* BrandIconTile.swift */,
 				C215081F3002FDF7008B66E2 /* GradientIconTile.swift */,
 				C215084030030ECB008B66E2 /* TFList.swift */,
+				C21508433003C3D6008B66E2 /* TFToggleRow.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -9427,6 +9431,7 @@
 				C295AFCB2FD20CDA000DF064 /* SpinnerDisplaying.swift in Sources */,
 				C215084130030ECB008B66E2 /* TFList.swift in Sources */,
 				C295AFCC2FD20CDA000DF064 /* UIFont+.swift in Sources */,
+				C21508453003C3D6008B66E2 /* TFToggleRow.swift in Sources */,
 				C295AFCD2FD20CDA000DF064 /* LabelImageRenderer.swift in Sources */,
 				C295AFCE2FD20CDA000DF064 /* SpinnerView.swift in Sources */,
 				C274CA012BAB8B92008E7212 /* ServiceExistenceStatus.swift in Sources */,
@@ -9653,6 +9658,7 @@
 				C295AF9E2FD1F6F8000DF064 /* IntroWelcomeView.swift in Sources */,
 				C295AF9F2FD1F6F8000DF064 /* Spacing.swift in Sources */,
 				C295AFA02FD1F6F8000DF064 /* TintColor.swift in Sources */,
+				C21508443003C3D6008B66E2 /* TFToggleRow.swift in Sources */,
 				C28AF2D42FD5D2940036DB9F /* TFTitleView.swift in Sources */,
 				C295AFA12FD1F6F8000DF064 /* TextStyle.swift in Sources */,
 				C21508183002CCB4008B66E2 /* BrandIconTile.swift in Sources */,

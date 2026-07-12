@@ -18,11 +18,12 @@
 //
 
 import UIKit
+import SwiftUI
 import Data
 import Common
 
 protocol VerifyPINFlowControllerParent: AnyObject {
-    func hideVerifyPIN()
+    func hideVerifyPIN(for action: VerifyPINFlowController.Action)
     func pinVerifiedCorrectly(for action: VerifyPINFlowController.Action)
 }
 
@@ -37,37 +38,46 @@ final class VerifyPINFlowController: FlowController {
         case change(currentPINType: PINType)
         case authorize
     }
-    
+
     private var action: Action?
     private weak var parent: VerifyPINFlowControllerParent?
-    
+
     static func setRoot(
         on navigationController: UINavigationController,
         parent: VerifyPINFlowControllerParent,
         for action: Action
     ) {
-        let view = VerifyPINViewController()
-        let flowController = VerifyPINFlowController(viewController: view)
-        flowController.parent = parent
-        flowController.action = action
-        let interactor = ModuleInteractorFactory.shared.verifyPINModuleInteractor()
-        let presenter = VerifyPINPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-        view.presenter = presenter
-        presenter.keyboard = view
-
-        navigationController.setViewControllers([view], animated: false)
+        let hosting = build(parent: parent, action: action)
+        navigationController.setViewControllers([hosting], animated: false)
     }
-    
+
     static func add(
         to viewController: UIViewController,
         parent: VerifyPINFlowControllerParent,
         for action: Action
     ) {
-        let view = VerifyPINViewController()
-        let flowController = VerifyPINFlowController(viewController: view)
+        let hosting = build(parent: parent, action: action)
+        hosting.willMove(toParent: viewController)
+        viewController.view.addSubview(hosting.view)
+        hosting.view.pinToParent()
+        viewController.addChild(hosting)
+        viewController.becomeFirstResponder()
+    }
+
+    static func present(
+        on viewController: UIViewController,
+        parent: VerifyPINFlowControllerParent
+    ) {
+        let hosting = build(parent: parent, action: .authorize)
+        let navigation = CommonNavigationController(rootViewController: hosting)
+        navigation.modalPresentationStyle = .fullScreen
+        viewController.present(navigation, animated: true)
+    }
+
+    private static func build(parent: VerifyPINFlowControllerParent, action: Action) -> UIViewController {
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = false
+        let flowController = VerifyPINFlowController(viewController: hosting)
         flowController.parent = parent
         flowController.action = action
         let interactor = ModuleInteractorFactory.shared.verifyPINModuleInteractor()
@@ -75,43 +85,20 @@ final class VerifyPINFlowController: FlowController {
             flowController: flowController,
             interactor: interactor
         )
-        view.presenter = presenter
-        presenter.keyboard = view
-
-        view.willMove(toParent: viewController)
-        viewController.view.addSubview(view.view)
-        view.view.pinToParent()
-        viewController.addChild(view)
-        viewController.becomeFirstResponder()
-    }
-    
-    static func present(
-        on viewController: UIViewController,
-        parent: VerifyPINFlowControllerParent
-    ) {
-        let view = VerifyPINViewController()
-        let flowController = VerifyPINFlowController(viewController: view)
-        flowController.parent = parent
-        flowController.action = .authorize
-        let interactor = ModuleInteractorFactory.shared.verifyPINModuleInteractor()
-        let presenter = VerifyPINPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-        view.presenter = presenter
-        presenter.keyboard = view
-        
-        let navigation = CommonNavigationController(rootViewController: view)
-        navigation.modalPresentationStyle = .fullScreen
-        viewController.present(navigation, animated: true)
+        if case .authorize = action {
+            presenter.leadingSymbol = .back
+        }
+        hosting.rootView = AnyView(VerifyPINView(presenter: presenter))
+        return hosting
     }
 }
 
 extension VerifyPINFlowController: VerifyPINFlowControlling {
     func toClose() {
-        parent?.hideVerifyPIN()
+        guard let action else { return }
+        parent?.hideVerifyPIN(for: action)
     }
-    
+
     func toPinVerifiedCorrectly() {
         guard let action else { return }
         parent?.pinVerifiedCorrectly(for: action)

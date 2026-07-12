@@ -43,7 +43,13 @@ final class UploadLogsViewController: UIViewController {
     private let sendButton: LoadingContentButton = {
         let button = LoadingContentButton()
         button.update(title: T.Commons.send)
-        button.apply(MainContainerButtonStyling.filledInDecoratedContainerLightText.value)
+        button.titleColor = Theme.Colors.Text.light
+        button.highlightedTitleColor = Theme.Colors.decoratedContainerButtonInverted
+        button.disabledTitleColor = Theme.Colors.inactiveInverted
+        button.inactiveColor = Theme.Colors.inactiveMoreContrast
+        button.highlightedColor = Theme.Colors.Controls.highlighed
+        button.normalColor = Theme.Colors.Controls.active
+        button.updateStyle()
         return button
     }()
     

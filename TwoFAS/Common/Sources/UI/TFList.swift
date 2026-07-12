@@ -150,6 +150,68 @@ public struct TFListSeparator: View {
     }
 }
 
+// MARK: - TFListMenuRow
+
+#if os(iOS)
+/// Standard row for opening a pop-up menu picker inside a `TFListSection`.
+///
+/// Renders as:
+/// `[title (labelsPrimary) ────────── currentValue (labelsSecondary) ⇅]`
+///
+/// The `content` builder supplies the menu's items — typically a `Picker`
+/// bound to a selection.
+///
+/// ```swift
+/// TFListMenuRow(title: "Algorithm", value: selectedAlgorithm.rawValue) {
+///     Picker(selection: $algorithm) {
+///         ForEach(Algorithm.allCases, id: \.self) {
+///             Text($0.rawValue).tag($0)
+///         }
+///     } label: { EmptyView() }
+/// }
+/// ```
+public struct TFListMenuRow<MenuContent: View>: View {
+    private let title: String
+    private let value: String
+    private let content: MenuContent
+
+    public init(
+        title: String,
+        value: String,
+        @ViewBuilder content: () -> MenuContent
+    ) {
+        self.title = title
+        self.value = value
+        self.content = content()
+    }
+
+    public var body: some View {
+        Menu {
+            content
+        } label: {
+            HStack(spacing: .ML) {
+                Text(title)
+                    .textStyle(.body)
+                    .foregroundStyle(AppColor.labelsPrimary)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                Text(value)
+                    .textStyle(.body)
+                    .foregroundStyle(AppColor.labelsSecondary)
+
+                Image(systemName: "chevron.up.chevron.down")
+                    .textStyle(.body)
+                    .foregroundStyle(AppColor.labelsSecondary)
+                    .accessibilityHidden(true)
+            }
+            .padding(.vertical, .L)
+            .contentShape(Rectangle())
+        }
+    }
+}
+#endif
+
 // MARK: - TFScreenTitleBar
 
 /// Internal SwiftUI navigation bar for screens that use

@@ -17,14 +17,16 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 
+@Observable
 final class AppearancePresenter {
-    weak var view: AppearanceViewControlling?
-    
+    var sections: [AppearanceSection] = []
+    var showsBackButton: Bool = true
+
     private let flowController: AppearanceFlowControlling
     let interactor: AppearanceModuleInteracting
-    
+
     init(flowController: AppearanceFlowControlling, interactor: AppearanceModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
@@ -33,7 +35,11 @@ final class AppearancePresenter {
     func viewWillAppear() {
         reload()
     }
-    
+
+    func handleBack() {
+        flowController.close()
+    }
+
     func handleToggle(for kind: AppearanceCell.Kind) {
         switch kind {
         case .incomingToken:
@@ -47,11 +53,11 @@ final class AppearancePresenter {
         }
         reload()
     }
-    
+
     func handleBecomeActive() {
         reload()
     }
-    
+
     func handleRowSelection(for kind: AppearanceCell.Kind) {
         switch kind {
         case .defaultList:
@@ -67,7 +73,6 @@ final class AppearancePresenter {
 
 private extension AppearancePresenter {
     func reload() {
-        let menu = buildMenu()
-        view?.reload(with: menu)
+        sections = buildMenu()
     }
 }

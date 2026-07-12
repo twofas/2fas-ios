@@ -17,20 +17,28 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import Common
+import Foundation
 
-struct AppearanceSection: TableViewSection {
+struct AppearanceSection: Identifiable {
+    let id = UUID()
     let title: String?
-    var cells: [AppearanceCell]
+    let cells: [AppearanceCell]
     let footer: String?
 }
 
-struct AppearanceCell: Hashable {
-    enum Accessory: Hashable {
-        case toggle(isOn: Bool)
-        case checkmark(selected: Bool)
+struct AppearanceCell: Identifiable {
+    struct PickerOption: Identifiable {
+        let id = UUID()
+        let title: String
+        let kind: Kind
+        let isSelected: Bool
     }
+
+    enum Accessory {
+        case toggle(isOn: Bool)
+        case picker(value: String, options: [PickerOption])
+    }
+
     enum Kind: Hashable {
         case incomingToken
         case activeSearch
@@ -38,8 +46,8 @@ struct AppearanceCell: Hashable {
         case compactList
         case hideTokens
     }
-    
-    let icon: UIImage?
+
+    let id = UUID()
     let title: String
     let accessory: Accessory
     let kind: Kind
@@ -51,8 +59,7 @@ extension AppearancePresenter {
         let incoming = AppearanceSection(
             title: nil,
             cells: [
-                .init(
-                    icon: Asset.settingsNextToken.image,
+                AppearanceCell(
                     title: T.Settings.showNextToken,
                     accessory: .toggle(isOn: isIncomingTokenEnabled),
                     kind: .incomingToken
@@ -61,12 +68,11 @@ extension AppearancePresenter {
             footer: T.Settings.seeIncomingTokens
         )
         let isActiveSearchEnabled = interactor.isActiveSearchEnabled
-        
+
         let activeSearch = AppearanceSection(
             title: nil,
             cells: [
-                .init(
-                    icon: Asset.settingsActiveSearch.image,
+                AppearanceCell(
                     title: T.Appearance.toggleActiveSearch,
                     accessory: .toggle(isOn: isActiveSearchEnabled),
                     kind: .activeSearch
@@ -74,38 +80,41 @@ extension AppearancePresenter {
             ],
             footer: T.Appearance.activeSearchDescription
         )
-        
+
         let selectedStyle = interactor.selectedListStyle
+        let selectedValue: String = selectedStyle == .default
+            ? T.Settings.listStyleOptionDefault
+            : T.Settings.listStyleOptionCompact
         let listStyle = AppearanceSection(
-            title: T.Settings.listStyle,
+            title: nil,
             cells: [
-                .init(
-                    icon: UIImage(systemName: "rectangle.grid.1x2.fill")?
-                        .apply(Theme.Colors.Fill.theme)?
-                        .scalePreservingAspectRatio(targetSize: Theme.Metrics.settingsSmallIconSize),
-                    title: T.Settings.listStyleOptionDefault,
-                    accessory: .checkmark(selected: selectedStyle == .default),
+                AppearanceCell(
+                    title: T.Settings.listStyle,
+                    accessory: .picker(
+                        value: selectedValue,
+                        options: [
+                            AppearanceCell.PickerOption(
+                                title: T.Settings.listStyleOptionDefault,
+                                kind: .defaultList,
+                                isSelected: selectedStyle == .default
+                            ),
+                            AppearanceCell.PickerOption(
+                                title: T.Settings.listStyleOptionCompact,
+                                kind: .compactList,
+                                isSelected: selectedStyle == .compact
+                            )
+                        ]
+                    ),
                     kind: .defaultList
-                ),
-                .init(
-                    icon: UIImage(systemName: "rectangle.grid.2x2.fill")?
-                        .apply(Theme.Colors.Fill.theme)?
-                        .scalePreservingAspectRatio(targetSize: Theme.Metrics.settingsSmallIconSize),
-                    title: T.Settings.listStyleOptionCompact,
-                    accessory: .checkmark(selected: selectedStyle == .compact),
-                    kind: .compactList
                 )
             ],
             footer: nil
         )
-        
+
         let tokensHidden = AppearanceSection(
             title: nil,
             cells: [
-                .init(
-                    icon: UIImage(systemName: "eye.fill")?
-                        .apply(Theme.Colors.Fill.theme)?
-                        .scalePreservingAspectRatio(targetSize: Theme.Metrics.settingsSmallIconSize),
+                AppearanceCell(
                     title: T.Settings.hideTokensTitle,
                     accessory: .toggle(isOn: interactor.areTokensHidden),
                     kind: .hideTokens
@@ -113,8 +122,8 @@ extension AppearancePresenter {
             ],
             footer: T.Settings.hideTokensDescription
         )
-        
-        return[
+
+        return [
             incoming,
             activeSearch,
             listStyle,

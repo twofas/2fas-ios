@@ -18,52 +18,54 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol AppearanceFlowControllerParent: AnyObject {}
 
-protocol AppearanceFlowControlling: AnyObject {}
+protocol AppearanceFlowControlling: AnyObject {
+    func close()
+}
 
 final class AppearanceFlowController: FlowController {
     private weak var parent: AppearanceFlowControllerParent?
-    private weak var navigationController: UINavigationController?
-    
+
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: AppearanceFlowControllerParent
     ) {
-        let view = AppearanceViewController()
-        let flowController = AppearanceFlowController(viewController: view)
-        flowController.parent = parent
-        flowController.navigationController = navigationController
-        let interactor = ModuleInteractorFactory.shared.appearanceModuleInteractor()
-        let presenter = AppearancePresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-        presenter.view = view
-        view.presenter = presenter
-        
-        navigationController.setViewControllers([view], animated: false)
+        let hosting = create(parent: parent, showsBackButton: false)
+        navigationController.setViewControllers([hosting], animated: false)
     }
-    
+
     static func push(
         in navigationController: UINavigationController,
         parent: AppearanceFlowControllerParent
     ) {
-        let view = AppearanceViewController()
-        let flowController = AppearanceFlowController(viewController: view)
+        let hosting = create(parent: parent, showsBackButton: true)
+        navigationController.pushRootViewController(hosting, animated: true)
+    }
+
+    private static func create(
+        parent: AppearanceFlowControllerParent,
+        showsBackButton: Bool
+    ) -> UIViewController {
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = false
+        let flowController = AppearanceFlowController(viewController: hosting)
         flowController.parent = parent
-        flowController.navigationController = navigationController
         let interactor = ModuleInteractorFactory.shared.appearanceModuleInteractor()
         let presenter = AppearancePresenter(
             flowController: flowController,
             interactor: interactor
         )
-        presenter.view = view
-        view.presenter = presenter
-        
-        navigationController.pushRootViewController(view, animated: true)
+        presenter.showsBackButton = showsBackButton
+        hosting.rootView = AnyView(AppearanceView(presenter: presenter))
+        return hosting
     }
 }
 
-extension AppearanceFlowController: AppearanceFlowControlling {}
+extension AppearanceFlowController: AppearanceFlowControlling {
+    func close() {
+        _viewController?.navigationController?.popViewController(animated: true)
+    }
+}

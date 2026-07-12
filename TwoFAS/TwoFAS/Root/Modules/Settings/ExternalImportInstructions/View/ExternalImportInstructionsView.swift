@@ -21,107 +21,44 @@ import SwiftUI
 import Common
 
 struct ExternalImportInstructionsView: View {
-    private let spacing: CGFloat = Spacing.XL.rawValue
-    
     let sourceLogo: AnyView
     let sourceName: String
     let info: String
-    
+
     let action: Callback
     let cancel: Callback
-    
+
     let actionName: String
     let secondaryActionName: String?
     let secondaryAction: Callback?
-    
-    private let minIconSpaceHeight: CGFloat = 90
-    
-    var body: some View {
-        VStack(alignment: .center, spacing: Spacing.M) {
-            VStack(spacing: spacing) {
-                HStack(spacing: spacing) {
-                    sourceLogo
-                    Asset.gaImport1.swiftUIImage
-                    Asset.gaImport2.swiftUIImage
-                }
-                .frame(minHeight: minIconSpaceHeight, alignment: .center)
-                Text(sourceName)
-                    .font(.title)
-                    .multilineTextAlignment(.center)
-                    .layoutPriority(1)
-                Text(info)
-                    .font(.body)
-                    .minimumScaleFactor(0.5)
-                    .multilineTextAlignment(.center)
-            }
-            .frame(maxHeight: .infinity, alignment: .center)
-            .layoutPriority(1)
-            
-            VStack(spacing: Spacing.SM) {
-                Button {
-                    action()
-                } label: {
-                    Text(actionName)
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                }
-                .buttonStyle(RoundedFilledButtonStyle())
-                
-                if let secondaryAction, let secondaryActionName {
-                    Button {
-                        secondaryAction()
-                    } label: {
-                        Text(secondaryActionName)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                    }
-                    .buttonStyle(RoundedBorderButtonStyle())
-                }
-                
-                Button {
-                    cancel()
-                } label: {
-                    Text(T.Commons.cancel)
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                }
-                .buttonStyle(LinkButtonStyle())
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-        }
-        .background {
-            Asset.introductionBackground.swiftUIImage
-                .renderingMode(.template)
-                .foregroundColor(Color(Theme.Colors.Line.secondaryLine))
-        }
-        .frame(maxWidth: Theme.Metrics.componentWidth)
-    }
-}
 
-struct ExternalImportInstructionsView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            ExternalImportInstructionsView(
-                sourceLogo: AnyView(Asset.externalImportRavio.swiftUIImage),
-                sourceName: T.externalimportGoogleAuthenticator,
-                info: T.Introduction.googleAuthenticatorImportProcess,
-                action: {},
-                cancel: {},
-                actionName: T.Commons.scanQrCode,
-                secondaryActionName: T.Tokens.selectFromGallery,
-                secondaryAction: {}
-            )
-                .previewDevice("iPhone SE (1st generation)")
-            
-            ExternalImportInstructionsView(
-                sourceLogo: AnyView(Asset.externalImportGoogleAuth.swiftUIImage),
-                sourceName: T.externalimportGoogleAuthenticator,
-                info: T.Introduction.googleAuthenticatorImportProcess,
-                action: {},
-                cancel: {},
-                actionName: T.Commons.scanQrCode,
-                secondaryActionName: T.Tokens.selectFromGallery,
-                secondaryAction: {}
-            )
-                .preferredColorScheme(.dark)
-                .previewDevice("iPhone 13 Pro Max")
+    private let image2 = Asset.gaImport2.image
+
+    var body: some View {
+        TFInfoView {
+            HStack(spacing: .XL) {
+                sourceLogo
+                ArrowIcon()
+                Image(uiImage: image2)
+                    .frame(width: image2.size.width, height: image2.size.height)
+            }
+        } texts: {
+            Text(sourceName)
+                .textStyle(.title1, .emphasized)
+                .foregroundStyle(.labelsPrimary)
+                .multilineTextAlignment(.center)
+            Text(info)
+                .textStyle(.body)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.labelsPrimary)
+        } buttons: {
+            TFButton(actionName, variant: .borderedProminent, size: .large, action: action)
+
+            if let secondaryAction, let secondaryActionName {
+                TFButton(secondaryActionName, variant: .bordered, size: .large, action: secondaryAction)
+            }
+
+            TFButton(T.Commons.cancel, variant: .borderless, size: .large, action: cancel)
         }
     }
 }

@@ -26,8 +26,7 @@ final class ExternalImportInstructionsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBarController?.tabBar.isHidden = true
-        
+
         let action: Callback = { [weak self] in self?.presenter.handleAction() }
         let cancel: Callback = { [weak self] in self?.presenter.handleCancel() }
         let secondaryAction: Callback? = { [weak self] () -> Callback? in

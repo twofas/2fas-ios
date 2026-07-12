@@ -23,23 +23,21 @@ import Common
 struct AboutView: View {
     @Bindable
     var presenter: AboutPresenter
-    
-    private static let iconLeadingInset: CGFloat = 28 + Spacing.ML.value
 
     var body: some View {
         VStack(spacing: .zero) {
-            titleBar()
+            TFScreenTitleBar(
+                title: T.Settings.about,
+                showsBackButton: presenter.showsBackButton,
+                onBack: presenter.showsBackButton ? presenter.handleBack : nil
+            )
 
-            ScrollView(.vertical) {
-                VStack(spacing: .XXXL) {
-                    ForEach(presenter.sections) { section in
-                        sectionView(section)
-                    }
-
-                    versionFooter()
+            TFListScreen {
+                ForEach(presenter.sections) { section in
+                    sectionView(section)
                 }
-                .padding(.horizontal, .XL)
-                .padding(.top, .M)
+
+                versionFooter()
             }
         }
         .background(.backgroundsPrimaryElevated)
@@ -49,42 +47,13 @@ struct AboutView: View {
     }
 
     @ViewBuilder
-    private func titleBar() -> some View {
-        ZStack {
-            HStack(spacing: .zero) {
-                if presenter.showsBackButton {
-                    TFLiquidGlassSymbolButton(symbol: .back) {
-                        presenter.handleBack()
-                    }
-                }
-                Spacer()
-            }
-            TFTitleView(title: T.Settings.about)
-        }
-        .padding(.horizontal, .XXXL)
-        .padding(.top, .XL)
-        .frame(alignment: .top)
-    }
-
-    @ViewBuilder
     private func sectionView(_ section: AboutSection) -> some View {
-        VStack(alignment: .leading, spacing: .zero) {
-            if let title = section.title {
-                sectionHeader(title)
-            }
-
-            VStack(alignment: .leading, spacing: .zero) {
-                ForEach(Array(section.cells.enumerated()), id: \.element.id) { index, cell in
-                    row(for: cell)
-                    if index < section.cells.count - 1 {
-                        separator(insetForIcon: cell.icon != nil)
-                    }
+        TFListSection(title: section.title, footer: section.footer) {
+            ForEach(Array(section.cells.enumerated()), id: \.element.id) { index, cell in
+                row(for: cell)
+                if index < section.cells.count - 1 {
+                    TFListSeparator(hasLeadingIcon: cell.icon != nil)
                 }
-            }
-            .groupedSectionBackground()
-
-            if let footer = section.footer {
-                sectionFooter(footer)
             }
         }
     }
@@ -149,34 +118,6 @@ struct AboutView: View {
             .labelsHidden()
             .tint(.accentsBrand)
         }
-    }
-
-    @ViewBuilder
-    private func separator(insetForIcon: Bool) -> some View {
-        Divider()
-            .foregroundStyle(.separatorsNonOpaque)
-            .padding(.leading, insetForIcon ? Self.iconLeadingInset : 0)
-    }
-
-    @ViewBuilder
-    private func sectionHeader(_ text: String) -> some View {
-        Text(text)
-            .textStyle(.headline)
-            .foregroundStyle(.labelsSecondary)
-            .accessibilityAddTraits(.isHeader)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.vertical, .ML)
-            .padding(.horizontal, .XL)
-    }
-
-    @ViewBuilder
-    private func sectionFooter(_ text: String) -> some View {
-        Text(text)
-            .textStyle(.footnote, .regular, .tight)
-            .foregroundStyle(.labelsSecondary)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.top, .M)
-            .padding(.horizontal, .XL)
     }
 
     @ViewBuilder

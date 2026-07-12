@@ -17,48 +17,48 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
+import Foundation
 import Common
 import Data
 
-final class BackupSetPasswordPresenter: ObservableObject {
-    @Published var isApplyingChanges = false
-    @Published var isDone = false
-    @Published var continueButtonEnabled = false
-    @Published var migrationError: String?
-    @Published var validationError: String?
-    
-    @Published var isFocused1 = false
-    @Published var isFocused2 = false
-    
-    @Published var password1: String = "" {
-        didSet {
-            validate()
-        }
+@Observable
+final class BackupSetPasswordPresenter {
+    var password1: String = ""
+    var password2: String = ""
+    var password1Error: String?
+    var password2Error: String?
+
+    var isApplyingChanges = false
+    var isDone = false
+    var migrationError: String?
+
+    var isContinueEnabled: Bool {
+        !password1.isEmpty
+            && !password2.isEmpty
+            && password1Error == nil
+            && password2Error == nil
+            && password1 == password2
     }
-    @Published var password2: String = "" {
-        didSet {
-            validate()
-        }
-    }
-    
-    lazy var callback: (MigrationResult) -> Void = { [weak self] result in
-        switch result {
-        case .success: self?.toSuccess()
-        case .error(let reason): self?.toFailure(reason)
-        }
-    }
-    private let flowController: BackupSetPasswordFlowControlling
-    private let interactor: BackupSetPasswordModalInteracting
-    private let flowType: BackupSetPasswordType
-    
+
     var isSettingPassword: Bool {
         switch flowType {
         case .setPassword: true
         case .changePassword: false
         }
     }
-    
+
+    var title: String {
+        isSettingPassword ? T.Backup.setPassword : T.Backup.changePassword
+    }
+
+    var applyingChangesText: String {
+        isSettingPassword ? T.Backup.settingPassword : T.Backup.changingPassword
+    }
+
+    private let flowController: BackupSetPasswordFlowControlling
+    private let interactor: BackupSetPasswordModalInteracting
+    private let flowType: BackupSetPasswordType
+
     init(
         flowController: BackupSetPasswordFlowControlling,
         interactor: BackupSetPasswordModalInteracting,
@@ -67,7 +67,7 @@ final class BackupSetPasswordPresenter: ObservableObject {
         self.flowController = flowController
         self.interactor = interactor
         self.flowType = flowType
-        
+
         interactor.syncSuccess = { [weak self] in
             self?.toSuccess()
         }
@@ -75,69 +75,79 @@ final class BackupSetPasswordPresenter: ObservableObject {
             self?.toFailure(reason)
         }
     }
-}
 
-extension BackupSetPasswordPresenter {
-    func close() {
+    func handleClose() {
         flowController.close()
     }
-    
-    func applyChanges() {
-        guard continueButtonEnabled else { return }
-        isApplyingChanges = true
-        interactor.setApplayinChanges()
-        interactor.setPassword(password1)
+
+    func handleContinue() {
+        if isDone {
+            handleClose()
+        } else {
+            applyChanges()
+        }
+    }
+
+    func handleFirstChanged(_ newValue: String) {
+        password1Error = validate(newValue)
+        checkMatch()
+    }
+
+    func handleSecondChanged(_ newValue: String) {
+        password2Error = validate(newValue)
+        checkMatch()
     }
 }
 
 private extension BackupSetPasswordPresenter {
-    func validate() {
-        func checkLength(_ string: String) -> Bool {
-            string.count >= Config.minSyncPasswordLength &&
-            string.count <= Config.maxSyncPasswordLength
+    func validate(_ value: String) -> String? {
+        guard !value.isEmpty else { return nil }
+        if value.count < Config.minSyncPasswordLength || value.count > Config.maxSyncPasswordLength {
+            return T.Backup.passwordLengthError(
+                Config.minSyncPasswordLength,
+                Config.maxSyncPasswordLength
+            )
         }
-        func validCharacters(_ string: String) -> Bool {
-            string.rangeOfCharacter(from: Config.PasswordCharacterSet.characterSet.inverted) == nil
+        if value.rangeOfCharacter(from: Config.PasswordCharacterSet.characterSet.inverted) != nil {
+            return T.Backup.passwordCharactersError
         }
-        
-        validationError = nil
-        continueButtonEnabled = false
-        
-        guard !password1.isEmpty && !password2.isEmpty else {
-            return
-        }
-        
-        if !checkLength(password1) || !checkLength(password2) {
-            validationError = T.Backup
-                .passwordLengthError(
-                    Config.minSyncPasswordLength,
-                    Config.maxSyncPasswordLength
-                )
-            return
-        }
-        if !validCharacters(password1) || !validCharacters(password2) {
-            validationError = T.Backup.passwordCharactersError
+        return nil
+    }
+
+    func checkMatch() {
+        guard !password1.isEmpty, !password2.isEmpty,
+              validate(password1) == nil, validate(password2) == nil else {
+            if password2Error == T.Backup.passwordMatchError {
+                password2Error = nil
+            }
             return
         }
         if password1 != password2 {
-            validationError = T.Backup.passwordMatchError
-            return
+            password2Error = T.Backup.passwordMatchError
+        } else if password2Error == T.Backup.passwordMatchError {
+            password2Error = nil
         }
-        continueButtonEnabled = true
     }
-    
+
+    func applyChanges() {
+        guard isContinueEnabled else { return }
+        isApplyingChanges = true
+        interactor.setApplayinChanges()
+        interactor.setPassword(password1)
+    }
+
     func toSuccess() {
-        validationError = nil
+        password1Error = nil
+        password2Error = nil
         migrationError = nil
         isApplyingChanges = false
         isDone = true
     }
-    
-    func toFailure(_ reason: CloudState.NotAvailableReason) {
-        validationError = nil
-        migrationError = nil
-        isApplyingChanges = false
 
+    func toFailure(_ reason: CloudState.NotAvailableReason) {
+        password1Error = nil
+        password2Error = nil
+        isApplyingChanges = false
         migrationError = reason.description
     }
 }

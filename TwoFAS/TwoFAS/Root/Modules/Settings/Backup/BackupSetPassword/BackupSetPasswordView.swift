@@ -21,173 +21,126 @@ import SwiftUI
 import Common
 
 struct BackupSetPasswordView: View {
-    @ObservedObject
+    @Bindable
     var presenter: BackupSetPasswordPresenter
-    
-    @State
-    private var height: CGFloat = 0
-    
+
+    @FocusState
+    private var focusedField: Field?
+    private enum Field: Int, Hashable {
+        case first
+        case second
+    }
+
     var body: some View {
-        ScrollView {
-            VStack(alignment: .center) {
-                VStack(alignment: .center, spacing: Spacing.M) {
-                    VStack(spacing: Spacing.M) {
-                        if presenter.isDone {
-                            Spacer()
-                                .frame(maxHeight: .infinity)
-                            Label(T.Backup.passwordSet, systemImage: "checkmark.circle.fill"
-                            )
-                            .font(.title3)
-                            .multilineTextAlignment(.center)
-                            .foregroundStyle(Color.green)
-                        } else if !presenter.isApplyingChanges {
-                            header()
-                            inputs()
-                                .padding(.bottom, Spacing.SM)
-                        }
-                    }
-                    Spacer()
-                        .frame(maxHeight: .infinity)
-                    if presenter.isApplyingChanges {
-                        VStack(spacing: Spacing.XL) {
-                            ProgressView()
-                                .progressViewStyle(.circular)
-                                .tint(Color(ThemeColor.theme))
-                                .scaleEffect(1.5)
-                            Text(
-                                verbatim: presenter.isSettingPassword ?
-                                T.Backup.settingPassword :
-                                    T.Backup.changingPassword
-                            )
-                            .font(.body)
-                            .multilineTextAlignment(.center)
-                        }
-                        Spacer()
-                            .frame(maxHeight: .infinity)
-                    } else {
-                        VStack {
-                            if let error = presenter.migrationError {
-                                Label(error, systemImage: "xmark.circle.fill")
-                                    .font(.caption)
-                                    .fontWeight(.bold)
-                                    .foregroundStyle(Color(Theme.Colors.Text.theme))
-                            }
-                            VStack {
-                                Button {
-                                    if presenter.isDone {
-                                        presenter.close()
-                                    } else {
-                                        presenter.applyChanges()
-                                    }
-                                } label: {
-                                    Text(verbatim: T.Commons.continue)
-                                        .frame(minWidth: 0, maxWidth: .infinity)
-                                }
-                                .modify {
-                                    if presenter.continueButtonEnabled {
-                                        $0.buttonStyle(RoundedFilledButtonStyle())
-                                    } else {
-                                        $0.buttonStyle(RoundedFilledInactiveButtonStyle())
-                                    }
-                                }
-                                Button {
-                                    presenter.close()
-                                } label: {
-                                    Text(T.Commons.close)
-                                }
-                                .buttonStyle(LinkButtonStyle())
-                                .isHidden(presenter.isDone)
-                            }
-                            .padding(.top, Spacing.XL)
-                        }
-                    }
+        VStack(spacing: .zero) {
+            TFScreenTitleBar(
+                title: presenter.title,
+                leadingSymbol: showsCloseInTitleBar ? .close : nil,
+                onLeadingTap: showsCloseInTitleBar ? presenter.handleClose : nil
+            )
+
+            AdaptiveReadableContainer {
+                if presenter.isDone {
+                    TFSuccessView(title: T.Backup.passwordSet)
+                } else if presenter.isApplyingChanges {
+                    TFLoadingView(title: presenter.applyingChangesText)
+                        .padding(.top, .XXXXXL)
+                } else {
+                    formContent
                 }
-                .background(Color(Theme.Colors.Fill.background))
-                .frame(maxWidth: Theme.Metrics.componentWidth)
-                .padding(.top, Spacing.XL)
             }
-            .frame(height: height)
-            .frame(maxWidth: .infinity)
-            .background(Color(Theme.Colors.Fill.background))
+            .padding(.horizontal, .XL)
+
+            if !presenter.isApplyingChanges {
+                AdaptiveReadableContainer {
+                    VStack(spacing: .L) {
+                        TFButton(
+                            T.Commons.continue,
+                            variant: .borderedProminent,
+                            size: .large
+                        ) {
+                            focusedField = nil
+                            presenter.handleContinue()
+                        }
+                        .disabled(!presenter.isDone && !presenter.isContinueEnabled)
+
+                        if !presenter.isDone {
+                            TFButton(T.Commons.cancel, variant: .borderless, size: .large) {
+                                presenter.handleClose()
+                            }
+                        }
+                    }
+                    .padding(.horizontal, .XL)
+                }
+            }
         }
-        .scrollContentBackground(.hidden)
-        .background(Color(Theme.Colors.Fill.background))
-        .frame(maxHeight: .infinity)
-        .observeHeight { height in
-            if !presenter.isFocused1 && !presenter.isFocused2 {
-                self.height = height
+        .background(.backgroundsPrimaryElevated)
+        .onChange(of: presenter.password1) { _, newValue in
+            presenter.handleFirstChanged(newValue)
+        }
+        .onChange(of: presenter.password2) { _, newValue in
+            presenter.handleSecondChanged(newValue)
+        }
+        .onAppear {
+            guard !presenter.isApplyingChanges, !presenter.isDone else { return }
+            DispatchQueue.main.async {
+                focusedField = .first
             }
         }
     }
-    
-    @ViewBuilder
-    private func header() -> some View {
-        Spacer()
-            .frame(height: Spacing.XL.rawValue)
-        Text(verbatim: presenter.isSettingPassword ? T.Backup.setPassword : T.Backup.changePassword)
-            .font(.title2)
-            .multilineTextAlignment(.center)
-        Text(verbatim: T.Backup.passwordSetDescription)
-            .font(.caption)
-            .multilineTextAlignment(.center)
-            .fixedSize(horizontal: false, vertical: true)
-        Spacer()
-            .frame(height: Spacing.XXXXXL.rawValue)
+
+    private var showsCloseInTitleBar: Bool {
+        !presenter.isApplyingChanges && !presenter.isDone
     }
-    
+
     @ViewBuilder
-    private func inputs() -> some View {
-        VStack(spacing: Spacing.M) {
-            VStack(spacing: Spacing.XS) {
-                PasswordTextField(
-                    title: T.Backup.encryptionEnterPassword,
-                    text: $presenter.password1,
-                    isFocused: $presenter.isFocused1
-                )
-                .onSubmit {
-                    DispatchQueue.main.async {
-                        presenter.isFocused1 = false
-                        presenter.isFocused2 = true
-                    }
-                }
-                .submitLabel(.next)
-                Divider()
-                    .overlay {
-                        Rectangle()
-                            .foregroundStyle(Color(Theme.Colors.Line.primaryLine))
-                    }
-            }
-            VStack(spacing: Spacing.XS) {
-                PasswordTextField(
-                    title: T.Backup.repeatPassword,
-                    text: $presenter.password2,
-                    isFocused: $presenter.isFocused2
-                )
-                .onSubmit {
-                    if presenter.continueButtonEnabled {
-                        presenter.applyChanges()
-                    }
-                }
-                .submitLabel(.return)
-                Divider()
-                    .overlay {
-                        Rectangle()
-                            .foregroundStyle(Color(Theme.Colors.Line.primaryLine))
-                    }
-            }
-            Text(verbatim: T.Backup.passwordRulesDescription)
-                .font(.caption)
-                .foregroundStyle(Color(Theme.Colors.Text.subtitle))
+    private var formContent: some View {
+        VStack(spacing: .XXXL) {
+            Text(T.Backup.passwordSetDescription)
+                .textStyle(.callout)
+                .foregroundStyle(.labelsPrimary)
                 .multilineTextAlignment(.leading)
-                .fixedSize(horizontal: false, vertical: true)
-            if let validationError = presenter.validationError {
-                Label(validationError, systemImage: "xmark.circle.fill")
-                    .font(.caption)
-                    .fontWeight(.bold)
-                    .foregroundStyle(Color(Theme.Colors.Text.theme))
-                    .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            VStack(spacing: .zero) {
+                TFFloatingTextField(
+                    placeHolder: T.Backup.encryptionEnterPassword,
+                    text: $presenter.password1,
+                    inputType: .password,
+                    keyboardType: .asciiCapable,
+                    focused: $focusedField,
+                    focusValue: .first,
+                    errorMessage: $presenter.password1Error,
+                    submit: .init(buttonType: .next, action: {
+                        focusedField = .second
+                    })
+                )
+
+                Divider()
+                    .foregroundStyle(.separatorsNonOpaque)
+
+                TFFloatingTextField(
+                    placeHolder: T.Backup.repeatPassword,
+                    text: $presenter.password2,
+                    inputType: .password,
+                    keyboardType: .asciiCapable,
+                    focused: $focusedField,
+                    focusValue: .second,
+                    errorMessage: $presenter.password2Error,
+                    submit: .init(buttonType: .done, action: {
+                        focusedField = nil
+                        presenter.handleContinue()
+                    })
+                )
+            }
+            .groupedSectionBackground()
+
+            if let error = presenter.migrationError {
+                Label(error, systemImage: "xmark.circle.fill")
+                    .textStyle(.footnote)
+                    .foregroundStyle(.accentsOrange)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
-        .disabled(presenter.isApplyingChanges)
     }
 }

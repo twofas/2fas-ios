@@ -18,6 +18,8 @@
 //
 
 import UIKit
+import SwiftUI
+import Common
 import Data
 
 protocol EncryptedByUserPasswordSyncFlowControllerParent: AnyObject {
@@ -45,8 +47,9 @@ final class EncryptedByUserPasswordSyncFlowController: FlowController {
         in viewController: UIViewController,
         parent: EncryptedByUserPasswordSyncFlowControllerParent
     ) -> (MigrationResult) -> Void {
-        let view = EncryptedByUserPasswordSyncViewController()
-        let flowController = EncryptedByUserPasswordSyncFlowController(viewController: view)
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
+        hosting.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+        let flowController = EncryptedByUserPasswordSyncFlowController(viewController: hosting)
         let interactor = ModuleInteractorFactory.shared.encryptedByUserPasswordSyncModuleInteractor()
         flowController.parent = parent
         let presenter = EncryptedByUserPasswordSyncPresenter(
@@ -54,21 +57,22 @@ final class EncryptedByUserPasswordSyncFlowController: FlowController {
             interactor: interactor,
             flowType: .enterPassword
         )
-        view.presenter = presenter
+        hosting.rootView = AnyView(EncryptedByUserPasswordSyncView(presenter: presenter))
 
-        view.configureAsModal()
-        viewController.present(view, animated: true)
-        
+        hosting.configureAsModal()
+        viewController.present(hosting, animated: true)
+
         return presenter.callback
     }
-    
+
     static func setAsRoot(
         in navigationController: UINavigationController,
         parent: EncryptedByUserPasswordSyncFlowControllerParent,
         actionType: EncryptedByUserPasswordSyncType
     ) {
-        let view = EncryptedByUserPasswordSyncViewController()
-        let flowController = EncryptedByUserPasswordSyncFlowController(viewController: view)
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
+        hosting.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+        let flowController = EncryptedByUserPasswordSyncFlowController(viewController: hosting)
         let interactor = ModuleInteractorFactory.shared.encryptedByUserPasswordSyncModuleInteractor()
         flowController.parent = parent
         let presenter = EncryptedByUserPasswordSyncPresenter(
@@ -76,15 +80,9 @@ final class EncryptedByUserPasswordSyncFlowController: FlowController {
             interactor: interactor,
             flowType: actionType
         )
-        view.presenter = presenter
-        
-        navigationController.pushRootViewController(view, animated: false)
-    }
-}
+        hosting.rootView = AnyView(EncryptedByUserPasswordSyncView(presenter: presenter))
 
-extension EncryptedByUserPasswordSyncFlowController {
-    var viewController: EncryptedByUserPasswordSyncViewController {
-        _viewController as! EncryptedByUserPasswordSyncViewController
+        navigationController.pushRootViewController(hosting, animated: false)
     }
 }
 
@@ -92,9 +90,9 @@ extension EncryptedByUserPasswordSyncFlowController: EncryptedByUserPasswordSync
     func close() {
         parent?.closeEncryptedByUser()
     }
-    
+
     func toChangePassword() {
-        guard let navi = viewController.navigationController else { return }
+        guard let navi = _viewController?.navigationController else { return }
         BackupSetPasswordFlowController.push(in: navi, parent: self, flowType: .changePassword)
     }
 }

@@ -28,17 +28,18 @@ struct EncryptedByUserPasswordSyncView: View {
     private var isFocused: Bool?
     
     var body: some View {
-        AdaptiveReadableContainer {
+        VStack(spacing: .zero) {
+            TFScreenTitleBar(
+                title: presenter.title,
+                leadingSymbol: .close,
+                onLeadingTap: presenter.close
+            )
+
+            AdaptiveReadableContainer {
                 VStack(alignment: .center) {
                     VStack(alignment: .center, spacing: Spacing.M) {
                         if !presenter.isWorking && !presenter.isDone {
                             VStack(spacing: .ML) {
-                                Spacer()
-                                    .frame(height: Spacing.XL.rawValue)
-                                Text(verbatim: T.Commons.icloudBackupPassword)
-                                    .textStyle(.title2)
-                                    .foregroundStyle(.labelsPrimary)
-                                    .multilineTextAlignment(.center)
                                 Text(
                                     verbatim: presenter.isVerifyingPassword ?
                                     T.Backup.verifyPasswordDescription :
@@ -50,7 +51,7 @@ struct EncryptedByUserPasswordSyncView: View {
                                 .fixedSize(horizontal: false, vertical: true)
                                 Spacer()
                                     .frame(height: Spacing.XL.rawValue)
-                                
+
                                 TFFloatingTextField(
                                     placeHolder: T.Backup.password,
                                     text: $presenter.password,
@@ -72,24 +73,11 @@ struct EncryptedByUserPasswordSyncView: View {
                         }
                         
                         if presenter.isWorking {
-                            Spacer()
-                                .frame(maxHeight: .infinity)
-                            VStack(spacing: .XL) {
-                                ProgressView()
-                                    .progressViewStyle(.circular)
-                                    .tint(.accentsBrand)
-                                    .scaleEffect(1.5)
-                                Text(
-                                    verbatim: presenter.isRemovingPassword ?
-                                    T.Backup.removingPassword :
-                                        T.Backup.veryfingPassword
-                                )
-                                .textStyle(.body)
-                                .foregroundStyle(.labelsPrimary)
-                                .multilineTextAlignment(.center)
-                            }
-                            Spacer()
-                                .frame(maxHeight: .infinity)
+                            TFLoadingView(
+                                title: presenter.isRemovingPassword ?
+                                T.Backup.removingPassword :
+                                    T.Backup.veryfingPassword
+                            )
                         } else {
                             VStack {
                                 if let migrationFailureReason = presenter.migrationFailureReason {
@@ -98,11 +86,7 @@ struct EncryptedByUserPasswordSyncView: View {
                                     if presenter.wrongPassword {
                                         labelWrongPassword
                                     } else if presenter.isDone {
-                                        Spacer()
-                                            .frame(maxHeight: .infinity)
-                                        labelSuccess
-                                        Spacer()
-                                            .frame(maxHeight: .infinity)
+                                        TFSuccessView(title: T.Commons.successEx)
                                     }
                                 }
                                 if isFocused == nil || isFocused == false {
@@ -116,10 +100,10 @@ struct EncryptedByUserPasswordSyncView: View {
                                         }
                                         .disabled(!presenter.checkPasswordEnabled)
                                         
-                                        TFButton(T.Commons.close, variant: .borderedSecondary, size: .large) {
+                                        TFButton(T.Commons.close, variant: .borderless, size: .large) {
                                             presenter.close()
                                         }
-                                        .isHidden(presenter.isDone)
+                                        .isHidden(presenter.isDone, remove: true)
                                     }
                                     .padding(.top, Spacing.XL)
                                 }
@@ -128,10 +112,14 @@ struct EncryptedByUserPasswordSyncView: View {
                     }
                     .padding(.top, .XL)
                 }
-            .frame(maxHeight: .infinity)
+                .frame(maxHeight: .infinity)
+            }
         }
         .dismissKeyboardOnTapOutside()
         .background(.backgroundsPrimaryElevated)
+        .onAppear {
+            isFocused = true
+        }
     }
     
     private func doneLabel() -> String {
@@ -147,7 +135,6 @@ struct EncryptedByUserPasswordSyncView: View {
             }
         }
     }
-    
     @ViewBuilder
     private func labelFail(_ description: String) -> some View {
         Label(
@@ -163,13 +150,5 @@ struct EncryptedByUserPasswordSyncView: View {
         Label(T.Backup.enterPasswordWrongPassword, systemImage: "xmark.circle.fill")
             .textStyle(.callout, .emphasized)
             .foregroundStyle(.accentsBrand)
-    }
-    
-    @ViewBuilder
-    private var labelSuccess: some View {
-        Label(T.Commons.successEx, systemImage: "checkmark.circle.fill")
-            .textStyle(.title3)
-            .multilineTextAlignment(.center)
-            .foregroundStyle(.accentsMint)
     }
 }

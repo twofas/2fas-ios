@@ -24,70 +24,42 @@ struct ExportQuestionView: View {
     @StateObject
     var presenter: ExportQuestionPresenter
     let exportType: ExportQuestionType
-    
+
     @State private var enableSave = false
-    private let spacing = ThemeMetrics.spacing
-    
+
+    private let image = Asset.exportBackup.image
+
     var body: some View {
-        NavigationView {
-            VStack(spacing: 0) {
-                VStack(spacing: spacing) {
-                    Spacer()
-                    
-                    Asset.exportBackup.swiftUIImage
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 280, height: 200)
-                    
-                    Spacer()
-                    
-                    Text(exportType.title)
-                        .font(.title)
-                        .fontWeight(.light)
-                        .minimumScaleFactor(0.8)
-                        .multilineTextAlignment(.center)
-                    
-                    Spacer()
-                }
-                .padding(.horizontal, 2 * spacing)
-                .frame(width: Theme.Metrics.componentWidth, alignment: .center)
-                
-                VStack(spacing: 3 * spacing) {
-                    VStack {
-                        Text(exportType.message)
-                            .font(.body)
-                            .minimumScaleFactor(0.8)
-                        
-                        Spacer()
-                        
-                        Toggle(T.Exportwarning.toggle, isOn: $enableSave)
-                            .tint(Color(ThemeColor.theme))
-                            .font(.body)
-                    }
-                    .padding(.horizontal, 2 * spacing)
-                    
-                    VStack(spacing: ThemeMetrics.spacing) {
-                        Button(action: {
-                            presenter.handleShowPIN()
-                        }) {
-                            Text(exportType.cta)
-                        }
-                        .buttonStyle(RoundedFilledConstantWidthStateButtonStyle(isDisabled: !enableSave))
-                        .disabled(!enableSave)
-                        
-                        Button(action: {
-                            presenter.handleClose()
-                        }) {
-                            Text(T.Commons.cancel)
-                        }
-                        .buttonStyle(TextLinkButtonStyle())
-                    }
-                }
-                .padding(.horizontal, 2 * spacing)
-                .background(Color(Theme.Colors.Fill.background))
+        TFInfoView {
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFit()
+                .frame(width: image.size.width / 2, height: image.size.height / 2)
+        } texts: {
+            Text(exportType.title)
+                .textStyle(.title1, .emphasized)
+                .foregroundStyle(.labelsPrimary)
+                .multilineTextAlignment(.center)
+            Text(exportType.message)
+                .textStyle(.body)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.labelsSecondary)
+        } buttons: {
+            TFToggleRow(T.Exportwarning.toggle, isOn: $enableSave)
+                .padding(.bottom, .S)
+
+            TFButton(
+                exportType.cta,
+                variant: .borderedProminent,
+                size: .large
+            ) {
+                presenter.handleShowPIN()
             }
-            .navigationBarHidden(true)
-            .frame(alignment: .center)
+            .disabled(!enableSave)
+
+            TFButton(T.Commons.cancel, variant: .borderless, size: .large) {
+                presenter.handleClose()
+            }
         }
     }
 }
@@ -99,14 +71,14 @@ private extension ExportQuestionType {
         case .qr: T.Exportwarning.titleQr
         }
     }
-    
+
     var message: String {
         switch self {
         case .file: T.Exportwarning.descriptionFile
         case .qr: T.Exportwarning.descriptionQr
         }
     }
-    
+
     var cta: String {
         switch self {
         case .file: T.Exportwarning.ctaFile

@@ -54,6 +54,8 @@ struct BackupSetPasswordView: View {
             if !presenter.isApplyingChanges {
                 AdaptiveReadableContainer {
                     VStack(spacing: .L) {
+                        Spacer()
+                            .frame(maxHeight: .infinity)
                         TFButton(
                             T.Commons.continue,
                             variant: .borderedProminent,
@@ -74,7 +76,9 @@ struct BackupSetPasswordView: View {
                 }
             }
         }
+        .dismissKeyboardOnTapOutside()
         .background(.backgroundsPrimaryElevated)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .onChange(of: presenter.password1) { _, newValue in
             presenter.handleFirstChanged(newValue)
         }

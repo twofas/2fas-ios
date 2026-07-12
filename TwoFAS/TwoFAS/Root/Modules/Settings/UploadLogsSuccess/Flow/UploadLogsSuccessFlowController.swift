@@ -18,6 +18,8 @@
 //
 
 import UIKit
+import SwiftUI
+import Common
 
 protocol UploadLogsSuccessFlowControllerParent: AnyObject {
     func uploadLogsSuccessClose()
@@ -34,16 +36,16 @@ final class UploadLogsSuccessFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: UploadLogsSuccessFlowControllerParent
     ) {
-        let view = UploadLogsSuccessViewController()
-        let flowController = UploadLogsSuccessFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = UploadLogsSuccessFlowController(viewController: hosting)
         flowController.parent = parent
-        
+
         let presenter = UploadLogsSuccessPresenter(
             flowController: flowController
         )
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: true)
+        hosting.rootView = AnyView(UploadLogsSuccessView(action: presenter.handleCancel))
+
+        navigationController.pushViewController(hosting, animated: true)
     }
 }
 

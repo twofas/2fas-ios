@@ -18,6 +18,8 @@
 //
 
 import UIKit
+import SwiftUI
+import Common
 
 protocol BrowserExtensionSuccessFlowControllerParent: AnyObject {
     func browserExtensionSuccessClose()
@@ -34,16 +36,18 @@ final class BrowserExtensionSuccessFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: BrowserExtensionSuccessFlowControllerParent
     ) {
-        let view = BrowserExtensionSuccessViewController()
-        let flowController = BrowserExtensionSuccessFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = BrowserExtensionSuccessFlowController(viewController: hosting)
         flowController.parent = parent
-        
+
         let presenter = BrowserExtensionSuccessPresenter(
             flowController: flowController
         )
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: true)
+        hosting.rootView = AnyView(
+            BrowserExtensionPairingSuccessfulView(action: presenter.handleCancel)
+        )
+
+        navigationController.pushViewController(hosting, animated: true)
     }
 }
 

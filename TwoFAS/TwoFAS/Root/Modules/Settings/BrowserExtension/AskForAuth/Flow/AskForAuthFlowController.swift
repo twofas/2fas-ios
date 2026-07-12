@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 import Data
 
@@ -40,18 +41,24 @@ final class AskForAuthFlowController: FlowController {
         auth: WebExtensionAwaitingAuth,
         pair: PairedAuthRequest
     ) {
-        let view = AskForAuthViewController()
-        let flowController = AskForAuthFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = AskForAuthFlowController(viewController: hosting)
         flowController.parent = parent
         let presenter = AskForAuthPresenter(
             flowController: flowController,
             auth: auth,
             pair: pair
         )
-        view.presenter = presenter
-        view.configureAsModal()
-        
-        viewController.present(view, animated: true, completion: nil)
+        hosting.rootView = AnyView(
+            AskForAuthView(
+                action: presenter.handleAction,
+                cancel: presenter.handleCancel,
+                domain: presenter.domain
+            )
+        )
+        hosting.configureAsModal()
+
+        viewController.present(hosting, animated: true, completion: nil)
     }
 }
 

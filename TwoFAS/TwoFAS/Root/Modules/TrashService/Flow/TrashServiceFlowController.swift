@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 
 protocol TrashServiceFlowControllerParent: AnyObject {
@@ -38,8 +39,9 @@ final class TrashServiceFlowController: FlowController {
         parent: TrashServiceFlowControllerParent,
         serviceData: ServiceData
     ) {
-        let view = TrashServiceViewController()
-        let flowController = TrashServiceFlowController(viewController: view)
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
+        hosting.view.backgroundColor = .clear
+        let flowController = TrashServiceFlowController(viewController: hosting)
         flowController.parent = parent
 
         let interactor = ModuleInteractorFactory.shared.trashServiceInteractor()
@@ -48,9 +50,9 @@ final class TrashServiceFlowController: FlowController {
             flowController: flowController,
             interactor: interactor
         )
-        view.presenter = presenter
+        hosting.rootView = AnyView(TrashServiceView(presenter: presenter))
 
-        flowController.presentAsHalfModal(on: viewController, view: view)
+        flowController.presentAsHalfModal(on: viewController, view: hosting)
     }
 }
 
@@ -65,7 +67,7 @@ extension TrashServiceFlowController: TrashServiceFlowControlling {
 }
 
 private extension TrashServiceFlowController {
-    func presentAsHalfModal(on parentViewController: UIViewController, view: TrashServiceViewController) {
+    func presentAsHalfModal(on parentViewController: UIViewController, view: UIViewController) {
         view.modalPresentationStyle = .pageSheet
 
         if let sheet = view.sheetPresentationController {

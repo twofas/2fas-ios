@@ -18,6 +18,8 @@
 //
 
 import UIKit
+import SwiftUI
+import Common
 
 protocol BrowserExtensionFailureFlowControllerParent: AnyObject {
     func browserExtensionFailureClose()
@@ -37,16 +39,22 @@ final class BrowserExtensionFailureFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: BrowserExtensionFailureFlowControllerParent
     ) {
-        let view = BrowserExtensionFailureViewController()
-        let flowController = BrowserExtensionFailureFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = BrowserExtensionFailureFlowController(viewController: hosting)
         flowController.parent = parent
-        
+
         let presenter = BrowserExtensionFailurePresenter(
             flowController: flowController
         )
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: true)
+        hosting.rootView = AnyView(
+            BrowserExtensionPairingFailureView(
+                action: presenter.handleAction,
+                cancel: presenter.handleCancel,
+                contactSupport: presenter.handleContactSupport
+            )
+        )
+
+        navigationController.pushViewController(hosting, animated: true)
     }
 }
 

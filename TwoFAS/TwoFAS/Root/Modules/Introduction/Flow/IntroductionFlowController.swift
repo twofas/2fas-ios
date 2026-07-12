@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 
 protocol IntroductionFlowControllerParent: AnyObject {
@@ -36,19 +37,21 @@ final class IntroductionFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: IntroductionFlowControllerParent
     ) {
-        let view = IntroductionViewController()
-        let flowController = IntroductionFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.view.layer.contentsFormat = .RGBA16Float
+        hosting.view.backgroundColor = Theme.Colors.Fill.background
+        let flowController = IntroductionFlowController(viewController: hosting)
         flowController.parent = parent
-        
+
         let interactor = ModuleInteractorFactory.shared.introductionModuleInteractor()
-        
+
         let presenter = IntroductionPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        view.presenter = presenter
-        
-        navigationController.setViewControllers([view], animated: false)
+        hosting.rootView = AnyView(IntroductionView(presenter: presenter))
+
+        navigationController.setViewControllers([hosting], animated: false)
     }
 }
 

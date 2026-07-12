@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol AppleWatchFlowControllerParent: AnyObject {
     func switchToBackup()
@@ -36,28 +37,30 @@ final class AppleWatchFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: AppleWatchFlowControllerParent
     ) {
-        let viewController = AppleWatchViewController()
-        let flowController = AppleWatchFlowController(viewController: viewController)
-        flowController.parent = parent
-        flowController.navigationController = navigationController
-        let presenter = AppleWatchPresenter(flowController: flowController)
-        viewController.presenter = presenter
-
-        navigationController.setViewControllers([viewController], animated: false)
+        let hosting = makeHosting(parent: parent, navigationController: navigationController)
+        navigationController.setViewControllers([hosting], animated: false)
     }
 
     static func push(
         in navigationController: UINavigationController,
         parent: AppleWatchFlowControllerParent
     ) {
-        let viewController = AppleWatchViewController()
-        let flowController = AppleWatchFlowController(viewController: viewController)
+        let hosting = makeHosting(parent: parent, navigationController: navigationController)
+        navigationController.pushRootViewController(hosting, animated: true)
+    }
+
+    private static func makeHosting(
+        parent: AppleWatchFlowControllerParent,
+        navigationController: UINavigationController
+    ) -> UIHostingController<AnyView> {
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
+        hosting.title = T.Settings.appleWatch
+        let flowController = AppleWatchFlowController(viewController: hosting)
         flowController.parent = parent
         flowController.navigationController = navigationController
         let presenter = AppleWatchPresenter(flowController: flowController)
-        viewController.presenter = presenter
-
-        navigationController.pushRootViewController(viewController, animated: true)
+        hosting.rootView = AnyView(AppleWatchView(presenter: presenter))
+        return hosting
     }
 }
 

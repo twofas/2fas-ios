@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 import Data
 
@@ -33,23 +34,26 @@ protocol ManageWatchFlowControlling: AnyObject {
 
 final class ManageWatchFlowController: FlowController {
     private weak var parent: ManageWatchFlowControllerParent?
-    
+    private weak var presenter: ManageWatchPresenter?
+
     static func present(
         on viewController: UIViewController,
         parent: ManageWatchFlowControllerParent
     ) {
-        let view = ManageWatchViewController()
-        let flowController = ManageWatchFlowController(viewController: view)
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
+        let flowController = ManageWatchFlowController(viewController: hosting)
         let interactor = ModuleInteractorFactory.shared.manageWatchModuleInteractor()
         flowController.parent = parent
         let presenter = ManageWatchPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        view.presenter = presenter
-        
-        view.configureAsModal()
-        viewController.present(view, animated: true)
+        flowController.presenter = presenter
+        hosting.rootView = AnyView(ManageWatchView(presenter: presenter))
+        hosting.view.backgroundColor = Theme.Colors.Fill.System.third
+
+        hosting.configureAsModal()
+        viewController.present(hosting, animated: true)
     }
 }
 
@@ -57,12 +61,12 @@ extension ManageWatchFlowController: ManageWatchFlowControlling {
     func close() {
         parent?.closeManageFlow()
     }
-    
+
     func toCamera() {
-        guard let viewController = _viewController as? ManageWatchViewController else { return }
-        CameraScannerFlowController.present(on: viewController, parent: self)
+        guard let vc = _viewController else { return }
+        CameraScannerFlowController.present(on: vc, parent: self)
     }
-    
+
     func toRename(_ pairedWatch: PairedWatch) {
         let alert = AlertControllerPromptFactory.create(
             title: T.Backup.managePairedWatchesRenameTitle,
@@ -71,26 +75,22 @@ extension ManageWatchFlowController: ManageWatchFlowControlling {
             defaultText: pairedWatch.deviceName,
             inputConfiguration: .name,
             action: { [weak self] deviceName in
-                self?.viewController.presenter.handleRename(deviceName, pairedWatch)
+                self?.presenter?.handleRename(deviceName, pairedWatch)
             },
             cancel: {},
             verify: { deviceName in
                 ServiceRules.isAppleWatchNameValid(deviceName: deviceName)
             }
         )
-        
-        viewController.present(alert, animated: true, completion: nil)
-    }
-}
 
-extension ManageWatchFlowController {
-    var viewController: ManageWatchViewController { _viewController as! ManageWatchViewController }
+        _viewController?.present(alert, animated: true, completion: nil)
+    }
 }
 
 extension ManageWatchFlowController: CameraScannerFlowControllerParent {
     func cameraScannerDidFinish() {
-        viewController.presenter.handleReloadList()
-        viewController.dismiss(animated: true)
+        presenter?.handleReloadList()
+        _viewController?.dismiss(animated: true)
     }
     func cameraScannerDidImport(count: Int) {}
     func cameraScannerServiceWasCreated(serviceData: ServiceData) {}

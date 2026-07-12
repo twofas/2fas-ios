@@ -18,6 +18,8 @@
 //
 
 import UIKit
+import SwiftUI
+import Common
 
 protocol ExternalImportInstructionsFlowControllerParent: AnyObject {
     func instructionsClose()
@@ -44,24 +46,29 @@ final class ExternalImportInstructionsFlowController: FlowController {
         parent: ExternalImportInstructionsFlowControllerParent,
         service: ExternalImportService
     ) {
-        let view = ExternalImportInstructionsViewController()
-        
-        let flowController = ExternalImportInstructionsFlowController(viewController: view)
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
+        let flowController = ExternalImportInstructionsFlowController(viewController: hosting)
         flowController.parent = parent
         flowController.navigationController = navigationController
         let presenter = ExternalImportInstructionsPresenter(
             flowController: flowController,
             service: service
         )
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: true)
-    }
-}
+        let secondaryAction: Callback? = presenter.hasSecondaryAction ? presenter.handleSecondaryAction : nil
+        hosting.rootView = AnyView(
+            ExternalImportInstructionsView(
+                sourceLogo: AnyView(presenter.sourceLogo),
+                sourceName: presenter.sourceName,
+                info: presenter.info,
+                action: presenter.handleAction,
+                cancel: presenter.handleCancel,
+                actionName: presenter.actionName,
+                secondaryActionName: presenter.secondaryActionName,
+                secondaryAction: secondaryAction
+            )
+        )
 
-extension ExternalImportInstructionsFlowController {
-    var viewController: ExternalImportInstructionsViewController {
-        _viewController as! ExternalImportInstructionsViewController
+        navigationController.pushViewController(hosting, animated: true)
     }
 }
 

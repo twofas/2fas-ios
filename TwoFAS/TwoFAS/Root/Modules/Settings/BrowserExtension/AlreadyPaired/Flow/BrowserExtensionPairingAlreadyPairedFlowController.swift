@@ -18,6 +18,8 @@
 //
 
 import UIKit
+import SwiftUI
+import Common
 
 protocol BrowserExtensionPairingAlreadyPairedFlowControllerParent: AnyObject {
     func browserExtensionAlreadyPairedClose()
@@ -29,21 +31,23 @@ protocol BrowserExtensionPairingAlreadyPairedFlowControlling: AnyObject {
 
 final class BrowserExtensionPairingAlreadyPairedFlowController: FlowController {
     private weak var parent: BrowserExtensionPairingAlreadyPairedFlowControllerParent?
-    
+
     static func push(
         in navigationController: UINavigationController,
         parent: BrowserExtensionPairingAlreadyPairedFlowControllerParent
     ) {
-        let view = BrowserExtensionPairingAlreadyPairedViewController()
-        let flowController = BrowserExtensionPairingAlreadyPairedFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = BrowserExtensionPairingAlreadyPairedFlowController(viewController: hosting)
         flowController.parent = parent
-        
+
         let presenter = BrowserExtensionPairingAlreadyPairedPresenter(
             flowController: flowController
         )
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: true)
+        hosting.rootView = AnyView(
+            BrowserExtensionPairingAlreadyPairedfulView(action: presenter.handleCancel)
+        )
+
+        navigationController.pushViewController(hosting, animated: true)
     }
 }
 

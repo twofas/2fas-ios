@@ -24,14 +24,14 @@ public struct TFLiquidGlassTextButton: View {
     private var colorScheme
     @Environment(\.isEnabled)
     private var isEnabled
-    
+
     private let label: String
     private let color: AppColor?
     private let action: () -> Void
 
     @GestureState
     private var isPressed = false
-    
+
     public init(
         _ label: String,
         color: AppColor? = nil,
@@ -44,14 +44,18 @@ public struct TFLiquidGlassTextButton: View {
 
     public var body: some View {
         Button(action: action) {
-            Text(label)
-                .textStyle(.body, .medium)
-                .foregroundStyle(
-                    isEnabled ?
-                    color != nil ? AppColor.graysWhite : AppColor.labelsVibrantPrimary
-                    : AppColor.labelsVibrantTertiary
-                )
-                .padding(.S)
+            if #available(iOS 26, *) {
+                textLabel
+                    .padding(.S)
+            } else {
+                textLabel
+                    .padding(.horizontal, .L)
+                    .padding(.vertical, .S)
+                    .background {
+                        Capsule()
+                            .fill(fallbackBackground)
+                    }
+            }
         }
         .modify {
             if #available(iOS 26, *) {
@@ -81,6 +85,26 @@ public struct TFLiquidGlassTextButton: View {
                 .updating($isPressed) { _, state, _ in state = true }
         )
         .sensoryFeedback(.impact(flexibility: .rigid, intensity: 0.6), trigger: isPressed) { _, new in new }
+    }
+
+    private var textLabel: some View {
+        Text(label)
+            .textStyle(.body, .medium)
+            .foregroundStyle(labelColor)
+    }
+
+    private var labelColor: AppColor {
+        if !isEnabled { return .labelsVibrantTertiary }
+        if color != nil { return .graysWhite }
+        return .labelsVibrantPrimary
+    }
+
+    /// Non-glass fallback: solid fill on `.glassProminent` case, subtle
+    /// `fillsTertiary` on the neutral case; disabled reads as `.fillsTertiary`.
+    private var fallbackBackground: AppColor {
+        guard isEnabled else { return .fillsTertiary }
+        if let color { return color }
+        return .fillsTertiary
     }
 }
 

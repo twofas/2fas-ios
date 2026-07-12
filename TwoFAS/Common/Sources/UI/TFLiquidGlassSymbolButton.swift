@@ -24,26 +24,34 @@ public struct TFLiquidGlassSymbolButton: View {
         case close = "xmark"
         case back = "chevron.left"
         case add = "plus"
+        case sidebar = "sidebar.left"
     }
-    
+
     private let fontSize: CGFloat = 20
-    
+
     @GestureState
     private var isPressed = false
     private let action: () -> Void
     private let symbol: Symbol
-    
+
     public init(symbol: Symbol, action: @escaping () -> Void) {
         self.symbol = symbol
         self.action = action
     }
-    
+
     public var body: some View {
         Button(action: action) {
-            Image(systemName: symbol.rawValue)
-                .font(.system(size: fontSize, weight: .regular))
-                .foregroundStyle(AppColor.labelsVibrantPrimary)
-                .padding(.S)
+            if #available(iOS 26, *) {
+                symbolLabel
+                    .padding(.S)
+            } else {
+                symbolLabel
+                    .frame(width: fallbackDiameter, height: fallbackDiameter)
+                    .background {
+                        Circle()
+                            .fill(AppColor.fillsTertiary)
+                    }
+            }
         }
         .modify {
             if #available(iOS 26, *) {
@@ -61,5 +69,17 @@ public struct TFLiquidGlassSymbolButton: View {
                 .updating($isPressed) { _, state, _ in state = true }
         )
         .sensoryFeedback(.impact(flexibility: .rigid, intensity: 0.6), trigger: isPressed) { _, new in new }
+    }
+
+    private var symbolLabel: some View {
+        Image(systemName: symbol.rawValue)
+            .font(.system(size: fontSize, weight: .regular))
+            .foregroundStyle(AppColor.labelsVibrantPrimary)
+    }
+
+    /// Matches the iOS 26 `.glass` + `.circle` circular button size
+    /// (20 pt symbol + 8 pt padding on each side).
+    private var fallbackDiameter: CGFloat {
+        fontSize + 2 * Spacing.M.value
     }
 }

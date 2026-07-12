@@ -188,13 +188,19 @@ public struct TFButton: View {
     
     @ViewBuilder
     private func textOnly(_ text: String) -> some View {
-        Text(text)
+        let label = Text(text)
             .frame(maxWidth: useWideLayout ? .infinity : nil)
             .textStyle(textStyleSize, textStyleWeight)
             .foregroundStyle(labelColor)
             .lineLimit(1)
             .padding(.horizontal, hPad)
             .padding(.vertical, vPad)
+
+        if #available(iOS 26, *) {
+            label
+        } else {
+            label.background(textBackground)
+        }
     }
     
     @ViewBuilder

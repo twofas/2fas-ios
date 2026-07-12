@@ -19,16 +19,22 @@
 
 import Foundation
 
-final class BackupManageEncryptionPresenter: ObservableObject {
-    weak var view: BackupManageEncryptionViewControlling?
-    
+@Observable
+final class BackupManageEncryptionPresenter {
+    var sections: [BackupManageEncryptionSection] = []
+    var showsBackButton: Bool = true
+
     private let flowController: BackupManageEncryptionFlowControlling
     let interactor: BackupManageEncryptionModuleInteracting
-    
+
     var isSyncing: Bool {
         interactor.isSyncing
     }
-    
+
+    var title: String {
+        interactor.isSyncing ? T.Backup.syncStatusProgress : T.Backup.manageTitle
+    }
+
     init(flowController: BackupManageEncryptionFlowControlling, interactor: BackupManageEncryptionModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
@@ -36,33 +42,26 @@ final class BackupManageEncryptionPresenter: ObservableObject {
             self?.reload()
         }
     }
-}
 
-extension BackupManageEncryptionPresenter {
     func viewWillAppear() {
         reload()
     }
-    
-    func handleSelection(at indexPath: IndexPath) {
-        let menu = buildMenu()
-        guard let section = menu[safe: indexPath.section],
-              let cell = section.cells[safe: indexPath.row]
-        else {
-            reload()
-            return
-        }
-        
-        switch cell.action {
+
+    func handleSelection(_ action: BackupManageEncryptionCell.Action) {
+        switch action {
         case .encrypt: flowController.toSetPassword()
         case .decrypt: flowController.toRemovePassword()
         case .recrypt: flowController.toChangePassword()
         }
     }
+
+    func handleBack() {
+        flowController.close()
+    }
 }
 
 private extension BackupManageEncryptionPresenter {
     func reload() {
-        let menu = buildMenu()
-        view?.reload(with: menu)
+        sections = buildMenu()
     }
 }

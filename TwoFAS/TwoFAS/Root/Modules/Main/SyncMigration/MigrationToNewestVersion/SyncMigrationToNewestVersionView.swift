@@ -56,16 +56,9 @@ struct SyncMigrationToNewestVersionView: View {
             } else {
                 VStack {
                     if let migrationFailureReason = presenter.migrationFailureReason {
-                        Label(
-                            T.Backup.enterPasswordFailure(migrationFailureReason.description),
-                            systemImage: "xmark.circle.fill"
-                        )
-                        .textStyle(.callout, .emphasized)
-                        .foregroundStyle(.accentsBrand)
+                        TFFailureView(title: T.Backup.enterPasswordFailure(migrationFailureReason.description))
                     } else {
-                        Label(T.Commons.successEx, systemImage: "checkmark.circle.fill")
-                            .textStyle(.callout, .emphasized)
-                            .foregroundStyle(.accentsMint)
+                        TFSuccessView(title: T.Commons.successEx)
                     }
                     TFButton(T.Commons.done, variant: .borderedProminent, size: .large) {
                         presenter.close()

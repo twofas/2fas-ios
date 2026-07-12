@@ -17,14 +17,14 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import Data
+import Foundation
 
-struct BackupManageEncryptionSection: TableViewSection {
+struct BackupManageEncryptionSection: Identifiable {
+    let id = UUID()
     let title: String?
     var cells: [BackupManageEncryptionCell]
     let footer: String?
-    
+
     init(title: String? = nil, cells: [BackupManageEncryptionCell], footer: String? = nil) {
         self.title = title
         self.cells = cells
@@ -32,33 +32,29 @@ struct BackupManageEncryptionSection: TableViewSection {
     }
 }
 
-struct BackupManageEncryptionCell: Hashable {
+struct BackupManageEncryptionCell: Identifiable {
     enum Action: Hashable {
         case encrypt
         case decrypt
         case recrypt
     }
-    
+
+    let id = UUID()
     let title: String
     let action: Action
     let isEnabled: Bool
-    var icon: UIImage {
-        action.icon
+
+    var iconSystemName: String {
+        switch action {
+        case .encrypt: return "lock.icloud.fill"
+        case .decrypt: return "lock.open.fill"
+        case .recrypt: return "lock.open.rotation"
+        }
     }
-    
+
     init(title: String, action: Action, isEnabled: Bool) {
         self.title = title
         self.action = action
         self.isEnabled = isEnabled
-    }
-}
-
-extension BackupManageEncryptionCell.Action {
-    var icon: UIImage {
-        switch self {
-        case .encrypt: UIImage(systemName: "lock.icloud.fill")!
-        case .decrypt: UIImage(systemName: "lock.open.fill")!
-        case .recrypt: UIImage(systemName: "lock.open.rotation")!
-        }
     }
 }

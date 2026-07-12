@@ -25,39 +25,41 @@ struct NewPINView: View {
     var presenter: NewPINPresenter
 
     var body: some View {
-        VStack(spacing: .XXXL) {
+        VStack(spacing: .zero) {
             TFScreenTitleBar(
                 title: presenter.title,
                 leadingSymbol: presenter.showsCancelButton ? .close : nil,
                 onLeadingTap: presenter.showsCancelButton ? { presenter.handleCancel() } : nil
             )
 
-            Text(presenter.info)
-                .textStyle(.body)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(presenter.isError ? AppColor.accentsBrand : AppColor.labelsSecondary)
-                .animation(.easeInOut, value: presenter.info)
-                .padding(.horizontal, .XL)
-            
-            Spacer()
+            VStack(spacing: .XXXL) {
+                Text(presenter.info)
+                    .textStyle(.body)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(presenter.isError ? AppColor.accentsBrand : AppColor.labelsSecondary)
+                    .animation(.easeInOut, value: presenter.info)
+                    .padding(.horizontal, .XL)
 
-            PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
-                .shake(on: presenter.shake)
-                .sensoryFeedback(.error, trigger: presenter.shake) { _, new in new }
+                Spacer()
 
-            PINKeyboard(action: presenter.onKeyPressed)
+                PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
+                    .shake(on: presenter.shake)
+                    .sensoryFeedback(.error, trigger: presenter.shake) { _, new in new }
 
-            Spacer()
+                PINKeyboard(action: presenter.onKeyPressed)
 
-            if presenter.showsPinLengthButton {
-                Button {
-                    presenter.handleChangePINType()
-                } label: {
-                    Text(T.Settings.selectPinLength)
-                        .textStyle(.body, .emphasized)
-                        .foregroundStyle(.accentsBrand)
+                Spacer()
+
+                if presenter.showsPinLengthButton {
+                    Button {
+                        presenter.handleChangePINType()
+                    } label: {
+                        Text(T.Settings.selectPinLength)
+                            .textStyle(.body, .emphasized)
+                            .foregroundStyle(.accentsBrand)
+                    }
+                    .padding(.bottom, .L)
                 }
-                .padding(.bottom, .L)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

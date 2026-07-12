@@ -110,7 +110,6 @@ struct EncryptedByUserPasswordSyncView: View {
                             }
                         }
                     }
-                    .padding(.top, .XL)
                 }
                 .frame(maxHeight: .infinity)
             }

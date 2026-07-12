@@ -285,6 +285,7 @@ public struct TFScreenTitleBar<Trailing: View>: View {
         }
         .padding(.horizontal, .XXXL)
         .padding(.top, .XL)
+        .padding(.bottom, .XL)
         .frame(alignment: .top)
     }
 }

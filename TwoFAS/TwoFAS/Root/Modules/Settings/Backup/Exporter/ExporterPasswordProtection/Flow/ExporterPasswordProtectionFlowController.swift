@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol ExporterPasswordProtectionFlowControllerParent: AnyObject {
     func closePasswordProtection()
@@ -31,6 +32,7 @@ protocol ExporterPasswordProtectionFlowControlling: AnyObject {
     func toExport(with url: URL)
     func toPINKeyboard(with password: String)
     func toExportError()
+    func back()
 }
 
 final class ExporterPasswordProtectionFlowController: FlowController {
@@ -40,18 +42,18 @@ final class ExporterPasswordProtectionFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: ExporterPasswordProtectionFlowControllerParent
     ) {
-        let view = ExporterPasswordProtectionViewController()
-        let flowController = ExporterPasswordProtectionFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = true
+        let flowController = ExporterPasswordProtectionFlowController(viewController: hosting)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.exporterPasswordProtectionModuleInteractor()
         let presenter = ExporterPasswordProtectionPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        presenter.view = view
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: true)
+        hosting.rootView = AnyView(ExporterPasswordProtectionView(presenter: presenter))
+
+        navigationController.pushViewController(hosting, animated: true)
     }
 }
 
@@ -70,5 +72,9 @@ extension ExporterPasswordProtectionFlowController: ExporterPasswordProtectionFl
     
     func toExportError() {
         parent?.showExportError()
+    }
+
+    func back() {
+        _viewController?.navigationController?.popViewController(animated: true)
     }
 }

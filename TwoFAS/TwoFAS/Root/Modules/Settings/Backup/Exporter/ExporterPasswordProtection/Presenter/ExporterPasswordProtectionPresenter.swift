@@ -18,34 +18,27 @@
 //
 
 import Foundation
+import Data
 
+@Observable
 final class ExporterPasswordProtectionPresenter {
-    weak var view: ExporterPasswordProtectionViewControlling?
-    
-    private enum ValueType {
-        case unchecked
-        case correct
-        case tooShort
-        case incorrectCharacter
+    var password1: String = ""
+    var password2: String = ""
+    var password1Error: String?
+    var password2Error: String?
+    var showsBackButton: Bool = true
+
+    var isExportEnabled: Bool {
+        password1.count >= ExportFileRules.minLength &&
+            password2.count >= ExportFileRules.minLength &&
+            password1 == password2 &&
+            password1Error == nil &&
+            password2Error == nil
     }
-    private var isRevealed = false
-    
-    private var password1: String?
-    private var password2: String?
-    
-    private var password: String? {
-        guard firstState == .correct, secondState == .correct,
-              password1 != nil, password2 != nil,
-              password1 == password2 else { return nil }
-        return password2
-    }
-    
-    private var firstState: ValueType = .unchecked
-    private var secondState: ValueType = .unchecked
-    
+
     private let flowController: ExporterPasswordProtectionFlowControlling
     private let interactor: ExporterPasswordProtectionModuleInteracting
-    
+
     init(
         flowController: ExporterPasswordProtectionFlowControlling,
         interactor: ExporterPasswordProtectionModuleInteracting
@@ -53,16 +46,10 @@ final class ExporterPasswordProtectionPresenter {
         self.flowController = flowController
         self.interactor = interactor
     }
-}
 
-extension ExporterPasswordProtectionPresenter {
-    func viewWillAppear() {
-        view?.disableExportButton()
-        view?.setFirstInputAsFirstResponder()
-    }
-    
     func handleExport() {
-        guard let password else { return }
+        guard isExportEnabled else { return }
+        let password = password1
         if interactor.isPINSet {
             flowController.toPINKeyboard(with: password)
         } else {
@@ -75,108 +62,52 @@ extension ExporterPasswordProtectionPresenter {
             }
         }
     }
-    
+
     func handleCancel() {
         flowController.toClose()
     }
-    
-    func handleReveal() {
-        isRevealed.toggle()
-        view?.setRevealState(isRevealed)
+
+    func handleBack() {
+        flowController.back()
     }
-    
-    func handleFirstDone(_ str: String?) {
-        firstState = .unchecked
-        password1 = str
-        verifyFirstValue()
-        handleErrorDisplay()
-        if firstState == .correct {
-            view?.setSecondInputAsFirstResponder()
+
+    func handleFirstChanged(_ newValue: String) {
+        if newValue.isEmpty {
+            password1Error = nil
+            return
         }
+        if newValue.count < ExportFileRules.minLength {
+            password1Error = T.Backup.toShortError
+        } else {
+            password1Error = nil
+        }
+        // Re-check second matches
+        checkMatch()
     }
-    
-    func handleSecondDone(_ str: String?) {
-        secondState = .unchecked
-        password2 = str
-        verifyValues()
-    }
-    
-    func handleFirstChanged() {
-        firstState = .unchecked
-        view?.hideFirstError()
-    }
-    
-    func handleSecondChanged() {
-        secondState = .unchecked
-        view?.hideSecondError()
-    }
-    
-    func handleFirstNotAllowedCharacter() {
-        firstState = .incorrectCharacter
-        password1 = nil
-        handleErrorDisplay()
-    }
-    
-    func handleSecondNotAllowedCharacter() {
-        secondState = .incorrectCharacter
-        password2 = nil
-        handleErrorDisplay()
+
+    func handleSecondChanged(_ newValue: String) {
+        if newValue.isEmpty {
+            password2Error = nil
+            return
+        }
+        if newValue.count < ExportFileRules.minLength {
+            password2Error = T.Backup.toShortError
+        } else {
+            password2Error = nil
+        }
+        checkMatch()
     }
 }
 
 private extension ExporterPasswordProtectionPresenter {
-    private func verifyValues() {
-        verifyFirstValue()
-        verifySecondValue()
-        handleErrorDisplay()
-        guard firstState == .correct, secondState == .correct else { return }
-        
-        if password1 == password2 {
-            view?.setSecondInputResignAsFirstResponder()
-            view?.enableExportButton()
-        } else {
-            view?.disableExportButton()
-            view?.showErrorPasswordsDontMatch()
-        }
-    }
-    
-    private func verifyFirstValue() {
-        guard let value = password1, value.count >= ExportFileRules.minLength else {
-            firstState = .tooShort
-            password1 = nil
-            return
-        }
-        
-        firstState = .correct
-    }
-    
-    private func verifySecondValue() {
-        guard let value = password2, value.count >= ExportFileRules.minLength else {
-            secondState = .tooShort
-            password2 = nil
-            return
-        }
-        
-        secondState = .correct
-    }
-    
-    func handleErrorDisplay() {
-        switch firstState {
-        case .correct, .unchecked:
-            view?.hideFirstError()
-        case .incorrectCharacter:
-            view?.showFirstIncorrectCharacterError()
-        case .tooShort:
-            view?.showFirstToShortError()
-        }
-        
-        switch secondState {
-        case .correct, .unchecked:
-            view?.hideSecondError()
-        case .incorrectCharacter:
-            view?.showSecondIncorrectCharacterError()
-        case .tooShort:
-            view?.showSecondToShortError()
+    func checkMatch() {
+        guard !password1.isEmpty && !password2.isEmpty else { return }
+        guard password1.count >= ExportFileRules.minLength,
+              password2.count >= ExportFileRules.minLength else { return }
+        if password1 != password2 {
+            password2Error = T.Backup.passwordsDontMatch
+        } else if password2Error == T.Backup.passwordsDontMatch {
+            password2Error = nil
         }
     }
 }

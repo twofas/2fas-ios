@@ -26,17 +26,21 @@ struct BackupAdvancedView: View {
 
     var body: some View {
         VStack(spacing: .zero) {
-            titleBar()
-
-            ScrollView(.vertical) {
-                VStack(spacing: .XXXL) {
-                    ForEach(presenter.sections) { section in
-                        sectionView(section)
-                    }
+            TFScreenTitleBar(
+                title: presenter.title,
+                showsBackButton: presenter.showsBackButton,
+                onBack: presenter.showsBackButton ? presenter.handleBack : nil
+            ) {
+                if presenter.isSyncing {
+                    ProgressView()
+                        .padding(.trailing, .S)
                 }
-                .padding(.horizontal, .XL)
-                .padding(.top, .M)
-                .padding(.bottom, .XXXL)
+            }
+
+            TFListScreen {
+                ForEach(presenter.sections) { section in
+                    sectionView(section)
+                }
             }
         }
         .background(.backgroundsPrimaryElevated)
@@ -46,46 +50,13 @@ struct BackupAdvancedView: View {
     }
 
     @ViewBuilder
-    private func titleBar() -> some View {
-        ZStack {
-            HStack(spacing: .zero) {
-                if presenter.showsBackButton {
-                    TFLiquidGlassSymbolButton(symbol: .back) {
-                        presenter.handleBack()
-                    }
-                }
-                Spacer()
-                if presenter.isSyncing {
-                    ProgressView()
-                        .padding(.trailing, .S)
-                }
-            }
-            TFTitleView(title: presenter.title)
-        }
-        .padding(.horizontal, .XXXL)
-        .padding(.top, .XL)
-        .frame(alignment: .top)
-    }
-
-    @ViewBuilder
     private func sectionView(_ section: BackupAdvancedSection) -> some View {
-        VStack(alignment: .leading, spacing: .zero) {
-            if let title = section.title {
-                sectionHeader(title)
-            }
-
-            VStack(alignment: .leading, spacing: .zero) {
-                ForEach(Array(section.cells.enumerated()), id: \.element.id) { index, cell in
-                    row(for: cell)
-                    if index < section.cells.count - 1 {
-                        separator()
-                    }
+        TFListSection(title: section.title, footer: section.footer) {
+            ForEach(Array(section.cells.enumerated()), id: \.element.id) { index, cell in
+                row(for: cell)
+                if index < section.cells.count - 1 {
+                    TFListSeparator(hasLeadingIcon: true)
                 }
-            }
-            .groupedSectionBackground()
-
-            if let footer = section.footer {
-                sectionFooter(footer)
             }
         }
     }
@@ -95,56 +66,21 @@ struct BackupAdvancedView: View {
         Button {
             presenter.handleSelection(cell.action)
         } label: {
-            rowContent(cell)
+            HStack(spacing: .ML) {
+                GradientIconTile(systemName: cell.iconSystemName)
+                    .accessibilityHidden(true)
+
+                Text(cell.title)
+                    .textStyle(.body)
+                    .foregroundStyle(.labelsPrimary)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(.vertical, .L)
+            .contentShape(Rectangle())
+            .opacity(cell.isEnabled ? 1 : 0.4)
         }
         .buttonStyle(.plain)
         .disabled(!cell.isEnabled)
-    }
-
-    @ViewBuilder
-    private func rowContent(_ cell: BackupAdvancedCell) -> some View {
-        HStack(spacing: .ML) {
-            GradientIconTile(systemName: cell.iconSystemName)
-                .accessibilityHidden(true)
-
-            Text(cell.title)
-                .textStyle(.body)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        .padding(.vertical, .L)
-        .contentShape(Rectangle())
-        .opacity(cell.isEnabled ? 1 : 0.4)
-    }
-
-    @ViewBuilder
-    private func separator() -> some View {
-        Divider()
-            .foregroundStyle(.separatorsNonOpaque)
-            .padding(.leading, Self.iconLeadingInset)
-    }
-
-    private static let iconLeadingInset: CGFloat = 28 + Spacing.ML.value
-
-    @ViewBuilder
-    private func sectionHeader(_ text: String) -> some View {
-        Text(text)
-            .textStyle(.headline)
-            .foregroundStyle(.labelsSecondary)
-            .accessibilityAddTraits(.isHeader)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.vertical, .ML)
-            .padding(.horizontal, .XL)
-    }
-
-    @ViewBuilder
-    private func sectionFooter(_ text: String) -> some View {
-        Text(text)
-            .textStyle(.footnote, .regular, .tight)
-            .foregroundStyle(.labelsSecondary)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.top, .M)
-            .padding(.horizontal, .XL)
     }
 }

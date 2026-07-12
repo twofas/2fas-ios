@@ -20,30 +20,19 @@
 import Foundation
 import Data
 
+@Observable
 final class ImporterEnterPasswordPresenter {
-    weak var view: ImporterEnterPasswordViewControling?
-    
-    private enum ValueType {
-        case unchecked
-        case correct
-        case tooShort
-        case incorrectCharacter
+    var password: String = ""
+    var errorMessage: String?
+
+    var isDecryptEnabled: Bool {
+        password.count >= ExportFileRules.minLength && errorMessage == nil
     }
-    
-    private var isRevealed = false
-    private var password: String?
-    private var inputState: ValueType = .unchecked {
-        didSet {
-            if inputState != .correct {
-                password = nil
-            }
-        }
-    }
-    
+
     private let flowController: ImporterEnterPasswordFlowControlling
     private let interactor: ImporterEnterPasswordModuleInteracting
     private let externalImportService: ExternalImportService
-    
+
     init(
         flowController: ImporterEnterPasswordFlowControlling,
         interactor: ImporterEnterPasswordModuleInteracting,
@@ -53,15 +42,9 @@ final class ImporterEnterPasswordPresenter {
         self.interactor = interactor
         self.externalImportService = externalImportService
     }
-}
 
-extension ImporterEnterPasswordPresenter {
-    func viewDidAppear() {
-        view?.inputBecomesFirstResponder()
-    }
-    
     func handlePreimport() {
-        guard let password else {
+        guard isDecryptEnabled else {
             flowController.toFileError(error: .cantReadFile(reason: nil))
             return
         }
@@ -71,36 +54,28 @@ extension ImporterEnterPasswordPresenter {
         case .wrongPassword: flowController.toWrongPassword()
         }
     }
-    
+
     func handleCancel() {
         flowController.toClose()
     }
-    
-    func handleDone(with value: String?) {
-        inputState = .unchecked
-        verifyValue(with: value)
-    }
-    
-    func handleReveal() {
-        isRevealed.toggle()
-        view?.setRevealState(isRevealed: isRevealed)
-    }
-    
-    func handleNotAllowedCharacter() {
-        inputState = .incorrectCharacter
-        errorDisplay()
-    }
-    
-    func handleChange() {
-        inputState = .unchecked
-        view?.hideError()
+
+    func handleChange(_ newValue: String) {
+        if newValue.isEmpty {
+            errorMessage = nil
+            return
+        }
+        if newValue.count < ExportFileRules.minLength {
+            errorMessage = T.Backup.toShortError
+        } else {
+            errorMessage = nil
+        }
     }
 }
 
 private extension ImporterEnterPasswordPresenter {
     func parseData(_ data: ExchangeDataServices, externalImportService: ExternalImportService) {
         let result = interactor.parseFile(with: data)
-        
+
         if result.countNew > 0 {
             flowController.toPreimportSummary(
                 countNew: result.countNew,
@@ -112,38 +87,5 @@ private extension ImporterEnterPasswordPresenter {
         } else {
             flowController.toFileIsEmpty()
         }
-    }
-    
-    func errorDisplay() {
-        switch inputState {
-        case .correct, .unchecked:
-            view?.hideError()
-        case .incorrectCharacter:
-            view?.showErrorIncorrectCharacter()
-        case .tooShort:
-            view?.showErrorToShort()
-        }
-    }
-    
-    func verifyValue(with value: String?) {
-        verifyFirstValue(with: value)
-        errorDisplay()
-        if inputState == .correct {
-            view?.enableDecryptButton()
-            view?.importResignsFirstResponder()
-        } else {
-            view?.disableDecryptButton()
-        }
-    }
-    
-    func verifyFirstValue(with value: String?) {
-        guard let value, value.count >= ExportFileRules.minLength else {
-            inputState = .tooShort
-            password = nil
-            return
-        }
-        
-        inputState = .correct
-        password = value
     }
 }

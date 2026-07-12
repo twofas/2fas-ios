@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 import Data
 
@@ -51,7 +52,7 @@ protocol ImporterEnterPasswordFlowControlling: AnyObject {
 
 final class ImporterEnterPasswordFlowController: FlowController {
     private weak var parent: ImporterEnterPasswordFlowControllerParent?
-    
+
     static func push(
         in navigationController: UINavigationController,
         parent: ImporterEnterPasswordFlowControllerParent,
@@ -59,8 +60,9 @@ final class ImporterEnterPasswordFlowController: FlowController {
         externalImportService: ExternalImportService,
         animated: Bool = true
     ) {
-        let view = ImporterEnterPasswordViewController()
-        let flowController = ImporterEnterPasswordFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = true
+        let flowController = ImporterEnterPasswordFlowController(viewController: hosting)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.importerEnterPasswordModuleInteractor(
             data: data
@@ -70,10 +72,9 @@ final class ImporterEnterPasswordFlowController: FlowController {
             interactor: interactor,
             externalImportService: externalImportService
         )
-        presenter.view = view
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: animated)
+        hosting.rootView = AnyView(ImporterEnterPasswordView(presenter: presenter))
+
+        navigationController.pushViewController(hosting, animated: animated)
     }
 }
 
@@ -81,7 +82,7 @@ extension ImporterEnterPasswordFlowController: ImporterEnterPasswordFlowControll
     func toClose() {
         parent?.hidePasswordImport()
     }
-    
+
     func toPreimportSummary(
         countNew: Int,
         countTotal: Int,
@@ -97,15 +98,15 @@ extension ImporterEnterPasswordFlowController: ImporterEnterPasswordFlowControll
             externalImportService: externalImportService
         )
     }
-    
+
     func toFileError(error: ImporterOpenFileError) {
         parent?.showFileError(error: error)
     }
-    
+
     func toFileIsEmpty() {
         parent?.showFileIsEmpty()
     }
-    
+
     func toWrongPassword() {
         parent?.showWrongPassword()
     }

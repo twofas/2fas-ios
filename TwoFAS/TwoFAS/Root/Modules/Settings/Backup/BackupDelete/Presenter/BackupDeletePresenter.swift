@@ -17,25 +17,22 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
+import Foundation
 
+@Observable
 final class BackupDeletePresenter {
-    weak var view: BackupDeleteViewControlling?
-    
     private let flowController: BackupDeleteFlowControlling
     private let interactor: BackupDeleteModuleInteracting
-    
+
     init(flowController: BackupDeleteFlowControlling, interactor: BackupDeleteModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
     }
-}
 
-extension BackupDeletePresenter {
     func handleCancel() {
         flowController.toClose(didDelete: false)
     }
-    
+
     func handleDeleteBackup() {
         interactor.erase(completion: { [weak self] result in
             switch result {

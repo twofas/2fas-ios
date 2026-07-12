@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 
 protocol BackupDeleteFlowControllerParent: AnyObject {
@@ -31,24 +32,28 @@ protocol BackupDeleteFlowControlling: AnyObject {
 
 final class BackupDeleteFlowController: FlowController {
     private weak var parent: BackupDeleteFlowControllerParent?
-    
+
     static func present(
         on viewController: UIViewController,
         parent: BackupDeleteFlowControllerParent
     ) {
-        let view = BackupDeleteViewController()
-        let flowController = BackupDeleteFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = BackupDeleteFlowController(viewController: hosting)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.backupDeleteModuleInteractor()
         let presenter = BackupDeletePresenter(
             flowController: flowController,
             interactor: interactor
         )
-        presenter.view = view
-        view.presenter = presenter
-        view.configureAsModal()
-        
-        viewController.present(view, animated: true, completion: nil)
+        hosting.rootView = AnyView(
+            BackupDeleteView(
+                action: { presenter.handleDeleteBackup() },
+                cancel: { presenter.handleCancel() }
+            )
+        )
+        hosting.configureAsModal()
+
+        viewController.present(hosting, animated: true, completion: nil)
     }
 }
 
@@ -56,14 +61,15 @@ extension BackupDeleteFlowController: BackupDeleteFlowControlling {
     func toClose(didDelete: Bool) {
         parent?.closeDeleteBackup(didDelete: didDelete)
     }
-    
+
     func toError(_ error: Error, completion: @escaping Callback) {
+        guard let vc = _viewController else { return }
         let alert = UIAlertController(
             title: T.Commons.error,
             message: error.localizedDescription,
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: T.Commons.ok, style: .default, handler: { _ in completion() }))
-        _viewController.present(alert, animated: true)
+        vc.present(alert, animated: true)
     }
 }

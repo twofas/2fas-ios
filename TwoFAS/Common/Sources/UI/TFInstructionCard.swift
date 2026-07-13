@@ -79,6 +79,7 @@ public struct TFInstructionCard: View {
     private let accessory: TFInstructionCardAccessory?
     private let primaryButton: TFInstructionCardButton?
     private let secondaryButton: TFInstructionCardButton?
+    private let onTap: (() -> Void)?
 
     public init(
         icon: TFInstructionCardIcon,
@@ -86,7 +87,8 @@ public struct TFInstructionCard: View {
         description: String? = nil,
         accessory: TFInstructionCardAccessory? = nil,
         primaryButton: TFInstructionCardButton? = nil,
-        secondaryButton: TFInstructionCardButton? = nil
+        secondaryButton: TFInstructionCardButton? = nil,
+        onTap: (() -> Void)? = nil
     ) {
         self.icon = icon
         self.title = title
@@ -94,9 +96,21 @@ public struct TFInstructionCard: View {
         self.accessory = accessory
         self.primaryButton = primaryButton
         self.secondaryButton = secondaryButton
+        self.onTap = onTap
     }
 
     public var body: some View {
+        if let onTap {
+            Button(action: onTap) {
+                cardContent
+            }
+            .buttonStyle(.plain)
+        } else {
+            cardContent
+        }
+    }
+
+    private var cardContent: some View {
         VStack(alignment: .leading, spacing: .XXL) {
             header
             if primaryButton != nil || secondaryButton != nil {
@@ -113,13 +127,18 @@ public struct TFInstructionCard: View {
                 .inset(by: 0.75)
                 .stroke(AppColor.bordersPrimary, lineWidth: 1)
         )
+        .contentShape(RoundedRectangle(.large))
     }
 
     private var header: some View {
-        HStack(alignment: .top, spacing: .L) {
-            Image(systemName: icon.systemName)
-                .textStyle(.title3, .regular)
-                .foregroundStyle(icon.color)
+        HStack(alignment: .center, spacing: .L) {
+            HStack(spacing: .zero) {
+                Image(systemName: icon.systemName)
+                    .textStyle(.title3, .regular)
+                    .foregroundStyle(icon.color)
+                Spacer(minLength: 0)
+            }
+            .frame(width: Spacing.XXXL.rawValue)
 
             VStack(alignment: .leading, spacing: .XS) {
                 Text(title)
@@ -152,15 +171,15 @@ public struct TFInstructionCard: View {
                 TFButton(
                     primaryButton.title,
                     variant: .borderedProminent,
-                    size: .medium,
+                    size: .small,
                     action: primaryButton.action
                 )
             }
             if let secondaryButton {
                 TFButton(
                     secondaryButton.title,
-                    variant: .bordered,
-                    size: .medium,
+                    variant: .borderedSecondary,
+                    size: .small,
                     action: secondaryButton.action
                 )
             }
@@ -204,5 +223,5 @@ public struct TFInstructionCard: View {
         }
         .padding(.XL)
     }
-    .background(AppColor.backgroundsPrimaryElevated)
+    .background(AppColor.backgroundsPrimary)
 }

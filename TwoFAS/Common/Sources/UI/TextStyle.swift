@@ -59,6 +59,8 @@ public enum TextStyle {
     case smallToken
     /// SF Pro 13pt — maps to `Font.TextStyle.footnote
     case counter
+    /// SF Pro 41pt Semibold — hero icon size used on empty states and prominent headers.
+    case iconLarge
 }
 
 // MARK: - TextStyleVariant
@@ -277,6 +279,17 @@ private extension TextStyle {
                 isItalic: false,
                 semanticStyle: .footnote,
                 monospacedDigits: true
+            )
+        case .iconLarge:
+            // Hero icon size — always semibold regardless of variant.
+            return TextStyleAttributes(
+                size: 41,
+                lineHeight: 41 + pad,
+                tracking: 0,
+                weight: .semibold,
+                isItalic: false,
+                semanticStyle: .largeTitle,
+                monospacedDigits: false
             )
         }
     }

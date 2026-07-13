@@ -50,7 +50,7 @@ struct TrashView: View {
         VStack(spacing: .XL) {
             Spacer()
             Image(systemName: "trash.fill")
-                .font(.system(size: 41, weight: .semibold))
+                .textStyle(.iconLarge)
                 .foregroundStyle(.accentsBrand)
             Text(T.Settings.trashIsEmpty)
                 .textStyle(.headline)

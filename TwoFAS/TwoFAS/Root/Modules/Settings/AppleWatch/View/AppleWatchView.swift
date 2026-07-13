@@ -27,75 +27,61 @@ struct AppleWatchInstallationStep: Hashable, Identifiable {
 }
 
 struct AppleWatchView<Presenter: AppleWatchPresenting>: View {
-    private let spacing: CGFloat = Spacing.XL.rawValue
     private let presenter: Presenter
-    private let appleWatchImageXOffset: CGFloat = 10
 
     init(presenter: Presenter) {
         self.presenter = presenter
     }
 
     var body: some View {
-        VStack(spacing: spacing) {
-            Image(uiImage: Asset.appleWatch.image)
-                .renderingMode(.original)
-                .padding(.top, Spacing.M)
-                .offset(x: appleWatchImageXOffset)
+        VStack(spacing: .zero) {
+            TFScreenTitleBar(
+                title: T.Settings.appleWatch,
+                showsBackButton: true,
+                onBack: presenter.handleBack
+            )
 
-            Text(T.AppleWatch.installationInfoTitle)
-                .font(Font(Theme.Fonts.Text.title))
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.7)
+            ScrollView {
+                VStack(spacing: .XXL) {
+                    Image(systemName: "lock.applewatch")
+                        .textStyle(.iconLarge)
+                        .foregroundStyle(.accentsBrand)
+                        .padding(.top, .XL)
 
-            VStack(alignment: .leading) {
-                ForEach(Array(presenter.appleWatchInstallationSteps.enumerated()), id: \.element) { index, step in
-                    let stepNumber = index + 1
-                    stepView(
-                        for: step,
-                        stepNumber: stepNumber,
-                        isDividerVisible: stepNumber != presenter.appleWatchInstallationSteps.count
-                    )
+                    Text(T.AppleWatch.installationInfoTitle)
+                        .textStyle(.title1, .emphasized)
+                        .foregroundStyle(.labelsPrimary)
+                        .multilineTextAlignment(.center)
+
+                    VStack(spacing: .L) {
+                        ForEach(
+                            Array(presenter.appleWatchInstallationSteps.enumerated()),
+                            id: \.element
+                        ) { index, step in
+                            let stepNumber = index + 1
+                            TFInstructionCard(
+                                icon: icon(for: stepNumber),
+                                title: step.actionTitle,
+                                description: step.description,
+                                accessory: .link,
+                                onTap: { presenter.handleInstallationStep(number: stepNumber) }
+                            )
+                        }
+                    }
                 }
+                .padding(.horizontal, .XL)
+                .padding(.bottom, .XL)
             }
-            .padding(.horizontal, Spacing.XXXXXL)
         }
+        .background(.backgroundsPrimary)
+        .toolbarVisibility(.hidden, for: .navigationBar)
     }
 
-    private func stepView(
-        for step: AppleWatchInstallationStep,
-        stepNumber: Int,
-        isDividerVisible: Bool
-    ) -> some View {
-        HStack(alignment: .top) {
-            Text("\(stepNumber)")
-                .font(Font(Theme.Fonts.iconLabelLarge))
-                .frame(width: 28, height: 28)
-                .background(Color(Theme.Colors.Fill.tertiary))
-                .clipShape(Circle())
-
-            VStack(alignment: .leading, spacing: Spacing.SM) {
-                Text(step.description)
-                    .font(Font(Theme.Fonts.Text.content))
-
-                Button {
-                    presenter.handleInstallationStep(number: stepNumber)
-                } label: {
-                    HStack(spacing: Spacing.SM) {
-                        Text(step.actionTitle)
-                            .font(Font(Theme.Fonts.Text.boldContent))
-
-                        Image(systemName: "arrow.up.right")
-                            .font(Font(Theme.Fonts.iconLabelExtraLarge))
-                    }
-                    .foregroundColor(Color(Theme.Colors.Text.theme))
-                }
-
-                if isDividerVisible {
-                    Divider()
-                        .frame(height: Theme.Metrics.separatorHeight)
-                        .padding(.vertical, Spacing.M)
-                }
-            }
+    private func icon(for stepNumber: Int) -> TFInstructionCardIcon {
+        switch stepNumber {
+        case 1: .download
+        case 2: .iCloudSync
+        default: .link
         }
     }
 }
@@ -110,6 +96,7 @@ struct AppleWatchView<Presenter: AppleWatchPresenting>: View {
         ]
 
         func handleInstallationStep(number: Int) {}
+        func handleBack() {}
     }
 
     return AppleWatchView(presenter: AppleWatchPresenterMock())

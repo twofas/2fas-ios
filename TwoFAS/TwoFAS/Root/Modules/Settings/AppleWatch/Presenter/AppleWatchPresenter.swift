@@ -23,6 +23,7 @@ protocol AppleWatchPresenting {
     var appleWatchInstallationSteps: [AppleWatchInstallationStep] { get }
 
     func handleInstallationStep(number: Int)
+    func handleBack()
 }
 
 final class AppleWatchPresenter: AppleWatchPresenting {
@@ -45,5 +46,9 @@ final class AppleWatchPresenter: AppleWatchPresenting {
         } else if number == 2 {
             flowController.switchToBackup()
         }
+    }
+
+    func handleBack() {
+        flowController.toBack()
     }
 }

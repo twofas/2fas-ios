@@ -19,71 +19,69 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 import Common
 
 protocol TrashFlowControllerParent: AnyObject {
 }
 
 protocol TrashFlowControlling: AnyObject {
+    func toBack()
     func toDelete(with serviceData: ServiceData)
 }
 
 final class TrashFlowController: FlowController {
     private weak var parent: TrashFlowControllerParent?
-    
+    fileprivate var presenter: TrashPresenter?
+
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: TrashFlowControllerParent
     ) {
-        let view = TrashViewController()
-        let flowController = TrashFlowController(viewController: view)
-        flowController.parent = parent
-        let interactor = ModuleInteractorFactory.shared.trashModuleInteractor()
-        let presenter = TrashPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-        presenter.view = view
-        view.presenter = presenter
-        
-        navigationController.setViewControllers([view], animated: false)
+        let hosting = create(parent: parent)
+        navigationController.setViewControllers([hosting], animated: false)
     }
-    
+
     static func push(
         in navigationController: UINavigationController,
         parent: TrashFlowControllerParent
     ) {
-        let view = TrashViewController()
-        let flowController = TrashFlowController(viewController: view)
+        let hosting = create(parent: parent)
+        navigationController.pushRootViewController(hosting, animated: true)
+    }
+
+    private static func create(parent: TrashFlowControllerParent) -> UIViewController {
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = TrashFlowController(viewController: hosting)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.trashModuleInteractor()
         let presenter = TrashPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        presenter.view = view
-        view.presenter = presenter
-        
-        navigationController.pushRootViewController(view, animated: true)
+        flowController.presenter = presenter
+        hosting.rootView = AnyView(TrashView(presenter: presenter))
+        return hosting
     }
 }
 
 extension TrashFlowController: TrashFlowControlling {
-    func toDelete(with serviceData: ServiceData) {
-        DeleteServiceFlowController.present(on: viewController, parent: self, serviceData: serviceData)
+    func toBack() {
+        _viewController.navigationController?.popViewController(animated: true)
     }
-}
-extension TrashFlowController {
-    var viewController: TrashViewController { _viewController as! TrashViewController }
+
+    func toDelete(with serviceData: ServiceData) {
+        DeleteServiceFlowController.present(on: _viewController, parent: self, serviceData: serviceData)
+    }
 }
 
 extension TrashFlowController: DeleteServiceFlowControllerParent {
     func didDeleteService() {
-        viewController.presenter.handleServiceListChanged()
-        viewController.dismiss(animated: true, completion: nil)
+        presenter?.handleServiceListChanged()
+        _viewController.dismiss(animated: true, completion: nil)
     }
-    
+
     func closeDeletingService() {
-        viewController.dismiss(animated: true, completion: nil)
+        _viewController.dismiss(animated: true, completion: nil)
     }
 }

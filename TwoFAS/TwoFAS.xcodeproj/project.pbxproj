@@ -230,9 +230,6 @@
 		C23387002780F14700F8DBC3 /* TrashFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23386FF2780F14700F8DBC3 /* TrashFlowController.swift */; };
 		C2338702278103B000F8DBC3 /* TrashModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2338701278103B000F8DBC3 /* TrashModuleInteractor.swift */; };
 		C23387042781068E00F8DBC3 /* TrashPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23387032781068E00F8DBC3 /* TrashPresenter.swift */; };
-		C233870627810C2E00F8DBC3 /* TrashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C233870527810C2E00F8DBC3 /* TrashViewController.swift */; };
-		C233870827810D1A00F8DBC3 /* TrashModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C233870727810D1A00F8DBC3 /* TrashModels.swift */; };
-		C233870A2781113800F8DBC3 /* TrashViewController+TableCellHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23387092781113800F8DBC3 /* TrashViewController+TableCellHandling.swift */; };
 		C23443402A8C12C200005F33 /* AddingServiceServiceIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234433F2A8C12C200005F33 /* AddingServiceServiceIconView.swift */; };
 		C23443DE26B08EAA00C9F645 /* ExtensionsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23443DD26B08EAA00C9F645 /* ExtensionsStorage.swift */; };
 		C2355B4B2221D33300BA001D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C2355B4A2221D33300BA001D /* GoogleService-Info.plist */; };
@@ -399,6 +396,7 @@
 		C25E89902663F11900A60CE5 /* SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E898F2663F11900A60CE5 /* SectionData.swift */; };
 		C25E8994266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E8992266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift */; };
 		C25E8995266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E8993266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift */; };
+		C25ECA7F30056E5300D46587 /* TrashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25ECA7E30056E5300D46587 /* TrashView.swift */; };
 		C25F4FDB2622207F008F7755 /* TokensViewEmptySearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25F4FDA2622207F008F7755 /* TokensViewEmptySearchScreen.swift */; };
 		C260DCC22BC885F1007807CC /* ServiceCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C260DCC12BC885F1007807CC /* ServiceCellView.swift */; };
 		C260DF4C2F5B07D4009A0357 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C260DF4B2F5B07D4009A0357 /* KeychainAccess */; };
@@ -465,8 +463,6 @@
 		C27205642E7C9765004FB39A /* ExportQuestionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27205632E7C9761004FB39A /* ExportQuestionType.swift */; };
 		C2726DAD214D731B00F17977 /* DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2726DAC214D731B00F17977 /* DateTests.swift */; platformFilter = ios; };
 		C2726DAF214D8DCD00F17977 /* RatingControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2726DAE214D8DCD00F17977 /* RatingControllerTests.swift */; platformFilter = ios; };
-		C2727D512781E10800B8FA03 /* TrashViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2727D502781E10800B8FA03 /* TrashViewTableViewCell.swift */; };
-		C2727D55278207D000B8FA03 /* TrashViewEmptyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2727D54278207D000B8FA03 /* TrashViewEmptyScreen.swift */; };
 		C273ADF125E05D02007C5711 /* MigrationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C273ADF025E05D02007C5711 /* MigrationHandler.swift */; };
 		C274BDBE2769409700EE28BC /* AppSecurityFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C274BDBD2769409700EE28BC /* AppSecurityFlowController.swift */; };
 		C274BDC02769419300EE28BC /* AppSecurityModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C274BDBF2769419300EE28BC /* AppSecurityModuleInteractor.swift */; };
@@ -2126,9 +2122,6 @@
 		C23386FF2780F14700F8DBC3 /* TrashFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashFlowController.swift; sourceTree = "<group>"; };
 		C2338701278103B000F8DBC3 /* TrashModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashModuleInteractor.swift; sourceTree = "<group>"; };
 		C23387032781068E00F8DBC3 /* TrashPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashPresenter.swift; sourceTree = "<group>"; };
-		C233870527810C2E00F8DBC3 /* TrashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashViewController.swift; sourceTree = "<group>"; };
-		C233870727810D1A00F8DBC3 /* TrashModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashModels.swift; sourceTree = "<group>"; };
-		C23387092781113800F8DBC3 /* TrashViewController+TableCellHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrashViewController+TableCellHandling.swift"; sourceTree = "<group>"; };
 		C233BD1F2801C8FA00A9CFF2 /* WebExtensionRemoteDeviceNameInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebExtensionRemoteDeviceNameInteractor.swift; sourceTree = "<group>"; };
 		C233BD212801CB2600A9CFF2 /* MainRepositoryImpl+Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Network.swift"; sourceTree = "<group>"; };
 		C233BD242801D6F900A9CFF2 /* WebExtensionDeviceNameInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebExtensionDeviceNameInteractor.swift; sourceTree = "<group>"; };
@@ -2317,6 +2310,7 @@
 		C25E89912664021900A60CE5 /* TwoFAS4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS4.xcdatamodel; sourceTree = "<group>"; };
 		C25E8992266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C25E8993266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C25ECA7E30056E5300D46587 /* TrashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashView.swift; sourceTree = "<group>"; };
 		C25F4FDA2622207F008F7755 /* TokensViewEmptySearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensViewEmptySearchScreen.swift; sourceTree = "<group>"; };
 		C260DCC02BC882AD007807CC /* TwoFASWatch-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TwoFASWatch-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C260DCC12BC885F1007807CC /* ServiceCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCellView.swift; sourceTree = "<group>"; };
@@ -2385,9 +2379,7 @@
 		C27205632E7C9761004FB39A /* ExportQuestionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportQuestionType.swift; sourceTree = "<group>"; };
 		C2726DAC214D731B00F17977 /* DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTests.swift; sourceTree = "<group>"; };
 		C2726DAE214D8DCD00F17977 /* RatingControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControllerTests.swift; sourceTree = "<group>"; };
-		C2727D502781E10800B8FA03 /* TrashViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashViewTableViewCell.swift; sourceTree = "<group>"; };
 		C2727D522781FE3F00B8FA03 /* ServiceIconDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceIconDefinition.swift; sourceTree = "<group>"; };
-		C2727D54278207D000B8FA03 /* TrashViewEmptyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashViewEmptyScreen.swift; sourceTree = "<group>"; };
 		C273ADF025E05D02007C5711 /* MigrationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationHandler.swift; sourceTree = "<group>"; };
 		C274BDBD2769409700EE28BC /* AppSecurityFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecurityFlowController.swift; sourceTree = "<group>"; };
 		C274BDBF2769419300EE28BC /* AppSecurityModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecurityModuleInteractor.swift; sourceTree = "<group>"; };
@@ -4111,10 +4103,7 @@
 		C23386FB2780F05900F8DBC3 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C2727D502781E10800B8FA03 /* TrashViewTableViewCell.swift */,
-				C233870527810C2E00F8DBC3 /* TrashViewController.swift */,
-				C23387092781113800F8DBC3 /* TrashViewController+TableCellHandling.swift */,
-				C2727D54278207D000B8FA03 /* TrashViewEmptyScreen.swift */,
+				C25ECA7E30056E5300D46587 /* TrashView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4123,7 +4112,6 @@
 			isa = PBXGroup;
 			children = (
 				C23387032781068E00F8DBC3 /* TrashPresenter.swift */,
-				C233870727810D1A00F8DBC3 /* TrashModels.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -8707,7 +8695,6 @@
 				C207324B29F725DE00FB294E /* TokensDragIcon.swift in Sources */,
 				C2E2C80B27B038DC00F04B70 /* IconSelectorModuleInteractor.swift in Sources */,
 				C21508153002C382008B66E2 /* AboutView.swift in Sources */,
-				C2727D512781E10800B8FA03 /* TrashViewTableViewCell.swift in Sources */,
 				C2B1209129D76FA60020281E /* AppearanceModuleInteractor.swift in Sources */,
 				C2E7C3482ADB021500478D89 /* CameraPreview.swift in Sources */,
 				C2D44E68275C10850043F5D6 /* SettingsMenuTableView.swift in Sources */,
@@ -8786,7 +8773,6 @@
 				C295AF842FD1DE9C000DF064 /* MainScreenModalView.swift in Sources */,
 				C20E2DFE2A7C4DE000DB64BB /* AddingServiceFlowController.swift in Sources */,
 				C2CC80D827B99B0600294CF2 /* ComposeServicePresenter.swift in Sources */,
-				C2727D55278207D000B8FA03 /* TrashViewEmptyScreen.swift in Sources */,
 				C240485E27654C5F0076376E /* ImporterEnterPasswordFlowController.swift in Sources */,
 				C2A7944D27F795E900E5C641 /* BrowserExtensionPairedService.swift in Sources */,
 				C2D2F7112FF042CF0008FE4D /* ComposeServiceAdvancedSummaryView.swift in Sources */,
@@ -8977,7 +8963,6 @@
 				C20E2E092A7C51F500DB64BB /* AddingServiceTokenViewController.swift in Sources */,
 				C2338702278103B000F8DBC3 /* TrashModuleInteractor.swift in Sources */,
 				C2B39E5229F5848700EC31F6 /* TokensLogo.swift in Sources */,
-				C233870A2781113800F8DBC3 /* TrashViewController+TableCellHandling.swift in Sources */,
 				C2ADD6162752DF770010F5E7 /* BackupMenuFlowController.swift in Sources */,
 				C2AC21FE27660F5700271402 /* ImporterOpenFileModuleInteractor.swift in Sources */,
 				C2B279C42FEC1ADD00C41919 /* ListSectionHeaderView.swift in Sources */,
@@ -9014,7 +8999,6 @@
 				C2A7945E27F9071000E5C641 /* BrowserExtensionServiceFlowController.swift in Sources */,
 				C25F4FDB2622207F008F7755 /* TokensViewEmptySearchScreen.swift in Sources */,
 				C2404885276572060076376E /* ImporterPreimportSummaryPresenter.swift in Sources */,
-				C233870827810D1A00F8DBC3 /* TrashModels.swift in Sources */,
 				C2150835300306E9008B66E2 /* ImporterFileErrorView.swift in Sources */,
 				C21347862D98795000D325F6 /* MigrationResult.swift in Sources */,
 				C2286034266972B5005E88E3 /* TokenCell.swift in Sources */,
@@ -9026,7 +9010,6 @@
 				C2150833300306AD008B66E2 /* BackupDeleteView.swift in Sources */,
 				C235A011298FD97D008F4FD0 /* MainSplitViewController.swift in Sources */,
 				C2D97E802E2454D600E213A7 /* QRCodeDisplayFlowController.swift in Sources */,
-				C233870627810C2E00F8DBC3 /* TrashViewController.swift in Sources */,
 				C2A7946427F9073400E5C641 /* BrowserExtensionServiceViewController.swift in Sources */,
 				C2AF24822E7C5FBB001475AF /* ExportQuestionView.swift in Sources */,
 				C2AF24832E7C5FBB001475AF /* ExportQuestionPresenter.swift in Sources */,
@@ -9065,6 +9048,7 @@
 				C2D2F70A2FF02EA00008FE4D /* LabelComposePresenter.swift in Sources */,
 				C2F5F9E528611DB300F778E1 /* BrowserExtensionPairingAlreadyPairedPresenter.swift in Sources */,
 				C21930EE2EC1094F001354C9 /* BackupManageEncryptionPresenter.swift in Sources */,
+				C25ECA7F30056E5300D46587 /* TrashView.swift in Sources */,
 				C219CDBB278E270F00CBBF09 /* SettingsEventController.swift in Sources */,
 				C21EB2F12A7FD77000FA8AA1 /* AddingServiceTitleView.swift in Sources */,
 				C272055E2E7C9140004FB39A /* ExportQuestionPINVerificationPresenter.swift in Sources */,

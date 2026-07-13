@@ -18,13 +18,15 @@
 //
 
 import Foundation
+import Common
 
+@Observable
 final class TrashPresenter {
-    weak var view: TrashViewControlling?
-    
+    var services: [ServiceData] = []
+
     private let flowController: TrashFlowControlling
     let interactor: TrashModuleInteracting
-    
+
     init(flowController: TrashFlowControlling, interactor: TrashModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
@@ -33,38 +35,31 @@ final class TrashPresenter {
     func viewWillAppear() {
         reload()
     }
-    
+
     func handleServiceListChanged() {
         reload()
     }
-    
+
     func handleBecomeActive() {
         reload()
     }
-    
-    func handleTrashing(at indexPath: IndexPath) {
-        let list = interactor.listTrashedServices()
-        guard let serviceData = list[safe: indexPath.row] else { return }
-        flowController.toDelete(with: serviceData)
+
+    func handleBack() {
+        flowController.toBack()
     }
-    
-    func handleRestoration(at indexPath: IndexPath) {
-        let list = interactor.listTrashedServices()
-        guard let serviceData = list[safe: indexPath.row] else { return }
+
+    func handleRestore(_ serviceData: ServiceData) {
         interactor.restoreService(serviceData)
         reload()
+    }
+
+    func handleDelete(_ serviceData: ServiceData) {
+        flowController.toDelete(with: serviceData)
     }
 }
 
 private extension TrashPresenter {
     func reload() {
-        let list = interactor.listTrashedServices()
-        if !list.isEmpty {
-            let cells = list.map { TrashCell(serviceData: $0) }
-            let section = TrashSection(cells: cells)
-            view?.reload(with: section)
-        } else {
-            view?.showEmptyScreen()
-        }
+        services = interactor.listTrashedServices()
     }
 }

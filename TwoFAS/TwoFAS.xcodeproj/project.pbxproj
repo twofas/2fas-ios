@@ -397,6 +397,8 @@
 		C25E8994266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E8992266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift */; };
 		C25E8995266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E8993266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift */; };
 		C25ECA7F30056E5300D46587 /* TrashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25ECA7E30056E5300D46587 /* TrashView.swift */; };
+		C25ECA813005825900D46587 /* TFInstructionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25ECA803005825900D46587 /* TFInstructionCard.swift */; };
+		C25ECA823005825900D46587 /* TFInstructionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25ECA803005825900D46587 /* TFInstructionCard.swift */; };
 		C25F4FDB2622207F008F7755 /* TokensViewEmptySearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25F4FDA2622207F008F7755 /* TokensViewEmptySearchScreen.swift */; };
 		C260DCC22BC885F1007807CC /* ServiceCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C260DCC12BC885F1007807CC /* ServiceCellView.swift */; };
 		C260DF4C2F5B07D4009A0357 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C260DF4B2F5B07D4009A0357 /* KeychainAccess */; };
@@ -2311,6 +2313,7 @@
 		C25E8992266402AD00A60CE5 /* SectionEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C25E8993266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C25ECA7E30056E5300D46587 /* TrashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashView.swift; sourceTree = "<group>"; };
+		C25ECA803005825900D46587 /* TFInstructionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFInstructionCard.swift; sourceTree = "<group>"; };
 		C25F4FDA2622207F008F7755 /* TokensViewEmptySearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensViewEmptySearchScreen.swift; sourceTree = "<group>"; };
 		C260DCC02BC882AD007807CC /* TwoFASWatch-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TwoFASWatch-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C260DCC12BC885F1007807CC /* ServiceCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCellView.swift; sourceTree = "<group>"; };
@@ -5583,6 +5586,7 @@
 				C21508433003C3D6008B66E2 /* TFToggleRow.swift */,
 				C2150846300429F0008B66E2 /* TFSuccessView.swift */,
 				C215084C30042E4C008B66E2 /* TFLoadingView.swift */,
+				C25ECA803005825900D46587 /* TFInstructionCard.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -9326,6 +9330,7 @@
 				C2A4D3392BC0B3DC0001587C /* CloudState.swift in Sources */,
 				C2C0A9802DA31ADD000A1772 /* DeviceCode.swift in Sources */,
 				C274C9ED2BAB8B92008E7212 /* CoreDataMigrator.swift in Sources */,
+				C25ECA823005825900D46587 /* TFInstructionCard.swift in Sources */,
 				C274C9EF2BAB8B92008E7212 /* Log.swift in Sources */,
 				C274C9F02BAB8B92008E7212 /* CountdownTimer.swift in Sources */,
 				C263E9C62D8791D100E98298 /* Data+.swift in Sources */,
@@ -9605,6 +9610,7 @@
 				C2E53B392B62DDAF008E1E70 /* Array+.swift in Sources */,
 				C2E53B422B62DDAF008E1E70 /* CommonServiceHandler.swift in Sources */,
 				C2E53B3B2B62DDAF008E1E70 /* ServiceMatchRules+.swift in Sources */,
+				C25ECA813005825900D46587 /* TFInstructionCard.swift in Sources */,
 				C2E53B362B62DDAF008E1E70 /* Character+.swift in Sources */,
 				C2E53B1D2B62DDAF008E1E70 /* CoreDataMigrationVersion.swift in Sources */,
 				C215084E30042E4C008B66E2 /* TFLoadingView.swift in Sources */,

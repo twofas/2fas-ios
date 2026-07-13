@@ -60,5 +60,6 @@ struct ExternalImportInstructionsView: View {
 
             TFButton(T.Commons.cancel, variant: .borderless, size: .large, action: cancel)
         }
+        .toolbarVisibility(.hidden, for: .navigationBar)
     }
 }

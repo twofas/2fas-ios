@@ -46,7 +46,7 @@ final class ExternalImportInstructionsFlowController: FlowController {
         parent: ExternalImportInstructionsFlowControllerParent,
         service: ExternalImportService
     ) {
-        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
         let flowController = ExternalImportInstructionsFlowController(viewController: hosting)
         flowController.parent = parent
         flowController.navigationController = navigationController

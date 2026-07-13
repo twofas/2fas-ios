@@ -72,7 +72,6 @@ final class TransferFlowController: FlowController {
         navigationController: UINavigationController
     ) -> UIViewController {
         let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
-        hosting.hidesBottomBarWhenPushed = false
         let flowController = TransferFlowController(viewController: hosting)
         flowController.parent = parent
         flowController.navigationController = navigationController

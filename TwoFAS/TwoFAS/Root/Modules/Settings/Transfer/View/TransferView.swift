@@ -48,6 +48,7 @@ struct TransferView: View {
         .onAppear {
             presenter.viewWillAppear()
         }
+        .toolbarVisibility(.hidden, for: .navigationBar)
     }
 
     @ViewBuilder

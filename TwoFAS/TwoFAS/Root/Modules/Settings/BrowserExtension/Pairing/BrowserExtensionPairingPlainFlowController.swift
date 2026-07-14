@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 import Data
 
@@ -35,45 +36,43 @@ protocol BrowserExtensionPairingPlainFlowControlling: AnyObject {
 
 final class BrowserExtensionPairingPlainFlowController: FlowController {
     private weak var parent: BrowserExtensionPairingPlainFlowControllerParent?
-    
+
+    private static func make(
+        parent: BrowserExtensionPairingPlainFlowControllerParent,
+        extensionID: ExtensionID
+    ) -> NavigationBarHiddenHostingController<AnyView> {
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = BrowserExtensionPairingPlainFlowController(viewController: hosting)
+        flowController.parent = parent
+        let interactor = ModuleInteractorFactory
+            .shared
+            .browserExtensionPairingModuleInteractor(extensionID: extensionID)
+        let presenter = BrowserExtensionPairingPresenter(
+            flowController: flowController,
+            interactor: interactor
+        )
+        hosting.rootView = AnyView(
+            BrowserExtensionPairingAnimationView(onAppear: presenter.onAppear)
+        )
+        return hosting
+    }
+
     static func push(
         in navigationController: UINavigationController,
         parent: BrowserExtensionPairingPlainFlowControllerParent,
         with extensionID: ExtensionID
     ) {
-        let view = BrowserExtensionPairingViewController()
-        let flowController = BrowserExtensionPairingPlainFlowController(viewController: view)
-        flowController.parent = parent
-        let interactor = ModuleInteractorFactory
-            .shared
-            .browserExtensionPairingModuleInteractor(extensionID: extensionID)
-        let presenter = BrowserExtensionPairingPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: true)
+        let hosting = make(parent: parent, extensionID: extensionID)
+        navigationController.pushViewController(hosting, animated: true)
     }
-    
+
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: BrowserExtensionPairingPlainFlowControllerParent,
         with extensionID: ExtensionID
     ) {
-        let view = BrowserExtensionPairingViewController()
-        let flowController = BrowserExtensionPairingPlainFlowController(viewController: view)
-        flowController.parent = parent
-        let interactor = ModuleInteractorFactory
-            .shared
-            .browserExtensionPairingModuleInteractor(extensionID: extensionID)
-        let presenter = BrowserExtensionPairingPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-        view.presenter = presenter
-        
-        navigationController.setViewControllers([view], animated: false)
+        let hosting = make(parent: parent, extensionID: extensionID)
+        navigationController.setViewControllers([hosting], animated: false)
     }
 }
 

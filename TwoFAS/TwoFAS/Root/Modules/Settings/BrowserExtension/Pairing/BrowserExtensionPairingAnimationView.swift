@@ -18,8 +18,11 @@
 //
 
 import SwiftUI
+import Common
 
 struct BrowserExtensionPairingAnimationView: View {
+    let onAppear: Callback
+
     private let size: CGFloat = 500
 
     private let orbits: [Orbit] = [
@@ -44,8 +47,9 @@ struct BrowserExtensionPairingAnimationView: View {
                 RotatingOrbit(orbit: orbits[index], containerSize: size)
             }
         }
-        .frame(width: size, height: size)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(Theme.Colors.Fill.background))
+        .onAppear(perform: onAppear)
     }
 }
 
@@ -78,5 +82,5 @@ private struct RotatingOrbit: View {
 }
 
 #Preview {
-    BrowserExtensionPairingAnimationView()
+    BrowserExtensionPairingAnimationView(onAppear: {})
 }

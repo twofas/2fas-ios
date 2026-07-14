@@ -18,19 +18,21 @@
 //
 
 import UIKit
+import SwiftUI
+import Common
 
 protocol BrowserExtensionServiceFlowControllerParent: AnyObject {
     func unpairService(with id: String)
 }
 
 protocol BrowserExtensionServiceFlowControlling: AnyObject {
-    func toUnpairQuestion()
     func toUnpairingService(with id: String)
+    func close()
 }
 
 final class BrowserExtensionServiceFlowController: FlowController {
     private weak var parent: BrowserExtensionServiceFlowControllerParent?
-    
+
     static func present(
         in navigationController: UINavigationController,
         parent: BrowserExtensionServiceFlowControllerParent,
@@ -38,45 +40,27 @@ final class BrowserExtensionServiceFlowController: FlowController {
         date: String,
         id: String
     ) {
-        let view = BrowserExtensionServiceViewController()
-        let flowController = BrowserExtensionServiceFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = false
+        let flowController = BrowserExtensionServiceFlowController(viewController: hosting)
         flowController.parent = parent
-        
         let presenter = BrowserExtensionServicePresenter(
             flowController: flowController,
             name: name,
             date: date,
             id: id
         )
-        presenter.view = view
-        
-        view.presenter = presenter
-
-        navigationController.pushViewController(view, animated: true)
-    }
-}
-
-extension BrowserExtensionServiceFlowController {
-    var viewController: BrowserExtensionServiceViewController {
-        _viewController as! BrowserExtensionServiceViewController
+        hosting.rootView = AnyView(BrowserExtensionServiceView(presenter: presenter))
+        navigationController.pushViewController(hosting, animated: true)
     }
 }
 
 extension BrowserExtensionServiceFlowController: BrowserExtensionServiceFlowControlling {
-    func toUnpairQuestion() {
-        let alert = AlertControllerDismissFlow(
-            title: T.Browser.deletingPairedDeviceTitle,
-            message: T.Browser.deletingPairedDeviceContent,
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: T.Commons.delete, style: .destructive) { [weak self] _ in
-            self?.viewController.presenter.handleUnpair()
-        })
-        viewController.present(alert, animated: true)
-    }
-    
     func toUnpairingService(with id: String) {
         parent?.unpairService(with: id)
+    }
+
+    func close() {
+        _viewController?.navigationController?.popViewController(animated: true)
     }
 }

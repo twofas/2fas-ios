@@ -20,48 +20,50 @@
 import Foundation
 import Common
 
-struct BrowserExtensionMainMenuSection: TableViewSection {
+struct BrowserExtensionMainSection: Identifiable {
+    let id = UUID()
     let title: String
-    var cells: [BrowserExtensionMainMenuCell]
+    var cells: [BrowserExtensionMainCell]
     let footer: String?
 }
 
-struct BrowserExtensionMainMenuCell: Hashable {
-    enum Kind: Hashable {
+struct BrowserExtensionMainCell: Identifiable {
+    enum Kind {
         case service(name: String, date: String, id: String)
         case addNew
         case nickname(String)
     }
+    let id = UUID()
     let kind: Kind
 }
 
 extension BrowserExtensionMainPresenter {
-    func buildMenu() -> [BrowserExtensionMainMenuSection] {
-        var cells: [BrowserExtensionMainMenuSection] = []
-        
-        var services: [BrowserExtensionMainMenuCell] = interactor.listPairedServices().map { service in
-            BrowserExtensionMainMenuCell(
+    func buildMenu() -> [BrowserExtensionMainSection] {
+        var sections: [BrowserExtensionMainSection] = []
+
+        var services: [BrowserExtensionMainCell] = interactor.listPairedServices().map { service in
+            BrowserExtensionMainCell(
                 kind: .service(name: service.name, date: service.pairingDateFormatted, id: service.extensionID)
             )
         }
         services.append(.init(kind: .addNew))
-        let servicesSection = BrowserExtensionMainMenuSection(
+        let servicesSection = BrowserExtensionMainSection(
             title: T.Browser.pairedDevicesBrowserTitle,
             cells: services,
             footer: nil
         )
-        
-        cells.append(servicesSection)
-        
+
+        sections.append(servicesSection)
+
         let nickname = interactor.deviceNickname
-        let deviceNameSection = BrowserExtensionMainMenuSection(
+        let deviceNameSection = BrowserExtensionMainSection(
             title: T.Browser.thisDeviceName,
             cells: [.init(kind: .nickname(nickname))],
             footer: T.Browser.thisDeviceFooter
         )
-        
-        cells.append(deviceNameSection)
-        
-        return cells
+
+        sections.append(deviceNameSection)
+
+        return sections
     }
 }

@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2026 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -17,21 +17,31 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
-import Common
+import SwiftUI
 
-struct BrowserExtensionEditNameMenuSection: TableViewSection {
-    var cells: [BrowserExtensionEditNameMenuCell]
+// MARK: - TFRowHeight
+
+/// Design system minimum row-height scale for list cells.
+///
+/// Usage:
+/// ```swift
+/// view.frame(minHeight: TFRowHeight.list.value)
+/// view.frame(minHeight: .list)
+/// ```
+@frozen
+public enum TFRowHeight: CGFloat, CaseIterable {
+    /// 68 pt — swipeable list row (leading icon + text).
+    case list = 68
+
+    /// Raw `CGFloat` value — use when a plain number is required.
+    public var value: CGFloat { rawValue }
 }
 
-struct BrowserExtensionEditNameMenuCell: Hashable {
-    let currentName: String
-}
+// MARK: - View extension
 
-extension BrowserExtensionEditNamePresenter {
-    func buildMenu() -> BrowserExtensionEditNameMenuSection {
-        .init(cells: [
-            BrowserExtensionEditNameMenuCell(currentName: currentName)
-        ])
+public extension View {
+    /// Sets a minimum row height using a design-system token.
+    func frame(minHeight: TFRowHeight) -> some View {
+        frame(minHeight: minHeight.value)
     }
 }

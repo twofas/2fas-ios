@@ -19,14 +19,16 @@
 
 import Foundation
 
+@Observable
 final class BrowserExtensionServicePresenter {
-    weak var view: BrowserExtensionServiceViewControlling?
-    
-    private let flowController: BrowserExtensionServiceFlowControlling
+    var sections: [BrowserExtensionServiceSection] = []
+    var showUnpairAlert = false
+
     let name: String
     let date: String
     private let id: String
-    
+    private let flowController: BrowserExtensionServiceFlowControlling
+
     init(flowController: BrowserExtensionServiceFlowControlling, name: String, date: String, id: String) {
         self.flowController = flowController
         self.name = name
@@ -39,21 +41,22 @@ extension BrowserExtensionServicePresenter {
     func viewWillAppear() {
         reload()
     }
-    
-    func handleSelection(at indexPath: IndexPath) {
-        let menu = buildMenu()
-        guard let cell = menu[safe: indexPath.section]?.cells[safe: indexPath.row], cell.kind == .unpair else { return }
-        flowController.toUnpairQuestion()
+
+    func handleBack() {
+        flowController.close()
     }
-    
-    func handleUnpair() {
+
+    func handleUnpairTap() {
+        showUnpairAlert = true
+    }
+
+    func handleConfirmUnpair() {
         flowController.toUnpairingService(with: id)
     }
 }
 
 private extension BrowserExtensionServicePresenter {
     func reload() {
-        let menu = buildMenu()
-        view?.reload(with: menu)
+        sections = buildMenu()
     }
 }

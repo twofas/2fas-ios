@@ -24,8 +24,6 @@ struct TrashView: View {
     @Bindable
     var presenter: TrashPresenter
 
-    private let minHeight: CGFloat = 68
-
     var body: some View {
         VStack(spacing: .zero) {
             TFScreenTitleBar(
@@ -116,6 +114,6 @@ struct TrashView: View {
             RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue, style: .continuous)
                 .foregroundStyle(.backgroundsSecondaryElevated)
         )
-        .frame(minHeight: minHeight)
+        .frame(minHeight: .list)
     }
 }

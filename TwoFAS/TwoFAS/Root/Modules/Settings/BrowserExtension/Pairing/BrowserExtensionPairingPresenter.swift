@@ -33,7 +33,13 @@ final class BrowserExtensionPairingPresenter {
 }
 
 extension BrowserExtensionPairingPresenter {
-    func handlePairing() {
+    func onAppear() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.handlePairing()
+        }
+    }
+
+    private func handlePairing() {
         interactor.startPairing { [weak self] result in
             switch result {
             case .success: self?.flowController.toSuccess()

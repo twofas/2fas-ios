@@ -18,16 +18,28 @@
 //
 
 import Foundation
+import Common
 
+@Observable
 final class BrowserExtensionMainPresenter {
-    weak var view: BrowserExtensionMainViewControlling?
-    
+    var sections: [BrowserExtensionMainSection] = []
+    var isLoading = false
+    var showsBackButton = false
+    var showRenameNickname = false
+
+    static let nicknameMinLength = 3
+    static let nicknameMaxLength = 60
+
     private let flowController: BrowserExtensionMainFlowControlling
     let interactor: BrowserExtensionMainModuleInteracting
-    
+
     init(flowController: BrowserExtensionMainFlowControlling, interactor: BrowserExtensionMainModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
+    }
+
+    var currentNickname: String {
+        interactor.deviceNickname
     }
 }
 
@@ -36,36 +48,43 @@ extension BrowserExtensionMainPresenter {
         reload()
         interactor.updatePairedServices { [weak self] _ in self?.reload() }
     }
-    
-    func handleSelection(at indexPath: IndexPath) {
-        let menu = buildMenu()
-        guard let cell = menu[safe: indexPath.section]?.cells[safe: indexPath.row] else { return }
+
+    func handleBack() {
+        flowController.close()
+    }
+
+    func handleTap(_ cell: BrowserExtensionMainCell) {
         switch cell.kind {
         case .service(let name, let date, let id):
             flowController.toService(name: name, date: date, id: id)
         case .addNew:
             addNew()
         case .nickname:
-            flowController.toNameChange(interactor.deviceNickname)
+            showRenameNickname = true
         }
     }
-    
+
     func handleNameChange(_ newDeviceNickname: String) {
-        view?.showSpinner()
+        isLoading = true
         interactor.changeDeviceNickname(newDeviceNickname) { [weak self] _ in
             self?.reload()
-            self?.view?.hideSpinner()
+            self?.isLoading = false
         }
     }
-    
+
+    func isNicknameValid(_ value: String) -> Bool {
+        let trimmed = value.trim()
+        return trimmed.count >= Self.nicknameMinLength && trimmed.count <= Self.nicknameMaxLength
+    }
+
     func handleServiceUnpairing(with id: String) {
-        view?.showSpinner()
+        isLoading = true
         interactor.unpairService(with: id) { [weak self] _ in
             self?.reload()
-            self?.view?.hideSpinner()
+            self?.isLoading = false
         }
     }
-    
+
     func handleRefresh() {
         reload()
     }
@@ -79,9 +98,9 @@ private extension BrowserExtensionMainPresenter {
             return
         }
         flowController.toClearScreen()
-        view?.reload(with: menu)
+        sections = menu
     }
-    
+
     func addNew() {
         if interactor.isCameraAvailable() {
             if interactor.isCameraAllowed() {
@@ -99,7 +118,7 @@ private extension BrowserExtensionMainPresenter {
             cameraNotAvailable()
         }
     }
-    
+
     func cameraNotAvailable() {
         flowController.toCameraNotAvailable()
     }

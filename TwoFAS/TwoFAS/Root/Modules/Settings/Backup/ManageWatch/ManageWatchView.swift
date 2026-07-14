@@ -24,8 +24,6 @@ struct ManageWatchView: View {
     @ObservedObject
     var presenter: ManageWatchPresenter
 
-    private let minHeight: CGFloat = 68
-
     var body: some View {
         VStack(spacing: .zero) {
             TFScreenTitleBar(
@@ -137,6 +135,6 @@ struct ManageWatchView: View {
             RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue, style: .continuous)
                 .foregroundStyle(.backgroundsSecondaryElevated)
         )
-        .frame(minHeight: minHeight)
+        .frame(minHeight: .list)
     }
 }

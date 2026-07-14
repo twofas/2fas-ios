@@ -19,27 +19,29 @@
 
 import Foundation
 
-struct BrowserExtensionServiceMenuSection: TableViewSection {
-    var cells: [BrowserExtensionServiceMenuCell]
+struct BrowserExtensionServiceSection: Identifiable {
+    let id = UUID()
+    var cells: [BrowserExtensionServiceCell]
 }
 
-struct BrowserExtensionServiceMenuCell: Hashable {
-    enum Kind: Hashable {
-        case name(name: String)
-        case date(date: String)
+struct BrowserExtensionServiceCell: Identifiable {
+    enum Kind {
+        case name(String)
+        case date(String)
         case unpair
     }
+    let id = UUID()
     let kind: Kind
 }
 
 extension BrowserExtensionServicePresenter {
-    func buildMenu() -> [BrowserExtensionServiceMenuSection] {
+    func buildMenu() -> [BrowserExtensionServiceSection] {
         [
-            BrowserExtensionServiceMenuSection(cells: [
-                .init(kind: .name(name: name)),
-                .init(kind: .date(date: date))
+            BrowserExtensionServiceSection(cells: [
+                .init(kind: .name(name)),
+                .init(kind: .date(date))
             ]),
-            BrowserExtensionServiceMenuSection(cells: [
+            BrowserExtensionServiceSection(cells: [
                 .init(kind: .unpair)
             ])
         ]

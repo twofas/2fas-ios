@@ -14,7 +14,7 @@
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with this program. If not, see <https://w2ww.gnu.org/licenses/>
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
 import SwiftUI
@@ -23,78 +23,120 @@ import Common
 struct ManageWatchView: View {
     @ObservedObject
     var presenter: ManageWatchPresenter
-    
+
+    private let minHeight: CGFloat = 68
+
     var body: some View {
-        NavigationStack {
-            mainView
-            .onAppear {
-                presenter.onAppear()
-            }
-            .navigationTitle(T.Backup.managePairedWatchesTitleShort)
-            .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(T.Commons.close) {
-                        presenter.onClose()
-                    }
-                    .tint(Color(Theme.Colors.Icon.theme))
+        VStack(spacing: .zero) {
+            TFScreenTitleBar(
+                title: T.Backup.managePairedWatchesTitleShort,
+                leadingSymbol: .close,
+                onLeadingTap: presenter.onClose
+            ) {
+                TFLiquidGlassSymbolButton(symbol: .add) {
+                    presenter.onPairWatch()
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        presenter.onPairWatch()
-                    }, label: {
-                        Label(T.Commons.add, systemImage: "plus")
-                    })
-                    .tint(Color(Theme.Colors.Icon.theme))
-                }
+                .accessibilityLabel(T.Commons.add)
             }
+
+            content
+        }
+        .background(.backgroundsPrimaryElevated)
+        .onAppear {
+            presenter.onAppear()
         }
     }
-    
+
     @ViewBuilder
-    private var mainView: some View {
-        VStack {
-            if presenter.isListAvailable {
-                if presenter.list.isEmpty {
-                    Text(T.Backup.managePairedWatchesEmptyList)
-                        .font(.caption)
-                        .fontWeight(.semibold)
-                } else {
-                    list()
-                }
-            } else {
-                Text(verbatim: T.Backup.managePairedWatchesSyncing)
-                    .font(.caption)
-                    .fontWeight(.semibold)
-            }
+    private var content: some View {
+        if !presenter.isListAvailable {
+            syncingState
+        } else if presenter.list.isEmpty {
+            emptyState
+        } else {
+            watchList
         }
     }
-    
-    @ViewBuilder
-    private func list() -> some View {
-        Spacer()
+
+    private var emptyState: some View {
+        VStack(spacing: .XL) {
+            Spacer()
+            Image(systemName: "applewatch")
+                .textStyle(.iconLarge)
+                .foregroundStyle(.accentsBrand)
+            Text(T.Backup.managePairedWatchesEmptyList)
+                .textStyle(.headline)
+                .foregroundStyle(.labelsSecondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, .XL)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var syncingState: some View {
+        VStack(spacing: .XL) {
+            Spacer()
+            ProgressView()
+            Text(T.Backup.managePairedWatchesSyncing)
+                .textStyle(.headline)
+                .foregroundStyle(.labelsSecondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, .XL)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var watchList: some View {
         List {
             ForEach(presenter.list) { item in
-                Text(item.deviceName)
-                    .padding(.vertical, Spacing.M)
-                    .font(.body)
-                    .swipeActions(edge: .trailing) {
-                        Button(role: .destructive) {
+                watchCell(item)
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets(top: .S, leading: .XL, bottom: .S, trailing: .XL))
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        Button {
                             presenter.onDelete(item)
                         } label: {
-                            Label(T.Commons.delete, systemImage: "trash")
+                            Label(T.Commons.delete, systemImage: "trash.fill")
                         }
-                        .tint(.red)
-                        
+                        .tint(AppColor.accentsBrand)
+
                         Button {
                             presenter.onRename(item)
                         } label: {
                             Label(T.Commons.rename, systemImage: "pencil")
                         }
-                        .tint(.blue)
+                        .tint(AppColor.accentsBlue)
                     }
             }
         }
-        .listStyle(.insetGrouped)
+        .animation(.default, value: presenter.list.count)
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+    }
+
+    @ViewBuilder
+    private func watchCell(_ item: PairedWatch) -> some View {
+        HStack(spacing: .M) {
+            Image(systemName: "applewatch")
+                .textStyle(.title3)
+                .foregroundStyle(.accentsBrand)
+                .frame(width: 28)
+
+            Text(item.deviceName)
+                .textStyle(.body)
+                .foregroundStyle(.labelsPrimary)
+
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, .XL)
+        .padding(.vertical, .L)
+        .background(
+            RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue, style: .continuous)
+                .foregroundStyle(.backgroundsSecondaryElevated)
+        )
+        .frame(minHeight: minHeight)
     }
 }

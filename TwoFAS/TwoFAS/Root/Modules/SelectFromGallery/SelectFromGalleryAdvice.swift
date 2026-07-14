@@ -21,69 +21,40 @@ import SwiftUI
 import Common
 
 struct SelectFromGalleryAdvice: View {
-    private let paddingHorizontal: Spacing = .XXXL
-    private let paddingVertical: Spacing = .XL
-    private let topSpacing: Spacing = .XXXXXXXL
-    private let containerPadding: Spacing = .M
-    private let spacing: Spacing = .XL
-    
     let action: Callback
+
     private let image = Asset.selectFromGalleryAdviceIcon.image
-    
+
     var body: some View {
-        Group {
-            VStack(alignment: .center, spacing: Spacing.M) {
-                Group {
-                    Image(uiImage: image)
-                        .foregroundColor(Color(Theme.Colors.Fill.theme))
-                        .frame(width: image.size.width, height: image.size.height)
-                }
-                .frame(maxHeight: .infinity, alignment: .center)
-                
-                VStack(spacing: Spacing.XL) {
-                    Text(T.Tokens.galleryAdviceTitle)
-                        .font(.title)
-                        .multilineTextAlignment(.center)
-                    Group {
-                        Text(T.Tokens.galleryAdviceContentFirst)
-                        + Text(T.Tokens.galleryAdviceContentMiddleBold)
-                            .fontWeight(.semibold)
-                        + Text(T.Tokens.galleryAdviceContentLast)
-                    }
-                    .font(.body)
-                    .multilineTextAlignment(.center)
-                }
-                .frame(alignment: .center)
-                .layoutPriority(1)
-                
-                VStack(spacing: 0) {
-                    Button {
-                        action()
-                    } label: {
-                        Text(T.Commons.gotIt)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                    }
-                    .buttonStyle(RoundedFilledButtonStyle())
-                }
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: spacing.rawValue, trailing: 0))
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-            }
-            .frame(maxWidth: Theme.Metrics.componentWidth)
-            .background(Color(Theme.Colors.Fill.background))
+        TFInfoView {
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFit()
+                .frame(width: image.size.width, height: image.size.height)
+        } texts: {
+            Text(T.Tokens.galleryAdviceTitle)
+                .textStyle(.title1, .emphasized)
+                .foregroundStyle(.labelsPrimary)
+                .multilineTextAlignment(.center)
+            (
+                Text(T.Tokens.galleryAdviceContentFirst)
+                + Text(T.Tokens.galleryAdviceContentMiddleBold).fontWeight(.semibold)
+                + Text(T.Tokens.galleryAdviceContentLast)
+            )
+            .textStyle(.body)
+            .foregroundStyle(.labelsSecondary)
+            .multilineTextAlignment(.center)
+        } buttons: {
+            TFButton(
+                T.Commons.gotIt,
+                variant: .borderedProminent,
+                size: .large,
+                action: action
+            )
         }
     }
 }
 
-struct SelectFromGalleryAdvice_Previews: PreviewProvider {
-    static var previews: some View {
-        SelectFromGalleryAdvice {}
-            .previewDevice("iPhone SE (1st generation)")
-            .background(Color.pink)
-            .preferredColorScheme(.dark)
-        
-        SelectFromGalleryAdvice {}
-            .previewDevice("iPhone 13 Pro")
-            .background(Color.pink)
-            .preferredColorScheme(.light)
-    }
+#Preview {
+    SelectFromGalleryAdvice(action: {})
 }

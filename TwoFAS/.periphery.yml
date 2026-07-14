@@ -1,6 +1,10 @@
 project: TwoFAS.xcodeproj
 schemes:
 - TwoFAS
+- TwoFASWatch Watch App
+- TwoFASWidgetExtension
+- TwoFASAuth
+- TwoFASServiceIntent
 retain_objc_accessible: true
 retain_swift_ui_previews: true
 report_exclude:

@@ -83,7 +83,7 @@ private extension SettingsFlowController {
     func setInitialMenu() {
         let menu = SettingsMenuFlowController.showAsRoot(in: viewController.navigationNavi, parent: self)
         navigationMenu = menu.flow
-        viewController.menu = menu.view
+        viewController.menu = menu.flow
     }
 }
 

@@ -23,11 +23,11 @@ import Data
 
 final class SettingsViewController: UIViewController, ContentNavigationControllerHideNavibar {
     var presenter: SettingsPresenter!
-    weak var menu: SettingsMenuViewController? {
+    weak var menu: SettingsMenuFlowControllerChild? {
         didSet {
             if let savedViewPath {
                 let force = !isCollapsed && contentNavi.viewControllers.isEmpty
-                menu?.presenter.handleNavigateToViewPath(savedViewPath, force: force)
+                menu?.handleNavigateToViewPath(savedViewPath, force: force)
                 self.savedViewPath = nil
             }
             if isMenuPositionPending {
@@ -101,7 +101,7 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     }
     
     func hideRevealButton() {
-        menu?.navigationItem.leftBarButtonItem = nil
+        menu?.hideSidebarReveal()
     }
     
     func navigateToView(_ viewPath: ViewPath.Settings?) {
@@ -116,14 +116,14 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
         }
         if let menuVC = menu {
             let force = !isCollapsed && contentNavi.viewControllers.isEmpty
-            menuVC.presenter.handleNavigateToViewPath(vp, force: force)
+            menuVC.handleNavigateToViewPath(vp, force: force)
         } else {
             savedViewPath = vp
         }
     }
     
     var currentView: ViewPath.Settings? {
-        menu?.presenter.currentViewPath
+        menu?.currentViewPath
     }
     
     @objc
@@ -179,12 +179,9 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     }
     
     private func setMenuPosition() {
-        menu?.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "sidebar.left"),
-            style: .plain,
-            target: self,
-            action: #selector(revealMenu)
-        )
+        menu?.showSidebarReveal { [weak self] in
+            self?.revealMenu()
+        }
     }
     
     deinit {

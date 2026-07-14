@@ -117,10 +117,6 @@ enum Theme {
             static let secondaryDivider = ThemeColor.secondaryDivider
         }
         
-        enum Grid {
-            static let background = ThemeColor.divider
-        }
-        
         enum Table {
             static let background = ThemeColor.tableBackground
         }
@@ -131,11 +127,6 @@ enum Theme {
             static let separator = ThemeColor.tableSeparator
         }
         
-        enum CloseButton {
-            static let background = ThemeColor.buttonCloseBackground
-            static let foreground = ThemeColor.buttonCloseForeground
-        }
-
         enum Fill {
             enum System {
                 static let first = UIColor.systemBackground
@@ -193,23 +184,6 @@ enum Theme {
             static let counter = Fonts.counter
         }
         
-        enum Counter {
-            
-            static let syncCounter = Fonts.syncCounter
-        }
-        
-        enum TokenCell {
-            static let privateKeyMask = Fonts.privateKeyMask
-            static let privateKey = Fonts.privateKey
-            static let description = Fonts.note
-        }
-        
-        enum SettingsCell {
-            
-            static let title = Fonts.content
-            static let state = Fonts.description
-        }
-        
         static let warning = UIFont.systemFont(ofSize: 13, weight: .medium)
         static let iconLabel = UIFont.systemFont(ofSize: 13, weight: .bold)
         static let iconLabelSmall = UIFont.systemFont(ofSize: 12, weight: .bold)
@@ -235,14 +209,6 @@ enum Theme {
             static let hide: TimeInterval = 0.15
             static let rootNextScreen: TimeInterval = 0.3
             static let displayNotification: TimeInterval = 2
-        }
-        
-        enum Curve {
-            static let show: UIView.AnimationOptions = .curveEaseOut
-            static let hide: UIView.AnimationOptions = .curveEaseOut
-            static let rootNextScreen: UIView.AnimationOptions = .curveEaseInOut
-            static let PINPush: UIView.AnimationOptions = .curveEaseOut
-            static let PINPop: UIView.AnimationOptions = .curveEaseIn
         }
     }
     
@@ -293,9 +259,4 @@ enum Theme {
     enum Consts {
         static let maxFieldLength: Int = 1024
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-private func convertToNSAttributedStringKeyDictionary(_ input: [String: Any]) -> [NSAttributedString.Key: Any] {
-    Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value) })
 }

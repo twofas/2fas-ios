@@ -19,15 +19,9 @@
 
 import Foundation
 
-public protocol RefreshTimerType: AnyObject {
-    var timerTicked: RefreshTimerCallback? { get set }
-    func start()
-    func stop()
-}
-
 public typealias RefreshTimerCallback = () -> Void
 
-public final class RefreshTimer: RefreshTimerType {
+public final class RefreshTimer {
     public var timerTicked: RefreshTimerCallback?
 
     public init() {}

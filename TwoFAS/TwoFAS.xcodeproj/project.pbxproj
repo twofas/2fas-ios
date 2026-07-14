@@ -285,6 +285,7 @@
 		C2404F7E2B72FC6000EBD8DC /* SelectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404F742B72E4AB00EBD8DC /* SelectService.swift */; };
 		C2404F7F2B72FC6400EBD8DC /* ServiceAppEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404F752B72E4AB00EBD8DC /* ServiceAppEntity.swift */; };
 		C240FB4027FCD2F900D9E630 /* NetworkCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240FB3F27FCD2F900D9E630 /* NetworkCall.swift */; };
+		C2418F683006C2DB008B674A /* SwiftUIButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2418F673006C2DB008B674A /* SwiftUIButtons.swift */; };
 		C241D448278B9E0E00D7C604 /* NetworkStack.h in Headers */ = {isa = PBXBuildFile; fileRef = C241D447278B9E0E00D7C604 /* NetworkStack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C241D452278B9E2D00D7C604 /* NetworkStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C241D450278B9E2D00D7C604 /* NetworkStack.swift */; };
 		C241D453278B9E2D00D7C604 /* AppVersionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C241D451278B9E2D00D7C604 /* AppVersionHandler.swift */; };
@@ -318,7 +319,6 @@
 		C24E3E692AB8F15A008A7158 /* discord.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E612AB8F159008A7158 /* discord.json */; };
 		C24E3E6A2AB8F15A008A7158 /* amazon.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E622AB8F15A008A7158 /* amazon.json */; };
 		C24E3E6B2AB8F15A008A7158 /* linkedin.json in Resources */ = {isa = PBXBuildFile; fileRef = C24E3E632AB8F15A008A7158 /* linkedin.json */; };
-		C24EE7972EC3A5810065B452 /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EE7962EC3A5780065B452 /* PasswordTextField.swift */; };
 		C24EECEC268772B600C6ABAA /* RecordType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECEB268772B600C6ABAA /* RecordType.swift */; };
 		C24EECF12687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECEF2687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift */; };
 		C24EECF22687772800C6ABAA /* SectionCacheEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24EECF02687772800C6ABAA /* SectionCacheEntity+CoreDataProperties.swift */; };
@@ -527,7 +527,6 @@
 		C274C9EC2BAB8B92008E7212 /* LegacyServiceDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53ADD2B62DDAF008E1E70 /* LegacyServiceDatabase.swift */; };
 		C274C9ED2BAB8B92008E7212 /* CoreDataMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53AE32B62DDAF008E1E70 /* CoreDataMigrator.swift */; };
 		C274C9EF2BAB8B92008E7212 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53AD92B62DDAF008E1E70 /* Log.swift */; };
-		C274C9F02BAB8B92008E7212 /* CountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53AD82B62DDAF008E1E70 /* CountdownTimer.swift */; };
 		C274C9F12BAB8B92008E7212 /* CommonLocalKeyEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53B0C2B62DDAF008E1E70 /* CommonLocalKeyEncryption.swift */; };
 		C274C9F22BAB8B92008E7212 /* PairedAuthRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53AF22B62DDAF008E1E70 /* PairedAuthRequest.swift */; };
 		C274C9F32BAB8B92008E7212 /* IconDescriptionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53AE82B62DDAF008E1E70 /* IconDescriptionGroup.swift */; };
@@ -666,7 +665,6 @@
 		C281A2732BD47D6C0068451C /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C281A2722BD47D6C0068451C /* SuccessView.swift */; };
 		C281A2772BD489590068451C /* IntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C281A2762BD489590068451C /* IntroductionView.swift */; };
 		C281A2782BD48A930068451C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C225E617241CFCE90041C238 /* Localizable.strings */; };
-		C2823B1626F3E84F00583586 /* RevealPasswordInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2823B1526F3E84F00583586 /* RevealPasswordInput.swift */; };
 		C2830D7A293D440900B3DDAF /* TokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D79293D440900B3DDAF /* TokensPresenter.swift */; };
 		C2830D7C293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D7B293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift */; };
 		C2830D7E293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2830D7D293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegate.swift */; };
@@ -1109,7 +1107,6 @@
 		C2E53B122B62DDAF008E1E70 /* ThemeMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53AD42B62DDAF008E1E70 /* ThemeMetrics.swift */; };
 		C2E53B132B62DDAF008E1E70 /* PushNotificationsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53AD52B62DDAF008E1E70 /* PushNotificationsConfig.swift */; };
 		C2E53B142B62DDAF008E1E70 /* EncryptionHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53AD72B62DDAF008E1E70 /* EncryptionHolder.swift */; };
-		C2E53B152B62DDAF008E1E70 /* CountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53AD82B62DDAF008E1E70 /* CountdownTimer.swift */; };
 		C2E53B162B62DDAF008E1E70 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53AD92B62DDAF008E1E70 /* Log.swift */; };
 		C2E53B172B62DDAF008E1E70 /* RefreshTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53ADA2B62DDAF008E1E70 /* RefreshTimer.swift */; };
 		C2E53B182B62DDAF008E1E70 /* ServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E53ADC2B62DDAF008E1E70 /* ServiceType.swift */; };
@@ -1378,7 +1375,6 @@
 		C2FCB29028258B3A00AF8A37 /* NewsPlainFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FCB28F28258B3A00AF8A37 /* NewsPlainFlowController.swift */; };
 		C2FDAE901FD0B42B004BABE4 /* NotificationStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FDAE8F1FD0B42B004BABE4 /* NotificationStateProtocol.swift */; };
 		C2FDEE54279C8F39002CAB9E /* CameraGoogleAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FDEE53279C8F39002CAB9E /* CameraGoogleAuth.swift */; };
-		C2FDEE57279C8FF8002CAB9E /* SwiftUIButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FDEE56279C8FF8002CAB9E /* SwiftUIButtons.swift */; };
 		C2FDEE5D279CC271002CAB9E /* CameraScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FDEE5C279CC271002CAB9E /* CameraScannerViewController.swift */; };
 		C2FDEE5F279CC316002CAB9E /* CameraScannerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FDEE5E279CC316002CAB9E /* CameraScannerPresenter.swift */; };
 		C2FDEE61279CC36C002CAB9E /* CameraScannerModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FDEE60279CC36C002CAB9E /* CameraScannerModuleInteractor.swift */; };
@@ -2185,6 +2181,7 @@
 		C2404F752B72E4AB00EBD8DC /* ServiceAppEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAppEntity.swift; sourceTree = "<group>"; };
 		C2404F7A2B72E89100EBD8DC /* AppIntentProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIntentProvider.swift; sourceTree = "<group>"; };
 		C240FB3F27FCD2F900D9E630 /* NetworkCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCall.swift; sourceTree = "<group>"; };
+		C2418F673006C2DB008B674A /* SwiftUIButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIButtons.swift; sourceTree = "<group>"; };
 		C241D445278B9E0E00D7C604 /* NetworkStack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NetworkStack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C241D447278B9E0E00D7C604 /* NetworkStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkStack.h; sourceTree = "<group>"; };
 		C241D450278B9E2D00D7C604 /* NetworkStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStack.swift; sourceTree = "<group>"; };
@@ -2230,7 +2227,6 @@
 		C24E3E612AB8F159008A7158 /* discord.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = discord.json; sourceTree = "<group>"; };
 		C24E3E622AB8F15A008A7158 /* amazon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amazon.json; sourceTree = "<group>"; };
 		C24E3E632AB8F15A008A7158 /* linkedin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = linkedin.json; sourceTree = "<group>"; };
-		C24EE7962EC3A5780065B452 /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
 		C24EECEB268772B600C6ABAA /* RecordType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordType.swift; sourceTree = "<group>"; };
 		C24EECEF2687772800C6ABAA /* SectionCacheEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionCacheEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C24EECF02687772800C6ABAA /* SectionCacheEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionCacheEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -2475,7 +2471,6 @@
 		C281909E2B0B84910042BB7D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C281A2722BD47D6C0068451C /* SuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
 		C281A2762BD489590068451C /* IntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionView.swift; sourceTree = "<group>"; };
-		C2823B1526F3E84F00583586 /* RevealPasswordInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealPasswordInput.swift; sourceTree = "<group>"; };
 		C2830D79293D440900B3DDAF /* TokensPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensPresenter.swift; sourceTree = "<group>"; };
 		C2830D7B293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+CommonSearchDataSourceSearchable.swift"; sourceTree = "<group>"; };
 		C2830D7D293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
@@ -2909,7 +2904,6 @@
 		C2E53AD42B62DDAF008E1E70 /* ThemeMetrics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeMetrics.swift; sourceTree = "<group>"; };
 		C2E53AD52B62DDAF008E1E70 /* PushNotificationsConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationsConfig.swift; sourceTree = "<group>"; };
 		C2E53AD72B62DDAF008E1E70 /* EncryptionHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncryptionHolder.swift; sourceTree = "<group>"; };
-		C2E53AD82B62DDAF008E1E70 /* CountdownTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountdownTimer.swift; sourceTree = "<group>"; };
 		C2E53AD92B62DDAF008E1E70 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		C2E53ADA2B62DDAF008E1E70 /* RefreshTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshTimer.swift; sourceTree = "<group>"; };
 		C2E53ADC2B62DDAF008E1E70 /* ServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceType.swift; sourceTree = "<group>"; };
@@ -3073,7 +3067,6 @@
 		C2FDC8B429B5379A00623145 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C2FDC8B529B5379B00623145 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		C2FDEE53279C8F39002CAB9E /* CameraGoogleAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraGoogleAuth.swift; sourceTree = "<group>"; };
-		C2FDEE56279C8FF8002CAB9E /* SwiftUIButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIButtons.swift; sourceTree = "<group>"; };
 		C2FDEE5C279CC271002CAB9E /* CameraScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScannerViewController.swift; sourceTree = "<group>"; };
 		C2FDEE5E279CC316002CAB9E /* CameraScannerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScannerPresenter.swift; sourceTree = "<group>"; };
 		C2FDEE60279CC36C002CAB9E /* CameraScannerModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScannerModuleInteractor.swift; sourceTree = "<group>"; };
@@ -3326,36 +3319,12 @@
 			path = IntentButtons;
 			sourceTree = "<group>";
 		};
-		8F43E6FD2C4C50A60006D380 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				8F594C412C3027160066562F /* AppleWatchView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		8F43E6FE2C4C50C70006D380 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				8F43E6FF2C4C50DD0006D380 /* AppleWatchPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		8F43E7012C4C51060006D380 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				8F43E7022C4C511A0006D380 /* AppleWatchFlowController.swift */,
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
 		8F594C402C3024E60066562F /* AppleWatch */ = {
 			isa = PBXGroup;
 			children = (
-				8F43E7012C4C51060006D380 /* Flow */,
-				8F43E6FE2C4C50C70006D380 /* Presenter */,
-				8F43E6FD2C4C50A60006D380 /* View */,
+				8F43E7022C4C511A0006D380 /* AppleWatchFlowController.swift */,
+				8F43E6FF2C4C50DD0006D380 /* AppleWatchPresenter.swift */,
+				8F594C412C3027160066562F /* AppleWatchView.swift */,
 			);
 			path = AppleWatch;
 			sourceTree = "<group>";
@@ -3430,15 +3399,6 @@
 				C200E49C1FB3911B00D7C748 /* Storage.h */,
 			);
 			path = Other;
-			sourceTree = "<group>";
-		};
-		C2014E0227BEEB3D0046B75C /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				C25B221727C1993B0052AAC4 /* Components */,
-				C2014E0327BEED630046B75C /* ComposeServiceInputCell.swift */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		C2035D3D2938129000B94834 /* Generated */ = {
@@ -3659,46 +3619,14 @@
 		C21111E2274AB8D300CA7C78 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				C21111E3274AB8DC00CA7C78 /* Flow */,
-				C21111E5274AB91C00CA7C78 /* Interactor */,
-				C21111E6274AB92E00CA7C78 /* Presenter */,
-				C21111E4274AB8E200CA7C78 /* View */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		C21111E3274AB8DC00CA7C78 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
 				C21111ED274ABBD900CA7C78 /* SettingsFlowController.swift */,
 				C2AB92E027668DE700698382 /* ShareActivityController.swift */,
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
-		C21111E4274AB8E200CA7C78 /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C21111F1274ABD5200CA7C78 /* SettingsModuleInteractor.swift */,
+				C21111E9274ABA4300CA7C78 /* SettingsPresenter.swift */,
 				C21111E7274AB98000CA7C78 /* SettingsViewController.swift */,
 				C21111EB274ABA5700CA7C78 /* SettingsViewControlling.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C21111E5274AB91C00CA7C78 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C21111F1274ABD5200CA7C78 /* SettingsModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C21111E6274AB92E00CA7C78 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C21111E9274ABA4300CA7C78 /* SettingsPresenter.swift */,
-			);
-			path = Presenter;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		C21111F3274ABDB300CA7C78 /* Interactors */ = {
@@ -3764,44 +3692,12 @@
 		C211717A276CE35F00042D28 /* VerifyPIN */ = {
 			isa = PBXGroup;
 			children = (
-				C211717F276CE53900042D28 /* Flow */,
-				C211717E276CE53300042D28 /* Interactor */,
-				C211717C276CE50600042D28 /* Presenter */,
-				C211717B276CE50200042D28 /* View */,
-			);
-			path = VerifyPIN;
-			sourceTree = "<group>";
-		};
-		C211717B276CE50200042D28 /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C2117180276CE54900042D28 /* VerifyPINFlowController.swift */,
+				C2117182276CE83B00042D28 /* VerifyPINModuleInteractor.swift */,
+				C2117184276CE95F00042D28 /* VerifyPINPresenter.swift */,
 				C2150828300300D1008B66E2 /* VerifyPINView.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C211717C276CE50600042D28 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2117184276CE95F00042D28 /* VerifyPINPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C211717E276CE53300042D28 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2117182276CE83B00042D28 /* VerifyPINModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C211717F276CE53900042D28 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2117180276CE54900042D28 /* VerifyPINFlowController.swift */,
-			);
-			path = Flow;
+			path = VerifyPIN;
 			sourceTree = "<group>";
 		};
 		C21247F927B717660044D9F2 /* Modules */ = {
@@ -3905,10 +3801,11 @@
 		C2153BBB1FE9A991005FD297 /* Camera Scanner */ = {
 			isa = PBXGroup;
 			children = (
-				C2FDEE5B279CC1AD002CAB9E /* Flow */,
-				C2FDEE5A279CC1A3002CAB9E /* Interactor */,
-				C2FDEE59279CC193002CAB9E /* Presenter */,
-				C2FDEE58279CC17A002CAB9E /* View */,
+				C23721A02804C07600DE335D /* CameraScannerNavigationFlowController.swift */,
+				C2FDEE62279CC37E002CAB9E /* CameraScannerFlowController.swift */,
+				C2FDEE60279CC36C002CAB9E /* CameraScannerModuleInteractor.swift */,
+				C2FDEE5E279CC316002CAB9E /* CameraScannerPresenter.swift */,
+				C2FDEE5C279CC271002CAB9E /* CameraScannerViewController.swift */,
 				C21987C627961BF600724E63 /* CameraErrorTemplate.swift */,
 				C2FDEE53279C8F39002CAB9E /* CameraGoogleAuth.swift */,
 				C25D5E772A64908200CA359B /* CameraLastPass.swift */,
@@ -4019,10 +3916,11 @@
 		C22D9E0C2468062E00AAE6EE /* Introduction */ = {
 			isa = PBXGroup;
 			children = (
-				C25C91D02B0A4FCC00E58729 /* Flow */,
-				C25C91D32B0A62FB00E58729 /* Interactor */,
-				C25C91D12B0A4FD000E58729 /* Presenter */,
-				C25C91D22B0A4FDA00E58729 /* View */,
+				C25C91D42B0A632500E58729 /* IntroductionNavigationFlowController.swift */,
+				C2BD85D92640290E0087D087 /* IntroductionFlowController.swift */,
+				C25C91D62B0A6DE600E58729 /* IntroductionModuleInteractor.swift */,
+				C2F6BB07264886B7002A9747 /* IntroductionPresenter.swift */,
+				C2F6BB0426488320002A9747 /* Pages */,
 			);
 			path = Introduction;
 			sourceTree = "<group>";
@@ -4052,87 +3950,23 @@
 		C23386EB2780D7AC00F8DBC3 /* DeleteService */ = {
 			isa = PBXGroup;
 			children = (
-				C23386F12780E47700F8DBC3 /* Flow */,
-				C23386EF2780E46A00F8DBC3 /* Interactor */,
-				C23386EE2780E46400F8DBC3 /* Presenter */,
-				C23386ED2780E45D00F8DBC3 /* View */,
-			);
-			path = DeleteService;
-			sourceTree = "<group>";
-		};
-		C23386ED2780E45D00F8DBC3 /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C23386F22780E52F00F8DBC3 /* DeleteServiceFlowController.swift */,
+				C23386F42780E53800F8DBC3 /* DeleteServiceInteractor.swift */,
+				C23386F62780E54200F8DBC3 /* DeleteServicePresenter.swift */,
 				C215083E300308A1008B66E2 /* DeleteServiceView.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C23386EE2780E46400F8DBC3 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C23386F62780E54200F8DBC3 /* DeleteServicePresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C23386EF2780E46A00F8DBC3 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C23386F42780E53800F8DBC3 /* DeleteServiceInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C23386F12780E47700F8DBC3 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C23386F22780E52F00F8DBC3 /* DeleteServiceFlowController.swift */,
-			);
-			path = Flow;
+			path = DeleteService;
 			sourceTree = "<group>";
 		};
 		C23386FA2780ECE400F8DBC3 /* Trash */ = {
 			isa = PBXGroup;
 			children = (
-				C23386FE2780F06F00F8DBC3 /* Flow */,
-				C23386FD2780F06500F8DBC3 /* Interactor */,
-				C23386FC2780F05D00F8DBC3 /* Presenter */,
-				C23386FB2780F05900F8DBC3 /* View */,
-			);
-			path = Trash;
-			sourceTree = "<group>";
-		};
-		C23386FB2780F05900F8DBC3 /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C23386FF2780F14700F8DBC3 /* TrashFlowController.swift */,
+				C2338701278103B000F8DBC3 /* TrashModuleInteractor.swift */,
+				C23387032781068E00F8DBC3 /* TrashPresenter.swift */,
 				C25ECA7E30056E5300D46587 /* TrashView.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C23386FC2780F05D00F8DBC3 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C23387032781068E00F8DBC3 /* TrashPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C23386FD2780F06500F8DBC3 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2338701278103B000F8DBC3 /* TrashModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C23386FE2780F06F00F8DBC3 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C23386FF2780F14700F8DBC3 /* TrashFlowController.swift */,
-			);
-			path = Flow;
+			path = Trash;
 			sourceTree = "<group>";
 		};
 		C233BD232801CB5300A9CFF2 /* Types */ = {
@@ -4142,42 +3976,6 @@
 				C2A8584D27FB95FA00CBD9ED /* NetworkError.swift */,
 			);
 			path = Types;
-			sourceTree = "<group>";
-		};
-		C2340CAD27BC488D00746676 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C2014E0227BEEB3D0046B75C /* Cells */,
-				C25B221327C17F1E0052AAC4 /* ComposeServiceInputKind.swift */,
-				C2B6D0E62FF1814300C4C73D /* Components */,
-				C2B6D0EB2FF181C800C4C73D /* ComposeServiceView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2340CAE27BC489200746676 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2CC80D727B99B0600294CF2 /* ComposeServicePresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2340CAF27BC489F00746676 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C271B64727BAE67500D0D743 /* ComposeServiceModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2340CB027BC48A600746676 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C23B899427C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift */,
-				C25B221127C177170052AAC4 /* ComposeServiceFlowController.swift */,
-			);
-			path = Flow;
 			sourceTree = "<group>";
 		};
 		C235A00B298FD8BF008F4FD0 /* MainSplit */ = {
@@ -4342,44 +4140,12 @@
 		C240484D2765285D0076376E /* ImporterEnterPassword */ = {
 			isa = PBXGroup;
 			children = (
-				C2404851276528910076376E /* Flow */,
-				C24048502765288B0076376E /* Interactor */,
-				C240484F276528840076376E /* Presenter */,
-				C240484E2765287F0076376E /* View */,
-			);
-			path = ImporterEnterPassword;
-			sourceTree = "<group>";
-		};
-		C240484E2765287F0076376E /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C240485D27654C5F0076376E /* ImporterEnterPasswordFlowController.swift */,
+				C240485F27654E370076376E /* ImporterEnterPasswordModuleInteractor.swift */,
+				C2404859276540970076376E /* ImporterEnterPasswordPresenter.swift */,
 				C215083630030747008B66E2 /* ImporterEnterPasswordView.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C240484F276528840076376E /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2404859276540970076376E /* ImporterEnterPasswordPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C24048502765288B0076376E /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C240485F27654E370076376E /* ImporterEnterPasswordModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2404851276528910076376E /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C240485D27654C5F0076376E /* ImporterEnterPasswordFlowController.swift */,
-			);
-			path = Flow;
+			path = ImporterEnterPassword;
 			sourceTree = "<group>";
 		};
 		C240485627652E170076376E /* DataTypes */ = {
@@ -4408,7 +4174,6 @@
 		C2404862276550840076376E /* PasswordInput */ = {
 			isa = PBXGroup;
 			children = (
-				C2823B1526F3E84F00583586 /* RevealPasswordInput.swift */,
 			);
 			path = PasswordInput;
 			sourceTree = "<group>";
@@ -4417,122 +4182,34 @@
 			isa = PBXGroup;
 			children = (
 				C21B40DB28C520E400348E04 /* ImporterOpenFileError.swift */,
-				C2404867276559F70076376E /* Flow */,
-				C2404866276559F00076376E /* Interactor */,
-				C2404865276559E70076376E /* Presenter */,
-				C2404864276559D50076376E /* View */,
-			);
-			path = ImporterOpenFile;
-			sourceTree = "<group>";
-		};
-		C2404864276559D50076376E /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C240486E27655E760076376E /* ImporterOpenFileFlowController.swift */,
+				C2AC21FD27660F5700271402 /* ImporterOpenFileModuleInteractor.swift */,
+				C240486A27655BD70076376E /* ImporterOpenFilePresenter.swift */,
 				C2FAE12428C7346900F2446F /* AEGISParseResultErrorStrings.swift */,
 				C23B33F02A48DF6A0014B804 /* ImporterOpenFileViewController.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2404865276559E70076376E /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C240486A27655BD70076376E /* ImporterOpenFilePresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2404866276559F00076376E /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2AC21FD27660F5700271402 /* ImporterOpenFileModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2404867276559F70076376E /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C240486E27655E760076376E /* ImporterOpenFileFlowController.swift */,
-			);
-			path = Flow;
+			path = ImporterOpenFile;
 			sourceTree = "<group>";
 		};
 		C240487227656A6E0076376E /* ImporterFileError */ = {
 			isa = PBXGroup;
 			children = (
-				C240487627656A9F0076376E /* Flow */,
-				C240487527656A8F0076376E /* Presenter */,
-				C240487427656A8B0076376E /* View */,
-			);
-			path = ImporterFileError;
-			sourceTree = "<group>";
-		};
-		C240487427656A8B0076376E /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C240487B27656DB40076376E /* ImporterFileErrorFlowController.swift */,
+				C240487927656C590076376E /* ImporterFileErrorPresenter.swift */,
 				C2150834300306E9008B66E2 /* ImporterFileErrorView.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C240487527656A8F0076376E /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C240487927656C590076376E /* ImporterFileErrorPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C240487627656A9F0076376E /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C240487B27656DB40076376E /* ImporterFileErrorFlowController.swift */,
-			);
-			path = Flow;
+			path = ImporterFileError;
 			sourceTree = "<group>";
 		};
 		C240487D2765713D0076376E /* ImporterPreimportSummary */ = {
 			isa = PBXGroup;
 			children = (
-				C2404881276571760076376E /* Flow */,
-				C24048802765716A0076376E /* Interactor */,
-				C240487F2765715E0076376E /* Presenter */,
-				C240487E276571590076376E /* View */,
-			);
-			path = ImporterPreimportSummary;
-			sourceTree = "<group>";
-		};
-		C240487E276571590076376E /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C24048862765723C0076376E /* ImporterPreimportSummaryFlowController.swift */,
+				C2404888276573420076376E /* ImporterPreimportSummaryModuleInteractor.swift */,
+				C2404884276572060076376E /* ImporterPreimportSummaryPresenter.swift */,
 				C21508383003078E008B66E2 /* ImporterPreimportSummaryView.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C240487F2765715E0076376E /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2404884276572060076376E /* ImporterPreimportSummaryPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C24048802765716A0076376E /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2404888276573420076376E /* ImporterPreimportSummaryModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2404881276571760076376E /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C24048862765723C0076376E /* ImporterPreimportSummaryFlowController.swift */,
-			);
-			path = Flow;
+			path = ImporterPreimportSummary;
 			sourceTree = "<group>";
 		};
 		C241D446278B9E0E00D7C604 /* NetworkStack */ = {
@@ -4637,38 +4314,6 @@
 			path = Pages;
 			sourceTree = "<group>";
 		};
-		C2497735277F611D00DC872C /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C2A2DA5D2FE5BAEE004FD390 /* TrashServiceView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2497736277F612200DC872C /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2FB8A6F277F990E0066DDE2 /* TrashServicePresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2497737277F612C00DC872C /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2FB8A6D277F98BF0066DDE2 /* TrashServiceInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2497738277F613500DC872C /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2497739277F618A00DC872C /* TrashServiceFlowController.swift */,
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
 		C249AF62278A40FE005F9D80 /* UserDefaults */ = {
 			isa = PBXGroup;
 			children = (
@@ -4756,33 +4401,6 @@
 				C24EECF5268787B400C6ABAA /* SectionHandler.swift */,
 			);
 			path = Section;
-			sourceTree = "<group>";
-		};
-		C2508E0E2753A4B80072C564 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C230A896275AC98B00FB83AE /* Subviews */,
-				C21508243002FF60008B66E2 /* SettingsMenuView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2508E112753AAB40072C564 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2508E122753AABF0072C564 /* SettingsMenuPresenter.swift */,
-				C29FEFF82756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift */,
-				C2508E212753D1EE0072C564 /* SettingsMenuModels.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2508E162753AB040072C564 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2508E142753AAFD0072C564 /* SettingsMenuModuleInteractor.swift */,
-			);
-			path = Interactor;
 			sourceTree = "<group>";
 		};
 		C2508E192753AEDB0072C564 /* TableView */ = {
@@ -4885,94 +4503,17 @@
 			path = News;
 			sourceTree = "<group>";
 		};
-		C25B221727C1993B0052AAC4 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				C24471D025F51F760024B4C5 /* ComposeServiceFormError.swift */,
-				C25B221527C181690052AAC4 /* ComposeServiceInputCellKind.swift */,
-				C24471A325F503690024B4C5 /* ComposeServiceFormInput.swift */,
-				C244718725F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift */,
-				C24471B225F506390024B4C5 /* ComposeServiceFormRow.swift */,
-			);
-			path = Components;
-			sourceTree = "<group>";
-		};
 		C25C660E28BADA7C008EC66A /* About */ = {
 			isa = PBXGroup;
 			children = (
-				C25C661228BADAA5008EC66A /* Flow */,
-				C25C661128BADA90008EC66A /* Interactor */,
-				C25C661028BADA8A008EC66A /* Presenter */,
-				C25C660F28BADA86008EC66A /* View */,
-			);
-			path = About;
-			sourceTree = "<group>";
-		};
-		C25C660F28BADA86008EC66A /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C21508143002C382008B66E2 /* AboutView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C25C661028BADA8A008EC66A /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
+				C25C661328BADAB0008EC66A /* AboutFlowController.swift */,
+				C2625F8F28BB85B100D84C5C /* AboutModuleInteractor.swift */,
 				C2625F8D28BB858600D84C5C /* AboutPresenter.swift */,
 				C2625F9328BBC01900D84C5C /* AboutPresenter+Menu.swift */,
 				C2625F9128BBB87700D84C5C /* AboutModels.swift */,
+				C21508143002C382008B66E2 /* AboutView.swift */,
 			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C25C661128BADA90008EC66A /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2625F8F28BB85B100D84C5C /* AboutModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C25C661228BADAA5008EC66A /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C25C661328BADAB0008EC66A /* AboutFlowController.swift */,
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
-		C25C91D02B0A4FCC00E58729 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C25C91D42B0A632500E58729 /* IntroductionNavigationFlowController.swift */,
-				C2BD85D92640290E0087D087 /* IntroductionFlowController.swift */,
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
-		C25C91D12B0A4FD000E58729 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2F6BB07264886B7002A9747 /* IntroductionPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C25C91D22B0A4FDA00E58729 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C2F6BB0426488320002A9747 /* Pages */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C25C91D32B0A62FB00E58729 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C25C91D62B0A6DE600E58729 /* IntroductionModuleInteractor.swift */,
-			);
-			path = Interactor;
+			path = About;
 			sourceTree = "<group>";
 		};
 		C25E8996266402C500A60CE5 /* Section */ = {
@@ -5033,45 +4574,13 @@
 		C26764A628723CFD00D468B2 /* CategorySelection */ = {
 			isa = PBXGroup;
 			children = (
-				C26764AA287244B500D468B2 /* Flow */,
-				C26764A9287244AF00D468B2 /* Interactor */,
-				C26764A8287244AA00D468B2 /* Presenter */,
-				C26764A7287244A200D468B2 /* View */,
-			);
-			path = CategorySelection;
-			sourceTree = "<group>";
-		};
-		C26764A7287244A200D468B2 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C2B6D0E32FF1729300C4C73D /* ComposeServiceCategorySelectionView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C26764A8287244AA00D468B2 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
+				C26764AB287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift */,
+				C26764AD287246F300D468B2 /* ComposeServiceCategorySelectionModuleInteractor.swift */,
 				C26764AF2872483900D468B2 /* ComposeServiceCategorySelectionPresenter.swift */,
 				C26764B12872494100D468B2 /* ComposeServiceCategorySelectionModels.swift */,
+				C2B6D0E32FF1729300C4C73D /* ComposeServiceCategorySelectionView.swift */,
 			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C26764A9287244AF00D468B2 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C26764AD287246F300D468B2 /* ComposeServiceCategorySelectionModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C26764AA287244B500D468B2 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C26764AB287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift */,
-			);
-			path = Flow;
+			path = CategorySelection;
 			sourceTree = "<group>";
 		};
 		C268918B2BC4960C00713078 /* ServiceList */ = {
@@ -5161,47 +4670,15 @@
 		C274BDB827693FFD00EE28BC /* AppSecurity */ = {
 			isa = PBXGroup;
 			children = (
-				C274BDBC2769402700EE28BC /* Flow */,
-				C274BDBB2769401F00EE28BC /* Interactor */,
-				C274BDBA2769401600EE28BC /* Presenter */,
-				C274BDB92769401200EE28BC /* View */,
-			);
-			path = AppSecurity;
-			sourceTree = "<group>";
-		};
-		C274BDB92769401200EE28BC /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C215081D3002E885008B66E2 /* AppSecurityView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C274BDBA2769401600EE28BC /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
+				C274BDBD2769409700EE28BC /* AppSecurityFlowController.swift */,
+				C274BDBF2769419300EE28BC /* AppSecurityModuleInteractor.swift */,
 				C274BDC1276941FB00EE28BC /* AppSecurityPresenter.swift */,
 				C274BDC32769425900EE28BC /* AppSecurityPresenter+Menu.swift */,
 				C274BDC52769428700EE28BC /* AppSecurityModels.swift */,
 				C287D4FA276A92460001B272 /* AppSecurityExtensions.swift */,
+				C215081D3002E885008B66E2 /* AppSecurityView.swift */,
 			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C274BDBB2769401F00EE28BC /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C274BDBF2769419300EE28BC /* AppSecurityModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C274BDBC2769402700EE28BC /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C274BDBD2769409700EE28BC /* AppSecurityFlowController.swift */,
-			);
-			path = Flow;
+			path = AppSecurity;
 			sourceTree = "<group>";
 		};
 		C274C9CE2BAB8ABB008E7212 /* TwoFASWatch Watch App */ = {
@@ -5356,32 +4833,6 @@
 			path = Flow;
 			sourceTree = "<group>";
 		};
-		C27D5439275D37B6001E9ABF /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C27BE516275D6ACC0090CA12 /* BackupMenuModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C27D543A275D37BD001E9ABF /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C27D543E275D393D001E9ABF /* BackupMenuPresenter.swift */,
-				C27BE512275D4A2A0090CA12 /* BackupMenuPresenter+Menu.swift */,
-				C27BE514275D4EE70090CA12 /* BackupMenuModels.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C27D543B275D37C3001E9ABF /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C215081B3002E7F5008B66E2 /* BackupMenuView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		C27D99DC2BD52A5E0008203F /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -5472,44 +4923,12 @@
 		C284AF6C2760112900FEE810 /* BackupDelete */ = {
 			isa = PBXGroup;
 			children = (
-				C284AF75276015A900FEE810 /* Flow */,
-				C284AF74276015A300FEE810 /* Interactor */,
-				C284AF712760158400FEE810 /* Presenter */,
-				C284AF70276011F300FEE810 /* View */,
-			);
-			path = BackupDelete;
-			sourceTree = "<group>";
-		};
-		C284AF70276011F300FEE810 /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C284AF7827601BCF00FEE810 /* BackupDeleteFlowController.swift */,
+				C284AF76276016EB00FEE810 /* BackupDeleteModuleInteractor.swift */,
+				C284AF722760159D00FEE810 /* BackupDeletePresenter.swift */,
 				C2150832300306AD008B66E2 /* BackupDeleteView.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C284AF712760158400FEE810 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C284AF722760159D00FEE810 /* BackupDeletePresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C284AF74276015A300FEE810 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C284AF76276016EB00FEE810 /* BackupDeleteModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C284AF75276015A900FEE810 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C284AF7827601BCF00FEE810 /* BackupDeleteFlowController.swift */,
-			);
-			path = Flow;
+			path = BackupDelete;
 			sourceTree = "<group>";
 		};
 		C28633D01FFABD2200C8F4B4 /* TwoFASAuth */ = {
@@ -5535,10 +4954,14 @@
 		C286ED4C25F4364000F92EDE /* ComposeService */ = {
 			isa = PBXGroup;
 			children = (
-				C2340CB027BC48A600746676 /* Flow */,
-				C2340CAF27BC489F00746676 /* Interactor */,
-				C2340CAE27BC489200746676 /* Presenter */,
-				C2340CAD27BC488D00746676 /* View */,
+				C23B899427C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift */,
+				C25B221127C177170052AAC4 /* ComposeServiceFlowController.swift */,
+				C271B64727BAE67500D0D743 /* ComposeServiceModuleInteractor.swift */,
+				C2CC80D727B99B0600294CF2 /* ComposeServicePresenter.swift */,
+				C2014E0327BEED630046B75C /* ComposeServiceInputCell.swift */,
+				C25B221327C17F1E0052AAC4 /* ComposeServiceInputKind.swift */,
+				C2B6D0E62FF1814300C4C73D /* Components */,
+				C2B6D0EB2FF181C800C4C73D /* ComposeServiceView.swift */,
 				C21247F927B717660044D9F2 /* Modules */,
 			);
 			path = ComposeService;
@@ -5673,11 +5096,11 @@
 		C2A277AC26DBCFFC00A18F25 /* SelectFromGallery */ = {
 			isa = PBXGroup;
 			children = (
+				C2B39C6F27A5882D00D3B579 /* SelectFromGalleryFlowController.swift */,
+				C2B39C7627A5908F00D3B579 /* SelectFromGalleryModuleInteractor.swift */,
+				C2B39C7427A58F0E00D3B579 /* SelectFromGalleryPresenter.swift */,
+				C2B39C7227A58E0800D3B579 /* SelectFromGalleryViewController.swift */,
 				C28356222897098300421882 /* SelectFromGalleryAdvice.swift */,
-				C2B39C6E27A581D300D3B579 /* Flow */,
-				C2B39C6D27A581CE00D3B579 /* Interactor */,
-				C2B39C6C27A581C600D3B579 /* Presenter */,
-				C2B39C7127A58DDA00D3B579 /* View */,
 			);
 			path = SelectFromGallery;
 			sourceTree = "<group>";
@@ -5685,46 +5108,14 @@
 		C2A70678276D1A0400885D79 /* NewPIN */ = {
 			isa = PBXGroup;
 			children = (
-				C2A7067C276D1A5F00885D79 /* Flow */,
-				C2A7067B276D1A1B00885D79 /* Interactor */,
-				C2A7067A276D1A1100885D79 /* Presenter */,
-				C2A70679276D1A0C00885D79 /* View */,
-			);
-			path = NewPIN;
-			sourceTree = "<group>";
-		};
-		C2A70679276D1A0C00885D79 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C21508263003009A008B66E2 /* NewPINView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2A7067A276D1A1100885D79 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2A70681276D390500885D79 /* NewPINPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2A7067B276D1A1B00885D79 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2A7067F276D36E100885D79 /* NewPINModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2A7067C276D1A5F00885D79 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
 				C2BC3FC82B94E70F004C4BA0 /* NewPINNavigationFlowController.swift */,
 				C2A7067D276D1A7500885D79 /* NewPINFlowController.swift */,
 				C2997AA82454D767006D5943 /* SelectPINLengthController.swift */,
+				C2A7067F276D36E100885D79 /* NewPINModuleInteractor.swift */,
+				C2A70681276D390500885D79 /* NewPINPresenter.swift */,
+				C21508263003009A008B66E2 /* NewPINView.swift */,
 			);
-			path = Flow;
+			path = NewPIN;
 			sourceTree = "<group>";
 		};
 		C2A7945827F901AA00E5C641 /* EditName */ = {
@@ -5800,44 +5191,12 @@
 		C2AB92C3276651C000698382 /* ExporterPIN */ = {
 			isa = PBXGroup;
 			children = (
-				C2AB92C7276651EA00698382 /* Flow */,
-				C2AB92C6276651E400698382 /* Interactor */,
-				C2AB92C5276651D900698382 /* Presenter */,
-				C2AB92C4276651D500698382 /* View */,
-			);
-			path = ExporterPIN;
-			sourceTree = "<group>";
-		};
-		C2AB92C4276651D500698382 /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C2AB92CE27665ACC00698382 /* ExporterPINFlowController.swift */,
+				C2AB92CA2766543700698382 /* ExporterPINModuleInteractor.swift */,
+				C2AB92CC276655EF00698382 /* ExporterPINPresenter.swift */,
 				C215082E3003026A008B66E2 /* ExporterPINView.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2AB92C5276651D900698382 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2AB92CC276655EF00698382 /* ExporterPINPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2AB92C6276651E400698382 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2AB92CA2766543700698382 /* ExporterPINModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2AB92C7276651EA00698382 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2AB92CE27665ACC00698382 /* ExporterPINFlowController.swift */,
-			);
-			path = Flow;
+			path = ExporterPIN;
 			sourceTree = "<group>";
 		};
 		C2AC21FA27660DEA00271402 /* Importer */ = {
@@ -5879,87 +5238,23 @@
 		C2AC2200276614AC00271402 /* ExporterMainScreen */ = {
 			isa = PBXGroup;
 			children = (
-				C2AC22042766151B00271402 /* Flow */,
-				C2AC22032766151600271402 /* Interactor */,
-				C2AC22022766151100271402 /* Presenter */,
-				C2AC22012766150D00271402 /* View */,
-			);
-			path = ExporterMainScreen;
-			sourceTree = "<group>";
-		};
-		C2AC22012766150D00271402 /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C2AC220B276618AD00271402 /* ExporterMainScreenFlowController.swift */,
+				C2AC22092766178400271402 /* ExporterMainScreenModuleInteractor.swift */,
+				C2AC2207276615FB00271402 /* ExporterMainScreenPresenter.swift */,
 				C215083A300307F6008B66E2 /* ExporterMainScreenView.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2AC22022766151100271402 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2AC2207276615FB00271402 /* ExporterMainScreenPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2AC22032766151600271402 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2AC22092766178400271402 /* ExporterMainScreenModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2AC22042766151B00271402 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2AC220B276618AD00271402 /* ExporterMainScreenFlowController.swift */,
-			);
-			path = Flow;
+			path = ExporterMainScreen;
 			sourceTree = "<group>";
 		};
 		C2AC220D27661B1700271402 /* ExporterPasswordProtection */ = {
 			isa = PBXGroup;
 			children = (
-				C2AC221127661B8E00271402 /* Flow */,
-				C2AC221027661B8800271402 /* Interactor */,
-				C2AC220F27661B6C00271402 /* Presenter */,
-				C2AC220E27661B6700271402 /* View */,
-			);
-			path = ExporterPasswordProtection;
-			sourceTree = "<group>";
-		};
-		C2AC220E27661B6700271402 /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C2AB92BA27662CC800698382 /* ExporterPasswordProtectionFlowController.swift */,
+				C2AB92BC27662E4C00698382 /* ExporterPasswordProtectionModuleInteractor.swift */,
+				C2AC221427661C0600271402 /* ExporterPasswordProtectionPresenter.swift */,
 				C215083C30030840008B66E2 /* ExporterPasswordProtectionView.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2AC220F27661B6C00271402 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2AC221427661C0600271402 /* ExporterPasswordProtectionPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2AC221027661B8800271402 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2AB92BC27662E4C00698382 /* ExporterPasswordProtectionModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2AC221127661B8E00271402 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2AB92BA27662CC800698382 /* ExporterPasswordProtectionFlowController.swift */,
-			);
-			path = Flow;
+			path = ExporterPasswordProtection;
 			sourceTree = "<group>";
 		};
 		C2ACF9E520A8A918003E0987 /* TwoFASTests */ = {
@@ -6056,39 +5351,28 @@
 		C2ADD60F2752DBF90010F5E7 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				C2ADD6102752DC030010F5E7 /* Flow */,
-				C2508E162753AB040072C564 /* Interactor */,
-				C2508E112753AAB40072C564 /* Presenter */,
-				C2508E0E2753A4B80072C564 /* View */,
+				C230A896275AC98B00FB83AE /* Subviews */,
+				C2ADD6112752DC1E0010F5E7 /* SettingsMenuFlowController.swift */,
+				C2508E142753AAFD0072C564 /* SettingsMenuModuleInteractor.swift */,
+				C2508E122753AABF0072C564 /* SettingsMenuPresenter.swift */,
+				C29FEFF82756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift */,
+				C2508E212753D1EE0072C564 /* SettingsMenuModels.swift */,
+				C21508243002FF60008B66E2 /* SettingsMenuView.swift */,
 			);
 			path = Menu;
-			sourceTree = "<group>";
-		};
-		C2ADD6102752DC030010F5E7 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2ADD6112752DC1E0010F5E7 /* SettingsMenuFlowController.swift */,
-			);
-			path = Flow;
 			sourceTree = "<group>";
 		};
 		C2ADD6132752DF590010F5E7 /* BackupMenu */ = {
 			isa = PBXGroup;
 			children = (
-				C2ADD6142752DF610010F5E7 /* Flow */,
-				C27D5439275D37B6001E9ABF /* Interactor */,
-				C27D543A275D37BD001E9ABF /* Presenter */,
-				C27D543B275D37C3001E9ABF /* View */,
+				C2ADD6152752DF770010F5E7 /* BackupMenuFlowController.swift */,
+				C27BE516275D6ACC0090CA12 /* BackupMenuModuleInteractor.swift */,
+				C27D543E275D393D001E9ABF /* BackupMenuPresenter.swift */,
+				C27BE512275D4A2A0090CA12 /* BackupMenuPresenter+Menu.swift */,
+				C27BE514275D4EE70090CA12 /* BackupMenuModels.swift */,
+				C215081B3002E7F5008B66E2 /* BackupMenuView.swift */,
 			);
 			path = BackupMenu;
-			sourceTree = "<group>";
-		};
-		C2ADD6142752DF610010F5E7 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2ADD6152752DF770010F5E7 /* BackupMenuFlowController.swift */,
-			);
-			path = Flow;
 			sourceTree = "<group>";
 		};
 		C2AE55472FBA2E8F00CF3643 /* Subviews */ = {
@@ -6120,23 +5404,6 @@
 				C25D5E752A64863000CA359B /* Code+LastPass.swift */,
 			);
 			path = CodeSupport;
-			sourceTree = "<group>";
-		};
-		C2AF247A2E7C3003001475AF /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C28FC6DF2E4011560053B0BE /* TransferModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2AF247B2E7C5C93001475AF /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-				C272055A2E7C90FF004FB39A /* ExportQuestionPINVerification */,
-				C2AF247C2E7C5C99001475AF /* ExportQuestion */,
-			);
-			path = Modules;
 			sourceTree = "<group>";
 		};
 		C2AF247C2E7C5C99001475AF /* ExportQuestion */ = {
@@ -6222,45 +5489,13 @@
 		C2B1208529D767150020281E /* Appearance */ = {
 			isa = PBXGroup;
 			children = (
-				C2B1208929D767310020281E /* Flow */,
-				C2B1208829D767280020281E /* Interactor */,
-				C2B1208729D767210020281E /* Presenter */,
-				C2B1208629D7671C0020281E /* View */,
-			);
-			path = Appearance;
-			sourceTree = "<group>";
-		};
-		C2B1208629D7671C0020281E /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C21508193002E750008B66E2 /* AppearanceView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2B1208729D767210020281E /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
+				C2B1209429D773770020281E /* AppearanceFlowController.swift */,
+				C2B1209029D76FA60020281E /* AppearanceModuleInteractor.swift */,
 				C2B1208C29D767B10020281E /* AppearancePresenter.swift */,
 				C2B1208E29D76BD10020281E /* AppearancePresenter+Menu.swift */,
+				C21508193002E750008B66E2 /* AppearanceView.swift */,
 			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2B1208829D767280020281E /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2B1209029D76FA60020281E /* AppearanceModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2B1208929D767310020281E /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2B1209429D773770020281E /* AppearanceFlowController.swift */,
-			);
-			path = Flow;
+			path = Appearance;
 			sourceTree = "<group>";
 		};
 		C2B25665200FED7400C86667 /* ServiceMigration */ = {
@@ -6279,38 +5514,6 @@
 				C2B2B9AE2AE932BD00AB61FD /* String+.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		C2B39C6C27A581C600D3B579 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2B39C7427A58F0E00D3B579 /* SelectFromGalleryPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2B39C6D27A581CE00D3B579 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2B39C7627A5908F00D3B579 /* SelectFromGalleryModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2B39C6E27A581D300D3B579 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2B39C6F27A5882D00D3B579 /* SelectFromGalleryFlowController.swift */,
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
-		C2B39C7127A58DDA00D3B579 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C2B39C7227A58E0800D3B579 /* SelectFromGalleryViewController.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		C2B39E4E29F5834400EC31F6 /* Components */ = {
@@ -6343,6 +5546,11 @@
 			children = (
 				C2B6D0E72FF1815200C4C73D /* ComposeServiceIconTypeSelector.swift */,
 				C2B6D0E92FF1816A00C4C73D /* ComposeServiceSecretKeyField.swift */,
+				C24471D025F51F760024B4C5 /* ComposeServiceFormError.swift */,
+				C25B221527C181690052AAC4 /* ComposeServiceInputCellKind.swift */,
+				C24471A325F503690024B4C5 /* ComposeServiceFormInput.swift */,
+				C244718725F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift */,
+				C24471B225F506390024B4C5 /* ComposeServiceFormRow.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -6431,22 +5639,6 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		C2BE80562811DDEE009CBC4A /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2BE80572811DF03009CBC4A /* AuthRequestsPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2BE80592811DF1C009CBC4A /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2BE805A2811DF3D009CBC4A /* AuthRequestsFlowController.swift */,
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
 		C2C3AE12269E224A00506ACF /* TwoFASWidget */ = {
 			isa = PBXGroup;
 			children = (
@@ -6505,45 +5697,13 @@
 		C2C56D3A27C9788A003B4C43 /* AdvancedSummary */ = {
 			isa = PBXGroup;
 			children = (
-				C2C56D3E27C978AD003B4C43 /* Flow */,
-				C2C56D3D27C978A1003B4C43 /* Interactor */,
-				C2C56D3C27C9789B003B4C43 /* Presenter */,
-				C2C56D3B27C97896003B4C43 /* View */,
-			);
-			path = AdvancedSummary;
-			sourceTree = "<group>";
-		};
-		C2C56D3B27C97896003B4C43 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C2D2F7102FF042CF0008FE4D /* ComposeServiceAdvancedSummaryView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2C56D3C27C9789B003B4C43 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
+				C2C56D4927C99314003B4C43 /* ComposeServiceAdvancedSummaryFlowController.swift */,
+				C2C56D4527C98AA3003B4C43 /* ComposeServiceAdvancedSummaryModuleInteractor.swift */,
 				C2C56D4127C98243003B4C43 /* ComposeServiceAdvancedSummaryPresenter.swift */,
 				C2C56D4327C98316003B4C43 /* ComposeServiceAdvancedSummaryPresenter+Menu.swift */,
+				C2D2F7102FF042CF0008FE4D /* ComposeServiceAdvancedSummaryView.swift */,
 			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2C56D3D27C978A1003B4C43 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2C56D4527C98AA3003B4C43 /* ComposeServiceAdvancedSummaryModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2C56D3E27C978AD003B4C43 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2C56D4927C99314003B4C43 /* ComposeServiceAdvancedSummaryFlowController.swift */,
-			);
-			path = Flow;
+			path = AdvancedSummary;
 			sourceTree = "<group>";
 		};
 		C2C66F8C1FE0683000AD5A1C /* Modules */ = {
@@ -6618,72 +5778,25 @@
 		C2CC0A3429D056CF00677A7B /* Transfer */ = {
 			isa = PBXGroup;
 			children = (
-				C2AF247B2E7C5C93001475AF /* Modules */,
-				C2CC0A3829D056F700677A7B /* Flow */,
-				C2CC0A3629D056E700677A7B /* Presenter */,
-				C2AF247A2E7C3003001475AF /* Interactor */,
-				C2CC0A3529D056DE00677A7B /* View */,
-			);
-			path = Transfer;
-			sourceTree = "<group>";
-		};
-		C2CC0A3529D056DE00677A7B /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C21508223002FE33008B66E2 /* TransferView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2CC0A3629D056E700677A7B /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
+				C272055A2E7C90FF004FB39A /* ExportQuestionPINVerification */,
+				C2AF247C2E7C5C99001475AF /* ExportQuestion */,
+				C2CC0A3F29D067EF00677A7B /* TransferFlowController.swift */,
 				C2CC0A3B29D05DC900677A7B /* TransferPresenter.swift */,
 				C2CC0A3D29D0603000677A7B /* TransferPresenter+Menu.swift */,
+				C28FC6DF2E4011560053B0BE /* TransferModuleInteractor.swift */,
+				C21508223002FE33008B66E2 /* TransferView.swift */,
 			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2CC0A3829D056F700677A7B /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2CC0A3F29D067EF00677A7B /* TransferFlowController.swift */,
-			);
-			path = Flow;
+			path = Transfer;
 			sourceTree = "<group>";
 		};
 		C2CC0A4129D08D7700677A7B /* ExternalImportInstructions */ = {
 			isa = PBXGroup;
 			children = (
-				C2CC0A4429D08DAD00677A7B /* Flow */,
-				C2CC0A4329D08DA500677A7B /* Presenter */,
-				C2CC0A4229D08DA000677A7B /* View */,
-			);
-			path = ExternalImportInstructions;
-			sourceTree = "<group>";
-		};
-		C2CC0A4229D08DA000677A7B /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C2CC0A4D29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift */,
+				C2CC0A4929D0CACC00677A7B /* ExternalImportInstructionsPresenter.swift */,
 				C2CC0A4529D098CB00677A7B /* ExternalImportInstructionsView.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2CC0A4329D08DA500677A7B /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2CC0A4929D0CACC00677A7B /* ExternalImportInstructionsPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2CC0A4429D08DAD00677A7B /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2CC0A4D29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift */,
-			);
-			path = Flow;
+			path = ExternalImportInstructions;
 			sourceTree = "<group>";
 		};
 		C2CE0E1427934709007DB667 /* GoogleAuthenticator */ = {
@@ -6994,7 +6107,6 @@
 			isa = PBXGroup;
 			children = (
 				C2E53AD72B62DDAF008E1E70 /* EncryptionHolder.swift */,
-				C2E53AD82B62DDAF008E1E70 /* CountdownTimer.swift */,
 				C2E53AD92B62DDAF008E1E70 /* Log.swift */,
 				C2E53ADA2B62DDAF008E1E70 /* RefreshTimer.swift */,
 			);
@@ -7158,10 +6270,10 @@
 		C2E5482821831244001AD1A5 /* TrashService */ = {
 			isa = PBXGroup;
 			children = (
-				C2497738277F613500DC872C /* Flow */,
-				C2497737277F612C00DC872C /* Interactor */,
-				C2497736277F612200DC872C /* Presenter */,
-				C2497735277F611D00DC872C /* View */,
+				C2497739277F618A00DC872C /* TrashServiceFlowController.swift */,
+				C2FB8A6D277F98BF0066DDE2 /* TrashServiceInteractor.swift */,
+				C2FB8A6F277F990E0066DDE2 /* TrashServicePresenter.swift */,
+				C2A2DA5D2FE5BAEE004FD390 /* TrashServiceView.swift */,
 			);
 			path = TrashService;
 			sourceTree = "<group>";
@@ -7434,19 +6546,11 @@
 		C2FA3E86280B624D0097ED71 /* AuthRequests */ = {
 			isa = PBXGroup;
 			children = (
-				C2BE80592811DF1C009CBC4A /* Flow */,
-				C2FA3E89280B626D0097ED71 /* Interactor */,
-				C2BE80562811DDEE009CBC4A /* Presenter */,
+				C2FA3E8B280B628D0097ED71 /* AuthRequestsModuleInteractor.swift */,
+				C2BE805A2811DF3D009CBC4A /* AuthRequestsFlowController.swift */,
+				C2BE80572811DF03009CBC4A /* AuthRequestsPresenter.swift */,
 			);
 			path = AuthRequests;
-			sourceTree = "<group>";
-		};
-		C2FA3E89280B626D0097ED71 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2FA3E8B280B628D0097ED71 /* AuthRequestsModuleInteractor.swift */,
-			);
-			path = Interactor;
 			sourceTree = "<group>";
 		};
 		C2FA857A2426BB7300AACFC9 /* ProtectionTests */ = {
@@ -7465,46 +6569,12 @@
 				C2D18D6F2FCC67E600FD6DE1 /* GetNameView.swift */,
 				C24F81772FB90FC300339C8B /* Shake.swift */,
 				C2FF03032FAB6DD500362B88 /* BorderShield.swift */,
-				C24EE7962EC3A5780065B452 /* PasswordTextField.swift */,
-				C2FDEE56279C8FF8002CAB9E /* SwiftUIButtons.swift */,
 				C206CACE27A35ABE0068284C /* View+.swift */,
 				C20524C22807620500B2B20C /* NavigationBarHiddenHostingController.swift */,
 				C2B6D0F02FF182E100C4C73D /* TFColorPickerMenu.swift */,
+				C2418F673006C2DB008B674A /* SwiftUIButtons.swift */,
 			);
 			path = SwiftUI;
-			sourceTree = "<group>";
-		};
-		C2FDEE58279CC17A002CAB9E /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C2FDEE5C279CC271002CAB9E /* CameraScannerViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2FDEE59279CC193002CAB9E /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2FDEE5E279CC316002CAB9E /* CameraScannerPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2FDEE5A279CC1A3002CAB9E /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2FDEE60279CC36C002CAB9E /* CameraScannerModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2FDEE5B279CC1AD002CAB9E /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C23721A02804C07600DE335D /* CameraScannerNavigationFlowController.swift */,
-				C2FDEE62279CC37E002CAB9E /* CameraScannerFlowController.swift */,
-			);
-			path = Flow;
 			sourceTree = "<group>";
 		};
 		DF9C0340C08C047D376083EC /* BackupAdvanced */ = {
@@ -8668,6 +7738,7 @@
 				C21B1B2B2A8820FB0021CAF1 /* AddingServiceTokenView.swift in Sources */,
 				C23B33F12A48DF6A0014B804 /* ImporterOpenFileViewController.swift in Sources */,
 				C2E7C3462ADB021500478D89 /* Camera.swift in Sources */,
+				C2418F683006C2DB008B674A /* SwiftUIButtons.swift in Sources */,
 				C2698B702986CA3C00EBC179 /* MainTabFlowController.swift in Sources */,
 				C2014E0427BEED630046B75C /* ComposeServiceInputCell.swift in Sources */,
 				C2FDEE63279CC37E002CAB9E /* CameraScannerFlowController.swift in Sources */,
@@ -8755,7 +7826,6 @@
 				C23185662EC648E900DD1ABE /* BackupSetPasswordPresenter.swift in Sources */,
 				C26764AC287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift in Sources */,
 				C2B077C8292A938D0074517F /* UploadLogsModuleInteractorError+.swift in Sources */,
-				C24EE7972EC3A5810065B452 /* PasswordTextField.swift in Sources */,
 				C2B39E5029F5841700EC31F6 /* TokensEditCell.swift in Sources */,
 				C2EBE0042AC44DC3008FD744 /* GuideMenuView.swift in Sources */,
 				C2FA6C472401DF9400A1F320 /* AlertControllerDismissFlow.swift in Sources */,
@@ -8766,7 +7836,6 @@
 				C2F5F9E328611D6200F778E1 /* BrowserExtensionPairingAlreadyPairedFlowController.swift in Sources */,
 				C28356232897098300421882 /* SelectFromGalleryAdvice.swift in Sources */,
 				C228603226697250005E88E3 /* TokensSection.swift in Sources */,
-				C2823B1626F3E84F00583586 /* RevealPasswordInput.swift in Sources */,
 				C26764B22872494100D468B2 /* ComposeServiceCategorySelectionModels.swift in Sources */,
 				C2E7C3472ADB021500478D89 /* CameraControllerDelegate.swift in Sources */,
 				C231856A2EC648F700DD1ABE /* BackupSetPasswordView.swift in Sources */,
@@ -9071,7 +8140,6 @@
 				C26764AE287246F300D468B2 /* ComposeServiceCategorySelectionModuleInteractor.swift in Sources */,
 				C20524C32807620500B2B20C /* NavigationBarHiddenHostingController.swift in Sources */,
 				C23185642EC648E300DD1ABE /* BackupSetPasswordFlowController.swift in Sources */,
-				C2FDEE57279C8FF8002CAB9E /* SwiftUIButtons.swift in Sources */,
 				C22E6FA121E2666B00A2E66B /* CircularShape.swift in Sources */,
 				C25BB2CA2DAAE35000BEC626 /* ManageWatchPresenter.swift in Sources */,
 				C2F7FE092A8ABA25004B2C95 /* AddingServiceManuallyView.swift in Sources */,
@@ -9332,7 +8400,6 @@
 				C274C9ED2BAB8B92008E7212 /* CoreDataMigrator.swift in Sources */,
 				C25ECA823005825900D46587 /* TFInstructionCard.swift in Sources */,
 				C274C9EF2BAB8B92008E7212 /* Log.swift in Sources */,
-				C274C9F02BAB8B92008E7212 /* CountdownTimer.swift in Sources */,
 				C263E9C62D8791D100E98298 /* Data+.swift in Sources */,
 				C274C9F12BAB8B92008E7212 /* CommonLocalKeyEncryption.swift in Sources */,
 				C2A1B3B62BB6084100D6B923 /* PINType.swift in Sources */,
@@ -9564,7 +8631,6 @@
 				C2E53B162B62DDAF008E1E70 /* Log.swift in Sources */,
 				C29B42C92D98943100F49DCE /* CloudEncryptionType.swift in Sources */,
 				C215084B30042CB3008B66E2 /* TFFailureView.swift in Sources */,
-				C2E53B152B62DDAF008E1E70 /* CountdownTimer.swift in Sources */,
 				C2E53B432B62DDAF008E1E70 /* CommonLocalKeyEncryption.swift in Sources */,
 				C2C0A97F2DA31ADD000A1772 /* DeviceCode.swift in Sources */,
 				C2E53B2C2B62DDAF008E1E70 /* PairedAuthRequest.swift in Sources */,

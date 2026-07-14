@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 
 protocol PushNotificationPermissionPlainFlowControllerParent: AnyObject {
@@ -30,33 +31,31 @@ protocol PushNotificationPermissionPlainFlowControlling: AnyObject {
 
 final class PushNotificationPermissionPlainFlowController: FlowController {
     private weak var parent: PushNotificationPermissionPlainFlowControllerParent?
-    
+
     static func push(
         on navigationController: UINavigationController,
         parent: PushNotificationPermissionPlainFlowControllerParent,
         extensionID: ExtensionID?
     ) {
-        let view = PushNotificationPermissionViewController()
-        let flowController = PushNotificationPermissionPlainFlowController(viewController: view)
-        flowController.parent = parent
-        let interactor = ModuleInteractorFactory.shared.pushNotificationPermissionModuleInteractor()
-        let presenter = PushNotificationPermissionPresenter(
-            flowController: flowController,
-            interactor: interactor,
-            extensionID: extensionID
-        )
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: true)
+        let hosting = makeHosting(parent: parent, extensionID: extensionID)
+        navigationController.pushViewController(hosting, animated: true)
     }
-    
+
     static func setRoot(
         in navigationController: UINavigationController,
         parent: PushNotificationPermissionPlainFlowControllerParent,
         extensionID: ExtensionID?
     ) {
-        let view = PushNotificationPermissionViewController()
-        let flowController = PushNotificationPermissionPlainFlowController(viewController: view)
+        let hosting = makeHosting(parent: parent, extensionID: extensionID)
+        navigationController.setViewControllers([hosting], animated: false)
+    }
+
+    private static func makeHosting(
+        parent: PushNotificationPermissionPlainFlowControllerParent,
+        extensionID: ExtensionID?
+    ) -> UIHostingController<AnyView> {
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = PushNotificationPermissionPlainFlowController(viewController: hosting)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.pushNotificationPermissionModuleInteractor()
         let presenter = PushNotificationPermissionPresenter(
@@ -64,15 +63,10 @@ final class PushNotificationPermissionPlainFlowController: FlowController {
             interactor: interactor,
             extensionID: extensionID
         )
-        view.presenter = presenter
-        
-        navigationController.setViewControllers([view], animated: false)
-    }
-}
-
-extension PushNotificationPermissionPlainFlowController {
-    var viewController: PushNotificationPermissionViewController {
-        _viewController as! PushNotificationPermissionViewController
+        hosting.rootView = AnyView(
+            PushNotificationPermissionView(action: presenter.handleAction)
+        )
+        return hosting
     }
 }
 

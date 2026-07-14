@@ -59,7 +59,6 @@
 		C20E578C29297593002B215B /* UploadLogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E578B29297593002B215B /* UploadLogsViewController.swift */; };
 		C20E578F292976DA002B215B /* UUIDInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E578E292976DA002B215B /* UUIDInputField.swift */; };
 		C20E60F728188A8E00AB002E /* PushNotificationPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E60F628188A8E00AB002E /* PushNotificationPermissionView.swift */; };
-		C20E60F928188AA500AB002E /* PushNotificationPermissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E60F828188AA500AB002E /* PushNotificationPermissionViewController.swift */; };
 		C20E60FB2818971300AB002E /* PushNotificationPermissionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E60FA2818971300AB002E /* PushNotificationPermissionPresenter.swift */; };
 		C20E60FD28189D2000AB002E /* PushNotificationPermissionModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E60FC28189D2000AB002E /* PushNotificationPermissionModuleInteractor.swift */; };
 		C20E60FF28189E8800AB002E /* PushNotificationPermissionPlainFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E60FE28189E8800AB002E /* PushNotificationPermissionPlainFlowController.swift */; };
@@ -633,7 +632,6 @@
 		C279C12C2FA66203006CC971 /* SwCrypt in Frameworks */ = {isa = PBXBuildFile; productRef = C279C12B2FA66203006CC971 /* SwCrypt */; };
 		C279C1682FA66F0F006CC971 /* IntroductionNavigationbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C279C1672FA66F08006CC971 /* IntroductionNavigationbar.swift */; };
 		C27A1EB529127C8D00702DB9 /* AlertController+Ready.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A1EB429127C8D00702DB9 /* AlertController+Ready.swift */; };
-		C27A549927F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549827F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift */; };
 		C27A549B27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549A27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift */; };
 		C27A549F27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A549E27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift */; };
 		C27A54A127F0CAFC00321D2B /* BrowserExtensionIntroFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A54A027F0CAFC00321D2B /* BrowserExtensionIntroFlowController.swift */; };
@@ -1969,7 +1967,6 @@
 		C20E578B29297593002B215B /* UploadLogsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogsViewController.swift; sourceTree = "<group>"; };
 		C20E578E292976DA002B215B /* UUIDInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDInputField.swift; sourceTree = "<group>"; };
 		C20E60F628188A8E00AB002E /* PushNotificationPermissionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionView.swift; sourceTree = "<group>"; };
-		C20E60F828188AA500AB002E /* PushNotificationPermissionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionViewController.swift; sourceTree = "<group>"; };
 		C20E60FA2818971300AB002E /* PushNotificationPermissionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionPresenter.swift; sourceTree = "<group>"; };
 		C20E60FC28189D2000AB002E /* PushNotificationPermissionModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionModuleInteractor.swift; sourceTree = "<group>"; };
 		C20E60FE28189E8800AB002E /* PushNotificationPermissionPlainFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionPlainFlowController.swift; sourceTree = "<group>"; };
@@ -2430,7 +2427,6 @@
 		C27A1EB429127C8D00702DB9 /* AlertController+Ready.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertController+Ready.swift"; sourceTree = "<group>"; };
 		C27A31C929C8EEE40094679F /* LastPassData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastPassData.swift; sourceTree = "<group>"; };
 		C27A31CB29C90B110094679F /* RaivoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RaivoData.swift; sourceTree = "<group>"; };
-		C27A549827F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroViewController.swift; sourceTree = "<group>"; };
 		C27A549A27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroPresenter.swift; sourceTree = "<group>"; };
 		C27A549E27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroModuleInteractor.swift; sourceTree = "<group>"; };
 		C27A54A027F0CAFC00321D2B /* BrowserExtensionIntroFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroFlowController.swift; sourceTree = "<group>"; };
@@ -3538,57 +3534,16 @@
 			path = Flow;
 			sourceTree = "<group>";
 		};
-		C20E60F0281886E700AB002E /* Permissions */ = {
-			isa = PBXGroup;
-			children = (
-				C20E60F1281886F300AB002E /* PushNotifications */,
-			);
-			path = Permissions;
-			sourceTree = "<group>";
-		};
 		C20E60F1281886F300AB002E /* PushNotifications */ = {
-			isa = PBXGroup;
-			children = (
-				C20E60F52818888C00AB002E /* Flow */,
-				C20E60F42818888300AB002E /* Interactor */,
-				C20E60F32818887D00AB002E /* Presenter */,
-				C20E60F22818887900AB002E /* View */,
-			);
-			path = PushNotifications;
-			sourceTree = "<group>";
-		};
-		C20E60F22818887900AB002E /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C20E60F628188A8E00AB002E /* PushNotificationPermissionView.swift */,
-				C20E60F828188AA500AB002E /* PushNotificationPermissionViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C20E60F32818887D00AB002E /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C20E60FA2818971300AB002E /* PushNotificationPermissionPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C20E60F42818888300AB002E /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C20E60FC28189D2000AB002E /* PushNotificationPermissionModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C20E60F52818888C00AB002E /* Flow */ = {
 			isa = PBXGroup;
 			children = (
 				C296D4D12A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift */,
 				C20E60FE28189E8800AB002E /* PushNotificationPermissionPlainFlowController.swift */,
+				C20E60FC28189D2000AB002E /* PushNotificationPermissionModuleInteractor.swift */,
+				C20E60FA2818971300AB002E /* PushNotificationPermissionPresenter.swift */,
+				C20E60F628188A8E00AB002E /* PushNotificationPermissionView.swift */,
 			);
-			path = Flow;
+			path = PushNotifications;
 			sourceTree = "<group>";
 		};
 		C21111E1274AB8C100CA7C78 /* Settings */ = {
@@ -4724,7 +4679,6 @@
 			isa = PBXGroup;
 			children = (
 				C2E3D55827D94ECB0050AF48 /* BrowserExtensionIntroView.swift */,
-				C27A549827F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4756,46 +4710,14 @@
 		C27A54A227F0DA9600321D2B /* Pairing */ = {
 			isa = PBXGroup;
 			children = (
-				C27A54A627F0DAB800321D2B /* Flow */,
-				C27A54A527F0DAAD00321D2B /* Interactor */,
-				C27A54A427F0DAA600321D2B /* Presenter */,
-				C27A54A327F0DAA200321D2B /* View */,
-			);
-			path = Pairing;
-			sourceTree = "<group>";
-		};
-		C27A54A327F0DAA200321D2B /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C296D4D32A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift */,
+				C27A54A727F0F3C700321D2B /* BrowserExtensionPairingPlainFlowController.swift */,
+				C27A54A927F0FAC500321D2B /* BrowserExtensionPairingModuleInteractor.swift */,
+				C27A54AB27F0FCC600321D2B /* BrowserExtensionPairingPresenter.swift */,
 				C2F51F0027DAB37200A67C73 /* BrowserExtensionPairingAnimationView.swift */,
 				C27A54AD27F0FD0C00321D2B /* BrowserExtensionPairingViewController.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C27A54A427F0DAA600321D2B /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C27A54AB27F0FCC600321D2B /* BrowserExtensionPairingPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C27A54A527F0DAAD00321D2B /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C27A54A927F0FAC500321D2B /* BrowserExtensionPairingModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C27A54A627F0DAB800321D2B /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C296D4D32A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift */,
-				C27A54A727F0F3C700321D2B /* BrowserExtensionPairingPlainFlowController.swift */,
-			);
-			path = Flow;
+			path = Pairing;
 			sourceTree = "<group>";
 		};
 		C27C03B827F4EFC70020DB5E /* View */ = {
@@ -5272,9 +5194,9 @@
 		C2AD652727F255F1008997DB /* Failed */ = {
 			isa = PBXGroup;
 			children = (
-				C2AD652C27F25644008997DB /* Flow */,
-				C2AD652A27F2562E008997DB /* Presenter */,
-				C2AD652927F25621008997DB /* View */,
+				C2AD653027F258B3008997DB /* BrowserExtensionFailureFlowController.swift */,
+				C2AD653227F25ABD008997DB /* BrowserExtensionFailurePresenter.swift */,
+				C2F51EFE27DAAD9900A67C73 /* BrowserExtensionPairingFailureView.swift */,
 			);
 			path = Failed;
 			sourceTree = "<group>";
@@ -5282,59 +5204,11 @@
 		C2AD652827F25615008997DB /* Success */ = {
 			isa = PBXGroup;
 			children = (
-				C2AD652F27F2586A008997DB /* Flow */,
-				C2AD652E27F25839008997DB /* Presenter */,
-				C2AD652D27F25652008997DB /* View */,
-			);
-			path = Success;
-			sourceTree = "<group>";
-		};
-		C2AD652927F25621008997DB /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C2F51EFE27DAAD9900A67C73 /* BrowserExtensionPairingFailureView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2AD652A27F2562E008997DB /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2AD653227F25ABD008997DB /* BrowserExtensionFailurePresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2AD652C27F25644008997DB /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2AD653027F258B3008997DB /* BrowserExtensionFailureFlowController.swift */,
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
-		C2AD652D27F25652008997DB /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C2AD653627F26139008997DB /* BrowserExtensionPairingSuccessFlowController.swift */,
+				C2AD653827F26196008997DB /* BrowserExtensionSuccessPresenter.swift */,
 				C2F51EFC27DAABD300A67C73 /* BrowserExtensionPairingSuccessfulView.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2AD652E27F25839008997DB /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2AD653827F26196008997DB /* BrowserExtensionSuccessPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2AD652F27F2586A008997DB /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2AD653627F26139008997DB /* BrowserExtensionPairingSuccessFlowController.swift */,
-			);
-			path = Flow;
+			path = Success;
 			sourceTree = "<group>";
 		};
 		C2AD653C27F26304008997DB /* Main */ = {
@@ -6048,7 +5922,7 @@
 				C2F5F9DE28611D3300F778E1 /* AlreadyPaired */,
 				C2AD652727F255F1008997DB /* Failed */,
 				C2AD652827F25615008997DB /* Success */,
-				C20E60F0281886E700AB002E /* Permissions */,
+				C20E60F1281886F300AB002E /* PushNotifications */,
 				C2AD653C27F26304008997DB /* Main */,
 			);
 			path = BrowserExtension;
@@ -6461,35 +6335,11 @@
 		C2F5F9DE28611D3300F778E1 /* AlreadyPaired */ = {
 			isa = PBXGroup;
 			children = (
-				C2F5F9E128611D4A00F778E1 /* Flow */,
-				C2F5F9E028611D4500F778E1 /* Presenter */,
-				C2F5F9DF28611D4200F778E1 /* View */,
-			);
-			path = AlreadyPaired;
-			sourceTree = "<group>";
-		};
-		C2F5F9DF28611D4200F778E1 /* View */ = {
-			isa = PBXGroup;
-			children = (
+				C2F5F9E228611D6200F778E1 /* BrowserExtensionPairingAlreadyPairedFlowController.swift */,
+				C2F5F9E428611DB300F778E1 /* BrowserExtensionPairingAlreadyPairedPresenter.swift */,
 				C2F5F9E828611DEF00F778E1 /* BrowserExtensionPairingAlreadyPairedView.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2F5F9E028611D4500F778E1 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2F5F9E428611DB300F778E1 /* BrowserExtensionPairingAlreadyPairedPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2F5F9E128611D4A00F778E1 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2F5F9E228611D6200F778E1 /* BrowserExtensionPairingAlreadyPairedFlowController.swift */,
-			);
-			path = Flow;
+			path = AlreadyPaired;
 			sourceTree = "<group>";
 		};
 		C2F6BB0426488320002A9747 /* Pages */ = {
@@ -7711,7 +7561,6 @@
 				C2D4196621F39B2400DFDB2B /* CameraView.swift in Sources */,
 				C2F5F9E928611DEF00F778E1 /* BrowserExtensionPairingAlreadyPairedView.swift in Sources */,
 				C215081C3002E7F5008B66E2 /* BackupMenuView.swift in Sources */,
-				C20E60F928188AA500AB002E /* PushNotificationPermissionViewController.swift in Sources */,
 				C213478C2D9885CB00D325F6 /* EncryptedByUserPasswordSyncModuleInteractor.swift in Sources */,
 				C2C56D4A27C99314003B4C43 /* ComposeServiceAdvancedSummaryFlowController.swift in Sources */,
 				C28FC6E02E4011580053B0BE /* TransferModuleInteractor.swift in Sources */,
@@ -7908,7 +7757,6 @@
 				C2F7FE032A8AB3D2004B2C95 /* AddingServiceManuallyPresenter.swift in Sources */,
 				C28C441724A67B7000534B30 /* CommonSearchBar.swift in Sources */,
 				C28B38C927CD784D00BD4A96 /* RefreshTokenCounter.swift in Sources */,
-				C27A549927F0C5DC00321D2B /* BrowserExtensionIntroViewController.swift in Sources */,
 				C2D6731E25DB2C5D004BD697 /* Toast.swift in Sources */,
 				C2B077A6292A75CA0074517F /* UploadLogsFlowController.swift in Sources */,
 				C21111EE274ABBD900CA7C78 /* SettingsFlowController.swift in Sources */,

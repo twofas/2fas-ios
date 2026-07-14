@@ -20,105 +20,97 @@
 import SwiftUI
 import Common
 
-struct BrowserExtensionIntroView: View {
-    private let spacing: CGFloat = Spacing.XL.rawValue
-    
-    private let image = Asset.aboutExtension.image
-    
-    let action: Callback
-    let cancel: Callback?
-    let info: Callback
-    
-    private let columns = [
-        GridItem(.flexible(maximum: 20), alignment: .top),
-        GridItem(.flexible())
-    ]
-    
-    private let data = [
-        "1.", T.Browser.infoDescriptionFirst,
-        "2.", T.Browser.infoDescriptionSecond
-    ]
-    
+struct BrowserExtensionIntroStep: Hashable, Identifiable {
+    var id = UUID()
+    let title: String
+    let icon: TFInstructionCardIcon
+    let description: String?
+}
+
+struct BrowserExtensionIntroView<Presenter: BrowserExtensionIntroPresenting>: View {
+    private let presenter: Presenter
+
+    init(presenter: Presenter) {
+        self.presenter = presenter
+    }
+
     var body: some View {
-        VStack(alignment: .center, spacing: Spacing.M) {
-            Group {
-                Image(uiImage: image)
-                    .renderingMode(.original)
-                    .padding(.top, Spacing.M)
-                    .frame(width: image.size.width, height: image.size.height)
-            }
-            .frame(maxHeight: .infinity, alignment: .center)
-            
-            VStack(spacing: spacing) {
-                Text(T.Browser.infoTitle)
-                    .font(.title)
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.7)
-                
-                LazyVGrid(columns: columns, alignment: .leading, spacing: Spacing.M.rawValue) {
-                    ForEach(data, id: \.self) { item in
-                        Group {
-                            Text(item)
-                                .font(.body)
-                                .multilineTextAlignment(.leading)
-                                .frame(alignment: .top)
+        VStack(spacing: .zero) {
+            TFScreenTitleBar(
+                title: T.Browser.browserExtension,
+                leadingSymbol: presenter.hasCancel ? .close : nil,
+                onLeadingTap: presenter.hasCancel ? presenter.handleCancel : nil
+            )
+
+            ScrollView {
+                VStack(spacing: .XXL) {
+                    Image(systemName: "puzzlepiece.extension.fill")
+                        .textStyle(.iconLarge)
+                        .foregroundStyle(.accentsBrand)
+                        .padding(.top, .XL)
+
+                    Text(T.Browser.infoTitle)
+                        .textStyle(.title1, .emphasized)
+                        .foregroundStyle(.labelsPrimary)
+                        .multilineTextAlignment(.center)
+
+                    VStack(spacing: .L) {
+                        ForEach(Array(presenter.steps.enumerated()), id: \.element) { _, step in
+                            TFInstructionCard(
+                                icon: step.icon,
+                                title: step.title,
+                                description: step.description,
+                                accessory: nil
+                            )
                         }
                     }
-                }
-                
-                HStack(spacing: Spacing.SM) {
-                    Text(T.Browser.moreInfo)
-                        .foregroundColor(Color(Theme.Colors.Text.main))
-                        .multilineTextAlignment(.trailing)
-                    Button {
-                        info()
-                    } label: {
-                        Text(T.Browser.moreInfoLinkTitle)
-                            .multilineTextAlignment(.leading)
+
+                    VStack(spacing: .S) {
+                        Text(T.Browser.moreInfo)
+                            .textStyle(.footnote)
+                            .foregroundStyle(.labelsSecondary)
+                            .multilineTextAlignment(.center)
+
+                        TFButton(
+                            T.Browser.moreInfoLinkTitle,
+                            variant: .borderless,
+                            size: .small,
+                            action: presenter.handleInfo
+                        )
                     }
-                    .buttonStyle(NoPaddingLinkButtonStyle())
                 }
-                .padding()
-                .frame(minWidth: 0, maxWidth: .infinity)
+                .padding(.horizontal, .XL)
+                .padding(.bottom, .XL)
             }
-            .frame(alignment: .center)
-            .layoutPriority(1)
-            
-            VStack(spacing: 0) {
-                Button {
-                    action()
-                } label: {
-                    Text(T.Browser.pairWithWebBrowser)
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                }
-                .buttonStyle(RoundedFilledButtonStyle())
-                
-                if let cancel {
-                    Button {
-                        cancel()
-                    } label: {
-                        Text(T.Commons.cancel)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                    }
-                    .buttonStyle(LinkButtonStyle())
-                }
+
+            VStack(spacing: .L) {
+                TFButton(
+                    T.Browser.pairWithWebBrowser,
+                    variant: .borderedProminent,
+                    size: .large,
+                    action: presenter.handleAction
+                )
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-            .padding(.bottom)
+            .padding(.horizontal, .XL)
+            .padding(.bottom, .XL)
         }
-        .frame(maxWidth: Theme.Metrics.componentWidth)
-        .navigationBarHidden(true)
+        .background(.backgroundsPrimary)
+        .toolbarVisibility(.hidden, for: .navigationBar)
     }
 }
 
-struct BrowserExtensionIntroView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            BrowserExtensionIntroView(action: {}, cancel: {}, info: {})
-                .previewDevice("iPhone SE (1st generation)")
-            BrowserExtensionIntroView(action: {}, cancel: nil, info: {})
-                .preferredColorScheme(.dark)
-                .previewDevice("iPhone 13 Pro Max")
-        }
+#Preview {
+    final class BrowserExtensionIntroPresenterMock: BrowserExtensionIntroPresenting {
+        var hasCancel: Bool { false }
+        let steps: [BrowserExtensionIntroStep] = [
+            .init(title: T.Browser.infoDescriptionFirst, icon: .download, description: nil),
+            .init(title: T.Browser.infoDescriptionSecond, icon: .link, description: nil)
+        ]
+
+        func handleAction() {}
+        func handleCancel() {}
+        func handleInfo() {}
     }
+
+    return BrowserExtensionIntroView(presenter: BrowserExtensionIntroPresenterMock())
 }

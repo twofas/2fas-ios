@@ -44,7 +44,7 @@ final class BrowserExtensionPairingAlreadyPairedFlowController: FlowController {
             flowController: flowController
         )
         hosting.rootView = AnyView(
-            BrowserExtensionPairingAlreadyPairedfulView(action: presenter.handleCancel)
+            BrowserExtensionPairingAlreadyPairedView(action: presenter.handleCancel)
         )
 
         navigationController.pushViewController(hosting, animated: true)

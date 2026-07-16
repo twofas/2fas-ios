@@ -18,12 +18,13 @@
 //
 
 import UIKit
+import Common
 
 final class CircleProgress: UIView {
     private let circle = CircularShape()
     private let valueLabel: UILabel = {
         let label = UILabel()
-        label.font = Theme.Fonts.Controls.counter
+        label.font = TextStyle.counter.uiFont()
         label.allowsDefaultTighteningForTruncation = true
         label.adjustsFontSizeToFitWidth = true
         label.numberOfLines = 1

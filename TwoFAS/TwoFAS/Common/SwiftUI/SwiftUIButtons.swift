@@ -47,29 +47,3 @@ struct LinkButtonStyle: SwiftUI.ButtonStyle {
     }
 }
 
-struct TextLinkButtonStyle: SwiftUI.ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .frame(width: Theme.Metrics.componentWidth, alignment: .center)
-            .contentShape(Rectangle())
-            .multilineTextAlignment(.center)
-            .font(.body)
-            .padding()
-            .foregroundColor(
-                Color(configuration.isPressed ? Theme.Colors.Text.themeHighlighted : Theme.Colors.Text.theme)
-            )
-            .background(Color(.clear))
-    }
-}
-
-struct NoPaddingLinkButtonStyle: SwiftUI.ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .multilineTextAlignment(.center)
-            .font(.body)
-            .foregroundColor(
-                Color(configuration.isPressed ? Theme.Colors.Text.themeHighlighted : Theme.Colors.Text.theme)
-            )
-            .background(Color(.clear))
-    }
-}

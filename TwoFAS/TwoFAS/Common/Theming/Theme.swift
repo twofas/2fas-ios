@@ -117,10 +117,6 @@ enum Theme {
             static let secondaryDivider = ThemeColor.secondaryDivider
         }
         
-        enum Table {
-            static let background = ThemeColor.tableBackground
-        }
-        
         enum SettingsCell {
             static let background = ThemeColor.settingsCellBackground
             static let iconBorder = ThemeColor.tertiary
@@ -145,10 +141,6 @@ enum Theme {
     }
     
     enum Fonts {
-        private static let syncCounter = UIFont.systemFont(ofSize: 60, weight: .thin)
-        private static let counter = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: .semibold)
-        private static let privateKey = UIFont.monospacedDigitSystemFont(ofSize: 50, weight: .thin)
-        private static let privateKeyMask = UIFont.monospacedSystemFont(ofSize: 43, weight: .regular)
         private static let title = UIFont.systemFont(ofSize: 32, weight: .light)
         private static let boldTitle = UIFont.systemFont(ofSize: 32, weight: .semibold)
         private static let header = UIFont.systemFont(ofSize: 17, weight: .semibold)
@@ -181,7 +173,6 @@ enum Theme {
             static let title = header
             static let PINPad = Fonts.title
             static let smallTitle = Fonts.note
-            static let counter = Fonts.counter
         }
         
         static let warning = UIFont.systemFont(ofSize: 13, weight: .medium)

@@ -20,7 +20,7 @@
 import UIKit
 import Common
 
-struct SelectServiceSection: TableViewSection {
+struct SelectServiceSection: Hashable {
     enum TitleType: Hashable {
         case noTitle
         case bestMatch

@@ -41,7 +41,7 @@ struct AddingServiceTOTPTimerView: View {
         
         ZStack(alignment: .center) {
             Text(text)
-                .font(Font(Theme.Fonts.Controls.counter))
+                .textStyle(.counter)
                 .lineLimit(1)
                 .multilineTextAlignment(.center)
                 .foregroundColor(color)

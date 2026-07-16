@@ -327,8 +327,9 @@ final class CloudKit {
                 )
             case .failure(let error):
                 self?.savePartialOperationError(error)
+                let nsError = error as NSError
                 Log(
-                    "CloudKit - perRecordSaveBlock - error: \(error), \((error as NSError).userInfo)",
+                    "CloudKit - perRecordSaveBlock - error domain: \(nsError.domain), code: \(nsError.code)",
                     module: .cloudSync
                 )
             }

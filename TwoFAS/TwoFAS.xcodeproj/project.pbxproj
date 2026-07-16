@@ -30,7 +30,6 @@
 		C200E4B71FB3913B00D7C748 /* ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200E4AA1FB3913A00D7C748 /* ServiceHandler.swift */; };
 		C200E4BA1FB3913B00D7C748 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200E4AD1FB3913A00D7C748 /* Storage.swift */; };
 		C200E4C01FB3926500D7C748 /* TwoFAS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C236667D1FB2644900989ACA /* TwoFAS.xcdatamodeld */; };
-		C2014E0427BEED630046B75C /* ComposeServiceInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2014E0327BEED630046B75C /* ComposeServiceInputCell.swift */; };
 		C2035D412938129000B94834 /* Mock.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2035D3F2938129000B94834 /* Mock.generated.swift */; };
 		C2044D83224EC6A8003940AA /* FCM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2044D82224EC6A8003940AA /* FCM.swift */; };
 		C2044D85224ECF1B003940AA /* FCMHandlerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2044D84224ECF1B003940AA /* FCMHandlerProtocol.swift */; };
@@ -292,10 +291,6 @@
 		C241D453278B9E2D00D7C604 /* AppVersionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C241D451278B9E2D00D7C604 /* AppVersionHandler.swift */; };
 		C24295572E43DA4E00E236EA /* CompressionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24295562E43D99100E236EA /* CompressionInteractor.swift */; };
 		C242C6D22F9AABA00080E0DB /* IntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C242C6D12F9AAB9A0080E0DB /* IntroductionView.swift */; };
-		C244718825F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C244718725F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift */; };
-		C24471A425F503690024B4C5 /* ComposeServiceFormInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24471A325F503690024B4C5 /* ComposeServiceFormInput.swift */; };
-		C24471B325F506390024B4C5 /* ComposeServiceFormRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24471B225F506390024B4C5 /* ComposeServiceFormRow.swift */; };
-		C24471D125F51F760024B4C5 /* ComposeServiceFormError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24471D025F51F760024B4C5 /* ComposeServiceFormError.swift */; };
 		C244EF11268674650040A58F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C244EF10268674650040A58F /* Extensions.swift */; };
 		C244EF14268685BC0040A58F /* Sync2-Sync3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C244EF13268685BC0040A58F /* Sync2-Sync3.xcmappingmodel */; };
 		C24587812D8B918B00F28B22 /* SyncMigrationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C245877F2D8B917100F28B22 /* SyncMigrationHandler.swift */; };
@@ -331,9 +326,6 @@
 		C24F81782FB90FC600339C8B /* Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24F81772FB90FC300339C8B /* Shake.swift */; };
 		C2508E132753AABF0072C564 /* SettingsMenuPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2508E122753AABF0072C564 /* SettingsMenuPresenter.swift */; };
 		C2508E152753AAFD0072C564 /* SettingsMenuModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2508E142753AAFD0072C564 /* SettingsMenuModuleInteractor.swift */; };
-		C2508E1B2753AEEB0072C564 /* TableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2508E1A2753AEEB0072C564 /* TableViewAdapter.swift */; };
-		C2508E1D2753AFBD0072C564 /* TableViewDataSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2508E1C2753AFBD0072C564 /* TableViewDataSnapshot.swift */; };
-		C2508E1F2753B00D0072C564 /* TableViewDelegatee.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2508E1E2753B00D0072C564 /* TableViewDelegatee.swift */; };
 		C2508E222753D1EE0072C564 /* SettingsMenuModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2508E212753D1EE0072C564 /* SettingsMenuModels.swift */; };
 		C251EDD82AE87150007722F2 /* Base32.h in Headers */ = {isa = PBXBuildFile; fileRef = C251EDD72AE87150007722F2 /* Base32.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C251EDDB2AE87150007722F2 /* Base32.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C251EDD52AE87150007722F2 /* Base32.framework */; };
@@ -372,8 +364,6 @@
 		C258EC6E227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = C258EC6D227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift */; };
 		C25AAA3C290455B2005747C5 /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
 		C25B221227C177170052AAC4 /* ComposeServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25B221127C177170052AAC4 /* ComposeServiceFlowController.swift */; };
-		C25B221427C17F1E0052AAC4 /* ComposeServiceInputKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25B221327C17F1E0052AAC4 /* ComposeServiceInputKind.swift */; };
-		C25B221627C181690052AAC4 /* ComposeServiceInputCellKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25B221527C181690052AAC4 /* ComposeServiceInputCellKind.swift */; };
 		C25BB2CA2DAAE35000BEC626 /* ManageWatchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BB2C92DAAE34C00BEC626 /* ManageWatchPresenter.swift */; };
 		C25BB2CC2DAAE3FF00BEC626 /* ManageWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BB2CB2DAAE3E500BEC626 /* ManageWatchView.swift */; };
 		C25BB2CE2DAAE45700BEC626 /* ManageWatchModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BB2CD2DAAE44C00BEC626 /* ManageWatchModuleInteractor.swift */; };
@@ -1914,7 +1904,6 @@
 		C200E49D1FB3911B00D7C748 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C200E4AA1FB3913A00D7C748 /* ServiceHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceHandler.swift; sourceTree = "<group>"; };
 		C200E4AD1FB3913A00D7C748 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
-		C2014E0327BEED630046B75C /* ComposeServiceInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceInputCell.swift; sourceTree = "<group>"; };
 		C2035D3F2938129000B94834 /* Mock.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mock.generated.swift; sourceTree = "<group>"; };
 		C2044D82224EC6A8003940AA /* FCM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCM.swift; sourceTree = "<group>"; };
 		C2044D84224ECF1B003940AA /* FCMHandlerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMHandlerProtocol.swift; sourceTree = "<group>"; };
@@ -2179,10 +2168,6 @@
 		C24295562E43D99100E236EA /* CompressionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressionInteractor.swift; sourceTree = "<group>"; };
 		C242C6D12F9AAB9A0080E0DB /* IntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionView.swift; sourceTree = "<group>"; };
 		C24336E7299ECEC700BF35B1 /* NewsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsInteractor.swift; sourceTree = "<group>"; };
-		C244718725F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceFormRowTitleLabel.swift; sourceTree = "<group>"; };
-		C24471A325F503690024B4C5 /* ComposeServiceFormInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceFormInput.swift; sourceTree = "<group>"; };
-		C24471B225F506390024B4C5 /* ComposeServiceFormRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceFormRow.swift; sourceTree = "<group>"; };
-		C24471D025F51F760024B4C5 /* ComposeServiceFormError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceFormError.swift; sourceTree = "<group>"; };
 		C244EF10268674650040A58F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C244EF12268680F70040A58F /* Sync3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sync3.xcdatamodel; sourceTree = "<group>"; };
 		C244EF13268685BC0040A58F /* Sync2-Sync3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = "Sync2-Sync3.xcmappingmodel"; sourceTree = "<group>"; };
@@ -2228,9 +2213,6 @@
 		C24F81772FB90FC300339C8B /* Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shake.swift; sourceTree = "<group>"; };
 		C2508E122753AABF0072C564 /* SettingsMenuPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuPresenter.swift; sourceTree = "<group>"; };
 		C2508E142753AAFD0072C564 /* SettingsMenuModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuModuleInteractor.swift; sourceTree = "<group>"; };
-		C2508E1A2753AEEB0072C564 /* TableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewAdapter.swift; sourceTree = "<group>"; };
-		C2508E1C2753AFBD0072C564 /* TableViewDataSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSnapshot.swift; sourceTree = "<group>"; };
-		C2508E1E2753B00D0072C564 /* TableViewDelegatee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDelegatee.swift; sourceTree = "<group>"; };
 		C2508E212753D1EE0072C564 /* SettingsMenuModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuModels.swift; sourceTree = "<group>"; };
 		C251EDD52AE87150007722F2 /* Base32.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Base32.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C251EDD72AE87150007722F2 /* Base32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Base32.h; sourceTree = "<group>"; };
@@ -2272,8 +2254,6 @@
 		C259133A2DBD70EF0040EF78 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C259133B2DBD70EF0040EF78 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C25B221127C177170052AAC4 /* ComposeServiceFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceFlowController.swift; sourceTree = "<group>"; };
-		C25B221327C17F1E0052AAC4 /* ComposeServiceInputKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceInputKind.swift; sourceTree = "<group>"; };
-		C25B221527C181690052AAC4 /* ComposeServiceInputCellKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceInputCellKind.swift; sourceTree = "<group>"; };
 		C25BB2C92DAAE34C00BEC626 /* ManageWatchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchPresenter.swift; sourceTree = "<group>"; };
 		C25BB2CB2DAAE3E500BEC626 /* ManageWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchView.swift; sourceTree = "<group>"; };
 		C25BB2CD2DAAE44C00BEC626 /* ManageWatchModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchModuleInteractor.swift; sourceTree = "<group>"; };
@@ -4333,9 +4313,6 @@
 		C2508E192753AEDB0072C564 /* TableView */ = {
 			isa = PBXGroup;
 			children = (
-				C2508E1A2753AEEB0072C564 /* TableViewAdapter.swift */,
-				C2508E1C2753AFBD0072C564 /* TableViewDataSnapshot.swift */,
-				C2508E1E2753B00D0072C564 /* TableViewDelegatee.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -4784,8 +4761,6 @@
 				C25B221127C177170052AAC4 /* ComposeServiceFlowController.swift */,
 				C271B64727BAE67500D0D743 /* ComposeServiceModuleInteractor.swift */,
 				C2CC80D727B99B0600294CF2 /* ComposeServicePresenter.swift */,
-				C2014E0327BEED630046B75C /* ComposeServiceInputCell.swift */,
-				C25B221327C17F1E0052AAC4 /* ComposeServiceInputKind.swift */,
 				C2B6D0E62FF1814300C4C73D /* Components */,
 				C2B6D0EB2FF181C800C4C73D /* ComposeServiceView.swift */,
 				C21247F927B717660044D9F2 /* Modules */,
@@ -5267,11 +5242,6 @@
 			children = (
 				C2B6D0E72FF1815200C4C73D /* ComposeServiceIconTypeSelector.swift */,
 				C2B6D0E92FF1816A00C4C73D /* ComposeServiceSecretKeyField.swift */,
-				C24471D025F51F760024B4C5 /* ComposeServiceFormError.swift */,
-				C25B221527C181690052AAC4 /* ComposeServiceInputCellKind.swift */,
-				C24471A325F503690024B4C5 /* ComposeServiceFormInput.swift */,
-				C244718725F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift */,
-				C24471B225F506390024B4C5 /* ComposeServiceFormRow.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -7407,7 +7377,6 @@
 				C2E7C3462ADB021500478D89 /* Camera.swift in Sources */,
 				C2418F683006C2DB008B674A /* SwiftUIButtons.swift in Sources */,
 				C2698B702986CA3C00EBC179 /* MainTabFlowController.swift in Sources */,
-				C2014E0427BEED630046B75C /* ComposeServiceInputCell.swift in Sources */,
 				C2FDEE63279CC37E002CAB9E /* CameraScannerFlowController.swift in Sources */,
 				C2E3D55927D94ECB0050AF48 /* BrowserExtensionIntroView.swift in Sources */,
 				C2AD653727F26139008997DB /* BrowserExtensionPairingSuccessFlowController.swift in Sources */,
@@ -7422,7 +7391,6 @@
 				C2E2C80927B0377B00F04B70 /* IconSelectorFlowController.swift in Sources */,
 				C209E9B9267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift in Sources */,
 				C21EB2FA2A800E7200FA8AA1 /* AddingServiceModuleInteractor.swift in Sources */,
-				C24471B325F506390024B4C5 /* ComposeServiceFormRow.swift in Sources */,
 				C23387042781068E00F8DBC3 /* TrashPresenter.swift in Sources */,
 				C25D5E782A64908200CA359B /* CameraLastPass.swift in Sources */,
 				C21930F02EC111DF001354C9 /* BackupManageEncryptionPresenter+Menu.swift in Sources */,
@@ -7455,7 +7423,6 @@
 				C2A2DA5E2FE5BAEE004FD390 /* TrashServiceView.swift in Sources */,
 				C21930F22EC11439001354C9 /* BackupManageEncryptionModels.swift in Sources */,
 				C29E833D2FC0BB4400CBE671 /* AddingServiceView.swift in Sources */,
-				C25B221627C181690052AAC4 /* ComposeServiceInputCellKind.swift in Sources */,
 				C2A7946027F9071F00E5C641 /* BrowserExtensionServicePresenter.swift in Sources */,
 				C267315A299AC9C40031DE09 /* LargeNavigationController.swift in Sources */,
 				C2147CF2205D8C6C0001D011 /* LoginModuleInteractor.swift in Sources */,
@@ -7485,9 +7452,7 @@
 				C2ABF3CD2003DB23003F2CBA /* ContentButton.swift in Sources */,
 				C2AC221527661C0600271402 /* ExporterPasswordProtectionPresenter.swift in Sources */,
 				C2B1208D29D767B10020281E /* AppearancePresenter.swift in Sources */,
-				C2508E1D2753AFBD0072C564 /* TableViewDataSnapshot.swift in Sources */,
 				C2B39C7727A5908F00D3B579 /* SelectFromGalleryModuleInteractor.swift in Sources */,
-				C24471D125F51F760024B4C5 /* ComposeServiceFormError.swift in Sources */,
 				C23185662EC648E900DD1ABE /* BackupSetPasswordPresenter.swift in Sources */,
 				C26764AC287245B100D468B2 /* ComposeServiceCategorySelectionFlowController.swift in Sources */,
 				C2B077C8292A938D0074517F /* UploadLogsModuleInteractorError+.swift in Sources */,
@@ -7516,7 +7481,6 @@
 				C2D2F7112FF042CF0008FE4D /* ComposeServiceAdvancedSummaryView.swift in Sources */,
 				C287D4FB276A92460001B272 /* AppSecurityExtensions.swift in Sources */,
 				C2CC0A4C29D0D4FC00677A7B /* ExternalImportService.swift in Sources */,
-				C244718825F4F6900024B4C5 /* ComposeServiceFormRowTitleLabel.swift in Sources */,
 				C2BDC6D61FC1CBE100967D0E /* UIView+Extensions.swift in Sources */,
 				C2AB92BB27662CC800698382 /* ExporterPasswordProtectionFlowController.swift in Sources */,
 				C2B6D0F12FF182E100C4C73D /* TFColorPickerMenu.swift in Sources */,
@@ -7622,7 +7586,6 @@
 				C2EF7B242DA9AE7100BAA559 /* ManageWatchFlowController.swift in Sources */,
 				C2EE37AA291D2B9800CAB85C /* Assets.swift in Sources */,
 				C2508E132753AABF0072C564 /* SettingsMenuPresenter.swift in Sources */,
-				C2508E1B2753AEEB0072C564 /* TableViewAdapter.swift in Sources */,
 				C2BDC6D41FC1CBE100967D0E /* Dictionary+Extensions.swift in Sources */,
 				C27205642E7C9765004FB39A /* ExportQuestionType.swift in Sources */,
 				C21508253002FF60008B66E2 /* SettingsMenuView.swift in Sources */,
@@ -7658,7 +7621,6 @@
 				C2F7FE012A8AB099004B2C95 /* AddingServiceManuallyFlowController.swift in Sources */,
 				C2CC0A4629D098CB00677A7B /* ExternalImportInstructionsView.swift in Sources */,
 				C240487A27656C590076376E /* ImporterFileErrorPresenter.swift in Sources */,
-				C25B221427C17F1E0052AAC4 /* ComposeServiceInputKind.swift in Sources */,
 				C2AD653327F25ABD008997DB /* BrowserExtensionFailurePresenter.swift in Sources */,
 				C249773A277F618A00DC872C /* TrashServiceFlowController.swift in Sources */,
 				C2DDEB25289F3D5200011712 /* TokensViewEmptyListScreen.swift in Sources */,
@@ -7709,7 +7671,6 @@
 				C205CE042CD1717300B69B62 /* RevealTokenAppIntent.swift in Sources */,
 				C24048872765723C0076376E /* ImporterPreimportSummaryFlowController.swift in Sources */,
 				C2A7B98E26B706B000055738 /* TwoFASWidget.intentdefinition in Sources */,
-				C2508E1F2753B00D0072C564 /* TableViewDelegatee.swift in Sources */,
 				C2EA566B2856925B00026BFE /* AskForAuthView.swift in Sources */,
 				C2830D7C293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift in Sources */,
 				C2B39E5429F5880600EC31F6 /* TokensCellKind.swift in Sources */,
@@ -7806,7 +7767,6 @@
 				C22E6FA121E2666B00A2E66B /* CircularShape.swift in Sources */,
 				C25BB2CA2DAAE35000BEC626 /* ManageWatchPresenter.swift in Sources */,
 				C2F7FE092A8ABA25004B2C95 /* AddingServiceManuallyView.swift in Sources */,
-				C24471A425F503690024B4C5 /* ComposeServiceFormInput.swift in Sources */,
 				C25860B828247CB7009AE54F /* NewsModels.swift in Sources */,
 				C2698B6C2986B42400EBC179 /* MainTabViewController.swift in Sources */,
 				C2CFA6A42AEEE9D500E574FC /* RootFlowController.swift in Sources */,

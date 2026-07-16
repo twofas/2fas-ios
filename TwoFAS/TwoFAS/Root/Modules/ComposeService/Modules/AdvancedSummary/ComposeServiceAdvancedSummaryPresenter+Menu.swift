@@ -19,7 +19,7 @@
 
 import Foundation
 
-struct ComposeServiceAdvancedSummaryMenuSection: TableViewSection {
+struct ComposeServiceAdvancedSummaryMenuSection: Hashable {
     let title: String
     var cells: [ComposeServiceAdvancedSummaryMenuCell]
 }

@@ -67,7 +67,9 @@ private struct GetNameView: View {
     private var container: some View {
         if #available(iOS 26.0, *) {
             GlassEffectContainer(spacing: Spacing.XL.rawValue) {
-                content
+                VStack(spacing: .XL) {
+                    content
+                }
             }
         } else {
             VStack(spacing: .XL) {

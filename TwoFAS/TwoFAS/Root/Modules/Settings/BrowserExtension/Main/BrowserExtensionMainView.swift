@@ -99,7 +99,7 @@ struct BrowserExtensionMainView: View {
         case .addNew:
             simpleRow(title: T.Browser.addNew, titleColor: .accentsBrand, showChevron: false)
         case .nickname(let nick):
-            simpleRow(title: nick, titleColor: .labelsPrimary, showChevron: true)
+            simpleRow(title: nick, titleColor: .labelsPrimary, showChevron: false)
         }
     }
 

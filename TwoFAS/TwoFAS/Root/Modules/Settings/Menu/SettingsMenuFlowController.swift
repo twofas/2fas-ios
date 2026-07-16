@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Data
 import Common
 
@@ -33,6 +34,11 @@ protocol SettingsMenuFlowControllerChild: AnyObject {
     func toSwitchToTransfer()
     func toSwitchToAppearance()
     func toSwitchToBackup()
+
+    func handleNavigateToViewPath(_ viewPath: ViewPath.Settings, force: Bool)
+    var currentViewPath: ViewPath.Settings? { get }
+    func showSidebarReveal(action: @escaping () -> Void)
+    func hideSidebarReveal()
 }
 
 protocol SettingsMenuFlowControllerParent: AnyObject {
@@ -68,33 +74,29 @@ protocol SettingsMenuFlowControlling: AnyObject {
 
 final class SettingsMenuFlowController: FlowController {
     private weak var parent: SettingsMenuFlowControllerParent?
-    
+    fileprivate var presenter: SettingsMenuPresenter?
+
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: SettingsMenuFlowControllerParent
-    ) -> (flow: SettingsMenuFlowControllerChild, view: SettingsMenuViewController) {
-        let view = SettingsMenuViewController()
-        let flowController = SettingsMenuFlowController(viewController: view)
+    ) -> (flow: SettingsMenuFlowControllerChild, view: UIViewController) {
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = false
+        let flowController = SettingsMenuFlowController(viewController: hosting)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.settingsMenuModuleInteractor()
         let presenter = SettingsMenuPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        presenter.view = view
-        view.presenter = presenter
-    
-        navigationController.setViewControllers([view], animated: false)
-        
-        return (flow: flowController, view: view)
+        flowController.presenter = presenter
+        hosting.rootView = AnyView(SettingsMenuView(presenter: presenter))
+
+        navigationController.setViewControllers([hosting], animated: false)
+
+        return (flow: flowController, view: hosting)
     }
 }
-
-extension SettingsMenuFlowController {
-    var viewController: SettingsMenuViewController { _viewController as! SettingsMenuViewController }
-}
-
-private extension SettingsMenuFlowController { }
 
 extension SettingsMenuFlowController: SettingsMenuFlowControlling {
     func toBackup() { parent?.toBackup() }
@@ -103,7 +105,8 @@ extension SettingsMenuFlowController: SettingsMenuFlowControlling {
     func toTrash() { parent?.toTrash() }
     func toAbout() { parent?.toAbout() }
     func toWidgetEnablingWarning() {
-        WidgetWarningFlowController.present(on: viewController, parent: self)
+        guard let vc = _viewController else { return }
+        WidgetWarningFlowController.present(on: vc, parent: self)
     }
     func toSocialChannel(_ socialChannel: SocialChannel) {
         parent?.toSocialChannel(socialChannel)
@@ -123,58 +126,76 @@ extension SettingsMenuFlowController: SettingsMenuFlowControlling {
 
 extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {
     func toCollapsed() {
-        viewController.presenter.setCollapsed()
+        presenter?.setCollapsed()
     }
-    
+
     func toExpanded() {
-        viewController.presenter.setExpanded()
+        presenter?.setExpanded()
     }
-    
+
     func toSelectedModule() {
-        viewController.presenter.handleShowSelected()
+        presenter?.handleShowSelected()
     }
-    
+
     func toShowingRoot() {
-        viewController.presenter.handleShowingRoot()
+        presenter?.handleShowingRoot()
     }
-    
+
     func toSwitchToSetupPIN() {
-        viewController.presenter.handleToSetupPIN()
+        presenter?.handleToSetupPIN()
     }
-    
+
     func toSwitchToFAQ() {
-        viewController.presenter.handleToFAQ()
+        presenter?.handleToFAQ()
     }
-    
+
     func appSecurityChaged() {
-        viewController.presenter.handleAppSecurityChaged()
+        presenter?.handleAppSecurityChaged()
     }
-    
+
     func toSwitchToBrowserExtension() {
-        viewController.presenter.handleSwitchToBrowserExtension()
+        presenter?.handleSwitchToBrowserExtension()
     }
-    
+
     func toSwitchToTransfer() {
-        viewController.presenter.handleSwitchToTransfer()
+        presenter?.handleSwitchToTransfer()
     }
-    
+
     func toSwitchToAppearance() {
-        viewController.presenter.handleSwitchToAppearance()
+        presenter?.handleSwitchToAppearance()
     }
 
     func toSwitchToBackup() {
-        viewController.presenter.handleSwitchToBackup()
+        presenter?.handleSwitchToBackup()
+    }
+
+    func handleNavigateToViewPath(_ viewPath: ViewPath.Settings, force: Bool) {
+        presenter?.handleNavigateToViewPath(viewPath, force: force)
+    }
+
+    var currentViewPath: ViewPath.Settings? {
+        presenter?.currentViewPath
+    }
+
+    func showSidebarReveal(action: @escaping () -> Void) {
+        presenter?.sidebarRevealAction = action
+        presenter?.showsSidebarButton = true
+    }
+
+    func hideSidebarReveal() {
+        presenter?.sidebarRevealAction = nil
+        presenter?.showsSidebarButton = false
     }
 }
 
 extension SettingsMenuFlowController: WidgetWarningFlowControllerParent {
     func hideWidgetWarning() {
-        viewController.dismiss(animated: true, completion: nil)
-        viewController.presenter.handleWidgetsCanceledFromWarningWindow()
+        _viewController?.dismiss(animated: true, completion: nil)
+        presenter?.handleWidgetsCanceledFromWarningWindow()
     }
-    
+
     func hideWidgetWarningAndEnable() {
-        viewController.dismiss(animated: true, completion: nil)
-        viewController.presenter.handleEnableWidgetsFromWarningWindow()
+        _viewController?.dismiss(animated: true, completion: nil)
+        presenter?.handleEnableWidgetsFromWarningWindow()
     }
 }

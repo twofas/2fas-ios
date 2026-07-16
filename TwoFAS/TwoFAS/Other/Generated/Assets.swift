@@ -106,6 +106,7 @@ internal enum Asset {
   internal static let scanErrorDuplicateError = ImageAsset(name: "scanErrorDuplicateError")
   internal static let scanErrorGeneralError = ImageAsset(name: "scanErrorGeneralError")
   internal static let selectFromGalleryAdviceIcon = ImageAsset(name: "SelectFromGalleryAdviceIcon")
+  internal static let settingsPass = ImageAsset(name: "SettingsPass")
   internal static let widgetWarningIcon = ImageAsset(name: "WidgetWarningIcon")
   internal static let shadowLine = ImageAsset(name: "ShadowLine")
   internal static let socialDiscord = ImageAsset(name: "social_discord")

@@ -21,7 +21,8 @@ import UIKit
 
 final class RootNavigationController: UINavigationController {
     var rootFlowController: FlowController!
-    
+    var keepsFullStack: Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,6 +52,7 @@ extension RootNavigationController: UINavigationControllerDelegate {
         didShow viewController: UIViewController,
         animated: Bool
     ) {
+        guard !keepsFullStack else { return }
         guard let last = viewControllers.last else { return }
         viewControllers = [last]
     }

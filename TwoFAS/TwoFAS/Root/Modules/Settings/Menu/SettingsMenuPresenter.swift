@@ -20,19 +20,18 @@
 import UIKit
 import Data
 
+@Observable
 final class SettingsMenuPresenter {
-    weak var view: SettingsMenuViewControlling?
-    
+    var sections: [SettingsMenuSection] = []
+    var selectedModule: SettingsNavigationModule?
+    var isCollapsed: Bool = false
+    var showsSidebarButton: Bool = false
+
+    var sidebarRevealAction: (() -> Void)?
+
     private let flowController: SettingsMenuFlowControlling
     let interactor: SettingsMenuModuleInteracting
-    
-    private var selectedModule: SettingsNavigationModule?
-    
-    private(set) var isCollapsed = false
-    private(set) var selectedIndex: IndexPath?
-    
-    private let tapLength = 0.75
-    
+
     init(flowController: SettingsMenuFlowControlling, interactor: SettingsMenuModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
@@ -58,33 +57,31 @@ extension SettingsMenuPresenter {
     func viewWillAppear() {
         reload()
     }
-    
-    func handleSelection(at indexPath: IndexPath) {
-        let menu = buildMenu()
-        guard let section = menu[safe: indexPath.section],
-              let cell = section.cells[safe: indexPath.row],
-              let action = cell.action else {
-            reload()
-            return
-        }
+
+    func handleSelection(_ action: SettingsMenuCell.Action, rememberPosition: Bool) {
         switch action {
         case .navigation(let navigatesTo):
-            navigate(to: navigatesTo, rememberPosition: cell.rememberPosition)
+            navigate(to: navigatesTo, rememberPosition: rememberPosition)
         }
         reload()
     }
-    
+
+    func handleToggle(_ kind: SettingsNavigationToggle) {
+        toggleAction(kind: kind)
+    }
+
+    func handleSidebarTap() {
+        sidebarRevealAction?()
+    }
+
     func setCollapsed() {
         isCollapsed = true
-        view?.clearSelection()
     }
-    
+
     func setExpanded() {
         isCollapsed = false
-        guard let selectedIndex else { return }
-        view?.setSelection(at: selectedIndex)
     }
-    
+
     func handleShowSelected() {
         if isCollapsed {
             if let selectedModule {
@@ -98,38 +95,27 @@ extension SettingsMenuPresenter {
             }
         }
     }
-    
-    func handleToggle(for indexPath: IndexPath) {
-        let menu = buildMenu()
-        guard let section = menu[safe: indexPath.section],
-              let cell = section.cells[safe: indexPath.row],
-              let cellAccessory = cell.accessory,
-              case SettingsMenuCell.AccessoryKind.toggle(let action, _) = cellAccessory
-        else { return }
-        toggleAction(kind: action)
-    }
-    
+
     func handleShowingRoot() {
         if isCollapsed {
-            selectedIndex = nil
             selectedModule = nil
             flowController.toUpdateCurrentPosition(nil)
         }
     }
-    
+
     func handleToFAQ() {
         navigate(to: .faq)
     }
-    
+
     func handleToSetupPIN() {
         guard selectedModule != .security else { return }
         navigate(to: .security)
     }
-    
+
     func handleSwitchToTransfer() {
         navigate(to: .transfer)
     }
-    
+
     func handleSwitchToAppearance() {
         navigate(to: .appearance)
     }
@@ -142,24 +128,24 @@ extension SettingsMenuPresenter {
         guard selectedModule != .browserExtension else { return }
         navigate(to: .browserExtension)
     }
-    
+
     func handleEnableWidgetsFromWarningWindow() {
         interactor.enableWidgets()
         reload()
     }
-    
+
     func handleWidgetsCanceledFromWarningWindow() {
         reload()
     }
-    
+
     func handleSocialChannel(_ socialChannel: SocialChannel) {
         flowController.toSocialChannel(socialChannel)
     }
-    
+
     func handleAppSecurityChaged() {
         reload()
     }
-    
+
     func handleNavigateToViewPath(_ viewPath: ViewPath.Settings, force: Bool = false) {
         switch viewPath {
         case .backup: navigate(to: .backup, force: force)
@@ -178,23 +164,18 @@ extension SettingsMenuPresenter {
 private extension SettingsMenuPresenter {
     func navigate(to navigateTo: SettingsNavigationModule, rememberPosition: Bool = true, force: Bool = false) {
         guard force || rememberPosition == false || navigateTo != selectedModule else { return }
-        let menu = buildMenu()
-        guard let indexPath = menu.indexPath(for: navigateTo) else { return }
         if rememberPosition {
             selectedModule = navigateTo
-            selectedIndex = indexPath
         } else {
             selectedModule = nil
-            selectedIndex = nil
         }
 
         flowController.toUpdateCurrentPosition(navigateToViewPath(navigateTo: navigateTo))
 
         if !isCollapsed {
-            view?.reload(with: menu)
-            view?.setSelection(at: indexPath)
+            reload()
         }
-        
+
         switch navigateTo {
         case .backup:
             flowController.toBackup()
@@ -220,30 +201,31 @@ private extension SettingsMenuPresenter {
             flowController.toOpenTwoPASS()
         }
     }
-    
+
     func toggleAction(kind: SettingsNavigationToggle) {
         switch kind {
         case .widgets: widgetAction()
         }
     }
-    
+
     func reload() {
-        let menu = buildMenu()
-        view?.reload(with: menu)
+        sections = buildMenu()
     }
-    
+
     func widgetAction() {
         if interactor.areWidgetsEnabled {
             interactor.disableWidgets()
+            reload()
         } else {
             if interactor.shouldShowWidgetWarning {
                 flowController.toWidgetEnablingWarning()
             } else {
                 interactor.enableWidgets()
+                reload()
             }
         }
     }
-    
+
     func navigateToViewPath(navigateTo: SettingsNavigationModule) -> ViewPath.Settings? {
         switch navigateTo {
         case .backup: .backup

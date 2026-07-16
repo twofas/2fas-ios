@@ -17,28 +17,31 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
+import Foundation
 
 extension SettingsMenuPresenter {
     func buildMenu() -> [SettingsMenuSection] {
         let networkSSLError = SettingsMenuSection(
-            title: T.Settings.sslErrorTitle,
-            cells: [
-                .init(title: T.Settings.sslErrorDescription, accessory: .warning, isEnabled: false)
-            ])
-        
-        let backup = SettingsMenuSection(
-            title: T.Settings.backupAndSynchronization,
             cells: [
                 .init(
-                    icon: Asset.backupSettingsIcon.image,
+                    icon: .symbol("exclamationmark.triangle.fill"),
+                    title: T.Settings.sslErrorDescription,
+                    accessory: .warning,
+                    isEnabled: false
+                )
+            ])
+
+        let backup = SettingsMenuSection(
+            cells: [
+                .init(
+                    icon: .symbol("cloud.fill"),
                     title: T.Backup._2fasBackup,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .backup)
                 )
             ]
         )
-        
+
         let securityDescription: String = {
             if interactor.isSecurityEnabled {
                 return T.Commons.on
@@ -46,10 +49,9 @@ extension SettingsMenuPresenter {
             return T.Commons.off
         }()
         let security = SettingsMenuSection(
-            title: T.Settings.security,
             cells: [
                 .init(
-                    icon: Asset.settingsPIN.image,
+                    icon: .symbol("staroflife.shield"),
                     title: T.Settings.appSecurity,
                     info: securityDescription,
                     accessory: .arrow,
@@ -64,66 +66,62 @@ extension SettingsMenuPresenter {
             return T.Commons.off
         }()
         let browerExtension = SettingsMenuSection(
-            title: T.Settings.advanced,
             cells: [
                 .init(
-                    icon: Asset.settingsBrowserExtension.image,
+                    icon: .symbol("puzzlepiece.extension.fill"),
                     title: T.Browser.browserExtensionSettings,
                     info: browerExtensionDescription,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .browserExtension)
                 ),
                 .init(
-                    icon: Asset.settingsWatch.image,
+                    icon: .symbol("lock.applewatch"),
                     title: T.Settings.appleWatch,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .appleWatch)
                 )
             ]
         )
-        
+
         let areWidgetsOn = interactor.areWidgetsEnabled
         let preferences = SettingsMenuSection(
-            title: T.Settings.preferences,
             cells: [
                 .init(
-                    icon: Asset.settingsAppearance.image,
+                    icon: .symbol("eye.fill"),
                     title: T.Settings.appearance,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .appearance)
                 ),
                 .init(
-                    icon: Asset.settingsWidget.image,
+                    icon: .symbol("square.grid.2x2.fill"),
                     title: T.Settings.widgets,
                     accessory: .toggle(kind: .widgets, isOn: areWidgetsOn)
                 )
             ],
             footer: T.Settings.displaySelectedServices
         )
-        
+
         let manageTokens = SettingsMenuSection(
-            title: T.Settings.manageTokens,
             cells: [
                 .init(
-                    icon: UIImage(systemName: "firewall.fill")!,
+                    icon: .symbol("arrow.left.arrow.right"),
                     title: T.Settings.transfer,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .transfer)
                 ),
                 .init(
-                    icon: Asset.settingsTrash.image,
+                    icon: .symbol("trash.fill"),
                     title: T.Settings.trashOption,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .trash)
                 )
             ]
         )
-        
+
         let pass = SettingsMenuSection(
-            title: T.settingsManagePasswordsTitle,
             cells: [
                 .init(
-                    icon: Asset.settingsPass.image,
+                    icon: .brand(Asset.settingsPass.image),
                     title: interactor.is2PASSInstalled ? T.settingsOpenTwofass : T.settingsOpenTwofassAppstore,
                     accessory: .external,
                     action: .navigation(navigatesTo: interactor.is2PASSInstalled ? .openPass : .appStorePass),
@@ -132,19 +130,18 @@ extension SettingsMenuPresenter {
             ],
             footer: nil
         )
-        
+
         let info = SettingsMenuSection(
-            title: T.Commons.info,
             cells: [
                 .init(
-                    icon: Asset.settingsFAQ.image,
+                    icon: .symbol("questionmark.circle.fill"),
                     title: T.Settings.support,
                     accessory: .external,
                     action: .navigation(navigatesTo: .faq),
                     rememberPosition: false
                 ),
                 .init(
-                    icon: Asset.settingsInfo.image,
+                    icon: .symbol("info.circle.fill"),
                     title: T.Settings.about,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .about)
@@ -152,21 +149,21 @@ extension SettingsMenuPresenter {
             ],
             footer: T.Settings.infoFooter
         )
-        
+
         var menu: [SettingsMenuSection] = []
         if interactor.hasSSLNetworkError && interactor.hasActiveBrowserExtension {
             menu.append(networkSSLError)
         }
-        
+
         menu.append(contentsOf: [
             backup,
             security
         ])
-        
+
         if interactor.isBrowserExtensionAllowed {
             menu.append(browerExtension)
         }
-        
+
         menu.append(contentsOf: [
             preferences,
             manageTokens,

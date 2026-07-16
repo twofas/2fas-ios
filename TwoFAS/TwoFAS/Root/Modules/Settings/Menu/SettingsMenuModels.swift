@@ -19,11 +19,12 @@
 
 import UIKit
 
-struct SettingsMenuSection: TableViewSection {
+struct SettingsMenuSection: Identifiable {
+    let id = UUID()
     let title: String?
     var cells: [SettingsMenuCell]
     let footer: String?
-    
+
     init(title: String? = nil, cells: [SettingsMenuCell], footer: String? = nil) {
         self.title = title
         self.cells = cells
@@ -31,29 +32,32 @@ struct SettingsMenuSection: TableViewSection {
     }
 }
 
-struct SettingsMenuCell: Hashable {
-    enum AccessoryKind: Hashable {
+struct SettingsMenuCell: Identifiable {
+    enum Icon {
+        case symbol(String)
+        case brand(UIImage)
+    }
+    enum AccessoryKind {
         case arrow
         case toggle(kind: SettingsNavigationToggle, isOn: Bool)
-        case customView(UIView)
         case external
         case warning
-        case donate
     }
     enum Action: Hashable {
         case navigation(navigatesTo: SettingsNavigationModule)
     }
-    
-    let icon: UIImage?
+
+    let id = UUID()
+    let icon: Icon?
     let title: String
     let info: String?
     let accessory: AccessoryKind?
     let action: Action?
     let isEnabled: Bool
     let rememberPosition: Bool
-    
+
     init(
-        icon: UIImage? = nil,
+        icon: Icon? = nil,
         title: String,
         info: String? = nil,
         accessory: AccessoryKind? = nil,
@@ -99,7 +103,7 @@ extension Array where Element == SettingsMenuSection {
                 }
             }
         }
-        
+
         return nil
     }
 }
@@ -110,5 +114,12 @@ extension SettingsMenuCell {
         case .navigation: return true
         default: return false
         }
+    }
+
+    var module: SettingsNavigationModule? {
+        if case .navigation(let module) = action {
+            return module
+        }
+        return nil
     }
 }

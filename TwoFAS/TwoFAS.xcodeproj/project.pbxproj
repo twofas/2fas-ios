@@ -216,8 +216,6 @@
 		C22E418825DF07B300105195 /* KeyEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22E418725DF07B300105195 /* KeyEncryption.swift */; };
 		C22E6FA121E2666B00A2E66B /* CircularShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22E6FA021E2666B00A2E66B /* CircularShape.swift */; };
 		C22FFC3E2DA5C02000A68ABD /* WatchPairHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22FFC3C2DA5C01900A68ABD /* WatchPairHandler.swift */; };
-		C230A898275AC99C00FB83AE /* SettingsMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C230A897275AC99C00FB83AE /* SettingsMenuTableViewCell.swift */; };
-		C230A89A275AE1A800FB83AE /* SettingsMenuToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C230A899275AE1A800FB83AE /* SettingsMenuToggle.swift */; };
 		C230DB8C274710E5005E7060 /* icon_64.png in Resources */ = {isa = PBXBuildFile; fileRef = C230DB8A274710E5005E7060 /* icon_64.png */; };
 		C23185642EC648E300DD1ABE /* BackupSetPasswordFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23185632EC648DD00DD1ABE /* BackupSetPasswordFlowController.swift */; };
 		C23185662EC648E900DD1ABE /* BackupSetPasswordPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23185652EC648E700DD1ABE /* BackupSetPasswordPresenter.swift */; };
@@ -1047,7 +1045,6 @@
 		C2D39DDE28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DDC28232A4E00E864E9 /* NewsEntity+CoreDataProperties.swift */; };
 		C2D39DE32823302200E864E9 /* StorageRepositoryImpl+News.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D39DE22823302200E864E9 /* StorageRepositoryImpl+News.swift */; };
 		C2D4196621F39B2400DFDB2B /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D4196521F39B2400DFDB2B /* CameraView.swift */; };
-		C2D44E68275C10850043F5D6 /* SettingsMenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D44E67275C10850043F5D6 /* SettingsMenuTableView.swift */; };
 		C2D477782FB3BE550057CA25 /* PINWelcomeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D477772FB3BE4C0057CA25 /* PINWelcomeHeader.swift */; };
 		C2D4777A2FB3C30A0057CA25 /* PINDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D477792FB3C3060057CA25 /* PINDots.swift */; };
 		C2D4777E2FB3C41C0057CA25 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D4777D2FB3C4130057CA25 /* LoginPresenter.swift */; };
@@ -1334,7 +1331,6 @@
 		C2F51F0127DAB37200A67C73 /* BrowserExtensionPairingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F51F0027DAB37200A67C73 /* BrowserExtensionPairingAnimationView.swift */; };
 		C2F543DD25672E7600611716 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F543DC25672E7600611716 /* Types.swift */; };
 		C2F5443525685C2100611716 /* SyncInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F5443425685C2100611716 /* SyncInstance.swift */; };
-		C2F5A9D9276E233000C422C4 /* SettingsMenuIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F5A9D8276E233000C422C4 /* SettingsMenuIcon.swift */; };
 		C2F5F9E328611D6200F778E1 /* BrowserExtensionPairingAlreadyPairedFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F5F9E228611D6200F778E1 /* BrowserExtensionPairingAlreadyPairedFlowController.swift */; };
 		C2F5F9E528611DB300F778E1 /* BrowserExtensionPairingAlreadyPairedPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F5F9E428611DB300F778E1 /* BrowserExtensionPairingAlreadyPairedPresenter.swift */; };
 		C2F5F9E928611DEF00F778E1 /* BrowserExtensionPairingAlreadyPairedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F5F9E828611DEF00F778E1 /* BrowserExtensionPairingAlreadyPairedView.swift */; };
@@ -2099,8 +2095,6 @@
 		C22E6F9E21E21A1E00A2E66B /* NotificationIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationIcon.swift; sourceTree = "<group>"; };
 		C22E6FA021E2666B00A2E66B /* CircularShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularShape.swift; sourceTree = "<group>"; };
 		C22FFC3C2DA5C01900A68ABD /* WatchPairHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchPairHandler.swift; sourceTree = "<group>"; };
-		C230A897275AC99C00FB83AE /* SettingsMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuTableViewCell.swift; sourceTree = "<group>"; };
-		C230A899275AE1A800FB83AE /* SettingsMenuToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuToggle.swift; sourceTree = "<group>"; };
 		C230DB8A274710E5005E7060 /* icon_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_64.png; sourceTree = "<group>"; };
 		C230DB8B274710E5005E7060 /* icon_320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_320.png; sourceTree = "<group>"; };
 		C23185632EC648DD00DD1ABE /* BackupSetPasswordFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSetPasswordFlowController.swift; sourceTree = "<group>"; };
@@ -2829,7 +2823,6 @@
 		C2D3B0F728EE115200D2F991 /* MainRepositoryImpl+Icons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Icons.swift"; sourceTree = "<group>"; };
 		C2D3B0F928EE12A700D2F991 /* ServiceDefinitionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDefinitionInteractor.swift; sourceTree = "<group>"; };
 		C2D4196521F39B2400DFDB2B /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
-		C2D44E67275C10850043F5D6 /* SettingsMenuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuTableView.swift; sourceTree = "<group>"; };
 		C2D44E69275C14790043F5D6 /* MainRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepository.swift; sourceTree = "<group>"; };
 		C2D44E6C275C14A70043F5D6 /* MainRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRepositoryImpl.swift; sourceTree = "<group>"; };
 		C2D44E6E275C19220043F5D6 /* MainRepositoryImpl+Security.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+Security.swift"; sourceTree = "<group>"; };
@@ -3013,7 +3006,6 @@
 		C2F51F0027DAB37200A67C73 /* BrowserExtensionPairingAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionPairingAnimationView.swift; sourceTree = "<group>"; };
 		C2F543DC25672E7600611716 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		C2F5443425685C2100611716 /* SyncInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncInstance.swift; sourceTree = "<group>"; };
-		C2F5A9D8276E233000C422C4 /* SettingsMenuIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsMenuIcon.swift; sourceTree = "<group>"; };
 		C2F5F9E228611D6200F778E1 /* BrowserExtensionPairingAlreadyPairedFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserExtensionPairingAlreadyPairedFlowController.swift; sourceTree = "<group>"; };
 		C2F5F9E428611DB300F778E1 /* BrowserExtensionPairingAlreadyPairedPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserExtensionPairingAlreadyPairedPresenter.swift; sourceTree = "<group>"; };
 		C2F5F9E828611DEF00F778E1 /* BrowserExtensionPairingAlreadyPairedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserExtensionPairingAlreadyPairedView.swift; sourceTree = "<group>"; };
@@ -3869,17 +3861,6 @@
 				C2F6BB0426488320002A9747 /* Pages */,
 			);
 			path = Introduction;
-			sourceTree = "<group>";
-		};
-		C230A896275AC98B00FB83AE /* Subviews */ = {
-			isa = PBXGroup;
-			children = (
-				C230A897275AC99C00FB83AE /* SettingsMenuTableViewCell.swift */,
-				C2F5A9D8276E233000C422C4 /* SettingsMenuIcon.swift */,
-				C230A899275AE1A800FB83AE /* SettingsMenuToggle.swift */,
-				C2D44E67275C10850043F5D6 /* SettingsMenuTableView.swift */,
-			);
-			path = Subviews;
 			sourceTree = "<group>";
 		};
 		C23185622EC6477F00DD1ABE /* BackupSetPassword */ = {
@@ -5092,7 +5073,6 @@
 		C2ADD60F2752DBF90010F5E7 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				C230A896275AC98B00FB83AE /* Subviews */,
 				C2ADD6112752DC1E0010F5E7 /* SettingsMenuFlowController.swift */,
 				C2508E142753AAFD0072C564 /* SettingsMenuModuleInteractor.swift */,
 				C2508E122753AABF0072C564 /* SettingsMenuPresenter.swift */,
@@ -7411,7 +7391,6 @@
 				C25DCB2F2B80318C00871035 /* AccessManager.swift in Sources */,
 				C27A54AC27F0FCC600321D2B /* BrowserExtensionPairingPresenter.swift in Sources */,
 				C2CFFCDD2007FDD600600AC6 /* CircleProgress.swift in Sources */,
-				C230A89A275AE1A800FB83AE /* SettingsMenuToggle.swift in Sources */,
 				C2698B722986F6E800EBC179 /* UITabBarController+addTab.swift in Sources */,
 				C284AF7927601BCF00FEE810 /* BackupDeleteFlowController.swift in Sources */,
 				C2E7C34B2ADB021500478D89 /* CameraOutputQRScanner.swift in Sources */,
@@ -7460,7 +7439,6 @@
 				C21508153002C382008B66E2 /* AboutView.swift in Sources */,
 				C2B1209129D76FA60020281E /* AppearanceModuleInteractor.swift in Sources */,
 				C2E7C3482ADB021500478D89 /* CameraPreview.swift in Sources */,
-				C2D44E68275C10850043F5D6 /* SettingsMenuTableView.swift in Sources */,
 				C2D4777E2FB3C41C0057CA25 /* LoginPresenter.swift in Sources */,
 				C2C0A7FC2DA2B46D000A1772 /* CloudState+.swift in Sources */,
 				C25C661428BADAB0008EC66A /* AboutFlowController.swift in Sources */,
@@ -7501,7 +7479,6 @@
 				C29FEFF92756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift in Sources */,
 				C2959627267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift in Sources */,
 				C2CC0A4E29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift in Sources */,
-				C2F5A9D9276E233000C422C4 /* SettingsMenuIcon.swift in Sources */,
 				C2B39C7327A58E0800D3B579 /* SelectFromGalleryViewController.swift in Sources */,
 				C206CACF27A35ABE0068284C /* View+.swift in Sources */,
 				C21111F0274ABCAB00CA7C78 /* FlowController.swift in Sources */,
@@ -7850,7 +7827,6 @@
 				C2CFA6A62AEEF0CB00E574FC /* RootModuleInteractor.swift in Sources */,
 				C258EC6E227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift in Sources */,
 				C2CB5D3A25DB1C9300A362A9 /* Orientation.swift in Sources */,
-				C230A898275AC99C00FB83AE /* SettingsMenuTableViewCell.swift in Sources */,
 				C27BE513275D4A2A0090CA12 /* BackupMenuPresenter+Menu.swift in Sources */,
 				C2B5BF5529460E9C00E5092D /* TokensExternalAction.swift in Sources */,
 				C2C66F8E1FE0684100AD5A1C /* MainViewController.swift in Sources */,

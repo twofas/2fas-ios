@@ -23,15 +23,18 @@ import Common
 
 public protocol AppLockStateInteracting: AnyObject {
     var isAppLocked: Bool { get }
-    
+
     var appLockAttempts: AppLockAttempts { get }
     func setAppLockAttempts(_ value: AppLockAttempts)
     var appLockBlockTime: AppLockBlockTime { get }
     func setAppLockBlockTime(_ value: AppLockBlockTime)
-    
+
     var appLockRemainingSeconds: Int? { get }
-    
+
     func lockApp()
+
+    func biometryAuthenticationStarted()
+    func biometryAuthenticationEnded()
 }
 
 final class AppLockStateInteractor {
@@ -86,6 +89,14 @@ extension AppLockStateInteractor: AppLockStateInteracting {
         Log("AppLockStateInteractor - lockApp", module: .interactor)
         let lockForSeconds = TimeInterval(appLockBlockTime.value * minute)
         mainRepository.setLockAppUntil(date: Date(timeInterval: lockForSeconds, since: currentTimestamp))
+    }
+
+    func biometryAuthenticationStarted() {
+        mainRepository.biometryAuthenticationStarted()
+    }
+
+    func biometryAuthenticationEnded() {
+        mainRepository.biometryAuthenticationEnded()
     }
 }
 

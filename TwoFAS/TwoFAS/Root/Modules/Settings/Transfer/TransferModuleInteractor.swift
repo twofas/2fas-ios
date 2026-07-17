@@ -76,7 +76,7 @@ extension TransferModuleInteractor: TransferModuleInteracting {
     
     func copyToClipboardGeneratedCodes(message: String) {
         notificationsInteractor.copyWithSuccess(value: generateOTPAuthCodes())
-        HUDNotification.presentSuccess(title: message)
+        ToastPresenter.shared.presentSuccess(title: message)
     }
     
     func createQRCodeFiles() async -> URL? {

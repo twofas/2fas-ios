@@ -26,6 +26,10 @@ public protocol AppStateInteracting: AnyObject {
     func lockScreenActive()
     func lockScreenInactive()
 
+    var isBiometryAuthenticating: Bool { get }
+    func biometryAuthenticationStarted()
+    func biometryAuthenticationEnded()
+
     var appState: AppState { get }
     func saveAppState(_ appState: AppState)
 
@@ -65,7 +69,19 @@ extension AppStateInteractor: AppStateInteracting {
     func lockScreenInactive() {
         mainRepository.lockScreenInactive()
     }
-    
+
+    var isBiometryAuthenticating: Bool {
+        mainRepository.isBiometryAuthenticating
+    }
+
+    func biometryAuthenticationStarted() {
+        mainRepository.biometryAuthenticationStarted()
+    }
+
+    func biometryAuthenticationEnded() {
+        mainRepository.biometryAuthenticationEnded()
+    }
+
     var appState: AppState {
         mainRepository.appState
     }

@@ -45,7 +45,9 @@ protocol RootModuleInteracting: AnyObject {
     )
     
     func lockScreenActive()
-    func lockScreenInactive()    
+    func lockScreenInactive()
+
+    var isBiometryAuthenticating: Bool { get }
 }
 
 final class RootModuleInteractor {
@@ -164,8 +166,12 @@ extension RootModuleInteractor: RootModuleInteracting {
     func lockScreenActive() {
         appStateInteractor.lockScreenActive()
     }
-    
+
     func lockScreenInactive() {
         appStateInteractor.lockScreenInactive()
+    }
+
+    var isBiometryAuthenticating: Bool {
+        appStateInteractor.isBiometryAuthenticating
     }
 }

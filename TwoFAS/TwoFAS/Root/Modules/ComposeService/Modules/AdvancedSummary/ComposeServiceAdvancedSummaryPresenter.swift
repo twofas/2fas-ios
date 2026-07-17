@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Common
 
 final class ComposeServiceAdvancedSummaryPresenter: ObservableObject {
     @Published var menu: ComposeServiceAdvancedSummaryMenuSection
@@ -44,7 +45,7 @@ extension ComposeServiceAdvancedSummaryPresenter {
         guard cell.copyValue else { return }
         interactor.copyCounter()
         VoiceOver.say(T.Notifications.counterCopied)
-        HUDNotification.presentSuccess(title: T.Notifications.counterCopied)
+        ToastPresenter.shared.presentCounterCopied()
     }
 
     func handleBack() {

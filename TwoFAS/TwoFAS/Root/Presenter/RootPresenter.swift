@@ -158,6 +158,7 @@ final class RootPresenter {
     
     private func installCover() {
         guard currentState != .login else { return }
+        guard !interactor.isBiometryAuthenticating else { return }
         flowController.toDismissKeyboard()
         isCoverActive = true
         flowController.toCover()

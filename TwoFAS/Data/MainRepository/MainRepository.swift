@@ -297,6 +297,11 @@ protocol MainRepository: AnyObject {
     var isLockScreenActive: Bool { get }
     func lockScreenActive()
     func lockScreenInactive()
+
+    // MARK: - Biometry authentication (in-app)
+    var isBiometryAuthenticating: Bool { get }
+    func biometryAuthenticationStarted()
+    func biometryAuthenticationEnded()
     
     // MARK: - New Version
     var newVersionCounter: Int { get }

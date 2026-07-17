@@ -114,7 +114,7 @@ final class Security: SecurityProtocol {
             completion(.notAvailable)
             return
         }
-        
+
         bioAuthCount += 1
         if bioAuthCount >= bioLimit {
             completion(.notAvailable)
@@ -122,7 +122,8 @@ final class Security: SecurityProtocol {
         }
         isAuthenticatingUsingBiometric = true
         self.completion = completion
-        
+
+        interactor?.biometryAuthenticationStarted()
         biometric.authenticate(reason: reason)
     }
     
@@ -197,20 +198,23 @@ final class Security: SecurityProtocol {
 extension Security: BiometricAuthDelegate {
     func bioAuthSuccess() {
         isAuthenticatingUsingBiometric = false
+        interactor?.biometryAuthenticationEnded()
         completion?(.autenticated)
         completion = nil
         clearBio()
         clearAuth()
     }
-    
+
     func bioAuthFailed() {
         isAuthenticatingUsingBiometric = false
+        interactor?.biometryAuthenticationEnded()
         completion?(.failed)
         completion = nil
     }
-    
+
     func bioAuthUserCancelled() {
         isAuthenticatingUsingBiometric = false
+        interactor?.biometryAuthenticationEnded()
         completion?(.notAvailable)
         completion = nil
         lockBio()

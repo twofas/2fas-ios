@@ -21,14 +21,24 @@ import Foundation
 
 extension MainRepositoryImpl {
     var isLockScreenActive: Bool { _isLockScreenActive }
-    
+
     func lockScreenActive() {
         _isLockScreenActive = true
         notificationCenter.post(name: .lockScreenIsActive, object: nil)
     }
-    
+
     func lockScreenInactive() {
         _isLockScreenActive = false
         notificationCenter.post(name: .lockScreenIsInactive, object: nil)
+    }
+
+    var isBiometryAuthenticating: Bool { _isBiometryAuthenticating }
+
+    func biometryAuthenticationStarted() {
+        _isBiometryAuthenticating = true
+    }
+
+    func biometryAuthenticationEnded() {
+        _isBiometryAuthenticating = false
     }
 }

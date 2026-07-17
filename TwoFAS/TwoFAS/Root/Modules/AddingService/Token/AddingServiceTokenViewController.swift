@@ -78,7 +78,7 @@ final class AddingServiceTokenViewController: UIViewController, AddingServiceTok
     
     func tokenCopied() {
         VoiceOver.say(T.Notifications.tokenCopied)
-        HUDNotification.presentSuccess(title: T.Notifications.tokenCopied)
+        ToastPresenter.shared.presentTokenCopied()
     }
     
     @objc

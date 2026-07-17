@@ -328,12 +328,12 @@ extension TokensViewController: TokensViewControlling {
     
     func copyToken() {
         VoiceOver.say(T.Notifications.tokenCopied)
-        HUDNotification.presentSuccess(title: T.Notifications.tokenCopied)
+        ToastPresenter.shared.presentTokenCopied()
     }
     
     func copyNextToken() {
         VoiceOver.say(T.Notifications.nextTokenCopied)
-        HUDNotification.presentSuccess(title: T.Notifications.nextTokenCopied)
+        ToastPresenter.shared.presentNextTokenCopied()
     }
 }
 
@@ -384,10 +384,11 @@ extension TokensViewController {
     
     @objc
     func notificationAppDidBecomeActive() {
+        // Do not trigger `tokensScreenIsVisible()` here — MainSplitPresenter
+        // posts `.tokensScreenIsVisible` on didBecomeActive / lockScreenIsInactive,
+        // which reaches this VC via its observer. Firing it here as well caused
+        // the search keyboard to be re-activated after the user dismissed it.
         presenter.handleAppDidBecomeActive()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            self?.tokensScreenIsVisible()
-        }
     }
     
     @objc

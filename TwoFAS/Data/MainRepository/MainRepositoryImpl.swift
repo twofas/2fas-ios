@@ -91,6 +91,7 @@ final class MainRepositoryImpl: MainRepository {
     var storageError: ((String) -> Void)?
     
     var _isLockScreenActive = false
+    var _isBiometryAuthenticating = false
     var _areLocalNotificationsHandled = false
     var _urlWillBeHandled = false
 

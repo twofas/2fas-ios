@@ -66,7 +66,7 @@ final class AuthRequestsFlowController {
 
 extension AuthRequestsFlowController: AuthRequestsFlowControlling {
     func toAuthorizationSuccess() {
-        HUDNotification.presentSuccess(title: T.Browser.codeSuccessTitle) { [weak self] in
+        ToastPresenter.shared.presentSuccess(title: T.Browser.codeSuccessTitle) { [weak self] in
             self?.presenter?.handleNextRequest()
         }
     }
@@ -78,7 +78,7 @@ extension AuthRequestsFlowController: AuthRequestsFlowControlling {
             }
             return ""
         }()
-        HUDNotification.presentFailure(title: T.Browser.codeFailure(err)) { [weak self] in
+        ToastPresenter.shared.presentFailure(title: T.Browser.codeFailure(err)) { [weak self] in
             self?.presenter?.handleNextRequest()
         }
     }

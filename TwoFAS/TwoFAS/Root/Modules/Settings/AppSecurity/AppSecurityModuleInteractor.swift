@@ -101,6 +101,7 @@ extension AppSecurityModuleInteractor: AppSecurityModuleInteracting {
         guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
             return false
         }
+        appLockStateInteractor.biometryAuthenticationStarted()
         let success: Bool = await withCheckedContinuation { continuation in
             context.evaluatePolicy(
                 .deviceOwnerAuthenticationWithBiometrics,
@@ -109,6 +110,7 @@ extension AppSecurityModuleInteractor: AppSecurityModuleInteracting {
                 continuation.resume(returning: success)
             }
         }
+        appLockStateInteractor.biometryAuthenticationEnded()
         if success {
             protectionInteractor.enableBiometry()
         }

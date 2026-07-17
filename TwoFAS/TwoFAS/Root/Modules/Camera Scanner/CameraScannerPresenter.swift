@@ -137,11 +137,6 @@ extension CameraScannerPresenter {
             } else {
                 flowController.toPushPermissions(extensionID: extensionID)
             }
-        case .support(let auditID):
-            Log("CameraScannerPresenter: Found 2FAS support request. AuditID: \(auditID)")
-            view?.enableOverlay()
-            view?.feedback()
-            flowController.toSendLogs(auditID: auditID)
         case .open:
             Log("CameraScannerPresenter: Found 2FAS open request")
         case .pairWatch(let deviceCodePath):

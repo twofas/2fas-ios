@@ -51,7 +51,6 @@ protocol TokensPlainFlowControlling: AnyObject {
     func toIncorrectCode()
     func toDuplicatedCode(forceAdd: @escaping Callback, cancel: @escaping Callback)
     func toShowShouldAddCode(with descriptionText: String?)
-    func toSendLogs(auditID: UUID)
     func toShouldRenameService(currentName: String, secret: String)
     // MARK: Sort
     func toShowSortTypes(selectedSortOption: SortType, callback: @escaping (SortType) -> Void)
@@ -282,10 +281,6 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         presentAlertOnMainSplitViewController(alert)
     }
     
-    func toSendLogs(auditID: UUID) {
-        sendLogs(auditID: auditID)
-    }
-    
     func toShouldRenameService(currentName: String, secret: String) {
         guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
         let alert = AlertControllerPromptFactory.create(
@@ -373,11 +368,6 @@ private extension TokensPlainFlowController {
             }
         }
     }
-    
-    func sendLogs(auditID: UUID) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
-        UploadLogsNavigationFlowController.present(on: mainSplitViewController, auditID: auditID, parent: self)
-    }
 }
 
 extension TokensPlainFlowController: CameraScannerNavigationFlowControllerParent {
@@ -425,13 +415,6 @@ extension TokensPlainFlowController: SelectFromGalleryFlowControllerParent {
             self?.toAddService()
         }
     }
-    
-    func galleryToSendLogs(auditID: UUID) {
-        dismiss(actions: [.continuesFlow]) { [weak self] in
-            self?.sendLogs(auditID: auditID)
-            self?.galleryViewController = nil
-        }
-    }
 }
 
 extension TokensPlainFlowController: TrashServiceFlowControllerParent {
@@ -475,12 +458,6 @@ extension TokensPlainFlowController: ComposeServiceNavigationFlowControllerParen
     }
 }
 
-extension TokensPlainFlowController: UploadLogsNavigationFlowControllerParent {
-    func uploadLogsClose() {
-        dismiss()
-    }
-}
-
 extension TokensPlainFlowController: AddingServiceFlowControllerParent {
     func addingServiceDismiss() {
         dismiss()
@@ -502,12 +479,6 @@ extension TokensPlainFlowController: AddingServiceFlowControllerParent {
     func addingServiceToLastPassSummary(importable: Int, total: Int, codes: [Code]) {
         dismiss(actions: [.continuesFlow]) { [weak self] in
             self?.showLastPassSummary(importable: importable, total: total, codes: codes)
-        }
-    }
-
-    func addingServiceToSendLogs(auditID: UUID) {
-        dismiss(actions: [.continuesFlow]) { [weak self] in
-            self?.toSendLogs(auditID: auditID)
         }
     }
 

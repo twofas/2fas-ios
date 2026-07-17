@@ -28,7 +28,6 @@ protocol SelectFromGalleryFlowControllerParent: AnyObject {
     func galleryDidImport(count: Int)
     func galleryDidCancel()
     func galleryServiceWasCreated(serviceData: ServiceData)
-    func galleryToSendLogs(auditID: UUID)
 }
 
 protocol SelectFromGalleryFlowControlling: AnyObject {
@@ -43,7 +42,6 @@ protocol SelectFromGalleryFlowControlling: AnyObject {
     func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
     func toLastPassSummary(importable: Int, total: Int, codes: [Code])
     func toRename(currentName: String, secret: String)
-    func toSendLogs(auditID: UUID)
 }
 
 final class SelectFromGalleryFlowController: FlowController {
@@ -231,10 +229,6 @@ extension SelectFromGalleryFlowController: SelectFromGalleryFlowControlling {
             })
         
         parentViewController?.present(alert, animated: true, completion: nil)
-    }
-    
-    func toSendLogs(auditID: UUID) {
-        parent?.galleryToSendLogs(auditID: auditID)
     }
 }
 

@@ -40,7 +40,6 @@ protocol CameraScannerFlowControlling: AnyObject {
     func toLastPassSummary(importable: Int, total: Int, codes: [Code])
     func toCameraError(_ error: String)
     func toTwoFASWebExtensionPairing(for extensionID: ExtensionID)
-    func toSendLogs(auditID: UUID)
     func toPushPermissions(extensionID: ExtensionID)
     func toRename(currentName: String, secret: String)
     func toServiceWasCreated(serviceData: ServiceData)
@@ -231,10 +230,6 @@ extension CameraScannerFlowController: CameraScannerFlowControlling {
         parent?.cameraScannerServiceWasCreated(serviceData: serviceData)
     }
     
-    func toSendLogs(auditID: UUID) {
-        UploadLogsNavigationFlowController.present(on: viewController, auditID: auditID, parent: self)
-    }
-    
     func toPairWatchQuestion(_ deviceCodePath: DeviceCodePath) {
         let alert = AlertControllerPromptFactory.create(
             title: T.Backup.watchPairingTitle,
@@ -307,11 +302,6 @@ extension CameraScannerFlowController: SelectFromGalleryFlowControllerParent {
         viewController.presenter.handleGalleryCancelled()
         galleryViewController = nil
     }
-    
-    func galleryToSendLogs(auditID: UUID) {
-        toSendLogs(auditID: auditID)
-        galleryViewController = nil
-    }
 }
 
 extension CameraScannerFlowController: BrowserExtensionPairingPlainFlowControllerParent {
@@ -357,11 +347,5 @@ extension CameraScannerFlowController: BrowserExtensionSuccessFlowControllerPare
     func browserExtensionSuccessClose() {
         toFinish()
         NotificationCenter.default.post(name: .switchToBrowserExtension, object: nil)
-    }
-}
-
-extension CameraScannerFlowController: UploadLogsNavigationFlowControllerParent {
-    func uploadLogsClose() {
-        toFinish()
     }
 }

@@ -134,9 +134,6 @@ private extension SelectFromGalleryPresenter {
             Log("SelectFromGalleryPresenter: Found wrong code", save: false)
             Log("SelectFromGalleryPresenter: It's app store link!")
             flowController.toAppStore()
-        case .support(let auditID):
-            Log("SelectFromGalleryPresenter: Found support link! AuditID: \(auditID)")
-            flowController.toSendLogs(auditID: auditID)
         default:
             Log("SelectFromGalleryPresenter: Found wrong code", save: false)
             Log("SelectFromGalleryPresenter: General wrong code")

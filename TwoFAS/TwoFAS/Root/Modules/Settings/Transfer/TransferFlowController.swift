@@ -223,7 +223,6 @@ extension TransferFlowController: SelectFromGalleryFlowControllerParent {
     func galleryDidFinish() { endGallery() }
     func galleryDidCancel() { endGallery() }
     func galleryServiceWasCreated(serviceData: ServiceData) { endGallery() }
-    func galleryToSendLogs(auditID: UUID) { endGallery() }
     func galleryDidImport(count: Int) {
         navigationController?.dismiss(animated: true) { [weak self] in
             self?.galleryViewController = nil

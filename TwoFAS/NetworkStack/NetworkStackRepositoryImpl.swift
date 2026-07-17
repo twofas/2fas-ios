@@ -151,13 +151,4 @@ extension NetworkStackRepositoryImpl: NetworkStackRepository {
         )
         networkCall.handleNotificationsCall(with: req, completion: completion)
     }
-    
-    public func uploadLogs(
-        _ logs: String,
-        auditID: String,
-        completion: @escaping (Result<Void, NetworkError>) -> Void
-    ) {
-        let req = UploadLogs.Request(auditID: auditID, textLog: logs)
-        networkCall.handleCall(with: req, completion: completion)
-    }
 }

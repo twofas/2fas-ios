@@ -126,9 +126,3 @@ extension AboutFlowController: AboutFlowControlling {
         _viewController?.navigationController?.popViewController(animated: true)
     }
 }
-
-extension AboutFlowController: UploadLogsNavigationFlowControllerParent {
-    func uploadLogsClose() {
-        _viewController?.dismiss(animated: true)
-    }
-}

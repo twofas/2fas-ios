@@ -25,7 +25,6 @@ protocol AddingServiceFlowControllerParent: AnyObject {
     func addingServiceDismiss()
     func addingServiceToGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
     func addingServiceToLastPassSummary(importable: Int, total: Int, codes: [Code])
-    func addingServiceToSendLogs(auditID: UUID)
     func addingServiceToPushPermissions(for extensionID: Common.ExtensionID)
     func addingServiceToTwoFASWebExtensionPairing(for extensionID: Common.ExtensionID)
     func addingServiceToToken(_ serviceData: ServiceData)
@@ -45,7 +44,6 @@ protocol AddingServiceFlowControlling: AnyObject {
     func toLastPassSummary(importable: Int, total: Int, codes: [Code])
     func toGallery()
     func toTwoFASWebExtensionPairing(for extensionID: ExtensionID)
-    func toSendLogs(auditID: UUID)
     func toPushPermissions(for extensionID: ExtensionID)
 }
 
@@ -240,10 +238,6 @@ extension AddingServiceFlowController: AddingServiceFlowControlling {
     func toTwoFASWebExtensionPairing(for extensionID: ExtensionID) {
         parent?.addingServiceToTwoFASWebExtensionPairing(for: extensionID)
     }
-    
-    func toSendLogs(auditID: UUID) {
-        parent?.addingServiceToSendLogs(auditID: auditID)
-    }
 }
 
 extension AddingServiceFlowController {
@@ -305,11 +299,6 @@ extension AddingServiceFlowController: SelectFromGalleryFlowControllerParent {
     func galleryServiceWasCreated(serviceData: ServiceData) {
         galleryViewController = nil
         parent?.addingServiceToToken(serviceData)
-    }
-
-    func galleryToSendLogs(auditID: UUID) {
-        galleryViewController = nil
-        parent?.addingServiceToSendLogs(auditID: auditID)
     }
 }
 

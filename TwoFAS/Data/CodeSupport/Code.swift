@@ -26,7 +26,6 @@ public enum CodeType: Hashable {
     case googleAuth(codes: [Code])
     case lastPass(codes: [Code], totalCodesCount: Int)
     case twoFASWebExtension(extensionID: String)
-    case support(auditID: UUID)
     case open
     case pairWatch(DeviceCodePath)
     case unknown
@@ -94,8 +93,6 @@ public extension Code {
             return .lastPass(codes: parsedData.codes, totalCodesCount: parsedData.totalCodesCount)
         } else if Code.isAppStore(with: data) {
             return .appStore
-        } else if let auditID = Code.parseSupport(with: data) {
-            return .support(auditID: auditID)
         } else if DeviceCodePath.isDeviceCode(data) {
             return .pairWatch(DeviceCodePath(codePath: data))
         } else if Code.parseOpen(with: data) {

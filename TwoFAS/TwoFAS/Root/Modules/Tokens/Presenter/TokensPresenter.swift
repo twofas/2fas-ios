@@ -151,7 +151,6 @@ extension TokensPresenter {
             self?.handleClearStoredCode()
         }
         case .shouldAddCode(let descriptionText): flowController.toShowShouldAddCode(with: descriptionText)
-        case .sendLogs(let auditID): flowController.toSendLogs(auditID: auditID)
         case .newData: handleNewData()
         case .shouldRename(let currentName, let secret):
             flowController.toShouldRenameService(currentName: currentName, secret: secret)

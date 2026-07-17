@@ -598,7 +598,6 @@ private extension TokensModuleInteractor {
         linkInteractor.showCodeAlreadyExists = { [weak self] in self?.linkAction?(.codeAlreadyExists) }
         linkInteractor.showIncorrectCode = { [weak self] in self?.linkAction?(.incorrectCode) }
         linkInteractor.showShouldAddCode = { [weak self] in self?.linkAction?(.shouldAddCode(descriptionText: $0)) }
-        linkInteractor.showSendLogs = { [weak self] in self?.linkAction?(.sendLogs(auditID: $0)) }
         linkInteractor.reloadDataAndRefresh = { [weak self] in self?.linkAction?(.newData) }
         linkInteractor.shouldRename = { [weak self] currentName, secret in
             self?.linkAction?(.shouldRename(currentName: currentName, secret: secret))

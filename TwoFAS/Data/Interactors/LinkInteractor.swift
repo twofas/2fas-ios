@@ -25,7 +25,6 @@ public protocol LinkInteracting: AnyObject {
     var showCodeAlreadyExists: Callback? { get set }
     var showIncorrectCode: Callback? { get set }
     var showShouldAddCode: ((String?) -> Void)? { get set }
-    var showSendLogs: ((UUID) -> Void)? { get set }
     var reloadDataAndRefresh: Callback? { get set }
     var shouldRename: ((String, String) -> Void)? { get set }
     var serviceWasCreated: ((ServiceData) -> Void)? { get set }
@@ -46,7 +45,6 @@ final class LinkInteractor {
     var showCodeAlreadyExists: Callback?
     var showIncorrectCode: Callback?
     var showShouldAddCode: ((String?) -> Void)?
-    var showSendLogs: ((UUID) -> Void)?
     var reloadDataAndRefresh: Callback?
     var shouldRename: ((String, String) -> Void)?
     var serviceWasCreated: ((ServiceData) -> Void)?
@@ -105,11 +103,6 @@ extension LinkInteractor: LinkInteracting {
         case .service(let code):
             Log("LinkInteractor - handleCodeIfNecessary - no code", module: .interactor)
             handleCode(code)
-        case .support(let auditID):
-            Log("LinkInteractor - handleCodeIfNecessary - isSupport link!", module: .interactor)
-            mainRepository.clearStoredURL()
-            showSendLogs?(auditID)
-            return
         default:
             Log("LinkInteractor - handleCodeIfNecessary - not supported type - exiting", module: .interactor)
             mainRepository.clearStoredURL()

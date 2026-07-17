@@ -75,9 +75,4 @@ public protocol NetworkStackRepository {
         appVersion: String?,
         completion: @escaping (Result<[ListNews.NewsEntry], NetworkError>) -> Void
     )
-    func uploadLogs(
-        _ logs: String,
-        auditID: String,
-        completion: @escaping (Result<Void, NetworkError>) -> Void
-    )
 }

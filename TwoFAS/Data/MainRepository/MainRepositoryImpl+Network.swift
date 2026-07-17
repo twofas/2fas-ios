@@ -147,12 +147,4 @@ extension MainRepositoryImpl {
                 completion: completion
             )
     }
-    
-    func uploadLogs(
-        _ logs: String,
-        auditID: String,
-        completion: @escaping (Result<Void, NetworkError>) -> Void
-    ) {
-        networkStack.network.uploadLogs(logs, auditID: auditID, completion: completion)
-    }
 }

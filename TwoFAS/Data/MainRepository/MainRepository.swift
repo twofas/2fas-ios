@@ -425,12 +425,6 @@ protocol MainRepository: AnyObject {
         noCompanionAppFrom: String?,
         completion: @escaping (Result<[ListNews.NewsEntry], NetworkError>) -> Void
     )
-    func uploadLogs(
-        _ logs: String,
-        auditID: String,
-        completion: @escaping (Result<Void, NetworkError>) -> Void
-    )
-    
     // MARK: - Notifications state
     var notificationState: PushNotificationState { get }
     func setNotificationState(_ state: PushNotificationState)

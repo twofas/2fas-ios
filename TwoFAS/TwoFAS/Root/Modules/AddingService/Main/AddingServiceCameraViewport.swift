@@ -30,16 +30,16 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
     var didFoundCode: (CodeType) -> Void
     
     final class Coordinator {
-        private weak var camera: CameraScanningView?
-        
+        weak var camera: CameraScanningView?
+
         private let feedbackGenerator = UINotificationFeedbackGenerator()
         private let notificationCenter = NotificationCenter.default
-        
+
         private let parent: AddingServiceCameraViewport
-        
+
         init(_ parent: AddingServiceCameraViewport) {
             self.parent = parent
-            
+
             notificationCenter.addObserver(
                 self,
                 selector: #selector(cameraStateChanged),
@@ -48,16 +48,22 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
             )
             notificationCenter.addObserver(
                 self,
+                selector: #selector(pauseCamera),
+                name: .lockScreenIsActive,
+                object: nil
+            )
+            notificationCenter.addObserver(
+                self,
                 selector: #selector(resumeCamera),
-                name: UIApplication.didBecomeActiveNotification,
+                name: .lockScreenIsInactive,
                 object: nil
             )
         }
-        
+
         func dismantle() {
             notificationCenter.removeObserver(self)
         }
-        
+
         @objc
         private func cameraStateChanged(notification: Notification) {
             guard
@@ -83,16 +89,22 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
             }()
             parent.didRegisterError(errorReason)
         }
-        
+
+        @objc
+        private func pauseCamera() {
+            camera?.stop()
+        }
+
         @objc
         private func resumeCamera() {
             camera?.start()
         }
     }
-    
+
     func makeUIView(context: Context) -> CameraScanningView {
         let cam = CameraScanningView()
         cam.codeFound = { didFoundCode($0) }
+        context.coordinator.camera = cam
         return cam
     }
     

@@ -1,5 +1,5 @@
 {
-  "originHash" : "d773ca8cf095966d60845bbd11bf41f226bb1f72955446ea58605e578119a408",
+  "originHash" : "44c55ae4ed9bcc27a93c59098bde20895b9828852be3acc370a2a86293b30b0f",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -152,15 +152,6 @@
       "state" : {
         "revision" : "b7e1104502eca3a213b46303391ca4d3bc8ddec1",
         "version" : "2.30910.0"
-      }
-    },
-    {
-      "identity" : "pkhud",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pkluz/PKHUD.git",
-      "state" : {
-        "revision" : "8fd26f23057c6bebd6695524b1c3e05e93aba571",
-        "version" : "5.4.0"
       }
     },
     {

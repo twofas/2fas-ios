@@ -165,7 +165,6 @@
 		C21675C52808C71F00D43EDD /* ShortDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21675C42808C71E00D43EDD /* ShortDateFormatter.swift */; };
 		C217B90C2F79CDD9000EAA7C /* TokensPassCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217B90B2F79CDD9000EAA7C /* TokensPassCell.swift */; };
 		C217E17023D7953000EE6C08 /* NotificationBottomOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217E16F23D7953000EE6C08 /* NotificationBottomOffset.swift */; };
-		C217E17223D79D8800EE6C08 /* ToastNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217E17123D79D8800EE6C08 /* ToastNotification.swift */; };
 		C218513C2A1A873F00A8352A /* TokensHOTPCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513B2A1A873F00A8352A /* TokensHOTPCell.swift */; };
 		C218513E2A1A8EF600A8352A /* TokensNextTokenLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */; };
 		C21851402A1AB01600A8352A /* TokensTOTPCompactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */; };
@@ -358,6 +357,10 @@
 		C258EC6E227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = C258EC6D227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift */; };
 		C25AAA3C290455B2005747C5 /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
 		C25AD89B300992FF00D9ABFB /* LogGenerationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AD89A300992FF00D9ABFB /* LogGenerationInteractor.swift */; };
+		C25AE51D300A58B800D9ABFB /* ToastContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AE518300A58B800D9ABFB /* ToastContentView.swift */; };
+		C25AE51E300A58B800D9ABFB /* ToastPresenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AE51B300A58B800D9ABFB /* ToastPresenterView.swift */; };
+		C25AE520300A58B800D9ABFB /* ToastPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AE519300A58B800D9ABFB /* ToastPresenter.swift */; };
+		C25AE525300A591600D9ABFB /* ToastPresenter+DefaultActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AE51A300A58B800D9ABFB /* ToastPresenter+DefaultActions.swift */; };
 		C25B221227C177170052AAC4 /* ComposeServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25B221127C177170052AAC4 /* ComposeServiceFlowController.swift */; };
 		C25BB2CA2DAAE35000BEC626 /* ManageWatchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BB2C92DAAE34C00BEC626 /* ManageWatchPresenter.swift */; };
 		C25BB2CC2DAAE3FF00BEC626 /* ManageWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BB2CB2DAAE3E500BEC626 /* ManageWatchView.swift */; };
@@ -839,8 +842,6 @@
 		C2AE5F5D2ADC363300AED670 /* ServiceGuideImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AE5F5C2ADC363300AED670 /* ServiceGuideImage+.swift */; };
 		C2AE5F5F2ADC370F00AED670 /* ShortDateTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B077D0292AA0A00074517F /* ShortDateTimeFormatter.swift */; };
 		C2AE5F652ADC3A4200AED670 /* VoiceOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FE36292517FF8D00035643 /* VoiceOver.swift */; };
-		C2AE5F662ADC3A4200AED670 /* HUDNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217E16D23D7913E00EE6C08 /* HUDNotification.swift */; };
-		C2AE5F672ADC3A4200AED670 /* NotificationIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22E6F9E21E21A1E00A2E66B /* NotificationIcon.swift */; };
 		C2AE5F682ADC5C8400AED670 /* ServiceMigrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ACF9DE20A8A30E003E0987 /* ServiceMigrationController.swift */; };
 		C2AE5F692ADC5D9D00AED670 /* Security.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2147CE8205D7FC90001D011 /* Security.swift */; };
 		C2AE5F722ADC880B00AED670 /* DeviceKit in Frameworks */ = {isa = PBXBuildFile; productRef = C2AE5F712ADC880B00AED670 /* DeviceKit */; };
@@ -1017,11 +1018,7 @@
 		C2D61E4125602F5000C5BE3A /* LogEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E2F25602F4100C5BE3A /* LogEntity+CoreDataClass.swift */; };
 		C2D61E4225602F5000C5BE3A /* LogEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E3025602F4100C5BE3A /* LogEntity+CoreDataProperties.swift */; };
 		C2D61E522560393000C5BE3A /* LogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E512560393000C5BE3A /* LogHandler.swift */; };
-		C2D6731A25DB2C5D004BD697 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6731525DB2C5C004BD697 /* ToastView.swift */; };
 		C2D6731B25DB2C5D004BD697 /* KeyboardObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6731625DB2C5C004BD697 /* KeyboardObserver.swift */; };
-		C2D6731C25DB2C5D004BD697 /* ToastWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6731725DB2C5C004BD697 /* ToastWindow.swift */; };
-		C2D6731D25DB2C5D004BD697 /* ToastCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6731825DB2C5D004BD697 /* ToastCenter.swift */; };
-		C2D6731E25DB2C5D004BD697 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6731925DB2C5D004BD697 /* Toast.swift */; };
 		C2D75D37297D51B60002531E /* iCloudIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D75D36297D51B60002531E /* iCloudIdentifier.swift */; };
 		C2D97E7D2E24436900E213A7 /* QRCodeGeneratorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E7C2E24436200E213A7 /* QRCodeGeneratorInteractor.swift */; };
 		C2D97E802E2454D600E213A7 /* QRCodeDisplayFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E7F2E2454D600E213A7 /* QRCodeDisplayFlowController.swift */; };
@@ -1049,7 +1046,6 @@
 		C2E520672FD2F65900C5E875 /* Icons+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E520662FD2F65600C5E875 /* Icons+.swift */; };
 		C2E520682FD2F65900C5E875 /* Icons+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E520662FD2F65600C5E875 /* Icons+.swift */; };
 		C2E520692FD3059B00C5E875 /* Content.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E53B4B2B62DDCB008E1E70 /* Content.framework */; };
-		C2E524892FD3081900C5E875 /* PKHUD in Frameworks */ = {isa = PBXBuildFile; productRef = C2E524882FD3081900C5E875 /* PKHUD */; };
 		C2E5248B2FD3348A00C5E875 /* IconDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248A2FD3347400C5E875 /* IconDetails.swift */; };
 		C2E5248C2FD3348A00C5E875 /* IconDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248A2FD3347400C5E875 /* IconDetails.swift */; };
 		C2E5248E2FD337AB00C5E875 /* AddingServiceHOTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248D2FD3379F00C5E875 /* AddingServiceHOTPView.swift */; };
@@ -1983,9 +1979,7 @@
 		C2153BC41FE9B2BF005FD297 /* CameraActiveArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraActiveArea.swift; sourceTree = "<group>"; };
 		C21675C42808C71E00D43EDD /* ShortDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortDateFormatter.swift; sourceTree = "<group>"; };
 		C217B90B2F79CDD9000EAA7C /* TokensPassCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensPassCell.swift; sourceTree = "<group>"; };
-		C217E16D23D7913E00EE6C08 /* HUDNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDNotification.swift; sourceTree = "<group>"; };
 		C217E16F23D7953000EE6C08 /* NotificationBottomOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBottomOffset.swift; sourceTree = "<group>"; };
-		C217E17123D79D8800EE6C08 /* ToastNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastNotification.swift; sourceTree = "<group>"; };
 		C218513B2A1A873F00A8352A /* TokensHOTPCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensHOTPCell.swift; sourceTree = "<group>"; };
 		C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNextTokenLabel.swift; sourceTree = "<group>"; };
 		C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensTOTPCompactCell.swift; sourceTree = "<group>"; };
@@ -2047,7 +2041,6 @@
 		C22CF3E727416271004F6A03 /* LogHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogHandler.swift; sourceTree = "<group>"; };
 		C22E417825DF076300105195 /* LocalEncryptedStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalEncryptedStorage.swift; sourceTree = "<group>"; };
 		C22E418725DF07B300105195 /* KeyEncryption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyEncryption.swift; sourceTree = "<group>"; };
-		C22E6F9E21E21A1E00A2E66B /* NotificationIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationIcon.swift; sourceTree = "<group>"; };
 		C22E6FA021E2666B00A2E66B /* CircularShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularShape.swift; sourceTree = "<group>"; };
 		C22FFC3C2DA5C01900A68ABD /* WatchPairHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchPairHandler.swift; sourceTree = "<group>"; };
 		C230DB8A274710E5005E7060 /* icon_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_64.png; sourceTree = "<group>"; };
@@ -2218,6 +2211,10 @@
 		C259133A2DBD70EF0040EF78 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C259133B2DBD70EF0040EF78 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C25AD89A300992FF00D9ABFB /* LogGenerationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogGenerationInteractor.swift; sourceTree = "<group>"; };
+		C25AE518300A58B800D9ABFB /* ToastContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastContentView.swift; sourceTree = "<group>"; };
+		C25AE519300A58B800D9ABFB /* ToastPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPresenter.swift; sourceTree = "<group>"; };
+		C25AE51A300A58B800D9ABFB /* ToastPresenter+DefaultActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToastPresenter+DefaultActions.swift"; sourceTree = "<group>"; };
+		C25AE51B300A58B800D9ABFB /* ToastPresenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPresenterView.swift; sourceTree = "<group>"; };
 		C25B221127C177170052AAC4 /* ComposeServiceFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceFlowController.swift; sourceTree = "<group>"; };
 		C25BB2C92DAAE34C00BEC626 /* ManageWatchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchPresenter.swift; sourceTree = "<group>"; };
 		C25BB2CB2DAAE3E500BEC626 /* ManageWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchView.swift; sourceTree = "<group>"; };
@@ -2770,11 +2767,7 @@
 		C2D672F325DB2BD2004BD697 /* Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generator.swift; sourceTree = "<group>"; };
 		C2D672F425DB2BD2004BD697 /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 		C2D672F625DB2BD3004BD697 /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
-		C2D6731525DB2C5C004BD697 /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		C2D6731625DB2C5C004BD697 /* KeyboardObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObserver.swift; sourceTree = "<group>"; };
-		C2D6731725DB2C5C004BD697 /* ToastWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastWindow.swift; sourceTree = "<group>"; };
-		C2D6731825DB2C5D004BD697 /* ToastCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastCenter.swift; sourceTree = "<group>"; };
-		C2D6731925DB2C5D004BD697 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		C2D75D36297D51B60002531E /* iCloudIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudIdentifier.swift; sourceTree = "<group>"; };
 		C2D958CF276FABE500B5A6BD /* TwoFAS5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS5.xcdatamodel; sourceTree = "<group>"; };
 		C2D97E7C2E24436200E213A7 /* QRCodeGeneratorInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGeneratorInteractor.swift; sourceTree = "<group>"; };
@@ -3016,7 +3009,6 @@
 				C2E53ACB2B62DD6C008E1E70 /* Common.framework in Frameworks */,
 				C2E53B512B62DDCB008E1E70 /* Content.framework in Frameworks */,
 				C200E4A11FB3911B00D7C748 /* Storage.framework in Frameworks */,
-				C2E524892FD3081900C5E875 /* PKHUD in Frameworks */,
 				C29626DD2370BD7F00C133BC /* TimeVerification.framework in Frameworks */,
 				C26B19342D90C5D8006FDDE0 /* FirebaseMessaging in Frameworks */,
 				C2E7C3882ADB19F300478D89 /* Data.framework in Frameworks */,
@@ -3690,6 +3682,7 @@
 		C223DAD7217BAFC0003F6E76 /* Architecture */ = {
 			isa = PBXGroup;
 			children = (
+				C25AE51A300A58B800D9ABFB /* ToastPresenter+DefaultActions.swift */,
 				C2E2C81227B0701100F04B70 /* CollectionView */,
 				C2508E192753AEDB0072C564 /* TableView */,
 				C2FC422023AA902700320ABE /* PresentableType.swift */,
@@ -4295,6 +4288,16 @@
 				C2A2DA5B2FE548EE004FD390 /* NewsView.swift */,
 			);
 			path = News;
+			sourceTree = "<group>";
+		};
+		C25AE51C300A58B800D9ABFB /* Toast */ = {
+			isa = PBXGroup;
+			children = (
+				C25AE518300A58B800D9ABFB /* ToastContentView.swift */,
+				C25AE519300A58B800D9ABFB /* ToastPresenter.swift */,
+				C25AE51B300A58B800D9ABFB /* ToastPresenterView.swift */,
+			);
+			path = Toast;
 			sourceTree = "<group>";
 		};
 		C25C660E28BADA7C008EC66A /* About */ = {
@@ -5247,20 +5250,8 @@
 		C2CB5D1125DB1B7E00A362A9 /* External */ = {
 			isa = PBXGroup;
 			children = (
-				C2CB5D1225DB1B8900A362A9 /* Toaster */,
 			);
 			path = External;
-			sourceTree = "<group>";
-		};
-		C2CB5D1225DB1B8900A362A9 /* Toaster */ = {
-			isa = PBXGroup;
-			children = (
-				C2D6731925DB2C5D004BD697 /* Toast.swift */,
-				C2D6731825DB2C5D004BD697 /* ToastCenter.swift */,
-				C2D6731525DB2C5C004BD697 /* ToastView.swift */,
-				C2D6731725DB2C5C004BD697 /* ToastWindow.swift */,
-			);
-			path = Toaster;
 			sourceTree = "<group>";
 		};
 		C2CB5D5525DB236300A362A9 /* External */ = {
@@ -5468,10 +5459,7 @@
 				C23B899827C292C30028FE34 /* CommonNavigationControlllerFlow.swift */,
 				C2E2364F2EC936B900676709 /* ContentNavigationControlllerFlow.swift */,
 				C2FE36292517FF8D00035643 /* VoiceOver.swift */,
-				C22E6F9E21E21A1E00A2E66B /* NotificationIcon.swift */,
-				C217E16D23D7913E00EE6C08 /* HUDNotification.swift */,
 				C24048702765612F0076376E /* RootNavigationController.swift */,
-				C217E17123D79D8800EE6C08 /* ToastNotification.swift */,
 				C2A2AF6E23D8EA710059094D /* UIActivityIndicator+.swift */,
 				C2FA6C462401DF9400A1F320 /* AlertControllerDismissFlow.swift */,
 				C28633C31FF9327900C8F4B4 /* AlertController.swift */,
@@ -5589,6 +5577,7 @@
 				C2E53AFC2B62DDAF008E1E70 /* Extensions */,
 				C2E53B062B62DDAF008E1E70 /* Colors */,
 				C2E53B092B62DDAF008E1E70 /* SharedProtocols */,
+				C25AE51C300A58B800D9ABFB /* Toast */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -6267,7 +6256,6 @@
 				C26B19312D90C5D8006FDDE0 /* FirebaseCrashlytics */,
 				C26B19332D90C5D8006FDDE0 /* FirebaseMessaging */,
 				C260DF4B2F5B07D4009A0357 /* KeychainAccess */,
-				C2E524882FD3081900C5E875 /* PKHUD */,
 			);
 			productName = TwoFAS;
 			productReference = C23666731FB2644900989ACA /* TwoFAS Dev.app */;
@@ -6796,7 +6784,6 @@
 			mainGroup = C236666A1FB2644900989ACA;
 			packageReferences = (
 				C27ABAD423297F470008F9B5 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
-				C2ABB61A25379D4B005CD66F /* XCRemoteSwiftPackageReference "PKHUD" */,
 				C23EBF012651227900FA9E81 /* XCRemoteSwiftPackageReference "DeviceKit" */,
 				C23EBF102651276800FA9E81 /* XCRemoteSwiftPackageReference "Kronos" */,
 				C2CE0E1127934579007DB667 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
@@ -7143,9 +7130,7 @@
 				C2A70682276D390500885D79 /* NewPINPresenter.swift in Sources */,
 				C21B1B2D2A8827D30021CAF1 /* AddingServiceTokenValueView.swift in Sources */,
 				C2FF03062FAB975A00362B88 /* PINKeyboard.swift in Sources */,
-				C2D6731D25DB2C5D004BD697 /* ToastCenter.swift in Sources */,
 				C25860B628247B87009AE54F /* NewsPresenter.swift in Sources */,
-				C2D6731A25DB2C5D004BD697 /* ToastView.swift in Sources */,
 				C2A283352186071200967022 /* AlertControllerPromptFactory.swift in Sources */,
 				C27A549F27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift in Sources */,
 				C2BDC6FD1FC4BC8A00967D0E /* UIViewController+Extensions.swift in Sources */,
@@ -7308,7 +7293,6 @@
 				C2AC2208276615FB00271402 /* ExporterMainScreenPresenter.swift in Sources */,
 				C2FC422323AA960400320ABE /* Module.swift in Sources */,
 				C2BDC6D91FC1CBE100967D0E /* String+Extensions.swift in Sources */,
-				C2D6731C25DB2C5D004BD697 /* ToastWindow.swift in Sources */,
 				C20E2E072A7C51E700DB64BB /* AddingServiceTokenFlowController.swift in Sources */,
 				C235FA76229DAED80098F8E9 /* GridViewItemProviderWriting.swift in Sources */,
 				C25BB2CE2DAAE45700BEC626 /* ManageWatchModuleInteractor.swift in Sources */,
@@ -7327,7 +7311,6 @@
 				C28C441724A67B7000534B30 /* CommonSearchBar.swift in Sources */,
 				C2418F6D3006E19D008B674A /* BrowserExtensionMainView.swift in Sources */,
 				C28B38C927CD784D00BD4A96 /* RefreshTokenCounter.swift in Sources */,
-				C2D6731E25DB2C5D004BD697 /* Toast.swift in Sources */,
 				C21111EE274ABBD900CA7C78 /* SettingsFlowController.swift in Sources */,
 				C24F81762FB90DFF00339C8B /* CancellableTimer.swift in Sources */,
 				C217E17023D7953000EE6C08 /* NotificationBottomOffset.swift in Sources */,
@@ -7390,7 +7373,6 @@
 				C2B6D0EA2FF1816A00C4C73D /* ComposeServiceSecretKeyField.swift in Sources */,
 				C204FAEE21F4A0850041E2F4 /* CGFloat+Extensions.swift in Sources */,
 				C215083130030673008B66E2 /* BackupManageEncryptionView.swift in Sources */,
-				C217E17223D79D8800EE6C08 /* ToastNotification.swift in Sources */,
 				C2508E152753AAFD0072C564 /* SettingsMenuModuleInteractor.swift in Sources */,
 				C2F6BB08264886B7002A9747 /* IntroductionPresenter.swift in Sources */,
 				C239DEA62FEEB7B3007C75A3 /* IconSelectorView.swift in Sources */,
@@ -7534,7 +7516,6 @@
 				C21EB2F12A7FD77000FA8AA1 /* AddingServiceTitleView.swift in Sources */,
 				C272055E2E7C9140004FB39A /* ExportQuestionPINVerificationPresenter.swift in Sources */,
 				C274BDC02769419300EE28BC /* AppSecurityModuleInteractor.swift in Sources */,
-				C2AE5F672ADC3A4200AED670 /* NotificationIcon.swift in Sources */,
 				C21675C52808C71F00D43EDD /* ShortDateFormatter.swift in Sources */,
 				C271B64827BAE67500D0D743 /* ComposeServiceModuleInteractor.swift in Sources */,
 				C2830D7E293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegate.swift in Sources */,
@@ -7563,7 +7544,6 @@
 				C28705F42980776300745459 /* MainFlowController.swift in Sources */,
 				C21987C727961BF600724E63 /* CameraErrorTemplate.swift in Sources */,
 				C2D2F70C2FF02EAC0008FE4D /* LabelComposeFlowController.swift in Sources */,
-				C2AE5F662ADC3A4200AED670 /* HUDNotification.swift in Sources */,
 				C218513E2A1A8EF600A8352A /* TokensNextTokenLabel.swift in Sources */,
 				C2CFA6A62AEEF0CB00E574FC /* RootModuleInteractor.swift in Sources */,
 				C258EC6E227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift in Sources */,
@@ -8041,6 +8021,9 @@
 				C2E53B102B62DDAF008E1E70 /* ServiceRules.swift in Sources */,
 				C295AF8E2FD1F6F8000DF064 /* View+.swift in Sources */,
 				C295AF8F2FD1F6F8000DF064 /* AdaptiveReadableContainer.swift in Sources */,
+				C25AE51D300A58B800D9ABFB /* ToastContentView.swift in Sources */,
+				C25AE51E300A58B800D9ABFB /* ToastPresenterView.swift in Sources */,
+				C25AE520300A58B800D9ABFB /* ToastPresenter.swift in Sources */,
 				C2E5248B2FD3348A00C5E875 /* IconDetails.swift in Sources */,
 				C295AF902FD1F6F8000DF064 /* TFCornerRadius.swift in Sources */,
 				C295AF912FD1F6F8000DF064 /* TFShadow.swift in Sources */,
@@ -12389,14 +12372,6 @@
 				minimumVersion = 0.9.19;
 			};
 		};
-		C2ABB61A25379D4B005CD66F /* XCRemoteSwiftPackageReference "PKHUD" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pkluz/PKHUD.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.4.0;
-			};
-		};
 		C2C0A9862DA33A72000A1772 /* XCRemoteSwiftPackageReference "EFQRCode" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/EFPrefix/EFQRCode.git";
@@ -12520,11 +12495,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C2C0A9862DA33A72000A1772 /* XCRemoteSwiftPackageReference "EFQRCode" */;
 			productName = EFQRCode;
-		};
-		C2E524882FD3081900C5E875 /* PKHUD */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C2ABB61A25379D4B005CD66F /* XCRemoteSwiftPackageReference "PKHUD" */;
-			productName = PKHUD;
 		};
 /* End XCSwiftPackageProductDependency section */
 

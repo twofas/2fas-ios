@@ -240,13 +240,13 @@ extension ComposeServicePresenter {
     func handleCopySecret() {
         interactor.copySecret()
         VoiceOver.say(T.Notifications.serviceKeyCopied)
-        HUDNotification.presentSuccess(title: T.Notifications.serviceKeyCopied)
+        ToastPresenter.shared.presentServiceKeyCopied()
     }
 
     func handleCopyLink() {
         interactor.copyLink()
         VoiceOver.say(T.Notifications.linkCopied)
-        HUDNotification.presentSuccess(title: T.Notifications.linkCopied)
+        ToastPresenter.shared.presentLinkCopied()
     }
 
     // MARK: - Start editing

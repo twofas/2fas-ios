@@ -46,21 +46,19 @@ final class RootViewController: UIViewController {
 
 extension RootViewController: RootViewControlling {
     func hideAllNotifications() {
-        ToastNotification.hideAll()
+        ToastPresenter.shared.dismissAll(animated: false)
     }
-    
+
     func rateApp() {
         RatingController.uiIsVisible()
     }
-    
+
     func tokenCopied() {
         func flashNotification() {
             VoiceOver.say(T.Notifications.tokenCopied)
-            if let keyWindow = UIApplication.keyWindow {
-                HUDNotification.presentSuccess(title: T.Notifications.tokenCopied, on: keyWindow)
-            }
+            ToastPresenter.shared.presentTokenCopied()
         }
-        
+
         if UIApplication.keyWindow != nil && view != nil {
             flashNotification()
         } else {

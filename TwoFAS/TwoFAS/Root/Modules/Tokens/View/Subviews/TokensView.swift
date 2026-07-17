@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class TokensView: UICollectionView {
     override var isEditing: Bool {
@@ -33,7 +34,7 @@ final class TokensView: UICollectionView {
     }
     
     func configure() {
-        backgroundColor = Theme.Colors.Fill.background
+        backgroundColor = AppColor.backgroundsPrimary.uiColor
         register(TokensTOTPCell.self, forCellWithReuseIdentifier: TokensTOTPCell.reuseIdentifier)
         register(TokensHOTPCell.self, forCellWithReuseIdentifier: TokensHOTPCell.reuseIdentifier)
         register(TokensEditCell.self, forCellWithReuseIdentifier: TokensEditCell.reuseIdentifier)

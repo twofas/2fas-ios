@@ -19,6 +19,7 @@
 
 import Foundation
 import SwiftUI
+import Common
 
 struct RoundedFilledButtonStyle: SwiftUI.ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
@@ -28,7 +29,7 @@ struct RoundedFilledButtonStyle: SwiftUI.ButtonStyle {
             .padding()
             .foregroundColor(.white)
             .background(
-                Color(configuration.isPressed ? Theme.Colors.Controls.highlighed : Theme.Colors.Controls.active)
+                Color(configuration.isPressed ? AppColor.accentsBrand.uiColor : AppColor.accentsBrand.uiColor)
             )
             .cornerRadius(Theme.Metrics.cornerRadius)
     }
@@ -41,9 +42,8 @@ struct LinkButtonStyle: SwiftUI.ButtonStyle {
             .font(.body.bold())
             .padding()
             .foregroundColor(
-                Color(configuration.isPressed ? Theme.Colors.Text.themeHighlighted : Theme.Colors.Text.theme)
+                Color(configuration.isPressed ? AppColor.accentsBrand.uiColor : AppColor.accentsBrand.uiColor)
             )
             .background(Color(.clear))
     }
 }
-

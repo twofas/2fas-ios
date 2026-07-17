@@ -25,7 +25,7 @@ public enum SpinnerViewLocalizations {
 }
 
 final class SpinnerView: UIView {
-    private let color = ThemeColor.theme
+    private let color = AppColor.accentsBrand.uiColor
     private let sizePrimary: CGFloat = 40
     private let sizeSecondary: CGFloat = 12
     private let distance: CGFloat = 20

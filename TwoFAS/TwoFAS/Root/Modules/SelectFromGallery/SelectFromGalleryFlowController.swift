@@ -264,7 +264,7 @@ private extension SelectFromGalleryFlowController {
     
     func configureViewController(_ vc: UIViewController) {
         if applyOverlay {
-            vc.view.backgroundColor = Theme.Colors.cameraOverlay
+            vc.view.backgroundColor = AppColor.overlaysDefault.uiColor
         } else {
             vc.view.backgroundColor = .clear
         }

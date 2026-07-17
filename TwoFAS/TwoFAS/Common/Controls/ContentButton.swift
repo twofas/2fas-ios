@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class ContentButton: UIButton {
     enum ActiveElement {
@@ -30,9 +31,9 @@ final class ContentButton: UIButton {
     private let backgroundRoleAlphaWithText: CGFloat = 0.3
     
     private var activeElement: ActiveElement = .noBackground
-    private var activeColor = Theme.Colors.Controls.active
-    private var normalColor = Theme.Colors.Controls.empty
-    private var inactiveColor = Theme.Colors.Controls.inactive
+    private var activeColor = AppColor.accentsBrand.uiColor
+    private var normalColor = AppColor.backgroundsPrimary.uiColor
+    private var inactiveColor = AppColor.fillsTertiary.uiColor
     
     private var title: String?
     
@@ -64,7 +65,7 @@ final class ContentButton: UIButton {
         backgroundView.isUserInteractionEnabled = false
         sendSubviewToBack(backgroundView)
         
-        titleLabel?.font = Theme.Fonts.Controls.title
+        titleLabel?.font = TextStyle.headline.uiFont()
         
         addTarget(self, action: #selector(downAction), for: .touchDown)
         addTarget(self, action: #selector(downAction), for: .touchDragInside)
@@ -98,7 +99,7 @@ final class ContentButton: UIButton {
         _ activeElement: ActiveElement,
         withNormalColor normalColor: UIColor,
         activeColor: UIColor,
-        inactiveColor: UIColor = Theme.Colors.Controls.inactive
+        inactiveColor: UIColor = AppColor.fillsTertiary.uiColor
     ) {
         
         self.activeElement = activeElement
@@ -122,7 +123,7 @@ final class ContentButton: UIButton {
         }
     }
     
-    func setTitleColor(normal: UIColor, active: UIColor, disabled: UIColor = Theme.Colors.Text.inactive) {
+    func setTitleColor(normal: UIColor, active: UIColor, disabled: UIColor = AppColor.labelsTertiary.uiColor) {
         setTitleColor(normal, for: .normal)
         setTitleColor(active, for: .selected)
         setTitleColor(active, for: .highlighted)

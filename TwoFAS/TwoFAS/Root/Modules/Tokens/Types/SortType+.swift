@@ -42,6 +42,6 @@ extension SortType {
             img = img?.withConfiguration(configuration)
         }
         
-        return img?.apply(Theme.Colors.Icon.theme)?.withRenderingMode(.alwaysOriginal) ?? UIImage()
+        return img?.apply(AppColor.accentsBrand.uiColor)?.withRenderingMode(.alwaysOriginal) ?? UIImage()
     }
 }

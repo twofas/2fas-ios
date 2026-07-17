@@ -42,8 +42,8 @@ final class CameraViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = T.Commons.scanQrCode
-        label.font = Theme.Fonts.Controls.title
-        label.textColor = Theme.Colors.Text.light
+        label.font = TextStyle.headline.uiFont()
+        label.textColor = AppColor.graysWhite.uiColor
         label.translatesAutoresizingMaskIntoConstraints = false
         label.minimumScaleFactor = 0.5
         label.adjustsFontSizeToFitWidth = true
@@ -52,8 +52,8 @@ final class CameraViewController: UIViewController {
     }()
     private let descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = Theme.Fonts.Text.content
-        label.textColor = Theme.Colors.Text.light
+        label.font = TextStyle.body.uiFont()
+        label.textColor = AppColor.graysWhite.uiColor
         label.textAlignment = .center
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -63,24 +63,24 @@ final class CameraViewController: UIViewController {
     }()
     private let descriptionFrame: UIView = {
         let view = UIView()
-        view.backgroundColor = Theme.Colors.cameraOverlay
+        view.backgroundColor = UIColor(white: 0, alpha: 0.67)
         return view
     }()
     private let cancelButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(Theme.Colors.Text.theme, for: .normal)
-        button.setTitleColor(Theme.Colors.Text.inactive, for: .disabled)
-        button.titleLabel?.font = Theme.Fonts.Controls.title
+        button.setTitleColor(AppColor.accentsBrand.uiColor, for: .normal)
+        button.setTitleColor(AppColor.graysGray.uiColor, for: .disabled)
+        button.titleLabel?.font = TextStyle.headline.uiFont()
         button.titleLabel?.layer.shadowOffset = CGSize(width: 0, height: 2)
         button.titleLabel?.layer.shadowOpacity = 0.3
         button.titleLabel?.layer.shadowColor = UIColor.black.cgColor
         return button
     }()
-    
+
     private let openGalleryButton: UIButton = {
         let button = UIButton()
         button.setImage(Asset.openGallery.image, for: .normal)
-        button.setImage(Asset.openGallery.image.apply(Theme.Colors.Icon.theme), for: .normal)
+        button.setImage(Asset.openGallery.image.apply(AppColor.accentsBrand.uiColor), for: .normal)
         return button
     }()
     
@@ -244,12 +244,12 @@ extension CameraViewController: CameraViewModelDelegate {
 
 extension CameraViewController: CameraViewControllerActivity {
     func overlayOnTop() {
-        titleLabel.textColor = Theme.Colors.Text.inactive
+        titleLabel.textColor = AppColor.graysGray.uiColor
         cancelButton.isEnabled = false
     }
-    
+
     func overlayHidden() {
-        titleLabel.textColor = Theme.Colors.Text.light
+        titleLabel.textColor = AppColor.graysWhite.uiColor
         cancelButton.isEnabled = true
     }
 }

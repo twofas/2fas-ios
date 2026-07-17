@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class CommonSearchBar: UISearchBar {
     private var shouldEndEditing = true
@@ -39,8 +40,8 @@ final class CommonSearchBar: UISearchBar {
         delegate = self
         barStyle = .default
         searchBarStyle = .minimal
-        tintColor = Theme.Colors.Fill.theme
-        barTintColor = Theme.Colors.Fill.theme
+        tintColor = AppColor.accentsBrand.uiColor
+        barTintColor = AppColor.accentsBrand.uiColor
         sizeToFit()
     }
     

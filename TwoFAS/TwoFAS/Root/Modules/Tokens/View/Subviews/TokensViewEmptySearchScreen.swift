@@ -72,7 +72,7 @@ final class TokensViewEmptySearchScreen: UIView {
     }
     
     private func commonInit() {
-        backgroundColor = Theme.Colors.Fill.background
+        backgroundColor = AppColor.backgroundsPrimary.uiColor
         isUserInteractionEnabled = false
         
         addSubview(backgroundImage)

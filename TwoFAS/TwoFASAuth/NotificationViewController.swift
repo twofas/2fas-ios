@@ -67,7 +67,7 @@ final class NotificationViewController: UIViewController, UNNotificationContentE
         super.viewDidLoad()
         presenter.view = self
         
-        view.backgroundColor = ThemeColor.background
+        view.backgroundColor = AppColor.backgroundsPrimary.uiColor
         notificationView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(notificationView)
         NSLayoutConstraint.activate([

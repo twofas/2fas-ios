@@ -37,18 +37,18 @@ struct BrowserExtensionPairingAnimationView: View {
         ZStack {
             Image(uiImage: Asset.pairingBackgroundOval1.image)
                 .renderingMode(.template)
-                .foregroundStyle(Color(Theme.Colors.Line.secondaryLine))
+                .foregroundStyle(Color(AppColor.separatorsOpaque.uiColor))
 
             Image(uiImage: Asset.pairingBackgroundOval2.image)
                 .renderingMode(.template)
-                .foregroundStyle(Color(Theme.Colors.Line.secondaryLine))
+                .foregroundStyle(Color(AppColor.separatorsOpaque.uiColor))
 
             ForEach(orbits.indices, id: \.self) { index in
                 RotatingOrbit(orbit: orbits[index], containerSize: size)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(Theme.Colors.Fill.background))
+        .background(Color(AppColor.backgroundsPrimary.uiColor))
         .onAppear(perform: onAppear)
     }
 }
@@ -68,7 +68,7 @@ private struct RotatingOrbit: View {
     var body: some View {
         Image(uiImage: orbit.image)
             .renderingMode(.template)
-            .foregroundStyle(Color(Theme.Colors.Fill.theme))
+            .foregroundStyle(Color(AppColor.accentsBrand.uiColor))
             .offset(x: orbit.offset.x, y: orbit.offset.y)
             .frame(width: containerSize, height: containerSize)
             .rotationEffect(.radians(rotation))

@@ -26,12 +26,12 @@ enum LoadingContentButtonState {
 }
 
 final class LoadingContentButton: UIView {
-    var titleColor = Theme.Colors.Text.light
-    var disabledTitleColor = Theme.Colors.Text.onBackground
-    var highlightedTitleColor = Theme.Colors.Text.light
-    var highlightedColor = Theme.Colors.Controls.highlighed
-    var normalColor = Theme.Colors.Controls.active
-    var inactiveColor = Theme.Colors.Controls.inactive
+    var titleColor = AppColor.graysWhite.uiColor
+    var disabledTitleColor = AppColor.backgroundsSecondary.uiColor
+    var highlightedTitleColor = AppColor.graysWhite.uiColor
+    var highlightedColor = AppColor.accentsBrand.uiColor
+    var normalColor = AppColor.accentsBrand.uiColor
+    var inactiveColor = AppColor.labelsTertiary.uiColor
     
     enum Style {
         case background

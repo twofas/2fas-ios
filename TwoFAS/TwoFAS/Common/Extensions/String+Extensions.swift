@@ -44,8 +44,8 @@ extension NSMutableAttributedString {
         let foundRange = self.mutableString.range(of: textToFind)
         
         if foundRange.location != NSNotFound {
-            self.addAttribute(.foregroundColor, value: Theme.Colors.Text.theme, range: foundRange)
-            self.addAttribute(.underlineColor, value: Theme.Colors.Text.theme, range: foundRange)
+            self.addAttribute(.foregroundColor, value: AppColor.accentsBrand.uiColor, range: foundRange)
+            self.addAttribute(.underlineColor, value: AppColor.accentsBrand.uiColor, range: foundRange)
             self.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: foundRange)
             return true
         }

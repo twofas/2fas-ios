@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class RootNavigationController: UINavigationController {
     var rootFlowController: FlowController!
@@ -37,10 +38,10 @@ final class RootNavigationController: UINavigationController {
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.shadowImage = shadowLine
-        navBarAppearance.shadowColor = Theme.Colors.Line.secondaryLine
-        navBarAppearance.titleTextAttributes = [.foregroundColor: Theme.Colors.Text.main]
-        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: Theme.Colors.Text.main]
-        navBarAppearance.backgroundColor = Theme.Colors.Fill.background
+        navBarAppearance.shadowColor = AppColor.separatorsOpaque.uiColor
+        navBarAppearance.titleTextAttributes = [.foregroundColor: AppColor.labelsPrimary.uiColor]
+        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: AppColor.labelsPrimary.uiColor]
+        navBarAppearance.backgroundColor = AppColor.backgroundsPrimary.uiColor
         navigationBar.standardAppearance = navBarAppearance
         navigationBar.scrollEdgeAppearance = navBarAppearance
     }

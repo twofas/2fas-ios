@@ -123,7 +123,7 @@ final class TokensViewController: UIViewController {
 private extension TokensViewController {
     func setupView() {
         extendedLayoutIncludesOpaqueBars = true
-        view.backgroundColor = Theme.Colors.Fill.background
+        view.backgroundColor = AppColor.backgroundsPrimary.uiColor
         title = T.Commons.tokens
         accessibilityTraits = .header
     }

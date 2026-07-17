@@ -18,12 +18,13 @@
 //
 
 import UIKit
+import Common
 
 enum ToastNotification {
     static func show(title: String, customView: UIView? = nil) {
         let toast = Toast(title: title, customView: customView, offset: NotificationBottomOffset.offset)
-        toast.view.backgroundColor = Theme.Colors.Line.primaryLine.withAlphaComponent(0.8)
-        toast.view.textColor = Theme.Colors.Text.onBackground
+        toast.view.backgroundColor = AppColor.labelsPrimary.uiColor.withAlphaComponent(0.8)
+        toast.view.textColor = AppColor.backgroundsSecondary.uiColor
         toast.show()
     }
     

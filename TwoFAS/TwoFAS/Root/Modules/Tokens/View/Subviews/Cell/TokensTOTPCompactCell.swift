@@ -85,7 +85,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
     }()
     private let separator: UIView = {
         let line = UIView()
-        line.backgroundColor = Theme.Colors.Line.separator
+        line.backgroundColor = AppColor.separatorsOpaque.uiColor
         line.isAccessibilityElement = false
         line.isUserInteractionEnabled = false
         return line
@@ -200,8 +200,8 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
 
 private extension TokensTOTPCompactCell {
     func setupBackground() {
-        contentView.backgroundColor = Theme.Colors.Fill.background
-        backgroundColor = Theme.Colors.Fill.background
+        contentView.backgroundColor = AppColor.backgroundsPrimary.uiColor
+        backgroundColor = AppColor.backgroundsPrimary.uiColor
     }
     
     func setupLayout() {

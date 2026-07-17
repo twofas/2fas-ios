@@ -77,8 +77,8 @@ final class NotificationIcon: UIView, PKHUDAnimating {
     
     private var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Theme.Colors.Text.light
-        label.font = Theme.Fonts.Controls.title
+        label.textColor = AppColor.graysWhite.uiColor
+        label.font = TextStyle.headline.uiFont()
         label.numberOfLines = 0
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
@@ -107,8 +107,8 @@ final class NotificationIcon: UIView, PKHUDAnimating {
         layer.lineCap = .square
         layer.lineJoin = .bevel
         
-        layer.fillColor = Theme.Colors.Fill.notification.cgColor
-        layer.strokeColor = Theme.Colors.Fill.notification.cgColor
+        layer.fillColor = AppColor.backgroundsSecondary.uiColor.cgColor
+        layer.strokeColor = AppColor.backgroundsSecondary.uiColor.cgColor
         layer.lineWidth = 1
         
         iconShapeLayer = layer
@@ -170,10 +170,10 @@ final class NotificationIcon: UIView, PKHUDAnimating {
         
         iconShapeLayer.add(checkmarkStrokeAnimation, forKey: strokeAnimKey)
         
-        iconShapeLayer.fillColor = Theme.Colors.Text.dark.cgColor
+        iconShapeLayer.fillColor = AppColor.graysBlack.uiColor.cgColor
         
         let fillAnimation = CAKeyframeAnimation(keyPath: "fillColor")
-        fillAnimation.values = [Theme.Colors.Text.dark.cgColor, Theme.Colors.Text.light.cgColor]
+        fillAnimation.values = [AppColor.graysBlack.uiColor.cgColor, AppColor.graysWhite.uiColor.cgColor]
         fillAnimation.keyTimes = [0, 1]
         fillAnimation.duration = 0.7
         fillAnimation.fillMode = .both
@@ -185,6 +185,6 @@ final class NotificationIcon: UIView, PKHUDAnimating {
     func stopAnimation() {
         iconShapeLayer.removeAnimation(forKey: strokeAnimKey)
         iconShapeLayer.removeAnimation(forKey: fillAnimationKey)
-        iconShapeLayer.fillColor = Theme.Colors.Text.light.cgColor
+        iconShapeLayer.fillColor = AppColor.graysWhite.uiColor.cgColor
     }
 }

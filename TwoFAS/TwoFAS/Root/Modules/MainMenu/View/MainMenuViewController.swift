@@ -55,14 +55,14 @@ final class MainMenuViewController: UIViewController {
             contentConfiguration.textProperties.font = contentConfiguration
                 .textProperties.font.withTraits(traits: .traitBold)
             contentConfiguration.imageProperties.reservedLayoutSize = .init(width: 24, height: 24)
-            contentConfiguration.textProperties.color = Theme.Colors.Text.main
+            contentConfiguration.textProperties.color = AppColor.labelsPrimary.uiColor
             
             if item.hasBadge {
                 let attributedString = NSMutableAttributedString(string: "\(item.title)\(badgeSymbol)")
                 attributedString.decorate(
                     textToDecorate: badgeSymbol,
                     attributes: [
-                        .foregroundColor: Theme.Colors.Fill.theme,
+                        .foregroundColor: AppColor.accentsBrand.uiColor,
                         .baselineOffset: 10,
                         .font: UIFont.systemFont(ofSize: 10, weight: .bold)
                     ]
@@ -79,7 +79,7 @@ final class MainMenuViewController: UIViewController {
         super.viewDidLoad()
         
         title = T.Commons._2fasToolbar
-        view.backgroundColor = Theme.Colors.Fill.System.second
+        view.backgroundColor = UIColor.secondarySystemBackground
         navigationItem.backButtonDisplayMode = .minimal
         navigationItem.largeTitleDisplayMode = .always
         
@@ -101,8 +101,8 @@ final class MainMenuViewController: UIViewController {
                 self?.cell(for: itemIdentifier, in: collectionView, at: indexPath) ?? UICollectionViewCell()
             })
         
-        collectionView.tintColor = Theme.Colors.Fill.theme
-        view.tintColor = Theme.Colors.Fill.theme
+        collectionView.tintColor = AppColor.accentsBrand.uiColor
+        view.tintColor = AppColor.accentsBrand.uiColor
         
         view.addSubview(collectionView)
         collectionView.pinToParent()
@@ -160,20 +160,20 @@ private final class MenuCell: UICollectionViewListCell {
         
         cConfig.textProperties.colorTransformer = UIConfigurationColorTransformer { _ in
             if state.isSelected {
-                return Theme.Colors.Text.light
+                return AppColor.graysWhite.uiColor
             } else if state.isHighlighted {
-                return Theme.Colors.Text.mainHighlighted
+                return AppColor.labelsSecondary.uiColor
             }
-            return Theme.Colors.Text.main
+            return AppColor.labelsPrimary.uiColor
         }
         
         cConfig.imageProperties.tintColorTransformer = UIConfigurationColorTransformer { _ in
             if state.isSelected {
-                return Theme.Colors.Text.light
+                return AppColor.graysWhite.uiColor
             } else if state.isHighlighted {
-                return Theme.Colors.Text.mainHighlighted
+                return AppColor.labelsSecondary.uiColor
             }
-            return Theme.Colors.Controls.inactive
+            return AppColor.labelsTertiary.uiColor
         }
         
         self.contentConfiguration = cConfig
@@ -181,9 +181,9 @@ private final class MenuCell: UICollectionViewListCell {
         guard var bConfig = self.backgroundConfiguration?.updated(for: state) else { return }
         bConfig.backgroundColorTransformer = UIConfigurationColorTransformer { _ in
             if state.isSelected {
-                return Theme.Colors.Fill.theme
+                return AppColor.accentsBrand.uiColor
             } else if state.isHighlighted {
-                return Theme.Colors.Fill.themeLight
+                return AppColor.accentsBrand.uiColor
             }
             return .clear
         }

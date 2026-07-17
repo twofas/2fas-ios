@@ -52,7 +52,7 @@ extension ExternalImportInstructionsPresenter {
                 Image(systemName: "doc.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .foregroundStyle(Color(ThemeColor.theme))
+                    .foregroundStyle(AppColor.accentsBrand)
                     .frame(width: 60, height: 60)
             )
         }

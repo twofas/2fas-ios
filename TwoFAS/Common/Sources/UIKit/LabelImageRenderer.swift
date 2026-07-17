@@ -52,8 +52,8 @@ public enum LabelImageRenderer {
         let size = CGSize(width: variant.size, height: variant.size)
         let frame = CGRect(origin: .zero, size: size)
         let paths = LabelShapes.generate(for: size)
-        let rectColor = ThemeColor.labelTextBackground
-        let textColor = ThemeColor.labelText
+        let rectColor = AppColor.backgroundsPrimary.uiColor
+        let textColor = AppColor.labelsPrimary.uiColor
         let renderer = UIGraphicsImageRenderer(bounds: frame)
         return renderer.image { _ in
             tintColor.color.setFill()

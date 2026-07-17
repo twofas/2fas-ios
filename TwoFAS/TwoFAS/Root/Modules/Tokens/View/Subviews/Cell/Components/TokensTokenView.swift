@@ -41,7 +41,7 @@ final class TokensTokenView: UIView {
     private let tokenLabel = TokensTokenLabel()
     private let spacingLabel: TokensTokenLabel = {
         let label = TokensTokenLabel()
-        label.textColor = Theme.Colors.Fill.background
+        label.textColor = AppColor.backgroundsPrimary.uiColor
         return label
     }()
 

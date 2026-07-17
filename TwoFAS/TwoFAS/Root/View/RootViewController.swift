@@ -31,7 +31,7 @@ final class RootViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Theme.Colors.Fill.background
+        view.backgroundColor = AppColor.backgroundsPrimary.uiColor
         SpinnerViewLocalizations.voiceOverSpinner = T.Voiceover.spinner
         Theme.applyAppearance()
     }

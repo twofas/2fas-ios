@@ -46,7 +46,7 @@ final class TokensEditCell: UICollectionViewCell {
     private var dragHandles: UIImageView = {
         let imageView = UIImageView(image: Asset.dragHandles.image)
         imageView.contentMode = .center
-        imageView.tintColor = Theme.Colors.Icon.more
+        imageView.tintColor = AppColor.labelsSecondary.uiColor
         return imageView
     }()
     
@@ -95,8 +95,8 @@ final class TokensEditCell: UICollectionViewCell {
     }
     
     private func setupBackground() {
-        contentView.backgroundColor = Theme.Colors.Fill.background
-        backgroundColor = Theme.Colors.Fill.background
+        contentView.backgroundColor = AppColor.backgroundsPrimary.uiColor
+        backgroundColor = AppColor.backgroundsPrimary.uiColor
     }
     
     private func setupLayout() {

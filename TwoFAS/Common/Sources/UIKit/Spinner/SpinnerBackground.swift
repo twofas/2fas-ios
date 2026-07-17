@@ -33,7 +33,7 @@ final class SpinnerBackground: UIView {
     }
     
     private func commonInit() {
-        backgroundColor = ThemeColor.overlay
+        backgroundColor = AppColor.overlaysDefault.uiColor
         alpha = 0
         isUserInteractionEnabled = false
         isAccessibilityElement = false

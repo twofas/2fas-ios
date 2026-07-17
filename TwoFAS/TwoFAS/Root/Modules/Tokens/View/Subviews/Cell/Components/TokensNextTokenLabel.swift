@@ -36,7 +36,7 @@ final class TokensNextTokenLabel: UILabel {
     private func commonInit() {
         adjustsFontForContentSizeCategory = true
         numberOfLines = 1
-        textColor = Theme.Colors.Text.main
+        textColor = AppColor.labelsPrimary.uiColor
         setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
         setContentHuggingPriority(.defaultLow - 1, for: .vertical)

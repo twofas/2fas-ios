@@ -185,7 +185,7 @@ private struct ErrorTextView: View {
         }()
         Text(reason)
             .font(.headline)
-            .foregroundColor(Color(Theme.Colors.Text.light))
+            .foregroundColor(Color(AppColor.graysWhite.uiColor))
             .multilineTextAlignment(.center)
             .padding(.horizontal, Spacing.XL)
             .frame(maxWidth: .infinity, alignment: .center)

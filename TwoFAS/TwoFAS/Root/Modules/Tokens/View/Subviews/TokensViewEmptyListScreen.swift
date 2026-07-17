@@ -346,6 +346,9 @@ private final class TrashWarning: UIButton {
     }
     
     private func refreshBackground() {
-        applyRoundedCorners(withBackgroundColor: ThemeColor.infoField, cornerRadius: 2 * Theme.Metrics.cornerRadius)
+        applyRoundedCorners(
+            withBackgroundColor: AppColor.backgroundsSecondary.uiColor,
+            cornerRadius: 2 * Theme.Metrics.cornerRadius
+        )
     }
 }

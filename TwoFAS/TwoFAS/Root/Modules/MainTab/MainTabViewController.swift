@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 import Data
 
 protocol MainTabViewControlling: AnyObject {
@@ -250,28 +251,29 @@ final class MainTabViewController: UITabBarController {
         guard #unavailable(iOS 26.0) else { return }
 
         let app = tabBar.standardAppearance.copy()
-        app.backgroundColor = Theme.Colors.Fill.background
-        app.shadowColor = Theme.Colors.Line.secondaryLine
+        app.backgroundColor = AppColor.backgroundsPrimary.uiColor
+        app.shadowColor = AppColor.separatorsOpaque.uiColor
         app.shadowImage = Asset.shadowLine.image
             .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
 
+        let tabBarFont = TextStyle.caption2.uiFont(.emphasized)
         let tabBarItemAppearance = UITabBarItemAppearance()
         tabBarItemAppearance.normal.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: Theme.Colors.Controls.inactive,
-            NSAttributedString.Key.font: Theme.Fonts.tabBar
+            NSAttributedString.Key.foregroundColor: AppColor.labelsTertiary.uiColor,
+            NSAttributedString.Key.font: tabBarFont
         ]
         tabBarItemAppearance.selected.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: Theme.Colors.Controls.active,
-            NSAttributedString.Key.font: Theme.Fonts.tabBar
+            NSAttributedString.Key.foregroundColor: AppColor.accentsBrand.uiColor,
+            NSAttributedString.Key.font: tabBarFont
         ]
         tabBarItemAppearance.focused.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: Theme.Colors.Controls.active,
-            NSAttributedString.Key.font: Theme.Fonts.tabBar
+            NSAttributedString.Key.foregroundColor: AppColor.accentsBrand.uiColor,
+            NSAttributedString.Key.font: tabBarFont
         ]
 
-        tabBarItemAppearance.normal.badgeTextAttributes = [.foregroundColor: Theme.Colors.Fill.theme]
-        tabBarItemAppearance.selected.badgeTextAttributes = [.foregroundColor: Theme.Colors.Fill.theme]
-        tabBarItemAppearance.focused.badgeTextAttributes = [.foregroundColor: Theme.Colors.Fill.theme]
+        tabBarItemAppearance.normal.badgeTextAttributes = [.foregroundColor: AppColor.accentsBrand.uiColor]
+        tabBarItemAppearance.selected.badgeTextAttributes = [.foregroundColor: AppColor.accentsBrand.uiColor]
+        tabBarItemAppearance.focused.badgeTextAttributes = [.foregroundColor: AppColor.accentsBrand.uiColor]
 
         tabBarItemAppearance.normal.badgeBackgroundColor = .clear
         tabBarItemAppearance.selected.badgeBackgroundColor = .clear

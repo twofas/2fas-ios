@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class FormLine: UIView {
     private var active: UIColor?
@@ -92,7 +93,7 @@ final class FormLine: UIView {
     }
     
     private func commonInit() {
-        backgroundColor = Theme.Colors.Line.separator
+        backgroundColor = AppColor.separatorsOpaque.uiColor
         isUserInteractionEnabled = false
         currentHeight = normalHeight
     }

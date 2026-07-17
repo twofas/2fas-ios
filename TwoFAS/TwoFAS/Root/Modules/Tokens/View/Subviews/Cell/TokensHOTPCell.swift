@@ -68,7 +68,7 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
     private let accessoryContainer = UIView()
     private let separator: UIView = {
         let line = UIView()
-        line.backgroundColor = Theme.Colors.Line.separator
+        line.backgroundColor = AppColor.separatorsOpaque.uiColor
         line.isAccessibilityElement = false
         line.isUserInteractionEnabled = false
         return line
@@ -157,8 +157,8 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
 
 private extension TokensHOTPCell {
     func setupBackground() {
-        contentView.backgroundColor = Theme.Colors.Fill.background
-        backgroundColor = Theme.Colors.Fill.background
+        contentView.backgroundColor = AppColor.backgroundsPrimary.uiColor
+        backgroundColor = AppColor.backgroundsPrimary.uiColor
     }
     
     func setupLayout() {
@@ -245,7 +245,7 @@ private extension TokensHOTPCell {
             UITapGestureRecognizer(target: self, action: #selector(animateRefreshCounter))
         )
         tokenLabel.maskToken()
-        nextTokenLabel.textColor = Theme.Colors.Fill.background.withAlphaComponent(0.1)
+        nextTokenLabel.textColor = AppColor.backgroundsPrimary.uiColor.withAlphaComponent(0.1)
         nextTokenLabel.text = TokenValue.empty
         nextTokenLabel.isAccessibilityElement = false
     }

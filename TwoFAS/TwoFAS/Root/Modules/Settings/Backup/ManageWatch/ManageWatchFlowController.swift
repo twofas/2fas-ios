@@ -50,7 +50,7 @@ final class ManageWatchFlowController: FlowController {
         )
         flowController.presenter = presenter
         hosting.rootView = AnyView(ManageWatchView(presenter: presenter))
-        hosting.view.backgroundColor = Theme.Colors.Fill.System.third
+        hosting.view.backgroundColor = AppColor.backgroundsTertiary.uiColor
 
         hosting.configureAsModal()
         viewController.present(hosting, animated: true)

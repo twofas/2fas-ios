@@ -39,7 +39,7 @@ final class IntroductionFlowController: FlowController {
     ) {
         let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
         hosting.view.layer.contentsFormat = .RGBA16Float
-        hosting.view.backgroundColor = Theme.Colors.Fill.background
+        hosting.view.backgroundColor = AppColor.backgroundsPrimary.uiColor
         let flowController = IntroductionFlowController(viewController: hosting)
         flowController.parent = parent
 

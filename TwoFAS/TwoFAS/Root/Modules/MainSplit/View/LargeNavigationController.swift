@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class LargeNavigationController: UINavigationController {
     override func viewDidLoad() {
@@ -31,7 +32,7 @@ final class LargeNavigationController: UINavigationController {
         navigationBar.shadowImage = nil
         navigationBar.setBackgroundImage(nil, for: .any, barMetrics: .default)
         navigationBar.scrollEdgeAppearance = nil
-        navigationBar.tintColor = Theme.Colors.Fill.theme
+        navigationBar.tintColor = AppColor.accentsBrand.uiColor
         view.backgroundColor = .clear
     }
 }

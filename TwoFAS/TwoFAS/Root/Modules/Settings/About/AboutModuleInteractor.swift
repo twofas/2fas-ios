@@ -24,15 +24,23 @@ protocol AboutModuleInteracting: AnyObject {
     var currentAppVersion: String { get }
     var isCrashlyticsDisabled: Bool { get }
     func setCrashlyticsDisabled(_ disabled: Bool)
+    func generateLogsFile() async -> URL?
+    func removeLogsFile(at url: URL)
 }
 
 final class AboutModuleInteractor {
     private let appInfoInteractor: AppInfoInteracting
     private let registerDeviceInteractor: RegisterDeviceInteracting
-    
-    init(appInfoInteractor: AppInfoInteracting, registerDeviceInteractor: RegisterDeviceInteracting) {
+    private let logGenerationInteractor: LogGenerationInteracting
+
+    init(
+        appInfoInteractor: AppInfoInteracting,
+        registerDeviceInteractor: RegisterDeviceInteracting,
+        logGenerationInteractor: LogGenerationInteracting
+    ) {
         self.appInfoInteractor = appInfoInteractor
         self.registerDeviceInteractor = registerDeviceInteractor
+        self.logGenerationInteractor = logGenerationInteractor
     }
 }
 
@@ -47,5 +55,16 @@ extension AboutModuleInteractor: AboutModuleInteracting {
     
     func setCrashlyticsDisabled(_ disabled: Bool) {
         registerDeviceInteractor.setCrashlyticsDisabled(disabled)
+    }
+
+    func generateLogsFile() async -> URL? {
+        switch await logGenerationInteractor.generateLogsFile() {
+        case .success(let url): return url
+        case .failure: return nil
+        }
+    }
+
+    func removeLogsFile(at url: URL) {
+        logGenerationInteractor.removeLogsFile(at: url)
     }
 }

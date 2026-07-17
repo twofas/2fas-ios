@@ -292,14 +292,8 @@ final class ModuleInteractorFactory {
     func aboutModuleInteractor() -> AboutModuleInteracting {
         AboutModuleInteractor(
             appInfoInteractor: InteractorFactory.shared.appInfoInteractor(),
-            registerDeviceInteractor: InteractorFactory.shared.registerDeviceInteractor()
-        )
-    }
-    
-    func uploadLogsModuleInteractor(auditID: UUID?) -> UploadLogsModuleInteracting {
-        UploadLogsModuleInteractor(
-            logUploadingInteractor: InteractorFactory.shared.logUploadingInteractor(),
-            passedUUID: auditID
+            registerDeviceInteractor: InteractorFactory.shared.registerDeviceInteractor(),
+            logGenerationInteractor: InteractorFactory.shared.logGenerationInteractor()
         )
     }
     
@@ -328,7 +322,7 @@ final class ModuleInteractorFactory {
     
     func mainModuleInteractor() -> MainModuleInteracting {
         MainModuleInteractor(
-            logUploadingInteractor: InteractorFactory.shared.logUploadingInteractor(),
+            logGenerationInteractor: InteractorFactory.shared.logGenerationInteractor(),
             viewPathInteractor: InteractorFactory.shared.viewPathInteractor(),
             cloudBackupStateInteractor: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: ""),
             fileInteractor: InteractorFactory.shared.fileInteractor(),
@@ -450,4 +444,13 @@ final class ModuleInteractorFactory {
             cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "")
         )
     }
+
+    #if DEV
+    func debugModuleInteractor() -> DebugModuleInteracting {
+        DebugModuleInteractor(
+            debugTools: InteractorFactory.shared.debugToolsInteractor(),
+            appInfoInteractor: InteractorFactory.shared.appInfoInteractor()
+        )
+    }
+    #endif
 }

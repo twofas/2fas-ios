@@ -28,9 +28,12 @@ protocol AboutFlowControlling: AnyObject {
     func toWriteReview()
     func toPrivacyPolicy()
     func toTOS()
-    func toSendLogs()
+    func toShareLogs(fileURL: URL, onDismiss: @escaping () -> Void)
     func toAcknowledgements()
     func toSocial(_ channel: SocialChannel)
+    #if DEV
+    func toDebug()
+    #endif
     func close()
 }
 
@@ -105,9 +108,19 @@ extension AboutFlowController: AboutFlowControlling {
         )
     }
 
-    func toSendLogs() {
+    func toShareLogs(fileURL: URL, onDismiss: @escaping () -> Void) {
         guard let vc = _viewController else { return }
-        UploadLogsNavigationFlowController.present(on: vc, auditID: nil, parent: self)
+        let activity = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
+        activity.completionWithItemsHandler = { _, _, _, _ in
+            onDismiss()
+        }
+        if let popover = activity.popoverPresentationController {
+            let bounds = vc.view.bounds
+            popover.permittedArrowDirections = .init(rawValue: 0)
+            popover.sourceRect = CGRect(x: bounds.midX, y: bounds.midY, width: 1, height: 2)
+            popover.sourceView = vc.view
+        }
+        vc.present(activity, animated: true, completion: nil)
     }
 
     func toAcknowledgements() {
@@ -122,7 +135,18 @@ extension AboutFlowController: AboutFlowControlling {
         )
     }
 
+    #if DEV
+    func toDebug() {
+        guard let navigationController = _viewController?.navigationController else { return }
+        DebugFlowController.push(in: navigationController, parent: self)
+    }
+    #endif
+
     func close() {
         _viewController?.navigationController?.popViewController(animated: true)
     }
 }
+
+#if DEV
+extension AboutFlowController: DebugFlowControllerParent {}
+#endif

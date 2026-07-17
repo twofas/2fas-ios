@@ -78,7 +78,7 @@ final class MainModuleInteractor {
         mdmInteractor.shouldSetPasscode
     }
     
-    private let logUploadingInteractor: LogUploadingInteracting
+    private let logGenerationInteractor: LogGenerationInteracting
     private let cloudBackupStateInteractor: CloudBackupStateInteracting
     private let fileInteractor: FileInteracting
     private let newVersionInteractor: NewVersionInteracting
@@ -90,7 +90,7 @@ final class MainModuleInteractor {
     private let syncMigrationInteractor: SyncMigrationInteracting
     
     init(
-        logUploadingInteractor: LogUploadingInteracting,
+        logGenerationInteractor: LogGenerationInteracting,
         viewPathInteractor: ViewPathIteracting,
         cloudBackupStateInteractor: CloudBackupStateInteracting,
         fileInteractor: FileInteracting,
@@ -102,7 +102,7 @@ final class MainModuleInteractor {
         protectionInteractor: ProtectionInteracting,
         syncMigrationInteractor: SyncMigrationInteracting
     ) {
-        self.logUploadingInteractor = logUploadingInteractor
+        self.logGenerationInteractor = logGenerationInteractor
         self.cloudBackupStateInteractor = cloudBackupStateInteractor
         self.fileInteractor = fileInteractor
         self.newVersionInteractor = newVersionInteractor
@@ -138,7 +138,7 @@ final class MainModuleInteractor {
 extension MainModuleInteractor: MainModuleInteracting {
     func initialize() {
         networkStatusInteractor.installListeners()
-        DebugLog(logUploadingInteractor.summarize())
+        DebugLog(logGenerationInteractor.summarize())
         appInfoInteractor.markDateOfFirstRunIfNeeded()
     }
     

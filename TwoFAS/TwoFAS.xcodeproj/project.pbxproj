@@ -357,6 +357,12 @@
 		C258EC6E227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = C258EC6D227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift */; };
 		C25AAA3C290455B2005747C5 /* Protection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2147CB5205D78600001D011 /* Protection.framework */; };
 		C25AD89B300992FF00D9ABFB /* LogGenerationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AD89A300992FF00D9ABFB /* LogGenerationInteractor.swift */; };
+		C25AD89D300A442F00D9ABFB /* DebugToolsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AD89C300A442F00D9ABFB /* DebugToolsInteractor.swift */; };
+		C25AD8A2300A453300D9ABFB /* DebugModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AD8A1300A453300D9ABFB /* DebugModels.swift */; };
+		C25AD8A4300A455200D9ABFB /* DebugModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AD8A3300A455200D9ABFB /* DebugModuleInteractor.swift */; };
+		C25AD8A6300A456F00D9ABFB /* DebugPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AD8A5300A456F00D9ABFB /* DebugPresenter.swift */; };
+		C25AD8A8300A459200D9ABFB /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AD8A7300A459200D9ABFB /* DebugView.swift */; };
+		C25AD8AA300A45A100D9ABFB /* DebugFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AD8A9300A45A100D9ABFB /* DebugFlowController.swift */; };
 		C25AE51D300A58B800D9ABFB /* ToastContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AE518300A58B800D9ABFB /* ToastContentView.swift */; };
 		C25AE51E300A58B800D9ABFB /* ToastPresenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AE51B300A58B800D9ABFB /* ToastPresenterView.swift */; };
 		C25AE520300A58B800D9ABFB /* ToastPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AE519300A58B800D9ABFB /* ToastPresenter.swift */; };
@@ -2211,6 +2217,12 @@
 		C259133A2DBD70EF0040EF78 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C259133B2DBD70EF0040EF78 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C25AD89A300992FF00D9ABFB /* LogGenerationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogGenerationInteractor.swift; sourceTree = "<group>"; };
+		C25AD89C300A442F00D9ABFB /* DebugToolsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugToolsInteractor.swift; sourceTree = "<group>"; };
+		C25AD8A1300A453300D9ABFB /* DebugModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugModels.swift; sourceTree = "<group>"; };
+		C25AD8A3300A455200D9ABFB /* DebugModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugModuleInteractor.swift; sourceTree = "<group>"; };
+		C25AD8A5300A456F00D9ABFB /* DebugPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPresenter.swift; sourceTree = "<group>"; };
+		C25AD8A7300A459200D9ABFB /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
+		C25AD8A9300A45A100D9ABFB /* DebugFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugFlowController.swift; sourceTree = "<group>"; };
 		C25AE518300A58B800D9ABFB /* ToastContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastContentView.swift; sourceTree = "<group>"; };
 		C25AE519300A58B800D9ABFB /* ToastPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastPresenter.swift; sourceTree = "<group>"; };
 		C25AE51A300A58B800D9ABFB /* ToastPresenter+DefaultActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToastPresenter+DefaultActions.swift"; sourceTree = "<group>"; };
@@ -3412,6 +3424,7 @@
 				C2AC21FB27660E0200271402 /* Backup */,
 				C2ADD60F2752DBF90010F5E7 /* Menu */,
 				C21111E2274AB8D300CA7C78 /* Settings */,
+				C25AD8A0300A451200D9ABFB /* Debug */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -3485,6 +3498,7 @@
 				C2EA6E5B2BA10AFE0034A964 /* LocalNotificationFetchInteractor.swift */,
 				C2D97E7C2E24436200E213A7 /* QRCodeGeneratorInteractor.swift */,
 				C25AD89A300992FF00D9ABFB /* LogGenerationInteractor.swift */,
+				C25AD89C300A442F00D9ABFB /* DebugToolsInteractor.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -4288,6 +4302,18 @@
 				C2A2DA5B2FE548EE004FD390 /* NewsView.swift */,
 			);
 			path = News;
+			sourceTree = "<group>";
+		};
+		C25AD8A0300A451200D9ABFB /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				C25AD8A1300A453300D9ABFB /* DebugModels.swift */,
+				C25AD8A3300A455200D9ABFB /* DebugModuleInteractor.swift */,
+				C25AD8A5300A456F00D9ABFB /* DebugPresenter.swift */,
+				C25AD8A7300A459200D9ABFB /* DebugView.swift */,
+				C25AD8A9300A45A100D9ABFB /* DebugFlowController.swift */,
+			);
+			path = Debug;
 			sourceTree = "<group>";
 		};
 		C25AE51C300A58B800D9ABFB /* Toast */ = {
@@ -7193,6 +7219,7 @@
 				C21508153002C382008B66E2 /* AboutView.swift in Sources */,
 				C2B1209129D76FA60020281E /* AppearanceModuleInteractor.swift in Sources */,
 				C2E7C3482ADB021500478D89 /* CameraPreview.swift in Sources */,
+				C25AD8A4300A455200D9ABFB /* DebugModuleInteractor.swift in Sources */,
 				C2D4777E2FB3C41C0057CA25 /* LoginPresenter.swift in Sources */,
 				C2C0A7FC2DA2B46D000A1772 /* CloudState+.swift in Sources */,
 				C25C661428BADAB0008EC66A /* AboutFlowController.swift in Sources */,
@@ -7242,6 +7269,7 @@
 				C2FA6C472401DF9400A1F320 /* AlertControllerDismissFlow.swift in Sources */,
 				C2E5248E2FD337AB00C5E875 /* AddingServiceHOTPView.swift in Sources */,
 				C2D97E822E24556F00E213A7 /* QRCodeDisplayView.swift in Sources */,
+				C25AD8AA300A45A100D9ABFB /* DebugFlowController.swift in Sources */,
 				C240484A2765218C0076376E /* WidgetWarningPresenter.swift in Sources */,
 				C2F5F9E328611D6200F778E1 /* BrowserExtensionPairingAlreadyPairedFlowController.swift in Sources */,
 				C28356232897098300421882 /* SelectFromGalleryAdvice.swift in Sources */,
@@ -7291,6 +7319,7 @@
 				C27205622E7C930B004FB39A /* ExportQuestionPINVerificationFlowController.swift in Sources */,
 				C2D18D702FCC685300FD6DE1 /* GetNameView.swift in Sources */,
 				C2AC2208276615FB00271402 /* ExporterMainScreenPresenter.swift in Sources */,
+				C25AD8A2300A453300D9ABFB /* DebugModels.swift in Sources */,
 				C2FC422323AA960400320ABE /* Module.swift in Sources */,
 				C2BDC6D91FC1CBE100967D0E /* String+Extensions.swift in Sources */,
 				C20E2E072A7C51E700DB64BB /* AddingServiceTokenFlowController.swift in Sources */,
@@ -7429,6 +7458,7 @@
 				C23443402A8C12C200005F33 /* AddingServiceServiceIconView.swift in Sources */,
 				C20E2E092A7C51F500DB64BB /* AddingServiceTokenViewController.swift in Sources */,
 				C2338702278103B000F8DBC3 /* TrashModuleInteractor.swift in Sources */,
+				C25AD8A8300A459200D9ABFB /* DebugView.swift in Sources */,
 				C2B39E5229F5848700EC31F6 /* TokensLogo.swift in Sources */,
 				C2ADD6162752DF770010F5E7 /* BackupMenuFlowController.swift in Sources */,
 				C2AC21FE27660F5700271402 /* ImporterOpenFileModuleInteractor.swift in Sources */,
@@ -7543,6 +7573,7 @@
 				C23386F72780E54200F8DBC3 /* DeleteServicePresenter.swift in Sources */,
 				C28705F42980776300745459 /* MainFlowController.swift in Sources */,
 				C21987C727961BF600724E63 /* CameraErrorTemplate.swift in Sources */,
+				C25AE525300A591600D9ABFB /* ToastPresenter+DefaultActions.swift in Sources */,
 				C2D2F70C2FF02EAC0008FE4D /* LabelComposeFlowController.swift in Sources */,
 				C218513E2A1A8EF600A8352A /* TokensNextTokenLabel.swift in Sources */,
 				C2CFA6A62AEEF0CB00E574FC /* RootModuleInteractor.swift in Sources */,
@@ -7557,6 +7588,7 @@
 				C2C56D4427C98316003B4C43 /* ComposeServiceAdvancedSummaryPresenter+Menu.swift in Sources */,
 				C215082F3003026A008B66E2 /* ExporterPINView.swift in Sources */,
 				C2AE5F652ADC3A4200AED670 /* VoiceOver.swift in Sources */,
+				C25AD8A6300A456F00D9ABFB /* DebugPresenter.swift in Sources */,
 				C296D4D42A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift in Sources */,
 				C2C66F951FE068CC00AD5A1C /* TokensViewController.swift in Sources */,
 				C2EBDFFC2AC44750008FD744 /* GuideMenuViewController.swift in Sources */,
@@ -8250,6 +8282,7 @@
 				C274C76B2ADD3C9C00B8AAC1 /* TokenGenerator.swift in Sources */,
 				C2E7C3E12ADB2BB400478D89 /* SortInteractor.swift in Sources */,
 				C2E7C3ED2ADB2BB400478D89 /* WebExtensionLocalDeviceNameInteractor.swift in Sources */,
+				C25AD89D300A442F00D9ABFB /* DebugToolsInteractor.swift in Sources */,
 				C2E7C3EA2ADB2BB400478D89 /* CloudBackupStateInteractor.swift in Sources */,
 				C2AE5F592ADC1C5B00AED670 /* PermissionsStateDataController.swift in Sources */,
 				C2E7C4072ADB2BB400478D89 /* PushNotificationInteractor.swift in Sources */,

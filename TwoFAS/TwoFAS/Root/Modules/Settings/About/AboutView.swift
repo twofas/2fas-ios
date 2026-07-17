@@ -44,6 +44,25 @@ struct AboutView: View {
         .onAppear {
             presenter.viewWillAppear()
         }
+        .alert("Generate logs?", isPresented: $presenter.isGenerateLogsAlertPresented) {
+            Button(T.Commons.cancel, role: .cancel) {}
+            Button("Generate") {
+                presenter.handleGenerateLogsConfirmed()
+            }
+        } message: {
+            Text("Do you want to generate logs?")
+        }
+        .overlay {
+            if presenter.isGeneratingLogs {
+                ZStack {
+                    Color.black.opacity(0.4)
+                        .ignoresSafeArea()
+                    TFLoadingView(title: "Generating logs…")
+                        .background(.backgroundsPrimaryElevated)
+                }
+                .transition(.opacity)
+            }
+        }
     }
 
     @ViewBuilder

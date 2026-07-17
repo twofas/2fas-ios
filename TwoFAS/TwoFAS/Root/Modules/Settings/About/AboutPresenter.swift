@@ -23,6 +23,8 @@ import UIKit
 final class AboutPresenter {
     var sections: [AboutSection] = []
     var showsBackButton: Bool = true
+    var isGenerateLogsAlertPresented: Bool = false
+    var isGeneratingLogs: Bool = false
 
     private let flowController: AboutFlowControlling
     let interactor: AboutModuleInteracting
@@ -57,17 +59,36 @@ extension AboutPresenter {
         case .share:
             flowController.toShare()
         case .sendLogs:
-            flowController.toSendLogs()
+            isGenerateLogsAlertPresented = true
         case .acknowledgements:
             flowController.toAcknowledgements()
         case .social(let channel):
             flowController.toSocial(channel)
+        #if DEV
+        case .debug:
+            flowController.toDebug()
+        #endif
         }
     }
 
     func handleToggle() {
         interactor.setCrashlyticsDisabled(!interactor.isCrashlyticsDisabled)
         reload()
+    }
+
+    func handleGenerateLogsConfirmed() {
+        isGeneratingLogs = true
+        Task { [weak self] in
+            guard let self else { return }
+            let url = await interactor.generateLogsFile()
+            await MainActor.run {
+                self.isGeneratingLogs = false
+                guard let url else { return }
+                self.flowController.toShareLogs(fileURL: url) { [weak self] in
+                    self?.interactor.removeLogsFile(at: url)
+                }
+            }
+        }
     }
 }
 

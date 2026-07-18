@@ -43,7 +43,7 @@ struct TransferView: View {
                 }
             }
         }
-        .background(.backgroundsPrimaryElevated)
+        .background(.backgroundsPrimary)
         .allowsHitTesting(!presenter.isLocked)
         .onAppear {
             presenter.viewWillAppear()

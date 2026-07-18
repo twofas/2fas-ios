@@ -35,7 +35,7 @@ struct ExternalImportInstructionsView: View {
     private let image2 = Asset.gaImport2.image
 
     var body: some View {
-        TFInfoView {
+        TFInfoView(background: .backgroundsPrimary) {
             HStack(spacing: .XL) {
                 sourceLogo
                 ArrowIcon()

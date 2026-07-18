@@ -20,15 +20,18 @@
 import SwiftUI
 
 public struct TFInfoView<VImage: View, VTexts: View, VButtons: View>: View {
+    private let background: AppColor
     private let image: VImage
     private let texts: VTexts
     private let buttons: VButtons
 
     public init(
+        background: AppColor = .backgroundsPrimaryElevated,
         @ViewBuilder image: () -> VImage,
         @ViewBuilder texts: () -> VTexts,
         @ViewBuilder buttons: () -> VButtons
     ) {
+        self.background = background
         self.image = image()
         self.texts = texts()
         self.buttons = buttons()
@@ -56,6 +59,6 @@ public struct TFInfoView<VImage: View, VTexts: View, VButtons: View>: View {
             }
         }
         .navigationBarHidden(true)
-        .background(.backgroundsPrimaryElevated)
+        .background(background)
     }
 }

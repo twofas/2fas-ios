@@ -26,7 +26,7 @@ struct PushNotificationPermissionView: View {
     private let image = Asset.permissionsPushNotifications.image
 
     var body: some View {
-        TFInfoView {
+        TFInfoView(background: .backgroundsPrimary) {
             Image(uiImage: image)
                 .resizable()
                 .scaledToFit()

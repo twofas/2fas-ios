@@ -32,7 +32,7 @@ public struct TFListScreen<Content: View>: View {
     private let content: Content
 
     public init(
-        backgroundColor: AppColor = AppColor.backgroundsPrimaryElevated,
+        backgroundColor: AppColor = AppColor.backgroundsPrimary,
         @ViewBuilder content: () -> Content
     ) {
         self.backgroundColor = backgroundColor

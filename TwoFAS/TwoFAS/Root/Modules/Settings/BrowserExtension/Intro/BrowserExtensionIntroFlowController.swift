@@ -57,10 +57,11 @@ final class BrowserExtensionIntroFlowController: FlowController {
 
     static func embed(
         in viewController: UIViewController,
-        parent: BrowserExtensionIntroFlowControllerParent
+        parent: BrowserExtensionIntroFlowControllerParent,
+        showsBackButton: Bool
     ) -> UIViewController {
         let navi = UINavigationController()
-        let hosting = makeHosting(parent: parent, navigationController: navi, showsBackButton: false)
+        let hosting = makeHosting(parent: parent, navigationController: navi, showsBackButton: showsBackButton)
         navi.setViewControllers([hosting], animated: false)
 
         viewController.addChild(navi)

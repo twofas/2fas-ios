@@ -26,7 +26,7 @@ struct BrowserExtensionPairingAlreadyPairedView: View {
     private let image = Asset.pairingAlreadyPaired.image
 
     var body: some View {
-        TFInfoView {
+        TFInfoView(background: .backgroundsPrimary) {
             Image(uiImage: image)
                 .resizable()
                 .scaledToFit()

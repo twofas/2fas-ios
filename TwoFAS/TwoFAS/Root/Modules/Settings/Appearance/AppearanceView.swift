@@ -38,7 +38,7 @@ struct AppearanceView: View {
                 }
             }
         }
-        .background(.backgroundsPrimaryElevated)
+        .background(.backgroundsPrimary)
         .onAppear {
             presenter.viewWillAppear()
         }

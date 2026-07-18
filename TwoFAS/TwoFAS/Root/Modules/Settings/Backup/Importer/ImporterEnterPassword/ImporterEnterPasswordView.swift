@@ -85,7 +85,7 @@ struct ImporterEnterPasswordView: View {
                 .padding(.bottom, .XL)
             }
         }
-        .background(.backgroundsPrimaryElevated)
+        .background(.backgroundsPrimary)
         .onChange(of: presenter.password) { _, newValue in
             presenter.handleChange(newValue)
         }

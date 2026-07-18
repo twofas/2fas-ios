@@ -38,7 +38,7 @@ struct BackupMenuView: View {
                 }
             }
         }
-        .background(.backgroundsPrimaryElevated)
+        .background(.backgroundsPrimary)
         .onAppear {
             presenter.viewWillAppear()
         }

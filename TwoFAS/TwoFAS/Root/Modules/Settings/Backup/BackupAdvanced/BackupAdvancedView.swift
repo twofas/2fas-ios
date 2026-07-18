@@ -37,13 +37,13 @@ struct BackupAdvancedView: View {
                 }
             }
 
-            TFListScreen {
+            TFListScreen() {
                 ForEach(presenter.sections) { section in
                     sectionView(section)
                 }
             }
         }
-        .background(.backgroundsPrimaryElevated)
+        .background(.backgroundsPrimary)
         .onAppear {
             presenter.viewWillAppear()
         }

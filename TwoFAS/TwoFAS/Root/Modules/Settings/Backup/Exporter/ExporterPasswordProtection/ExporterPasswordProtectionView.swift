@@ -104,7 +104,7 @@ struct ExporterPasswordProtectionView: View {
                 .padding(.bottom, .XL)
             }
         }
-        .background(.backgroundsPrimaryElevated)
+        .background(.backgroundsPrimary)
         .onChange(of: presenter.password1) { _, newValue in
             presenter.handleFirstChanged(newValue)
         }

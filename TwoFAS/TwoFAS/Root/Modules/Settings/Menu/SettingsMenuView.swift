@@ -32,7 +32,7 @@ struct SettingsMenuView: View {
                 onLeadingTap: presenter.showsSidebarButton ? presenter.handleSidebarTap : nil
             )
 
-            TFListScreen(backgroundColor: .backgroundsPrimary) {
+            TFListScreen {
                 ForEach(presenter.sections) { section in
                     sectionView(section)
                 }

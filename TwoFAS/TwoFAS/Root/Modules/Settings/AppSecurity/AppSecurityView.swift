@@ -38,7 +38,7 @@ struct AppSecurityView: View {
                 }
             }
         }
-        .background(.backgroundsPrimaryElevated)
+        .background(.backgroundsPrimary)
         .onAppear {
             presenter.viewWillAppear()
         }

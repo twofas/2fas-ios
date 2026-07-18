@@ -28,7 +28,7 @@ struct DebugView: View {
 
     var body: some View {
         content
-            .background(AppColor.backgroundsPrimaryElevated)
+            .background(AppColor.backgroundsPrimary)
             .onAppear { presenter.viewWillAppear() }
             .modifier(ActionAlertModifier(presenter: presenter))
             .modifier(GenerateAlertModifier(presenter: presenter))
@@ -59,7 +59,7 @@ struct DebugView: View {
                     .fill(AppColor.overlaysDefault)
                     .ignoresSafeArea()
                 TFLoadingView(title: presenter.runningMessage)
-                    .background(AppColor.backgroundsPrimaryElevated)
+                    .background(AppColor.backgroundsPrimary)
             }
             .transition(.opacity)
         }

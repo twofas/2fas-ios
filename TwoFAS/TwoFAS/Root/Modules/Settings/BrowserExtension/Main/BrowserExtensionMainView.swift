@@ -38,7 +38,7 @@ struct BrowserExtensionMainView: View {
                 }
             }
         }
-        .background(.backgroundsPrimaryElevated)
+        .background(.backgroundsPrimary)
         .overlay {
             if presenter.isLoading {
                 ZStack {

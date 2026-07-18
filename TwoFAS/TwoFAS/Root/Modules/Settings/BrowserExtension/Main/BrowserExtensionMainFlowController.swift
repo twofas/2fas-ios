@@ -83,7 +83,11 @@ private extension BrowserExtensionMainFlowController {
 extension BrowserExtensionMainFlowController: BrowserExtensionMainFlowControlling {
     func toInitialScreen() {
         guard embeddedViewController == nil, let vc = _viewController else { return }
-        embeddedViewController = BrowserExtensionIntroFlowController.embed(in: vc, parent: self)
+        embeddedViewController = BrowserExtensionIntroFlowController.embed(
+            in: vc,
+            parent: self,
+            showsBackButton: presenter?.showsBackButton ?? false
+        )
     }
 
     func toClearScreen() {

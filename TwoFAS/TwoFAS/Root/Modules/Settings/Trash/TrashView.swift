@@ -38,7 +38,7 @@ struct TrashView: View {
                 trashList
             }
         }
-        .background(.backgroundsPrimaryElevated)
+        .background(.backgroundsPrimary)
         .onAppear {
             presenter.viewWillAppear()
         }

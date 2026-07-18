@@ -40,7 +40,7 @@ struct AboutView: View {
                 versionFooter()
             }
         }
-        .background(.backgroundsPrimaryElevated)
+        .background(.backgroundsPrimary)
         .onAppear {
             presenter.viewWillAppear()
         }
@@ -58,7 +58,7 @@ struct AboutView: View {
                     Color.black.opacity(0.4)
                         .ignoresSafeArea()
                     TFLoadingView(title: T.About.generateLogs)
-                        .background(.backgroundsPrimaryElevated)
+                        .background(.backgroundsPrimary)
                 }
                 .transition(.opacity)
             }

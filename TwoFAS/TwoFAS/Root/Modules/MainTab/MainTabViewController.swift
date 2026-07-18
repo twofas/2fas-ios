@@ -361,11 +361,14 @@ extension MainTabViewController: MainTabViewControlling {
     func setView(_ viewPath: ViewPath) {
         if #available(iOS 26.0, *), internalTabs.indices.contains(viewPath.index) {
             let tab = internalTabs[viewPath.index]
+            guard selectedTab !== tab else { return }
             selectedTab = tab
             DispatchQueue.main.async { [weak self] in
-                self?.selectedTab = tab
+                guard let self, self.selectedTab !== tab else { return }
+                self.selectedTab = tab
             }
         } else {
+            guard selectedIndex != viewPath.index else { return }
             selectedIndex = viewPath.index
         }
     }

@@ -22,8 +22,10 @@ import SwiftUI
 public struct GradientIconTile: View {
     private let systemName: String
     private let size: CGFloat
+    
+    private let iconSize: CGFloat = 17
 
-    public init(systemName: String, size: CGFloat = 28) {
+    public init(systemName: String, size: CGFloat = 30) {
         self.systemName = systemName
         self.size = size
     }
@@ -38,6 +40,8 @@ public struct GradientIconTile: View {
                 .stroke(AppColor.bordersPrimary, lineWidth: 1)
             Image(systemName: systemName)
                 .textStyle(.body)
+                .scaledToFit()
+                .frame(width: iconSize, height: iconSize)
                 .foregroundStyle(.white)
         }
         .frame(width: size, height: size)

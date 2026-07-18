@@ -28,9 +28,14 @@ import SwiftUI
 /// `.backgroundsPrimaryElevated` and is meant to be composed underneath a
 /// `TFScreenTitleBar`.
 public struct TFListScreen<Content: View>: View {
+    private let backgroundColor: AppColor
     private let content: Content
 
-    public init(@ViewBuilder content: () -> Content) {
+    public init(
+        backgroundColor: AppColor = AppColor.backgroundsPrimaryElevated,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.backgroundColor = backgroundColor
         self.content = content()
     }
 
@@ -43,7 +48,7 @@ public struct TFListScreen<Content: View>: View {
             .padding(.top, .M)
             .padding(.bottom, .XXXL)
         }
-        .background(AppColor.backgroundsPrimaryElevated)
+        .background(backgroundColor)
     }
 }
 

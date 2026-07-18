@@ -23,7 +23,7 @@ public struct BrandIconTile: View {
     private let image: UIImage
     private let size: CGFloat
 
-    public init(image: UIImage, size: CGFloat = 28) {
+    public init(image: UIImage, size: CGFloat = 30) {
         self.image = image
         self.size = size
     }

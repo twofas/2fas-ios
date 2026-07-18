@@ -19,20 +19,15 @@
 
 import Foundation
 
-protocol AppleWatchPresenting {
-    var appleWatchInstallationSteps: [AppleWatchInstallationStep] { get }
-
-    func handleInstallationStep(number: Int)
-    func handleBack()
-}
-
-final class AppleWatchPresenter: AppleWatchPresenting {
+final class AppleWatchPresenter {
     let appleWatchInstallationSteps: [AppleWatchInstallationStep] = [
         .init(description: T.AppleWatch.installationFirstStep,
               actionTitle: T.AppleWatch.installationFirstStepLink),
         .init(description: T.AppleWatch.installationSecondStep,
               actionTitle: T.AppleWatch.installationSecondStepLink)
     ]
+
+    var showsBackButton: Bool = true
 
     private let flowController: AppleWatchFlowControlling
 

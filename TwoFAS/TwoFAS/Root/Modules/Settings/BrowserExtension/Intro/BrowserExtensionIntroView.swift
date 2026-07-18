@@ -27,10 +27,10 @@ struct BrowserExtensionIntroStep: Hashable, Identifiable {
     let description: String?
 }
 
-struct BrowserExtensionIntroView<Presenter: BrowserExtensionIntroPresenting>: View {
-    private let presenter: Presenter
+struct BrowserExtensionIntroView: View {
+    private let presenter: BrowserExtensionIntroPresenter
 
-    init(presenter: Presenter) {
+    init(presenter: BrowserExtensionIntroPresenter) {
         self.presenter = presenter
     }
 
@@ -38,8 +38,8 @@ struct BrowserExtensionIntroView<Presenter: BrowserExtensionIntroPresenting>: Vi
         VStack(spacing: .zero) {
             TFScreenTitleBar(
                 title: T.Browser.browserExtension,
-                leadingSymbol: presenter.hasCancel ? .close : nil,
-                onLeadingTap: presenter.hasCancel ? presenter.handleCancel : nil
+                leadingSymbol: presenter.showsBackButton ? .back : nil,
+                onLeadingTap: presenter.showsBackButton ? { presenter.close() } : nil
             )
 
             ScrollView {
@@ -97,20 +97,4 @@ struct BrowserExtensionIntroView<Presenter: BrowserExtensionIntroPresenting>: Vi
         .background(.backgroundsPrimary)
         .toolbarVisibility(.hidden, for: .navigationBar)
     }
-}
-
-#Preview {
-    final class BrowserExtensionIntroPresenterMock: BrowserExtensionIntroPresenting {
-        var hasCancel: Bool { false }
-        let steps: [BrowserExtensionIntroStep] = [
-            .init(title: T.Browser.infoDescriptionFirst, icon: .download, description: nil),
-            .init(title: T.Browser.infoDescriptionSecond, icon: .link, description: nil)
-        ]
-
-        func handleAction() {}
-        func handleCancel() {}
-        func handleInfo() {}
-    }
-
-    return BrowserExtensionIntroView(presenter: BrowserExtensionIntroPresenterMock())
 }

@@ -28,8 +28,8 @@ struct TrashView: View {
         VStack(spacing: .zero) {
             TFScreenTitleBar(
                 title: T.Settings.trash,
-                showsBackButton: true,
-                onBack: presenter.handleBack
+                showsBackButton: presenter.showsBackButton,
+                onBack: presenter.showsBackButton ? presenter.handleBack : nil
             )
 
             if presenter.services.isEmpty {

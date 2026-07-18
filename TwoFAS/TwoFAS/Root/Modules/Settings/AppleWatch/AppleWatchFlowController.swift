@@ -38,7 +38,7 @@ final class AppleWatchFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: AppleWatchFlowControllerParent
     ) {
-        let hosting = makeHosting(parent: parent, navigationController: navigationController)
+        let hosting = makeHosting(parent: parent, navigationController: navigationController, showsBackButton: false)
         navigationController.setViewControllers([hosting], animated: false)
     }
 
@@ -46,13 +46,14 @@ final class AppleWatchFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: AppleWatchFlowControllerParent
     ) {
-        let hosting = makeHosting(parent: parent, navigationController: navigationController)
+        let hosting = makeHosting(parent: parent, navigationController: navigationController, showsBackButton: true)
         navigationController.pushRootViewController(hosting, animated: true)
     }
 
     private static func makeHosting(
         parent: AppleWatchFlowControllerParent,
-        navigationController: UINavigationController
+        navigationController: UINavigationController,
+        showsBackButton: Bool
     ) -> UIHostingController<AnyView> {
         let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.title = T.Settings.appleWatch
@@ -60,6 +61,7 @@ final class AppleWatchFlowController: FlowController {
         flowController.parent = parent
         flowController.navigationController = navigationController
         let presenter = AppleWatchPresenter(flowController: flowController)
+        presenter.showsBackButton = showsBackButton
         hosting.rootView = AnyView(AppleWatchView(presenter: presenter))
         return hosting
     }

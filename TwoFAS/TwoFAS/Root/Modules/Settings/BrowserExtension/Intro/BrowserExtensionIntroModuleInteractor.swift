@@ -21,7 +21,6 @@ import Foundation
 import Data
 
 protocol BrowserExtensionIntroModuleInteracting: AnyObject {
-    var isFromScanning: Bool { get }
     var shouldAskForPushNotifications: Bool { get }
     func isCameraAllowed() -> Bool
     func isCameraAvailable() -> Bool
@@ -43,10 +42,6 @@ final class BrowserExtensionIntroModuleInteractor {
 }
 
 extension BrowserExtensionIntroModuleInteractor: BrowserExtensionIntroModuleInteracting {
-    var isFromScanning: Bool {
-        false
-    }
-    
     var shouldAskForPushNotifications: Bool {
         pushNotificationRegistrationInteractor.state == .notDetermined
     }

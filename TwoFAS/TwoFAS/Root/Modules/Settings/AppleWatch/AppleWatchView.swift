@@ -26,10 +26,10 @@ struct AppleWatchInstallationStep: Hashable, Identifiable {
     let actionTitle: String
 }
 
-struct AppleWatchView<Presenter: AppleWatchPresenting>: View {
-    private let presenter: Presenter
+struct AppleWatchView: View {
+    private let presenter: AppleWatchPresenter
 
-    init(presenter: Presenter) {
+    init(presenter: AppleWatchPresenter) {
         self.presenter = presenter
     }
 
@@ -37,8 +37,8 @@ struct AppleWatchView<Presenter: AppleWatchPresenting>: View {
         VStack(spacing: .zero) {
             TFScreenTitleBar(
                 title: T.Settings.appleWatch,
-                showsBackButton: true,
-                onBack: presenter.handleBack
+                showsBackButton: presenter.showsBackButton,
+                onBack: presenter.showsBackButton ? presenter.handleBack : nil
             )
 
             ScrollView {
@@ -84,20 +84,4 @@ struct AppleWatchView<Presenter: AppleWatchPresenting>: View {
         default: .link
         }
     }
-}
-
-#Preview {
-    final class AppleWatchPresenterMock: AppleWatchPresenting {
-        let appleWatchInstallationSteps: [AppleWatchInstallationStep] = [
-            .init(description: T.AppleWatch.installationFirstStep,
-                  actionTitle: T.AppleWatch.installationFirstStepLink),
-            .init(description: T.AppleWatch.installationSecondStep,
-                  actionTitle: T.AppleWatch.installationSecondStepLink)
-        ]
-
-        func handleInstallationStep(number: Int) {}
-        func handleBack() {}
-    }
-
-    return AppleWatchView(presenter: AppleWatchPresenterMock())
 }

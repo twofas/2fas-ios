@@ -119,7 +119,7 @@ extension BrowserExtensionMainFlowController: BrowserExtensionIntroFlowControlle
     }
 
     func browserExtensionIntroClose() {
-        dismiss()
+        _viewController?.navigationController?.popViewController(animated: true)
     }
 }
 

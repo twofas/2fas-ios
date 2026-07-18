@@ -19,20 +19,13 @@
 
 import Foundation
 
-protocol BrowserExtensionIntroPresenting {
-    var hasCancel: Bool { get }
-    var steps: [BrowserExtensionIntroStep] { get }
-
-    func handleAction()
-    func handleCancel()
-    func handleInfo()
-}
-
-final class BrowserExtensionIntroPresenter: BrowserExtensionIntroPresenting {
+final class BrowserExtensionIntroPresenter {
     let steps: [BrowserExtensionIntroStep] = [
         .init(title: T.Browser.infoDescriptionFirst, icon: .download, description: nil),
         .init(title: T.Browser.infoDescriptionSecond, icon: .link, description: nil)
     ]
+
+    var showsBackButton: Bool = true
 
     private let flowController: BrowserExtensionIntroFlowControlling
     private let interactor: BrowserExtensionIntroModuleInteracting
@@ -44,10 +37,6 @@ final class BrowserExtensionIntroPresenter: BrowserExtensionIntroPresenting {
 }
 
 extension BrowserExtensionIntroPresenter {
-    var hasCancel: Bool {
-        interactor.isFromScanning
-    }
-
     var askForPushNotificationPermission: Bool {
         interactor.shouldAskForPushNotifications
     }
@@ -60,8 +49,7 @@ extension BrowserExtensionIntroPresenter {
         checkCameraPermission()
     }
 
-    func handleCancel() {
-        guard hasCancel else { return }
+    func close() {
         flowController.toClose()
     }
 

@@ -23,6 +23,7 @@ import Common
 @Observable
 final class TrashPresenter {
     var services: [ServiceData] = []
+    var showsBackButton: Bool = true
 
     private let flowController: TrashFlowControlling
     let interactor: TrashModuleInteracting

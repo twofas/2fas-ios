@@ -22,8 +22,7 @@ import UIKit
 import SwiftUI
 import Common
 
-protocol TrashFlowControllerParent: AnyObject {
-}
+protocol TrashFlowControllerParent: AnyObject {}
 
 protocol TrashFlowControlling: AnyObject {
     func toBack()
@@ -38,7 +37,7 @@ final class TrashFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: TrashFlowControllerParent
     ) {
-        let hosting = create(parent: parent)
+        let hosting = create(parent: parent, showsBackButton: false)
         navigationController.setViewControllers([hosting], animated: false)
     }
 
@@ -46,11 +45,14 @@ final class TrashFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: TrashFlowControllerParent
     ) {
-        let hosting = create(parent: parent)
+        let hosting = create(parent: parent, showsBackButton: true)
         navigationController.pushRootViewController(hosting, animated: true)
     }
 
-    private static func create(parent: TrashFlowControllerParent) -> UIViewController {
+    private static func create(
+        parent: TrashFlowControllerParent,
+        showsBackButton: Bool
+    ) -> UIViewController {
         let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
         let flowController = TrashFlowController(viewController: hosting)
         flowController.parent = parent
@@ -59,6 +61,7 @@ final class TrashFlowController: FlowController {
             flowController: flowController,
             interactor: interactor
         )
+        presenter.showsBackButton = showsBackButton
         flowController.presenter = presenter
         hosting.rootView = AnyView(TrashView(presenter: presenter))
         return hosting

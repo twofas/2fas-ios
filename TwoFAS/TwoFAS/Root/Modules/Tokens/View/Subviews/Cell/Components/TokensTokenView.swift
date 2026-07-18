@@ -273,8 +273,7 @@ private class TokensTokenLabel: UILabel {
         case .compact:
             font = UIFont.monospacedDigitSystemFont(ofSize: 32, weight: .thin)
         case .normal:
-            font = UIFontMetrics(forTextStyle: .largeTitle)
-                .scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 32, weight: .regular))
+            font = UIFont.monospacedDigitSystemFont(ofSize: 32, weight: .regular)
         default:
             break
         }

@@ -94,5 +94,6 @@ struct ImporterEnterPasswordView: View {
                 focusedField = .password
             }
         }
+        .dismissKeyboardOnTapOutside()
     }
 }

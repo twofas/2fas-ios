@@ -61,6 +61,7 @@ private struct GetNameView: View {
             .onChange(of: text) { _, _ in
                 updateConfirmState()
             }
+            .dismissKeyboardOnTapOutside()
     }
 
     @ViewBuilder

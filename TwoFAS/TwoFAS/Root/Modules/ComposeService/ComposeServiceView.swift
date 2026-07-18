@@ -50,8 +50,9 @@ struct ComposeServiceView: View {
                         deleteSection
                     }
                 }
+                .dismissKeyboardOnTapOutside()
             }
-            .scrollDismissesKeyboard(.interactively)
+            .scrollDismissesKeyboard(.immediately)
         }
         .background(.backgroundsPrimaryElevated)
         .onAppear {

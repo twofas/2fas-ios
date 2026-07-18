@@ -55,9 +55,6 @@ private struct IconTypeOption<Preview: View>: View {
 
     private let indicatorSize: CGFloat = 22
 
-    @GestureState
-    private var isPressed = false
-
     var body: some View {
         Button {
             selectedType = type
@@ -86,11 +83,16 @@ private struct IconTypeOption<Preview: View>: View {
             .frame(maxWidth: .infinity)
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .updating($isPressed) { _, state, _ in state = true }
-        )
-        .sensoryFeedback(.impact(flexibility: .rigid, intensity: 0.6), trigger: isPressed) { _, new in new }
+        .buttonStyle(PressFeedbackButtonStyle())
+    }
+}
+
+private struct PressFeedbackButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .sensoryFeedback(
+                .impact(flexibility: .rigid, intensity: 0.6),
+                trigger: configuration.isPressed
+            ) { _, new in new }
     }
 }

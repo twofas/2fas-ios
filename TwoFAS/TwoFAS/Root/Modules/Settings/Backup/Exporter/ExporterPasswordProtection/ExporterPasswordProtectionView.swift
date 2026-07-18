@@ -116,5 +116,6 @@ struct ExporterPasswordProtectionView: View {
                 focusedField = .first
             }
         }
+        .dismissKeyboardOnTapOutside()
     }
 }

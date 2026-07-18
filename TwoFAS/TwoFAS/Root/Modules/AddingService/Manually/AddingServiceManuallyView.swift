@@ -119,6 +119,7 @@ struct AddingServiceManuallyView: View {
                         }
                     }
                 }
+                .dismissKeyboardOnTapOutside()
                 .onChange(of: focusedField) { oldField, newField in
                     if let newField {
                         proxy.scrollTo(newField, anchor: .center)

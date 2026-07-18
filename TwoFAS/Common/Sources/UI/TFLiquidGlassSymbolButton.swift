@@ -47,6 +47,7 @@ public struct TFLiquidGlassSymbolButton: View {
             } else {
                 symbolLabel
                     .frame(width: fallbackDiameter, height: fallbackDiameter)
+                    .padding(.S)
                     .background {
                         Circle()
                             .fill(AppColor.fillsTertiary)

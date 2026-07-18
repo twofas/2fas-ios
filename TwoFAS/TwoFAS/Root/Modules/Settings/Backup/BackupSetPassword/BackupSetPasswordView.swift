@@ -119,6 +119,7 @@ struct BackupSetPasswordView: View {
                         focusedField = .second
                     })
                 )
+                .padding(.top, .S)
 
                 Divider()
                     .foregroundStyle(.separatorsNonOpaque)
@@ -136,6 +137,7 @@ struct BackupSetPasswordView: View {
                         presenter.handleContinue()
                     })
                 )
+                .padding(.bottom, .S)
             }
             .groupedSectionBackground()
 

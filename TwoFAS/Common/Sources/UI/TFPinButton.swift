@@ -101,6 +101,10 @@ public struct TFPinButton: View {
                     .shadow(.glass)
             } else {
                 $0.buttonStyle(ButtonFeedbackStyle())
+                    .background {
+                        Circle()
+                            .fill(AnyShapeStyle(.clear))
+                    }
             }
         }
         .frame(width: Self.size, height: Self.size)

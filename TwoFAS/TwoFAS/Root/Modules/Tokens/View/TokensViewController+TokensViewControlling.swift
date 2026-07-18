@@ -132,22 +132,30 @@ extension TokensViewController: TokensViewControlling {
     func updateNaviIcons(using state: TokensViewControllerAddState, hasUnreadNews: Bool) {
         func createNewsButton() -> UIBarButtonItem {
             if hasUnreadNews {
-                let naviButton = UnreadNewsNaviButton()
+                let naviButton: UIButton
+                if #available(iOS 26.0, *) {
+                    let button = UnreadNewsNaviButton()
+                    button.animate()
+                    naviButton = button
+                } else {
+                    let button = LegacyUnreadNewsNaviButton()
+                    button.animate()
+                    naviButton = button
+                }
                 naviButton.translatesAutoresizingMaskIntoConstraints = false
                 naviButton.accessibilityLabel = T.Commons.notifications
                 naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
-                naviButton.animate()
                 let uiBarButtonItem = UIBarButtonItem(customView: naviButton)
                 newsButton = .unread(uiBarButtonItem)
                 return uiBarButtonItem
             } else {
-                let cfg = UIImage.SymbolConfiguration(
-                    pointSize: UnreadNewsNaviButton.iconReadPointSize,
-                    weight: UnreadNewsNaviButton.iconWeight
-                )
-                let icon = UIImage(systemName: UnreadNewsNaviButton.iconSymbolName, withConfiguration: cfg)
                 let uiBarButtonItem: UIBarButtonItem
                 if #available(iOS 26.0, *) {
+                    let cfg = UIImage.SymbolConfiguration(
+                        pointSize: UnreadNewsNaviButton.iconReadPointSize,
+                        weight: UnreadNewsNaviButton.iconWeight
+                    )
+                    let icon = UIImage(systemName: UnreadNewsNaviButton.iconSymbolName, withConfiguration: cfg)
                     uiBarButtonItem = UIBarButtonItem(
                         image: icon,
                         style: .plain,
@@ -156,7 +164,7 @@ extension TokensViewController: TokensViewControlling {
                     )
                 } else {
                     let naviButton = UIButton(type: .custom)
-                    naviButton.setImage(icon, for: .normal)
+                    naviButton.setBackgroundImage(Asset.navibarNewsIcon.image, for: .normal)
                     naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
                     naviButton.translatesAutoresizingMaskIntoConstraints = false
                     uiBarButtonItem = UIBarButtonItem(customView: naviButton)
@@ -177,7 +185,11 @@ extension TokensViewController: TokensViewControlling {
 
         switch state {
         case .firstTime:
-            navigationItem.rightBarButtonItems = [resolvedNewsButton()]
+            if #available(iOS 26.0, *) {
+                navigationItem.rightBarButtonItems = [resolvedNewsButton()]
+            } else {
+                navigationItem.rightBarButtonItems = [makeAddServiceButton(), resolvedNewsButton()]
+            }
         case .normal:
             navigationItem.rightBarButtonItems = [makeMoreMenuButton(), resolvedNewsButton()]
         case .none:
@@ -223,9 +235,31 @@ extension TokensViewController: TokensViewControlling {
             children: [deferredSortChildren]
         )
 
-        let menu = UIMenu(children: [editAction, sortMenu])
+        var children: [UIMenuElement] = [editAction, sortMenu]
+        if #unavailable(iOS 26.0) {
+            let addServiceAction = UIAction(
+                title: T.Tokens.addServiceTitle,
+                image: UIImage(systemName: "plus")
+            ) { [weak self] _ in
+                self?.presenter.handleAddService()
+            }
+            children.insert(addServiceAction, at: 0)
+        }
+
+        let menu = UIMenu(children: children)
         let button = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), menu: menu)
         button.accessibilityLabel = T.Commons.optionsTitle
+        return button
+    }
+
+    private func makeAddServiceButton() -> UIBarButtonItem {
+        let button = UIBarButtonItem(
+            image: Asset.naviIconAddFirst.image,
+            style: .plain,
+            target: self,
+            action: #selector(addServiceAction)
+        )
+        button.accessibilityLabel = T.Voiceover.addService
         return button
     }
 
@@ -536,6 +570,89 @@ private extension TokensViewController {
                 }, completion: { [badgeView] _ in
                     UIView.animate(withDuration: 0.15) {
                         badgeView.transform = CGAffineTransform(scaleX: settleScale, y: settleScale)
+                    }
+                }
+            )
+        }
+    }
+
+    final class LegacyUnreadNewsNaviButton: UIButton {
+        let newsImageView = UIImageView(image: Asset.navibarNewsIcon.image)
+        let badgeImageView = UIImageView(image: Asset.badge.image)
+
+        private let badgeWidth: CGFloat = 3
+
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            setupViews()
+        }
+
+        required init?(coder: NSCoder) {
+            super.init(coder: coder)
+            setupViews()
+        }
+
+        private func setupViews() {
+            newsImageView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(newsImageView)
+
+            badgeImageView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(badgeImageView)
+            badgeImageView.isHidden = true
+
+            NSLayoutConstraint.activate([
+                newsImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+                newsImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+                badgeImageView.topAnchor.constraint(equalTo: topAnchor, constant: Spacing.SM.rawValue),
+                badgeImageView.trailingAnchor.constraint(
+                    equalTo: trailingAnchor,
+                    constant: -Spacing.XS.rawValue
+                ),
+                badgeImageView.widthAnchor.constraint(equalToConstant: badgeWidth),
+                badgeImageView.heightAnchor.constraint(equalToConstant: badgeWidth)
+            ])
+        }
+
+        func animate() {
+            let angle: Double = .pi / 12
+            let numberOfFrames: Double = 5
+            let frameDuration = Double(0.7 / numberOfFrames)
+
+            UIView.animateKeyframes(
+                withDuration: 1,
+                delay: 0,
+                animations: { [newsImageView] in
+                    UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: frameDuration) {
+                        newsImageView.transform = CGAffineTransform(rotationAngle: -angle)
+                    }
+                    UIView.addKeyframe(withRelativeStartTime: frameDuration, relativeDuration: frameDuration) {
+                        newsImageView.transform = CGAffineTransform(rotationAngle: +angle)
+                    }
+                    UIView.addKeyframe(withRelativeStartTime: 2 * frameDuration, relativeDuration: frameDuration) {
+                        newsImageView.transform = CGAffineTransform(rotationAngle: -angle)
+                    }
+                    UIView.addKeyframe(withRelativeStartTime: 3 * frameDuration, relativeDuration: frameDuration) {
+                        newsImageView.transform = CGAffineTransform(rotationAngle: +angle)
+                    }
+                    UIView.addKeyframe(withRelativeStartTime: 4 * frameDuration, relativeDuration: frameDuration) {
+                        newsImageView.transform = CGAffineTransform.identity
+                    }
+                },
+                completion: { [weak self] _ in
+                    self?.badgeImageView.isHidden = false
+                    self?.animateBadge()
+                }
+            )
+        }
+
+        private func animateBadge() {
+            UIView.animate(
+                withDuration: 0.2,
+                animations: { [badgeImageView, badgeWidth] in
+                    badgeImageView.transform = CGAffineTransform(scaleX: 12.0 / badgeWidth, y: 12.0 / badgeWidth)
+                }, completion: { [badgeImageView, badgeWidth] _ in
+                    UIView.animate(withDuration: 0.15) {
+                        badgeImageView.transform = CGAffineTransform(scaleX: 8.0 / badgeWidth, y: 8.0 / badgeWidth)
                     }
                 }
             )

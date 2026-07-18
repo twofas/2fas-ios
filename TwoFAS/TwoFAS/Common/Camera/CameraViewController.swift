@@ -61,26 +61,48 @@ final class CameraViewController: UIViewController {
         label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         return label
     }()
-    private let descriptionFrame: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(white: 0, alpha: 0.67)
-        return view
-    }()
+    private let descriptionFrame = UIView()
     private let cancelButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(AppColor.accentsBrand.uiColor, for: .normal)
-        button.setTitleColor(AppColor.graysGray.uiColor, for: .disabled)
-        button.titleLabel?.font = TextStyle.headline.uiFont()
-        button.titleLabel?.layer.shadowOffset = CGSize(width: 0, height: 2)
-        button.titleLabel?.layer.shadowOpacity = 0.3
-        button.titleLabel?.layer.shadowColor = UIColor.black.cgColor
+        if #available(iOS 26, *) {
+            var config = UIButton.Configuration.glass()
+            config.baseForegroundColor = AppColor.accentsBrand.uiColor
+            button.configuration = config
+            button.configurationUpdateHandler = { button in
+                button.configuration?.baseForegroundColor = button.isEnabled
+                    ? AppColor.accentsBrand.uiColor
+                    : AppColor.graysGray.uiColor
+            }
+        } else {
+            button.setTitleColor(AppColor.accentsBrand.uiColor, for: .normal)
+            button.setTitleColor(AppColor.graysGray.uiColor, for: .disabled)
+            button.titleLabel?.font = TextStyle.headline.uiFont()
+            button.titleLabel?.layer.shadowOffset = CGSize(width: 0, height: 2)
+            button.titleLabel?.layer.shadowOpacity = 0.3
+            button.titleLabel?.layer.shadowColor = UIColor.black.cgColor
+        }
         return button
     }()
 
     private let openGalleryButton: UIButton = {
         let button = UIButton()
-        button.setImage(Asset.openGallery.image, for: .normal)
-        button.setImage(Asset.openGallery.image.apply(AppColor.accentsBrand.uiColor), for: .normal)
+        if #available(iOS 26, *) {
+            // Circular glass background to match the redesigned styling.
+            var config = UIButton.Configuration.glass()
+            config.cornerStyle = .capsule
+            config.image = Asset.openGallery.image.apply(AppColor.accentsBrand.uiColor)
+            let inset = Spacing.L.rawValue
+            config.contentInsets = NSDirectionalEdgeInsets(
+                top: inset,
+                leading: inset,
+                bottom: inset,
+                trailing: inset
+            )
+            button.configuration = config
+        } else {
+            button.setImage(Asset.openGallery.image, for: .normal)
+            button.setImage(Asset.openGallery.image.apply(AppColor.accentsBrand.uiColor), for: .normal)
+        }
         return button
     }()
     
@@ -108,10 +130,11 @@ final class CameraViewController: UIViewController {
             activeArea.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -activeAreaYOffset)
         ])
         
-        if let cancelButtonTitle {
-            cancelButton.setTitle(cancelButtonTitle, for: .normal)
+        let cancelTitle = cancelButtonTitle ?? T.Commons.cancel
+        if #available(iOS 26, *) {
+            cancelButton.configuration?.title = cancelTitle
         } else {
-            cancelButton.setTitle(T.Commons.cancel, for: .normal)
+            cancelButton.setTitle(cancelTitle, for: .normal)
         }
         
         view.addSubview(cancelButton, with: [
@@ -142,28 +165,37 @@ final class CameraViewController: UIViewController {
         NSLayoutConstraint.activate([
             breakable
         ])
-        
-        let smallMargin = Spacing.SM.rawValue
+        configureDescriptionFrameAppearance()
+
+        let horizontalMargin: CGFloat
+        let verticalMargin: CGFloat
+        if #available(iOS 26, *) {
+            horizontalMargin = Spacing.XL.rawValue
+            verticalMargin = Spacing.L.rawValue
+        } else {
+            horizontalMargin = Spacing.SM.rawValue
+            verticalMargin = Spacing.SM.rawValue
+        }
         descriptionFrame.addSubview(descriptionLabel, with: [
             descriptionLabel.topAnchor.constraint(
                 equalTo: descriptionFrame.topAnchor,
-                constant: smallMargin
+                constant: verticalMargin
             ),
             descriptionLabel.bottomAnchor.constraint(
                 equalTo: descriptionFrame.bottomAnchor,
-                constant: -smallMargin
+                constant: -verticalMargin
             ),
             descriptionLabel.leadingAnchor.constraint(
                 equalTo: descriptionFrame.leadingAnchor,
-                constant: smallMargin
+                constant: horizontalMargin
             ),
             descriptionLabel.trailingAnchor.constraint(
                 equalTo: descriptionFrame.trailingAnchor,
-                constant: -smallMargin
+                constant: -horizontalMargin
             ),
             descriptionLabel.widthAnchor.constraint(
                 equalTo: activeArea.widthAnchor,
-                constant: 2 * smallMargin
+                constant: 2 * Spacing.SM.rawValue
             )
         ])
         
@@ -181,6 +213,26 @@ final class CameraViewController: UIViewController {
         )
     }
         
+    private func configureDescriptionFrameAppearance() {
+        descriptionFrame.layer.cornerCurve = .continuous
+        descriptionFrame.layer.cornerRadius = TFCornerRadius.large.value
+        descriptionFrame.clipsToBounds = true
+
+        if #available(iOS 26, *) {
+            let glassView = UIVisualEffectView(effect: UIGlassEffect(style: .regular))
+            glassView.translatesAutoresizingMaskIntoConstraints = false
+            descriptionFrame.insertSubview(glassView, at: 0)
+            NSLayoutConstraint.activate([
+                glassView.topAnchor.constraint(equalTo: descriptionFrame.topAnchor),
+                glassView.bottomAnchor.constraint(equalTo: descriptionFrame.bottomAnchor),
+                glassView.leadingAnchor.constraint(equalTo: descriptionFrame.leadingAnchor),
+                glassView.trailingAnchor.constraint(equalTo: descriptionFrame.trailingAnchor)
+            ])
+        } else {
+            descriptionFrame.backgroundColor = UIColor(white: 0, alpha: 0.67)
+        }
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         

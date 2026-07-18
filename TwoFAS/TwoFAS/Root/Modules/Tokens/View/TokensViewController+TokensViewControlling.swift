@@ -265,9 +265,9 @@ extension TokensViewController: TokensViewControlling {
 
     private func sortSystemImageName(for sortType: SortType) -> String {
         switch sortType {
-        case .az: return "arrow.down"
-        case .za: return "arrow.up"
-        case .manual: return "line.3.horizontal"
+        case .az: "arrow.down"
+        case .za: "arrow.up"
+        case .manual: "line.3.horizontal"
         }
     }
     

@@ -5601,7 +5601,6 @@
 				C2E53ADF2B62DDAF008E1E70 /* CoreData */,
 				C2E53AE42B62DDAF008E1E70 /* Models */,
 				C2E53AFC2B62DDAF008E1E70 /* Extensions */,
-				C2E53B062B62DDAF008E1E70 /* Colors */,
 				C2E53B092B62DDAF008E1E70 /* SharedProtocols */,
 				C25AE51C300A58B800D9ABFB /* Toast */,
 			);
@@ -5703,13 +5702,6 @@
 				C295AF692FD1DA07000DF064 /* View+.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		C2E53B062B62DDAF008E1E70 /* Colors */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Colors;
 			sourceTree = "<group>";
 		};
 		C2E53B092B62DDAF008E1E70 /* SharedProtocols */ = {

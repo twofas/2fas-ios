@@ -297,6 +297,16 @@ internal enum T {
   internal static let widgetsWarningMsg = T.tr("Localizable", "widgets_warning_msg", fallback: "Tokens visible in the widget are not protected by your PIN code.\n\nAre you sure you want to display your Tokens in the widget?")
   /// WARNING!
   internal static let widgetsWarningTitle = T.tr("Localizable", "widgets_warning_title", fallback: "WARNING!")
+  internal enum About {
+    /// Generate logs
+    internal static let generateLogs = T.tr("Localizable", "about__generate_logs", fallback: "Generate logs")
+    /// Generate
+    internal static let generateLogsAlertAction = T.tr("Localizable", "about__generate_logs_alert_action", fallback: "Generate")
+    /// Do you want to generate logs? It can take some time.
+    internal static let generateLogsAlertMessage = T.tr("Localizable", "about__generate_logs_alert_message", fallback: "Do you want to generate logs? It can take some time.")
+    /// Generate logs?
+    internal static let generateLogsAlertTitle = T.tr("Localizable", "about__generate_logs_alert_title", fallback: "Generate logs?")
+  }
   internal enum Android {
     /// 2FAS Auth
     internal static let appName = T.tr("Localizable", "android__app_name", fallback: "2FAS Auth")

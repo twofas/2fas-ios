@@ -44,20 +44,20 @@ struct AboutView: View {
         .onAppear {
             presenter.viewWillAppear()
         }
-        .alert("Generate logs?", isPresented: $presenter.isGenerateLogsAlertPresented) {
+        .alert(T.About.generateLogsAlertTitle, isPresented: $presenter.isGenerateLogsAlertPresented) {
             Button(T.Commons.cancel, role: .cancel) {}
-            Button("Generate") {
+            Button(T.About.generateLogsAlertAction) {
                 presenter.handleGenerateLogsConfirmed()
             }
         } message: {
-            Text("Do you want to generate logs?")
+            Text(T.About.generateLogsAlertMessage)
         }
         .overlay {
             if presenter.isGeneratingLogs {
                 ZStack {
                     Color.black.opacity(0.4)
                         .ignoresSafeArea()
-                    TFLoadingView(title: "Generating logs…")
+                    TFLoadingView(title: T.About.generateLogs)
                         .background(.backgroundsPrimaryElevated)
                 }
                 .transition(.opacity)

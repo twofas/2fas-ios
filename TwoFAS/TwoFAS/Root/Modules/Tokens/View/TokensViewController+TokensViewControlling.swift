@@ -146,6 +146,9 @@ extension TokensViewController: TokensViewControlling {
                 naviButton.accessibilityLabel = T.Commons.notifications
                 naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
                 let uiBarButtonItem = UIBarButtonItem(customView: naviButton)
+                if #available(iOS 26.0, *) {
+                    uiBarButtonItem.hidesSharedBackground = true
+                }
                 newsButton = .unread(uiBarButtonItem)
                 return uiBarButtonItem
             } else {
@@ -191,7 +194,13 @@ extension TokensViewController: TokensViewControlling {
                 navigationItem.rightBarButtonItems = [makeAddServiceButton(), resolvedNewsButton()]
             }
         case .normal:
-            navigationItem.rightBarButtonItems = [makeMoreMenuButton(), resolvedNewsButton()]
+            if #available(iOS 26.0, *) {
+                // fixedSpace(0) splits the shared glass background so the two buttons always
+                // render as separate glass capsules, regardless of the unread badge state.
+                navigationItem.rightBarButtonItems = [makeMoreMenuButton(), .fixedSpace(0), resolvedNewsButton()]
+            } else {
+                navigationItem.rightBarButtonItems = [makeMoreMenuButton(), resolvedNewsButton()]
+            }
         case .none:
             let buttonSection = UIBarButtonItem(
                 image: Asset.addCategory.image,
@@ -455,6 +464,7 @@ extension TokensViewController {
 }
 
 private extension TokensViewController {
+    @available(iOS 26.0, *)
     final class UnreadNewsNaviButton: UIButton {
         // MARK: - Configuration
         static let iconSymbolName = "bell.fill"
@@ -467,14 +477,25 @@ private extension TokensViewController {
         static var badgeFillColor: UIColor { AppColor.accentsBrand.uiColor }
         static var badgeBorderColor: UIColor { AppColor.backgroundsPrimary.uiColor }
 
-        static let badgeCenterOffsetX: CGFloat = 24
-        static let badgeCenterOffsetY: CGFloat = 11
+        // Badge position measured inward from the top-trailing corner of the button.
+        static let badgeCornerInset: CGFloat = 12
+
+        // Diameter of the circular glass background. Kept square so the capsule renders as a
+        // circle matching the adjacent standard bar button items (e.g. the "more" button).
+        static let glassDiameter: CGFloat = 44
 
         static let badgePopScale: CGFloat = 2.0
         static let badgeSettleScale: CGFloat = 1.0
 
         let newsImageView = UIImageView()
         let badgeView = UIView()
+        let glassEffectView: UIVisualEffectView = {
+            let effect = UIGlassEffect()
+            effect.isInteractive = true
+            let view = UIVisualEffectView(effect: effect)
+            view.cornerConfiguration = .capsule()
+            return view
+        }()
 
         override init(frame: CGRect) {
             super.init(frame: frame)
@@ -487,6 +508,9 @@ private extension TokensViewController {
         }
 
         private func setupViews() {
+            glassEffectView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(glassEffectView)
+
             let cfg = UIImage.SymbolConfiguration(
                 pointSize: Self.iconPointSize,
                 weight: Self.iconWeight
@@ -495,8 +519,10 @@ private extension TokensViewController {
             newsImageView.contentMode = .center
             newsImageView.translatesAutoresizingMaskIntoConstraints = false
             newsImageView.tintColor = AppColor.labelsPrimary.uiColor
-            addSubview(newsImageView)
+            glassEffectView.contentView.addSubview(newsImageView)
 
+            // The badge lives on top of the glass (not inside its content view) so it keeps its
+            // full brand color and isn't clipped by the capsule shape.
             badgeView.backgroundColor = Self.badgeFillColor
             badgeView.layer.borderWidth = Self.badgeBorderWidth
             badgeView.layer.borderColor = Self.badgeBorderColor.cgColor
@@ -509,20 +535,20 @@ private extension TokensViewController {
                 self.badgeView.layer.borderColor = Self.badgeBorderColor.cgColor
             }
 
+            let content = glassEffectView.contentView
             NSLayoutConstraint.activate([
-                newsImageView.topAnchor.constraint(equalTo: topAnchor),
-                newsImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
-                newsImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-                newsImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                glassEffectView.topAnchor.constraint(equalTo: topAnchor),
+                glassEffectView.bottomAnchor.constraint(equalTo: bottomAnchor),
+                glassEffectView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                glassEffectView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                glassEffectView.widthAnchor.constraint(equalToConstant: Self.glassDiameter),
+                glassEffectView.heightAnchor.constraint(equalToConstant: Self.glassDiameter),
 
-                badgeView.centerXAnchor.constraint(
-                    equalTo: newsImageView.leadingAnchor,
-                    constant: Self.badgeCenterOffsetX
-                ),
-                badgeView.centerYAnchor.constraint(
-                    equalTo: newsImageView.topAnchor,
-                    constant: Self.badgeCenterOffsetY
-                ),
+                newsImageView.centerXAnchor.constraint(equalTo: content.centerXAnchor),
+                newsImageView.centerYAnchor.constraint(equalTo: content.centerYAnchor),
+
+                badgeView.centerXAnchor.constraint(equalTo: trailingAnchor, constant: -Self.badgeCornerInset),
+                badgeView.centerYAnchor.constraint(equalTo: topAnchor, constant: Self.badgeCornerInset),
                 badgeView.widthAnchor.constraint(equalToConstant: Self.badgeSize),
                 badgeView.heightAnchor.constraint(equalToConstant: Self.badgeSize)
             ])

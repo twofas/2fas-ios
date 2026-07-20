@@ -26,6 +26,8 @@ final class AppSecurityPresenter {
     var sections: [AppSecurityMenuSection] = []
     var showsBackButton: Bool = true
 
+    var isBiometryAuthenticationInProgress = false
+
     private let flowController: AppSecurityFlowControlling
     let interactor: AppSecurityModuleInteracting
 
@@ -152,13 +154,14 @@ private extension AppSecurityPresenter {
             let reason = interactor.biometryType == .faceID
                 ? T.Settings.faceId
                 : T.Settings.touchId
-            let success = await interactor.requestBiometryEnable(reason: reason)
-            if !success {
-                // Ensure UI reflects the unchanged (off) state on failure/cancel.
-                reload()
-            } else {
-                reload()
-            }
+
+            isBiometryAuthenticationInProgress = true
+            reload()
+
+            _ = await interactor.requestBiometryEnable(reason: reason)
+
+            isBiometryAuthenticationInProgress = false
+            reload()
         }
     }
 

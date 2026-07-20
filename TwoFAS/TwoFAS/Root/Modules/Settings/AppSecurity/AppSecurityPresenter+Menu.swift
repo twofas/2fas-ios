@@ -88,7 +88,11 @@ extension AppSecurityPresenter {
             let section = AppSecurityMenuSection(title: T.Settings.biometricAuthentication, cells: [
                 AppSecurityMenuCell(
                     title: biometryType.localized,
-                    accessory: .toggle(toggle: .init(kind: .biometry, isOn: isBiometryEnabled, isBlocked: false))
+                    accessory: .toggle(toggle: .init(
+                        kind: .biometry,
+                        isOn: isBiometryEnabled,
+                        isBlocked: isBiometryAuthenticationInProgress
+                    ))
                 )
             ])
             switch biometryType {

@@ -61,14 +61,14 @@ final class RootPresenter {
         Log("App: applicationWillResignActive")
         view?.hideAllNotifications()
         interactor.applicationWillResignActive()
-        
-        interactor.lockScreenActive()
-        installCover()
     }
-    
+
     func applicationDidEnterBackground() {
         Log("App: applicationDidEnterBackground")
-        
+
+        interactor.lockScreenActive()
+        installCover()
+
         interactor.applicationDidEnterBackground()
         interactor.lockApplicationIfNeeded { [weak self] in
             self?.removeCover()

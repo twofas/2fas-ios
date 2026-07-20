@@ -32,7 +32,7 @@ struct NewPINView: View {
                 onLeadingTap: presenter.showsCancelButton ? { presenter.handleCancel() } : nil
             )
 
-            VStack(spacing: .XXXL) {
+            VStack(spacing: .XL) {
                 Text(presenter.info)
                     .textStyle(.body)
                     .multilineTextAlignment(.center)

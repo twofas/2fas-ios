@@ -32,7 +32,7 @@ struct VerifyPINView: View {
                 onLeadingTap: { presenter.handleCancel() }
             )
 
-            VStack(spacing: .XXXL) {
+            VStack(spacing: .XL) {
                 Text(presenter.info)
                     .textStyle(.body)
                     .multilineTextAlignment(.center)

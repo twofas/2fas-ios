@@ -40,7 +40,7 @@ struct DebugView: View {
         VStack(spacing: .zero) {
             TFScreenTitleBar(
                 title: "Debug",
-                showsBackButton: true,
+                showsBackButton: presenter.showsBackButton,
                 onBack: presenter.handleBack
             )
             TFListScreen {

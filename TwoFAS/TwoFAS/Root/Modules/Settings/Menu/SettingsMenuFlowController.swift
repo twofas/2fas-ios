@@ -53,6 +53,9 @@ protocol SettingsMenuFlowControllerParent: AnyObject {
     func toTransfer()
     func toAppearance()
     func toAppleWatch()
+    #if DEV
+    func toDebug()
+    #endif
 }
 
 protocol SettingsMenuFlowControlling: AnyObject {
@@ -70,6 +73,9 @@ protocol SettingsMenuFlowControlling: AnyObject {
     func toAppleWatch()
     func toTwoPASSAppStore()
     func toOpenTwoPASS()
+    #if DEV
+    func toDebug()
+    #endif
 }
 
 final class SettingsMenuFlowController: FlowController {
@@ -122,6 +128,9 @@ extension SettingsMenuFlowController: SettingsMenuFlowControlling {
     func toOpenTwoPASS() {
         UIApplication.shared.open(Config.twofasPassOpenLink, options: [:], completionHandler: nil)
     }
+    #if DEV
+    func toDebug() { parent?.toDebug() }
+    #endif
 }
 
 extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {

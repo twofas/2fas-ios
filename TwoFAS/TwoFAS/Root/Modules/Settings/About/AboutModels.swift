@@ -49,9 +49,6 @@ struct AboutCell: Identifiable {
         case sendLogs
         case acknowledgements
         case social(SocialChannel)
-        #if DEV
-        case debug
-        #endif
     }
 
     let id = UUID()

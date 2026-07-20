@@ -199,6 +199,10 @@ private extension SettingsMenuPresenter {
             flowController.toTwoPASSAppStore()
         case .openPass:
             flowController.toOpenTwoPASS()
+        #if DEV
+        case .debug:
+            flowController.toDebug()
+        #endif
         }
     }
 
@@ -237,6 +241,9 @@ private extension SettingsMenuPresenter {
         case .appearance: .appearance
         case .appleWatch: .appleWatch
         case .faq, .appStorePass, .openPass: nil
+        #if DEV
+        case .debug: nil
+        #endif
         @unknown default: nil
         }
     }

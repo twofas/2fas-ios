@@ -170,6 +170,21 @@ extension SettingsMenuPresenter {
             pass,
             info
         ])
+
+        #if DEV
+        let debug = SettingsMenuSection(
+            cells: [
+                .init(
+                    icon: .symbol("ladybug.fill"),
+                    title: "Debug",
+                    accessory: .arrow,
+                    action: .navigation(navigatesTo: .debug)
+                )
+            ]
+        )
+        menu.append(debug)
+        #endif
+
         return menu
     }
 }

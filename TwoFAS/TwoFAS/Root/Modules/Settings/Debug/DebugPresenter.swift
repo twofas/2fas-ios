@@ -23,6 +23,7 @@ import Foundation
 @Observable
 final class DebugPresenter {
     var stateSections: [DebugStateSection] = []
+    var showsBackButton: Bool = true
     var pendingAction: DebugAction?
     var pendingGenerationCount: Int?
     var distributeIntoCategories: Bool = false

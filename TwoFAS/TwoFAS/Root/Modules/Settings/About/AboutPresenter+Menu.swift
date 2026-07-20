@@ -76,15 +76,9 @@ extension AboutPresenter {
                     icon: Asset.socialFacebook.image
                 )
             ]),
-            .init(title: T.Settings.support, cells: {
-                var cells: [AboutCell] = [
-                    .init(title: "Generate logs", accessory: .noAccessory, action: .sendLogs)
-                ]
-                #if DEV
-                cells.append(.init(title: "Debug", accessory: .noAccessory, action: .debug))
-                #endif
-                return cells
-            }()),
+            .init(title: T.Settings.support, cells: [
+                .init(title: "Generate logs", accessory: .noAccessory, action: .sendLogs)
+            ]),
             .init(
                 title: T.Settings.aboutCrashOptoutTitle,
                 cells: [

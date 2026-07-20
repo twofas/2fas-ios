@@ -220,6 +220,16 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
             AppleWatchFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
         }
     }
+
+    #if DEV
+    func toDebug() {
+        if isCollapsed {
+            DebugFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            DebugFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
+    #endif
 }
 extension SettingsFlowController: BackupMenuFlowControllerParent {
     func showFAQ() {
@@ -249,5 +259,8 @@ extension SettingsFlowController: AppleWatchFlowControllerParent {
 extension SettingsFlowController: TrashFlowControllerParent {}
 extension SettingsFlowController: BrowserExtensionMainFlowControllerParent {}
 extension SettingsFlowController: AboutFlowControllerParent {}
+#if DEV
+extension SettingsFlowController: DebugFlowControllerParent {}
+#endif
 extension SettingsFlowController: TransferFlowControllerParent {}
 extension SettingsFlowController: AppearanceFlowControllerParent {}

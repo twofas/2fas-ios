@@ -87,6 +87,9 @@ enum SettingsNavigationModule: Hashable {
     case appleWatch
     case openPass
     case appStorePass
+    #if DEV
+    case debug
+    #endif
 }
 
 enum SettingsNavigationToggle: Hashable {

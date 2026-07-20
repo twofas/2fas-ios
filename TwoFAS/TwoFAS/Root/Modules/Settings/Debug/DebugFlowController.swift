@@ -31,18 +31,35 @@ protocol DebugFlowControlling: AnyObject {
 final class DebugFlowController: FlowController {
     private weak var parent: DebugFlowControllerParent?
 
+    static func showAsRoot(
+        in navigationController: UINavigationController,
+        parent: DebugFlowControllerParent
+    ) {
+        let hosting = create(parent: parent, showsBackButton: false)
+        navigationController.setViewControllers([hosting], animated: false)
+    }
+
     static func push(
         in navigationController: UINavigationController,
         parent: DebugFlowControllerParent
     ) {
+        let hosting = create(parent: parent, showsBackButton: true)
+        navigationController.pushViewController(hosting, animated: true)
+    }
+
+    private static func create(
+        parent: DebugFlowControllerParent,
+        showsBackButton: Bool
+    ) -> UIViewController {
         let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
         hosting.hidesBottomBarWhenPushed = false
         let flowController = DebugFlowController(viewController: hosting)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.debugModuleInteractor()
         let presenter = DebugPresenter(flowController: flowController, interactor: interactor)
+        presenter.showsBackButton = showsBackButton
         hosting.rootView = AnyView(DebugView(presenter: presenter))
-        navigationController.pushViewController(hosting, animated: true)
+        return hosting
     }
 }
 

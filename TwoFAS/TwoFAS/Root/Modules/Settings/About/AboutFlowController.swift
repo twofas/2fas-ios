@@ -31,9 +31,6 @@ protocol AboutFlowControlling: AnyObject {
     func toShareLogs(fileURL: URL, onDismiss: @escaping () -> Void)
     func toAcknowledgements()
     func toSocial(_ channel: SocialChannel)
-    #if DEV
-    func toDebug()
-    #endif
     func close()
 }
 
@@ -135,18 +132,7 @@ extension AboutFlowController: AboutFlowControlling {
         )
     }
 
-    #if DEV
-    func toDebug() {
-        guard let navigationController = _viewController?.navigationController else { return }
-        DebugFlowController.push(in: navigationController, parent: self)
-    }
-    #endif
-
     func close() {
         _viewController?.navigationController?.popViewController(animated: true)
     }
 }
-
-#if DEV
-extension AboutFlowController: DebugFlowControllerParent {}
-#endif

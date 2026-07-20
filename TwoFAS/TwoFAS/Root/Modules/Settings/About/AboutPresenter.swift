@@ -64,10 +64,6 @@ extension AboutPresenter {
             flowController.toAcknowledgements()
         case .social(let channel):
             flowController.toSocial(channel)
-        #if DEV
-        case .debug:
-            flowController.toDebug()
-        #endif
         }
     }
 

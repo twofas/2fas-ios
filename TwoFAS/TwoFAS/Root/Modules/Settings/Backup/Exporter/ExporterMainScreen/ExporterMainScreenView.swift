@@ -42,7 +42,7 @@ struct ExporterMainScreenView: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.labelsSecondary)
         } buttons: {
-            TFToggleRow(T.Backup.backupFilePasswordTitle, isOn: $presenter.setPassword)
+            TFToggleRow(T.Backup.backupFilePasswordTitle, isOn: $presenter.setPassword, isElevated: true)
                 .padding(.bottom, .S)
 
             TFButton(

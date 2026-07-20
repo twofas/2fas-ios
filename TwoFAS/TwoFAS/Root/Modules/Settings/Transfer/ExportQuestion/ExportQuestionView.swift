@@ -45,7 +45,7 @@ struct ExportQuestionView: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.labelsSecondary)
         } buttons: {
-            TFToggleRow(T.Exportwarning.toggle, isOn: $enableSave)
+            TFToggleRow(T.Exportwarning.toggle, isOn: $enableSave, isElevated: true)
                 .padding(.bottom, .S)
 
             TFButton(

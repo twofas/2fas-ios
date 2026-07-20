@@ -44,7 +44,7 @@ struct BackupDeleteView: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.labelsSecondary)
         } buttons: {
-            TFToggleRow(T.Backup.deleteTitle, isOn: $confirmed)
+            TFToggleRow(T.Backup.deleteTitle, isOn: $confirmed, isElevated: true)
                 .padding(.bottom, .S)
 
             TFButton(

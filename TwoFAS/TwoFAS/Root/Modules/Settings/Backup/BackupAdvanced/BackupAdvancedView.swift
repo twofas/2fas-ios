@@ -37,7 +37,7 @@ struct BackupAdvancedView: View {
                 }
             }
 
-            TFListScreen() {
+            TFListScreen {
                 ForEach(presenter.sections) { section in
                     sectionView(section)
                 }

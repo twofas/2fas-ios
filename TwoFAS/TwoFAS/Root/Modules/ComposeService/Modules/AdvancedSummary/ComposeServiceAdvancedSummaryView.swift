@@ -54,7 +54,7 @@ struct ComposeServiceAdvancedSummaryView: View {
                                 }
                             }
                         }
-                        .groupedSectionBackground()
+                        .groupedSectionBackground(isElevated: true)
                     }
                     .padding(.top, .XXXXL)
                 }

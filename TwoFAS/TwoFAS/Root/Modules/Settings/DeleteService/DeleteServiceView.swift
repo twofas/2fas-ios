@@ -44,7 +44,7 @@ struct DeleteServiceView: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.labelsSecondary)
         } buttons: {
-            TFToggleRow(T.Tokens.iWantToDeleteThisToken, isOn: $confirmed)
+            TFToggleRow(T.Tokens.iWantToDeleteThisToken, isOn: $confirmed, isElevated: true)
                 .padding(.bottom, .S)
 
             TFButton(

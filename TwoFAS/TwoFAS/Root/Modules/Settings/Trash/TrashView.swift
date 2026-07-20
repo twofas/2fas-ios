@@ -112,7 +112,7 @@ struct TrashView: View {
         .padding(.vertical, .L)
         .background(
             RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue, style: .continuous)
-                .foregroundStyle(.backgroundsSecondaryElevated)
+                .foregroundStyle(.backgroundsSecondary)
         )
         .frame(minHeight: .list)
     }

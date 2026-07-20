@@ -166,7 +166,7 @@ struct ComposeServiceView: View {
                     action: { presenter.handleAdvanced() }
                 )
             }
-            .groupedSectionBackground()
+            .groupedSectionBackground(isElevated: true)
         }
     }
 
@@ -224,7 +224,7 @@ struct ComposeServiceView: View {
                     action: { presenter.handleCategory() }
                 )
             }
-            .groupedSectionBackground()
+            .groupedSectionBackground(isElevated: true)
         }
     }
 
@@ -241,7 +241,7 @@ struct ComposeServiceView: View {
                     action: { presenter.handleBrowserExtension() }
                 )
             }
-            .groupedSectionBackground()
+            .groupedSectionBackground(isElevated: true)
         }
     }
 
@@ -260,7 +260,7 @@ struct ComposeServiceView: View {
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-            .groupedSectionBackground()
+            .groupedSectionBackground(isElevated: true)
         }
     }
 

@@ -62,15 +62,18 @@ public struct TFListScreen<Content: View>: View {
 public struct TFListSection<Content: View>: View {
     private let title: String?
     private let footer: String?
+    private let isElevated: Bool
     private let content: Content
 
     public init(
         title: String? = nil,
         footer: String? = nil,
+        isElevated: Bool = false,
         @ViewBuilder content: () -> Content
     ) {
         self.title = title
         self.footer = footer
+        self.isElevated = isElevated
         self.content = content()
     }
 
@@ -83,7 +86,7 @@ public struct TFListSection<Content: View>: View {
             VStack(alignment: .leading, spacing: .zero) {
                 content
             }
-            .groupedSectionBackground()
+            .groupedSectionBackground(isElevated: isElevated)
 
             if let footer {
                 TFListSectionFooter(footer)

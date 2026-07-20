@@ -72,7 +72,7 @@ struct LabelComposeView: View {
                                 selectedColor: $presenter.color
                             )
                         }
-                        .groupedSectionBackground()
+                        .groupedSectionBackground(isElevated: true)
                     }
                 }
             }

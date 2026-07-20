@@ -85,7 +85,7 @@ struct AddingServiceManuallyView: View {
                                     })
                                 )
                                 .id(Field.additionalInfo)
-                                .groupedSectionBackground()
+                                .groupedSectionBackground(isElevated: true)
                                 
                                 typeSelector()
                                 
@@ -190,7 +190,7 @@ struct AddingServiceManuallyView: View {
                 )
                 .id(Field.secret)
             }
-            .groupedSectionBackground()
+            .groupedSectionBackground(isElevated: true)
         }
     }
     
@@ -244,7 +244,7 @@ struct AddingServiceManuallyView: View {
             }
             .padding(.horizontal, .XXXXXL)
             .padding(.vertical, .XXL)
-            .groupedSectionBackground()
+            .groupedSectionBackground(isElevated: true)
         }
     }
     

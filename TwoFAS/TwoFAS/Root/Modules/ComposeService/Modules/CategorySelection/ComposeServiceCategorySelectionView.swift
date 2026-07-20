@@ -57,7 +57,7 @@ struct ComposeServiceCategorySelectionView: View {
                             .buttonStyle(.plain)
                         }
                     }
-                    .groupedSectionBackground()
+                    .groupedSectionBackground(isElevated: true)
                 }
             }
             .scrollDismissesKeyboard(.interactively)

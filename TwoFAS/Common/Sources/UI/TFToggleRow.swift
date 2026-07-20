@@ -19,7 +19,7 @@
 
 import SwiftUI
 
-/// A capsule-shaped toggle row sitting on `.backgroundsSecondaryElevated`,
+/// A capsule-shaped toggle row sitting on `.backgroundsSecondary`,
 /// used for inline confirmation switches (e.g. "I want to delete this token").
 ///
 /// - 16 pt horizontal insets
@@ -27,11 +27,17 @@ import SwiftUI
 /// - Uses `AppColor.accentsBrand` as the toggle tint
 public struct TFToggleRow: View {
     private let title: String
+    private let isElevated: Bool
     @Binding private var isOn: Bool
 
-    public init(_ title: String, isOn: Binding<Bool>) {
+    /// - Parameter isElevated: Pass `true` when the row sits on a
+    ///   `.backgroundsPrimaryElevated` screen, so it uses
+    ///   `.backgroundsGroupedTertiary` instead of the default
+    ///   `.backgroundsSecondary`.
+    public init(_ title: String, isOn: Binding<Bool>, isElevated: Bool = false) {
         self.title = title
         self._isOn = isOn
+        self.isElevated = isElevated
     }
 
     public var body: some View {
@@ -46,7 +52,7 @@ public struct TFToggleRow: View {
         .padding(.vertical, .L)
         .background {
             RoundedRectangle(.extraLarge)
-                .foregroundStyle(AppColor.backgroundsSecondaryElevated)
+                .foregroundStyle(isElevated ? AppColor.backgroundsGroupedTertiary : AppColor.backgroundsSecondary)
         }
     }
 }

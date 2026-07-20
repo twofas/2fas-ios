@@ -65,7 +65,7 @@ struct ComposeServiceWebExtensionView: View {
                                         .buttonStyle(.plain)
                                     }
                                 }
-                                .groupedSectionBackground()
+                                .groupedSectionBackground(isElevated: true)
                             }
                         }
                     }

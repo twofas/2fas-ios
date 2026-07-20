@@ -20,7 +20,15 @@
 import SwiftUI
 
 public struct GroupedSectionBackgroundModifier: ViewModifier {
-    public init() {}
+    private let isElevated: Bool
+
+    /// - Parameter isElevated: Pass `true` when the section sits on a
+    ///   `.backgroundsPrimaryElevated` screen. The lighter screen background
+    ///   requires `.backgroundsGroupedTertiary` for the section instead of the
+    ///   default `.backgroundsSecondary`.
+    public init(isElevated: Bool = false) {
+        self.isElevated = isElevated
+    }
 
     public func body(content: Content) -> some View {
         content
@@ -28,13 +36,13 @@ public struct GroupedSectionBackgroundModifier: ViewModifier {
             .frame(maxWidth: .infinity, alignment: .topLeading)
             .background {
                 RoundedRectangle(.large)
-                    .foregroundStyle(AppColor.backgroundsGroupedTertiary)
+                    .foregroundStyle(isElevated ? AppColor.backgroundsGroupedTertiary : AppColor.backgroundsSecondary)
             }
     }
 }
 
 public extension View {
-    func groupedSectionBackground() -> some View {
-        modifier(GroupedSectionBackgroundModifier())
+    func groupedSectionBackground(isElevated: Bool = false) -> some View {
+        modifier(GroupedSectionBackgroundModifier(isElevated: isElevated))
     }
 }

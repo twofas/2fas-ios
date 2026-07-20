@@ -66,7 +66,7 @@ struct EncryptedByUserPasswordSyncView: View {
                                     })
                                 )
                                 .disabled(presenter.isWorking)
-                                .groupedSectionBackground()
+                                .groupedSectionBackground(isElevated: true)
                             }
                             Spacer()
                                 .frame(maxHeight: .infinity)

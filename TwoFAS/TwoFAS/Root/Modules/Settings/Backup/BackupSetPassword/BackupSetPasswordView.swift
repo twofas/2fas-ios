@@ -139,7 +139,7 @@ struct BackupSetPasswordView: View {
                 )
                 .padding(.bottom, .S)
             }
-            .groupedSectionBackground()
+            .groupedSectionBackground(isElevated: true)
 
             if let error = presenter.migrationError {
                 Label(error, systemImage: "xmark.circle.fill")

@@ -94,7 +94,7 @@ struct SelectServiceView: View {
                                 .buttonStyle(.plain)
                             }
                         }
-                        .groupedSectionBackground()
+                        .groupedSectionBackground(isElevated: true)
                     }
                 }
             }
@@ -192,7 +192,7 @@ private struct SelectServiceListHeader: View {
                     .tint(.accentsBrand)
             }
             .padding(.vertical, .L)
-            .groupedSectionBackground()
+            .groupedSectionBackground(isElevated: true)
         }
     }
 }

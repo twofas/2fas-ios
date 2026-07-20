@@ -1298,6 +1298,7 @@
 		C2F5F9E928611DEF00F778E1 /* BrowserExtensionPairingAlreadyPairedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F5F9E828611DEF00F778E1 /* BrowserExtensionPairingAlreadyPairedView.swift */; };
 		C2F6AF40273056010015BC59 /* ExchangeFileEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F6AF3F273056010015BC59 /* ExchangeFileEncryption.swift */; };
 		C2F6BB08264886B7002A9747 /* IntroductionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F6BB07264886B7002A9747 /* IntroductionPresenter.swift */; };
+		C2F751DC300ECC9200835ADD /* PINEntryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F751DB300ECC9200835ADD /* PINEntryScreen.swift */; };
 		C2F7FE012A8AB099004B2C95 /* AddingServiceManuallyFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F7FE002A8AB099004B2C95 /* AddingServiceManuallyFlowController.swift */; };
 		C2F7FE032A8AB3D2004B2C95 /* AddingServiceManuallyPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F7FE022A8AB3D2004B2C95 /* AddingServiceManuallyPresenter.swift */; };
 		C2F7FE052A8AB70D004B2C95 /* AddingServiceManuallyModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F7FE042A8AB70D004B2C95 /* AddingServiceManuallyModuleInteractor.swift */; };
@@ -2937,6 +2938,7 @@
 		C2F5F9E828611DEF00F778E1 /* BrowserExtensionPairingAlreadyPairedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserExtensionPairingAlreadyPairedView.swift; sourceTree = "<group>"; };
 		C2F6AF3F273056010015BC59 /* ExchangeFileEncryption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeFileEncryption.swift; sourceTree = "<group>"; };
 		C2F6BB07264886B7002A9747 /* IntroductionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionPresenter.swift; sourceTree = "<group>"; };
+		C2F751DB300ECC9200835ADD /* PINEntryScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINEntryScreen.swift; sourceTree = "<group>"; };
 		C2F7FE002A8AB099004B2C95 /* AddingServiceManuallyFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceManuallyFlowController.swift; sourceTree = "<group>"; };
 		C2F7FE022A8AB3D2004B2C95 /* AddingServiceManuallyPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceManuallyPresenter.swift; sourceTree = "<group>"; };
 		C2F7FE042A8AB70D004B2C95 /* AddingServiceManuallyModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceManuallyModuleInteractor.swift; sourceTree = "<group>"; };
@@ -4999,6 +5001,7 @@
 				C2FF03052FAB973E00362B88 /* PINKeyboard.swift */,
 				C21DBE942FAD055600C0E857 /* PINKeypadLayout.swift */,
 				C2FF03012FAB6D5200362B88 /* AppReset.swift */,
+				C2F751DB300ECC9200835ADD /* PINEntryScreen.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -7391,6 +7394,7 @@
 				C2B5BF592946616900E5092D /* TokensNavigationFlowController.swift in Sources */,
 				C2BBD0232E270138004ECE56 /* QRCodeDisplayViewController.swift in Sources */,
 				C27A549B27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift in Sources */,
+				C2F751DC300ECC9200835ADD /* PINEntryScreen.swift in Sources */,
 				C2B6D0EA2FF1816A00C4C73D /* ComposeServiceSecretKeyField.swift in Sources */,
 				C204FAEE21F4A0850041E2F4 /* CGFloat+Extensions.swift in Sources */,
 				C215083130030673008B66E2 /* BackupManageEncryptionView.swift in Sources */,

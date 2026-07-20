@@ -25,55 +25,11 @@ struct ExportQuestionPINVerificationView: View {
     var presenter: ExportQuestionPINVerificationPresenter
 
     var body: some View {
-        VStack(spacing: .S) {
-            titleBar()
-
-            VStack(spacing: .S) {
-                Spacer()
-                header()
-                Spacer()
-            }
-
-            PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
-                .shake(on: presenter.shake)
-                .sensoryFeedback(.error, trigger: presenter.shake) { _, new in new }
-
-            PINKeyboard(action: presenter.onKeyPressed)
-
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(AppColor.backgroundsPrimary)
-        .onAppear {
-            presenter.viewWillAppear()
-        }
-    }
-
-    @ViewBuilder
-    private func titleBar() -> some View {
-        ZStack {
-            HStack(spacing: .zero) {
-                TFLiquidGlassSymbolButton(symbol: .close) {
-                    presenter.handleCancel()
-                }
-                Spacer()
-            }
-            TFTitleView(title: T.Backup.verifyPin)
-        }
-        .padding(.horizontal, .XXXL)
-        .padding(.top, .XL)
-        .frame(alignment: .top)
-    }
-
-    @ViewBuilder
-    private func header() -> some View {
-        VStack(spacing: .M) {
-            Asset.pinLogo.swiftUIImage
-            Text(presenter.info)
-                .textStyle(.body)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(presenter.isError ? AppColor.accentsBrand : AppColor.labelsSecondary)
-                .animation(.easeInOut, value: presenter.info)
-        }
+        PINEntryScreen(
+            title: T.Backup.verifyPin,
+            onLeadingTap: { presenter.handleCancel() },
+            presenter: presenter,
+            onAppear: { presenter.viewWillAppear() }
+        )
     }
 }

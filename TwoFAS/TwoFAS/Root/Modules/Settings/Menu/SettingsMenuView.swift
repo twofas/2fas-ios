@@ -98,7 +98,7 @@ struct SettingsMenuView: View {
                     ),
                     style: .continuous
                 )
-                .fill(AppColor.backgroundsSecondary)
+                .fill(selectionHighlightColor)
                 .padding(.horizontal, -Spacing.XL.value)
             }
         }
@@ -164,6 +164,14 @@ struct SettingsMenuView: View {
             return .accentsBrand
         }
         return .labelsPrimary
+    }
+
+    private var selectionHighlightColor: AppColor {
+        if #available(iOS 26.0, *) {
+            return .backgroundsSecondary
+        } else {
+            return .fillsSecondary
+        }
     }
 
     private func isSelected(_ cell: SettingsMenuCell) -> Bool {

@@ -96,6 +96,8 @@ final class NewPINPresenter {
     }
 }
 
+extension NewPINPresenter: PINEntryPresenting {}
+
 private extension NewPINPresenter {
     func pinGathered() {
         if isSecond {

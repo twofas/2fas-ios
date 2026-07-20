@@ -25,38 +25,12 @@ struct VerifyPINView: View {
     var presenter: VerifyPINPresenter
 
     var body: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: T.Backup.verifyPin,
-                leadingSymbol: presenter.leadingSymbol,
-                onLeadingTap: { presenter.handleCancel() }
-            )
-
-            VStack(spacing: .XL) {
-                Text(presenter.info)
-                    .textStyle(.body)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(presenter.isError ? AppColor.accentsBrand : AppColor.labelsSecondary)
-                    .animation(.easeInOut, value: presenter.info)
-                    .padding(.horizontal, .XL)
-
-                Spacer()
-
-                PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
-                    .disabled(presenter.isLocked)
-                    .shake(on: presenter.shake)
-                    .sensoryFeedback(.error, trigger: presenter.shake) { _, new in new }
-
-                PINKeyboard(action: presenter.onKeyPressed)
-                    .disabled(presenter.isLocked)
-
-                Spacer()
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(AppColor.backgroundsPrimary)
-        .onAppear {
-            presenter.viewWillAppear()
-        }
+        PINEntryScreen(
+            title: T.Backup.verifyPin,
+            leadingSymbol: presenter.leadingSymbol,
+            onLeadingTap: { presenter.handleCancel() },
+            presenter: presenter,
+            onAppear: { presenter.viewWillAppear() }
+        )
     }
 }

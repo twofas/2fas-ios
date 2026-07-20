@@ -77,6 +77,10 @@ final class VerifyPINPresenter {
     }
 }
 
+extension VerifyPINPresenter: PINEntryPresenting {
+    var isInputDisabled: Bool { isLocked }
+}
+
 private extension VerifyPINPresenter {
     var passcode: String {
         pin.concateToPositionString()

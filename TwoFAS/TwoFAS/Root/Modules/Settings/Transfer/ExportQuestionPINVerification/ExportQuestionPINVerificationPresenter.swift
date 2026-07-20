@@ -70,6 +70,8 @@ final class ExportQuestionPINVerificationPresenter {
     }
 }
 
+extension ExportQuestionPINVerificationPresenter: PINEntryPresenting {}
+
 private extension ExportQuestionPINVerificationPresenter {
     func pinGathered() {
         if interactor.verifyCode(pin) {

@@ -73,15 +73,21 @@ public enum TFPinKey: Equatable, Hashable {
 /// ```
 public struct TFPinButton: View {
     public static let size: CGFloat = 64
-    
-    @GestureState
-    private var isPressed = false
-    
+
     private let key: TFPinKey
     private let action: (TFPinKey) -> Void
+    private let glassID: String?
+    private let glassNamespace: Namespace.ID?
 
-    public init(_ key: TFPinKey, action: @escaping (TFPinKey) -> Void) {
+    public init(
+        _ key: TFPinKey,
+        glassID: String? = nil,
+        glassNamespace: Namespace.ID? = nil,
+        action: @escaping (TFPinKey) -> Void
+    ) {
         self.key = key
+        self.glassID = glassID
+        self.glassNamespace = glassNamespace
         self.action = action
     }
 
@@ -99,20 +105,39 @@ public struct TFPinButton: View {
                 }
                 .glassEffect(.regular.interactive())
                     .shadow(.glass)
-            } else {
-                $0.buttonStyle(ButtonFeedbackStyle())
-                    .background {
-                        Circle()
-                            .fill(AnyShapeStyle(.clear))
+                    .buttonStyle(ButtonFeedbackStyle())
+                    .modify { glass in
+                        if let glassID, let glassNamespace {
+                            glass.glassEffectID(glassID, in: glassNamespace)
+                        } else {
+                            glass
+                        }
                     }
+            } else {
+                $0.buttonStyle(PinPressStyle())
             }
         }
         .frame(width: Self.size, height: Self.size)
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .updating($isPressed) { _, state, _ in state = true }
-        )
-        .sensoryFeedback(.impact(flexibility: .rigid, intensity: 0.6), trigger: isPressed) { _, new in new }
+    }
+
+    private struct PinPressStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .background {
+                    Circle()
+                        .fill(AppColor.backgroundsSecondary)
+                        .overlay {
+                            if configuration.isPressed {
+                                Circle().fill(AppColor.fillsPrimary)
+                            }
+                        }
+                        .animation(.easeInOut, value: configuration.isPressed)
+                }
+                .sensoryFeedback(
+                    .impact(flexibility: .rigid, intensity: 0.6),
+                    trigger: configuration.isPressed
+                ) { _, new in new }
+        }
     }
 
     // MARK: Content

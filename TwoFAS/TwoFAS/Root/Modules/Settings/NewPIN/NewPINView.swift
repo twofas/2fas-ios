@@ -25,48 +25,26 @@ struct NewPINView: View {
     var presenter: NewPINPresenter
 
     var body: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: presenter.title,
-                leadingSymbol: presenter.showsCancelButton ? .close : nil,
-                onLeadingTap: presenter.showsCancelButton ? { presenter.handleCancel() } : nil
-            )
-
-            VStack(spacing: .XL) {
-                Text(presenter.info)
-                    .textStyle(.body)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(presenter.isError ? AppColor.accentsBrand : AppColor.labelsSecondary)
-                    .animation(.easeInOut, value: presenter.info)
-                    .padding(.horizontal, .XL)
-
-                Spacer()
-
-                PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
-                    .shake(on: presenter.shake)
-                    .sensoryFeedback(.error, trigger: presenter.shake) { _, new in new }
-
-                PINKeyboard(action: presenter.onKeyPressed)
-
-                Spacer()
-
-                if presenter.showsPinLengthButton {
-                    Button {
-                        presenter.handleChangePINType()
-                    } label: {
-                        Text(T.Settings.selectPinLength)
-                            .textStyle(.body, .emphasized)
-                            .foregroundStyle(.accentsBrand)
-                    }
-                    .padding(.bottom, .L)
-                }
+        PINEntryScreen(
+            title: presenter.title,
+            leadingSymbol: presenter.showsCancelButton ? .close : nil,
+            onLeadingTap: presenter.showsCancelButton ? { presenter.handleCancel() } : nil,
+            presenter: presenter,
+            onAppear: {
+                presenter.viewDidLoad()
+                presenter.viewWillAppear()
             }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(AppColor.backgroundsPrimary)
-        .onAppear {
-            presenter.viewDidLoad()
-            presenter.viewWillAppear()
+        ) {
+            if presenter.showsPinLengthButton {
+                Button {
+                    presenter.handleChangePINType()
+                } label: {
+                    Text(T.Settings.selectPinLength)
+                        .textStyle(.body, .emphasized)
+                        .foregroundStyle(.accentsBrand)
+                }
+                .padding(.bottom, .L)
+            }
         }
     }
 }

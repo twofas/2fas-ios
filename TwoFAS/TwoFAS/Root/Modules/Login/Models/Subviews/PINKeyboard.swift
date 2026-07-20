@@ -22,24 +22,37 @@ import Common
 
 struct PINKeyboard: View {
     let action: (TFPinKey) -> Void
-    
+
+    @Namespace private var glassNamespace
+
     var body: some View {
+        keypad
+            .modify { view in
+                if #available(iOS 26, *) {
+                    GlassEffectContainer { view }
+                } else {
+                    view
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.XL)
+    }
+
+    private var keypad: some View {
         PINKeypadLayout {
-            TFPinButton(.digit(1), action: action)
-            TFPinButton(.digit(2), action: action)
-            TFPinButton(.digit(3), action: action)
-            TFPinButton(.digit(4), action: action)
-            TFPinButton(.digit(5), action: action)
-            TFPinButton(.digit(6), action: action)
-            TFPinButton(.digit(7), action: action)
-            TFPinButton(.digit(8), action: action)
-            TFPinButton(.digit(9), action: action)
-            TFPinButton(.delete, action: action)
+            TFPinButton(.digit(1), glassID: "digit-1", glassNamespace: glassNamespace, action: action)
+            TFPinButton(.digit(2), glassID: "digit-2", glassNamespace: glassNamespace, action: action)
+            TFPinButton(.digit(3), glassID: "digit-3", glassNamespace: glassNamespace, action: action)
+            TFPinButton(.digit(4), glassID: "digit-4", glassNamespace: glassNamespace, action: action)
+            TFPinButton(.digit(5), glassID: "digit-5", glassNamespace: glassNamespace, action: action)
+            TFPinButton(.digit(6), glassID: "digit-6", glassNamespace: glassNamespace, action: action)
+            TFPinButton(.digit(7), glassID: "digit-7", glassNamespace: glassNamespace, action: action)
+            TFPinButton(.digit(8), glassID: "digit-8", glassNamespace: glassNamespace, action: action)
+            TFPinButton(.digit(9), glassID: "digit-9", glassNamespace: glassNamespace, action: action)
+            TFPinButton(.delete, glassID: "delete-placeholder", glassNamespace: glassNamespace, action: action)
                 .isHidden(true, remove: false)
-            TFPinButton(.digit(0), action: action)
-            TFPinButton(.delete, action: action)
+            TFPinButton(.digit(0), glassID: "digit-0", glassNamespace: glassNamespace, action: action)
+            TFPinButton(.delete, glassID: "delete", glassNamespace: glassNamespace, action: action)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.XL)
     }
 }

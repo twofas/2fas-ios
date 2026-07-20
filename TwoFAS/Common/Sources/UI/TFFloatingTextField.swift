@@ -160,7 +160,7 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
         ZStack {
             SecureField("", text: $text, prompt: promptText)
                 .focused($internalFocus, equals: .secure)
-                .focused(focused, equals: focusValue)
+                .textContentType(isSecure ? .password : nil)
                 .opacity(showAsSecure ? 1 : 0)
                 .accessibilityHidden(!showAsSecure)
                 .allowsHitTesting(showAsSecure)
@@ -168,7 +168,6 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
 
             TextField("", text: $text, prompt: promptText)
                 .focused($internalFocus, equals: .plain)
-                .focused(focused, equals: focusValue)
                 .opacity(showAsSecure ? 0 : 1)
                 .accessibilityHidden(showAsSecure)
                 .allowsHitTesting(!showAsSecure)
@@ -193,6 +192,22 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
         .onChange(of: internalFocus) { _, newValue in
             withAnimation {
                 isEditing = newValue != nil
+            }
+            if newValue != nil {
+                if focused.wrappedValue != focusValue {
+                    focused.wrappedValue = focusValue
+                }
+            } else if focused.wrappedValue == focusValue {
+                focused.wrappedValue = nil
+            }
+        }
+        .onChange(of: focused.wrappedValue) { _, newValue in
+            if newValue == focusValue {
+                if internalFocus == nil {
+                    internalFocus = showAsSecure ? .secure : .plain
+                }
+            } else if internalFocus != nil {
+                internalFocus = nil
             }
         }
         .onChange(of: showAsSecure) { _, newShowAsSecure in
@@ -239,7 +254,6 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
                     .autocorrectionDisabled()
             case .password:
                 content
-                    .textContentType(.password)
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
             case .other:

@@ -22,6 +22,9 @@ import CommonWatch
 
 struct ServiceView: View {
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.scenePhase) private var scenePhase
+
+    @State private var timelineStartDate = Date()
     
     @ObservedObject
     var presenter: ServicePresenter
@@ -42,11 +45,16 @@ struct ServiceView: View {
                 .lineLimit(1)
         }
         .scenePadding()
+        .onAppear(perform: refreshTimeline)
+        .onChange(of: scenePhase) { _, newPhase in
+            guard newPhase == .active else { return }
+            refreshTimeline()
+        }
     }
     
     @ViewBuilder
     private func list() -> some View {
-        TimelineView(.explicit(presenter.timelineEntries())) { context in
+        TimelineView(.explicit(presenter.timelineEntries(from: timelineStartDate))) { context in
             VStack(alignment: .leading, spacing: nil) {
                 HStack(alignment: .center, spacing: nil) {
                     IconRenderer(service: presenter.service)
@@ -95,6 +103,7 @@ struct ServiceView: View {
                 .background(Color.accentColor, in: Circle())
             }
         }
+        .id(timelineStartDate)
     }
     
     @ViewBuilder
@@ -109,5 +118,9 @@ struct ServiceView: View {
         } else {
             Text("0:00")
         }
+    }
+
+    private func refreshTimeline() {
+        timelineStartDate = Date()
     }
 }

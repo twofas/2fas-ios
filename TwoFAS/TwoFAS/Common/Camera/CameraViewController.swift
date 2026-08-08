@@ -305,3 +305,7 @@ extension CameraViewController: CameraViewControllerActivity {
         cancelButton.isEnabled = true
     }
 }
+
+private extension CGFloat {
+    var half: CGFloat { (self / 2.0).rounded() }
+}

@@ -135,7 +135,7 @@ final class ContentButton: UIButton {
         setTitle(title, for: .normal)
         self.title = title
     }
-
+    
     func applyCornerRadius(_ radius: CGFloat) {
         backgroundView.layer.cornerRadius = radius
     }
@@ -204,5 +204,37 @@ final class ContentButton: UIButton {
         quickAnim { [weak self] in
             self?.applyColorToActiveElement(color)
         }
+    }
+}
+
+private extension UIView {
+    func animateReplacementOfSubview(_ subview: UIView?, with replacement: UIView, completion: @escaping Callback) {
+        replacement.alpha = 0
+        
+        if let subview {
+            subview.quickAnim({
+                subview.alpha = 0
+            }) {
+                replacement.quickAnim({
+                    replacement.alpha = 1
+                }, completion: completion)
+            }
+        } else {
+            replacement.quickAnim({
+                replacement.alpha = 1
+            }, completion: completion)
+        }
+    }
+    
+    func quickAnim(_ animations: @escaping Callback) {
+        quickAnim(animations, completion: nil)
+    }
+    
+    func quickAnim(_ animations: @escaping Callback, completion: Callback? = nil) {
+        UIView.animate(
+            withDuration: Theme.Animations.Timing.show,
+            animations: animations,
+            completion: { _ in completion?() }
+        )
     }
 }

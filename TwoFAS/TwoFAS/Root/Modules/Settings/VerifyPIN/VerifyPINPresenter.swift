@@ -145,3 +145,9 @@ private extension VerifyPINPresenter {
         return T.Security.tooManyAttemptsTryAgainAfter("\(lockTime / minute)")
     }
 }
+
+private extension Array where Element == Int {
+    func concateToPositionString() -> String {
+        self.map { String($0) }.reduce("", +)
+    }
+}

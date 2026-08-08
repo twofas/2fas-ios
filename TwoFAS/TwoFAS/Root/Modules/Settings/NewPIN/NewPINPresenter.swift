@@ -139,3 +139,9 @@ private extension NewPINPresenter {
         }
     }
 }
+
+private extension Array where Element == Int {
+    func concateToPositionString() -> String {
+        self.map { String($0) }.reduce("", +)
+    }
+}

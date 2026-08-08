@@ -112,14 +112,6 @@ extension UIView {
         layer.add(animation, forKey: "shake")
     }
     
-    static func prepareViewsForAutoLayout(withViews views: [UIView], superview: UIView?) {
-        views.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
-        
-        guard let s = superview else { return }
-        
-        views.forEach { s.addSubview($0) }
-    }
-    
     func overlay(_ view: UIView, on overlayed: UIView) {
         addSubview(view, with: [
             view.leadingAnchor.constraint(equalTo: overlayed.leadingAnchor),
@@ -133,24 +125,6 @@ extension UIView {
         v.translatesAutoresizingMaskIntoConstraints = false
         addSubview(v)
         NSLayoutConstraint.activate(constraints)
-    }
-    
-    func animateReplacementOfSubview(_ subview: UIView?, with replacement: UIView, completion: @escaping Callback) {
-        replacement.alpha = 0
-        
-        if let subview {
-            subview.quickAnim({
-                subview.alpha = 0
-            }) {
-                replacement.quickAnim({
-                    replacement.alpha = 1
-                }, completion: completion)
-            }
-        } else {
-            replacement.quickAnim({
-                replacement.alpha = 1
-            }, completion: completion)
-        }
     }
     
     func applyRoundedCorners(withBackgroundColor color: UIColor, cornerRadius: CGFloat = Theme.Metrics.cornerRadius) {
@@ -183,18 +157,6 @@ extension UIView {
     var safeLeadingAnchor: NSLayoutXAxisAnchor { self.safeAreaLayoutGuide.leadingAnchor }
     var safeTrailingAnchor: NSLayoutXAxisAnchor { self.safeAreaLayoutGuide.trailingAnchor }
     var safeBottomAnchor: NSLayoutYAxisAnchor { self.safeAreaLayoutGuide.bottomAnchor }
-    
-    func quickAnim(_ animations: @escaping Callback) {
-        quickAnim(animations, completion: nil)
-    }
-    
-    func quickAnim(_ animations: @escaping Callback, completion: Callback? = nil) {
-        UIView.animate(
-            withDuration: Theme.Animations.Timing.show,
-            animations: animations,
-            completion: { _ in completion?() }
-        )
-    }
     
     func removeAllSubviews() {
         subviews.forEach { $0.removeFromSuperview() }

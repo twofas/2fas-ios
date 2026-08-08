@@ -3849,12 +3849,12 @@
 			isa = PBXGroup;
 			children = (
 				C23666761FB2644900989ACA /* AppDelegate.swift */,
+				C2617E0730276F620004AE2B /* SceneDelegate.swift */,
 				C2E7C38D2ADB1A2000478D89 /* Interactors */,
 				C2BDC6BE1FC1A87400967D0E /* Root */,
 				C257FD161FDC69B600CF6898 /* DataControllers */,
 				C2BDC6CD1FC1CBB700967D0E /* Common */,
 				C2BDC6BF1FC1ABF600967D0E /* Other */,
-				C2617E0730276F620004AE2B /* SceneDelegate.swift */,
 			);
 			path = TwoFAS;
 			sourceTree = "<group>";

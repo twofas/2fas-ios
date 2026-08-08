@@ -32,6 +32,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard !ProcessInfo.isSwiftUIPreview else { return }
         guard let windowScene = scene as? UIWindowScene else { return }
 
+        windowScene.sizeRestrictions?.minimumSize = CGSize(width: 480, height: 720)
+        
         let window = UIWindow(windowScene: windowScene)
         self.window = window
 

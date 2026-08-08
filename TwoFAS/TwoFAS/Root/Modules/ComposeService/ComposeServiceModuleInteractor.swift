@@ -278,13 +278,13 @@ extension ComposeServiceModuleInteractor: ComposeServiceModuleInteracting {
     
     func copySecret() {
         guard let privateKey else { return }
-        notificationsInteractor.copyWithSuccess(value: privateKey.removeWhitespaces())
+        notificationsInteractor.copy(value: privateKey.removeWhitespaces())
     }
     
     func copyLink() {
         guard let serviceData else { return }
         let link = serviceDefinitionInteractor.otpAuth(from: serviceData)
-        notificationsInteractor.copyWithSuccess(value: link.removeWhitespaces())
+        notificationsInteractor.copy(value: link.removeWhitespaces())
     }
     
     func createQRCode(size: CGFloat, margin: CGFloat) async -> UIImage? {

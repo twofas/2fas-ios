@@ -134,6 +134,8 @@ protocol MainRepository: AnyObject {
     var inCompact: Bool { get }
     func saveInCompact(_ value: Bool)
 
+    func copy(_ str: String)
+    
     var isAddingServiceVisible: Bool { get }
     func saveIsAddingServiceVisible(_ value: Bool)
     
@@ -483,12 +485,6 @@ protocol MainRepository: AnyObject {
     func section(for secret: String) -> SectionData?
     @discardableResult
     func createSection(with title: String) -> SectionID
-    
-    // MARK: - Notifications
-    func copy(_ str: String)
-    func wobbleWarning()
-    func wobbleError()
-    func wobbleSuccess()
     
     // MARK: - Service Definition
     func serviceDefinition(using serviceTypeID: ServiceTypeID) -> ServiceDefinition?

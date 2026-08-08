@@ -65,6 +65,6 @@ extension ComposeServiceAdvancedSummaryModuleInteractor: ComposeServiceAdvancedS
     }
     
     func copyCounter() {
-        notificationInteractor.copyWithSuccess(value: String(counter).removeWhitespaces())
+        notificationInteractor.copy(value: String(counter).removeWhitespaces())
     }
 }

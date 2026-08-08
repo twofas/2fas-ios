@@ -74,7 +74,6 @@ extension AddingServicePresenter {
             if interactor.codeExists(code) {
                 guard let description = interactor.serviceDescription(for: code) else { return }
                 Log("AddingServiceMainPresenter: Found code: \(code) which is a duplicate of: \(description)")
-                interactor.warning()
                 alert = .duplicatedCode(code: code)
             } else {
                 Log("AddingServiceMainPresenter: Adding unique code: \(code)")
@@ -97,12 +96,10 @@ extension AddingServicePresenter {
         case .appStore:
             Log("AddingServiceMainPresenter: Found wrong code: \(codeType)", save: false)
             Log("AddingServiceMainPresenter: It's an app store link!")
-            interactor.warning()
             alert = .appStore
         case .twoFASWebExtension(let extensionID):
             Log("AddingServiceMainPresenter: Found 2FAS Web Extension code for: \(codeType)", save: false)
             Log("AddingServiceMainPresenter: It's a 2FAS Web Extension!")
-            interactor.warning()
             if interactor.wasUserAskedAboutPush {
                 flowController.toTwoFASWebExtensionPairing(for: extensionID)
             } else {
@@ -110,7 +107,6 @@ extension AddingServicePresenter {
             }
         case .pairWatch(let deviceCodePath):
             Log("AddingServiceMainPresenter: Found Device Code Path: \(deviceCodePath.codePath)")
-            interactor.warning()
             if interactor.canPairWatch {
                 self.deviceCodePath = deviceCodePath
                 showPairWatchQuestion = true
@@ -122,7 +118,6 @@ extension AddingServicePresenter {
         case .unknown:
             Log("AddingServiceMainPresenter: Found wrong code: \(codeType)", save: false)
             Log("AddingServiceMainPresenter: General wrong code")
-            interactor.warning()
             alert = .generalError
         }
     }

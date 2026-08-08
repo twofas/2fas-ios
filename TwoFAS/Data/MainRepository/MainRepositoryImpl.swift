@@ -63,9 +63,7 @@ final class MainRepositoryImpl: MainRepository {
     
     lazy var notificationStateController: NotificationStateProtocol = { pushNotifications.notificationState }()
     lazy var channelStateController: FCMHandlerProtocol = { pushNotifications.fcmHandler }()
-    
-    let feedbackGenerator = UINotificationFeedbackGenerator()
-    
+        
     var currentDate: Date {
         timeVerificationController.currentDate
     }

@@ -107,6 +107,10 @@ extension MainRepositoryImpl {
         let lastTwo = String(hasGroupID.suffix(2))
         userDefaultsRepository.saveNotificationGroupID(lastTwo)
     }
+    
+    func copy(_ str: String) {
+        UIPasteboard.general.string = str
+    }
 
     var is2FASPASSInstalled: Bool {
 #if os(iOS)

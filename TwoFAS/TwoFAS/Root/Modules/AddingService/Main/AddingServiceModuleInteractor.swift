@@ -38,7 +38,6 @@ protocol AddingServiceModuleInteracting: AnyObject {
     
     func service(for secret: String) -> ServiceData?
     
-    func warning()
     func pairAppleWatch(deviceCodePath: DeviceCodePath, deviceName: String)
 }
 
@@ -67,7 +66,6 @@ final class AddingServiceModuleInteractor {
         
         newCodeInteractor.serviceWasCreated = { [weak self] in
             self?.serviceWasCreated?($0)
-            self?.notificationInteractor.success()
         }
         newCodeInteractor.shouldRename = { [weak self] in self?.shouldRename?($0, $1) }
     }
@@ -128,11 +126,5 @@ extension AddingServiceModuleInteractor: AddingServiceModuleInteracting {
     
     func pairAppleWatch(deviceCodePath: DeviceCodePath, deviceName: String) {
         watchPairing.pair(deviceCodePath: deviceCodePath, deviceName: deviceName)
-    }
-    
-    // MARK: - Notifications
-    
-    func warning() {
-        notificationInteractor.warning()
     }
 }

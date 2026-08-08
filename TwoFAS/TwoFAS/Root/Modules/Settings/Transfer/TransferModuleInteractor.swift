@@ -75,7 +75,7 @@ extension TransferModuleInteractor: TransferModuleInteracting {
     }
     
     func copyToClipboardGeneratedCodes(message: String) {
-        notificationsInteractor.copyWithSuccess(value: generateOTPAuthCodes())
+        notificationsInteractor.copy(value: generateOTPAuthCodes())
         ToastPresenter.shared.presentSuccess(title: message)
     }
     

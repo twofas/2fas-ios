@@ -812,11 +812,11 @@ private extension TokensModuleInteractor {
     }
     
     private func copyToken(_ token: String) {
-        notificationsInteractor.copyWithSuccess(value: token.removeWhitespaces())
+        notificationsInteractor.copy(value: token.removeWhitespaces())
     }
     
     private func copyNextToken(_ token: String) {
-        notificationsInteractor.copyWithSuccess(value: token.removeWhitespaces())
+        notificationsInteractor.copy(value: token.removeWhitespaces())
     }
 }
 

@@ -25,20 +25,14 @@ struct SettingsMenuView: View {
     var presenter: SettingsMenuPresenter
 
     var body: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: T.Settings.settings,
-                leadingSymbol: presenter.showsSidebarButton ? .sidebar : nil,
-                onLeadingTap: presenter.showsSidebarButton ? presenter.handleSidebarTap : nil
-            )
-
-            TFListScreen {
-                ForEach(presenter.sections) { section in
-                    sectionView(section)
-                }
+        TFListScreen {
+            ForEach(presenter.sections) { section in
+                sectionView(section)
             }
         }
         .background(.backgroundsPrimary)
+        .navigationTitle(T.Settings.settings)
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             presenter.viewWillAppear()
         }

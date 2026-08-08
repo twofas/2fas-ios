@@ -25,22 +25,16 @@ struct AboutView: View {
     var presenter: AboutPresenter
 
     var body: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: T.Settings.about,
-                showsBackButton: presenter.showsBackButton,
-                onBack: presenter.showsBackButton ? presenter.handleBack : nil
-            )
-
-            TFListScreen {
-                ForEach(presenter.sections) { section in
-                    sectionView(section)
-                }
-
-                versionFooter()
+        TFListScreen {
+            ForEach(presenter.sections) { section in
+                sectionView(section)
             }
+
+            versionFooter()
         }
         .background(.backgroundsPrimary)
+        .navigationTitle(T.Settings.about)
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             presenter.viewWillAppear()
         }

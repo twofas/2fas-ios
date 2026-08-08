@@ -44,12 +44,6 @@ extension MainRepositoryImpl {
         _plusButtonRect = rect
     }
 
-    var inCompact: Bool { _inCompact }
-
-    func saveInCompact(_ value: Bool) {
-        _inCompact = value
-    }
-
     var isAddingServiceVisible: Bool { _isAddingServiceVisible }
 
     func saveIsAddingServiceVisible(_ value: Bool) {

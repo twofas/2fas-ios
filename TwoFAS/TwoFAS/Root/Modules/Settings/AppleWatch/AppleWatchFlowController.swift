@@ -32,13 +32,12 @@ protocol AppleWatchFlowControlling: AnyObject {
 
 final class AppleWatchFlowController: FlowController {
     private weak var parent: AppleWatchFlowControllerParent?
-    private weak var navigationController: UINavigationController?
 
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: AppleWatchFlowControllerParent
     ) {
-        let hosting = makeHosting(parent: parent, navigationController: navigationController, showsBackButton: false)
+        let hosting = makeHosting(parent: parent)
         navigationController.setViewControllers([hosting], animated: false)
     }
 
@@ -46,22 +45,18 @@ final class AppleWatchFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: AppleWatchFlowControllerParent
     ) {
-        let hosting = makeHosting(parent: parent, navigationController: navigationController, showsBackButton: true)
+        let hosting = makeHosting(parent: parent)
         navigationController.pushRootViewController(hosting, animated: true)
     }
 
     private static func makeHosting(
-        parent: AppleWatchFlowControllerParent,
-        navigationController: UINavigationController,
-        showsBackButton: Bool
+        parent: AppleWatchFlowControllerParent
     ) -> UIHostingController<AnyView> {
         let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.title = T.Settings.appleWatch
         let flowController = AppleWatchFlowController(viewController: hosting)
         flowController.parent = parent
-        flowController.navigationController = navigationController
         let presenter = AppleWatchPresenter(flowController: flowController)
-        presenter.showsBackButton = showsBackButton
         hosting.rootView = AnyView(AppleWatchView(presenter: presenter))
         return hosting
     }

@@ -66,5 +66,6 @@ struct SyncMigrationToNewestVersionView: View {
                 }
             }
         }
+        .navigationBarHidden(true)
     }
 }

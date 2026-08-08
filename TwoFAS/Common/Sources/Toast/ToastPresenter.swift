@@ -94,11 +94,14 @@ public final class ToastPresenter {
         let toastViewController = UIHostingController(rootView: toastView)
         toastViewController.view.backgroundColor = .clear
         
-        let toastSize = toastViewController.sizeThatFits(in: UIScreen.main.bounds.size)
-        window.frame = CGRect(x: 0, y: 0, width: toastSize.width, height: toastSize.height)
-        window.center.x = UIScreen.main.bounds.width / 2.0
-        window.windowLevel = windowLevel
         window.windowScene = UIApplication.shared.activeWindowScene
+        let containerBounds = window.windowScene?.coordinateSpace.bounds
+            ?? window.windowScene?.screen.bounds
+            ?? .zero
+        let toastSize = toastViewController.sizeThatFits(in: containerBounds.size)
+        window.frame = CGRect(x: 0, y: 0, width: toastSize.width, height: toastSize.height)
+        window.center.x = containerBounds.width / 2.0
+        window.windowLevel = windowLevel
         
         window.rootViewController = toastViewController
         window.isHidden = false

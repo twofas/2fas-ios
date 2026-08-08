@@ -44,6 +44,7 @@ struct WidgetWarning: View {
             TFButton(T.Commons.continue, variant: .borderedProminent, size: .large, action: action)
             TFButton(T.Commons.cancel, variant: .borderless, size: .large, action: cancel)
         }
+        .navigationBarHidden(true)
     }
 }
 

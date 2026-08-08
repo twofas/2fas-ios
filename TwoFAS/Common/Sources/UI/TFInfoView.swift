@@ -58,7 +58,6 @@ public struct TFInfoView<VImage: View, VTexts: View, VButtons: View>: View {
                 .frame(maxWidth: .infinity, alignment: .bottom)
             }
         }
-        .navigationBarHidden(true)
         .background(background)
     }
 }

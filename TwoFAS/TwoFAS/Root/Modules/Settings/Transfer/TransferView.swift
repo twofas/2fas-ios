@@ -25,30 +25,25 @@ struct TransferView: View {
     var presenter: TransferPresenter
 
     var body: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: T.Settings.transfer,
-                showsBackButton: presenter.showsBackButton,
-                onBack: presenter.showsBackButton ? presenter.handleBack : nil
-            ) {
-                if presenter.isExporting {
-                    ProgressView()
-                        .padding(.trailing, .S)
-                }
-            }
-
-            TFListScreen {
-                ForEach(presenter.sections) { section in
-                    sectionView(section)
-                }
+        TFListScreen {
+            ForEach(presenter.sections) { section in
+                sectionView(section)
             }
         }
         .background(.backgroundsPrimary)
         .allowsHitTesting(!presenter.isLocked)
+        .navigationTitle(T.Settings.transfer)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if presenter.isExporting {
+                ToolbarItem(placement: .topBarTrailing) {
+                    ProgressView()
+                }
+            }
+        }
         .onAppear {
             presenter.viewWillAppear()
         }
-        .toolbarVisibility(.hidden, for: .navigationBar)
     }
 
     @ViewBuilder

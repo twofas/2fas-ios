@@ -34,22 +34,20 @@ protocol BackupManageEncryptionFlowControlling: AnyObject {
 
 final class BackupManageEncryptionFlowController: FlowController {
     private weak var parent: BackupManageEncryptionFlowControllerParent?
-    private weak var navigationController: UINavigationController?
+    private var navigationController: UINavigationController? { _viewController?.navigationController }
 
     static func push(
         in navigationController: UINavigationController,
         parent: BackupManageEncryptionFlowControllerParent
     ) {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.hidesBottomBarWhenPushed = false
         let flowController = BackupManageEncryptionFlowController(viewController: hosting)
         flowController.parent = parent
-        flowController.navigationController = navigationController
         let presenter = BackupManageEncryptionPresenter(
             flowController: flowController,
             interactor: ModuleInteractorFactory
                 .shared.backupManageEncryptionModuleInteractor())
-        presenter.showsBackButton = true
         hosting.rootView = AnyView(BackupManageEncryptionView(presenter: presenter))
 
         navigationController.pushViewController(hosting, animated: true)

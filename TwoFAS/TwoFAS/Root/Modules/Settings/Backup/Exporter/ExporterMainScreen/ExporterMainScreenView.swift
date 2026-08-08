@@ -57,5 +57,6 @@ struct ExporterMainScreenView: View {
                 presenter.handleClose()
             }
         }
+        .navigationBarHidden(true)
     }
 }

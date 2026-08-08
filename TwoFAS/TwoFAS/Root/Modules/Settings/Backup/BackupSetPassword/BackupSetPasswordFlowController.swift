@@ -42,7 +42,7 @@ final class BackupSetPasswordFlowController: FlowController {
         parent: BackupSetPasswordFlowControllerParent,
         flowType: BackupSetPasswordType
     ) {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         let flowController = BackupSetPasswordFlowController(viewController: hosting)
         flowController.parent = parent
         let presenter = BackupSetPasswordPresenter(
@@ -50,10 +50,11 @@ final class BackupSetPasswordFlowController: FlowController {
             interactor: ModuleInteractorFactory.shared.backupSetPasswordModuleInteractor(),
             flowType: flowType
         )
-        hosting.rootView = AnyView(BackupSetPasswordView(presenter: presenter))
+        hosting.rootView = AnyView(BackupSetPasswordView(presenter: presenter, isModalRoot: true))
 
-        hosting.configureAsModal()
-        viewController.present(hosting, animated: true)
+        let navi = CommonNavigationController(rootViewController: hosting)
+        navi.configureAsModal()
+        viewController.present(navi, animated: true)
     }
 
     static func push(
@@ -70,7 +71,7 @@ final class BackupSetPasswordFlowController: FlowController {
             interactor: ModuleInteractorFactory.shared.backupSetPasswordModuleInteractor(),
             flowType: flowType
         )
-        hosting.rootView = AnyView(BackupSetPasswordView(presenter: presenter))
+        hosting.rootView = AnyView(BackupSetPasswordView(presenter: presenter, isModalRoot: false))
 
         navigationController.pushViewController(hosting, animated: true)
     }

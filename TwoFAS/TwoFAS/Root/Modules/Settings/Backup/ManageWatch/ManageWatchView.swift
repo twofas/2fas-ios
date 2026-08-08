@@ -25,21 +25,23 @@ struct ManageWatchView: View {
     var presenter: ManageWatchPresenter
 
     var body: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: T.Backup.managePairedWatchesTitleShort,
-                leadingSymbol: .close,
-                onLeadingTap: presenter.onClose
-            ) {
-                TFLiquidGlassSymbolButton(symbol: .add) {
+        content
+        .background(.backgroundsPrimaryElevated)
+        .navigationTitle(T.Backup.managePairedWatchesTitleShort)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(T.Commons.close) { presenter.onClose() }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
                     presenter.onPairWatch()
+                } label: {
+                    Image(systemName: "plus")
                 }
                 .accessibilityLabel(T.Commons.add)
             }
-
-            content
         }
-        .background(.backgroundsPrimaryElevated)
         .onAppear {
             presenter.onAppear()
         }

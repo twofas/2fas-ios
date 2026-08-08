@@ -26,7 +26,6 @@ struct ExternalImportInstructionsView: View {
     let info: String
 
     let action: Callback
-    let cancel: Callback
 
     let actionName: String
     let secondaryActionName: String?
@@ -57,9 +56,8 @@ struct ExternalImportInstructionsView: View {
             if let secondaryAction, let secondaryActionName {
                 TFButton(secondaryActionName, variant: .bordered, size: .large, action: secondaryAction)
             }
-
-            TFButton(T.Commons.cancel, variant: .borderless, size: .large, action: cancel)
         }
-        .toolbarVisibility(.hidden, for: .navigationBar)
+        .navigationTitle(sourceName)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

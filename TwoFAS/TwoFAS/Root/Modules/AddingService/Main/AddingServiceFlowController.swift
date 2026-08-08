@@ -498,6 +498,15 @@ private final class DimmingPresentationController: UIPresentationController {
 
     override var shouldRemovePresentersView: Bool { false }
 
+    override var frameOfPresentedViewInContainerView: CGRect {
+        containerView?.bounds ?? super.frameOfPresentedViewInContainerView
+    }
+
+    override func containerViewWillLayoutSubviews() {
+        super.containerViewWillLayoutSubviews()
+        presentedView?.frame = frameOfPresentedViewInContainerView
+    }
+
     override func presentationTransitionWillBegin() {
         super.presentationTransitionWillBegin()
         guard let container = containerView else { return }

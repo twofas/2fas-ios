@@ -22,7 +22,6 @@ import Foundation
 @Observable
 final class BackupAdvancedPresenter {
     var sections: [BackupAdvancedSection] = []
-    var showsBackButton: Bool = true
 
     private let flowController: BackupAdvancedFlowControlling
     let interactor: BackupAdvancedModuleInteracting

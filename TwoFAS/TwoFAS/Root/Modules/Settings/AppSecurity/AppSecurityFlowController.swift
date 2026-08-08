@@ -43,15 +43,13 @@ final class AppSecurityFlowController: FlowController {
     }
 
     private weak var parent: AppSecurityFlowControllerParent?
-    private weak var navigationController: UINavigationController?
     fileprivate weak var presenter: AppSecurityPresenter?
 
     static func showAsRoot(
         in navigationController: UINavigationController,
         parent: AppSecurityFlowControllerParent
     ) {
-        let (hosting, flowController) = create(parent: parent, showsBackButton: false)
-        flowController.navigationController = navigationController
+        let (hosting, flowController) = create(parent: parent)
         navigationController.setViewControllers([hosting], animated: false)
         flowController.presenter?.viewDidLoad()
     }
@@ -60,17 +58,15 @@ final class AppSecurityFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: AppSecurityFlowControllerParent
     ) {
-        let (hosting, flowController) = create(parent: parent, showsBackButton: true)
-        flowController.navigationController = navigationController
+        let (hosting, flowController) = create(parent: parent)
         navigationController.pushRootViewController(hosting, animated: true)
         flowController.presenter?.viewDidLoad()
     }
 
     private static func create(
-        parent: AppSecurityFlowControllerParent,
-        showsBackButton: Bool
+        parent: AppSecurityFlowControllerParent
     ) -> (UIViewController, AppSecurityFlowController) {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.hidesBottomBarWhenPushed = false
         let flowController = AppSecurityFlowController(viewController: hosting)
         flowController.parent = parent
@@ -79,7 +75,6 @@ final class AppSecurityFlowController: FlowController {
             flowController: flowController,
             interactor: interactor
         )
-        presenter.showsBackButton = showsBackButton
         flowController.presenter = presenter
         hosting.rootView = AnyView(AppSecurityView(presenter: presenter))
         return (hosting, flowController)

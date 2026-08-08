@@ -26,11 +26,24 @@ struct VerifyPINView: View {
 
     var body: some View {
         PINEntryScreen(
-            title: T.Backup.verifyPin,
-            leadingSymbol: presenter.leadingSymbol,
-            onLeadingTap: { presenter.handleCancel() },
             presenter: presenter,
             onAppear: { presenter.viewWillAppear() }
         )
+        .navigationTitle(T.Backup.verifyPin)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button { presenter.handleCancel() } label: {
+                    Image(systemName: leadingImageName)
+                }
+            }
+        }
+    }
+
+    private var leadingImageName: String {
+        switch presenter.leadingSymbol {
+        case .back: return "chevron.backward"
+        default: return "xmark"
+        }
     }
 }

@@ -41,23 +41,21 @@ protocol BackupAdvancedFlowControlling: AnyObject {
 
 final class BackupAdvancedFlowController: FlowController {
     private weak var parent: BackupAdvancedFlowControllerParent?
-    private weak var navigationController: UINavigationController?
+    private var navigationController: UINavigationController? { _viewController?.navigationController }
     private var importKeysPickerDelegateHandler: BackupAdvancedImportKeysDocumentPickerDelegate?
 
     static func push(
         in navigationController: UINavigationController,
         parent: BackupAdvancedFlowControllerParent
     ) {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.hidesBottomBarWhenPushed = false
         let flowController = BackupAdvancedFlowController(viewController: hosting)
         flowController.parent = parent
-        flowController.navigationController = navigationController
         let presenter = BackupAdvancedPresenter(
             flowController: flowController,
             interactor: ModuleInteractorFactory.shared.backupAdvancedModuleInteractor()
         )
-        presenter.showsBackButton = true
         hosting.rootView = AnyView(BackupAdvancedView(presenter: presenter))
 
         navigationController.pushViewController(hosting, animated: true)

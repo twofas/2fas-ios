@@ -52,6 +52,7 @@ struct SelectFromGalleryAdvice: View {
                 action: action
             )
         }
+        .navigationBarHidden(true)
     }
 }
 

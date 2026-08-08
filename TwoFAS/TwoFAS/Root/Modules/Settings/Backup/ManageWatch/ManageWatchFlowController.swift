@@ -52,8 +52,11 @@ final class ManageWatchFlowController: FlowController {
         hosting.rootView = AnyView(ManageWatchView(presenter: presenter))
         hosting.view.backgroundColor = AppColor.backgroundsTertiary.uiColor
 
-        hosting.configureAsModal()
-        viewController.present(hosting, animated: true)
+        // Wrap in a navigation controller so the modal shows a native bar
+        // (title + Close/Add bar buttons); pushed steps get a native back.
+        let navi = CommonNavigationController(rootViewController: hosting)
+        navi.configureAsModal()
+        viewController.present(navi, animated: true)
     }
 }
 

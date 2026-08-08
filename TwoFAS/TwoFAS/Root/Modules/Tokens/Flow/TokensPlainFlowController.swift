@@ -62,27 +62,21 @@ protocol TokensPlainFlowControlling: AnyObject {
     func toAllServicesRemoved(completion: @escaping Callback)
 }
 
-final class TokensPlainFlowController: FlowController, TokensNavigationFlowControllerParent {
+final class TokensPlainFlowController: FlowController {
     private weak var parent: TokensPlainFlowControllerParent?
-    private weak var mainSplitViewController: MainSplitViewController?
+    // The presentation host for modals/alerts: the main tab-bar container. Only
+    // UIViewController API is used, so the concrete container type is irrelevant.
+    private weak var presentationHost: UIViewController?
     private var galleryViewController: UIViewController?
 
-    static func showAsTab(
-        viewController: TokensViewController,
-        in navigationController: UINavigationController
-    ) {
-        navigationController.setViewControllers([viewController], animated: false)
-        navigationController.setNavigationBarHidden(false, animated: false)
-    }
-    
     static func setup(
-        mainSplitViewController: MainSplitViewController,
+        presentationHost: UIViewController,
         parent: TokensPlainFlowControllerParent
     ) -> TokensViewController {
         let view = TokensViewController()
         let flowController = TokensPlainFlowController(viewController: view)
         flowController.parent = parent
-        flowController.mainSplitViewController = mainSplitViewController
+        flowController.presentationHost = presentationHost
         let interactor = ModuleInteractorFactory.shared.tokensModuleInteractor()
         let presenter = TokensPresenter(
             flowController: flowController,
@@ -94,23 +88,16 @@ final class TokensPlainFlowController: FlowController, TokensNavigationFlowContr
         return view
     }
     
-    static func showAsRoot(
-        viewController: TokensViewController,
-        in navigationController: ContentNavigationController
-    ) {
-        navigationController.setRootViewController(viewController)
-    }
-    
     private func presentAlertOnMainSplitViewController(_ alert: UIAlertController) {
-        guard let mainSplitViewController else { return }
+        guard let presentationHost else { return }
 
-        if AddingServiceFlowController.isPresented(on: mainSplitViewController),
-           let presentedViewController = mainSplitViewController.presentedViewController {
+        if AddingServiceFlowController.isPresented(on: presentationHost),
+           let presentedViewController = presentationHost.presentedViewController {
             presentedViewController.dismiss(animated: true) {
-                mainSplitViewController.present(alert, animated: true)
+                presentationHost.present(alert, animated: true)
             }
         } else {
-            mainSplitViewController.present(alert, animated: true)
+            presentationHost.present(alert, animated: true)
         }
     }
 }
@@ -119,19 +106,19 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     // MARK: - Service
     
     func toAddService() {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
-        AddingServiceFlowController.present(on: mainSplitViewController, parent: self)
+        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
+        AddingServiceFlowController.present(on: presentationHost, parent: self)
     }
     
     func toDeleteService(serviceData: ServiceData) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
-        TrashServiceFlowController.present(on: mainSplitViewController, parent: self, serviceData: serviceData)
+        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
+        TrashServiceFlowController.present(on: presentationHost, parent: self, serviceData: serviceData)
     }
     
     func toShowEditingService(with serviceData: ServiceData, freshlyAdded: Bool = false, gotoIconEdit: Bool = false) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
         ComposeServiceNavigationFlowController.present(
-            on: mainSplitViewController,
+            on: presentationHost,
             parent: self,
             serviceData: serviceData,
             gotoIconEdit: gotoIconEdit,
@@ -140,10 +127,10 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     }
     
     func toServiceWasCreated(_ serviceData: ServiceData) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
         
         FirstCodeAddedStatsController.markStats() // TODO: Move to MainRepository and proper interactor
-        AddingServiceTokenFlowController.present(on: mainSplitViewController, parent: self, serviceData: serviceData)
+        AddingServiceTokenFlowController.present(on: presentationHost, parent: self, serviceData: serviceData)
     }
     
     // MARK: - Section
@@ -160,7 +147,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     }
     
     func toCreateSection(_ callback: @escaping (String) -> Void) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
         let alert = AlertControllerPromptFactory.create(
             title: T.Tokens.addGroup,
             message: T.Tokens.groupName,
@@ -175,11 +162,11 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
                 ServiceRules.isSectionNameValid(sectionName: sectionName.trim())
             })
         
-        mainSplitViewController.present(alert, animated: true, completion: nil)
+        presentationHost.present(alert, animated: true, completion: nil)
     }
     
     func toRenameSection(current name: String, callback: @escaping (String) -> Void) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
         let alert = AlertControllerPromptFactory.create(
             title: T.Commons.rename,
             message: T.Tokens.groupName,
@@ -194,14 +181,14 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
                 ServiceRules.isSectionNameValid(sectionName: sectionName.trim())
             })
         
-        mainSplitViewController.present(alert, animated: true, completion: nil)
+        presentationHost.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Camera
     
     func toShowCamera() {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
-        CameraScannerNavigationFlowController.present(on: mainSplitViewController, parent: self)
+        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
+        CameraScannerNavigationFlowController.present(on: presentationHost, parent: self)
     }
     
     func toCameraNotAvailable() {
@@ -216,9 +203,9 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     }
     
     func toShowGallery() {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
         galleryViewController = SelectFromGalleryFlowController.present(
-            on: mainSplitViewController,
+            on: presentationHost,
             applyOverlay: true,
             parent: self
         )
@@ -280,7 +267,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     }
     
     func toShouldRenameService(currentName: String, secret: String) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
         let alert = AlertControllerPromptFactory.create(
             title: T.Tokens.enterServiceName,
             message: nil,
@@ -296,12 +283,19 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
             }
         )
         
-        mainSplitViewController.present(alert, animated: true)
+        presentationHost.present(alert, animated: true)
     }
     
     // MARK: - Notifications
     func toNotifications() {
-        NewsPlainFlowController.present(on: viewController, parent: self)
+        // Present on the top-most controller in the window so it works regardless
+        // of which container hosts the tokens screen (legacy split or tab bar).
+        let host: UIViewController = presentationHost ?? viewController
+        var top: UIViewController = host
+        while let presented = top.presentedViewController {
+            top = presented
+        }
+        NewsPlainFlowController.present(on: top, parent: self)
     }
     
     // MARK: - Import
@@ -333,7 +327,7 @@ extension TokensPlainFlowController {
 
 private extension TokensPlainFlowController {
     func dismiss(actions: Set<TokensExternalAction> = [.finishedFlow], completion: Callback? = nil) {
-        mainSplitViewController?.dismiss(animated: true) { [weak self] in
+        presentationHost?.dismiss(animated: true) { [weak self] in
             if actions.contains(.refreshImmidiately) {
                 self?.viewController.presenter.handleExternalAction(actions)
                 completion?()
@@ -418,7 +412,7 @@ extension TokensPlainFlowController: ComposeServiceNavigationFlowControllerParen
                 with: T.Commons.info,
                 message: T.Notifications.serviceAlreadyModifiedTitle
             )
-            self?.mainSplitViewController?.present(alert, animated: true)
+            self?.presentationHost?.present(alert, animated: true)
         }
     }
     
@@ -428,7 +422,7 @@ extension TokensPlainFlowController: ComposeServiceNavigationFlowControllerParen
                 with: T.Commons.info,
                 message: T.Notifications.serviceAlreadyRemovedTitle
             )
-            self?.mainSplitViewController?.present(alert, animated: true)
+            self?.presentationHost?.present(alert, animated: true)
         }
     }
 }
@@ -478,7 +472,7 @@ extension TokensPlainFlowController: AddingServiceFlowControllerParent {
 
 private extension TokensPlainFlowController {
     func showGoogleAuthSummary(importable: Int, total: Int, codes: [Code]) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
         
         let google = CameraGoogleAuth(
             importedCount: importable,
@@ -496,11 +490,11 @@ private extension TokensPlainFlowController {
         let vc = UIHostingController(rootView: google)
         vc.view.backgroundColor = .clear
         vc.configureAsModal()
-        mainSplitViewController.present(vc, animated: true, completion: nil)
+        presentationHost.present(vc, animated: true, completion: nil)
     }
     
     func showLastPassSummary(importable: Int, total: Int, codes: [Code]) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
         
         let lastPass = CameraLastPass(
             importedCount: importable,
@@ -518,36 +512,36 @@ private extension TokensPlainFlowController {
         let vc = UIHostingController(rootView: lastPass)
         vc.view.backgroundColor = .clear
         vc.configureAsModal()
-        mainSplitViewController.present(vc, animated: true, completion: nil)
+        presentationHost.present(vc, animated: true, completion: nil)
     }
     
     func showPushPermission(for extensionID: ExtensionID) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
         PushNotificationPermissionNavigationFlowController.show(
-            on: mainSplitViewController,
+            on: presentationHost,
             parent: self,
             extensionID: extensionID
         )
     }
     
     func showWebPairing(for extensionID: ExtensionID) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
         BrowserExtensionPairingNavigationFlowController.show(
-            on: mainSplitViewController,
+            on: presentationHost,
             parent: self,
             extensionID: extensionID
         )
     }
     
     func showSummary(count: Int) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
+        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
         let alert = AlertControllerDismissFlow(
             title: T.Backup.importCompletedSuccessfuly,
             message: T.Backup.servicesImportedCount(count),
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
-        mainSplitViewController.present(alert, animated: true)
+        presentationHost.present(alert, animated: true)
     }
 }
 

@@ -86,7 +86,9 @@ final class SettingsMenuFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: SettingsMenuFlowControllerParent
     ) -> (flow: SettingsMenuFlowControllerChild, view: UIViewController) {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        // Native navigation chrome: the settings list shows a native title bar
+        // (the bar is never hidden).
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.hidesBottomBarWhenPushed = false
         let flowController = SettingsMenuFlowController(viewController: hosting)
         flowController.parent = parent

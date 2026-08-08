@@ -22,7 +22,6 @@ import UIKit
 @Observable
 final class AboutPresenter {
     var sections: [AboutSection] = []
-    var showsBackButton: Bool = true
     var isGenerateLogsAlertPresented: Bool = false
     var isGeneratingLogs: Bool = false
 

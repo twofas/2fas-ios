@@ -22,7 +22,6 @@ import UIKit
 @Observable
 final class AppearancePresenter {
     var sections: [AppearanceSection] = []
-    var showsBackButton: Bool = true
 
     private let flowController: AppearanceFlowControlling
     let interactor: AppearanceModuleInteracting

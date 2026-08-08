@@ -336,21 +336,6 @@ final class ModuleInteractorFactory {
         )
     }
     
-    func mainSplitModuleInteractor() -> MainSplitModuleInteracting {
-        MainSplitModuleInteractor(
-            viewPathInteractor: InteractorFactory.shared.viewPathInteractor(),
-            linkInteractor: InteractorFactory.shared.linkInteractor(),
-            appearanceInteractor: InteractorFactory.shared.appearanceInteractor(),
-            appStateInteractor: InteractorFactory.shared.appStateInteractor()
-        )
-    }
-
-    func mainTabModuleInteractor() -> MainTabModuleInteracting {
-        MainTabModuleInteractor(
-            appStateInteractor: InteractorFactory.shared.appStateInteractor()
-        )
-    }
-    
     func appearanceModuleInteractor() -> AppearanceModuleInteracting {
         AppearanceModuleInteractor(appearanceInteractor: InteractorFactory.shared.appearanceInteractor())
     }

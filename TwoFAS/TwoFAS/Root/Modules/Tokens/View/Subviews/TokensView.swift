@@ -21,18 +21,28 @@ import UIKit
 import Common
 
 final class TokensView: UICollectionView {
+    private var lastLayoutWidth: CGFloat = 0
+
     override var isEditing: Bool {
         get {
             super.isEditing
         }
-        
+
         set {
             guard newValue != super.isEditing else { return }
             super.isEditing = newValue
             reloadHeaders()
         }
     }
-    
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if bounds.width != lastLayoutWidth {
+            lastLayoutWidth = bounds.width
+            collectionViewLayout.invalidateLayout()
+        }
+    }
+
     func configure() {
         backgroundColor = AppColor.backgroundsPrimary.uiColor
         register(TokensTOTPCell.self, forCellWithReuseIdentifier: TokensTOTPCell.reuseIdentifier)

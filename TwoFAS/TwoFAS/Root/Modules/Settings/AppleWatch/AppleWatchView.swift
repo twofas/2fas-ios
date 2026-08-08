@@ -34,14 +34,7 @@ struct AppleWatchView: View {
     }
 
     var body: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: T.Settings.appleWatch,
-                showsBackButton: presenter.showsBackButton,
-                onBack: presenter.showsBackButton ? presenter.handleBack : nil
-            )
-
-            ScrollView {
+        ScrollView {
                 VStack(spacing: .XXL) {
                     Image(systemName: "lock.applewatch")
                         .textStyle(.iconLarge)
@@ -72,9 +65,9 @@ struct AppleWatchView: View {
                 .padding(.horizontal, .XL)
                 .padding(.bottom, .XL)
             }
-        }
         .background(.backgroundsPrimary)
-        .toolbarVisibility(.hidden, for: .navigationBar)
+        .navigationTitle(T.Settings.appleWatch)
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     private func icon(for stepNumber: Int) -> TFInstructionCardIcon {

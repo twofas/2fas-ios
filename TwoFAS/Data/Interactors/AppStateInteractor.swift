@@ -40,9 +40,6 @@ public protocol AppStateInteracting: AnyObject {
     var plusButtonRect: CGRect? { get }
     func savePlusButtonRect(_ rect: CGRect?)
 
-    var inCompact: Bool { get }
-    func saveInCompact(_ value: Bool)
-
     var isAddingServiceVisible: Bool { get }
     func saveIsAddingServiceVisible(_ value: Bool)
 }
@@ -105,12 +102,6 @@ extension AppStateInteractor: AppStateInteracting {
 
     func savePlusButtonRect(_ rect: CGRect?) {
         mainRepository.savePlusButtonRect(rect)
-    }
-
-    var inCompact: Bool { mainRepository.inCompact }
-
-    func saveInCompact(_ value: Bool) {
-        mainRepository.saveInCompact(value)
     }
 
     var isAddingServiceVisible: Bool { mainRepository.isAddingServiceVisible }

@@ -22,7 +22,6 @@ import UIKit
 @Observable
 final class TransferPresenter {
     var sections: [TransferSection] = []
-    var showsBackButton: Bool = true
     var isExporting: Bool = false
     var isLocked: Bool = false
 

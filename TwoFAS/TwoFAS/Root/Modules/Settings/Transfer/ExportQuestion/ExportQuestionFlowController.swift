@@ -34,8 +34,8 @@ final class ExportQuestionFlowController: ObservableObject {
     private weak var navigationController: UINavigationController?
     private var exportType: ExportQuestionType?
     
-    static func present(
-        on viewController: UIViewController,
+    static func push(
+        in navigationController: UINavigationController,
         parent: ExportQuestionFlowControllerParent,
         exportType: ExportQuestionType
     ) {
@@ -43,21 +43,16 @@ final class ExportQuestionFlowController: ObservableObject {
         let presenter = ExportQuestionPresenter(
             flowController: flowController
         )
-        let hosting = NavigationBarHiddenHostingController(
+        let hosting = UIHostingController(
             rootView: AnyView(ExportQuestionView(presenter: presenter, exportType: exportType))
         )
         hosting.title = T.Settings.exportTitleTokens
 
-        let navController = CommonNavigationController(rootViewController: hosting)
-        navController.isNavigationBarHidden = true
-
         flowController.parent = parent
-        flowController.navigationController = navController
+        flowController.navigationController = navigationController
         flowController.exportType = exportType
 
-        navController.configureAsPhoneFullscreenModal()
-
-        viewController.present(navController, animated: true, completion: nil)
+        navigationController.pushViewController(hosting, animated: true)
     }
 }
 

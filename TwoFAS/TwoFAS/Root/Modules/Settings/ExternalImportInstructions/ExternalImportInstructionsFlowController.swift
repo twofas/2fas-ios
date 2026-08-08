@@ -17,7 +17,6 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
 import SwiftUI
 import Common
 
@@ -39,17 +38,15 @@ protocol ExternalImportInstructionsFlowControlling: AnyObject {
 
 final class ExternalImportInstructionsFlowController: FlowController {
     private weak var parent: ExternalImportInstructionsFlowControllerParent?
-    private weak var navigationController: UINavigationController?
-    
+
     static func push(
         in navigationController: UINavigationController,
         parent: ExternalImportInstructionsFlowControllerParent,
         service: ExternalImportService
     ) {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         let flowController = ExternalImportInstructionsFlowController(viewController: hosting)
         flowController.parent = parent
-        flowController.navigationController = navigationController
         let presenter = ExternalImportInstructionsPresenter(
             flowController: flowController,
             service: service
@@ -61,12 +58,12 @@ final class ExternalImportInstructionsFlowController: FlowController {
                 sourceName: presenter.sourceName,
                 info: presenter.info,
                 action: presenter.handleAction,
-                cancel: presenter.handleCancel,
                 actionName: presenter.actionName,
                 secondaryActionName: presenter.secondaryActionName,
                 secondaryAction: secondaryAction
             )
         )
+        hosting.view.backgroundColor = AppColor.backgroundsPrimary.uiColor
 
         navigationController.pushViewController(hosting, animated: true)
     }

@@ -75,6 +75,7 @@ struct ImporterPreimportSummaryView: View {
                 }
             }
         }
+        .navigationBarHidden(true)
     }
 
     private var secondaryText: String {

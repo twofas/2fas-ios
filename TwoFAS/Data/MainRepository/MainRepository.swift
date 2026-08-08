@@ -131,9 +131,6 @@ protocol MainRepository: AnyObject {
     var plusButtonRect: CGRect? { get }
     func savePlusButtonRect(_ rect: CGRect?)
 
-    var inCompact: Bool { get }
-    func saveInCompact(_ value: Bool)
-
     func copy(_ str: String)
     
     var isAddingServiceVisible: Bool { get }
@@ -254,6 +251,30 @@ protocol MainRepository: AnyObject {
         source: ServiceSource,
         sectionID: SectionID?
     )
+    #if DEV
+    /// Adds a service without triggering a cloud sync. Used by debug bulk generation
+    /// to avoid firing one availability check + cache purge per inserted service.
+    func addServiceWithoutSync(
+        name: String,
+        secret: String,
+        serviceTypeID: ServiceTypeID?,
+        additionalInfo: String?,
+        rawIssuer: String?,
+        otpAuth: String?,
+        tokenPeriod: Period?,
+        tokenLength: Digits,
+        badgeColor: TintColor?,
+        iconType: IconType,
+        iconTypeID: IconTypeID,
+        labelColor: TintColor,
+        labelTitle: String,
+        algorithm: Algorithm,
+        counter: Int?,
+        tokenType: TokenType,
+        source: ServiceSource,
+        sectionID: SectionID?
+    )
+    #endif
     func updateService(
         _ serviceData: ServiceData,
         name: String,

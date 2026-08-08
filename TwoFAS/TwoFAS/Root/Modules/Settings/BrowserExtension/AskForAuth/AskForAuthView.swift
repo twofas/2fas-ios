@@ -54,6 +54,7 @@ struct AskForAuthView: View {
                 cancel()
             }
         }
+        .navigationBarHidden(true)
     }
 }
 

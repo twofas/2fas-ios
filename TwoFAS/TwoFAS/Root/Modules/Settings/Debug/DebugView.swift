@@ -37,18 +37,13 @@ struct DebugView: View {
 
     @ViewBuilder
     private var content: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: "Debug",
-                showsBackButton: presenter.showsBackButton,
-                onBack: presenter.handleBack
-            )
-            TFListScreen {
-                stateSections
-                actionsSection
-                generatorSection
-            }
+        TFListScreen {
+            stateSections
+            actionsSection
+            generatorSection
         }
+        .navigationTitle("Debug")
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     @ViewBuilder

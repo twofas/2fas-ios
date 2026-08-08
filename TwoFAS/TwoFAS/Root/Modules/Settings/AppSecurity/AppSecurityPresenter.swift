@@ -24,7 +24,6 @@ import Common
 @Observable
 final class AppSecurityPresenter {
     var sections: [AppSecurityMenuSection] = []
-    var showsBackButton: Bool = true
 
     var isBiometryAuthenticationInProgress = false
 

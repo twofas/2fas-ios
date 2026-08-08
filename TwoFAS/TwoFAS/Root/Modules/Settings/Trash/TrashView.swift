@@ -25,13 +25,7 @@ struct TrashView: View {
     var presenter: TrashPresenter
 
     var body: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: T.Settings.trash,
-                showsBackButton: presenter.showsBackButton,
-                onBack: presenter.showsBackButton ? presenter.handleBack : nil
-            )
-
+        Group {
             if presenter.services.isEmpty {
                 emptyState
             } else {
@@ -39,6 +33,8 @@ struct TrashView: View {
             }
         }
         .background(.backgroundsPrimary)
+        .navigationTitle(T.Settings.trash)
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             presenter.viewWillAppear()
         }

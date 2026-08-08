@@ -504,6 +504,7 @@ private extension TokensViewController {
 
         private func setupViews() {
             glassEffectView.translatesAutoresizingMaskIntoConstraints = false
+            glassEffectView.isUserInteractionEnabled = false
             addSubview(glassEffectView)
 
             let cfg = UIImage.SymbolConfiguration(

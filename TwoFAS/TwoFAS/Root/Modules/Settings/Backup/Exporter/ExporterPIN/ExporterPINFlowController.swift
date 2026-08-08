@@ -40,7 +40,7 @@ final class ExporterPINFlowController: FlowController {
         parent: ExporterPINFlowControllerParent,
         password: String?
     ) {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.hidesBottomBarWhenPushed = false
         let flowController = ExporterPINFlowController(viewController: hosting)
         flowController.parent = parent
@@ -52,6 +52,7 @@ final class ExporterPINFlowController: FlowController {
         )
         hosting.rootView = AnyView(ExporterPINView(presenter: presenter))
 
+        navigationController.setNavigationBarHidden(false, animated: false)
         navigationController.pushViewController(hosting, animated: true)
     }
 }

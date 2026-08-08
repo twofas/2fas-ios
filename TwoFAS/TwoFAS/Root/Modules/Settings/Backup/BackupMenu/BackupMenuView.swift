@@ -25,20 +25,14 @@ struct BackupMenuView: View {
     var presenter: BackupMenuPresenter
 
     var body: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: T.Backup._2fasBackup,
-                showsBackButton: presenter.showsBackButton,
-                onBack: presenter.showsBackButton ? presenter.handleBack : nil
-            )
-
-            TFListScreen {
-                ForEach(presenter.sections) { section in
-                    sectionView(section)
-                }
+        TFListScreen {
+            ForEach(presenter.sections) { section in
+                sectionView(section)
             }
         }
         .background(.backgroundsPrimary)
+        .navigationTitle(T.Backup._2fasBackup)
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             presenter.viewWillAppear()
         }

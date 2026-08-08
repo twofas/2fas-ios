@@ -25,27 +25,23 @@ struct BackupManageEncryptionView: View {
     var presenter: BackupManageEncryptionPresenter
 
     var body: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: presenter.title,
-                showsBackButton: presenter.showsBackButton,
-                onBack: presenter.showsBackButton ? presenter.handleBack : nil
-            ) {
-                if presenter.isSyncing {
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .tint(.accentsBrand)
-                        .padding(.trailing, .S)
-                }
-            }
-
-            TFListScreen {
-                ForEach(presenter.sections) { section in
-                    sectionView(section)
-                }
+        TFListScreen {
+            ForEach(presenter.sections) { section in
+                sectionView(section)
             }
         }
         .background(.backgroundsPrimary)
+        .navigationTitle(presenter.title)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if presenter.isSyncing {
+                ToolbarItem(placement: .topBarTrailing) {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .tint(.accentsBrand)
+                }
+            }
+        }
         .onAppear {
             presenter.viewWillAppear()
         }

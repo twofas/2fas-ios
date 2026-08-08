@@ -26,7 +26,10 @@ final class AlertController: UIAlertController {
     private var alertWindow: UIWindow?
 
     func show(animated flag: Bool = true, completion: (() -> Void)? = nil) {
-        guard let windowScene = UIApplication.shared.currentScene else { Log("No active scene"); return }
+        let windowScene = UIApplication.shared.currentScene
+            ?? UIApplication.keyWindow?.windowScene
+            ?? UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first
+        guard let windowScene else { Log("No window scene for alert"); return }
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = UIViewController()
         window.backgroundColor = UIColor.clear

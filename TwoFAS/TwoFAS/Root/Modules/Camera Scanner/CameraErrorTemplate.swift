@@ -65,6 +65,7 @@ struct CameraErrorTemplate: View {
             }
             .isHidden(cancel == nil, remove: true)
         }
+        .navigationBarHidden(true)
     }
 }
 

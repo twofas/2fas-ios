@@ -192,7 +192,7 @@ private final class DebugServiceGenerator {
         let counter: Int? = (tokenType == .hotp) ? Int.random(in: 0...5) : nil
         let secret = randomBase32Secret()
 
-        mainRepository.addService(
+        mainRepository.addServiceWithoutSync(
             name: name,
             secret: secret,
             serviceTypeID: issuer?.serviceTypeID,

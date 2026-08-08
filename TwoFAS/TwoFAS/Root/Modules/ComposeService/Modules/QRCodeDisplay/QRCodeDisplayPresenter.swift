@@ -28,9 +28,14 @@ final class QRCodeDisplayPresenter: ObservableObject {
     private var previousBrightness: CGFloat = 0.0
     private var isVisible = false
     private var brightnessObserver: NSObjectProtocol?
-    
+
+    // The screen showing the QR code, captured while the scene is active so
+    // brightness can be restored even after the app resigns active.
+    private let screen: UIScreen?
+
     init(qrCodeImage: UIImage) {
         self.qrCodeImage = qrCodeImage
+        self.screen = UIApplication.shared.currentScene?.screen
         setupBrightnessObserver()
     }
     
@@ -67,7 +72,7 @@ final class QRCodeDisplayPresenter: ObservableObject {
     // MARK: - Private Methods
     
     private func setupBrightnessObserver() {
-        previousBrightness = UIScreen.main.brightness
+        previousBrightness = screen?.brightness ?? previousBrightness
         brightnessObserver = NotificationCenter.default.addObserver(
             forName: UIApplication.willResignActiveNotification,
             object: nil,
@@ -93,11 +98,11 @@ final class QRCodeDisplayPresenter: ObservableObject {
     }
     
     private func setMaximumBrightness() {
-        previousBrightness = UIScreen.main.brightness
-        UIScreen.main.brightness = 1.0
+        previousBrightness = screen?.brightness ?? previousBrightness
+        screen?.brightness = 1.0
     }
-    
+
     private func restorePreviousBrightness() {
-        UIScreen.main.brightness = previousBrightness
+        screen?.brightness = previousBrightness
     }
 }

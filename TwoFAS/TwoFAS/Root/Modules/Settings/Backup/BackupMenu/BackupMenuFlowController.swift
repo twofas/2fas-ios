@@ -43,7 +43,7 @@ final class BackupMenuFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: BackupMenuFlowControllerParent
     ) {
-        let hosting = create(parent: parent, showsBackButton: false)
+        let hosting = create(parent: parent)
         navigationController.setViewControllers([hosting], animated: false)
     }
 
@@ -51,15 +51,14 @@ final class BackupMenuFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: BackupMenuFlowControllerParent
     ) {
-        let hosting = create(parent: parent, showsBackButton: true)
+        let hosting = create(parent: parent)
         navigationController.pushRootViewController(hosting, animated: true)
     }
 
     private static func create(
-        parent: BackupMenuFlowControllerParent,
-        showsBackButton: Bool
+        parent: BackupMenuFlowControllerParent
     ) -> UIViewController {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.hidesBottomBarWhenPushed = false
         let flowController = BackupMenuFlowController(viewController: hosting)
         flowController.parent = parent
@@ -68,7 +67,6 @@ final class BackupMenuFlowController: FlowController {
             flowController: flowController,
             interactor: interactor
         )
-        presenter.showsBackButton = showsBackButton
         hosting.rootView = AnyView(BackupMenuView(presenter: presenter))
         return hosting
     }

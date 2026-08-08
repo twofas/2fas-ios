@@ -57,5 +57,6 @@ struct BackupDeleteView: View {
 
             TFButton(T.Commons.cancel, variant: .borderless, size: .large, action: cancel)
         }
+        .navigationBarHidden(true)
     }
 }

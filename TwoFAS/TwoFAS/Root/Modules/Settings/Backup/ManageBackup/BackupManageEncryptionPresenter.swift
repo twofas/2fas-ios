@@ -22,7 +22,6 @@ import Foundation
 @Observable
 final class BackupManageEncryptionPresenter {
     var sections: [BackupManageEncryptionSection] = []
-    var showsBackButton: Bool = true
 
     private let flowController: BackupManageEncryptionFlowControlling
     let interactor: BackupManageEncryptionModuleInteracting

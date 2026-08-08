@@ -22,7 +22,6 @@ import UIKit
 @Observable
 final class BackupMenuPresenter {
     var sections: [BackupMenuSection] = []
-    var showsBackButton: Bool = true
 
     private let flowController: BackupMenuFlowControlling
     let interactor: BackupMenuModuleInteracting

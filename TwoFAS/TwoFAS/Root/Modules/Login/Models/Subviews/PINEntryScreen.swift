@@ -38,62 +38,49 @@ extension PINEntryPresenting {
     var isInputDisabled: Bool { false }
 }
 
-/// A reusable full-screen PIN-entry layout: title bar, info text, dots and keyboard.
-/// Screen-specific variations are passed as parameters (title, leading button, footer, onAppear).
+/// A reusable PIN-entry layout: info text, dots, keyboard and an optional footer.
+///
+/// This view is intentionally navigation-bar agnostic — it renders no title bar
+/// and never touches the navigation bar. The hosting view (one level up) is
+/// responsible for the chrome: setting a native `.navigationTitle` and any
+/// leading button (Close/X) via `.toolbar` on its enclosing navigation stack.
 struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
-    private let title: String
-    private let leadingSymbol: TFLiquidGlassSymbolButton.Symbol?
-    private let onLeadingTap: (() -> Void)?
     @Bindable private var presenter: Presenter
     private let onAppear: (() -> Void)?
     private let footer: () -> Footer
 
     init(
-        title: String,
-        leadingSymbol: TFLiquidGlassSymbolButton.Symbol? = .close,
-        onLeadingTap: (() -> Void)? = nil,
         presenter: Presenter,
         onAppear: (() -> Void)? = nil,
         @ViewBuilder footer: @escaping () -> Footer
     ) {
-        self.title = title
-        self.leadingSymbol = leadingSymbol
-        self.onLeadingTap = onLeadingTap
         self._presenter = Bindable(wrappedValue: presenter)
         self.onAppear = onAppear
         self.footer = footer
     }
 
     var body: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: title,
-                leadingSymbol: leadingSymbol,
-                onLeadingTap: onLeadingTap
-            )
+        VStack(spacing: .XL) {
+            Text(presenter.info)
+                .textStyle(.body)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(presenter.isError ? AppColor.accentsBrand : AppColor.labelsSecondary)
+                .animation(.easeInOut, value: presenter.info)
+                .padding(.horizontal, .XL)
 
-            VStack(spacing: .XL) {
-                Text(presenter.info)
-                    .textStyle(.body)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(presenter.isError ? AppColor.accentsBrand : AppColor.labelsSecondary)
-                    .animation(.easeInOut, value: presenter.info)
-                    .padding(.horizontal, .XL)
+            Spacer()
 
-                Spacer()
+            PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
+                .disabled(presenter.isInputDisabled)
+                .shake(on: presenter.shake)
+                .sensoryFeedback(.error, trigger: presenter.shake) { _, new in new }
 
-                PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
-                    .disabled(presenter.isInputDisabled)
-                    .shake(on: presenter.shake)
-                    .sensoryFeedback(.error, trigger: presenter.shake) { _, new in new }
+            PINKeyboard(action: presenter.onKeyPressed)
+                .disabled(presenter.isInputDisabled)
 
-                PINKeyboard(action: presenter.onKeyPressed)
-                    .disabled(presenter.isInputDisabled)
+            Spacer()
 
-                Spacer()
-
-                footer()
-            }
+            footer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(AppColor.backgroundsPrimary)
@@ -103,16 +90,10 @@ struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
 
 extension PINEntryScreen where Footer == EmptyView {
     init(
-        title: String,
-        leadingSymbol: TFLiquidGlassSymbolButton.Symbol? = .close,
-        onLeadingTap: (() -> Void)? = nil,
         presenter: Presenter,
         onAppear: (() -> Void)? = nil
     ) {
         self.init(
-            title: title,
-            leadingSymbol: leadingSymbol,
-            onLeadingTap: onLeadingTap,
             presenter: presenter,
             onAppear: onAppear,
             footer: { EmptyView() }

@@ -144,7 +144,54 @@ extension MainRepositoryImpl {
         logDataChange.logNewServiceAdded(with: result)
         cloudHandler.synchronize()
     }
-    
+
+    #if DEV
+    func addServiceWithoutSync(
+        name: String,
+        secret: String,
+        serviceTypeID: ServiceTypeID?,
+        additionalInfo: String?,
+        rawIssuer: String?,
+        otpAuth: String?,
+        tokenPeriod: Period?,
+        tokenLength: Digits,
+        badgeColor: TintColor?,
+        iconType: IconType,
+        iconTypeID: IconTypeID,
+        labelColor: TintColor,
+        labelTitle: String,
+        algorithm: Algorithm,
+        counter: Int?,
+        tokenType: TokenType,
+        source: ServiceSource,
+        sectionID: SectionID?
+    ) {
+        let result = storageRepository
+            .addService(
+                name: name,
+                secret: secret.uppercased(),
+                serviceTypeID: serviceTypeID,
+                additionalInfo: additionalInfo,
+                rawIssuer: rawIssuer,
+                otpAuth: otpAuth,
+                tokenPeriod: tokenPeriod,
+                tokenLength: tokenLength,
+                badgeColor: badgeColor,
+                iconType: iconType,
+                iconTypeID: iconTypeID,
+                labelColor: labelColor,
+                labelTitle: labelTitle,
+                algorithm: algorithm,
+                counter: counter,
+                tokenType: tokenType,
+                sectionID: sectionID,
+                source: source
+            )
+
+        logDataChange.logNewServiceAdded(with: result)
+    }
+    #endif
+
     func updateService(
         _ serviceData: ServiceData,
         name: String,

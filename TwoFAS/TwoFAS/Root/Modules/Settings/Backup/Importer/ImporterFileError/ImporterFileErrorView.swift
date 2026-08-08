@@ -50,6 +50,7 @@ struct ImporterFileErrorView: View {
         } buttons: {
             TFButton(T.Commons.close, variant: .borderedProminent, size: .large, action: action)
         }
+        .navigationBarHidden(true)
     }
 
     private var title: String {

@@ -32,7 +32,7 @@ final class MainViewController: UIViewController {
     private let settingsEventController = SettingsEventController()
     private let notificationCenter = NotificationCenter.default
         
-    var splitView: MainSplitViewController?
+    var splitView: (any MainNavigating)?
     
     override func viewDidLoad() {
         super.viewDidLoad()

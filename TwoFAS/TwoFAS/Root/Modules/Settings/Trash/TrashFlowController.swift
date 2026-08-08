@@ -37,7 +37,7 @@ final class TrashFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: TrashFlowControllerParent
     ) {
-        let hosting = create(parent: parent, showsBackButton: false)
+        let hosting = create(parent: parent)
         navigationController.setViewControllers([hosting], animated: false)
     }
 
@@ -45,15 +45,14 @@ final class TrashFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: TrashFlowControllerParent
     ) {
-        let hosting = create(parent: parent, showsBackButton: true)
+        let hosting = create(parent: parent)
         navigationController.pushRootViewController(hosting, animated: true)
     }
 
     private static func create(
-        parent: TrashFlowControllerParent,
-        showsBackButton: Bool
+        parent: TrashFlowControllerParent
     ) -> UIViewController {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         let flowController = TrashFlowController(viewController: hosting)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.trashModuleInteractor()
@@ -61,7 +60,6 @@ final class TrashFlowController: FlowController {
             flowController: flowController,
             interactor: interactor
         )
-        presenter.showsBackButton = showsBackButton
         flowController.presenter = presenter
         hosting.rootView = AnyView(TrashView(presenter: presenter))
         return hosting

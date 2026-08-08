@@ -33,7 +33,7 @@ final class AppearanceFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: AppearanceFlowControllerParent
     ) {
-        let hosting = create(parent: parent, showsBackButton: false)
+        let hosting = create(parent: parent)
         navigationController.setViewControllers([hosting], animated: false)
     }
 
@@ -41,15 +41,14 @@ final class AppearanceFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: AppearanceFlowControllerParent
     ) {
-        let hosting = create(parent: parent, showsBackButton: true)
+        let hosting = create(parent: parent)
         navigationController.pushRootViewController(hosting, animated: true)
     }
 
     private static func create(
-        parent: AppearanceFlowControllerParent,
-        showsBackButton: Bool
+        parent: AppearanceFlowControllerParent
     ) -> UIViewController {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.hidesBottomBarWhenPushed = false
         let flowController = AppearanceFlowController(viewController: hosting)
         flowController.parent = parent
@@ -58,7 +57,6 @@ final class AppearanceFlowController: FlowController {
             flowController: flowController,
             interactor: interactor
         )
-        presenter.showsBackButton = showsBackButton
         hosting.rootView = AnyView(AppearanceView(presenter: presenter))
         return hosting
     }

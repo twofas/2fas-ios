@@ -35,7 +35,7 @@ final class DebugFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: DebugFlowControllerParent
     ) {
-        let hosting = create(parent: parent, showsBackButton: false)
+        let hosting = create(parent: parent)
         navigationController.setViewControllers([hosting], animated: false)
     }
 
@@ -43,21 +43,19 @@ final class DebugFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: DebugFlowControllerParent
     ) {
-        let hosting = create(parent: parent, showsBackButton: true)
+        let hosting = create(parent: parent)
         navigationController.pushViewController(hosting, animated: true)
     }
 
     private static func create(
-        parent: DebugFlowControllerParent,
-        showsBackButton: Bool
+        parent: DebugFlowControllerParent
     ) -> UIViewController {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.hidesBottomBarWhenPushed = false
         let flowController = DebugFlowController(viewController: hosting)
         flowController.parent = parent
         let interactor = ModuleInteractorFactory.shared.debugModuleInteractor()
         let presenter = DebugPresenter(flowController: flowController, interactor: interactor)
-        presenter.showsBackButton = showsBackButton
         hosting.rootView = AnyView(DebugView(presenter: presenter))
         return hosting
     }

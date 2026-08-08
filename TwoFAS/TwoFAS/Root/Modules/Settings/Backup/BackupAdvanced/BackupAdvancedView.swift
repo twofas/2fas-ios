@@ -25,25 +25,21 @@ struct BackupAdvancedView: View {
     var presenter: BackupAdvancedPresenter
 
     var body: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: presenter.title,
-                showsBackButton: presenter.showsBackButton,
-                onBack: presenter.showsBackButton ? presenter.handleBack : nil
-            ) {
-                if presenter.isSyncing {
-                    ProgressView()
-                        .padding(.trailing, .S)
-                }
-            }
-
-            TFListScreen {
-                ForEach(presenter.sections) { section in
-                    sectionView(section)
-                }
+        TFListScreen {
+            ForEach(presenter.sections) { section in
+                sectionView(section)
             }
         }
         .background(.backgroundsPrimary)
+        .navigationTitle(presenter.title)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if presenter.isSyncing {
+                ToolbarItem(placement: .topBarTrailing) {
+                    ProgressView()
+                }
+            }
+        }
         .onAppear {
             presenter.viewWillAppear()
         }

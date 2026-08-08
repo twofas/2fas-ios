@@ -27,8 +27,6 @@ final class AppleWatchPresenter {
               actionTitle: T.AppleWatch.installationSecondStepLink)
     ]
 
-    var showsBackButton: Bool = true
-
     private let flowController: AppleWatchFlowControlling
 
     init(flowController: AppleWatchFlowControlling) {

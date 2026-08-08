@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2026 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -18,22 +18,20 @@
 //
 
 import UIKit
+import Data
 
-protocol TokensNavigationFlowControllerParent: AnyObject {}
+/// Root content container that `MainViewController` hosts (the tab-bar
+/// container), so the rest of the app can drive navigation through it.
+protocol MainNavigating: UIViewController {
+    func navigateToView(_ viewPath: ViewPath)
+}
 
-final class TokensNavigationFlowController: NavigationFlowController {
-    private weak var parent: TokensNavigationFlowControllerParent?
-    
-    static func showAsEmptyTab(
-        in tabBarController: UITabBarController,
-        parent: TokensNavigationFlowControllerParent
-    ) -> UINavigationController {
-        let flowController = TokensNavigationFlowController()
-        flowController.parent = parent
-        
-        let navi = CommonNavigationControllerFlow(flowController: flowController)
-        flowController.navigationController = navi
-        
-        return navi
-    }
+/// Callbacks the main container sends up to `MainFlowController` when the active
+/// section changes. (Name kept from the former split implementation.)
+protocol MainSplitFlowControllerParent: AnyObject {
+    func navigationSwitchedToTokens()
+    func navigationSwitchedToSettings()
+    func navigationSwitchedToSettingsExternalImport()
+    func navigationSwitchedToSettingsBackup()
+    func navigationSwitchedToSettingsTrash()
 }

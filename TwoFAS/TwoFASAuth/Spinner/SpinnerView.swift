@@ -18,12 +18,9 @@
 //
 
 import UIKit
+import Common
 
 #if os(iOS)
-public enum SpinnerViewLocalizations {
-    public static var voiceOverSpinner: String?
-}
-
 final class SpinnerView: UIView {
     private let color = AppColor.accentsBrand.uiColor
     private let sizePrimary: CGFloat = 40
@@ -64,7 +61,6 @@ final class SpinnerView: UIView {
         layer.addSublayer(secondaryShapeLayer)
         
         isAccessibilityElement = true
-        accessibilityLabel = SpinnerViewLocalizations.voiceOverSpinner
         
         tintColor = color
         secondaryShapeLayer.fillColor = color.cgColor

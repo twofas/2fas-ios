@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 #if os(iOS)
 final class SpinnerBackground: UIView {

@@ -400,6 +400,9 @@
 		C260DF502F5B07EA009A0357 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C260DF4F2F5B07EA009A0357 /* KeychainAccess */; };
 		C260DF522F5B07F1009A0357 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C260DF512F5B07F1009A0357 /* KeychainAccess */; };
 		C260DF542F5B0806009A0357 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C260DF532F5B0806009A0357 /* KeychainAccess */; };
+		C2617E04302753700004AE2B /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E567A2809A19B00141238 /* SpinnerView.swift */; };
+		C2617E05302753700004AE2B /* SpinnerBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E567E2809B83300141238 /* SpinnerBackground.swift */; };
+		C2617E06302753700004AE2B /* SpinnerDisplaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E567C2809B78000141238 /* SpinnerDisplaying.swift */; };
 		C2625F8E28BB858600D84C5C /* AboutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F8D28BB858600D84C5C /* AboutPresenter.swift */; };
 		C2625F9028BB85B100D84C5C /* AboutModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F8F28BB85B100D84C5C /* AboutModuleInteractor.swift */; };
 		C2625F9228BBB87700D84C5C /* AboutModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F9128BBB87700D84C5C /* AboutModels.swift */; };
@@ -732,18 +735,12 @@
 		C295AFBF2FD20AB6000DF064 /* ServiceIconDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2727D522781FE3F00B8FA03 /* ServiceIconDefinition.swift */; };
 		C295AFC32FD20CDA000DF064 /* LabelShapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CF16A42AB6506F00E2D7FF /* LabelShapes.swift */; };
 		C295AFC52FD20CDA000DF064 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C205A88C261B5F8A00E00286 /* UIColor+.swift */; };
-		C295AFC72FD20CDA000DF064 /* SpinnerBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E567E2809B83300141238 /* SpinnerBackground.swift */; };
-		C295AFCB2FD20CDA000DF064 /* SpinnerDisplaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E567C2809B78000141238 /* SpinnerDisplaying.swift */; };
 		C295AFCC2FD20CDA000DF064 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE082810306300CA6A9A /* UIFont+.swift */; };
 		C295AFCD2FD20CDA000DF064 /* LabelImageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D07EE726A468D000AF8E7B /* LabelImageRenderer.swift */; };
-		C295AFCE2FD20CDA000DF064 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E567A2809A19B00141238 /* SpinnerView.swift */; };
-		C295AFD02FD20CDB000DF064 /* SpinnerBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E567E2809B83300141238 /* SpinnerBackground.swift */; };
 		C295AFD12FD20CDB000DF064 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE082810306300CA6A9A /* UIFont+.swift */; };
 		C295AFD22FD20CDB000DF064 /* LabelImageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D07EE726A468D000AF8E7B /* LabelImageRenderer.swift */; };
 		C295AFD32FD20CDB000DF064 /* LabelShapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CF16A42AB6506F00E2D7FF /* LabelShapes.swift */; };
 		C295AFD52FD20CDB000DF064 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C205A88C261B5F8A00E00286 /* UIColor+.swift */; };
-		C295AFD92FD20CDB000DF064 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E567A2809A19B00141238 /* SpinnerView.swift */; };
-		C295AFDC2FD20CDB000DF064 /* SpinnerDisplaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E567C2809B78000141238 /* SpinnerDisplaying.swift */; };
 		C295AFE02FD20E6C000DF064 /* ServiceIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21AF6A526A237EA00BDAA37 /* ServiceIcon.swift */; };
 		C295AFE12FD20E6C000DF064 /* ServiceIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21AF6A526A237EA00BDAA37 /* ServiceIcon.swift */; };
 		C29626DA2370BD7F00C133BC /* TimeVerification.h in Headers */ = {isa = PBXBuildFile; fileRef = C29626D82370BD7F00C133BC /* TimeVerification.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -4658,6 +4655,7 @@
 		C28633D01FFABD2200C8F4B4 /* TwoFASAuth */ = {
 			isa = PBXGroup;
 			children = (
+				C29E56792809A18400141238 /* Spinner */,
 				C2E3CBF3292102ED006A1522 /* Generated */,
 				C2E3CBF429210320006A1522 /* Localizable.strings */,
 				C28633D11FFABD2200C8F4B4 /* NotificationViewController.swift */,
@@ -4744,7 +4742,6 @@
 				C2D07EE726A468D000AF8E7B /* LabelImageRenderer.swift */,
 				C205A88C261B5F8A00E00286 /* UIColor+.swift */,
 				C2CF16A42AB6506F00E2D7FF /* LabelShapes.swift */,
-				C29E56792809A18400141238 /* Spinner */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -7837,13 +7834,10 @@
 				C295AFC32FD20CDA000DF064 /* LabelShapes.swift in Sources */,
 				C295AFC52FD20CDA000DF064 /* UIColor+.swift in Sources */,
 				C2B279CA2FEC554800C41919 /* GroupedSectionBackground.swift in Sources */,
-				C295AFC72FD20CDA000DF064 /* SpinnerBackground.swift in Sources */,
-				C295AFCB2FD20CDA000DF064 /* SpinnerDisplaying.swift in Sources */,
 				C215084130030ECB008B66E2 /* TFList.swift in Sources */,
 				C295AFCC2FD20CDA000DF064 /* UIFont+.swift in Sources */,
 				C21508453003C3D6008B66E2 /* TFToggleRow.swift in Sources */,
 				C295AFCD2FD20CDA000DF064 /* LabelImageRenderer.swift in Sources */,
-				C295AFCE2FD20CDA000DF064 /* SpinnerView.swift in Sources */,
 				C274CA012BAB8B92008E7212 /* ServiceExistenceStatus.swift in Sources */,
 				C295AFA62FD1F6F8000DF064 /* View+.swift in Sources */,
 				C295AFA72FD1F6F8000DF064 /* AdaptiveReadableContainer.swift in Sources */,
@@ -7946,6 +7940,9 @@
 		C28633C71FFABD2200C8F4B4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
+				C2617E04302753700004AE2B /* SpinnerView.swift in Sources */,
+				C2617E05302753700004AE2B /* SpinnerBackground.swift in Sources */,
+				C2617E06302753700004AE2B /* SpinnerDisplaying.swift in Sources */,
 				C2E3CBF829210624006A1522 /* T.generated.swift in Sources */,
 				C2B90F02281EE901004B8AEC /* NotificationViewError.swift in Sources */,
 				C2B90EF0281EB3F8004B8AEC /* MainRepository.swift in Sources */,
@@ -8062,14 +8059,11 @@
 				C295AF982FD1F6F8000DF064 /* TFLiquidGlassSymbolButton.swift in Sources */,
 				C295AF9B2FD1F6F8000DF064 /* TFInputFloatingContainer.swift in Sources */,
 				C295AF9D2FD1F6F8000DF064 /* AnimationTiming.swift in Sources */,
-				C295AFD02FD20CDB000DF064 /* SpinnerBackground.swift in Sources */,
 				C295AFD12FD20CDB000DF064 /* UIFont+.swift in Sources */,
 				C295AFD22FD20CDB000DF064 /* LabelImageRenderer.swift in Sources */,
 				C295AFD32FD20CDB000DF064 /* LabelShapes.swift in Sources */,
 				C295AFD52FD20CDB000DF064 /* UIColor+.swift in Sources */,
 				C2150848300429F0008B66E2 /* TFSuccessView.swift in Sources */,
-				C295AFD92FD20CDB000DF064 /* SpinnerView.swift in Sources */,
-				C295AFDC2FD20CDB000DF064 /* SpinnerDisplaying.swift in Sources */,
 				C295AF9E2FD1F6F8000DF064 /* IntroWelcomeView.swift in Sources */,
 				C295AF9F2FD1F6F8000DF064 /* Spacing.swift in Sources */,
 				C295AFA02FD1F6F8000DF064 /* TintColor.swift in Sources */,

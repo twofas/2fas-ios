@@ -73,26 +73,26 @@ public enum TFPinKey: Equatable, Hashable {
 /// ```
 public struct TFPinButton: View {
     public static let size: CGFloat = 64
+    
+    @State
+    private var tapCount = 0
 
     private let key: TFPinKey
     private let action: (TFPinKey) -> Void
-    private let glassID: String?
-    private let glassNamespace: Namespace.ID?
 
     public init(
         _ key: TFPinKey,
-        glassID: String? = nil,
-        glassNamespace: Namespace.ID? = nil,
         action: @escaping (TFPinKey) -> Void
     ) {
         self.key = key
-        self.glassID = glassID
-        self.glassNamespace = glassNamespace
         self.action = action
     }
 
     public var body: some View {
-        Button(action: { action(key) }) {
+        Button(action: {
+            tapCount += 1
+            action(key)
+        }) {
             keyLabel
                 .foregroundStyle(AppColor.labelsPrimary)
                 .frame(width: Self.size, height: Self.size)
@@ -103,16 +103,10 @@ public struct TFPinButton: View {
                     Circle()
                         .fill(AnyShapeStyle(.clear))
                 }
-                .glassEffect(.regular.interactive())
-                    .shadow(.glass)
-                    .buttonStyle(ButtonFeedbackStyle())
-                    .modify { glass in
-                        if let glassID, let glassNamespace {
-                            glass.glassEffectID(glassID, in: glassNamespace)
-                        } else {
-                            glass
-                        }
-                    }
+                .buttonBorderShape(.circle)
+                .buttonStyle(.glass)
+                .shadow(.glass)
+                .sensoryFeedback(.impact(weight: .light), trigger: tapCount)
             } else {
                 $0.buttonStyle(PinPressStyle())
             }

@@ -162,3 +162,9 @@ extension UIView {
         subviews.forEach { $0.removeFromSuperview() }
     }
 }
+
+extension UITraitEnvironment {
+    var isRegularWidthLayout: Bool {
+        traitCollection.horizontalSizeClass == .regular
+    }
+}

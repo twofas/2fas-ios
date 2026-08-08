@@ -23,16 +23,10 @@ import Common
 
 enum SelectPINLengthController {
     static func make(in view: UIView, completion: @escaping (PINType) -> Void) -> AlertController {
-        let preferredStyle: UIAlertController.Style = {
-            if UIDevice.isiPad {
-                return .alert
-            }
-            return .actionSheet
-        }()
         let alertController = AlertController(
             title: T.Settings.selectPinLength,
             message: nil,
-            preferredStyle: preferredStyle
+            preferredStyle: .alert
         )
         PINType.allCases.forEach { pinType in
             let action = UIAlertAction(title: pinType.localized, style: .default) { _ in

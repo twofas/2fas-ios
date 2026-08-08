@@ -22,7 +22,7 @@ import Data
 import AVFoundation
 
 struct AddingServiceCameraViewport: UIViewRepresentable {
-    private let height = AddingServiceMetrics.cameraActiveAreaHeight
+    let height: CGFloat
     @Binding
     var cameraFreeze: Bool
     

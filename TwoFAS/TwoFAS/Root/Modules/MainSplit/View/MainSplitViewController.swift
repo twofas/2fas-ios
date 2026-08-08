@@ -371,7 +371,7 @@ extension MainSplitViewController: UISplitViewControllerDelegate {
         _ svc: UISplitViewController,
         willChangeTo displayMode: UISplitViewController.DisplayMode
     ) {
-        if displayMode == .secondaryOnly && UIDevice.isiPad {
+        if displayMode == .secondaryOnly && svc.isRegularWidthLayout {
             settingsViewController?.showRevealButton()
         } else {
             settingsViewController?.hideRevealButton()

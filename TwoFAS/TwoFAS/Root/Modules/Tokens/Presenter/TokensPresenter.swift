@@ -248,14 +248,6 @@ extension TokensPresenter {
         flowController.toHelp()
     }
     
-    func handleShowSortSelection() {
-        Log("TokensPresenter - handleShowSortSelection")
-        flowController.toShowSortTypes(selectedSortOption: interactor.selectedSortType) { [weak self] selectedValue in
-            self?.interactor.setSortType(selectedValue)
-            self?.reloadData()
-        }
-    }
-    
     func handleTokensScreenIsVisible() {
         if interactor.isActiveSearchEnabled && showSearchBar {
             view?.showKeyboard()

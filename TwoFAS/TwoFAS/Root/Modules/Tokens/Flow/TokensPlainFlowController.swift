@@ -52,8 +52,6 @@ protocol TokensPlainFlowControlling: AnyObject {
     func toDuplicatedCode(forceAdd: @escaping Callback, cancel: @escaping Callback)
     func toShowShouldAddCode(with descriptionText: String?)
     func toShouldRenameService(currentName: String, secret: String)
-    // MARK: Sort
-    func toShowSortTypes(selectedSortOption: SortType, callback: @escaping (SortType) -> Void)
     // MARK: News
     func toNotifications()
     // MARK: Import
@@ -299,29 +297,6 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         )
         
         mainSplitViewController.present(alert, animated: true)
-    }
-    
-    // MARK: - Sort
-    
-    func toShowSortTypes(selectedSortOption: SortType, callback: @escaping (SortType) -> Void) {
-        guard let mainSplitViewController, mainSplitViewController.presentedViewController == nil else { return }
-        
-        let preferredStyle: UIAlertController.Style = {
-            if UIDevice.isiPad {
-                return .alert
-            }
-            return .actionSheet
-        }()
-        let alertController = AlertController(title: T.Tokens.sortBy, message: nil, preferredStyle: preferredStyle)
-        SortType.allCases.forEach { sortType in
-            let action = UIAlertAction(title: sortType.localized, style: .default) { _ in
-                callback(sortType)
-            }
-            action.setValue(sortType.image(forSelectedOption: selectedSortOption), forKey: "image")
-            alertController.addAction(action)
-        }
-        alertController.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel, handler: { _ in }))
-        mainSplitViewController.present(alertController, animated: true)
     }
     
     // MARK: - Notifications

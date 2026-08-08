@@ -387,11 +387,6 @@ private extension TokensViewController {
     }
     
     @objc
-    func showSortSelection() {
-        presenter.handleShowSortSelection()
-    }
-    
-    @objc
     func addServiceAction() {
         presenter.handleAddService()
     }

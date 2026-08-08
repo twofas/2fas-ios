@@ -29,7 +29,10 @@ struct AddingServiceView: View {
     
     @State
     private var isVisible = false
-    
+
+    @Environment(\.horizontalSizeClass)
+    private var horizontalSizeClass
+
     @Bindable
     var presenter: AddingServicePresenter
     
@@ -58,6 +61,7 @@ struct AddingServiceView: View {
                         }
                 } else {
                     AddingServiceCameraViewport(
+                        height: AddingServiceMetrics.cameraActiveAreaHeight(for: horizontalSizeClass),
                         cameraFreeze: $presenter.freezeCamera,
                         didRegisterError: { error in
                             self.errorReason = error
@@ -69,7 +73,7 @@ struct AddingServiceView: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .frame(height: AddingServiceMetrics.cameraActiveAreaHeight)
+            .frame(height: AddingServiceMetrics.cameraActiveAreaHeight(for: horizontalSizeClass))
             .clipShape(RoundedRectangle(.badge))
             .overlay {
                 RoundedRectangle(.badge)

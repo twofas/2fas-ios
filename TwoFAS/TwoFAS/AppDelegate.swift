@@ -24,54 +24,25 @@ import Data
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
-    private var rootViewController: RootViewController?
-    
+    private lazy var pushInteractor: RootInteracting = InteractorFactory.shared.rootInteractor()
+
+    private var rootViewController: RootViewController? {
+        UIApplication.shared.connectedScenes
+            .compactMap { ($0.delegate as? SceneDelegate)?.rootViewController }
+            .first
+    }
+
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         guard !ProcessInfo.isSwiftUIPreview else { return true }
-        
+
         DataExternalTranslations.setTranslations(serviceNameTranslation: T.Commons.service)
-        
-        window = UIWindow(frame: UIScreen.main.bounds)
 
-        rootViewController = RootFlowController.setAsRoot(
-            in: window,
-            parent: self
-        )
-        window?.makeKeyAndVisible()
-
-        rootViewController?.presenter.initialize()
-        
         return true
     }
-    
-    func application(
-        _ app: UIApplication,
-        open url: URL,
-        options: [UIApplication.OpenURLOptionsKey: Any] = [:]
-    ) -> Bool {
-        rootViewController?.presenter.shouldHandleURL(url: url) == true
-    }
-    
-    func applicationWillResignActive(_ application: UIApplication) {
-        rootViewController?.presenter.applicationWillResignActive()
-    }
-    
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        rootViewController?.presenter.applicationDidEnterBackground()
-    }
-    
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        rootViewController?.presenter.applicationWillEnterForeground()
-    }
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        rootViewController?.presenter.applicationDidBecomeActive()
-    }
-    
+
     func applicationWillTerminate(_ application: UIApplication) {
         rootViewController?.presenter.applicationWillTerminate()
     }
@@ -79,23 +50,21 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Push Notifications
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        rootViewController?.presenter.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
+        pushInteractor.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
     }
-    
+
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        rootViewController?.presenter.didFailToRegisterForRemoteNotifications(with: error)
+        pushInteractor.didFailToRegisterForRemoteNotifications(with: error)
     }
-    
+
     func application(
         _ application: UIApplication,
         didReceiveRemoteNotification userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     ) {
-        rootViewController?.presenter.didReceiveRemoteNotification(
+        pushInteractor.didReceiveRemoteNotification(
             userInfo: userInfo,
             fetchCompletionHandler: completionHandler
         )
     }
 }
-
-extension AppDelegate: RootFlowControllerParent {}

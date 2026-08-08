@@ -37,13 +37,6 @@ protocol RootModuleInteracting: AnyObject {
     
     func shouldHandleURL(url: URL) -> Bool
 
-    func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data)
-    func didFailToRegisterForRemoteNotifications(with error: Error)
-    func didReceiveRemoteNotification(
-        userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
-    )
-    
     func lockScreenActive()
     func lockScreenInactive()
 
@@ -146,21 +139,6 @@ extension RootModuleInteractor: RootModuleInteracting {
         }
         
         return value
-    }
-    
-    func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {
-        rootInteractor.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
-    }
-    
-    func didFailToRegisterForRemoteNotifications(with error: Error) {
-        rootInteractor.didFailToRegisterForRemoteNotifications(with: error)
-    }
-    
-    func didReceiveRemoteNotification(
-        userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
-    ) {
-        rootInteractor.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
     }
     
     func lockScreenActive() {

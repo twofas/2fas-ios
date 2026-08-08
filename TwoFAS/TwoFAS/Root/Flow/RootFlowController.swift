@@ -117,6 +117,7 @@ extension RootFlowController: RootFlowControlling {
         let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         coverWindow.rootViewController = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
 
+        coverWindow.windowScene = window?.windowScene
         coverWindow.isHidden = false
         coverWindow.makeKeyAndVisible()
     }
@@ -136,6 +137,7 @@ extension RootFlowController: RootFlowControlling {
         )
         
         self.loginViewController = loginViewController
+        loginWindow.windowScene = window?.windowScene
         loginWindow.isHidden = false
         loginWindow.makeKeyAndVisible()
     }

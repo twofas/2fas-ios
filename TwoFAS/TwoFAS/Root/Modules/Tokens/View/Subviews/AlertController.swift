@@ -23,24 +23,23 @@ import Common
 final class AlertController: UIAlertController {
     var removeController: ((AlertController) -> Void)?
     
-    private lazy var alertWindow: UIWindow = {
-        let window = UIWindow(frame: UIScreen.main.bounds)
+    private var alertWindow: UIWindow?
+
+    func show(animated flag: Bool = true, completion: (() -> Void)? = nil) {
+        guard let windowScene = UIApplication.shared.currentScene else { Log("No active scene"); return }
+        let window = UIWindow(windowScene: windowScene)
         window.rootViewController = UIViewController()
         window.backgroundColor = UIColor.clear
         window.windowLevel = UIWindow.Level.alert
-        return window
-    }()
-    
-    func show(animated flag: Bool = true, completion: (() -> Void)? = nil) {
-        guard let rootViewController = alertWindow.rootViewController else { Log("No root view controller"); return }
-        alertWindow.makeKeyAndVisible()
-            
-        rootViewController.present(self, animated: flag, completion: completion)
+        alertWindow = window
+        window.makeKeyAndVisible()
+
+        window.rootViewController?.present(self, animated: flag, completion: completion)
     }
-    
+
     func dismiss() {
-        guard let rootViewController = alertWindow.rootViewController else { Log("No root view controller"); return }
-        
+        guard let rootViewController = alertWindow?.rootViewController else { Log("No root view controller"); return }
+
         rootViewController.dismiss(animated: false, completion: nil)
     }
     

@@ -104,25 +104,7 @@ final class RootPresenter {
         Log("App: shouldHandleURL")
         return interactor.shouldHandleURL(url: url)
     }
-    
-    func didRegisterForRemoteNotifications(withDeviceToken deviceToken: Data) {
-        Log("App: didRegisterForRemoteNotifications")
-        interactor.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
-    }
-    
-    func didFailToRegisterForRemoteNotifications(with error: Error) {
-        Log("App: didFailToRegisterForRemoteNotifications")
-        interactor.didFailToRegisterForRemoteNotifications(with: error)
-    }
-    
-    func didReceiveRemoteNotification(
-        userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
-    ) {
-        Log("App: didReceiveRemoteNotification")
-        interactor.didReceiveRemoteNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
-    }
-    
+
     func handleIntroHasFinished() {
         handleViewFlow()
     }

@@ -25,10 +25,10 @@ struct ExportQuestionPINVerificationView: View {
     var presenter: ExportQuestionPINVerificationPresenter
 
     var body: some View {
-        PINEntryScreen(
-            presenter: presenter,
-            onAppear: { presenter.viewWillAppear() }
-        )
+        PINEntryScreen(presenter: presenter)
+        .onAppear {
+            presenter.viewWillAppear()
+        }
         .navigationTitle(T.Backup.verifyPin)
         .navigationBarTitleDisplayMode(.inline)
     }

@@ -39,30 +39,14 @@ final class BrowserExtensionIntroFlowController: FlowController {
     private weak var navigationController: UINavigationController?
     private weak var presenter: BrowserExtensionIntroPresenter?
 
-    static func showAsRoot(
-        in navigationController: UINavigationController,
-        parent: BrowserExtensionIntroFlowControllerParent
-    ) {
-        let hosting = makeHosting(parent: parent, navigationController: navigationController, showsBackButton: false)
-        navigationController.setViewControllers([hosting], animated: false)
-    }
-
-    static func push(
-        in navigationController: UINavigationController,
-        parent: BrowserExtensionIntroFlowControllerParent
-    ) {
-        let hosting = makeHosting(parent: parent, navigationController: navigationController, showsBackButton: true)
-        navigationController.pushViewController(hosting, animated: false)
-    }
-
     static func embed(
         in viewController: UIViewController,
-        parent: BrowserExtensionIntroFlowControllerParent,
-        showsBackButton: Bool
+        parent: BrowserExtensionIntroFlowControllerParent
     ) -> UIViewController {
         let navi = UINavigationController()
-        let hosting = makeHosting(parent: parent, navigationController: navi, showsBackButton: showsBackButton)
+        let hosting = makeHosting(parent: parent, navigationController: navi)
         navi.setViewControllers([hosting], animated: false)
+        navi.setNavigationBarHidden(true, animated: false)
 
         viewController.addChild(navi)
         viewController.view.addSubview(navi.view)
@@ -74,10 +58,9 @@ final class BrowserExtensionIntroFlowController: FlowController {
 
     private static func makeHosting(
         parent: BrowserExtensionIntroFlowControllerParent,
-        navigationController: UINavigationController,
-        showsBackButton: Bool
+        navigationController: UINavigationController
     ) -> UIHostingController<AnyView> {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.title = T.Browser.browserExtension
         let flowController = BrowserExtensionIntroFlowController(viewController: hosting)
         flowController.parent = parent
@@ -87,7 +70,6 @@ final class BrowserExtensionIntroFlowController: FlowController {
             flowController: flowController,
             interactor: interactor
         )
-        presenter.showsBackButton = showsBackButton
         flowController.presenter = presenter
         hosting.rootView = AnyView(BrowserExtensionIntroView(presenter: presenter))
         return hosting

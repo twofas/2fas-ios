@@ -46,16 +46,13 @@ extension PINEntryPresenting {
 /// leading button (Close/X) via `.toolbar` on its enclosing navigation stack.
 struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
     @Bindable private var presenter: Presenter
-    private let onAppear: (() -> Void)?
     private let footer: () -> Footer
 
     init(
         presenter: Presenter,
-        onAppear: (() -> Void)? = nil,
         @ViewBuilder footer: @escaping () -> Footer
     ) {
         self._presenter = Bindable(wrappedValue: presenter)
-        self.onAppear = onAppear
         self.footer = footer
     }
 
@@ -85,18 +82,15 @@ struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(AppColor.backgroundsPrimary)
-        .onAppear { onAppear?() }
     }
 }
 
 extension PINEntryScreen where Footer == EmptyView {
     init(
-        presenter: Presenter,
-        onAppear: (() -> Void)? = nil
+        presenter: Presenter
     ) {
         self.init(
             presenter: presenter,
-            onAppear: onAppear,
             footer: { EmptyView() }
         )
     }

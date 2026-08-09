@@ -24,6 +24,11 @@ struct BackupSetPasswordView: View {
     @Bindable
     var presenter: BackupSetPasswordPresenter
 
+    /// When presented as a modal root, the screen uses the native navigation bar
+    /// (title + Close). When pushed inside another (not-yet-migrated) modal
+    /// container, it keeps the legacy in-content header.
+    let isModalRoot: Bool
+
     @FocusState
     private var focusedField: Field?
     private enum Field: Int, Hashable {
@@ -33,11 +38,13 @@ struct BackupSetPasswordView: View {
 
     var body: some View {
         VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: presenter.title,
-                leadingSymbol: showsCloseInTitleBar ? .close : nil,
-                onLeadingTap: showsCloseInTitleBar ? presenter.handleClose : nil
-            )
+            if !isModalRoot {
+                TFScreenTitleBar(
+                    title: presenter.title,
+                    leadingSymbol: showsCloseInTitleBar ? .close : nil,
+                    onLeadingTap: showsCloseInTitleBar ? presenter.handleClose : nil
+                )
+            }
 
             AdaptiveReadableContainer {
                 if presenter.isDone {
@@ -66,7 +73,7 @@ struct BackupSetPasswordView: View {
                         }
                         .disabled(!presenter.isDone && !presenter.isContinueEnabled)
 
-                        if !presenter.isDone {
+                        if !isModalRoot, !presenter.isDone {
                             TFButton(T.Commons.cancel, variant: .borderless, size: .large) {
                                 presenter.handleClose()
                             }
@@ -78,6 +85,15 @@ struct BackupSetPasswordView: View {
         }
         .dismissKeyboardOnTapOutside()
         .background(.backgroundsPrimaryElevated)
+        .navigationTitle(presenter.title)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if isModalRoot, showsCloseInTitleBar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(T.Commons.close) { presenter.handleClose() }
+                }
+            }
+        }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .onChange(of: presenter.password1) { _, newValue in
             presenter.handleFirstChanged(newValue)

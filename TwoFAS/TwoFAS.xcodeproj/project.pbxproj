@@ -4983,10 +4983,10 @@
 		C2BDC6BE1FC1A87400967D0E /* Root */ = {
 			isa = PBXGroup;
 			children = (
-				C2CFA6A22AEEE5E300E574FC /* Flow */,
-				C2CFA6A12AEEE5D900E574FC /* Interactor */,
-				C2CFA6A02AEEE5D100E574FC /* Presenter */,
-				C2CFA69F2AEEE5CD00E574FC /* View */,
+				C2CFA6A32AEEE9D500E574FC /* RootFlowController.swift */,
+				C2CFA6A52AEEF0CB00E574FC /* RootModuleInteractor.swift */,
+				C2BDC6C11FC1AC0A00967D0E /* RootPresenter.swift */,
+				C2BDC6C01FC1AC0A00967D0E /* RootViewController.swift */,
 				C2C66F8C1FE0683000AD5A1C /* Modules */,
 			);
 			path = Root;
@@ -5189,38 +5189,6 @@
 				C2081015279494980035E339 /* MigrationPayload+Conversion.swift */,
 			);
 			path = GoogleAuthenticator;
-			sourceTree = "<group>";
-		};
-		C2CFA69F2AEEE5CD00E574FC /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C2BDC6C01FC1AC0A00967D0E /* RootViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2CFA6A02AEEE5D100E574FC /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				C2BDC6C11FC1AC0A00967D0E /* RootPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2CFA6A12AEEE5D900E574FC /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				C2CFA6A52AEEF0CB00E574FC /* RootModuleInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		C2CFA6A22AEEE5E300E574FC /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-				C2CFA6A32AEEE9D500E574FC /* RootFlowController.swift */,
-			);
-			path = Flow;
 			sourceTree = "<group>";
 		};
 		C2D17FF3291BB5D90072EBFD /* Generated */ = {

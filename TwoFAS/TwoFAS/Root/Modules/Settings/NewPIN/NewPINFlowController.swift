@@ -102,7 +102,7 @@ final class NewPINFlowController: FlowController {
         step: Step,
         interactor: NewPINModuleInteracting
     ) -> UIViewController {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.hidesBottomBarWhenPushed = false
         let flowController = NewPINFlowController(viewController: hosting)
         flowController.parent = parent

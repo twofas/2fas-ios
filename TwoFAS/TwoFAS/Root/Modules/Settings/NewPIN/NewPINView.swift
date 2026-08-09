@@ -26,10 +26,7 @@ struct NewPINView: View {
 
     var body: some View {
         PINEntryScreen(
-            presenter: presenter,
-            onAppear: {
-                presenter.viewWillAppear()
-            }
+            presenter: presenter
         ) {
             if presenter.showsPinLengthButton {
                 Button {
@@ -42,8 +39,20 @@ struct NewPINView: View {
                 .padding(.bottom, .L)
             }
         }
-        .navigationBarBackButtonHidden()
+        .onAppear {
+            presenter.viewWillAppear()
+        }
+        .navigationBarBackButtonHidden(presenter.showsCancelButton)
         .navigationTitle(presenter.title)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if presenter.showsCancelButton {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button { presenter.handleCancel() } label: {
+                        Image(systemName: "xmark")
+                    }
+                }
+            }
+        }
     }
 }

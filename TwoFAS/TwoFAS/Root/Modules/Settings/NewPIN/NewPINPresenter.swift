@@ -51,9 +51,6 @@ final class NewPINPresenter {
         self.flowController = flowController
         self.interactor = interactor
         self.totalDigits = interactor.pinType.digits
-    }
-
-    func viewDidLoad() {
         showsCancelButton = !interactor.lockNavigation
     }
 

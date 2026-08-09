@@ -23,7 +23,7 @@ import Common
 final class TokensAdditionalInfo: UIView {
     private let label: UILabel = {
         let label = UILabel()
-        label.font = TextStyle.footnote.uiFont()
+        label.font = TextStyle.caption1.uiFont()
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail

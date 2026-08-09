@@ -38,7 +38,7 @@ public struct TFShadow {
 
 public extension TFShadow {
     /// Subtle depth shadow used on glass (liquid-glass) elements.
-    static let glass = TFShadow(color: .black.opacity(0.12), radius: 20, x: 0, y: 8)
+    static let glass = TFShadow(color: .black.opacity(0.06), radius: 20, x: 0, y: 8)
 }
 
 // MARK: - View extension

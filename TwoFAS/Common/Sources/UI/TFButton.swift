@@ -305,10 +305,13 @@ public struct TFButton: View {
     }
     
     private var vPad: Spacing {
+        if useWideLayout {
+            return .SM
+        }
         switch size {
-        case .small: .S
-        case .medium: .M // 8  (nearest to design 7)
-        case .large: .L // 12 (nearest to design 14)
+        case .small: return .S
+        case .medium: return .M // 8  (nearest to design 7)
+        case .large: return .L // 12 (nearest to design 14)
         }
     }
     

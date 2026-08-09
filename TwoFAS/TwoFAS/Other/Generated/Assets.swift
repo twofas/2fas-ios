@@ -118,7 +118,6 @@ internal enum Asset {
   internal static let socialReddit = ImageAsset(name: "social_reddit")
   internal static let socialTwitter = ImageAsset(name: "social_twitter")
   internal static let socialYoutube = ImageAsset(name: "social_youtube")
-  internal static let startScreenCircle = ImageAsset(name: "StartScreenCircle")
   internal static let tabBarIconServicesInactive = ImageAsset(name: "TabBarIconServicesInactive")
   internal static let tabBarIconSettingsInactive = ImageAsset(name: "TabBarIconSettingsInactive")
   internal static let trashIcon = ImageAsset(name: "TrashIcon")

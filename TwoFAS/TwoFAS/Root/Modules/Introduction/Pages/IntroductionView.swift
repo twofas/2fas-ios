@@ -102,12 +102,13 @@ struct IntroductionView: View {
             position.scrollTo(id: 0)
         }
 
-        AdaptiveReadableContainer {
+        AdaptiveReadableContainer(verticalMargin: .zero) {
             ScrollPagingView(
                 showPaging: $showPaging,
                 activePage: Binding(get: { abs((position.viewID as? Int ?? 0) - 1) }, set: { _ in }),
                 dotsCount: totalPages - 1
             )
+            .padding(.bottom, .XL)
             VStack(spacing: .XL) {
                 TFButton(
                     (position.viewID as? Int ?? 0) == totalPages - 1 ? T.Introduction.title : T.Commons.continue,
@@ -130,6 +131,7 @@ struct IntroductionView: View {
                 .animation(.easeInOut, value: position)
             }
         }
+        .ignoresSafeArea(edges: .bottom)
         .sheet(isPresented: $showInfo, content: {
             IntroductionInfoSheetContent()
         })

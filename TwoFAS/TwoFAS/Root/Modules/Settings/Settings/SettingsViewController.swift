@@ -47,9 +47,23 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     let navigationNavi = CommonNavigationController()
     let contentNavi = CommonNavigationController()
     
-    var isCollapsed: Bool { split.isCollapsed }
-    var isInitialConfigRead = false
-    
+    // Navigation follows the native split state: collapsed → push, expanded →
+    // detail column. During an expand/collapse transition the split still reports
+    // its pre-transition `isCollapsed` (the display-mode delegate fires before the
+    // state flips), so routing must instead follow the transition we are actively
+    // performing. `routingCollapsedOverride` carries that intent; it falls back to
+    // the live split state before the first transition.
+    private var routingCollapsedOverride: Bool?
+    var isCollapsed: Bool { routingCollapsedOverride ?? split.isCollapsed }
+
+    /// Records which layout the content is being routed into for the duration of a
+    /// collapse/expand transition, so pushes land in the correct column.
+    func beginLayoutTransition(collapsed: Bool) {
+        routingCollapsedOverride = collapsed
+    }
+
+    private var lastCollapsedState: Bool?
+
     private var isMenuPositionPending = false
     
     private var savedViewPath: ViewPath.Settings?
@@ -57,8 +71,13 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationNavi.navigationBar.isTranslucent = false
-        contentNavi.navigationBar.isTranslucent = false
+        if #available(iOS 26.0, *) {
+            applyGlassNavigationBarAppearance(to: navigationNavi)
+            applyGlassNavigationBarAppearance(to: contentNavi)
+        } else {
+            navigationNavi.navigationBar.isTranslucent = false
+            contentNavi.navigationBar.isTranslucent = false
+        }
         navigationNavi.delegate = self
         
         presenter.viewDidLoad()
@@ -66,7 +85,7 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
         setupSplit()
         
         registerForTraitChanges([UITraitHorizontalSizeClass.self]) { (self: Self, _) in
-            self.setInitialTrait()
+            self.reconcileForCollapsedStateIfNeeded()
         }
     }
     
@@ -85,13 +104,15 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
         )
         
         updateSize(width: view.frame.size.width)
+        reconcileForCollapsedStateIfNeeded()
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateSize(width: view.frame.size.width)
+        reconcileForCollapsedStateIfNeeded()
     }
-    
+
     func showRevealButton() {
         guard menu != nil else {
             isMenuPositionPending = true
@@ -137,11 +158,16 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     }
     
     private func updateSize(width: CGFloat) {
+        // The settings split is nested inside a tab that forces a compact size
+        // class (bottom tab bar), so the inherited system size class doesn't
+        // reflect the width actually available here. Drive collapse/expand from
+        // the real available width instead — this updates on every layout and
+        // window resize, so the split collapses (single stack + Back) when narrow
+        // and shows two columns when wide, on both iOS 18 and 26.
         let newSizeClass: UIUserInterfaceSizeClass = width < minimumSecondaryColumnWidth ? .compact : .regular
 
         guard newSizeClass != split.traitCollection.horizontalSizeClass else { return }
 
-        Log("SettingsViewController - setting: \(newSizeClass == .compact ? "compact" : "regular")")
         split.traitOverrides.horizontalSizeClass = newSizeClass
         split.reload()
     }
@@ -167,17 +193,46 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
         split.setViewController(navigationNavi, for: .compact)
     }
     
-    private func setInitialTrait() {
-        guard traitCollection.horizontalSizeClass != .unspecified, !isInitialConfigRead else { return }
-        
-        isInitialConfigRead = true
-        if traitCollection.horizontalSizeClass == .compact {
+    /// Reconciles the settings content with the split's actual collapsed state.
+    /// The settings split decides compact/regular via a width-based trait override
+    /// (`updateSize`), so the outer window size class is the wrong signal — we must
+    /// follow `split.isCollapsed`. Deduped so it only reconfigures on change.
+    private func reconcileForCollapsedStateIfNeeded() {
+        guard traitCollection.horizontalSizeClass != .unspecified else { return }
+
+        updateNavigationBarVisibility()
+
+        let collapsed = split.isCollapsed
+        guard collapsed != lastCollapsedState else { return }
+        lastCollapsedState = collapsed
+
+        if collapsed {
             presenter.handleCollapse()
         } else {
             presenter.handleExpansion()
         }
     }
     
+    /// Both columns always show their native navigation bar. This is what makes
+    /// the native title + back button appear when collapsed to a single column
+    /// (or when launching already collapsed); a conditional hide here raced the
+    /// split's collapse state and left the bar hidden with no back button.
+    private func updateNavigationBarVisibility() {
+        navigationNavi.setNavigationBarHidden(false, animated: false)
+        contentNavi.setNavigationBarHidden(false, animated: false)
+    }
+
+    @available(iOS 26.0, *)
+    private func applyGlassNavigationBarAppearance(to navigationController: UINavigationController) {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.backgroundEffect = UIBlurEffect(style: .regular)
+        appearance.backgroundColor = .clear
+        navigationController.navigationBar.standardAppearance = appearance
+        navigationController.navigationBar.scrollEdgeAppearance = appearance
+        navigationController.navigationBar.compactAppearance = appearance
+    }
+
     private func setMenuPosition() {
         menu?.showSidebarReveal { [weak self] in
             self?.revealMenu()
@@ -231,6 +286,8 @@ extension SettingsViewController: UISplitViewControllerDelegate {
         _ svc: UISplitViewController,
         willChangeTo displayMode: UISplitViewController.DisplayMode
     ) {
+        // Legacy iOS ≤18 workaround only; iOS 26 relies on native display-mode handling.
+        guard #unavailable(iOS 26.0) else { return }
         if !svc.isCollapsed, displayMode != .oneBesideSecondary {
             DispatchQueue.main.async {
                 svc.preferredDisplayMode = .oneBesideSecondary
@@ -246,8 +303,11 @@ final class PrimaryNavigationLayoutFixingSplitViewController: UISplitViewControl
     
     override func setViewController(_ vc: UIViewController?, for column: UISplitViewController.Column) {
         super.setViewController(vc, for: column)
+        // The manual safe-area fix-up is a legacy iOS ≤18 workaround; iOS 26 uses
+        // the plain split behavior.
+        guard #unavailable(iOS 26.0) else { return }
         guard column == .primary, let viewController = vc else { return }
-        
+
         fixedViewController = viewController
         
         primaryColumnFrameKVOToken = viewController.view.observe(\.frame) { [weak self, weak viewController] _, _ in
@@ -263,10 +323,11 @@ final class PrimaryNavigationLayoutFixingSplitViewController: UISplitViewControl
     }
     
     func reload() {
+        guard #unavailable(iOS 26.0) else { return }
         guard let vc = fixedViewController else {
             return
         }
-        
+
         applyCorrectLayoutIfNeeded(toPrimaryColumnViewController: vc)
     }
     

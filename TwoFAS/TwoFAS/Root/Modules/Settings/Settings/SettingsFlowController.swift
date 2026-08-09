@@ -93,8 +93,9 @@ extension SettingsFlowController: SettingsFlowControlling {
     }
     
     func toCollapsedView() {
+        viewController.beginLayoutTransition(collapsed: true)
         navigationMenu?.toCollapsed()
-        
+
         if viewController.contentNavi.viewControllers.isEmpty {
             navigationMenu?.toSelectedModule()
         } else {
@@ -114,6 +115,7 @@ extension SettingsFlowController: SettingsFlowControlling {
     }
     
     func toExpandedView() {
+        viewController.beginLayoutTransition(collapsed: false)
         navigationMenu?.toExpanded()
         if let vcs = viewController.navigationNavi.popToRootViewController(animated: false), !vcs.isEmpty {
             vcs.forEach({ $0.willMove(toParent: viewController.contentNavi) })
@@ -203,6 +205,10 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
     
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
         parent?.settingsToUpdateCurrentPosition(viewPath)
+    }
+
+    func toPopDetailToRoot() {
+        viewController.contentNavi.popToRootViewController(animated: true)
     }
     
     func toAppearance() {

@@ -37,7 +37,7 @@ final class ExportQuestionPINVerificationFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: ExportQuestionPINVerificationFlowControllerParent
     ) {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.hidesBottomBarWhenPushed = false
         let flowController = ExportQuestionPINVerificationFlowController(viewController: hosting)
         flowController.parent = parent
@@ -48,6 +48,7 @@ final class ExportQuestionPINVerificationFlowController: FlowController {
         )
         hosting.rootView = AnyView(ExportQuestionPINVerificationView(presenter: presenter))
 
+        navigationController.setNavigationBarHidden(false, animated: false)
         navigationController.pushViewController(hosting, animated: true)
     }
 }

@@ -40,7 +40,7 @@ final class BrowserExtensionServiceFlowController: FlowController {
         date: String,
         id: String
     ) {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.hidesBottomBarWhenPushed = false
         let flowController = BrowserExtensionServiceFlowController(viewController: hosting)
         flowController.parent = parent

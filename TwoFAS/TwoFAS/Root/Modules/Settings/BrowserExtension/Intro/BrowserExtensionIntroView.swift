@@ -36,12 +36,6 @@ struct BrowserExtensionIntroView: View {
 
     var body: some View {
         VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: T.Browser.browserExtension,
-                leadingSymbol: presenter.showsBackButton ? .back : nil,
-                onLeadingTap: presenter.showsBackButton ? { presenter.close() } : nil
-            )
-
             ScrollView {
                 VStack(spacing: .XXL) {
                     Image(systemName: "puzzlepiece.extension.fill")
@@ -95,6 +89,5 @@ struct BrowserExtensionIntroView: View {
             .padding(.bottom, .XL)
         }
         .background(.backgroundsPrimary)
-        .toolbarVisibility(.hidden, for: .navigationBar)
     }
 }

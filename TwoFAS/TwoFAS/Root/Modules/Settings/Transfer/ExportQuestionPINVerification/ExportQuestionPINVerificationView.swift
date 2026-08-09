@@ -26,10 +26,10 @@ struct ExportQuestionPINVerificationView: View {
 
     var body: some View {
         PINEntryScreen(
-            title: T.Backup.verifyPin,
-            onLeadingTap: { presenter.handleCancel() },
             presenter: presenter,
             onAppear: { presenter.viewWillAppear() }
         )
+        .navigationTitle(T.Backup.verifyPin)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

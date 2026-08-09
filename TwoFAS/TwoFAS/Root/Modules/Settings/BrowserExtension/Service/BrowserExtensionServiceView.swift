@@ -25,20 +25,14 @@ struct BrowserExtensionServiceView: View {
     var presenter: BrowserExtensionServicePresenter
 
     var body: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: T.Browser.browserExtension,
-                showsBackButton: true,
-                onBack: presenter.handleBack
-            )
-
-            TFListScreen {
-                ForEach(presenter.sections) { section in
-                    sectionView(section)
-                }
+        TFListScreen {
+            ForEach(presenter.sections) { section in
+                sectionView(section)
             }
         }
         .background(.backgroundsPrimary)
+        .navigationTitle(T.Browser.browserExtension)
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             presenter.viewWillAppear()
         }

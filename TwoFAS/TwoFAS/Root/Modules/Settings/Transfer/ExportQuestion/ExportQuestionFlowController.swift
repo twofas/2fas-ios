@@ -18,7 +18,7 @@
 //
 
 import SwiftUI
-import UIKit
+import Common
 
 protocol ExportQuestionFlowControllerParent: AnyObject {
     func closeExporter(export: Bool, exportType: ExportQuestionType)
@@ -47,6 +47,7 @@ final class ExportQuestionFlowController: ObservableObject {
             rootView: AnyView(ExportQuestionView(presenter: presenter, exportType: exportType))
         )
         hosting.title = T.Settings.exportTitleTokens
+        hosting.view.backgroundColor = AppColor.backgroundsPrimary.uiColor
 
         flowController.parent = parent
         flowController.navigationController = navigationController

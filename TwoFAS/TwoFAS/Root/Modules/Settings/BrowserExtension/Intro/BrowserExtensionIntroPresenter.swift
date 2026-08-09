@@ -25,8 +25,6 @@ final class BrowserExtensionIntroPresenter {
         .init(title: T.Browser.infoDescriptionSecond, icon: .link, description: nil)
     ]
 
-    var showsBackButton: Bool = true
-
     private let flowController: BrowserExtensionIntroFlowControlling
     private let interactor: BrowserExtensionIntroModuleInteracting
 

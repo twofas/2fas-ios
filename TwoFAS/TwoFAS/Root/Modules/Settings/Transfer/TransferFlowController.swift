@@ -45,7 +45,7 @@ protocol TransferFlowControlling: AnyObject {
 
 final class TransferFlowController: FlowController {
     private weak var parent: TransferFlowControllerParent?
-    private weak var navigationController: UINavigationController?
+    private var navigationController: UINavigationController? { _viewController?.navigationController }
     private var galleryViewController: UIViewController?
     private var importer: ImporterOpenFileHeadlessFlowController?
     fileprivate var presenter: TransferPresenter?
@@ -54,7 +54,7 @@ final class TransferFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: TransferFlowControllerParent
     ) {
-        let hosting = create(parent: parent, showsBackButton: false, navigationController: navigationController)
+        let hosting = create(parent: parent)
         navigationController.setViewControllers([hosting], animated: false)
     }
 
@@ -62,25 +62,21 @@ final class TransferFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: TransferFlowControllerParent
     ) {
-        let hosting = create(parent: parent, showsBackButton: true, navigationController: navigationController)
+        let hosting = create(parent: parent)
         navigationController.pushRootViewController(hosting, animated: true)
     }
 
     private static func create(
-        parent: TransferFlowControllerParent,
-        showsBackButton: Bool,
-        navigationController: UINavigationController
+        parent: TransferFlowControllerParent
     ) -> UIViewController {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         let flowController = TransferFlowController(viewController: hosting)
         flowController.parent = parent
-        flowController.navigationController = navigationController
         let interactor = ModuleInteractorFactory.shared.transferModuleInteractor()
         let presenter = TransferPresenter(
             flowController: flowController,
             interactor: interactor
         )
-        presenter.showsBackButton = showsBackButton
         flowController.presenter = presenter
         hosting.rootView = AnyView(TransferView(presenter: presenter))
         return hosting
@@ -99,13 +95,13 @@ extension TransferFlowController: TransferFlowControlling {
 
     // MARK: - Export
     func toSaveOTPAuthFile() {
-        guard let vc = _viewController else { return }
-        ExportQuestionFlowController.present(on: vc, parent: self, exportType: .file)
+        guard let navigationController else { return }
+        ExportQuestionFlowController.push(in: navigationController, parent: self, exportType: .file)
     }
 
     func toExportQRCodes() {
-        guard let vc = _viewController else { return }
-        ExportQuestionFlowController.present(on: vc, parent: self, exportType: .qr)
+        guard let navigationController else { return }
+        ExportQuestionFlowController.push(in: navigationController, parent: self, exportType: .qr)
     }
 
     func toSetupPIN() {
@@ -159,7 +155,6 @@ extension TransferFlowController: TransferFlowControlling {
 private extension TransferFlowController {
     func pushInstructions(service: ExternalImportService) {
         guard let navigationController else { return }
-        navigationController.setNavigationBarHidden(true, animated: true)
         ExternalImportInstructionsFlowController.push(
             in: navigationController,
             parent: self,
@@ -233,7 +228,6 @@ extension TransferFlowController: SelectFromGalleryFlowControllerParent {
 
 extension TransferFlowController: ImporterOpenFileHeadlessFlowControllerParent {
     func importerCloseOnSucessfulImport() {
-        navigationController?.setNavigationBarHidden(false, animated: false)
         importer = nil
         navigationController?.dismiss(animated: true) { [weak self] in
             self?.navigationController?.popToRootViewController(animated: true)
@@ -249,7 +243,6 @@ extension TransferFlowController: ImporterOpenFileHeadlessFlowControllerParent {
 private extension TransferFlowController {
     func closeInstructions(animated: Bool = true) {
         navigationController?.popViewController(animated: animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
     func endGallery() {
@@ -311,15 +304,25 @@ private extension TransferFlowController {
 
 extension TransferFlowController: ExportQuestionFlowControllerParent {
     func closeExporter(export: Bool, exportType: ExportQuestionType) {
-        _viewController?.dismiss(animated: true)
-        guard export else {
-            return
+        // The export flow is pushed onto the Transfer stack, so unwind by popping
+        // back to Transfer (the PIN step hides the bar, so re-assert visibility).
+        // The actual export (share sheet) is triggered after the pop completes to
+        // avoid presenting mid-transition.
+        guard let transferVC = _viewController else { return }
+        let navi = transferVC.navigationController
+
+        CATransaction.begin()
+        CATransaction.setCompletionBlock { [weak self] in
+            guard export else { return }
+            switch exportType {
+            case .file:
+                self?.presenter?.handleSaveOTPAuthFile()
+            case .qr:
+                self?.presenter?.handleExportQRCodes()
+            }
         }
-        switch exportType {
-        case .file:
-            presenter?.handleSaveOTPAuthFile()
-        case .qr:
-            presenter?.handleExportQRCodes()
-        }
+        navi?.popToViewController(transferVC, animated: true)
+        navi?.setNavigationBarHidden(false, animated: true)
+        CATransaction.commit()
     }
 }

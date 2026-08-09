@@ -30,7 +30,7 @@ struct ExportQuestionView: View {
     private let image = Asset.exportBackup.image
 
     var body: some View {
-        TFInfoView {
+        TFInfoView(background: .backgroundsPrimary) {
             Image(uiImage: image)
                 .resizable()
                 .scaledToFit()

@@ -47,7 +47,7 @@ final class VerifyPINFlowController: FlowController {
         parent: VerifyPINFlowControllerParent,
         for action: Action
     ) {
-        let hosting = build(parent: parent, action: action)
+        let hosting = build(parent: parent, action: action, native: true)
         navigationController.setViewControllers([hosting], animated: false)
     }
 
@@ -56,7 +56,7 @@ final class VerifyPINFlowController: FlowController {
         parent: VerifyPINFlowControllerParent,
         for action: Action
     ) {
-        let hosting = build(parent: parent, action: action)
+        let hosting = build(parent: parent, action: action, native: true)
         hosting.willMove(toParent: viewController)
         viewController.view.addSubview(hosting.view)
         hosting.view.pinToParent()
@@ -68,14 +68,20 @@ final class VerifyPINFlowController: FlowController {
         on viewController: UIViewController,
         parent: VerifyPINFlowControllerParent
     ) {
-        let hosting = build(parent: parent, action: .authorize)
+        let hosting = build(parent: parent, action: .authorize, native: true)
         let navigation = CommonNavigationController(rootViewController: hosting)
         navigation.modalPresentationStyle = .fullScreen
         viewController.present(navigation, animated: true)
     }
 
-    private static func build(parent: VerifyPINFlowControllerParent, action: Action) -> UIViewController {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+    private static func build(
+        parent: VerifyPINFlowControllerParent,
+        action: Action,
+        native: Bool
+    ) -> UIViewController {
+        let hosting: UIHostingController<AnyView> = native
+            ? UIHostingController(rootView: AnyView(EmptyView()))
+            : NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
         hosting.hidesBottomBarWhenPushed = false
         let flowController = VerifyPINFlowController(viewController: hosting)
         flowController.parent = parent

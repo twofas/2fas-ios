@@ -393,7 +393,11 @@ extension MainTabSidebarViewController: UITabBarControllerDelegate {
             }
         } else if selectedTab === settingsTab {
             let path = ViewPath.settings(option: settingsViewController?.currentView)
-            isReselection ? onReselect?(path) : onSelect?(path)
+            if isReselection {
+                onReselect?(path)
+            } else {
+                onSelect?(path)
+            }
         }
     }
 }

@@ -49,4 +49,8 @@ extension TrashServicePresenter {
         interactor.trashService(serviceData)
         flowController.toTrashService()
     }
+
+    func handleContentHeight(_ height: CGFloat) {
+        flowController.setContentHeight(height)
+    }
 }

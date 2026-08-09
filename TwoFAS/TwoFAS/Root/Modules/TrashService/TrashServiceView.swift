@@ -25,60 +25,69 @@ struct TrashServiceView: View {
     var presenter: TrashServicePresenter
 
     var body: some View {
-        VStack(spacing: .zero) {
-            HStack(spacing: .zero) {
-                TFLiquidGlassSymbolButton(symbol: .close) {
-                    presenter.handleCancel()
+        ScrollView {
+            VStack(spacing: .zero) {
+                HStack(spacing: .zero) {
+                    TFLiquidGlassSymbolButton(symbol: .close) {
+                        presenter.handleCancel()
+                    }
+                    Spacer()
                 }
-                Spacer()
-            }
-            
-            Spacer()
 
-            VStack(spacing: .XXXL) {
-                Image(uiImage: Asset.trashIcon.image)
-                    .renderingMode(.original)
-                    .accessibilityHidden(true)
+                VStack(spacing: .XXXL) {
+                    Image(uiImage: Asset.trashIcon.image)
+                        .renderingMode(.original)
+                        .accessibilityHidden(true)
+
+                    VStack(spacing: .M) {
+                        Text("\(T.Tokens.deleteToken) \(presenter.serviceName)")
+                            .textStyle(.title2, .emphasized)
+                            .foregroundStyle(.labelsPrimary)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        Text(T.Tokens.signInNotPossibleTitle(presenter.serviceName, presenter.serviceName))
+                            .textStyle(.callout)
+                            .foregroundStyle(.labelsPrimary)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                .padding(.top, .M)
+
+                Spacer()
+                    .frame(height: Spacing.XXL.rawValue)
 
                 VStack(spacing: .M) {
-                    Text("\(T.Tokens.deleteToken) \(presenter.serviceName)")
-                        .textStyle(.title2, .emphasized)
-                        .foregroundStyle(.labelsPrimary)
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
+                    TFButton(
+                        T.Tokens.moveToTrash,
+                        variant: .borderedProminent,
+                        size: .large,
+                        applyGlass: true,
+                    ) {
+                        presenter.handleTrashing()
+                    }
 
-                    Text(T.Tokens.signInNotPossibleTitle(presenter.serviceName, presenter.serviceName))
-                        .textStyle(.callout)
-                        .foregroundStyle(.labelsPrimary)
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
+                    TFButton(
+                        T.Commons.cancel,
+                        variant: .borderlessNeutral,
+                        size: .large
+                    ) {
+                        presenter.handleCancel()
+                    }
                 }
             }
-            .padding(.top, .M)
-
-            Spacer()
-                .frame(height: Spacing.XXL.rawValue)
-
-            VStack(spacing: .M) {
-                TFButton(
-                    T.Tokens.moveToTrash,
-                    variant: .borderedProminent,
-                    size: .large,
-                    applyGlass: true,
-                ) {
-                    presenter.handleTrashing()
-                }
-
-                TFButton(
-                    T.Commons.cancel,
-                    variant: .borderlessNeutral,
-                    size: .large
-                ) {
-                    presenter.handleCancel()
-                }
+            .frame(maxWidth: Theme.Metrics.modalPreferredWidth)
+            .padding(.horizontal, .XL)
+            .padding(.top, .XL)
+            .padding(.bottom, 0)
+            .onGeometryChange(for: CGFloat.self) { proxy in
+                proxy.size.height
+            } action: { height in
+                presenter.handleContentHeight(height)
             }
         }
-        .frame(maxWidth: Theme.Metrics.modalPreferredWidth)
-        .padding(.XL)
+        .scrollContentBackground(.hidden)
+        .scrollDisabled(true)
     }
 }

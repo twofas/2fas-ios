@@ -29,11 +29,12 @@ protocol TrashServiceFlowControllerParent: AnyObject {
 protocol TrashServiceFlowControlling: AnyObject {
     func toTrashService()
     func toClose()
+    func setContentHeight(_ height: CGFloat)
 }
 
 final class TrashServiceFlowController: FlowController {
     private weak var parent: TrashServiceFlowControllerParent?
-
+    
     static func present(
         on viewController: UIViewController,
         parent: TrashServiceFlowControllerParent,
@@ -43,7 +44,7 @@ final class TrashServiceFlowController: FlowController {
         hosting.view.backgroundColor = .clear
         let flowController = TrashServiceFlowController(viewController: hosting)
         flowController.parent = parent
-
+        
         let interactor = ModuleInteractorFactory.shared.trashServiceInteractor()
         let presenter = TrashServicePresenter(
             serviceData: serviceData,
@@ -51,7 +52,7 @@ final class TrashServiceFlowController: FlowController {
             interactor: interactor
         )
         hosting.rootView = AnyView(TrashServiceView(presenter: presenter))
-
+        
         flowController.presentAsHalfModal(on: viewController, view: hosting)
     }
 }
@@ -60,19 +61,35 @@ extension TrashServiceFlowController: TrashServiceFlowControlling {
     func toClose() {
         parent?.closeTrashService()
     }
-
+    
     func toTrashService() {
         parent?.didTrashService()
+    }
+    
+    func setContentHeight(_ height: CGFloat) {
+        guard let sheet = _viewController?.sheetPresentationController else { return }
+        sheet.animateChanges {
+            sheet.detents = [
+                .custom(identifier: .trashContent) { context in
+                    min(height, context.maximumDetentValue)
+                }
+            ]
+            sheet.selectedDetentIdentifier = .trashContent
+        }
     }
 }
 
 private extension TrashServiceFlowController {
     func presentAsHalfModal(on parentViewController: UIViewController, view: UIViewController) {
         view.modalPresentationStyle = .formSheet
-
+        
         if let sheet = view.sheetPresentationController {
-            sheet.detents = [.large()]
-            sheet.selectedDetentIdentifier = .large
+            sheet.detents = [
+                .custom(identifier: .trashContent) { _ in
+                    Theme.Metrics.modalLargePreferredHeight
+                }
+            ]
+            sheet.selectedDetentIdentifier = .trashContent
             sheet.prefersGrabberVisible = false
             if #available(iOS 26.1, *) {
                 sheet.backgroundEffect = UIBlurEffect(style: .systemMaterial)
@@ -80,8 +97,13 @@ private extension TrashServiceFlowController {
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             sheet.preferredCornerRadius = TFCornerRadius.large.rawValue
             sheet.prefersEdgeAttachedInCompactHeight = true
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
         }
-
+        
         parentViewController.present(view, animated: true, completion: nil)
     }
+}
+
+private extension UISheetPresentationController.Detent.Identifier {
+    static let trashContent = UISheetPresentationController.Detent.Identifier("trashContent")
 }

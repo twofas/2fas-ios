@@ -37,6 +37,13 @@ final class TokensNextTokenLabel: UILabel {
         adjustsFontForContentSizeCategory = true
         numberOfLines = 1
         textColor = AppColor.labelsPrimary.uiColor
+        
+        minimumScaleFactor = 0.8
+        allowsDefaultTighteningForTruncation = true
+        adjustsFontSizeToFitWidth = true
+        baselineAdjustment = .alignCenters
+        textAlignment = .left
+
         setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
         setContentHuggingPriority(.defaultLow - 1, for: .vertical)

@@ -245,7 +245,7 @@ private extension TokensTOTPCell {
             accessoryContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             nextTokenLabel.trailingAnchor
-                .constraint(lessThanOrEqualTo: accessoryContainer.leadingAnchor, constant: tokenNegativeMargin)
+                .constraint(lessThanOrEqualTo: accessoryContainer.leadingAnchor, constant: -tokenNegativeMargin)
         ])
         
         accessoryContainer.addSubview(circularProgress, with: [

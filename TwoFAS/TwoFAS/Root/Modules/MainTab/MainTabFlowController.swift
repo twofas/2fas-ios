@@ -26,6 +26,8 @@ final class MainTabFlowController: FlowController {
     private weak var tokensViewController: TokensViewController?
     private weak var settingsViewController: SettingsViewController?
 
+    private let viewPathInteractor = InteractorFactory.shared.viewPathInteractor()
+
     static func showAsRoot(
         in mainViewController: MainViewController,
         parent: MainSplitFlowControllerParent
@@ -46,7 +48,14 @@ final class MainTabFlowController: FlowController {
         container.onSelect = { [weak flowController] path in
             flowController?.handleSelect(path)
         }
+        container.onReselect = { [weak tokens, weak settings] path in
+            switch path {
+            case .main: tokens?.scrollToTop()
+            case .settings: settings?.navigateToView(nil)
+            }
+        }
         container.onAddService = { [weak tokens] in
+            NotificationCenter.default.post(name: .switchToTokens, object: nil)
             tokens?.presenter.handleAddService()
         }
 
@@ -56,11 +65,16 @@ final class MainTabFlowController: FlowController {
         container.didMove(toParent: mainViewController)
         mainViewController.splitView = container
 
-        container.navigateToView(.main)
-        parent.navigationSwitchedToTokens()
+        let restoredPath = flowController.viewPathInteractor.viewPath() ?? .main
+        container.navigateToView(restoredPath)
+        switch restoredPath {
+        case .main: parent.navigationSwitchedToTokens()
+        case .settings: parent.navigationSwitchedToSettings()
+        }
     }
 
     private func handleSelect(_ path: ViewPath) {
+        viewPathInteractor.setViewPath(path)
         switch path {
         case .main: parent?.navigationSwitchedToTokens()
         case .settings: parent?.navigationSwitchedToSettings()
@@ -92,7 +106,7 @@ extension MainTabFlowController: TokensPlainFlowControllerParent {
 
 extension MainTabFlowController: SettingsFlowControllerParent {
     func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
-        // The sidebar tab keeps its own position; nothing to sync here.
+        viewPathInteractor.setViewPath(.settings(option: viewPath))
     }
 
     func settingsToRevealMenu() {
@@ -118,6 +132,7 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
     }()
 
     var onSelect: ((ViewPath) -> Void)?
+    var onReselect: ((ViewPath) -> Void)?
     var onAddService: (() -> Void)?
 
     override func viewDidLoad() {
@@ -296,10 +311,12 @@ extension MainTabSidebarViewController: UITabBarControllerDelegate {
         previousTab: UITab?
     ) {
         if selectedTab is UISearchTab { return }
+        let isReselection = selectedTab === previousTab
         if selectedTab === tokensTab {
-            onSelect?(.main)
+            isReselection ? onReselect?(.main) : onSelect?(.main)
         } else if selectedTab === settingsTab {
-            onSelect?(.settings(option: settingsViewController?.currentView))
+            let path = ViewPath.settings(option: settingsViewController?.currentView)
+            isReselection ? onReselect?(path) : onSelect?(path)
         }
     }
 }

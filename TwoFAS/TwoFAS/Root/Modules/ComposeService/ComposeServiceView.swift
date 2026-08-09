@@ -73,17 +73,6 @@ struct ComposeServiceView: View {
         } message: {
             Text(T.Tokens.showServiceKeySetupLock)
         }
-        .confirmationDialog(
-            T.Commons.optionsTitle,
-            isPresented: $presenter.isRevealMenuPresented,
-            titleVisibility: .visible
-        ) {
-            Button(T.Tokens.copySecret) { presenter.handleCopySecret() }
-            Button(T.Tokens.copyLink) { presenter.handleCopyLink() }
-            Button(T.Tokens.qrCodeShow) { presenter.handleShowQRCode() }
-            Button(T.Tokens.qrCodeShare) { presenter.handleShareQRCode() }
-            Button(T.Commons.cancel, role: .cancel) {}
-        }
     }
 
     @ViewBuilder
@@ -138,6 +127,17 @@ struct ComposeServiceView: View {
                     onReveal: { presenter.handleReveal() },
                     onShare: { presenter.handleShare() }
                 )
+                .confirmationDialog(
+                    T.Commons.optionsTitle,
+                    isPresented: $presenter.isRevealMenuPresented,
+                    titleVisibility: .visible
+                ) {
+                    Button(T.Tokens.copySecret) { presenter.handleCopySecret() }
+                    Button(T.Tokens.copyLink) { presenter.handleCopyLink() }
+                    Button(T.Tokens.qrCodeShow) { presenter.handleShowQRCode() }
+                    Button(T.Tokens.qrCodeShare) { presenter.handleShareQRCode() }
+                    Button(T.Commons.cancel, role: .cancel) {}
+                }
 
                 separator()
 

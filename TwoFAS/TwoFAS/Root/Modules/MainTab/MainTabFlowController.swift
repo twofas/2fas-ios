@@ -21,7 +21,7 @@ import UIKit
 import Common
 import Data
 
-final class MainTabSidebarFlowController: FlowController {
+final class MainTabFlowController: FlowController {
     private weak var parent: MainSplitFlowControllerParent?
     private weak var tokensViewController: TokensViewController?
     private weak var settingsViewController: SettingsViewController?
@@ -31,7 +31,7 @@ final class MainTabSidebarFlowController: FlowController {
         parent: MainSplitFlowControllerParent
     ) {
         let container = MainTabSidebarViewController()
-        let flowController = MainTabSidebarFlowController(viewController: container)
+        let flowController = MainTabFlowController(viewController: container)
         flowController.parent = parent
 
         let tokens = TokensPlainFlowController.setup(presentationHost: container, parent: flowController)
@@ -68,11 +68,11 @@ final class MainTabSidebarFlowController: FlowController {
     }
 }
 
-extension MainTabSidebarFlowController {
+extension MainTabFlowController {
     var viewController: MainTabSidebarViewController { _viewController as! MainTabSidebarViewController }
 }
 
-extension MainTabSidebarFlowController: TokensPlainFlowControllerParent {
+extension MainTabFlowController: TokensPlainFlowControllerParent {
     func tokensSwitchToTokensTab() {
         parent?.navigationSwitchedToTokens()
     }
@@ -90,7 +90,7 @@ extension MainTabSidebarFlowController: TokensPlainFlowControllerParent {
     }
 }
 
-extension MainTabSidebarFlowController: SettingsFlowControllerParent {
+extension MainTabFlowController: SettingsFlowControllerParent {
     func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
         // The sidebar tab keeps its own position; nothing to sync here.
     }
@@ -107,10 +107,6 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
 
     private let appState = InteractorFactory.shared.appStateInteractor()
     private let plusButton = UIButton(type: .system)
-    private var plusButtonCenterXConstraint: NSLayoutConstraint?
-    private var plusButtonCenterYConstraint: NSLayoutConstraint?
-    private var plusButtonWidthConstraint: NSLayoutConstraint?
-    private var plusButtonHeightConstraint: NSLayoutConstraint?
 
     private static let transparentPixelImage: UIImage = {
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1))
@@ -140,9 +136,57 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if #available(iOS 26.0, *) {
-            alignPlusButtonToSpacerTab()
+        guard #available(iOS 26.0, *) else { return }
+        positionPlusButtonOverSearchSlot()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard #available(iOS 26.0, *) else { return }
+        // The auxiliary (search) slot gets its real frame asynchronously, after
+        // the last layout pass, so poll briefly until it's ready.
+        ensurePlusButtonPositioned(attempt: 0)
+    }
+
+    private func ensurePlusButtonPositioned(attempt: Int) {
+        if positionPlusButtonOverSearchSlot() || attempt >= 20 { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.ensurePlusButtonPositioned(attempt: attempt + 1)
         }
+    }
+
+    /// The hidden `UISearchTab` renders in a trailing `_UITabBarAuxiliaryView`
+    /// slot. Track that slot's frame and place the "+" exactly over it (1:1),
+    /// so it stays correct on iPhone and iPad and moves with the tab bar.
+    @discardableResult
+    private func positionPlusButtonOverSearchSlot() -> Bool {
+        guard tabBar.window != nil,
+              let auxiliary = findSubview(in: tabBar, classNameContains: "AuxiliaryView") else {
+            return false
+        }
+        let frameInTabBar = auxiliary.convert(auxiliary.bounds, to: tabBar)
+        guard frameInTabBar.width > 0, frameInTabBar.height > 0 else { return false }
+
+        plusButton.frame = frameInTabBar
+        plusButton.isHidden = false
+        tabBar.bringSubviewToFront(plusButton)
+
+        if let window = view.window {
+            appState.savePlusButtonRect(plusButton.convert(plusButton.bounds, to: window))
+        }
+        return true
+    }
+
+    private func findSubview(in root: UIView, classNameContains needle: String) -> UIView? {
+        for sub in root.subviews {
+            if String(describing: type(of: sub)).contains(needle) {
+                return sub
+            }
+            if let match = findSubview(in: sub, classNameContains: needle) {
+                return match
+            }
+        }
+        return nil
     }
 
     deinit {
@@ -211,67 +255,14 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
             self?.onAddService?()
         }, for: .touchUpInside)
 
-        plusButton.translatesAutoresizingMaskIntoConstraints = false
+        // Frame is tracked to the search tab slot in `positionPlusButtonOverSearchSlot`.
+        plusButton.translatesAutoresizingMaskIntoConstraints = true
         tabBar.addSubview(plusButton)
-
-        let centerX = plusButton.centerXAnchor.constraint(equalTo: tabBar.leadingAnchor)
-        let centerY = plusButton.centerYAnchor.constraint(equalTo: tabBar.topAnchor)
-        let width = plusButton.widthAnchor.constraint(equalToConstant: 56)
-        let height = plusButton.heightAnchor.constraint(equalToConstant: 56)
-        plusButtonCenterXConstraint = centerX
-        plusButtonCenterYConstraint = centerY
-        plusButtonWidthConstraint = width
-        plusButtonHeightConstraint = height
-        NSLayoutConstraint.activate([width, height, centerX, centerY])
-
         plusButton.isHidden = true
-    }
 
-    /// Positions the "+" 1:1 over the hidden spacer (search) tab inside the tab
-    /// bar, so it moves and hides together with the tab bar.
-    private func alignPlusButtonToSpacerTab() {
-        guard tabBar.window != nil,
-              let auxiliary = findSubview(in: tabBar, classNameContains: "AuxiliaryView") else {
-            plusButton.isHidden = true
-            return
-        }
-        let target = findSubview(in: auxiliary, classNameContains: "TabButton") ?? auxiliary
-        let frameInTabBar = target.convert(target.bounds, to: tabBar)
-        guard frameInTabBar.width > 0, frameInTabBar.height > 0 else {
-            plusButton.isHidden = true
-            return
-        }
-        plusButtonCenterXConstraint?.constant = frameInTabBar.midX
-        plusButtonCenterYConstraint?.constant = frameInTabBar.midY
-        plusButtonWidthConstraint?.constant = frameInTabBar.width
-        plusButtonHeightConstraint?.constant = frameInTabBar.height
-
-        tabBar.bringSubviewToFront(plusButton)
-        tabBar.layoutIfNeeded()
-
-        if plusButton.isHidden {
-            let isAddingVisible = appState.isAddingServiceVisible
-            plusButton.tintColor = isAddingVisible ? AppColor.graysGray3.uiColor : AppColor.accentsBrand.uiColor
-            plusButton.isUserInteractionEnabled = !isAddingVisible
-            plusButton.isHidden = false
-        }
-
-        if let window = view.window {
-            let rectInWindow = plusButton.convert(plusButton.bounds, to: window)
-            appState.savePlusButtonRect(rectInWindow)
-        }
-    }
-
-    private func findSubview(in root: UIView, classNameContains needle: String) -> UIView? {
-        for sub in root.subviews {
-            if String(describing: type(of: sub)).contains(needle) {
-                return sub
-            }
-            if let match = findSubview(in: sub, classNameContains: needle) {
-                return match
-            }
-        }
-        return nil
+        let isAddingVisible = appState.isAddingServiceVisible
+        plusButton.tintColor = isAddingVisible ? AppColor.graysGray3.uiColor : AppColor.accentsBrand.uiColor
+        plusButton.isUserInteractionEnabled = !isAddingVisible
     }
 
     @objc

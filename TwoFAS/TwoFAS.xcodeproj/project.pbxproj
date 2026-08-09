@@ -401,7 +401,7 @@
 		C2617E06302753700004AE2B /* SpinnerDisplaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29E567C2809B78000141238 /* SpinnerDisplaying.swift */; };
 		C2617E0830276F620004AE2B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2617E0730276F620004AE2B /* SceneDelegate.swift */; };
 		C2617E0A3027AECE0004AE2B /* MainNavigating.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2617E093027AECE0004AE2B /* MainNavigating.swift */; };
-		C2617E0C3027AF110004AE2B /* MainTabSidebarFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2617E0B3027AF110004AE2B /* MainTabSidebarFlowController.swift */; };
+		C2617E0C3027AF110004AE2B /* MainTabFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2617E0B3027AF110004AE2B /* MainTabFlowController.swift */; };
 		C2625F8E28BB858600D84C5C /* AboutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F8D28BB858600D84C5C /* AboutPresenter.swift */; };
 		C2625F9028BB85B100D84C5C /* AboutModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F8F28BB85B100D84C5C /* AboutModuleInteractor.swift */; };
 		C2625F9228BBB87700D84C5C /* AboutModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F9128BBB87700D84C5C /* AboutModels.swift */; };
@@ -2230,7 +2230,7 @@
 		C260DCC12BC885F1007807CC /* ServiceCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCellView.swift; sourceTree = "<group>"; };
 		C2617E0730276F620004AE2B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C2617E093027AECE0004AE2B /* MainNavigating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigating.swift; sourceTree = "<group>"; };
-		C2617E0B3027AF110004AE2B /* MainTabSidebarFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabSidebarFlowController.swift; sourceTree = "<group>"; };
+		C2617E0B3027AF110004AE2B /* MainTabFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabFlowController.swift; sourceTree = "<group>"; };
 		C261A1212A12BECC00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C261A1222A12BECC00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C261A1232A12BECD00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3270,37 +3270,6 @@
 			path = Generated;
 			sourceTree = "<group>";
 		};
-		C2079B50298EB352003FA86D /* MainMenu */ = {
-			isa = PBXGroup;
-			children = (
-				C2079B54298EB374003FA86D /* Flow */,
-				C2079B52298EB363003FA86D /* Presenter */,
-				C2079B51298EB35F003FA86D /* View */,
-			);
-			path = MainMenu;
-			sourceTree = "<group>";
-		};
-		C2079B51298EB35F003FA86D /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C2079B52298EB363003FA86D /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C2079B54298EB374003FA86D /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Flow;
-			sourceTree = "<group>";
-		};
 		C20935CF29213610000F5AA7 /* Legacy */ = {
 			isa = PBXGroup;
 			children = (
@@ -3721,39 +3690,6 @@
 				C2A8584D27FB95FA00CBD9ED /* NetworkError.swift */,
 			);
 			path = Types;
-			sourceTree = "<group>";
-		};
-		C235A00B298FD8BF008F4FD0 /* MainSplit */ = {
-			isa = PBXGroup;
-			children = (
-				C235A00F298FD8F9008F4FD0 /* Flow */,
-				C29B2B7729982E2600EDE75B /* Interactor */,
-				C235A00D298FD8DB008F4FD0 /* Presenter */,
-				C235A00C298FD8D4008F4FD0 /* View */,
-			);
-			path = MainSplit;
-			sourceTree = "<group>";
-		};
-		C235A00C298FD8D4008F4FD0 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C24D8B3B29BE41CA00C3E11E /* ContentNavigationController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C235A00D298FD8DB008F4FD0 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		C235A00F298FD8F9008F4FD0 /* Flow */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Flow;
 			sourceTree = "<group>";
 		};
 		C236666A1FB2644900989ACA = {
@@ -4400,7 +4336,7 @@
 			isa = PBXGroup;
 			children = (
 				C217E16F23D7953000EE6C08 /* NotificationBottomOffset.swift */,
-				C2617E0B3027AF110004AE2B /* MainTabSidebarFlowController.swift */,
+				C2617E0B3027AF110004AE2B /* MainTabFlowController.swift */,
 			);
 			path = MainTab;
 			sourceTree = "<group>";
@@ -4731,13 +4667,6 @@
 				C2B077D0292AA0A00074517F /* ShortDateTimeFormatter.swift */,
 			);
 			path = DateFormatter;
-			sourceTree = "<group>";
-		};
-		C29B2B7729982E2600EDE75B /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Interactor;
 			sourceTree = "<group>";
 		};
 		C29E56792809A18400141238 /* Spinner */ = {
@@ -5180,9 +5109,7 @@
 				C2147CEE205D8C620001D011 /* Login */,
 				C20E2DED2A7C4A3D00DB64BB /* AddingService */,
 				C2D75D38297DA07B0002531E /* Main */,
-				C235A00B298FD8BF008F4FD0 /* MainSplit */,
 				C2698B662986B3E500EBC179 /* MainTab */,
-				C2079B50298EB352003FA86D /* MainMenu */,
 				C244F9E022762A54009992D3 /* Tokens */,
 				C21111E1274AB8C100CA7C78 /* Settings */,
 				C25860AE28246D87009AE54F /* News */,
@@ -5393,6 +5320,7 @@
 				C2C02241297F222100D596A8 /* MainPresenter.swift */,
 				C2C66F8D1FE0684100AD5A1C /* MainViewController.swift */,
 				C2617E093027AECE0004AE2B /* MainNavigating.swift */,
+				C24D8B3B29BE41CA00C3E11E /* ContentNavigationController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -7411,7 +7339,7 @@
 				C2CC0A4A29D0CACC00677A7B /* ExternalImportInstructionsPresenter.swift in Sources */,
 				C27C03BF27F4FD6C0020DB5E /* BrowserExtensionMainModuleInteractor.swift in Sources */,
 				C2F7FE052A8AB70D004B2C95 /* AddingServiceManuallyModuleInteractor.swift in Sources */,
-				C2617E0C3027AF110004AE2B /* MainTabSidebarFlowController.swift in Sources */,
+				C2617E0C3027AF110004AE2B /* MainTabFlowController.swift in Sources */,
 				C2E2C80D27B0392D00F04B70 /* IconSelectorPresenter.swift in Sources */,
 				C2D97E882E2469BD00E213A7 /* T.generated.swift in Sources */,
 				C20CD5402A1D017700A7F324 /* TokensHOTPCellType.swift in Sources */,

@@ -93,7 +93,7 @@ extension MainFlowController {
 
 extension MainFlowController: MainFlowControlling {
     func toSetupSplit() {
-        MainTabSidebarFlowController.showAsRoot(in: viewController, parent: self)
+        MainTabFlowController.showAsRoot(in: viewController, parent: self)
     }
     func toAuthRequestFetch() {
         authRequestsFlowController?.refresh()

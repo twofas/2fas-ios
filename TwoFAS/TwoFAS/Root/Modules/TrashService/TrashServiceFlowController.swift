@@ -68,17 +68,18 @@ extension TrashServiceFlowController: TrashServiceFlowControlling {
 
 private extension TrashServiceFlowController {
     func presentAsHalfModal(on parentViewController: UIViewController, view: UIViewController) {
-        view.modalPresentationStyle = .pageSheet
+        view.modalPresentationStyle = .formSheet
 
         if let sheet = view.sheetPresentationController {
-            sheet.detents = [.medium()]
-            sheet.selectedDetentIdentifier = .medium
+            sheet.detents = [.large()]
+            sheet.selectedDetentIdentifier = .large
             sheet.prefersGrabberVisible = false
             if #available(iOS 26.1, *) {
                 sheet.backgroundEffect = UIBlurEffect(style: .systemMaterial)
             }
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             sheet.preferredCornerRadius = TFCornerRadius.large.rawValue
+            sheet.prefersEdgeAttachedInCompactHeight = true
         }
 
         parentViewController.present(view, animated: true, completion: nil)

@@ -32,6 +32,8 @@ struct TrashServiceView: View {
                 }
                 Spacer()
             }
+            
+            Spacer()
 
             VStack(spacing: .XXXL) {
                 Image(uiImage: Asset.trashIcon.image)
@@ -43,17 +45,19 @@ struct TrashServiceView: View {
                         .textStyle(.title2, .emphasized)
                         .foregroundStyle(.labelsPrimary)
                         .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     Text(T.Tokens.signInNotPossibleTitle(presenter.serviceName, presenter.serviceName))
                         .textStyle(.callout)
                         .foregroundStyle(.labelsPrimary)
                         .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                .frame(maxWidth: .infinity)
             }
             .padding(.top, .M)
 
-            Spacer(minLength: Spacing.XXL.rawValue)
+            Spacer()
+                .frame(height: Spacing.XXL.rawValue)
 
             VStack(spacing: .M) {
                 TFButton(
@@ -74,7 +78,7 @@ struct TrashServiceView: View {
                 }
             }
         }
+        .frame(maxWidth: Theme.Metrics.modalPreferredWidth)
         .padding(.XL)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

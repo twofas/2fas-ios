@@ -29,54 +29,55 @@ struct BrowserExtensionIntroStep: Hashable, Identifiable {
 
 struct BrowserExtensionIntroView: View {
     private let presenter: BrowserExtensionIntroPresenter
-
+    
     init(presenter: BrowserExtensionIntroPresenter) {
         self.presenter = presenter
     }
-
+    
     var body: some View {
-        VStack(spacing: .zero) {
-            ScrollView {
-                VStack(spacing: .XXL) {
-                    Image(systemName: "puzzlepiece.extension.fill")
-                        .textStyle(.iconLarge)
-                        .foregroundStyle(.accentsBrand)
-                        .padding(.top, .XL)
-
-                    Text(T.Browser.infoTitle)
-                        .textStyle(.title1, .emphasized)
-                        .foregroundStyle(.labelsPrimary)
-                        .multilineTextAlignment(.center)
-
-                    VStack(spacing: .L) {
-                        ForEach(Array(presenter.steps.enumerated()), id: \.element) { _, step in
-                            TFInstructionCard(
-                                icon: step.icon,
-                                title: step.title,
-                                description: step.description,
-                                accessory: nil
-                            )
-                        }
-                    }
-
-                    VStack(spacing: .S) {
-                        Text(T.Browser.moreInfo)
-                            .textStyle(.footnote)
-                            .foregroundStyle(.labelsSecondary)
-                            .multilineTextAlignment(.center)
-
-                        TFButton(
-                            T.Browser.moreInfoLinkTitle,
-                            variant: .borderless,
-                            size: .small,
-                            action: presenter.handleInfo
+        AdaptiveReadableContainer {
+            VStack(spacing: .XXL) {
+                Image(systemName: "puzzlepiece.extension.fill")
+                    .textStyle(.iconLarge)
+                    .foregroundStyle(.accentsBrand)
+                    .padding(.top, .XL)
+                
+                Text(T.Browser.infoTitle)
+                    .textStyle(.title1, .emphasized)
+                    .foregroundStyle(.labelsPrimary)
+                    .multilineTextAlignment(.center)
+                
+                VStack(spacing: .L) {
+                    ForEach(Array(presenter.steps.enumerated()), id: \.element) { _, step in
+                        TFInstructionCard(
+                            icon: step.icon,
+                            title: step.title,
+                            description: step.description,
+                            accessory: nil
                         )
                     }
                 }
-                .padding(.horizontal, .XL)
-                .padding(.bottom, .XL)
+                
+                VStack(spacing: .S) {
+                    Text(T.Browser.moreInfo)
+                        .textStyle(.footnote)
+                        .foregroundStyle(.labelsSecondary)
+                        .multilineTextAlignment(.center)
+                    
+                    TFButton(
+                        T.Browser.moreInfoLinkTitle,
+                        variant: .borderless,
+                        size: .small,
+                        action: presenter.handleInfo
+                    )
+                }
             }
-
+            .padding(.horizontal, .XL)
+            .padding(.bottom, .XL)
+            
+            Spacer()
+                .frame(maxHeight: .infinity)
+            
             VStack(spacing: .L) {
                 TFButton(
                     T.Browser.pairWithWebBrowser,

@@ -28,48 +28,48 @@ struct AppleWatchInstallationStep: Hashable, Identifiable {
 
 struct AppleWatchView: View {
     private let presenter: AppleWatchPresenter
-
+    
     init(presenter: AppleWatchPresenter) {
         self.presenter = presenter
     }
-
+    
     var body: some View {
-        ScrollView {
-                VStack(spacing: .XXL) {
-                    Image(systemName: "lock.applewatch")
-                        .textStyle(.iconLarge)
-                        .foregroundStyle(.accentsBrand)
-                        .padding(.top, .XL)
-
-                    Text(T.AppleWatch.installationInfoTitle)
-                        .textStyle(.title1, .emphasized)
-                        .foregroundStyle(.labelsPrimary)
-                        .multilineTextAlignment(.center)
-
-                    VStack(spacing: .L) {
-                        ForEach(
-                            Array(presenter.appleWatchInstallationSteps.enumerated()),
-                            id: \.element
-                        ) { index, step in
-                            let stepNumber = index + 1
-                            TFInstructionCard(
-                                icon: icon(for: stepNumber),
-                                title: step.actionTitle,
-                                description: step.description,
-                                accessory: .link,
-                                onTap: { presenter.handleInstallationStep(number: stepNumber) }
-                            )
-                        }
+        AdaptiveReadableContainer {
+            VStack(spacing: .XXL) {
+                Image(systemName: "lock.applewatch")
+                    .textStyle(.iconLarge)
+                    .foregroundStyle(.accentsBrand)
+                    .padding(.top, .XL)
+                
+                Text(T.AppleWatch.installationInfoTitle)
+                    .textStyle(.title1, .emphasized)
+                    .foregroundStyle(.labelsPrimary)
+                    .multilineTextAlignment(.center)
+                
+                VStack(spacing: .L) {
+                    ForEach(
+                        Array(presenter.appleWatchInstallationSteps.enumerated()),
+                        id: \.element
+                    ) { index, step in
+                        let stepNumber = index + 1
+                        TFInstructionCard(
+                            icon: icon(for: stepNumber),
+                            title: step.actionTitle,
+                            description: step.description,
+                            accessory: .link,
+                            onTap: { presenter.handleInstallationStep(number: stepNumber) }
+                        )
                     }
                 }
-                .padding(.horizontal, .XL)
-                .padding(.bottom, .XL)
             }
+        }
+        .padding(.horizontal, .XL)
+        .padding(.bottom, .XL)
         .background(.backgroundsPrimary)
         .navigationTitle(T.Settings.appleWatch)
         .navigationBarTitleDisplayMode(.inline)
     }
-
+    
     private func icon(for stepNumber: Int) -> TFInstructionCardIcon {
         switch stepNumber {
         case 1: .download

@@ -34,7 +34,11 @@ extension UIViewController {
         if UIDevice.isSmallScreen {
             modalPresentationStyle = .fullScreen
         } else {
-            modalPresentationStyle = .pageSheet
+            modalPresentationStyle = .formSheet
+            preferredContentSize = CGSize(
+                width: Theme.Metrics.modalPreferredWidth,
+                height: Theme.Metrics.modalLargePreferredHeight
+            )
         }
         isModalInPresentation = true
         definesPresentationContext = true

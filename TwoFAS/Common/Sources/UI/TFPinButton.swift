@@ -116,7 +116,7 @@ public struct TFPinButton: View {
                 .glassEffect(.regular, in: .circle)
                 .shadow(.glass)
                 .scaleEffect(configuration.isPressed ? 0.82 : 1)
-                .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
+                .animation(.spring(response: 0.2, dampingFraction: 0.7), value: configuration.isPressed)
         }
     }
 

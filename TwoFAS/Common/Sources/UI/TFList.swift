@@ -41,8 +41,10 @@ public struct TFListScreen<Content: View>: View {
 
     public var body: some View {
         ScrollView(.vertical) {
-            VStack(spacing: .XXXL) {
-                content
+            AdaptiveReadableContainer {
+                VStack(spacing: .XXXL) {
+                    content
+                }
             }
             .padding(.horizontal, .XL)
             .padding(.top, .M)

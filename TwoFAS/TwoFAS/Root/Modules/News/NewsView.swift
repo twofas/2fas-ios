@@ -77,10 +77,12 @@ struct NewsView: View {
         ScrollView(.vertical) {
             LazyVStack(spacing: .zero) {
                 ForEach(Array(presenter.list.enumerated()), id: \.element.id) { index, cell in
-                    Button {
-                        presenter.handleSelection(at: index)
-                    } label: {
-                        row(for: cell)
+                    AdaptiveReadableContainer {
+                        Button {
+                            presenter.handleSelection(at: index)
+                        } label: {
+                            row(for: cell)
+                        }
                     }
                 }
             }

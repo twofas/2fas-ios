@@ -80,36 +80,35 @@ struct TrashView: View {
                     }
             }
         }
-        .animation(.default, value: presenter.services.count)
-        .listStyle(.plain)
-        .scrollContentBackground(.hidden)
     }
 
     @ViewBuilder
     private func trashCell(_ service: ServiceData) -> some View {
-        HStack(spacing: .M) {
-            ServiceIconView(icon: service.iconDetails, showBackground: false)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(service.name)
-                    .textStyle(.body)
-                    .foregroundStyle(.labelsPrimary)
-
-                if let additionalInfo = service.additionalInfo, !additionalInfo.isEmpty {
-                    Text(additionalInfo)
-                        .textStyle(.subheadline)
-                        .foregroundStyle(.labelsSecondary)
+        AdaptiveReadableContainer {
+            HStack(spacing: .M) {
+                ServiceIconView(icon: service.iconDetails, showBackground: false)
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(service.name)
+                        .textStyle(.body)
+                        .foregroundStyle(.labelsPrimary)
+                    
+                    if let additionalInfo = service.additionalInfo, !additionalInfo.isEmpty {
+                        Text(additionalInfo)
+                            .textStyle(.subheadline)
+                            .foregroundStyle(.labelsSecondary)
+                    }
                 }
+                
+                Spacer(minLength: 0)
             }
-
-            Spacer(minLength: 0)
+            .padding(.horizontal, .XL)
+            .padding(.vertical, .L)
+            .background(
+                RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue, style: .continuous)
+                    .foregroundStyle(.backgroundsSecondary)
+            )
+            .frame(minHeight: .list)
         }
-        .padding(.horizontal, .XL)
-        .padding(.vertical, .L)
-        .background(
-            RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue, style: .continuous)
-                .foregroundStyle(.backgroundsSecondary)
-        )
-        .frame(minHeight: .list)
     }
 }

@@ -78,6 +78,11 @@ enum Theme {
 
         static let buttonHeight: CGFloat = 50
 
+        /// 540 - preferowana szerokość arkuszy modalnych na iPadzie (regular width)
+        static let modalPreferredWidth: CGFloat = 540
+        /// 620 - preferowana wysokość dużych arkuszy modalnych na iPadzie (regular width)
+        static let modalLargePreferredHeight: CGFloat = 620
+
         /// 288
         static let componentWidth: CGFloat = 288
         /// 280

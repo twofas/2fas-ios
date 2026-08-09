@@ -137,6 +137,20 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(notifyTokensVisible),
+            name: .lockScreenIsInactive,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(notifyTokensVisible),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+
         // Floating glass "+" is an iOS 26 affordance; on iOS 18 the add action
         // lives in the tokens navigation bar (see updateNaviIcons).
         guard #available(iOS 26.0, *) else { return }
@@ -149,10 +163,56 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
         )
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        changeStyling()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         guard #available(iOS 26.0, *) else { return }
         positionPlusButtonOverSearchSlot()
+    }
+
+    /// Branded tab bar appearance for iOS 18. On iOS 26 the Liquid Glass tab bar
+    /// provides its own appearance, so this is skipped.
+    private func changeStyling() {
+        guard #unavailable(iOS 26.0) else { return }
+
+        let app = tabBar.standardAppearance.copy()
+        app.backgroundColor = AppColor.backgroundsPrimary.uiColor
+        app.shadowColor = AppColor.separatorsOpaque.uiColor
+        app.shadowImage = Asset.shadowLine.image
+            .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+
+        let tabBarFont = TextStyle.caption2.uiFont(.emphasized)
+        let tabBarItemAppearance = UITabBarItemAppearance()
+        tabBarItemAppearance.normal.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: AppColor.labelsTertiary.uiColor,
+            NSAttributedString.Key.font: tabBarFont
+        ]
+        tabBarItemAppearance.selected.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: AppColor.accentsBrand.uiColor,
+            NSAttributedString.Key.font: tabBarFont
+        ]
+        tabBarItemAppearance.focused.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: AppColor.accentsBrand.uiColor,
+            NSAttributedString.Key.font: tabBarFont
+        ]
+
+        tabBarItemAppearance.normal.badgeTextAttributes = [.foregroundColor: AppColor.accentsBrand.uiColor]
+        tabBarItemAppearance.selected.badgeTextAttributes = [.foregroundColor: AppColor.accentsBrand.uiColor]
+        tabBarItemAppearance.focused.badgeTextAttributes = [.foregroundColor: AppColor.accentsBrand.uiColor]
+
+        tabBarItemAppearance.normal.badgeBackgroundColor = .clear
+        tabBarItemAppearance.selected.badgeBackgroundColor = .clear
+        tabBarItemAppearance.focused.badgeBackgroundColor = .clear
+
+        app.compactInlineLayoutAppearance = tabBarItemAppearance
+        app.inlineLayoutAppearance = tabBarItemAppearance
+        app.stackedLayoutAppearance = tabBarItemAppearance
+
+        tabBar.standardAppearance = app
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -295,11 +355,23 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
             if let tokensTab {
                 selectedTab = tokensTab
             }
+            notifyTokensVisible()
         case .settings(let option):
             if let settingsTab {
                 selectedTab = settingsTab
             }
             settingsViewController?.navigateToView(option)
+        }
+    }
+
+    @objc
+    private func notifyTokensVisible() {
+        guard selectedTab === tokensTab else { return }
+        // The tokens screen may not be loaded yet; a short delay lets it settle
+        // (mirrors the pre-redesign split behavior). The receiver ignores the
+        // event while a modal (e.g. the lock screen) is on top.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            NotificationCenter.default.post(name: .tokensScreenIsVisible, object: nil)
         }
     }
 }
@@ -313,7 +385,12 @@ extension MainTabSidebarViewController: UITabBarControllerDelegate {
         if selectedTab is UISearchTab { return }
         let isReselection = selectedTab === previousTab
         if selectedTab === tokensTab {
-            isReselection ? onReselect?(.main) : onSelect?(.main)
+            if isReselection {
+                onReselect?(.main)
+            } else {
+                onSelect?(.main)
+                notifyTokensVisible()
+            }
         } else if selectedTab === settingsTab {
             let path = ViewPath.settings(option: settingsViewController?.currentView)
             isReselection ? onReselect?(path) : onSelect?(path)

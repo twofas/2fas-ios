@@ -162,7 +162,6 @@
 		C2153BC51FE9B2BF005FD297 /* CameraActiveArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2153BC41FE9B2BF005FD297 /* CameraActiveArea.swift */; };
 		C21675C52808C71F00D43EDD /* ShortDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21675C42808C71E00D43EDD /* ShortDateFormatter.swift */; };
 		C217B90C2F79CDD9000EAA7C /* TokensPassCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217B90B2F79CDD9000EAA7C /* TokensPassCell.swift */; };
-		C217E17023D7953000EE6C08 /* NotificationBottomOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217E16F23D7953000EE6C08 /* NotificationBottomOffset.swift */; };
 		C218513C2A1A873F00A8352A /* TokensHOTPCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513B2A1A873F00A8352A /* TokensHOTPCell.swift */; };
 		C218513E2A1A8EF600A8352A /* TokensNextTokenLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */; };
 		C21851402A1AB01600A8352A /* TokensTOTPCompactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */; };
@@ -1960,7 +1959,6 @@
 		C2153BC41FE9B2BF005FD297 /* CameraActiveArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraActiveArea.swift; sourceTree = "<group>"; };
 		C21675C42808C71E00D43EDD /* ShortDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortDateFormatter.swift; sourceTree = "<group>"; };
 		C217B90B2F79CDD9000EAA7C /* TokensPassCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensPassCell.swift; sourceTree = "<group>"; };
-		C217E16F23D7953000EE6C08 /* NotificationBottomOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBottomOffset.swift; sourceTree = "<group>"; };
 		C218513B2A1A873F00A8352A /* TokensHOTPCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensHOTPCell.swift; sourceTree = "<group>"; };
 		C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNextTokenLabel.swift; sourceTree = "<group>"; };
 		C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensTOTPCompactCell.swift; sourceTree = "<group>"; };
@@ -4335,7 +4333,6 @@
 		C2698B662986B3E500EBC179 /* MainTab */ = {
 			isa = PBXGroup;
 			children = (
-				C217E16F23D7953000EE6C08 /* NotificationBottomOffset.swift */,
 				C2617E0B3027AF110004AE2B /* MainTabFlowController.swift */,
 			);
 			path = MainTab;
@@ -7136,7 +7133,6 @@
 				C28B38C927CD784D00BD4A96 /* RefreshTokenCounter.swift in Sources */,
 				C21111EE274ABBD900CA7C78 /* SettingsFlowController.swift in Sources */,
 				C24F81762FB90DFF00339C8B /* CancellableTimer.swift in Sources */,
-				C217E17023D7953000EE6C08 /* NotificationBottomOffset.swift in Sources */,
 				C284AF732760159D00FEE810 /* BackupDeletePresenter.swift in Sources */,
 				C23B899927C292C30028FE34 /* CommonNavigationControlllerFlow.swift in Sources */,
 				C21347822D98786B00D325F6 /* EncryptedByUserPasswordSyncView.swift in Sources */,

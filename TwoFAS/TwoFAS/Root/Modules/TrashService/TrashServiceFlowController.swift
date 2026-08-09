@@ -41,7 +41,11 @@ final class TrashServiceFlowController: FlowController {
         serviceData: ServiceData
     ) {
         let hosting = UIHostingController(rootView: AnyView(EmptyView()))
-        hosting.view.backgroundColor = .clear
+        if #available(iOS 26.1, *) {
+            hosting.view.backgroundColor = .clear
+        } else {
+            hosting.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+        }
         let flowController = TrashServiceFlowController(viewController: hosting)
         flowController.parent = parent
         

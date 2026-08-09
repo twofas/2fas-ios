@@ -84,12 +84,21 @@ final class TransferPresenter {
     }
 
     func handleSaveOTPAuthFile() {
-        guard let url = interactor.createOTPAuthCodesFile() else {
-            flowController.toError(T.Commons.fileCreationError)
-            return
-        }
-        flowController.toShareOTPAuthFileContents(url) { [weak self] in
-            self?.interactor.cleanupTemporaryFiles(urls: [url])
+        isExporting = true
+        Task {
+            guard let url = await interactor.createOTPAuthCodesFile() else {
+                await MainActor.run {
+                    self.flowController.toError(T.Commons.fileCreationError)
+                    self.isExporting = false
+                }
+                return
+            }
+            await MainActor.run {
+                self.flowController.toShareOTPAuthFileContents(url) { [weak self] in
+                    self?.interactor.cleanupTemporaryFiles(urls: [url])
+                }
+                self.isExporting = false
+            }
         }
     }
 

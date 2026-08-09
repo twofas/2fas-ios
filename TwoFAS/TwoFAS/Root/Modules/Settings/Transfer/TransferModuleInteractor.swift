@@ -26,7 +26,7 @@ protocol TransferModuleInteracting: AnyObject {
     var hasServices: Bool { get }
     var hasPIN: Bool { get }
     func copyToClipboardGeneratedCodes(message: String)
-    func createOTPAuthCodesFile() -> URL?
+    func createOTPAuthCodesFile() async -> URL?
     func createQRCodeFiles() async -> URL?
     func cleanupTemporaryFiles(urls: [URL])
 }
@@ -67,7 +67,7 @@ final class TransferModuleInteractor {
 }
 
 extension TransferModuleInteractor: TransferModuleInteracting {
-    func createOTPAuthCodesFile() -> URL? {
+    func createOTPAuthCodesFile() async -> URL? {
         let contents = generateOTPAuthCodes().utf8
         let data = Data(contents)
         let fileName = "otpauth_\(Date().fileDateAndTime()).txt"

@@ -48,6 +48,7 @@ final class TransferFlowController: FlowController {
     private var navigationController: UINavigationController? { _viewController?.navigationController }
     private var galleryViewController: UIViewController?
     private var importer: ImporterOpenFileHeadlessFlowController?
+    private var exportLoadingViewController: UIViewController?
     fileprivate var presenter: TransferPresenter?
 
     static func showAsRoot(
@@ -122,29 +123,19 @@ extension TransferFlowController: TransferFlowControlling {
     }
 
     func toShareOTPAuthFileContents(_ url: URL, completion: @escaping () -> Void) {
-        guard let vc = _viewController else { return }
-        let activityVC = activityVC(
-            for: url,
-            title: T.Settings.exportTitleTokens,
-            completion: completion
-        )
-        vc.present(activityVC, animated: true, completion: nil)
+        presentExportActivity(for: url, title: T.Settings.exportTitleTokens, completion: completion)
     }
 
     func toShareQRCodes(_ url: URL, completion: @escaping () -> Void) {
-        guard let vc = _viewController else { return }
-        let activityVC = activityVC(
-            for: url,
-            title: T.Settings.exportTitleQrCodes,
-            completion: completion
-        )
-        vc.present(activityVC, animated: true, completion: nil)
+        presentExportActivity(for: url, title: T.Settings.exportTitleQrCodes, completion: completion)
     }
 
     func toError(_ message: String) {
-        guard let vc = _viewController else { return }
-        let alert = UIAlertController.makeSimple(with: T.Commons.error, message: message)
-        vc.present(alert, animated: true, completion: nil)
+        dismissExportLoading { [weak self] in
+            guard let self, let vc = self._viewController else { return }
+            let alert = UIAlertController.makeSimple(with: T.Commons.error, message: message)
+            vc.present(alert, animated: true, completion: nil)
+        }
     }
 
     func close() {
@@ -306,14 +297,16 @@ extension TransferFlowController: ExportQuestionFlowControllerParent {
     func closeExporter(export: Bool, exportType: ExportQuestionType) {
         // The export flow is pushed onto the Transfer stack, so unwind by popping
         // back to Transfer (the PIN step hides the bar, so re-assert visibility).
-        // The actual export (share sheet) is triggered after the pop completes to
-        // avoid presenting mid-transition.
         guard let transferVC = _viewController else { return }
         let navi = transferVC.navigationController
 
-        CATransaction.begin()
-        CATransaction.setCompletionBlock { [weak self] in
-            guard export else { return }
+        guard export else {
+            navi?.popToViewController(transferVC, animated: true)
+            navi?.setNavigationBarHidden(false, animated: true)
+            return
+        }
+
+        presentExportLoading { [weak self] in
             switch exportType {
             case .file:
                 self?.presenter?.handleSaveOTPAuthFile()
@@ -321,8 +314,53 @@ extension TransferFlowController: ExportQuestionFlowControllerParent {
                 self?.presenter?.handleExportQRCodes()
             }
         }
+    }
+}
+
+private extension TransferFlowController {
+    func presentExportLoading(completion: @escaping () -> Void) {
+        guard let navigationController else {
+            completion()
+            return
+        }
+        let hosting = UIHostingController(
+            rootView: AnyView(
+                TFLoadingView(title: T.Backup.migrationSubtitle)
+                    .navigationBarBackButtonHidden()
+            )
+        )
+        hosting.view.backgroundColor = AppColor.backgroundsPrimary.uiColor
+        hosting.navigationItem.setHidesBackButton(true, animated: false)
+        exportLoadingViewController = hosting
+        navigationController.setNavigationBarHidden(false, animated: false)
+
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        navigationController.pushViewController(hosting, animated: true)
+        CATransaction.commit()
+    }
+
+    func dismissExportLoading(completion: @escaping () -> Void) {
+        guard let transferVC = _viewController else {
+            completion()
+            return
+        }
+        exportLoadingViewController = nil
+        let navi = transferVC.navigationController
+
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
         navi?.popToViewController(transferVC, animated: true)
         navi?.setNavigationBarHidden(false, animated: true)
         CATransaction.commit()
+    }
+
+    func presentExportActivity(for url: URL, title: String, completion: @escaping () -> Void) {
+        guard let presentingVC = exportLoadingViewController ?? _viewController else { return }
+        let activityVC = activityVC(for: url, title: title) { [weak self] in
+            completion()
+            self?.dismissExportLoading {}
+        }
+        presentingVC.present(activityVC, animated: true, completion: nil)
     }
 }

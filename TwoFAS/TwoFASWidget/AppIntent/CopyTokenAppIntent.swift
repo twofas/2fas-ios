@@ -57,7 +57,7 @@ struct CopyTokenIntent: AppIntent {
     }
     
     @MainActor
-    func perform() async throws -> some IntentResult {
+    func perform() async throws -> some IntentResult & OpensIntent {
         generator.generate(
             secret: $secret.wrappedValue,
             period: period,
@@ -69,15 +69,12 @@ struct CopyTokenIntent: AppIntent {
         let defaults = UserDefaults(suiteName: Config.groupIdentifier)!
         defaults.set(token, forKey: Config.exchangeTokenKey)
         defaults.synchronize()
-        
-        return .result()
+        let url = URL(string: "twofas://open")!
+        return .result(opensIntent: OpenURLIntent(url))
     }
-    
+
     static var openAppWhenRun = true
 }
-
-@available(iOSApplicationExtension, unavailable)
-extension CopyTokenIntent: ForegroundContinuableIntent { }
 
 private final class Generator: ObservableObject {
     @Published var token: String = ""

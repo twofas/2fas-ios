@@ -21,9 +21,9 @@ import UIKit
 import Common
 
 extension UIWindow.Level {
+    static let toast = UIWindow.Level.normal + 4
     static let cover = UIWindow.Level.normal + 3
     static let login = UIWindow.Level.normal + 2
-    static let toast = UIWindow.Level.normal + 1
 }
 
 protocol RootFlowControllerParent: AnyObject {}

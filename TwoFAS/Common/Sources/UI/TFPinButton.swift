@@ -99,20 +99,25 @@ public struct TFPinButton: View {
         }
         .modify {
             if #available(iOS 26, *) {
-                $0.background {
-                    Circle()
-                        .fill(AnyShapeStyle(.clear))
-                }
-                .buttonBorderShape(.circle)
-                .buttonStyle(.glass)
-                .shadow(.glass)
-                .sensoryFeedback(.impact(weight: .light), trigger: tapCount)
+                $0.buttonStyle(GlassPinPressStyle())
+                    .sensoryFeedback(.impact(weight: .light), trigger: tapCount)
             } else {
                 $0.buttonStyle(PinPressStyle())
             }
         }
         .frame(maxWidth: Self.size, maxHeight: Self.size)
         .aspectRatio(1, contentMode: .fit)
+    }
+
+    @available(iOS 26, *)
+    private struct GlassPinPressStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .glassEffect(.regular, in: .circle)
+                .shadow(.glass)
+                .scaleEffect(configuration.isPressed ? 0.82 : 1)
+                .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
+        }
     }
 
     private struct PinPressStyle: ButtonStyle {

@@ -25,18 +25,17 @@ struct PINKeyboard: View {
 
     var body: some View {
         keypad
-            .modify { view in
-                if #available(iOS 26, *) {
-                    GlassEffectContainer { view }
-                } else {
-                    view
-                }
-            }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.XL)
     }
 
+    @ViewBuilder
     private var keypad: some View {
+        // Note: the buttons are intentionally NOT wrapped in a `GlassEffectContainer`.
+        // The keys are spaced far apart, so they never blend or morph — the container would
+        // add no visual benefit. Worse, it merges all keys into a single rendered glass shape,
+        // so the interactive press of one `.buttonStyle(.glass)` key (press-in + press-out)
+        // forces the whole shape to re-render, making every button flash twice on each tap.
         PINKeypadLayout {
             TFPinButton(.digit(1), action: action)
             TFPinButton(.digit(2), action: action)

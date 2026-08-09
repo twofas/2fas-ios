@@ -34,28 +34,40 @@ struct PINKeypadLayout: Layout {
     
     private var maxWidth: CGFloat { Self.buttonSize * Self.maxWidthFactor }
     private var maxHeight: CGFloat { Self.buttonSize * Self.maxHeightFactor }
-    private var minHeight: CGFloat { Self.buttonSize * CGFloat(Self.rows) + Self.minSpacing * CGFloat(Self.rows - 1) }
+
+    // Height at which full-size buttons still fit with exactly minSpacing between rows
+    // (and top/bottom edges). Below this the buttons are scaled down instead of overflowing.
+    private var minHeight: CGFloat {
+        Self.buttonSize * CGFloat(Self.rows) + Self.minSpacing * CGFloat(Self.rows + 1)
+    }
+
+    private func buttonSize(fittingHeight height: CGFloat) -> CGFloat {
+        guard height < minHeight else { return Self.buttonSize }
+        let available = height - Self.minSpacing * CGFloat(Self.rows + 1)
+        let scaled = available / CGFloat(Self.rows)
+        return max(0, min(Self.buttonSize, scaled))
+    }
 
     // MARK: Layout
 
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
         let availableW = proposal.width ?? maxWidth
         let availableH = proposal.height ?? maxHeight
-        let height = max(min(availableH, maxHeight), minHeight)
 
         return CGSize(
             width: min(availableW, maxWidth),
-            height: height
+            height: min(availableH, maxHeight)
         )
     }
 
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
-        let btn  = Self.buttonSize
         let cols = Self.columns
         let rows = Self.rows
 
         let layoutW = min(bounds.width, maxWidth)
-        let layoutH = max(min(bounds.height, maxHeight), minHeight)
+        let layoutH = min(bounds.height, maxHeight)
+
+        let btn = buttonSize(fittingHeight: layoutH)
 
         // Equal horizontal gaps: left edge + gaps between cols + right edge = cols+1 slots
         let hGap = (layoutW - btn * CGFloat(cols)) / CGFloat(cols + 1)

@@ -95,7 +95,7 @@ public struct TFPinButton: View {
         }) {
             keyLabel
                 .foregroundStyle(AppColor.labelsPrimary)
-                .frame(width: Self.size, height: Self.size)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .modify {
             if #available(iOS 26, *) {
@@ -111,7 +111,8 @@ public struct TFPinButton: View {
                 $0.buttonStyle(PinPressStyle())
             }
         }
-        .frame(width: Self.size, height: Self.size)
+        .frame(maxWidth: Self.size, maxHeight: Self.size)
+        .aspectRatio(1, contentMode: .fit)
     }
 
     private struct PinPressStyle: ButtonStyle {

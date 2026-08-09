@@ -67,6 +67,7 @@ struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
                 .foregroundStyle(presenter.isError ? AppColor.accentsBrand : AppColor.labelsSecondary)
                 .animation(.easeInOut, value: presenter.info)
                 .padding(.horizontal, .XL)
+                .padding(.top, .XL)
 
             Spacer()
 

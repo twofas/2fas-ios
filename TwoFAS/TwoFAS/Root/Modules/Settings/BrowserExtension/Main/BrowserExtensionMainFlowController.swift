@@ -42,7 +42,7 @@ final class BrowserExtensionMainFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: BrowserExtensionMainFlowControllerParent
     ) {
-        let hosting = create(parent: parent, showsBackButton: false)
+        let hosting = create(parent: parent)
         navigationController.setViewControllers([hosting], animated: false)
     }
 
@@ -50,15 +50,14 @@ final class BrowserExtensionMainFlowController: FlowController {
         in navigationController: UINavigationController,
         parent: BrowserExtensionMainFlowControllerParent
     ) {
-        let hosting = create(parent: parent, showsBackButton: true)
+        let hosting = create(parent: parent)
         navigationController.pushRootViewController(hosting, animated: true)
     }
 
     private static func create(
-        parent: BrowserExtensionMainFlowControllerParent,
-        showsBackButton: Bool
+        parent: BrowserExtensionMainFlowControllerParent
     ) -> UIViewController {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.hidesBottomBarWhenPushed = false
         let flowController = BrowserExtensionMainFlowController(viewController: hosting)
         flowController.parent = parent
@@ -67,7 +66,6 @@ final class BrowserExtensionMainFlowController: FlowController {
             flowController: flowController,
             interactor: interactor
         )
-        presenter.showsBackButton = showsBackButton
         flowController.presenter = presenter
         hosting.rootView = AnyView(BrowserExtensionMainView(presenter: presenter))
         return hosting
@@ -85,8 +83,7 @@ extension BrowserExtensionMainFlowController: BrowserExtensionMainFlowControllin
         guard embeddedViewController == nil, let vc = _viewController else { return }
         embeddedViewController = BrowserExtensionIntroFlowController.embed(
             in: vc,
-            parent: self,
-            showsBackButton: presenter?.showsBackButton ?? false
+            parent: self
         )
     }
 

@@ -88,19 +88,18 @@ extension SettingsMenuPresenter {
                 navigate(to: selectedModule)
             }
         } else {
-            if let selectedModule {
-                navigate(to: selectedModule)
-            } else {
-                navigate(to: .backup)
-            }
+            // Restoring the detail column on expansion: force the navigation so the
+            // column is rebuilt even when the target equals the remembered module
+            // (otherwise the reselection guard would leave the detail empty).
+            navigate(to: selectedModule ?? .backup, force: true)
         }
     }
 
     func handleShowingRoot() {
-        if isCollapsed {
-            selectedModule = nil
-            flowController.toUpdateCurrentPosition(nil)
-        }
+        // Returning to the collapsed root menu must not forget the selected module:
+        // it is needed to restore the detail column when the layout expands again.
+        // The highlight is already suppressed while collapsed (see isSelected), so
+        // there is nothing to clear here.
     }
 
     func handleToFAQ() {
@@ -163,7 +162,14 @@ extension SettingsMenuPresenter {
 
 private extension SettingsMenuPresenter {
     func navigate(to navigateTo: SettingsNavigationModule, rememberPosition: Bool = true, force: Bool = false) {
-        guard force || rememberPosition == false || navigateTo != selectedModule else { return }
+        if !force, rememberPosition, navigateTo == selectedModule, !isCollapsed {
+            // Re-selecting the already-active module in the two-column layout:
+            // return its detail stack to root instead of rebuilding the same
+            // detail. (Collapsed layout falls through and pushes a fresh copy,
+            // since the menu is only reachable at the navigation root there.)
+            flowController.toPopDetailToRoot()
+            return
+        }
         if rememberPosition {
             selectedModule = navigateTo
         } else {

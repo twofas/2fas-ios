@@ -24,7 +24,6 @@ import Common
 final class BrowserExtensionMainPresenter {
     var sections: [BrowserExtensionMainSection] = []
     var isLoading = false
-    var showsBackButton = true
     var showRenameNickname = false
 
     static let nicknameMinLength = 3

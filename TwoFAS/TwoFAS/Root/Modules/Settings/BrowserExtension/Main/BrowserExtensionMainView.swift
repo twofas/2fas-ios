@@ -25,20 +25,14 @@ struct BrowserExtensionMainView: View {
     var presenter: BrowserExtensionMainPresenter
 
     var body: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: T.Browser.browserExtension,
-                showsBackButton: presenter.showsBackButton,
-                onBack: presenter.showsBackButton ? presenter.handleBack : nil
-            )
-
-            TFListScreen {
-                ForEach(presenter.sections) { section in
-                    sectionView(section)
-                }
+        TFListScreen {
+            ForEach(presenter.sections) { section in
+                sectionView(section)
             }
         }
         .background(.backgroundsPrimary)
+        .navigationTitle(T.Browser.browserExtension)
+        .navigationBarTitleDisplayMode(.inline)
         .overlay {
             if presenter.isLoading {
                 ZStack {

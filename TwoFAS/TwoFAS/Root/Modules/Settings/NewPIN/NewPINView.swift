@@ -26,12 +26,8 @@ struct NewPINView: View {
 
     var body: some View {
         PINEntryScreen(
-            title: presenter.title,
-            leadingSymbol: presenter.showsCancelButton ? .close : nil,
-            onLeadingTap: presenter.showsCancelButton ? { presenter.handleCancel() } : nil,
             presenter: presenter,
             onAppear: {
-                presenter.viewDidLoad()
                 presenter.viewWillAppear()
             }
         ) {
@@ -46,5 +42,8 @@ struct NewPINView: View {
                 .padding(.bottom, .L)
             }
         }
+        .navigationBarBackButtonHidden()
+        .navigationTitle(presenter.title)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

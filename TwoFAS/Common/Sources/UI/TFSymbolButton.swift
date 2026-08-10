@@ -45,7 +45,6 @@ public struct TFSymbolButton: View {
                 .foregroundStyle(AppColor.labelsVibrantPrimary)
                 .padding(.S)
         }
-        .buttonStyle(ButtonFeedbackStyle())
         .simultaneousGesture(
             DragGesture(minimumDistance: 0)
                 .updating($isPressed) { _, state, _ in state = true }

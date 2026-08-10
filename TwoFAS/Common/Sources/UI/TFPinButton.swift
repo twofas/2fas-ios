@@ -105,6 +105,7 @@ public struct TFPinButton: View {
                 $0.buttonStyle(PinPressStyle())
             }
         }
+        .contentShape(Rectangle())
         .frame(maxWidth: Self.size, maxHeight: Self.size)
         .aspectRatio(1, contentMode: .fit)
     }

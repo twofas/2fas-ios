@@ -60,7 +60,8 @@ final class ExternalImportInstructionsFlowController: FlowController {
                 action: presenter.handleAction,
                 actionName: presenter.actionName,
                 secondaryActionName: presenter.secondaryActionName,
-                secondaryAction: secondaryAction
+                secondaryAction: secondaryAction,
+                close: presenter.handleCancel
             )
         )
         hosting.view.backgroundColor = AppColor.backgroundsPrimary.uiColor

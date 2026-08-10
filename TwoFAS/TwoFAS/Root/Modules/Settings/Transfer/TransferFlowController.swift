@@ -45,7 +45,7 @@ protocol TransferFlowControlling: AnyObject {
 
 final class TransferFlowController: FlowController {
     private weak var parent: TransferFlowControllerParent?
-    private var navigationController: UINavigationController? { _viewController?.navigationController }
+    private var modalNavigationController: UINavigationController?
     private var galleryViewController: UIViewController?
     private var importer: ImporterOpenFileHeadlessFlowController?
     private var exportLoadingViewController: UIViewController?
@@ -86,23 +86,21 @@ final class TransferFlowController: FlowController {
 
 extension TransferFlowController: TransferFlowControlling {
     // MARK: - Import
-    func toAegis() { pushInstructions(service: .aegis) }
-    func toRaivo() { pushInstructions(service: .raivo) }
-    func toLastPass() { pushInstructions(service: .lastPass) }
-    func toGoogleAuth() { pushInstructions(service: .googleAuth) }
-    func toAndOTP() { pushInstructions(service: .andOTP) }
-    func toAuthenticatorPro() { pushInstructions(service: .authenticatorPro) }
-    func toOpenTXTFile() { pushInstructions(service: .otpAuthFile) }
+    func toAegis() { presentInstructions(service: .aegis) }
+    func toRaivo() { presentInstructions(service: .raivo) }
+    func toLastPass() { presentInstructions(service: .lastPass) }
+    func toGoogleAuth() { presentInstructions(service: .googleAuth) }
+    func toAndOTP() { presentInstructions(service: .andOTP) }
+    func toAuthenticatorPro() { presentInstructions(service: .authenticatorPro) }
+    func toOpenTXTFile() { presentInstructions(service: .otpAuthFile) }
 
     // MARK: - Export
     func toSaveOTPAuthFile() {
-        guard let navigationController else { return }
-        ExportQuestionFlowController.push(in: navigationController, parent: self, exportType: .file)
+        presentExportQuestion(exportType: .file)
     }
 
     func toExportQRCodes() {
-        guard let navigationController else { return }
-        ExportQuestionFlowController.push(in: navigationController, parent: self, exportType: .qr)
+        presentExportQuestion(exportType: .qr)
     }
 
     func toSetupPIN() {
@@ -131,7 +129,7 @@ extension TransferFlowController: TransferFlowControlling {
     }
 
     func toError(_ message: String) {
-        dismissExportLoading { [weak self] in
+        dismissModal { [weak self] in
             guard let self, let vc = self._viewController else { return }
             let alert = UIAlertController.makeSimple(with: T.Commons.error, message: message)
             vc.present(alert, animated: true, completion: nil)
@@ -144,49 +142,81 @@ extension TransferFlowController: TransferFlowControlling {
 }
 
 private extension TransferFlowController {
-    func pushInstructions(service: ExternalImportService) {
-        guard let navigationController else { return }
+    func presentInstructions(service: ExternalImportService) {
+        guard let presentingViewController = _viewController else { return }
+        let navi = makeModalNavigationController()
         ExternalImportInstructionsFlowController.push(
-            in: navigationController,
+            in: navi,
             parent: self,
             service: service
         )
+        presentingViewController.present(navi, animated: true)
+    }
+
+    func presentExportQuestion(exportType: ExportQuestionType) {
+        guard let presentingViewController = _viewController else { return }
+        let navi = makeModalNavigationController()
+        ExportQuestionFlowController.push(in: navi, parent: self, exportType: exportType)
+        presentingViewController.present(navi, animated: true)
+    }
+
+    func makeModalNavigationController() -> UINavigationController {
+        let navi = CommonNavigationController()
+        navi.configureAsModal()
+        modalNavigationController = navi
+        return navi
+    }
+
+    func dismissModal(completion: (() -> Void)? = nil) {
+        guard modalNavigationController != nil else {
+            completion?()
+            return
+        }
+        _viewController?.dismiss(animated: true) { [weak self] in
+            self?.modalNavigationController = nil
+            self?.exportLoadingViewController = nil
+            completion?()
+        }
+    }
+
+    func dismissInnerModal(completion: (() -> Void)? = nil) {
+        modalNavigationController?.dismiss(animated: true, completion: completion)
     }
 }
 
 extension TransferFlowController: ExternalImportInstructionsFlowControllerParent {
     func instructionsClose() {
-        closeInstructions()
+        dismissModal()
     }
 
     func instructionsOpenFile(service: ExternalImportService) {
-        guard let navigationController else { return }
+        guard let modalNavigationController else { return }
         importer = ImporterOpenFileHeadlessFlowController
-            .present(on: navigationController, parent: self, url: nil, importingOTPAuthFile: service == .otpAuthFile)
+            .present(on: modalNavigationController, parent: self, url: nil, importingOTPAuthFile: service == .otpAuthFile)
     }
 
     func instructionsCamera() {
-        guard let navigationController else { return }
+        guard let modalNavigationController else { return }
         CameraScannerFlowController.present(
-            on: navigationController,
+            on: modalNavigationController,
             parent: self
         )
     }
 
     func instructionsGallery() {
-        guard let navigationController else { return }
+        guard let modalNavigationController else { return }
         galleryViewController = SelectFromGalleryFlowController.present(
-            on: navigationController,
+            on: modalNavigationController,
             applyOverlay: true,
             parent: self
         )
     }
 
     func instructionsFromClipboard() {
-        guard let navigationController else { return }
+        guard let modalNavigationController else { return }
         importer = ImporterOpenFileHeadlessFlowController
             .present(
-                on: navigationController,
+                on: modalNavigationController,
                 parent: self,
                 url: nil,
                 importingOTPAuthFile: true,
@@ -196,13 +226,13 @@ extension TransferFlowController: ExternalImportInstructionsFlowControllerParent
 }
 
 extension TransferFlowController: CameraScannerFlowControllerParent {
-    func cameraScannerDidFinish() { end() }
+    func cameraScannerDidFinish() { dismissInnerModal() }
     func cameraScannerDidImport(count: Int) {
-        navigationController?.dismiss(animated: true) { [weak self] in
+        dismissInnerModal { [weak self] in
             self?.showSummary(count: count)
         }
     }
-    func cameraScannerServiceWasCreated(serviceData: ServiceData) { end() }
+    func cameraScannerServiceWasCreated(serviceData: ServiceData) { dismissInnerModal() }
 }
 
 extension TransferFlowController: SelectFromGalleryFlowControllerParent {
@@ -210,7 +240,7 @@ extension TransferFlowController: SelectFromGalleryFlowControllerParent {
     func galleryDidCancel() { endGallery() }
     func galleryServiceWasCreated(serviceData: ServiceData) { endGallery() }
     func galleryDidImport(count: Int) {
-        navigationController?.dismiss(animated: true) { [weak self] in
+        dismissInnerModal { [weak self] in
             self?.galleryViewController = nil
             self?.showSummary(count: count)
         }
@@ -220,30 +250,22 @@ extension TransferFlowController: SelectFromGalleryFlowControllerParent {
 extension TransferFlowController: ImporterOpenFileHeadlessFlowControllerParent {
     func importerCloseOnSucessfulImport() {
         importer = nil
-        navigationController?.dismiss(animated: true) { [weak self] in
-            self?.navigationController?.popToRootViewController(animated: true)
+        dismissInnerModal { [weak self] in
+            self?.dismissModal()
         }
     }
 
     func importerClose() {
         importer = nil
-        end()
+        dismissInnerModal()
     }
 }
 
 private extension TransferFlowController {
-    func closeInstructions(animated: Bool = true) {
-        navigationController?.popViewController(animated: animated)
-    }
-
     func endGallery() {
-        navigationController?.dismiss(animated: true) { [weak self] in
+        dismissInnerModal { [weak self] in
             self?.galleryViewController = nil
         }
-    }
-
-    func end() {
-        navigationController?.dismiss(animated: true)
     }
 
     func showSummary(count: Int) {
@@ -254,12 +276,12 @@ private extension TransferFlowController {
         )
         alert.addAction(UIAlertAction(title: T.Commons.tokens, style: .default, handler: { [weak self] _ in
             NotificationCenter.default.post(name: .switchToTokens, object: nil)
-            self?.closeInstructions(animated: false)
+            self?.dismissModal()
         }))
         alert.addAction(UIAlertAction(title: T.Commons.close, style: .cancel, handler: { [weak self] _ in
-            self?.instructionsClose()
+            self?.dismissModal()
         }))
-        navigationController?.present(alert, animated: true)
+        modalNavigationController?.present(alert, animated: true)
     }
 
     func activityVC(for url: URL, title: String, completion: @escaping () -> Void) -> UIActivityViewController {
@@ -295,14 +317,8 @@ private extension TransferFlowController {
 
 extension TransferFlowController: ExportQuestionFlowControllerParent {
     func closeExporter(export: Bool, exportType: ExportQuestionType) {
-        // The export flow is pushed onto the Transfer stack, so unwind by popping
-        // back to Transfer (the PIN step hides the bar, so re-assert visibility).
-        guard let transferVC = _viewController else { return }
-        let navi = transferVC.navigationController
-
         guard export else {
-            navi?.popToViewController(transferVC, animated: true)
-            navi?.setNavigationBarHidden(false, animated: true)
+            dismissModal()
             return
         }
 
@@ -319,7 +335,7 @@ extension TransferFlowController: ExportQuestionFlowControllerParent {
 
 private extension TransferFlowController {
     func presentExportLoading(completion: @escaping () -> Void) {
-        guard let navigationController else {
+        guard let modalNavigationController else {
             completion()
             return
         }
@@ -332,26 +348,10 @@ private extension TransferFlowController {
         hosting.view.backgroundColor = AppColor.backgroundsPrimary.uiColor
         hosting.navigationItem.setHidesBackButton(true, animated: false)
         exportLoadingViewController = hosting
-        navigationController.setNavigationBarHidden(false, animated: false)
 
         CATransaction.begin()
         CATransaction.setCompletionBlock(completion)
-        navigationController.pushViewController(hosting, animated: true)
-        CATransaction.commit()
-    }
-
-    func dismissExportLoading(completion: @escaping () -> Void) {
-        guard let transferVC = _viewController else {
-            completion()
-            return
-        }
-        exportLoadingViewController = nil
-        let navi = transferVC.navigationController
-
-        CATransaction.begin()
-        CATransaction.setCompletionBlock(completion)
-        navi?.popToViewController(transferVC, animated: true)
-        navi?.setNavigationBarHidden(false, animated: true)
+        modalNavigationController.pushViewController(hosting, animated: true)
         CATransaction.commit()
     }
 
@@ -359,7 +359,7 @@ private extension TransferFlowController {
         guard let presentingVC = exportLoadingViewController ?? _viewController else { return }
         let activityVC = activityVC(for: url, title: title) { [weak self] in
             completion()
-            self?.dismissExportLoading {}
+            self?.dismissModal()
         }
         presentingVC.present(activityVC, animated: true, completion: nil)
     }

@@ -31,5 +31,15 @@ struct ExportQuestionPINVerificationView: View {
         }
         .navigationTitle(T.Backup.verifyPin)
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    presenter.handleCancel()
+                } label: {
+                    Image(systemName: "xmark")
+                }
+            }
+        }
     }
 }

@@ -56,8 +56,25 @@ struct ExportQuestionView: View {
                 presenter.handleShowPIN()
             }
             .disabled(!enableSave)
+
+            TFButton(
+                T.Commons.cancel,
+                variant: .borderless,
+                size: .large
+            ) {
+                presenter.handleClose()
+            }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    presenter.handleClose()
+                } label: {
+                    Image(systemName: "xmark")
+                }
+            }
+        }
     }
 }
 

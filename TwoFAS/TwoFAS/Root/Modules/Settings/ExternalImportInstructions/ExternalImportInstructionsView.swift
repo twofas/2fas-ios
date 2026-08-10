@@ -31,6 +31,8 @@ struct ExternalImportInstructionsView: View {
     let secondaryActionName: String?
     let secondaryAction: Callback?
 
+    let close: Callback
+
     private let image2 = Asset.gaImport2.image
 
     var body: some View {
@@ -56,8 +58,17 @@ struct ExternalImportInstructionsView: View {
             if let secondaryAction, let secondaryActionName {
                 TFButton(secondaryActionName, variant: .bordered, size: .large, action: secondaryAction)
             }
+
+            TFButton(T.Commons.cancel, variant: .borderless, size: .large, action: close)
         }
         .navigationTitle(sourceName)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button(action: close) {
+                    Image(systemName: "xmark")
+                }
+            }
+        }
     }
 }

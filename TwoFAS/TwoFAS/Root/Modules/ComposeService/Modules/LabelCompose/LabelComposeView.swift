@@ -28,57 +28,49 @@ struct LabelComposeView: View {
     private var isTitleFocused: Bool?
 
     var body: some View {
-        VStack(alignment: .center, spacing: .zero) {
-            ZStack {
-                HStack(spacing: .zero) {
-                    TFLiquidGlassSymbolButton(symbol: .back) {
-                        presenter.handleBack()
-                    }
-                    Spacer()
-                    TFLiquidGlassTextButton(T.Commons.save, color: .accentsBrand) {
-                        presenter.handleSave()
-                    }
-                    .disabled(!presenter.isSaveEnabled)
-                }
-                TFTitleView(title: T.Tokens.changeLabel)
-            }
-            .padding(.horizontal, .XL)
-            .padding(.top, .XL)
+        ScrollView {
+            AdaptiveReadableContainer {
+                VStack(spacing: .XXXXL) {
+                    ServiceIconView(
+                        icon: .label(title: presenter.title, TintColor: presenter.color)
+                    )
+                    .shadow(.glass)
 
-            ScrollView {
-                AdaptiveReadableContainer {
-                    VStack(spacing: .XXXXL) {
-                        ServiceIconView(
-                            icon: .label(title: presenter.title, TintColor: presenter.color)
+                    VStack(alignment: .leading, spacing: .zero) {
+                        TFFloatingTextField(
+                            placeHolder: T.Tokens.labelCharactersTitle,
+                            text: $presenter.title,
+                            inputType: .other,
+                            keyboardType: .default,
+                            autocapitalization: .characters,
+                            focused: $isTitleFocused,
+                            focusValue: true
                         )
-                        .shadow(.glass)
 
-                        VStack(alignment: .leading, spacing: .zero) {
-                            TFFloatingTextField(
-                                placeHolder: T.Tokens.labelCharactersTitle,
-                                text: $presenter.title,
-                                inputType: .other,
-                                keyboardType: .default,
-                                autocapitalization: .characters,
-                                focused: $isTitleFocused,
-                                focusValue: true
-                            )
+                        Divider()
+                            .foregroundStyle(.separatorsNonOpaque)
 
-                            Divider()
-                                .foregroundStyle(.separatorsNonOpaque)
-
-                            TFColorPickerMenu(
-                                title: T.Tokens.pickBackgroundColor,
-                                selectedColor: $presenter.color
-                            )
-                        }
-                        .groupedSectionBackground(isElevated: true)
+                        TFColorPickerMenu(
+                            title: T.Tokens.pickBackgroundColor,
+                            selectedColor: $presenter.color
+                        )
                     }
+                    .groupedSectionBackground(isElevated: true)
                 }
             }
-            .scrollDismissesKeyboard(.interactively)
         }
+        .scrollDismissesKeyboard(.interactively)
         .background(.backgroundsPrimaryElevated)
+        .navigationTitle(T.Tokens.changeLabel)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(T.Commons.save) {
+                    presenter.handleSave()
+                }
+                .disabled(!presenter.isSaveEnabled)
+            }
+        }
         .onChange(of: presenter.title) { _, newValue in
             let sanitized = presenter.sanitize(newValue)
             if sanitized != newValue {

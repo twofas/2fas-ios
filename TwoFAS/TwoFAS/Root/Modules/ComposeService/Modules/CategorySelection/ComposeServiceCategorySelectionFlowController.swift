@@ -17,54 +17,9 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import SwiftUI
 import Common
-
-protocol ComposeServiceCategorySelectionFlowControllerParent: AnyObject {
-    func didChangeSectionID(_ section: SectionID?)
-}
 
 protocol ComposeServiceCategorySelectionFlowControlling: AnyObject {
     func toChangeSection(_ sectionID: SectionID?)
     func close()
-}
-
-final class ComposeServiceCategorySelectionFlowController: FlowController {
-    private weak var parent: ComposeServiceCategorySelectionFlowControllerParent?
-    private weak var navigationController: UINavigationController?
-
-    static func push(
-        on navigationController: UINavigationController,
-        parent: ComposeServiceCategorySelectionFlowControllerParent,
-        selectedSection: SectionID?
-    ) {
-        let hostingController = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
-        let flowController = ComposeServiceCategorySelectionFlowController(viewController: hostingController)
-        flowController.parent = parent
-        flowController.navigationController = navigationController
-
-        let interactor = ModuleInteractorFactory
-            .shared
-            .composeServiceCategorySelectionModuleInteractor(with: selectedSection)
-        let presenter = ComposeServiceCategorySelectionPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-
-        hostingController.rootView = AnyView(ComposeServiceCategorySelectionView(presenter: presenter))
-        hostingController.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
-
-        navigationController.pushViewController(hostingController, animated: true)
-    }
-}
-
-extension ComposeServiceCategorySelectionFlowController: ComposeServiceCategorySelectionFlowControlling {
-    func toChangeSection(_ sectionID: SectionID?) {
-        parent?.didChangeSectionID(sectionID)
-    }
-
-    func close() {
-        navigationController?.popViewController(animated: true)
-    }
 }

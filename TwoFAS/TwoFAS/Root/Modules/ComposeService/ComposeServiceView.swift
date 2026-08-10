@@ -21,8 +21,11 @@ import SwiftUI
 import Common
 
 struct ComposeServiceView: View {
-    @ObservedObject
+    @Bindable
     var presenter: ComposeServicePresenter
+
+    @Bindable
+    var router: ComposeServiceRouter
 
     @FocusState
     private var focusedField: Field?
@@ -36,9 +39,7 @@ struct ComposeServiceView: View {
     @State private var touchedAdditionalInfo = false
 
     var body: some View {
-        VStack(alignment: .center, spacing: .zero) {
-            header
-
+        NavigationStack(path: $router.path) {
             ScrollView {
                 AdaptiveReadableContainer {
                     VStack(spacing: .XXXL) {
@@ -53,45 +54,46 @@ struct ComposeServiceView: View {
                 .dismissKeyboardOnTapOutside()
             }
             .scrollDismissesKeyboard(.immediately)
-        }
-        .background(.backgroundsPrimaryElevated)
-        .onAppear {
-            presenter.viewWillAppear()
-        }
-        .onReceive(NotificationCenter.default.publisher(for: .servicesWereUpdated)) { notification in
-            let modified = notification.userInfo?[Notification.UserInfoKey.modified] as? [String]
-            let deleted = notification.userInfo?[Notification.UserInfoKey.deleted] as? [String]
-            presenter.handleServicesWereUpdated(modified: modified, deleted: deleted)
-        }
-        .onChange(of: presenter.serviceName) { _, _ in touchedServiceName = true }
-        .onChange(of: presenter.additionalInfo) { _, _ in touchedAdditionalInfo = true }
-        .alert(T.Commons.notice, isPresented: $presenter.isSetPINAlertPresented) {
-            Button(T.Commons.cancel, role: .cancel) {}
-            Button(T.Commons.set, role: .destructive) {
-                presenter.handleSwitchToSetupPIN()
-            }
-        } message: {
-            Text(T.Tokens.showServiceKeySetupLock)
-        }
-    }
-
-    @ViewBuilder
-    private var header: some View {
-        ZStack {
-            HStack(spacing: .zero) {
-                TFLiquidGlassSymbolButton(symbol: .close) {
-                    presenter.handleCancel()
+            .background(.backgroundsPrimaryElevated)
+            .navigationTitle(T.Commons.edit)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        presenter.handleCancel()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
                 }
-                Spacer()
-                TFLiquidGlassTextButton(T.Commons.save, color: .accentsBrand) {
-                    presenter.handleSave()
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(T.Commons.save) {
+                        presenter.handleSave()
+                    }
+                    .disabled(!presenter.isSaveEnabled)
                 }
-                .disabled(!presenter.isSaveEnabled)
             }
-            TFTitleView(title: T.Commons.edit)
+            .navigationDestination(for: ComposeServiceRoute.self) { route in
+                router.destination(for: route)
+            }
+            .onAppear {
+                presenter.viewWillAppear()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .servicesWereUpdated)) { notification in
+                let modified = notification.userInfo?[Notification.UserInfoKey.modified] as? [String]
+                let deleted = notification.userInfo?[Notification.UserInfoKey.deleted] as? [String]
+                presenter.handleServicesWereUpdated(modified: modified, deleted: deleted)
+            }
+            .onChange(of: presenter.serviceName) { _, _ in touchedServiceName = true }
+            .onChange(of: presenter.additionalInfo) { _, _ in touchedAdditionalInfo = true }
+            .alert(T.Commons.notice, isPresented: $presenter.isSetPINAlertPresented) {
+                Button(T.Commons.cancel, role: .cancel) {}
+                Button(T.Commons.set, role: .destructive) {
+                    presenter.handleSwitchToSetupPIN()
+                }
+            } message: {
+                Text(T.Tokens.showServiceKeySetupLock)
+            }
         }
-        .padding(.horizontal, .XL)
-        .padding(.vertical, .XL)
     }
 
     @ViewBuilder

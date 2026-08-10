@@ -25,44 +25,38 @@ struct ComposeServiceCategorySelectionView: View {
     var presenter: ComposeServiceCategorySelectionPresenter
 
     var body: some View {
-        VStack(alignment: .center, spacing: .zero) {
-            ZStack {
-                HStack(spacing: .zero) {
-                    TFLiquidGlassSymbolButton(symbol: .back) {
-                        presenter.handleBack()
-                    }
-                    Spacer()
-                    TFLiquidGlassSymbolButton(symbol: .add) {
-                        presenter.handleShowAddSection()
-                    }
-                    .accessibilityLabel(T.Voiceover.addGroup)
-                }
-                TFTitleView(title: T.Tokens.selectGroup)
-            }
-            .padding(.horizontal, .XL)
-            .padding(.top, .XL)
-
-            ScrollView {
-                AdaptiveReadableContainer {
-                    VStack(spacing: .zero) {
-                        ForEach(Array(presenter.rows.enumerated()), id: \.element.id) { index, row in
-                            Button {
-                                presenter.handleSelection(row)
-                            } label: {
-                                CategoryRow(
-                                    row: row,
-                                    showSeparator: index < presenter.rows.count - 1
-                                )
-                            }
-                            .buttonStyle(.plain)
+        ScrollView {
+            AdaptiveReadableContainer {
+                VStack(spacing: .zero) {
+                    ForEach(Array(presenter.rows.enumerated()), id: \.element.id) { index, row in
+                        Button {
+                            presenter.handleSelection(row)
+                        } label: {
+                            CategoryRow(
+                                row: row,
+                                showSeparator: index < presenter.rows.count - 1
+                            )
                         }
+                        .buttonStyle(.plain)
                     }
-                    .groupedSectionBackground(isElevated: true)
                 }
+                .groupedSectionBackground(isElevated: true)
             }
-            .scrollDismissesKeyboard(.interactively)
         }
+        .scrollDismissesKeyboard(.interactively)
         .background(.backgroundsPrimaryElevated)
+        .navigationTitle(T.Tokens.selectGroup)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    presenter.handleShowAddSection()
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .accessibilityLabel(T.Voiceover.addGroup)
+            }
+        }
         .onAppear {
             presenter.viewWillAppear()
         }

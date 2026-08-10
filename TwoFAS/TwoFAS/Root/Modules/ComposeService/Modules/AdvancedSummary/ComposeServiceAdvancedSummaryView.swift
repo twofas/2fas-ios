@@ -25,42 +25,30 @@ struct ComposeServiceAdvancedSummaryView: View {
     var presenter: ComposeServiceAdvancedSummaryPresenter
 
     var body: some View {
-        VStack(alignment: .center, spacing: .zero) {
-            ZStack {
-                HStack(spacing: .zero) {
-                    TFLiquidGlassSymbolButton(symbol: .back) {
-                        presenter.handleBack()
+        ScrollView(.vertical) {
+            AdaptiveReadableContainer(horizontalMargin: Spacing.XL.rawValue) {
+                VStack(alignment: .leading, spacing: .zero) {
+                    if !presenter.menu.title.isEmpty {
+                        sectionHeader(presenter.menu.title)
                     }
-                    Spacer()
-                }
-                TFTitleView(title: T.Tokens.advanced)
-            }
-            .padding(.horizontal, .XL)
-            .padding(.top, .XL)
 
-            ScrollView(.vertical) {
-                AdaptiveReadableContainer(horizontalMargin: Spacing.XL.rawValue) {
                     VStack(alignment: .leading, spacing: .zero) {
-                        if !presenter.menu.title.isEmpty {
-                            sectionHeader(presenter.menu.title)
-                        }
-
-                        VStack(alignment: .leading, spacing: .zero) {
-                            ForEach(Array(presenter.menu.cells.enumerated()), id: \.offset) { index, cell in
-                                row(for: cell)
-                                if index < presenter.menu.cells.count - 1 {
-                                    Divider()
-                                        .foregroundStyle(.separatorsNonOpaque)
-                                }
+                        ForEach(Array(presenter.menu.cells.enumerated()), id: \.offset) { index, cell in
+                            row(for: cell)
+                            if index < presenter.menu.cells.count - 1 {
+                                Divider()
+                                    .foregroundStyle(.separatorsNonOpaque)
                             }
                         }
-                        .groupedSectionBackground(isElevated: true)
                     }
-                    .padding(.top, .XXXXL)
+                    .groupedSectionBackground(isElevated: true)
                 }
+                .padding(.top, .XXXXL)
             }
         }
         .background(.backgroundsPrimaryElevated)
+        .navigationTitle(T.Tokens.advanced)
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             presenter.viewWillAppear()
         }

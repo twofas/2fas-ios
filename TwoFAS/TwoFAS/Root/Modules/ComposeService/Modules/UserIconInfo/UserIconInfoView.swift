@@ -27,34 +27,21 @@ struct UserIconInfoView: View {
     private var colorScheme: ColorScheme
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                AdaptiveReadableContainer(
-                    horizontalMargin: Spacing.XL.value,
-                    verticalMargin: Spacing.XL.value
-                ) {
-                    VStack(spacing: .XL) {
-                        socialSection
-                        orDivider
-                        providerSection
-                    }
+        ScrollView {
+            AdaptiveReadableContainer(
+                horizontalMargin: Spacing.XL.value,
+                verticalMargin: Spacing.XL.value
+            ) {
+                VStack(spacing: .XL) {
+                    socialSection
+                    orDivider
+                    providerSection
                 }
             }
-            .background(AppColor.backgroundsPrimaryElevated)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    TFSymbolButton(symbol: .back) {
-                        presenter.handleBack()
-                    }
-                }
-                ToolbarItem(placement: .principal) {
-                    TFTitleView(title: T.Tokens.requestIconPageTitle)
-                }
-            }
-            .toolbarBackground(AppColor.backgroundsPrimaryElevated, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
         }
+        .background(AppColor.backgroundsPrimaryElevated)
+        .navigationTitle(T.Tokens.requestIconPageTitle)
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     @ViewBuilder

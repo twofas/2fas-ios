@@ -401,6 +401,8 @@
 		C2617E0830276F620004AE2B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2617E0730276F620004AE2B /* SceneDelegate.swift */; };
 		C2617E0A3027AECE0004AE2B /* MainNavigating.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2617E093027AECE0004AE2B /* MainNavigating.swift */; };
 		C2617E0C3027AF110004AE2B /* MainTabFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2617E0B3027AF110004AE2B /* MainTabFlowController.swift */; };
+		C2617E103029D05D0004AE2B /* ComposeServiceRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2617E0F3029D05D0004AE2B /* ComposeServiceRoute.swift */; };
+		C2617E123029D07D0004AE2B /* ComposeServiceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2617E113029D07D0004AE2B /* ComposeServiceRouter.swift */; };
 		C2625F8E28BB858600D84C5C /* AboutPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F8D28BB858600D84C5C /* AboutPresenter.swift */; };
 		C2625F9028BB85B100D84C5C /* AboutModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F8F28BB85B100D84C5C /* AboutModuleInteractor.swift */; };
 		C2625F9228BBB87700D84C5C /* AboutModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2625F9128BBB87700D84C5C /* AboutModels.swift */; };
@@ -2229,6 +2231,8 @@
 		C2617E0730276F620004AE2B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C2617E093027AECE0004AE2B /* MainNavigating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigating.swift; sourceTree = "<group>"; };
 		C2617E0B3027AF110004AE2B /* MainTabFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabFlowController.swift; sourceTree = "<group>"; };
+		C2617E0F3029D05D0004AE2B /* ComposeServiceRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceRoute.swift; sourceTree = "<group>"; };
+		C2617E113029D07D0004AE2B /* ComposeServiceRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeServiceRouter.swift; sourceTree = "<group>"; };
 		C261A1212A12BECC00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C261A1222A12BECC00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C261A1232A12BECD00A1519F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -4554,6 +4558,8 @@
 				C2B6D0E62FF1814300C4C73D /* Components */,
 				C2B6D0EB2FF181C800C4C73D /* ComposeServiceView.swift */,
 				C21247F927B717660044D9F2 /* Modules */,
+				C2617E0F3029D05D0004AE2B /* ComposeServiceRoute.swift */,
+				C2617E113029D07D0004AE2B /* ComposeServiceRouter.swift */,
 			);
 			path = ComposeService;
 			sourceTree = "<group>";
@@ -6971,6 +6977,7 @@
 				C2CC0A3E29D0603000677A7B /* TransferPresenter+Menu.swift in Sources */,
 				C25371A2281DCF56005FB118 /* UINavigationController+.swift in Sources */,
 				C215083730030747008B66E2 /* ImporterEnterPasswordView.swift in Sources */,
+				C2617E123029D07D0004AE2B /* ComposeServiceRouter.swift in Sources */,
 				C25DCB2F2B80318C00871035 /* AccessManager.swift in Sources */,
 				C27A54AC27F0FCC600321D2B /* BrowserExtensionPairingPresenter.swift in Sources */,
 				C284AF7927601BCF00FEE810 /* BackupDeleteFlowController.swift in Sources */,
@@ -7221,6 +7228,7 @@
 				C2EBDFFE2AC4476D008FD744 /* GuideMenuPresenter.swift in Sources */,
 				C25C91D72B0A6DE600E58729 /* IntroductionModuleInteractor.swift in Sources */,
 				C27C03BD27F4FA980020DB5E /* BrowserExtensionMainFlowController.swift in Sources */,
+				C2617E103029D05D0004AE2B /* ComposeServiceRoute.swift in Sources */,
 				C20CD53E2A1D013200A7F324 /* TokensTOTPCellType.swift in Sources */,
 				C2F9E1632D98607B004B7DFA /* SyncMigrationToNewestVersionView.swift in Sources */,
 				C266542B2725EF7B00DC3A3C /* ExportFileRules.swift in Sources */,

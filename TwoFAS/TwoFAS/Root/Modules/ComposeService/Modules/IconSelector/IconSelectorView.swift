@@ -34,35 +34,22 @@ struct IconSelectorView: View {
     private let maxWidth: CGFloat = 400
     
     var body: some View {
-        NavigationStack {
-            Group {
-                if presenter.sections.isEmpty {
-                    emptyView
-                } else {
-                    content
-                }
+        Group {
+            if presenter.sections.isEmpty {
+                emptyView
+            } else {
+                content
             }
-            .background(AppColor.backgroundsPrimaryElevated)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    TFSymbolButton(symbol: .back) {
-                        presenter.handleBack()
-                    }
-                }
-                ToolbarItem(placement: .principal) {
-                    TFTitleView(title: T.Tokens.changeBrandIcon)
-                }
-            }
-            .toolbarBackground(AppColor.backgroundsPrimaryElevated, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
-            .searchable(text: $presenter.searchPhrase, prompt: Text(T.Commons.search))
-            .onChange(of: presenter.searchPhrase) { _, newValue in
-                presenter.handleSearchChange(newValue)
-            }
-            .onAppear {
-                presenter.viewDidAppear()
-            }
+        }
+        .background(AppColor.backgroundsPrimaryElevated)
+        .navigationTitle(T.Tokens.changeBrandIcon)
+        .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $presenter.searchPhrase, prompt: Text(T.Commons.search))
+        .onChange(of: presenter.searchPhrase) { _, newValue in
+            presenter.handleSearchChange(newValue)
+        }
+        .onAppear {
+            presenter.viewDidAppear()
         }
     }
     

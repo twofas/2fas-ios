@@ -25,55 +25,43 @@ struct ComposeServiceWebExtensionView: View {
     var presenter: ComposeServiceWebExtensionPresenter
 
     var body: some View {
-        VStack(alignment: .center, spacing: .zero) {
-            ZStack {
-                HStack(spacing: .zero) {
-                    TFLiquidGlassSymbolButton(symbol: .back) {
-                        presenter.handleBack()
-                    }
-                    Spacer()
-                }
-                TFTitleView(title: T.Browser.browserExtension)
-            }
-            .padding(.horizontal, .XL)
-            .padding(.top, .XL)
+        ScrollView {
+            AdaptiveReadableContainer {
+                VStack(alignment: .leading, spacing: .XXXL) {
+                    Text(T.Browser.pairedDomainsListTitle)
+                        .textStyle(.title2, .emphasized)
+                        .foregroundStyle(.labelsPrimary)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.horizontal, .L)
 
-            ScrollView {
-                AdaptiveReadableContainer {
-                    VStack(alignment: .leading, spacing: .XXXL) {
-                        Text(T.Browser.pairedDomainsListTitle)
-                            .textStyle(.title2, .emphasized)
-                            .foregroundStyle(.labelsPrimary)
-                            .multilineTextAlignment(.center)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .padding(.horizontal, .L)
+                    ForEach(presenter.sections) { section in
+                        VStack(alignment: .leading, spacing: .zero) {
+                            ListSectionHeaderView(title: section.title)
 
-                        ForEach(presenter.sections) { section in
-                            VStack(alignment: .leading, spacing: .zero) {
-                                ListSectionHeaderView(title: section.title)
-
-                                VStack(spacing: .zero) {
-                                    ForEach(Array(section.cells.enumerated()), id: \.element.id) { index, row in
-                                        Button {
-                                            presenter.handleSelection(row)
-                                        } label: {
-                                            PairedDomainRow(
-                                                row: row,
-                                                showSeparator: index < section.cells.count - 1
-                                            )
-                                        }
-                                        .buttonStyle(.plain)
+                            VStack(spacing: .zero) {
+                                ForEach(Array(section.cells.enumerated()), id: \.element.id) { index, row in
+                                    Button {
+                                        presenter.handleSelection(row)
+                                    } label: {
+                                        PairedDomainRow(
+                                            row: row,
+                                            showSeparator: index < section.cells.count - 1
+                                        )
                                     }
+                                    .buttonStyle(.plain)
                                 }
-                                .groupedSectionBackground(isElevated: true)
                             }
+                            .groupedSectionBackground(isElevated: true)
                         }
                     }
                 }
             }
-            .scrollDismissesKeyboard(.interactively)
         }
+        .scrollDismissesKeyboard(.interactively)
         .background(.backgroundsPrimaryElevated)
+        .navigationTitle(T.Browser.browserExtension)
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             presenter.viewWillAppear()
         }

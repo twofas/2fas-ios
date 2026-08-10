@@ -17,52 +17,10 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import SwiftUI
-import Common
-import Data
-
-protocol UserIconInfoFlowControllerParent: AnyObject {}
+import Foundation
 
 protocol UserIconInfoFlowControlling: AnyObject {
     func toSocial()
     func toShare()
     func close()
-}
-
-final class UserIconInfoFlowController: FlowController {
-    private weak var parent: UserIconInfoFlowControllerParent?
-    private weak var navigationController: UINavigationController?
-
-    static func push(
-        on navigationController: UINavigationController,
-        parent: UserIconInfoFlowControllerParent
-    ) {
-        let hostingController = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
-        let flowController = UserIconInfoFlowController(viewController: hostingController)
-        flowController.parent = parent
-        flowController.navigationController = navigationController
-
-        let presenter = UserIconInfoPresenter(flowController: flowController)
-
-        hostingController.rootView = AnyView(UserIconInfoView(presenter: presenter))
-        hostingController.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
-
-        navigationController.pushViewController(hostingController, animated: true)
-    }
-}
-
-extension UserIconInfoFlowController: UserIconInfoFlowControlling {
-    func toSocial() {
-        UIApplication.shared.open(SocialChannel.discord.url, completionHandler: nil)
-    }
-
-    func toShare() {
-        let vc = ShareActivityController.createWithText(T.Tokens.requestIconProviderMessage)
-        _viewController.present(vc, animated: true, completion: nil)
-    }
-
-    func close() {
-        navigationController?.popViewController(animated: true)
-    }
 }

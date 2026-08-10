@@ -17,49 +17,8 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import SwiftUI
-import Common
-
-protocol ComposeServiceAdvancedSummaryFlowControllerParent: AnyObject {
-    func advancedSummaryDidFinish()
-}
+import Foundation
 
 protocol ComposeServiceAdvancedSummaryFlowControlling: AnyObject {
     func close()
-}
-
-final class ComposeServiceAdvancedSummaryFlowController: FlowController {
-    private weak var parent: ComposeServiceAdvancedSummaryFlowControllerParent?
-    private weak var navigationController: UINavigationController?
-
-    static func present(
-        in navigationController: UINavigationController,
-        parent: ComposeServiceAdvancedSummaryFlowControllerParent,
-        settings: ComposeServiceAdvancedSettings
-    ) {
-        let hostingController = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
-        let flowController = ComposeServiceAdvancedSummaryFlowController(viewController: hostingController)
-        flowController.parent = parent
-        flowController.navigationController = navigationController
-
-        let interactor = ModuleInteractorFactory
-            .shared
-            .composeServiceAdvancedSummaryModuleInteractor(settings: settings)
-        let presenter = ComposeServiceAdvancedSummaryPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-
-        hostingController.rootView = AnyView(ComposeServiceAdvancedSummaryView(presenter: presenter))
-        hostingController.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
-
-        navigationController.pushViewController(hostingController, animated: true)
-    }
-}
-
-extension ComposeServiceAdvancedSummaryFlowController: ComposeServiceAdvancedSummaryFlowControlling {
-    func close() {
-        navigationController?.popViewController(animated: true)
-    }
 }

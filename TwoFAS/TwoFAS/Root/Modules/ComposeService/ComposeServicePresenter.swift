@@ -21,26 +21,28 @@ import SwiftUI
 import Common
 import Storage
 
-final class ComposeServicePresenter: ObservableObject {
-    @Published var serviceName = ""
-    @Published var additionalInfo = ""
-    @Published var iconType: IconType = .brand
-    @Published var iconTypeID: IconTypeID = .default
-    @Published var labelTitle = ServiceRules.defaultTwoLetters
-    @Published var labelColor: TintColor = .lightBlue
-    @Published var badgeColor: TintColor = .default
-    @Published var sectionTitle = ""
-    @Published var iconTypeName = ""
-    @Published var isSaveEnabled = false
-    @Published var isWebExtensionActive = false
-    @Published var revealedSecret: String?
-    @Published var isSetPINAlertPresented = false
-    @Published var isRevealMenuPresented = false
-    @Published var serviceNameError: String?
-    @Published var additionalInfoError: String?
+@Observable
+final class ComposeServicePresenter {
+    var serviceName = ""
+    var additionalInfo = ""
+    var iconType: IconType = .brand
+    var iconTypeID: IconTypeID = .default
+    var labelTitle = ServiceRules.defaultTwoLetters
+    var labelColor: TintColor = .lightBlue
+    var badgeColor: TintColor = .default
+    var sectionTitle = ""
+    var iconTypeName = ""
+    var isSaveEnabled = false
+    var isWebExtensionActive = false
+    var revealedSecret: String?
+    var isSetPINAlertPresented = false
+    var isRevealMenuPresented = false
+    var serviceNameError: String?
+    var additionalInfoError: String?
 
     private var isLocked = true
     private let flowController: ComposeServiceFlowControlling
+    weak var router: ComposeServiceRouter?
     let interactor: ComposeServiceModuleInteracting
     private let freshlyAdded: Bool
 
@@ -119,29 +121,25 @@ extension ComposeServicePresenter {
 
     func handleLabel() {
         guard interactor.iconType == .label else { return }
-        flowController.toLabelEditor(title: interactor.labelTitle, color: interactor.labelColor)
+        router?.showLabelEditor(title: interactor.labelTitle, color: interactor.labelColor)
     }
 
     func handleBrandIcon() {
         guard interactor.iconType == .brand else { return }
-        flowController.toBrandIconSelection(
-            defaultIcon: .default,
-            selectedIcon: interactor.iconTypeID,
-            animated: true
-        )
+        router?.showIconSelector(selectedIcon: interactor.iconTypeID, animated: true)
     }
 
     func handleAdvanced() {
-        flowController.toAdvancedSummary(settings: interactor.advancedSettings)
+        router?.showAdvancedSummary(settings: interactor.advancedSettings)
     }
 
     func handleBrowserExtension() {
         guard let secret = interactor.serviceData?.secret, interactor.webExtensionActive else { return }
-        flowController.toBrowserExtension(with: secret)
+        router?.showBrowserExtension(secret: secret)
     }
 
     func handleCategory() {
-        flowController.toCategorySelection(with: interactor.sectionID)
+        router?.showCategorySelection(selectedSection: interactor.sectionID)
     }
 
     func handleAskForDeletition() {
@@ -251,7 +249,7 @@ extension ComposeServicePresenter {
 
     // MARK: - Start editing
     func handleToIconEditFromStart() {
-        flowController.toBrandIconSelection(defaultIcon: .default, selectedIcon: interactor.iconTypeID, animated: false)
+        router?.showIconSelector(selectedIcon: interactor.iconTypeID, animated: false)
     }
 }
 

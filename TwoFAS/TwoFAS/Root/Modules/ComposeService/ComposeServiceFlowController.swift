@@ -33,13 +33,8 @@ protocol ComposeServiceFlowControllerParent: AnyObject {
 protocol ComposeServiceFlowControlling: AnyObject {
     func toClose()
     func toLogin()
-    func toBrandIconSelection(defaultIcon: IconTypeID?, selectedIcon: IconTypeID?, animated: Bool)
-    func toLabelEditor(title: String, color: TintColor)
     func toDelete(serviceData: ServiceData)
     func toSetupPIN()
-    func toAdvancedSummary(settings: ComposeServiceAdvancedSettings)
-    func toBrowserExtension(with secret: String)
-    func toCategorySelection(with sectionID: SectionID?)
     func toServiceWasCreated(serviceData: ServiceData)
     func toServiceWasModified()
     func toServiceWasDeleted()
@@ -49,8 +44,8 @@ protocol ComposeServiceFlowControlling: AnyObject {
 
 final class ComposeServiceFlowController: FlowController {
     private weak var parent: ComposeServiceFlowControllerParent?
-    private weak var navigationController: UINavigationController?
     private var presenter: ComposeServicePresenter?
+    private var router: ComposeServiceRouter?
 
     static func present(
         in navigationController: UINavigationController,
@@ -62,7 +57,6 @@ final class ComposeServiceFlowController: FlowController {
         let hostingController = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
         let flowController = ComposeServiceFlowController(viewController: hostingController)
         flowController.parent = parent
-        flowController.navigationController = navigationController
 
         let interactor = ModuleInteractorFactory.shared.composeServiceModuleInteractor(secret: serviceData?.secret)
         let presenter = ComposeServicePresenter(
@@ -72,7 +66,13 @@ final class ComposeServiceFlowController: FlowController {
         )
         flowController.presenter = presenter
 
-        hostingController.rootView = AnyView(ComposeServiceView(presenter: presenter))
+        let router = ComposeServiceRouter()
+        router.presenter = presenter
+        router.viewController = hostingController
+        presenter.router = router
+        flowController.router = router
+
+        hostingController.rootView = AnyView(ComposeServiceView(presenter: presenter, router: router))
         hostingController.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
 
         navigationController.pushViewController(hostingController, animated: false)
@@ -94,22 +94,6 @@ extension ComposeServiceFlowController: ComposeServiceFlowControlling {
         LoginFlowController.present(on: viewController, parent: self)
     }
 
-    func toBrandIconSelection(defaultIcon: IconTypeID?, selectedIcon: IconTypeID?, animated: Bool) {
-        guard let navi = navigationController else { return }
-        IconSelectorFlowController.present(
-            defaultIcon: defaultIcon,
-            selectedIcon: selectedIcon,
-            on: navi,
-            parent: self,
-            animated: animated
-        )
-    }
-
-    func toLabelEditor(title: String, color: TintColor) {
-        guard let navi = navigationController else { return }
-        LabelComposeFlowController.present(title: title, color: color, on: navi, parent: self)
-    }
-
     func toDelete(serviceData: ServiceData) {
         guard let viewController = _viewController else { return }
         TrashServiceFlowController.present(on: viewController, parent: self, serviceData: serviceData)
@@ -118,21 +102,6 @@ extension ComposeServiceFlowController: ComposeServiceFlowControlling {
     func toSetupPIN() {
         parent?.composeServiceDidFinish()
         NotificationCenter.default.post(name: .switchToSetupPIN, object: nil)
-    }
-
-    func toAdvancedSummary(settings: ComposeServiceAdvancedSettings) {
-        guard let navi = navigationController else { return }
-        ComposeServiceAdvancedSummaryFlowController.present(in: navi, parent: self, settings: settings)
-    }
-
-    func toBrowserExtension(with secret: String) {
-        guard let navi = navigationController else { return }
-        ComposeServiceWebExtensionFlowController.present(in: navi, parent: self, secret: secret)
-    }
-
-    func toCategorySelection(with sectionID: SectionID?) {
-        guard let navi = navigationController else { return }
-        ComposeServiceCategorySelectionFlowController.push(on: navi, parent: self, selectedSection: sectionID)
     }
 
     func toServiceWasCreated(serviceData: ServiceData) {
@@ -170,10 +139,6 @@ private extension ComposeServiceFlowController {
             viewController.dismiss(animated: true, completion: completion)
         }
     }
-
-    func pop() {
-        navigationController?.popToRootViewController(animated: true)
-    }
 }
 
 extension ComposeServiceFlowController: QRCodeDisplayFlowControllerParent {
@@ -200,37 +165,5 @@ extension ComposeServiceFlowController: LoginFlowControllerParent {
     func loginLoggedIn() {
         presenter?.handleAuthorized()
         dismiss()
-    }
-}
-
-extension ComposeServiceFlowController: IconSelectorFlowControllerParent {
-    func iconSelectorDidSelect(iconTypeID: IconTypeID) {
-        presenter?.handleIconSelectorDidSelect(selectedIconTypeID: iconTypeID)
-        pop()
-    }
-}
-
-extension ComposeServiceFlowController: LabelComposeFlowControllerParent {
-    func labelComposeSave(title: String, color: TintColor) {
-        presenter?.handleLabelComposeSave(title: title, color: color)
-        pop()
-    }
-}
-
-extension ComposeServiceFlowController: ComposeServiceAdvancedSummaryFlowControllerParent {
-    func advancedSummaryDidFinish() {
-        toClose()
-    }
-}
-
-extension ComposeServiceFlowController: ComposeServiceWebExtensionFlowControllerParent {
-    func webExtensionDidFinish() {
-        pop()
-    }
-}
-
-extension ComposeServiceFlowController: ComposeServiceCategorySelectionFlowControllerParent {
-    func didChangeSectionID(_ sectionID: SectionID?) {
-        presenter?.handleSectionSelected(sectionID)
     }
 }

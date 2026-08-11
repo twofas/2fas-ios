@@ -61,6 +61,7 @@ struct ComposeServiceSecretKeyField<FocusValue: Hashable>: View {
                 }
                 .buttonStyle(.plain)
             }
+            .frame(minHeight: .input)
         case .hiddenNonCopyable:
             row(value: maskedPlaceholder, isMasked: true) {
                 EmptyView()
@@ -100,6 +101,6 @@ struct ComposeServiceSecretKeyField<FocusValue: Hashable>: View {
             accessory()
         }
         .padding(.vertical, .L)
-        .frame(minHeight: .list)
+        .frame(minHeight: .input)
     }
 }

@@ -271,9 +271,9 @@ private class TokensTokenLabel: UILabel {
     func setKind(_ kind: TokensCellKind) {
         switch kind {
         case .compact:
-            font = UIFont.monospacedDigitSystemFont(ofSize: 28, weight: .thin)
+            font = TextStyle.compactToken.uiFont()
         case .normal:
-            font = UIFont.monospacedDigitSystemFont(ofSize: 28, weight: .regular)
+            font = TextStyle.token.uiFont()
         default:
             break
         }

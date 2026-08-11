@@ -58,7 +58,7 @@ struct ImporterEnterPasswordView: View {
             }
             .scrollDismissesKeyboard(.interactively)
 
-            AdaptiveReadableContainer() {
+            AdaptiveReadableContainer {
                 VStack(spacing: .L) {
                     TFButton(
                         T.Commons.continue,

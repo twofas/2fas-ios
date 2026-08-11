@@ -76,7 +76,8 @@ struct MainScreenModalView<Content: View, Footer: View>: View {
             Text(subtitle)
                 .multilineTextAlignment(.center)
                 .textStyle(.subheadline)
-                .foregroundStyle(.labelsPrimary)
+                .foregroundStyle(.labelsSecondary)
         }
+        .padding(.horizontal, .XXXXXXXL)
     }
 }

@@ -95,7 +95,7 @@ final class TokensViewEmptyListScreen: UIView {
         var config = UIButton.Configuration.filled()
         config.baseBackgroundColor = AppColor.fillsTertiary.uiColor
         config.baseForegroundColor = AppColor.labelsPrimary.uiColor
-        config.background.cornerRadius = TFCornerRadius.medium.rawValue
+        config.background.cornerRadius = TFCornerRadius.large.rawValue
         config.contentInsets = NSDirectionalEdgeInsets(
             top: Spacing.M.rawValue,
             leading: Spacing.ML.rawValue,
@@ -113,7 +113,7 @@ final class TokensViewEmptyListScreen: UIView {
         sv.axis = .vertical
         sv.alignment = .fill
         sv.distribution = .fill
-        sv.spacing = Spacing.XL.rawValue
+        sv.spacing = Spacing.XS.rawValue
         return sv
     }()
     
@@ -173,8 +173,7 @@ final class TokensViewEmptyListScreen: UIView {
 
         mainStackView.addArrangedSubviews([headerStackView, buttonsStackView])
         headerStackView.addArrangedSubviews([iconImage, titleLabel, headerLabel])
-        headerStackView.setCustomSpacing(Spacing.L.rawValue, after: iconImage)
-        headerStackView.setCustomSpacing(Spacing.SM.rawValue, after: titleLabel)
+        headerStackView.setCustomSpacing(Spacing.M.rawValue, after: titleLabel)
         buttonsStackView.addArrangedSubviews([pairNewServiceButton, importButton])
 
         addSubview(helpButton, with: [

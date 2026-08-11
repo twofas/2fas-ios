@@ -77,8 +77,7 @@ struct TFColorPickerMenu: View {
                     .foregroundStyle(.labelsSecondary)
                     .accessibilityHidden(true)
             }
-            .padding(.vertical, .XL)
-            .frame(minHeight: .list)
+            .frame(minHeight: .normal)
         }
     }
 }

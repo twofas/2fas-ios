@@ -55,6 +55,8 @@ public enum TextStyle {
     case caption2
     /// SF Pro 32pt — maps to `Font.TextStyle.body`
     case token
+    /// SF Pro 28pt — maps to `Font.TextStyle.body`
+    case compactToken
     /// SF Pro 15pt — maps to `Font.TextStyle.subheadline`
     case smallToken
     /// SF Pro 13pt — maps to `Font.TextStyle.footnote
@@ -258,7 +260,17 @@ private extension TextStyle {
                 weight: .regular,
                 isItalic: false,
                 semanticStyle: .body,
-                monospacedDigits: true
+                monospacedDigits: false
+            )
+        case .compactToken:
+            return TextStyleAttributes(
+                size: 28,
+                lineHeight: 28 + pad,
+                tracking: 0.4,
+                weight: .regular,
+                isItalic: false,
+                semanticStyle: .body,
+                monospacedDigits: false
             )
         case .smallToken:
             return TextStyleAttributes(
@@ -267,8 +279,8 @@ private extension TextStyle {
                 tracking: 0,
                 weight: .semibold,
                 isItalic: false,
-                semanticStyle: .body,
-                monospacedDigits: true
+                semanticStyle: .subheadline,
+                monospacedDigits: false
             )
         case .counter:
             return TextStyleAttributes(
@@ -278,7 +290,7 @@ private extension TextStyle {
                 weight: .semibold,
                 isItalic: false,
                 semanticStyle: .footnote,
-                monospacedDigits: true
+                monospacedDigits: false
             )
         case .iconLarge:
             // Hero icon size — always semibold regardless of variant.

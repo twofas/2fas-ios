@@ -114,6 +114,7 @@ struct ComposeServiceView: View {
                         focusedField = .additionalInfo
                     })
                 )
+                .frame(minHeight: .input)
                 .onChange(of: presenter.serviceName) { _, newValue in
                     presenter.handleServiceNameUpdate(newValue)
                 }
@@ -129,6 +130,7 @@ struct ComposeServiceView: View {
                     onReveal: { presenter.handleReveal() },
                     onShare: { presenter.handleShare() }
                 )
+                .frame(minHeight: .input)
                 .confirmationDialog(
                     T.Commons.optionsTitle,
                     isPresented: $presenter.isRevealMenuPresented,
@@ -155,6 +157,7 @@ struct ComposeServiceView: View {
                         focusedField = nil
                     })
                 )
+                .frame(minHeight: .input)
                 .onChange(of: presenter.additionalInfo) { _, newValue in
                     presenter.handleAdditionalInfoUpdate(newValue)
                 }

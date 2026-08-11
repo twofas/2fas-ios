@@ -102,6 +102,7 @@ struct AddingServiceView: View {
                     presenter.handleToGuides()
                 }
             }
+            .padding(.bottom, .XL)
         }
         .opacity(presenter.isOverlayPresented ? 0 : 1)
         .alert(item: $presenter.alert) { alert in

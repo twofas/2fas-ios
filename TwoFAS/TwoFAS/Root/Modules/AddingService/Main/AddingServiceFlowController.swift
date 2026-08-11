@@ -172,7 +172,7 @@ private struct AddServiceHostingView: View {
 
     var body: some View {
         ZStack {
-            Color.clear
+            Color.black.opacity(0.7)
                 .contentShape(Rectangle())
                 .ignoresSafeArea()
                 .onTapGesture(perform: onFullyDismissed)

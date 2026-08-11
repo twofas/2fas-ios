@@ -43,6 +43,12 @@
 		C207324929F724AB00FB294E /* TokensAdditionalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207324829F724AB00FB294E /* TokensAdditionalInfo.swift */; };
 		C207766A2FBA361900F5ABC9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20776692FBA361900F5ABC9 /* LoginViewController.swift */; };
 		C207C11F2559F1CB0053975E /* CloudKitErrorParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207C11E2559F1CB0053975E /* CloudKitErrorParser.swift */; };
+		C207DAC7302B4A39004FC767 /* ExporterRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207DAC6302B4A39004FC767 /* ExporterRoute.swift */; };
+		C207DAC9302B4A47004FC767 /* ExporterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207DAC8302B4A47004FC767 /* ExporterRouter.swift */; };
+		C207DACB302B4BBF004FC767 /* ImporterRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207DACA302B4BBF004FC767 /* ImporterRoute.swift */; };
+		C207DACD302B4BD3004FC767 /* ImporterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207DACC302B4BD3004FC767 /* ImporterRouter.swift */; };
+		C207DACF302B4E95004FC767 /* GuideRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207DACE302B4E95004FC767 /* GuideRoute.swift */; };
+		C207DAD1302B4E9F004FC767 /* GuideRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207DAD0302B4E9F004FC767 /* GuideRouter.swift */; };
 		C209E9B9267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C209E9B8267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift */; };
 		C20CD53C2A1CF03F00A7F324 /* TokensViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20CD53B2A1CF03F00A7F324 /* TokensViewController+Layout.swift */; };
 		C20CD53E2A1D013200A7F324 /* TokensTOTPCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20CD53D2A1D013200A7F324 /* TokensTOTPCellType.swift */; };
@@ -874,6 +880,8 @@
 		C2B39E5B29F5D0AA00EC31F6 /* TokensServiceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5A29F5D0AA00EC31F6 /* TokensServiceName.swift */; };
 		C2B3D1A8267E6BEC009E6DE0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B3D1A7267E6BEC009E6DE0 /* Extensions.swift */; };
 		C2B3D1AA267E91E9009E6DE0 /* TokensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B3D1A9267E91E9009E6DE0 /* TokensView.swift */; };
+		C2B58A13302BAC8600E0FF36 /* TFRowContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B58A12302BAC8600E0FF36 /* TFRowContent.swift */; };
+		C2B58A14302BAC8600E0FF36 /* TFRowContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B58A12302BAC8600E0FF36 /* TFRowContent.swift */; };
 		C2B5BF53294601BE00E5092D /* TokensPlainFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BF52294601BE00E5092D /* TokensPlainFlowController.swift */; };
 		C2B5BF5529460E9C00E5092D /* TokensExternalAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BF5429460E9C00E5092D /* TokensExternalAction.swift */; };
 		C2B5BF572946169D00E5092D /* TokensLinkAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BF562946169D00E5092D /* TokensLinkAction.swift */; };
@@ -1874,6 +1882,12 @@
 		C207324829F724AB00FB294E /* TokensAdditionalInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensAdditionalInfo.swift; sourceTree = "<group>"; };
 		C20776692FBA361900F5ABC9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C207C11E2559F1CB0053975E /* CloudKitErrorParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitErrorParser.swift; sourceTree = "<group>"; };
+		C207DAC6302B4A39004FC767 /* ExporterRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExporterRoute.swift; sourceTree = "<group>"; };
+		C207DAC8302B4A47004FC767 /* ExporterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExporterRouter.swift; sourceTree = "<group>"; };
+		C207DACA302B4BBF004FC767 /* ImporterRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterRoute.swift; sourceTree = "<group>"; };
+		C207DACC302B4BD3004FC767 /* ImporterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterRouter.swift; sourceTree = "<group>"; };
+		C207DACE302B4E95004FC767 /* GuideRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideRoute.swift; sourceTree = "<group>"; };
+		C207DAD0302B4E9F004FC767 /* GuideRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideRouter.swift; sourceTree = "<group>"; };
 		C208101327948DFD0035E339 /* Code+GoogleAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Code+GoogleAuth.swift"; sourceTree = "<group>"; };
 		C2081015279494980035E339 /* MigrationPayload+Conversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MigrationPayload+Conversion.swift"; sourceTree = "<group>"; };
 		C20935D1292142B4000F5AA7 /* WidgetsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsInteractor.swift; sourceTree = "<group>"; };
@@ -2568,6 +2582,7 @@
 		C2B3D1A7267E6BEC009E6DE0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C2B3D1A9267E91E9009E6DE0 /* TokensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensView.swift; sourceTree = "<group>"; };
 		C2B563F41FD895460011CAAA /* PermissionsStateDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsStateDataController.swift; sourceTree = "<group>"; };
+		C2B58A12302BAC8600E0FF36 /* TFRowContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFRowContent.swift; sourceTree = "<group>"; };
 		C2B5BF52294601BE00E5092D /* TokensPlainFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensPlainFlowController.swift; sourceTree = "<group>"; };
 		C2B5BF5429460E9C00E5092D /* TokensExternalAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensExternalAction.swift; sourceTree = "<group>"; };
 		C2B5BF562946169D00E5092D /* TokensLinkAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensLinkAction.swift; sourceTree = "<group>"; };
@@ -3771,6 +3786,8 @@
 				C23736942AC08DF600792054 /* Selector */,
 				C2EBDFF52AC44604008FD744 /* Menu */,
 				C248B1482AC4B4D300E6B897 /* Pages */,
+				C207DACE302B4E95004FC767 /* GuideRoute.swift */,
+				C207DAD0302B4E9F004FC767 /* GuideRouter.swift */,
 			);
 			path = Guide;
 			sourceTree = "<group>";
@@ -4606,6 +4623,7 @@
 				C21508433003C3D6008B66E2 /* TFToggleRow.swift */,
 				C2150846300429F0008B66E2 /* TFSuccessView.swift */,
 				C215084C30042E4C008B66E2 /* TFLoadingView.swift */,
+				C2B58A12302BAC8600E0FF36 /* TFRowContent.swift */,
 				C25ECA803005825900D46587 /* TFInstructionCard.swift */,
 				C2418F693006DCA6008B674A /* TFRowHeight.swift */,
 			);
@@ -4736,6 +4754,8 @@
 				C240487227656A6E0076376E /* ImporterFileError */,
 				C240484D2765285D0076376E /* ImporterEnterPassword */,
 				C240487D2765713D0076376E /* ImporterPreimportSummary */,
+				C207DACA302B4BBF004FC767 /* ImporterRoute.swift */,
+				C207DACC302B4BD3004FC767 /* ImporterRouter.swift */,
 			);
 			path = Importer;
 			sourceTree = "<group>";
@@ -4761,6 +4781,8 @@
 				C2AC2200276614AC00271402 /* ExporterMainScreen */,
 				C2AC220D27661B1700271402 /* ExporterPasswordProtection */,
 				C2AB92C3276651C000698382 /* ExporterPIN */,
+				C207DAC6302B4A39004FC767 /* ExporterRoute.swift */,
+				C207DAC8302B4A47004FC767 /* ExporterRouter.swift */,
 			);
 			path = Exporter;
 			sourceTree = "<group>";
@@ -6964,6 +6986,7 @@
 				C2A283352186071200967022 /* AlertControllerPromptFactory.swift in Sources */,
 				C27A549F27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift in Sources */,
 				C2BDC6FD1FC4BC8A00967D0E /* UIViewController+Extensions.swift in Sources */,
+				C207DAC7302B4A39004FC767 /* ExporterRoute.swift in Sources */,
 				C2A4D33C2BC0B5ED0001587C /* PINType+.swift in Sources */,
 				C215081E3002E885008B66E2 /* AppSecurityView.swift in Sources */,
 				C2A70680276D36E100885D79 /* NewPINModuleInteractor.swift in Sources */,
@@ -7074,9 +7097,11 @@
 				C2F5F9E328611D6200F778E1 /* BrowserExtensionPairingAlreadyPairedFlowController.swift in Sources */,
 				C28356232897098300421882 /* SelectFromGalleryAdvice.swift in Sources */,
 				C228603226697250005E88E3 /* TokensSection.swift in Sources */,
+				C207DAD1302B4E9F004FC767 /* GuideRouter.swift in Sources */,
 				C26764B22872494100D468B2 /* ComposeServiceCategorySelectionModels.swift in Sources */,
 				C2E7C3472ADB021500478D89 /* CameraControllerDelegate.swift in Sources */,
 				C231856A2EC648F700DD1ABE /* BackupSetPasswordView.swift in Sources */,
+				C207DACD302B4BD3004FC767 /* ImporterRouter.swift in Sources */,
 				C2D6731B25DB2C5D004BD697 /* KeyboardObserver.swift in Sources */,
 				C2E948AB23B64DB1003BDCC1 /* LoadingContentButton.swift in Sources */,
 				C23B899727C287480028FE34 /* NavigationFlowController.swift in Sources */,
@@ -7242,6 +7267,7 @@
 				C284AF77276016EB00FEE810 /* BackupDeleteModuleInteractor.swift in Sources */,
 				F359D064687935A24E141C3F /* BackupAdvancedModels.swift in Sources */,
 				6806E49D6D5E4129B7F5EC5F /* BackupAdvancedModuleInteractor.swift in Sources */,
+				C207DACB302B4BBF004FC767 /* ImporterRoute.swift in Sources */,
 				689BFDC04760BA4D88CC5754 /* BackupAdvancedPresenter.swift in Sources */,
 				37D4E0A4779DA4A4A8EE9456 /* BackupAdvancedPresenter+Menu.swift in Sources */,
 				640506B23BFADE99A62F57C6 /* BackupAdvancedFlowController.swift in Sources */,
@@ -7273,6 +7299,7 @@
 				C2625F9228BBB87700D84C5C /* AboutModels.swift in Sources */,
 				C299B7D2236DE78700224F51 /* StackView+.swift in Sources */,
 				C29CF8E82FA7A6EA0058E3A0 /* ScrollPagingView.swift in Sources */,
+				C207DACF302B4E95004FC767 /* GuideRoute.swift in Sources */,
 				C2B6D0EC2FF181C800C4C73D /* ComposeServiceView.swift in Sources */,
 				C248B1532AC4C77100E6B897 /* GuidePagesView.swift in Sources */,
 				C23FD5102814648C00E4E9C5 /* ComposeServiceWebExtensionModuleInteractor.swift in Sources */,
@@ -7322,6 +7349,7 @@
 				C2A7946227F9072800E5C641 /* BrowserExtensionServicePresenter+Menu.swift in Sources */,
 				C27A1EB529127C8D00702DB9 /* AlertController+Ready.swift in Sources */,
 				C2A4C8372A11141D00AFD67C /* TokensNextTokenView.swift in Sources */,
+				C207DAC9302B4A47004FC767 /* ExporterRouter.swift in Sources */,
 				C2BE80582811DF03009CBC4A /* AuthRequestsPresenter.swift in Sources */,
 				C274BDC2276941FB00EE28BC /* AppSecurityPresenter.swift in Sources */,
 				C2FB8A6E277F98BF0066DDE2 /* TrashServiceInteractor.swift in Sources */,
@@ -7674,6 +7702,7 @@
 				C274CA132BAB8B92008E7212 /* WidgetServiceHandlerType.swift in Sources */,
 				C274CA152BAB8B92008E7212 /* PairedWebExtension.swift in Sources */,
 				C215084A30042CB3008B66E2 /* TFFailureView.swift in Sources */,
+				C2B58A13302BAC8600E0FF36 /* TFRowContent.swift in Sources */,
 				C274CA162BAB8B92008E7212 /* Digits.swift in Sources */,
 				C274CA172BAB8B92008E7212 /* SortType.swift in Sources */,
 				C274CA182BAB8B92008E7212 /* TypeAliases.swift in Sources */,
@@ -7838,6 +7867,7 @@
 				C2E53B132B62DDAF008E1E70 /* PushNotificationsConfig.swift in Sources */,
 				C2E53B102B62DDAF008E1E70 /* ServiceRules.swift in Sources */,
 				C295AF8E2FD1F6F8000DF064 /* View+.swift in Sources */,
+				C2B58A14302BAC8600E0FF36 /* TFRowContent.swift in Sources */,
 				C295AF8F2FD1F6F8000DF064 /* AdaptiveReadableContainer.swift in Sources */,
 				C25AE51D300A58B800D9ABFB /* ToastContentView.swift in Sources */,
 				C25AE51E300A58B800D9ABFB /* ToastPresenterView.swift in Sources */,

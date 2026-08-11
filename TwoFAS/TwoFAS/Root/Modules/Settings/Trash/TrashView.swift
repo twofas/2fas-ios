@@ -60,9 +60,10 @@ struct TrashView: View {
         List {
             ForEach(presenter.services, id: \.secret) { service in
                 trashCell(service)
+                    .padding(.bottom, .XL)
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: .S, leading: .XL, bottom: .S, trailing: .XL))
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                         Button {
                             presenter.handleDelete(service)
@@ -80,11 +81,12 @@ struct TrashView: View {
                     }
             }
         }
+        .scrollContentBackground(.hidden)
     }
 
     @ViewBuilder
     private func trashCell(_ service: ServiceData) -> some View {
-        AdaptiveReadableContainer {
+        AdaptiveReadableContainer(horizontalMargin: .zero, verticalMargin: .zero) {
             HStack(spacing: .M) {
                 ServiceIconView(icon: service.iconDetails, showBackground: false)
                 
@@ -106,7 +108,7 @@ struct TrashView: View {
             .padding(.vertical, .L)
             .background(
                 RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue, style: .continuous)
-                    .foregroundStyle(.backgroundsSecondary)
+                    .foregroundStyle(AppColor.backgroundsSecondary)
             )
             .frame(minHeight: .list)
         }

@@ -17,15 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import SwiftUI
-
-protocol ExporterPasswordProtectionFlowControllerParent: AnyObject {
-    func closePasswordProtection()
-    func showExport(with url: URL)
-    func showPINKeyboard(with password: String)
-    func showExportError()
-}
+import Foundation
 
 protocol ExporterPasswordProtectionFlowControlling: AnyObject {
     func toClose()
@@ -33,48 +25,4 @@ protocol ExporterPasswordProtectionFlowControlling: AnyObject {
     func toPINKeyboard(with password: String)
     func toExportError()
     func back()
-}
-
-final class ExporterPasswordProtectionFlowController: FlowController {
-    private weak var parent: ExporterPasswordProtectionFlowControllerParent?
-    
-    static func push(
-        in navigationController: UINavigationController,
-        parent: ExporterPasswordProtectionFlowControllerParent
-    ) {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
-        hosting.hidesBottomBarWhenPushed = true
-        let flowController = ExporterPasswordProtectionFlowController(viewController: hosting)
-        flowController.parent = parent
-        let interactor = ModuleInteractorFactory.shared.exporterPasswordProtectionModuleInteractor()
-        let presenter = ExporterPasswordProtectionPresenter(
-            flowController: flowController,
-            interactor: interactor
-        )
-        hosting.rootView = AnyView(ExporterPasswordProtectionView(presenter: presenter))
-
-        navigationController.pushViewController(hosting, animated: true)
-    }
-}
-
-extension ExporterPasswordProtectionFlowController: ExporterPasswordProtectionFlowControlling {
-    func toClose() {
-        parent?.closePasswordProtection()
-    }
-    
-    func toExport(with url: URL) {
-        parent?.showExport(with: url)
-    }
-    
-    func toPINKeyboard(with password: String) {
-        parent?.showPINKeyboard(with: password)
-    }
-    
-    func toExportError() {
-        parent?.showExportError()
-    }
-
-    func back() {
-        _viewController?.navigationController?.popViewController(animated: true)
-    }
 }

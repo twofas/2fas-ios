@@ -33,12 +33,6 @@ struct ExporterPasswordProtectionView: View {
 
     var body: some View {
         VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: T.backupSettingsPasswordSetTitle,
-                showsBackButton: presenter.showsBackButton,
-                onBack: presenter.showsBackButton ? presenter.handleBack : nil
-            )
-
             ScrollView(.vertical) {
                 AdaptiveReadableContainer {
                     Text(T.Backup.setPasswordTitle)
@@ -105,6 +99,18 @@ struct ExporterPasswordProtectionView: View {
             }
         }
         .background(.backgroundsPrimary)
+        .navigationTitle(T.backupSettingsPasswordSetTitle)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    presenter.handleCancel()
+                } label: {
+                    Image(systemName: "xmark")
+                }
+            }
+        }
         .onChange(of: presenter.password1) { _, newValue in
             presenter.handleFirstChanged(newValue)
         }

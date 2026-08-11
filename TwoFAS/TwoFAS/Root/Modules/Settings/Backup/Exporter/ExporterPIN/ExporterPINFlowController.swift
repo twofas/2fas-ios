@@ -17,56 +17,10 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import SwiftUI
-
-protocol ExporterPINFlowControllerParent: AnyObject {
-    func closePIN()
-    func showExport(with url: URL)
-    func showExportError()
-}
+import Foundation
 
 protocol ExporterPINFlowControlling: AnyObject {
     func toClose()
     func toExport(with url: URL)
     func toExportError()
-}
-
-final class ExporterPINFlowController: FlowController {
-    private weak var parent: ExporterPINFlowControllerParent?
-
-    static func push(
-        in navigationController: UINavigationController,
-        parent: ExporterPINFlowControllerParent,
-        password: String?
-    ) {
-        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
-        hosting.hidesBottomBarWhenPushed = false
-        let flowController = ExporterPINFlowController(viewController: hosting)
-        flowController.parent = parent
-        let interactor = ModuleInteractorFactory.shared.exporterPINModuleInteractor()
-        let presenter = ExporterPINPresenter(
-            flowController: flowController,
-            interactor: interactor,
-            password: password
-        )
-        hosting.rootView = AnyView(ExporterPINView(presenter: presenter))
-
-        navigationController.setNavigationBarHidden(false, animated: false)
-        navigationController.pushViewController(hosting, animated: true)
-    }
-}
-
-extension ExporterPINFlowController: ExporterPINFlowControlling {
-    func toClose() {
-        parent?.closePIN()
-    }
-
-    func toExport(with url: URL) {
-        parent?.showExport(with: url)
-    }
-
-    func toExportError() {
-        parent?.showExportError()
-    }
 }

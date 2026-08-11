@@ -19,6 +19,7 @@
 
 import UIKit
 import SwiftUI
+import Common
 
 protocol ExporterMainScreenFlowControllerParent: AnyObject {
     func closeExporter()
@@ -34,8 +35,10 @@ protocol ExporterMainScreenFlowControlling: AnyObject {
 
 final class ExporterMainScreenFlowController: FlowController {
     private weak var parent: ExporterMainScreenFlowControllerParent?
-    private weak var navigationController: UINavigationController!
-    
+    private weak var navigationController: UINavigationController?
+    private var router: ExporterRouter?
+    private var presenter: ExporterMainScreenPresenter?
+
     static func present(
         on viewController: UIViewController,
         parent: ExporterMainScreenFlowControllerParent
@@ -43,12 +46,18 @@ final class ExporterMainScreenFlowController: FlowController {
         let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
         let flowController = ExporterMainScreenFlowController(viewController: hosting)
         flowController.parent = parent
+
         let interactor = ModuleInteractorFactory.shared.exporterMainScreenModuleInteractor()
+        let router = ExporterRouter()
+        router.flowController = flowController
         let presenter = ExporterMainScreenPresenter(
-            flowController: flowController,
+            flowController: router,
             interactor: interactor
         )
-        hosting.rootView = AnyView(ExporterMainScreenView(presenter: presenter))
+        flowController.router = router
+        flowController.presenter = presenter
+
+        hosting.rootView = AnyView(ExporterMainScreenView(presenter: presenter, router: router))
 
         let navi = RootNavigationController(rootViewController: hosting)
         navi.configureAsModal()
@@ -57,58 +66,17 @@ final class ExporterMainScreenFlowController: FlowController {
         navi.keepsFullStack = true
 
         flowController.navigationController = navi
-        
+
         viewController.present(navi, animated: true, completion: nil)
     }
-}
 
-extension ExporterMainScreenFlowController: ExporterMainScreenFlowControlling {
-    func toClose() {
+    // MARK: - Terminal actions (driven by the router)
+
+    func finishExporter() {
         parent?.closeExporter()
     }
-    
-    func toPasswordProtection() {
-        ExporterPasswordProtectionFlowController.push(in: navigationController, parent: self)
-    }
-    
-    func toPINKeyboard() {
-        showPINKeyboardAuth(with: nil)
-    }
-    
-    func toExport(with url: URL) {
-        showExport(with: url)
-    }
-    
-    func toExportError() {
-        showExportError()
-    }
-}
 
-private extension ExporterMainScreenFlowController {
-    func showPINKeyboardAuth(with password: String?) {
-        ExporterPINFlowController.push(in: navigationController, parent: self, password: password)
-    }
-    
-    func importErrorAlert() -> UIViewController {
-        let alert = AlertControllerDismissFlow(
-            title: T.Commons.error,
-            message: T.Backup.errorWhileExportingFile,
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
-        alert.didDisappear = { [weak self] _ in
-            self?.parent?.closeExporter()
-        }
-        return alert
-    }
-}
-
-extension ExporterMainScreenFlowController: ExporterPasswordProtectionFlowControllerParent {
-    func closePasswordProtection() {
-        parent?.closeExporter()
-    }
-    
-    func showExport(with url: URL) {
+    func shareExport(url: URL) {
         let vc = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         vc.title = T.Backup.saveFile
         vc.completionWithItemsHandler = { [weak self] _, _, _, _ in self?.parent?.closeExporter() }
@@ -119,21 +87,19 @@ extension ExporterMainScreenFlowController: ExporterPasswordProtectionFlowContro
             popover.sourceRect = CGRect(x: bounds.midX, y: bounds.midY, width: 1, height: 2)
             popover.sourceView = view
         }
-        navigationController.present(vc, animated: true, completion: nil)
+        navigationController?.present(vc, animated: true, completion: nil)
     }
-    
-    func showExportError() {
-        let vc = importErrorAlert()
-        navigationController.present(vc, animated: true, completion: nil)
-    }
-    
-    func showPINKeyboard(with password: String) {
-        showPINKeyboardAuth(with: password)
-    }
-}
 
-extension ExporterMainScreenFlowController: ExporterPINFlowControllerParent {
-    func closePIN() {
-        parent?.closeExporter()
+    func showExportError() {
+        let alert = AlertControllerDismissFlow(
+            title: T.Commons.error,
+            message: T.Backup.errorWhileExportingFile,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
+        alert.didDisappear = { [weak self] _ in
+            self?.parent?.closeExporter()
+        }
+        navigationController?.present(alert, animated: true, completion: nil)
     }
 }

@@ -24,39 +24,56 @@ struct ExporterMainScreenView: View {
     @Bindable
     var presenter: ExporterMainScreenPresenter
 
+    @ObservedObject
+    var router: ExporterRouter
+
     private let image = Asset.exportBackup.image
 
     var body: some View {
-        TFInfoView {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: image.size.width / 2, height: image.size.height / 2)
-        } texts: {
-            Text(T.Backup.exportToBackupFile)
-                .textStyle(.title1, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.center)
-            Text(T.Backup.importFileTitle)
-                .textStyle(.body)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.labelsSecondary)
-        } buttons: {
-            TFToggleRow(T.Backup.backupFilePasswordTitle, isOn: $presenter.setPassword, isElevated: true)
-                .padding(.bottom, .S)
+        NavigationStack(path: $router.path) {
+            TFInfoView {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: image.size.width / 2, height: image.size.height / 2)
+            } texts: {
+                Text(T.Backup.exportToBackupFile)
+                    .textStyle(.title1, .emphasized)
+                    .foregroundStyle(.labelsPrimary)
+                    .multilineTextAlignment(.center)
+                Text(T.Backup.importFileTitle)
+                    .textStyle(.body)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.labelsSecondary)
+            } buttons: {
+                TFToggleRow(T.Backup.backupFilePasswordTitle, isOn: $presenter.setPassword, isElevated: true)
+                    .padding(.bottom, .S)
 
-            TFButton(
-                T.Backup.exportToFile,
-                variant: .borderedProminent,
-                size: .large
-            ) {
-                presenter.handleExport()
+                TFButton(
+                    T.Backup.exportToFile,
+                    variant: .borderedProminent,
+                    size: .large
+                ) {
+                    presenter.handleExport()
+                }
+
+                TFButton(T.Commons.cancel, variant: .borderless, size: .large) {
+                    presenter.handleClose()
+                }
             }
-
-            TFButton(T.Commons.cancel, variant: .borderless, size: .large) {
-                presenter.handleClose()
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        presenter.handleClose()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                }
+            }
+            .navigationDestination(for: ExporterRoute.self) { route in
+                router.destination(for: route)
             }
         }
-        .navigationBarHidden(true)
     }
 }

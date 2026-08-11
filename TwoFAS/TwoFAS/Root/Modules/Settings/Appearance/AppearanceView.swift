@@ -64,23 +64,10 @@ struct AppearanceView: View {
                 }
             }
         case .toggle:
-            rowContent(cell)
+            TFRowContent(title: cell.title) {
+                accessoryView(for: cell)
+            }
         }
-    }
-
-    @ViewBuilder
-    private func rowContent(_ cell: AppearanceCell) -> some View {
-        HStack(spacing: .ML) {
-            Text(cell.title)
-                .textStyle(.body)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            accessoryView(for: cell)
-        }
-        .padding(.vertical, .L)
-        .contentShape(Rectangle())
     }
 
     @ViewBuilder

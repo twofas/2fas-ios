@@ -66,5 +66,6 @@ public struct TFRowContent<Accessory: View>: View {
         }
         .padding(.vertical, .L)
         .contentShape(Rectangle())
+        .frame(minHeight: .normal)
     }
 }

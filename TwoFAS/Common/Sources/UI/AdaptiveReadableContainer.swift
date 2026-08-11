@@ -33,7 +33,7 @@ public struct AdaptiveReadableContainer<Content: View>: View {
     public init(
         iphoneMaxWidth: CGFloat = .infinity,
         ipadMaxWidth: CGFloat = 720,
-        horizontalMargin: CGFloat = Spacing.XXXL.value,
+        horizontalMargin: CGFloat = Spacing.XL.value,
         verticalMargin: CGFloat = Spacing.XL.value,
         @ViewBuilder content: () -> Content
     ) {

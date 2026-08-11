@@ -54,5 +54,6 @@ public struct TFToggleRow: View {
             RoundedRectangle(.extraLarge)
                 .foregroundStyle(isElevated ? AppColor.backgroundsGroupedTertiary : AppColor.backgroundsSecondary)
         }
+        .frame(minHeight: .normal)
     }
 }

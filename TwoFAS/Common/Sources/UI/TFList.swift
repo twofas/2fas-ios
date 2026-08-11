@@ -42,16 +42,15 @@ public struct TFListScreen<Content: View>: View {
     public var body: some View {
         ScrollView(.vertical) {
             AdaptiveReadableContainer(
-                horizontalMargin: Spacing.XL.rawValue,
                 verticalMargin: .zero
             ) {
                 VStack(spacing: .XXXL) {
                     content
                 }
             }
-            .padding(.top, .M)
             .padding(.bottom, .XXXL)
         }
+        .scrollContentBackground(.hidden)
         .background(backgroundColor)
     }
 }
@@ -219,6 +218,7 @@ public struct TFListMenuRow<MenuContent: View>: View {
             }
             .padding(.vertical, .L)
             .contentShape(Rectangle())
+            .frame(minHeight: .normal)
         }
     }
 }

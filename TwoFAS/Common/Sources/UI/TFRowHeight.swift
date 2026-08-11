@@ -32,6 +32,10 @@ import SwiftUI
 public enum TFRowHeight: CGFloat, CaseIterable {
     /// 68 pt — swipeable list row (leading icon + text).
     case list = 68
+    /// 55 pt — input
+    case input = 55
+    /// 52 pt - normal list posiition
+    case normal = 52
 
     /// Raw `CGFloat` value — use when a plain number is required.
     public var value: CGFloat { rawValue }

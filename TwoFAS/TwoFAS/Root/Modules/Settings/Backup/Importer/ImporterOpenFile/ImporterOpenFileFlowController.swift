@@ -18,8 +18,8 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
-import UniformTypeIdentifiers
 import Data
 
 protocol ImporterOpenFileHeadlessFlowControllerParent: AnyObject {
@@ -46,9 +46,10 @@ final class ImporterOpenFileHeadlessFlowController: FlowController {
     private weak var parent: ImporterOpenFileHeadlessFlowControllerParent?
     private var navigationController: UINavigationController?
     private var presenter: ImporterOpenFilePresenter!
-    
+    private var router: ImporterRouter!
+
     private var isNaviPresented = false
-    
+
     static func present(
         on viewController: UIViewController,
         parent: ImporterOpenFileHeadlessFlowControllerParent,
@@ -58,182 +59,72 @@ final class ImporterOpenFileHeadlessFlowController: FlowController {
     ) -> ImporterOpenFileHeadlessFlowController {
         let flowController = ImporterOpenFileHeadlessFlowController(viewController: viewController)
         flowController.parent = parent
+
         let interactor = ModuleInteractorFactory.shared.importerOpenFileModuleInteractor(
             url: url,
             importingOTPAuthFile: importingOTPAuthFile,
             isFromClipboard: isFromClipboard
         )
+
+        let router = ImporterRouter()
+        router.flowController = flowController
+        flowController.router = router
+
         let presenter = ImporterOpenFilePresenter(
-            flowController: flowController,
+            flowController: router,
             interactor: interactor
         )
-        
         flowController.presenter = presenter
-        
-        let navi = RootNavigationController(rootViewController: UIViewController())
+
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(ImporterRootView(router: router)))
+        let navi = RootNavigationController(rootViewController: hosting)
         navi.configureAsModal()
         navi.rootFlowController = flowController
         navi.isNavigationBarHidden = true
         flowController.navigationController = navi
-        
+
         presenter.start()
-        
+
         return flowController
     }
-}
 
-extension ImporterOpenFileHeadlessFlowController: ImporterOpenFileHeadlessFlowControlling {
-    func toClose() {
+    // MARK: - Terminal actions (driven by the router)
+
+    func close() {
         parent?.importerClose()
     }
-    
-    func toPreimportSummary(
-        countNew: Int,
-        countTotal: Int,
-        sections: [CommonSectionData],
-        services: [ServiceData],
-        externalImportService: ExternalImportService
-    ) {
-        showNavigationController { [weak self, weak navigationController] animated in
-            guard let self, let navigationController else { return }
-            
-            ImporterPreimportSummaryFlowController.push(
-                in: navigationController,
-                parent: self,
-                countNew: countNew,
-                countTotal: countTotal,
-                sections: sections,
-                services: services,
-                externalImportService: externalImportService,
-                animated: animated
-            )
-        }
-    }
-    
-    func toFileError(error: ImporterOpenFileError) {
-        showNavigationController { [weak self, weak navigationController] animated in
-            guard let self, let navigationController else { return }
-            
-            ImporterFileErrorFlowController.push(
-                in: navigationController,
-                parent: self,
-                fileError: error,
-                animated: animated
-            )
-        }
-    }
-    
-    func toFileIsEmpty() {
-        showNavigationController { [weak self, weak navigationController] animated in
-            guard let self, let navigationController else { return }
-            
-            ImporterFileErrorFlowController.push(
-                in: navigationController,
-                parent: self,
-                fileError: .noNewServices,
-                animated: animated
-            )
-        }
-    }
-    
-    func toEnterPassword(for data: ExchangeDataFormat, externalImportService: ExternalImportService) {
-        showNavigationController { [weak self, weak navigationController] animated in
-            guard let self, let navigationController else { return }
-            
-            ImporterEnterPasswordFlowController.push(
-                in: navigationController,
-                parent: self,
-                data: data,
-                externalImportService: externalImportService,
-                animated: animated
-            )
-        }
-    }
-}
 
-extension ImporterOpenFileHeadlessFlowController: ImporterEnterPasswordFlowControllerParent {
-    func hidePasswordImport() {
-        parent?.importerClose()
+    func presentModalIfNeeded() {
+        guard !isNaviPresented, let navigationController else { return }
+        isNaviPresented = true
+        _viewController.present(navigationController, animated: true)
     }
-    
-    func showPreimportSummary(
-        countNew: Int,
-        countTotal: Int,
-        sections: [CommonSectionData],
-        services: [ServiceData],
-        externalImportService: ExternalImportService
-    ) {
-        toPreimportSummary(
-            countNew: countNew,
-            countTotal: countTotal,
-            sections: sections,
-            services: services,
-            externalImportService: externalImportService
-        )
-    }
-    
-    func showFileError(error: ImporterOpenFileError) {
-        toFileError(error: error)
-    }
-    
-    func showFileIsEmpty() {
-        toFileIsEmpty()
-    }
-    
-    func showWrongPassword() {
-        let vc = createWrongPassword()
-        showNavigationController { [weak navigationController] _ in
-            navigationController?.present(vc, animated: true, completion: nil)
-        }
-    }
-    
-    func toOpenFile() {
+
+    func presentDocumentPicker() {
         let view = ImporterOpenFileViewController(forOpeningContentTypes: nil, asCopy: false)
         view.handleCantReadFile = { [weak self] in
-            self?.toFileError(error: .cantReadFile(reason: nil))
+            self?.router.toFileError(error: .cantReadFile(reason: nil))
         }
         view.handleFileOpen = { [weak self] url in
             self?.presenter.handleFileOpen(url)
         }
         view.handleCancelFileOpen = { [weak self] in
-            self?.toClose()
+            self?.close()
         }
         _viewController.present(view, animated: true)
     }
-}
 
-extension ImporterOpenFileHeadlessFlowController: ImporterFileErrorFlowControllerParent {
-    func hideFileError() {
-        parent?.importerClose()
-    }
-}
-
-extension ImporterOpenFileHeadlessFlowController: ImporterPreimportSummaryFlowControllerParent {
-    func hidePreimportSummary() {
-        parent?.importerClose()
-    }
-    
-    func showImportSummary(count: Int) {
-        let vc = createSummary(count: count)
-        showNavigationController { [weak navigationController] _ in
-            navigationController?.present(vc, animated: true, completion: nil)
-        }
-    }    
-}
-
-private extension ImporterOpenFileHeadlessFlowController {
-    func createWrongPassword() -> UIViewController {
+    func showWrongPassword() {
         let alert = UIAlertController(
             title: T.Commons.error,
             message: T.Backup.incorrectPassword,
             preferredStyle: .alert
         )
-        let cancel = UIAlertAction(title: T.Commons.ok, style: .cancel)
-        alert.addAction(cancel)
-        return alert
+        alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel))
+        (navigationController ?? _viewController).present(alert, animated: true, completion: nil)
     }
-    
-    func createSummary(count: Int) -> UIViewController {
+
+    func showImportSummary(count: Int) {
         let alert = AlertControllerDismissFlow(
             title: T.Backup.importCompletedSuccessfuly,
             message: T.Backup.servicesImportedCount(count),
@@ -243,18 +134,6 @@ private extension ImporterOpenFileHeadlessFlowController {
         alert.didDisappear = { [weak self] _ in
             self?.parent?.importerCloseOnSucessfulImport()
         }
-        return alert
-    }
-    
-    func showNavigationController(completion: @escaping (Bool) -> Void) {
-        guard !isNaviPresented, let navigationController else {
-            completion(true)
-            return
-        }
-        
-        completion(false)
-        _viewController.present(navigationController, animated: true) { [weak self] in
-            self?.isNaviPresented = true
-        }
+        (navigationController ?? _viewController).present(alert, animated: true, completion: nil)
     }
 }

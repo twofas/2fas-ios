@@ -50,7 +50,17 @@ struct ImporterFileErrorView: View {
         } buttons: {
             TFButton(T.Commons.close, variant: .borderedProminent, size: .large, action: action)
         }
-        .navigationBarHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    action()
+                } label: {
+                    Image(systemName: "xmark")
+                }
+            }
+        }
     }
 
     private var title: String {

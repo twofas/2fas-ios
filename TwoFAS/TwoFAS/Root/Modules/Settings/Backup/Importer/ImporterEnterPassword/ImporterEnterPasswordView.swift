@@ -32,12 +32,6 @@ struct ImporterEnterPasswordView: View {
 
     var body: some View {
         VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: T.Backup.encryptionEnterPassword,
-                leadingSymbol: .close,
-                onLeadingTap: presenter.handleCancel
-            )
-
             ScrollView(.vertical) {
                 AdaptiveReadableContainer {
                     VStack(spacing: .XXXL) {
@@ -86,6 +80,17 @@ struct ImporterEnterPasswordView: View {
             }
         }
         .background(.backgroundsPrimary)
+        .navigationTitle(T.Backup.encryptionEnterPassword)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    presenter.handleCancel()
+                } label: {
+                    Image(systemName: "xmark")
+                }
+            }
+        }
         .onChange(of: presenter.password) { _, newValue in
             presenter.handleChange(newValue)
         }

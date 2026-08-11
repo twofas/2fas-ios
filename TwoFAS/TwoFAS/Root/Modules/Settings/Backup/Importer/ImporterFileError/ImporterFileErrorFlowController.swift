@@ -17,46 +17,8 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import SwiftUI
-
-protocol ImporterFileErrorFlowControllerParent: AnyObject {
-    func hideFileError()
-}
+import Foundation
 
 protocol ImporterFileErrorFlowControlling: AnyObject {
     func toClose()
-}
-
-final class ImporterFileErrorFlowController: FlowController {
-    private weak var parent: ImporterFileErrorFlowControllerParent?
-
-    static func push(
-        in navigationController: UINavigationController,
-        parent: ImporterFileErrorFlowControllerParent,
-        fileError: ImporterOpenFileError,
-        animated: Bool = true
-    ) {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
-        hosting.hidesBottomBarWhenPushed = true
-        let flowController = ImporterFileErrorFlowController(viewController: hosting)
-        flowController.parent = parent
-        let presenter = ImporterFileErrorPresenter(
-            flowController: flowController,
-            fileError: fileError
-        )
-        hosting.rootView = AnyView(
-            ImporterFileErrorView(fileError: fileError, action: {
-                presenter.handleClose()
-            })
-        )
-
-        navigationController.pushViewController(hosting, animated: animated)
-    }
-}
-
-extension ImporterFileErrorFlowController: ImporterFileErrorFlowControlling {
-    func toClose() {
-        parent?.hideFileError()
-    }
 }

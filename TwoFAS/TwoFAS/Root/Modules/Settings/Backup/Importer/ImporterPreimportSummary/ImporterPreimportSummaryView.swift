@@ -75,7 +75,17 @@ struct ImporterPreimportSummaryView: View {
                 }
             }
         }
-        .navigationBarHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    presenter.handleCancel()
+                } label: {
+                    Image(systemName: "xmark")
+                }
+            }
+        }
     }
 
     private var secondaryText: String {

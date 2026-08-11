@@ -17,24 +17,8 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import SwiftUI
 import Common
 import Data
-
-protocol ImporterEnterPasswordFlowControllerParent: AnyObject {
-    func hidePasswordImport()
-    func showPreimportSummary(
-        countNew: Int,
-        countTotal: Int,
-        sections: [CommonSectionData],
-        services: [ServiceData],
-        externalImportService: ExternalImportService
-    )
-    func showFileError(error: ImporterOpenFileError)
-    func showFileIsEmpty()
-    func showWrongPassword()
-}
 
 protocol ImporterEnterPasswordFlowControlling: AnyObject {
     func toClose()
@@ -48,66 +32,4 @@ protocol ImporterEnterPasswordFlowControlling: AnyObject {
     func toFileError(error: ImporterOpenFileError)
     func toFileIsEmpty()
     func toWrongPassword()
-}
-
-final class ImporterEnterPasswordFlowController: FlowController {
-    private weak var parent: ImporterEnterPasswordFlowControllerParent?
-
-    static func push(
-        in navigationController: UINavigationController,
-        parent: ImporterEnterPasswordFlowControllerParent,
-        data: ExchangeDataFormat,
-        externalImportService: ExternalImportService,
-        animated: Bool = true
-    ) {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
-        hosting.hidesBottomBarWhenPushed = true
-        let flowController = ImporterEnterPasswordFlowController(viewController: hosting)
-        flowController.parent = parent
-        let interactor = ModuleInteractorFactory.shared.importerEnterPasswordModuleInteractor(
-            data: data
-        )
-        let presenter = ImporterEnterPasswordPresenter(
-            flowController: flowController,
-            interactor: interactor,
-            externalImportService: externalImportService
-        )
-        hosting.rootView = AnyView(ImporterEnterPasswordView(presenter: presenter))
-
-        navigationController.pushViewController(hosting, animated: animated)
-    }
-}
-
-extension ImporterEnterPasswordFlowController: ImporterEnterPasswordFlowControlling {
-    func toClose() {
-        parent?.hidePasswordImport()
-    }
-
-    func toPreimportSummary(
-        countNew: Int,
-        countTotal: Int,
-        sections: [CommonSectionData],
-        services: [ServiceData],
-        externalImportService: ExternalImportService
-    ) {
-        parent?.showPreimportSummary(
-            countNew: countNew,
-            countTotal: countTotal,
-            sections: sections,
-            services: services,
-            externalImportService: externalImportService
-        )
-    }
-
-    func toFileError(error: ImporterOpenFileError) {
-        parent?.showFileError(error: error)
-    }
-
-    func toFileIsEmpty() {
-        parent?.showFileIsEmpty()
-    }
-
-    func toWrongPassword() {
-        parent?.showWrongPassword()
-    }
 }

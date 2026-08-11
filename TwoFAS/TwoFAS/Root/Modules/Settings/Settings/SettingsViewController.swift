@@ -71,10 +71,7 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if #available(iOS 26.0, *) {
-            applyGlassNavigationBarAppearance(to: navigationNavi)
-            applyGlassNavigationBarAppearance(to: contentNavi)
-        } else {
+        if #unavailable(iOS 26.0) {
             navigationNavi.navigationBar.isTranslucent = false
             contentNavi.navigationBar.isTranslucent = false
         }
@@ -193,16 +190,17 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
         split.setViewController(navigationNavi, for: .compact)
     }
     
-    /// Reconciles the settings content with the split's actual collapsed state.
     /// The settings split decides compact/regular via a width-based trait override
-    /// (`updateSize`), so the outer window size class is the wrong signal — we must
-    /// follow `split.isCollapsed`. Deduped so it only reconfigures on change.
     private func reconcileForCollapsedStateIfNeeded() {
         guard traitCollection.horizontalSizeClass != .unspecified else { return }
 
         updateNavigationBarVisibility()
+        applyLargeTitleIfNeeded()
 
-        let collapsed = split.isCollapsed
+        let width = view.frame.size.width
+        guard width > 0 else { return }
+
+        let collapsed = width < minimumSecondaryColumnWidth
         guard collapsed != lastCollapsedState else { return }
         lastCollapsedState = collapsed
 
@@ -222,15 +220,13 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
         contentNavi.setNavigationBarHidden(false, animated: false)
     }
 
-    @available(iOS 26.0, *)
-    private func applyGlassNavigationBarAppearance(to navigationController: UINavigationController) {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithDefaultBackground()
-        appearance.backgroundEffect = UIBlurEffect(style: .regular)
-        appearance.backgroundColor = .clear
-        navigationController.navigationBar.standardAppearance = appearance
-        navigationController.navigationBar.scrollEdgeAppearance = appearance
-        navigationController.navigationBar.compactAppearance = appearance
+    private func applyLargeTitleIfNeeded() {
+        guard #available(iOS 26.0, *) else { return }
+        let width = view.frame.size.width
+        guard width > 0 else { return }
+        let isCompact = width < minimumSecondaryColumnWidth
+        navigationNavi.navigationBar.prefersLargeTitles = isCompact
+        contentNavi.navigationBar.prefersLargeTitles = isCompact
     }
 
     private func setMenuPosition() {

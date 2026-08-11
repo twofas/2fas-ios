@@ -32,10 +32,20 @@ struct SettingsMenuView: View {
         }
         .background(.backgroundsPrimary)
         .navigationTitle(T.Settings.settings)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(titleDisplayMode)
         .onAppear {
             presenter.viewWillAppear()
         }
+    }
+
+    /// On iOS 26+ the compact (collapsed, single-column) layout uses a large
+    /// title to match the rest of the app; the expanded two-column layout and
+    /// earlier systems keep the inline title.
+    private var titleDisplayMode: NavigationBarItem.TitleDisplayMode {
+        if #available(iOS 26.0, *), presenter.isCollapsed {
+            return .large
+        }
+        return .inline
     }
 
     @ViewBuilder

@@ -85,6 +85,8 @@ public enum AppColor: CaseIterable {
     case backgroundsSecondaryElevated
     case backgroundsTertiaryElevated
 
+    case backgroundsSecondaryTranslucent
+
     // MARK: Backgrounds – Grouped
     case backgroundsGroupedPrimary
     case backgroundsGroupedSecondary
@@ -255,6 +257,8 @@ private extension AppColor {
         case .backgroundsPrimaryElevated: Color(.sRGB, red: 1, green: 1, blue: 1, opacity: 1)
         case .backgroundsSecondaryElevated: Color(.sRGB, red: 0.949, green: 0.949, blue: 0.9686, opacity: 1)
         case .backgroundsTertiaryElevated: Color(.sRGB, red: 1, green: 1, blue: 1, opacity: 1)
+        // Over backgroundsPrimary (white) at α=0.75 → resolves to backgroundsSecondary
+        case .backgroundsSecondaryTranslucent: Color(.sRGB, red: 0.932, green: 0.932, blue: 0.9581, opacity: 0.75)
         // Backgrounds – Grouped
         case .backgroundsGroupedPrimary: Color(.sRGB, red: 0.949, green: 0.949, blue: 0.9686, opacity: 1)
         case .backgroundsGroupedSecondary: Color(.sRGB, red: 1, green: 1, blue: 1, opacity: 1)
@@ -332,6 +336,8 @@ private extension AppColor {
         case .backgroundsPrimaryElevated: Color(.sRGB, red: 0.1098, green: 0.1098, blue: 0.1176, opacity: 1)
         case .backgroundsSecondaryElevated: Color(.sRGB, red: 0.1725, green: 0.1725, blue: 0.1804, opacity: 1)
         case .backgroundsTertiaryElevated: Color(.sRGB, red: 0.2275, green: 0.2275, blue: 0.2353, opacity: 1)
+        // Over backgroundsPrimary (black) at α=0.75 → resolves to backgroundsSecondary
+        case .backgroundsSecondaryTranslucent: Color(.sRGB, red: 0.1464, green: 0.1464, blue: 0.1568, opacity: 0.75)
         // Backgrounds – Grouped
         case .backgroundsGroupedPrimary: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 1)
         case .backgroundsGroupedSecondary: Color(.sRGB, red: 0.1098, green: 0.1098, blue: 0.1176, opacity: 1)

@@ -79,7 +79,6 @@ final class TokensViewController: UIViewController {
         presenter.viewWillAppear()
         navigationController?.setNavigationBarHidden(false, animated: animated)
         applyLargeTitleIfNeeded()
-        applyUltraThinNavigationBarAppearance()
         startSafeAreaKeyboardAdjustment()
     }
 
@@ -97,16 +96,6 @@ final class TokensViewController: UIViewController {
         let isCompact = horizontal == .compact
         navigationController?.navigationBar.prefersLargeTitles = isCompact
         navigationItem.largeTitleDisplayMode = isCompact ? .always : .never
-    }
-
-    private func applyUltraThinNavigationBarAppearance() {
-        guard #available(iOS 26.0, *) else { return }
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithDefaultBackground()
-        appearance.backgroundEffect = UIBlurEffect(style: .regular)
-        appearance.backgroundColor = .clear
-        navigationItem.standardAppearance = appearance
-        navigationItem.compactScrollEdgeAppearance = appearance
     }
     
     override func viewWillDisappear(_ animated: Bool) {

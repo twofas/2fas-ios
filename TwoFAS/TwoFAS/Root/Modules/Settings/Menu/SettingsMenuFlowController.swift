@@ -36,6 +36,7 @@ protocol SettingsMenuFlowControllerChild: AnyObject {
     func toSwitchToBackup()
 
     func handleNavigateToViewPath(_ viewPath: ViewPath.Settings, force: Bool)
+    func restoreSelection(_ viewPath: ViewPath.Settings?)
     var currentViewPath: ViewPath.Settings? { get }
     func showSidebarReveal(action: @escaping () -> Void)
     func hideSidebarReveal()
@@ -185,6 +186,10 @@ extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {
 
     func handleNavigateToViewPath(_ viewPath: ViewPath.Settings, force: Bool) {
         presenter?.handleNavigateToViewPath(viewPath, force: force)
+    }
+
+    func restoreSelection(_ viewPath: ViewPath.Settings?) {
+        presenter?.restoreSelection(viewPath)
     }
 
     var currentViewPath: ViewPath.Settings? {

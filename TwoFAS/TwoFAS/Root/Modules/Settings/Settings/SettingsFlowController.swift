@@ -97,7 +97,10 @@ extension SettingsFlowController: SettingsFlowControlling {
         navigationMenu?.toCollapsed()
 
         if viewController.contentNavi.viewControllers.isEmpty {
-            navigationMenu?.toSelectedModule()
+            // Collapsed with an empty detail (e.g. a fresh launch): keep the menu
+            // list at its root. The remembered selection only becomes a detail
+            // screen once the layout expands (see toExpandedView).
+            viewController.navigationNavi.popToRootViewController(animated: false)
         } else {
             var vcs = viewController.navigationNavi.viewControllers
             vcs += viewController.contentNavi.viewControllers

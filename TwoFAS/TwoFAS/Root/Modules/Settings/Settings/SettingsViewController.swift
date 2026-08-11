@@ -26,8 +26,11 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     weak var menu: SettingsMenuFlowControllerChild? {
         didSet {
             if let savedViewPath {
-                let force = !isCollapsed && contentNavi.viewControllers.isEmpty
-                menu?.handleNavigateToViewPath(savedViewPath, force: force)
+                // Launch/restore: only remember the selection. The collapse/expand
+                // reconciliation (post-layout) places it — menu root when collapsed,
+                // detail column when expanded — so we don't push it here, where the
+                // split's collapsed state isn't reliable yet.
+                menu?.restoreSelection(savedViewPath)
                 self.savedViewPath = nil
             }
             if isMenuPositionPending {
@@ -47,12 +50,6 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     let navigationNavi = CommonNavigationController()
     let contentNavi = CommonNavigationController()
     
-    // Navigation follows the native split state: collapsed → push, expanded →
-    // detail column. During an expand/collapse transition the split still reports
-    // its pre-transition `isCollapsed` (the display-mode delegate fires before the
-    // state flips), so routing must instead follow the transition we are actively
-    // performing. `routingCollapsedOverride` carries that intent; it falls back to
-    // the live split state before the first transition.
     private var routingCollapsedOverride: Bool?
     var isCollapsed: Bool { routingCollapsedOverride ?? split.isCollapsed }
 
@@ -123,21 +120,25 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     }
     
     func navigateToView(_ viewPath: ViewPath.Settings?) {
-        var vp: ViewPath.Settings = .backup
-        if let viewPath {
-            vp = viewPath
-        } else {
-            if isCollapsed {
-                navigationNavi.popToRootViewController(animated: true)
-                return
+        guard lastCollapsedState != nil, let menuVC = menu else {
+            // The split hasn't reconciled its real collapsed state yet
+            // (launch/restore, before the first layout). Only remember the target
+            // as the selected module; the first collapse/expand reconciliation
+            // places it — menu root when collapsed, detail column when expanded.
+            if let menu {
+                menu.restoreSelection(viewPath)
+            } else {
+                savedViewPath = viewPath
             }
+            return
         }
-        if let menuVC = menu {
-            let force = !isCollapsed && contentNavi.viewControllers.isEmpty
-            menuVC.handleNavigateToViewPath(vp, force: force)
-        } else {
-            savedViewPath = vp
+        if viewPath == nil, isCollapsed {
+            navigationNavi.popToRootViewController(animated: true)
+            return
         }
+        let vp = viewPath ?? .backup
+        let force = !isCollapsed && contentNavi.viewControllers.isEmpty
+        menuVC.handleNavigateToViewPath(vp, force: force)
     }
     
     var currentView: ViewPath.Settings? {
@@ -155,12 +156,6 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     }
     
     private func updateSize(width: CGFloat) {
-        // The settings split is nested inside a tab that forces a compact size
-        // class (bottom tab bar), so the inherited system size class doesn't
-        // reflect the width actually available here. Drive collapse/expand from
-        // the real available width instead — this updates on every layout and
-        // window resize, so the split collapses (single stack + Back) when narrow
-        // and shows two columns when wide, on both iOS 18 and 26.
         let newSizeClass: UIUserInterfaceSizeClass = width < minimumSecondaryColumnWidth ? .compact : .regular
 
         guard newSizeClass != split.traitCollection.horizontalSizeClass else { return }

@@ -82,6 +82,13 @@ extension SettingsMenuPresenter {
         isCollapsed = false
     }
 
+    func restoreSelection(_ viewPath: ViewPath.Settings?) {
+        // Restore which module is "selected" without navigating anywhere. The
+        // selection is only used to populate the detail column once the layout is
+        // (or becomes) expanded; while collapsed the menu list stays at its root.
+        selectedModule = module(for: viewPath)
+    }
+
     func handleShowSelected() {
         if isCollapsed {
             if let selectedModule {
@@ -233,6 +240,21 @@ private extension SettingsMenuPresenter {
                 interactor.enableWidgets()
                 reload()
             }
+        }
+    }
+
+    func module(for viewPath: ViewPath.Settings?) -> SettingsNavigationModule? {
+        guard let viewPath else { return nil }
+        switch viewPath {
+        case .backup: return .backup
+        case .security: return .security
+        case .browserExtension: return .browserExtension
+        case .trash: return .trash
+        case .about: return .about
+        case .transfer: return .transfer
+        case .appearance: return .appearance
+        case .appleWatch: return .appleWatch
+        @unknown default: return nil
         }
     }
 

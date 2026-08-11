@@ -126,7 +126,6 @@ struct IntroductionView: View {
                 ) {
                     presenter.onTOS()
                 }
-                .padding(.bottom, .XL)
                 .isHidden((position.viewID as? Int ?? 0) != 0, remove: true)
                 .animation(.easeInOut, value: position)
             }

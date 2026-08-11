@@ -27,7 +27,8 @@ struct SyncMigrationToNewestVersionView: View {
     var presenter: SyncMigrationToNewestVersionPresenter
     
     var body: some View {
-        TFInfoView {
+        NavigationStack {
+            TFInfoView {
             Image(uiImage: image)
                 .renderingMode(.original)
                 .frame(width: image.size.width, height: image.size.height)
@@ -66,6 +67,7 @@ struct SyncMigrationToNewestVersionView: View {
                 }
             }
         }
-        .navigationBarHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }

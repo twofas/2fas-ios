@@ -28,13 +28,7 @@ struct EncryptedByUserPasswordSyncView: View {
     private var isFocused: Bool?
     
     var body: some View {
-        VStack(spacing: .zero) {
-            TFScreenTitleBar(
-                title: presenter.title,
-                leadingSymbol: .close,
-                onLeadingTap: presenter.close
-            )
-
+        NavigationStack {
             AdaptiveReadableContainer {
                 VStack(alignment: .center) {
                     VStack(alignment: .center, spacing: Spacing.M) {
@@ -99,11 +93,6 @@ struct EncryptedByUserPasswordSyncView: View {
                                             }
                                         }
                                         .disabled(!presenter.checkPasswordEnabled)
-                                        
-                                        TFButton(T.Commons.close, variant: .borderless, size: .large) {
-                                            presenter.close()
-                                        }
-                                        .isHidden(presenter.isDone, remove: true)
                                     }
                                     .padding(.top, Spacing.XL)
                                 }
@@ -113,11 +102,22 @@ struct EncryptedByUserPasswordSyncView: View {
                 }
                 .frame(maxHeight: .infinity)
             }
-        }
-        .dismissKeyboardOnTapOutside()
-        .background(.backgroundsPrimaryElevated)
-        .onAppear {
-            isFocused = true
+            .dismissKeyboardOnTapOutside()
+            .background(.backgroundsPrimaryElevated)
+            .navigationTitle(presenter.title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        presenter.close()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                }
+            }
+            .onAppear {
+                isFocused = true
+            }
         }
     }
     

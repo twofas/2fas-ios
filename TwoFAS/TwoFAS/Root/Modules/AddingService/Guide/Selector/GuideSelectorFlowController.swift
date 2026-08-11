@@ -23,8 +23,9 @@ import Common
 import Data
 
 protocol GuideSelectorFlowControllerParent: AnyObject {
-    func guideSelectorToGuideMenu(_ guide: GuideDescription)
     func guideSelectorClose()
+    func guideSelectorAddManually(with data: String?)
+    func guideSelectorCodeScanner()
 }
 
 protocol GuideSelectorFlowControlling: AnyObject {
@@ -34,34 +35,47 @@ protocol GuideSelectorFlowControlling: AnyObject {
 
 final class GuideSelectorFlowController: FlowController {
     private weak var parent: GuideSelectorFlowControllerParent?
+    private var router: GuideRouter?
+    private var presenter: GuideSelectorPresenter?
 
+    @discardableResult
     static func present(
         in navigationController: UINavigationController,
         parent: GuideSelectorFlowControllerParent
-    ) {
+    ) -> GuideSelectorFlowController {
         let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
         let flowController = GuideSelectorFlowController(viewController: hosting)
         flowController.parent = parent
 
         let interactor = ModuleInteractorFactory.shared.guideSelectorModuleInteractor()
-
+        let router = GuideRouter()
+        router.flowController = flowController
         let presenter = GuideSelectorPresenter(
-            flowController: flowController,
+            flowController: router,
             interactor: interactor
         )
-        hosting.rootView = AnyView(GuideSelectorView(presenter: presenter))
+        flowController.router = router
+        flowController.presenter = presenter
+
+        hosting.rootView = AnyView(GuideSelectorView(presenter: presenter, router: router))
         hosting.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
 
         navigationController.setViewControllers([hosting], animated: false)
-    }
-}
 
-extension GuideSelectorFlowController: GuideSelectorFlowControlling {
-    func toClose() {
+        return flowController
+    }
+
+    // MARK: - Terminal actions (driven by the router)
+
+    func close() {
         parent?.guideSelectorClose()
     }
-    
-    func toGuideMenu(_ guide: GuideDescription) {
-        parent?.guideSelectorToGuideMenu(guide)
+
+    func addManually(with data: String?) {
+        parent?.guideSelectorAddManually(with: data)
+    }
+
+    func codeScanner() {
+        parent?.guideSelectorCodeScanner()
     }
 }

@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Copyright © 2026 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -19,5 +19,7 @@
 
 import Foundation
 
-// GuideMenu is now presented as a SwiftUI destination inside the Guide `NavigationStack`.
-// See `GuideRouter` and `GuideMenuView`.
+enum GuideRoute: Hashable {
+    case menu
+    case pages
+}

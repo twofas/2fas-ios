@@ -27,52 +27,66 @@ struct GuideSelectorView: View {
     
     private static let itemWidth: CGFloat = 148
     private static let itemHeight: CGFloat = 118
-    
-    private let columns = [GridItem(.fixed(Self.itemWidth)), GridItem(.fixed(Self.itemWidth))]
+    private let ipadMaxWidth: CGFloat = 480
+
+    private let columns = [
+        GridItem(.flexible(minimum: Self.itemWidth)),
+        GridItem(.flexible(minimum: Self.itemWidth))
+    ]
     
     @ObservedObject
     var presenter: GuideSelectorPresenter
 
+    @ObservedObject
+    var router: GuideRouter
+
     var body: some View {
-        VStack(alignment: .center, spacing: .zero) {
-            ZStack {
-                HStack(spacing: .zero) {
-                    TFLiquidGlassSymbolButton(symbol: .close) {
-                        presenter.handleClose()
-                    }
-                    Spacer()
-                    TFLiquidGlassTextButton(T.Guides.requestService) {
-                        UIApplication.shared.open(URL(string: "https://2fas.com/your-2fa-guide/")!)
-                    }
-                }
-                TFTitleView(title: T.Guides.selectTitle)
-            }
+        NavigationStack(path: $router.path) {
             ScrollView(.vertical) {
-                VStack(spacing: .L) {
-                    Text(T.Guides.selectDescription)
-                        .textStyle(.title2, .emphasized)
-                        .multilineTextAlignment(.center)
-                        .foregroundStyle(.labelsPrimary)
-                        .accessibilityAddTraits(.isHeader)
-                        .padding(.vertical, .XXXXXL)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                    LazyVGrid(columns: columns, spacing: Spacing.L.rawValue) {
-                        ForEach(presenter.guides.chunked(into: 2), id: \.self) { values in
-                            if let first = values.first {
-                                serviceGuide(first)
-                            }
-                            if let last = values.last {
-                                serviceGuide(last)
+                AdaptiveReadableContainer(ipadMaxWidth: ipadMaxWidth) {
+                    VStack(spacing: .L) {
+                        Text(T.Guides.selectDescription)
+                            .textStyle(.title2, .emphasized)
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(.labelsPrimary)
+                            .accessibilityAddTraits(.isHeader)
+                            .padding(.vertical, .XXXXXL)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                        LazyVGrid(columns: columns, spacing: Spacing.L.rawValue) {
+                            ForEach(presenter.guides.chunked(into: 2), id: \.self) { values in
+                                if let first = values.first {
+                                    serviceGuide(first)
+                                }
+                                if let last = values.last {
+                                    serviceGuide(last)
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-        .padding(.horizontal, .XL)
-        .padding(.top, .XL)
-        .onAppear {
-            presenter.viewDidLoad()
+            .navigationTitle(T.Guides.selectTitle)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        presenter.handleClose()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(T.Guides.requestService) {
+                        UIApplication.shared.open(URL(string: "https://2fas.com/your-2fa-guide/")!)
+                    }
+                }
+            }
+            .navigationDestination(for: GuideRoute.self) { route in
+                router.destination(for: route)
+            }
+            .onAppear {
+                presenter.viewDidLoad()
+            }
         }
     }
 

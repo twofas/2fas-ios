@@ -30,36 +30,13 @@ struct GuidePagesView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: .zero) {
-            ZStack {
-                HStack(spacing: .zero) {
-                    let pageNumber = position.viewID as? Int ?? 0
-                    TFLiquidGlassSymbolButton(symbol: .back) {
-                        if pageNumber > 0 {
-                            withAnimation {
-                                position.scrollTo(id: pageNumber - 1)
-                            }
-                        } else {
-                            presenter.onBack()
-                        }
-                    }
-                    Spacer()
-                    TFLiquidGlassSymbolButton(symbol: .close) {
-                        presenter.onClose()
-                    }
-                }
-                TFTitleView(title: T.Guides.guideTitle(presenter.serviceName))
-            }
-            .padding(.horizontal, .XXXL)
-            .padding(.top, .XL)
-            .frame(alignment: .top)
-            
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 0) {
                     ForEach(0..<presenter.totalPages, id: \.self) { index in
                         let page = presenter.pages[index]
                         PageView(icon: page.image.icon, description: page.content, pageNumber: index)
-                        .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
-                        .id(index)
+                            .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
+                            .id(index)
                     }
                 }
                 .scrollTargetLayout()
@@ -76,14 +53,15 @@ struct GuidePagesView: View {
                 position.scrollTo(id: 0)
             }
             
-            AdaptiveReadableContainer {
+            AdaptiveReadableContainer(verticalMargin: .zero) {
                 let pageNumber = position.viewID as? Int ?? 0
-
+                
                 ScrollPagingView(
                     showPaging: .constant(true),
                     activePage: Binding(get: { pageNumber }, set: { _ in }),
                     dotsCount: presenter.totalPages
                 )
+                .padding(.bottom, .XXL)
                 VStack(spacing: .XL) {
                     TFButton(
                         presenter.buttonTitle(for: pageNumber),
@@ -105,6 +83,8 @@ struct GuidePagesView: View {
                 }
             }
         }
+        .navigationTitle(T.Guides.guideTitle(presenter.serviceName))
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

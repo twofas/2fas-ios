@@ -17,52 +17,9 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
 import Data
-
-protocol GuideMenuFlowControllerParent: AnyObject {
-    func guideMenuToMenuPosition(_ menu: GuideDescription.MenuPosition)
-}
 
 protocol GuideMenuFlowControlling: AnyObject {
     func toMenuPosition(_ menu: GuideDescription.MenuPosition)
     func back()
-}
-
-final class GuideMenuFlowController: FlowController {
-    private weak var parent: GuideMenuFlowControllerParent?
-    
-    static func push(
-        on navigationController: UINavigationController,
-        parent: GuideMenuFlowControllerParent,
-        guide: GuideDescription
-    ) {
-        let view = GuideMenuViewController()
-        let flowController = GuideMenuFlowController(viewController: view)
-        flowController.parent = parent
-        
-        let presenter = GuideMenuPresenter(
-            flowController: flowController,
-            guide: guide
-        )
-        view.presenter = presenter
-        
-        navigationController.pushViewController(view, animated: true)
-    }
-}
-
-extension GuideMenuFlowController {
-    var viewController: GuideMenuViewController {
-        _viewController as! GuideMenuViewController
-    }
-}
-
-extension GuideMenuFlowController: GuideMenuFlowControlling {
-    func toMenuPosition(_ menu: GuideDescription.MenuPosition) {
-        parent?.guideMenuToMenuPosition(menu)
-    }
-    
-    func back() {
-        viewController.navigationController?.popViewController(animated: true)
-    }
 }

@@ -17,17 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import SwiftUI
-import Common
-import Data
-
-protocol GuidePagesFlowControllerParent: AnyObject {
-    func guidePageToAddManually(with data: String?)
-    func guidePageToCodeScanner()
-    func guideToMenu()
-    func guideClose()
-}
+import Foundation
 
 protocol GuidePagesFlowControlling: AnyObject {
     func toAddManually(with data: String?)
@@ -35,49 +25,4 @@ protocol GuidePagesFlowControlling: AnyObject {
     func toMenu()
     func back()
     func close()
-}
-
-final class GuidePagesFlowController: FlowController {
-    private weak var parent: GuidePagesFlowControllerParent?
-
-    static func push(
-        on navigationController: UINavigationController,
-        parent: GuidePagesFlowControllerParent,
-        content: GuideDescription.MenuPosition
-    ) {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
-        let flowController = GuidePagesFlowController(viewController: hosting)
-        flowController.parent = parent
-
-        let presenter = GuidePagesPresenter(
-            flowController: flowController,
-            content: content
-        )
-        hosting.rootView = AnyView(GuidePagesView(presenter: presenter))
-        hosting.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
-
-        navigationController.pushViewController(hosting, animated: true)
-    }
-}
-
-extension GuidePagesFlowController: GuidePagesFlowControlling {
-    func toAddManually(with data: String?) {
-        parent?.guidePageToAddManually(with: data)
-    }
-    
-    func toCodeScanner() {
-        parent?.guidePageToCodeScanner()
-    }
-    
-    func toMenu() {
-        parent?.guideToMenu()
-    }
-    
-    func back() {
-        _viewController.navigationController?.popViewController(animated: true)
-    }
-    
-    func close() {
-        parent?.guideClose()
-    }
 }

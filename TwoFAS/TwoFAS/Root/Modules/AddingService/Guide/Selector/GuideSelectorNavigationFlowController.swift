@@ -28,7 +28,8 @@ protocol GuideSelectorNavigationFlowControllerParent: AnyObject {
 
 final class GuideSelectorNavigationFlowController: NavigationFlowController {
     private weak var parent: GuideSelectorNavigationFlowControllerParent?
-    
+    private var selectorFlowController: GuideSelectorFlowController?
+
     static func show(
         on viewController: UIViewController,
         parent: GuideSelectorNavigationFlowControllerParent
@@ -38,48 +39,28 @@ final class GuideSelectorNavigationFlowController: NavigationFlowController {
 
         let navi = CommonNavigationControllerFlow(flowController: flowController)
         navi.configureAsLargeModal()
-        
+
         flowController.navigationController = navi
-        
-        GuideSelectorFlowController.present(
+
+        flowController.selectorFlowController = GuideSelectorFlowController.present(
             in: navi,
             parent: flowController
         )
-        
+
         viewController.present(navi, animated: true, completion: nil)
     }
 }
 
 extension GuideSelectorNavigationFlowController: GuideSelectorFlowControllerParent {
-    func guideSelectorToGuideMenu(_ guide: GuideDescription) {
-        GuideMenuFlowController.push(on: navigationController, parent: self, guide: guide)
-    }
-    
     func guideSelectorClose() {
         parent?.closeGuideSelector()
     }
-}
 
-extension GuideSelectorNavigationFlowController: GuideMenuFlowControllerParent {
-    func guideMenuToMenuPosition(_ content: GuideDescription.MenuPosition) {
-        GuidePagesFlowController.push(on: navigationController, parent: self, content: content)
-    }
-}
-
-extension GuideSelectorNavigationFlowController: GuidePagesFlowControllerParent {
-    func guidePageToAddManually(with data: String?) {
+    func guideSelectorAddManually(with data: String?) {
         parent?.guideToAddManually(with: data)
     }
-    
-    func guidePageToCodeScanner() {
+
+    func guideSelectorCodeScanner() {
         parent?.guideToCodeScanner()
-    }
-    
-    func guideToMenu() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    func guideClose() {
-        parent?.closeGuideSelector()
     }
 }

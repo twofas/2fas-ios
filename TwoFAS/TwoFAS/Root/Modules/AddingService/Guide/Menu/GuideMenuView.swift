@@ -25,19 +25,6 @@ struct GuideMenuView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: .zero) {
-            ZStack {
-                HStack(spacing: .zero) {
-                    TFLiquidGlassSymbolButton(symbol: .back) {
-                        presenter.onBack()
-                    }
-                    Spacer()
-                }
-                TFTitleView(title: "2FAS for \(presenter.serviceName)")
-            }
-            .padding(.horizontal, .XXXL)
-            .padding(.top, .XL)
-            .frame(alignment: .top)
-            
             Spacer()
             
             AdaptiveReadableContainer {
@@ -53,14 +40,13 @@ struct GuideMenuView: View {
                             .textStyle(.callout)
                             .multilineTextAlignment(.center)
                             .foregroundStyle(.labelsSecondary)
-                            .padding(.horizontal, .XL)
                     }
                 }
             }
             
             Spacer()
             
-            AdaptiveReadableContainer {
+            AdaptiveReadableContainer(verticalMargin: .zero) {
                 VStack(spacing: .L) {
                     ForEach(presenter.menuPositions, id: \.self) { menuPosition in
                         TFButton(menuPosition.title, variant: .borderedSecondary, size: .medium) {
@@ -70,5 +56,7 @@ struct GuideMenuView: View {
                 }
             }
         }
+        .navigationTitle(T.Guides.guideTitle(presenter.serviceName))
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

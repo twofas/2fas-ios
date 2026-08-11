@@ -54,12 +54,11 @@ struct ImporterEnterPasswordView: View {
                         )
                         .groupedSectionBackground()
                     }
-                    .padding(.horizontal, .XL)
                 }
             }
             .scrollDismissesKeyboard(.interactively)
 
-            AdaptiveReadableContainer {
+            AdaptiveReadableContainer() {
                 VStack(spacing: .L) {
                     TFButton(
                         T.Commons.continue,
@@ -75,8 +74,6 @@ struct ImporterEnterPasswordView: View {
                         presenter.handleCancel()
                     }
                 }
-                .padding(.horizontal, .XL)
-                .padding(.bottom, .XL)
             }
         }
         .background(.backgroundsPrimary)

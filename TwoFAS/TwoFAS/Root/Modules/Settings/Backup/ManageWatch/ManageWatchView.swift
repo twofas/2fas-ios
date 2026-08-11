@@ -30,8 +30,12 @@ struct ManageWatchView: View {
         .navigationTitle(T.Backup.managePairedWatchesTitleShort)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button(T.Commons.close) { presenter.onClose() }
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    presenter.onClose()
+                } label: {
+                    Image(systemName: "xmark")
+                }
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -50,7 +54,7 @@ struct ManageWatchView: View {
     @ViewBuilder
     private var content: some View {
         if !presenter.isListAvailable {
-            syncingState
+            TFLoadingView(title: T.Backup.managePairedWatchesSyncing)
         } else if presenter.list.isEmpty {
             emptyState
         } else {
@@ -74,27 +78,14 @@ struct ManageWatchView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    private var syncingState: some View {
-        VStack(spacing: .XL) {
-            Spacer()
-            ProgressView()
-            Text(T.Backup.managePairedWatchesSyncing)
-                .textStyle(.headline)
-                .foregroundStyle(.labelsSecondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, .XL)
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
     private var watchList: some View {
         List {
             ForEach(presenter.list) { item in
                 watchCell(item)
+                    .padding(.bottom, .XL)
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: .S, leading: .XL, bottom: .S, trailing: .XL))
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                         Button {
                             presenter.onDelete(item)
@@ -119,24 +110,26 @@ struct ManageWatchView: View {
 
     @ViewBuilder
     private func watchCell(_ item: PairedWatch) -> some View {
-        HStack(spacing: .M) {
-            Image(systemName: "applewatch")
-                .textStyle(.title3)
-                .foregroundStyle(.accentsBrand)
-                .frame(width: 28)
-
-            Text(item.deviceName)
-                .textStyle(.body)
-                .foregroundStyle(.labelsPrimary)
-
-            Spacer(minLength: 0)
+        AdaptiveReadableContainer(horizontalMargin: .zero, verticalMargin: .zero) {
+            HStack(spacing: .M) {
+                Image(systemName: "applewatch")
+                    .textStyle(.title3)
+                    .foregroundStyle(.accentsBrand)
+                    .frame(width: 28)
+                
+                Text(item.deviceName)
+                    .textStyle(.body)
+                    .foregroundStyle(.labelsPrimary)
+                
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, .XL)
+            .padding(.vertical, .L)
+            .background(
+                RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue, style: .continuous)
+                    .foregroundStyle(.backgroundsSecondary)
+            )
+            .frame(minHeight: .list)
         }
-        .padding(.horizontal, .XL)
-        .padding(.vertical, .L)
-        .background(
-            RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue, style: .continuous)
-                .foregroundStyle(.backgroundsSecondary)
-        )
-        .frame(minHeight: .list)
     }
 }

@@ -36,9 +36,7 @@ struct MainScreenModalView<Content: View, Footer: View>: View {
     
     var body: some View {
         AdaptiveReadableContainer(
-            ipadMaxWidth: ipadMaxWidth,
-            horizontalMargin: Spacing.XL.rawValue,
-            verticalMargin: Spacing.XL.rawValue
+            ipadMaxWidth: ipadMaxWidth
         ) {
             VStack(spacing: .L) {
                 HStack(spacing: .zero) {

@@ -88,6 +88,6 @@ struct TFInputFloatingContainer<Content: View, TrailingAccessory: View>: View {
             .clipped()
             .animation(Animation.easeInOut(duration: AnimationTiming.duration), value: errorMessage)
         }
-        .frame(minHeight: Size.textFieldHeight)
+        .frame(minHeight: .input)
     }
 }

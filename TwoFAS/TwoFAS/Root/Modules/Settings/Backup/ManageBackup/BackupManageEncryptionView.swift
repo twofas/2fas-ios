@@ -64,21 +64,12 @@ struct BackupManageEncryptionView: View {
         Button {
             presenter.handleSelection(cell.action)
         } label: {
-            HStack(spacing: .ML) {
+            TFRowContent(title: cell.title) {
                 GradientIconTile(systemName: cell.iconSystemName)
                     .accessibilityHidden(true)
-
-                Text(cell.title)
-                    .textStyle(.body)
-                    .foregroundStyle(.labelsPrimary)
-                    .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .padding(.vertical, .L)
-            .contentShape(Rectangle())
-            .opacity(cell.isEnabled ? 1 : 0.4)
+            } accessory: {}
+                .opacity(cell.isEnabled ? 1 : 0.4)
         }
-        .buttonStyle(.plain)
         .disabled(!cell.isEnabled)
     }
 }

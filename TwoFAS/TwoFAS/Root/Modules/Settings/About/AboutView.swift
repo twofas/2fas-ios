@@ -87,22 +87,14 @@ struct AboutView: View {
 
     @ViewBuilder
     private func rowContent(_ cell: AboutCell) -> some View {
-        HStack(spacing: .ML) {
+        TFRowContent(title: cell.title, isActive: isActive(for: cell)) {
             if let icon = cell.icon {
                 BrandIconTile(image: icon)
                     .accessibilityHidden(true)
             }
-
-            Text(cell.title)
-                .textStyle(.body)
-                .foregroundStyle(titleColor(for: cell))
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
+        } accessory: {
             accessoryView(cell.accessory)
         }
-        .padding(.vertical, .L)
-        .contentShape(Rectangle())
     }
 
     @ViewBuilder
@@ -147,10 +139,10 @@ struct AboutView: View {
         .padding(.bottom, 40)
     }
 
-    private func titleColor(for cell: AboutCell) -> AppColor {
+    private func isActive(for cell: AboutCell) -> Bool {
         if case .noAccessory = cell.accessory, cell.action != nil {
-            return .accentsBrand
+            return true
         }
-        return .labelsPrimary
+        return false
     }
 }

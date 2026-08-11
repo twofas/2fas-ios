@@ -97,6 +97,7 @@ struct DebugView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .frame(minHeight: .normal)
     }
 
     private func copyValue(_ value: String) {
@@ -137,6 +138,7 @@ struct DebugView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .frame(minHeight: .normal)
     }
 
     // MARK: - Generator

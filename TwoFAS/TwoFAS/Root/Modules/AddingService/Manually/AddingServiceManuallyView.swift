@@ -40,24 +40,7 @@ struct AddingServiceManuallyView: View {
     private var touchedAdditionalInfo = false
     
     var body: some View {
-        VStack(alignment: .center, spacing: .zero) {
-            ZStack {
-                HStack(spacing: .zero) {
-                    TFLiquidGlassSymbolButton(symbol: .close) {
-                        presenter.handleCancel()
-                    }
-                    Spacer()
-                    TFLiquidGlassTextButton(T.Commons.pair, color: .accentsBrand) {
-                        presenter.handlePair()
-                    }
-                    .disabled(!presenter.isAddServiceEnabled)
-                }
-                TFTitleView(title: T.Tokens.addTitle)
-            }
-            .padding(.horizontal, .XXXL)
-            .padding(.top, .XL)
-            .frame(alignment: .top)
-            
+        NavigationStack {
             ScrollViewReader { proxy in
                 ScrollView(.vertical) {
                     AdaptiveReadableContainer {
@@ -149,8 +132,25 @@ struct AddingServiceManuallyView: View {
                     presenter.viewDidAppear()
                 }
             }
+            .navigationTitle(T.Tokens.addTitle)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        presenter.handleCancel()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(T.Commons.pair) {
+                        presenter.handlePair()
+                    }
+                    .disabled(!presenter.isAddServiceEnabled)
+                }
+            }
+            .background(.backgroundsPrimaryElevated)
         }
-        .background(.backgroundsPrimaryElevated)
     }
     
     @ViewBuilder

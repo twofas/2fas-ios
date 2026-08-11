@@ -70,17 +70,9 @@ struct BackupMenuView: View {
 
     @ViewBuilder
     private func rowContent(_ cell: BackupMenuCell) -> some View {
-        HStack(spacing: .ML) {
-            Text(cell.title)
-                .textStyle(.body)
-                .foregroundStyle(titleColor(for: cell))
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
+        TFRowContent(title: cell.title, isActive: isActive(for: cell)) {
             accessoryView(for: cell)
         }
-        .padding(.vertical, .L)
-        .contentShape(Rectangle())
         .opacity(cell.isEnabled ? 1 : 0.4)
     }
 
@@ -100,10 +92,10 @@ struct BackupMenuView: View {
         }
     }
 
-    private func titleColor(for cell: BackupMenuCell) -> AppColor {
+    private func isActive(for cell: BackupMenuCell) -> Bool {
         if cell.action != nil, cell.accessory == nil {
-            return .accentsBrand
+            return true
         }
-        return .labelsPrimary
+        return false
     }
 }

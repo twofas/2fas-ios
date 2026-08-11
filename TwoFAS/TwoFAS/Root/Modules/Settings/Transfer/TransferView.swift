@@ -71,23 +71,8 @@ struct TransferView: View {
 
     @ViewBuilder
     private func rowContent(_ cell: TransferCell) -> some View {
-        HStack(spacing: .ML) {
-            leadingIcon(for: cell.icon)
-
-            Text(cell.title)
-                .textStyle(.body)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            Image(systemName: "chevron.right")
-                .textStyle(.subheadline, .emphasized)
-                .foregroundStyle(.labelsTertiary)
-                .accessibilityHidden(true)
-        }
-        .padding(.vertical, .L)
-        .contentShape(Rectangle())
-        .opacity(cell.isActive ? 1 : 0.4)
+        TFRowContent(title: cell.title, icon: { leadingIcon(for: cell.icon) }, accessory: { CheveronIcon() })
+            .opacity(cell.isActive ? 1 : 0.4)
     }
 
     @ViewBuilder

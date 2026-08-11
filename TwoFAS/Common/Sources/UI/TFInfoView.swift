@@ -38,7 +38,7 @@ public struct TFInfoView<VImage: View, VTexts: View, VButtons: View>: View {
     }
 
     public var body: some View {
-        AdaptiveReadableContainer {
+        AdaptiveReadableContainer(verticalMargin: .zero) {
             VStack(alignment: .center) {
                 Spacer()
 

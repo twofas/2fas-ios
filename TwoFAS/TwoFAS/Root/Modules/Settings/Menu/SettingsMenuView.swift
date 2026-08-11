@@ -77,19 +77,11 @@ struct SettingsMenuView: View {
 
     @ViewBuilder
     private func rowContent(_ cell: SettingsMenuCell, isFirst: Bool, isLast: Bool) -> some View {
-        HStack(spacing: .ML) {
+        TFRowContent(title: cell.title, isActive: isActive(for: cell)) {
             leadingIcon(for: cell.icon)
-
-            Text(cell.title)
-                .textStyle(.body)
-                .foregroundStyle(titleColor(for: cell))
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
+        } accessory: {
             accessoryView(for: cell)
         }
-        .padding(.vertical, .L)
-        .contentShape(Rectangle())
         .opacity(cell.isEnabled ? 1 : 0.6)
         .background(alignment: .center) {
             if isSelected(cell) {
@@ -104,6 +96,7 @@ struct SettingsMenuView: View {
                 )
                 .fill(selectionHighlightColor)
                 .padding(.horizontal, -Spacing.XL.value)
+                .frame(minHeight: .normal)
             }
         }
     }
@@ -163,11 +156,11 @@ struct SettingsMenuView: View {
         }
     }
 
-    private func titleColor(for cell: SettingsMenuCell) -> AppColor {
+    private func isActive(for cell: SettingsMenuCell) -> Bool {
         if case .warning = cell.accessory {
-            return .accentsBrand
+            return true
         }
-        return .labelsPrimary
+        return false
     }
 
     private var selectionHighlightColor: AppColor {

@@ -78,6 +78,7 @@ struct TFColorPickerMenu: View {
                     .accessibilityHidden(true)
             }
             .padding(.vertical, .XL)
+            .frame(minHeight: .list)
         }
     }
 }

@@ -28,10 +28,7 @@ struct UserIconInfoView: View {
 
     var body: some View {
         ScrollView {
-            AdaptiveReadableContainer(
-                horizontalMargin: Spacing.XL.value,
-                verticalMargin: Spacing.XL.value
-            ) {
+            AdaptiveReadableContainer {
                 VStack(spacing: .XL) {
                     socialSection
                     orDivider

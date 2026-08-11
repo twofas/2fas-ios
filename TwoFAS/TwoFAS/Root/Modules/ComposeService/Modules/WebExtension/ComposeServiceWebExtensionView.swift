@@ -107,5 +107,6 @@ private struct PairedDomainRow: View {
             }
         }
         .contentShape(Rectangle())
+        .frame(minHeight: .normal)
     }
 }

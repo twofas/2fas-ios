@@ -91,9 +91,9 @@ struct BrowserExtensionMainView: View {
         case .service(let name, let date, _):
             serviceRow(name: name, date: date)
         case .addNew:
-            simpleRow(title: T.Browser.addNew, titleColor: .accentsBrand, showChevron: false)
+            simpleRow(title: T.Browser.addNew, isActive: true, showChevron: false)
         case .nickname(let nick):
-            simpleRow(title: nick, titleColor: .labelsPrimary, showChevron: false)
+            simpleRow(title: nick, isActive: false, showChevron: false)
         }
     }
 
@@ -111,31 +111,18 @@ struct BrowserExtensionMainView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            Image(systemName: "chevron.right")
-                .textStyle(.footnote)
-                .foregroundStyle(.labelsTertiary)
-                .accessibilityHidden(true)
+            CheveronIcon()
         }
         .padding(.vertical, .L)
         .contentShape(Rectangle())
+        .frame(minHeight: .normal)
     }
 
-    private func simpleRow(title: String, titleColor: AppColor, showChevron: Bool) -> some View {
-        HStack(spacing: .ML) {
-            Text(title)
-                .textStyle(.body)
-                .foregroundStyle(titleColor)
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
+    private func simpleRow(title: String, isActive: Bool, showChevron: Bool) -> some View {
+        TFRowContent(title: title, isActive: isActive) {
             if showChevron {
-                Image(systemName: "chevron.right")
-                    .textStyle(.footnote)
-                    .foregroundStyle(.labelsTertiary)
-                    .accessibilityHidden(true)
+                CheveronIcon()
             }
         }
-        .padding(.vertical, .L)
-        .contentShape(Rectangle())
     }
 }

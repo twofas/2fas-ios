@@ -100,5 +100,6 @@ struct ComposeServiceSecretKeyField<FocusValue: Hashable>: View {
             accessory()
         }
         .padding(.vertical, .L)
+        .frame(minHeight: .list)
     }
 }

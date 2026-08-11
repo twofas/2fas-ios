@@ -107,5 +107,6 @@ private struct CategoryRow: View {
             }
         }
         .contentShape(Rectangle())
+        .frame(minHeight: .normal)
     }
 }

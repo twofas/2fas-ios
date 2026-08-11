@@ -79,17 +79,9 @@ struct AppSecurityView: View {
 
     @ViewBuilder
     private func rowContent(_ cell: AppSecurityMenuCell) -> some View {
-        HStack(spacing: .ML) {
-            Text(cell.title)
-                .textStyle(.body)
-                .foregroundStyle(titleColor(for: cell))
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
+        TFRowContent(title: cell.title, isActive: isActive(for: cell)) {
             accessoryView(for: cell)
         }
-        .padding(.vertical, .L)
-        .contentShape(Rectangle())
         .opacity(isDisabled(cell) ? 0.4 : 1)
     }
 
@@ -114,11 +106,11 @@ struct AppSecurityView: View {
         }
     }
 
-    private func titleColor(for cell: AppSecurityMenuCell) -> AppColor {
+    private func isActive(for cell: AppSecurityMenuCell) -> Bool {
         if case .changePIN = cell.action {
-            return .accentsBrand
+            return true
         }
-        return .labelsPrimary
+        return false
     }
 
     private func isDisabled(_ cell: AppSecurityMenuCell) -> Bool {

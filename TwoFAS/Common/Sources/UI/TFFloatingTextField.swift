@@ -45,7 +45,7 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
     }
 
     // MARK: - Variable
-    private let textFieldHeight: CGFloat = Size.textFieldHeight
+    private let textFieldHeight: CGFloat = TFRowHeight.list.value
     private let placeHolderText: String
     private let submit: TFFormTextFieldSubmit?
 
@@ -149,6 +149,7 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
             }
         }
         .contentShape(Rectangle())
+        .frame(minHeight: .input)
         .onTapGesture {
             guard isEnabled else { return }
             focused.wrappedValue = focusValue

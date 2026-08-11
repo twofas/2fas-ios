@@ -27,24 +27,35 @@ struct WidgetWarning: View {
     let cancel: Callback
 
     var body: some View {
-        TFInfoView {
-            Image(uiImage: icon)
-                .resizable()
-                .frame(width: icon.size.width / 2.0, height: icon.size.height / 2.0)
-        } texts: {
-            Text("\(T.Commons.warning.uppercased())!")
-                .textStyle(.title1, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.center)
-            Text(T.Settings.widgetsTitle)
-                .textStyle(.body)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.labelsPrimary)
-        } buttons: {
-            TFButton(T.Commons.continue, variant: .borderedProminent, size: .large, action: action)
-            TFButton(T.Commons.cancel, variant: .borderless, size: .large, action: cancel)
+        NavigationStack {
+            TFInfoView {
+                Image(uiImage: icon)
+                    .resizable()
+                    .frame(width: icon.size.width / 2.0, height: icon.size.height / 2.0)
+            } texts: {
+                Text("\(T.Commons.warning.uppercased())!")
+                    .textStyle(.title1, .emphasized)
+                    .foregroundStyle(.labelsPrimary)
+                    .multilineTextAlignment(.center)
+                Text(T.Settings.widgetsTitle)
+                    .textStyle(.body)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.labelsPrimary)
+            } buttons: {
+                TFButton(T.Commons.continue, variant: .borderedProminent, size: .large, action: action)
+                TFButton(T.Commons.cancel, variant: .borderless, size: .large, action: cancel)
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        cancel()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                }
+            }
         }
-        .navigationBarHidden(true)
     }
 }
 

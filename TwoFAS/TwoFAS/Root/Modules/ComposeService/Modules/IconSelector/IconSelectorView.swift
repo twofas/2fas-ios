@@ -152,19 +152,25 @@ struct IconSelectorView: View {
     @ViewBuilder
     private func rowView(row: [IconSelectorCell], columns: Int) -> some View {
         AdaptiveReadableContainer(iphoneMaxWidth: maxWidth, horizontalMargin: .zero, verticalMargin: .zero) {
-            HStack(spacing: .M) {
-                ForEach(row, id: \.iconTypeID) { cell in
-                    IconSelectorCellView(
-                        cell: cell,
-                        isSelected: presenter.selectedIconTypeID == cell.iconTypeID
-                    ) {
-                        presenter.handleSelection(iconTypeID: cell.iconTypeID)
+            HStack(spacing: .zero) {
+                Spacer(minLength: 0)
+                
+                HStack(spacing: .M) {
+                    ForEach(row, id: \.iconTypeID) { cell in
+                        IconSelectorCellView(
+                            cell: cell,
+                            isSelected: presenter.selectedIconTypeID == cell.iconTypeID
+                        ) {
+                            presenter.handleSelection(iconTypeID: cell.iconTypeID)
+                        }
+                        .frame(maxWidth: .infinity)
                     }
-                    .frame(maxWidth: .infinity)
+                    ForEach(0..<max(0, columns - row.count), id: \.self) { _ in
+                        Color.clear.frame(maxWidth: .infinity)
+                    }
                 }
-                ForEach(0..<max(0, columns - row.count), id: \.self) { _ in
-                    Color.clear.frame(maxWidth: .infinity)
-                }
+                
+                Spacer(minLength: 0)
             }
         }
         .listRowInsets(EdgeInsets())

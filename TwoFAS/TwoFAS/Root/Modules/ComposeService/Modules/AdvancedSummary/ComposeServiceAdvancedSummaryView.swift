@@ -43,7 +43,6 @@ struct ComposeServiceAdvancedSummaryView: View {
                     }
                     .groupedSectionBackground(isElevated: true)
                 }
-                .padding(.top, .XXXXL)
             }
         }
         .background(.backgroundsPrimaryElevated)
@@ -84,6 +83,7 @@ struct ComposeServiceAdvancedSummaryView: View {
             }
         }
         .padding(.vertical, .XL)
+        .frame(minHeight: .normal)
     }
 
     @ViewBuilder

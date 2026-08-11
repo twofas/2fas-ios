@@ -37,28 +37,51 @@ import SwiftUI
 ///         .tint(AppColor.accentsBrand)
 /// }
 /// ```
-public struct TFRowContent<Accessory: View>: View {
+public struct TFRowContent<Accessory: View, Icon: View>: View {
     private let title: String
+    private let isActive: Bool
+    private let icon: Icon?
     private let accessory: Accessory
-
+    
     public init(
         title: String,
+        isActive: Bool = false,
         @ViewBuilder accessory: () -> Accessory
-    ) {
+    ) where Icon == EmptyView {
         self.title = title
+        self.isActive = isActive
+        self.icon = nil
         self.accessory = accessory()
     }
 
-    public init(title: String) where Accessory == EmptyView {
+    public init(title: String, isActive: Bool = false) where Accessory == EmptyView, Icon == EmptyView {
         self.title = title
+        self.isActive = isActive
+        self.icon = nil
         self.accessory = EmptyView()
+    }
+    
+    public init(
+        title: String,
+        isActive: Bool = false,
+        @ViewBuilder icon: (() -> Icon),
+        @ViewBuilder accessory: () -> Accessory
+    ) {
+        self.title = title
+        self.isActive = isActive
+        self.icon = icon()
+        self.accessory = accessory()
     }
 
     public var body: some View {
         HStack(spacing: .ML) {
+            if let icon {
+                icon
+            }
+            
             Text(title)
                 .textStyle(.body)
-                .foregroundStyle(AppColor.labelsPrimary)
+                .foregroundStyle(isActive ? AppColor.accentsBrand : AppColor.labelsPrimary)
                 .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -67,5 +90,15 @@ public struct TFRowContent<Accessory: View>: View {
         .padding(.vertical, .L)
         .contentShape(Rectangle())
         .frame(minHeight: .normal)
+    }
+}
+
+public struct CheveronIcon: View {
+    public init() {}
+    public var body: some View {
+        Image(systemName: "chevron.right")
+            .textStyle(.subheadline, .emphasized)
+            .foregroundStyle(.labelsTertiary)
+            .accessibilityHidden(true)
     }
 }

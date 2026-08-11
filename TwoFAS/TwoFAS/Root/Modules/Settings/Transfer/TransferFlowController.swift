@@ -192,7 +192,12 @@ extension TransferFlowController: ExternalImportInstructionsFlowControllerParent
     func instructionsOpenFile(service: ExternalImportService) {
         guard let modalNavigationController else { return }
         importer = ImporterOpenFileHeadlessFlowController
-            .present(on: modalNavigationController, parent: self, url: nil, importingOTPAuthFile: service == .otpAuthFile)
+            .present(
+                on: modalNavigationController,
+                parent: self,
+                url: nil,
+                importingOTPAuthFile: service == .otpAuthFile
+            )
     }
 
     func instructionsCamera() {

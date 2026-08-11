@@ -303,6 +303,7 @@ struct ComposeServiceView: View {
         }
         .buttonStyle(.plain)
         .disabled(!isEnabled)
+        .frame(minHeight: .normal)
     }
 
     @ViewBuilder

@@ -29,36 +29,31 @@ struct NewsView: View {
     private let dotSize: CGFloat = 8
     
     var body: some View {
-        VStack(spacing: .zero) {
-            titleBar()
-            
-            if presenter.list.isEmpty {
-                emptyContent()
-            } else {
-                list()
-            }
-        }
-        .onAppear {
-            presenter.viewDidAppear()
-        }
-    }
-    
-    @ViewBuilder
-    private func titleBar() -> some View {
-        ZStack {
-            HStack(spacing: .zero) {
-                Spacer()
-                TFLiquidGlassSymbolButton(symbol: .close) {
-                    presenter.close()
+        NavigationStack {
+            Group {
+                if presenter.list.isEmpty {
+                    emptyContent()
+                } else {
+                    list()
                 }
             }
-            TFTitleView(title: T.Commons.notifications)
+            .navigationTitle(T.Commons.notifications)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        presenter.close()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                }
+            }
+            .onAppear {
+                presenter.viewDidAppear()
+            }
         }
-        .padding(.horizontal, .XXXL)
-        .padding(.top, .XL)
-        .frame(alignment: .top)
     }
-    
+
     @ViewBuilder
     private func emptyContent() -> some View {
         VStack(spacing: .M) {
@@ -110,7 +105,6 @@ struct NewsView: View {
             actionIcon()
                 .isHidden(!cell.hasURL, remove: false)
         }
-        .padding(.horizontal, .XL)
         .padding(.top, .XXXL)
     }
     

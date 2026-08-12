@@ -201,7 +201,7 @@ private extension TokensHOTPCell {
         contentView.addSubview(tokenLabel, with: [
             additionalInfoLabel.bottomAnchor.constraint(
                 equalTo: tokenLabel.topAnchor,
-                constant: tokenNegativeMargin
+                constant: -tokenNegativeMargin
             ),
             tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
             tokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)

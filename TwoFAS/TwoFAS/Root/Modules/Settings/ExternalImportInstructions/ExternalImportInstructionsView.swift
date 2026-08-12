@@ -60,6 +60,7 @@ struct ExternalImportInstructionsView: View {
             }
 
             TFButton(T.Commons.cancel, variant: .borderless, size: .large, action: close)
+                .padding(.bottom, .XL)
         }
         .navigationTitle(sourceName)
         .navigationBarTitleDisplayMode(.inline)

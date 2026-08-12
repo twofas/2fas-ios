@@ -39,22 +39,25 @@ final class ImporterRouter: ObservableObject {
 
     @ViewBuilder
     func destination(for route: ImporterRoute) -> some View {
-        switch route {
-        case .enterPassword:
-            if let enterPasswordPresenter {
-                ImporterEnterPasswordView(presenter: enterPasswordPresenter)
-            }
-        case .preimportSummary:
-            if let preimportSummaryPresenter {
-                ImporterPreimportSummaryView(presenter: preimportSummaryPresenter)
-            }
-        case .fileError:
-            if let fileError {
-                ImporterFileErrorView(fileError: fileError, action: { [weak self] in
-                    self?.toClose()
-                })
+        Group {
+            switch route {
+            case .enterPassword:
+                if let enterPasswordPresenter {
+                    ImporterEnterPasswordView(presenter: enterPasswordPresenter)
+                }
+            case .preimportSummary:
+                if let preimportSummaryPresenter {
+                    ImporterPreimportSummaryView(presenter: preimportSummaryPresenter)
+                }
+            case .fileError:
+                if let fileError {
+                    ImporterFileErrorView(fileError: fileError, action: { [weak self] in
+                        self?.toClose()
+                    })
+                }
             }
         }
+        .chevronOnlyBackButton()
     }
 
     // MARK: - Navigation helper

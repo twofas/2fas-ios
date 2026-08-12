@@ -52,6 +52,13 @@ public struct TFListScreen<Content: View>: View {
         }
         .scrollContentBackground(.hidden)
         .background(backgroundColor)
+        .modify { view in
+            if #unavailable(iOS 26.0) {
+                view.padding(.top, .XL)
+            } else {
+                view
+            }
+        }
     }
 }
 

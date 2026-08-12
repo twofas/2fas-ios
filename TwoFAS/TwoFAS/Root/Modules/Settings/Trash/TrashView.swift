@@ -41,19 +41,10 @@ struct TrashView: View {
     }
 
     private var emptyState: some View {
-        VStack(spacing: .XL) {
-            Spacer()
-            Image(systemName: "trash.fill")
-                .textStyle(.iconLarge)
-                .foregroundStyle(.accentsBrand)
-            Text(T.Settings.trashIsEmpty)
-                .textStyle(.headline)
-                .foregroundStyle(.labelsSecondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, .XL)
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        TFEmptyScreen(
+            systemImage: "trash.fill",
+            title: T.Settings.trashIsEmpty
+        )
     }
 
     private var trashList: some View {

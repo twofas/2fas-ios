@@ -56,15 +56,10 @@ struct NewsView: View {
 
     @ViewBuilder
     private func emptyContent() -> some View {
-        VStack(spacing: .M) {
-            Spacer()
-            Image(uiImage: Asset.emptyNotifications.image)
-            Text(T.Notifications.noNotifications)
-                .textStyle(.title2, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        TFEmptyScreen(
+            image: Asset.emptyNotifications.image,
+            title: T.Notifications.noNotifications
+        )
     }
     
     @ViewBuilder

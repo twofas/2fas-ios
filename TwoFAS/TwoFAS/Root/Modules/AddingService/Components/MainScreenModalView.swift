@@ -22,7 +22,7 @@ import Common
 
 struct MainScreenModalView<Content: View, Footer: View>: View {
     private let ipadMaxWidth: CGFloat = 480
-
+    
     let onClose: () -> Void
     
     let title: String
@@ -51,6 +51,7 @@ struct MainScreenModalView<Content: View, Footer: View>: View {
                 content()
                 
                 footer()
+                    .padding(.bottom, .XL)
             }
         }
         .background {

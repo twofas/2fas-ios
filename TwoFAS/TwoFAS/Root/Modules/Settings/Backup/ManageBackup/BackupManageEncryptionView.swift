@@ -30,6 +30,7 @@ struct BackupManageEncryptionView: View {
                 sectionView(section)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.backgroundsPrimary)
         .navigationTitle(presenter.title)
         .navigationBarTitleDisplayMode(.inline)

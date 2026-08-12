@@ -30,6 +30,7 @@ struct SettingsMenuView: View {
                 sectionView(section)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.backgroundsPrimary)
         .navigationTitle(T.Settings.settings)
         .navigationBarTitleDisplayMode(titleDisplayMode)

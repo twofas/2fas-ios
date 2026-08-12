@@ -35,6 +35,9 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         windowScene.sizeRestrictions?.minimumSize = CGSize(width: 480, height: 720)
         
         let window = UIWindow(windowScene: windowScene)
+        if #unavailable(iOS 26.0) {
+            window.tintColor = AppColor.accentsBrand.uiColor
+        }
         self.window = window
 
         rootViewController = RootFlowController.setAsRoot(in: window, parent: self)

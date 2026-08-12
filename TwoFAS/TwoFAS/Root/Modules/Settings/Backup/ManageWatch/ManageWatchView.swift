@@ -63,19 +63,10 @@ struct ManageWatchView: View {
     }
 
     private var emptyState: some View {
-        VStack(spacing: .XL) {
-            Spacer()
-            Image(systemName: "applewatch")
-                .textStyle(.iconLarge)
-                .foregroundStyle(.accentsBrand)
-            Text(T.Backup.managePairedWatchesEmptyList)
-                .textStyle(.headline)
-                .foregroundStyle(.labelsSecondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, .XL)
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        TFEmptyScreen(
+            systemImage: "applewatch",
+            title: T.Backup.managePairedWatchesEmptyList
+        )
     }
 
     private var watchList: some View {

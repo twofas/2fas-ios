@@ -145,6 +145,7 @@ public struct TFInstructionCard: View {
                     .textStyle(.body, .emphasized)
                     .foregroundStyle(.labelsPrimary)
                     .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 if let description {
@@ -152,6 +153,7 @@ public struct TFInstructionCard: View {
                         .textStyle(.footnote, .regular)
                         .foregroundStyle(.labelsSecondary)
                         .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }

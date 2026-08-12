@@ -32,6 +32,7 @@ struct AboutView: View {
 
             versionFooter()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.backgroundsPrimary)
         .navigationTitle(T.Settings.about)
         .navigationBarTitleDisplayMode(.inline)

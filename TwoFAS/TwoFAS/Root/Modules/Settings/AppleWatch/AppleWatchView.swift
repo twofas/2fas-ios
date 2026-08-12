@@ -61,10 +61,12 @@ struct AppleWatchView: View {
                         )
                     }
                 }
+                
+                Spacer()
+                    .frame(maxHeight: .infinity)
             }
+            .padding(.top, .XXXXXXXL)
         }
-        .padding(.horizontal, .XL)
-        .padding(.bottom, .XL)
         .background(.backgroundsPrimary)
         .navigationTitle(T.Settings.appleWatch)
         .navigationBarTitleDisplayMode(.inline)

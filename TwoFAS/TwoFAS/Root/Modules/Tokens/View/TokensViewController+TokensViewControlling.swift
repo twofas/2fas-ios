@@ -191,7 +191,9 @@ extension TokensViewController: TokensViewControlling {
             if #available(iOS 26.0, *) {
                 navigationItem.rightBarButtonItems = [resolvedNewsButton()]
             } else {
-                navigationItem.rightBarButtonItems = [makeAddServiceButton(), resolvedNewsButton()]
+                // iOS 18: the news bell moves to the leading side and the full "+" stays on the trailing side.
+                navigationItem.rightBarButtonItems = [makeAddServiceButton()]
+                navigationItem.leftBarButtonItem = resolvedNewsButton()
             }
         case .normal:
             if #available(iOS 26.0, *) {
@@ -199,7 +201,9 @@ extension TokensViewController: TokensViewControlling {
                 // render as separate glass capsules, regardless of the unread badge state.
                 navigationItem.rightBarButtonItems = [makeMoreMenuButton(), .fixedSpace(0), resolvedNewsButton()]
             } else {
-                navigationItem.rightBarButtonItems = [makeMoreMenuButton(), resolvedNewsButton()]
+                // iOS 18: the news bell moves to the leading side and a "+" button takes its place next to "...".
+                navigationItem.rightBarButtonItems = [makeMoreMenuButton(), makeAddServicePlusButton()]
+                navigationItem.leftBarButtonItem = resolvedNewsButton()
             }
         case .none:
             let buttonSection = UIBarButtonItem(
@@ -244,17 +248,7 @@ extension TokensViewController: TokensViewControlling {
             children: [deferredSortChildren]
         )
 
-        var children: [UIMenuElement] = [editAction, sortMenu]
-        if #unavailable(iOS 26.0) {
-            let addServiceAction = UIAction(
-                title: T.Tokens.addServiceTitle,
-                image: UIImage(systemName: "plus")
-            ) { [weak self] _ in
-                self?.presenter.handleAddService()
-            }
-            children.insert(addServiceAction, at: 0)
-        }
-
+        let children: [UIMenuElement] = [editAction, sortMenu]
         let menu = UIMenu(children: children)
         let button = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), menu: menu)
         button.accessibilityLabel = T.Commons.optionsTitle
@@ -264,6 +258,17 @@ extension TokensViewController: TokensViewControlling {
     private func makeAddServiceButton() -> UIBarButtonItem {
         let button = UIBarButtonItem(
             image: Asset.naviIconAddFirst.image,
+            style: .plain,
+            target: self,
+            action: #selector(addServiceAction)
+        )
+        button.accessibilityLabel = T.Voiceover.addService
+        return button
+    }
+
+    private func makeAddServicePlusButton() -> UIBarButtonItem {
+        let button = UIBarButtonItem(
+            image: UIImage(systemName: "plus"),
             style: .plain,
             target: self,
             action: #selector(addServiceAction)
@@ -285,7 +290,7 @@ extension TokensViewController: TokensViewControlling {
 
         switch state {
         case .edit:
-            button = nil
+            button = leadingNewsButtonForLegacyLayout()
             tokensView.isEditing = false
         case .cancel:
             button = UIBarButtonItem(
@@ -296,11 +301,21 @@ extension TokensViewController: TokensViewControlling {
             )
             tokensView.isEditing = true
         case .none:
-            button = nil
+            button = leadingNewsButtonForLegacyLayout()
             tokensView.isEditing = false
         }
 
         navigationItem.leftBarButtonItem = button
+    }
+
+    // On iOS 18 the news bell lives on the leading side, so when there is no "Done" button to show
+    // we keep the bell there instead of clearing the slot.
+    private func leadingNewsButtonForLegacyLayout() -> UIBarButtonItem? {
+        guard #unavailable(iOS 26.0) else { return nil }
+        switch newsButton {
+        case .unread(let item), .read(let item): return item
+        case .none: return nil
+        }
     }
     
     func gridCell(for indexPath: IndexPath) -> TokenCell? {

@@ -199,7 +199,9 @@ public struct TFButton: View {
         if #available(iOS 26, *) {
             label
         } else {
-            label.background(textBackground)
+            label
+                .frame(minHeight: controlHeight)
+                .background(textBackground)
         }
     }
     
@@ -215,6 +217,13 @@ public struct TFButton: View {
         .foregroundStyle(labelColor)
         .padding(.horizontal, hPad)
         .padding(.vertical, vPad)
+        .modify {
+            if #available(iOS 26, *) {
+                $0
+            } else {
+                $0.frame(minHeight: controlHeight)
+            }
+        }
         .background {
             Capsule()
                 .fill(backgroundStyle)
@@ -270,6 +279,17 @@ public struct TFButton: View {
         switch size {
         case .small: 28
         case .medium: 34
+        case .large: 48
+        }
+    }
+
+    /// Minimum control height matching the design-system hit targets.
+    /// Used only on iOS 18, where the fallback button style lacks the intrinsic
+    /// height that `.glassProminent` provides on iOS 26.
+    private var controlHeight: CGFloat {
+        switch size {
+        case .small: 28
+        case .medium: 36
         case .large: 48
         }
     }

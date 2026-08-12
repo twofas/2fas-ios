@@ -35,16 +35,19 @@ final class GuideRouter: ObservableObject {
 
     @ViewBuilder
     func destination(for route: GuideRoute) -> some View {
-        switch route {
-        case .menu:
-            if let menuPresenter {
-                GuideMenuView(presenter: menuPresenter)
-            }
-        case .pages:
-            if let pagesPresenter {
-                GuidePagesView(presenter: pagesPresenter)
+        Group {
+            switch route {
+            case .menu:
+                if let menuPresenter {
+                    GuideMenuView(presenter: menuPresenter)
+                }
+            case .pages:
+                if let pagesPresenter {
+                    GuidePagesView(presenter: pagesPresenter)
+                }
             }
         }
+        .chevronOnlyBackButton()
     }
 
     private func pop() {

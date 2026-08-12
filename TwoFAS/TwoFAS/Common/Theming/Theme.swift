@@ -36,6 +36,8 @@ enum Theme {
             navibarAppearance.tintColor = AppColor.accentsBrand.uiColor
             navibarAppearance.barTintColor = AppColor.accentsBrand.uiColor
 
+            configureNavigationBarButtons(on: navibarAppearance)
+
             UIView.appearance(
                 whenContainedInInstancesOf: [UIAlertController.self]
             ).tintColor = AppColor.accentsBrand.uiColor
@@ -47,6 +49,25 @@ enum Theme {
             tabBarAppearance.shadowImage = shadowLine
             tabBarAppearance.backgroundImage = bgImage
             tabBarAppearance.isTranslucent = true
+        }
+    }
+
+    private static func configureNavigationBarButtons(on navigationBar: UINavigationBar) {
+        let brand = AppColor.accentsBrand.uiColor
+        let appearances = [
+            navigationBar.standardAppearance,
+            navigationBar.compactAppearance,
+            navigationBar.scrollEdgeAppearance,
+            navigationBar.compactScrollEdgeAppearance
+        ].compactMap { $0 }
+
+        for appearance in appearances {
+            appearance.backButtonAppearance = .chevronOnly
+            for buttonAppearance in [appearance.buttonAppearance, appearance.doneButtonAppearance] {
+                buttonAppearance.normal.titleTextAttributes[.foregroundColor] = brand
+                buttonAppearance.highlighted.titleTextAttributes[.foregroundColor] = brand
+                buttonAppearance.focused.titleTextAttributes[.foregroundColor] = brand
+            }
         }
     }
 

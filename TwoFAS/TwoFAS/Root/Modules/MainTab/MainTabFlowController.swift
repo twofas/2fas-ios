@@ -183,6 +183,7 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
         app.backgroundColor = AppColor.backgroundsPrimary.uiColor
         app.shadowColor = AppColor.separatorsOpaque.uiColor
         app.shadowImage = Asset.shadowLine.image
+            .withRenderingMode(.alwaysTemplate)
             .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
 
         let tabBarFont = TextStyle.caption2.uiFont(.emphasized)

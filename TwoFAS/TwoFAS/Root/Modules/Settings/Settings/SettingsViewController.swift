@@ -74,6 +74,9 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
         }
         navigationNavi.delegate = self
         
+        view.backgroundColor = AppColor.backgroundsPrimary.uiColor
+        split.view.backgroundColor = AppColor.backgroundsPrimary.uiColor
+        
         presenter.viewDidLoad()
         
         setupSplit()

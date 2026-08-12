@@ -24,10 +24,11 @@ struct BackupSetPasswordView: View {
     @Bindable
     var presenter: BackupSetPasswordPresenter
 
-    /// When presented as a modal root, the screen uses the native navigation bar
-    /// (title + Close). When pushed inside another (not-yet-migrated) modal
-    /// container, it keeps the legacy in-content header.
-    let isModalRoot: Bool
+    /// When `true`, the screen owns its navigation and wraps its content in a
+    /// native `NavigationStack` (title + Close button). When `false`, it's a
+    /// destination pushed into a navigation stack that already exists, so it
+    /// relies on that stack's bar and native back button instead.
+    let embedsNavigationStack: Bool
 
     @FocusState
     private var focusedField: Field?
@@ -37,15 +38,18 @@ struct BackupSetPasswordView: View {
     }
 
     var body: some View {
-        VStack(spacing: .zero) {
-            if !isModalRoot {
-                TFScreenTitleBar(
-                    title: presenter.title,
-                    leadingSymbol: showsCloseInTitleBar ? .close : nil,
-                    onLeadingTap: showsCloseInTitleBar ? presenter.handleClose : nil
-                )
+        if embedsNavigationStack {
+            NavigationStack {
+                content
             }
+        } else {
+            content
+                .chevronOnlyBackButton()
+        }
+    }
 
+    private var content: some View {
+        VStack(spacing: .zero) {
             AdaptiveReadableContainer {
                 if presenter.isDone {
                     TFSuccessView(title: T.Backup.passwordSet)
@@ -56,7 +60,6 @@ struct BackupSetPasswordView: View {
                     formContent
                 }
             }
-            .padding(.horizontal, .XL)
 
             if !presenter.isApplyingChanges {
                 AdaptiveReadableContainer {
@@ -72,14 +75,7 @@ struct BackupSetPasswordView: View {
                             presenter.handleContinue()
                         }
                         .disabled(!presenter.isDone && !presenter.isContinueEnabled)
-
-                        if !isModalRoot, !presenter.isDone {
-                            TFButton(T.Commons.cancel, variant: .borderless, size: .large) {
-                                presenter.handleClose()
-                            }
-                        }
                     }
-                    .padding(.horizontal, .XL)
                 }
             }
         }
@@ -88,9 +84,13 @@ struct BackupSetPasswordView: View {
         .navigationTitle(presenter.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            if isModalRoot, showsCloseInTitleBar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(T.Commons.close) { presenter.handleClose() }
+            if embedsNavigationStack, showsCloseInTitleBar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        presenter.handleClose()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
                 }
             }
         }

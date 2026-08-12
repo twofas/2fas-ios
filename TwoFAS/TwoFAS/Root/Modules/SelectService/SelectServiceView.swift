@@ -58,8 +58,6 @@ struct SelectServiceView: View {
                 .background(.backgroundsPrimaryElevated)
         } else {
             listView
-                .padding(.horizontal, .XL)
-                .padding(.bottom, .XL)
                 .padding(.top, .XXL)
                 .background(.backgroundsPrimaryElevated)
         }
@@ -68,33 +66,36 @@ struct SelectServiceView: View {
     @ViewBuilder
     private var listView: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: .XXXXXL) {
-                if presenter.showTableViewHeader {
-                    SelectServiceListHeader(
-                        extensionName: presenter.browserName,
-                        domain: presenter.domain,
-                        isOn: $presenter.saveSwitchValue
-                    )
-                }
-
-                ForEach(Array(presenter.list.enumerated()), id: \.offset) { _, section in
-                    VStack(alignment: .leading, spacing: .zero) {
-                        ListSectionHeaderView(title: titleString(for: section.title))
-
-                        VStack(spacing: .zero) {
-                            ForEach(Array(section.cells.enumerated()), id: \.offset) { index, cell in
-                                Button {
-                                    presenter.handleSelection(cell)
-                                } label: {
-                                    SelectServiceRow(
-                                        cell: cell,
-                                        showSeparator: index < section.cells.count - 1
-                                    )
+            AdaptiveReadableContainer {
+                VStack(alignment: .leading, spacing: .XXXXXL) {
+                    if presenter.showTableViewHeader {
+                        SelectServiceListHeader(
+                            extensionName: presenter.browserName,
+                            domain: presenter.domain,
+                            isOn: $presenter.saveSwitchValue
+                        )
+                    }
+                    
+                    ForEach(Array(presenter.list.enumerated()), id: \.offset) { _, section in
+                        VStack(alignment: .leading, spacing: .zero) {
+                            ListSectionHeaderView(title: titleString(for: section.title))
+                            
+                            VStack(spacing: .zero) {
+                                ForEach(Array(section.cells.enumerated()), id: \.offset) { index, cell in
+                                    Button {
+                                        presenter.handleSelection(cell)
+                                    } label: {
+                                        SelectServiceRow(
+                                            cell: cell,
+                                            showSeparator: index < section.cells.count - 1
+                                        )
+                                        .frame(minHeight: .list)
+                                    }
+                                    .buttonStyle(.plain)
                                 }
-                                .buttonStyle(.plain)
                             }
+                            .groupedSectionBackground(isElevated: true)
                         }
-                        .groupedSectionBackground(isElevated: true)
                     }
                 }
             }
@@ -103,14 +104,10 @@ struct SelectServiceView: View {
 
     @ViewBuilder
     private var emptyView: some View {
-        VStack {
-            Spacer()
-            Text(T.Commons.noResults)
-                .textStyle(.title2, .emphasized)
-                .foregroundStyle(.labelsSecondary)
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        TFEmptyScreen(
+            systemImage: "magnifyingglass",
+            title: T.Commons.noResults
+        )
     }
 
     private func titleString(for type: SelectServiceSection.TitleType) -> String {
@@ -194,5 +191,6 @@ private struct SelectServiceListHeader: View {
             .padding(.vertical, .L)
             .groupedSectionBackground(isElevated: true)
         }
+        .frame(minHeight: .normal)
     }
 }

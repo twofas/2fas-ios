@@ -21,8 +21,8 @@ import Foundation
 
 final class BrowserExtensionIntroPresenter {
     let steps: [BrowserExtensionIntroStep] = [
-        .init(title: T.Browser.infoDescriptionFirst, icon: .download, description: nil),
-        .init(title: T.Browser.infoDescriptionSecond, icon: .link, description: nil)
+        .init(title: T.Browser.infoDescriptionFirst, icon: .download, description: nil, hasAction: false),
+        .init(title: T.Browser.infoDescriptionSecond, icon: .link, description: nil, hasAction: true)
     ]
 
     private let flowController: BrowserExtensionIntroFlowControlling

@@ -42,6 +42,8 @@ struct DebugView: View {
             actionsSection
             generatorSection
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(.backgroundsPrimary)
         .navigationTitle("Debug")
         .navigationBarTitleDisplayMode(.inline)
     }

@@ -1028,6 +1028,10 @@
 		C2DEC7A326767B28006DB1E6 /* SectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DEC7A226767B28006DB1E6 /* SectionHandler.swift */; };
 		C2DF710E2B5DD31200D85D87 /* DataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DF710D2B5DD31200D85D87 /* DataTests.swift */; };
 		C2DF710F2B5DD31200D85D87 /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E7C3822ADB19F300478D89 /* Data.framework */; platformFilter = ios; };
+		C2DFDBD7302C824900EFA0B5 /* UIBarButtonItemAppearance+ChevronOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DFDBD6302C824900EFA0B5 /* UIBarButtonItemAppearance+ChevronOnly.swift */; };
+		C2DFDBD9302C888600EFA0B5 /* View+ChevronOnlyBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DFDBD8302C888600EFA0B5 /* View+ChevronOnlyBackButton.swift */; };
+		C2DFDBDD302C977100EFA0B5 /* TFEmptyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DFDBDC302C977100EFA0B5 /* TFEmptyScreen.swift */; };
+		C2DFDBDE302C977100EFA0B5 /* TFEmptyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DFDBDC302C977100EFA0B5 /* TFEmptyScreen.swift */; };
 		C2E2364E2EC9230300676709 /* EncryptedByUserPasswordSyncNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2364D2EC922F400676709 /* EncryptedByUserPasswordSyncNavigationFlowController.swift */; };
 		C2E236502EC936B900676709 /* ContentNavigationControlllerFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2364F2EC936B900676709 /* ContentNavigationControlllerFlow.swift */; };
 		C2E2C80927B0377B00F04B70 /* IconSelectorFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E2C80827B0377B00F04B70 /* IconSelectorFlowController.swift */; };
@@ -2769,6 +2773,9 @@
 		C2DF245F29859F9700762A26 /* MainRepositoryImpl+ViewPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+ViewPath.swift"; sourceTree = "<group>"; };
 		C2DF710B2B5DD31200D85D87 /* DataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2DF710D2B5DD31200D85D87 /* DataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTests.swift; sourceTree = "<group>"; };
+		C2DFDBD6302C824900EFA0B5 /* UIBarButtonItemAppearance+ChevronOnly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItemAppearance+ChevronOnly.swift"; sourceTree = "<group>"; };
+		C2DFDBD8302C888600EFA0B5 /* View+ChevronOnlyBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ChevronOnlyBackButton.swift"; sourceTree = "<group>"; };
+		C2DFDBDC302C977100EFA0B5 /* TFEmptyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFEmptyScreen.swift; sourceTree = "<group>"; };
 		C2E2364D2EC922F400676709 /* EncryptedByUserPasswordSyncNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptedByUserPasswordSyncNavigationFlowController.swift; sourceTree = "<group>"; };
 		C2E2364F2EC936B900676709 /* ContentNavigationControlllerFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentNavigationControlllerFlow.swift; sourceTree = "<group>"; };
 		C2E2C80827B0377B00F04B70 /* IconSelectorFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorFlowController.swift; sourceTree = "<group>"; };
@@ -4568,13 +4575,13 @@
 		C286ED4C25F4364000F92EDE /* ComposeService */ = {
 			isa = PBXGroup;
 			children = (
+				C2B6D0E62FF1814300C4C73D /* Components */,
+				C21247F927B717660044D9F2 /* Modules */,
 				C23B899427C27AFC0028FE34 /* ComposeServiceNavigationFlowController.swift */,
 				C25B221127C177170052AAC4 /* ComposeServiceFlowController.swift */,
 				C271B64727BAE67500D0D743 /* ComposeServiceModuleInteractor.swift */,
 				C2CC80D727B99B0600294CF2 /* ComposeServicePresenter.swift */,
-				C2B6D0E62FF1814300C4C73D /* Components */,
 				C2B6D0EB2FF181C800C4C73D /* ComposeServiceView.swift */,
-				C21247F927B717660044D9F2 /* Modules */,
 				C2617E0F3029D05D0004AE2B /* ComposeServiceRoute.swift */,
 				C2617E113029D07D0004AE2B /* ComposeServiceRouter.swift */,
 			);
@@ -4610,6 +4617,7 @@
 				C295AF622FD1DA07000DF064 /* TFInputFloatingContainer.swift */,
 				C295AF642FD1DA07000DF064 /* TFLiquidGlassSymbolButton.swift */,
 				C295AF652FD1DA07000DF064 /* TFLiquidGlassTextButton.swift */,
+				C2DFDBDC302C977100EFA0B5 /* TFEmptyScreen.swift */,
 				C295AF662FD1DA07000DF064 /* TFPinButton.swift */,
 				C295AF672FD1DA07000DF064 /* TFPressStyle.swift */,
 				C295AF682FD1DA07000DF064 /* TFShadow.swift */,
@@ -5337,6 +5345,8 @@
 				C2E2364F2EC936B900676709 /* ContentNavigationControlllerFlow.swift */,
 				C2FE36292517FF8D00035643 /* VoiceOver.swift */,
 				C24048702765612F0076376E /* RootNavigationController.swift */,
+				C2DFDBD6302C824900EFA0B5 /* UIBarButtonItemAppearance+ChevronOnly.swift */,
+				C2DFDBD8302C888600EFA0B5 /* View+ChevronOnlyBackButton.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -7056,6 +7066,7 @@
 				C25BB2CC2DAAE3FF00BEC626 /* ManageWatchView.swift in Sources */,
 				C2A2DA5E2FE5BAEE004FD390 /* TrashServiceView.swift in Sources */,
 				C21930F22EC11439001354C9 /* BackupManageEncryptionModels.swift in Sources */,
+				C2DFDBD9302C888600EFA0B5 /* View+ChevronOnlyBackButton.swift in Sources */,
 				C29E833D2FC0BB4400CBE671 /* AddingServiceView.swift in Sources */,
 				C2A7946027F9071F00E5C641 /* BrowserExtensionServicePresenter.swift in Sources */,
 				C2147CF2205D8C6C0001D011 /* LoginModuleInteractor.swift in Sources */,
@@ -7145,6 +7156,7 @@
 				C2AC2208276615FB00271402 /* ExporterMainScreenPresenter.swift in Sources */,
 				C25AD8A2300A453300D9ABFB /* DebugModels.swift in Sources */,
 				C2BDC6D91FC1CBE100967D0E /* String+Extensions.swift in Sources */,
+				C2DFDBD7302C824900EFA0B5 /* UIBarButtonItemAppearance+ChevronOnly.swift in Sources */,
 				C20E2E072A7C51E700DB64BB /* AddingServiceTokenFlowController.swift in Sources */,
 				C235FA76229DAED80098F8E9 /* GridViewItemProviderWriting.swift in Sources */,
 				C25BB2CE2DAAE45700BEC626 /* ManageWatchModuleInteractor.swift in Sources */,
@@ -7701,6 +7713,7 @@
 				C274CA122BAB8B92008E7212 /* AttributedText+Formatting.swift in Sources */,
 				C274CA132BAB8B92008E7212 /* WidgetServiceHandlerType.swift in Sources */,
 				C274CA152BAB8B92008E7212 /* PairedWebExtension.swift in Sources */,
+				C2DFDBDD302C977100EFA0B5 /* TFEmptyScreen.swift in Sources */,
 				C215084A30042CB3008B66E2 /* TFFailureView.swift in Sources */,
 				C2B58A13302BAC8600E0FF36 /* TFRowContent.swift in Sources */,
 				C274CA162BAB8B92008E7212 /* Digits.swift in Sources */,
@@ -7859,6 +7872,7 @@
 				C29B42C92D98943100F49DCE /* CloudEncryptionType.swift in Sources */,
 				C215084B30042CB3008B66E2 /* TFFailureView.swift in Sources */,
 				C2E53B432B62DDAF008E1E70 /* CommonLocalKeyEncryption.swift in Sources */,
+				C2DFDBDE302C977100EFA0B5 /* TFEmptyScreen.swift in Sources */,
 				C2C0A97F2DA31ADD000A1772 /* DeviceCode.swift in Sources */,
 				C2E53B2C2B62DDAF008E1E70 /* PairedAuthRequest.swift in Sources */,
 				C2E53B222B62DDAF008E1E70 /* IconDescriptionGroup.swift in Sources */,

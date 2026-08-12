@@ -30,6 +30,7 @@ struct BrowserExtensionServiceView: View {
                 sectionView(section)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.backgroundsPrimary)
         .navigationTitle(T.Browser.browserExtension)
         .navigationBarTitleDisplayMode(.inline)

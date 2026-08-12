@@ -42,6 +42,7 @@ final class RootNavigationController: UINavigationController {
         navBarAppearance.titleTextAttributes = [.foregroundColor: AppColor.labelsPrimary.uiColor]
         navBarAppearance.largeTitleTextAttributes = [.foregroundColor: AppColor.labelsPrimary.uiColor]
         navBarAppearance.backgroundColor = AppColor.backgroundsPrimary.uiColor
+        navBarAppearance.backButtonAppearance = .chevronOnly
         navigationBar.standardAppearance = navBarAppearance
         navigationBar.scrollEdgeAppearance = navBarAppearance
     }

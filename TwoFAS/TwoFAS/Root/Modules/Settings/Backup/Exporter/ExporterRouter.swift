@@ -36,16 +36,19 @@ final class ExporterRouter: ObservableObject {
 
     @ViewBuilder
     func destination(for route: ExporterRoute) -> some View {
-        switch route {
-        case .passwordProtection:
-            if let passwordProtectionPresenter {
-                ExporterPasswordProtectionView(presenter: passwordProtectionPresenter)
-            }
-        case .pin:
-            if let pinPresenter {
-                ExporterPINView(presenter: pinPresenter)
+        Group {
+            switch route {
+            case .passwordProtection:
+                if let passwordProtectionPresenter {
+                    ExporterPasswordProtectionView(presenter: passwordProtectionPresenter)
+                }
+            case .pin:
+                if let pinPresenter {
+                    ExporterPINView(presenter: pinPresenter)
+                }
             }
         }
+        .chevronOnlyBackButton()
     }
 
     // MARK: - Stack helpers

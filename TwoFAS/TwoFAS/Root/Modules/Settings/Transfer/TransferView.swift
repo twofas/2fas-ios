@@ -30,6 +30,7 @@ struct TransferView: View {
                 sectionView(section)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.backgroundsPrimary)
         .allowsHitTesting(!presenter.isLocked)
         .navigationTitle(T.Settings.transfer)

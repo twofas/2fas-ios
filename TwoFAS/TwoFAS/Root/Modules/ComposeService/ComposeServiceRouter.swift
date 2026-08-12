@@ -89,32 +89,35 @@ final class ComposeServiceRouter {
 
     @ViewBuilder
     func destination(for route: ComposeServiceRoute) -> some View {
-        switch route {
-        case .iconSelector:
-            if let iconSelectorPresenter {
-                IconSelectorView(presenter: iconSelectorPresenter)
-            }
-        case .userIconInfo:
-            if let userIconInfoPresenter {
-                UserIconInfoView(presenter: userIconInfoPresenter)
-            }
-        case .labelEditor:
-            if let labelComposePresenter {
-                LabelComposeView(presenter: labelComposePresenter)
-            }
-        case .advancedSummary:
-            if let advancedSummaryPresenter {
-                ComposeServiceAdvancedSummaryView(presenter: advancedSummaryPresenter)
-            }
-        case .browserExtension:
-            if let webExtensionPresenter {
-                ComposeServiceWebExtensionView(presenter: webExtensionPresenter)
-            }
-        case .categorySelection:
-            if let categorySelectionPresenter {
-                ComposeServiceCategorySelectionView(presenter: categorySelectionPresenter)
+        Group {
+            switch route {
+            case .iconSelector:
+                if let iconSelectorPresenter {
+                    IconSelectorView(presenter: iconSelectorPresenter)
+                }
+            case .userIconInfo:
+                if let userIconInfoPresenter {
+                    UserIconInfoView(presenter: userIconInfoPresenter)
+                }
+            case .labelEditor:
+                if let labelComposePresenter {
+                    LabelComposeView(presenter: labelComposePresenter)
+                }
+            case .advancedSummary:
+                if let advancedSummaryPresenter {
+                    ComposeServiceAdvancedSummaryView(presenter: advancedSummaryPresenter)
+                }
+            case .browserExtension:
+                if let webExtensionPresenter {
+                    ComposeServiceWebExtensionView(presenter: webExtensionPresenter)
+                }
+            case .categorySelection:
+                if let categorySelectionPresenter {
+                    ComposeServiceCategorySelectionView(presenter: categorySelectionPresenter)
+                }
             }
         }
+        .chevronOnlyBackButton()
     }
 
     // MARK: - Stack helpers

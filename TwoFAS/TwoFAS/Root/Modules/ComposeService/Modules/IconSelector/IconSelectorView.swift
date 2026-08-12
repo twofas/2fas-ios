@@ -55,14 +55,10 @@ struct IconSelectorView: View {
     
     @ViewBuilder
     private var emptyView: some View {
-        VStack {
-            Spacer()
-            Text(T.Commons.noResults)
-                .textStyle(.title2, .emphasized)
-                .foregroundStyle(.labelsSecondary)
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        TFEmptyScreen(
+            systemImage: "magnifyingglass",
+            title: T.Commons.noResults
+        )
     }
     
     @ViewBuilder
@@ -153,8 +149,6 @@ struct IconSelectorView: View {
     private func rowView(row: [IconSelectorCell], columns: Int) -> some View {
         AdaptiveReadableContainer(iphoneMaxWidth: maxWidth, horizontalMargin: .zero, verticalMargin: .zero) {
             HStack(spacing: .zero) {
-                Spacer(minLength: 0)
-                
                 HStack(spacing: .M) {
                     ForEach(row, id: \.iconTypeID) { cell in
                         IconSelectorCellView(
@@ -169,10 +163,10 @@ struct IconSelectorView: View {
                         Color.clear.frame(maxWidth: .infinity)
                     }
                 }
-                
-                Spacer(minLength: 0)
+                .frame(maxWidth: .infinity, alignment: .center)
             }
         }
+        .frame(maxWidth: .infinity)
         .listRowInsets(EdgeInsets())
         .listRowSeparator(.hidden)
         .listRowBackground(Color.clear)

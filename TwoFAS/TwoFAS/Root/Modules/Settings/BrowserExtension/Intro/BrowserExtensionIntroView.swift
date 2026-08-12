@@ -25,6 +25,7 @@ struct BrowserExtensionIntroStep: Hashable, Identifiable {
     let title: String
     let icon: TFInstructionCardIcon
     let description: String?
+    let hasAction: Bool
 }
 
 struct BrowserExtensionIntroView: View {
@@ -36,8 +37,8 @@ struct BrowserExtensionIntroView: View {
     
     var body: some View {
         AdaptiveReadableContainer {
-            VStack(spacing: .XXL) {
-                Image(systemName: "puzzlepiece.extension.fill")
+            VStack(alignment: .center, spacing: .XXL) {
+                Image(systemName: "desktopcomputer.and.arrow.down")
                     .textStyle(.iconLarge)
                     .foregroundStyle(.accentsBrand)
                     .padding(.top, .XL)
@@ -46,6 +47,8 @@ struct BrowserExtensionIntroView: View {
                     .textStyle(.title1, .emphasized)
                     .foregroundStyle(.labelsPrimary)
                     .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 
                 VStack(spacing: .L) {
                     ForEach(Array(presenter.steps.enumerated()), id: \.element) { _, step in
@@ -53,41 +56,18 @@ struct BrowserExtensionIntroView: View {
                             icon: step.icon,
                             title: step.title,
                             description: step.description,
-                            accessory: nil
+                            accessory: nil,
+                            primaryButton: step.hasAction ? .init(title: T.Browser.pairWithWebBrowser, action: {
+                                presenter.handleAction()
+                            }) : nil
                         )
                     }
                 }
-                
-                VStack(spacing: .S) {
-                    Text(T.Browser.moreInfo)
-                        .textStyle(.footnote)
-                        .foregroundStyle(.labelsSecondary)
-                        .multilineTextAlignment(.center)
-                    
-                    TFButton(
-                        T.Browser.moreInfoLinkTitle,
-                        variant: .borderless,
-                        size: .small,
-                        action: presenter.handleInfo
-                    )
-                }
+                .padding(.top, .XXXXXXXL)
+
+                Spacer()
+                    .frame(maxHeight: .infinity)
             }
-            .padding(.horizontal, .XL)
-            .padding(.bottom, .XL)
-            
-            Spacer()
-                .frame(maxHeight: .infinity)
-            
-            VStack(spacing: .L) {
-                TFButton(
-                    T.Browser.pairWithWebBrowser,
-                    variant: .borderedProminent,
-                    size: .large,
-                    action: presenter.handleAction
-                )
-            }
-            .padding(.horizontal, .XL)
-            .padding(.bottom, .XL)
         }
         .background(.backgroundsPrimary)
     }

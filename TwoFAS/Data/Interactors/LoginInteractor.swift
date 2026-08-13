@@ -24,6 +24,7 @@ import Protection
 public protocol LoginInteracting: AnyObject {
     var codeLength: Int { get }
     var isLocked: Bool { get }
+    var isLoggedOut: Bool { get }
     
     func authSuccessfully()
     func authFailed()
@@ -47,6 +48,10 @@ extension LoginInteractor: LoginInteracting {
     
     var isLocked: Bool {
         !security.canAuthorize
+    }
+    
+    var isLoggedOut: Bool {
+        security.isAuthenticationRequired
     }
     
     func authenticateUsingBiometry(reason: String, completion: @escaping (Bool) -> Void) {

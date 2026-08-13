@@ -90,11 +90,7 @@ final class TokensSectionHeader: UICollectionReusableView {
 
 private extension TokensSectionHeader {
     func setupBackground() {
-        if #available(iOS 26.0, *) {
-            backgroundColor = AppColor.backgroundsSecondaryTranslucent.uiColor
-        } else {
-            backgroundColor = AppColor.backgroundsSecondary.uiColor
-        }
+        backgroundColor = AppColor.backgroundsSecondary.uiColor
     }
     
     func setupLayout() {

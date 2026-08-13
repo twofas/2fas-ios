@@ -23,6 +23,7 @@ import Data
 
 protocol LoginModuleInteracting: AnyObject {
     var isLocked: Bool { get }
+    var isLoggedOut: Bool { get }
     var lockTime: Int? { get }
     var codeLength: Int { get }
     
@@ -49,6 +50,10 @@ final class LoginModuleInteractor {
 extension LoginModuleInteractor: LoginModuleInteracting {
     var isLocked: Bool {
         loginInteractor.isLocked
+    }
+    
+    var isLoggedOut: Bool {
+        loginInteractor.isLoggedOut
     }
     
     var lockTime: Int? {

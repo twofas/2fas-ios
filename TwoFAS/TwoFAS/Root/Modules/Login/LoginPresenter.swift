@@ -42,7 +42,10 @@ final class LoginPresenter {
     var totalDigits: Int = 0
     var enteredDigitCount: Int = 0
     var isBlocked = false
-    
+    var isResetVisible = false
+
+    private var isAuthenticating = false
+
     private var pin: [Int] = [] {
         didSet {
             enteredDigitCount = pin.count
@@ -66,8 +69,13 @@ final class LoginPresenter {
             )
         totalDigits = interactor.codeLength
     }
-    
+
     func onAppear() {
+        isVisible()
+    }
+
+    func onResetDismiss() {
+        isResetVisible = false
         isVisible()
     }
     
@@ -90,7 +98,10 @@ final class LoginPresenter {
 
 private extension LoginPresenter {
     func biometry() {
+        guard !isAuthenticating else { return }
+        isAuthenticating = true
         interactor.verifyUsingBiometry(reason: reason) { [weak self] result in
+            self?.isAuthenticating = false
             if result {
                 self?.userLoggedIn()
             }
@@ -160,12 +171,14 @@ private extension LoginPresenter {
     func didBecomeActive() {
         isVisible()
     }
-    
     func isVisible() {
+        guard !isResetVisible else { return }
         if interactor.isLocked {
             lockedState()
         } else {
-            biometry()
+            if interactor.isLoggedOut {
+                biometry()
+            }
         }
     }
 }

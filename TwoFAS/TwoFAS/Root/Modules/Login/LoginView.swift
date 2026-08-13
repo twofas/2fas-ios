@@ -23,13 +23,10 @@ import Common
 struct LoginView: View {
     @Bindable
     var presenter: LoginPresenter
-    
+
     @Environment(\.scenePhase)
     private var scenePhase
-    
-    @State
-    private var aboutWindow = false
-    
+
     var body: some View {
         VStack(spacing: .S) {
             if presenter.loginType == .verify {
@@ -64,7 +61,7 @@ struct LoginView: View {
             Spacer()
             if presenter.loginType == .login {
                 PINWelcomeFooter {
-                    aboutWindow = true
+                    presenter.isResetVisible = true
                 }
             }
         }
@@ -81,7 +78,9 @@ struct LoginView: View {
                 presenter.onAppear()
             }
         }
-        .sheet(isPresented: $aboutWindow) {
+        .sheet(isPresented: $presenter.isResetVisible, onDismiss: {
+            presenter.onResetDismiss()
+        }) {
             AppReset()
         }
     }

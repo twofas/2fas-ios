@@ -80,7 +80,7 @@ struct TrashServiceView: View {
             .frame(maxWidth: Theme.Metrics.modalPreferredWidth)
             .padding(.horizontal, .XL)
             .padding(.top, .XL)
-            .padding(.bottom, .S)
+            .padding(.bottom, .XL)
             .onGeometryChange(for: CGFloat.self) { proxy in
                 proxy.size.height
             } action: { height in

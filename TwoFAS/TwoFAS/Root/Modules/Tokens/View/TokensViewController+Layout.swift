@@ -239,7 +239,7 @@ extension TokensViewController {
             elementKind: TokensSectionHeader.reuseIdentifier,
             alignment: .top
         )
-        sectionHeader.pinToVisibleBounds = true
+        sectionHeader.pinToVisibleBounds = false
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .zero
         

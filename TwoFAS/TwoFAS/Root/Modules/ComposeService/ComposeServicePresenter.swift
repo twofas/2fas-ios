@@ -36,7 +36,6 @@ final class ComposeServicePresenter {
     var isWebExtensionActive = false
     var revealedSecret: String?
     var isSetPINAlertPresented = false
-    var isRevealMenuPresented = false
     var serviceNameError: String?
     var additionalInfoError: String?
 
@@ -148,19 +147,13 @@ extension ComposeServicePresenter {
     }
 
     func handleReveal() {
-        if interactor.isPINSet {
-            if isLocked {
-                flowController.toLogin()
-            } else {
-                isRevealMenuPresented = true
-            }
-        } else {
+        guard interactor.isPINSet else {
             isSetPINAlertPresented = true
+            return
         }
-    }
-
-    func handleShare() {
-        isRevealMenuPresented = true
+        if isLocked {
+            flowController.toLogin()
+        }
     }
 
     func handleServicesWereUpdated(modified: [Secret]?, deleted: [Secret]?) {

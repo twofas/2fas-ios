@@ -80,7 +80,7 @@ struct TrashView: View {
                 
                 Spacer(minLength: 0)
 
-                Menu {
+                TFMenuButton {
                     Button {
                         presenter.handleRestore(service)
                     } label: {
@@ -92,12 +92,6 @@ struct TrashView: View {
                     } label: {
                         Label(T.Commons.delete, systemImage: "trash.fill")
                     }
-                } label: {
-                    Image(systemName: "ellipsis")
-                        .textStyle(.body)
-                        .foregroundStyle(.labelsSecondary)
-                        .frame(width: 44, height: 44)
-                        .contentShape(Rectangle())
                 }
             }
             .padding(.horizontal, .XL)

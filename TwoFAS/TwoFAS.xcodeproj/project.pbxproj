@@ -169,6 +169,7 @@
 		C21675C52808C71F00D43EDD /* ShortDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21675C42808C71E00D43EDD /* ShortDateFormatter.swift */; };
 		C217B90C2F79CDD9000EAA7C /* TokensPassCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217B90B2F79CDD9000EAA7C /* TokensPassCell.swift */; };
 		C217CDC73032260F007D88C0 /* TFCancelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217CDC63032260F007D88C0 /* TFCancelButton.swift */; };
+		C217CDCD303226F5007D88C0 /* TFMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217CDCA303226F5007D88C0 /* TFMenuButton.swift */; };
 		C218513C2A1A873F00A8352A /* TokensHOTPCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513B2A1A873F00A8352A /* TokensHOTPCell.swift */; };
 		C218513E2A1A8EF600A8352A /* TokensNextTokenLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */; };
 		C21851402A1AB01600A8352A /* TokensTOTPCompactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */; };
@@ -1981,6 +1982,7 @@
 		C21675C42808C71E00D43EDD /* ShortDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortDateFormatter.swift; sourceTree = "<group>"; };
 		C217B90B2F79CDD9000EAA7C /* TokensPassCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensPassCell.swift; sourceTree = "<group>"; };
 		C217CDC63032260F007D88C0 /* TFCancelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFCancelButton.swift; sourceTree = "<group>"; };
+		C217CDCA303226F5007D88C0 /* TFMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFMenuButton.swift; sourceTree = "<group>"; };
 		C218513B2A1A873F00A8352A /* TokensHOTPCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensHOTPCell.swift; sourceTree = "<group>"; };
 		C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNextTokenLabel.swift; sourceTree = "<group>"; };
 		C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensTOTPCompactCell.swift; sourceTree = "<group>"; };
@@ -4636,6 +4638,7 @@
 				C2B58A12302BAC8600E0FF36 /* TFRowContent.swift */,
 				C25ECA803005825900D46587 /* TFInstructionCard.swift */,
 				C2418F693006DCA6008B674A /* TFRowHeight.swift */,
+				C217CDCA303226F5007D88C0 /* TFMenuButton.swift */,
 				C217CDC63032260F007D88C0 /* TFCancelButton.swift */,
 			);
 			path = UI;
@@ -7870,6 +7873,7 @@
 				C2E53B412B62DDAF008E1E70 /* CommonSectionHandler.swift in Sources */,
 				C2E53B192B62DDAF008E1E70 /* LegacyServiceDatabase.swift in Sources */,
 				C2E53B1E2B62DDAF008E1E70 /* CoreDataMigrator.swift in Sources */,
+				C217CDCD303226F5007D88C0 /* TFMenuButton.swift in Sources */,
 				C2EF7B1F2DA99D1000BAA559 /* PairedWatch.swift in Sources */,
 				C295AFBE2FD20AB6000DF064 /* ServiceIconDefinition.swift in Sources */,
 				C2E53B162B62DDAF008E1E70 /* Log.swift in Sources */,

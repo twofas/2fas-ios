@@ -127,21 +127,30 @@ struct ComposeServiceView: View {
                     errorMessage: .constant(nil),
                     focused: $focusedField,
                     focusValue: .secret,
-                    onReveal: { presenter.handleReveal() },
-                    onShare: { presenter.handleShare() }
-                )
-                .frame(minHeight: .input)
-                .confirmationDialog(
-                    T.Commons.optionsTitle,
-                    isPresented: $presenter.isRevealMenuPresented,
-                    titleVisibility: .visible
+                    onReveal: { presenter.handleReveal() }
                 ) {
-                    Button(T.Tokens.copySecret) { presenter.handleCopySecret() }
-                    Button(T.Tokens.copyLink) { presenter.handleCopyLink() }
-                    Button(T.Tokens.qrCodeShow) { presenter.handleShowQRCode() }
-                    Button(T.Tokens.qrCodeShare) { presenter.handleShareQRCode() }
-                    Button(T.Commons.cancel, role: .cancel) {}
+                    Button {
+                        presenter.handleCopySecret()
+                    } label: {
+                        Label(T.Tokens.copySecret, systemImage: "doc.on.doc")
+                    }
+                    Button {
+                        presenter.handleCopyLink()
+                    } label: {
+                        Label(T.Tokens.copyLink, systemImage: "link")
+                    }
+                    Button {
+                        presenter.handleShowQRCode()
+                    } label: {
+                        Label(T.Tokens.qrCodeShow, systemImage: "qrcode")
+                    }
+                    Button {
+                        presenter.handleShareQRCode()
+                    } label: {
+                        Label(T.Tokens.qrCodeShare, systemImage: "square.and.arrow.up")
+                    }
                 }
+                .frame(minHeight: .input)
 
                 separator()
 

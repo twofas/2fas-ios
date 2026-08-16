@@ -27,14 +27,14 @@ enum ComposeServiceSecretKeyMode: Hashable {
     case revealed(String)
 }
 
-struct ComposeServiceSecretKeyField<FocusValue: Hashable>: View {
+struct ComposeServiceSecretKeyField<FocusValue: Hashable, MenuContent: View>: View {
     let mode: ComposeServiceSecretKeyMode
     @Binding var secret: String
     let errorMessage: Binding<String?>
     let focused: FocusState<FocusValue?>.Binding
     let focusValue: FocusValue
     let onReveal: () -> Void
-    let onShare: () -> Void
+    @ViewBuilder let menuContent: () -> MenuContent
 
     private let maskedPlaceholder = "•••••••••••••••"
 
@@ -68,13 +68,9 @@ struct ComposeServiceSecretKeyField<FocusValue: Hashable>: View {
             }
         case .revealed(let value):
             row(value: value, isMasked: false) {
-                Button(action: onShare) {
-                    Image(systemName: "square.and.arrow.up")
-                        .textStyle(.body)
-                        .foregroundStyle(.accentsBrand)
-                        .accessibilityLabel(T.Voiceover.copyServiceKey)
+                TFMenuButton(accessibilityLabel: T.Commons.optionsTitle, moveRight: true) {
+                    menuContent()
                 }
-                .buttonStyle(.plain)
             }
         }
     }

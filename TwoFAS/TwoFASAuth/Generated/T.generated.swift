@@ -1323,9 +1323,9 @@ internal enum T {
     internal static let hideTokensDescription = T.tr("Localizable", "settings__hide_tokens_description", fallback: "Tokens will be revealed on tap.")
     /// Hide Tokens
     internal static let hideTokensTitle = T.tr("Localizable", "settings__hide_tokens_title", fallback: "Hide Tokens")
-    /// Select the maximum number of unsuccessful attempts to enter the passcode before locking the application (lockout time can be changed below).
+    /// Select the maximum number of unsuccessful attempts to enter the passcode before locking the application for set amount of time.
     /// 
-    internal static let howManyAttemptsFooter = T.tr("Localizable", "settings__how_many_attempts_footer", fallback: "Select the maximum number of unsuccessful attempts to enter the passcode before locking the application (lockout time can be changed below).\n")
+    internal static let howManyAttemptsFooter = T.tr("Localizable", "settings__how_many_attempts_footer", fallback: "Select the maximum number of unsuccessful attempts to enter the passcode before locking the application for set amount of time.\n")
     /// Importing Tokens from text file
     internal static let importContentsFile = T.tr("Localizable", "settings__import_contents_file", fallback: "Importing Tokens from text file")
     /// Import from file
@@ -1449,8 +1449,8 @@ internal enum T {
     internal static let themeOptionDark = T.tr("Localizable", "settings__theme_option_dark", fallback: "Dark")
     /// Light
     internal static let themeOptionLight = T.tr("Localizable", "settings__theme_option_light", fallback: "Light")
-    /// Block after X failed attempts:
-    internal static let tooManyAttemptsHeader = T.tr("Localizable", "settings__too_many_attempts_header", fallback: "Block after X failed attempts:")
+    /// Number of failed attempts:
+    internal static let tooManyAttemptsHeader = T.tr("Localizable", "settings__too_many_attempts_header", fallback: "Number of failed attempts:")
     /// Touch ID
     internal static let touchId = T.tr("Localizable", "settings__touch_id", fallback: "Touch ID")
     /// Transfer tokens
@@ -1718,8 +1718,8 @@ internal enum T {
     internal static let refreshTime = T.tr("Localizable", "tokens__refresh_time", fallback: "Refresh time")
     /// Delete Token 
     internal static let removeForever = T.tr("Localizable", "tokens__remove_forever", fallback: "Delete Token ")
-    /// Delete service forever
-    internal static let removeItForever = T.tr("Localizable", "tokens__remove_it_forever", fallback: "Delete service forever")
+    /// Delete
+    internal static let removeItForever = T.tr("Localizable", "tokens__remove_it_forever", fallback: "Delete")
     /// Remove this service from 2FAS app
     internal static let removeServiceFromApp = T.tr("Localizable", "tokens__remove_service_from_app", fallback: "Remove this service from 2FAS app")
     /// Removing Group

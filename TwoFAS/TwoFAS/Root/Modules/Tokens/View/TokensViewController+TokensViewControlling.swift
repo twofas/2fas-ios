@@ -115,6 +115,10 @@ extension TokensViewController: TokensViewControlling {
     }
     
     func showKeyboard() {
+        guard UIApplication.shared.applicationState == .active else {
+            Log("TokensViewController - showKeyboard: skipped, app not active")
+            return
+        }
         guard !searchController.searchBar.isFirstResponder && searchBarAdded else { return }
         searchController.searchBar.becomeFirstResponder()
     }

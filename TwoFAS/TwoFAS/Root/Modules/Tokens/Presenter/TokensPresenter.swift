@@ -120,7 +120,7 @@ extension TokensPresenter {
     }
     
     func handleAppBecomesInactive() {
-        Log("TokensPresenter - handleAppBecomesInactive")
+        Log("TokensPresenter - handleAppBecomesInactive appState=\(UIApplication.shared.applicationState.rawValue)")
         interactor.stopCounters()
         view?.stopSearch()
         if isSearching {

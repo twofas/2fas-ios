@@ -52,7 +52,16 @@ extension AppSecurityPresenter {
                 isSelected: value == attemptsSelected
             )
         }
-        let attemptsSection = AppSecurityMenuSection(
+        let blockTimeSelected = interactor.selectedBlockTime
+        let blockTimeOptions: [AppSecurityMenuCell.PickerOption] = AppLockBlockTime.allCases.map { value in
+            AppSecurityMenuCell.PickerOption(
+                title: value.localized,
+                kind: .blockTime(value),
+                isSelected: value == blockTimeSelected
+            )
+        }
+        
+        var attemptsSection = AppSecurityMenuSection(
             title: T.Settings.appBlocking,
             cells: [
                 AppSecurityMenuCell(
@@ -62,23 +71,13 @@ extension AppSecurityPresenter {
             ],
             footer: T.Settings.howManyAttemptsFooter
         )
-
-        let blockTimeSelected = interactor.selectedBlockTime
-        let blockTimeOptions: [AppSecurityMenuCell.PickerOption] = AppLockBlockTime.allCases.map { value in
-            AppSecurityMenuCell.PickerOption(
-                title: value.localized,
-                kind: .blockTime(value),
-                isSelected: value == blockTimeSelected
-            )
+        
+        if attemptsSelected != .noLimit {
+            attemptsSection.cells.append(AppSecurityMenuCell(
+                title: T.Settings.blockFor,
+                accessory: .picker(value: blockTimeSelected.localized, options: blockTimeOptions)
+            ))
         }
-        let blockTimeSection = AppSecurityMenuSection(
-            cells: [
-                AppSecurityMenuCell(
-                    title: T.Settings.blockFor,
-                    accessory: .picker(value: blockTimeSelected.localized, options: blockTimeOptions)
-                )
-            ]
-        )
 
         let biometryType = interactor.biometryType
         let isBiometryEnabled = interactor.isBiometryEnabled
@@ -102,9 +101,7 @@ extension AppSecurityPresenter {
         }()
 
         var menu: [AppSecurityMenuSection] = [settings, attemptsSection]
-        if attemptsSelected != .noLimit {
-            menu.append(blockTimeSection)
-        }
+
         if let biometry {
             menu.append(biometry)
         }

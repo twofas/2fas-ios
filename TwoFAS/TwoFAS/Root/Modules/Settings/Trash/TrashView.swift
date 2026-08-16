@@ -55,21 +55,6 @@ struct TrashView: View {
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                        Button {
-                            presenter.handleDelete(service)
-                        } label: {
-                            Label(T.Commons.delete, systemImage: "trash.fill")
-                        }
-                        .tint(AppColor.accentsBrand)
-
-                        Button {
-                            presenter.handleRestore(service)
-                        } label: {
-                            Label(T.Settings.restore, systemImage: "arrow.clockwise")
-                        }
-                        .tint(AppColor.accentsBlue)
-                    }
             }
         }
         .scrollContentBackground(.hidden)
@@ -94,6 +79,26 @@ struct TrashView: View {
                 }
                 
                 Spacer(minLength: 0)
+
+                Menu {
+                    Button {
+                        presenter.handleRestore(service)
+                    } label: {
+                        Label(T.Settings.restore, systemImage: "arrow.clockwise")
+                    }
+
+                    Button(role: .destructive) {
+                        presenter.handleDelete(service)
+                    } label: {
+                        Label(T.Commons.delete, systemImage: "trash.fill")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis")
+                        .textStyle(.body)
+                        .foregroundStyle(.labelsSecondary)
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
+                }
             }
             .padding(.horizontal, .XL)
             .padding(.vertical, .L)

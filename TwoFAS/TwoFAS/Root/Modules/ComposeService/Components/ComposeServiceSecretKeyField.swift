@@ -87,7 +87,7 @@ struct ComposeServiceSecretKeyField<FocusValue: Hashable, MenuContent: View>: Vi
                     .textStyle(.footnote)
                     .foregroundStyle(.labelsSecondary)
                 Text(value)
-                    .textStyle(.body)
+                    .textStyle(.body, .medium)
                     .foregroundStyle(isMasked ? .labelsTertiary : .labelsPrimary)
                     .lineLimit(1)
                     .accessibilityLabel(isMasked ? T.Voiceover.revealHiddenSecretKeyButtonTitle : value)

@@ -37,7 +37,6 @@ final class CameraViewController: UIViewController {
     private let cameraPreview = CameraPreview()
     private var cameraView: CameraView!
     private var activeArea: CameraActiveArea!
-    private var cancelButtonTitle: String?
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -64,9 +63,20 @@ final class CameraViewController: UIViewController {
     private let descriptionFrame = UIView()
     private let cancelButton: UIButton = {
         let button = UIButton()
+        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .semibold)
+        let xmarkImage = UIImage(systemName: "xmark", withConfiguration: symbolConfig)
         if #available(iOS 26, *) {
             var config = UIButton.Configuration.glass()
+            config.cornerStyle = .capsule
             config.baseForegroundColor = AppColor.accentsBrand.uiColor
+            config.image = xmarkImage
+            let inset = Spacing.M.rawValue
+            config.contentInsets = NSDirectionalEdgeInsets(
+                top: inset,
+                leading: inset,
+                bottom: inset,
+                trailing: inset
+            )
             button.configuration = config
             button.configurationUpdateHandler = { button in
                 button.configuration?.baseForegroundColor = button.isEnabled
@@ -74,12 +84,11 @@ final class CameraViewController: UIViewController {
                     : AppColor.graysGray.uiColor
             }
         } else {
-            button.setTitleColor(AppColor.accentsBrand.uiColor, for: .normal)
-            button.setTitleColor(AppColor.graysGray.uiColor, for: .disabled)
-            button.titleLabel?.font = TextStyle.headline.uiFont()
-            button.titleLabel?.layer.shadowOffset = CGSize(width: 0, height: 2)
-            button.titleLabel?.layer.shadowOpacity = 0.3
-            button.titleLabel?.layer.shadowColor = UIColor.black.cgColor
+            button.setImage(xmarkImage, for: .normal)
+            button.tintColor = AppColor.accentsBrand.uiColor
+            button.imageView?.layer.shadowOffset = CGSize(width: 0, height: 2)
+            button.imageView?.layer.shadowOpacity = 0.3
+            button.imageView?.layer.shadowColor = UIColor.black.cgColor
         }
         return button
     }()
@@ -130,13 +139,8 @@ final class CameraViewController: UIViewController {
             activeArea.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -activeAreaYOffset)
         ])
         
-        let cancelTitle = cancelButtonTitle ?? T.Commons.cancel
-        if #available(iOS 26, *) {
-            cancelButton.configuration?.title = cancelTitle
-        } else {
-            cancelButton.setTitle(cancelTitle, for: .normal)
-        }
-        
+        cancelButton.accessibilityLabel = T.Commons.cancel
+
         view.addSubview(cancelButton, with: [
             cancelButton.leadingAnchor.constraint(
                 equalTo: view.safeLeadingAnchor,
@@ -147,7 +151,7 @@ final class CameraViewController: UIViewController {
         
         view.addSubview(titleLabel, with: [
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            titleLabel.firstBaselineAnchor.constraint(equalTo: cancelButton.firstBaselineAnchor)
+            titleLabel.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor)
         ])
         
         view.addSubview(descriptionFrame, with: [
@@ -298,11 +302,13 @@ extension CameraViewController: CameraViewControllerActivity {
     func overlayOnTop() {
         titleLabel.textColor = AppColor.graysGray.uiColor
         cancelButton.isEnabled = false
+        cancelButton.tintColor = AppColor.graysGray.uiColor
     }
 
     func overlayHidden() {
         titleLabel.textColor = AppColor.graysWhite.uiColor
         cancelButton.isEnabled = true
+        cancelButton.tintColor = AppColor.accentsBrand.uiColor
     }
 }
 

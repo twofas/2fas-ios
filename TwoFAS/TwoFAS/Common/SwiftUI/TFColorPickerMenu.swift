@@ -41,43 +41,47 @@ struct TFColorPickerMenu: View {
     }
 
     var body: some View {
-        Menu {
-            ForEach(colors, id: \.self) { color in
-                Button {
-                    selectedColor = color
-                } label: {
-                    Label {
-                        Text(color.localizedName)
-                    } icon: {
-                        Image(uiImage: UIImage(systemName: "circle.fill")!
-                            .withTintColor(color.color, renderingMode: .alwaysOriginal))
+        HStack(spacing: .ML) {
+            Text(title)
+                .textStyle(.body)
+                .foregroundStyle(.labelsPrimary)
+                .minimumScaleFactor(0.9)
+                .allowsTightening(true)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            Menu {
+                ForEach(colors, id: \.self) { color in
+                    Button {
+                        selectedColor = color
+                    } label: {
+                        Label {
+                            Text(color.localizedName)
+                        } icon: {
+                            Image(uiImage: UIImage(systemName: "circle.fill")!
+                                .withTintColor(color.color, renderingMode: .alwaysOriginal))
+                        }
                     }
                 }
+            } label: {
+                HStack(spacing: .ML) {
+                    Circle()
+                        .fill(selectedColor.color(for: colorScheme))
+                        .frame(width: circleSize, height: circleSize)
+                    
+                    Text(selectedColor.localizedName)
+                        .textStyle(.body)
+                        .foregroundStyle(.labelsSecondary)
+                    
+                    Image(systemName: "chevron.up.chevron.down")
+                        .textStyle(.body)
+                        .foregroundStyle(.labelsSecondary)
+                        .accessibilityHidden(true)
+                }
+                .frame(minHeight: .normal)
             }
-        } label: {
-            HStack(spacing: .ML) {
-                Text(title)
-                    .textStyle(.body)
-                    .foregroundStyle(.labelsPrimary)
-                    .minimumScaleFactor(0.9)
-                    .allowsTightening(true)
-                    .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                Circle()
-                    .fill(selectedColor.color(for: colorScheme))
-                    .frame(width: circleSize, height: circleSize)
-
-                Text(selectedColor.localizedName)
-                    .textStyle(.body)
-                    .foregroundStyle(.labelsSecondary)
-
-                Image(systemName: "chevron.up.chevron.down")
-                    .textStyle(.body)
-                    .foregroundStyle(.labelsSecondary)
-                    .accessibilityHidden(true)
-            }
-            .frame(minHeight: .normal)
+            .labelStyle(.titleAndIcon)
+            .menuStyle(.button)
         }
     }
 }

@@ -204,28 +204,32 @@ public struct TFListMenuRow<MenuContent: View>: View {
     }
 
     public var body: some View {
-        Menu {
-            content
-        } label: {
-            HStack(spacing: .ML) {
-                Text(title)
-                    .textStyle(.body)
-                    .foregroundStyle(AppColor.labelsPrimary)
-                    .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+        HStack(spacing: .ML) {
+            Text(title)
+                .textStyle(.body)
+                .foregroundStyle(AppColor.labelsPrimary)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
 
-                Text(value)
-                    .textStyle(.body)
-                    .foregroundStyle(AppColor.labelsSecondary)
-
-                Image(systemName: "chevron.up.chevron.down")
-                    .textStyle(.body)
-                    .foregroundStyle(AppColor.labelsSecondary)
-                    .accessibilityHidden(true)
+            Menu {
+                content
+            } label: {
+                HStack(spacing: .ML) {
+                    Text(value)
+                        .textStyle(.body)
+                        .foregroundStyle(AppColor.labelsSecondary)
+                    
+                    Image(systemName: "chevron.up.chevron.down")
+                        .textStyle(.body)
+                        .foregroundStyle(AppColor.labelsSecondary)
+                        .accessibilityHidden(true)
+                }
+                .padding(.vertical, .L)
+                .contentShape(Rectangle())
+                .frame(minHeight: .normal)
             }
-            .padding(.vertical, .L)
-            .contentShape(Rectangle())
-            .frame(minHeight: .normal)
+            .labelStyle(.titleAndIcon)
+            .menuStyle(.button)
         }
     }
 }

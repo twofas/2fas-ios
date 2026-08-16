@@ -192,6 +192,8 @@ public struct TFListMenuRow<MenuContent: View>: View {
     private let title: String
     private let value: String
     private let content: MenuContent
+    
+    private let minWidth: CGFloat = 55
 
     public init(
         title: String,
@@ -227,6 +229,7 @@ public struct TFListMenuRow<MenuContent: View>: View {
                 .padding(.vertical, .L)
                 .contentShape(Rectangle())
                 .frame(minHeight: .normal)
+                .frame(minWidth: minWidth, alignment: .trailing)
             }
             .labelStyle(.titleAndIcon)
             .menuStyle(.button)

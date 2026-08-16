@@ -86,8 +86,11 @@ struct TFInputFloatingContainer<Content: View, TrailingAccessory: View>: View {
             .opacity(errorMessage == nil ? 0 : 1)
             .frame(height: errorMessage == nil ? 0 : nil, alignment: .leading)
             .clipped()
-            .animation(Animation.easeInOut(duration: AnimationTiming.duration), value: errorMessage)
+            .onTapGesture {
+                isEditing = true
+            }
         }
-        .frame(minHeight: .input)
+        .frame(minHeight: errorMessage == nil ? .input : .inputError)
+        .animation(Animation.easeInOut(duration: AnimationTiming.duration), value: errorMessage)
     }
 }

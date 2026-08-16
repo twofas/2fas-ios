@@ -55,8 +55,10 @@ private struct GetNameView: View {
                 if let defaultText {
                     text = defaultText
                 }
-                isFocused = true
                 isConfirmEnabled = text.isEmpty == false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    isFocused = true
+                }
             }
             .onChange(of: text) { _, _ in
                 updateConfirmState()

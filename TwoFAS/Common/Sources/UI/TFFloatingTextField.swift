@@ -127,10 +127,8 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
                     Button {
                         isPasswordRevealed.toggle()
                     } label: {
-                        Image(systemName: isPasswordRevealed ? "eye.slash" : "eye")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: Size.mediumIconSize)
+                        Image(systemName: isPasswordRevealed ? "eye.fill" : "eye.slash.fill")
+                            .textStyle(.body)
                             .tint(.labelsTertiary)
                     }
                 }

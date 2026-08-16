@@ -54,7 +54,7 @@ struct ComposeServiceSecretKeyField<FocusValue: Hashable, MenuContent: View>: Vi
         case .hidden:
             row(value: maskedPlaceholder, isMasked: true) {
                 Button(action: onReveal) {
-                    Image(systemName: "eye")
+                    Image(systemName: "eye.slash.fill")
                         .textStyle(.body)
                         .foregroundStyle(.accentsBrand)
                         .accessibilityLabel(T.Voiceover.showServiceKey)

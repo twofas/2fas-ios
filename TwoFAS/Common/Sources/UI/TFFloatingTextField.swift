@@ -39,11 +39,6 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
         case other
     }
     
-    private enum SecureFieldKind: Hashable {
-        case secure
-        case plain
-    }
-
     // MARK: - Variable
     private let textFieldHeight: CGFloat = TFRowHeight.list.value
     private let placeHolderText: String
@@ -56,8 +51,6 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
     private var text: String
     private let focused: FocusState<FocusValue?>.Binding
     private let focusValue: FocusValue
-    @FocusState
-    private var internalFocus: SecureFieldKind?
     @Binding
     private var errorMessage: String?
     @State
@@ -74,7 +67,7 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
     private let autocapitalization: TextInputAutocapitalization
 
     private var isFocused: Bool {
-        internalFocus != nil
+        focused.wrappedValue == focusValue
     }
 
     private var isSecure: Bool {
@@ -149,28 +142,32 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
         .contentShape(Rectangle())
         .frame(minHeight: .input)
         .onTapGesture {
-            guard isEnabled else { return }
-            focused.wrappedValue = focusValue
+            requestFocus()
         }
+        .onChange(of: isEditing) { _, newValue in
+            guard newValue else { return }
+            requestFocus()
+        }
+    }
+
+    private func requestFocus() {
+        guard isEnabled, focused.wrappedValue != focusValue else { return }
+        focused.wrappedValue = focusValue
     }
 
     @ViewBuilder
     private func textField() -> some View {
         ZStack {
-            SecureField("", text: $text, prompt: promptText)
-                .focused($internalFocus, equals: .secure)
-                .textContentType(isSecure ? .password : nil)
-                .opacity(showAsSecure ? 1 : 0)
-                .accessibilityHidden(!showAsSecure)
-                .allowsHitTesting(showAsSecure)
-                .transition(.opacity.animation(.easeInOut(duration: AnimationTiming.duration)))
-
-            TextField("", text: $text, prompt: promptText)
-                .focused($internalFocus, equals: .plain)
-                .opacity(showAsSecure ? 0 : 1)
-                .accessibilityHidden(showAsSecure)
-                .allowsHitTesting(!showAsSecure)
-                .transition(.opacity.animation(.easeInOut(duration: AnimationTiming.duration)))
+            if showAsSecure {
+                SecureField("", text: $text, prompt: promptText)
+                    .focused(focused, equals: focusValue)
+                    .textContentType(.password)
+                    .transition(.opacity.animation(.easeInOut(duration: AnimationTiming.duration)))
+            } else {
+                TextField("", text: $text, prompt: promptText)
+                    .focused(focused, equals: focusValue)
+                    .transition(.opacity.animation(.easeInOut(duration: AnimationTiming.duration)))
+            }
         }
         .modifier(FormatInputModifier(inputType))
         .foregroundStyle(isEnabled ? .labelsPrimary : .labelsTertiary)
@@ -184,34 +181,19 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
         .accessibilityLabel(placeHolderText)
         .submitLabel(submit?.buttonType ?? .return)
         .onSubmit {
-            DispatchQueue.main.async {
-                submit?.action?()
-            }
-        }
-        .onChange(of: internalFocus) { _, newValue in
-            withAnimation {
-                isEditing = newValue != nil
-            }
-            if newValue != nil {
-                if focused.wrappedValue != focusValue {
-                    focused.wrappedValue = focusValue
-                }
-            } else if focused.wrappedValue == focusValue {
-                focused.wrappedValue = nil
-            }
+            submit?.action?()
         }
         .onChange(of: focused.wrappedValue) { _, newValue in
-            if newValue == focusValue {
-                if internalFocus == nil {
-                    internalFocus = showAsSecure ? .secure : .plain
-                }
-            } else if internalFocus != nil {
-                internalFocus = nil
+            withAnimation {
+                isEditing = newValue == focusValue
             }
         }
-        .onChange(of: showAsSecure) { _, newShowAsSecure in
-            guard internalFocus != nil else { return }
-            internalFocus = newShowAsSecure ? .secure : .plain
+        .onChange(of: showAsSecure) { _, _ in
+            guard focused.wrappedValue == focusValue else { return }
+            focused.wrappedValue = nil
+            DispatchQueue.main.async {
+                focused.wrappedValue = focusValue
+            }
         }
     }
 

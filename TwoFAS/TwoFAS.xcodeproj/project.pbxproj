@@ -168,6 +168,7 @@
 		C2153BC51FE9B2BF005FD297 /* CameraActiveArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2153BC41FE9B2BF005FD297 /* CameraActiveArea.swift */; };
 		C21675C52808C71F00D43EDD /* ShortDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21675C42808C71E00D43EDD /* ShortDateFormatter.swift */; };
 		C217B90C2F79CDD9000EAA7C /* TokensPassCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217B90B2F79CDD9000EAA7C /* TokensPassCell.swift */; };
+		C217CDC73032260F007D88C0 /* TFCancelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217CDC63032260F007D88C0 /* TFCancelButton.swift */; };
 		C218513C2A1A873F00A8352A /* TokensHOTPCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513B2A1A873F00A8352A /* TokensHOTPCell.swift */; };
 		C218513E2A1A8EF600A8352A /* TokensNextTokenLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */; };
 		C21851402A1AB01600A8352A /* TokensTOTPCompactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */; };
@@ -1979,6 +1980,7 @@
 		C2153BC41FE9B2BF005FD297 /* CameraActiveArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraActiveArea.swift; sourceTree = "<group>"; };
 		C21675C42808C71E00D43EDD /* ShortDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortDateFormatter.swift; sourceTree = "<group>"; };
 		C217B90B2F79CDD9000EAA7C /* TokensPassCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensPassCell.swift; sourceTree = "<group>"; };
+		C217CDC63032260F007D88C0 /* TFCancelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFCancelButton.swift; sourceTree = "<group>"; };
 		C218513B2A1A873F00A8352A /* TokensHOTPCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensHOTPCell.swift; sourceTree = "<group>"; };
 		C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNextTokenLabel.swift; sourceTree = "<group>"; };
 		C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensTOTPCompactCell.swift; sourceTree = "<group>"; };
@@ -4634,6 +4636,7 @@
 				C2B58A12302BAC8600E0FF36 /* TFRowContent.swift */,
 				C25ECA803005825900D46587 /* TFInstructionCard.swift */,
 				C2418F693006DCA6008B674A /* TFRowHeight.swift */,
+				C217CDC63032260F007D88C0 /* TFCancelButton.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -7713,6 +7716,7 @@
 				C274CA122BAB8B92008E7212 /* AttributedText+Formatting.swift in Sources */,
 				C274CA132BAB8B92008E7212 /* WidgetServiceHandlerType.swift in Sources */,
 				C274CA152BAB8B92008E7212 /* PairedWebExtension.swift in Sources */,
+				C217CDC83032260F007D88C0 /* TFCancelButton.swift in Sources */,
 				C2DFDBDD302C977100EFA0B5 /* TFEmptyScreen.swift in Sources */,
 				C215084A30042CB3008B66E2 /* TFFailureView.swift in Sources */,
 				C2B58A13302BAC8600E0FF36 /* TFRowContent.swift in Sources */,
@@ -7871,6 +7875,7 @@
 				C2E53B162B62DDAF008E1E70 /* Log.swift in Sources */,
 				C29B42C92D98943100F49DCE /* CloudEncryptionType.swift in Sources */,
 				C215084B30042CB3008B66E2 /* TFFailureView.swift in Sources */,
+				C217CDC73032260F007D88C0 /* TFCancelButton.swift in Sources */,
 				C2E53B432B62DDAF008E1E70 /* CommonLocalKeyEncryption.swift in Sources */,
 				C2DFDBDE302C977100EFA0B5 /* TFEmptyScreen.swift in Sources */,
 				C2C0A97F2DA31ADD000A1772 /* DeviceCode.swift in Sources */,

@@ -57,7 +57,7 @@ struct ExporterMainScreenView: View {
                     presenter.handleExport()
                 }
 
-                TFButton(T.Commons.cancel, variant: .borderless, size: .large) {
+                TFCancelButton(T.Commons.cancel) {
                     presenter.handleClose()
                 }
             }

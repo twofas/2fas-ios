@@ -70,7 +70,7 @@ struct ImporterPreimportSummaryView: View {
                 }
                 .disabled(presenter.countNew == 0)
 
-                TFButton(T.Commons.cancel, variant: .borderless, size: .large) {
+                TFCancelButton(T.Commons.cancel) {
                     presenter.handleCancel()
                 }
             }

@@ -59,7 +59,7 @@ struct ExternalImportInstructionsView: View {
                 TFButton(secondaryActionName, variant: .bordered, size: .large, action: secondaryAction)
             }
 
-            TFButton(T.Commons.cancel, variant: .borderless, size: .large, action: close)
+            TFCancelButton(T.Commons.cancel, action: close)
                 .padding(.bottom, .XL)
         }
         .navigationTitle(sourceName)

@@ -54,13 +54,7 @@ struct CameraErrorTemplate: View {
             TFButton(actionTitleString, variant: .borderedProminent, size: .large) {
                 action()
             }
-            let cancelTitleString: String = {
-                if let cancelTitle {
-                    return cancelTitle
-                }
-                return T.Commons.cancel
-            }()
-            TFButton(cancelTitleString, variant: .borderless, size: .large) {
+            TFButton(cancelTitle ?? T.Commons.cancel, variant: .borderless, size: .large) {
                 cancel?()
             }
             .isHidden(cancel == nil, remove: true)

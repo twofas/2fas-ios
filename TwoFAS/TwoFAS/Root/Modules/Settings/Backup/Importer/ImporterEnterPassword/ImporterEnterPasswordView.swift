@@ -70,7 +70,7 @@ struct ImporterEnterPasswordView: View {
                     }
                     .disabled(!presenter.isDecryptEnabled)
 
-                    TFButton(T.Commons.cancel, variant: .borderless, size: .large) {
+                    TFCancelButton(T.Commons.cancel) {
                         presenter.handleCancel()
                     }
                 }

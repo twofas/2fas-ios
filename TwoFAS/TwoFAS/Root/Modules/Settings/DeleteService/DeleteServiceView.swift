@@ -55,7 +55,7 @@ struct DeleteServiceView: View {
             )
             .disabled(!confirmed)
 
-            TFButton(T.Commons.cancel, variant: .borderless, size: .large, action: cancel)
+            TFCancelButton(T.Commons.cancel, action: cancel)
         }
         .navigationBarHidden(true)
     }

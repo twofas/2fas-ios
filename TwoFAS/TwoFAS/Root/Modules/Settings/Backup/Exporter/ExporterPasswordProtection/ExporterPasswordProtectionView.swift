@@ -90,7 +90,7 @@ struct ExporterPasswordProtectionView: View {
                     }
                     .disabled(!presenter.isExportEnabled)
 
-                    TFButton(T.Commons.cancel, variant: .borderless, size: .large) {
+                    TFCancelButton(T.Commons.cancel) {
                         presenter.handleCancel()
                     }
                 }

@@ -64,7 +64,7 @@ struct CameraLastPass: View {
         } buttons: {
             TFButton(T.Commons.continue, variant: .borderedProminent, size: .large, action: action)
                 .disabled(importedCount == 0)
-            TFButton(T.Commons.cancel, variant: .borderless, size: .large, action: cancel)
+            TFCancelButton(T.Commons.cancel, action: cancel)
         }
         .navigationBarHidden(true)
     }

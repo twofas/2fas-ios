@@ -95,7 +95,6 @@ public struct TFPinButton: View {
         }) {
             keyLabel
                 .foregroundStyle(AppColor.labelsPrimary)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .modify {
             if #available(iOS 26, *) {
@@ -105,25 +104,28 @@ public struct TFPinButton: View {
                 $0.buttonStyle(PinPressStyle())
             }
         }
-        .contentShape(Rectangle())
-        .frame(maxWidth: Self.size, maxHeight: Self.size)
-        .aspectRatio(1, contentMode: .fit)
     }
 
     @available(iOS 26, *)
     private struct GlassPinPressStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
+                .frame(maxWidth: TFPinButton.size, maxHeight: TFPinButton.size)
+                .aspectRatio(1, contentMode: .fit)
                 .glassEffect(.regular, in: .circle)
                 .shadow(.glass)
                 .scaleEffect(configuration.isPressed ? 0.82 : 1)
                 .animation(.spring(response: 0.2, dampingFraction: 0.7), value: configuration.isPressed)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .contentShape(Rectangle())
         }
     }
 
     private struct PinPressStyle: ButtonStyle {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
+                .frame(maxWidth: TFPinButton.size, maxHeight: TFPinButton.size)
+                .aspectRatio(1, contentMode: .fit)
                 .background {
                     Circle()
                         .fill(AppColor.backgroundsSecondary)
@@ -138,6 +140,8 @@ public struct TFPinButton: View {
                     .impact(flexibility: .rigid, intensity: 0.6),
                     trigger: configuration.isPressed
                 ) { _, new in new }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .contentShape(Rectangle())
         }
     }
 

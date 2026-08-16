@@ -30,23 +30,10 @@ struct PINKeypadLayout: Layout {
     private static let maxWidthFactor: CGFloat = 7
     private static let maxHeightFactor: CGFloat = 8
     
-    private static let minSpacing: CGFloat = 16
-    
+    private static let minSpacing: CGFloat = 8
+
     private var maxWidth: CGFloat { Self.buttonSize * Self.maxWidthFactor }
     private var maxHeight: CGFloat { Self.buttonSize * Self.maxHeightFactor }
-
-    // Height at which full-size buttons still fit with exactly minSpacing between rows
-    // (and top/bottom edges). Below this the buttons are scaled down instead of overflowing.
-    private var minHeight: CGFloat {
-        Self.buttonSize * CGFloat(Self.rows) + Self.minSpacing * CGFloat(Self.rows + 1)
-    }
-
-    private func buttonSize(fittingHeight height: CGFloat) -> CGFloat {
-        guard height < minHeight else { return Self.buttonSize }
-        let available = height - Self.minSpacing * CGFloat(Self.rows + 1)
-        let scaled = available / CGFloat(Self.rows)
-        return max(0, min(Self.buttonSize, scaled))
-    }
 
     // MARK: Layout
 
@@ -67,27 +54,23 @@ struct PINKeypadLayout: Layout {
         let layoutW = min(bounds.width, maxWidth)
         let layoutH = min(bounds.height, maxHeight)
 
-        let btn = buttonSize(fittingHeight: layoutH)
-
-        // Equal horizontal gaps: left edge + gaps between cols + right edge = cols+1 slots
-        let hGap = (layoutW - btn * CGFloat(cols)) / CGFloat(cols + 1)
-        // Equal vertical gaps: top edge + gaps between rows + bottom edge = rows+1 slots
-        let vGap = (layoutH - btn * CGFloat(rows)) / CGFloat(rows + 1)
+        let cellW = max(0, (layoutW - Self.minSpacing * CGFloat(cols + 1)) / CGFloat(cols))
+        let cellH = max(0, (layoutH - Self.minSpacing * CGFloat(rows + 1)) / CGFloat(rows))
 
         // Center the grid inside bounds if bounds is larger than layoutW/H
         let originX = round(bounds.minX + (bounds.width - layoutW) / 2)
         let originY = round(bounds.minY + (bounds.height - layoutH) / 2)
 
-        let buttonProposal = ProposedViewSize(width: btn, height: btn)
+        let cellProposal = ProposedViewSize(width: cellW, height: cellH)
 
         for (index, subview) in subviews.enumerated() {
             let col = index % cols
             let row = index / cols
 
-            let cx = originX + CGFloat(col + 1) * hGap + CGFloat(col) * btn + btn / 2
-            let cy = originY + CGFloat(row + 1) * vGap + CGFloat(row) * btn + btn / 2
+            let cx = originX + Self.minSpacing * CGFloat(col + 1) + cellW * CGFloat(col) + cellW / 2
+            let cy = originY + Self.minSpacing * CGFloat(row + 1) + cellH * CGFloat(row) + cellH / 2
 
-            subview.place(at: CGPoint(x: round(cx), y: round(cy)), anchor: .center, proposal: buttonProposal)
+            subview.place(at: CGPoint(x: round(cx), y: round(cy)), anchor: .center, proposal: cellProposal)
         }
     }
 }

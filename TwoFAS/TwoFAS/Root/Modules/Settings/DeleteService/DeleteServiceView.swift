@@ -29,34 +29,44 @@ struct DeleteServiceView: View {
     private let image = Asset.deleteForeverIcon.image
 
     var body: some View {
-        TFInfoView {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: image.size.width / 2, height: image.size.height / 2)
-        } texts: {
-            Text(T.Commons.warning.uppercased())
-                .textStyle(.title1, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.center)
-            Text(T.Tokens.tokenNotPossibleToRestore)
-                .textStyle(.body)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.labelsSecondary)
-        } buttons: {
-            TFToggleRow(T.Tokens.iWantToDeleteThisToken, isOn: $confirmed, isElevated: true)
-                .padding(.bottom, .S)
-
-            TFButton(
-                T.Tokens.removeItForever,
-                variant: .borderedProminent,
-                size: .large,
-                action: action
-            )
-            .disabled(!confirmed)
-
-            TFCancelButton(T.Commons.cancel, action: cancel)
+        NavigationStack {
+            TFInfoView {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: image.size.width / 2, height: image.size.height / 2)
+            } texts: {
+                Text(T.Commons.warning.uppercased())
+                    .textStyle(.title1, .emphasized)
+                    .foregroundStyle(.labelsPrimary)
+                    .multilineTextAlignment(.center)
+                Text(T.Tokens.tokenNotPossibleToRestore)
+                    .textStyle(.body)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.labelsSecondary)
+            } buttons: {
+                TFToggleRow(T.Tokens.iWantToDeleteThisToken, isOn: $confirmed, isElevated: true)
+                    .padding(.bottom, .S)
+                
+                TFButton(
+                    T.Tokens.removeItForever,
+                    variant: .borderedProminent,
+                    size: .large,
+                    action: action
+                )
+                .disabled(!confirmed)
+                
+                TFCancelButton(T.Commons.cancel, action: cancel)
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        cancel()
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                }
+            }
         }
-        .navigationBarHidden(true)
     }
 }

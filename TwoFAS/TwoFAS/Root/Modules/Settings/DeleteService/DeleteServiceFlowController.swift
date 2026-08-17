@@ -39,7 +39,7 @@ final class DeleteServiceFlowController: FlowController {
         parent: DeleteServiceFlowControllerParent,
         serviceData: ServiceData
     ) {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         let flowController = DeleteServiceFlowController(viewController: hosting)
         flowController.parent = parent
 

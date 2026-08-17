@@ -31,7 +31,7 @@ struct TFInputFloatingContainer<Content: View, TrailingAccessory: View>: View {
     private var errorMessage: String?
     private let content: Content
     private let trailingAccessory: TrailingAccessory
-
+    
     init(
         isEditing: Binding<Bool>,
         movePlaceholderUp: Binding<Bool>,
@@ -47,10 +47,10 @@ struct TFInputFloatingContainer<Content: View, TrailingAccessory: View>: View {
         self.content = content()
         self.trailingAccessory = trailingAccessory()
     }
-
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: .S) {
-            HStack(spacing: .M) {
+        HStack(alignment: .center, spacing: .M) {
+            VStack(alignment: .leading, spacing: .zero) {
                 VStack(alignment: .leading, spacing: movePlaceholderUp ? Spacing.XS.rawValue : 0) {
                     Text(title)
                         .foregroundStyle(isEnabled ? .labelsSecondary : .labelsQuaternary)
@@ -68,27 +68,28 @@ struct TFInputFloatingContainer<Content: View, TrailingAccessory: View>: View {
                 }
                 .frame(maxWidth: .infinity, alignment: movePlaceholderUp ? .topLeading : .leading)
                 .animation(Animation.easeInOut(duration: AnimationTiming.duration), value: movePlaceholderUp)
+                HStack(spacing: .S) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .resizable()
+                        .frame(width: Size.extraSmallIconSize, height: Size.extraSmallIconSize)
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundStyle(.accentsBrand)
 
-                trailingAccessory
+                    Text(errorMessage ?? "")
+                        .textStyle(.caption2)
+                        .foregroundStyle(.accentsBrand)
+                }
+                .padding(.top, errorMessage == nil ? 0 : Spacing.M.rawValue)
+                .padding(.bottom, errorMessage == nil ? 0 : Spacing.M.rawValue)
+                .opacity(errorMessage == nil ? 0 : 1)
+                .frame(height: errorMessage == nil ? 0 : nil, alignment: .leading)
+                .clipped()
+                .onTapGesture {
+                    isEditing = true
+                }
             }
-            HStack(spacing: .S) {
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .resizable()
-                    .frame(width: Size.extraSmallIconSize, height: Size.extraSmallIconSize)
-                    .aspectRatio(contentMode: .fit)
-                    .foregroundStyle(.accentsBrand)
 
-                Text(errorMessage ?? "")
-                    .textStyle(.caption2)
-                    .foregroundStyle(.accentsBrand)
-            }
-            .padding(.bottom, .S)
-            .opacity(errorMessage == nil ? 0 : 1)
-            .frame(height: errorMessage == nil ? 0 : nil, alignment: .leading)
-            .clipped()
-            .onTapGesture {
-                isEditing = true
-            }
+            trailingAccessory
         }
         .frame(minHeight: errorMessage == nil ? .input : .inputError)
         .animation(Animation.easeInOut(duration: AnimationTiming.duration), value: errorMessage)

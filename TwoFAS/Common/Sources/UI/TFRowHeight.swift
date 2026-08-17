@@ -34,8 +34,8 @@ public enum TFRowHeight: CGFloat, CaseIterable {
     case list = 68
     /// 55 pt — input
     case input = 55
-    /// 74 pt — input error
-    case inputError = 74
+    /// 61 pt — input error
+    case inputError = 61
     /// 52 pt - normal list posiition
     case normal = 52
 

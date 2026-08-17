@@ -115,28 +115,32 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
             textField()
                 .frame(maxWidth: .infinity)
         } trailingAccessory: {
-            if isSecure {
-                if isEnabled {
+            HStack(alignment: .center, spacing: .zero) {
+                if isSecure {
+                    if isEnabled {
+                        Button {
+                            isPasswordRevealed.toggle()
+                        } label: {
+                            Image(systemName: isPasswordRevealed ? "eye.fill" : "eye.slash.fill")
+                                .textStyle(.body)
+                                .tint(.labelsTertiary)
+                        }
+                    }
+                } else if isFocused && !text.isEmpty && isEnabled {
                     Button {
-                        isPasswordRevealed.toggle()
+                        clearTapped.toggle()
+                        clearTextField()
                     } label: {
-                        Image(systemName: isPasswordRevealed ? "eye.fill" : "eye.slash.fill")
-                            .textStyle(.body)
+                        Image(systemName: "xmark.circle.fill")
+                            .resizable()
+                            .frame(width: Size.mediumIconSize, height: Size.mediumIconSize)
+                            .aspectRatio(contentMode: .fit)
                             .tint(.labelsTertiary)
                     }
+                    .sensoryFeedback(
+                        .impact(flexibility: .rigid, intensity: 0.6),
+                        trigger: clearTapped) { _, new in new }
                 }
-            } else if isFocused && !text.isEmpty && isEnabled {
-                Button {
-                    clearTapped.toggle()
-                    clearTextField()
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .resizable()
-                        .frame(width: Size.mediumIconSize, height: Size.mediumIconSize)
-                        .aspectRatio(contentMode: .fit)
-                        .tint(.labelsTertiary)
-                }
-                .sensoryFeedback(.impact(flexibility: .rigid, intensity: 0.6), trigger: clearTapped) { _, new in new }
             }
         }
         .contentShape(Rectangle())
@@ -256,7 +260,7 @@ private struct Test: View {
     private var isFocused: Bool?
 
     @State
-    private var errorMessage: String?
+    private var errorMessage: String? = "this is an error"
 
     var body: some View {
         VStack(spacing: .zero) {

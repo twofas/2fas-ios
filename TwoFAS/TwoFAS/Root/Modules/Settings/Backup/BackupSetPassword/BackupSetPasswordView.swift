@@ -50,22 +50,23 @@ struct BackupSetPasswordView: View {
 
     private var content: some View {
         VStack(spacing: .zero) {
-            AdaptiveReadableContainer {
-                if presenter.isDone {
-                    TFSuccessView(title: T.Backup.passwordSet)
-                } else if presenter.isApplyingChanges {
-                    TFLoadingView(title: presenter.applyingChangesText)
-                        .padding(.top, .XXXXXL)
-                } else {
-                    formContent
+            ScrollView {
+                AdaptiveReadableContainer {
+                    if presenter.isDone {
+                        TFSuccessView(title: T.Backup.passwordSet)
+                    } else if presenter.isApplyingChanges {
+                        TFLoadingView(title: presenter.applyingChangesText)
+                            .padding(.top, .XXXXXL)
+                    } else {
+                        formContent
+                    }
                 }
             }
+            .scrollBounceBehavior(.basedOnSize)
 
             if !presenter.isApplyingChanges {
                 AdaptiveReadableContainer {
                     VStack(spacing: .L) {
-                        Spacer()
-                            .frame(maxHeight: .infinity)
                         TFButton(
                             T.Commons.continue,
                             variant: .borderedProminent,
@@ -135,7 +136,6 @@ struct BackupSetPasswordView: View {
                         focusedField = .second
                     })
                 )
-                .padding(.top, .S)
 
                 Divider()
                     .foregroundStyle(.separatorsNonOpaque)
@@ -153,7 +153,6 @@ struct BackupSetPasswordView: View {
                         presenter.handleContinue()
                     })
                 )
-                .padding(.bottom, .S)
             }
             .groupedSectionBackground(isElevated: true)
 

@@ -114,7 +114,6 @@ struct ComposeServiceView: View {
                         focusedField = .additionalInfo
                     })
                 )
-                .frame(minHeight: .input)
                 .onChange(of: presenter.serviceName) { _, newValue in
                     presenter.handleServiceNameUpdate(newValue)
                 }
@@ -150,7 +149,6 @@ struct ComposeServiceView: View {
                         Label(T.Tokens.qrCodeShare, systemImage: "square.and.arrow.up")
                     }
                 }
-                .frame(minHeight: .input)
 
                 separator()
 
@@ -166,7 +164,6 @@ struct ComposeServiceView: View {
                         focusedField = nil
                     })
                 )
-                .frame(minHeight: .input)
                 .onChange(of: presenter.additionalInfo) { _, newValue in
                     presenter.handleAdditionalInfoUpdate(newValue)
                 }

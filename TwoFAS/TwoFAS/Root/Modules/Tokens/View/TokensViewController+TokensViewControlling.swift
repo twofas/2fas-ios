@@ -68,6 +68,7 @@ extension TokensViewController: TokensViewControlling {
     
     // MARK: - Empty screen or list
     func showList() {
+        tokensView.isScrollEnabled = true
         if presenter.showSearchBar {
             addSearchBar()
             tokensView.alwaysBounceVertical = true
@@ -91,8 +92,9 @@ extension TokensViewController: TokensViewControlling {
     
     func showEmptyScreen() {
         removeSearchBar()
+        tokensView.isScrollEnabled = false
         VoiceOver.say(T.Voiceover.useAddServiceButtonTitle)
-        emptyListScreenView.setItemsInTrashCount(presenter.trashedServicesCount)
+        emptyListModel.setItemsInTrashCount(presenter.trashedServicesCount)
         guard emptyListScreenView.isHidden else { return }
         emptyListScreenView.alpha = 0
         emptyListScreenView.isHidden = false

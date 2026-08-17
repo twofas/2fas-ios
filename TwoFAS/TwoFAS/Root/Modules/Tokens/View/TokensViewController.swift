@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 import Data
 
@@ -38,7 +39,12 @@ final class TokensViewController: UIViewController {
     
     let headerHeight: CGFloat = 44
     let emptySearchScreenView = TokensViewEmptySearchScreen()
-    let emptyListScreenView = TokensViewEmptyListScreen()
+
+    let emptyListModel = TokensEmptyListModel()
+    private(set) lazy var emptyListHostingController = UIHostingController(
+        rootView: TokensEmptyListView(model: emptyListModel)
+    )
+    var emptyListScreenView: UIView { emptyListHostingController.view }
     
     private var layout: UICollectionViewCompositionalLayout!
     
@@ -150,12 +156,15 @@ private extension TokensViewController {
         emptySearchScreenView.isHidden = true
         emptySearchScreenView.alpha = 0
         
+        addChild(emptyListHostingController)
+        emptyListScreenView.backgroundColor = AppColor.backgroundsPrimary.uiColor
         view.addSubview(emptyListScreenView, with: [
             emptyListScreenView.leadingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.leadingAnchor),
             emptyListScreenView.trailingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.trailingAnchor),
             emptyListScreenView.topAnchor.constraint(equalTo: tokensView.safeTopAnchor),
             emptyListScreenView.bottomAnchor.constraint(equalTo: tokensView.safeBottomAnchor)
         ])
+        emptyListHostingController.didMove(toParent: self)
         emptyListScreenView.isHidden = true
         emptyListScreenView.alpha = 0
     }
@@ -167,13 +176,13 @@ private extension TokensViewController {
     }
     
     func setupEmptyScreensEvents() {
-        emptyListScreenView.pairNewService = { [weak self] in self?.presenter.handleAddService() }
-        emptyListScreenView.importFromExternalService = { [weak self] in
+        emptyListModel.pairNewService = { [weak self] in self?.presenter.handleAddService() }
+        emptyListModel.importFromExternalService = { [weak self] in
             AppEventLog(.onboardingBackupFile)
             self?.presenter.handleImportExternalFile()
         }
-        emptyListScreenView.help = { [weak self] in self?.presenter.handleShowHelp() }
-        emptyListScreenView.goToTrashAction = { [weak self] in self?.presenter.goToTrash() }
+        emptyListModel.help = { [weak self] in self?.presenter.handleShowHelp() }
+        emptyListModel.goToTrashAction = { [weak self] in self?.presenter.goToTrash() }
     }
     
     func setupNotificationsListeners() {

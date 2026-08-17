@@ -35,6 +35,7 @@ final class MainTabFlowController: FlowController {
         let container = MainTabSidebarViewController()
         let flowController = MainTabFlowController(viewController: container)
         flowController.parent = parent
+        container.flowController = flowController
 
         let tokens = TokensPlainFlowController.setup(presentationHost: container, parent: flowController)
         let settings = SettingsFlowController.setup(parent: flowController)
@@ -115,6 +116,8 @@ extension MainTabFlowController: SettingsFlowControllerParent {
 }
 
 final class MainTabSidebarViewController: UITabBarController, MainNavigating {
+    // Strong reference: the container owns its coordinator (see showAsRoot).
+    var flowController: MainTabFlowController?
     private weak var tokensTab: UITab?
     private weak var settingsTab: UITab?
     private weak var settingsViewController: SettingsViewController?

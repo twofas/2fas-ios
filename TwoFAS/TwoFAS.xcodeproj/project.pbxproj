@@ -824,7 +824,6 @@
 		C2AB92E127668DE700698382 /* ShareActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AB92E027668DE700698382 /* ShareActivityController.swift */; };
 		C2ABA1CC24B24B7F008426D1 /* TokensViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ABA1CB24B24B7F008426D1 /* TokensViewController+ContextMenu.swift */; };
 		C2ABF3C92002A01A003F2CBA /* CommonNavigationControlller.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ABF3C82002A01A003F2CBA /* CommonNavigationControlller.swift */; };
-		C2ABF3CD2003DB23003F2CBA /* ContentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ABF3CC2003DB23003F2CBA /* ContentButton.swift */; };
 		C2AC21FE27660F5700271402 /* ImporterOpenFileModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AC21FD27660F5700271402 /* ImporterOpenFileModuleInteractor.swift */; };
 		C2AC2208276615FB00271402 /* ExporterMainScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AC2207276615FB00271402 /* ExporterMainScreenPresenter.swift */; };
 		C2AC220A2766178400271402 /* ExporterMainScreenModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AC22092766178400271402 /* ExporterMainScreenModuleInteractor.swift */; };
@@ -1261,7 +1260,6 @@
 		C2E86AC327FF921900C830BB /* UpdateDeviceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E86AC227FF921900C830BB /* UpdateDeviceName.swift */; };
 		C2E86AC527FF957400C830BB /* ListAll2FARequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E86AC427FF957400C830BB /* ListAll2FARequests.swift */; };
 		C2E86AC727FF97E200C830BB /* Send2FAToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E86AC627FF97E200C830BB /* Send2FAToken.swift */; };
-		C2E948AB23B64DB1003BDCC1 /* LoadingContentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E948AA23B64DB1003BDCC1 /* LoadingContentButton.swift */; };
 		C2EA566B2856925B00026BFE /* AskForAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA566A2856925B00026BFE /* AskForAuthView.swift */; };
 		C2EA566F28569A5E00026BFE /* AskForAuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA566E28569A5E00026BFE /* AskForAuthPresenter.swift */; };
 		C2EA567128569ADD00026BFE /* AskForAuthFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EA567028569ADD00026BFE /* AskForAuthFlowController.swift */; };
@@ -2550,7 +2548,6 @@
 		C2AB92E42766A9A700698382 /* SocialChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialChannel.swift; sourceTree = "<group>"; };
 		C2ABA1CB24B24B7F008426D1 /* TokensViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		C2ABF3C82002A01A003F2CBA /* CommonNavigationControlller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonNavigationControlller.swift; sourceTree = "<group>"; };
-		C2ABF3CC2003DB23003F2CBA /* ContentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentButton.swift; sourceTree = "<group>"; };
 		C2AC21FD27660F5700271402 /* ImporterOpenFileModuleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileModuleInteractor.swift; sourceTree = "<group>"; };
 		C2AC2207276615FB00271402 /* ExporterMainScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExporterMainScreenPresenter.swift; sourceTree = "<group>"; };
 		C2AC22092766178400271402 /* ExporterMainScreenModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExporterMainScreenModuleInteractor.swift; sourceTree = "<group>"; };
@@ -2893,7 +2890,6 @@
 		C2E86AC427FF957400C830BB /* ListAll2FARequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListAll2FARequests.swift; sourceTree = "<group>"; };
 		C2E86AC627FF97E200C830BB /* Send2FAToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Send2FAToken.swift; sourceTree = "<group>"; };
 		C2E881D928F35C030053A89D /* ExchangeData2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeData2.swift; sourceTree = "<group>"; };
-		C2E948AA23B64DB1003BDCC1 /* LoadingContentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingContentButton.swift; sourceTree = "<group>"; };
 		C2EA566A2856925B00026BFE /* AskForAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskForAuthView.swift; sourceTree = "<group>"; };
 		C2EA566E28569A5E00026BFE /* AskForAuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskForAuthPresenter.swift; sourceTree = "<group>"; };
 		C2EA567028569ADD00026BFE /* AskForAuthFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskForAuthFlowController.swift; sourceTree = "<group>"; };
@@ -4267,8 +4263,6 @@
 			children = (
 				C299B7D1236DE78700224F51 /* StackView+.swift */,
 				C2A283342186071200967022 /* AlertControllerPromptFactory.swift */,
-				C2ABF3CC2003DB23003F2CBA /* ContentButton.swift */,
-				C2E948AA23B64DB1003BDCC1 /* LoadingContentButton.swift */,
 				C2FA6C462401DF9400A1F320 /* AlertControllerDismissFlow.swift */,
 				C28633C31FF9327900C8F4B4 /* AlertController.swift */,
 				C25F4FBE26221838008F7755 /* Search */,
@@ -7105,7 +7099,6 @@
 				C2B39C7327A58E0800D3B579 /* SelectFromGalleryViewController.swift in Sources */,
 				C206CACF27A35ABE0068284C /* View+.swift in Sources */,
 				C21111F0274ABCAB00CA7C78 /* FlowController.swift in Sources */,
-				C2ABF3CD2003DB23003F2CBA /* ContentButton.swift in Sources */,
 				C2AC221527661C0600271402 /* ExporterPasswordProtectionPresenter.swift in Sources */,
 				C2B1208D29D767B10020281E /* AppearancePresenter.swift in Sources */,
 				C2B39C7727A5908F00D3B579 /* SelectFromGalleryModuleInteractor.swift in Sources */,
@@ -7128,7 +7121,6 @@
 				C231856A2EC648F700DD1ABE /* BackupSetPasswordView.swift in Sources */,
 				C207DACD302B4BD3004FC767 /* ImporterRouter.swift in Sources */,
 				C2D6731B25DB2C5D004BD697 /* KeyboardObserver.swift in Sources */,
-				C2E948AB23B64DB1003BDCC1 /* LoadingContentButton.swift in Sources */,
 				C23B899727C287480028FE34 /* NavigationFlowController.swift in Sources */,
 				C295AF842FD1DE9C000DF064 /* MainScreenModalView.swift in Sources */,
 				C20E2DFE2A7C4DE000DB64BB /* AddingServiceFlowController.swift in Sources */,

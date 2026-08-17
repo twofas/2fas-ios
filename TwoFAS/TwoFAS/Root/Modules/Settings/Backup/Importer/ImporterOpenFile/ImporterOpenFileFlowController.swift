@@ -130,7 +130,11 @@ final class ImporterOpenFileHeadlessFlowController: FlowController {
             message: T.Backup.servicesImportedCount(count),
             preferredStyle: .alert
         )
-        alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: T.Commons.tokens, style: .default, handler: { _ in
+            NotificationCenter.default.post(name: .switchToTokens, object: nil)
+        }))
+        alert.addAction(UIAlertAction(title: T.Commons.close, style: .cancel, handler: nil))
+        
         alert.didDisappear = { [weak self] _ in
             self?.parent?.importerCloseOnSucessfulImport()
         }

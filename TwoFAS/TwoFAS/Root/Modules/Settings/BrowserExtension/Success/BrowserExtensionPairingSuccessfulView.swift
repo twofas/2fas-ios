@@ -22,32 +22,21 @@ import Common
 
 struct BrowserExtensionPairingSuccessfulView: View {
     let action: Callback
-
-    private let image = Asset.pairingSuccessful.image
-
+        
     var body: some View {
-        TFInfoView(background: .backgroundsPrimary) {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: image.size.width / 2, height: image.size.height / 2)
-        } texts: {
-            Text(T.Browser.pairingSuccessfulTitle)
-                .textStyle(.title1, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.center)
-            Text(T.Browser.pairingSuccessfulDescription)
-                .textStyle(.body)
-                .foregroundStyle(.labelsSecondary)
-                .multilineTextAlignment(.center)
-        } buttons: {
-            TFButton(
-                T.Commons.continue,
-                variant: .borderedProminent,
-                size: .large,
-                action: action
-            )
-        }
+        TFInfoView(
+            icon: .image(Asset.pairingSuccessful.image, .original),
+            title: T.Browser.pairingSuccessfulTitle,
+            description: T.Browser.pairingSuccessfulDescription,
+            background: .backgroundsPrimary,
+            buttons: {
+                TFButton(
+                    T.Commons.continue,
+                    variant: .borderedProminent,
+                    size: .large,
+                    action: action
+                )
+            })
     }
 }
 

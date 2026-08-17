@@ -82,6 +82,7 @@ struct BackupSetPasswordView: View {
         }
         .dismissKeyboardOnTapOutside()
         .background(.backgroundsPrimaryElevated)
+        .minimumBottomSpacing()
         .navigationTitle(presenter.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

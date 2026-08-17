@@ -42,79 +42,39 @@ import SwiftUI
 /// TFEmptyScreen(image: myImage, title: "Nothing here")
 /// ```
 public struct TFEmptyScreen: View {
-    private enum Icon {
-        case systemImage(String)
-        case image(UIImage)
-    }
-
-    private let icon: Icon
+    private let icon: TFInfoContent.Icon
     private let title: String
+    private let subtitle: String?
     private let description: String?
-
-    // MARK: Init – SF Symbol
-
+    
     public init(
-        systemImage: String,
+        icon: TFInfoContent.Icon,
         title: String,
+        subtitle: String? = nil,
         description: String? = nil
     ) {
-        self.icon = .systemImage(systemImage)
+        self.icon = icon
         self.title = title
-        self.description = description
-    }
-
-    // MARK: Init – UIImage
-
-    public init(
-        image: UIImage,
-        title: String,
-        description: String? = nil
-    ) {
-        self.icon = .image(image)
-        self.title = title
+        self.subtitle = subtitle
         self.description = description
     }
 
     public var body: some View {
         AdaptiveReadableContainer {
-            VStack(spacing: .M) {
+            VStack(spacing: .zero) {
                 Spacer()
 
-                iconView
-                    .foregroundStyle(.accentsBrand)
-                    .padding(.bottom, .M)
-
-                Text(title)
-                    .textStyle(.headline)
-                    .foregroundStyle(.labelsPrimary)
-                    .multilineTextAlignment(.center)
-
-                if let description, !description.isEmpty {
-                    Text(description)
-                        .textStyle(.callout)
-                        .foregroundStyle(.labelsSecondary)
-                        .multilineTextAlignment(.center)
-                }
+                TFInfoContent(
+                    icon: icon,
+                    title: title,
+                    subtitle: subtitle,
+                    description: description
+                )
 
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    @ViewBuilder
-    private var iconView: some View {
-        switch icon {
-        case let .systemImage(name):
-            Image(systemName: name)
-                .textStyle(.iconLarge)
-        case let .image(image):
-            Image(uiImage: image)
-                .renderingMode(.template)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 41, height: 41)
-        }
     }
 }

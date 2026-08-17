@@ -396,6 +396,10 @@
 		C25ECA7F30056E5300D46587 /* TrashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25ECA7E30056E5300D46587 /* TrashView.swift */; };
 		C25ECA813005825900D46587 /* TFInstructionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25ECA803005825900D46587 /* TFInstructionCard.swift */; };
 		C25ECA823005825900D46587 /* TFInstructionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25ECA803005825900D46587 /* TFInstructionCard.swift */; };
+		C25EE7303033828C00068C45 /* TFInfoContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25EE72F3033827600068C45 /* TFInfoContent.swift */; };
+		C25EE7313033828C00068C45 /* TFInfoContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25EE72F3033827600068C45 /* TFInfoContent.swift */; };
+		C25EE7333033B43500068C45 /* MinimumBottomSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25EE7323033B43500068C45 /* MinimumBottomSpacing.swift */; };
+		C25EE7343033B43500068C45 /* MinimumBottomSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25EE7323033B43500068C45 /* MinimumBottomSpacing.swift */; };
 		C25F4FDB2622207F008F7755 /* TokensViewEmptySearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25F4FDA2622207F008F7755 /* TokensViewEmptySearchScreen.swift */; };
 		C260DCC22BC885F1007807CC /* ServiceCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C260DCC12BC885F1007807CC /* ServiceCellView.swift */; };
 		C260DF4C2F5B07D4009A0357 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C260DF4B2F5B07D4009A0357 /* KeychainAccess */; };
@@ -2247,6 +2251,8 @@
 		C25E8993266402AD00A60CE5 /* SectionEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C25ECA7E30056E5300D46587 /* TrashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashView.swift; sourceTree = "<group>"; };
 		C25ECA803005825900D46587 /* TFInstructionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFInstructionCard.swift; sourceTree = "<group>"; };
+		C25EE72F3033827600068C45 /* TFInfoContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFInfoContent.swift; sourceTree = "<group>"; };
+		C25EE7323033B43500068C45 /* MinimumBottomSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimumBottomSpacing.swift; sourceTree = "<group>"; };
 		C25F4FDA2622207F008F7755 /* TokensViewEmptySearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensViewEmptySearchScreen.swift; sourceTree = "<group>"; };
 		C260DCC02BC882AD007807CC /* TwoFASWatch-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TwoFASWatch-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C260DCC12BC885F1007807CC /* ServiceCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCellView.swift; sourceTree = "<group>"; };
@@ -4603,6 +4609,7 @@
 		C295AF8D2FD1F6B2000DF064 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				C25EE72F3033827600068C45 /* TFInfoContent.swift */,
 				C2C357E62FFD781B00287B49 /* ArrowIcon.swift */,
 				C2DCAA7F2FF5549E00FAB19D /* TFInfoView.swift */,
 				C2E5248F2FD33D7400C5E875 /* ServiceIconView.swift */,
@@ -4640,6 +4647,7 @@
 				C2418F693006DCA6008B674A /* TFRowHeight.swift */,
 				C217CDCA303226F5007D88C0 /* TFMenuButton.swift */,
 				C217CDC63032260F007D88C0 /* TFCancelButton.swift */,
+				C25EE7323033B43500068C45 /* MinimumBottomSpacing.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -7696,6 +7704,7 @@
 				C295AFB82FD1F6F8000DF064 /* TintColor.swift in Sources */,
 				C295AFB92FD1F6F8000DF064 /* TextStyle.swift in Sources */,
 				C295AFBA2FD1F6F8000DF064 /* Size.swift in Sources */,
+				C25EE7303033828C00068C45 /* TFInfoContent.swift in Sources */,
 				C295AFBC2FD1F6F8000DF064 /* TFLiquidGlassTextButton.swift in Sources */,
 				C295AFBD2FD1F6F8000DF064 /* TFButton.swift in Sources */,
 				C274CA022BAB8B92008E7212 /* ServiceDefinition.swift in Sources */,
@@ -7706,6 +7715,7 @@
 				C295AFBF2FD20AB6000DF064 /* ServiceIconDefinition.swift in Sources */,
 				C274CA072BAB8B92008E7212 /* CoreDataStack.swift in Sources */,
 				C2150847300429F0008B66E2 /* TFSuccessView.swift in Sources */,
+				C25EE7333033B43500068C45 /* MinimumBottomSpacing.swift in Sources */,
 				C274CA082BAB8B92008E7212 /* VersionDecoded.swift in Sources */,
 				C274CA092BAB8B92008E7212 /* ListStyle.swift in Sources */,
 				C274CA0A2BAB8B92008E7212 /* RefreshTimer.swift in Sources */,
@@ -7719,7 +7729,6 @@
 				C274CA122BAB8B92008E7212 /* AttributedText+Formatting.swift in Sources */,
 				C274CA132BAB8B92008E7212 /* WidgetServiceHandlerType.swift in Sources */,
 				C274CA152BAB8B92008E7212 /* PairedWebExtension.swift in Sources */,
-				C217CDC83032260F007D88C0 /* TFCancelButton.swift in Sources */,
 				C2DFDBDD302C977100EFA0B5 /* TFEmptyScreen.swift in Sources */,
 				C215084A30042CB3008B66E2 /* TFFailureView.swift in Sources */,
 				C2B58A13302BAC8600E0FF36 /* TFRowContent.swift in Sources */,
@@ -7908,6 +7917,7 @@
 				C295AFD12FD20CDB000DF064 /* UIFont+.swift in Sources */,
 				C295AFD22FD20CDB000DF064 /* LabelImageRenderer.swift in Sources */,
 				C295AFD32FD20CDB000DF064 /* LabelShapes.swift in Sources */,
+				C25EE7343033B43500068C45 /* MinimumBottomSpacing.swift in Sources */,
 				C295AFD52FD20CDB000DF064 /* UIColor+.swift in Sources */,
 				C2150848300429F0008B66E2 /* TFSuccessView.swift in Sources */,
 				C295AF9E2FD1F6F8000DF064 /* IntroWelcomeView.swift in Sources */,
@@ -7920,6 +7930,7 @@
 				C295AFA22FD1F6F8000DF064 /* Size.swift in Sources */,
 				C295AFA42FD1F6F8000DF064 /* TFLiquidGlassTextButton.swift in Sources */,
 				C295AFA52FD1F6F8000DF064 /* TFButton.swift in Sources */,
+				C25EE7313033828C00068C45 /* TFInfoContent.swift in Sources */,
 				C215084230030ECB008B66E2 /* TFList.swift in Sources */,
 				C2E53B372B62DDAF008E1E70 /* ServiceData+.swift in Sources */,
 				C2B279C92FEC554800C41919 /* GroupedSectionBackground.swift in Sources */,

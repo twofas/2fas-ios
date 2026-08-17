@@ -24,47 +24,36 @@ struct ExportQuestionView: View {
     @StateObject
     var presenter: ExportQuestionPresenter
     let exportType: ExportQuestionType
-
+    
     @State private var enableSave = false
-
-    private let image = Asset.exportBackup.image
-
+    
     var body: some View {
-        TFInfoView(background: .backgroundsPrimary) {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: image.size.width / 2, height: image.size.height / 2)
-        } texts: {
-            Text(exportType.title)
-                .textStyle(.title1, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.center)
-            Text(exportType.message)
-                .textStyle(.body)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.labelsSecondary)
-        } buttons: {
-            TFToggleRow(T.Exportwarning.toggle, isOn: $enableSave, isElevated: true)
-                .padding(.bottom, .S)
-
-            TFButton(
-                exportType.cta,
-                variant: .borderedProminent,
-                size: .large
-            ) {
-                presenter.handleShowPIN()
-            }
-            .disabled(!enableSave)
-
-            TFButton(
-                T.Commons.cancel,
-                variant: .borderless,
-                size: .large
-            ) {
-                presenter.handleClose()
-            }
-        }
+        TFInfoView(
+            icon: .image(Asset.exportBackup.image, .original),
+            title: exportType.title,
+            description: exportType.message,
+            background: .backgroundsPrimary,
+            buttons: {
+                TFToggleRow(T.Exportwarning.toggle, isOn: $enableSave, isElevated: true)
+                    .padding(.bottom, .S)
+                
+                TFButton(
+                    exportType.cta,
+                    variant: .borderedProminent,
+                    size: .large
+                ) {
+                    presenter.handleShowPIN()
+                }
+                .disabled(!enableSave)
+                
+                TFButton(
+                    T.Commons.cancel,
+                    variant: .borderless,
+                    size: .large
+                ) {
+                    presenter.handleClose()
+                }
+            })
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -85,14 +74,14 @@ private extension ExportQuestionType {
         case .qr: T.Exportwarning.titleQr
         }
     }
-
+    
     var message: String {
         switch self {
         case .file: T.Exportwarning.descriptionFile
         case .qr: T.Exportwarning.descriptionQr
         }
     }
-
+    
     var cta: String {
         switch self {
         case .file: T.Exportwarning.ctaFile

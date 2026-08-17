@@ -32,8 +32,16 @@ struct CameraGoogleAuth: View {
     let action: Callback
     let cancel: Callback
     
+    private var summaryDescription: AttributedString {
+        let first = AttributedString("\(T.Tokens.googleAuthImportSubtitle)\n\n")
+        var middle = AttributedString(T.Tokens.googleAuthOutOfTitle(importedCount, totalCount))
+        middle.inlinePresentationIntent = .stronglyEmphasized
+        let last = AttributedString("\n\n\(T.Tokens.googleAuthImportSubtitleEnd)")
+        return first + middle + last
+    }
+    
     var body: some View {
-        TFInfoView {
+        TFInfoView(icon: .view(view: AnyView(
             HStack(spacing: spacing) {
                 Image(uiImage: image0)
                     .frame(width: image0.size.width, height: image0.size.height)
@@ -41,28 +49,14 @@ struct CameraGoogleAuth: View {
                 Image(uiImage: image2)
                     .frame(width: image2.size.width, height: image2.size.height)
             }
-        } texts: {
-            Text(T.Tokens.googleAuthImport)
-                .textStyle(.title1, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.center)
-            Text(T.Tokens.googleAuthImportSubtitle)
-                .textStyle(.body)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.labelsPrimary)
-            Text(T.Tokens.googleAuthOutOfTitle(importedCount, totalCount))
-                .textStyle(.body, .emphasized)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.labelsPrimary)
-            Text(T.Tokens.googleAuthImportSubtitleEnd)
-                .textStyle(.body)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.labelsPrimary)
-        } buttons: {
+        )),
+        title: T.Tokens.googleAuthImport,
+        attributedDescription: summaryDescription,
+        buttons: {
             TFButton(T.Commons.continue, variant: .borderedProminent, size: .large, action: action)
                 .disabled(importedCount == 0)
             TFCancelButton(T.Commons.cancel, action: cancel)
-        }
+        })
         .navigationBarHidden(true)
     }
 }

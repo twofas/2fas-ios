@@ -57,7 +57,7 @@ struct NewsView: View {
     @ViewBuilder
     private func emptyContent() -> some View {
         TFEmptyScreen(
-            image: Asset.emptyNotifications.image,
+            icon: .image(Asset.emptyNotifications.image, .original),
             title: T.Notifications.noNotifications
         )
     }

@@ -24,44 +24,34 @@ struct BrowserExtensionPairingFailureView: View {
     let action: Callback
     let cancel: Callback
     let contactSupport: Callback
-
-    private let image = Asset.pairingFailed.image
-
+    
     var body: some View {
-        TFInfoView(background: .backgroundsPrimary) {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: image.size.width / 2, height: image.size.height / 2)
-        } texts: {
-            Text(T.Browser.pairingFailedTitle)
-                .textStyle(.title1, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.center)
-            Text(T.Browser.pairingFailedDescription)
-                .textStyle(.body)
-                .foregroundStyle(.labelsSecondary)
-                .multilineTextAlignment(.center)
-            TFButton(
-                T.Browser.contactSupport,
-                variant: .borderless,
-                size: .medium,
-                action: contactSupport
-            )
-        } buttons: {
-            TFButton(
-                T.Commons.continue,
-                variant: .borderedProminent,
-                size: .large,
-                action: action
-            )
-            TFButton(
-                T.Commons.cancel,
-                variant: .borderless,
-                size: .large,
-                action: cancel
-            )
-        }
+        TFInfoView(
+            icon: .image(Asset.pairingFailed.image, .original),
+            title: T.Browser.pairingFailedTitle,
+            description: T.Browser.pairingFailedDescription,
+            background: .backgroundsPrimary,
+            buttons: {
+                TFButton(
+                    T.Browser.contactSupport,
+                    variant: .borderless,
+                    size: .medium,
+                    action: contactSupport
+                )
+                .padding(.bottom, .L)
+                TFButton(
+                    T.Commons.continue,
+                    variant: .borderedProminent,
+                    size: .large,
+                    action: action
+                )
+                TFButton(
+                    T.Commons.cancel,
+                    variant: .borderless,
+                    size: .large,
+                    action: cancel
+                )
+            })
     }
 }
 

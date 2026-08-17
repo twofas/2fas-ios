@@ -130,7 +130,7 @@ struct IntroductionView: View {
                 .animation(.easeInOut, value: position)
             }
         }
-        .ignoresSafeArea(edges: .bottom)
+        .minimumBottomSpacing()
         .sheet(isPresented: $showInfo, content: {
             IntroductionInfoSheetContent()
         })

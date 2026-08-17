@@ -36,44 +36,46 @@ struct IntroductionInfoSheetContent: View {
                         Spacer()
                     }
                     
-                    VStack(spacing: Spacing.XXXL) {
-                        Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90")
-                            .font(.system(size: 40, weight: .semibold))
-                            .foregroundStyle(AppColor.accentsBrand)
-                        
-                        VStack(spacing: Spacing.M) {
-                            Text(T.Introduction.backupIcloudTitle)
-                                .textStyle(.title2, .emphasized)
-                                .foregroundStyle(AppColor.labelsPrimary)
-                                .multilineTextAlignment(.center)
+                    AdaptiveReadableContainer(verticalMargin: .zero) {
+                        VStack(spacing: Spacing.XXXL) {
+                            Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90")
+                                .font(.system(size: 40, weight: .semibold))
+                                .foregroundStyle(AppColor.accentsBrand)
                             
-                            Text(T.Introduction.backupIcloudDescription)
-                                .textStyle(.callout)
-                                .foregroundStyle(AppColor.labelsPrimary)
-                                .multilineTextAlignment(.center)
-                            
-                            Spacer()
-                                .frame(height: Spacing.XXXXXL.rawValue)
-                            
-                            Text(T.Introduction.backupIcloudDescriptionNote)
-                                .textStyle(.footnote)
-                                .foregroundStyle(AppColor.labelsSecondary)
-                                .multilineTextAlignment(.center)
-                                .padding(.horizontal, Spacing.XXXXXL)
-                                .padding(.bottom, .M)
-                            
-                            TFButton(
-                                T.Commons.understood,
-                                variant: .borderedProminent,
-                                size: .large,
-                                applyGlass: true
-                            ) {
-                                dismiss()
+                            VStack(spacing: Spacing.M) {
+                                Text(T.Introduction.backupIcloudTitle)
+                                    .textStyle(.title2, .emphasized)
+                                    .foregroundStyle(AppColor.labelsPrimary)
+                                    .multilineTextAlignment(.center)
+                                
+                                Text(T.Introduction.backupIcloudDescription)
+                                    .textStyle(.callout)
+                                    .foregroundStyle(AppColor.labelsPrimary)
+                                    .multilineTextAlignment(.center)
+                                
+                                Spacer()
+                                    .frame(height: Spacing.XXXXXL.rawValue)
+                                
+                                Text(T.Introduction.backupIcloudDescriptionNote)
+                                    .textStyle(.footnote)
+                                    .foregroundStyle(AppColor.labelsSecondary)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal, Spacing.XXXXXL)
+                                    .padding(.bottom, .M)
+                                
+                                TFButton(
+                                    T.Commons.understood,
+                                    variant: .borderedProminent,
+                                    size: .large,
+                                    applyGlass: true
+                                ) {
+                                    dismiss()
+                                }
                             }
                         }
                     }
                 }
-                .padding(.XL)
+                .padding(.vertical, .XL)
             }
             .scrollContentBackground(.hidden)
             .scrollDisabled(true)

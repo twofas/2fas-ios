@@ -97,5 +97,6 @@ struct ImporterEnterPasswordView: View {
             }
         }
         .dismissKeyboardOnTapOutside()
+        .minimumBottomSpacing()
     }
 }

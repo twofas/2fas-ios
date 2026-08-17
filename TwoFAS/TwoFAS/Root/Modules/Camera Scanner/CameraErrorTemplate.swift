@@ -31,20 +31,11 @@ struct CameraErrorTemplate: View {
     let cancelTitle: String?
     
     var body: some View {
-        TFInfoView {
-            Image(uiImage: image)
-                .frame(width: imageSize.width, height: imageSize.height)
-        } texts: {
-            Text(title)
-                .textStyle(.title1, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.center)
-            Text(subtitle)
-                .textStyle(.body)
-                .minimumScaleFactor(0.5)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.labelsPrimary)
-        } buttons: {
+        TFInfoView(
+            icon: .image(image, .template),
+            title: title,
+            description: subtitle,
+            buttons: {
             let actionTitleString: String = {
                 if let actionTitle {
                     return actionTitle
@@ -54,11 +45,11 @@ struct CameraErrorTemplate: View {
             TFButton(actionTitleString, variant: .borderedProminent, size: .large) {
                 action()
             }
-            TFButton(cancelTitle ?? T.Commons.cancel, variant: .borderless, size: .large) {
+            TFCancelButton(cancelTitle ?? T.Commons.cancel) {
                 cancel?()
             }
             .isHidden(cancel == nil, remove: true)
-        }
+        })
         .navigationBarHidden(true)
     }
 }

@@ -24,40 +24,29 @@ struct BackupDeleteView: View {
     let action: Callback
     let cancel: Callback
     
-    @State private var confirmed: Bool = false
-    
-    private let image = Asset.backupDeleted.image
+    @State
+    private var confirmed: Bool = false
     
     var body: some View {
         NavigationStack {
-            TFInfoView {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: image.size.width / 2, height: image.size.height / 2)
-            } texts: {
-                Text(T.Backup.delete2fasBackup)
-                    .textStyle(.title1, .emphasized)
-                    .foregroundStyle(.labelsPrimary)
-                    .multilineTextAlignment(.center)
-                Text(T.Backup.warningIntroduction)
-                    .textStyle(.body)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(.labelsSecondary)
-            } buttons: {
-                TFToggleRow(T.Backup.deleteTitle, isOn: $confirmed, isElevated: true)
-                    .padding(.bottom, .S)
-                
-                TFButton(
-                    T.Commons.delete,
-                    variant: .borderedProminent,
-                    size: .large,
-                    action: action
-                )
-                .disabled(!confirmed)
-                
-                TFCancelButton(T.Commons.cancel, action: cancel)
-            }
+            TFInfoView(
+                icon: .image(Asset.backupDeleted.image, .original),
+                title: T.Backup.delete2fasBackup,
+                description: T.Backup.warningIntroduction,
+                buttons: {
+                    TFToggleRow(T.Backup.deleteTitle, isOn: $confirmed, isElevated: true)
+                        .padding(.bottom, .S)
+                    
+                    TFButton(
+                        T.Commons.delete,
+                        variant: .borderedProminent,
+                        size: .large,
+                        action: action
+                    )
+                    .disabled(!confirmed)
+                    
+                    TFCancelButton(T.Commons.cancel, action: cancel)
+                })
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
@@ -69,4 +58,8 @@ struct BackupDeleteView: View {
             }
         }
     }
+}
+
+#Preview {
+    BackupDeleteView(action: {}, cancel: {})
 }

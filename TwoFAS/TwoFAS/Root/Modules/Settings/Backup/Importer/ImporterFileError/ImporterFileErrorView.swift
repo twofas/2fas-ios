@@ -23,33 +23,25 @@ import Common
 struct ImporterFileErrorView: View {
     let fileError: ImporterOpenFileError
     let action: Callback
-
-    private let image = Asset.fileError.image
-
-    var body: some View {
-        TFInfoView {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: image.size.width / 2, height: image.size.height / 2)
-        } texts: {
-            Text(title)
-                .textStyle(.title1, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.center)
-            Text(content)
-                .textStyle(.body)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.labelsSecondary)
-            if let reason {
-                Text(reason)
-                    .textStyle(.footnote, .regular, .tight)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(.labelsTertiary)
-            }
-        } buttons: {
-            TFButton(T.Commons.close, variant: .borderedProminent, size: .large, action: action)
+    
+    private var attributedDescription: AttributedString {
+        let content = AttributedString(content)
+        if let reason {
+            var reasonText = AttributedString("\n\n\(reason)")
+            reasonText.inlinePresentationIntent = .stronglyEmphasized
+            return content + reasonText
         }
+        return content
+    }
+    
+    var body: some View {
+        TFInfoView(
+            icon: .image(Asset.fileError.image, .original),
+            title: title,
+            attributedDescription: attributedDescription,
+            buttons: {
+                TFButton(T.Commons.close, variant: .borderedProminent, size: .large, action: action)
+            })
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -62,14 +54,14 @@ struct ImporterFileErrorView: View {
             }
         }
     }
-
+    
     private var title: String {
         switch fileError {
         case .noNewServices: return T.Backup.noNewServices
         default: return T.Backup.fileError
         }
     }
-
+    
     private var content: String {
         switch fileError {
         case .noNewServices: return T.Backup.noNewServicesError
@@ -77,11 +69,15 @@ struct ImporterFileErrorView: View {
         case .cantReadFile: return T.Backup.cantReadFileError
         }
     }
-
+    
     private var reason: String? {
         if case .cantReadFile(let reason) = fileError {
             return reason
         }
         return nil
     }
+}
+
+#Preview {
+    ImporterFileErrorView(fileError: .cantReadFile(reason: "File is incorrect"), action: {})
 }

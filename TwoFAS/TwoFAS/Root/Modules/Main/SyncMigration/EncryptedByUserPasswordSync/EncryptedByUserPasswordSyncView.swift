@@ -103,6 +103,7 @@ struct EncryptedByUserPasswordSyncView: View {
                 .frame(maxHeight: .infinity)
             }
             .dismissKeyboardOnTapOutside()
+            .minimumBottomSpacing()
             .background(.backgroundsPrimaryElevated)
             .navigationTitle(presenter.title)
             .navigationBarTitleDisplayMode(.inline)

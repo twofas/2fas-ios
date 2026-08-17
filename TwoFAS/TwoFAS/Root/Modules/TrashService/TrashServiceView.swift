@@ -35,23 +35,12 @@ struct TrashServiceView: View {
                 }
 
                 VStack(spacing: .XXXL) {
-                    Image(uiImage: Asset.trashIcon.image)
-                        .renderingMode(.original)
-                        .accessibilityHidden(true)
-
-                    VStack(spacing: .M) {
-                        Text("\(T.Tokens.deleteToken) \(presenter.serviceName)")
-                            .textStyle(.title2, .emphasized)
-                            .foregroundStyle(.labelsPrimary)
-                            .multilineTextAlignment(.center)
-                            .fixedSize(horizontal: false, vertical: true)
-
-                        Text(T.Tokens.signInNotPossibleTitle(presenter.serviceName, presenter.serviceName))
-                            .textStyle(.callout)
-                            .foregroundStyle(.labelsPrimary)
-                            .multilineTextAlignment(.center)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
+                    TFInfoContent(
+                        icon: .image(Asset.trashIcon.image, .original),
+                        title: "\(T.Tokens.deleteToken) \(presenter.serviceName)",
+                        subtitle: nil,
+                        description: T.Tokens.signInNotPossibleTitle(presenter.serviceName, presenter.serviceName)
+                    )
                 }
                 .padding(.top, .M)
 
@@ -67,20 +56,13 @@ struct TrashServiceView: View {
                     ) {
                         presenter.handleTrashing()
                     }
-
-                    TFButton(
-                        T.Commons.cancel,
-                        variant: .borderlessNeutral,
-                        size: .large
-                    ) {
-                        presenter.handleCancel()
-                    }
+                    
+                    TFCancelButton(T.Commons.cancel, action: presenter.handleCancel)
                 }
             }
             .frame(maxWidth: Theme.Metrics.modalPreferredWidth)
             .padding(.horizontal, .XL)
             .padding(.top, .XL)
-            .padding(.bottom, .XL)
             .onGeometryChange(for: CGFloat.self) { proxy in
                 proxy.size.height
             } action: { height in
@@ -89,5 +71,6 @@ struct TrashServiceView: View {
         }
         .scrollContentBackground(.hidden)
         .scrollDisabled(true)
+        .minimumBottomSpacing()
     }
 }

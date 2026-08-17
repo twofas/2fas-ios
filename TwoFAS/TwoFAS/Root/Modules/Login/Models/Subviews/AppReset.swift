@@ -25,53 +25,53 @@ struct AppReset: View {
     private var dismiss
     
     var body: some View {
-        ZStack {
+        NavigationStack {
             VStack(spacing: 0) {
-                HStack {
-                    TFLiquidGlassSymbolButton(symbol: .close) { dismiss() }
-                    Spacer()
+                Spacer()
+                    .frame(maxHeight: .infinity)
+                
+                AdaptiveReadableContainer {
+                    TFInfoContent(
+                        icon: .view(view: AnyView(
+                            BorderShield(showDeleteIcon: true)
+                                .padding(.bottom, .M)
+                        )),
+                        title: T.Restore.Reset.title,
+                        description: T.Restore.resetPinTitle
+                    )
                 }
-                .frame(alignment: .top)
                 
                 Spacer()
                     .frame(maxHeight: .infinity)
                 
-                VStack(spacing: .XXXL) {
-                    infoFrame
-                    
-                    TFButton(
-                        T.Commons.dismiss,
-                        variant: .borderedProminent,
-                        size: .large,
-                        applyGlass: true
-                    ) {
-                        dismiss()
+                AdaptiveReadableContainer {
+                    VStack(spacing: .XXXL) {
+                        infoFrame
+                        
+                        TFButton(
+                            T.Commons.dismiss,
+                            variant: .borderedProminent,
+                            size: .large,
+                            applyGlass: true
+                        ) {
+                            dismiss()
+                        }
                     }
                 }
                 .frame(alignment: .bottom)
             }
-            
-            VStack(spacing: 0) {
-                VStack(spacing: .XXXL) {
-                    BorderShield(showDeleteIcon: true)
-                    VStack(spacing: .M) {
-                        Text(T.Restore.Reset.title)
-                            .textStyle(.title2, .emphasized)
-                            .foregroundStyle(AppColor.labelsPrimary)
-
-                        Text(T.Restore.resetPinTitle)
-                            .textStyle(.callout)
-                            .multilineTextAlignment(.center)
-                            .foregroundStyle(AppColor.labelsPrimary)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
                     }
                 }
-                .frame(maxWidth: .infinity)
-
-                Spacer()
-                    .containerRelativeFrame(.vertical) { size, _ in size * 0.3 }
             }
         }
-        .padding(.XL)
+        .background(.backgroundsPrimaryElevated)
+        .minimumBottomSpacing()
         .presentationDetents([.large])
         .presentationCornerRadius(TFCornerRadius.large.rawValue)
         .presentationDragIndicator(.hidden)
@@ -86,13 +86,14 @@ struct AppReset: View {
             
             Text(T.Commons.warning)
                 .textStyle(.headline)
-                    .foregroundStyle(AppColor.labelsPrimary)
+                .foregroundStyle(AppColor.labelsPrimary)
             
             Text(T.Restore.backupAdvice)
                 .multilineTextAlignment(.center)
                 .textStyle(.footnote)
                 .foregroundStyle(AppColor.labelsPrimary)
                 .padding(.horizontal, .XL)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .frame(maxWidth: .infinity)
         .padding(.XL)

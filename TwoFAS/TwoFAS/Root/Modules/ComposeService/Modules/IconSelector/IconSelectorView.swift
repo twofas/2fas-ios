@@ -56,7 +56,7 @@ struct IconSelectorView: View {
     @ViewBuilder
     private var emptyView: some View {
         TFEmptyScreen(
-            systemImage: "magnifyingglass",
+            icon: .systemImage("magnifyingglass"),
             title: T.Commons.noResults
         )
     }

@@ -28,20 +28,11 @@ struct GuideMenuView: View {
             Spacer()
             
             AdaptiveReadableContainer {
-                VStack(spacing: .XL) {
-                    Image(uiImage: presenter.serviceIcon)
-                        .accessibilityHidden(true)
-                    VStack(spacing: .M) {
-                        Text(verbatim: presenter.serviceName)
-                            .textStyle(.title1, .emphasized)
-                            .foregroundStyle(.labelsPrimary)
-                            .accessibilityAddTraits(.isHeader)
-                        Text(verbatim: presenter.header)
-                            .textStyle(.callout)
-                            .multilineTextAlignment(.center)
-                            .foregroundStyle(.labelsSecondary)
-                    }
-                }
+                TFInfoContent(
+                    icon: .image(presenter.serviceIcon, .original),
+                    title: presenter.serviceName,
+                    description: presenter.header
+                )
             }
             
             Spacer()
@@ -56,6 +47,7 @@ struct GuideMenuView: View {
                 }
             }
         }
+        .minimumBottomSpacing()
         .navigationTitle(T.Guides.guideTitle(presenter.serviceName))
         .navigationBarTitleDisplayMode(.inline)
     }

@@ -83,6 +83,7 @@ struct GuidePagesView: View {
                 }
             }
         }
+        .minimumBottomSpacing()
         .navigationTitle(T.Guides.guideTitle(presenter.serviceName))
         .navigationBarTitleDisplayMode(.inline)
     }

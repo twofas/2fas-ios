@@ -23,40 +23,31 @@ import Common
 struct ImporterPreimportSummaryView: View {
     @Bindable
     var presenter: ImporterPreimportSummaryPresenter
-
+    
+    private var attributedDescription: AttributedString {
+        let first = AttributedString("\(presenter.subtitle)\n\n")
+        var middle = AttributedString(secondaryText)
+        middle.inlinePresentationIntent = .stronglyEmphasized
+        let last = AttributedString("\n\n\(tertiaryText)")
+        return first + middle + last
+    }
+    
     var body: some View {
-        TFInfoView {
+        TFInfoView(icon: {
             if let icon = presenter.additionalIcon {
-                HStack(spacing: .XL) {
-                    Image(uiImage: icon)
-                    ArrowIcon()
-                    Image(uiImage: Asset.gaImport2.image)
-                }
-            } else {
-                let image = Asset.importBackup.image
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: image.size.width / 2, height: image.size.height / 2)
+                return .view(view: AnyView(
+                    HStack(spacing: .XL) {
+                        Image(uiImage: icon)
+                        ArrowIcon()
+                        Image(uiImage: Asset.gaImport2.image)
+                    }
+                ))
             }
-        } texts: {
-            Text(presenter.title)
-                .textStyle(.title1, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.center)
-            Text(presenter.subtitle)
-                .textStyle(.body)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.labelsSecondary)
-            Text(secondaryText)
-                .textStyle(.body, .emphasized)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.labelsPrimary)
-            Text(tertiaryText)
-                .textStyle(.body)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.labelsSecondary)
-        } buttons: {
+            return .image(Asset.importBackup.image, .original)
+        }(),
+                   title: presenter.title,
+                   attributedDescription: attributedDescription,
+                   buttons: {
             if presenter.isImporting {
                 ProgressView()
                     .padding(.vertical, .M)
@@ -69,12 +60,12 @@ struct ImporterPreimportSummaryView: View {
                     presenter.handleImport()
                 }
                 .disabled(presenter.countNew == 0)
-
+                
                 TFCancelButton(T.Commons.cancel) {
                     presenter.handleCancel()
                 }
             }
-        }
+        })
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -87,14 +78,14 @@ struct ImporterPreimportSummaryView: View {
             }
         }
     }
-
+    
     private var secondaryText: String {
         if presenter.isBackupFile {
             return T.Backup.newServices(presenter.countNew)
         }
         return T.Tokens.googleAuthOutOfTitle(presenter.countNew, presenter.countTotal)
     }
-
+    
     private var tertiaryText: String {
         if presenter.isBackupFile {
             return T.Backup.servicesMergeTitle

@@ -22,36 +22,28 @@ import Common
 
 struct SelectFromGalleryAdvice: View {
     let action: Callback
-
-    private let image = Asset.selectFromGalleryAdviceIcon.image
+    
+    private var adviceDescription: AttributedString {
+        let first = AttributedString("\(T.Tokens.galleryAdviceContentFirst)")
+        var middle = AttributedString(T.Tokens.galleryAdviceContentMiddleBold)
+        middle.inlinePresentationIntent = .stronglyEmphasized
+        let last = AttributedString("\(T.Tokens.galleryAdviceContentLast)")
+        return first + middle + last
+    }
 
     var body: some View {
-        TFInfoView {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: image.size.width, height: image.size.height)
-        } texts: {
-            Text(T.Tokens.galleryAdviceTitle)
-                .textStyle(.title1, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.center)
-            (
-                Text(T.Tokens.galleryAdviceContentFirst)
-                + Text(T.Tokens.galleryAdviceContentMiddleBold).fontWeight(.semibold)
-                + Text(T.Tokens.galleryAdviceContentLast)
-            )
-            .textStyle(.body)
-            .foregroundStyle(.labelsSecondary)
-            .multilineTextAlignment(.center)
-        } buttons: {
-            TFButton(
-                T.Commons.gotIt,
-                variant: .borderedProminent,
-                size: .large,
-                action: action
-            )
-        }
+        TFInfoView(
+            icon: .image(Asset.selectFromGalleryAdviceIcon.image, .original),
+            title: T.Tokens.galleryAdviceTitle,
+            attributedDescription: adviceDescription,
+            buttons: {
+                TFButton(
+                    T.Commons.gotIt,
+                    variant: .borderedProminent,
+                    size: .large,
+                    action: action
+                )
+            })
         .navigationBarHidden(true)
     }
 }

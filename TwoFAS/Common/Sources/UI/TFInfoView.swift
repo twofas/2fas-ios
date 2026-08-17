@@ -19,21 +19,30 @@
 
 import SwiftUI
 
-public struct TFInfoView<VImage: View, VTexts: View, VButtons: View>: View {
+public struct TFInfoView<VButtons: View>: View {
     private let background: AppColor
-    private let image: VImage
-    private let texts: VTexts
+    private let icon: TFInfoContent.Icon
+    private let title: String
+    private let subtitle: String?
+    private let description: String?
+    private let attributedDescription: AttributedString?
     private let buttons: VButtons
 
     public init(
+        icon: TFInfoContent.Icon,
+        title: String,
+        subtitle: String? = nil,
+        description: String? = nil,
+        attributedDescription: AttributedString? = nil,
         background: AppColor = .backgroundsPrimaryElevated,
-        @ViewBuilder image: () -> VImage,
-        @ViewBuilder texts: () -> VTexts,
         @ViewBuilder buttons: () -> VButtons
     ) {
+        self.icon = icon
+        self.title = title
+        self.subtitle = subtitle
+        self.description = description
+        self.attributedDescription = attributedDescription
         self.background = background
-        self.image = image()
-        self.texts = texts()
         self.buttons = buttons()
     }
 
@@ -42,13 +51,13 @@ public struct TFInfoView<VImage: View, VTexts: View, VButtons: View>: View {
             VStack(alignment: .center) {
                 Spacer()
 
-                VStack(spacing: .XL) {
-                    image
-
-                    VStack(spacing: .M) {
-                        texts
-                    }
-                }
+                TFInfoContent(
+                    icon: icon,
+                    title: title,
+                    subtitle: subtitle,
+                    description: description,
+                    attributedDescription: attributedDescription
+                )
 
                 Spacer()
 
@@ -59,5 +68,6 @@ public struct TFInfoView<VImage: View, VTexts: View, VButtons: View>: View {
             }
         }
         .background(background)
+        .minimumBottomSpacing()
     }
 }

@@ -23,41 +23,30 @@ import Common
 struct DeleteServiceView: View {
     let action: Callback
     let cancel: Callback
-
-    @State private var confirmed: Bool = false
-
-    private let image = Asset.deleteForeverIcon.image
-
+    
+    @State
+    private var confirmed: Bool = false
+        
     var body: some View {
         NavigationStack {
-            TFInfoView {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: image.size.width / 2, height: image.size.height / 2)
-            } texts: {
-                Text(T.Commons.warning.uppercased())
-                    .textStyle(.title1, .emphasized)
-                    .foregroundStyle(.labelsPrimary)
-                    .multilineTextAlignment(.center)
-                Text(T.Tokens.tokenNotPossibleToRestore)
-                    .textStyle(.body)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(.labelsSecondary)
-            } buttons: {
-                TFToggleRow(T.Tokens.iWantToDeleteThisToken, isOn: $confirmed, isElevated: true)
-                    .padding(.bottom, .S)
-                
-                TFButton(
-                    T.Tokens.removeItForever,
-                    variant: .borderedProminent,
-                    size: .large,
-                    action: action
-                )
-                .disabled(!confirmed)
-                
-                TFCancelButton(T.Commons.cancel, action: cancel)
-            }
+            TFInfoView(
+                icon: .image(Asset.deleteForeverIcon.image, .original),
+                title: T.Commons.warning.uppercased(),
+                description: T.Tokens.tokenNotPossibleToRestore,
+                buttons: {
+                    TFToggleRow(T.Tokens.iWantToDeleteThisToken, isOn: $confirmed, isElevated: true)
+                        .padding(.bottom, .S)
+                    
+                    TFButton(
+                        T.Tokens.removeItForever,
+                        variant: .borderedProminent,
+                        size: .large,
+                        action: action
+                    )
+                    .disabled(!confirmed)
+                    
+                    TFCancelButton(T.Commons.cancel, action: cancel)
+                })
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
@@ -69,4 +58,8 @@ struct DeleteServiceView: View {
             }
         }
     }
+}
+
+#Preview {
+    DeleteServiceView(action: {}, cancel: {})
 }

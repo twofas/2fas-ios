@@ -42,7 +42,7 @@ struct TrashView: View {
 
     private var emptyState: some View {
         TFEmptyScreen(
-            systemImage: "trash.fill",
+            icon: .systemImage("trash.fill"),
             title: T.Settings.trashIsEmpty
         )
     }

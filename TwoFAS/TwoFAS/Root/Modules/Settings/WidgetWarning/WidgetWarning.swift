@@ -21,30 +21,19 @@ import SwiftUI
 import Common
 
 struct WidgetWarning: View {
-    private let icon = Asset.widgetWarningIcon.image
-
     let action: Callback
     let cancel: Callback
-
+    
     var body: some View {
         NavigationStack {
-            TFInfoView {
-                Image(uiImage: icon)
-                    .resizable()
-                    .frame(width: icon.size.width / 2.0, height: icon.size.height / 2.0)
-            } texts: {
-                Text("\(T.Commons.warning.uppercased())!")
-                    .textStyle(.title1, .emphasized)
-                    .foregroundStyle(.labelsPrimary)
-                    .multilineTextAlignment(.center)
-                Text(T.Settings.widgetsTitle)
-                    .textStyle(.body)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(.labelsPrimary)
-            } buttons: {
-                TFButton(T.Commons.continue, variant: .borderedProminent, size: .large, action: action)
-                TFCancelButton(T.Commons.cancel, action: cancel)
-            }
+            TFInfoView(
+                icon: .image(Asset.widgetWarningIcon.image, .original),
+                title: "\(T.Commons.warning.uppercased())!",
+                description: T.Settings.widgetsTitle,
+                buttons: {
+                    TFButton(T.Commons.continue, variant: .borderedProminent, size: .large, action: action)
+                    TFCancelButton(T.Commons.cancel, action: cancel)
+                })
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -75,4 +64,8 @@ struct WidgetWarning_Previews: PreviewProvider {
             .previewDevice("iPhone 13 Pro Max")
         }
     }
+}
+
+#Preview {
+    WidgetWarning(action: {}, cancel: {})
 }

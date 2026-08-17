@@ -36,23 +36,12 @@ struct ExternalImportInstructionsView: View {
     private let image2 = Asset.gaImport2.image
 
     var body: some View {
-        TFInfoView(background: .backgroundsPrimary) {
-            HStack(spacing: .XL) {
-                sourceLogo
-                ArrowIcon()
-                Image(uiImage: image2)
-                    .frame(width: image2.size.width, height: image2.size.height)
-            }
-        } texts: {
-            Text(sourceName)
-                .textStyle(.title1, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.center)
-            Text(info)
-                .textStyle(.body)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.labelsPrimary)
-        } buttons: {
+        TFInfoView(
+            icon: .view(view: AnyView(logos)),
+            title: sourceName,
+            description: info,
+            background: .backgroundsPrimary,
+            buttons: {
             TFButton(actionName, variant: .borderedProminent, size: .large, action: action)
 
             if let secondaryAction, let secondaryActionName {
@@ -61,7 +50,7 @@ struct ExternalImportInstructionsView: View {
 
             TFCancelButton(T.Commons.cancel, action: close)
                 .padding(.bottom, .XL)
-        }
+        })
         .navigationTitle(sourceName)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -72,4 +61,27 @@ struct ExternalImportInstructionsView: View {
             }
         }
     }
+    
+    @ViewBuilder
+    private var logos: some View {
+        HStack(spacing: .XL) {
+            sourceLogo
+            ArrowIcon()
+            Image(uiImage: image2)
+                .frame(width: image2.size.width, height: image2.size.height)
+        }
+    }
+}
+
+#Preview {
+    ExternalImportInstructionsView(
+        sourceLogo: AnyView(EmptyView()),
+        sourceName: "Source",
+        info: "Info",
+        action: {},
+        actionName: "Call me!",
+        secondaryActionName: "Secondary action!",
+        secondaryAction: {},
+        close: {}
+    )
 }

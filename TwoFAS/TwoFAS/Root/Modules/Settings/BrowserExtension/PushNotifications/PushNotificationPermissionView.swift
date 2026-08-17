@@ -22,32 +22,21 @@ import Common
 
 struct PushNotificationPermissionView: View {
     let action: Callback
-
-    private let image = Asset.permissionsPushNotifications.image
-
+    
     var body: some View {
-        TFInfoView(background: .backgroundsPrimary) {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: image.size.width / 2, height: image.size.height / 2)
-        } texts: {
-            Text(T.Browser.pushNotificationsTitle)
-                .textStyle(.title1, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.center)
-            Text(T.Browser.pushNotificationsContent)
-                .textStyle(.body)
-                .foregroundStyle(.labelsSecondary)
-                .multilineTextAlignment(.center)
-        } buttons: {
-            TFButton(
-                T.Commons.continue,
-                variant: .borderedProminent,
-                size: .large,
-                action: action
-            )
-        }
+        TFInfoView(
+            icon: .image(Asset.permissionsPushNotifications.image, .original),
+            title: T.Browser.pushNotificationsTitle,
+            description: T.Browser.pushNotificationsContent,
+            background: .backgroundsPrimary,
+            buttons: {
+                TFButton(
+                    T.Commons.continue,
+                    variant: .borderedProminent,
+                    size: .large,
+                    action: action
+                )
+            })
     }
 }
 

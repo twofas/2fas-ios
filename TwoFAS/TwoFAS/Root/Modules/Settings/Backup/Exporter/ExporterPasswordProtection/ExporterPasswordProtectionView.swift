@@ -123,5 +123,6 @@ struct ExporterPasswordProtectionView: View {
             }
         }
         .dismissKeyboardOnTapOutside()
+        .minimumBottomSpacing()
     }
 }

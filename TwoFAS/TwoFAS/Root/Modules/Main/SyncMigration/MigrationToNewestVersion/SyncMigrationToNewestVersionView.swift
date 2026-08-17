@@ -21,33 +21,17 @@ import SwiftUI
 import Common
 
 struct SyncMigrationToNewestVersionView: View {
-    private let image = Asset.cloudBackup.image
-    
     @ObservedObject
     var presenter: SyncMigrationToNewestVersionPresenter
     
     var body: some View {
         NavigationStack {
-            TFInfoView {
-            Image(uiImage: image)
-                .renderingMode(.original)
-                .frame(width: image.size.width, height: image.size.height)
-                .scaleEffect(0.75)
-        } texts: {
-            Text(verbatim: T.Backup.migrationTitle)
-                .textStyle(.title1, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.center)
-            Text(verbatim: T.Backup.migrationSubtitle)
-                .textStyle(.title2)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.accentsBrand)
-            Text(verbatim: T.Backup.migrationDescription)
-                .textStyle(.body)
-                .minimumScaleFactor(0.5)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.labelsPrimary)
-        } buttons: {
+            TFInfoView(
+                icon: .image(Asset.cloudBackup.image, .original),
+                title: T.Backup.migrationTitle,
+                subtitle: T.Backup.migrationSubtitle,
+                description: T.Backup.migrationDescription,
+                buttons: {
             if presenter.isMigrating {
                 ProgressView()
                     .progressViewStyle(.circular)
@@ -66,7 +50,7 @@ struct SyncMigrationToNewestVersionView: View {
                     }
                 }
             }
-        }
+        })
             .navigationBarTitleDisplayMode(.inline)
         }
     }

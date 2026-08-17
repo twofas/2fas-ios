@@ -21,43 +21,35 @@ import SwiftUI
 import Common
 
 struct AskForAuthView: View {
-    private let image = Asset.authRequestQuestion.image
-    
     let action: Callback
     let cancel: Callback
     let domain: String
     
+    private var attributedDescription: AttributedString {
+        let first = AttributedString("\(T.Browser._2faTokenRequestContent)")
+        var domainText = AttributedString("\(domain)")
+        domainText.inlinePresentationIntent = .stronglyEmphasized
+        let last = AttributedString("?")
+        return first + domainText + last
+    }
+    
     var body: some View {
-        TFInfoView {
-            Image(uiImage: image)
-                .renderingMode(.original)
-                .frame(width: image.size.width, height: image.size.height)
-                .scaleEffect(0.75)
-        } texts: {
-            Text(T.Browser._2faTokenRequestTitle)
-                .textStyle(.title1, .emphasized)
-                .foregroundStyle(.labelsPrimary)
-                .multilineTextAlignment(.center)
-            Group {
-                Text(T.Browser._2faTokenRequestContent)
-                + Text(domain + "?")
-                    .bold()
-            }
-            .textStyle(.callout)
-            .multilineTextAlignment(.center)
-            .foregroundStyle(.labelsPrimary)
-        } buttons: {
+        TFInfoView(
+            icon: .image(Asset.authRequestQuestion.image, .original),
+            title: T.Browser._2faTokenRequestTitle,
+            attributedDescription: attributedDescription,
+            buttons: {
             TFButton(T.Commons.approve, variant: .bordered, size: .large) {
                 action()
             }
             TFButton(T.Commons.deny, variant: .bordered, size: .large) {
                 cancel()
             }
-        }
+        })
         .navigationBarHidden(true)
     }
 }
 
 #Preview {
-    AskForAuthView(action: {}, cancel: {}, domain: "2fas.com")
+    AskForAuthView(action: {}, cancel: {}, domain: "https://example.com")
 }

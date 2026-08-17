@@ -27,25 +27,13 @@ struct ExporterMainScreenView: View {
     @ObservedObject
     var router: ExporterRouter
 
-    private let image = Asset.exportBackup.image
-
     var body: some View {
         NavigationStack(path: $router.path) {
-            TFInfoView {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: image.size.width / 2, height: image.size.height / 2)
-            } texts: {
-                Text(T.Backup.exportToBackupFile)
-                    .textStyle(.title1, .emphasized)
-                    .foregroundStyle(.labelsPrimary)
-                    .multilineTextAlignment(.center)
-                Text(T.Backup.importFileTitle)
-                    .textStyle(.body)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(.labelsSecondary)
-            } buttons: {
+            TFInfoView(
+                icon: .image(Asset.exportBackup.image, .original),
+                title: T.Backup.exportToBackupFile,
+                description: T.Backup.importFileTitle,
+                buttons: {
                 TFToggleRow(T.Backup.backupFilePasswordTitle, isOn: $presenter.setPassword, isElevated: true)
                     .padding(.bottom, .S)
 
@@ -60,7 +48,7 @@ struct ExporterMainScreenView: View {
                 TFCancelButton(T.Commons.cancel) {
                     presenter.handleClose()
                 }
-            }
+            })
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {

@@ -77,7 +77,7 @@ extension AboutPresenter {
                 )
             ]),
             .init(title: T.Settings.support, cells: [
-                .init(title: "Generate logs", accessory: .noAccessory, action: .sendLogs)
+                .init(title: T.About.generateLogs, accessory: .noAccessory, action: .sendLogs)
             ]),
             .init(
                 title: T.Settings.aboutCrashOptoutTitle,

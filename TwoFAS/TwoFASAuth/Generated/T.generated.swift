@@ -121,8 +121,8 @@ internal enum T {
   internal static let externalimportAegis = T.tr("Localizable", "externalimport_aegis", fallback: "Aegis")
   /// andOTP
   internal static let externalimportAndotp = T.tr("Localizable", "externalimport_andotp", fallback: "andOTP")
-  /// You can import your Tokens to 2FAS from different apps. Choose an app from the list and follow the instructions.
-  internal static let externalimportDescription = T.tr("Localizable", "externalimport_description", fallback: "You can import your Tokens to 2FAS from different apps. Choose an app from the list and follow the instructions.")
+  /// Choose an app from the list and follow the instructions.
+  internal static let externalimportDescription = T.tr("Localizable", "externalimport_description", fallback: "Choose an app from the list and follow the instructions.")
   /// Google Authenticator
   internal static let externalimportGoogleAuthenticator = T.tr("Localizable", "externalimport_google_authenticator", fallback: "Google Authenticator")
   /// LastPass
@@ -1186,14 +1186,14 @@ internal enum T {
   internal enum Restore {
     /// Application restoration
     internal static let applicationRestoration = T.tr("Localizable", "restore__application_restoration", fallback: "Application restoration")
-    /// Be advised that if you do not have a backup and reset the app, you will lose access to all your codes. And therefore, access to all your 2FA-secured accounts.
-    internal static let backupAdvice = T.tr("Localizable", "restore__backup_advice", fallback: "Be advised that if you do not have a backup and reset the app, you will lose access to all your codes. And therefore, access to all your 2FA-secured accounts.")
+    /// If you do not have a backup and reset the app, you will lose access to all your 2FA codes and all secured accounts.
+    internal static let backupAdvice = T.tr("Localizable", "restore__backup_advice", fallback: "If you do not have a backup and reset the app, you will lose access to all your 2FA codes and all secured accounts.")
     /// If you have a backup, take it easy, you'll be able to restore all your codes.
     internal static let backupTitle = T.tr("Localizable", "restore__backup_title", fallback: "If you have a backup, take it easy, you'll be able to restore all your codes.")
     /// How to restore 2FAS app?
     internal static let howToRestore = T.tr("Localizable", "restore__how_to_restore", fallback: "How to restore 2FAS app?")
-    /// If you have forgotten the PIN or want to reset the 2FAS app, you have to reinstall the app.
-    internal static let resetPinTitle = T.tr("Localizable", "restore__reset_Pin_title", fallback: "If you have forgotten the PIN or want to reset the 2FAS app, you have to reinstall the app.")
+    /// If you have forgotten the PIN or want to reset the 2FAS app, you have to reinstall it.
+    internal static let resetPinTitle = T.tr("Localizable", "restore__reset_Pin_title", fallback: "If you have forgotten the PIN or want to reset the 2FAS app, you have to reinstall it.")
     internal enum Reset {
       /// Restoring the app
       internal static let title = T.tr("Localizable", "restore__reset__title", fallback: "Restoring the app")
@@ -1285,8 +1285,8 @@ internal enum T {
     internal static let configureMailServiceTryAgain = T.tr("Localizable", "settings__configure_mail_service_try_again", fallback: "Configure mail service and try again")
     /// Developer Options
     internal static let developer = T.tr("Localizable", "settings__developer", fallback: "Developer Options")
-    /// Display selected services on the Home Screen Widgets.
-    internal static let displaySelectedServices = T.tr("Localizable", "settings__display_selected_services", fallback: "Display selected services on the Home Screen Widgets.")
+    /// Display selected services on widgets.
+    internal static let displaySelectedServices = T.tr("Localizable", "settings__display_selected_services", fallback: "Display selected services on widgets.")
     /// Donate to 2FAS
     internal static let donateTwofas = T.tr("Localizable", "settings__donate_twofas", fallback: "Donate to 2FAS")
     /// Donations
@@ -1297,8 +1297,8 @@ internal enum T {
     internal static let enableCrashlyticsDescription = T.tr("Localizable", "settings__enable_crashlytics_description", fallback: "Send anonymous crash reports to help 2FAS identify and solve issues in the app (app restart required).")
     /// Export QR codes
     internal static let exportOptionsExportQrCodes = T.tr("Localizable", "settings__export_options_export_qr_codes", fallback: "Export QR codes")
-    /// Choose how you would like to export your Tokens. You can export them as an OTPAuth file or as QR codes.
-    internal static let exportOptionsFooter = T.tr("Localizable", "settings__export_options_footer", fallback: "Choose how you would like to export your Tokens. You can export them as an OTPAuth file or as QR codes.")
+    /// Choose how you would like to export your Tokens.
+    internal static let exportOptionsFooter = T.tr("Localizable", "settings__export_options_footer", fallback: "Choose how you would like to export your Tokens.")
     /// Save OTPAuth file
     internal static let exportOptionsSaveFile = T.tr("Localizable", "settings__export_options_save_file", fallback: "Save OTPAuth file")
     /// Your Secret Keys are protected. Please add a PIN or Biometry lock to export them.

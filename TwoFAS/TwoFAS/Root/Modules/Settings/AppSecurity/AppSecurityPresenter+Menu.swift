@@ -100,11 +100,13 @@ extension AppSecurityPresenter {
             }
         }()
 
-        var menu: [AppSecurityMenuSection] = [settings, attemptsSection]
+        var menu: [AppSecurityMenuSection] = [settings]
 
         if let biometry {
             menu.append(biometry)
         }
+        
+        menu.append(attemptsSection)
 
         return menu
     }

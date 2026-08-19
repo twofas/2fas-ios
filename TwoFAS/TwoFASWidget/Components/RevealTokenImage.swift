@@ -17,14 +17,19 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 import SwiftUI
+import Common
 
 struct RevealTokenImage: View {
+    private let size: CGFloat = 40
+    
     var body: some View {
-        Image("eye.slash2")
+        Image(systemName: "eye.fill")
+            .textStyle(.subheadline)
+            .foregroundStyle(.labelsPrimary)
             .background(
                 Circle()
-                    .fill(Color.gray5)
-                    .frame(width: 40, height: 40)
+                    .fill(.fillsTertiary)
+                    .frame(width: size, height: size)
             )
     }
 }

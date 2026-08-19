@@ -73,7 +73,6 @@ struct ExporterPasswordProtectionView: View {
                         }
                         .groupedSectionBackground()
                     }
-                    .padding(.horizontal, .XL)
                 }
             }
             .scrollDismissesKeyboard(.interactively)
@@ -94,11 +93,10 @@ struct ExporterPasswordProtectionView: View {
                         presenter.handleCancel()
                     }
                 }
-                .padding(.horizontal, .XL)
                 .padding(.bottom, .XL)
             }
         }
-        .background(.backgroundsPrimary)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .navigationTitle(T.backupSettingsPasswordSetTitle)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -124,5 +122,6 @@ struct ExporterPasswordProtectionView: View {
         }
         .dismissKeyboardOnTapOutside()
         .minimumBottomSpacing()
+        .background(.backgroundsPrimary)
     }
 }

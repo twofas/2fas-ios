@@ -63,5 +63,6 @@ struct ExporterMainScreenView: View {
                 router.destination(for: route)
             }
         }
+        .background(.backgroundsPrimary)
     }
 }

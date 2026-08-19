@@ -39,5 +39,6 @@ struct ExporterPINView: View {
                 }
             }
         }
+        .background(.backgroundsPrimary)
     }
 }

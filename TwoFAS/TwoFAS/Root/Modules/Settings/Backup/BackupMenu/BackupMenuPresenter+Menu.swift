@@ -21,15 +21,17 @@ import Foundation
 
 extension BackupMenuPresenter {
     func buildMenu() -> [BackupMenuSection] {
-        var footer = "\(T.Backup.sectionDescription)\n\n\(T.Backup.sectionNote)"
-        let state = interactor.iCloudState.description
-        let dateStr: String = {
-            if let date = interactor.syncSuccessDate {
-                return dateFormatter.string(from: date)
-            }
-            return "-"
-        }()
-        footer.append("\n\n\(T.Backup.state) \(state)\n\(T.backupSettingsSyncTitle): \(dateStr)")
+        var footer = "\(T.Backup.sectionDescription)"
+        if interactor.iCloudState != .disabledAvailable {
+            let state = interactor.iCloudState.description
+            let dateStr: String = {
+                if let date = interactor.syncSuccessDate {
+                    return dateFormatter.string(from: date)
+                }
+                return "-"
+            }()
+            footer.append("\n\n\(T.Backup.state) \(state)\n\(T.backupSettingsSyncTitle): \(dateStr)")
+        }
         
         var mainCells: [BackupMenuCell] = [
             .init(

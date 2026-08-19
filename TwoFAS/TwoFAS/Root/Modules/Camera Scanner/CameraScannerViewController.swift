@@ -37,7 +37,7 @@ final class CameraScannerViewController: UIViewController {
     
     private var camera: CameraViewController!
     private var cameraViewModel: CameraViewModel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,7 +47,21 @@ final class CameraScannerViewController: UIViewController {
             name: AVCaptureSession.wasInterruptedNotification,
             object: nil
         )
-        
+
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(appDidEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
+
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(appWillEnterForeground),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+
         camera = CameraViewController()
         cameraViewModel = CameraViewModel(presenter: presenter)
         
@@ -71,16 +85,13 @@ final class CameraScannerViewController: UIViewController {
         presenter.viewDidAppear()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        notificationCenter.removeObserver(self)
-    }
-    
     @objc
     private func cameraStateChanged(notification: Notification) {
         if let reasonKey = notification.userInfo?[AVCaptureSessionInterruptionReasonKey] as? Int,
            let reason = AVCaptureSession.InterruptionReason(rawValue: reasonKey) {
+            if reason == .videoDeviceNotAvailableInBackground {
+                return
+            }
             let str: String = {
                 switch reason {
                 case .videoDeviceInUseByAnotherClient: T.Camera.cameraUsedByOtherAppTitle
@@ -95,6 +106,17 @@ final class CameraScannerViewController: UIViewController {
         }
     }
     
+    @objc
+    private func appDidEnterBackground() {
+        cameraViewModel.stopIfNeeded()
+    }
+
+    @objc
+    private func appWillEnterForeground() {
+        cameraViewModel.initialize()
+        cameraViewModel.startIfPossible()
+    }
+
     deinit {
         notificationCenter.removeObserver(self)
     }

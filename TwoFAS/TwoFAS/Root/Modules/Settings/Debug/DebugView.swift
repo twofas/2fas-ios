@@ -110,7 +110,8 @@ struct DebugView: View {
     // MARK: - Actions
 
     private var allActions: [DebugAction] {
-        [.emptyTrash, .reloadPushToken, .unpairAllBrowsers, .wipeDatabase, .resetApp, .wipeAndReset]
+        [.trashAllServices, .restoreAllServices, .emptyTrash, .reloadPushToken,
+         .unpairAllBrowsers, .wipeDatabase, .resetApp, .wipeAndReset]
     }
 
     @ViewBuilder

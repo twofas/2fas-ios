@@ -59,6 +59,8 @@ final class DebugPresenter {
             case .wipeDatabase: interactor.wipeDatabase()
             case .resetApp: interactor.resetApp()
             case .wipeAndReset: interactor.wipeAndReset()
+            case .trashAllServices: interactor.trashAllServices()
+            case .restoreAllServices: interactor.restoreAllServices()
             case .emptyTrash: interactor.emptyTrash()
             case .reloadPushToken: interactor.reloadPushToken()
             case .unpairAllBrowsers: interactor.unpairAllBrowsers()
@@ -95,12 +97,13 @@ final class DebugPresenter {
         stateSections = interactor.buildStateSections()
     }
 
-    private func run(actionTitle: String, work: @escaping @Sendable () -> Void) {
+    private func run(actionTitle: String, work: @escaping @MainActor () -> Void) {
         isRunning = true
         runningMessage = actionTitle
-        Task.detached(priority: .userInitiated) { [weak self] in
+        Task { @MainActor [weak self] in
+            try? await Task.sleep(nanoseconds: 50_000_000)
             work()
-            await self?.finishRunning()
+            self?.finishRunning()
         }
     }
 
@@ -120,6 +123,10 @@ extension DebugAction {
             "Resetting app…"
         case .wipeAndReset:
             "Wiping + resetting…"
+        case .trashAllServices:
+            "Moving services to trash…"
+        case .restoreAllServices:
+            "Restoring services from trash…"
         case .emptyTrash:
             "Emptying trash…"
         case .reloadPushToken:
@@ -137,7 +144,11 @@ extension DebugAction {
             "Reset app (clear UserDefaults)"
         case .wipeAndReset:
             "Wipe DB + reset app"
-        case .emptyTrash: 
+        case .trashAllServices:
+            "Move all services to trash"
+        case .restoreAllServices:
+            "Restore all services from trash"
+        case .emptyTrash:
             "Empty trash"
         case .reloadPushToken:
             "Reload push token"
@@ -152,9 +163,13 @@ extension DebugAction {
             "Cloud sync will be disabled and ALL services, sections and trash will be permanently removed."
         case .resetApp: 
             "All UserDefaults will be cleared. Restart recommended."
-        case .wipeAndReset: 
+        case .wipeAndReset:
             "Cloud sync will be disabled. All data + user defaults will be permanently removed. Restart recommended."
-        case .emptyTrash: 
+        case .trashAllServices:
+            "All active services will be moved to trash."
+        case .restoreAllServices:
+            "All trashed services will be restored."
+        case .emptyTrash:
             "All trashed services will be permanently removed."
         case .reloadPushToken: 
             "The device will re-register for remote notifications."
@@ -165,8 +180,9 @@ extension DebugAction {
 
     var isDestructive: Bool {
         switch self {
-        case .wipeDatabase, .resetApp, .wipeAndReset, .emptyTrash, .unpairAllBrowsers: return true
-        case .reloadPushToken: return false
+        case .wipeDatabase, .resetApp, .wipeAndReset, .emptyTrash, .unpairAllBrowsers, .trashAllServices:
+            return true
+        case .restoreAllServices, .reloadPushToken: return false
         }
     }
 }

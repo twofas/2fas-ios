@@ -36,6 +36,8 @@ enum DebugAction: Hashable {
     case wipeDatabase
     case resetApp
     case wipeAndReset
+    case trashAllServices
+    case restoreAllServices
     case emptyTrash
     case reloadPushToken
     case unpairAllBrowsers

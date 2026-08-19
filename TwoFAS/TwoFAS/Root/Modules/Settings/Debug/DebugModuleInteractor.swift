@@ -28,6 +28,8 @@ protocol DebugModuleInteracting: AnyObject {
     func wipeDatabase()
     func resetApp()
     func wipeAndReset()
+    func trashAllServices()
+    func restoreAllServices()
     func emptyTrash()
     func reloadPushToken()
     func unpairAllBrowsers()
@@ -94,6 +96,14 @@ extension DebugModuleInteractor: DebugModuleInteracting {
         debugTools.disableCloudBackup()
         debugTools.wipeAllServicesAndSections()
         debugTools.clearAllUserDefaults()
+    }
+
+    func trashAllServices() {
+        debugTools.trashAllServices()
+    }
+
+    func restoreAllServices() {
+        debugTools.restoreAllServices()
     }
 
     func emptyTrash() {

@@ -42,6 +42,8 @@ public protocol DebugToolsInteracting: AnyObject {
     func disableCloudBackup()
     func enableCloudBackup()
     func wipeAllServicesAndSections()
+    func trashAllServices()
+    func restoreAllServices()
     func emptyTrash()
     func clearAllUserDefaults()
     func removeAllBrowserPairings()
@@ -121,6 +123,16 @@ extension DebugToolsInteractor: DebugToolsInteracting {
         mainRepository.listTrashedServices().forEach { mainRepository.deleteService($0) }
         mainRepository.listAllSections().forEach { mainRepository.deleteSection($0) }
         mainRepository.removeAllAuthRequests()
+        mainRepository.saveStorage()
+    }
+
+    func trashAllServices() {
+        mainRepository.listAllNotTrashed().forEach { mainRepository.trashService($0) }
+        mainRepository.saveStorage()
+    }
+
+    func restoreAllServices() {
+        mainRepository.listTrashedServices().forEach { mainRepository.untrashService($0) }
         mainRepository.saveStorage()
     }
 

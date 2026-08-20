@@ -148,6 +148,7 @@ extension RootFlowController: RootFlowControlling {
         loginWindow.endEditing(true)
         loginWindow.isHidden = true
         loginWindow.rootViewController = nil
+        window?.makeKey()
     }
     
     func toDismissKeyboard() {

@@ -25,7 +25,7 @@ import Common
 struct DebugView: View {
     @Bindable
     var presenter: DebugPresenter
-
+    
     var body: some View {
         content
             .background(AppColor.backgroundsPrimary)
@@ -34,7 +34,7 @@ struct DebugView: View {
             .modifier(GenerateAlertModifier(presenter: presenter))
             .overlay { runningOverlay }
     }
-
+    
     @ViewBuilder
     private var content: some View {
         TFListScreen {
@@ -47,7 +47,7 @@ struct DebugView: View {
         .navigationTitle("Debug")
         .navigationBarTitleDisplayMode(.inline)
     }
-
+    
     @ViewBuilder
     private var runningOverlay: some View {
         if presenter.isRunning {
@@ -61,9 +61,9 @@ struct DebugView: View {
             .transition(.opacity)
         }
     }
-
+    
     // MARK: - State
-
+    
     @ViewBuilder
     private var stateSections: some View {
         ForEach(presenter.stateSections) { section in
@@ -77,7 +77,7 @@ struct DebugView: View {
             }
         }
     }
-
+    
     @ViewBuilder
     private func stateRow(_ row: DebugStateRow) -> some View {
         Button {
@@ -101,19 +101,27 @@ struct DebugView: View {
         .buttonStyle(.plain)
         .frame(minHeight: .normal)
     }
-
+    
     private func copyValue(_ value: String) {
         UIPasteboard.general.string = value
         ToastPresenter.shared.presentCopied()
     }
-
+    
     // MARK: - Actions
-
+    
     private var allActions: [DebugAction] {
-        [.trashAllServices, .restoreAllServices, .emptyTrash, .reloadPushToken,
-         .unpairAllBrowsers, .wipeDatabase, .resetApp, .wipeAndReset]
+        [
+            .trashAllServices,
+            .restoreAllServices,
+            .emptyTrash,
+            .reloadPushToken,
+            .unpairAllBrowsers,
+            .wipeDatabase,
+            .resetApp,
+            .wipeAndReset
+        ]
     }
-
+    
     @ViewBuilder
     private var actionsSection: some View {
         TFListSection(title: "Actions") {
@@ -125,7 +133,7 @@ struct DebugView: View {
             }
         }
     }
-
+    
     @ViewBuilder
     private func actionRow(_ action: DebugAction) -> some View {
         Button {
@@ -143,9 +151,9 @@ struct DebugView: View {
         .buttonStyle(.plain)
         .frame(minHeight: .normal)
     }
-
+    
     // MARK: - Generator
-
+    
     @ViewBuilder
     private var generatorSection: some View {
         TFListSection(
@@ -157,7 +165,7 @@ struct DebugView: View {
             countButtonsGrid
         }
     }
-
+    
     @ViewBuilder
     private var distributeToggleRow: some View {
         HStack(spacing: .ML) {
@@ -171,7 +179,7 @@ struct DebugView: View {
         }
         .padding(.vertical, .L)
     }
-
+    
     @ViewBuilder
     private var countButtonsGrid: some View {
         let counts = DebugGenerateCount.allCases
@@ -181,7 +189,7 @@ struct DebugView: View {
             GridItem(.flexible(), spacing: Spacing.M.value),
             GridItem(.flexible(), spacing: Spacing.M.value)
         ]
-
+        
         LazyVGrid(columns: columns, spacing: Spacing.M.value) {
             ForEach(counts) { count in
                 TFButton(
@@ -196,7 +204,7 @@ struct DebugView: View {
         }
         .padding(.vertical, .L)
     }
-
+    
     fileprivate func generateAlertMessage(count: Int) -> String {
         let base = "Cloud sync will be disabled, then \(count) random services will be added."
         if presenter.distributeIntoCategories {
@@ -208,7 +216,7 @@ struct DebugView: View {
 
 private struct ActionAlertModifier: ViewModifier {
     let presenter: DebugPresenter
-
+    
     func body(content: Content) -> some View {
         content.alert(
             presenter.pendingAction?.displayTitle ?? "",
@@ -233,7 +241,7 @@ private struct ActionAlertModifier: ViewModifier {
 
 private struct GenerateAlertModifier: ViewModifier {
     let presenter: DebugPresenter
-
+    
     func body(content: Content) -> some View {
         content.alert(
             "Generate services",
@@ -249,7 +257,7 @@ private struct GenerateAlertModifier: ViewModifier {
             Text(message(for: count))
         }
     }
-
+    
     private func message(for count: Int) -> String {
         let base = "Cloud sync will be disabled, then \(count) random services will be added."
         if presenter.distributeIntoCategories {

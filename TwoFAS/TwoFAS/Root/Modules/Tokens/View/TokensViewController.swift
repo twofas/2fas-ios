@@ -49,7 +49,8 @@ final class TokensViewController: UIViewController {
     private var layout: UICollectionViewCompositionalLayout!
     
     var searchBarAdded = false
-    
+    var pendingSearchFocus = false
+
     let searchController = CommonSearchController()
     
     override func loadView() {
@@ -86,6 +87,11 @@ final class TokensViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
         applyLargeTitleIfNeeded()
         startSafeAreaKeyboardAdjustment()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tryFulfillPendingSearchFocus()
     }
 
     override func willTransition(
@@ -225,8 +231,8 @@ private extension TokensViewController {
         )
         center.addObserver(
             self,
-            selector: #selector(tokensScreenIsVisible),
-            name: .tokensScreenIsVisible,
+            selector: #selector(activeSearchShouldFocus),
+            name: .activeSearchShouldFocus,
             object: nil
         )
         center.addObserver(

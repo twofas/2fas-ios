@@ -43,8 +43,8 @@ protocol TokensViewControlling: AnyObject {
     func enableBounce()
     func disableBounce()
     
-    func showKeyboard()
-    
+    func focusSearchBar()
+
     func copyToken()
     func copyNextToken()
 }
@@ -116,12 +116,23 @@ extension TokensViewController: TokensViewControlling {
         }
     }
     
-    func showKeyboard() {
+    func focusSearchBar() {
+        pendingSearchFocus = true
+        tryFulfillPendingSearchFocus()
+    }
+
+    func tryFulfillPendingSearchFocus() {
+        guard pendingSearchFocus else { return }
         guard UIApplication.shared.applicationState == .active else {
-            Log("TokensViewController - showKeyboard: skipped, app not active")
+            Log("TokensViewController - focusSearchBar: deferred, app not active")
             return
         }
-        guard !searchController.searchBar.isFirstResponder && searchBarAdded else { return }
+        guard viewIfLoaded?.window != nil, searchBarAdded else {
+            Log("TokensViewController - focusSearchBar: deferred, view/search bar not ready")
+            return
+        }
+        pendingSearchFocus = false
+        guard !searchController.searchBar.isFirstResponder else { return }
         searchController.searchBar.becomeFirstResponder()
     }
     
@@ -360,6 +371,7 @@ extension TokensViewController: TokensViewControlling {
         }
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
+        tryFulfillPendingSearchFocus()
     }
     
     func removeSearchBar() {
@@ -375,6 +387,7 @@ extension TokensViewController: TokensViewControlling {
     }
     
     func stopSearch() {
+        pendingSearchFocus = false
         searchController.isActive = false
     }
     
@@ -444,6 +457,7 @@ extension TokensViewController {
     @objc
     func notificationAppDidBecomeActive() {
         presenter.handleAppDidBecomeActive()
+        tryFulfillPendingSearchFocus()
     }
     
     @objc
@@ -452,7 +466,7 @@ extension TokensViewController {
     }
     
     @objc
-    func tokensScreenIsVisible() {
+    func activeSearchShouldFocus() {
         guard viewIfLoaded?.window != nil else { return }
         var modalPresent = false
         var vc: UIViewController? = self
@@ -463,9 +477,9 @@ extension TokensViewController {
             }
             vc = vc?.parent
         } while vc != nil
-        
+
         guard !modalPresent else { return }
-        presenter.handleTokensScreenIsVisible()
+        presenter.handleActiveSearchShouldFocus()
     }
     
     @objc

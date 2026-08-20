@@ -143,13 +143,13 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
 
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(notifyTokensVisible),
+            selector: #selector(notifyAppBecameActive),
             name: .lockScreenIsInactive,
             object: nil
         )
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(notifyTokensVisible),
+            selector: #selector(notifyAppBecameActive),
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
@@ -368,7 +368,6 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
         }
     }
 
-    @objc
     private func notifyTokensVisible() {
         guard selectedTab === tokensTab else { return }
         // The tokens screen may not be loaded yet; a short delay lets it settle
@@ -376,6 +375,15 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
         // event while a modal (e.g. the lock screen) is on top.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             NotificationCenter.default.post(name: .tokensScreenIsVisible, object: nil)
+        }
+    }
+
+    @objc
+    private func notifyAppBecameActive() {
+        guard selectedTab === tokensTab else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            NotificationCenter.default.post(name: .tokensScreenIsVisible, object: nil)
+            NotificationCenter.default.post(name: .activeSearchShouldFocus, object: nil)
         }
     }
 }

@@ -34,6 +34,7 @@ final class TokensPresenter {
     private var changeRequriesTokenRefresh = false
     private var serviceWasCreated: ServiceData?
     private var focusOnService: ServiceData?
+    private var lastActiveSearchFocusDate: Date?
     
     weak var view: TokensViewControlling?
     
@@ -248,10 +249,14 @@ extension TokensPresenter {
         flowController.toHelp()
     }
     
-    func handleTokensScreenIsVisible() {
-        if interactor.isActiveSearchEnabled && showSearchBar {
-            view?.showKeyboard()
+    func handleActiveSearchShouldFocus() {
+        guard interactor.isActiveSearchEnabled, showSearchBar else { return }
+        let now = Date()
+        if let last = lastActiveSearchFocusDate, now.timeIntervalSince(last) < 0.3 {
+            return
         }
+        lastActiveSearchFocusDate = now
+        view?.focusSearchBar()
     }
     
     // MARK: - Search

@@ -125,6 +125,7 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
     private let appState = InteractorFactory.shared.appStateInteractor()
     private let plusButton = UIButton(type: .system)
     private var didHandleFirstAppearance = false
+    private var shouldFocusSearchOnActivation = true
 
     private static let transparentPixelImage: UIImage = {
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1))
@@ -154,7 +155,13 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
-        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appDidEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
+
         // Floating glass "+" is an iOS 26 affordance; on iOS 18 the add action
         // lives in the tokens navigation bar (see updateNaviIcons).
         guard #available(iOS 26.0, *) else { return }
@@ -387,11 +394,22 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
     }
 
     @objc
+    private func appDidEnterBackground() {
+        shouldFocusSearchOnActivation = true
+    }
+
+    @objc
     private func notifyAppBecameActive() {
         guard selectedTab === tokensTab else { return }
+        let focusSearch = shouldFocusSearchOnActivation && !appState.isLockScreenActive
+        if focusSearch {
+            shouldFocusSearchOnActivation = false
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             NotificationCenter.default.post(name: .tokensScreenIsVisible, object: nil)
-            NotificationCenter.default.post(name: .activeSearchShouldFocus, object: nil)
+            if focusSearch {
+                NotificationCenter.default.post(name: .activeSearchShouldFocus, object: nil)
+            }
         }
     }
 }

@@ -400,11 +400,12 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
 
     @objc
     private func notifyAppBecameActive() {
-        guard selectedTab === tokensTab else { return }
-        let focusSearch = shouldFocusSearchOnActivation && !appState.isLockScreenActive
-        if focusSearch {
+        var focusSearch = false
+        if !appState.isLockScreenActive {
+            focusSearch = shouldFocusSearchOnActivation
             shouldFocusSearchOnActivation = false
         }
+        guard selectedTab === tokensTab else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             NotificationCenter.default.post(name: .tokensScreenIsVisible, object: nil)
             if focusSearch {

@@ -124,6 +124,7 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
 
     private let appState = InteractorFactory.shared.appStateInteractor()
     private let plusButton = UIButton(type: .system)
+    private var didHandleFirstAppearance = false
 
     private static let transparentPixelImage: UIImage = {
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1))
@@ -153,7 +154,7 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
-
+        
         // Floating glass "+" is an iOS 26 affordance; on iOS 18 the add action
         // lives in the tokens navigation bar (see updateNaviIcons).
         guard #available(iOS 26.0, *) else { return }
@@ -221,6 +222,13 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        if !didHandleFirstAppearance {
+            didHandleFirstAppearance = true
+            // Cold start with the lock screen: .lockScreenIsInactive is posted
+            // before this controller exists, so the observer above never sees
+            // it — replay the missed event on first appearance.
+            notifyAppBecameActive()
+        }
         guard #available(iOS 26.0, *) else { return }
         // The auxiliary (search) slot gets its real frame asynchronously, after
         // the last layout pass, so poll briefly until it's ready.

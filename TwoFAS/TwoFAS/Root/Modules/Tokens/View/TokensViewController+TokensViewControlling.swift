@@ -123,12 +123,13 @@ extension TokensViewController: TokensViewControlling {
 
     func tryFulfillPendingSearchFocus() {
         guard pendingSearchFocus else { return }
-        guard UIApplication.shared.applicationState == .active else {
-            Log("TokensViewController - focusSearchBar: deferred, app not active")
+        guard let window = viewIfLoaded?.window, searchBarAdded else {
+            Log("TokensViewController - focusSearchBar: deferred, view/search bar not ready")
             return
         }
-        guard viewIfLoaded?.window != nil, searchBarAdded else {
-            Log("TokensViewController - focusSearchBar: deferred, view/search bar not ready")
+        let sceneState = window.windowScene?.activationState
+        guard sceneState == .foregroundActive || sceneState == .foregroundInactive else {
+            Log("TokensViewController - focusSearchBar: deferred, scene not in foreground")
             return
         }
         pendingSearchFocus = false

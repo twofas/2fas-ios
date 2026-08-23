@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Data
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -48,11 +49,29 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let url = connectionOptions.urlContexts.first?.url {
             _ = rootViewController?.presenter.shouldHandleURL(url: url)
         }
+
+        if let shortcutItem = connectionOptions.shortcutItem,
+           let action = QuickAction(shortcutType: shortcutItem.type) {
+            InteractorFactory.shared.appStateInteractor().storeQuickAction(action)
+        }
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else { return }
         _ = rootViewController?.presenter.shouldHandleURL(url: url)
+    }
+
+    func windowScene(
+        _ windowScene: UIWindowScene,
+        performActionFor shortcutItem: UIApplicationShortcutItem,
+        completionHandler: @escaping (Bool) -> Void
+    ) {
+        guard let action = QuickAction(shortcutType: shortcutItem.type) else {
+            completionHandler(false)
+            return
+        }
+        InteractorFactory.shared.appStateInteractor().storeQuickAction(action)
+        completionHandler(true)
     }
 
     func sceneWillResignActive(_ scene: UIScene) {

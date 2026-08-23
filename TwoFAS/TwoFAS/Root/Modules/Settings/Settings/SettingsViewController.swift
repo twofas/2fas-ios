@@ -37,6 +37,7 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
                 setMenuPosition()
                 isMenuPositionPending = false
             }
+            flushPendingActiveNavigationIfPossible()
         }
     }
     
@@ -64,7 +65,9 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     private var isMenuPositionPending = false
     
     private var savedViewPath: ViewPath.Settings?
-    
+
+    private var pendingActiveViewPath: ViewPath.Settings?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -122,16 +125,22 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
         menu?.hideSidebarReveal()
     }
     
-    func navigateToView(_ viewPath: ViewPath.Settings?) {
+    func navigateToView(_ viewPath: ViewPath.Settings?, isRestoration: Bool = false) {
         guard lastCollapsedState != nil, let menuVC = menu else {
             // The split hasn't reconciled its real collapsed state yet
-            // (launch/restore, before the first layout). Only remember the target
-            // as the selected module; the first collapse/expand reconciliation
-            // places it — menu root when collapsed, detail column when expanded.
-            if let menu {
-                menu.restoreSelection(viewPath)
+            // (launch/restore, before the first layout).
+            if isRestoration {
+                // Only remember the target as the selected module; the first
+                // collapse/expand reconciliation places it — menu root when
+                // collapsed, detail column when expanded.
+                if let menu {
+                    menu.restoreSelection(viewPath)
+                } else {
+                    savedViewPath = viewPath
+                }
             } else {
-                savedViewPath = viewPath
+                // Explicit navigation: perform it for real once the split is ready.
+                pendingActiveViewPath = viewPath
             }
             return
         }
@@ -146,6 +155,12 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
     
     var currentView: ViewPath.Settings? {
         menu?.currentViewPath
+    }
+
+    private func flushPendingActiveNavigationIfPossible() {
+        guard let target = pendingActiveViewPath, lastCollapsedState != nil, menu != nil else { return }
+        pendingActiveViewPath = nil
+        navigateToView(target)
     }
     
     @objc
@@ -207,6 +222,8 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
         } else {
             presenter.handleExpansion()
         }
+
+        flushPendingActiveNavigationIfPossible()
     }
     
     /// Both columns always show their native navigation bar. This is what makes

@@ -67,7 +67,7 @@ final class MainTabFlowController: FlowController {
         mainViewController.splitView = container
 
         let restoredPath = flowController.viewPathInteractor.viewPath() ?? .main
-        container.navigateToView(restoredPath)
+        container.navigateToView(restoredPath, isRestoration: true)
         switch restoredPath {
         case .main: parent.navigationSwitchedToTokens()
         case .settings: parent.navigationSwitchedToSettings()
@@ -366,6 +366,10 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
     }
 
     func navigateToView(_ viewPath: ViewPath) {
+        navigateToView(viewPath, isRestoration: false)
+    }
+
+    func navigateToView(_ viewPath: ViewPath, isRestoration: Bool) {
         switch viewPath {
         case .main:
             if let tokensTab {
@@ -376,7 +380,7 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
             if let settingsTab {
                 selectedTab = settingsTab
             }
-            settingsViewController?.navigateToView(option)
+            settingsViewController?.navigateToView(option, isRestoration: isRestoration)
         }
     }
 

@@ -97,6 +97,11 @@ final class MainRepositoryImpl: MainRepository {
 
     var _plusButtonRect: CGRect?
     var _isAddingServiceVisible: Bool = false
+
+    var _pendingQuickAction: QuickAction?
+    var _openBackupExportOnAppear = false
+    var _openAddServiceOnAppear = false
+    var _focusSearchOnAppear = false
     
     // Cached values for higher pefrormance
     var cachedSortType: SortType?

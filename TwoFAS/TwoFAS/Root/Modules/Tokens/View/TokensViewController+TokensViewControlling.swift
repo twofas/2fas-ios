@@ -494,6 +494,18 @@ extension TokensViewController {
     }
 
     @objc
+    func quickActionTokensRequested() {
+        consumePendingTokensQuickActions()
+    }
+
+    func consumePendingTokensQuickActions() {
+        presenter.handleAddServiceQuickActionIfNeeded()
+        if presenter.shouldFocusSearchOnQuickAction() {
+            focusSearchBar()
+        }
+    }
+
+    @objc
     func allServicesRemovedAlertShouldBeShown() {
         presenter.handleAllServicesRemovedAlert()
     }

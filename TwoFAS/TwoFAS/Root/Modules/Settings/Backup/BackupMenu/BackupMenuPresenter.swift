@@ -60,6 +60,11 @@ final class BackupMenuPresenter {
     func viewWillAppear() {
         interactor.startMonitoring()
         reload()
+
+        if interactor.openBackupExportOnAppear {
+            interactor.setOpenBackupExportOnAppear(false)
+            handleSelection(.exportFile)
+        }
     }
 
     func viewWillDisappear() {

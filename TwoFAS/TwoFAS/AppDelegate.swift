@@ -40,6 +40,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
         DataExternalTranslations.setTranslations(serviceNameTranslation: T.Commons.service)
 
+        application.shortcutItems = QuickAction.shortcutItems
+
         return true
     }
 

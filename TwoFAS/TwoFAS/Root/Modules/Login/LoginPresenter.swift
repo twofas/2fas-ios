@@ -84,7 +84,9 @@ final class LoginPresenter {
         if let number = digit.number, pin.count < totalDigits {
             pin.append(number)
             if pin.count >= totalDigits {
-                allEntered()
+                DispatchQueue.main.asyncAfter(deadline: .now() + PINDotsAnimation.fillDuration) { [weak self] in
+                    self?.allEntered()
+                }
             }
         } else if digit.isDelete {
             _ = pin.popLast()

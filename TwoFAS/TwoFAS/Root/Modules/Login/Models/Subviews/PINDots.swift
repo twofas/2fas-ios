@@ -20,6 +20,10 @@
 import SwiftUI
 import Common
 
+enum PINDotsAnimation {
+    static let fillDuration: TimeInterval = 0.12
+}
+
 struct PINDots: View {
     @Environment(\.isEnabled)
     private var isEnabled
@@ -47,7 +51,7 @@ struct PINDots: View {
                     }())
             }
         }
-        .animation(.easeInOut, value: enteredCount)
+        .animation(.easeInOut(duration: PINDotsAnimation.fillDuration), value: enteredCount)
         .frame(maxWidth: .infinity)
         .frame(height: size)
         .padding(.top, .XXXXXL)

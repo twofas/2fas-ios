@@ -71,7 +71,10 @@ final class NewPINPresenter {
         if let number = key.number, pin.count < totalDigits {
             pin.append(number)
             if pin.count >= totalDigits {
-                pinGathered()
+                DispatchQueue.main.asyncAfter(deadline: .now() + PINDotsAnimation.fillDuration) { [weak self] in
+                    guard let self, self.pin.count >= self.totalDigits else { return }
+                    self.pinGathered()
+                }
             }
         } else if key.isDelete {
             _ = pin.popLast()

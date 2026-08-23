@@ -124,6 +124,8 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
 
     private let appState = InteractorFactory.shared.appStateInteractor()
     private let plusButton = UIButton(type: .system)
+    private var didPerformInitialActiveNotify = false
+    private var shouldFocusSearchOnActivation = true
 
     private static let transparentPixelImage: UIImage = {
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1))
@@ -151,6 +153,12 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
             self,
             selector: #selector(notifyAppBecameActive),
             name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appDidEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
             object: nil
         )
 
@@ -221,6 +229,10 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        if !didPerformInitialActiveNotify {
+            didPerformInitialActiveNotify = true
+            notifyAppBecameActive()
+        }
         guard #available(iOS 26.0, *) else { return }
         // The auxiliary (search) slot gets its real frame asynchronously, after
         // the last layout pass, so poll briefly until it's ready.
@@ -379,11 +391,23 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
     }
 
     @objc
+    private func appDidEnterBackground() {
+        shouldFocusSearchOnActivation = true
+    }
+
+    @objc
     private func notifyAppBecameActive() {
+        var focusSearch = false
+        if !appState.isLockScreenActive {
+            focusSearch = shouldFocusSearchOnActivation
+            shouldFocusSearchOnActivation = false
+        }
         guard selectedTab === tokensTab else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             NotificationCenter.default.post(name: .tokensScreenIsVisible, object: nil)
-            NotificationCenter.default.post(name: .activeSearchShouldFocus, object: nil)
+            if focusSearch {
+                NotificationCenter.default.post(name: .activeSearchShouldFocus, object: nil)
+            }
         }
     }
 }

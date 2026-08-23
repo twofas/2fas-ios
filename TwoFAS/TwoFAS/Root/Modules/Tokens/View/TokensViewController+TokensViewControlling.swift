@@ -123,17 +123,23 @@ extension TokensViewController: TokensViewControlling {
 
     func tryFulfillPendingSearchFocus() {
         guard pendingSearchFocus else { return }
-        guard UIApplication.shared.applicationState == .active else {
-            Log("TokensViewController - focusSearchBar: deferred, app not active")
-            return
-        }
-        guard viewIfLoaded?.window != nil, searchBarAdded else {
+        guard let window = viewIfLoaded?.window, searchBarAdded else {
             Log("TokensViewController - focusSearchBar: deferred, view/search bar not ready")
             return
         }
-        pendingSearchFocus = false
-        guard !searchController.searchBar.isFirstResponder else { return }
-        searchController.searchBar.becomeFirstResponder()
+        let sceneState = window.windowScene?.activationState
+        guard sceneState == .foregroundActive || sceneState == .foregroundInactive else {
+            Log("TokensViewController - focusSearchBar: deferred, scene not in foreground")
+            return
+        }
+        guard !searchController.searchBar.isFirstResponder else {
+            pendingSearchFocus = false
+            return
+        }
+        let didBecome = searchController.searchBar.becomeFirstResponder()
+        if didBecome {
+            pendingSearchFocus = false
+        }
     }
     
     // MARK: - Dragging

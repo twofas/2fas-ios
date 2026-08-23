@@ -24,7 +24,7 @@ import Common
 public final class BiometricAuth {
     public weak var delegate: BiometricAuthDelegate?
     
-    private lazy var context = LAContext()
+    private var context: LAContext?
     private let storage: LocalEncryptedStorage
     
     init(storage: LocalEncryptedStorage) {
@@ -33,23 +33,32 @@ public final class BiometricAuth {
     
     public var isAvailable: Bool {
         var error: NSError?
-        
-        let avail = context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error)
-        
+        context = LAContext()
+        defer { context = nil }
+
+        let avail = context?.canEvaluatePolicy(
+            LAPolicy.deviceOwnerAuthenticationWithBiometrics,
+            error: &error
+        ) ?? false
+
         if let err = error {
             Log("isAvailable - can't use bio authenticating: \(err.localizedDescription)")
         }
-        
+
         return avail
     }
-    
+
     public var biometryType: LABiometryType {
-        context.biometryType
+        context = LAContext()
+        defer { context = nil }
+        return context?.biometryType ?? .none
     }
-    
+
     public var isBiometryLockedOut: Bool {
         var error: NSError?
-        _ = context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error)
+        context = LAContext()
+        defer { context = nil }
+        _ = context?.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error)
         guard let err = error else { return false }
         return err.code == LAError.biometryLockout.rawValue
     }
@@ -76,35 +85,44 @@ public final class BiometricAuth {
     public func authenticate(reason: String) {
         var error: NSError?
         Log("Authenticating using bio")
-        
-        guard context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
+        context = LAContext()
+
+        guard context?.canEvaluatePolicy(
+            LAPolicy.deviceOwnerAuthenticationWithBiometrics,
+            error: &error
+        ) ?? false else {
             if let err = error {
                 Log("Error - can't use bio authenticating: \(err.localizedDescription)")
             }
-            
+
+            context?.invalidate()
+            context = nil
             DispatchQueue.main.async { [weak self] in
                 self?.delegate?.bioAuthFailed()
             }
-            
+
             return
         }
-        
+
         evaluate(reason: reason)
     }
-    
+
     private func evaluate(reason: String) {
-        context.evaluatePolicy(
+        context?.evaluatePolicy(
             LAPolicy.deviceOwnerAuthenticationWithBiometrics,
             localizedReason: reason,
             reply: { [weak self] (success: Bool, evalPolicyError: Error?) in
-                
+                guard let self else { return }
+                let stateHash = context?.domainState.biometry.stateHash
+                context?.invalidate()
+                context = nil
+
                 DispatchQueue.main.async { [weak self] in
                     guard let self else { return }
-                    
+
                     if success {
                         let savedStateHash = BiometryStateHashStorage.stateHash
-                        let stateHash = context.domainState.biometry.stateHash
-                        
+
                         guard savedStateHash == nil || savedStateHash == stateHash else {
                             self.disable()
                             self.delegate?.bioAuthFailed()
@@ -113,9 +131,8 @@ public final class BiometricAuth {
                         if let stateHash, savedStateHash == nil {
                             BiometryStateHashStorage.save(stateHash: stateHash)
                         }
-                        
+
                         self.delegate?.bioAuthSuccess()
-                        context = LAContext()
                         Log("BioAuthSuccess")
                     } else if let code = (evalPolicyError as? LAError)?.code,
                             code == LAError.userCancel
@@ -125,15 +142,15 @@ public final class BiometricAuth {
                         self.delegate?.bioAuthUserCancelled()
                         Log("BioAuthCancelled")
                     } else {
-                    guard let err = evalPolicyError as NSError? else {
-                        assertionFailure("Unsupported conversion")
-                        return
+                        guard let err = evalPolicyError as NSError? else {
+                            assertionFailure("Unsupported conversion")
+                            return
+                        }
+                        Log("Error while authenticating - \(err.localizedDescription)")
+
+                        self.delegate?.bioAuthFailed()
                     }
-                    Log("Error while authenticating - \(err.localizedDescription)")
-                    
-                    self.delegate?.bioAuthFailed()
                 }
-            }
-        })
+            })
     }
 }

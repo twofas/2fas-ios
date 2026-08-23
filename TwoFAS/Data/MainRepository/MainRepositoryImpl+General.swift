@@ -38,12 +38,6 @@ extension MainRepositoryImpl {
         _urlWillBeHandled = true
     }
 
-    var plusButtonRect: CGRect? { _plusButtonRect }
-
-    func savePlusButtonRect(_ rect: CGRect?) {
-        _plusButtonRect = rect
-    }
-
     var isAddingServiceVisible: Bool { _isAddingServiceVisible }
 
     func saveIsAddingServiceVisible(_ value: Bool) {

@@ -37,9 +37,6 @@ public protocol AppStateInteracting: AnyObject {
     func clearURLWillBeHandled()
     func markURLWillBeHandled()
 
-    var plusButtonRect: CGRect? { get }
-    func savePlusButtonRect(_ rect: CGRect?)
-
     var isAddingServiceVisible: Bool { get }
     func saveIsAddingServiceVisible(_ value: Bool)
 }
@@ -96,12 +93,6 @@ extension AppStateInteractor: AppStateInteracting {
 
     func markURLWillBeHandled() {
         mainRepository.markURLWillBeHandled()
-    }
-
-    var plusButtonRect: CGRect? { mainRepository.plusButtonRect }
-
-    func savePlusButtonRect(_ rect: CGRect?) {
-        mainRepository.savePlusButtonRect(rect)
     }
 
     var isAddingServiceVisible: Bool { mainRepository.isAddingServiceVisible }

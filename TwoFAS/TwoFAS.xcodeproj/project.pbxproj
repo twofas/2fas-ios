@@ -55,6 +55,7 @@
 		C20CD5402A1D017700A7F324 /* TokensHOTPCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20CD53F2A1D017700A7F324 /* TokensHOTPCellType.swift */; };
 		C20E2DE52A7C27A500DB64BB /* GlobalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2DE42A7C27A500DB64BB /* GlobalState.swift */; };
 		C20E2DFE2A7C4DE000DB64BB /* AddingServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2DFD2A7C4DE000DB64BB /* AddingServiceFlowController.swift */; };
+		C2AB10042FD1000100000001 /* AddingServiceCardPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AB10032FD1000100000001 /* AddingServiceCardPresentation.swift */; };
 		C20E2E072A7C51E700DB64BB /* AddingServiceTokenFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2E062A7C51E700DB64BB /* AddingServiceTokenFlowController.swift */; };
 		C20E2E092A7C51F500DB64BB /* AddingServiceTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2E082A7C51F500DB64BB /* AddingServiceTokenViewController.swift */; };
 		C20E2E0B2A7C52AA00DB64BB /* AddingServicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20E2E0A2A7C52AA00DB64BB /* AddingServicePresenter.swift */; };
@@ -824,6 +825,7 @@
 		C2AB92E127668DE700698382 /* ShareActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AB92E027668DE700698382 /* ShareActivityController.swift */; };
 		C2ABA1CC24B24B7F008426D1 /* TokensViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ABA1CB24B24B7F008426D1 /* TokensViewController+ContextMenu.swift */; };
 		C2ABF3C92002A01A003F2CBA /* CommonNavigationControlller.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ABF3C82002A01A003F2CBA /* CommonNavigationControlller.swift */; };
+		C2AB10022FD1000100000001 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AB10012FD1000100000001 /* MainView.swift */; };
 		C2AC21FE27660F5700271402 /* ImporterOpenFileModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AC21FD27660F5700271402 /* ImporterOpenFileModuleInteractor.swift */; };
 		C2AC2208276615FB00271402 /* ExporterMainScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AC2207276615FB00271402 /* ExporterMainScreenPresenter.swift */; };
 		C2AC220A2766178400271402 /* ExporterMainScreenModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AC22092766178400271402 /* ExporterMainScreenModuleInteractor.swift */; };
@@ -1911,6 +1913,7 @@
 		C20CD53F2A1D017700A7F324 /* TokensHOTPCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensHOTPCellType.swift; sourceTree = "<group>"; };
 		C20E2DE42A7C27A500DB64BB /* GlobalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalState.swift; sourceTree = "<group>"; };
 		C20E2DFD2A7C4DE000DB64BB /* AddingServiceFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceFlowController.swift; sourceTree = "<group>"; };
+		C2AB10032FD1000100000001 /* AddingServiceCardPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceCardPresentation.swift; sourceTree = "<group>"; };
 		C20E2E062A7C51E700DB64BB /* AddingServiceTokenFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceTokenFlowController.swift; sourceTree = "<group>"; };
 		C20E2E082A7C51F500DB64BB /* AddingServiceTokenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceTokenViewController.swift; sourceTree = "<group>"; };
 		C20E2E0A2A7C52AA00DB64BB /* AddingServicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServicePresenter.swift; sourceTree = "<group>"; };
@@ -2548,6 +2551,7 @@
 		C2AB92E42766A9A700698382 /* SocialChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialChannel.swift; sourceTree = "<group>"; };
 		C2ABA1CB24B24B7F008426D1 /* TokensViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokensViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		C2ABF3C82002A01A003F2CBA /* CommonNavigationControlller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonNavigationControlller.swift; sourceTree = "<group>"; };
+		C2AB10012FD1000100000001 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C2AC21FD27660F5700271402 /* ImporterOpenFileModuleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileModuleInteractor.swift; sourceTree = "<group>"; };
 		C2AC2207276615FB00271402 /* ExporterMainScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExporterMainScreenPresenter.swift; sourceTree = "<group>"; };
 		C2AC22092766178400271402 /* ExporterMainScreenModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExporterMainScreenModuleInteractor.swift; sourceTree = "<group>"; };
@@ -3325,6 +3329,7 @@
 			isa = PBXGroup;
 			children = (
 				C20E2DFD2A7C4DE000DB64BB /* AddingServiceFlowController.swift */,
+				C2AB10032FD1000100000001 /* AddingServiceCardPresentation.swift */,
 				C21EB2F92A800E7200FA8AA1 /* AddingServiceModuleInteractor.swift */,
 				C20E2E0A2A7C52AA00DB64BB /* AddingServicePresenter.swift */,
 				C29E833C2FC0BB3A00CBE671 /* AddingServiceView.swift */,
@@ -5328,6 +5333,7 @@
 				C2C02243297F224700D596A8 /* MainModuleInteractor.swift */,
 				C2C02241297F222100D596A8 /* MainPresenter.swift */,
 				C2C66F8D1FE0684100AD5A1C /* MainViewController.swift */,
+				C2AB10012FD1000100000001 /* MainView.swift */,
 				C2617E093027AECE0004AE2B /* MainNavigating.swift */,
 				C24D8B3B29BE41CA00C3E11E /* ContentNavigationController.swift */,
 			);
@@ -7054,6 +7060,7 @@
 				C2404F7F2B72FC6400EBD8DC /* ServiceAppEntity.swift in Sources */,
 				C2AB92CF27665ACC00698382 /* ExporterPINFlowController.swift in Sources */,
 				C2ABF3C92002A01A003F2CBA /* CommonNavigationControlller.swift in Sources */,
+				C2AB10022FD1000100000001 /* MainView.swift in Sources */,
 				C2EBE0022AC44787008FD744 /* GuideMenuFlowController.swift in Sources */,
 				C240486B27655BD70076376E /* ImporterOpenFilePresenter.swift in Sources */,
 				C2E2C80B27B038DC00F04B70 /* IconSelectorModuleInteractor.swift in Sources */,
@@ -7124,6 +7131,7 @@
 				C23B899727C287480028FE34 /* NavigationFlowController.swift in Sources */,
 				C295AF842FD1DE9C000DF064 /* MainScreenModalView.swift in Sources */,
 				C20E2DFE2A7C4DE000DB64BB /* AddingServiceFlowController.swift in Sources */,
+				C2AB10042FD1000100000001 /* AddingServiceCardPresentation.swift in Sources */,
 				C2CC80D827B99B0600294CF2 /* ComposeServicePresenter.swift in Sources */,
 				C240485E27654C5F0076376E /* ImporterEnterPasswordFlowController.swift in Sources */,
 				C2A7944D27F795E900E5C641 /* BrowserExtensionPairedService.swift in Sources */,

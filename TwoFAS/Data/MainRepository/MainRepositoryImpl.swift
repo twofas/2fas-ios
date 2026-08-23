@@ -95,7 +95,6 @@ final class MainRepositoryImpl: MainRepository {
 
     var _appState: AppState = .unknown
 
-    var _plusButtonRect: CGRect?
     var _isAddingServiceVisible: Bool = false
     
     // Cached values for higher pefrormance

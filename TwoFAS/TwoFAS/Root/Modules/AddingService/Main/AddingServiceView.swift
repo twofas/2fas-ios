@@ -36,13 +36,16 @@ struct AddingServiceView: View {
     @Bindable
     var presenter: AddingServicePresenter
     
+    let outerPadding: Spacing?
     let onClose: () -> Void
     
     init(
         presenter: AddingServicePresenter,
+        outerPadding: Spacing? = .ML,
         onClose: @escaping () -> Void
     ) {
         self.presenter = presenter
+        self.outerPadding = outerPadding
         self.onClose = onClose
     }
     
@@ -50,7 +53,8 @@ struct AddingServiceView: View {
         MainScreenModalView(
             onClose: onClose,
             title: T.Tokens.addManualTitle,
-            subtitle: T.Tokens.addDescription
+            subtitle: T.Tokens.addDescription,
+            outerPadding: outerPadding
         ) {
             VStack(spacing: .zero) {
                 if errorReason != nil || presenter.isCameraUnavailable {

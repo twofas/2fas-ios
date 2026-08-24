@@ -92,6 +92,11 @@ final class AddServiceCardPresentationController: UIPresentationController {
 
         setSublayerTransformDisabled(true)
 
+        // The presenting view stays in place (`shouldRemovePresentersView` is
+        // false), so without this VoiceOver could still focus and activate
+        // controls behind the card.
+        containerView.accessibilityViewIsModal = true
+
         dimmingView.frame = containerView.bounds
         containerView.insertSubview(dimmingView, at: 0)
 

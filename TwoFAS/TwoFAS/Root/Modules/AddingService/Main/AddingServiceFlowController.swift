@@ -208,8 +208,8 @@ private final class FlowControllerBox {
     var flowController: AddingServiceFlowControlling?
 }
 
-/// The card content; sizing, margin and the dimmed backdrop are owned by
-/// `AddServiceCardPresentationController`.
+/// The card content alone: it renders edge-to-edge, bringing no margin and
+/// no backdrop of its own.
 private struct AddServiceHostingView: View {
     let flowController: FlowControllerBox
     let onFullyDismissed: () -> Void

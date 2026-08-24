@@ -52,9 +52,24 @@ final class AddingServiceFlowController: FlowController {
 
     private weak var parent: AddingServiceFlowControllerParent?
     private var galleryViewController: UIViewController?
+    /// Whether the hosting view carries the opaque plate that backs the
+    /// system zoom morph; only then is there anything to hide while an
+    /// overlay covers the card.
+    private var hasOpaqueCardBackground = false
     // swiftlint:disable weak_delegate
     private var zoomTransitioningDelegate: (any UIViewControllerTransitioningDelegate)?
     // swiftlint:enable weak_delegate
+
+    /// While an overlay covers the card the content hides itself, so the
+    /// opaque plate would remain as a bare black rounded rectangle — fade it
+    /// out for that time and back in once the overlay is gone. The duration
+    /// matches the 0.15 s fade of the card content.
+    private func setCardBackgroundHidden(_ hidden: Bool) {
+        guard hasOpaqueCardBackground else { return }
+        UIView.animate(withDuration: 0.15) {
+            self._viewController?.view.backgroundColor = hidden ? .clear : Self.systemZoomPlateColor
+        }
+    }
 
     static func isPresented(on viewController: UIViewController) -> Bool {
         viewController.presentedViewController is UIHostingController<AddServiceHostingView>
@@ -121,6 +136,8 @@ final class AddingServiceFlowController: FlowController {
         let flowController = AddingServiceFlowController(viewController: hosting)
         flowController.parent = parent
         flowController.zoomTransitioningDelegate = transitioningDelegate
+        // The opaque plate backs only the system-zoom variant.
+        flowController.hasOpaqueCardBackground = legacySourceProvider == nil
         box.flowController = flowController
 
         viewController.present(hosting, animated: true)
@@ -143,8 +160,12 @@ final class AddingServiceFlowController: FlowController {
         // card's shadow still shows).
         hosting.view.layer.cornerRadius = TFCornerRadius.extraLarge.value
         hosting.view.layer.cornerCurve = .continuous
-        hosting.view.backgroundColor = .black
+        hosting.view.backgroundColor = systemZoomPlateColor
     }
+
+    /// Backs the hosting view during the system zoom morph, where the SwiftUI
+    /// content can lag behind the animated frame.
+    private static let systemZoomPlateColor: UIColor = .black
 
     private static let zoomSourceTag = 0xADD5_E70C
 
@@ -238,6 +259,7 @@ extension AddingServiceFlowController: AddingServiceFlowControlling {
     }
     
     func toAddManually() {
+        setCardBackgroundHidden(true)
         presentManually(name: nil)
     }
     
@@ -248,11 +270,13 @@ extension AddingServiceFlowController: AddingServiceFlowControlling {
     
     func toGuides() {
         guard let _viewController else { return }
+        setCardBackgroundHidden(true)
         GuideSelectorNavigationFlowController.show(on: _viewController, parent: self)
     }
 
     func toGallery() {
         guard let _viewController else { return }
+        setCardBackgroundHidden(true)
         galleryViewController = SelectFromGalleryFlowController.present(
             on: _viewController,
             applyOverlay: true,
@@ -295,6 +319,7 @@ extension AddingServiceFlowController: AddingServiceManuallyNavigationFlowContro
 
     func addingServiceManuallyToCancel() {
         _viewController?.dismiss(animated: true)
+        setCardBackgroundHidden(false)
         onOverlayDismissed?()
     }
 }
@@ -302,6 +327,7 @@ extension AddingServiceFlowController: AddingServiceManuallyNavigationFlowContro
 extension AddingServiceFlowController: GuideSelectorNavigationFlowControllerParent {
     func closeGuideSelector() {
         _viewController?.dismiss(animated: true)
+        setCardBackgroundHidden(false)
         onOverlayDismissed?()
     }
 
@@ -313,6 +339,7 @@ extension AddingServiceFlowController: GuideSelectorNavigationFlowControllerPare
 
     func guideToCodeScanner() {
         _viewController?.dismiss(animated: true)
+        setCardBackgroundHidden(false)
         onOverlayDismissed?()
     }
 }
@@ -320,6 +347,7 @@ extension AddingServiceFlowController: GuideSelectorNavigationFlowControllerPare
 extension AddingServiceFlowController: SelectFromGalleryFlowControllerParent {
     func galleryDidFinish() {
         galleryViewController = nil
+        setCardBackgroundHidden(false)
         onOverlayDismissed?()
     }
 
@@ -330,6 +358,7 @@ extension AddingServiceFlowController: SelectFromGalleryFlowControllerParent {
 
     func galleryDidCancel() {
         galleryViewController = nil
+        setCardBackgroundHidden(false)
         onOverlayDismissed?()
     }
 

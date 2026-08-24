@@ -41,23 +41,29 @@ protocol BackupMenuModuleInteracting: AnyObject {
     func toggleBackup()
     
     var syncSuccessDate: Date? { get }
-    
+
     func reloadKeys()
+
+    var openBackupExportOnAppear: Bool { get }
+    func setOpenBackupExportOnAppear(_ value: Bool)
 }
 
 final class BackupMenuModuleInteractor {
     private let serviceListingInteractor: ServiceListingInteracting
     private let cloudBackup: CloudBackupStateInteracting
     private let mdmInteractor: MDMInteracting
-    
+    private let appStateInteractor: AppStateInteracting
+
     init(
         serviceListingInteractor: ServiceListingInteracting,
         cloudBackup: CloudBackupStateInteracting,
-        mdmInteractor: MDMInteracting
+        mdmInteractor: MDMInteracting,
+        appStateInteractor: AppStateInteracting
     ) {
         self.serviceListingInteractor = serviceListingInteractor
         self.cloudBackup = cloudBackup
         self.mdmInteractor = mdmInteractor
+        self.appStateInteractor = appStateInteractor
     }
 }
 
@@ -130,6 +136,14 @@ extension BackupMenuModuleInteractor: BackupMenuModuleInteracting {
     func reloadKeys() {
         cloudBackup.disableBackup()
         cloudBackup.reloadKeys()
+    }
+
+    var openBackupExportOnAppear: Bool {
+        appStateInteractor.openBackupExportOnAppear
+    }
+
+    func setOpenBackupExportOnAppear(_ value: Bool) {
+        appStateInteractor.setOpenBackupExportOnAppear(value)
     }
 }
 

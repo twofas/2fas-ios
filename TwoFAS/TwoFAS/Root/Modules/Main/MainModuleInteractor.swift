@@ -49,10 +49,16 @@ protocol MainModuleInteracting: AnyObject {
     
     func checkForCompanionApp()
     func setNotificationGroupID()
-    
+
     // MARK: - New app version
     func checkForNewAppVersion(completion: @escaping (URL?) -> Void)
     func skipAppVersion()
+
+    // MARK: - Quick Action
+    func takeQuickAction() -> QuickAction?
+    func setOpenBackupExportOnAppear(_ value: Bool)
+    func setOpenAddServiceOnAppear(_ value: Bool)
+    func setFocusSearchOnAppear(_ value: Bool)
 }
 
 final class MainModuleInteractor {
@@ -88,7 +94,8 @@ final class MainModuleInteractor {
     private let mdmInteractor: MDMInteracting
     private let protectionInteractor: ProtectionInteracting
     private let syncMigrationInteractor: SyncMigrationInteracting
-    
+    private let appStateInteractor: AppStateInteracting
+
     init(
         logGenerationInteractor: LogGenerationInteracting,
         viewPathInteractor: ViewPathIteracting,
@@ -100,7 +107,8 @@ final class MainModuleInteractor {
         rootInteractor: RootInteracting,
         mdmInteractor: MDMInteracting,
         protectionInteractor: ProtectionInteracting,
-        syncMigrationInteractor: SyncMigrationInteracting
+        syncMigrationInteractor: SyncMigrationInteracting,
+        appStateInteractor: AppStateInteracting
     ) {
         self.logGenerationInteractor = logGenerationInteractor
         self.cloudBackupStateInteractor = cloudBackupStateInteractor
@@ -112,6 +120,7 @@ final class MainModuleInteractor {
         self.mdmInteractor = mdmInteractor
         self.protectionInteractor = protectionInteractor
         self.syncMigrationInteractor = syncMigrationInteractor
+        self.appStateInteractor = appStateInteractor
 
         cloudBackupStateInteractor.secretSyncError = { [weak self] in self?.secretSyncError?($0) }
         
@@ -196,5 +205,23 @@ extension MainModuleInteractor: MainModuleInteracting {
     
     func skipAppVersion() {
         newVersionInteractor.userSkippedVersion()
+    }
+
+    // MARK: - Quick Action
+
+    func takeQuickAction() -> QuickAction? {
+        appStateInteractor.takeQuickAction()
+    }
+
+    func setOpenBackupExportOnAppear(_ value: Bool) {
+        appStateInteractor.setOpenBackupExportOnAppear(value)
+    }
+
+    func setOpenAddServiceOnAppear(_ value: Bool) {
+        appStateInteractor.setOpenAddServiceOnAppear(value)
+    }
+
+    func setFocusSearchOnAppear(_ value: Bool) {
+        appStateInteractor.setFocusSearchOnAppear(value)
     }
 }

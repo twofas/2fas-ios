@@ -59,7 +59,8 @@ final class ModuleInteractorFactory {
         BackupMenuModuleInteractor(
             serviceListingInteractor: InteractorFactory.shared.serviceListingInteractor(),
             cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "BackupMenuModuleInteractor"),
-            mdmInteractor: InteractorFactory.shared.mdmInteractor()
+            mdmInteractor: InteractorFactory.shared.mdmInteractor(),
+            appStateInteractor: InteractorFactory.shared.appStateInteractor()
         )
     }
     
@@ -316,10 +317,11 @@ final class ModuleInteractorFactory {
             rootInteractor: InteractorFactory.shared.rootInteractor(),
             localNotificationFetchInteractor: InteractorFactory.shared.localNotificationFetchInteractor(),
             appInfoInteractor: InteractorFactory.shared.appInfoInteractor(),
-            trashInteractor: InteractorFactory.shared.trashingServiceInteractor()
+            trashInteractor: InteractorFactory.shared.trashingServiceInteractor(),
+            appStateInteractor: InteractorFactory.shared.appStateInteractor()
         )
     }
-    
+
     func mainModuleInteractor() -> MainModuleInteracting {
         MainModuleInteractor(
             logGenerationInteractor: InteractorFactory.shared.logGenerationInteractor(),
@@ -332,7 +334,8 @@ final class ModuleInteractorFactory {
             rootInteractor: InteractorFactory.shared.rootInteractor(),
             mdmInteractor: InteractorFactory.shared.mdmInteractor(monitorCloudState: true),
             protectionInteractor: InteractorFactory.shared.protectionInteractor(),
-            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor()
+            syncMigrationInteractor: InteractorFactory.shared.syncMigrationInteractor(),
+            appStateInteractor: InteractorFactory.shared.appStateInteractor()
         )
     }
     

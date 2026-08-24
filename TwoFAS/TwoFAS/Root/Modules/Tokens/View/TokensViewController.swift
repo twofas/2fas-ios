@@ -92,6 +92,7 @@ final class TokensViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tryFulfillPendingSearchFocus()
+        consumePendingTokensQuickActions()
     }
 
     override func willTransition(
@@ -239,6 +240,12 @@ private extension TokensViewController {
             self,
             selector: #selector(userLoggedIn),
             name: .userLoggedIn,
+            object: nil
+        )
+        center.addObserver(
+            self,
+            selector: #selector(quickActionTokensRequested),
+            name: .quickActionTokensRequested,
             object: nil
         )
         center.addObserver(

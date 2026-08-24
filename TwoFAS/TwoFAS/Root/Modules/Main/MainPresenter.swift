@@ -66,7 +66,12 @@ final class MainPresenter {
     }
     
     func viewWillAppear() {
-       viewIsVisible()        
+       viewIsVisible()
+       consumePendingQuickAction()
+    }
+
+    func handleQuickActionRequested() {
+        consumePendingQuickAction()
     }
     
     func handleSwitchToSetupPIN() {
@@ -120,6 +125,7 @@ final class MainPresenter {
     
     func handleViewIsVisible() {
         viewIsVisible()
+        consumePendingQuickAction()
     }
     
     func handleSyncCompletedSuccessfuly() {
@@ -141,6 +147,25 @@ final class MainPresenter {
 }
 
 private extension MainPresenter {
+    func consumePendingQuickAction() {
+        guard !interactor.isAppLocked, let action = interactor.takeQuickAction() else { return }
+        switch action {
+        case .support:
+            view?.navigateToViewPath(.settings(option: .about))
+        case .backup:
+            interactor.setOpenBackupExportOnAppear(true)
+            view?.navigateToViewPath(.settings(option: .backup))
+        case .pair:
+            interactor.setOpenAddServiceOnAppear(true)
+            view?.navigateToViewPath(.main)
+            NotificationCenter.default.post(name: .quickActionTokensRequested, object: nil)
+        case .search:
+            interactor.setFocusSearchOnAppear(true)
+            view?.navigateToViewPath(.main)
+            NotificationCenter.default.post(name: .quickActionTokensRequested, object: nil)
+        }
+    }
+
     func viewIsVisible() {
         guard !interactor.isAppLocked && !handlingViewIsVisible else { return }
         handlingViewIsVisible = true

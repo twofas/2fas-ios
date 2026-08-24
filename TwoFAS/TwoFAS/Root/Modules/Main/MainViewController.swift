@@ -196,6 +196,17 @@ extension MainViewController {
             name: .allServicesRemoved,
             object: nil
         )
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(quickActionRequested),
+            name: .quickActionRequested,
+            object: nil
+        )
+    }
+
+    @objc
+    private func quickActionRequested() {
+        presenter.handleQuickActionRequested()
     }
 
     @objc

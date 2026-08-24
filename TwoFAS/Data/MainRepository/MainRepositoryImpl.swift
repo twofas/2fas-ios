@@ -95,6 +95,10 @@ final class MainRepositoryImpl: MainRepository {
 
     var _appState: AppState = .unknown
 
+    var _pendingQuickAction: QuickAction?
+    var _openBackupExportOnAppear = false
+    var _openAddServiceOnAppear = false
+    var _focusSearchOnAppear = false
     
     // Cached values for higher pefrormance
     var cachedSortType: SortType?

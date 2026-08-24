@@ -36,6 +36,18 @@ public protocol AppStateInteracting: AnyObject {
     var willURLBeHandled: Bool { get }
     func clearURLWillBeHandled()
     func markURLWillBeHandled()
+
+    func storeQuickAction(_ action: QuickAction)
+    func takeQuickAction() -> QuickAction?
+
+    var openBackupExportOnAppear: Bool { get }
+    func setOpenBackupExportOnAppear(_ value: Bool)
+
+    var openAddServiceOnAppear: Bool { get }
+    func setOpenAddServiceOnAppear(_ value: Bool)
+
+    var focusSearchOnAppear: Bool { get }
+    func setFocusSearchOnAppear(_ value: Bool)
 }
 
 final class AppStateInteractor {
@@ -92,4 +104,30 @@ extension AppStateInteractor: AppStateInteracting {
         mainRepository.markURLWillBeHandled()
     }
 
+    func storeQuickAction(_ action: QuickAction) {
+        mainRepository.storeQuickAction(action)
+        NotificationCenter.default.post(name: .quickActionRequested, object: nil)
+    }
+
+    func takeQuickAction() -> QuickAction? {
+        mainRepository.takeQuickAction()
+    }
+
+    var openBackupExportOnAppear: Bool { mainRepository.openBackupExportOnAppear }
+
+    func setOpenBackupExportOnAppear(_ value: Bool) {
+        mainRepository.setOpenBackupExportOnAppear(value)
+    }
+
+    var openAddServiceOnAppear: Bool { mainRepository.openAddServiceOnAppear }
+
+    func setOpenAddServiceOnAppear(_ value: Bool) {
+        mainRepository.setOpenAddServiceOnAppear(value)
+    }
+
+    var focusSearchOnAppear: Bool { mainRepository.focusSearchOnAppear }
+
+    func setFocusSearchOnAppear(_ value: Bool) {
+        mainRepository.setFocusSearchOnAppear(value)
+    }
 }

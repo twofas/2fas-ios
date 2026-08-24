@@ -92,6 +92,11 @@ protocol TokensModuleInteracting: AnyObject {
     // MARK: Sync alerts
     var allServicesRemovedPending: Bool { get }
     func clearAllServicesRemovedPending()
+    // MARK: Quick Action
+    var openAddServiceOnAppear: Bool { get }
+    func setOpenAddServiceOnAppear(_ value: Bool)
+    var focusSearchOnAppear: Bool { get }
+    func setFocusSearchOnAppear(_ value: Bool)
 }
 
 final class TokensModuleInteractor {
@@ -127,7 +132,8 @@ final class TokensModuleInteractor {
     private let localNotificationFetchInteractor: LocalNotificationFetchInteracting
     private let appInfoInteractor: AppInfoInteracting
     private let trashInteractor: TrashingServiceInteracting
-    
+    private let appStateInteractor: AppStateInteracting
+
     private(set) var categoryData: [CategoryData] = []
     
     private var hasUnreadLocalNotification = false
@@ -152,7 +158,8 @@ final class TokensModuleInteractor {
         rootInteractor: RootInteracting,
         localNotificationFetchInteractor: LocalNotificationFetchInteracting,
         appInfoInteractor: AppInfoInteracting,
-        trashInteractor: TrashingServiceInteracting
+        trashInteractor: TrashingServiceInteracting,
+        appStateInteractor: AppStateInteracting
     ) {
         self.appearanceInteractor = appearanceInteractor
         self.serviceDefinitionsInteractor = serviceDefinitionsInteractor
@@ -172,7 +179,8 @@ final class TokensModuleInteractor {
         self.localNotificationFetchInteractor = localNotificationFetchInteractor
         self.appInfoInteractor = appInfoInteractor
         self.trashInteractor = trashInteractor
-        
+        self.appStateInteractor = appStateInteractor
+
         setupLinkInteractor()
     }
 }
@@ -574,6 +582,22 @@ extension TokensModuleInteractor: TokensModuleInteracting {
 
     func clearAllServicesRemovedPending() {
         cloudBackupInteractor.clearAllServicesRemovedPending()
+    }
+
+    var openAddServiceOnAppear: Bool {
+        appStateInteractor.openAddServiceOnAppear
+    }
+
+    func setOpenAddServiceOnAppear(_ value: Bool) {
+        appStateInteractor.setOpenAddServiceOnAppear(value)
+    }
+
+    var focusSearchOnAppear: Bool {
+        appStateInteractor.focusSearchOnAppear
+    }
+
+    func setFocusSearchOnAppear(_ value: Bool) {
+        appStateInteractor.setFocusSearchOnAppear(value)
     }
 
     private var showPassPromoCell: Bool {

@@ -401,6 +401,9 @@
 		C25EE7313033828C00068C45 /* TFInfoContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25EE72F3033827600068C45 /* TFInfoContent.swift */; };
 		C25EE7333033B43500068C45 /* MinimumBottomSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25EE7323033B43500068C45 /* MinimumBottomSpacing.swift */; };
 		C25EE7343033B43500068C45 /* MinimumBottomSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25EE7323033B43500068C45 /* MinimumBottomSpacing.swift */; };
+		C25EF6E3303B408A00907B49 /* QuickAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25EF6E2303B408900907B49 /* QuickAction.swift */; };
+		C25EF6E7303B513600907B49 /* QuickAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25EF6E6303B513600907B49 /* QuickAction.swift */; };
+		C25EF6E9303B513E00907B49 /* MainRepositoryImpl+QuickAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25EF6E8303B513E00907B49 /* MainRepositoryImpl+QuickAction.swift */; };
 		C25F4FDB2622207F008F7755 /* TokensViewEmptySearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25F4FDA2622207F008F7755 /* TokensViewEmptySearchScreen.swift */; };
 		C260DCC22BC885F1007807CC /* ServiceCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C260DCC12BC885F1007807CC /* ServiceCellView.swift */; };
 		C260DF4C2F5B07D4009A0357 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C260DF4B2F5B07D4009A0357 /* KeychainAccess */; };
@@ -2254,6 +2257,9 @@
 		C25ECA803005825900D46587 /* TFInstructionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFInstructionCard.swift; sourceTree = "<group>"; };
 		C25EE72F3033827600068C45 /* TFInfoContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFInfoContent.swift; sourceTree = "<group>"; };
 		C25EE7323033B43500068C45 /* MinimumBottomSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimumBottomSpacing.swift; sourceTree = "<group>"; };
+		C25EF6E2303B408900907B49 /* QuickAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAction.swift; sourceTree = "<group>"; };
+		C25EF6E6303B513600907B49 /* QuickAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAction.swift; sourceTree = "<group>"; };
+		C25EF6E8303B513E00907B49 /* MainRepositoryImpl+QuickAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+QuickAction.swift"; sourceTree = "<group>"; };
 		C25F4FDA2622207F008F7755 /* TokensViewEmptySearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensViewEmptySearchScreen.swift; sourceTree = "<group>"; };
 		C260DCC02BC882AD007807CC /* TwoFASWatch-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TwoFASWatch-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C260DCC12BC885F1007807CC /* ServiceCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCellView.swift; sourceTree = "<group>"; };
@@ -3882,6 +3888,7 @@
 				C229403D2AB3A50700D55B58 /* AndOTPData.swift */,
 				C27A31CB29C90B110094679F /* RaivoData.swift */,
 				C237368F2ABF5E2C00792054 /* Guides.swift */,
+				C25EF6E6303B513600907B49 /* QuickAction.swift */,
 			);
 			path = DataTypes;
 			sourceTree = "<group>";
@@ -5041,6 +5048,7 @@
 		C2BDC6BF1FC1ABF600967D0E /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				C25EF6E2303B408900907B49 /* QuickAction.swift */,
 				C279C1232FA6613E006CC971 /* TwoFASDebug.entitlements */,
 				C279C1242FA6613E006CC971 /* TwoFASProduction.entitlements */,
 				C279C1252FA6613E006CC971 /* TwoFASRelease.entitlements */,
@@ -5297,6 +5305,7 @@
 				C2EA6E5D2BA110FA0034A964 /* MainRepositoryImpl+LocalNotifications.swift */,
 				C22CD3952B91419B005FE348 /* MainRepositoryImpl+MDM.swift */,
 				C249AF62278A40FE005F9D80 /* UserDefaults */,
+				C25EF6E8303B513E00907B49 /* MainRepositoryImpl+QuickAction.swift */,
 			);
 			path = MainRepository;
 			sourceTree = "<group>";
@@ -7263,6 +7272,7 @@
 				C2F7FE012A8AB099004B2C95 /* AddingServiceManuallyFlowController.swift in Sources */,
 				C2CC0A4629D098CB00677A7B /* ExternalImportInstructionsView.swift in Sources */,
 				C240487A27656C590076376E /* ImporterFileErrorPresenter.swift in Sources */,
+				C25EF6E3303B408A00907B49 /* QuickAction.swift in Sources */,
 				C2AD653327F25ABD008997DB /* BrowserExtensionFailurePresenter.swift in Sources */,
 				C249773A277F618A00DC872C /* TrashServiceFlowController.swift in Sources */,
 				C2DDEB25289F3D5200011712 /* TokensViewEmptyListScreen.swift in Sources */,
@@ -8058,6 +8068,7 @@
 				C2AE5F862ADC8B0D00AED670 /* CodeParser.swift in Sources */,
 				C2AE5F852ADC8B0D00AED670 /* Code+LastPass.swift in Sources */,
 				C2E7C3CC2ADB2B9C00478D89 /* MainRepositoryImpl+WebExtensionPairing.swift in Sources */,
+				C25EF6E7303B513600907B49 /* QuickAction.swift in Sources */,
 				C2E7C4112ADB2BE500478D89 /* RaivoData.swift in Sources */,
 				C2E7C4032ADB2BB400478D89 /* TokenGeneratorInteractor.swift in Sources */,
 				C2E7C3D62ADB2B9C00478D89 /* MainRepositoryImpl+PushNotifications.swift in Sources */,
@@ -8073,6 +8084,7 @@
 				C2BF61142D95D5F900E308BF /* SyncMigrationInteractor.swift in Sources */,
 				C2E7C3E32ADB2BB400478D89 /* NewCodeInteractor.swift in Sources */,
 				C2CACFC42B015847001E0F8E /* MainRepositoryImpl+LockScreen.swift in Sources */,
+				C25EF6E9303B513E00907B49 /* MainRepositoryImpl+QuickAction.swift in Sources */,
 				C2E7C3CF2ADB2B9C00478D89 /* MainRepositoryImpl+ServiceDefinition.swift in Sources */,
 				C286E9AA2E377CF20019CF79 /* Code+Open.swift in Sources */,
 				C2E7C3D92ADB2B9C00478D89 /* MainRepositoryImpl+General.swift in Sources */,

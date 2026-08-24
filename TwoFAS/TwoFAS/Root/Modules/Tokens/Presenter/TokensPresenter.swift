@@ -423,6 +423,18 @@ extension TokensPresenter {
         Log("TokensPresenter - handleAddService - toAddService")
         flowController.toAddService()
     }
+
+    func handleAddServiceQuickActionIfNeeded() {
+        guard interactor.openAddServiceOnAppear else { return }
+        interactor.setOpenAddServiceOnAppear(false)
+        handleAddService()
+    }
+
+    func shouldFocusSearchOnQuickAction() -> Bool {
+        guard interactor.focusSearchOnAppear else { return false }
+        interactor.setFocusSearchOnAppear(false)
+        return true
+    }
     
     func handleEditService(_ serviceData: ServiceData) {
         Log("TokensPresenter - handleEditService")

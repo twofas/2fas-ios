@@ -1063,9 +1063,21 @@ internal enum T {
       return T.tr("Localizable", "guides__step_number", p1, fallback: "Step %d")
     }
   }
+  internal enum Home {
+    /// Not now
+    internal static let appReviewDismiss = T.tr("Localizable", "home__app_review_dismiss", fallback: "Not now")
+    /// If the app has been useful to you, please take a moment to rate it. It really helps us out!
+    internal static let appReviewMsg = T.tr("Localizable", "home__app_review_msg", fallback: "If the app has been useful to you, please take a moment to rate it. It really helps us out!")
+    /// Rate
+    internal static let appReviewRate = T.tr("Localizable", "home__app_review_rate", fallback: "Rate")
+    /// Enjoying 2FAS Auth?
+    internal static let appReviewTitle = T.tr("Localizable", "home__app_review_title", fallback: "Enjoying 2FAS Auth?")
+  }
   internal enum Introduction {
     /// In the next step, you'll be asked to choose your Google Drive account, where the 2FA Tokens will be stored safely.
     internal static let backupDescription = T.tr("Localizable", "introduction__backup_description", fallback: "In the next step, you'll be asked to choose your Google Drive account, where the 2FA Tokens will be stored safely.")
+    /// Backup
+    internal static let backupHeader = T.tr("Localizable", "introduction__backup_header", fallback: "Backup")
     /// Learn more about backup
     internal static let backupIcloudCta = T.tr("Localizable", "introduction__backup_icloud_cta", fallback: "Learn more about backup")
     /// 2FAS uses iCloud for secure backup and sync of your 2FA Tokens. The encrypted backup data is stored in iCloud, accessible only by the 2FAS app. Additionally, this feature aids with Token recovery and syncing across iOS devices.
@@ -1254,6 +1266,8 @@ internal enum T {
     internal static let about = T.tr("Localizable", "settings__about", fallback: "About")
     /// Crash Reports
     internal static let aboutCrashOptoutTitle = T.tr("Localizable", "settings__about_crash_optout_title", fallback: "Crash Reports")
+    /// App info, version and licenses.
+    internal static let aboutDescription = T.tr("Localizable", "settings__about_description", fallback: "App info, version and licenses.")
     /// Acknowledgements
     internal static let acknowledgements = T.tr("Localizable", "settings__acknowledgements", fallback: "Acknowledgements")
     /// Advanced
@@ -1264,10 +1278,16 @@ internal enum T {
     internal static let appSecurity = T.tr("Localizable", "settings__app_security", fallback: "App security")
     /// Appearance
     internal static let appearance = T.tr("Localizable", "settings__appearance", fallback: "Appearance")
+    /// Tailor the app's appearance and features.
+    internal static let appearanceDescription = T.tr("Localizable", "settings__appearance_description", fallback: "Tailor the app's appearance and features.")
     /// Apple Watch
     internal static let appleWatch = T.tr("Localizable", "settings__apple_watch", fallback: "Apple Watch")
     /// Backup and Synchronization
     internal static let backupAndSynchronization = T.tr("Localizable", "settings__backup_and_synchronization", fallback: "Backup and Synchronization")
+    /// Backup and Transfer
+    internal static let backupAndTransfer = T.tr("Localizable", "settings__backup_and_transfer", fallback: "Backup and Transfer")
+    /// Back up and sync your Tokens across devices.
+    internal static let backupDescription = T.tr("Localizable", "settings__backup_description", fallback: "Back up and sync your Tokens across devices.")
     /// Biometric Authentication
     internal static let biometricAuthentication = T.tr("Localizable", "settings__biometric_authentication", fallback: "Biometric Authentication")
     /// Biometrics
@@ -1277,16 +1297,24 @@ internal enum T {
     /// Select the time for which the app will be locked.
     /// 
     internal static let blockForFooter = T.tr("Localizable", "settings__block_for_footer", fallback: "Select the time for which the app will be locked.\n")
+    /// Browser Extension
+    internal static let browserExtensionHeader = T.tr("Localizable", "settings__browser_extension_header", fallback: "Browser Extension")
     /// Pairing result
     internal static let browserExtensionResultToolbarTitle = T.tr("Localizable", "settings__browser_extension_result_toolbar_title", fallback: "Pairing result")
     /// Choose topic
     internal static let chooseTopic = T.tr("Localizable", "settings__choose_topic", fallback: "Choose topic")
     /// Configure mail service and try again
     internal static let configureMailServiceTryAgain = T.tr("Localizable", "settings__configure_mail_service_try_again", fallback: "Configure mail service and try again")
+    /// Connected Extensions
+    internal static let connectedExtensions = T.tr("Localizable", "settings__connected_extensions", fallback: "Connected Extensions")
+    /// Manage connected browser extensions.
+    internal static let connectedExtensionsDescription = T.tr("Localizable", "settings__connected_extensions_description", fallback: "Manage connected browser extensions.")
     /// Developer Options
     internal static let developer = T.tr("Localizable", "settings__developer", fallback: "Developer Options")
     /// Display selected services on widgets.
     internal static let displaySelectedServices = T.tr("Localizable", "settings__display_selected_services", fallback: "Display selected services on widgets.")
+    /// Support the development of 2FAS.
+    internal static let donateDescription = T.tr("Localizable", "settings__donate_description", fallback: "Support the development of 2FAS.")
     /// Donate to 2FAS
     internal static let donateTwofas = T.tr("Localizable", "settings__donate_twofas", fallback: "Donate to 2FAS")
     /// Donations
@@ -1336,6 +1364,8 @@ internal enum T {
     internal static let importFromTextFileDescription = T.tr("Localizable", "settings__import_from_text_file_description", fallback: "Text file should contain a list of links starting with 'otpauth://'.")
     /// OTPAuth links
     internal static let importOtpauthTitle = T.tr("Localizable", "settings__import_otpauth_title", fallback: "OTPAuth links")
+    /// Import Tokens from other apps.
+    internal static let importTokensDescription = T.tr("Localizable", "settings__import_tokens_description", fallback: "Import Tokens from other apps.")
     /// Your support allows us to develop new features and improvements. Thank you!
     internal static let infoFooter = T.tr("Localizable", "settings__info_footer", fallback: "Your support allows us to develop new features and improvements. Thank you!")
     /// It matters
@@ -1354,6 +1384,8 @@ internal enum T {
     internal static let mailServicesNotAvailable = T.tr("Localizable", "settings__mail_services_not_available", fallback: "Mail services are not available")
     /// Manage Tokens
     internal static let manageTokens = T.tr("Localizable", "settings__manage_tokens", fallback: "Manage Tokens")
+    /// More
+    internal static let more = T.tr("Localizable", "settings__more", fallback: "More")
     /// No limit
     internal static let noLimit = T.tr("Localizable", "settings__no_limit", fallback: "No limit")
     /// Biometric Lock
@@ -1385,10 +1417,16 @@ internal enum T {
     internal static let problem = T.tr("Localizable", "settings__problem", fallback: "Problem")
     /// Check out this awesome two-factor authentication app from 2FAS: https://2fas.com
     internal static let recommendation = T.tr("Localizable", "settings__recommendation ", fallback: "Check out this awesome two-factor authentication app from 2FAS: https://2fas.com")
+    /// Removed Items
+    internal static let removedItems = T.tr("Localizable", "settings__removed_items", fallback: "Removed Items")
+    /// Recover or permanently delete Tokens you've removed from the app.
+    internal static let removedItemsDescription = T.tr("Localizable", "settings__removed_items_description", fallback: "Recover or permanently delete Tokens you've removed from the app.")
     /// Restore
     internal static let restore = T.tr("Localizable", "settings__restore", fallback: "Restore")
     /// Security
     internal static let security = T.tr("Localizable", "settings__security", fallback: "Security")
+    /// Control your app security and privacy settings.
+    internal static let securityDescription = T.tr("Localizable", "settings__security_description", fallback: "Control your app security and privacy settings.")
     /// See incoming tokens on the list.
     internal static let seeIncomingTokens = T.tr("Localizable", "settings__see_incoming_tokens", fallback: "See incoming tokens on the list.")
     /// Select PIN length
@@ -1437,6 +1475,8 @@ internal enum T {
     internal static let support = T.tr("Localizable", "settings__support", fallback: "2FAS Support")
     /// Support and Share
     internal static let supportAndShare = T.tr("Localizable", "settings__support_and_share", fallback: "Support and Share")
+    /// Get help from the 2FAS team.
+    internal static let supportDescription = T.tr("Localizable", "settings__support_description", fallback: "Get help from the 2FAS team.")
     /// Tell a friend
     internal static let tellAFriend = T.tr("Localizable", "settings__tell_a_friend", fallback: "Tell a friend")
     /// Terms of Service
@@ -1477,6 +1517,16 @@ internal enum T {
     internal static let widgetsTitle = T.tr("Localizable", "settings__widgets_title", fallback: "After you enable widgets, all your Tokens can be accessed without your PIN code.\n\nAre you sure you want to enable widgets?")
     /// Write a review
     internal static let writeAReview = T.tr("Localizable", "settings__write_a_review", fallback: "Write a review")
+  }
+  internal enum Shortcuts {
+    /// DON'T DELETE ME without full backup
+    internal static let backupTitle = T.tr("Localizable", "shortcuts__backup_title", fallback: "DON'T DELETE ME without full backup")
+    /// Pair service
+    internal static let pairTitle = T.tr("Localizable", "shortcuts__pair_title", fallback: "Pair service")
+    /// Search for service
+    internal static let searchTitle = T.tr("Localizable", "shortcuts__search_title", fallback: "Search for service")
+    /// Get support
+    internal static let supportTitle = T.tr("Localizable", "shortcuts__support_title", fallback: "Get support")
   }
   internal enum Social {
     /// Discord

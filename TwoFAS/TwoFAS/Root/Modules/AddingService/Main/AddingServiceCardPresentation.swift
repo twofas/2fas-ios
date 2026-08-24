@@ -36,6 +36,11 @@ final class AddServiceCardPresentationController: UIPresentationController {
     /// so the presenting screen can suppress the zoom's push-back.
     private let setSublayerTransformDisabled: (Bool) -> Void
     private let dimmingView = UIView()
+    /// Fitted card size for a given available size. Measuring the SwiftUI
+    /// content is a full layout pass, and the container re-asks for the frame
+    /// on every layout, so the result is cached until the available size
+    /// changes.
+    private var cachedCardSize: (available: CGSize, fitting: CGSize)?
 
     init(
         presentedViewController: UIViewController,
@@ -62,7 +67,15 @@ final class AddServiceCardPresentationController: UIPresentationController {
         guard let containerView else { return .zero }
         let bounds = containerView.bounds
         let available = bounds.insetBy(dx: Constants.margin, dy: Constants.margin)
-        let fitting = presentedView?.sizeThatFits(available.size) ?? .zero
+        let fitting: CGSize
+        if let cached = cachedCardSize, cached.available == available.size {
+            fitting = cached.fitting
+        } else if let presentedView {
+            fitting = presentedView.sizeThatFits(available.size)
+            cachedCardSize = (available.size, fitting)
+        } else {
+            fitting = .zero
+        }
         let size = CGSize(
             width: min(max(fitting.width, 0), available.width),
             height: min(max(fitting.height, 0), available.height)

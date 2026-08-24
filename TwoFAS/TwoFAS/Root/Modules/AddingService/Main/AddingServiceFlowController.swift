@@ -235,22 +235,22 @@ private struct AddServiceHostingView: View {
                     .ignoresSafeArea()
                     .onTapGesture(perform: onFullyDismissed)
 
-                card(outerPadding: .ML)
+                card()
+                    .padding(.ML)
             }
         } else {
-            card(outerPadding: nil)
+            card()
         }
     }
 
     @ViewBuilder
-    private func card(outerPadding: Spacing?) -> some View {
+    private func card() -> some View {
         if let flowController = flowController.flowController {
             AddingServiceView(
                 presenter: AddingServicePresenter(
                     flowController: flowController,
                     interactor: ModuleInteractorFactory.shared.addingServiceModuleInteractor()
                 ),
-                outerPadding: outerPadding,
                 onClose: onFullyDismissed
             )
             .background(.clear)

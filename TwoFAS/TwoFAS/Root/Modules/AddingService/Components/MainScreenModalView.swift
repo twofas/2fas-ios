@@ -27,7 +27,6 @@ struct MainScreenModalView<Content: View, Footer: View>: View {
     
     let title: String
     let subtitle: String
-    var outerPadding: Spacing? = .ML
     
     @ViewBuilder
     let content: () -> Content
@@ -65,7 +64,6 @@ struct MainScreenModalView<Content: View, Footer: View>: View {
                 .stroke(.bordersVibrant, lineWidth: 1)
         }
         .environment(\.colorScheme, .dark)
-        .padding(outerPadding?.value ?? 0)
     }
     
     @ViewBuilder

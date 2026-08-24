@@ -96,6 +96,10 @@ final class AddingServiceFlowController: FlowController {
         let hosting = UIHostingController(rootView: rootView)
 
         hosting.modalPresentationStyle = .custom
+        // Publishes the SwiftUI content's ideal size as `preferredContentSize`,
+        // so the presentation controller can drop its cached card size when
+        // the content reflows (Dynamic Type, content swaps).
+        hosting.sizingOptions = .preferredContentSize
         hosting.isModalInPresentation = true
         hosting.definesPresentationContext = true
         // Prevents UIKit from snapshotting the full focus environment on present(),

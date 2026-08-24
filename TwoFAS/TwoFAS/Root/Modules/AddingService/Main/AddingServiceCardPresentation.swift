@@ -39,7 +39,9 @@ final class AddServiceCardPresentationController: UIPresentationController {
     /// Fitted card size for a given available size. Measuring the SwiftUI
     /// content is a full layout pass, and the container re-asks for the frame
     /// on every layout, so the result is cached until the available size
-    /// changes.
+    /// changes or the presented controller reports a new preferred content
+    /// size (its content reflowed, e.g. a Dynamic Type change or a swap of
+    /// the card's content).
     private var cachedCardSize: (available: CGSize, fitting: CGSize)?
 
     init(
@@ -92,6 +94,13 @@ final class AddServiceCardPresentationController: UIPresentationController {
         super.containerViewWillLayoutSubviews()
         dimmingView.frame = containerView?.bounds ?? .zero
         presentedView?.frame = frameOfPresentedViewInContainerView
+    }
+
+    override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
+        super.preferredContentSizeDidChange(forChildContentContainer: container)
+        guard container === presentedViewController else { return }
+        cachedCardSize = nil
+        containerView?.setNeedsLayout()
     }
 
     // MARK: - Transitions

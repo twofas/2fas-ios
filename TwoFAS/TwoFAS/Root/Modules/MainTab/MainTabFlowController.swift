@@ -142,7 +142,6 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
         width: NSLayoutConstraint,
         height: NSLayoutConstraint
     )?
-    private var didHandleFirstAppearance = false
     private var shouldFocusSearchOnActivation = true
 
     private static let transparentPixelImage: UIImage = {

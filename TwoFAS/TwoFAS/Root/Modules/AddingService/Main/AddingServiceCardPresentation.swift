@@ -22,9 +22,8 @@ import Common
 
 /// Presents the "add service" card centered in the container, sized to its
 /// content, over a dimmed backdrop. Tapping the backdrop invokes
-/// `onBackdropTap`. The animation itself comes from the system zoom
-/// transition (`UIViewController.preferredTransition`), not from here.
-@available(iOS 26.0, *)
+/// `onBackdropTap`. The animation itself is owned by the transitioning
+/// delegate, not by this controller.
 final class AddServiceCardPresentationController: UIPresentationController {
     private enum Constants {
         static let dimColor = UIColor.black.withAlphaComponent(0.7)
@@ -136,48 +135,3 @@ final class AddServiceCardPresentationController: UIPresentationController {
     }
 }
 
-/// Pairs the system zoom transition with `AddServiceCardPresentationController`.
-/// Returning `nil` animators lets UIKit fall back to `preferredTransition`.
-@available(iOS 26.0, *)
-final class AddServiceCardTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
-    private let cardSizeProvider: (CGSize) -> CGSize
-    private let setSublayerTransformDisabled: (Bool) -> Void
-    private let onBackdropTap: () -> Void
-
-    init(
-        cardSizeProvider: @escaping (CGSize) -> CGSize,
-        setSublayerTransformDisabled: @escaping (Bool) -> Void,
-        onBackdropTap: @escaping () -> Void
-    ) {
-        self.cardSizeProvider = cardSizeProvider
-        self.setSublayerTransformDisabled = setSublayerTransformDisabled
-        self.onBackdropTap = onBackdropTap
-        super.init()
-    }
-
-    func animationController(
-        forPresented presented: UIViewController,
-        presenting: UIViewController,
-        source: UIViewController
-    ) -> UIViewControllerAnimatedTransitioning? {
-        nil
-    }
-
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        nil
-    }
-
-    func presentationController(
-        forPresented presented: UIViewController,
-        presenting: UIViewController?,
-        source: UIViewController
-    ) -> UIPresentationController? {
-        AddServiceCardPresentationController(
-            presentedViewController: presented,
-            presenting: presenting,
-            cardSizeProvider: cardSizeProvider,
-            setSublayerTransformDisabled: setSublayerTransformDisabled,
-            onBackdropTap: onBackdropTap
-        )
-    }
-}

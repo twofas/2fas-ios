@@ -82,13 +82,12 @@ final class AddingServiceFlowController: FlowController {
 
         let rootView = AddServiceHostingView(
             flowController: box,
-            showsBackdrop: !usesSystemZoom,
             onFullyDismissed: onFullyDismissed
         )
 
         let hosting = UIHostingController(rootView: rootView)
 
-        hosting.view.backgroundColor = .black
+        
         hosting.modalPresentationStyle = .custom
         hosting.isModalInPresentation = true
         hosting.definesPresentationContext = true
@@ -96,19 +95,39 @@ final class AddingServiceFlowController: FlowController {
         // which blocks the main thread for several seconds on large token lists.
         hosting.restoresFocusAfterTransition = false
 
-        let transitioningDelegate: any UIViewControllerTransitioningDelegate
+        let cardSizeProvider: (CGSize) -> CGSize = { [weak hosting] fitting in
+            hosting?.sizeThatFits(in: fitting) ?? .zero
+        }
+        let transitioningDelegate: AddServiceTransitioningDelegate
         if #available(iOS 26.0, *), usesSystemZoom {
             // The system zoom morphs the source view into the card; the
             // presentation controller owns sizing and the persistent dimming.
-            transitioningDelegate = configureSystemZoom(
-                for: hosting,
-                sourceView: zoomSourceView,
+            configureSystemZoom(for: hosting, sourceView: zoomSourceView)
+
+            // `sublayerTransform` is disabled on the presenting screen only for
+            // the duration of this presentation; its `MainView` sits above the
+            // zoom source.
+            let mainView = sequence(first: zoomSourceView, next: { $0?.superview })
+                .compactMap { $0 as? MainView }
+                .first
+            
+            transitioningDelegate = AddServiceTransitioningDelegate(
+                legacySourceProvider: nil,
+                cardSizeProvider: cardSizeProvider,
+                setSublayerTransformDisabled: { [weak mainView] disabled in
+                    mainView?.disablesSublayerTransform = disabled
+                },
                 onBackdropTap: onFullyDismissed
             )
         } else {
+            hosting.view.backgroundColor = .clear
+            
             let sourceView = self.zoomSourceView(in: viewController)
-            transitioningDelegate = ZoomFromRectTransitioningDelegate(
-                sourceProvider: { [weak sourceView] in sourceView }
+            transitioningDelegate = AddServiceTransitioningDelegate(
+                legacySourceProvider: { [weak sourceView] in sourceView },
+                cardSizeProvider: cardSizeProvider,
+                setSublayerTransformDisabled: { _ in },
+                onBackdropTap: onFullyDismissed
             )
         }
         hosting.transitioningDelegate = transitioningDelegate
@@ -124,9 +143,8 @@ final class AddingServiceFlowController: FlowController {
     @available(iOS 26.0, *)
     private static func configureSystemZoom(
         for hosting: UIHostingController<AddServiceHostingView>,
-        sourceView: UIView?,
-        onBackdropTap: @escaping () -> Void
-    ) -> any UIViewControllerTransitioningDelegate {
+        sourceView: UIView?
+    ) {
         // The presentation controller owns the dimming; without this the system
         // zoom adds its own on top and removes it when the transition ends,
         // which reads as a visible step.
@@ -139,23 +157,7 @@ final class AddingServiceFlowController: FlowController {
         // card's shadow still shows).
         hosting.view.layer.cornerRadius = TFCornerRadius.extraLarge.value
         hosting.view.layer.cornerCurve = .continuous
-
-        // `sublayerTransform` is disabled on the presenting screen only for
-        // the duration of this presentation; its `MainView` sits above the
-        // zoom source.
-        let mainView = sequence(first: sourceView, next: { $0?.superview })
-            .compactMap { $0 as? MainView }
-            .first
-
-        return AddServiceCardTransitioningDelegate(
-            cardSizeProvider: { [weak hosting] fitting in
-                hosting?.sizeThatFits(in: fitting) ?? .zero
-            },
-            setSublayerTransformDisabled: { [weak mainView] disabled in
-                mainView?.disablesSublayerTransform = disabled
-            },
-            onBackdropTap: onBackdropTap
-        )
+        hosting.view.backgroundColor = .black
     }
 
     private static let zoomSourceTag = 0xADD5_E70C
@@ -220,32 +222,13 @@ private final class FlowControllerBox {
     var flowController: AddingServiceFlowControlling?
 }
 
+/// The card content; sizing, margin and the dimmed backdrop are owned by
+/// `AddServiceCardPresentationController`.
 private struct AddServiceHostingView: View {
     let flowController: FlowControllerBox
-    /// `true`: full-screen backdrop with the padded card inside (legacy
-    /// transition). `false`: the view is the card itself; dimming and sizing
-    /// come from `AddServiceCardPresentationController`.
-    let showsBackdrop: Bool
     let onFullyDismissed: () -> Void
 
     var body: some View {
-        if showsBackdrop {
-            ZStack {
-                Color.black.opacity(0.7)
-                    .contentShape(Rectangle())
-                    .ignoresSafeArea()
-                    .onTapGesture(perform: onFullyDismissed)
-
-                card()
-                    .padding(.ML)
-            }
-        } else {
-            card()
-        }
-    }
-
-    @ViewBuilder
-    private func card() -> some View {
         if let flowController = flowController.flowController {
             AddingServiceView(
                 presenter: AddingServicePresenter(
@@ -513,11 +496,26 @@ private final class ZoomFromRectAnimator: NSObject, UIViewControllerAnimatedTran
     }
 }
 
-private final class ZoomFromRectTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
-    private let sourceProvider: () -> UIView?
+/// Drives both variants of the presentation: with `legacySourceProvider` the
+/// zoom-from-rect animator runs; without it the animators are `nil`, letting
+/// UIKit use the hosting controller's `preferredTransition` (system zoom).
+/// `AddServiceCardPresentationController` is shared by both.
+private final class AddServiceTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
+    private let legacySourceProvider: (() -> UIView?)?
+    private let cardSizeProvider: (CGSize) -> CGSize
+    private let setSublayerTransformDisabled: (Bool) -> Void
+    private let onBackdropTap: () -> Void
 
-    init(sourceProvider: @escaping () -> UIView?) {
-        self.sourceProvider = sourceProvider
+    init(
+        legacySourceProvider: (() -> UIView?)?,
+        cardSizeProvider: @escaping (CGSize) -> CGSize,
+        setSublayerTransformDisabled: @escaping (Bool) -> Void,
+        onBackdropTap: @escaping () -> Void
+    ) {
+        self.legacySourceProvider = legacySourceProvider
+        self.cardSizeProvider = cardSizeProvider
+        self.setSublayerTransformDisabled = setSublayerTransformDisabled
+        self.onBackdropTap = onBackdropTap
         super.init()
     }
 
@@ -526,11 +524,11 @@ private final class ZoomFromRectTransitioningDelegate: NSObject, UIViewControlle
         presenting: UIViewController,
         source: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
-        ZoomFromRectAnimator(direction: .present, sourceProvider: sourceProvider)
+        legacySourceProvider.map { ZoomFromRectAnimator(direction: .present, sourceProvider: $0) }
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        ZoomFromRectAnimator(direction: .dismiss, sourceProvider: sourceProvider)
+        legacySourceProvider.map { ZoomFromRectAnimator(direction: .dismiss, sourceProvider: $0) }
     }
 
     func presentationController(
@@ -538,75 +536,13 @@ private final class ZoomFromRectTransitioningDelegate: NSObject, UIViewControlle
         presenting: UIViewController?,
         source: UIViewController
     ) -> UIPresentationController? {
-        DimmingPresentationController(presentedViewController: presented, presenting: presenting)
-    }
-}
-
-// MARK: - Dimming Presentation Controller
-
-private final class DimmingPresentationController: UIPresentationController {
-    private enum Constants {
-        static let dimColor: UIColor = .black
-        static let maxAlpha: CGFloat = 0.4
-        static let durationShow: TimeInterval = 0.15
-        static let durationHide: TimeInterval = 0.35
-        static let curve: UIView.AnimationOptions = .curveLinear
-    }
-
-    private let dimView: UIView = {
-        let view = UIView()
-        view.backgroundColor = Constants.dimColor
-        view.alpha = 0
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    override var shouldRemovePresentersView: Bool { false }
-
-    override var frameOfPresentedViewInContainerView: CGRect {
-        containerView?.bounds ?? super.frameOfPresentedViewInContainerView
-    }
-
-    override func containerViewWillLayoutSubviews() {
-        super.containerViewWillLayoutSubviews()
-        presentedView?.frame = frameOfPresentedViewInContainerView
-    }
-
-    override func presentationTransitionWillBegin() {
-        super.presentationTransitionWillBegin()
-        guard let container = containerView else { return }
-
-        container.insertSubview(dimView, at: 0)
-        NSLayoutConstraint.activate([
-            dimView.topAnchor.constraint(equalTo: container.topAnchor),
-            dimView.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-            dimView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            dimView.trailingAnchor.constraint(equalTo: container.trailingAnchor)
-        ])
-
-        UIView.animate(
-            withDuration: Constants.durationShow,
-            delay: 0,
-            options: Constants.curve,
-            animations: { [self] in
-                dimView.alpha = Constants.maxAlpha
-            }
-        )
-    }
-
-    override func dismissalTransitionWillBegin() {
-        super.dismissalTransitionWillBegin()
-
-        UIView.animate(
-            withDuration: Constants.durationHide,
-            delay: 0,
-            options: Constants.curve,
-            animations: { [self] in
-                dimView.alpha = 0
-            },
-            completion: { [weak self] _ in
-                self?.dimView.removeFromSuperview()
-            }
+        AddServiceCardPresentationController(
+            presentedViewController: presented,
+            presenting: presenting,
+            cardSizeProvider: cardSizeProvider,
+            setSublayerTransformDisabled: setSublayerTransformDisabled,
+            onBackdropTap: onBackdropTap
         )
     }
 }
+

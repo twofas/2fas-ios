@@ -43,9 +43,16 @@ final class MainViewController: UIViewController {
 
     var onAddService: (() -> Void)?
 
-    /// Zoom source for the "add service" presentation (iOS 26 only).
+    /// Zoom source for the "add service" presentation (iOS 26 only): the "+"
+    /// button, or `nil` while it has no resolved on-screen frame to zoom
+    /// from (its slot in the tab bar is located asynchronously, so on a cold
+    /// launch the button can still be zero-sized).
     var addServiceSourceView: UIView? {
-        guard #available(iOS 26.0, *) else { return nil }
+        guard #available(iOS 26.0, *),
+              addServiceButton.window != nil,
+              addServiceButton.bounds.width > 0,
+              addServiceButton.bounds.height > 0
+        else { return nil }
         return addServiceButton
     }
 

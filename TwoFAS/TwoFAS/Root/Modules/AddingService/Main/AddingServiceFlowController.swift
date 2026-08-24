@@ -140,8 +140,9 @@ final class AddingServiceFlowController: FlowController {
         hosting.view.layer.cornerRadius = TFCornerRadius.extraLarge.value
         hosting.view.layer.cornerCurve = .continuous
 
-        // The presenting screen is stabilized only for the duration of this
-        // presentation; its `MainView` sits above the zoom source.
+        // `sublayerTransform` is disabled on the presenting screen only for
+        // the duration of this presentation; its `MainView` sits above the
+        // zoom source.
         let mainView = sequence(first: sourceView, next: { $0?.superview })
             .compactMap { $0 as? MainView }
             .first
@@ -150,8 +151,8 @@ final class AddingServiceFlowController: FlowController {
             cardSizeProvider: { [weak hosting] fitting in
                 hosting?.sizeThatFits(in: fitting) ?? .zero
             },
-            setStabilizationActive: { [weak mainView] active in
-                mainView?.isStabilizationActive = active
+            setSublayerTransformDisabled: { [weak mainView] disabled in
+                mainView?.disablesSublayerTransform = disabled
             },
             onBackdropTap: onBackdropTap
         )

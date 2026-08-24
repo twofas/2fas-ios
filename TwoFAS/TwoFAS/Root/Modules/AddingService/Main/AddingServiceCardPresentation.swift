@@ -36,18 +36,18 @@ final class AddServiceCardPresentationController: UIPresentationController {
     private let onBackdropTap: () -> Void
     /// Receives `true` when the presentation begins and `false` once it ends,
     /// so the presenting screen can suppress the zoom's push-back.
-    private let setStabilizationActive: (Bool) -> Void
+    private let setSublayerTransformDisabled: (Bool) -> Void
     private let dimmingView = UIView()
 
     init(
         presentedViewController: UIViewController,
         presenting: UIViewController?,
         cardSizeProvider: @escaping (CGSize) -> CGSize,
-        setStabilizationActive: @escaping (Bool) -> Void,
+        setSublayerTransformDisabled: @escaping (Bool) -> Void,
         onBackdropTap: @escaping () -> Void
     ) {
         self.cardSizeProvider = cardSizeProvider
-        self.setStabilizationActive = setStabilizationActive
+        self.setSublayerTransformDisabled = setSublayerTransformDisabled
         self.onBackdropTap = onBackdropTap
         super.init(presentedViewController: presentedViewController, presenting: presenting)
 
@@ -91,7 +91,7 @@ final class AddServiceCardPresentationController: UIPresentationController {
         super.presentationTransitionWillBegin()
         guard let containerView else { return }
 
-        setStabilizationActive(true)
+        setSublayerTransformDisabled(true)
 
         dimmingView.frame = containerView.bounds
         containerView.insertSubview(dimmingView, at: 0)
@@ -105,7 +105,7 @@ final class AddServiceCardPresentationController: UIPresentationController {
         super.presentationTransitionDidEnd(completed)
         if !completed {
             dimmingView.removeFromSuperview()
-            setStabilizationActive(false)
+            setSublayerTransformDisabled(false)
         }
     }
 
@@ -124,7 +124,7 @@ final class AddServiceCardPresentationController: UIPresentationController {
         super.dismissalTransitionDidEnd(completed)
         if completed {
             dimmingView.removeFromSuperview()
-            setStabilizationActive(false)
+            setSublayerTransformDisabled(false)
         }
     }
 
@@ -141,16 +141,16 @@ final class AddServiceCardPresentationController: UIPresentationController {
 @available(iOS 26.0, *)
 final class AddServiceCardTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     private let cardSizeProvider: (CGSize) -> CGSize
-    private let setStabilizationActive: (Bool) -> Void
+    private let setSublayerTransformDisabled: (Bool) -> Void
     private let onBackdropTap: () -> Void
 
     init(
         cardSizeProvider: @escaping (CGSize) -> CGSize,
-        setStabilizationActive: @escaping (Bool) -> Void,
+        setSublayerTransformDisabled: @escaping (Bool) -> Void,
         onBackdropTap: @escaping () -> Void
     ) {
         self.cardSizeProvider = cardSizeProvider
-        self.setStabilizationActive = setStabilizationActive
+        self.setSublayerTransformDisabled = setSublayerTransformDisabled
         self.onBackdropTap = onBackdropTap
         super.init()
     }
@@ -176,7 +176,7 @@ final class AddServiceCardTransitioningDelegate: NSObject, UIViewControllerTrans
             presentedViewController: presented,
             presenting: presenting,
             cardSizeProvider: cardSizeProvider,
-            setStabilizationActive: setStabilizationActive,
+            setSublayerTransformDisabled: setSublayerTransformDisabled,
             onBackdropTap: onBackdropTap
         )
     }

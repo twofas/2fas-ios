@@ -31,7 +31,6 @@ final class AddServiceCardPresentationController: UIPresentationController {
         static let margin = Spacing.ML.value
     }
 
-    private let cardSizeProvider: (CGSize) -> CGSize
     private let onBackdropTap: () -> Void
     /// Receives `true` when the presentation begins and `false` once it ends,
     /// so the presenting screen can suppress the zoom's push-back.
@@ -41,11 +40,9 @@ final class AddServiceCardPresentationController: UIPresentationController {
     init(
         presentedViewController: UIViewController,
         presenting: UIViewController?,
-        cardSizeProvider: @escaping (CGSize) -> CGSize,
         setSublayerTransformDisabled: @escaping (Bool) -> Void,
         onBackdropTap: @escaping () -> Void
     ) {
-        self.cardSizeProvider = cardSizeProvider
         self.setSublayerTransformDisabled = setSublayerTransformDisabled
         self.onBackdropTap = onBackdropTap
         super.init(presentedViewController: presentedViewController, presenting: presenting)
@@ -65,7 +62,7 @@ final class AddServiceCardPresentationController: UIPresentationController {
         guard let containerView else { return .zero }
         let bounds = containerView.bounds
         let available = bounds.insetBy(dx: Constants.margin, dy: Constants.margin)
-        let fitting = cardSizeProvider(available.size)
+        let fitting = presentedView?.sizeThatFits(available.size) ?? .zero
         let size = CGSize(
             width: min(max(fitting.width, 0), available.width),
             height: min(max(fitting.height, 0), available.height)

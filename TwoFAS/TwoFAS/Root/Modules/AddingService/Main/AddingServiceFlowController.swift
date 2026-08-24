@@ -95,9 +95,6 @@ final class AddingServiceFlowController: FlowController {
         // which blocks the main thread for several seconds on large token lists.
         hosting.restoresFocusAfterTransition = false
 
-        let cardSizeProvider: (CGSize) -> CGSize = { [weak hosting] fitting in
-            hosting?.sizeThatFits(in: fitting) ?? .zero
-        }
         let transitioningDelegate: AddServiceTransitioningDelegate
         if #available(iOS 26.0, *), usesSystemZoom {
             // The system zoom morphs the source view into the card; the
@@ -113,7 +110,6 @@ final class AddingServiceFlowController: FlowController {
             
             transitioningDelegate = AddServiceTransitioningDelegate(
                 legacySourceProvider: nil,
-                cardSizeProvider: cardSizeProvider,
                 setSublayerTransformDisabled: { [weak mainView] disabled in
                     mainView?.disablesSublayerTransform = disabled
                 },
@@ -125,7 +121,6 @@ final class AddingServiceFlowController: FlowController {
             let sourceView = self.zoomSourceView(in: viewController)
             transitioningDelegate = AddServiceTransitioningDelegate(
                 legacySourceProvider: { [weak sourceView] in sourceView },
-                cardSizeProvider: cardSizeProvider,
                 setSublayerTransformDisabled: { _ in },
                 onBackdropTap: onFullyDismissed
             )
@@ -502,18 +497,15 @@ private final class ZoomFromRectAnimator: NSObject, UIViewControllerAnimatedTran
 /// `AddServiceCardPresentationController` is shared by both.
 private final class AddServiceTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     private let legacySourceProvider: (() -> UIView?)?
-    private let cardSizeProvider: (CGSize) -> CGSize
     private let setSublayerTransformDisabled: (Bool) -> Void
     private let onBackdropTap: () -> Void
 
     init(
         legacySourceProvider: (() -> UIView?)?,
-        cardSizeProvider: @escaping (CGSize) -> CGSize,
         setSublayerTransformDisabled: @escaping (Bool) -> Void,
         onBackdropTap: @escaping () -> Void
     ) {
         self.legacySourceProvider = legacySourceProvider
-        self.cardSizeProvider = cardSizeProvider
         self.setSublayerTransformDisabled = setSublayerTransformDisabled
         self.onBackdropTap = onBackdropTap
         super.init()
@@ -539,7 +531,6 @@ private final class AddServiceTransitioningDelegate: NSObject, UIViewControllerT
         AddServiceCardPresentationController(
             presentedViewController: presented,
             presenting: presenting,
-            cardSizeProvider: cardSizeProvider,
             setSublayerTransformDisabled: setSublayerTransformDisabled,
             onBackdropTap: onBackdropTap
         )

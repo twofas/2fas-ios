@@ -130,9 +130,6 @@ protocol MainRepository: AnyObject {
 
     func copy(_ str: String)
     
-    var isAddingServiceVisible: Bool { get }
-    func saveIsAddingServiceVisible(_ value: Bool)
-    
     // MARK: - Services
     var hasServices: Bool { get }
     

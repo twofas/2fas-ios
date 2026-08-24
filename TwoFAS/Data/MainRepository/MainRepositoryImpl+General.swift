@@ -38,12 +38,6 @@ extension MainRepositoryImpl {
         _urlWillBeHandled = true
     }
 
-    var isAddingServiceVisible: Bool { _isAddingServiceVisible }
-
-    func saveIsAddingServiceVisible(_ value: Bool) {
-        _isAddingServiceVisible = value
-    }
-
     var currentAppVersion: String {
         appVersion ?? "-"
     }

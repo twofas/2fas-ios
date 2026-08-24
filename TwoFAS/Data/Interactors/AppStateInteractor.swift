@@ -36,9 +36,6 @@ public protocol AppStateInteracting: AnyObject {
     var willURLBeHandled: Bool { get }
     func clearURLWillBeHandled()
     func markURLWillBeHandled()
-
-    var isAddingServiceVisible: Bool { get }
-    func saveIsAddingServiceVisible(_ value: Bool)
 }
 
 final class AppStateInteractor {
@@ -95,11 +92,4 @@ extension AppStateInteractor: AppStateInteracting {
         mainRepository.markURLWillBeHandled()
     }
 
-    var isAddingServiceVisible: Bool { mainRepository.isAddingServiceVisible }
-
-    func saveIsAddingServiceVisible(_ value: Bool) {
-        guard mainRepository.isAddingServiceVisible != value else { return }
-        mainRepository.saveIsAddingServiceVisible(value)
-        notificationCenter.post(name: .addingServiceVisibilityDidChange, object: nil, userInfo: nil)
-    }
 }

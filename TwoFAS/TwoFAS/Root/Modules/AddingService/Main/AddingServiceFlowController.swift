@@ -397,13 +397,10 @@ private final class ZoomFromRectAnimator: NSObject, UIViewControllerAnimatedTran
     }
 
     func animateTransition(using context: UIViewControllerContextTransitioning) {
-        let interactor = InteractorFactory.shared.appStateInteractor()
         switch direction {
         case .present:
-            interactor.saveIsAddingServiceVisible(true)
             animatePresent(context: context)
         case .dismiss:
-            interactor.saveIsAddingServiceVisible(false)
             animateDismiss(context: context)
         }
     }

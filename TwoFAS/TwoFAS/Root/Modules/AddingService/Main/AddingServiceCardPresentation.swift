@@ -19,7 +19,6 @@
 
 import UIKit
 import Common
-import Data
 
 /// Presents the "add service" card centered in the container, sized to its
 /// content, over a dimmed backdrop. Tapping the backdrop invokes
@@ -39,7 +38,6 @@ final class AddServiceCardPresentationController: UIPresentationController {
     /// so the presenting screen can suppress the zoom's push-back.
     private let setStabilizationActive: (Bool) -> Void
     private let dimmingView = UIView()
-    private let appState = InteractorFactory.shared.appStateInteractor()
 
     init(
         presentedViewController: UIViewController,
@@ -93,7 +91,6 @@ final class AddServiceCardPresentationController: UIPresentationController {
         super.presentationTransitionWillBegin()
         guard let containerView else { return }
 
-        appState.saveIsAddingServiceVisible(true)
         setStabilizationActive(true)
 
         dimmingView.frame = containerView.bounds
@@ -108,14 +105,12 @@ final class AddServiceCardPresentationController: UIPresentationController {
         super.presentationTransitionDidEnd(completed)
         if !completed {
             dimmingView.removeFromSuperview()
-            appState.saveIsAddingServiceVisible(false)
             setStabilizationActive(false)
         }
     }
 
     override func dismissalTransitionWillBegin() {
         super.dismissalTransitionWillBegin()
-        appState.saveIsAddingServiceVisible(false)
         presentedViewController.transitionCoordinator?.animate { [dimmingView] _ in
             dimmingView.alpha = 0
         } completion: { [dimmingView] context in
@@ -130,8 +125,6 @@ final class AddServiceCardPresentationController: UIPresentationController {
         if completed {
             dimmingView.removeFromSuperview()
             setStabilizationActive(false)
-        } else {
-            appState.saveIsAddingServiceVisible(true)
         }
     }
 

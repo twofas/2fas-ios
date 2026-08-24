@@ -40,7 +40,6 @@ final class MainViewController: UIViewController {
     /// `MainView` keeps this screen still, and `UITabBarController` can't swap
     /// its own view class.
     private let addServiceButton = UIButton(type: .system)
-    private let appState = InteractorFactory.shared.appStateInteractor()
 
     var onAddService: (() -> Void)?
 
@@ -105,34 +104,9 @@ extension MainViewController {
         addServiceButton.addAction(UIAction { [weak self] _ in
             self?.onAddService?()
         }, for: .touchUpInside)
+        addServiceButton.tintColor = AppColor.accentsBrand.uiColor
         addServiceButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(addServiceButton)
-
-        updateAddServiceButtonAvailability(animated: false)
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(addingServiceVisibilityDidChange),
-            name: .addingServiceVisibilityDidChange,
-            object: nil
-        )
-    }
-
-    @objc
-    private func addingServiceVisibilityDidChange() {
-        updateAddServiceButtonAvailability(animated: true)
-    }
-
-    private func updateAddServiceButtonAvailability(animated: Bool) {
-        let disabled = appState.isAddingServiceVisible
-        addServiceButton.isUserInteractionEnabled = !disabled
-        let tint = disabled ? AppColor.graysGray3.uiColor : AppColor.accentsBrand.uiColor
-        if animated {
-            UIView.animate(withDuration: 0.35) { [addServiceButton] in
-                addServiceButton.tintColor = tint
-            }
-        } else {
-            addServiceButton.tintColor = tint
-        }
     }
 }
 

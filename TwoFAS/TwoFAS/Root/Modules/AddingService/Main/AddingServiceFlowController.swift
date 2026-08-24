@@ -73,13 +73,6 @@ final class AddingServiceFlowController: FlowController {
             parent?.addingServiceDismiss()
         }
 
-        let usesSystemZoom: Bool
-        if #available(iOS 26.0, *), zoomSourceView != nil {
-            usesSystemZoom = true
-        } else {
-            usesSystemZoom = false
-        }
-
         let rootView = AddServiceHostingView(
             flowController: box,
             onFullyDismissed: onFullyDismissed
@@ -87,7 +80,6 @@ final class AddingServiceFlowController: FlowController {
 
         let hosting = UIHostingController(rootView: rootView)
 
-        
         hosting.modalPresentationStyle = .custom
         hosting.isModalInPresentation = true
         hosting.definesPresentationContext = true
@@ -95,8 +87,9 @@ final class AddingServiceFlowController: FlowController {
         // which blocks the main thread for several seconds on large token lists.
         hosting.restoresFocusAfterTransition = false
 
-        let transitioningDelegate: AddServiceTransitioningDelegate
-        if #available(iOS 26.0, *), usesSystemZoom {
+        let legacySourceProvider: (() -> UIView?)?
+        let setSublayerTransformDisabled: (Bool) -> Void
+        if #available(iOS 26.0, *), let zoomSourceView {
             // The system zoom morphs the source view into the card; the
             // presentation controller owns sizing and the persistent dimming.
             configureSystemZoom(for: hosting, sourceView: zoomSourceView)
@@ -104,27 +97,25 @@ final class AddingServiceFlowController: FlowController {
             // `sublayerTransform` is disabled on the presenting screen only for
             // the duration of this presentation; its `MainView` sits above the
             // zoom source.
-            let mainView = sequence(first: zoomSourceView, next: { $0?.superview })
+            let mainView = sequence(first: zoomSourceView, next: { $0.superview })
                 .compactMap { $0 as? MainView }
                 .first
-            
-            transitioningDelegate = AddServiceTransitioningDelegate(
-                legacySourceProvider: nil,
-                setSublayerTransformDisabled: { [weak mainView] disabled in
-                    mainView?.disablesSublayerTransform = disabled
-                },
-                onBackdropTap: onFullyDismissed
-            )
+            legacySourceProvider = nil
+            setSublayerTransformDisabled = { [weak mainView] disabled in
+                mainView?.disablesSublayerTransform = disabled
+            }
         } else {
             hosting.view.backgroundColor = .clear
-            
+
             let sourceView = self.zoomSourceView(in: viewController)
-            transitioningDelegate = AddServiceTransitioningDelegate(
-                legacySourceProvider: { [weak sourceView] in sourceView },
-                setSublayerTransformDisabled: { _ in },
-                onBackdropTap: onFullyDismissed
-            )
+            legacySourceProvider = { [weak sourceView] in sourceView }
+            setSublayerTransformDisabled = { _ in }
         }
+        let transitioningDelegate = AddServiceTransitioningDelegate(
+            legacySourceProvider: legacySourceProvider,
+            setSublayerTransformDisabled: setSublayerTransformDisabled,
+            onBackdropTap: onFullyDismissed
+        )
         hosting.transitioningDelegate = transitioningDelegate
 
         let flowController = AddingServiceFlowController(viewController: hosting)

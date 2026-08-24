@@ -253,7 +253,7 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
     private func configureAddServiceSlotLayoutGuide() {
         view.addLayoutGuide(addServiceSlotLayoutGuide)
         let constraints = (
-            x: addServiceSlotLayoutGuide.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            x: addServiceSlotLayoutGuide.leftAnchor.constraint(equalTo: view.leftAnchor),
             y: addServiceSlotLayoutGuide.topAnchor.constraint(equalTo: view.topAnchor),
             width: addServiceSlotLayoutGuide.widthAnchor.constraint(equalToConstant: 0),
             height: addServiceSlotLayoutGuide.heightAnchor.constraint(equalToConstant: 0)

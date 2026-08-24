@@ -60,9 +60,9 @@ final class AddingServiceFlowController: FlowController {
         viewController.presentedViewController is UIHostingController<AddServiceHostingView>
     }
 
-    /// - Parameter zoomSourceView: the view the card zooms out of (the floating
-    ///   "+", iOS 26). When `nil` (iOS 18) the legacy zoom-from-top transition
-    ///   is used instead.
+    /// - Parameter zoomSourceView: the view the card zooms out of using the
+    ///   system zoom transition (iOS 26). When `nil`, or below iOS 26, the
+    ///   legacy zoom-from-top transition is used instead.
     static func present(
         on viewController: UIViewController,
         parent: AddingServiceFlowControllerParent,
@@ -98,8 +98,8 @@ final class AddingServiceFlowController: FlowController {
 
         let transitioningDelegate: any UIViewControllerTransitioningDelegate
         if #available(iOS 26.0, *), usesSystemZoom {
-            // System zoom morphs the "+" into the card; the presentation
-            // controller owns sizing and the persistent dimming.
+            // The system zoom morphs the source view into the card; the
+            // presentation controller owns sizing and the persistent dimming.
             transitioningDelegate = configureSystemZoom(
                 for: hosting,
                 sourceView: zoomSourceView,
@@ -140,8 +140,8 @@ final class AddingServiceFlowController: FlowController {
         hosting.view.layer.cornerRadius = TFCornerRadius.extraLarge.value
         hosting.view.layer.cornerCurve = .continuous
 
-        // The "+" lives in `MainView`; stabilization is only switched on for
-        // the duration of this presentation.
+        // The presenting screen is stabilized only for the duration of this
+        // presentation; its `MainView` sits above the zoom source.
         let mainView = sequence(first: sourceView, next: { $0?.superview })
             .compactMap { $0 as? MainView }
             .first

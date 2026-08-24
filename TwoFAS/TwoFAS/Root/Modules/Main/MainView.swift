@@ -19,19 +19,18 @@
 
 import UIKit
 
-/// `MainViewController`'s root view: hosts the tab bar container and the
-/// floating "+", and doesn't get "pushed back" by system presentation
-/// transitions while `isStabilizationActive` is set.
+/// Root view of the main screen: its content doesn't get "pushed back" by
+/// system presentation transitions while `isStabilizationActive` is set.
 ///
 /// The system zoom transition scales the presenting view controller's content
 /// by animating its layer's `sublayerTransform` (≈0.91 while presented). There
 /// is no public option to opt out, so this view uses a layer that ignores any
-/// `sublayerTransform` change while stabilization is active, keeping the
-/// screen underneath exactly where it is. With stabilization inactive the
-/// layer behaves like a regular `CALayer`.
+/// `sublayerTransform` change while stabilization is active, keeping its
+/// content exactly where it is. With stabilization inactive the layer
+/// behaves like a regular `CALayer`.
 final class MainView: UIView {
-    /// Set for the duration of a presentation whose push-back should be
-    /// suppressed (see `AddServiceCardPresentationController`).
+    /// Set for the duration of a presentation whose push-back of this view
+    /// should be suppressed.
     var isStabilizationActive = false
 
     override class var layerClass: AnyClass { MainLayer.self }

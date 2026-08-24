@@ -78,8 +78,8 @@ final class MainViewController: UIViewController {
 }
 
 extension MainViewController {
-    /// Pins the "+" over the tab bar's trailing (search) slot and keeps it above
-    /// the tab bar controller's view. Called once the container is embedded.
+    /// Pins the "+" over `slot` and keeps it above the other subviews. Call
+    /// once the tab bar container's view has been added.
     @available(iOS 26.0, *)
     func attachAddServiceButton(to slot: UILayoutGuide) {
         view.bringSubviewToFront(addServiceButton)

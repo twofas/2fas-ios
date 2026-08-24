@@ -133,8 +133,8 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
     private var didPerformInitialActiveNotify = false
 
     /// The slot of the hidden search tab: a circle trailing the floating tab
-    /// bar, free for a sibling control (the "+" in `MainViewController`) to
-    /// take over. Resolved during layout, see `updateAddServiceSlot`.
+    /// bar, free for a sibling control to take over. Resolved during layout,
+    /// see `updateAddServiceSlot`.
     let addServiceSlotLayoutGuide = UILayoutGuide()
     private var addServiceSlotConstraints: (
         x: NSLayoutConstraint,
@@ -270,9 +270,9 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
     }
 
     /// The hidden `UISearchTab` renders in a trailing `_UITabBarAuxiliaryView`
-    /// slot. Track that slot's frame with `addServiceSlotLayoutGuide`, so the
-    /// "+" pinned to it sits exactly over the slot (1:1) on iPhone and iPad and
-    /// moves with the tab bar.
+    /// slot. Tracks that slot's frame with `addServiceSlotLayoutGuide`, so a
+    /// control pinned to the guide sits exactly over the slot (1:1) on iPhone
+    /// and iPad and moves with the tab bar.
     @discardableResult
     private func updateAddServiceSlot() -> Bool {
         guard tabBar.window != nil,
@@ -282,8 +282,6 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
         let slot = auxiliary.convert(auxiliary.bounds, to: view)
         guard slot.width > 0, slot.height > 0 else { return false }
 
-        // The "+" only covers the search circle; hide the circle itself so it
-        // doesn't show through while the "+" is hidden as the zoom source.
         auxiliary.alpha = 0
 
         addServiceSlotConstraints?.x.constant = slot.minX
@@ -332,9 +330,9 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
 
         var allTabs: [UITab] = [tokensTab, settingsTab]
         if #available(iOS 26.0, *) {
-            // A disabled, transparent "search" tab reserves a trailing slot; the
-            // floating "+" (owned by `MainViewController`) is pinned 1:1 over it
-            // through `addServiceSlotLayoutGuide`.
+            // A disabled, transparent "search" tab reserves a trailing slot,
+            // exposed through `addServiceSlotLayoutGuide` for a control to be
+            // pinned over it.
             let spacerTab = UISearchTab { _ in UIViewController() }
             spacerTab.title = ""
             spacerTab.image = Self.transparentPixelImage

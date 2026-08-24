@@ -67,7 +67,7 @@ final class TokensPlainFlowController: FlowController {
     // The presentation host for modals/alerts: the main tab-bar container. Only
     // UIViewController API is used, so the concrete container type is irrelevant.
     private weak var presentationHost: UIViewController?
-    // Zoom source for the "add service" card.
+    // Provides the view the "add service" card zooms out of.
     private var addServiceSourceView: () -> UIView? = { nil }
     private var galleryViewController: UIViewController?
 

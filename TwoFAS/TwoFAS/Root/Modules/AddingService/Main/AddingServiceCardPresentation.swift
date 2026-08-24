@@ -22,9 +22,9 @@ import Common
 import Data
 
 /// Presents the "add service" card centered in the container, sized to its
-/// content, over a dimmed backdrop. Tapping the backdrop asks the flow to
-/// dismiss. The animation itself comes from the system zoom transition
-/// (`UIViewController.preferredTransition`), not from here.
+/// content, over a dimmed backdrop. Tapping the backdrop invokes
+/// `onBackdropTap`. The animation itself comes from the system zoom
+/// transition (`UIViewController.preferredTransition`), not from here.
 @available(iOS 26.0, *)
 final class AddServiceCardPresentationController: UIPresentationController {
     private enum Constants {
@@ -35,8 +35,8 @@ final class AddServiceCardPresentationController: UIPresentationController {
 
     private let cardSizeProvider: (CGSize) -> CGSize
     private let onBackdropTap: () -> Void
-    /// Suppresses the zoom's push-back of the presenting screen for the
-    /// duration of this presentation (see `MainView`).
+    /// Receives `true` when the presentation begins and `false` once it ends,
+    /// so the presenting screen can suppress the zoom's push-back.
     private let setStabilizationActive: (Bool) -> Void
     private let dimmingView = UIView()
     private let appState = InteractorFactory.shared.appStateInteractor()

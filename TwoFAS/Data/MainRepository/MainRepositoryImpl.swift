@@ -95,9 +95,6 @@ final class MainRepositoryImpl: MainRepository {
 
     var _appState: AppState = .unknown
 
-    var _plusButtonRect: CGRect?
-    var _isAddingServiceVisible: Bool = false
-
     var _pendingQuickAction: QuickAction?
     var _openBackupExportOnAppear = false
     var _openAddServiceOnAppear = false

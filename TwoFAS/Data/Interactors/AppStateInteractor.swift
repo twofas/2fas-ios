@@ -37,12 +37,6 @@ public protocol AppStateInteracting: AnyObject {
     func clearURLWillBeHandled()
     func markURLWillBeHandled()
 
-    var plusButtonRect: CGRect? { get }
-    func savePlusButtonRect(_ rect: CGRect?)
-
-    var isAddingServiceVisible: Bool { get }
-    func saveIsAddingServiceVisible(_ value: Bool)
-
     func storeQuickAction(_ action: QuickAction)
     func takeQuickAction() -> QuickAction?
 
@@ -108,20 +102,6 @@ extension AppStateInteractor: AppStateInteracting {
 
     func markURLWillBeHandled() {
         mainRepository.markURLWillBeHandled()
-    }
-
-    var plusButtonRect: CGRect? { mainRepository.plusButtonRect }
-
-    func savePlusButtonRect(_ rect: CGRect?) {
-        mainRepository.savePlusButtonRect(rect)
-    }
-
-    var isAddingServiceVisible: Bool { mainRepository.isAddingServiceVisible }
-
-    func saveIsAddingServiceVisible(_ value: Bool) {
-        guard mainRepository.isAddingServiceVisible != value else { return }
-        mainRepository.saveIsAddingServiceVisible(value)
-        notificationCenter.post(name: .addingServiceVisibilityDidChange, object: nil, userInfo: nil)
     }
 
     func storeQuickAction(_ action: QuickAction) {

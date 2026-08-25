@@ -40,6 +40,7 @@ struct AddingServiceTokenView: View {
                     presenter.handleCopyCode()
                 }
             }
+            .padding(.ML)
         }
     }
     

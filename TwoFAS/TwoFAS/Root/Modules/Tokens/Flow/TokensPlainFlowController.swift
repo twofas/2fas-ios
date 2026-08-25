@@ -67,16 +67,20 @@ final class TokensPlainFlowController: FlowController {
     // The presentation host for modals/alerts: the main tab-bar container. Only
     // UIViewController API is used, so the concrete container type is irrelevant.
     private weak var presentationHost: UIViewController?
+    // Provides the view the "add service" card zooms out of.
+    private var addServiceSourceView: () -> UIView? = { nil }
     private var galleryViewController: UIViewController?
 
     static func setup(
         presentationHost: UIViewController,
-        parent: TokensPlainFlowControllerParent
+        parent: TokensPlainFlowControllerParent,
+        addServiceSourceView: @escaping () -> UIView? = { nil }
     ) -> TokensViewController {
         let view = TokensViewController()
         let flowController = TokensPlainFlowController(viewController: view)
         flowController.parent = parent
         flowController.presentationHost = presentationHost
+        flowController.addServiceSourceView = addServiceSourceView
         let interactor = ModuleInteractorFactory.shared.tokensModuleInteractor()
         let presenter = TokensPresenter(
             flowController: flowController,
@@ -107,7 +111,11 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     
     func toAddService() {
         guard let presentationHost, presentationHost.presentedViewController == nil else { return }
-        AddingServiceFlowController.present(on: presentationHost, parent: self)
+        AddingServiceFlowController.present(
+            on: presentationHost,
+            parent: self,
+            zoomSourceView: addServiceSourceView()
+        )
     }
     
     func toDeleteService(serviceData: ServiceData) {

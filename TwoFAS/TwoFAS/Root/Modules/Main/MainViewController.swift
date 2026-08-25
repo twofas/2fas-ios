@@ -33,12 +33,42 @@ final class MainViewController: UIViewController {
     private let notificationCenter = NotificationCenter.default
         
     var splitView: (any MainNavigating)?
+
+    /// Floating glass "+" (iOS 26). It lives here, outside the tab bar
+    /// controller, because the system zoom transition used to present "add
+    /// service" pushes back the view of the controller owning the zoom source;
+    /// `MainView` keeps this screen still, and `UITabBarController` can't swap
+    /// its own view class.
+    private let addServiceButton = UIButton(type: .system)
+
+    var onAddService: (() -> Void)?
+
+    /// Zoom source for the "add service" presentation (iOS 26 only): the "+"
+    /// button, or `nil` while it has no resolved on-screen frame to zoom
+    /// from (its slot in the tab bar is located asynchronously, so on a cold
+    /// launch the button can still be zero-sized).
+    var addServiceSourceView: UIView? {
+        guard #available(iOS 26.0, *),
+              addServiceButton.window != nil,
+              addServiceButton.bounds.width > 0,
+              addServiceButton.bounds.height > 0
+        else { return nil }
+        return addServiceButton
+    }
+
+    override func loadView() {
+        view = MainView()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         settingsEventController.setup()
         setupEvents()
+
+        if #available(iOS 26.0, *) {
+            setupAddServiceButton()
+        }
         
         presenter.viewDidLoad()
     }
@@ -50,6 +80,40 @@ final class MainViewController: UIViewController {
     
     deinit {
         notificationCenter.removeObserver(self)
+    }
+}
+
+extension MainViewController {
+    /// Pins the "+" over `slot` and keeps it above the other subviews. Call
+    /// once the tab bar container's view has been added.
+    @available(iOS 26.0, *)
+    func attachAddServiceButton(to slot: UILayoutGuide) {
+        view.bringSubviewToFront(addServiceButton)
+        NSLayoutConstraint.activate([
+            addServiceButton.widthAnchor.constraint(equalTo: slot.widthAnchor),
+            addServiceButton.heightAnchor.constraint(equalTo: slot.heightAnchor),
+            addServiceButton.centerXAnchor.constraint(equalTo: slot.centerXAnchor),
+            addServiceButton.centerYAnchor.constraint(equalTo: slot.centerYAnchor)
+        ])
+    }
+
+    @available(iOS 26.0, *)
+    private func setupAddServiceButton() {
+        var config = UIButton.Configuration.prominentGlass()
+        config.image = UIImage(systemName: "plus")
+        config.preferredSymbolConfigurationForImage = .init(pointSize: 22, weight: .semibold)
+        // Brand-tinted glass fill with a contrasting (white) "+" glyph.
+        config.baseForegroundColor = .white
+        config.baseBackgroundColor = AppColor.accentsBrand.uiColor
+
+        addServiceButton.configuration = config
+        addServiceButton.accessibilityLabel = T.Voiceover.addService
+        addServiceButton.addAction(UIAction { [weak self] _ in
+            self?.onAddService?()
+        }, for: .touchUpInside)
+        addServiceButton.tintColor = AppColor.accentsBrand.uiColor
+        addServiceButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(addServiceButton)
     }
 }
 

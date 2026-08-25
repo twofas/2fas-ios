@@ -37,7 +37,11 @@ final class MainTabFlowController: FlowController {
         flowController.parent = parent
         container.flowController = flowController
 
-        let tokens = TokensPlainFlowController.setup(presentationHost: container, parent: flowController)
+        let tokens = TokensPlainFlowController.setup(
+            presentationHost: container,
+            parent: flowController,
+            addServiceSourceView: { [weak mainViewController] in mainViewController?.addServiceSourceView }
+        )
         let settings = SettingsFlowController.setup(parent: flowController)
         flowController.tokensViewController = tokens
         flowController.settingsViewController = settings
@@ -55,7 +59,7 @@ final class MainTabFlowController: FlowController {
             case .settings: settings?.navigateToView(nil)
             }
         }
-        container.onAddService = { [weak tokens] in
+        mainViewController.onAddService = { [weak tokens] in
             NotificationCenter.default.post(name: .switchToTokens, object: nil)
             tokens?.presenter.handleAddService()
         }
@@ -65,6 +69,9 @@ final class MainTabFlowController: FlowController {
         container.view.pinToParent()
         container.didMove(toParent: mainViewController)
         mainViewController.splitView = container
+        if #available(iOS 26.0, *) {
+            mainViewController.attachAddServiceButton(to: container.addServiceSlotLayoutGuide)
+        }
 
         let restoredPath = flowController.viewPathInteractor.viewPath() ?? .main
         container.navigateToView(restoredPath, isRestoration: true)
@@ -123,8 +130,18 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
     private weak var settingsViewController: SettingsViewController?
 
     private let appState = InteractorFactory.shared.appStateInteractor()
-    private let plusButton = UIButton(type: .system)
     private var didPerformInitialActiveNotify = false
+
+    /// The slot of the hidden search tab: a circle trailing the floating tab
+    /// bar, free for a sibling control to take over. Resolved during layout,
+    /// see `updateAddServiceSlot`.
+    let addServiceSlotLayoutGuide = UILayoutGuide()
+    private var addServiceSlotConstraints: (
+        x: NSLayoutConstraint,
+        y: NSLayoutConstraint,
+        width: NSLayoutConstraint,
+        height: NSLayoutConstraint
+    )?
     private var shouldFocusSearchOnActivation = true
 
     private static let transparentPixelImage: UIImage = {
@@ -138,7 +155,6 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
 
     var onSelect: ((ViewPath) -> Void)?
     var onReselect: ((ViewPath) -> Void)?
-    var onAddService: (() -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,13 +181,7 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
         // Floating glass "+" is an iOS 26 affordance; on iOS 18 the add action
         // lives in the tokens navigation bar (see updateNaviIcons).
         guard #available(iOS 26.0, *) else { return }
-        setupPlusButton()
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(addingServiceVisibilityDidChange),
-            name: .addingServiceVisibilityDidChange,
-            object: nil
-        )
+        configureAddServiceSlotLayoutGuide()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -182,7 +192,7 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         guard #available(iOS 26.0, *) else { return }
-        positionPlusButtonOverSearchSlot()
+        updateAddServiceSlot()
     }
 
     /// Branded tab bar appearance for iOS 18. On iOS 26 the Liquid Glass tab bar
@@ -236,35 +246,47 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
         guard #available(iOS 26.0, *) else { return }
         // The auxiliary (search) slot gets its real frame asynchronously, after
         // the last layout pass, so poll briefly until it's ready.
-        ensurePlusButtonPositioned(attempt: 0)
+        ensureAddServiceSlotResolved(attempt: 0)
     }
 
-    private func ensurePlusButtonPositioned(attempt: Int) {
-        if positionPlusButtonOverSearchSlot() || attempt >= 20 { return }
+    private func configureAddServiceSlotLayoutGuide() {
+        view.addLayoutGuide(addServiceSlotLayoutGuide)
+        let constraints = (
+            x: addServiceSlotLayoutGuide.leftAnchor.constraint(equalTo: view.leftAnchor),
+            y: addServiceSlotLayoutGuide.topAnchor.constraint(equalTo: view.topAnchor),
+            width: addServiceSlotLayoutGuide.widthAnchor.constraint(equalToConstant: 0),
+            height: addServiceSlotLayoutGuide.heightAnchor.constraint(equalToConstant: 0)
+        )
+        addServiceSlotConstraints = constraints
+        NSLayoutConstraint.activate([constraints.x, constraints.y, constraints.width, constraints.height])
+    }
+
+    private func ensureAddServiceSlotResolved(attempt: Int) {
+        if updateAddServiceSlot() || attempt >= 20 { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            self?.ensurePlusButtonPositioned(attempt: attempt + 1)
+            self?.ensureAddServiceSlotResolved(attempt: attempt + 1)
         }
     }
 
     /// The hidden `UISearchTab` renders in a trailing `_UITabBarAuxiliaryView`
-    /// slot. Track that slot's frame and place the "+" exactly over it (1:1),
-    /// so it stays correct on iPhone and iPad and moves with the tab bar.
+    /// slot. Tracks that slot's frame with `addServiceSlotLayoutGuide`, so a
+    /// control pinned to the guide sits exactly over the slot (1:1) on iPhone
+    /// and iPad and moves with the tab bar.
     @discardableResult
-    private func positionPlusButtonOverSearchSlot() -> Bool {
+    private func updateAddServiceSlot() -> Bool {
         guard tabBar.window != nil,
               let auxiliary = findSubview(in: tabBar, classNameContains: "AuxiliaryView") else {
             return false
         }
-        let frameInTabBar = auxiliary.convert(auxiliary.bounds, to: tabBar)
-        guard frameInTabBar.width > 0, frameInTabBar.height > 0 else { return false }
+        let slot = auxiliary.convert(auxiliary.bounds, to: view)
+        guard slot.width > 0, slot.height > 0 else { return false }
 
-        plusButton.frame = frameInTabBar
-        plusButton.isHidden = false
-        tabBar.bringSubviewToFront(plusButton)
+        auxiliary.alpha = 0
 
-        if let window = view.window {
-            appState.savePlusButtonRect(plusButton.convert(plusButton.bounds, to: window))
-        }
+        addServiceSlotConstraints?.x.constant = slot.minX
+        addServiceSlotConstraints?.y.constant = slot.minY
+        addServiceSlotConstraints?.width.constant = slot.width
+        addServiceSlotConstraints?.height.constant = slot.height
         return true
     }
 
@@ -307,9 +329,9 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
 
         var allTabs: [UITab] = [tokensTab, settingsTab]
         if #available(iOS 26.0, *) {
-            // A disabled, transparent "search" tab reserves a trailing slot; the
-            // floating "+" is positioned 1:1 over it, so it lives inside the tab
-            // bar and hides together with it.
+            // A disabled, transparent "search" tab reserves a trailing slot,
+            // exposed through `addServiceSlotLayoutGuide` for a control to be
+            // pinned over it.
             let spacerTab = UISearchTab { _ in UIViewController() }
             spacerTab.title = ""
             spacerTab.image = Self.transparentPixelImage
@@ -329,40 +351,6 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
         tabBar.tintColor = AppColor.accentsBrand.uiColor
         view.tintColor = AppColor.accentsBrand.uiColor
         delegate = self
-    }
-
-    @available(iOS 26.0, *)
-    private func setupPlusButton() {
-        var config = UIButton.Configuration.prominentGlass()
-        config.image = UIImage(systemName: "plus")
-        config.preferredSymbolConfigurationForImage = .init(pointSize: 22, weight: .semibold)
-        // Brand-tinted glass fill with a contrasting (white) "+" glyph.
-        config.baseForegroundColor = .white
-        config.baseBackgroundColor = AppColor.accentsBrand.uiColor
-
-        plusButton.configuration = config
-        plusButton.tintColor = AppColor.accentsBrand.uiColor
-        plusButton.addAction(UIAction { [weak self] _ in
-            self?.onAddService?()
-        }, for: .touchUpInside)
-
-        // Frame is tracked to the search tab slot in `positionPlusButtonOverSearchSlot`.
-        plusButton.translatesAutoresizingMaskIntoConstraints = true
-        tabBar.addSubview(plusButton)
-        plusButton.isHidden = true
-
-        let isAddingVisible = appState.isAddingServiceVisible
-        plusButton.tintColor = isAddingVisible ? AppColor.graysGray3.uiColor : AppColor.accentsBrand.uiColor
-        plusButton.isUserInteractionEnabled = !isAddingVisible
-    }
-
-    @objc
-    private func addingServiceVisibilityDidChange() {
-        let disabled = appState.isAddingServiceVisible
-        plusButton.isUserInteractionEnabled = !disabled
-        UIView.animate(withDuration: 0.35) { [self] in
-            plusButton.tintColor = disabled ? AppColor.graysGray3.uiColor : AppColor.accentsBrand.uiColor
-        }
     }
 
     func navigateToView(_ viewPath: ViewPath) {

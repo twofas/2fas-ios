@@ -64,7 +64,6 @@ struct MainScreenModalView<Content: View, Footer: View>: View {
                 .stroke(.bordersVibrant, lineWidth: 1)
         }
         .environment(\.colorScheme, .dark)
-        .padding(.ML)
     }
     
     @ViewBuilder

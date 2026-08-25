@@ -128,13 +128,7 @@ protocol MainRepository: AnyObject {
     func clearURLWillBeHandled()
     func markURLWillBeHandled()
 
-    var plusButtonRect: CGRect? { get }
-    func savePlusButtonRect(_ rect: CGRect?)
-
     func copy(_ str: String)
-    
-    var isAddingServiceVisible: Bool { get }
-    func saveIsAddingServiceVisible(_ value: Bool)
 
     // MARK: - Quick Action
     func storeQuickAction(_ action: QuickAction)

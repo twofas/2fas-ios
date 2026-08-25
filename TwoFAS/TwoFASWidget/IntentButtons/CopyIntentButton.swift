@@ -24,8 +24,6 @@ struct CopyIntentButton<Content>: View where Content: View {
     private let appIntent: (any AppIntent)?
     private let content: () -> Content
     
-    // TODO: Add support for NIL app intent - ios 16
-    
     init(
         rawEntry: CodeEntry.EntryData.RawEntryData?,
         secret: String? = nil,
@@ -38,7 +36,7 @@ struct CopyIntentButton<Content>: View where Content: View {
                 digits: rawEntry.digits,
                 algorithm: rawEntry.algorithm,
                 tokenType: rawEntry.tokenType
-            )
+            )  
         } else if let secret {
             self.appIntent = RevealTokenAppIntent(secret: secret)
         } else {

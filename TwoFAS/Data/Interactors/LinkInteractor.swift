@@ -65,7 +65,13 @@ extension LinkInteractor: LinkInteracting {
     
     func shouldHandleURL(url: URL) -> Bool {
         Log("LinkInteractor - shouldHandleURL", module: .interactor)
-        
+
+        if let code = widgetCopyCode(from: url) {
+            Log("LinkInteractor - shouldHandleURL - widget copy", module: .interactor)
+            mainRepository.setExchangeToken(code)
+            return true
+        }
+
         let (canHandle, shouldSave) = mainRepository.handleURL(url)
         Log("URL: \(url), canHandle: \(canHandle), shoudlSave: \(shouldSave)", module: .interactor, save: false)
         
@@ -81,6 +87,12 @@ extension LinkInteractor: LinkInteracting {
         return true
     }
     
+    private func widgetCopyCode(from url: URL) -> String? {
+        guard url.scheme == "twofas", url.host == "copy" else { return nil }
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        return components?.queryItems?.first(where: { $0.name == "code" })?.value
+    }
+
     func handleURLIfNecessary() {
         Log("LinkInteractor - handleCodeIfNecessary", module: .interactor)
         guard hasStoredURL else {

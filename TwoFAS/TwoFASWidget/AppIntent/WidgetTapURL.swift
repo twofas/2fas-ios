@@ -1,7 +1,7 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2024 Two Factor Authentication Service, Inc.
-//  Contributed by Grzegorz Machnio. All rights reserved.
+//  Copyright © 2026 Two Factor Authentication Service, Inc.
+//  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,28 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
-import SwiftUI
-import Common
 
-struct CountdownTimerText: View {
-    let date: Date?
+import Foundation
 
-    private var timerText: some View {
-        if let countdownTo = date {
-            Text(countdownTo, style: .timer)
-        } else {
-            Text("0:00")
-        }
+enum WidgetTapURL {
+    static func copy(code: String) -> URL? {
+        var components = URLComponents()
+        components.scheme = "twofas"
+        components.host = "copy"
+        components.queryItems = [URLQueryItem(name: "code", value: code)]
+        return components.url
     }
-    
-    var body: some View {
-        timerText
-            .frame(width: 40, height: 18)
-            .foregroundStyle(.labelsPrimary)
-            .multilineTextAlignment(.trailing)
-            .textStyle(.caption1, .emphasized)
-            .monospacedDigit()
-            .lineLimit(1)
-            .contentTransition(.numericText(countsDown: true))
-    }
+
+    static let openApp = URL(string: "twofas://open")
 }

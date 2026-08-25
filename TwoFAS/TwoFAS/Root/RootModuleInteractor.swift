@@ -133,11 +133,11 @@ extension RootModuleInteractor: RootModuleInteracting {
         let shouldHandleURL = linkInteractor.shouldHandleURL(url: url)
         let shouldHandleFileURL = fileInteractor.shouldHandleURL(url: url)
         let value = shouldHandleURL || shouldHandleFileURL
-        
+
         if value {
             appStateInteractor.markURLWillBeHandled()
         }
-        
+
         return value
     }
     

@@ -46,7 +46,7 @@ public extension ServiceIconDefinition {
         case .brand:
             IconDetails.brand(iconTypeID: iconTypeID)
         case .label:
-            IconDetails.label(title: labelTitle, TintColor: labelColor)
+            IconDetails.label(title: labelTitle, tintColor: labelColor)
         }
     }
 }

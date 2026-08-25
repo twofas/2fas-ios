@@ -40,7 +40,7 @@ struct ComposeServiceIconTypeSelector: View {
                 title: T.Tokens.label,
                 selectedType: $selectedType
             ) {
-                ServiceIconView(icon: .label(title: labelTitle, TintColor: labelColor))
+                ServiceIconView(icon: .label(title: labelTitle, tintColor: labelColor))
             }
         }
         .padding(.vertical, .XL)

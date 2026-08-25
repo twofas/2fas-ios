@@ -40,16 +40,9 @@ struct TwoFASWidgetRectangular: View {
                         Spacer()
                         code(data.code)
                     }
-                    .overlay {
-                        CopyIntentButton(
-                            rawEntry: data.rawEntry,
-                            secret: kind == .singleEntryHidden ? data.secret : nil
-                        ) {
-                            Rectangle()
-                                .foregroundStyle(Color.clear)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        }
-                    }
+                    .widgetURL(kind == .singleEntryHidden
+                               ? WidgetTapURL.openApp
+                               : WidgetTapURL.copy(code: data.code))
                 }
             } else {
                 image()
@@ -72,7 +65,8 @@ struct TwoFASWidgetRectangular: View {
     @ViewBuilder
     func code(_ code: String) -> some View {
         Text(code)
-            .font(Font.system(.title).weight(.medium).monospacedDigit())
+            .textStyle(.title1, .emphasized)
+            .monospacedDigit()
             .multilineTextAlignment(.center)
             .minimumScaleFactor(0.1)
             .lineLimit(1)

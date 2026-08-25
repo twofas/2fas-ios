@@ -22,7 +22,9 @@ import SwiftUI
 import Common
 
 struct TwoFASWidgetCircular: View {
-    @Environment(\.redactionReasons) private var reasons
+    @Environment(\.redactionReasons)
+    private var reasons
+    
     let entry: CodeEntry.Entry?
     
     @ViewBuilder
@@ -36,16 +38,9 @@ struct TwoFASWidgetCircular: View {
                     image()
                 } else {
                     code(data.code)
-                        .overlay {
-                            CopyIntentButton(
-                                rawEntry: data.rawEntry,
-                                secret: kind == .singleEntryHidden ? data.secret : nil
-                            ) {
-                                Rectangle()
-                                    .foregroundStyle(Color.clear)
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            }
-                        }
+                        .widgetURL(kind == .singleEntryHidden
+                                   ? WidgetTapURL.openApp
+                                   : WidgetTapURL.copy(code: data.code))
                 }
             } else {
                 image()
@@ -68,11 +63,8 @@ struct TwoFASWidgetCircular: View {
     @ViewBuilder
     func code(_ code: String) -> some View {
         Text(code)
-            .font(
-                Font.system(.title)
-                    .weight(.medium)
-                    .monospacedDigit()
-            )
+            .textStyle(.title1, .emphasized)
+            .monospacedDigit()
             .multilineTextAlignment(.center)
             .lineLimit(2)
             .fixedSize(horizontal: false, vertical: true)

@@ -21,5 +21,5 @@ import Foundation
 
 public enum IconDetails: Hashable {
     case brand(iconTypeID: IconTypeID)
-    case label(title: String, TintColor: TintColor)
+    case label(title: String, tintColor: TintColor)
 }

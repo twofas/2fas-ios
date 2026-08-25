@@ -35,6 +35,9 @@ struct TwoFASWidgetInline: View {
                     codePlaceholder()
                 } else {
                     code(entryData.code)
+                        .widgetURL(kind == .singleEntryHidden
+                                   ? WidgetTapURL.openApp
+                                   : WidgetTapURL.copy(code: entryData.code))
                 }
             } else {
                 codePlaceholder()
@@ -62,10 +65,10 @@ struct TwoFASWidgetInline: View {
     
     @ViewBuilder
     func code(_ code: String) -> some View {
-        
         Label {
             Text(code)
-                .font(Font.system(.title).weight(.medium).monospacedDigit())
+                .textStyle(.title1, .emphasized)
+                .monospacedDigit()
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.1)
                 .lineLimit(1)

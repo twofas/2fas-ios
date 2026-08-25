@@ -981,6 +981,12 @@
 		C2CACFC02AFFB7F7001E0F8E /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CACFBF2AFFB7F7001E0F8E /* LoginInteractor.swift */; };
 		C2CACFC22B015725001E0F8E /* AppStateInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CACFC12B015725001E0F8E /* AppStateInteractor.swift */; };
 		C2CACFC42B015847001E0F8E /* MainRepositoryImpl+LockScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CACFC32B015847001E0F8E /* MainRepositoryImpl+LockScreen.swift */; };
+		C2CBE26E303E0784009A65EC /* WidgetTapURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE26D303E0784009A65EC /* WidgetTapURL.swift */; };
+		C2CBE26F303E0784009A65EC /* WidgetTapURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE26D303E0784009A65EC /* WidgetTapURL.swift */; };
+		C2CBE270303E16CB009A65EC /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E53AC52B62DD6C008E1E70 /* Common.framework */; };
+		C2CBE271303E16CB009A65EC /* Common.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C2E53AC52B62DD6C008E1E70 /* Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C2CBE276303E184E009A65EC /* ServiceIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248F2FD33D7400C5E875 /* ServiceIconView.swift */; };
+		C2CBE277303E184E009A65EC /* ServiceIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248F2FD33D7400C5E875 /* ServiceIconView.swift */; };
 		C2CC0A3C29D05DC900677A7B /* TransferPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3B29D05DC900677A7B /* TransferPresenter.swift */; };
 		C2CC0A3E29D0603000677A7B /* TransferPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3D29D0603000677A7B /* TransferPresenter+Menu.swift */; };
 		C2CC0A4029D067EF00677A7B /* TransferFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3F29D067EF00677A7B /* TransferFlowController.swift */; };
@@ -1055,7 +1061,6 @@
 		C2E5248B2FD3348A00C5E875 /* IconDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248A2FD3347400C5E875 /* IconDetails.swift */; };
 		C2E5248C2FD3348A00C5E875 /* IconDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248A2FD3347400C5E875 /* IconDetails.swift */; };
 		C2E5248E2FD337AB00C5E875 /* AddingServiceHOTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248D2FD3379F00C5E875 /* AddingServiceHOTPView.swift */; };
-		C2E524902FD33D7E00C5E875 /* ServiceIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248F2FD33D7400C5E875 /* ServiceIconView.swift */; };
 		C2E53AC82B62DD6C008E1E70 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = C2E53AC72B62DD6C008E1E70 /* Common.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2E53ACB2B62DD6C008E1E70 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E53AC52B62DD6C008E1E70 /* Common.framework */; };
 		C2E53ACC2B62DD6C008E1E70 /* Common.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C2E53AC52B62DD6C008E1E70 /* Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1588,6 +1593,13 @@
 			remoteGlobalIDString = C2C3AE24269E274700506ACF;
 			remoteInfo = TwoFASServiceIntent;
 		};
+		C2CBE272303E16CB009A65EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C236666B1FB2644900989ACA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C2E53AC42B62DD6C008E1E70;
+			remoteInfo = Common;
+		};
 		C2D07ED926A45BBD00AF8E7B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C236666B1FB2644900989ACA /* Project object */;
@@ -1838,6 +1850,15 @@
 				C28633D91FFABD2200C8F4B4 /* TwoFASAuth.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+		};
+		C2CBE274303E16CB009A65EC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = Frameworks;
+			files = (
+				C2CBE271303E16CB009A65EC /* Common.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -2710,6 +2731,7 @@
 		C2CACFBF2AFFB7F7001E0F8E /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
 		C2CACFC12B015725001E0F8E /* AppStateInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateInteractor.swift; sourceTree = "<group>"; };
 		C2CACFC32B015847001E0F8E /* MainRepositoryImpl+LockScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+LockScreen.swift"; sourceTree = "<group>"; };
+		C2CBE26D303E0784009A65EC /* WidgetTapURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetTapURL.swift; sourceTree = "<group>"; };
 		C2CC0A3B29D05DC900677A7B /* TransferPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferPresenter.swift; sourceTree = "<group>"; };
 		C2CC0A3D29D0603000677A7B /* TransferPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransferPresenter+Menu.swift"; sourceTree = "<group>"; };
 		C2CC0A3F29D067EF00677A7B /* TransferFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFlowController.swift; sourceTree = "<group>"; };
@@ -3130,6 +3152,7 @@
 				C2E53BC92B62DFFD008E1E70 /* Content.framework in Frameworks */,
 				C2C3AE0F269E224A00506ACF /* WidgetKit.framework in Frameworks */,
 				C251EDED2AE87284007722F2 /* Base32.framework in Frameworks */,
+				C2CBE270303E16CB009A65EC /* Common.framework in Frameworks */,
 				C2379D1026B6DF720010C6B1 /* IntentsUI.framework in Frameworks */,
 				C2379D0726B6D6CC0010C6B1 /* Protection.framework in Frameworks */,
 			);
@@ -4134,6 +4157,7 @@
 		C25228ED2B72E44C00F40C86 /* AppIntent */ = {
 			isa = PBXGroup;
 			children = (
+				C2CBE26D303E0784009A65EC /* WidgetTapURL.swift */,
 				C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */,
 				C248DDAB2B7998DA004712E3 /* CopyTokenAppIntent.swift */,
 				C205CE012CD170F100B69B62 /* RevealTokenAppIntent.swift */,
@@ -6392,6 +6416,7 @@
 				C2C3AE09269E224A00506ACF /* Sources */,
 				C2C3AE0A269E224A00506ACF /* Frameworks */,
 				C2C3AE0B269E224A00506ACF /* Resources */,
+				C2CBE274303E16CB009A65EC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -6402,6 +6427,7 @@
 				C251EDF02AE87284007722F2 /* PBXTargetDependency */,
 				C2E53BCC2B62DFFD008E1E70 /* PBXTargetDependency */,
 				C238276C2B7D3BE1005DD234 /* PBXTargetDependency */,
+				C2CBE273303E16CB009A65EC /* PBXTargetDependency */,
 			);
 			name = TwoFASWidgetExtension;
 			productName = TwoFASWidgetExtension;
@@ -7046,7 +7072,6 @@
 				C2FDEE63279CC37E002CAB9E /* CameraScannerFlowController.swift in Sources */,
 				C2E3D55927D94ECB0050AF48 /* BrowserExtensionIntroView.swift in Sources */,
 				C2AD653727F26139008997DB /* BrowserExtensionPairingSuccessFlowController.swift in Sources */,
-				C2E524902FD33D7E00C5E875 /* ServiceIconView.swift in Sources */,
 				C25E898E2663DF9700A60CE5 /* TokensSectionHeader.swift in Sources */,
 				C2E7C34A2ADB021500478D89 /* CameraController.swift in Sources */,
 				C2153BC51FE9B2BF005FD297 /* CameraActiveArea.swift in Sources */,
@@ -7102,6 +7127,7 @@
 				C2A4C8352A10F13800AFD67C /* TokensTOTPCell.swift in Sources */,
 				C2117181276CE54900042D28 /* VerifyPINFlowController.swift in Sources */,
 				C2D278002FE9B55F00ACB9FA /* SelectServiceView.swift in Sources */,
+				C2CBE26F303E0784009A65EC /* WidgetTapURL.swift in Sources */,
 				C29FEFF92756DAC6002FC523 /* SettingsMenuPresenter+Menu.swift in Sources */,
 				C2959627267F4D090086DEB1 /* NSDiffableDataSourceSnapshot+.swift in Sources */,
 				C2CC0A4E29D0D62600677A7B /* ExternalImportInstructionsFlowController.swift in Sources */,
@@ -7182,6 +7208,7 @@
 				C215083F300308A1008B66E2 /* DeleteServiceView.swift in Sources */,
 				C2F33940214AB53F0072FE80 /* RatingController.swift in Sources */,
 				C26D1AC52600041400D3D868 /* UIImage+.swift in Sources */,
+				C2CBE276303E184E009A65EC /* ServiceIconView.swift in Sources */,
 				C2B5BF53294601BE00E5092D /* TokensPlainFlowController.swift in Sources */,
 				C2633F1F265B045F0034B836 /* UIApplication.swift in Sources */,
 				C21B1B272A8811920021CAF1 /* TOTPAdapter.swift in Sources */,
@@ -7838,10 +7865,12 @@
 				C2529CB52E5C6AE200515AB7 /* TwoFASWidgetLineView.swift in Sources */,
 				C2529CB62E5C6AE200515AB7 /* TwoFASWidgetInline.swift in Sources */,
 				C2529CB72E5C6AE200515AB7 /* TwoFASWidgetLineViewGrid.swift in Sources */,
+				C2CBE26E303E0784009A65EC /* WidgetTapURL.swift in Sources */,
 				C2529CB82E5C6AE200515AB7 /* TwoFASControlWidget.swift in Sources */,
 				C2529CB92E5C6AE200515AB7 /* TwoFASWidgetCircular.swift in Sources */,
 				C2C32A312AB7198C00DDB944 /* IconRenderer.swift in Sources */,
 				C248DDAC2B7998DA004712E3 /* CopyTokenAppIntent.swift in Sources */,
+				C2CBE277303E184E009A65EC /* ServiceIconView.swift in Sources */,
 				C2A7B98F26B706B000055738 /* TwoFASWidget.intentdefinition in Sources */,
 				C254D12226ACB7D8005FEBD4 /* CodeRedaction.swift in Sources */,
 				C254D12026ACB777005FEBD4 /* Provider.swift in Sources */,
@@ -8353,6 +8382,11 @@
 			isa = PBXTargetDependency;
 			target = C2C3AE24269E274700506ACF /* TwoFASServiceIntent */;
 			targetProxy = C2C3AE3D269E274700506ACF /* PBXContainerItemProxy */;
+		};
+		C2CBE273303E16CB009A65EC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C2E53AC42B62DD6C008E1E70 /* Common */;
+			targetProxy = C2CBE272303E16CB009A65EC /* PBXContainerItemProxy */;
 		};
 		C2D07EDA26A45BBD00AF8E7B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

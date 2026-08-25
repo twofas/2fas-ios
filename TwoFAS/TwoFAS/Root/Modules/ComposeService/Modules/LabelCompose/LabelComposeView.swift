@@ -32,7 +32,7 @@ struct LabelComposeView: View {
             AdaptiveReadableContainer {
                 VStack(spacing: .XXXXL) {
                     ServiceIconView(
-                        icon: .label(title: presenter.title, TintColor: presenter.color)
+                        icon: .label(title: presenter.title, tintColor: presenter.color)
                     )
                     .shadow(.glass)
 

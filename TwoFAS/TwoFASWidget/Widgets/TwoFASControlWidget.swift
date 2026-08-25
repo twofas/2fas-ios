@@ -20,6 +20,7 @@
 import WidgetKit
 import SwiftUI
 import AppIntents
+import Common
 
 struct TwoFASControlWidget: ControlWidget {
     var body: some ControlWidgetConfiguration {
@@ -29,7 +30,7 @@ struct TwoFASControlWidget: ControlWidget {
             } actionLabel: { _ in
                 Text("widget__open_app")
             }
-            .tint(Color.accentColor)
+            .tint(Color(AppColor.accentsBrand.uiColor))
         }
         .displayName("2FAS")
         .description("widget__open_app_description")

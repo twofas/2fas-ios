@@ -72,3 +72,14 @@ struct CodeEntry: TimelineEntry, Encodable {
         var rawEntry: RawEntryData?
     }
 }
+
+extension CodeEntry.EntryData {
+    var icon: IconDetails {
+        switch iconType {
+        case .brand:
+            .brand(iconTypeID: iconTypeID)
+        case .label:
+            .label(title: labelTitle, tintColor: labelColor)
+        }
+    }
+}

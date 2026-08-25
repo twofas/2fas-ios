@@ -32,7 +32,7 @@ final class MainView: UIView {
     /// layer behaves like a regular `CALayer`.
     var disablesSublayerTransform = false
 
-    override class var layerClass: AnyClass { MainLayer.self }
+    override static var layerClass: AnyClass { MainLayer.self }
 
     private final class MainLayer: CALayer {
         private var sublayerTransformDisabled: Bool {

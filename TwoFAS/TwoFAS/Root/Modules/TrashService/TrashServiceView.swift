@@ -24,6 +24,13 @@ struct TrashServiceView: View {
     @ObservedObject
     var presenter: TrashServicePresenter
 
+    // The sheet detent is the sum of the scrollable content, the pinned bottom bar and the
+    // device safe area; when that exceeds the maximum detent only the content scrolls, so the
+    // buttons never leave the screen.
+    @State private var contentHeight: CGFloat = 0
+    @State private var bottomBarHeight: CGFloat = 0
+    @State private var bottomSafeArea: CGFloat = 0
+
     var body: some View {
         ScrollView {
             VStack(spacing: .zero) {
@@ -46,31 +53,59 @@ struct TrashServiceView: View {
 
                 Spacer()
                     .frame(height: Spacing.XXL.rawValue)
-
-                VStack(spacing: .M) {
-                    TFButton(
-                        T.Tokens.moveToTrash,
-                        variant: .borderedProminent,
-                        size: .large,
-                        applyGlass: true,
-                    ) {
-                        presenter.handleTrashing()
-                    }
-                    
-                    TFCancelButton(T.Commons.cancel, action: presenter.handleCancel)
-                }
             }
             .frame(maxWidth: Theme.Metrics.modalPreferredWidth)
             .padding(.horizontal, .XL)
             .padding(.top, .XL)
+            .frame(maxWidth: .infinity)
             .onGeometryChange(for: CGFloat.self) { proxy in
                 proxy.size.height
             } action: { height in
-                presenter.handleContentHeight(height)
+                contentHeight = height
+                reportHeight()
             }
         }
         .scrollContentBackground(.hidden)
-        .scrollDisabled(true)
-        .minimumBottomSpacing()
+        .scrollBounceBehavior(.basedOnSize)
+        .safeAreaInset(edge: .bottom, spacing: .zero) {
+            VStack(spacing: .M) {
+                TFButton(
+                    T.Tokens.moveToTrash,
+                    variant: .borderedProminent,
+                    size: .large,
+                    applyGlass: true,
+                ) {
+                    presenter.handleTrashing()
+                }
+
+                TFCancelButton(T.Commons.cancel, action: presenter.handleCancel)
+            }
+            .frame(maxWidth: Theme.Metrics.modalPreferredWidth)
+            .padding(.horizontal, .XL)
+            .frame(maxWidth: .infinity)
+            .minimumBottomSpacing()
+            .onGeometryChange(for: CGFloat.self) { proxy in
+                proxy.size.height
+            } action: { height in
+                bottomBarHeight = height
+                reportHeight()
+            }
+        }
+        .background {
+            GeometryReader { proxy in
+                Color.clear
+                    .onAppear { bottomSafeArea = proxy.safeAreaInsets.bottom }
+                    .onChange(of: proxy.safeAreaInsets.bottom) { _, newValue in
+                        bottomSafeArea = newValue
+                        reportHeight()
+                    }
+            }
+            .ignoresSafeArea()
+        }
+    }
+
+    private func reportHeight() {
+        guard contentHeight > 0, bottomBarHeight > 0 else { return }
+        presenter.handleContentHeight(contentHeight + bottomBarHeight + bottomSafeArea)
     }
 }

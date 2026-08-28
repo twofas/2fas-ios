@@ -41,7 +41,8 @@ final class TrashServiceFlowController: FlowController {
         serviceData: ServiceData
     ) {
         let hosting = UIHostingController(rootView: AnyView(EmptyView()))
-        if #available(iOS 26.1, *) {
+        if #available(iOS 26.0, *) {
+            // Transparent so the sheet's system Liquid Glass background shows through.
             hosting.view.backgroundColor = .clear
         } else {
             hosting.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
@@ -95,9 +96,6 @@ private extension TrashServiceFlowController {
             ]
             sheet.selectedDetentIdentifier = .trashContent
             sheet.prefersGrabberVisible = false
-            if #available(iOS 26.1, *) {
-                sheet.backgroundEffect = UIBlurEffect(style: .systemMaterial)
-            }
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             sheet.preferredCornerRadius = TFCornerRadius.large.rawValue
             sheet.prefersEdgeAttachedInCompactHeight = true

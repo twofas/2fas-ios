@@ -17,7 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import Foundation
+import UIKit
 
 extension TokensViewController: CommonSearchDataSourceSearchable {
     func setSearchPhrase(_ phrase: String) {
@@ -26,5 +26,23 @@ extension TokensViewController: CommonSearchDataSourceSearchable {
     
     func clearSearchPhrase() {
         presenter.handleClearSearchPhrase()
+    }
+}
+
+extension TokensViewController: UISearchControllerDelegate {
+    func willPresentSearchController(_ searchController: UISearchController) {
+        isSearchTransitioning = true
+    }
+
+    func didPresentSearchController(_ searchController: UISearchController) {
+        isSearchTransitioning = false
+    }
+
+    func willDismissSearchController(_ searchController: UISearchController) {
+        isSearchTransitioning = true
+    }
+
+    func didDismissSearchController(_ searchController: UISearchController) {
+        isSearchTransitioning = false
     }
 }

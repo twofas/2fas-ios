@@ -156,6 +156,8 @@ extension TokensViewController {
             withReuseIdentifier: kind,
             for: indexPath
         )
+        // A reused header may have been made invisible while the floating header mirrored it.
+        header.alpha = 1
         if kind == TokensSectionHeader.reuseIdentifier {
             let header = header as? TokensSectionHeader
             header?.setIsEditing(collectionView.isEditing)
@@ -250,6 +252,56 @@ extension TokensViewController {
         return section
     }
     
+    /// Mirrors the header of the section whose own header has reached the top of the visible area
+    /// and pushes it away when the next section's header arrives. The mirrored list header is made
+    /// invisible so the two never draw on top of each other; sections without a header leave the
+    /// floating header hidden.
+    func updateFloatingHeader() {
+        guard dataSource != nil, floatingHeader != nil else { return }
+        let layout = tokensView.collectionViewLayout
+        let kind = TokensSectionHeader.reuseIdentifier
+        let pinLine = tokensView.contentOffset.y + tokensView.adjustedContentInset.top
+        var current: Int?
+        var nextHeaderTop: CGFloat?
+        for section in 0..<tokensView.numberOfSections {
+            guard let attributes = layout.layoutAttributesForSupplementaryView(
+                ofKind: kind,
+                at: IndexPath(item: 0, section: section)
+            ) else { continue }
+            if attributes.frame.minY <= pinLine {
+                current = section
+            } else {
+                nextHeaderTop = attributes.frame.minY
+                break
+            }
+        }
+        for indexPath in tokensView.indexPathsForVisibleSupplementaryElements(ofKind: kind) {
+            tokensView.supplementaryView(forElementKind: kind, at: indexPath)?.alpha =
+                indexPath.section == current ? 0 : 1
+        }
+        let emptyScreenShown = !emptySearchScreenView.isHidden || !emptyListScreenView.isHidden
+        guard !emptyScreenShown, let current, let section = dataSource.sectionIdentifier(for: current) else {
+            floatingHeader.isHidden = true
+            floatingSection = nil
+            return
+        }
+        if floatingSection != section || floatingHeader.header.isEditing != tokensView.isEditing {
+            floatingSection = section
+            floatingHeader.header.setIsEditing(tokensView.isEditing)
+            floatingHeader.header.setConfiguration(section)
+        }
+        floatingHeader.isHidden = false
+        if let nextHeaderTop {
+            // Before the first layout pass the floating header has no size yet; every section
+            // header shares the same height, so the layout's estimate is a good stand-in.
+            let measured = floatingHeader.header.bounds.height
+            let height = measured > 0 ? measured : headerHeight
+            floatingHeader.pushOffset = min(0, nextHeaderTop - pinLine - height)
+        } else {
+            floatingHeader.pushOffset = 0
+        }
+    }
+
     func cellHeight() -> NSCollectionLayoutDimension {
         guard !tokensView.isEditing else {
             return .estimated(60)

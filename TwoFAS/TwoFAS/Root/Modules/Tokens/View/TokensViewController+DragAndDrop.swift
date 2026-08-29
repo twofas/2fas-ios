@@ -55,11 +55,13 @@ extension TokensViewController: UICollectionViewDragDelegate {
     
     func collectionView(_ collectionView: UICollectionView, dragSessionWillBegin session: UIDragSession) {
         Log("DragSessionWillBegin")
+        floatingHeader.isUserInteractionEnabled = false
         presenter.handleDragSessionWillBegin()
     }
     
     func collectionView(_ collectionView: UICollectionView, dragSessionDidEnd session: UIDragSession) {
         Log("DragSessionDidEnd")
+        floatingHeader.isUserInteractionEnabled = true
         presenter.handleDragSessionDidEnd()
     }
 }
@@ -119,6 +121,7 @@ extension TokensViewController: UICollectionViewDropDelegate {
     
     func collectionView(_ collectionView: UICollectionView, dropSessionDidEnd session: UIDropSession) {
         Log("Drop session did end")
+        floatingHeader.isUserInteractionEnabled = true
         presenter.handleDragSessionDidEnd()
     }
 }

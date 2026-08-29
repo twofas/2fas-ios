@@ -48,7 +48,7 @@ final class TokensSectionHeader: UICollectionReusableView {
     
     private let bgView = UIView()
     
-    private var isEditing = false
+    private(set) var isEditing = false
     
     private var config: TokensSection?
     
@@ -73,7 +73,13 @@ final class TokensSectionHeader: UICollectionReusableView {
         self.isEditing = isEditing
         setupContainers()
     }
-    
+
+    /// Gives the header the list's background color so content scrolled beneath it is hidden.
+    /// Off by default: the header is transparent and shows whatever is drawn behind it.
+    func setOpaque(_ isOpaque: Bool) {
+        backgroundColor = isOpaque ? AppColor.backgroundsPrimary.uiColor : .clear
+    }
+
     func setConfiguration(_ config: TokensSection) {
         self.config = config
         updateCollapsedState()
@@ -90,7 +96,7 @@ final class TokensSectionHeader: UICollectionReusableView {
 
 private extension TokensSectionHeader {
     func setupBackground() {
-        backgroundColor = AppColor.backgroundsSecondary.uiColor
+        backgroundColor = .clear
     }
     
     func setupLayout() {

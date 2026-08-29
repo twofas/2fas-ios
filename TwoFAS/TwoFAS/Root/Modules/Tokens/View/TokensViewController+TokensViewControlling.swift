@@ -376,7 +376,7 @@ extension TokensViewController: TokensViewControlling {
             navigationItem.preferredSearchBarPlacement = .stacked
         }
         navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = true
+        navigationItem.hidesSearchBarWhenScrolling = false
         tryFulfillPendingSearchFocus()
     }
     

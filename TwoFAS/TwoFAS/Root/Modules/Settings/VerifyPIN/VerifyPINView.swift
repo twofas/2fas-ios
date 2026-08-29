@@ -29,7 +29,6 @@ struct VerifyPINView: View {
         .onAppear {
             presenter.viewWillAppear()
         }
-        .navigationTitle(T.Backup.verifyPin)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {

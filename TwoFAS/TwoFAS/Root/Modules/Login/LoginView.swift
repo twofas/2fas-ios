@@ -39,7 +39,7 @@ struct LoginView: View {
                 .padding(.XL)
             }
             
-            VStack(spacing: .zero) {
+            VStack(spacing: .XXXL) {
                 Spacer()
                 AdaptiveReadableContainer {
                     PINWelcomeHeader(loginType: presenter.loginType, info: $presenter.info)
@@ -58,7 +58,6 @@ struct LoginView: View {
             PINKeyboard(action: presenter.onKeyPressed)
                 .disabled(presenter.isBlocked)
             
-            Spacer()
             if presenter.loginType == .login {
                 PINWelcomeFooter {
                     presenter.isResetVisible = true

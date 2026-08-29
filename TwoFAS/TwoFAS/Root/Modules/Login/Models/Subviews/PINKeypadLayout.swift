@@ -21,56 +21,93 @@ import SwiftUI
 import Common
 
 struct PINKeypadLayout: Layout {
+    // Layout is driven by the button's *visible* size (the 64 pt circle). The
+    // extra tappable inset is intentionally ignored here and simply overlaps the
+    // gaps between keys.
     static let buttonSize: CGFloat = TFPinButton.size
 
     private static let columns = 3
     private static let rows = 4
 
-    // Max dimensions expressed as multiples of buttonSize — calculated independently.
-    private static let maxWidthFactor: CGFloat = 7
-    private static let maxHeightFactor: CGFloat = 8
-    
-    private static let minSpacing: CGFloat = 8
+    // Horizontal spacing between keys and the outer horizontal margin both scale
+    // together with the available width, between their min and max bounds.
+    private static let hSpacingMin: CGFloat = TFPinButton.tapInset * 2 // 12
+    private static let hSpacingMax: CGFloat = 54
+    private static let hMarginMin: CGFloat = TFPinButton.tapInset       // 6
+    private static let hMarginMax: CGFloat = 51
 
-    private var maxWidth: CGFloat { Self.buttonSize * Self.maxWidthFactor }
-    private var maxHeight: CGFloat { Self.buttonSize * Self.maxHeightFactor }
+    // Vertical spacing is uniform: the gap between rows equals the top/bottom
+    // margin, and scales together with the available height.
+    private static let vSpacingMin: CGFloat = 12
+    private static let vSpacingMax: CGFloat = 24
+
+    private static var minWidth: CGFloat {
+        hMarginMin * 2 + buttonSize * CGFloat(columns) + hSpacingMin * CGFloat(columns - 1)
+    }
+    private static var maxWidth: CGFloat {
+        hMarginMax * 2 + buttonSize * CGFloat(columns) + hSpacingMax * CGFloat(columns - 1)
+    }
+    private static var minHeight: CGFloat {
+        vSpacingMin * CGFloat(rows + 1) + buttonSize * CGFloat(rows)
+    }
+    private static var maxHeight: CGFloat {
+        vSpacingMax * CGFloat(rows + 1) + buttonSize * CGFloat(rows)
+    }
 
     // MARK: Layout
 
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        let availableW = proposal.width ?? maxWidth
-        let availableH = proposal.height ?? maxHeight
+        let availableW = proposal.width ?? Self.maxWidth
+        let availableH = proposal.height ?? Self.maxHeight
 
         return CGSize(
-            width: min(availableW, maxWidth),
-            height: min(availableH, maxHeight)
+            width: clamp(availableW, Self.minWidth, Self.maxWidth),
+            height: clamp(availableH, Self.minHeight, Self.maxHeight)
         )
     }
 
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
         let cols = Self.columns
-        let rows = Self.rows
 
-        let layoutW = min(bounds.width, maxWidth)
-        let layoutH = min(bounds.height, maxHeight)
+        let layoutW = clamp(bounds.width, Self.minWidth, Self.maxWidth)
+        let layoutH = clamp(bounds.height, Self.minHeight, Self.maxHeight)
 
-        let cellW = max(0, (layoutW - Self.minSpacing * CGFloat(cols + 1)) / CGFloat(cols))
-        let cellH = max(0, (layoutH - Self.minSpacing * CGFloat(rows + 1)) / CGFloat(rows))
+        let tH = fraction(layoutW, Self.minWidth, Self.maxWidth)
+        let tV = fraction(layoutH, Self.minHeight, Self.maxHeight)
 
-        // Center the grid inside bounds if bounds is larger than layoutW/H
-        let originX = round(bounds.minX + (bounds.width - layoutW) / 2)
-        let originY = round(bounds.minY + (bounds.height - layoutH) / 2)
+        let hSpacing = lerp(Self.hSpacingMin, Self.hSpacingMax, tH)
+        let hMargin = lerp(Self.hMarginMin, Self.hMarginMax, tH)
+        let vSpacing = lerp(Self.vSpacingMin, Self.vSpacingMax, tV)
 
-        let cellProposal = ProposedViewSize(width: cellW, height: cellH)
+        // Center the grid inside bounds.
+        let originX = bounds.minX + (bounds.width - layoutW) / 2
+        let originY = bounds.minY + (bounds.height - layoutH) / 2
+
+        let cellProposal = ProposedViewSize(width: Self.buttonSize, height: Self.buttonSize)
 
         for (index, subview) in subviews.enumerated() {
             let col = index % cols
             let row = index / cols
 
-            let cx = originX + Self.minSpacing * CGFloat(col + 1) + cellW * CGFloat(col) + cellW / 2
-            let cy = originY + Self.minSpacing * CGFloat(row + 1) + cellH * CGFloat(row) + cellH / 2
+            let cx = originX + hMargin + CGFloat(col) * (Self.buttonSize + hSpacing) + Self.buttonSize / 2
+            let cy = originY + vSpacing + CGFloat(row) * (Self.buttonSize + vSpacing) + Self.buttonSize / 2
 
             subview.place(at: CGPoint(x: round(cx), y: round(cy)), anchor: .center, proposal: cellProposal)
         }
+    }
+
+    // MARK: Helpers
+
+    private func clamp(_ value: CGFloat, _ lower: CGFloat, _ upper: CGFloat) -> CGFloat {
+        min(max(value, lower), upper)
+    }
+
+    private func fraction(_ value: CGFloat, _ lower: CGFloat, _ upper: CGFloat) -> CGFloat {
+        guard upper > lower else { return 0 }
+        return clamp((value - lower) / (upper - lower), 0, 1)
+    }
+
+    private func lerp(_ from: CGFloat, _ to: CGFloat, _ t: CGFloat) -> CGFloat {
+        from + (to - from) * t
     }
 }

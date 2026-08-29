@@ -29,21 +29,17 @@ struct NewPINView: View {
             presenter: presenter
         ) {
             if presenter.showsPinLengthButton {
-                Button {
-                    presenter.handleChangePINType()
-                } label: {
-                    Text(T.Settings.selectPinLength)
-                        .textStyle(.body, .emphasized)
-                        .foregroundStyle(.accentsBrand)
+                HStack(alignment: .center) {
+                    TFButton(T.Settings.selectPinLength, variant: .borderless, size: .small) {
+                        presenter.handleChangePINType()
+                    }
                 }
-                .padding(.bottom, .L)
             }
         }
         .onAppear {
             presenter.viewWillAppear()
         }
         .navigationBarBackButtonHidden(presenter.showsCancelButton)
-        .navigationTitle(presenter.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             if presenter.showsCancelButton {

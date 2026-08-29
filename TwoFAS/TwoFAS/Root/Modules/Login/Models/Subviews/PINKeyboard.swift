@@ -53,3 +53,54 @@ struct PINKeyboard: View {
         }
     }
 }
+
+#Preview {
+    PINKeyboard(action: { _ in })
+        .background(AppColor.backgroundsPrimary)
+}
+
+private struct KeypadDeviceGridPreview: View {
+    private let widths: [(String, CGFloat)] = [
+        ("min 228", 228),
+        ("SE 320", 320),
+        ("iPhone 393", 393),
+        ("Pro Max 430", 430),
+        ("iPad split 540", 540)
+    ]
+
+    var body: some View {
+        VStack(spacing: 16) {
+                ForEach(widths, id: \.0) { label, width in
+                    HStack(spacing: 12) {
+                        Text(verbatim: label)
+                            .font(.caption.monospaced())
+                            .foregroundStyle(.secondary)
+                            .frame(width: 90, alignment: .trailing)
+                        PINKeypadLayout {
+                            TFPinButton(.digit(1), action: { _ in })
+                            TFPinButton(.digit(2), action: { _ in })
+                            TFPinButton(.digit(3), action: { _ in })
+                            TFPinButton(.digit(4), action: { _ in })
+                            TFPinButton(.digit(5), action: { _ in })
+                            TFPinButton(.digit(6), action: { _ in })
+                            TFPinButton(.digit(7), action: { _ in })
+                            TFPinButton(.digit(8), action: { _ in })
+                            TFPinButton(.digit(9), action: { _ in })
+                            TFPinButton(.delete, action: { _ in }).isHidden(true, remove: false)
+                            TFPinButton(.digit(0), action: { _ in })
+                            TFPinButton(.delete, action: { _ in })
+                        }
+                        .frame(width: width, height: 380)
+                        .border(.red.opacity(0.4))
+                    }
+                }
+        }
+        .scaleEffect(0.36)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(AppColor.backgroundsPrimary)
+    }
+}
+
+#Preview("Device grid") {
+    KeypadDeviceGridPreview()
+}

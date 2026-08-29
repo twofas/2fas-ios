@@ -359,7 +359,7 @@ private struct TextStyleModifier: ViewModifier {
 
         return content
             .font(font)
-            .tracking(attrs.tracking)
+//            .tracking(attrs.tracking)
             .lineSpacing(lineSpacingDelta)
     }
 }

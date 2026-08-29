@@ -82,6 +82,8 @@ public struct TFRowContent<Accessory: View, Icon: View>: View {
             Text(title)
                 .textStyle(.body)
                 .foregroundStyle(isActive ? AppColor.accentsBrand : AppColor.labelsPrimary)
+                .allowsTightening(false)
+                .minimumScaleFactor(1)
                 .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
 

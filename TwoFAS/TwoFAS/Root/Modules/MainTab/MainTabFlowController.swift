@@ -269,7 +269,8 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
     }
 
     /// The hidden `UISearchTab` renders in a trailing `_UITabBarAuxiliaryView`
-    /// slot. Tracks that slot's frame with `addServiceSlotLayoutGuide`, so a
+    /// slot (on iOS 27 it has to be the prominent tab to get there, see
+    /// `configure`). Tracks that slot's frame with `addServiceSlotLayoutGuide`, so a
     /// control pinned to the guide sits exactly over the slot (1:1) on iPhone
     /// and iPad and moves with the tab bar.
     @discardableResult
@@ -341,6 +342,15 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
         }
 
         tabs = allTabs
+#if compiler(>=6.4)
+        if #available(iOS 27.0, *), let spacerTab = allTabs.last as? UISearchTab {
+            // iOS 27 gives the trailing slot to the "prominent" tab, and a search
+            // tab only takes that role by default when it activates search
+            // automatically. Without an explicit claim the spacer lands inline
+            // in the tab bar as a third, empty tab.
+            prominentTabIdentifier = spacerTab.identifier
+        }
+#endif
         // Plain iOS-style tab bar on every width (no top-level split view).
         mode = .tabBar
         // iPad (iOS 18/26) renders a tab bar at the top by default. Force a

@@ -283,6 +283,9 @@ extension CameraScannerFlowController: PushNotificationPermissionPlainFlowContro
 }
 
 extension CameraScannerFlowController: SelectFromGalleryFlowControllerParent {
+    func galleryWillShow(alongside coordinator: UIViewControllerTransitionCoordinator?) {}
+    func galleryWillCancel(alongside coordinator: UIViewControllerTransitionCoordinator?) {}
+
     func galleryDidImport(count: Int) {
         parent?.cameraScannerDidImport(count: count)
         galleryViewController = nil

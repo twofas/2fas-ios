@@ -365,6 +365,9 @@ extension TokensPlainFlowController: CameraScannerNavigationFlowControllerParent
 }
 
 extension TokensPlainFlowController: SelectFromGalleryFlowControllerParent {
+    func galleryWillShow(alongside coordinator: UIViewControllerTransitionCoordinator?) {}
+    func galleryWillCancel(alongside coordinator: UIViewControllerTransitionCoordinator?) {}
+
     func galleryDidImport(count: Int) {
         dismiss(actions: [.finishedFlow, .newData, .sync]) { [weak self] in
             self?.galleryViewController = nil

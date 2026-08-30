@@ -103,7 +103,6 @@ struct AddingServiceView: View {
                 }
             }
         }
-        .opacity(presenter.isOverlayPresented ? 0 : 1)
         .alert(item: $presenter.alert) { alert in
             switch alert {
             case .cantPairWatch:

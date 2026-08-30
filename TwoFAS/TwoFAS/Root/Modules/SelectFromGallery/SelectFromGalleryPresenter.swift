@@ -41,6 +41,14 @@ extension SelectFromGalleryPresenter {
         flowController.toCancel()
     }
     
+    func handlePickerWillDismiss(alongside coordinator: UIViewControllerTransitionCoordinator?) {
+        flowController.toWillCancel(alongside: coordinator)
+    }
+    
+    func handlePickerWillShow(alongside coordinator: UIViewControllerTransitionCoordinator?) {
+        flowController.toWillShow(alongside: coordinator)
+    }
+    
     func handleScanError() {
         flowController.toErrorWhileScanning()
     }

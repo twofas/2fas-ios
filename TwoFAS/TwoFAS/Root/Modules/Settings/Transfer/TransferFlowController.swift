@@ -241,6 +241,9 @@ extension TransferFlowController: CameraScannerFlowControllerParent {
 }
 
 extension TransferFlowController: SelectFromGalleryFlowControllerParent {
+    func galleryWillShow(alongside coordinator: UIViewControllerTransitionCoordinator?) {}
+    func galleryWillCancel(alongside coordinator: UIViewControllerTransitionCoordinator?) {}
+
     func galleryDidFinish() { endGallery() }
     func galleryDidCancel() { endGallery() }
     func galleryServiceWasCreated(serviceData: ServiceData) { endGallery() }

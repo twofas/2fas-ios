@@ -36,7 +36,30 @@ final class SelectFromGalleryViewController: UIViewController {
         let imageSelector = PHPickerViewController(configuration: imagePickerConfiguration)
         imageSelector.view.tintColor = AppColor.accentsBrand.uiColor
         imageSelector.delegate = self
+        // A swipe-down dismissal bypasses `picker(_:didFinishPicking:)`; the
+        // presentation controller is the only place it is reported.
+        imageSelector.presentationController?.delegate = self
         return imageSelector
+    }
+}
+
+extension SelectFromGalleryViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationController(
+        _ presentationController: UIPresentationController,
+        willPresentWithAdaptiveStyle style: UIModalPresentationStyle,
+        transitionCoordinator: UIViewControllerTransitionCoordinator?
+    ) {
+        presenter.handlePickerWillShow(alongside: transitionCoordinator)
+    }
+
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        presenter.handlePickerWillDismiss(
+            alongside: presentationController.presentedViewController.transitionCoordinator
+        )
+    }
+
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        presenter.handlePickerDidCancel()
     }
 }
 
@@ -44,9 +67,7 @@ extension SelectFromGalleryViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         guard let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) else {
             picker.dismiss(animated: true, completion: nil)
-            DispatchQueue.main.async {
-                self.presenter.handlePickerDidCancel()
-            }
+            presenter.handlePickerDidCancel()
             return
         }
         itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in

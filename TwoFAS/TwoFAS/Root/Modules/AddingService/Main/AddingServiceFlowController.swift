@@ -33,6 +33,7 @@ protocol AddingServiceFlowControllerParent: AnyObject {
 
 protocol AddingServiceFlowControlling: AnyObject {
     var onOverlayDismissed: (() -> Void)? { get set }
+    func setCardAvoidsKeyboard(_ avoids: Bool)
 
     func toToken(serviceData: ServiceData)
     func close()
@@ -52,23 +53,25 @@ final class AddingServiceFlowController: FlowController {
 
     private weak var parent: AddingServiceFlowControllerParent?
     private var galleryViewController: UIViewController?
-    /// Whether the hosting view carries the opaque plate that backs the
-    /// system zoom morph; only then is there anything to hide while an
-    /// overlay covers the card.
-    private var hasOpaqueCardBackground = false
     // swiftlint:disable weak_delegate
     private var zoomTransitioningDelegate: (any UIViewControllerTransitioningDelegate)?
     // swiftlint:enable weak_delegate
 
-    /// While an overlay covers the card the content hides itself, so the
-    /// opaque plate would remain as a bare black rounded rectangle — fade it
-    /// out for that time and back in once the overlay is gone. The duration
-    /// matches the 0.15 s fade of the card content.
-    private func setCardBackgroundHidden(_ hidden: Bool) {
-        guard hasOpaqueCardBackground else { return }
-        UIView.animate(withDuration: 0.15) {
-            self._viewController?.view.backgroundColor = hidden ? .clear : Self.systemZoomPlateColor
+    /// Fades the card out while an overlay is presented above it and back in
+    /// once the overlay goes away. With `coordinator` the fade rides the
+    /// overlay's own transition: an interactive dismissal scrubs it and
+    /// rewinds it when cancelled. A coordinator whose transition is already
+    /// animating refuses new work, so the fade then runs on its own.
+    private func setCardHidden(
+        _ hidden: Bool,
+        alongside coordinator: UIViewControllerTransitionCoordinator? = nil
+    ) {
+        guard let view = _viewController?.view else { return }
+        let alpha: CGFloat = hidden ? 0 : 1
+        if let coordinator, coordinator.animate(alongsideTransition: { _ in view.alpha = alpha }) {
+            return
         }
+        UIView.animate(withDuration: 0.3) { view.alpha = alpha }
     }
 
     static func isPresented(on viewController: UIViewController) -> Bool {
@@ -105,6 +108,8 @@ final class AddingServiceFlowController: FlowController {
         // Prevents UIKit from snapshotting the full focus environment on present(),
         // which blocks the main thread for several seconds on large token lists.
         hosting.restoresFocusAfterTransition = false
+        // The keyboard joins the card's safe area only for the card's own prompts.
+        hosting.safeAreaRegions = .container
 
         let legacySourceProvider: (() -> UIView?)?
         let setSublayerTransformDisabled: (Bool) -> Void
@@ -137,8 +142,6 @@ final class AddingServiceFlowController: FlowController {
         let flowController = AddingServiceFlowController(viewController: hosting)
         flowController.parent = parent
         flowController.zoomTransitioningDelegate = transitioningDelegate
-        // The opaque plate backs only the system-zoom variant.
-        flowController.hasOpaqueCardBackground = legacySourceProvider == nil
         box.flowController = flowController
 
         viewController.present(hosting, animated: true)
@@ -285,9 +288,13 @@ extension AddingServiceFlowController: AddingServiceFlowControlling {
         parent?.addingServiceDismiss()
     }
     
+    func setCardAvoidsKeyboard(_ avoids: Bool) {
+        (_viewController as? UIHostingController<AddServiceHostingView>)?.safeAreaRegions = avoids ? .all : .container
+    }
+    
     func toAddManually() {
-        setCardBackgroundHidden(true)
         presentManually(name: nil)
+        setCardHidden(true, alongside: _viewController?.transitionCoordinator)
     }
     
     func toAppSettings() {
@@ -297,13 +304,12 @@ extension AddingServiceFlowController: AddingServiceFlowControlling {
     
     func toGuides() {
         guard let _viewController else { return }
-        setCardBackgroundHidden(true)
         GuideSelectorNavigationFlowController.show(on: _viewController, parent: self)
+        setCardHidden(true, alongside: _viewController.transitionCoordinator)
     }
 
     func toGallery() {
         guard let _viewController else { return }
-        setCardBackgroundHidden(true)
         galleryViewController = SelectFromGalleryFlowController.present(
             on: _viewController,
             applyOverlay: true,
@@ -346,7 +352,7 @@ extension AddingServiceFlowController: AddingServiceManuallyNavigationFlowContro
 
     func addingServiceManuallyToCancel() {
         _viewController?.dismiss(animated: true)
-        setCardBackgroundHidden(false)
+        setCardHidden(false, alongside: _viewController?.transitionCoordinator)
         onOverlayDismissed?()
     }
 }
@@ -354,7 +360,7 @@ extension AddingServiceFlowController: AddingServiceManuallyNavigationFlowContro
 extension AddingServiceFlowController: GuideSelectorNavigationFlowControllerParent {
     func closeGuideSelector() {
         _viewController?.dismiss(animated: true)
-        setCardBackgroundHidden(false)
+        setCardHidden(false, alongside: _viewController?.transitionCoordinator)
         onOverlayDismissed?()
     }
 
@@ -366,7 +372,7 @@ extension AddingServiceFlowController: GuideSelectorNavigationFlowControllerPare
 
     func guideToCodeScanner() {
         _viewController?.dismiss(animated: true)
-        setCardBackgroundHidden(false)
+        setCardHidden(false, alongside: _viewController?.transitionCoordinator)
         onOverlayDismissed?()
     }
 }
@@ -374,7 +380,7 @@ extension AddingServiceFlowController: GuideSelectorNavigationFlowControllerPare
 extension AddingServiceFlowController: SelectFromGalleryFlowControllerParent {
     func galleryDidFinish() {
         galleryViewController = nil
-        setCardBackgroundHidden(false)
+        setCardHidden(false, alongside: _viewController?.transitionCoordinator)
         onOverlayDismissed?()
     }
 
@@ -385,8 +391,16 @@ extension AddingServiceFlowController: SelectFromGalleryFlowControllerParent {
 
     func galleryDidCancel() {
         galleryViewController = nil
-        setCardBackgroundHidden(false)
+        setCardHidden(false, alongside: _viewController?.transitionCoordinator)
         onOverlayDismissed?()
+    }
+
+    func galleryWillCancel(alongside coordinator: UIViewControllerTransitionCoordinator?) {
+        setCardHidden(false, alongside: coordinator)
+    }
+
+    func galleryWillShow(alongside coordinator: UIViewControllerTransitionCoordinator?) {
+        setCardHidden(true, alongside: coordinator)
     }
 
     func galleryServiceWasCreated(serviceData: ServiceData) {

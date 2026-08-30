@@ -18,7 +18,7 @@
 //
 
 import Foundation
-import SwiftUI
+import Observation
 import Data
 import Common
 
@@ -36,15 +36,18 @@ final class AddingServicePresenter {
     var freezeCamera = false
     var isCameraUnavailable = false
     var alert: AddingServiceAlert?
-    var isOverlayPresented = false
 
     // Renaming
-    var showRename = false
+    var showRename = false {
+        didSet { updateKeyboardAvoidance() }
+    }
     var currentName = ""
     var secret = ""
 
     // PairWatchQuestion
-    var showPairWatchQuestion = false
+    var showPairWatchQuestion = false {
+        didSet { updateKeyboardAvoidance() }
+    }
     var deviceCodePath: DeviceCodePath?
 
     private let flowController: AddingServiceFlowControlling
@@ -192,15 +195,13 @@ private extension AddingServicePresenter {
 
     func presentOverlay() {
         freezeCamera = true
-        withAnimation(.easeInOut(duration: 0.15)) {
-            isOverlayPresented = true
-        }
     }
 
     func handleOverlayDismissed() {
         freezeCamera = false
-        withAnimation(.easeInOut(duration: 0.15)) {
-            isOverlayPresented = false
-        }
+    }
+
+    func updateKeyboardAvoidance() {
+        flowController.setCardAvoidsKeyboard(showRename || showPairWatchQuestion)
     }
 }

@@ -27,6 +27,12 @@ protocol SelectFromGalleryFlowControllerParent: AnyObject {
     func galleryDidFinish()
     func galleryDidImport(count: Int)
     func galleryDidCancel()
+    /// The picker's presentation transition started. `coordinator` runs
+    /// alongside it.
+    func galleryWillShow(alongside coordinator: UIViewControllerTransitionCoordinator?)
+    /// The picker started going away by an interactive gesture. `coordinator`
+    /// runs alongside it and reports whether the gesture was cancelled.
+    func galleryWillCancel(alongside coordinator: UIViewControllerTransitionCoordinator?)
     func galleryServiceWasCreated(serviceData: ServiceData)
 }
 
@@ -39,6 +45,8 @@ protocol SelectFromGalleryFlowControlling: AnyObject {
     func toDidImport(count: Int)
     func toAppStore()
     func toCancel()
+    func toWillCancel(alongside coordinator: UIViewControllerTransitionCoordinator?)
+    func toWillShow(alongside coordinator: UIViewControllerTransitionCoordinator?)
     func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
     func toLastPassSummary(importable: Int, total: Int, codes: [Code])
     func toRename(currentName: String, secret: String)
@@ -172,6 +180,14 @@ extension SelectFromGalleryFlowController: SelectFromGalleryFlowControlling {
     
     func toCancel() {
         parent?.galleryDidCancel()
+    }
+    
+    func toWillCancel(alongside coordinator: UIViewControllerTransitionCoordinator?) {
+        parent?.galleryWillCancel(alongside: coordinator)
+    }
+    
+    func toWillShow(alongside coordinator: UIViewControllerTransitionCoordinator?) {
+        parent?.galleryWillShow(alongside: coordinator)
     }
     
     func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code]) {

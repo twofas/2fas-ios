@@ -121,7 +121,7 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
                         Button {
                             isPasswordRevealed.toggle()
                         } label: {
-                            Image(systemName: isPasswordRevealed ? "eye.fill" : "eye.slash.fill")
+                            Image(icon: isPasswordRevealed ? .eyeFill : .eyeSlashFill)
                                 .textStyle(.body)
                                 .tint(.labelsTertiary)
                         }
@@ -131,7 +131,7 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
                         clearTapped.toggle()
                         clearTextField()
                     } label: {
-                        Image(systemName: "xmark.circle.fill")
+                        Image(icon: .xmarkCircleFill)
                             .resizable()
                             .frame(width: Size.mediumIconSize, height: Size.mediumIconSize)
                             .aspectRatio(contentMode: .fit)

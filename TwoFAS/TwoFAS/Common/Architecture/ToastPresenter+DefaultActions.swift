@@ -25,7 +25,7 @@ public extension ToastPresenter {
         present(
             T.Tokens.copiedClipboard,
             style: .info,
-            icon: UIImage(systemName: "rectangle.on.rectangle")
+            icon: UIImage(icon: .rectangleOnRectangle)
         )
     }
 

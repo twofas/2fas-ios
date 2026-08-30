@@ -102,12 +102,12 @@ struct AboutView: View {
     private func accessoryView(_ accessory: AboutCell.Accessory) -> some View {
         switch accessory {
         case .external:
-            Image(systemName: "arrow.up.right")
+            Image(icon: .arrowUpRight)
                 .textStyle(.subheadline, .emphasized)
                 .foregroundStyle(.accentsBrand)
                 .accessibilityHidden(true)
         case .share:
-            Image(systemName: "square.and.arrow.up")
+            Image(icon: .squareAndArrowUp)
                 .textStyle(.subheadline, .emphasized)
                 .foregroundStyle(.accentsBrand)
                 .accessibilityHidden(true)

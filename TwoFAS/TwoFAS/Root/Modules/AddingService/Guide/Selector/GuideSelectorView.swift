@@ -72,7 +72,7 @@ struct GuideSelectorView: View {
                     Button {
                         presenter.handleClose()
                     } label: {
-                        Image(systemName: "xmark")
+                        Image(icon: .xmark)
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {

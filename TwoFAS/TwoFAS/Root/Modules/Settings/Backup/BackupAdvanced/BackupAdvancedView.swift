@@ -64,7 +64,7 @@ struct BackupAdvancedView: View {
             presenter.handleSelection(cell.action)
         } label: {
             TFRowContent(title: cell.title) {
-                GradientIconTile(systemName: cell.iconSystemName)
+                GradientIconTile(icon: cell.icon)
                     .accessibilityHidden(true)
             } accessory: {}
             .opacity(cell.isEnabled ? 1 : 0.4)

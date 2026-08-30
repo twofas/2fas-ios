@@ -33,16 +33,16 @@ struct VerifyPINView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button { presenter.handleCancel() } label: {
-                    Image(systemName: leadingImageName)
+                    Image(icon: leadingImageName)
                 }
             }
         }
     }
 
-    private var leadingImageName: String {
+    private var leadingImageName: IconName {
         switch presenter.leadingSymbol {
-        case .back: return "chevron.backward"
-        default: return "xmark"
+        case .back: return .chevronBackward
+        default: return .xmark
         }
     }
 }

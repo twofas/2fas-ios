@@ -58,7 +58,7 @@ struct TFColorPickerMenu: View {
                         Label {
                             Text(color.localizedName)
                         } icon: {
-                            Image(uiImage: UIImage(systemName: "circle.fill")!
+                            Image(uiImage: UIImage(icon: .circleFill)!
                                 .withTintColor(color.color, renderingMode: .alwaysOriginal))
                         }
                     }
@@ -73,7 +73,7 @@ struct TFColorPickerMenu: View {
                         .textStyle(.body)
                         .foregroundStyle(.labelsSecondary)
                     
-                    Image(systemName: "chevron.up.chevron.down")
+                    Image(icon: .chevronUpChevronDown)
                         .textStyle(.body)
                         .foregroundStyle(.labelsSecondary)
                         .accessibilityHidden(true)

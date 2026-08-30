@@ -34,14 +34,14 @@ struct ManageWatchView: View {
                 Button {
                     presenter.onClose()
                 } label: {
-                    Image(systemName: "xmark")
+                    Image(icon: .xmark)
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     presenter.onPairWatch()
                 } label: {
-                    Image(systemName: "plus")
+                    Image(icon: .plus)
                 }
                 .accessibilityLabel(T.Commons.add)
             }
@@ -64,7 +64,7 @@ struct ManageWatchView: View {
 
     private var emptyState: some View {
         TFEmptyScreen(
-            icon: .systemImage("applewatch"),
+            icon: .systemImage(.appleWatch),
             title: T.Backup.managePairedWatchesEmptyList
         )
     }
@@ -81,14 +81,14 @@ struct ManageWatchView: View {
                         Button {
                             presenter.onDelete(item)
                         } label: {
-                            Label(T.Commons.delete, systemImage: "trash.fill")
+                            Label(T.Commons.delete, icon: .trashFill)
                         }
                         .tint(AppColor.accentsBrand)
 
                         Button {
                             presenter.onRename(item)
                         } label: {
-                            Label(T.Commons.rename, systemImage: "pencil")
+                            Label(T.Commons.rename, icon: .pencil)
                         }
                         .tint(AppColor.accentsBlue)
                     }
@@ -103,7 +103,7 @@ struct ManageWatchView: View {
     private func watchCell(_ item: PairedWatch) -> some View {
         AdaptiveReadableContainer(horizontalMargin: .zero, verticalMargin: .zero) {
             HStack(spacing: .M) {
-                Image(systemName: "applewatch")
+                Image(icon: .appleWatch)
                     .textStyle(.title3)
                     .foregroundStyle(.accentsBrand)
                     .frame(width: 28)

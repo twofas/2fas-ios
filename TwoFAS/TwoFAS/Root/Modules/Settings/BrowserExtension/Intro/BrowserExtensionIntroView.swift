@@ -39,7 +39,7 @@ struct BrowserExtensionIntroView: View {
         AdaptiveReadableContainer {
             VStack(alignment: .center, spacing: .XXL) {
                 VStack(spacing: .XL) {
-                    Image(systemName: "desktopcomputer.and.arrow.down")
+                    Image(icon: .desktopcomputerAndArrowDown)
                         .textStyle(.iconLarge)
                         .foregroundStyle(.accentsBrand)
                         .padding(.top, .XXXXXL)

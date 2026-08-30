@@ -93,7 +93,7 @@ private struct PairedDomainRow: View {
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Image(systemName: "trash")
+                Image(icon: .trash)
                     .textStyle(.body)
                     .foregroundStyle(.accentsBrand)
                     .accessibilityLabel(T.Commons.delete)

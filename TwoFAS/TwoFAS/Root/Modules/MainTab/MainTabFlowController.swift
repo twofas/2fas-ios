@@ -315,13 +315,13 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
 
         let tokensTab = UITab(
             title: T.Commons.tokens,
-            image: UIImage(systemName: "lock.badge.clock.fill"),
+            image: UIImage(icon: .lockBadgeClockFill),
             identifier: "tokens"
         ) { _ in tokensNavigationController }
 
         let settingsTab = UITab(
             title: T.Settings.settings,
-            image: UIImage(systemName: "gear"),
+            image: UIImage(icon: .gear),
             identifier: "settings"
         ) { [weak settingsViewController] _ in settingsViewController ?? UIViewController() }
 

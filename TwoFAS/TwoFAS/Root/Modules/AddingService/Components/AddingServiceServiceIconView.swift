@@ -42,7 +42,7 @@ struct AddingServiceServiceIconView: View {
             Image(uiImage: serviceImage)
                 .scaleEffect(0.65)
         } else {
-            Image(systemName: "photo")
+            Image(icon: .photo)
                 .foregroundStyle(.labelsSecondary)
         }
     }

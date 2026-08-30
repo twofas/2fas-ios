@@ -35,7 +35,7 @@ public struct TFFailureView: View {
         VStack(spacing: .L) {
             Spacer()
                 .frame(maxHeight: .infinity)
-            Image(systemName: "xmark.circle.fill")
+            Image(icon: .xmarkCircleFill)
                 .font(.system(size: 56))
                 .foregroundStyle(.accentsBrand)
                 .symbolEffect(.bounce, value: symbolBounce)

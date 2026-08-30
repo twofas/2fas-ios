@@ -31,8 +31,8 @@ struct ExportQuestionView: View {
         TFInfoView(
             icon: .view(view: AnyView(
                 TFDoubleIconArrow(
-                    leadingSymbol: "staroflife.shield.fill",
-                    trailingSymbol: exportType == .file ? "document.fill" : "qrcode"
+                    leadingSymbol: .staroflifeShieldFill,
+                    trailingSymbol: exportType == .file ? .documentFill : .qrcode
                 )
             )),
             title: exportType.title,

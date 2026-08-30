@@ -69,7 +69,7 @@ struct TFInputFloatingContainer<Content: View, TrailingAccessory: View>: View {
                 .frame(maxWidth: .infinity, alignment: movePlaceholderUp ? .topLeading : .leading)
                 .animation(Animation.easeInOut(duration: AnimationTiming.duration), value: movePlaceholderUp)
                 HStack(spacing: .S) {
-                    Image(systemName: "exclamationmark.triangle.fill")
+                    Image(icon: .exclamationmarkTriangleFill)
                         .resizable()
                         .frame(width: Size.extraSmallIconSize, height: Size.extraSmallIconSize)
                         .aspectRatio(contentMode: .fit)

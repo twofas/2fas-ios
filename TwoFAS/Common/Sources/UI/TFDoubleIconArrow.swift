@@ -20,11 +20,11 @@
 import SwiftUI
 
 public struct TFDoubleIconArrow: View {
-    private let leadingSymbol: String
-    private let trailingSymbol: String
+    private let leadingSymbol: IconName
+    private let trailingSymbol: IconName
     private let spacing: Spacing
 
-    public init(leadingSymbol: String, trailingSymbol: String, spacing: Spacing = .XL) {
+    public init(leadingSymbol: IconName, trailingSymbol: IconName, spacing: Spacing = .XL) {
         self.leadingSymbol = leadingSymbol
         self.trailingSymbol = trailingSymbol
         self.spacing = spacing
@@ -32,12 +32,12 @@ public struct TFDoubleIconArrow: View {
 
     public var body: some View {
         HStack(spacing: spacing) {
-            Image(systemName: leadingSymbol)
+            Image(icon: leadingSymbol)
                 .textStyle(.iconLarge)
                 .foregroundStyle(.accentsBrand)
                 .symbolBounceOnAppear(delay: 0.2)
             ArrowIcon()
-            Image(systemName: trailingSymbol)
+            Image(icon: trailingSymbol)
                 .textStyle(.iconLarge)
                 .foregroundStyle(.accentsBrand)
                 .symbolBounceOnAppear(delay: 0.8)

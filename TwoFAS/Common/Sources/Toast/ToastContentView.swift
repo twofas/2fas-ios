@@ -61,13 +61,13 @@ public struct ToastContentView: View {
     private var defaultIcon: Image {
         switch style {
         case .success:
-            Image(systemName: "checkmark.circle.fill")
+            Image(icon: .checkmarkCircleFill)
         case .failure:
-            Image(systemName: "xmark.circle.fill")
+            Image(icon: .xmarkCircleFill)
         case .info:
-            Image(systemName: "info.circle.fill")
+            Image(icon: .infoCircleFill)
         case .warning:
-            Image(systemName: "exclamationmark.triangle.fill")
+            Image(icon: .exclamationmarkTriangleFill)
         }
     }
 

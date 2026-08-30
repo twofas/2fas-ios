@@ -139,7 +139,7 @@ struct AddingServiceManuallyView: View {
                     Button {
                         presenter.handleCancel()
                     } label: {
-                        Image(systemName: "xmark")
+                        Image(icon: .xmark)
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
@@ -318,7 +318,7 @@ struct AddingServiceManuallyView: View {
                     .textStyle(.body)
                     .foregroundStyle(.labelsSecondary)
 
-                Image(systemName: "pencil")
+                Image(icon: .pencil)
                     .textStyle(.body)
                     .foregroundStyle(.labelsSecondary)
                     .accessibilityHidden(true)
@@ -360,7 +360,7 @@ private struct TokenTypeOption: View {
                     .foregroundStyle(.labelsPrimary)
                 
                 if selectedTokenType == tokenType {
-                    Image(systemName: "checkmark")
+                    Image(icon: .checkmark)
                         .textStyle(.footnote, .emphasized)
                         .foregroundStyle(.graysWhite)
                         .frame(width: circleSize, height: circleSize, alignment: .center)

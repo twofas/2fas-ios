@@ -23,7 +23,7 @@ struct RevealTokenImage: View {
     private let size: CGFloat = 40
     
     var body: some View {
-        Image(systemName: "eye.fill")
+        Image(icon: .eyeFill)
             .textStyle(.subheadline)
             .foregroundStyle(.labelsPrimary)
             .background(

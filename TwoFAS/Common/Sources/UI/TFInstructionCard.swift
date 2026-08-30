@@ -27,11 +27,11 @@ public enum TFInstructionCardIcon {
     case iCloudSync
     case link
 
-    var systemName: String {
+    var icon: IconName {
         switch self {
-        case .download: "arrow.down.circle.fill"
-        case .iCloudSync: "arrow.trianglehead.2.clockwise.rotate.90.icloud.fill"
-        case .link: "link"
+        case .download: .arrowDownCircleFill
+        case .iCloudSync: .arrowTrianglehead2ClockwiseRotate90IcloudFill
+        case .link: .link
         }
     }
 
@@ -50,10 +50,10 @@ public enum TFInstructionCardAccessory {
     case chevron
     case link
 
-    var systemName: String {
+    var icon: IconName {
         switch self {
-        case .chevron: "chevron.right"
-        case .link: "arrow.up.forward"
+        case .chevron: .chevronRight
+        case .link: .arrowUpForward
         }
     }
 }
@@ -133,7 +133,7 @@ public struct TFInstructionCard: View {
     private var header: some View {
         HStack(alignment: .center, spacing: .L) {
             HStack(spacing: .zero) {
-                Image(systemName: icon.systemName)
+                Image(icon: icon.icon)
                     .textStyle(.title3, .regular)
                     .foregroundStyle(icon.color)
                 Spacer(minLength: 0)
@@ -159,7 +159,7 @@ public struct TFInstructionCard: View {
             }
 
             if let accessory {
-                Image(systemName: accessory.systemName)
+                Image(icon: accessory.icon)
                     .textStyle(.body, .emphasized)
                     .foregroundStyle(.labelsTertiary)
                     .accessibilityHidden(true)

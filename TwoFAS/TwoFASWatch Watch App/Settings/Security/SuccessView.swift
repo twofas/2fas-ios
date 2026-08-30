@@ -18,12 +18,13 @@
 //
 
 import SwiftUI
+import CommonWatch
 
 struct SuccessView: View {
     var close: () -> Void
     var body: some View {
         VStack(spacing: 8) {
-            Image(systemName: "checkmark.shield.fill")
+            Image(icon: .checkmarkShieldFill)
                 .font(.system(size: 40))
             Text(T.Commons.success)
             Spacer()

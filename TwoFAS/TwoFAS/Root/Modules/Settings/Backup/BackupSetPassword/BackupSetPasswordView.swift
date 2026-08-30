@@ -91,7 +91,7 @@ struct BackupSetPasswordView: View {
                     Button {
                         presenter.handleClose()
                     } label: {
-                        Image(systemName: "xmark")
+                        Image(icon: .xmark)
                     }
                 }
             }
@@ -158,7 +158,7 @@ struct BackupSetPasswordView: View {
             .groupedSectionBackground(isElevated: true)
 
             if let error = presenter.migrationError {
-                Label(error, systemImage: "xmark.circle.fill")
+                Label(error, icon: .xmarkCircleFill)
                     .textStyle(.footnote)
                     .foregroundStyle(.accentsOrange)
                     .frame(maxWidth: .infinity, alignment: .leading)

@@ -98,7 +98,7 @@ public struct TFRowContent<Accessory: View, Icon: View>: View {
 public struct CheveronIcon: View {
     public init() {}
     public var body: some View {
-        Image(systemName: "chevron.right")
+        Image(icon: .chevronRight)
             .textStyle(.subheadline, .emphasized)
             .foregroundStyle(.labelsTertiary)
             .accessibilityHidden(true)

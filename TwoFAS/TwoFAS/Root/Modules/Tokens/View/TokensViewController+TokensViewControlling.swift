@@ -241,7 +241,7 @@ extension TokensViewController: TokensViewControlling {
     private func makeMoreMenuButton() -> UIBarButtonItem {
         let editAction = UIAction(
             title: T.Commons.edit,
-            image: UIImage(systemName: "pencil")
+            image: UIImage(icon: .pencil)
         ) { [weak self] _ in
             self?.presenter.handleEnterEditMode()
         }
@@ -255,7 +255,7 @@ extension TokensViewController: TokensViewControlling {
             let actions: [UIAction] = SortType.allCases.map { sortType in
                 UIAction(
                     title: sortType.localized,
-                    image: UIImage(systemName: self.sortSystemImageName(for: sortType)),
+                    image: UIImage(icon: self.sortSystemImageName(for: sortType)),
                     state: sortType == selected ? .on : .off
                 ) { [weak self] _ in
                     self?.presenter.handleSetSortType(sortType)
@@ -271,7 +271,7 @@ extension TokensViewController: TokensViewControlling {
 
         let children: [UIMenuElement] = [editAction, sortMenu]
         let menu = UIMenu(children: children)
-        let button = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), menu: menu)
+        let button = UIBarButtonItem(image: UIImage(icon: .ellipsis), menu: menu)
         button.accessibilityLabel = T.Commons.optionsTitle
         return button
     }
@@ -289,7 +289,7 @@ extension TokensViewController: TokensViewControlling {
 
     private func makeAddServicePlusButton() -> UIBarButtonItem {
         let button = UIBarButtonItem(
-            image: UIImage(systemName: "plus"),
+            image: UIImage(icon: .plus),
             style: .plain,
             target: self,
             action: #selector(addServiceAction)
@@ -298,11 +298,11 @@ extension TokensViewController: TokensViewControlling {
         return button
     }
 
-    private func sortSystemImageName(for sortType: SortType) -> String {
+    private func sortSystemImageName(for sortType: SortType) -> IconName {
         switch sortType {
-        case .az: "arrow.down"
-        case .za: "arrow.up"
-        case .manual: "line.3.horizontal"
+        case .az: .arrowDown
+        case .za: .arrowUp
+        case .manual: .line3Horizontal
         }
     }
     
@@ -516,7 +516,7 @@ private extension TokensViewController {
     @available(iOS 26.0, *)
     final class UnreadNewsNaviButton: UIButton {
         // MARK: - Configuration
-        static let iconSymbolName = "bell.fill"
+        static let iconSymbolName = IconName.bellFill
         static let iconPointSize: CGFloat = 20
         static let iconReadPointSize: CGFloat = 16
         static let iconWeight: UIImage.SymbolWeight = .regular
@@ -569,7 +569,7 @@ private extension TokensViewController {
                 pointSize: iconPointSize,
                 weight: Self.iconWeight
             )
-            newsImageView.image = UIImage(systemName: Self.iconSymbolName, withConfiguration: cfg)
+            newsImageView.image = UIImage(icon: Self.iconSymbolName, withConfiguration: cfg)
             newsImageView.contentMode = .center
             newsImageView.translatesAutoresizingMaskIntoConstraints = false
             newsImageView.tintColor = AppColor.labelsPrimary.uiColor

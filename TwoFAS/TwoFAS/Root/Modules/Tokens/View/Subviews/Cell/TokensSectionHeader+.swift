@@ -32,7 +32,7 @@ extension TokensSectionHeader {
         
         private let collapse: UIImageView = {
             let config = UIImage.SymbolConfiguration(textStyle: .body)
-            let img = UIImageView(image: UIImage(systemName: "chevron.up", withConfiguration: config))
+            let img = UIImageView(image: UIImage(icon: .chevronUp, withConfiguration: config))
             img.tintColor = AppColor.labelsSecondary.uiColor
             img.adjustsImageSizeForAccessibilityContentSizeCategory = true
             img.contentMode = .center
@@ -40,7 +40,7 @@ extension TokensSectionHeader {
         }()
         private let expand: UIImageView = {
             let config = UIImage.SymbolConfiguration(textStyle: .body)
-            let img = UIImageView(image: UIImage(systemName: "chevron.down", withConfiguration: config))
+            let img = UIImageView(image: UIImage(icon: .chevronDown, withConfiguration: config))
             img.tintColor = AppColor.labelsSecondary.uiColor
             img.adjustsImageSizeForAccessibilityContentSizeCategory = true
             img.contentMode = .center
@@ -97,7 +97,7 @@ extension TokensSectionHeader {
         private let down: UIButton = {
             let b = UIButton()
             let config = UIImage.SymbolConfiguration(textStyle: .body)
-            b.setImage(UIImage(systemName: "chevron.down", withConfiguration: config), for: .normal)
+            b.setImage(UIImage(icon: .chevronDown, withConfiguration: config), for: .normal)
             b.imageView?.tintColor = AppColor.labelsSecondary.uiColor
             b.adjustsImageSizeForAccessibilityContentSizeCategory = true
             return b
@@ -105,7 +105,7 @@ extension TokensSectionHeader {
         private let up: UIButton = {
             let b = UIButton()
             let config = UIImage.SymbolConfiguration(textStyle: .body)
-            b.setImage(UIImage(systemName: "chevron.up", withConfiguration: config), for: .normal)
+            b.setImage(UIImage(icon: .chevronUp, withConfiguration: config), for: .normal)
             b.imageView?.tintColor = AppColor.labelsSecondary.uiColor
             b.adjustsImageSizeForAccessibilityContentSizeCategory = true
             b.setPreferredSymbolConfiguration(config, forImageIn: .normal)
@@ -291,7 +291,7 @@ extension TokensSectionHeader {
         private func commonInit() {
             let config = UIImage.SymbolConfiguration(textStyle: .body)
             adjustsImageSizeForAccessibilityContentSizeCategory = true
-            setImage(UIImage(systemName: "ellipsis", withConfiguration: config), for: .normal)
+            setImage(UIImage(icon: .ellipsis, withConfiguration: config), for: .normal)
             imageView?.tintColor = AppColor.labelsSecondary.uiColor
             showsMenuAsPrimaryAction = true
         }

@@ -46,7 +46,7 @@ struct NewPINView: View {
             if presenter.showsCancelButton {
                 ToolbarItem(placement: .topBarLeading) {
                     Button { presenter.handleCancel() } label: {
-                        Image(systemName: "xmark")
+                        Image(icon: .xmark)
                     }
                 }
             }

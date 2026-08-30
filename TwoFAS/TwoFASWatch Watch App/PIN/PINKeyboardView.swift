@@ -94,7 +94,7 @@ struct PINKeyboardView: View {
                     Button {
                         presenter.onCloseAction()
                     } label: {
-                        Label(T.Commons.close, systemImage: "xmark")
+                        Label(T.Commons.close, icon: .xmark)
                     }
                 }
             }
@@ -122,7 +122,7 @@ struct PINKeyboardView: View {
         Button(action: {
             presenter.onDeleteAction()
         }, label: {
-            Image(systemName: "delete.left")
+            Image(icon: .deleteLeft)
                 .foregroundStyle(.black)
         })
         .buttonStyle(KeyboardButton())

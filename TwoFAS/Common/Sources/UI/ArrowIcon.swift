@@ -22,7 +22,7 @@ import SwiftUI
 public struct ArrowIcon: View {
     public init() {}
     public var body: some View {
-        Image(systemName: "arrow.right")
+        Image(icon: .arrowRight)
             .textStyle(.body)
             .foregroundStyle(.labelsTertiary)
             .multilineTextAlignment(.center)

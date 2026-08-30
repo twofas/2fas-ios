@@ -29,11 +29,11 @@ import SwiftUI
 ///
 /// ```swift
 /// // SF Symbol
-/// TFEmptyScreen(systemImage: "trash.fill", title: T.Settings.trashIsEmpty)
+/// TFEmptyScreen(icon: .systemImage(.trashFill), title: T.Settings.trashIsEmpty)
 ///
 /// // SF Symbol + description
 /// TFEmptyScreen(
-///     systemImage: "trash.fill",
+///     icon: .systemImage(.trashFill),
 ///     title: T.Settings.trashIsEmpty,
 ///     description: T.Settings.trashIsEmptyDescription
 /// )

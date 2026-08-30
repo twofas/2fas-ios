@@ -60,7 +60,7 @@ struct TokensEmptyListView: View {
             ) {
                 VStack(spacing: .XXXXXL) {
                     TFInfoContent(
-                        icon: .systemImage("qrcode"),
+                        icon: .systemImage(.qrcode),
                         title: T.Tokens.emptyListTitle,
                         description: T.Introduction.descriptionTitle
                     )
@@ -117,7 +117,7 @@ private struct TrashWarningCard: View {
     var body: some View {
         Button(action: action) {
             HStack(alignment: .top, spacing: .S) {
-                Image(systemName: "trash")
+                Image(icon: .trash)
                     .textStyle(.subheadline, .emphasized)
                     .foregroundStyle(.labelsPrimary)
 
@@ -131,7 +131,7 @@ private struct TrashWarningCard: View {
                     HStack(spacing: .S) {
                         Text(T.Commons.goToTrash)
                             .textStyle(.callout)
-                        Image(systemName: "arrow.up.forward")
+                        Image(icon: .arrowUpForward)
                             .textStyle(.callout)
                     }
                     .foregroundStyle(.accentsBrand)

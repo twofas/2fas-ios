@@ -30,10 +30,10 @@ import SwiftUI
 /// ```swift
 /// TFMenuButton {
 ///     Button(action: onRestore) {
-///         Label(T.Settings.restore, systemImage: "arrow.clockwise")
+///         Label(T.Settings.restore, icon: .arrowClockwise)
 ///     }
 ///     Button(role: .destructive, action: onDelete) {
-///         Label(T.Commons.delete, systemImage: "trash.fill")
+///         Label(T.Commons.delete, icon: .trashFill)
 ///     }
 /// }
 /// ```
@@ -57,7 +57,7 @@ public struct TFMenuButton<Content: View>: View {
         Menu {
             content()
         } label: {
-            Image(systemName: "ellipsis")
+            Image(icon: .ellipsis)
                 .textStyle(.body)
                 .foregroundStyle(AppColor.labelsSecondary)
                 .frame(width: 44, height: 44, alignment: moveRight ? .trailing : .center)

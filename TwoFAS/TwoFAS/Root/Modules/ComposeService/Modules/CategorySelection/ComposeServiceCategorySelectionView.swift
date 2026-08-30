@@ -52,7 +52,7 @@ struct ComposeServiceCategorySelectionView: View {
                 Button {
                     presenter.handleShowAddSection()
                 } label: {
-                    Image(systemName: "plus")
+                    Image(icon: .plus)
                 }
                 .accessibilityLabel(T.Voiceover.addGroup)
             }
@@ -92,7 +92,7 @@ private struct CategoryRow: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 if row.checkmark {
-                    Image(systemName: "checkmark")
+                    Image(icon: .checkmark)
                         .textStyle(.body, .emphasized)
                         .foregroundStyle(.accentsBrand)
                         .accessibilityLabel(T.Voiceover.selected)

@@ -100,7 +100,7 @@ extension MainViewController {
     @available(iOS 26.0, *)
     private func setupAddServiceButton() {
         var config = UIButton.Configuration.prominentGlass()
-        config.image = UIImage(systemName: "plus")
+        config.image = UIImage(icon: .plus)
         config.preferredSymbolConfigurationForImage = .init(pointSize: 22, weight: .semibold)
         // Brand-tinted glass fill with a contrasting (white) "+" glyph.
         config.baseForegroundColor = .white

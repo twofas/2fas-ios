@@ -37,7 +37,7 @@ struct AppleWatchView: View {
         AdaptiveReadableContainer {
             VStack(alignment: .center, spacing: .XXL) {
                 VStack(spacing: .XL) {
-                    Image(systemName: "lock.applewatch")
+                    Image(icon: .lockAppleWatch)
                         .textStyle(.iconLarge)
                         .foregroundStyle(.accentsBrand)
                         .padding(.top, .XXXXXL)

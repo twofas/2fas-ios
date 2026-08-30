@@ -35,7 +35,7 @@ public struct TFSuccessView: View {
         VStack(spacing: .L) {
             Spacer()
                 .frame(maxHeight: .infinity)
-            Image(systemName: "checkmark.circle.fill")
+            Image(icon: .checkmarkCircleFill)
                 .font(.system(size: 56))
                 .foregroundStyle(.accentsGreen)
                 .symbolEffect(.bounce, value: symbolBounce)

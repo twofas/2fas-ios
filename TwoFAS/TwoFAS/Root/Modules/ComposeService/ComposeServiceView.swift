@@ -62,7 +62,7 @@ struct ComposeServiceView: View {
                     Button {
                         presenter.handleCancel()
                     } label: {
-                        Image(systemName: "xmark")
+                        Image(icon: .xmark)
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
@@ -131,22 +131,22 @@ struct ComposeServiceView: View {
                     Button {
                         presenter.handleCopySecret()
                     } label: {
-                        Label(T.Tokens.copySecret, systemImage: "doc.on.doc")
+                        Label(T.Tokens.copySecret, icon: .docOnDoc)
                     }
                     Button {
                         presenter.handleCopyLink()
                     } label: {
-                        Label(T.Tokens.copyLink, systemImage: "link")
+                        Label(T.Tokens.copyLink, icon: .link)
                     }
                     Button {
                         presenter.handleShowQRCode()
                     } label: {
-                        Label(T.Tokens.qrCodeShow, systemImage: "qrcode")
+                        Label(T.Tokens.qrCodeShow, icon: .qrcode)
                     }
                     Button {
                         presenter.handleShareQRCode()
                     } label: {
-                        Label(T.Tokens.qrCodeShare, systemImage: "square.and.arrow.up")
+                        Label(T.Tokens.qrCodeShare, icon: .squareAndArrowUp)
                     }
                 }
 
@@ -302,7 +302,7 @@ struct ComposeServiceView: View {
                         .lineLimit(1)
                 }
 
-                Image(systemName: "chevron.right")
+                Image(icon: .chevronRight)
                     .textStyle(.footnote, .emphasized)
                     .foregroundStyle(.labelsTertiary)
                     .accessibilityHidden(true)

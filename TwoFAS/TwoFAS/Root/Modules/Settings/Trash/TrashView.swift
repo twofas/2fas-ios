@@ -42,7 +42,7 @@ struct TrashView: View {
 
     private var emptyState: some View {
         TFEmptyScreen(
-            icon: .systemImage("trash.fill"),
+            icon: .systemImage(.trashFill),
             title: T.Settings.trashIsEmpty
         )
     }
@@ -84,13 +84,13 @@ struct TrashView: View {
                     Button {
                         presenter.handleRestore(service)
                     } label: {
-                        Label(T.Settings.restore, systemImage: "arrow.clockwise")
+                        Label(T.Settings.restore, icon: .arrowClockwise)
                     }
 
                     Button(role: .destructive) {
                         presenter.handleDelete(service)
                     } label: {
-                        Label(T.Commons.delete, systemImage: "trash.fill")
+                        Label(T.Commons.delete, icon: .trashFill)
                     }
                 }
             }

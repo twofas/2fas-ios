@@ -49,7 +49,7 @@ extension ExternalImportInstructionsPresenter {
         case .twofas: AnyView(Asset.externalImportGoogleAuth.swiftUIImage) // Not used here
         case .otpAuthFile:
             AnyView(
-                Image(systemName: "doc.fill")
+                Image(icon: .docFill)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .foregroundStyle(AppColor.accentsBrand)

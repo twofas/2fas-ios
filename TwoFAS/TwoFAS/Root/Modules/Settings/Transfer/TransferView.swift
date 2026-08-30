@@ -83,7 +83,7 @@ struct TransferView: View {
             BrandIconTile(image: image)
                 .accessibilityHidden(true)
         case .symbol(let name):
-            GradientIconTile(systemName: name)
+            GradientIconTile(icon: name)
                 .accessibilityHidden(true)
         }
     }

@@ -260,7 +260,7 @@ private extension TokensSectionHeader {
     func menu() -> UIMenu {
         let edit = UIAction(
             title: T.Commons.edit,
-            image: UIImage(systemName: "pencil")
+            image: UIImage(icon: .pencil)
         ) { [weak self] _ in
             guard let config = self?.config else { return }
             self?.dataSource?.rename(config)
@@ -268,7 +268,7 @@ private extension TokensSectionHeader {
         
         let delete = UIAction(
             title: T.Commons.delete,
-            image: UIImage(systemName: "trash"),
+            image: UIImage(icon: .trash),
             attributes: .destructive
         ) { [weak self] _ in
             guard let config = self?.config else { return }

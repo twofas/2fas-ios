@@ -24,7 +24,7 @@ extension SettingsMenuPresenter {
         let networkSSLError = SettingsMenuSection(
             cells: [
                 .init(
-                    icon: .symbol("exclamationmark.triangle.fill"),
+                    icon: .symbol(.exclamationmarkTriangleFill),
                     title: T.Settings.sslErrorDescription,
                     accessory: .warning,
                     isEnabled: false
@@ -34,7 +34,7 @@ extension SettingsMenuPresenter {
         let backup = SettingsMenuSection(
             cells: [
                 .init(
-                    icon: .symbol("cloud.fill"),
+                    icon: .symbol(.cloudFill),
                     title: T.Backup._2fasBackup,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .backup)
@@ -51,7 +51,7 @@ extension SettingsMenuPresenter {
         let security = SettingsMenuSection(
             cells: [
                 .init(
-                    icon: .symbol("staroflife.shield"),
+                    icon: .symbol(.staroflifeShield),
                     title: T.Settings.appSecurity,
                     info: securityDescription,
                     accessory: .arrow,
@@ -68,14 +68,14 @@ extension SettingsMenuPresenter {
         let browerExtension = SettingsMenuSection(
             cells: [
                 .init(
-                    icon: .symbol("puzzlepiece.extension.fill"),
+                    icon: .symbol(.puzzlepieceExtensionFill),
                     title: T.Browser.browserExtensionSettings,
                     info: browerExtensionDescription,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .browserExtension)
                 ),
                 .init(
-                    icon: .symbol("lock.applewatch"),
+                    icon: .symbol(.lockAppleWatch),
                     title: T.Settings.appleWatch,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .appleWatch)
@@ -87,13 +87,13 @@ extension SettingsMenuPresenter {
         let preferences = SettingsMenuSection(
             cells: [
                 .init(
-                    icon: .symbol("eye.fill"),
+                    icon: .symbol(.eyeFill),
                     title: T.Settings.appearance,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .appearance)
                 ),
                 .init(
-                    icon: .symbol("square.grid.2x2.fill"),
+                    icon: .symbol(.squareGrid2x2Fill),
                     title: T.Settings.widgets,
                     accessory: .toggle(kind: .widgets, isOn: areWidgetsOn)
                 )
@@ -104,13 +104,13 @@ extension SettingsMenuPresenter {
         let manageTokens = SettingsMenuSection(
             cells: [
                 .init(
-                    icon: .symbol("arrow.left.arrow.right"),
+                    icon: .symbol(.arrowLeftArrowRight),
                     title: T.Settings.transfer,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .transfer)
                 ),
                 .init(
-                    icon: .symbol("trash.fill"),
+                    icon: .symbol(.trashFill),
                     title: T.Settings.trashOption,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .trash)
@@ -134,14 +134,14 @@ extension SettingsMenuPresenter {
         let info = SettingsMenuSection(
             cells: [
                 .init(
-                    icon: .symbol("questionmark.circle.fill"),
+                    icon: .symbol(.questionmarkCircleFill),
                     title: T.Settings.support,
                     accessory: .external,
                     action: .navigation(navigatesTo: .faq),
                     rememberPosition: false
                 ),
                 .init(
-                    icon: .symbol("info.circle.fill"),
+                    icon: .symbol(.infoCircleFill),
                     title: T.Settings.about,
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .about)
@@ -175,7 +175,7 @@ extension SettingsMenuPresenter {
         let debug = SettingsMenuSection(
             cells: [
                 .init(
-                    icon: .symbol("ladybug.fill"),
+                    icon: .symbol(.ladybugFill),
                     title: "Debug",
                     accessory: .arrow,
                     action: .navigation(navigatesTo: .debug)

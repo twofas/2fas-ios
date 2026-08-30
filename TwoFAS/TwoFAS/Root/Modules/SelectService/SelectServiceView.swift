@@ -105,7 +105,7 @@ struct SelectServiceView: View {
     @ViewBuilder
     private var emptyView: some View {
         TFEmptyScreen(
-            icon: .systemImage("magnifyingglass"),
+            icon: .systemImage(.magnifyingglass),
             title: T.Commons.noResults
         )
     }

@@ -32,21 +32,21 @@ struct SecurityView: View {
                 if presenter.isPINset {
                     NavigationLink(value: SecurityPath.changePIN(.verify)) {
                         HStack {
-                            Image(systemName: "lock.rotation")
+                            Image(icon: .lockRotation)
                             Text(T.Security.changePin)
                         }
                     }
 
                     NavigationLink(value: SecurityPath.disablePIN(.verify)) {
                         HStack {
-                            Image(systemName: "lock.open.fill")
+                            Image(icon: .lockOpenFill)
                             Text(T.Security.disablePin)
                         }
                     }
                 } else {
                     NavigationLink(value: SecurityPath.setPIN(.selectLength)) {
                         HStack {
-                            Image(systemName: "lock.fill")
+                            Image(icon: .lockFill)
                             Text(T.Security.createPin)
                         }
                     }

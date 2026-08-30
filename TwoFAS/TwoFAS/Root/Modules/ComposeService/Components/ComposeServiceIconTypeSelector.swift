@@ -67,7 +67,7 @@ private struct IconTypeOption<Preview: View>: View {
                     .foregroundStyle(.labelsPrimary)
 
                 if selectedType == type {
-                    Image(systemName: "checkmark")
+                    Image(icon: .checkmark)
                         .textStyle(.footnote, .emphasized)
                         .foregroundStyle(.graysWhite)
                         .frame(width: indicatorSize, height: indicatorSize, alignment: .center)

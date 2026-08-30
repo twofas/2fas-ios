@@ -23,7 +23,7 @@ import Common
 final class TokensRevealButton: UIButton {
     static let sizeNormal: CGFloat = 34
     static let sizeCompact: CGFloat = 32
-    private let imageValue = "eye.fill"
+    private let imageValue = IconName.eyeFill
     
     private var kind: TokensCellKind = .normal
     
@@ -61,7 +61,7 @@ final class TokensRevealButton: UIButton {
     private func setupCompact() {
         let config = UIImage.SymbolConfiguration(font: TextStyle.footnote.uiFont())
         let imageNormal = UIImage(
-            systemName: imageValue,
+            icon: imageValue,
             withConfiguration: config
         )!
 
@@ -74,7 +74,7 @@ final class TokensRevealButton: UIButton {
         adjustsImageSizeForAccessibilityContentSizeCategory = true
         let config = UIImage.SymbolConfiguration(font: TextStyle.subheadline.uiFont())
         let imageNormal = UIImage(
-            systemName: imageValue,
+            icon: imageValue,
             withConfiguration: config
         )!
         

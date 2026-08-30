@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 import Data
 
 extension QuickAction {
@@ -30,12 +31,12 @@ extension QuickAction {
         }
     }
 
-    var iconSystemName: String {
+    var icon: IconName {
         switch self {
-        case .backup: return "doc"
-        case .support: return "questionmark.circle"
-        case .pair: return "plus"
-        case .search: return "magnifyingglass"
+        case .backup: return .doc
+        case .support: return .questionmarkCircle
+        case .pair: return .plus
+        case .search: return .magnifyingglass
         }
     }
 
@@ -44,7 +45,7 @@ extension QuickAction {
             type: rawValue,
             localizedTitle: title,
             localizedSubtitle: nil,
-            icon: UIApplicationShortcutIcon(systemImageName: iconSystemName),
+            icon: UIApplicationShortcutIcon(systemImageName: icon.rawValue),
             userInfo: nil
         )
     }

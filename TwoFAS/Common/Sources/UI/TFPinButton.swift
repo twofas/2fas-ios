@@ -163,7 +163,7 @@ public struct TFPinButton: View {
                 .textStyle(.title1, .medium)
         case .delete:
             // Title2/Regular — 22 pt, weight 400
-            Image(systemName: "delete.backward")
+            Image(icon: .deleteBackward)
                 .font(.system(size: 22, weight: .regular))
         }
     }

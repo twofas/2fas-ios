@@ -20,13 +20,13 @@
 import SwiftUI
 
 public struct GradientIconTile: View {
-    private let systemName: String
+    private let icon: IconName
     private let size: CGFloat
-    
+
     private let iconSize: CGFloat = 17
 
-    public init(systemName: String, size: CGFloat = 30) {
-        self.systemName = systemName
+    public init(icon: IconName, size: CGFloat = 30) {
+        self.icon = icon
         self.size = size
     }
 
@@ -38,7 +38,7 @@ public struct GradientIconTile: View {
             RoundedRectangle(cornerRadius: corner, style: .continuous)
                 .inset(by: 0.5)
                 .stroke(AppColor.bordersPrimary, lineWidth: 1)
-            Image(systemName: systemName)
+            Image(icon: icon)
                 .textStyle(.body)
                 .scaledToFit()
                 .frame(width: iconSize, height: iconSize)

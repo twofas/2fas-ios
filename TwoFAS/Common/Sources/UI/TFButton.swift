@@ -60,10 +60,10 @@ public enum TFButtonVariant {
 /// TFButton("Info", variant: .borderless, size: .small)  { info() }
 ///
 /// // Symbol-only (circular)
-/// TFButton(systemImage: "play.fill", variant: .borderedProminent, size: .large) { }
+/// TFButton(systemImage: .plus, variant: .borderedProminent, size: .large) { }
 ///
 /// // Symbol + text
-/// TFButton(systemImage: "play.fill", "Play", variant: .bordered, size: .large) { }
+/// TFButton(systemImage: .plus, "Play", variant: .bordered, size: .large) { }
 ///
 /// // Disabled
 /// TFButton("Save", variant: .borderedProminent, size: .large) { save() }
@@ -77,7 +77,7 @@ public struct TFButton: View {
     private var isEnabled
     
     private let label: String?
-    private let systemImage: String?
+    private let systemImage: IconName?
     private let variant: TFButtonVariant
     private let size: TFButtonSize
     private let applyGlass: Bool
@@ -106,7 +106,7 @@ public struct TFButton: View {
     // MARK: Init – symbol only
 
     public init(
-        systemImage: String,
+        systemImage: IconName,
         variant: TFButtonVariant,
         size: TFButtonSize,
         applyGlass: Bool = false,
@@ -125,7 +125,7 @@ public struct TFButton: View {
     // MARK: Init – symbol + text
 
     public init(
-        systemImage: String,
+        systemImage: IconName,
         _ label: String,
         variant: TFButtonVariant,
         size: TFButtonSize,
@@ -175,8 +175,8 @@ public struct TFButton: View {
     }
     
     @ViewBuilder
-    private func symbolOnly(_ imageName: String) -> some View {
-        Image(systemName: imageName)
+    private func symbolOnly(_ imageName: IconName) -> some View {
+        Image(icon: imageName)
             .font(symbolFont)
             .foregroundStyle(labelColor)
             .frame(width: symbolDimension, height: symbolDimension)
@@ -206,9 +206,9 @@ public struct TFButton: View {
     }
     
     @ViewBuilder
-    private func symbolAndText(_ imageName: String, _ text: String) -> some View {
+    private func symbolAndText(_ imageName: IconName, _ text: String) -> some View {
         HStack(spacing: iconSpacing) {
-            Image(systemName: imageName)
+            Image(icon: imageName)
                 .font(symbolFont)
             Text(text)
                 .textStyle(textStyleSize, textStyleWeight)

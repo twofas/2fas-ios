@@ -21,7 +21,7 @@ import SwiftUI
 
 public struct TFInfoContent: View {
     public enum Icon {
-        case systemImage(String)
+        case systemImage(IconName)
         case image(UIImage, Image.TemplateRenderingMode)
         case view(view: AnyView)
     }
@@ -89,7 +89,7 @@ public struct TFInfoContent: View {
     private var iconView: some View {
         switch icon {
         case let .systemImage(name):
-            Image(systemName: name)
+            Image(icon: name)
                 .textStyle(.iconLarge)
                 .foregroundStyle(.accentsBrand)
                 .symbolBounceOnAppear()

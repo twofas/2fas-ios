@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 struct SettingsMenuSection: Identifiable {
     let id = UUID()
@@ -34,7 +35,7 @@ struct SettingsMenuSection: Identifiable {
 
 struct SettingsMenuCell: Identifiable {
     enum Icon {
-        case symbol(String)
+        case symbol(IconName)
         case brand(UIImage)
     }
     enum AccessoryKind {

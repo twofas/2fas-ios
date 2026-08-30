@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Common
 import Data
 
 struct BackupAdvancedSection: Identifiable {
@@ -45,11 +46,11 @@ struct BackupAdvancedCell: Identifiable {
     let action: Action
     let isEnabled: Bool
 
-    var iconSystemName: String {
+    var icon: IconName {
         switch action {
-        case .exportKeys: return "arrow.up.doc.fill"
-        case .importKeys: return "square.and.arrow.down.on.square.fill"
-        case .deleteBackup: return "xmark.icloud.fill"
+        case .exportKeys: return .arrowUpDocFill
+        case .importKeys: return .squareAndArrowDownOnSquareFill
+        case .deleteBackup: return .xmarkIcloudFill
         }
     }
 

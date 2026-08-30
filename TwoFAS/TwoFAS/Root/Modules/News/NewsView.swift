@@ -127,7 +127,7 @@ struct NewsView: View {
     
     @ViewBuilder
     private func actionIcon() -> some View {
-        Image(systemName: "arrow.up.right")
+        Image(icon: .arrowUpRight)
             .renderingMode(.template)
             .foregroundStyle(.labelsTertiary)
     }

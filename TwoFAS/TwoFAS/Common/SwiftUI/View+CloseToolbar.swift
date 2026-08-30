@@ -24,7 +24,7 @@ extension View {
         toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button(action: action) {
-                    Image(systemName: "xmark")
+                    Image(icon: .xmark)
                 }
             }
         }

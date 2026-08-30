@@ -34,21 +34,21 @@ extension TokensViewController {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak self] _ in
             let edit = UIAction(
                 title: T.Commons.edit,
-                image: UIImage(systemName: "square.and.pencil")
+                image: UIImage(icon: .squareAndPencil)
             ) { [weak self] _ in
                 self?.presenter.handleEditService(serviceData)
             }
             
             let copy = UIAction(
                 title: T.Tokens.copyToken,
-                image: UIImage(systemName: "doc.on.doc")
+                image: UIImage(icon: .docOnDoc)
             ) { [weak self] _ in
                 self?.presenter.handleCopyToken(from: serviceData)
             }
 
             let delete = UIAction(
                 title: T.Commons.delete,
-                image: UIImage(systemName: "trash"),
+                image: UIImage(icon: .trash),
                 attributes: .destructive
             ) { [weak self] _ in
                 self?.presenter.handleDeleteService(serviceData)
@@ -65,7 +65,7 @@ extension TokensViewController {
                 if canMoveUp {
                     actions.append(UIAction(
                         title: T.Tokens.moveUp,
-                        image: UIImage(systemName: "chevron.up")
+                        image: UIImage(icon: .chevronUp)
                     ) { [weak self] _ in
                         self?.presenter.handleMoveServiceUp(serviceData)
                     })
@@ -73,7 +73,7 @@ extension TokensViewController {
                 if canModeDown {
                     actions.append(UIAction(
                         title: T.Tokens.moveDown,
-                        image: UIImage(systemName: "chevron.down")
+                        image: UIImage(icon: .chevronDown)
                     ) { [weak self] _ in
                         self?.presenter.handleMoveServiceDown(serviceData)
                     })

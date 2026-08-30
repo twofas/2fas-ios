@@ -106,7 +106,7 @@ struct SettingsMenuView: View {
     private func leadingIcon(for icon: SettingsMenuCell.Icon?) -> some View {
         switch icon {
         case .symbol(let name):
-            GradientIconTile(systemName: name)
+            GradientIconTile(icon: name)
                 .accessibilityHidden(true)
         case .brand(let image):
             BrandIconTile(image: image)
@@ -127,7 +127,7 @@ struct SettingsMenuView: View {
                             .textStyle(.body)
                             .foregroundStyle(.labelsSecondary)
                     }
-                    Image(systemName: "chevron.right")
+                    Image(icon: .chevronRight)
                         .textStyle(.subheadline, .emphasized)
                         .foregroundStyle(.labelsTertiary)
                         .accessibilityHidden(true)
@@ -143,7 +143,7 @@ struct SettingsMenuView: View {
                 .labelsHidden()
                 .tint(.accentsBrand)
             case .external:
-                Image(systemName: "arrow.up.right")
+                Image(icon: .arrowUpRight)
                     .textStyle(.subheadline, .emphasized)
                     .foregroundStyle(.accentsBrand)
                     .accessibilityHidden(true)

@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import CommonWatch
 
 struct MainView: View {
     @Bindable var presenter: MainPresenter
@@ -33,7 +34,7 @@ struct MainView: View {
                 if !presenter.favoriteList.isEmpty {
                     Section(header:
                                 HStack(alignment: .center) {
-                        Image(systemName: "star.fill")
+                        Image(icon: .starFill)
                         Text(T.Tokens.favoriteServices)
                     }
                     ) {
@@ -50,7 +51,7 @@ struct MainView: View {
                 Section {
                     NavigationLink(value: MainPath.tokens) {
                         HStack(alignment: .center) {
-                            Image(systemName: "folder")
+                            Image(icon: .folder)
                             Text(T.Commons.tokens)
                                 .font(.callout)
                                 .padding(4)
@@ -60,7 +61,7 @@ struct MainView: View {
                     
                     NavigationLink(value: MainPath.settings) {
                         HStack(alignment: .center) {
-                            Image(systemName: "gear")
+                            Image(icon: .gear)
                             Text(T.Settings.settings)
                                 .font(.callout)
                                 .padding(4)

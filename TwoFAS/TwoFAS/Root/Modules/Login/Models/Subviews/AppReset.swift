@@ -74,7 +74,7 @@ struct AppReset: View {
     @ViewBuilder
     private var infoFrame: some View {
         VStack(spacing: .M) {
-            Image(systemName: "exclamationmark.triangle")
+            Image(icon: .exclamationmarkTriangle)
                 .textStyle(.title2)
                 .foregroundStyle(AppColor.labelsPrimary)
             

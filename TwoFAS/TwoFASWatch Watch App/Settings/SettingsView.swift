@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import CommonWatch
 
 enum SettingsPath: Hashable {
     case security
@@ -32,7 +33,7 @@ struct SettingsView: View {
     var body: some View {
             List {
                 NavigationLink(value: SettingsPath.security) {
-                    settingsRow(image: Image(systemName: "lock.fill"), title: T.Settings.security)
+                    settingsRow(image: Image(icon: .lockFill), title: T.Settings.security)
                 }
 
                 NavigationLink(value: SettingsPath.sortTokens) {
@@ -40,7 +41,7 @@ struct SettingsView: View {
                 }
 
                 NavigationLink(value: SettingsPath.about) {
-                    settingsRow(image: Image(systemName: "info.bubble.fill"), title: T.Settings.about)
+                    settingsRow(image: Image(icon: .infoBubbleFill), title: T.Settings.about)
                 }
             }
             .navigationDestination(for: SettingsPath.self) { route in

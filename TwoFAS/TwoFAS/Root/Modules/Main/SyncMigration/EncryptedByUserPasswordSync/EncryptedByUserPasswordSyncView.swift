@@ -133,7 +133,7 @@ struct EncryptedByUserPasswordSyncView: View {
     private func labelFail(_ description: String) -> some View {
         Label(
             T.Backup.enterPasswordFailure(description),
-            systemImage: "xmark.circle.fill"
+            icon: .xmarkCircleFill
         )
         .textStyle(.callout, .emphasized)
         .foregroundStyle(.accentsBrand)
@@ -141,7 +141,7 @@ struct EncryptedByUserPasswordSyncView: View {
     
     @ViewBuilder
     private var labelWrongPassword: some View {
-        Label(T.Backup.enterPasswordWrongPassword, systemImage: "xmark.circle.fill")
+        Label(T.Backup.enterPasswordWrongPassword, icon: .xmarkCircleFill)
             .textStyle(.callout, .emphasized)
             .foregroundStyle(.accentsBrand)
     }

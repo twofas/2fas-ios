@@ -64,7 +64,7 @@ final class CameraViewController: UIViewController {
     private let cancelButton: UIButton = {
         let button = UIButton()
         let symbolConfig = UIImage.SymbolConfiguration(pointSize: 17, weight: .semibold)
-        let xmarkImage = UIImage(systemName: "xmark", withConfiguration: symbolConfig)
+        let xmarkImage = UIImage(icon: .xmark, withConfiguration: symbolConfig)
         if #available(iOS 26, *) {
             var config = UIButton.Configuration.glass()
             config.cornerStyle = .capsule

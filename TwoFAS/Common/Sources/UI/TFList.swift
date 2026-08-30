@@ -221,7 +221,7 @@ public struct TFListMenuRow<MenuContent: View>: View {
                         .textStyle(.body)
                         .foregroundStyle(AppColor.labelsSecondary)
                     
-                    Image(systemName: "chevron.up.chevron.down")
+                    Image(icon: .chevronUpChevronDown)
                         .textStyle(.body)
                         .foregroundStyle(AppColor.labelsSecondary)
                         .accessibilityHidden(true)

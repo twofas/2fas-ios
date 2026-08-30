@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Common
 
 struct BackupManageEncryptionSection: Identifiable {
     let id = UUID()
@@ -44,11 +45,11 @@ struct BackupManageEncryptionCell: Identifiable {
     let action: Action
     let isEnabled: Bool
 
-    var iconSystemName: String {
+    var icon: IconName {
         switch action {
-        case .encrypt: return "lock.icloud.fill"
-        case .decrypt: return "lock.open.fill"
-        case .recrypt: return "lock.open.rotation"
+        case .encrypt: return .lockIcloudFill
+        case .decrypt: return .lockOpenFill
+        case .recrypt: return .lockOpenRotation
         }
     }
 

@@ -38,7 +38,7 @@ struct IntroductionInfoSheetContent: View {
                     
                     AdaptiveReadableContainer(verticalMargin: .zero) {
                         VStack(spacing: Spacing.XXXL) {
-                            Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90")
+                            Image(icon: .arrowTrianglehead2ClockwiseRotate90)
                                 .font(.system(size: 40, weight: .semibold))
                                 .foregroundStyle(AppColor.accentsBrand)
                             

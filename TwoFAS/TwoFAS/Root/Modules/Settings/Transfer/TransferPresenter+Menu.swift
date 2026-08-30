@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 struct TransferSection: Identifiable {
     let id = UUID()
@@ -29,7 +30,7 @@ struct TransferSection: Identifiable {
 struct TransferCell: Identifiable {
     enum Icon {
         case brand(UIImage)
-        case symbol(String)
+        case symbol(IconName)
     }
 
     enum TransferAction: Hashable {
@@ -95,7 +96,7 @@ extension TransferPresenter {
                         action: .authenticatorPro
                     ),
                     .init(
-                        icon: .symbol("doc.fill"),
+                        icon: .symbol(.docFill),
                         title: T.Transfer.importOtpauthFile,
                         action: .otpAuthFileImport
                     )
@@ -106,13 +107,13 @@ extension TransferPresenter {
                 title: T.Transfer.exportSectionTitle,
                 cells: [
                     .init(
-                        icon: .symbol("doc.fill"),
+                        icon: .symbol(.docFill),
                         title: T.Transfer.exportOtpFile,
                         action: .otpAuthFileExport,
                         isActive: interactor.hasServices
                     ),
                     .init(
-                        icon: .symbol("qrcode"),
+                        icon: .symbol(.qrcode),
                         title: T.Transfer.exportOtpQr,
                         action: .exportQRCodes,
                         isActive: interactor.hasServices

@@ -56,7 +56,7 @@ struct IconSelectorView: View {
     @ViewBuilder
     private var emptyView: some View {
         TFEmptyScreen(
-            icon: .systemImage("magnifyingglass"),
+            icon: .systemImage(.magnifyingglass),
             title: T.Commons.noResults
         )
     }
@@ -250,7 +250,7 @@ private struct IconSelectorOrderCell: View {
             
             VStack(spacing: .XXL) {
                 HStack(spacing: .L) {
-                    Image(systemName: "photo")
+                    Image(icon: .photo)
                         .textStyle(.title3)
                         .foregroundStyle(.accentsBrand)
                         .frame(height: iconSize)
@@ -274,10 +274,10 @@ private struct IconSelectorOrderCell: View {
                 
                 Menu {
                     Button(action: onUserIcon) {
-                        Label(T.Tokens.orderMenuOptionUser, systemImage: "person")
+                        Label(T.Tokens.orderMenuOptionUser, icon: .person)
                     }
                     Button(action: onCompanyIcon) {
-                        Label(T.Tokens.orderMenuOptionCompany, systemImage: "briefcase")
+                        Label(T.Tokens.orderMenuOptionCompany, icon: .briefcase)
                     }
                 } label: {
                     TFButton(

@@ -74,7 +74,7 @@ struct TwoFASWidgetInline: View {
                 .lineLimit(1)
                 .frame(alignment: .center)
         } icon: {
-            Image(systemName: "key.horizontal.fill")
+            Image(icon: .keyHorizontalFill)
                 .resizable()
                 .frame(width: 12, height: 21, alignment: .center)
                 .foregroundColor(.white)

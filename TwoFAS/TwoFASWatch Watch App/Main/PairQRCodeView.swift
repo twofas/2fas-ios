@@ -22,10 +22,10 @@ import EFQRCode
 import CommonWatch
 
 struct PairIconBadge: View {
-    let systemName: String
+    let icon: IconName
 
     var body: some View {
-        Image(systemName: systemName)
+        Image(icon: icon)
             .renderingMode(.template)
             .font(.system(size: 24))
             .foregroundStyle(Color.accent)
@@ -47,31 +47,31 @@ struct PairQRCodeView: View {
         VStack(spacing: 0) {
             TabView(selection: $currentPage) {
                 instructionPage(
-                    icon: "applewatch.and.arrow.forward",
+                    icon: .applewatchAndArrowForward,
                     text: T.Watch.introStep1
                 )
                 .tag(0)
 
                 instructionPage(
-                    icon: "gearshape",
+                    icon: .gearshape,
                     text: T.Watch.introStep2
                 )
                 .tag(1)
 
                 instructionPage(
-                    icon: "icloud",
+                    icon: .icloud,
                     text: T.Watch.introStep3
                 )
                 .tag(2)
 
                 instructionPage(
-                    icon: "applewatch",
+                    icon: .appleWatch,
                     text: T.Watch.introStep4
                 )
                 .tag(3)
 
                 instructionPage(
-                    icon: "qrcode.viewfinder",
+                    icon: .qrcodeViewfinder,
                     text: T.Watch.introStep5
                 )
                 .tag(4)
@@ -80,7 +80,7 @@ struct PairQRCodeView: View {
                     .tag(5)
                 
                 instructionPage(
-                    icon: "checkmark.circle.fill",
+                    icon: .checkmarkCircleFill,
                     text: T.Watch.introStep6
                 )
             }
@@ -88,9 +88,9 @@ struct PairQRCodeView: View {
         }
     }
 
-    private func instructionPage(icon: String, text: String) -> some View {
+    private func instructionPage(icon: IconName, text: String) -> some View {
         VStack(spacing: 12) {
-            PairIconBadge(systemName: icon)
+            PairIconBadge(icon: icon)
             Text(text)
                 .font(.body)
                 .multilineTextAlignment(.leading)

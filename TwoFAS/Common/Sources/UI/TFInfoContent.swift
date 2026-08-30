@@ -20,6 +20,8 @@
 import SwiftUI
 
 public struct TFInfoContent: View {
+    private let animDelay: CGFloat = 0.4
+    
     public enum Icon {
         case systemImage(String)
         case image(UIImage, Image.TemplateRenderingMode)
@@ -31,7 +33,9 @@ public struct TFInfoContent: View {
     private let subtitle: String?
     private let description: String?
     private let attributedDescription: AttributedString?
-    
+
+    @State private var animateIcon = false
+
     public init(
         icon: Icon,
         title: String,
@@ -92,6 +96,11 @@ public struct TFInfoContent: View {
             Image(systemName: name)
                 .textStyle(.iconLarge)
                 .foregroundStyle(.accentsBrand)
+                .symbolEffect(.bounce.down, value: animateIcon)
+                .task {
+                    try? await Task.sleep(for: .seconds(animDelay))
+                    animateIcon = true
+                }
         case let .image(image, renderingMode):
             Group {
                 switch renderingMode {

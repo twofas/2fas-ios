@@ -21,30 +21,30 @@ import UIKit
 
 /// `MainViewController`'s root view.
 final class MainView: UIView {
-    /// Set for the duration of a presentation whose push-back of this view
-    /// should be suppressed.
-    ///
-    /// The system zoom transition scales the presenting view controller's
-    /// content by animating its layer's `sublayerTransform` (≈0.91 while
-    /// presented). There is no public option to opt out, so while this flag
-    /// is set the view's layer ignores any `sublayerTransform` change,
-    /// keeping its content exactly where it is. With the flag unset the
-    /// layer behaves like a regular `CALayer`.
-    var disablesSublayerTransform = false
-
     override static var layerClass: AnyClass { MainLayer.self }
+}
 
-    private final class MainLayer: CALayer {
-        private var sublayerTransformDisabled: Bool {
-            (delegate as? MainView)?.disablesSublayerTransform == true
-        }
-        
-        override var sublayerTransform: CATransform3D {
-            get { sublayerTransformDisabled ? CATransform3DIdentity : super.sublayerTransform }
-            set {
-                guard !sublayerTransformDisabled else { return }
-                super.sublayerTransform = newValue
-            }
+private final class MainLayer: CALayer, ZoomPushBackSuppressingLayer {
+    var suppressesZoomPushBack = false
+
+    override init() {
+        super.init()
+    }
+
+    override init(layer: Any) {
+        super.init(layer: layer)
+        suppressesZoomPushBack = (layer as? MainLayer)?.suppressesZoomPushBack ?? false
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    override var sublayerTransform: CATransform3D {
+        get { suppressesZoomPushBack ? CATransform3DIdentity : super.sublayerTransform }
+        set {
+            guard !suppressesZoomPushBack else { return }
+            super.sublayerTransform = newValue
         }
     }
 }

@@ -69,7 +69,7 @@ final class TokensView: UICollectionView {
     
     private func reloadHeaders() {
         guard let visible = visibleSupplementaryViews(
-            ofKind: UICollectionView.elementKindSectionHeader
+            ofKind: TokensSectionHeader.reuseIdentifier
         ) as? [TokensSectionHeader] else { return }
         visible.forEach({ $0.setIsEditing(isEditing) })
     }

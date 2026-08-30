@@ -86,6 +86,7 @@ extension TokensViewController: TokensViewControlling {
             completion: { _ in
                 self.emptyListScreenView.isHidden = true
                 self.emptySearchScreenView.isHidden = true
+                self.updateFloatingHeader()
             }
         )
     }
@@ -98,6 +99,7 @@ extension TokensViewController: TokensViewControlling {
         guard emptyListScreenView.isHidden else { return }
         emptyListScreenView.alpha = 0
         emptyListScreenView.isHidden = false
+        updateFloatingHeader()
         UIView.animate(withDuration: Theme.Animations.Timing.show, animations: {
             self.emptyListScreenView.alpha = 1
         })
@@ -107,6 +109,7 @@ extension TokensViewController: TokensViewControlling {
         VoiceOver.say(T.Voiceover.noSearchResults)
         emptySearchScreenView.alpha = 0
         emptySearchScreenView.isHidden = false
+        updateFloatingHeader()
         UIView.animate(
             withDuration: Theme.Animations.Timing.show,
             delay: 0,
@@ -360,11 +363,14 @@ extension TokensViewController: TokensViewControlling {
     func lockBars() {
         tabBarController?.tabBar.isUserInteractionEnabled = false
         navigationController?.navigationBar.isUserInteractionEnabled = false
+        // Lets a drop over the floating header fall through to the list beneath it.
+        floatingHeader.isUserInteractionEnabled = false
     }
     
     func unlockBars() {
         tabBarController?.tabBar.isUserInteractionEnabled = true
         navigationController?.navigationBar.isUserInteractionEnabled = true
+        floatingHeader.isUserInteractionEnabled = true
     }
     
     // MARK: - Search Bars

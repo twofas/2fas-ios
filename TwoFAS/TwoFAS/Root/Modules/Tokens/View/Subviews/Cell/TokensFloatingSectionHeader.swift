@@ -23,13 +23,14 @@ import Common
 /// A `TokensSectionHeader` that floats at the top edge of a scroll view, standing in for the
 /// section header that has scrolled out of view. Place it above the scroll view (as a sibling,
 /// not a subview) and pin `header`'s top to the safe area; move it with `pushOffset` when the next
-/// section header is about to take its place. Only the header's own area takes touches.
+/// section header is about to take its place. Only the header's own area takes touches. The header
+/// stays accessible, so the list header it stands in for should hide its own content meanwhile.
 ///
 /// On iOS 26 the view reaches `edgeEffectExtension` points above the header and the scroll
 /// view's top scroll-edge effect is extended behind that whole area, so the blur overlaps the
 /// navigation bar's own and continues seamlessly down to the header's bottom edge while the
-/// header stays transparent. Earlier systems draw an opaque navigation bar, so there the header
-/// gets the list's background color to hide the content scrolling beneath it.
+/// header stays transparent. Earlier systems draw an opaque navigation bar, and the header keeps
+/// its own opaque band, which also hides the content scrolling beneath it.
 final class TokensFloatingSectionHeader: UIView {
     /// How far above the header the scroll-edge effect is extended on iOS 26.
     static let edgeEffectExtension: CGFloat = 44
@@ -57,16 +58,18 @@ final class TokensFloatingSectionHeader: UIView {
     init(scrollView: UIScrollView) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
-        // The list's own header remains the accessible one; this view only mirrors it visually.
-        accessibilityElementsHidden = true
 
-        let topExtension: CGFloat = {
-            if #available(iOS 26.0, *) { return Self.edgeEffectExtension }
-            return 0
-        }()
+        let topExtension: CGFloat
         if #available(iOS 26.0, *) {
+            topExtension = Self.edgeEffectExtension
             addSubview(effectFiller)
             effectFiller.pinToParent()
+            let interaction = UIScrollEdgeElementContainerInteraction()
+            interaction.scrollView = scrollView
+            interaction.edge = .top
+            addInteraction(interaction)
+        } else {
+            topExtension = 0
         }
         addSubview(header, with: [
             header.topAnchor.constraint(equalTo: topAnchor, constant: topExtension),
@@ -74,15 +77,6 @@ final class TokensFloatingSectionHeader: UIView {
             header.trailingAnchor.constraint(equalTo: trailingAnchor),
             header.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-
-        if #available(iOS 26.0, *) {
-            let interaction = UIScrollEdgeElementContainerInteraction()
-            interaction.scrollView = scrollView
-            interaction.edge = .top
-            addInteraction(interaction)
-        } else {
-            header.setOpaque(true)
-        }
     }
 
     required init?(coder: NSCoder) {

@@ -156,8 +156,6 @@ extension TokensViewController {
             withReuseIdentifier: kind,
             for: indexPath
         )
-        // A reused header may have been made invisible while the floating header mirrored it.
-        header.alpha = 1
         if kind == TokensSectionHeader.reuseIdentifier {
             let header = header as? TokensSectionHeader
             header?.setIsEditing(collectionView.isEditing)
@@ -253,9 +251,9 @@ extension TokensViewController {
     }
     
     /// Mirrors the header of the section whose own header has reached the top of the visible area
-    /// and pushes it away when the next section's header arrives. The mirrored list header is made
-    /// invisible so the two never draw on top of each other; sections without a header leave the
-    /// floating header hidden.
+    /// and pushes it away when the next section's header arrives. The mirrored list header hides
+    /// its content so the two never draw on top of each other; sections without a header and the
+    /// empty screens leave the floating header hidden.
     func updateFloatingHeader() {
         guard dataSource != nil, floatingHeader != nil else { return }
         let layout = tokensView.collectionViewLayout
@@ -275,19 +273,20 @@ extension TokensViewController {
                 break
             }
         }
-        for indexPath in tokensView.indexPathsForVisibleSupplementaryElements(ofKind: kind) {
-            tokensView.supplementaryView(forElementKind: kind, at: indexPath)?.alpha =
-                indexPath.section == current ? 0 : 1
-        }
         let emptyScreenShown = !emptySearchScreenView.isHidden || !emptyListScreenView.isHidden
-        guard !emptyScreenShown, let current, let section = dataSource.sectionIdentifier(for: current) else {
+        let mirrored: Int? = emptyScreenShown ? nil : current
+        for indexPath in tokensView.indexPathsForVisibleSupplementaryElements(ofKind: kind) {
+            (tokensView.supplementaryView(forElementKind: kind, at: indexPath) as? TokensSectionHeader)?
+                .isContentHidden = indexPath.section == mirrored
+        }
+        guard let mirrored, let section = dataSource.sectionIdentifier(for: mirrored) else {
             floatingHeader.isHidden = true
-            floatingSection = nil
             return
         }
-        if floatingSection != section || floatingHeader.header.isEditing != tokensView.isEditing {
-            floatingSection = section
+        if floatingHeader.header.isEditing != tokensView.isEditing {
             floatingHeader.header.setIsEditing(tokensView.isEditing)
+        }
+        if floatingHeader.header.config != section {
             floatingHeader.header.setConfiguration(section)
         }
         floatingHeader.isHidden = false

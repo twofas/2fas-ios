@@ -36,12 +36,8 @@ final class TokensViewController: UIViewController {
 
     private(set) var tokensView: TokensView!
     private(set) var floatingHeader: TokensFloatingSectionHeader!
-    /// The section currently mirrored by `floatingHeader`; `nil` while it is hidden.
-    var floatingSection: TokensSection?
     /// Set while the search bar is being presented or dismissed.
     var isSearchTransitioning = false
-    /// Distance of the floating header's top from the view's top; follows the top safe-area inset.
-    private var floatingHeaderTopConstraint: NSLayoutConstraint?
     private(set) var dataSource: UICollectionViewDiffableDataSource<TokensSection, TokenCell>!
     
     let headerHeight: CGFloat = 44
@@ -128,7 +124,6 @@ final class TokensViewController: UIViewController {
     
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
-        floatingHeaderTopConstraint?.constant = view.safeAreaInsets.top
         // The search bar's presentation moves the safe area in one step; animating the layout keeps
         // views pinned to it (the floating header) moving with the bar.
         if isSearchTransitioning {
@@ -168,15 +163,10 @@ private extension TokensViewController {
         floatingHeader = TokensFloatingSectionHeader(scrollView: tokensView)
         floatingHeader.header.dataSource = self
         floatingHeader.isHidden = true
-        let topConstraint = floatingHeader.header.topAnchor.constraint(
-            equalTo: view.topAnchor,
-            constant: view.safeAreaInsets.top
-        )
-        floatingHeaderTopConstraint = topConstraint
         view.addSubview(floatingHeader, with: [
             floatingHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             floatingHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            topConstraint
+            floatingHeader.header.topAnchor.constraint(equalTo: view.safeTopAnchor)
         ])
     }
     

@@ -55,14 +55,8 @@ struct ExportQuestionView: View {
                 }
             })
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    presenter.handleClose()
-                } label: {
-                    Image(systemName: "xmark")
-                }
-            }
+        .closeToolbar {
+            presenter.handleClose()
         }
     }
 }

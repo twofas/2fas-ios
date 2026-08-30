@@ -36,9 +36,9 @@ final class MainViewController: UIViewController {
 
     /// Floating glass "+" (iOS 26). It lives here, outside the tab bar
     /// controller, because the system zoom transition used to present "add
-    /// service" pushes back the view of the controller owning the zoom source;
-    /// `MainView` keeps this screen still, and `UITabBarController` can't swap
-    /// its own view class.
+    /// service" pushes back the screen behind the card; `MainView` (and the
+    /// tokens list, see `ZoomPushBackSuppressingLayer`) keeps it still, and
+    /// `UITabBarController` can't swap its own view class.
     private let addServiceButton = UIButton(type: .system)
 
     var onAddService: (() -> Void)?

@@ -60,14 +60,8 @@ struct AppReset: View {
                 }
                 .frame(alignment: .bottom)
             }
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark")
-                    }
-                }
+            .closeToolbar {
+                dismiss()
             }
         }
         .background(.backgroundsPrimaryElevated)

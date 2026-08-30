@@ -989,6 +989,9 @@
 		C2CBE270303E16CB009A65EC /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2E53AC52B62DD6C008E1E70 /* Common.framework */; };
 		C2CBE276303E184E009A65EC /* ServiceIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248F2FD33D7400C5E875 /* ServiceIconView.swift */; };
 		C2CBE277303E184E009A65EC /* ServiceIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E5248F2FD33D7400C5E875 /* ServiceIconView.swift */; };
+		C2CBE27930449483009A65EC /* View+CloseToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE27830449483009A65EC /* View+CloseToolbar.swift */; };
+		C2CBE27B30449FB7009A65EC /* SymbolBounceOnAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE27A30449FB7009A65EC /* SymbolBounceOnAppear.swift */; };
+		C2CBE27C30449FB7009A65EC /* SymbolBounceOnAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CBE27A30449FB7009A65EC /* SymbolBounceOnAppear.swift */; };
 		C2CC0A3C29D05DC900677A7B /* TransferPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3B29D05DC900677A7B /* TransferPresenter.swift */; };
 		C2CC0A3E29D0603000677A7B /* TransferPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3D29D0603000677A7B /* TransferPresenter+Menu.swift */; };
 		C2CC0A4029D067EF00677A7B /* TransferFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CC0A3F29D067EF00677A7B /* TransferFlowController.swift */; };
@@ -2728,6 +2731,8 @@
 		C2CACFC12B015725001E0F8E /* AppStateInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateInteractor.swift; sourceTree = "<group>"; };
 		C2CACFC32B015847001E0F8E /* MainRepositoryImpl+LockScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+LockScreen.swift"; sourceTree = "<group>"; };
 		C2CBE26D303E0784009A65EC /* WidgetTapURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetTapURL.swift; sourceTree = "<group>"; };
+		C2CBE27830449483009A65EC /* View+CloseToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CloseToolbar.swift"; sourceTree = "<group>"; };
+		C2CBE27A30449FB7009A65EC /* SymbolBounceOnAppear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolBounceOnAppear.swift; sourceTree = "<group>"; };
 		C2CC0A3B29D05DC900677A7B /* TransferPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferPresenter.swift; sourceTree = "<group>"; };
 		C2CC0A3D29D0603000677A7B /* TransferPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransferPresenter+Menu.swift"; sourceTree = "<group>"; };
 		C2CC0A3F29D067EF00677A7B /* TransferFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferFlowController.swift; sourceTree = "<group>"; };
@@ -4671,6 +4676,7 @@
 				C217CDCA303226F5007D88C0 /* TFMenuButton.swift */,
 				C217CDC63032260F007D88C0 /* TFCancelButton.swift */,
 				C25EE7323033B43500068C45 /* MinimumBottomSpacing.swift */,
+				C2CBE27A30449FB7009A65EC /* SymbolBounceOnAppear.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -5906,6 +5912,7 @@
 				C20524C22807620500B2B20C /* NavigationBarHiddenHostingController.swift */,
 				C2B6D0F02FF182E100C4C73D /* TFColorPickerMenu.swift */,
 				C2418F673006C2DB008B674A /* SwiftUIButtons.swift */,
+				C2CBE27830449483009A65EC /* View+CloseToolbar.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -7083,6 +7090,7 @@
 				C240486B27655BD70076376E /* ImporterOpenFilePresenter.swift in Sources */,
 				C2E2C80B27B038DC00F04B70 /* IconSelectorModuleInteractor.swift in Sources */,
 				C21508153002C382008B66E2 /* AboutView.swift in Sources */,
+				C2CBE27930449483009A65EC /* View+CloseToolbar.swift in Sources */,
 				C2B1209129D76FA60020281E /* AppearanceModuleInteractor.swift in Sources */,
 				C2E7C3482ADB021500478D89 /* CameraPreview.swift in Sources */,
 				C25AD8A4300A455200D9ABFB /* DebugModuleInteractor.swift in Sources */,
@@ -7666,6 +7674,7 @@
 				C274C9E82BAB8B92008E7212 /* Collection+.swift in Sources */,
 				C2EF7B1E2DA99D1000BAA559 /* PairedWatch.swift in Sources */,
 				C274C9E92BAB8B92008E7212 /* String+.swift in Sources */,
+				C2CBE27C30449FB7009A65EC /* SymbolBounceOnAppear.swift in Sources */,
 				C274C9EA2BAB8B92008E7212 /* EncryptionHolder.swift in Sources */,
 				C274C9EB2BAB8B92008E7212 /* CommonSectionHandler.swift in Sources */,
 				C274C9EC2BAB8B92008E7212 /* LegacyServiceDatabase.swift in Sources */,
@@ -7929,6 +7938,7 @@
 				C25AE51E300A58B800D9ABFB /* ToastPresenterView.swift in Sources */,
 				C25AE520300A58B800D9ABFB /* ToastPresenter.swift in Sources */,
 				C2E5248B2FD3348A00C5E875 /* IconDetails.swift in Sources */,
+				C2CBE27B30449FB7009A65EC /* SymbolBounceOnAppear.swift in Sources */,
 				C295AF902FD1F6F8000DF064 /* TFCornerRadius.swift in Sources */,
 				C295AF912FD1F6F8000DF064 /* TFShadow.swift in Sources */,
 				C295AF922FD1F6F8000DF064 /* TFFloatingTextField.swift in Sources */,

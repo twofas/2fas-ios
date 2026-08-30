@@ -34,6 +34,21 @@ final class TokensViewController: UIViewController {
     }
     var newsButton: NewsButtonType?
 
+    var newsButtonSourceView: UIView? {
+        guard #available(iOS 26.0, *) else { return nil }
+        let item: UIBarButtonItem?
+        switch newsButton {
+        case .unread(let button), .read(let button): item = button
+        case .none: item = nil
+        }
+        guard let view = item?.customView,
+              view.window != nil,
+              view.bounds.width > 0,
+              view.bounds.height > 0
+        else { return nil }
+        return view
+    }
+
     private(set) var tokensView: TokensView!
     private(set) var floatingHeader: TokensFloatingSectionHeader!
     /// Set while the search bar is being presented or dismissed.

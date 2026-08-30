@@ -38,17 +38,20 @@ struct BrowserExtensionIntroView: View {
     var body: some View {
         AdaptiveReadableContainer {
             VStack(alignment: .center, spacing: .XXL) {
-                Image(systemName: "desktopcomputer.and.arrow.down")
-                    .textStyle(.iconLarge)
-                    .foregroundStyle(.accentsBrand)
-                    .padding(.top, .XL)
-                
-                Text(T.Browser.infoTitle)
-                    .textStyle(.title1, .emphasized)
-                    .foregroundStyle(.labelsPrimary)
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: .infinity, alignment: .center)
+                VStack(spacing: .XL) {
+                    Image(systemName: "desktopcomputer.and.arrow.down")
+                        .textStyle(.iconLarge)
+                        .foregroundStyle(.accentsBrand)
+                        .padding(.top, .XXXXXL)
+                        .symbolBounceOnAppear()
+                    
+                    Text(T.Browser.infoTitle)
+                        .textStyle(.title1, .emphasized)
+                        .foregroundStyle(.labelsPrimary)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
                 
                 VStack(spacing: .L) {
                     ForEach(Array(presenter.steps.enumerated()), id: \.element) { _, step in
@@ -63,12 +66,13 @@ struct BrowserExtensionIntroView: View {
                         )
                     }
                 }
-                .padding(.top, .XXXXXXXL)
 
                 Spacer()
                     .frame(maxHeight: .infinity)
             }
         }
         .background(.backgroundsPrimary)
+        .navigationTitle(T.Settings.browserExtensionHeader)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

@@ -31,12 +31,8 @@ struct ExporterPINView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button { presenter.handleCancel() } label: {
-                    Image(systemName: "xmark")
-                }
-            }
+        .closeToolbar {
+            presenter.handleCancel()
         }
         .background(.backgroundsPrimary)
     }

@@ -31,7 +31,7 @@ public struct TFInfoContent: View {
     private let subtitle: String?
     private let description: String?
     private let attributedDescription: AttributedString?
-    
+
     public init(
         icon: Icon,
         title: String,
@@ -92,6 +92,7 @@ public struct TFInfoContent: View {
             Image(systemName: name)
                 .textStyle(.iconLarge)
                 .foregroundStyle(.accentsBrand)
+                .symbolBounceOnAppear()
         case let .image(image, renderingMode):
             Group {
                 switch renderingMode {

@@ -113,15 +113,12 @@ final class AddingServiceFlowController: FlowController {
             // presentation controller owns sizing and the persistent dimming.
             configureSystemZoom(for: hosting, sourceView: zoomSourceView)
 
-            // `sublayerTransform` is disabled on the presenting screen only for
-            // the duration of this presentation; its `MainView` sits above the
-            // zoom source.
-            let mainView = sequence(first: zoomSourceView, next: { $0.superview })
-                .compactMap { $0 as? MainView }
-                .first
+            // The push-back of the screen behind the card is suppressed only
+            // for the duration of this presentation.
+            let pushBackTargets = zoomPushBackTargets(host: viewController, zoomSourceView: zoomSourceView)
             legacySourceProvider = nil
-            setSublayerTransformDisabled = { [weak mainView] disabled in
-                mainView?.disablesSublayerTransform = disabled
+            setSublayerTransformDisabled = { disabled in
+                pushBackTargets.forEach { $0.suppressesZoomPushBack = disabled }
             }
         } else {
             hosting.view.backgroundColor = .clear
@@ -145,6 +142,32 @@ final class AddingServiceFlowController: FlowController {
         box.flowController = flowController
 
         viewController.present(hosting, animated: true)
+    }
+
+    /// The layers the system zoom pushes back, wherever UIKit picks them: up
+    /// from the zoom source to the screen's root (iOS 26 SDK), and down from
+    /// the presenting controller through the selected tab and navigation
+    /// stack to the visible content (iOS 27 SDK).
+    private static func zoomPushBackTargets(
+        host: UIViewController,
+        zoomSourceView: UIView
+    ) -> [any ZoomPushBackSuppressingLayer] {
+        var targets: [any ZoomPushBackSuppressingLayer] = []
+        for view in sequence(first: zoomSourceView, next: { $0.superview }) {
+            if let target = view.layer as? ZoomPushBackSuppressingLayer {
+                targets.append(target)
+            }
+        }
+        var viewController: UIViewController? = host
+        while let current = viewController {
+            if let target = current.viewIfLoaded?.layer as? ZoomPushBackSuppressingLayer,
+               !targets.contains(where: { $0 === target }) {
+                targets.append(target)
+            }
+            viewController = (current as? UITabBarController)?.selectedViewController
+                ?? (current as? UINavigationController)?.topViewController
+        }
+        return targets
     }
 
     @available(iOS 26.0, *)
@@ -370,6 +393,23 @@ extension AddingServiceFlowController: SelectFromGalleryFlowControllerParent {
         galleryViewController = nil
         parent?.addingServiceToToken(serviceData)
     }
+}
+
+// MARK: - System zoom push-back
+
+/// A layer that can hold its `sublayerTransform` at identity for the
+/// duration of a system zoom presentation.
+///
+/// The system zoom transition pushes back the screen behind the presented
+/// card by animating a layer's `sublayerTransform` (≈0.91 while presented):
+/// the presenting screen's root view when linked against the iOS 26 SDK, the
+/// selected tab's content view from the iOS 27 SDK. There is no public option
+/// to opt out. A view whose layer adopts this protocol (via `layerClass`)
+/// stays still while `suppressesZoomPushBack` is set: the layer ignores any
+/// `sublayerTransform` change. With the flag unset it behaves like a regular
+/// `CALayer`.
+protocol ZoomPushBackSuppressingLayer: CALayer {
+    var suppressesZoomPushBack: Bool { get set }
 }
 
 // MARK: - Custom zoom-from-rect transition

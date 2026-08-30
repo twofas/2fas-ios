@@ -25,6 +25,8 @@ final class TokensView: UICollectionView {
     /// Called after every layout pass, i.e. on scroll, data reload and size change.
     var didLayout: Callback?
 
+    override static var layerClass: AnyClass { TokensLayer.self }
+
     override var isEditing: Bool {
         get {
             super.isEditing
@@ -71,5 +73,30 @@ final class TokensView: UICollectionView {
             ofKind: TokensSectionHeader.reuseIdentifier
         ) as? [TokensSectionHeader] else { return }
         visible.forEach({ $0.setIsEditing(isEditing) })
+    }
+}
+
+private final class TokensLayer: CALayer, ZoomPushBackSuppressingLayer {
+    var suppressesZoomPushBack = false
+
+    override init() {
+        super.init()
+    }
+
+    override init(layer: Any) {
+        super.init(layer: layer)
+        suppressesZoomPushBack = (layer as? TokensLayer)?.suppressesZoomPushBack ?? false
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    override var sublayerTransform: CATransform3D {
+        get { suppressesZoomPushBack ? CATransform3DIdentity : super.sublayerTransform }
+        set {
+            guard !suppressesZoomPushBack else { return }
+            super.sublayerTransform = newValue
+        }
     }
 }

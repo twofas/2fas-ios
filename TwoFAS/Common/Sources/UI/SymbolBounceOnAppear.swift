@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2025 Two Factor Authentication Service, Inc.
+//  Copyright © 2026 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -18,21 +18,25 @@
 //
 
 import SwiftUI
-import Common
 
-struct ExportQuestionPINVerificationView: View {
-    @Bindable
-    var presenter: ExportQuestionPINVerificationPresenter
+private struct SymbolBounceOnAppear: ViewModifier {
+    let delay: CGFloat
 
-    var body: some View {
-        PINEntryScreen(presenter: presenter)
-        .onAppear {
-            presenter.viewWillAppear()
-        }
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden()
-        .closeToolbar {
-            presenter.handleCancel()
-        }
+    @State
+    private var animate = false
+
+    func body(content: Content) -> some View {
+        content
+            .symbolEffect(.bounce.down, value: animate)
+            .task {
+                try? await Task.sleep(for: .seconds(delay))
+                animate = true
+            }
+    }
+}
+
+public extension View {
+    func symbolBounceOnAppear(delay: CGFloat = 0.4) -> some View {
+        modifier(SymbolBounceOnAppear(delay: delay))
     }
 }

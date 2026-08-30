@@ -303,7 +303,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         while let presented = top.presentedViewController {
             top = presented
         }
-        NewsPlainFlowController.present(on: top, parent: self)
+        NewsPlainFlowController.present(on: top, parent: self, sourceView: viewController.newsButtonSourceView)
     }
     
     // MARK: - Import

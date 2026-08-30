@@ -39,14 +39,8 @@ struct NewsView: View {
             }
             .navigationTitle(T.Commons.notifications)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        presenter.close()
-                    } label: {
-                        Image(systemName: "xmark")
-                    }
-                }
+            .closeToolbar {
+                presenter.close()
             }
             .onAppear {
                 presenter.viewDidAppear()

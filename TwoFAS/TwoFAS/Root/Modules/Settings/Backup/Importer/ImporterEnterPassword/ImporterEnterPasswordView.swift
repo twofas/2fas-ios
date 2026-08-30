@@ -79,14 +79,8 @@ struct ImporterEnterPasswordView: View {
         .background(.backgroundsPrimary)
         .navigationTitle(T.Backup.encryptionEnterPassword)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    presenter.handleCancel()
-                } label: {
-                    Image(systemName: "xmark")
-                }
-            }
+        .closeToolbar {
+            presenter.handleCancel()
         }
         .onChange(of: presenter.password) { _, newValue in
             presenter.handleChange(newValue)

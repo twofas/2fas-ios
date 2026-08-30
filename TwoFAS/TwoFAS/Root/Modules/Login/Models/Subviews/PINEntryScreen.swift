@@ -66,7 +66,7 @@ struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
                 .padding(.horizontal, .XL)
                 .padding(.top, .XL)
 
-            Spacer()
+            Spacer(minLength: 0)
 
             PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
                 .disabled(presenter.isInputDisabled)

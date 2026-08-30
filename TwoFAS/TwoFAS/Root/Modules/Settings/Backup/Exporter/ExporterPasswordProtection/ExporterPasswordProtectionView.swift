@@ -100,14 +100,8 @@ struct ExporterPasswordProtectionView: View {
         .navigationTitle(T.backupSettingsPasswordSetTitle)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    presenter.handleCancel()
-                } label: {
-                    Image(systemName: "xmark")
-                }
-            }
+        .closeToolbar {
+            presenter.handleCancel()
         }
         .onChange(of: presenter.password1) { _, newValue in
             presenter.handleFirstChanged(newValue)

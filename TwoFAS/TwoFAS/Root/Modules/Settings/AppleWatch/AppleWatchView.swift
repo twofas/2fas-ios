@@ -35,16 +35,21 @@ struct AppleWatchView: View {
     
     var body: some View {
         AdaptiveReadableContainer {
-            VStack(spacing: .XXL) {
-                Image(systemName: "lock.applewatch")
-                    .textStyle(.iconLarge)
-                    .foregroundStyle(.accentsBrand)
-                    .padding(.top, .XL)
-                
-                Text(T.AppleWatch.installationInfoTitle)
-                    .textStyle(.title1, .emphasized)
-                    .foregroundStyle(.labelsPrimary)
-                    .multilineTextAlignment(.center)
+            VStack(alignment: .center, spacing: .XXL) {
+                VStack(spacing: .XL) {
+                    Image(systemName: "lock.applewatch")
+                        .textStyle(.iconLarge)
+                        .foregroundStyle(.accentsBrand)
+                        .padding(.top, .XXXXXL)
+                        .symbolBounceOnAppear()
+                    
+                    Text(T.AppleWatch.installationInfoTitle)
+                        .textStyle(.title1, .emphasized)
+                        .foregroundStyle(.labelsPrimary)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
                 
                 VStack(spacing: .L) {
                     ForEach(
@@ -65,7 +70,6 @@ struct AppleWatchView: View {
                 Spacer()
                     .frame(maxHeight: .infinity)
             }
-            .padding(.top, .XXXXXXXL)
         }
         .background(.backgroundsPrimary)
         .navigationTitle(T.Settings.appleWatch)

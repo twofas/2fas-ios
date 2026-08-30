@@ -47,14 +47,8 @@ struct DeleteServiceView: View {
                     
                     TFCancelButton(T.Commons.cancel, action: cancel)
                 })
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        cancel()
-                    } label: {
-                        Image(systemName: "xmark")
-                    }
-                }
+            .closeToolbar {
+                cancel()
             }
         }
     }

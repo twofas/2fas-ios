@@ -29,7 +29,6 @@ final class TokensView: UICollectionView {
         get {
             super.isEditing
         }
-
         set {
             guard newValue != super.isEditing else { return }
             super.isEditing = newValue

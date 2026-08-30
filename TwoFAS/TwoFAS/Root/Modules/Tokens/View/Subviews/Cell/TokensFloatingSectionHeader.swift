@@ -26,17 +26,25 @@ import Common
 /// section header is about to take its place. Only the header's own area takes touches. The header
 /// stays accessible, so the list header it stands in for should hide its own content meanwhile.
 ///
-/// On iOS 26 the view reaches `edgeEffectExtension` points above the header and the scroll
-/// view's top scroll-edge effect is extended behind that whole area, so the blur overlaps the
-/// navigation bar's own and continues seamlessly down to the header's bottom edge while the
-/// header stays transparent. Earlier systems draw an opaque navigation bar, and the header keeps
-/// its own opaque band, which also hides the content scrolling beneath it.
+/// From iOS 26 the scroll view's top scroll-edge effect is extended behind this view, so the
+/// blur continues down to the header's bottom edge while the header stays transparent. On iOS 26
+/// the effect covers only this view, which would leave a gap below the navigation bar's own, so
+/// the view reaches `edgeEffectExtension` points above the header to overlap it; iOS 27 fills the
+/// effect from the scroll view's edge on its own. Earlier systems draw an opaque navigation bar,
+/// and the header keeps its own opaque band, which also hides the content scrolling beneath it.
 final class TokensFloatingSectionHeader: UIView {
-    /// How far above the header the scroll-edge effect is extended on iOS 26.
-    static let edgeEffectExtension: CGFloat = 44
+    /// How far above the header the scroll-edge effect is extended: enough to overlap the
+    /// navigation bar's own effect on iOS 26, nothing from iOS 27, which fills the effect from the
+    /// scroll view's edge on its own.
+    static var edgeEffectExtension: CGFloat {
+        if #available(iOS 27.0, *) {
+            return 0
+        }
+        return 44
+    }
 
     let header = TokensSectionHeader()
-
+    
     /// Covers the whole view so the scroll-edge effect is extended behind all of it, not only
     /// behind the header; the interaction sizes the effect from the elements it finds inside.
     private let effectFiller: UILabel = {

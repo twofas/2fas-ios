@@ -250,10 +250,16 @@ extension TokensViewController {
         return section
     }
     
-    /// Mirrors the header of the section whose own header has reached the top of the visible area
-    /// and pushes it away when the next section's header arrives. The mirrored list header hides
-    /// its content so the two never draw on top of each other; sections without a header and the
-    /// empty screens leave the floating header hidden.
+    /// A list header is only mirrored once it has scrolled this far past the pin line. A header
+    /// still in its own place needs no mirror, and mirroring it would extend the scroll-edge
+    /// effect over the large title while it is expanded or collapsing; the tolerance also covers
+    /// the sub-point jitter between the content offset and the inset during that collapse.
+    private static let pinnedHeaderTolerance: CGFloat = 1
+
+    /// Mirrors the header of the section whose own header has scrolled past the top of the visible
+    /// area and pushes it away when the next section's header arrives. The mirrored list header
+    /// hides its content so the two never draw on top of each other; sections without a header
+    /// and the empty screens leave the floating header hidden.
     func updateFloatingHeader() {
         guard dataSource != nil, floatingHeader != nil else { return }
         let layout = tokensView.collectionViewLayout
@@ -266,7 +272,7 @@ extension TokensViewController {
                 ofKind: kind,
                 at: IndexPath(item: 0, section: section)
             ) else { continue }
-            if attributes.frame.minY <= pinLine {
+            if attributes.frame.minY < pinLine - Self.pinnedHeaderTolerance {
                 current = section
             } else {
                 nextHeaderTop = attributes.frame.minY

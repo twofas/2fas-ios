@@ -71,6 +71,9 @@ final class MainTabFlowController: FlowController {
         mainViewController.splitView = container
         if #available(iOS 26.0, *) {
             mainViewController.attachAddServiceButton(to: container.addServiceSlotLayoutGuide)
+            container.onAddServiceSlotResolved = { [weak mainViewController] in
+                mainViewController?.revealAddServiceButton()
+            }
         }
 
         let restoredPath = flowController.viewPathInteractor.viewPath() ?? .main
@@ -136,6 +139,8 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
     /// bar, free for a sibling control to take over. Resolved during layout,
     /// see `updateAddServiceSlot`.
     let addServiceSlotLayoutGuide = UILayoutGuide()
+    /// Fires once, when `addServiceSlotLayoutGuide` first gets a real frame.
+    var onAddServiceSlotResolved: (() -> Void)?
     private var addServiceSlotConstraints: (
         x: NSLayoutConstraint,
         y: NSLayoutConstraint,
@@ -288,6 +293,9 @@ final class MainTabSidebarViewController: UITabBarController, MainNavigating {
         addServiceSlotConstraints?.y.constant = slot.minY
         addServiceSlotConstraints?.width.constant = slot.width
         addServiceSlotConstraints?.height.constant = slot.height
+
+        onAddServiceSlotResolved?()
+        onAddServiceSlotResolved = nil
         return true
     }
 

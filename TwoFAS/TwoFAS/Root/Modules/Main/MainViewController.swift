@@ -113,7 +113,19 @@ extension MainViewController {
         }, for: .touchUpInside)
         addServiceButton.tintColor = AppColor.accentsBrand.uiColor
         addServiceButton.translatesAutoresizingMaskIntoConstraints = false
+        // Invisible until the tab bar slot is resolved, so it never flashes
+        // at an interim position; see revealAddServiceButton.
+        addServiceButton.alpha = 0
         view.addSubview(addServiceButton)
+    }
+
+    /// Shows the "+" at its final position, without animation. Call once the
+    /// slot layout guide has a resolved frame; safe to call repeatedly.
+    @available(iOS 26.0, *)
+    func revealAddServiceButton() {
+        guard addServiceButton.alpha == 0 else { return }
+        view.layoutIfNeeded()
+        addServiceButton.alpha = 1
     }
 }
 

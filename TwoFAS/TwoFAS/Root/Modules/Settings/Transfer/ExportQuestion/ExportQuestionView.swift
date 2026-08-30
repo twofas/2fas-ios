@@ -29,7 +29,12 @@ struct ExportQuestionView: View {
     
     var body: some View {
         TFInfoView(
-            icon: .image(Asset.exportBackup.image, .original),
+            icon: .view(view: AnyView(
+                TFDoubleIconArrow(
+                    leadingSymbol: "staroflife.shield.fill",
+                    trailingSymbol: exportType == .file ? "document.fill" : "qrcode"
+                )
+            )),
             title: exportType.title,
             description: exportType.message,
             background: .backgroundsPrimary,

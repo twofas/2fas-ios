@@ -19,24 +19,28 @@
 
 import SwiftUI
 
-private struct SymbolBounceOnAppear: ViewModifier {
-    let delay: CGFloat
+public struct TFDoubleIconArrow: View {
+    private let leadingSymbol: String
+    private let trailingSymbol: String
+    private let spacing: Spacing
 
-    @State
-    private var animate = false
-
-    func body(content: Content) -> some View {
-        content
-            .symbolEffect(.bounce.down.byLayer, value: animate)
-            .task {
-                try? await Task.sleep(for: .seconds(delay))
-                animate = true
-            }
+    public init(leadingSymbol: String, trailingSymbol: String, spacing: Spacing = .XL) {
+        self.leadingSymbol = leadingSymbol
+        self.trailingSymbol = trailingSymbol
+        self.spacing = spacing
     }
-}
 
-public extension View {
-    func symbolBounceOnAppear(delay: CGFloat = 0.4) -> some View {
-        modifier(SymbolBounceOnAppear(delay: delay))
+    public var body: some View {
+        HStack(spacing: spacing) {
+            Image(systemName: leadingSymbol)
+                .textStyle(.iconLarge)
+                .foregroundStyle(.accentsBrand)
+                .symbolBounceOnAppear(delay: 0.2)
+            ArrowIcon()
+            Image(systemName: trailingSymbol)
+                .textStyle(.iconLarge)
+                .foregroundStyle(.accentsBrand)
+                .symbolBounceOnAppear(delay: 0.8)
+        }
     }
 }

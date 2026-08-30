@@ -105,29 +105,7 @@ public struct ToastPresenterView: View {
     
     public var body: some View {
         VStack {
-            toast
-                .background(
-                    ZStack {
-                        Capsule()
-                            .fill(AppColor.backgroundsPrimaryElevated)
-                            .shadow(color: .black.opacity(0.15), radius: 25, x: 0, y: 20)
-                            .shadow(color:
-                                        Color(
-                                            red: 0.15,
-                                            green: 0.15,
-                                            blue: 0.15
-                                        )
-                                            .opacity(0.69),
-                                    radius: 0,
-                                    x: 0,
-                                    y: 0
-                            )
-                            .opacity(controller.isPresented ? 1 : 0)
-                        
-                        Capsule()
-                            .fill(AppColor.backgroundsPrimaryElevated)
-                    }
-                )
+            toastWithBackground
                 .onGeometryChange(
                     for: CGSize.self,
                     of: { proxy in
@@ -182,6 +160,38 @@ public struct ToastPresenterView: View {
         }
     }
     
+    @ViewBuilder
+    private var toastWithBackground: some View {
+        if #available(iOS 26.0, *) {
+            toast
+                .glassEffect(in: .capsule)
+        } else {
+            toast
+                .background(
+                    ZStack {
+                        Capsule()
+                            .fill(AppColor.backgroundsPrimaryElevated)
+                            .shadow(color: .black.opacity(0.15), radius: 25, x: 0, y: 20)
+                            .shadow(color:
+                                        Color(
+                                            red: 0.15,
+                                            green: 0.15,
+                                            blue: 0.15
+                                        )
+                                            .opacity(0.69),
+                                    radius: 0,
+                                    x: 0,
+                                    y: 0
+                            )
+                            .opacity(controller.isPresented ? 1 : 0)
+
+                        Capsule()
+                            .fill(AppColor.backgroundsPrimaryElevated)
+                    }
+                )
+        }
+    }
+
     func sensoryFeedbackConfiguration(_ configuration: @escaping SensoryFeedbackConfiguration) -> Self {
         var instance = self
         instance.sensoryFeedbackConfiguration = configuration

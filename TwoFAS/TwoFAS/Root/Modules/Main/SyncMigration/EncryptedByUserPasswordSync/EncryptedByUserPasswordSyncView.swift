@@ -107,14 +107,8 @@ struct EncryptedByUserPasswordSyncView: View {
             .background(.backgroundsPrimaryElevated)
             .navigationTitle(presenter.title)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        presenter.close()
-                    } label: {
-                        Image(systemName: "xmark")
-                    }
-                }
+            .closeToolbar {
+                presenter.close()
             }
             .onAppear {
                 isFocused = true

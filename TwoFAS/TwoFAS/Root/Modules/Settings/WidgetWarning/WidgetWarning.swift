@@ -35,14 +35,8 @@ struct WidgetWarning: View {
                     TFCancelButton(T.Commons.cancel, action: cancel)
                 })
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        cancel()
-                    } label: {
-                        Image(systemName: "xmark")
-                    }
-                }
+            .closeToolbar {
+                cancel()
             }
         }
     }

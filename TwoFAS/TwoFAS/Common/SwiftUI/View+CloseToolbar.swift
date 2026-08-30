@@ -1,6 +1,6 @@
 //
 //  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
-//  Copyright © 2025 Two Factor Authentication Service, Inc.
+//  Copyright © 2026 Two Factor Authentication Service, Inc.
 //  Contributed by Zbigniew Cisiński. All rights reserved.
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -18,21 +18,15 @@
 //
 
 import SwiftUI
-import Common
 
-struct ExportQuestionPINVerificationView: View {
-    @Bindable
-    var presenter: ExportQuestionPINVerificationPresenter
-
-    var body: some View {
-        PINEntryScreen(presenter: presenter)
-        .onAppear {
-            presenter.viewWillAppear()
-        }
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden()
-        .closeToolbar {
-            presenter.handleCancel()
+extension View {
+    func closeToolbar(action: @escaping () -> Void) -> some View {
+        toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button(action: action) {
+                    Image(systemName: "xmark")
+                }
+            }
         }
     }
 }

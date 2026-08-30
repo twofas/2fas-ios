@@ -53,13 +53,7 @@ struct ExternalImportInstructionsView: View {
         })
         .navigationTitle(sourceName)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button(action: close) {
-                    Image(systemName: "xmark")
-                }
-            }
-        }
+        .closeToolbar(action: close)
     }
     
     @ViewBuilder

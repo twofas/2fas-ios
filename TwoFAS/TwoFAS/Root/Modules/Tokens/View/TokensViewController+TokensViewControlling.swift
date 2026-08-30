@@ -177,19 +177,12 @@ extension TokensViewController: TokensViewControlling {
             } else {
                 let uiBarButtonItem: UIBarButtonItem
                 if #available(iOS 26.0, *) {
-                    let cfg = UIImage.SymbolConfiguration(
-                        pointSize: UnreadNewsNaviButton.iconReadPointSize,
-                        weight: UnreadNewsNaviButton.iconWeight
-                    )
-                    let icon = UIImage(systemName: UnreadNewsNaviButton.iconSymbolName, withConfiguration: cfg)
-                    // A custom view (instead of a plain image item) so the notifications
-                    // presentation has a stable view to zoom out of. The shared glass
-                    // background is kept, so the button still renders as a glass capsule.
-                    let naviButton = UIButton(type: .system)
-                    naviButton.setImage(icon, for: .normal)
-                    naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
+                    let naviButton = UnreadNewsNaviButton(iconPointSize: UnreadNewsNaviButton.iconReadPointSize)
                     naviButton.translatesAutoresizingMaskIntoConstraints = false
-                    uiBarButtonItem = UIBarButtonItem(customView: naviButton)
+                    naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
+                    let item = UIBarButtonItem(customView: naviButton)
+                    item.hidesSharedBackground = true
+                    uiBarButtonItem = item
                 } else {
                     let naviButton = UIButton(type: .custom)
                     naviButton.setBackgroundImage(Asset.navibarNewsIcon.image, for: .normal)
@@ -547,12 +540,16 @@ private extension TokensViewController {
             return view
         }()
 
-        override init(frame: CGRect) {
-            super.init(frame: frame)
+        private let iconPointSize: CGFloat
+
+        init(iconPointSize: CGFloat = UnreadNewsNaviButton.iconPointSize) {
+            self.iconPointSize = iconPointSize
+            super.init(frame: .zero)
             setupViews()
         }
 
         required init?(coder: NSCoder) {
+            iconPointSize = Self.iconPointSize
             super.init(coder: coder)
             setupViews()
         }
@@ -563,7 +560,7 @@ private extension TokensViewController {
             addSubview(glassEffectView)
 
             let cfg = UIImage.SymbolConfiguration(
-                pointSize: Self.iconPointSize,
+                pointSize: iconPointSize,
                 weight: Self.iconWeight
             )
             newsImageView.image = UIImage(systemName: Self.iconSymbolName, withConfiguration: cfg)

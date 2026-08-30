@@ -57,11 +57,11 @@ struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
     }
 
     var body: some View {
-        VStack(spacing: .XL) {
+        VStack(spacing: .XXXL) {
             Text(presenter.info)
-                .textStyle(.body)
+                .textStyle(.title2, .emphasized)
                 .multilineTextAlignment(.center)
-                .foregroundStyle(presenter.isError ? AppColor.accentsBrand : AppColor.labelsSecondary)
+                .foregroundStyle(presenter.isError ? AppColor.accentsBrand : AppColor.labelsPrimary)
                 .animation(.easeInOut, value: presenter.info)
                 .padding(.horizontal, .XL)
                 .padding(.top, .XL)
@@ -76,9 +76,10 @@ struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
             PINKeyboard(action: presenter.onKeyPressed)
                 .disabled(presenter.isInputDisabled)
 
-            Spacer()
-
-            footer()
+            HStack(alignment: .center) {
+                footer()
+            }
+            .frame(minHeight: Spacing.XXXL.rawValue)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(AppColor.backgroundsPrimary)

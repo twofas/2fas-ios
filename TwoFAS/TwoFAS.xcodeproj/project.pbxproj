@@ -5467,7 +5467,6 @@
 		C2E53AC62B62DD6C008E1E70 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				C2E53B0D2B62DDAF008E1E70 /* Assets */,
 				C2E53AD02B62DDAF008E1E70 /* Sources */,
 				C2E53AC72B62DD6C008E1E70 /* Common.h */,
 			);
@@ -5597,13 +5596,6 @@
 				C2727D522781FE3F00B8FA03 /* ServiceIconDefinition.swift */,
 			);
 			path = SharedProtocols;
-			sourceTree = "<group>";
-		};
-		C2E53B0D2B62DDAF008E1E70 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Assets;
 			sourceTree = "<group>";
 		};
 		C2E53B4C2B62DDCB008E1E70 /* Content */ = {

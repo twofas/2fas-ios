@@ -73,7 +73,8 @@ public enum TFPinKey: Equatable, Hashable {
 /// ```
 public struct TFPinButton: View {
     public static let size: CGFloat = 64
-    
+    public static let tapInset: CGFloat = 6
+
     @State
     private var tapCount = 0
 
@@ -116,7 +117,10 @@ public struct TFPinButton: View {
                 .shadow(.glass)
                 .scaleEffect(configuration.isPressed ? 0.82 : 1)
                 .animation(.spring(response: 0.2, dampingFraction: 0.7), value: configuration.isPressed)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(
+                    width: TFPinButton.size + TFPinButton.tapInset * 2,
+                    height: TFPinButton.size + TFPinButton.tapInset * 2
+                )
                 .contentShape(Rectangle())
         }
     }
@@ -140,7 +144,10 @@ public struct TFPinButton: View {
                     .impact(flexibility: .rigid, intensity: 0.6),
                     trigger: configuration.isPressed
                 ) { _, new in new }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(
+                    width: TFPinButton.size + TFPinButton.tapInset * 2,
+                    height: TFPinButton.size + TFPinButton.tapInset * 2
+                )
                 .contentShape(Rectangle())
         }
     }

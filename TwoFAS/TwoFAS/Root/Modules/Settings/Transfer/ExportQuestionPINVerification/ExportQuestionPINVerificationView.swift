@@ -29,7 +29,6 @@ struct ExportQuestionPINVerificationView: View {
         .onAppear {
             presenter.viewWillAppear()
         }
-        .navigationTitle(T.Backup.verifyPin)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .toolbar {

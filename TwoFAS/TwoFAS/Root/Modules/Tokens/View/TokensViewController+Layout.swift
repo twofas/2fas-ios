@@ -250,6 +250,63 @@ extension TokensViewController {
         return section
     }
     
+    /// A list header is only mirrored once it has scrolled this far past the pin line. A header
+    /// still in its own place needs no mirror, and mirroring it would extend the scroll-edge
+    /// effect over the large title while it is expanded or collapsing; the tolerance also covers
+    /// the sub-point jitter between the content offset and the inset during that collapse.
+    private static let pinnedHeaderTolerance: CGFloat = 1
+
+    /// Mirrors the header of the section whose own header has scrolled past the top of the visible
+    /// area and pushes it away when the next section's header arrives. The mirrored list header
+    /// hides its content so the two never draw on top of each other; sections without a header
+    /// and the empty screens leave the floating header hidden.
+    func updateFloatingHeader() {
+        guard dataSource != nil, floatingHeader != nil else { return }
+        let layout = tokensView.collectionViewLayout
+        let kind = TokensSectionHeader.reuseIdentifier
+        let pinLine = tokensView.contentOffset.y + tokensView.adjustedContentInset.top
+        var current: Int?
+        var nextHeaderTop: CGFloat?
+        for section in 0..<tokensView.numberOfSections {
+            guard let attributes = layout.layoutAttributesForSupplementaryView(
+                ofKind: kind,
+                at: IndexPath(item: 0, section: section)
+            ) else { continue }
+            if attributes.frame.minY < pinLine - Self.pinnedHeaderTolerance {
+                current = section
+            } else {
+                nextHeaderTop = attributes.frame.minY
+                break
+            }
+        }
+        let emptyScreenShown = !emptySearchScreenView.isHidden || !emptyListScreenView.isHidden
+        let mirrored: Int? = emptyScreenShown ? nil : current
+        for indexPath in tokensView.indexPathsForVisibleSupplementaryElements(ofKind: kind) {
+            (tokensView.supplementaryView(forElementKind: kind, at: indexPath) as? TokensSectionHeader)?
+                .isContentHidden = indexPath.section == mirrored
+        }
+        guard let mirrored, let section = dataSource.sectionIdentifier(for: mirrored) else {
+            floatingHeader.isHidden = true
+            return
+        }
+        if floatingHeader.header.isEditing != tokensView.isEditing {
+            floatingHeader.header.setIsEditing(tokensView.isEditing)
+        }
+        if floatingHeader.header.config != section {
+            floatingHeader.header.setConfiguration(section)
+        }
+        floatingHeader.isHidden = false
+        if let nextHeaderTop {
+            // Before the first layout pass the floating header has no size yet; every section
+            // header shares the same height, so the layout's estimate is a good stand-in.
+            let measured = floatingHeader.header.bounds.height
+            let height = measured > 0 ? measured : headerHeight
+            floatingHeader.pushOffset = min(0, nextHeaderTop - pinLine - height)
+        } else {
+            floatingHeader.pushOffset = 0
+        }
+    }
+
     func cellHeight() -> NSCollectionLayoutDimension {
         guard !tokensView.isEditing else {
             return .estimated(60)

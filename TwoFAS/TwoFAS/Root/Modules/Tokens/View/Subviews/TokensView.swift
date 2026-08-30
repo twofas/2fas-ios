@@ -22,6 +22,8 @@ import Common
 
 final class TokensView: UICollectionView {
     private var lastLayoutWidth: CGFloat = 0
+    /// Called after every layout pass, i.e. on scroll, data reload and size change.
+    var didLayout: Callback?
 
     override static var layerClass: AnyClass { TokensLayer.self }
 
@@ -29,7 +31,6 @@ final class TokensView: UICollectionView {
         get {
             super.isEditing
         }
-
         set {
             guard newValue != super.isEditing else { return }
             super.isEditing = newValue
@@ -43,6 +44,7 @@ final class TokensView: UICollectionView {
             lastLayoutWidth = bounds.width
             collectionViewLayout.invalidateLayout()
         }
+        didLayout?()
     }
 
     func configure() {
@@ -68,7 +70,7 @@ final class TokensView: UICollectionView {
     
     private func reloadHeaders() {
         guard let visible = visibleSupplementaryViews(
-            ofKind: UICollectionView.elementKindSectionHeader
+            ofKind: TokensSectionHeader.reuseIdentifier
         ) as? [TokensSectionHeader] else { return }
         visible.forEach({ $0.setIsEditing(isEditing) })
     }

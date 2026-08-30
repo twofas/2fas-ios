@@ -48,9 +48,20 @@ final class TokensSectionHeader: UICollectionReusableView {
     
     private let bgView = UIView()
     
-    private var isEditing = false
+    private(set) var isEditing = false
     
-    private var config: TokensSection?
+    private(set) var config: TokensSection?
+
+    /// Hides everything the header draws while keeping its size and its place in the layout, for
+    /// when a copy of it is drawn elsewhere. Kept out of `alpha`, which the collection view resets
+    /// whenever it re-applies layout attributes. Cleared on reuse.
+    var isContentHidden = false {
+        didSet {
+            guard isContentHidden != oldValue else { return }
+            let alpha: CGFloat = isContentHidden ? 0 : 1
+            [counter, titleLabel, normalContainer, editContainer].forEach { $0.alpha = alpha }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -68,12 +79,17 @@ final class TokensSectionHeader: UICollectionReusableView {
         setupCallbacks()
         setupMenu()
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        isContentHidden = false
+    }
         
     func setIsEditing(_ isEditing: Bool) {
         self.isEditing = isEditing
         setupContainers()
     }
-    
+
     func setConfiguration(_ config: TokensSection) {
         self.config = config
         updateCollapsedState()
@@ -89,10 +105,14 @@ final class TokensSectionHeader: UICollectionReusableView {
 }
 
 private extension TokensSectionHeader {
+    /// On iOS 26 the header is transparent so the scroll-edge blur shows through it when it's
+    /// pinned; earlier systems have no such blur and keep the header's own band.
     func setupBackground() {
-        backgroundColor = AppColor.backgroundsSecondary.uiColor
+        if #unavailable(iOS 26.0) {
+            backgroundColor = AppColor.backgroundsSecondary.uiColor
+        }
     }
-    
+
     func setupLayout() {
         addSubview(counter, with: [
             counter.topAnchor.constraint(equalTo: topAnchor, constant: Spacing.M.rawValue),

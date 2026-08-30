@@ -50,9 +50,13 @@ final class TokensViewController: UIViewController {
     }
 
     private(set) var tokensView: TokensView!
+    private(set) var floatingHeader: TokensFloatingSectionHeader!
+    /// Set while the search bar is being presented or dismissed.
+    var isSearchTransitioning = false
     private(set) var dataSource: UICollectionViewDiffableDataSource<TokensSection, TokenCell>!
     
     let headerHeight: CGFloat = 44
+    private static let searchTransitioningLayoutAnimationDuration: TimeInterval = 0.3
     let emptySearchScreenView = TokensViewEmptySearchScreen()
 
     let emptyListModel = TokensEmptyListModel()
@@ -71,14 +75,21 @@ final class TokensViewController: UIViewController {
     override func loadView() {
         createLayout()
         tokensView = TokensView(frame: .zero, collectionViewLayout: layout)
-        self.view = tokensView
         tokensView.configure()
+        // The list is wrapped so the floating header can sit above it, outside the scroll view.
+        let container = UIView()
+        tokensView.frame = container.bounds
+        tokensView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        container.addSubview(tokensView)
+        view = container
+        setContentScrollView(tokensView, for: .all)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
+        setupFloatingHeader()
         setupEmptyScreensLayout()
         setupEmptyScreensEvents()
         setupDelegates()
@@ -126,6 +137,17 @@ final class TokensViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = isCompact ? .always : .never
     }
     
+    override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
+        // The search bar's presentation moves the safe area in one step; animating the layout keeps
+        // views pinned to it (the floating header) moving with the bar.
+        if isSearchTransitioning {
+            UIView.animate(withDuration: Self.searchTransitioningLayoutAnimationDuration) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -147,7 +169,20 @@ private extension TokensViewController {
     
     func setupDelegates() {
         searchController.searchBarDelegate = self
+        searchController.delegate = self
         tokensView.delegate = self
+        tokensView.didLayout = { [weak self] in self?.updateFloatingHeader() }
+    }
+
+    func setupFloatingHeader() {
+        floatingHeader = TokensFloatingSectionHeader(scrollView: tokensView)
+        floatingHeader.header.dataSource = self
+        floatingHeader.isHidden = true
+        view.addSubview(floatingHeader, with: [
+            floatingHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            floatingHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            floatingHeader.header.topAnchor.constraint(equalTo: view.safeTopAnchor)
+        ])
     }
     
     func setupDataSource() {
@@ -169,7 +204,9 @@ private extension TokensViewController {
     }
     
     func setupEmptyScreensLayout() {
-        view.addSubview(emptySearchScreenView, with: [
+        // Both empty screens live inside the list, not in the root view: a hosted SwiftUI view
+        // that receives real safe-area insets there relayouts endlessly once the keyboard is up.
+        tokensView.addSubview(emptySearchScreenView, with: [
             emptySearchScreenView.leadingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.leadingAnchor),
             emptySearchScreenView.trailingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.trailingAnchor),
             emptySearchScreenView.topAnchor.constraint(equalTo: tokensView.frameLayoutGuide.topAnchor),
@@ -180,7 +217,7 @@ private extension TokensViewController {
         
         addChild(emptyListHostingController)
         emptyListScreenView.backgroundColor = AppColor.backgroundsPrimary.uiColor
-        view.addSubview(emptyListScreenView, with: [
+        tokensView.addSubview(emptyListScreenView, with: [
             emptyListScreenView.leadingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.leadingAnchor),
             emptyListScreenView.trailingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.trailingAnchor),
             emptyListScreenView.topAnchor.constraint(equalTo: tokensView.safeTopAnchor),

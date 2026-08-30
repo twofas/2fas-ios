@@ -37,10 +37,14 @@ final class NewsPlainFlowController: FlowController {
 
     static func present(
         on viewController: UIViewController,
-        parent: NewsPlainFlowControllerParent
+        parent: NewsPlainFlowControllerParent,
+        sourceView: UIView? = nil
     ) {
         let hosting = create(parent: parent)
         hosting.configureAsLargeModal()
+        if #available(iOS 26.0, *), let sourceView {
+            hosting.preferredTransition = .zoom { [weak sourceView] _ in sourceView }
+        }
         viewController.present(hosting, animated: true)
     }
 

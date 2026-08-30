@@ -182,12 +182,14 @@ extension TokensViewController: TokensViewControlling {
                         weight: UnreadNewsNaviButton.iconWeight
                     )
                     let icon = UIImage(systemName: UnreadNewsNaviButton.iconSymbolName, withConfiguration: cfg)
-                    uiBarButtonItem = UIBarButtonItem(
-                        image: icon,
-                        style: .plain,
-                        target: self,
-                        action: #selector(showNotifications)
-                    )
+                    // A custom view (instead of a plain image item) so the notifications
+                    // presentation has a stable view to zoom out of. The shared glass
+                    // background is kept, so the button still renders as a glass capsule.
+                    let naviButton = UIButton(type: .system)
+                    naviButton.setImage(icon, for: .normal)
+                    naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
+                    naviButton.translatesAutoresizingMaskIntoConstraints = false
+                    uiBarButtonItem = UIBarButtonItem(customView: naviButton)
                 } else {
                     let naviButton = UIButton(type: .custom)
                     naviButton.setBackgroundImage(Asset.navibarNewsIcon.image, for: .normal)

@@ -24,7 +24,9 @@ import Common
 // Created only to keep memory management happy
 final class SelectFromGalleryViewController: UIViewController {
     var presenter: SelectFromGalleryPresenter!
-    
+
+    private var didReportCancel = false
+
     private let imagePickerConfiguration: PHPickerConfiguration = {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
@@ -33,6 +35,7 @@ final class SelectFromGalleryViewController: UIViewController {
     }()
     
     func createImagePicker() -> UIViewController {
+        didReportCancel = false
         let imageSelector = PHPickerViewController(configuration: imagePickerConfiguration)
         imageSelector.view.tintColor = AppColor.accentsBrand.uiColor
         imageSelector.delegate = self
@@ -41,9 +44,27 @@ final class SelectFromGalleryViewController: UIViewController {
         imageSelector.presentationController?.delegate = self
         return imageSelector
     }
+
+    /// Reports the cancel exactly once, after the picker is fully off screen,
+    /// whichever way it went away. Parents can therefore treat
+    /// `galleryDidCancel` as "nothing is presented any more" — a dismiss
+    /// issued there would land on their own controller. The one-shot guard
+    /// covers an OS that delivers both the empty `didFinishPicking` and the
+    /// presentation-controller callback for a single dismissal.
+    private func reportPickerCancelled() {
+        guard !didReportCancel else { return }
+        didReportCancel = true
+        presenter.handlePickerDidCancel()
+    }
 }
 
 extension SelectFromGalleryViewController: UIAdaptivePresentationControllerDelegate {
+    // Fires when the picker's deferred presentation transition actually
+    // starts — the only moment its coordinator becomes available (the
+    // remote view controller presents itself once its content has loaded,
+    // after `present()` has long returned). Documented for adaptivity
+    // changes, it also fires for the initial non-adapting sheet
+    // presentation (verified on iOS 18.6 and 26.5).
     func presentationController(
         _ presentationController: UIPresentationController,
         willPresentWithAdaptiveStyle style: UIModalPresentationStyle,
@@ -59,15 +80,16 @@ extension SelectFromGalleryViewController: UIAdaptivePresentationControllerDeleg
     }
 
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        presenter.handlePickerDidCancel()
+        reportPickerCancelled()
     }
 }
 
 extension SelectFromGalleryViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         guard let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) else {
-            picker.dismiss(animated: true, completion: nil)
-            presenter.handlePickerDidCancel()
+            picker.dismiss(animated: true) { [weak self] in
+                self?.reportPickerCancelled()
+            }
             return
         }
         itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in

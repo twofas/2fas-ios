@@ -28,7 +28,11 @@ protocol SelectFromGalleryFlowControllerParent: AnyObject {
     func galleryDidImport(count: Int)
     func galleryDidCancel()
     /// The picker's presentation transition started. `coordinator` runs
-    /// alongside it.
+    /// alongside it. This callback exists because the picker is a remote
+    /// view controller: its transition begins only once the remote content
+    /// has loaded, seconds after `present()` returns, so reading
+    /// `transitionCoordinator` right after presenting — the pattern that
+    /// works for locally-presented overlays — yields nil here.
     func galleryWillShow(alongside coordinator: UIViewControllerTransitionCoordinator?)
     /// The picker started going away by an interactive gesture. `coordinator`
     /// runs alongside it and reports whether the gesture was cancelled.

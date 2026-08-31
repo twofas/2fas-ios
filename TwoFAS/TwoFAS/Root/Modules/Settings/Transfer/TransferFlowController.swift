@@ -245,7 +245,10 @@ extension TransferFlowController: SelectFromGalleryFlowControllerParent {
     func galleryWillCancel(alongside coordinator: UIViewControllerTransitionCoordinator?) {}
 
     func galleryDidFinish() { endGallery() }
-    func galleryDidCancel() { endGallery() }
+    /// The cancel arrives with the picker already off screen, so only the
+    /// reference needs releasing — a dismiss issued here would land on the
+    /// instructions modal itself and close the whole flow.
+    func galleryDidCancel() { galleryViewController = nil }
     func galleryServiceWasCreated(serviceData: ServiceData) { endGallery() }
     func galleryDidImport(count: Int) {
         dismissInnerModal { [weak self] in

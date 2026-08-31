@@ -666,12 +666,12 @@ internal enum T {
     internal static let deviceName = T.tr("Localizable", "browser__device_name", fallback: "Device nickname")
     /// Forget this web browser
     internal static let forgetThisBrowser = T.tr("Localizable", "browser__forget_this_browser", fallback: "Forget this web browser")
-    /// Install the 2FAS browser extension on your desktop computer.
-    internal static let infoDescriptionFirst = T.tr("Localizable", "browser__info_description_first", fallback: "Install the 2FAS browser extension on your desktop computer.")
+    /// Install the 2FAS Auth browser extension on your desktop computer.
+    internal static let infoDescriptionFirst = T.tr("Localizable", "browser__info_description_first", fallback: "Install the 2FAS Auth browser extension on your desktop computer.")
     /// Pair it with your 2FAS app.
     internal static let infoDescriptionSecond = T.tr("Localizable", "browser__info_description_second", fallback: "Pair it with your 2FAS app.")
-    /// 2FAS Web Browser extension
-    internal static let infoTitle = T.tr("Localizable", "browser__info_title", fallback: "2FAS Web Browser extension")
+    /// 2FAS Auth Browser extension
+    internal static let infoTitle = T.tr("Localizable", "browser__info_title", fallback: "2FAS Auth Browser extension")
     /// More info:
     internal static let moreInfo = T.tr("Localizable", "browser__more_info", fallback: "More info:")
     /// https://www.2fas.com/be
@@ -1417,8 +1417,8 @@ internal enum T {
     internal static let problem = T.tr("Localizable", "settings__problem", fallback: "Problem")
     /// Check out this awesome two-factor authentication app from 2FAS: https://2fas.com
     internal static let recommendation = T.tr("Localizable", "settings__recommendation ", fallback: "Check out this awesome two-factor authentication app from 2FAS: https://2fas.com")
-    /// Removed Items
-    internal static let removedItems = T.tr("Localizable", "settings__removed_items", fallback: "Removed Items")
+    /// Removed Tokens
+    internal static let removedItems = T.tr("Localizable", "settings__removed_items", fallback: "Removed Tokens")
     /// Recover or permanently delete Tokens you've removed from the app.
     internal static let removedItemsDescription = T.tr("Localizable", "settings__removed_items_description", fallback: "Recover or permanently delete Tokens you've removed from the app.")
     /// Restore
@@ -1475,8 +1475,8 @@ internal enum T {
     internal static let support = T.tr("Localizable", "settings__support", fallback: "2FAS Support")
     /// Support and Share
     internal static let supportAndShare = T.tr("Localizable", "settings__support_and_share", fallback: "Support and Share")
-    /// Get help from the 2FAS team.
-    internal static let supportDescription = T.tr("Localizable", "settings__support_description", fallback: "Get help from the 2FAS team.")
+    /// 2FAS Support
+    internal static let supportDescription = T.tr("Localizable", "settings__support_description", fallback: "2FAS Support")
     /// Tell a friend
     internal static let tellAFriend = T.tr("Localizable", "settings__tell_a_friend", fallback: "Tell a friend")
     /// Terms of Service
@@ -1525,8 +1525,8 @@ internal enum T {
     internal static let pairTitle = T.tr("Localizable", "shortcuts__pair_title", fallback: "Pair service")
     /// Search for service
     internal static let searchTitle = T.tr("Localizable", "shortcuts__search_title", fallback: "Search for service")
-    /// Get support
-    internal static let supportTitle = T.tr("Localizable", "shortcuts__support_title", fallback: "Get support")
+    /// Support
+    internal static let supportTitle = T.tr("Localizable", "shortcuts__support_title", fallback: "Support")
   }
   internal enum Social {
     /// Discord
@@ -1798,8 +1798,8 @@ internal enum T {
     internal static let retypeThisToken = T.tr("Localizable", "tokens__retype_this_token", fallback: "Retype this Token")
     /// Point your camera to the screen to scan the QR Code
     internal static let scanQrCodeTitle = T.tr("Localizable", "tokens__scan_qr_code_title", fallback: "Point your camera to the screen to scan the QR Code")
-    /// Search service
-    internal static let searchServiceTitle = T.tr("Localizable", "tokens__search_service_title", fallback: "Search service")
+    /// Search
+    internal static let searchServiceTitle = T.tr("Localizable", "tokens__search_service_title", fallback: "Search")
     /// %d sec
     internal static func second(_ p1: Int) -> String {
       return T.tr("Localizable", "tokens__second", p1, fallback: "%d sec")

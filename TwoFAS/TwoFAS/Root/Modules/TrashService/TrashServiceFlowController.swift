@@ -97,7 +97,6 @@ private extension TrashServiceFlowController {
             sheet.selectedDetentIdentifier = .trashContent
             sheet.prefersGrabberVisible = false
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            sheet.preferredCornerRadius = TFCornerRadius.large.rawValue
             sheet.prefersEdgeAttachedInCompactHeight = true
             sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
         }

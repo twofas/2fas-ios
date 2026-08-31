@@ -86,7 +86,6 @@ struct IntroductionInfoSheetContent: View {
             }
         }
         .presentationDetents([.height(sheetHeight)])
-        .presentationCornerRadius(TFCornerRadius.large.rawValue)
         .presentationDragIndicator(.visible)
     }
 }

@@ -67,7 +67,6 @@ struct AppReset: View {
         .background(.backgroundsPrimaryElevated)
         .minimumBottomSpacing()
         .presentationDetents([.large])
-        .presentationCornerRadius(TFCornerRadius.large.rawValue)
         .presentationDragIndicator(.hidden)
     }
     

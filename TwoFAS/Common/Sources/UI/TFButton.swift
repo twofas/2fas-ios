@@ -243,7 +243,13 @@ public struct TFButton: View {
     }
     
     private var labelColor: AppColor {
-        guard isEnabled else { return .labelsTertiary }
+        guard isEnabled else {
+            if colorScheme == .dark {
+                return .labelsTertiary
+            } else {
+                return .labelsPrimary
+            }
+        }
         switch variant {
         case .borderedProminent: return .graysWhite
         case .bordered, .borderless: return .accentsBrand

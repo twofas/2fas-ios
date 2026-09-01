@@ -378,7 +378,7 @@ private struct TokenTypeOption: View {
             DragGesture(minimumDistance: 0)
                 .updating($isPressed) { _, state, _ in state = true }
         )
-        .sensoryFeedback(.impact(flexibility: .rigid, intensity: 0.6), trigger: isPressed) { _, new in new }
+        .sensoryFeedback(.selection, trigger: isPressed) { _, new in new }
     }
 }
 

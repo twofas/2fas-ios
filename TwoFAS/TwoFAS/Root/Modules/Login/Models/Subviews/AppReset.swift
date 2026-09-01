@@ -23,51 +23,35 @@ import Common
 struct AppReset: View {
     @Environment(\.dismiss)
     private var dismiss
-    
+
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                Spacer()
-                    .frame(maxHeight: .infinity)
-                
-                AdaptiveReadableContainer {
-                    TFInfoContent(
-                        icon: .view(view: AnyView(
-                            BorderShield(showDeleteIcon: true)
-                                .padding(.bottom, .M)
-                        )),
-                        title: T.Restore.Reset.title,
-                        description: T.Restore.resetPinTitle
-                    )
-                }
-                
-                Spacer()
-                    .frame(maxHeight: .infinity)
-                
-                AdaptiveReadableContainer {
-                    VStack(spacing: .XXXL) {
-                        infoFrame
-                        
-                        TFButton(
-                            T.Commons.dismiss,
-                            variant: .borderedProminent,
-                            size: .large,
-                            applyGlass: true
-                        ) {
-                            dismiss()
-                        }
-                    }
-                }
-                .frame(alignment: .bottom)
+        SheetContent(
+            sizing: .fillViewport,
+            onClose: { dismiss() }
+        ) {
+            AdaptiveReadableContainer {
+                TFInfoContent(
+                    icon: .view(view: AnyView(
+                        BorderShield(showDeleteIcon: true)
+                            .padding(.bottom, .M)
+                    )),
+                    title: T.Restore.Reset.title,
+                    description: T.Restore.resetPinTitle
+                )
             }
-            .closeToolbar {
+        } buttons: {
+            TFButton(
+                T.Commons.dismiss,
+                variant: .borderedProminent,
+                size: .large,
+                applyGlass: true
+            ) {
                 dismiss()
             }
+        } bottomAccessory: {
+            infoFrame
         }
         .background(.backgroundsPrimaryElevated)
-        .minimumBottomSpacing()
-        .presentationDetents([.large])
-        .presentationDragIndicator(.hidden)
     }
     
     @ViewBuilder

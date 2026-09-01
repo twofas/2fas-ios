@@ -23,6 +23,9 @@ import Common
 struct IntroductionView: View {
     @Bindable
     var presenter: IntroductionPresenter
+
+    @Environment(\.horizontalSizeClass)
+    private var horizontalSizeClass
     
     @State
     private var position = ScrollPosition(idType: Int.self)
@@ -38,7 +41,7 @@ struct IntroductionView: View {
     
     @State
     private var showInfo = false
-    
+
     private let totalPages: Int = 4
     
     var body: some View {
@@ -133,6 +136,7 @@ struct IntroductionView: View {
         .minimumBottomSpacing()
         .sheet(isPresented: $showInfo, content: {
             IntroductionInfoSheetContent()
+                .presentedFromRegularWidth(horizontalSizeClass == .regular)
         })
         .toolbarVisibility(.hidden, for: .navigationBar)
     }

@@ -24,6 +24,9 @@ struct LoginView: View {
     @Bindable
     var presenter: LoginPresenter
 
+    @Environment(\.horizontalSizeClass)
+    private var horizontalSizeClass
+
     @Environment(\.scenePhase)
     private var scenePhase
 
@@ -81,6 +84,7 @@ struct LoginView: View {
             presenter.onResetDismiss()
         }) {
             AppReset()
+                .presentedFromRegularWidth(horizontalSizeClass == .regular)
         }
     }
 }

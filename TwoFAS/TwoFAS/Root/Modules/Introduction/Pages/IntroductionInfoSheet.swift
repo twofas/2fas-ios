@@ -23,69 +23,51 @@ import Common
 struct IntroductionInfoSheetContent: View {
     @Environment(\.dismiss)
     private var dismiss
-    
-    @State
-    private var sheetHeight: CGFloat = 500
-    
+
     var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                VStack(spacing: 0) {
-                    HStack {
-                        TFLiquidGlassSymbolButton(symbol: .close) { dismiss() }
+        SheetContent(
+            sizing: .fitContent,
+            onClose: { dismiss() }
+        ) {
+            AdaptiveReadableContainer(verticalMargin: .zero) {
+                VStack(spacing: Spacing.XXXL) {
+                    Image(icon: .arrowTrianglehead2ClockwiseRotate90)
+                        .font(.system(size: 40, weight: .semibold))
+                        .foregroundStyle(AppColor.accentsBrand)
+
+                    VStack(spacing: Spacing.M) {
+                        Text(T.Introduction.backupIcloudTitle)
+                            .textStyle(.title2, .emphasized)
+                            .foregroundStyle(AppColor.labelsPrimary)
+                            .multilineTextAlignment(.center)
+
+                        Text(T.Introduction.backupIcloudDescription)
+                            .textStyle(.callout)
+                            .foregroundStyle(AppColor.labelsPrimary)
+                            .multilineTextAlignment(.center)
+
                         Spacer()
-                    }
-                    
-                    AdaptiveReadableContainer(verticalMargin: .zero) {
-                        VStack(spacing: Spacing.XXXL) {
-                            Image(icon: .arrowTrianglehead2ClockwiseRotate90)
-                                .font(.system(size: 40, weight: .semibold))
-                                .foregroundStyle(AppColor.accentsBrand)
-                            
-                            VStack(spacing: Spacing.M) {
-                                Text(T.Introduction.backupIcloudTitle)
-                                    .textStyle(.title2, .emphasized)
-                                    .foregroundStyle(AppColor.labelsPrimary)
-                                    .multilineTextAlignment(.center)
-                                
-                                Text(T.Introduction.backupIcloudDescription)
-                                    .textStyle(.callout)
-                                    .foregroundStyle(AppColor.labelsPrimary)
-                                    .multilineTextAlignment(.center)
-                                
-                                Spacer()
-                                    .frame(height: Spacing.XXXXXL.rawValue)
-                                
-                                Text(T.Introduction.backupIcloudDescriptionNote)
-                                    .textStyle(.footnote)
-                                    .foregroundStyle(AppColor.labelsSecondary)
-                                    .multilineTextAlignment(.center)
-                                    .padding(.horizontal, Spacing.XXXXXL)
-                                    .padding(.bottom, .M)
-                                
-                                TFButton(
-                                    T.Commons.understood,
-                                    variant: .borderedProminent,
-                                    size: .large,
-                                    applyGlass: true
-                                ) {
-                                    dismiss()
-                                }
-                            }
-                        }
+                            .frame(height: Spacing.XXXXXL.rawValue)
+
+                        Text(T.Introduction.backupIcloudDescriptionNote)
+                            .textStyle(.footnote)
+                            .foregroundStyle(AppColor.labelsSecondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, Spacing.XXXXXL)
                     }
                 }
-                .padding(.vertical, .XL)
             }
-            .scrollContentBackground(.hidden)
-            .scrollDisabled(true)
-            .onGeometryChange(for: CGFloat.self) { proxy in
-                proxy.size.height
-            } action: { height in
-                sheetHeight = height
+            .padding(.top, .M)
+            .padding(.bottom, .L)
+        } buttons: {
+            TFButton(
+                T.Commons.understood,
+                variant: .borderedProminent,
+                size: .large,
+                applyGlass: true
+            ) {
+                dismiss()
             }
         }
-        .presentationDetents([.height(sheetHeight)])
-        .presentationDragIndicator(.visible)
     }
 }

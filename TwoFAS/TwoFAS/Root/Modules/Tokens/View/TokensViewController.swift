@@ -104,6 +104,15 @@ final class TokensViewController: UIViewController {
         guard snapshot.item(for: indexPath) != nil else { return }
         tokensView.scrollToItem(at: indexPath, at: .top, animated: true)
     }
+
+    /// The visible cell for the given service — the anchor for the delete confirmation popover.
+    func cellView(for serviceData: ServiceData) -> UIView? {
+        guard
+            let item = dataSource.snapshot().itemIdentifiers.first(where: { $0.serviceData == serviceData }),
+            let indexPath = dataSource.indexPath(for: item)
+        else { return nil }
+        return tokensView.cellForItem(at: indexPath)
+    }
     
     // MARK: - App events
     

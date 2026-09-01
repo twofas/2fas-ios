@@ -103,6 +103,8 @@ enum Theme {
         static let modalPreferredWidth: CGFloat = 540
         /// 620 - preferowana wysokość dużych arkuszy modalnych na iPadzie (regular width)
         static let modalLargePreferredHeight: CGFloat = 620
+        /// 360 - preferowana szerokość popoverów zakotwiczonych w treści (regular width)
+        static let popoverPreferredWidth: CGFloat = 360
 
         /// 288
         static let componentWidth: CGFloat = 288

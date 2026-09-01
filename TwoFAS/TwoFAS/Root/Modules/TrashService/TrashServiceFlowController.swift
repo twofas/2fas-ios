@@ -39,7 +39,8 @@ final class TrashServiceFlowController: FlowController {
     static func present(
         on viewController: UIViewController,
         parent: TrashServiceFlowControllerParent,
-        serviceData: ServiceData
+        serviceData: ServiceData,
+        anchor: (() -> UIView?)? = nil
     ) {
         let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         let flowController = TrashServiceFlowController(viewController: hosting)
@@ -53,7 +54,7 @@ final class TrashServiceFlowController: FlowController {
         )
         hosting.rootView = AnyView(TrashServiceView(presenter: presenter))
 
-        flowController.sheetHost.present(hosting, on: viewController)
+        flowController.sheetHost.present(hosting, on: viewController, popoverAnchor: anchor)
     }
 }
 

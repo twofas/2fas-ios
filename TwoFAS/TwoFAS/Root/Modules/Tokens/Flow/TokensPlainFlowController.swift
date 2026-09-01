@@ -120,7 +120,14 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
     
     func toDeleteService(serviceData: ServiceData) {
         guard let presentationHost, presentationHost.presentedViewController == nil else { return }
-        TrashServiceFlowController.present(on: presentationHost, parent: self, serviceData: serviceData)
+        TrashServiceFlowController.present(
+            on: presentationHost,
+            parent: self,
+            serviceData: serviceData,
+            anchor: { [weak self] in
+                (self?._viewController as? TokensViewController)?.cellView(for: serviceData)
+            }
+        )
     }
     
     func toShowEditingService(with serviceData: ServiceData, freshlyAdded: Bool = false, gotoIconEdit: Bool = false) {

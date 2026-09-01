@@ -54,6 +54,26 @@ extension View {
     func presentedFromRegularWidth(_ isRegularWidth: Bool) -> some View {
         environment(\.presentedFromRegularWidth, isRegularWidth)
     }
+
+    /// Marks `SheetContent` presented through SwiftUI's `.popover` — the popover takes the
+    /// content's ideal size, so the component sizes itself to the given width and to the
+    /// measured content height instead of applying sheet presentation sizing. The compact
+    /// adaptation (iPhone) still becomes the content-height bottom sheet.
+    func presentedInPopover(width: CGFloat = Theme.Metrics.popoverPreferredWidth) -> some View {
+        environment(\.presentedInPopoverWidth, width)
+    }
+}
+
+private struct PresentedInPopoverWidthKey: EnvironmentKey {
+    static let defaultValue: CGFloat? = nil
+}
+
+extension EnvironmentValues {
+    /// Width of the popover this sheet content is presented in; nil outside popovers.
+    var presentedInPopoverWidth: CGFloat? {
+        get { self[PresentedInPopoverWidthKey.self] }
+        set { self[PresentedInPopoverWidthKey.self] = newValue }
+    }
 }
 
 /// Shared content layout for modal sheets: a system toolbar with a close button, scrollable
@@ -73,18 +93,32 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
     private let buttons: Buttons
     private let bottomAccessory: BottomAccessory
     private var onHeightChange: ((CGFloat) -> Void)?
+    private var addsBalancedBottomSpacing = true
 
     @Environment(\.presentedFromRegularWidth)
     private var isRegularWidth
 
+    @Environment(\.presentedInPopoverWidth)
+    private var popoverWidth
+
     /// Pre-measurement fallback, replaced by the measured height after the first layout.
     @State private var sheetHeight: CGFloat = Theme.Metrics.modalLargePreferredHeight
     @State private var minContentHeight: CGFloat = 0
+    /// Height of the navigation bar area, mirrored below the content by balancedBottomSpacing().
     @State private var topContentInset: CGFloat = 0
-    @State private var naturalContentHeight: CGFloat = 0
     /// Pre-iOS-26 the bar sits below the scroll view instead of inside its insets, so its
     /// height is measured separately and added to the reported sheet height. Stays 0 on iOS 26.
     @State private var legacyBarHeight: CGFloat = 0
+
+    /// In the popover incarnation the sheet is always content-fitted: `.fillViewport`
+    /// stretching applies only inside a real sheet viewport (the compact adaptation).
+    private var isPopoverIncarnation: Bool {
+        popoverWidth != nil && isRegularWidth
+    }
+
+    private var balancedBottomSpacingHeight: CGFloat {
+        addsBalancedBottomSpacing ? topContentInset : .zero
+    }
 
     /// `buttons` fills the pinned bottom bar; `bottomAccessory` sits in the bar above them.
     init(
@@ -109,6 +143,16 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
         return copy
     }
 
+    /// A navigation-bar-high space below the content (before the buttons) mirrors the bar
+    /// above in every incarnation — the popover grows by it, a fitted sheet's detent
+    /// includes it, and in `.fillViewport` the centered content-plus-space block balances
+    /// the bar optically. On by default; a content screen opts out with `false`.
+    func balancedBottomSpacing(_ isEnabled: Bool) -> Self {
+        var copy = self
+        copy.addsBalancedBottomSpacing = isEnabled
+        return copy
+    }
+
     @ViewBuilder
     var body: some View {
         let core = NavigationStack {
@@ -116,6 +160,15 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
                 .closeToolbar(action: onClose)
         }
 
+        if let popoverWidth {
+            // As a popover the ideal frame drives the size (content-fitted regardless of
+            // sizing); when it adapts to a sheet in compact width the detents take over,
+            // honouring the declared sizing, and the ideal frame is inert.
+            core
+                .frame(idealWidth: popoverWidth, idealHeight: totalSheetHeight)
+                .presentationCompactAdaptation(.sheet)
+                .presentationDetents(sizing == .fitContent ? [.height(totalSheetHeight)] : [.large])
+        } else {
         switch sizing {
         case .fitContent:
             if isRegularWidth {
@@ -135,15 +188,7 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
                     .presentationDetents([.large])
             }
         }
-    }
-
-    // `.fillViewport` centers the content optically within the whole sheet — the navigation
-    // bar area counts too, so the content sits higher than the bare viewport center — but
-    // it must never start under the bar: the upward bias is clamped at the viewport edge
-    // and disappears entirely once the content outgrows the viewport and scrolls.
-    private var fillViewportTopPadding: CGFloat {
-        guard sizing == .fillViewport else { return .zero }
-        return max(0, (minContentHeight - topContentInset - naturalContentHeight) / 2)
+        }
     }
 
     /// The full sheet height for `.fitContent`: the scroll measurement plus, pre-iOS-26,
@@ -186,17 +231,10 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
     private var scrollView: some View {
         ScrollView {
             content
-                .onGeometryChange(for: CGFloat.self) { geometry in
-                    geometry.size.height
-                } action: { height in
-                    guard sizing == .fillViewport else { return }
-                    naturalContentHeight = height
-                }
-                .padding(.top, fillViewportTopPadding)
+                .padding(.bottom, balancedBottomSpacingHeight)
                 .frame(
                     maxWidth: .infinity,
-                    minHeight: sizing == .fillViewport ? minContentHeight : nil,
-                    alignment: .top
+                    minHeight: sizing == .fillViewport && !isPopoverIncarnation ? minContentHeight : nil
                 )
         }
         .scrollContentBackground(.hidden)
@@ -208,34 +246,35 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
         // is measured instead, so the content can stretch to it. Rounding inside the
         // transform also keeps sub-point layout jitter from re-firing the action.
         .onScrollGeometryChange(for: CGFloat.self) { geometry in
-            switch sizing {
-            case .fitContent:
-                ceil(geometry.contentSize.height + geometry.contentInsets.top + geometry.contentInsets.bottom)
-            case .fillViewport:
+            if sizing == .fitContent || isPopoverIncarnation {
+                // The content-fitted measurement; in the popover incarnation it also covers
+                // `.fillViewport`, which is content-fitted there.
+                return ceil(geometry.contentSize.height + geometry.contentInsets.top + geometry.contentInsets.bottom)
+            } else {
                 // containerSize is already the inset-adjusted viewport — do not subtract
                 // the insets again.
-                floor(geometry.containerSize.height)
+                return floor(geometry.containerSize.height)
             }
         } action: { _, height in
             guard height > 0 else { return }
-            switch sizing {
-            case .fitContent:
+            if sizing == .fitContent || isPopoverIncarnation {
                 sheetHeight = height
                 onHeightChange?(totalSheetHeight)
-            case .fillViewport:
+            } else {
                 minContentHeight = height
             }
         }
         .onScrollGeometryChange(for: CGFloat.self) { geometry in
             geometry.contentInsets.top
         } action: { _, inset in
-            guard sizing == .fillViewport else { return }
+            guard sizing == .fillViewport || addsBalancedBottomSpacing else { return }
             topContentInset = inset
         }
     }
 
     private var bottomBar: some View {
         AdaptiveReadableContainer(verticalMargin: .zero) {
+
             VStack(spacing: .XXXL) {
                 bottomAccessory
 

@@ -65,6 +65,11 @@ struct LoginView: View {
                 PINWelcomeFooter {
                     presenter.isResetVisible = true
                 }
+                .popover(isPresented: $presenter.isResetVisible) {
+                    AppReset()
+                        .presentedFromRegularWidth(horizontalSizeClass == .regular)
+                        .presentedInPopover(width: 440)
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -80,11 +85,11 @@ struct LoginView: View {
                 presenter.onAppear()
             }
         }
-        .sheet(isPresented: $presenter.isResetVisible, onDismiss: {
-            presenter.onResetDismiss()
-        }) {
-            AppReset()
-                .presentedFromRegularWidth(horizontalSizeClass == .regular)
+        // .popover has no onDismiss counterpart.
+        .onChange(of: presenter.isResetVisible) { _, isVisible in
+            if !isVisible {
+                presenter.onResetDismiss()
+            }
         }
     }
 }

@@ -35,7 +35,6 @@ struct TrashServiceView: View {
                 subtitle: nil,
                 description: T.Tokens.signInNotPossibleTitle(presenter.serviceName, presenter.serviceName)
             )
-            .padding(.top, .M)
             .padding(.bottom, .L)
             .frame(maxWidth: Theme.Metrics.modalPreferredWidth)
             .padding(.horizontal, .XL)
@@ -51,6 +50,7 @@ struct TrashServiceView: View {
 
             TFCancelButton(T.Commons.cancel, action: presenter.handleCancel)
         }
+        .balancedBottomSpacing(false)
         .onHeightChange { presenter.handleContentHeight($0) }
     }
 }

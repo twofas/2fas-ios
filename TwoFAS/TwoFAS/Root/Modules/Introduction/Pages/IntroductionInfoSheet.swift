@@ -21,6 +21,7 @@ import SwiftUI
 import Common
 
 struct IntroductionInfoSheetContent: View {
+    
     @Environment(\.dismiss)
     private var dismiss
 
@@ -57,7 +58,6 @@ struct IntroductionInfoSheetContent: View {
                     }
                 }
             }
-            .padding(.top, .M)
             .padding(.bottom, .L)
         } buttons: {
             TFButton(
@@ -69,5 +69,6 @@ struct IntroductionInfoSheetContent: View {
                 dismiss()
             }
         }
+        .balancedBottomSpacing(false)
     }
 }

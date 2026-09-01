@@ -184,6 +184,7 @@ public struct TFButton: View {
                 Circle()
                     .fill(backgroundStyle)
             }
+            .contentShape(Circle())
     }
     
     @ViewBuilder
@@ -202,6 +203,7 @@ public struct TFButton: View {
             label
                 .frame(minHeight: controlHeight)
                 .background(textBackground)
+                .contentShape(textButtonShape)
         }
     }
     
@@ -228,8 +230,9 @@ public struct TFButton: View {
             Capsule()
                 .fill(backgroundStyle)
         }
+        .contentShape(Capsule())
     }
-    
+
     /// Borderless/Large uses a rounded rect; every other combination uses a capsule.
     @ViewBuilder
     private var textBackground: some View {
@@ -239,6 +242,14 @@ public struct TFButton: View {
         } else {
             Capsule()
                 .fill(backgroundStyle)
+        }
+    }
+
+    private var textButtonShape: AnyShape {
+        if (variant == .borderless || variant == .borderlessNeutral) && size == .large {
+            AnyShape(RoundedRectangle(.medium))
+        } else {
+            AnyShape(Capsule())
         }
     }
     

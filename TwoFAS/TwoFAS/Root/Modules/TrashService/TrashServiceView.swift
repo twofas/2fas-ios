@@ -35,7 +35,7 @@ struct TrashServiceView: View {
                 subtitle: nil,
                 description: T.Tokens.signInNotPossibleTitle(presenter.serviceName, presenter.serviceName)
             )
-            .padding(.bottom, .L)
+            .padding(.bottom, .XXL)
             .frame(maxWidth: Theme.Metrics.modalPreferredWidth)
             .padding(.horizontal, .XL)
         } buttons: {

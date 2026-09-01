@@ -58,7 +58,7 @@ struct IntroductionInfoSheetContent: View {
                     }
                 }
             }
-            .padding(.bottom, .L)
+            .padding(.bottom, .XXL)
         } buttons: {
             TFButton(
                 T.Commons.understood,

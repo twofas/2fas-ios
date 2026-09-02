@@ -34,7 +34,7 @@ protocol TrashServiceFlowControlling: AnyObject {
 
 final class TrashServiceFlowController: FlowController {
     private weak var parent: TrashServiceFlowControllerParent?
-    private let sheetHost = AdaptiveSheetHost()
+    private let sheetHost = AdaptivePopoverHost()
 
     static func present(
         on viewController: UIViewController,

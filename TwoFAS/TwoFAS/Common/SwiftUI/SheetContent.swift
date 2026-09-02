@@ -228,26 +228,22 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
     }
 
     // A plain, non-greedy column: header with the close button, the content, and the
-    // pinned bottom bar. There is deliberately no ScrollView (and no NavigationStack —
-    // it is greedy, which would break natural sizing): the measured height is then the
-    // pure content height, independent of presentation-environment insets, which removes
-    // the whole class of "measured in the window, presented with different insets"
-    // sizing mismatches. Content taller than the container clips.
+    // pinned bottom bar. There is deliberately no NavigationStack (it is greedy, which
+    // would break natural sizing) and no ScrollView in the fitted branch: the measured
+    // height is then the pure content height, independent of presentation-environment
+    // insets, which removes the whole class of "measured in the window, presented with
+    // different insets" sizing mismatches.
     private var column: some View {
-        VStack(spacing: .zero) {
-            header
-
-            content
-                // Take the height the text actually needs even when the container proposes
-                // less — otherwise it truncates with an ellipsis and the measured height
-                // (which drives the detent/ideal size) can never grow to fit it.
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.bottom, balancedBottomSpacingHeight)
-                .frame(maxWidth: .infinity)
-                .frame(maxHeight: sizing == .fillViewport && !isPopoverIncarnation ? .infinity : nil)
-
-            bottomBar
-                .minimumBottomSpacing()
+        // Scrolling exists only as a safety net: the fitted branch wins whenever the
+        // content's natural height fits, so sizing queries (ideal size, the measured
+        // height) always see the natural branch and the popover cannot jump between
+        // variants. Only when a hard cap bites (maximumDetentValue, a stale popover
+        // size, accessibility type) does the overflow variant take over: a full-bleed
+        // scroll view running under the header and the bar (with the system's edge blur
+        // on iOS 26), with both pinned so the buttons never leave the screen.
+        ViewThatFits(in: .vertical) {
+            fittedColumn
+            overflowColumn
         }
         // For `.fitContent` the measured natural height drives the compact detent and the
         // UIKit host's preferredContentSize; rounding up avoids sub-point overflow.
@@ -258,6 +254,61 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
             sheetHeight = height
             onHeightChange?(height)
         }
+    }
+
+    private var fittedColumn: some View {
+        VStack(spacing: .zero) {
+            header
+
+            contentBlock
+                .frame(maxHeight: sizing == .fillViewport && !isPopoverIncarnation ? .infinity : nil)
+
+            bottomBar
+                .minimumBottomSpacing()
+        }
+    }
+
+    @ViewBuilder
+    private var overflowColumn: some View {
+        let scroll = ScrollView {
+            contentBlock
+        }
+        .scrollBounceBehavior(.basedOnSize)
+
+        if #available(iOS 26.0, *) {
+            scroll
+                .safeAreaBar(edge: .top, spacing: .zero) {
+                    header
+                }
+                .safeAreaBar(edge: .bottom, spacing: .zero) {
+                    bottomBar
+                        .minimumBottomSpacing()
+                }
+        } else {
+            // No scroll edge effect before iOS 26 — opaque chrome instead, so scrolled
+            // content does not show through the header and the buttons.
+            scroll
+                .safeAreaInset(edge: .top, spacing: .zero) {
+                    header
+                        .background(AppColor.backgroundsPrimaryElevated)
+                }
+                .safeAreaInset(edge: .bottom, spacing: .zero) {
+                    bottomBar
+                        .minimumBottomSpacing()
+                        .background(AppColor.backgroundsPrimaryElevated)
+                }
+        }
+    }
+
+    private var contentBlock: some View {
+        content
+            // Take the height the text actually needs even when the container proposes
+            // less — this is what makes the fit check meaningful (a compressed text would
+            // always "fit" and the fitted branch would always win) and keeps the measured
+            // height able to grow past a stale cap.
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.bottom, balancedBottomSpacingHeight)
+            .frame(maxWidth: .infinity)
     }
 
     @ViewBuilder

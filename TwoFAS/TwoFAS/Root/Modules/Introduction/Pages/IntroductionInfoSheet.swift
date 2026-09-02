@@ -69,6 +69,5 @@ struct IntroductionInfoSheetContent: View {
                 dismiss()
             }
         }
-        .balancedBottomSpacing(false)
     }
 }

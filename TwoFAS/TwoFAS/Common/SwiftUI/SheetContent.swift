@@ -136,7 +136,7 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
     private let buttons: Buttons
     private let bottomAccessory: BottomAccessory
     private var onHeightChange: ((CGFloat) -> Void)?
-    private var addsBalancedBottomSpacing = true
+    private var addsBalancedBottomSpacing = false
 
     @Environment(\.presentedFromRegularWidth)
     private var isRegularWidth
@@ -181,11 +181,12 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
         return copy
     }
 
-    /// A navigation-bar-high space below the content (before the buttons) mirrors the bar
-    /// above in every incarnation — the popover grows by it, a fitted sheet's detent
-    /// includes it, and in `.fillViewport` the centered content-plus-space block balances
-    /// the bar optically. On by default; a content screen opts out with `false`.
-    func balancedBottomSpacing(_ isEnabled: Bool) -> Self {
+    /// A header-high space below the content (before the buttons) mirrors the header above
+    /// in every incarnation — the popover grows by it, a fitted sheet's detent includes it,
+    /// and in `.fillViewport` the centered content-plus-space block balances the header
+    /// optically. Off by default (compact dialogs manage their own gap); a content screen
+    /// opts in explicitly.
+    func balancedBottomSpacing(_ isEnabled: Bool = true) -> Self {
         var copy = self
         copy.addsBalancedBottomSpacing = isEnabled
         return copy

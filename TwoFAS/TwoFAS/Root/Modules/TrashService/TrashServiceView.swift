@@ -56,7 +56,6 @@ struct TrashServiceView: View {
 
             TFCancelButton(T.Commons.cancel, action: presenter.handleCancel)
         }
-        .balancedBottomSpacing(false)
         .onHeightChange(onHeightChange)
     }
 }

@@ -51,6 +51,7 @@ struct AppReset: View {
         } bottomAccessory: {
             infoFrame
         }
+        .balancedBottomSpacing()
         .background(.backgroundsPrimaryElevated)
     }
     

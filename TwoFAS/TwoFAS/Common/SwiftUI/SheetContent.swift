@@ -47,11 +47,11 @@ extension EnvironmentValues {
 }
 
 extension View {
-    /// Marks SwiftUI-presented sheet content with the presenting view's width class — apply
-    /// inside the presentation closure, passing `horizontalSizeClass == .regular` read from
-    /// the presenting view's environment. Sheets presented from UIKit manage regular width
-    /// themselves and leave the default (compact).
-    func presentedFromRegularWidth(_ isRegularWidth: Bool) -> some View {
+    /// Marks SwiftUI-presented sheet content with the presenting view's width class.
+    /// Deliberately not public API: a plain `.sheet` that forgets this injection silently
+    /// mis-sizes on iPad, so SwiftUI presentations go through `sheetContentPopover` (UIKit
+    /// ones manage sizing in `AdaptivePopoverHost` and leave the compact default).
+    fileprivate func presentedFromRegularWidth(_ isRegularWidth: Bool) -> some View {
         environment(\.presentedFromRegularWidth, isRegularWidth)
     }
 
@@ -59,7 +59,7 @@ extension View {
     /// content's ideal size, so the component sizes itself to the given width and to the
     /// measured content height instead of applying sheet presentation sizing. The compact
     /// adaptation (iPhone) still becomes the declared sheet sizing.
-    func presentedInPopover(width: CGFloat) -> some View {
+    fileprivate func presentedInPopover(width: CGFloat) -> some View {
         environment(\.presentedInPopoverWidth, width)
     }
 

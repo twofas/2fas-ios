@@ -36,6 +36,7 @@ final class AdaptivePopoverHost: NSObject {
     private var lastContentHeight: CGFloat?
     private var popoverAnchorProvider: (() -> UIView?)?
     private weak var presented: UIViewController?
+    private weak var presentingTarget: UIViewController?
 
     func present(
         _ viewController: UIViewController,
@@ -49,8 +50,32 @@ final class AdaptivePopoverHost: NSObject {
         // silently ignored.
         viewController.modalPresentationStyle = .popover
 
-        measureContent(of: viewController, in: parentViewController) {
-            self.presentPopover(viewController, on: parentViewController)
+        let window = parentViewController.viewIfLoaded?.window
+        // Read the size class from the window — presentation host containers (e.g. the tab
+        // sidebar) can override their children's traits to compact even on a full-screen iPad.
+        let isRegularWidth = window?.isRegularWidthLayout ?? parentViewController.isRegularWidthLayout
+
+        // Present from the window root, whose traits are genuine (the tab container
+        // overrides its horizontal size class to compact, which would collapse the popover
+        // into a sheet even on a full-screen iPad) — walked down to its topmost presented
+        // controller so the confirmation also works from within other modals (e.g. the
+        // service edit sheet, where presenting from the busy root would fail outright).
+        // Dismissal is unaffected: presentedViewController/dismiss are inherited across
+        // the presenting hierarchy.
+        var target = window?.rootViewController ?? parentViewController
+        while let presentedViewController = target.presentedViewController {
+            target = presentedViewController
+        }
+        presentingTarget = target
+
+        // Measure at the width the presentation will actually use: the popover width in
+        // regular, the window width for the compact sheet — otherwise text wraps
+        // differently during measurement and the sheet opens at the wrong height.
+        let measurementWidth = isRegularWidth
+            ? Theme.Metrics.popoverPreferredWidth
+            : (window?.bounds.width ?? Theme.Metrics.popoverPreferredWidth)
+        measureContent(of: viewController, in: parentViewController, width: measurementWidth) {
+            self.presentPopover(viewController, isAdaptedToSheet: !isRegularWidth)
         }
     }
 
@@ -74,6 +99,7 @@ private extension AdaptivePopoverHost {
     func measureContent(
         of viewController: UIViewController,
         in parentViewController: UIViewController,
+        width: CGFloat,
         completion: @escaping () -> Void
     ) {
         guard let window = parentViewController.viewIfLoaded?.window else {
@@ -81,7 +107,7 @@ private extension AdaptivePopoverHost {
             return
         }
 
-        viewController.view.frame = CGRect(origin: .zero, size: contentSize())
+        viewController.view.frame = CGRect(origin: .zero, size: CGSize(width: width, height: cappedContentHeight))
         viewController.view.alpha = 0
         window.insertSubview(viewController.view, at: 0)
         viewController.view.layoutIfNeeded()
@@ -93,28 +119,20 @@ private extension AdaptivePopoverHost {
         }
     }
 
-    func presentPopover(_ viewController: UIViewController, on parentViewController: UIViewController) {
-        let window = parentViewController.viewIfLoaded?.window
-        // Read the size class from the window — presentation host containers (e.g. the tab
-        // sidebar) can override their children's traits to compact even on a full-screen iPad.
-        let isRegularWidth = window?.isRegularWidthLayout ?? parentViewController.isRegularWidthLayout
-        applyPopoverBackground(isAdaptedToSheet: !isRegularWidth)
-        viewController.preferredContentSize = contentSize()
+    func presentPopover(_ viewController: UIViewController, isAdaptedToSheet: Bool) {
+        // The presentation was deferred by a runloop turn for the measurement, so the
+        // callers' presentedViewController == nil guards no longer protect against a rapid
+        // second activation — re-check here, where the presentation actually happens.
+        guard let presentingTarget, presentingTarget.presentedViewController == nil else { return }
 
-        // The tab container overrides its horizontal size class to compact (to keep the
-        // bottom tab bar on iPad), which makes UIKit collapse a popover presented from it
-        // into a sheet even on a full-screen iPad. Present from the window root instead —
-        // its traits are genuine, so the popover stays a popover in regular width and
-        // still adapts to the content-detent sheet in genuinely compact windows.
-        // Dismissal is unaffected: presentedViewController/dismiss are inherited across
-        // the presenting hierarchy.
-        let presentingViewController = window?.rootViewController ?? parentViewController
+        applyPopoverBackground(isAdaptedToSheet: isAdaptedToSheet)
+        viewController.preferredContentSize = contentSize()
 
         if let popover = viewController.popoverPresentationController {
             popover.delegate = self
             if let anchor = popoverAnchorProvider?(), anchor.window != nil {
                 popover.sourceView = anchor
-            } else if let sourceView = presentingViewController.viewIfLoaded {
+            } else if let sourceView = presentingTarget.viewIfLoaded {
                 // Anchorless: a centered, arrow-less popover stands in for a centered
                 // form sheet — unlike a plain sheet it keeps the system's two-way
                 // compact adaptation.
@@ -133,7 +151,7 @@ private extension AdaptivePopoverHost {
             sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
         }
 
-        presentingViewController.present(viewController, animated: true, completion: nil)
+        presentingTarget.present(viewController, animated: true, completion: nil)
     }
 
     // Invalidating synchronously from the measurement callback closes a layout feedback
@@ -205,7 +223,13 @@ extension AdaptivePopoverHost: UIPopoverPresentationControllerDelegate {
         if let anchor = popoverAnchorProvider?(), anchor.window != nil {
             view.pointee = anchor
             rect.pointee = anchor.bounds
-        } else if popoverPresentationController.permittedArrowDirections.isEmpty {
+        } else {
+            // The anchor no longer resolves (cells are reused and reloads rebuild them) —
+            // recenter as an arrow-less popover rather than pointing at a stale view.
+            popoverPresentationController.permittedArrowDirections = []
+            if view.pointee.window == nil, let sourceView = presentingTarget?.viewIfLoaded {
+                view.pointee = sourceView
+            }
             rect.pointee = centerRect(of: view.pointee)
         }
     }

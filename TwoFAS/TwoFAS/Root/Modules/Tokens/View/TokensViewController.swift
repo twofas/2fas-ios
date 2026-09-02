@@ -107,10 +107,11 @@ final class TokensViewController: UIViewController {
 
     /// The visible cell for the given service — the anchor for the delete confirmation
     /// popover. Only visible cells qualify as anchors, so the visible index paths are
-    /// scanned instead of the full snapshot.
+    /// scanned instead of the full snapshot; the match uses the stable identity (secret),
+    /// because reloads rebuild items with fresh ServiceData whose mutable fields differ.
     func cellView(for serviceData: ServiceData) -> UIView? {
         tokensView.indexPathsForVisibleItems
-            .first { dataSource.itemIdentifier(for: $0)?.serviceData == serviceData }
+            .first { dataSource.itemIdentifier(for: $0)?.secret == serviceData.secret }
             .flatMap { tokensView.cellForItem(at: $0) }
     }
     

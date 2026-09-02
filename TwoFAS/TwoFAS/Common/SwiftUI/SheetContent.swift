@@ -245,24 +245,20 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
             fittedColumn
             overflowColumn
         }
-        // For `.fitContent` the measured natural height drives the compact detent and the
-        // UIKit host's preferredContentSize; rounding up avoids sub-point overflow.
-        // Measured on a hidden fixed-size probe, not on the visible tree: while the
-        // overflow branch is showing, the visible height IS the clamped container, so the
-        // detent could never grow to the available maximum — the probe always reports the
-        // fitted column's true need and the system clamps it to whatever actually fits.
-        .background {
-            fittedColumn
-                .fixedSize(horizontal: false, vertical: true)
-                .hidden()
-                .onGeometryChange(for: CGFloat.self) { geometry in
-                    ceil(geometry.size.height)
-                } action: { height in
-                    guard height > 0, sizing == .fitContent else { return }
-                    sheetHeight = height
-                    onHeightChange?(height)
-                }
-        }
+    }
+
+    // Each branch measures itself, so the reported height is always the content's true
+    // need, never the clamped container: the fitted branch reports its natural column
+    // height directly, the overflow branch derives it from the scroll geometry (the
+    // content lays out at natural height inside the scroll view; the pinned header and
+    // bar report themselves as content insets). The overflow formula also counts the
+    // system's scroll edge margins, but it is only ever active while the detent is
+    // clamped at the maximum anyway, so the slight overshoot is harmless and the branch
+    // switchover cannot oscillate.
+    private func reportMeasuredHeight(_ height: CGFloat) {
+        guard height > 0, sizing == .fitContent else { return }
+        sheetHeight = height
+        onHeightChange?(height)
     }
 
     private var fittedColumn: some View {
@@ -275,6 +271,11 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
             bottomBar
                 .minimumBottomSpacing()
         }
+        .onGeometryChange(for: CGFloat.self) { geometry in
+            ceil(geometry.size.height)
+        } action: { height in
+            reportMeasuredHeight(height)
+        }
     }
 
     @ViewBuilder
@@ -283,6 +284,11 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
             contentBlock
         }
         .scrollBounceBehavior(.basedOnSize)
+        .onScrollGeometryChange(for: CGFloat.self) { geometry in
+            ceil(geometry.contentSize.height + geometry.contentInsets.top + geometry.contentInsets.bottom)
+        } action: { _, height in
+            reportMeasuredHeight(height)
+        }
 
         if #available(iOS 26.0, *) {
             scroll

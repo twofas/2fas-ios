@@ -201,9 +201,12 @@ private extension AdaptivePopoverHost {
     // A single stable detent that resolves against the latest measured content height —
     // height changes go through invalidateDetents() instead of replacing the detents array.
     func contentDetent() -> UISheetPresentationController.Detent {
+        // Unlike the popover (capped at the large-modal ceiling), the compact sheet may
+        // grow all the way to the maximum detent — overflowing content should fill the
+        // available height before it starts scrolling.
         .custom(identifier: .adaptiveSheetContent) { [weak self] context in
             min(
-                self?.cappedContentHeight ?? Theme.Metrics.modalLargePreferredHeight,
+                self?.lastContentHeight ?? Theme.Metrics.modalLargePreferredHeight,
                 context.maximumDetentValue
             )
         }

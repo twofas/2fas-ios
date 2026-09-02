@@ -247,12 +247,21 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
         }
         // For `.fitContent` the measured natural height drives the compact detent and the
         // UIKit host's preferredContentSize; rounding up avoids sub-point overflow.
-        .onGeometryChange(for: CGFloat.self) { geometry in
-            ceil(geometry.size.height)
-        } action: { height in
-            guard height > 0, sizing == .fitContent else { return }
-            sheetHeight = height
-            onHeightChange?(height)
+        // Measured on a hidden fixed-size probe, not on the visible tree: while the
+        // overflow branch is showing, the visible height IS the clamped container, so the
+        // detent could never grow to the available maximum — the probe always reports the
+        // fitted column's true need and the system clamps it to whatever actually fits.
+        .background {
+            fittedColumn
+                .fixedSize(horizontal: false, vertical: true)
+                .hidden()
+                .onGeometryChange(for: CGFloat.self) { geometry in
+                    ceil(geometry.size.height)
+                } action: { height in
+                    guard height > 0, sizing == .fitContent else { return }
+                    sheetHeight = height
+                    onHeightChange?(height)
+                }
         }
     }
 

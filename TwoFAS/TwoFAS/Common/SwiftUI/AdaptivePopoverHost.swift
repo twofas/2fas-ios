@@ -31,9 +31,6 @@ import Common
 /// The owner (typically a flow controller) keeps the host alive for the lifetime of the
 /// presentation; the presented controller itself is only referenced weakly.
 final class AdaptivePopoverHost: NSObject {
-    /// Whether the popover is currently adapted to its compact sheet; kept in sync by the
-    /// adaptive presentation delegate callback.
-    private var isAdaptedToSheet = false
     private var isAdaptationTransitionRunning = false
     private var pendingDetentInvalidation = false
     private var lastContentHeight: CGFloat?
@@ -52,7 +49,7 @@ final class AdaptivePopoverHost: NSObject {
         // silently ignored.
         viewController.modalPresentationStyle = .popover
 
-        measureContent(of: viewController, in: parentViewController, proposedSize: contentSize()) {
+        measureContent(of: viewController, in: parentViewController) {
             self.presentPopover(viewController, on: parentViewController)
         }
     }
@@ -77,7 +74,6 @@ private extension AdaptivePopoverHost {
     func measureContent(
         of viewController: UIViewController,
         in parentViewController: UIViewController,
-        proposedSize: CGSize,
         completion: @escaping () -> Void
     ) {
         guard let window = parentViewController.viewIfLoaded?.window else {
@@ -85,10 +81,10 @@ private extension AdaptivePopoverHost {
             return
         }
 
-        viewController.view.frame = CGRect(origin: .zero, size: proposedSize)
+        viewController.view.frame = CGRect(origin: .zero, size: contentSize())
         viewController.view.alpha = 0
         window.insertSubview(viewController.view, at: 0)
-        window.layoutIfNeeded()
+        viewController.view.layoutIfNeeded()
 
         DispatchQueue.main.async {
             viewController.view.removeFromSuperview()
@@ -98,12 +94,11 @@ private extension AdaptivePopoverHost {
     }
 
     func presentPopover(_ viewController: UIViewController, on parentViewController: UIViewController) {
+        let window = parentViewController.viewIfLoaded?.window
         // Read the size class from the window — presentation host containers (e.g. the tab
         // sidebar) can override their children's traits to compact even on a full-screen iPad.
-        let isRegularWidth = parentViewController.viewIfLoaded?.window?.isRegularWidthLayout
-            ?? parentViewController.isRegularWidthLayout
-        isAdaptedToSheet = !isRegularWidth
-        applyPopoverBackground(isAdaptedToSheet: isAdaptedToSheet)
+        let isRegularWidth = window?.isRegularWidthLayout ?? parentViewController.isRegularWidthLayout
+        applyPopoverBackground(isAdaptedToSheet: !isRegularWidth)
         viewController.preferredContentSize = contentSize()
 
         // The tab container overrides its horizontal size class to compact (to keep the
@@ -113,8 +108,7 @@ private extension AdaptivePopoverHost {
         // still adapts to the content-detent sheet in genuinely compact windows.
         // Dismissal is unaffected: presentedViewController/dismiss are inherited across
         // the presenting hierarchy.
-        let presentingViewController = parentViewController.viewIfLoaded?.window?.rootViewController
-            ?? parentViewController
+        let presentingViewController = window?.rootViewController ?? parentViewController
 
         if let popover = viewController.popoverPresentationController {
             popover.delegate = self
@@ -169,14 +163,17 @@ private extension AdaptivePopoverHost {
         }
     }
 
-    func contentSize() -> CGSize {
-        CGSize(
-            width: Theme.Metrics.popoverPreferredWidth,
-            height: min(
-                lastContentHeight ?? Theme.Metrics.modalLargePreferredHeight,
-                Theme.Metrics.modalLargePreferredHeight
-            )
+    /// The measured height with the pre-measurement fallback, capped at the large-modal
+    /// ceiling.
+    var cappedContentHeight: CGFloat {
+        min(
+            lastContentHeight ?? Theme.Metrics.modalLargePreferredHeight,
+            Theme.Metrics.modalLargePreferredHeight
         )
+    }
+
+    func contentSize() -> CGSize {
+        CGSize(width: Theme.Metrics.popoverPreferredWidth, height: cappedContentHeight)
     }
 
     func centerRect(of view: UIView) -> CGRect {
@@ -188,7 +185,7 @@ private extension AdaptivePopoverHost {
     func contentDetent() -> UISheetPresentationController.Detent {
         .custom(identifier: .adaptiveSheetContent) { [weak self] context in
             min(
-                self?.lastContentHeight ?? Theme.Metrics.modalLargePreferredHeight,
+                self?.cappedContentHeight ?? Theme.Metrics.modalLargePreferredHeight,
                 context.maximumDetentValue
             )
         }
@@ -220,8 +217,7 @@ extension AdaptivePopoverHost: UIPopoverPresentationControllerDelegate {
         willPresentWithAdaptiveStyle style: UIModalPresentationStyle,
         transitionCoordinator: UIViewControllerTransitionCoordinator?
     ) {
-        isAdaptedToSheet = style != .none
-        applyPopoverBackground(isAdaptedToSheet: isAdaptedToSheet)
+        applyPopoverBackground(isAdaptedToSheet: style != .none)
 
         if let transitionCoordinator {
             isAdaptationTransitionRunning = true

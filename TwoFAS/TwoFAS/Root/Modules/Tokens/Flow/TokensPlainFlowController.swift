@@ -125,7 +125,7 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
             parent: self,
             serviceData: serviceData,
             anchor: { [weak self] in
-                (self?._viewController as? TokensViewController)?.cellView(for: serviceData)
+                self?.viewController.cellView(for: serviceData)
             }
         )
     }

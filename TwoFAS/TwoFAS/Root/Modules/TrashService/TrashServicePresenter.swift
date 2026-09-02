@@ -50,7 +50,4 @@ extension TrashServicePresenter {
         flowController.toTrashService()
     }
 
-    func handleContentHeight(_ height: CGFloat) {
-        flowController.setContentHeight(height)
-    }
 }

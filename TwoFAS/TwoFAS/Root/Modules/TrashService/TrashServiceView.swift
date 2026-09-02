@@ -24,20 +24,26 @@ struct TrashServiceView: View {
     @ObservedObject
     var presenter: TrashServicePresenter
 
+    let onHeightChange: (CGFloat) -> Void
+
     var body: some View {
         SheetContent(
             sizing: .fitContent,
             onClose: presenter.handleCancel
         ) {
-            TFInfoContent(
-                icon: .image(Asset.trashIcon.image, .original),
-                title: "\(T.Tokens.deleteToken) \(presenter.serviceName)",
-                subtitle: nil,
-                description: T.Tokens.signInNotPossibleTitle(presenter.serviceName, presenter.serviceName)
-            )
-            .padding(.bottom, .XXL)
-            .frame(maxWidth: Theme.Metrics.modalPreferredWidth)
-            .padding(.horizontal, .XL)
+            AdaptiveReadableContainer(
+                iphoneMaxWidth: Theme.Metrics.modalPreferredWidth,
+                ipadMaxWidth: Theme.Metrics.modalPreferredWidth,
+                verticalMargin: .zero
+            ) {
+                TFInfoContent(
+                    icon: .image(Asset.trashIcon.image, .original),
+                    title: "\(T.Tokens.deleteToken) \(presenter.serviceName)",
+                    subtitle: nil,
+                    description: T.Tokens.signInNotPossibleTitle(presenter.serviceName, presenter.serviceName)
+                )
+                .padding(.bottom, .XXL)
+            }
         } buttons: {
             TFButton(
                 T.Tokens.moveToTrash,
@@ -51,6 +57,6 @@ struct TrashServiceView: View {
             TFCancelButton(T.Commons.cancel, action: presenter.handleCancel)
         }
         .balancedBottomSpacing(false)
-        .onHeightChange { presenter.handleContentHeight($0) }
+        .onHeightChange(onHeightChange)
     }
 }

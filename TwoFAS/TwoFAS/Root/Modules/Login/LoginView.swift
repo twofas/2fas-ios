@@ -24,8 +24,6 @@ struct LoginView: View {
     @Bindable
     var presenter: LoginPresenter
 
-    @Environment(\.horizontalSizeClass)
-    private var horizontalSizeClass
 
     @Environment(\.scenePhase)
     private var scenePhase
@@ -65,10 +63,11 @@ struct LoginView: View {
                 PINWelcomeFooter {
                     presenter.isResetVisible = true
                 }
-                .popover(isPresented: $presenter.isResetVisible) {
+                .sheetContentPopover(
+                    isPresented: $presenter.isResetVisible,
+                    onDismiss: { presenter.onResetDismiss() }
+                ) {
                     AppReset()
-                        .presentedFromRegularWidth(horizontalSizeClass == .regular)
-                        .presentedInPopover(width: 440)
                 }
             }
         }
@@ -83,12 +82,6 @@ struct LoginView: View {
             guard oldValue != newValue else { return }
             if newValue == .active {
                 presenter.onAppear()
-            }
-        }
-        // .popover has no onDismiss counterpart.
-        .onChange(of: presenter.isResetVisible) { _, isVisible in
-            if !isVisible {
-                presenter.onResetDismiss()
             }
         }
     }

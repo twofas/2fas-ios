@@ -105,13 +105,13 @@ final class TokensViewController: UIViewController {
         tokensView.scrollToItem(at: indexPath, at: .top, animated: true)
     }
 
-    /// The visible cell for the given service — the anchor for the delete confirmation popover.
+    /// The visible cell for the given service — the anchor for the delete confirmation
+    /// popover. Only visible cells qualify as anchors, so the visible index paths are
+    /// scanned instead of the full snapshot.
     func cellView(for serviceData: ServiceData) -> UIView? {
-        guard
-            let item = dataSource.snapshot().itemIdentifiers.first(where: { $0.serviceData == serviceData }),
-            let indexPath = dataSource.indexPath(for: item)
-        else { return nil }
-        return tokensView.cellForItem(at: indexPath)
+        tokensView.indexPathsForVisibleItems
+            .first { dataSource.itemIdentifier(for: $0)?.serviceData == serviceData }
+            .flatMap { tokensView.cellForItem(at: $0) }
     }
     
     // MARK: - App events

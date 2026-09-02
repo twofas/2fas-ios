@@ -29,7 +29,6 @@ protocol TrashServiceFlowControllerParent: AnyObject {
 protocol TrashServiceFlowControlling: AnyObject {
     func toTrashService()
     func toClose()
-    func setContentHeight(_ height: CGFloat)
 }
 
 final class TrashServiceFlowController: FlowController {
@@ -52,7 +51,11 @@ final class TrashServiceFlowController: FlowController {
             flowController: flowController,
             interactor: interactor
         )
-        hosting.rootView = AnyView(TrashServiceView(presenter: presenter))
+        hosting.rootView = AnyView(
+            TrashServiceView(presenter: presenter) { [weak flowController] height in
+                flowController?.sheetHost.setContentHeight(height)
+            }
+        )
 
         flowController.sheetHost.present(hosting, on: viewController, popoverAnchor: anchor)
     }
@@ -65,9 +68,5 @@ extension TrashServiceFlowController: TrashServiceFlowControlling {
 
     func toTrashService() {
         parent?.didTrashService()
-    }
-
-    func setContentHeight(_ height: CGFloat) {
-        sheetHost.setContentHeight(height)
     }
 }

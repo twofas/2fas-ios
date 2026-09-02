@@ -105,6 +105,8 @@ enum Theme {
         static let modalLargePreferredHeight: CGFloat = 620
         /// 360 - preferowana szerokość popoverów zakotwiczonych w treści (regular width)
         static let popoverPreferredWidth: CGFloat = 360
+        /// 440 - preferowana szerokość popoverów informacyjnych z dłuższym tekstem
+        static let popoverInfoPreferredWidth: CGFloat = 440
 
         /// 288
         static let componentWidth: CGFloat = 288

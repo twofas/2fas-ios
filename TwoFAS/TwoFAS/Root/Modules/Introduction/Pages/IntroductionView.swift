@@ -36,9 +36,6 @@ struct IntroductionView: View {
     @State
     private var showPaging = false
     
-    @State
-    private var showInfo = false
-
     private let totalPages: Int = 4
     
     var body: some View {
@@ -56,7 +53,7 @@ struct IntroductionView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 0) {
                 ForEach(0..<totalPages, id: \.self) { index in
-                    PageView(page: index, showInfo: $showInfo)
+                    PageView(page: index)
                     .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
                     .id(index)
                 }
@@ -238,10 +235,7 @@ private struct IntroductionPage2: View {
 }
 
 private struct IntroductionPage3: View {
-    @Binding var showInfo: Bool
-
-    @Environment(\.horizontalSizeClass)
-    private var horizontalSizeClass
+    @State private var showInfo = false
     
     var body: some View {
         ZStack {
@@ -267,10 +261,8 @@ private struct IntroductionPage3: View {
                             }
                     }
                     .padding(.top, .M)
-                    .popover(isPresented: $showInfo) {
+                    .sheetContentPopover(isPresented: $showInfo) {
                         IntroductionInfoSheetContent()
-                            .presentedFromRegularWidth(horizontalSizeClass == .regular)
-                            .presentedInPopover(width: 440)
                     }
                 }
                 .frame(alignment: .top)
@@ -291,7 +283,6 @@ private struct IntroductionPage3: View {
 
 private struct PageView: View {
     let page: Int
-    @Binding var showInfo: Bool
 
     var body: some View {
         AdaptiveReadableContainer {
@@ -299,7 +290,7 @@ private struct PageView: View {
             case 0: IntroductionPage0()
             case 1: IntroductionPage1()
             case 2: IntroductionPage2()
-            case 3: IntroductionPage3(showInfo: $showInfo)
+            case 3: IntroductionPage3()
             default: EmptyView()
             }
         }

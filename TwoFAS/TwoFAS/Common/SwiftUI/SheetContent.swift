@@ -147,6 +147,8 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
     /// Pre-measurement fallback, replaced by the measured height after the first layout.
     @State private var sheetHeight: CGFloat = Theme.Metrics.modalLargePreferredHeight
     @State private var headerHeight: CGFloat = 0
+    @State private var contentNaturalHeight: CGFloat = 0
+    @State private var barHeight: CGFloat = 0
 
     /// In the popover incarnation the sheet is always content-fitted: `.fillViewport`
     /// stretching applies only inside a real sheet viewport (the compact adaptation).
@@ -261,6 +263,19 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
         onHeightChange?(height)
     }
 
+    /// `.fillViewport` stretches its column, so the column measurement reports the
+    /// container, not the need — for hosts that want a content-fitted compact detent the
+    /// natural height is assembled from the parts instead: the fixed-size content, the
+    /// header and the bar, each measured unstretched.
+    private var reportsFillViewportHeight: Bool {
+        sizing == .fillViewport && onHeightChange != nil
+    }
+
+    private func reportFillViewportHeightIfReady() {
+        guard reportsFillViewportHeight, contentNaturalHeight > 0, headerHeight > 0, barHeight > 0 else { return }
+        onHeightChange?(ceil(contentNaturalHeight + headerHeight + barHeight))
+    }
+
     private var fittedColumn: some View {
         VStack(spacing: .zero) {
             header
@@ -268,8 +283,19 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
             contentBlock
                 .frame(maxHeight: sizing == .fillViewport && !isPopoverIncarnation ? .infinity : nil)
 
-            bottomBar
-                .minimumBottomSpacing()
+            if reportsFillViewportHeight {
+                bottomBar
+                    .minimumBottomSpacing()
+                    .onGeometryChange(for: CGFloat.self) { geometry in
+                        geometry.size.height
+                    } action: { height in
+                        barHeight = height
+                        reportFillViewportHeightIfReady()
+                    }
+            } else {
+                bottomBar
+                    .minimumBottomSpacing()
+            }
         }
         .onGeometryChange(for: CGFloat.self) { geometry in
             ceil(geometry.size.height)
@@ -315,8 +341,9 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
         }
     }
 
+    @ViewBuilder
     private var contentBlock: some View {
-        content
+        let block = content
             // Take the height the text actually needs even when the container proposes
             // less — this is what makes the fit check meaningful (a compressed text would
             // always "fit" and the fitted branch would always win) and keeps the measured
@@ -324,6 +351,18 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
             .fixedSize(horizontal: false, vertical: true)
             .padding(.bottom, balancedBottomSpacingHeight)
             .frame(maxWidth: .infinity)
+
+        if reportsFillViewportHeight {
+            block
+                .onGeometryChange(for: CGFloat.self) { geometry in
+                    geometry.size.height
+                } action: { height in
+                    contentNaturalHeight = height
+                    reportFillViewportHeightIfReady()
+                }
+        } else {
+            block
+        }
     }
 
     @ViewBuilder
@@ -337,12 +376,13 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
 
         // Measure only when the value is consumed — the geometry write invalidates the
         // whole body.
-        if addsBalancedBottomSpacing {
+        if addsBalancedBottomSpacing || reportsFillViewportHeight {
             bar
                 .onGeometryChange(for: CGFloat.self) { geometry in
                     geometry.size.height
                 } action: { height in
                     headerHeight = height
+                    reportFillViewportHeightIfReady()
                 }
         } else {
             bar

@@ -23,37 +23,40 @@ import Common
 struct DeleteServiceView: View {
     let action: Callback
     let cancel: Callback
-    
+    let onHeightChange: (CGFloat) -> Void
+
     @State
     private var confirmed: Bool = false
         
     var body: some View {
-        NavigationStack {
-            TFInfoView(
-                icon: .image(Asset.deleteForeverIcon.image, .original),
-                title: T.Commons.warning.uppercased(),
-                description: T.Tokens.tokenNotPossibleToRestore,
-                buttons: {
-                    TFToggleRow(T.Tokens.iWantToDeleteThisToken, isOn: $confirmed, isElevated: true)
-                        .padding(.bottom, .S)
-                    
-                    TFButton(
-                        T.Tokens.removeItForever,
-                        variant: .borderedProminent,
-                        size: .large,
-                        action: action
-                    )
-                    .disabled(!confirmed)
-                    
-                    TFCancelButton(T.Commons.cancel, action: cancel)
-                })
-            .closeToolbar {
-                cancel()
+        SheetContent(sizing: .fillViewport, onClose: cancel) {
+            AdaptiveReadableContainer {
+                TFInfoContent(
+                    icon: .image(Asset.deleteForeverIcon.image, .original),
+                    title: T.Commons.warning.uppercased(),
+                    description: T.Tokens.tokenNotPossibleToRestore
+                )
             }
+        } buttons: {
+            TFButton(
+                T.Tokens.removeItForever,
+                variant: .borderedProminent,
+                size: .large,
+                applyGlass: true,
+                action: action
+            )
+            .disabled(!confirmed)
+
+            TFCancelButton(T.Commons.cancel, action: cancel)
+        } bottomAccessory: {
+            TFToggleRow(T.Tokens.iWantToDeleteThisToken, isOn: $confirmed, isElevated: true)
         }
+        .balancedBottomSpacing()
+        .onHeightChange(onHeightChange)
+        .background(.backgroundsPrimaryElevated)
     }
 }
 
 #Preview {
-    DeleteServiceView(action: {}, cancel: {})
+    DeleteServiceView(action: {}, cancel: {}, onHeightChange: { _ in })
 }

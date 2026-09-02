@@ -33,6 +33,7 @@ protocol DeleteServiceFlowControlling: AnyObject {
 
 final class DeleteServiceFlowController: FlowController {
     private weak var parent: DeleteServiceFlowControllerParent?
+    private let sheetHost = AdaptivePopoverHost()
 
     static func present(
         on viewController: UIViewController,
@@ -53,12 +54,20 @@ final class DeleteServiceFlowController: FlowController {
         hosting.rootView = AnyView(
             DeleteServiceView(
                 action: { presenter.handleDelete() },
-                cancel: { presenter.handleCancel() }
+                cancel: { presenter.handleCancel() },
+                onHeightChange: { [weak flowController] height in
+                    flowController?.sheetHost.setContentHeight(height)
+                }
             )
         )
-        hosting.configureAsModal()
-
-        viewController.present(hosting, animated: true, completion: nil)
+        // A centered card at the measured content height in regular width; in compact the
+        // same height drives the bottom sheet's detent. SheetContent's fillViewport
+        // stretches and centers the content inside whatever it gets.
+        flowController.sheetHost.presentAsSystemFormSheet(
+            hosting,
+            on: viewController,
+            regularSizing: .contentHeight
+        )
     }
 }
 

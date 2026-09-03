@@ -84,10 +84,6 @@ final class BackupAdvancedPresenter {
             flowController.toDeleteBackup()
         }
     }
-
-    func handleBack() {
-        flowController.close()
-    }
 }
 
 private extension BackupAdvancedPresenter {

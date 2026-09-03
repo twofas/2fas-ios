@@ -70,10 +70,6 @@ extension SettingsMenuPresenter {
         toggleAction(kind: kind)
     }
 
-    func handleSidebarTap() {
-        sidebarRevealAction?()
-    }
-
     func setCollapsed() {
         isCollapsed = true
     }
@@ -109,30 +105,8 @@ extension SettingsMenuPresenter {
         // there is nothing to clear here.
     }
 
-    func handleToFAQ() {
-        navigate(to: .faq)
-    }
-
-    func handleToSetupPIN() {
-        guard selectedModule != .security else { return }
-        navigate(to: .security)
-    }
-
-    func handleSwitchToTransfer() {
-        navigate(to: .transfer)
-    }
-
-    func handleSwitchToAppearance() {
-        navigate(to: .appearance)
-    }
-
     func handleSwitchToBackup() {
         navigate(to: .backup)
-    }
-
-    func handleSwitchToBrowserExtension() {
-        guard selectedModule != .browserExtension else { return }
-        navigate(to: .browserExtension)
     }
 
     func handleEnableWidgetsFromWarningWindow() {
@@ -142,10 +116,6 @@ extension SettingsMenuPresenter {
 
     func handleWidgetsCanceledFromWarningWindow() {
         reload()
-    }
-
-    func handleSocialChannel(_ socialChannel: SocialChannel) {
-        flowController.toSocialChannel(socialChannel)
     }
 
     func handleAppSecurityChaged() {

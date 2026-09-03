@@ -152,10 +152,6 @@ final class TokensCircleProgress: UIView {
         marked = false
     }
     
-    func setClearBackground() {
-        circle.setClearBackground()
-    }
-    
     func setKind(_ kind: TokensCellKind) {
         self.kind = kind
         switch kind {

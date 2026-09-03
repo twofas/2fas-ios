@@ -48,10 +48,6 @@ extension LabelComposePresenter {
         flowController.toSave(title: title, color: color)
     }
 
-    func handleBack() {
-        flowController.close()
-    }
-
     func sanitize(_ value: String) -> String {
         let filtered = value.filter { char in
             char.isASCII || char.isLetter || char.isNumber || char.isSymbol || char.isEmoji

@@ -24,7 +24,6 @@ protocol SettingsMenuModuleInteracting: AnyObject {
     var isSecurityEnabled: Bool { get }
     var areWidgetsEnabled: Bool { get }
     var shouldShowWidgetWarning: Bool { get }
-    var isPushNotificationDetermined: Bool { get }
     var hasSSLNetworkError: Bool { get }
     var hasActiveBrowserExtension: Bool { get }
     var isBrowserExtensionAllowed: Bool { get }
@@ -36,7 +35,6 @@ protocol SettingsMenuModuleInteracting: AnyObject {
 
 final class SettingsMenuModuleInteractor {
     private let widgetsInteractor: WidgetsInteracting
-    private let pushNotifications: PushNotificationRegistrationInteracting
     private let protectionInteractor: ProtectionInteracting
     private let networkStatusInteractor: NetworkStatusInteracting
     private let pairingDeviceInteractor: PairingWebExtensionInteracting
@@ -45,7 +43,6 @@ final class SettingsMenuModuleInteractor {
     
     init(
         widgetsInteractor: WidgetsInteracting,
-        pushNotifications: PushNotificationRegistrationInteracting,
         protectionInteractor: ProtectionInteracting,
         networkStatusInteractor: NetworkStatusInteracting,
         pairingDeviceInteractor: PairingWebExtensionInteracting,
@@ -53,7 +50,6 @@ final class SettingsMenuModuleInteractor {
         appInfoInteractor: AppInfoInteracting
     ) {
         self.widgetsInteractor = widgetsInteractor
-        self.pushNotifications = pushNotifications
         self.protectionInteractor = protectionInteractor
         self.networkStatusInteractor = networkStatusInteractor
         self.pairingDeviceInteractor = pairingDeviceInteractor
@@ -66,7 +62,6 @@ extension SettingsMenuModuleInteractor: SettingsMenuModuleInteracting {
     var isSecurityEnabled: Bool { protectionInteractor.isPINSet }
     var areWidgetsEnabled: Bool { widgetsInteractor.areEnabled }
     var shouldShowWidgetWarning: Bool { widgetsInteractor.showWarning }
-    var isPushNotificationDetermined: Bool { pushNotifications.wasUserAsked }
     var hasSSLNetworkError: Bool { networkStatusInteractor.hasSSLNetworkError }
     var hasActiveBrowserExtension: Bool { pairingDeviceInteractor.hasActiveBrowserExtension }
     var isBrowserExtensionAllowed: Bool { !mdmInteractor.isBrowserExtensionBlocked }

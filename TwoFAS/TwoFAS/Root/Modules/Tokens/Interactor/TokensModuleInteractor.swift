@@ -32,7 +32,6 @@ protocol TokensModuleInteracting: AnyObject {
     var emptySnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell> { get }
     var trashedServicesCount: Int { get }
     var isiPhone: Bool { get }
-    var canBeDragged: Bool { get }
     var hasServices: Bool { get }
     var count: Int { get }
     var isSortingEnabled: Bool { get }
@@ -268,10 +267,6 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     func enableHOTPCounter(for secret: Secret) {
         tokenInteractor.unlockCounter(for: secret)
-    }
-    
-    func unlockConsumer(for consumer: TokenTimerConsumer) {
-        tokenInteractor.unlockTOTPConsumer(consumer)
     }
     
     func stopCounters() {

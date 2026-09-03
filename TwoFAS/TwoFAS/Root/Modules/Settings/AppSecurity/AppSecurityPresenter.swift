@@ -82,10 +82,6 @@ final class AppSecurityPresenter {
         reload()
     }
 
-    func handleAppLockValueUpdate() {
-        reload()
-    }
-
     func handleInitialAutorization() {
         interactor.saveInitialAuthorization()
         reload()
@@ -111,11 +107,6 @@ final class AppSecurityPresenter {
         reload()
     }
 
-    // Change PIN
-    func handleChangePINVerifiedPIN() {
-        flowController.toCreatePIN(pinType: interactor.currentPINType)
-    }
-
     func handleNewPINHidden() {
         reload()
     }
@@ -123,10 +114,6 @@ final class AppSecurityPresenter {
     // PIN Enabled
     func handleDidHidePINVerification() {
         reload()
-    }
-
-    func handleBack() {
-        flowController.close()
     }
 }
 

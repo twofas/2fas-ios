@@ -53,10 +53,6 @@ final class BackupManageEncryptionPresenter {
         case .recrypt: flowController.toChangePassword()
         }
     }
-
-    func handleBack() {
-        flowController.close()
-    }
 }
 
 private extension BackupManageEncryptionPresenter {

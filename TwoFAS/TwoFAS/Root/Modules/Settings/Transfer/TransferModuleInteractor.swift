@@ -25,7 +25,6 @@ import CryptoKit
 protocol TransferModuleInteracting: AnyObject {
     var hasServices: Bool { get }
     var hasPIN: Bool { get }
-    func copyToClipboardGeneratedCodes(message: String)
     func createOTPAuthCodesFile() async -> URL?
     func createQRCodeFiles() async -> URL?
     func cleanupTemporaryFiles(urls: [URL])
@@ -33,7 +32,6 @@ protocol TransferModuleInteracting: AnyObject {
 
 final class TransferModuleInteractor {
     private let serviceListingInteractor: ServiceListingInteracting
-    private let notificationsInteractor: NotificationInteracting
     private let qrCodeGeneratorInteractor: QRCodeGeneratorInteracting
     private let serviceDefinitionInteractor: ServiceDefinitionInteracting
     private let protectionInteractor: ProtectionInteracting
@@ -51,14 +49,12 @@ final class TransferModuleInteractor {
     
     init(
         serviceListingInteractor: ServiceListingInteracting,
-        notificationsInteractor: NotificationInteracting,
         qrCodeGeneratorInteractor: QRCodeGeneratorInteracting,
         serviceDefinitionInteractor: ServiceDefinitionInteracting,
         protectionInteractor: ProtectionInteracting,
         compressionInteractor: CompressionInteracting
     ) {
         self.serviceListingInteractor = serviceListingInteractor
-        self.notificationsInteractor = notificationsInteractor
         self.qrCodeGeneratorInteractor = qrCodeGeneratorInteractor
         self.serviceDefinitionInteractor = serviceDefinitionInteractor
         self.protectionInteractor = protectionInteractor
@@ -72,11 +68,6 @@ extension TransferModuleInteractor: TransferModuleInteracting {
         let data = Data(contents)
         let fileName = "otpauth_\(Date().fileDateAndTime()).txt"
         return createTemporaryFiles(from: [fileName: data]).first
-    }
-    
-    func copyToClipboardGeneratedCodes(message: String) {
-        notificationsInteractor.copy(value: generateOTPAuthCodes())
-        ToastPresenter.shared.presentSuccess(title: message)
     }
     
     func createQRCodeFiles() async -> URL? {

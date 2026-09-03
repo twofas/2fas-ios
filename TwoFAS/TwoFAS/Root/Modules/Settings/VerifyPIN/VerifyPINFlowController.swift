@@ -64,16 +64,6 @@ final class VerifyPINFlowController: FlowController {
         viewController.becomeFirstResponder()
     }
 
-    static func present(
-        on viewController: UIViewController,
-        parent: VerifyPINFlowControllerParent
-    ) {
-        let hosting = build(parent: parent, action: .authorize, native: true)
-        let navigation = CommonNavigationController(rootViewController: hosting)
-        navigation.modalPresentationStyle = .fullScreen
-        viewController.present(navigation, animated: true)
-    }
-
     private static func build(
         parent: VerifyPINFlowControllerParent,
         action: Action,

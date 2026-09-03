@@ -24,7 +24,6 @@ import SwiftUI
 import Storage
 
 protocol SelectFromGalleryFlowControllerParent: AnyObject {
-    func galleryDidFinish()
     func galleryDidImport(count: Int)
     func galleryDidCancel()
     /// The picker's presentation transition started. `coordinator` runs

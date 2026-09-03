@@ -23,8 +23,6 @@ protocol EncryptedByUserPasswordSyncNavigationFlowControllerParent: AnyObject {
     func closeEncryptedByUserPasswordSync()
 }
 
-protocol EncryptedByUserPasswordSyncNavigationFlowControlling: AnyObject {}
-
 final class EncryptedByUserPasswordSyncNavigationFlowController: NavigationFlowController {
     private weak var parent: EncryptedByUserPasswordSyncNavigationFlowControllerParent?
     
@@ -46,8 +44,6 @@ final class EncryptedByUserPasswordSyncNavigationFlowController: NavigationFlowC
         viewController.present(navi, animated: true, completion: nil)
     }
 }
-
-extension EncryptedByUserPasswordSyncNavigationFlowController: EncryptedByUserPasswordSyncNavigationFlowControlling {}
 
 extension EncryptedByUserPasswordSyncNavigationFlowController: EncryptedByUserPasswordSyncFlowControllerParent {
     func closeEncryptedByUser() {

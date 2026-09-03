@@ -38,9 +38,6 @@ public struct ToastContentView: View {
         self.icon = icon
     }
 
-    @Environment(\.colorScheme)
-    private var colorScheme
-
     public var body: some View {
         HStack(spacing: Spacing.M.value) {
             (icon ?? defaultIcon)

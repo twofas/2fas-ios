@@ -20,20 +20,20 @@
 import SwiftUI
 import Common
 
-public struct ServiceIconView: View {
+struct ServiceIconView: View {
     @Environment(\.colorScheme)
     private var colorScheme
     
-    public static let defaultCircleSize: CGFloat = 52
+    static let defaultCircleSize: CGFloat = 52
     private let defaultIconSize: CGFloat = 32
-    
-    public let icon: IconDetails
-    public let showBackground: Bool
+
+    let icon: IconDetails
+    let showBackground: Bool
 
     private let circleSize: CGFloat
     private let iconSize: CGFloat
     
-    public init(icon: IconDetails, showBackground: Bool = true, dimension: CGFloat = Self.defaultCircleSize) {
+    init(icon: IconDetails, showBackground: Bool = true, dimension: CGFloat = Self.defaultCircleSize) {
         self.icon = icon
         self.showBackground = showBackground
 
@@ -41,7 +41,7 @@ public struct ServiceIconView: View {
         iconSize = dimension / Self.defaultCircleSize * defaultIconSize
     }
     
-    public var body: some View {
+    var body: some View {
         ZStack {
             switch icon {
             case .brand:

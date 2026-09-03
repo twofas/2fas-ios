@@ -19,8 +19,8 @@
 
 import Foundation
 
-public enum DeletePairing {
-    public struct Request: NetworkRequestFormat {
+enum DeletePairing {
+    struct Request: NetworkRequestFormat {
         let deviceID: String
         let extensionID: String
         let method: HTTPMethod = .DELETE

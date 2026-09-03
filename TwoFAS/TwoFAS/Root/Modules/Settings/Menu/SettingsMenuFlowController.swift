@@ -27,19 +27,13 @@ protocol SettingsMenuFlowControllerChild: AnyObject {
     func toExpanded()
     func toSelectedModule()
     func toShowingRoot()
-    func toSwitchToSetupPIN()
-    func toSwitchToBrowserExtension()
-    func toSwitchToFAQ()
     func appSecurityChaged()
-    func toSwitchToTransfer()
-    func toSwitchToAppearance()
     func toSwitchToBackup()
 
     func handleNavigateToViewPath(_ viewPath: ViewPath.Settings, force: Bool)
     func restoreSelection(_ viewPath: ViewPath.Settings?)
     var currentViewPath: ViewPath.Settings? { get }
     func showSidebarReveal(action: @escaping () -> Void)
-    func hideSidebarReveal()
 }
 
 protocol SettingsMenuFlowControllerParent: AnyObject {
@@ -48,7 +42,6 @@ protocol SettingsMenuFlowControllerParent: AnyObject {
     func toFAQ()
     func toTrash()
     func toAbout()
-    func toSocialChannel(_ socialChannel: SocialChannel)
     func toBrowserExtension()
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func toTransfer()
@@ -66,7 +59,6 @@ protocol SettingsMenuFlowControlling: AnyObject {
     func toFAQ()
     func toTrash()
     func toWidgetEnablingWarning()
-    func toSocialChannel(_ socialChannel: SocialChannel)
     func toBrowserExtension()
     func toAbout()
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
@@ -119,9 +111,6 @@ extension SettingsMenuFlowController: SettingsMenuFlowControlling {
         guard let vc = _viewController else { return }
         WidgetWarningFlowController.present(on: vc, parent: self)
     }
-    func toSocialChannel(_ socialChannel: SocialChannel) {
-        parent?.toSocialChannel(socialChannel)
-    }
     func toBrowserExtension() { parent?.toBrowserExtension() }
     func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) { parent?.toUpdateCurrentPosition(viewPath) }
     func toTransfer() { parent?.toTransfer() }
@@ -156,28 +145,8 @@ extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {
         presenter?.handleShowingRoot()
     }
 
-    func toSwitchToSetupPIN() {
-        presenter?.handleToSetupPIN()
-    }
-
-    func toSwitchToFAQ() {
-        presenter?.handleToFAQ()
-    }
-
     func appSecurityChaged() {
         presenter?.handleAppSecurityChaged()
-    }
-
-    func toSwitchToBrowserExtension() {
-        presenter?.handleSwitchToBrowserExtension()
-    }
-
-    func toSwitchToTransfer() {
-        presenter?.handleSwitchToTransfer()
-    }
-
-    func toSwitchToAppearance() {
-        presenter?.handleSwitchToAppearance()
     }
 
     func toSwitchToBackup() {
@@ -199,11 +168,6 @@ extension SettingsMenuFlowController: SettingsMenuFlowControllerChild {
     func showSidebarReveal(action: @escaping () -> Void) {
         presenter?.sidebarRevealAction = action
         presenter?.showsSidebarButton = true
-    }
-
-    func hideSidebarReveal() {
-        presenter?.sidebarRevealAction = nil
-        presenter?.showsSidebarButton = false
     }
 }
 

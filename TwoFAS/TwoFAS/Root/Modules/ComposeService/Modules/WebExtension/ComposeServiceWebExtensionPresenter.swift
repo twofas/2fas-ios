@@ -55,10 +55,6 @@ extension ComposeServiceWebExtensionPresenter {
         reload()
     }
 
-    func handleBack() {
-        flowController.close()
-    }
-
     func handleSelection(_ row: ComposeServiceWebExtensionSection.Row) {
         pendingDeletion = row
         isDeleteAlertPresented = true

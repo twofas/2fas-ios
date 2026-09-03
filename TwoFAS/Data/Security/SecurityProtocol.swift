@@ -20,7 +20,7 @@
 import Foundation
 import Protection
 
-public protocol SecurityProtocol: AnyObject {
+protocol SecurityProtocol: AnyObject {
     var isAuthenticationRequired: Bool { get }
     
     // auth

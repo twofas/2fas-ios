@@ -29,16 +29,16 @@ import SwiftUI
 /// - if it is smaller (e.g. `0` on devices with a Home button), the difference
 ///   is added as bottom padding, so the effective bottom gap always equals
 ///   `spacing`.
-public struct MinimumBottomSpacing: ViewModifier {
+struct MinimumBottomSpacing: ViewModifier {
     private let spacing: Spacing
 
     @State private var bottomSafeArea: CGFloat = 0
 
-    public init(spacing: Spacing) {
+    init(spacing: Spacing) {
         self.spacing = spacing
     }
 
-    public func body(content: Content) -> some View {
+    func body(content: Content) -> some View {
         content
             .padding(.bottom, max(0, spacing.value - bottomSafeArea))
             .background {

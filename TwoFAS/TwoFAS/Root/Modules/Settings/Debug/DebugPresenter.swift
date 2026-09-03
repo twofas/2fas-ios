@@ -41,10 +41,6 @@ final class DebugPresenter {
         reloadState()
     }
 
-    func handleBack() {
-        flowController.close()
-    }
-
     // MARK: - Actions
 
     func requestAction(_ action: DebugAction) {

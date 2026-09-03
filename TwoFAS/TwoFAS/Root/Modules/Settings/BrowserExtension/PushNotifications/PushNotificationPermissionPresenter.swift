@@ -37,11 +37,6 @@ final class PushNotificationPermissionPresenter {
 }
 
 extension PushNotificationPermissionPresenter {
-    func handleCancel() {
-        interactor.deny()
-        flowController.close(extensionID: extensionID)
-    }
-    
     func handleAction() {
         interactor.ask { [weak self] in
             self?.flowController.close(extensionID: self?.extensionID)

@@ -33,7 +33,6 @@ protocol AppSecurityFlowControlling: AnyObject {
     func toChangePIN(pinType: PINType)
 
     func toInitialAuthorization()
-    func close()
 }
 
 final class AppSecurityFlowController: FlowController {
@@ -123,10 +122,6 @@ extension AppSecurityFlowController: AppSecurityFlowControlling {
     func toInitialAuthorization() {
         guard let vc = _viewController else { return }
         VerifyPINFlowController.add(to: vc, parent: self, for: .authorize)
-    }
-
-    func close() {
-        _viewController?.navigationController?.popViewController(animated: true)
     }
 }
 

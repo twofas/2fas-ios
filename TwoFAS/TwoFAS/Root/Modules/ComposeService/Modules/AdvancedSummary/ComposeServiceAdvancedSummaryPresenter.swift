@@ -47,8 +47,4 @@ extension ComposeServiceAdvancedSummaryPresenter {
         VoiceOver.say(T.Notifications.counterCopied)
         ToastPresenter.shared.presentCounterCopied()
     }
-
-    func handleBack() {
-        flowController.close()
-    }
 }

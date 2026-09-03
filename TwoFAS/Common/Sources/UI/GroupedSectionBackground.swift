@@ -19,18 +19,18 @@
 
 import SwiftUI
 
-public struct GroupedSectionBackgroundModifier: ViewModifier {
+struct GroupedSectionBackgroundModifier: ViewModifier {
     private let isElevated: Bool
 
     /// - Parameter isElevated: Pass `true` when the section sits on a
     ///   `.backgroundsPrimaryElevated` screen. The lighter screen background
     ///   requires `.backgroundsGroupedTertiary` for the section instead of the
     ///   default `.backgroundsSecondary`.
-    public init(isElevated: Bool = false) {
+    init(isElevated: Bool = false) {
         self.isElevated = isElevated
     }
 
-    public func body(content: Content) -> some View {
+    func body(content: Content) -> some View {
         content
             .padding(.horizontal, .XL)
             .frame(maxWidth: .infinity, alignment: .topLeading)

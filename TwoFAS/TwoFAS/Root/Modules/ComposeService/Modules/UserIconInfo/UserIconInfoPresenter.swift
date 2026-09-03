@@ -38,8 +38,4 @@ extension UserIconInfoPresenter {
         AppEventLog(.orderIconShare)
         flowController.toShare()
     }
-
-    func handleBack() {
-        flowController.close()
-    }
 }

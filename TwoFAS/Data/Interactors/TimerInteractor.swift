@@ -26,7 +26,6 @@ public protocol TimerInteracting: AnyObject {
     func destroy()
     func pause()
     func start()
-    func setTickEverySecond(seconds: Int)
 }
 
 final class TimerInteractor {
@@ -51,10 +50,6 @@ final class TimerInteractor {
             name: UIApplication.didEnterBackgroundNotification,
             object: nil
         )
-    }
-    
-    func setTickEverySecond(seconds: Int) {
-        tickTime = seconds
     }
     
     @objc

@@ -35,24 +35,12 @@ final class BrowserExtensionIntroPresenter {
 }
 
 extension BrowserExtensionIntroPresenter {
-    var askForPushNotificationPermission: Bool {
-        interactor.shouldAskForPushNotifications
-    }
-
     func handleAction() {
         checkPushNotificationPermission()
     }
 
     func handlePushNotificationClosed() {
         checkCameraPermission()
-    }
-
-    func close() {
-        flowController.toClose()
-    }
-
-    func handleInfo() {
-        flowController.toInfo()
     }
 }
 

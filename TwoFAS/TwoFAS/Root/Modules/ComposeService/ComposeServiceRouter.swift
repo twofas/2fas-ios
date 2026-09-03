@@ -207,8 +207,6 @@ extension ComposeServiceRouter: ComposeServiceCategorySelectionFlowControlling {
     }
 }
 
-// MARK: - Shared close (pops the top-most pushed screen)
-
 extension ComposeServiceRouter {
     func close() {
         pop()

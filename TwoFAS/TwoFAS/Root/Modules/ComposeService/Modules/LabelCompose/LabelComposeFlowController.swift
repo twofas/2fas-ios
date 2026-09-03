@@ -21,5 +21,4 @@ import Common
 
 protocol LabelComposeFlowControlling: AnyObject {
     func toSave(title: String, color: TintColor)
-    func close()
 }

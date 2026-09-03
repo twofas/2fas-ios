@@ -106,14 +106,14 @@ public struct TFListSection<Content: View>: View {
 // MARK: - TFListSectionHeader
 
 /// Section header text — headline weight, secondary label color.
-public struct TFListSectionHeader: View {
+struct TFListSectionHeader: View {
     private let text: String
 
-    public init(_ text: String) {
+    init(_ text: String) {
         self.text = text
     }
 
-    public var body: some View {
+    var body: some View {
         Text(text)
             .textStyle(.headline)
             .foregroundStyle(AppColor.labelsSecondary)
@@ -127,14 +127,14 @@ public struct TFListSectionHeader: View {
 // MARK: - TFListSectionFooter
 
 /// Section footer text — tight footnote, secondary label color.
-public struct TFListSectionFooter: View {
+struct TFListSectionFooter: View {
     private let text: String
 
-    public init(_ text: String) {
+    init(_ text: String) {
         self.text = text
     }
 
-    public var body: some View {
+    var body: some View {
         Text(text)
             .textStyle(.footnote, .regular, .tight)
             .foregroundStyle(AppColor.labelsSecondary)

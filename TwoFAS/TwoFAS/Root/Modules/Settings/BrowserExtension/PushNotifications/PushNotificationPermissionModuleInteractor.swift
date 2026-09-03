@@ -22,7 +22,6 @@ import Common
 import Data
 
 protocol PushNotificationPermissionModuleInteracting: AnyObject {
-    func deny()
     func ask(completion: @escaping Callback)
 }
 
@@ -35,10 +34,6 @@ final class PushNotificationPermissionModuleInteractor {
 }
 
 extension PushNotificationPermissionModuleInteractor: PushNotificationPermissionModuleInteracting {
-    func deny() {
-        pushNotificationsRegistrationInteractor.markAsDenied()
-    }
-    
     func ask(completion: @escaping Callback) {
         pushNotificationsRegistrationInteractor.register {
             completion()

@@ -63,14 +63,6 @@ final class GuidePagesPresenter {
         }
     }
     
-    func onBack() {
-        flowController.toMenu()
-    }
-    
-    func onClose() {
-        flowController.close()
-    }
-    
     func onManually(data: String?) {
         flowController.toAddManually(with: data)
     }

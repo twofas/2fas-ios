@@ -105,8 +105,6 @@ final class TokensTokenView: UIView {
         return size
     }
     
-    var currentToken: String? { tokenLabel.text }
-    
     func mark() {
         guard !isMarked else { return }
         

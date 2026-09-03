@@ -40,12 +40,6 @@ final class AlertController: UIAlertController {
         window.rootViewController?.present(self, animated: flag, completion: completion)
     }
 
-    func dismiss() {
-        guard let rootViewController = alertWindow?.rootViewController else { Log("No root view controller"); return }
-
-        rootViewController.dismiss(animated: false, completion: nil)
-    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         

@@ -40,9 +40,6 @@ protocol TokensViewControlling: AnyObject {
     func removeSearchBar()
     func stopSearch()
     
-    func enableBounce()
-    func disableBounce()
-    
     func focusSearchBar()
 
     func copyToken()
@@ -398,16 +395,6 @@ extension TokensViewController: TokensViewControlling {
         searchController.isActive = false
     }
     
-    // MARK: - Bounce
-    
-    func enableBounce() {
-        tokensView.alwaysBounceVertical = true
-    }
-    
-    func disableBounce() {
-        tokensView.alwaysBounceVertical = false
-    }
-
     // MARK: - Notifications
     
     func copyToken() {

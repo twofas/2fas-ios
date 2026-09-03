@@ -49,11 +49,6 @@ final class GuideRouter: ObservableObject {
         }
         .chevronOnlyBackButton()
     }
-
-    private func pop() {
-        guard !path.isEmpty else { return }
-        path.removeLast()
-    }
 }
 
 // MARK: - GuideSelectorFlowControlling
@@ -76,10 +71,6 @@ extension GuideRouter: GuideMenuFlowControlling {
         pagesPresenter = GuidePagesPresenter(flowController: self, content: menu)
         path.append(.pages)
     }
-
-    func back() {
-        pop()
-    }
 }
 
 // MARK: - GuidePagesFlowControlling
@@ -91,13 +82,5 @@ extension GuideRouter: GuidePagesFlowControlling {
 
     func toCodeScanner() {
         flowController?.codeScanner()
-    }
-
-    func toMenu() {
-        pop()
-    }
-
-    func close() {
-        flowController?.close()
     }
 }

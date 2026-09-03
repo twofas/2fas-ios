@@ -46,7 +46,6 @@ final class ModuleInteractorFactory {
     func settingsMenuModuleInteractor() -> SettingsMenuModuleInteracting {
         SettingsMenuModuleInteractor(
             widgetsInteractor: InteractorFactory.shared.widgetsInteractor(),
-            pushNotifications: InteractorFactory.shared.pushNotificationRegistrationInteractor(),
             protectionInteractor: InteractorFactory.shared.protectionInteractor(),
             networkStatusInteractor: InteractorFactory.shared.networkStatusInteractor(),
             pairingDeviceInteractor: InteractorFactory.shared.pairingWebExtensionInteractor(),
@@ -391,7 +390,6 @@ final class ModuleInteractorFactory {
     func transferModuleInteractor() -> TransferModuleInteracting {
         TransferModuleInteractor(
             serviceListingInteractor: InteractorFactory.shared.serviceListingInteractor(),
-            notificationsInteractor: InteractorFactory.shared.notificationInteractor(),
             qrCodeGeneratorInteractor: InteractorFactory.shared.qrCodeGeneratorInteractor(),
             serviceDefinitionInteractor: InteractorFactory.shared.serviceDefinitionInteractor(),
             protectionInteractor: InteractorFactory.shared.protectionInteractor(),

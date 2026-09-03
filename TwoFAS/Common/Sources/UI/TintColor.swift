@@ -87,11 +87,6 @@ public extension TintColor {
         }
     }
     
-    static func fromImportString(_ str: String?, defaultValue: TintColor = .default) -> TintColor {
-        guard let str, let value = fromImportString(str) else { return defaultValue }
-        return value
-    }
-    
     var toExportString: String {
         switch self {
         case .`default`: return "Default"

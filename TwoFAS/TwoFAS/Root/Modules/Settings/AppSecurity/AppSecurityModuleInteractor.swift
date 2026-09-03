@@ -22,7 +22,7 @@ import LocalAuthentication
 import Data
 import Common
 
-public protocol AppSecurityModuleInteracting: AnyObject {
+protocol AppSecurityModuleInteracting: AnyObject {
     var isPINSet: Bool { get }
     var biometryType: BiometryType { get }
     var isBiometryEnabled: Bool { get }

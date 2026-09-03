@@ -22,13 +22,8 @@ import Common
 
 protocol ComposeServiceNavigationFlowControllerParent: AnyObject {
     func composeServiceDidFinish()
-    func composeServiceWasCreated(serviceData: ServiceData)
     func composeServiceServiceWasModified()
     func composeServiceServiceWasDeleted()
-}
-
-protocol ComposeServiceNavigationFlowControlling: AnyObject {
-    func toClose()
 }
 
 final class ComposeServiceNavigationFlowController: NavigationFlowController {
@@ -64,10 +59,6 @@ final class ComposeServiceNavigationFlowController: NavigationFlowController {
 extension ComposeServiceNavigationFlowController: ComposeServiceFlowControllerParent {
     func composeServiceDidFinish() {
         parent?.composeServiceDidFinish()
-    }
-    
-    func composeServiceWasCreated(serviceData: ServiceData) {
-        parent?.composeServiceWasCreated(serviceData: serviceData)
     }
     
     func composeServiceServiceWasModified() {

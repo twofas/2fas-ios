@@ -20,13 +20,9 @@
 import UIKit
 import SwiftUI
 
-protocol BackupManageEncryptionFlowControllerParent: AnyObject {
-    func backupManageEncryptionClose()
-}
+protocol BackupManageEncryptionFlowControllerParent: AnyObject {}
 
 protocol BackupManageEncryptionFlowControlling: AnyObject {
-    func close()
-    func toDeleteBackup()
     func toSetPassword()
     func toChangePassword()
     func toRemovePassword()
@@ -55,15 +51,6 @@ final class BackupManageEncryptionFlowController: FlowController {
 }
 
 extension BackupManageEncryptionFlowController: BackupManageEncryptionFlowControlling {
-    func close() {
-        _viewController?.navigationController?.popViewController(animated: true)
-    }
-
-    func toDeleteBackup() {
-        guard let vc = _viewController else { return }
-        BackupDeleteFlowController.present(on: vc, parent: self)
-    }
-
     func toSetPassword() {
         guard let vc = _viewController else { return }
         BackupSetPasswordFlowController.present(

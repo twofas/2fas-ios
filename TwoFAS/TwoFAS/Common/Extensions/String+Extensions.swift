@@ -21,20 +21,9 @@ import UIKit
 import Common
 
 extension String {
-    var localized: String { NSLocalizedString(self, comment: "") }
-    
     func sanitizeFilename() -> String {
         let invalidCharacters = CharacterSet(charactersIn: ":/\\?%*|\"<>")
         return self.components(separatedBy: invalidCharacters).joined(separator: "_")
-    }
-}
-
-extension Optional where Wrapped == String {
-    var hasContent: Bool { self != nil && !self!.isEmpty }
-    var value: String { self ?? "" }
-    var nilIfEmpty: String? {
-        guard let self, !self.isEmpty else { return nil }
-        return self
     }
 }
 
@@ -42,7 +31,7 @@ extension NSMutableAttributedString {
     @discardableResult
     func formatAsLink(textToFind: String) -> Bool {
         let foundRange = self.mutableString.range(of: textToFind)
-        
+
         if foundRange.location != NSNotFound {
             self.addAttribute(.foregroundColor, value: AppColor.accentsBrand.uiColor, range: foundRange)
             self.addAttribute(.underlineColor, value: AppColor.accentsBrand.uiColor, range: foundRange)

@@ -45,9 +45,7 @@ final class TokensSectionHeader: UICollectionReusableView {
     
     private let normalContainer = UIView()
     private let editContainer = UIView()
-    
-    private let bgView = UIView()
-    
+
     private(set) var isEditing = false
     
     private(set) var config: TokensSection?

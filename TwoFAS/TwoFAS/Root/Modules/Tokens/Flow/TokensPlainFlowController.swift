@@ -39,12 +39,8 @@ protocol TokensPlainFlowControlling: AnyObject {
     func toAskDeleteSection(_ callback: @escaping Callback)
     func toCreateSection(_ callback: @escaping (String) -> Void)
     func toRenameSection(current name: String, callback: @escaping (String) -> Void)
-    // MARK: Camera
-    func toShowCamera()
-    func toCameraNotAvailable()
     // MARK: Initial screen
     func toFileImport()
-    func toShowGallery()
     func toHelp()
     func toTrash()
     // MARK: Link actions
@@ -192,31 +188,10 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         presentationHost.present(alert, animated: true, completion: nil)
     }
     
-    // MARK: - Camera
-    
-    func toShowCamera() {
-        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
-        CameraScannerNavigationFlowController.present(on: presentationHost, parent: self)
-    }
-    
-    func toCameraNotAvailable() {
-        let ac = AlertController.cameraNotAvailable
-        ac.show(animated: true, completion: nil)
-    }
-    
     // MARK: - Initial screen
-    
+
     func toFileImport() {
         parent?.tokensSwitchToSettingsExternalImport()
-    }
-    
-    func toShowGallery() {
-        guard let presentationHost, presentationHost.presentedViewController == nil else { return }
-        galleryViewController = SelectFromGalleryFlowController.present(
-            on: presentationHost,
-            applyOverlay: true,
-            parent: self
-        )
     }
     
     func toHelp() {
@@ -410,11 +385,6 @@ extension TokensPlainFlowController: TrashServiceFlowControllerParent {
 extension TokensPlainFlowController: ComposeServiceNavigationFlowControllerParent {
     func composeServiceDidFinish() {
         dismiss(actions: [.finishedFlow, .newData, .sync])
-    }
-    
-    func composeServiceWasCreated(serviceData: ServiceData) {
-        parent?.tokensSwitchToTokensTab()
-        dismiss(actions: [.finishedFlow, .addedService(serviceData: serviceData), .sync])
     }
     
     func composeServiceServiceWasModified() {

@@ -22,11 +22,9 @@ import Foundation
 public typealias DeviceID = String
 public typealias GCMToken = String
 public typealias ExtensionID = String
-public typealias IconTypeName = String
 public typealias ServiceTypeID = UUID
 public typealias IconTypeID = UUID
 public typealias SectionID = UUID
-public typealias DeviceName = String
 public typealias CloudStateListenerID = String
 public typealias CloudStateListener = (CloudState) -> Void
 

@@ -23,5 +23,4 @@ protocol IconSelectorFlowControlling: AnyObject {
     func toSelection(iconTypeID: IconTypeID)
     func toUserIcon()
     func toCompanyIcon()
-    func close()
 }

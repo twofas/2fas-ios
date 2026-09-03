@@ -28,10 +28,8 @@ final class TokensHOTPCompactCell: UICollectionViewCell, TokenCounterConsumer, T
     var didTapRefreshCounter: ((Secret) -> Void)?
     
     private let hMargin: CGFloat = Spacing.XL.rawValue
-    private let sMargin: CGFloat = Spacing.M.rawValue
     private let vMargin: CGFloat = Spacing.L.rawValue
-    private let manualOffset: CGFloat = 3
-    
+
     private var showTokenWithAdditionalInfoConstraints: [NSLayoutConstraint] = []
     private var showTokenWithoutAdditionalInfoConstraints: [NSLayoutConstraint] = []
     private var hideTokenWithAdditionalInfoConstraints: [NSLayoutConstraint] = []

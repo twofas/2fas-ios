@@ -20,18 +20,14 @@
 import UIKit
 import SwiftUI
 
-protocol BackupMenuFlowControllerParent: AnyObject {
-    func showFAQ()
-}
+protocol BackupMenuFlowControllerParent: AnyObject {}
 
 protocol BackupMenuFlowControlling: AnyObject {
-    func toFAQ()
     func toFileImport()
     func toFileExport()
     func toManageAppleWatch()
     func toManageBackup()
     func toAdvanced()
-    func close()
 }
 
 final class BackupMenuFlowController: FlowController {
@@ -73,10 +69,6 @@ final class BackupMenuFlowController: FlowController {
 }
 
 extension BackupMenuFlowController: BackupMenuFlowControlling {
-    func toFAQ() {
-        parent?.showFAQ()
-    }
-
     func toFileImport() {
         guard let vc = _viewController else { return }
         importer = ImporterOpenFileHeadlessFlowController.present(on: vc, parent: self, url: nil)
@@ -100,10 +92,6 @@ extension BackupMenuFlowController: BackupMenuFlowControlling {
     func toAdvanced() {
         guard let navigationController = _viewController?.navigationController else { return }
         BackupAdvancedFlowController.push(in: navigationController, parent: self)
-    }
-
-    func close() {
-        _viewController?.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -135,14 +123,6 @@ extension BackupMenuFlowController: ExporterMainScreenFlowControllerParent {
     }
 }
 
-extension BackupMenuFlowController: BackupManageEncryptionFlowControllerParent {
-    func backupManageEncryptionClose() {
-        _viewController?.navigationController?.popViewController(animated: true)
-    }
-}
+extension BackupMenuFlowController: BackupManageEncryptionFlowControllerParent {}
 
-extension BackupMenuFlowController: BackupAdvancedFlowControllerParent {
-    func backupAdvancedClose() {
-        _viewController?.navigationController?.popViewController(animated: true)
-    }
-}
+extension BackupMenuFlowController: BackupAdvancedFlowControllerParent {}

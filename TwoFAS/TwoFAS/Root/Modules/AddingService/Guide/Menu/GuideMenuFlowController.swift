@@ -21,5 +21,4 @@ import Data
 
 protocol GuideMenuFlowControlling: AnyObject {
     func toMenuPosition(_ menu: GuideDescription.MenuPosition)
-    func back()
 }

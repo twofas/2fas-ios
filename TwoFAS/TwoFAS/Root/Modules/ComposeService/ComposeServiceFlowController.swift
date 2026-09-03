@@ -25,7 +25,6 @@ import Data
 
 protocol ComposeServiceFlowControllerParent: AnyObject {
     func composeServiceDidFinish()
-    func composeServiceWasCreated(serviceData: ServiceData)
     func composeServiceServiceWasModified()
     func composeServiceServiceWasDeleted()
 }
@@ -35,7 +34,6 @@ protocol ComposeServiceFlowControlling: AnyObject {
     func toLogin()
     func toDelete(serviceData: ServiceData)
     func toSetupPIN()
-    func toServiceWasCreated(serviceData: ServiceData)
     func toServiceWasModified()
     func toServiceWasDeleted()
     func toShowQRCode(code: UIImage)
@@ -102,10 +100,6 @@ extension ComposeServiceFlowController: ComposeServiceFlowControlling {
     func toSetupPIN() {
         parent?.composeServiceDidFinish()
         NotificationCenter.default.post(name: .switchToSetupPIN, object: nil)
-    }
-
-    func toServiceWasCreated(serviceData: ServiceData) {
-        parent?.composeServiceWasCreated(serviceData: serviceData)
     }
 
     func toServiceWasModified() {

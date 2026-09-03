@@ -31,7 +31,6 @@ protocol AboutFlowControlling: AnyObject {
     func toShareLogs(fileURL: URL, onDismiss: @escaping () -> Void)
     func toAcknowledgements()
     func toSocial(_ channel: SocialChannel)
-    func close()
 }
 
 final class AboutFlowController: FlowController {
@@ -128,9 +127,5 @@ extension AboutFlowController: AboutFlowControlling {
             options: [:],
             completionHandler: nil
         )
-    }
-
-    func close() {
-        _viewController?.navigationController?.popViewController(animated: true)
     }
 }

@@ -34,7 +34,6 @@ final class TokensPassCell: UICollectionViewCell {
     private let pressedAnimDuration: CGFloat = 0.1
     private let releaseAnimDuration: CGFloat = 0.15
     
-    private let size = CGSize(width: 328, height: 163)
     private let imageFrame = UIImage(asset: Asset.passFrameLight)
     private let imageDecoration = UIImage(asset: Asset.framePassDecoration)
     

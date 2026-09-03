@@ -35,10 +35,6 @@ final class AppearancePresenter {
         reload()
     }
 
-    func handleBack() {
-        flowController.close()
-    }
-
     func handleToggle(for kind: AppearanceCell.Kind) {
         switch kind {
         case .incomingToken:
@@ -50,10 +46,6 @@ final class AppearancePresenter {
         default:
             break
         }
-        reload()
-    }
-
-    func handleBecomeActive() {
         reload()
     }
 

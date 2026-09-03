@@ -21,18 +21,11 @@ import UIKit
 import Data
 import Common
 
-protocol CameraViewControllerActivity {
-    func overlayOnTop()
-    func overlayHidden()
-}
-
 final class CameraViewController: UIViewController {
     private let activeAreaYOffset = Theme.Metrics.cameraActiveAreaYOffset
-    private let cancelButtonOffset: CGFloat = 20
     private let descriptionOffset: CGFloat = 50
     private let openGalleryOffset: CGFloat = 64
-    private let spacing: CGFloat = 16
-    
+
     var viewModel: CameraViewModelType!
     private let cameraPreview = CameraPreview()
     private var cameraView: CameraView!
@@ -298,7 +291,7 @@ extension CameraViewController: CameraViewModelDelegate {
     var isPresenting: Bool { presentedViewController != nil }
 }
 
-extension CameraViewController: CameraViewControllerActivity {
+extension CameraViewController {
     func overlayOnTop() {
         titleLabel.textColor = AppColor.graysGray.uiColor
         cancelButton.isEnabled = false

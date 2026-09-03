@@ -40,7 +40,6 @@ protocol TransferFlowControlling: AnyObject {
     func toShareOTPAuthFileContents(_ url: URL, completion: @escaping () -> Void)
     func toShareQRCodes(_ url: URL, completion: @escaping () -> Void)
     func toError(_ message: String)
-    func close()
 }
 
 final class TransferFlowController: FlowController {
@@ -135,10 +134,6 @@ extension TransferFlowController: TransferFlowControlling {
             vc.present(alert, animated: true, completion: nil)
         }
     }
-
-    func close() {
-        _viewController?.navigationController?.popViewController(animated: true)
-    }
 }
 
 private extension TransferFlowController {
@@ -216,18 +211,6 @@ extension TransferFlowController: ExternalImportInstructionsFlowControllerParent
             parent: self
         )
     }
-
-    func instructionsFromClipboard() {
-        guard let modalNavigationController else { return }
-        importer = ImporterOpenFileHeadlessFlowController
-            .present(
-                on: modalNavigationController,
-                parent: self,
-                url: nil,
-                importingOTPAuthFile: true,
-                isFromClipboard: true
-            )
-    }
 }
 
 extension TransferFlowController: CameraScannerFlowControllerParent {
@@ -244,7 +227,6 @@ extension TransferFlowController: SelectFromGalleryFlowControllerParent {
     func galleryWillShow(alongside coordinator: UIViewControllerTransitionCoordinator?) {}
     func galleryWillCancel(alongside coordinator: UIViewControllerTransitionCoordinator?) {}
 
-    func galleryDidFinish() { endGallery() }
     /// The cancel arrives with the picker already off screen, so only the
     /// reference needs releasing — a dismiss issued here would land on the
     /// instructions modal itself and close the whole flow.

@@ -24,7 +24,6 @@ public enum ServiceRules {
     public static let serviceNameMaxLength = 50
     public static let serviceNameMinLength = 1
     public static let privateKeyMaxLength = 512
-    public static let privateKeyRegex = "^[a-zA-Z2-7]*$"
     public static let privateKeyAllowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz234567"
     public static let additionalInfoMaxLength = 50
     public static let minKeyLength: Int = 4

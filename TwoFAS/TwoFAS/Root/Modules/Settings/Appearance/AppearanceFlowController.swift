@@ -22,9 +22,7 @@ import SwiftUI
 
 protocol AppearanceFlowControllerParent: AnyObject {}
 
-protocol AppearanceFlowControlling: AnyObject {
-    func close()
-}
+protocol AppearanceFlowControlling: AnyObject {}
 
 final class AppearanceFlowController: FlowController {
     private weak var parent: AppearanceFlowControllerParent?
@@ -62,8 +60,4 @@ final class AppearanceFlowController: FlowController {
     }
 }
 
-extension AppearanceFlowController: AppearanceFlowControlling {
-    func close() {
-        _viewController?.navigationController?.popViewController(animated: true)
-    }
-}
+extension AppearanceFlowController: AppearanceFlowControlling {}

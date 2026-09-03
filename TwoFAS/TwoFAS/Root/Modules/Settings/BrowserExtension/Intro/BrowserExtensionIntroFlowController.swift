@@ -22,14 +22,11 @@ import SwiftUI
 import Common
 
 protocol BrowserExtensionIntroFlowControllerParent: AnyObject {
-    func browserExtensionIntroClose()
     func browserExtensionIntroPairing()
 }
 
 protocol BrowserExtensionIntroFlowControlling: AnyObject {
-    func toClose()
     func toCamera()
-    func toInfo()
     func toCameraNotAvailable()
     func toPushNotifications()
 }
@@ -77,10 +74,6 @@ final class BrowserExtensionIntroFlowController: FlowController {
 }
 
 extension BrowserExtensionIntroFlowController: BrowserExtensionIntroFlowControlling {
-    func toClose() {
-        parent?.browserExtensionIntroClose()
-    }
-
     func toPushNotifications() {
         Log("Presenting Push Notification Permissions")
         guard let navigationController else { return }
@@ -89,10 +82,6 @@ extension BrowserExtensionIntroFlowController: BrowserExtensionIntroFlowControll
 
     func toCamera() {
         parent?.browserExtensionIntroPairing()
-    }
-
-    func toInfo() {
-        UIApplication.shared.open(URL(string: T.Browser.moreInfoLink)!, options: [:], completionHandler: nil)
     }
 
     func toCameraNotAvailable() {

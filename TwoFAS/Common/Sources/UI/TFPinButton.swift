@@ -34,13 +34,6 @@ public enum TFPinKey: Equatable, Hashable {
     /// The backspace / delete key.
     case delete
     
-    public var isNumber: Bool {
-        switch self {
-        case .digit: true
-        case .delete: false
-        }
-    }
-    
     public var isDelete: Bool {
         switch self {
         case .digit: false

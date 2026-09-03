@@ -171,15 +171,7 @@ extension RootFlowController: IntroductionNavigationFlowControllerParent {
     }
 }
 
-extension RootFlowController: MainFlowControllerParent {
-    func removeCover() {
-        toRemoveCover()
-    }
-    
-    func removeLogin() {
-        toRemoveLogin()
-    }
-}
+extension RootFlowController: MainFlowControllerParent {}
 
 extension RootFlowController: LoginFlowControllerParent {
     func loginClose() {

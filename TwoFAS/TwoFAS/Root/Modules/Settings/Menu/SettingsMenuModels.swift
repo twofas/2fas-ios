@@ -97,29 +97,7 @@ enum SettingsNavigationToggle: Hashable {
     case widgets
 }
 
-extension Array where Element == SettingsMenuSection {
-    func indexPath(for module: SettingsNavigationModule) -> IndexPath? {
-        for (sectionIndex, section) in self.enumerated() {
-            for (cellIndex, cell) in section.cells.enumerated() {
-                if let action = cell.action, case SettingsMenuCell.Action.navigation(let navigatesTo) = action,
-                    navigatesTo == module {
-                    return IndexPath(row: cellIndex, section: sectionIndex)
-                }
-            }
-        }
-
-        return nil
-    }
-}
-
 extension SettingsMenuCell {
-    var shouldSelectCell: Bool {
-        switch self.action {
-        case .navigation: return true
-        default: return false
-        }
-    }
-
     var module: SettingsNavigationModule? {
         if case .navigation(let module) = action {
             return module

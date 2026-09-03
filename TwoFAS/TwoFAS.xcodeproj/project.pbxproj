@@ -753,7 +753,6 @@
 		C296D4D22A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D4D12A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift */; };
 		C296D4D42A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C296D4D32A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift */; };
 		C2997AA92454D767006D5943 /* SelectPINLengthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2997AA82454D767006D5943 /* SelectPINLengthController.swift */; };
-		C299B7D2236DE78700224F51 /* StackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C299B7D1236DE78700224F51 /* StackView+.swift */; };
 		C29B42C92D98943100F49DCE /* CloudEncryptionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42C72D9892C600F49DCE /* CloudEncryptionType.swift */; };
 		C29B42CA2D98B24800F49DCE /* CloudEncryptionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29B42C72D9892C600F49DCE /* CloudEncryptionType.swift */; };
 		C29B9ADA2B1E859D00255A2C /* google.json in Resources */ = {isa = PBXBuildFile; fileRef = C29B9AD62B1E859D00255A2C /* google.json */; };
@@ -2502,7 +2501,6 @@
 		C296D4D12A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationPermissionNavigationFlowController.swift; sourceTree = "<group>"; };
 		C296D4D32A8979BF005F05E2 /* BrowserExtensionPairingNavigationFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionPairingNavigationFlowController.swift; sourceTree = "<group>"; };
 		C2997AA82454D767006D5943 /* SelectPINLengthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPINLengthController.swift; sourceTree = "<group>"; };
-		C299B7D1236DE78700224F51 /* StackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView+.swift"; sourceTree = "<group>"; };
 		C29B42C72D9892C600F49DCE /* CloudEncryptionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudEncryptionType.swift; sourceTree = "<group>"; };
 		C29B9AD62B1E859D00255A2C /* google.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = google.json; sourceTree = "<group>"; };
 		C29B9AD72B1E859D00255A2C /* paypal.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = paypal.json; sourceTree = "<group>"; };
@@ -4292,7 +4290,6 @@
 		C25F4FD92622206F008F7755 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				C299B7D1236DE78700224F51 /* StackView+.swift */,
 				C2A283342186071200967022 /* AlertControllerPromptFactory.swift */,
 				C2FA6C462401DF9400A1F320 /* AlertControllerDismissFlow.swift */,
 				C28633C31FF9327900C8F4B4 /* AlertController.swift */,
@@ -7350,7 +7347,6 @@
 				C2FDEE54279C8F39002CAB9E /* CameraGoogleAuth.swift in Sources */,
 				C2F51EFD27DAABD300A67C73 /* BrowserExtensionPairingSuccessfulView.swift in Sources */,
 				C2625F9228BBB87700D84C5C /* AboutModels.swift in Sources */,
-				C299B7D2236DE78700224F51 /* StackView+.swift in Sources */,
 				C29CF8E82FA7A6EA0058E3A0 /* ScrollPagingView.swift in Sources */,
 				C207DACF302B4E95004FC767 /* GuideRoute.swift in Sources */,
 				C2B6D0EC2FF181C800C4C73D /* ComposeServiceView.swift in Sources */,

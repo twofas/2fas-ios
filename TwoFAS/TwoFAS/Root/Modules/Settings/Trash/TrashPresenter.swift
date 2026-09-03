@@ -40,14 +40,6 @@ final class TrashPresenter {
         reload()
     }
 
-    func handleBecomeActive() {
-        reload()
-    }
-
-    func handleBack() {
-        flowController.toBack()
-    }
-
     func handleRestore(_ serviceData: ServiceData) {
         interactor.restoreService(serviceData)
         reload()

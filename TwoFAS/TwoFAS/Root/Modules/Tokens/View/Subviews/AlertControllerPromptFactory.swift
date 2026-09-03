@@ -86,17 +86,6 @@ final class AlertControllerPrompt: UIAlertController {
         textAction?.isEnabled = !(defaultText == nil || defaultText?.isEmpty == true)
     }
     
-    func configureTextFieldIntNumber(defaultText: String?) {
-        addTextField { [weak self] tx in
-            tx.placeholder = defaultText
-            tx.autocapitalizationType = .none
-            tx.keyboardType = .numberPad
-            tx.addTarget(self, action: #selector(self?.textChanged(sender:)), for: .editingChanged)
-        }
-        
-        textAction?.isEnabled = !(defaultText == nil || defaultText?.isEmpty == true)
-    }
-    
     @objc private func textChanged(sender: UITextField) {
         if let text = sender.text, !text.isEmpty {
             if let v = verify {

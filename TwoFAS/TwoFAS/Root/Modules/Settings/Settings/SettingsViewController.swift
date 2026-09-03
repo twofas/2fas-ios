@@ -113,18 +113,6 @@ final class SettingsViewController: UIViewController, ContentNavigationControlle
         reconcileForCollapsedStateIfNeeded()
     }
 
-    func showRevealButton() {
-        guard menu != nil else {
-            isMenuPositionPending = true
-            return
-        }
-        setMenuPosition()
-    }
-    
-    func hideRevealButton() {
-        menu?.hideSidebarReveal()
-    }
-    
     func navigateToView(_ viewPath: ViewPath.Settings?, isRestoration: Bool = false) {
         guard lastCollapsedState != nil, let menuVC = menu else {
             // The split hasn't reconciled its real collapsed state yet

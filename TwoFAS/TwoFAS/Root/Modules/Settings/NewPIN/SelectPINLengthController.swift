@@ -22,7 +22,7 @@ import Data
 import Common
 
 enum SelectPINLengthController {
-    static func make(in view: UIView, completion: @escaping (PINType) -> Void) -> AlertController {
+    static func make(in _: UIView, completion: @escaping (PINType) -> Void) -> AlertController {
         let alertController = AlertController(
             title: T.Settings.selectPinLength,
             message: nil,

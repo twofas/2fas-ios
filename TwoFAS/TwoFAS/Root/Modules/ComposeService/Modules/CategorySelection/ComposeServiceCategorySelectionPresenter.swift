@@ -46,10 +46,6 @@ extension ComposeServiceCategorySelectionPresenter {
         reload()
     }
 
-    func handleBack() {
-        flowController.close()
-    }
-
     func handleSelection(_ row: ComposeServiceCategorySelectionRow) {
         interactor.setSelection(row.sectionID)
         flowController.toChangeSection(row.sectionID)

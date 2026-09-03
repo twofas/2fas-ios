@@ -79,10 +79,6 @@ final class TransferPresenter {
         }
     }
 
-    func handleBack() {
-        flowController.close()
-    }
-
     func handleSaveOTPAuthFile() {
         isExporting = true
         Task {

@@ -96,10 +96,6 @@ final class BackupMenuPresenter {
             interactor.toggleBackup()
         }
     }
-
-    func handleBack() {
-        flowController.close()
-    }
 }
 
 private extension BackupMenuPresenter {

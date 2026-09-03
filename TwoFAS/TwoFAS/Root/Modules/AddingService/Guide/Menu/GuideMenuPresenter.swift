@@ -33,10 +33,6 @@ final class GuideMenuPresenter: ObservableObject {
         guide.header
     }
     
-    var menuTitle: String {
-        guide.menuTitle
-    }
-    
     var menuPositions: [GuideDescription.MenuPosition] {
         guide.menuPositions
     }
@@ -51,9 +47,5 @@ final class GuideMenuPresenter: ObservableObject {
     
     func handleSelectedMenuPosition(_ menuPosition: GuideDescription.MenuPosition) {
         flowController.toMenuPosition(menuPosition)
-    }
-
-    func onBack() {
-        flowController.back()
     }
 }

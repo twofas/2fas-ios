@@ -69,10 +69,6 @@ extension IconSelectorPresenter {
         flowController.toCompanyIcon()
     }
 
-    func handleBack() {
-        flowController.close()
-    }
-
     func handleSearchChange(_ phrase: String) {
         if phrase.isEmpty {
             interactor.clearSearch()

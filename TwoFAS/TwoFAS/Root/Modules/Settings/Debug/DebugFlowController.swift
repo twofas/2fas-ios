@@ -24,9 +24,7 @@ import Common
 
 protocol DebugFlowControllerParent: AnyObject {}
 
-protocol DebugFlowControlling: AnyObject {
-    func close()
-}
+protocol DebugFlowControlling: AnyObject {}
 
 final class DebugFlowController: FlowController {
     private weak var parent: DebugFlowControllerParent?
@@ -61,9 +59,5 @@ final class DebugFlowController: FlowController {
     }
 }
 
-extension DebugFlowController: DebugFlowControlling {
-    func close() {
-        _viewController?.navigationController?.popViewController(animated: true)
-    }
-}
+extension DebugFlowController: DebugFlowControlling {}
 #endif

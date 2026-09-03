@@ -25,7 +25,6 @@ protocol ExternalImportInstructionsFlowControllerParent: AnyObject {
     func instructionsOpenFile(service: ExternalImportService)
     func instructionsCamera()
     func instructionsGallery()
-    func instructionsFromClipboard()
 }
 
 protocol ExternalImportInstructionsFlowControlling: AnyObject {
@@ -33,7 +32,6 @@ protocol ExternalImportInstructionsFlowControlling: AnyObject {
     func toOpenFile(service: ExternalImportService)
     func toCamera()
     func toGallery()
-    func toFromClipboard()
 }
 
 final class ExternalImportInstructionsFlowController: FlowController {
@@ -85,9 +83,5 @@ extension ExternalImportInstructionsFlowController: ExternalImportInstructionsFl
     
     func toGallery() {
         parent?.instructionsGallery()
-    }
-    
-    func toFromClipboard() {
-        parent?.instructionsFromClipboard()
     }
 }

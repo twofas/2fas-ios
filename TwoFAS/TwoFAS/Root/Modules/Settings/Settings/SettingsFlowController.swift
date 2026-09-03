@@ -31,8 +31,6 @@ protocol SettingsFlowControlling: AnyObject {
     func toCollapsedView()
     func toExpandedView()
     func toShowingRootMenu()
-    func toSwitchToSetupPIN()
-    func toSwitchToBrowserExtension()
     func toRevealMenu()
 }
 
@@ -43,13 +41,6 @@ final class SettingsFlowController: FlowController {
     
     private var isCollapsed: Bool {
         viewController.isCollapsed
-    }
-    
-    static func showAsTab(
-        viewController: SettingsViewController,
-        in navigationController: UINavigationController
-    ) {
-        navigationController.setViewControllers([viewController], animated: false)
     }
     
     static func setup(
@@ -67,15 +58,6 @@ final class SettingsFlowController: FlowController {
         view.presenter = presenter
         
         return view
-    }
-    
-    static func showAsRoot(
-        viewController: SettingsViewController,
-        in navigationController: ContentNavigationController,
-        navigateToPath: ViewPath.Settings?
-    ) {
-        navigationController.setRootViewController(viewController)
-        viewController.navigateToView(navigateToPath)
     }
 }
 
@@ -131,15 +113,7 @@ extension SettingsFlowController: SettingsFlowControlling {
     func toShowingRootMenu() {
         navigationMenu?.toShowingRoot()
     }
-    
-    func toSwitchToSetupPIN() {
-        navigationMenu?.toSwitchToSetupPIN()
-    }
-    
-    func toSwitchToBrowserExtension() {
-        navigationMenu?.toSwitchToBrowserExtension()
-    }
-    
+
     func toRevealMenu() {
         parent?.settingsToRevealMenu()
     }
@@ -184,10 +158,6 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
         } else {
             AboutFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
         }
-    }
-    
-    func toSocialChannel(_ socialChannel: SocialChannel) {
-        UIApplication.shared.open(socialChannel.url, options: [:], completionHandler: nil)
     }
     
     func toBrowserExtension() {
@@ -240,14 +210,7 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
     }
     #endif
 }
-extension SettingsFlowController: BackupMenuFlowControllerParent {
-    func showFAQ() {
-        if isCollapsed {
-            viewController.navigationNavi.popToRootViewController(animated: false)
-        }
-        navigationMenu?.toSwitchToFAQ()
-    }
-}
+extension SettingsFlowController: BackupMenuFlowControllerParent {}
 
 extension SettingsFlowController: PushNotificationPermissionPlainFlowControllerParent {
     func pushNotificationsClose(extensionID: ExtensionID?) {}

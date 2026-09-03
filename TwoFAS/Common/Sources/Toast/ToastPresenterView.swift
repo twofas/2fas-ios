@@ -83,10 +83,6 @@ public final class ToastPresentationController {
 }
 
 public struct ToastPresenterView: View {
-    
-    @Environment(\.colorScheme)
-    private var colorScheme
-    
     @State
     private var sensoryFeedback: Bool = false
     

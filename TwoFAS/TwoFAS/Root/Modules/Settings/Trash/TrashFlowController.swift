@@ -25,7 +25,6 @@ import Common
 protocol TrashFlowControllerParent: AnyObject {}
 
 protocol TrashFlowControlling: AnyObject {
-    func toBack()
     func toDelete(with serviceData: ServiceData)
 }
 
@@ -67,10 +66,6 @@ final class TrashFlowController: FlowController {
 }
 
 extension TrashFlowController: TrashFlowControlling {
-    func toBack() {
-        _viewController.navigationController?.popViewController(animated: true)
-    }
-
     func toDelete(with serviceData: ServiceData) {
         DeleteServiceFlowController.present(on: _viewController, parent: self, serviceData: serviceData)
     }

@@ -42,10 +42,6 @@ extension BrowserExtensionServicePresenter {
         reload()
     }
 
-    func handleBack() {
-        flowController.close()
-    }
-
     func handleUnpairTap() {
         showUnpairAlert = true
     }

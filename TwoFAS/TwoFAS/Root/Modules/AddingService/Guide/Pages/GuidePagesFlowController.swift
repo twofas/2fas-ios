@@ -22,7 +22,4 @@ import Foundation
 protocol GuidePagesFlowControlling: AnyObject {
     func toAddManually(with data: String?)
     func toCodeScanner()
-    func toMenu()
-    func back()
-    func close()
 }

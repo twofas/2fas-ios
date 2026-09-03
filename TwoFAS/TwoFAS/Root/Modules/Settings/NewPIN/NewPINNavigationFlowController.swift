@@ -28,8 +28,6 @@ protocol NewPINNavigationFlowControllerParent: AnyObject {
     )
 }
 
-protocol NewPINNavigationFlowControlling: AnyObject {}
-
 final class NewPINNavigationFlowController: NavigationFlowController {
     private weak var parent: NewPINNavigationFlowControllerParent?
     
@@ -50,8 +48,6 @@ final class NewPINNavigationFlowController: NavigationFlowController {
         viewController.present(navi, animated: true, completion: nil)
     }
 }
-
-extension NewPINNavigationFlowController: NewPINNavigationFlowControlling {}
 
 extension NewPINNavigationFlowController: NewPINFlowControllerParent {
     func hideNewPIN() {}

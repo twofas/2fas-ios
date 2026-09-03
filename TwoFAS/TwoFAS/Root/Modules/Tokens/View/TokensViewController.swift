@@ -29,9 +29,6 @@ final class TokensViewController: UIViewController {
     }
 
     var presenter: TokensPresenter!
-    var addButton: UIBarButtonItem? {
-        navigationItem.rightBarButtonItem
-    }
     var newsButton: NewsButtonType?
 
     var newsButtonSourceView: UIView? {

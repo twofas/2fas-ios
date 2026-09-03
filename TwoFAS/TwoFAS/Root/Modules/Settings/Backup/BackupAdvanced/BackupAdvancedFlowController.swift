@@ -22,9 +22,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 import Common
 
-protocol BackupAdvancedFlowControllerParent: AnyObject {
-    func backupAdvancedClose()
-}
+protocol BackupAdvancedFlowControllerParent: AnyObject {}
 
 protocol BackupAdvancedFlowControlling: AnyObject {
     func toDeleteBackup()
@@ -36,7 +34,6 @@ protocol BackupAdvancedFlowControlling: AnyObject {
     func toImportKeys(completion: @escaping (URL) -> Void)
     func importKeysSuccess()
     func toKeysImportError()
-    func close()
 }
 
 final class BackupAdvancedFlowController: FlowController {
@@ -174,10 +171,6 @@ extension BackupAdvancedFlowController: BackupAdvancedFlowControlling {
 
     func toKeysImportError() {
         toKeysError(T.Backup.keysImportError)
-    }
-
-    func close() {
-        _viewController?.navigationController?.popViewController(animated: true)
     }
 }
 

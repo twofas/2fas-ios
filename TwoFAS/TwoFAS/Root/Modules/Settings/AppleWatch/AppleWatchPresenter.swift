@@ -40,8 +40,4 @@ final class AppleWatchPresenter {
             flowController.switchToBackup()
         }
     }
-
-    func handleBack() {
-        flowController.toBack()
-    }
 }

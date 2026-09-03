@@ -48,10 +48,6 @@ extension BrowserExtensionMainPresenter {
         interactor.updatePairedServices { [weak self] _ in self?.reload() }
     }
 
-    func handleBack() {
-        flowController.close()
-    }
-
     func handleTap(_ cell: BrowserExtensionMainCell) {
         switch cell.kind {
         case .service(let name, let date, let id):

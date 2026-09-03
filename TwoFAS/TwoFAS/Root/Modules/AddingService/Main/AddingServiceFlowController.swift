@@ -378,12 +378,6 @@ extension AddingServiceFlowController: GuideSelectorNavigationFlowControllerPare
 }
 
 extension AddingServiceFlowController: SelectFromGalleryFlowControllerParent {
-    func galleryDidFinish() {
-        galleryViewController = nil
-        setCardHidden(false, alongside: _viewController?.transitionCoordinator)
-        onOverlayDismissed?()
-    }
-
     func galleryDidImport(count: Int) {
         galleryViewController = nil
         parent?.addingServiceGalleryDidImport(count: count)

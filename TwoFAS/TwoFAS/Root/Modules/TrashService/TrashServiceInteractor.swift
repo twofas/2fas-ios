@@ -21,7 +21,7 @@ import Foundation
 import Common
 import Data
 
-public protocol TrashServiceInteracting: AnyObject {
+protocol TrashServiceInteracting: AnyObject {
     func trashService(_ serviceData: ServiceData)
 }
 

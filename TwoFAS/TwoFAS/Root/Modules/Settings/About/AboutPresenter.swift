@@ -32,10 +32,6 @@ final class AboutPresenter {
         self.flowController = flowController
         self.interactor = interactor
     }
-
-    func handleBack() {
-        flowController.close()
-    }
 }
 
 extension AboutPresenter {

@@ -25,7 +25,6 @@ protocol CommonSearchDataSourceSearchable: AnyObject {
 }
 
 final class CommonSearchController: UISearchController {
-    private var tempText: String?
     weak var searchBarDelegate: CommonSearchDataSourceSearchable?
     private let commonSearchBar = CommonSearchBar()
     

@@ -21,5 +21,4 @@ import Foundation
 
 protocol ComposeServiceWebExtensionFlowControlling: AnyObject {
     func toFinish()
-    func close()
 }

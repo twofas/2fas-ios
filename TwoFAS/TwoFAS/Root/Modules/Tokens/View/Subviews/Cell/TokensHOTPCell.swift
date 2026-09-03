@@ -29,8 +29,7 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
     
     private let hMargin: CGFloat = Spacing.XL.rawValue
     private let vMargin: CGFloat = Spacing.L.rawValue
-    private let manualOffset: CGFloat = 3
-    
+
     private let tokenLabel: TokensTokenView = {
         let view = TokensTokenView()
         view.setKind(.normal)

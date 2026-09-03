@@ -19,8 +19,8 @@
 
 import Foundation
 
-public enum UpdateDeviceName {
-    public struct Request: NetworkRequestFormat {
+enum UpdateDeviceName {
+    struct Request: NetworkRequestFormat {
         let deviceID: String
         let method: HTTPMethod = .PUT
         var path: String { "mobile/devices/\(deviceID)" }

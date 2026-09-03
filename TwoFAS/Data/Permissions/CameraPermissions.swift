@@ -21,17 +21,17 @@ import Foundation
 import AVFoundation
 import Common
 
-public final class CameraPermissions {
-    public enum PermissionState {
+final class CameraPermissions {
+    enum PermissionState {
         case unknown
         case granted
         case denied
         case error
     }
-    
-    public private(set) var permission: PermissionState = .unknown
-    
-    public func checkForPermission() -> PermissionState {
+
+    private(set) var permission: PermissionState = .unknown
+
+    func checkForPermission() -> PermissionState {
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         Log("CameraPermissions - checkForPermission: \(status)", module: .camera)
         switch status {
@@ -48,9 +48,9 @@ public final class CameraPermissions {
         return permission
     }
     
-    public var isCameraPresent: Bool { AVCaptureDevice.default(for: .video) != nil }
-    
-    public func requestPermission(result: @escaping (PermissionState) -> Void) {
+    var isCameraPresent: Bool { AVCaptureDevice.default(for: .video) != nil }
+
+    func requestPermission(result: @escaping (PermissionState) -> Void) {
         Log("CameraPermissions - requestPermission: - isCameraPresent: \(isCameraPresent)", module: .camera)
         guard isCameraPresent else {
             permission = .error

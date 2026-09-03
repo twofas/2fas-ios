@@ -20,12 +20,12 @@
 import UIKit
 
 #if os(iOS)
-public protocol SpinnerDisplaying {
+protocol SpinnerDisplaying {
     func showSpinner()
     func hideSpinner()
 }
 
-public extension SpinnerDisplaying where Self: UIViewController {
+extension SpinnerDisplaying where Self: UIViewController {
     func showSpinner() {
         view.showSpinner()
     }

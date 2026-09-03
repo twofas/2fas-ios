@@ -22,5 +22,4 @@ import Foundation
 protocol UserIconInfoFlowControlling: AnyObject {
     func toSocial()
     func toShare()
-    func close()
 }

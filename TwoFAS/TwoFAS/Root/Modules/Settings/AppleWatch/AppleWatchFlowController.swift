@@ -27,7 +27,6 @@ protocol AppleWatchFlowControllerParent: AnyObject {
 protocol AppleWatchFlowControlling: AnyObject {
     func toSystemWatchApp()
     func switchToBackup()
-    func toBack()
 }
 
 final class AppleWatchFlowController: FlowController {
@@ -71,9 +70,5 @@ extension AppleWatchFlowController: AppleWatchFlowControlling {
 
     func switchToBackup() {
         parent?.switchToBackup()
-    }
-
-    func toBack() {
-        _viewController.navigationController?.popViewController(animated: true)
     }
 }

@@ -43,7 +43,6 @@ final class TokensPresenter {
     
     var isMainOnlyCategory: Bool { interactor.isMainOnlyCategory }
     var hasUnreadNews: Bool { interactor.hasUnreadNews }
-    var showPassCell: Bool = false
 
     var listStyle: ListStyle {
         interactor.currentListStyle
@@ -67,10 +66,6 @@ final class TokensPresenter {
 
 extension TokensPresenter {
     // MARK: - Sort Type
-    var isSortingEnabled: Bool {
-        interactor.isSortingEnabled
-    }
-    
     var shouldAnimate: Bool {
         interactor.shouldAnimate
     }
@@ -204,7 +199,7 @@ extension TokensPresenter {
         }
     }
     
-    func handleServicesWereUpdated(modified: [Secret]?, deleted: [Secret]?) {
+    func handleServicesWereUpdated(modified _: [Secret]?, deleted _: [Secret]?) {
         interactor.servicesWereUpdated()
         handleNewData()
     }
@@ -226,19 +221,6 @@ extension TokensPresenter {
     }
     
     // MARK: - Actions
-    func handleShowCamera() {
-        Log("TokensPresenter - handleShowCamera")
-        interactor.checkCameraPermission { [weak self] value in
-            if value {
-                Log("TokensPresenter - toShowCamera")
-                self?.flowController.toShowCamera()
-            } else {
-                Log("TokensPresenter - toCameraNotAvailable")
-                self?.flowController.toCameraNotAvailable()
-            }
-        }
-    }
-    
     func handleImportExternalFile() {
         Log("TokensPresenter - handleImportExternalFile")
         flowController.toFileImport()
@@ -375,12 +357,6 @@ extension TokensPresenter {
             self?.interactor.createSection(with: name)
             self?.reloadData()
         }
-    }
-    
-    func handleAddSection(with name: String) {
-        Log("TokensPresenter - handleAddSection")
-        interactor.createSection(with: name)
-        reloadData()
     }
     
     func handleToggleCollapseAction(with section: TokensSection) {

@@ -295,12 +295,7 @@ extension CameraScannerFlowController: SelectFromGalleryFlowControllerParent {
         parent?.cameraScannerServiceWasCreated(serviceData: serviceData)
         galleryViewController = nil
     }
-    
-    func galleryDidFinish() {
-        toFinish()
-        galleryViewController = nil
-    }
-    
+
     func galleryDidCancel() {
         viewController.presenter.handleGalleryCancelled()
         galleryViewController = nil

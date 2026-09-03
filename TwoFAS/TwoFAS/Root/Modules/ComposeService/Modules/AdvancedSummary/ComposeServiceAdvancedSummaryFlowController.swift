@@ -19,6 +19,4 @@
 
 import Foundation
 
-protocol ComposeServiceAdvancedSummaryFlowControlling: AnyObject {
-    func close()
-}
+protocol ComposeServiceAdvancedSummaryFlowControlling: AnyObject {}

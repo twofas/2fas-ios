@@ -60,14 +60,6 @@ extension SettingsPresenter {
         flowController.toExpandedView()
     }
     
-    func handleSwitchToSetupPIN() {
-        flowController.toSwitchToSetupPIN()
-    }
-    
-    func handleSwitchToBrowserExtension() {
-        flowController.toSwitchToBrowserExtension()
-    }
-    
     func handleRevealMenu() {
         flowController.toRevealMenu()
     }

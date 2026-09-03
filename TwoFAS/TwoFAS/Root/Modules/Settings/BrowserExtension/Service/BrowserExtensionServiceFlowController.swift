@@ -27,7 +27,6 @@ protocol BrowserExtensionServiceFlowControllerParent: AnyObject {
 
 protocol BrowserExtensionServiceFlowControlling: AnyObject {
     func toUnpairingService(with id: String)
-    func close()
 }
 
 final class BrowserExtensionServiceFlowController: FlowController {
@@ -58,9 +57,5 @@ final class BrowserExtensionServiceFlowController: FlowController {
 extension BrowserExtensionServiceFlowController: BrowserExtensionServiceFlowControlling {
     func toUnpairingService(with id: String) {
         parent?.unpairService(with: id)
-    }
-
-    func close() {
-        _viewController?.navigationController?.popViewController(animated: true)
     }
 }

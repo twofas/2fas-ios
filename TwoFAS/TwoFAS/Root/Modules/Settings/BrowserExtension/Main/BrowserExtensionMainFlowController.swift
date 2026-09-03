@@ -29,7 +29,6 @@ protocol BrowserExtensionMainFlowControlling: AnyObject {
     func toCamera()
     func toService(name: String, date: String, id: String)
     func toCameraNotAvailable()
-    func close()
 }
 
 final class BrowserExtensionMainFlowController: FlowController {
@@ -108,19 +107,11 @@ extension BrowserExtensionMainFlowController: BrowserExtensionMainFlowControllin
         let ac = AlertController.cameraNotAvailable
         ac.show(animated: true, completion: nil)
     }
-
-    func close() {
-        _viewController?.navigationController?.popViewController(animated: true)
-    }
 }
 
 extension BrowserExtensionMainFlowController: BrowserExtensionIntroFlowControllerParent {
     func browserExtensionIntroPairing() {
         toCamera()
-    }
-
-    func browserExtensionIntroClose() {
-        _viewController?.navigationController?.popViewController(animated: true)
     }
 }
 

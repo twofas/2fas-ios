@@ -60,50 +60,6 @@ extension UIViewController {
         definesPresentationContext = true
     }
     
-    func setCustomLeftBackButton() {
-        navigationItem.leftBarButtonItem = createCustomLeftBackButton()
-    }
-    
-    func setCustomBackButton(systemBack: Bool = true) {
-        let target = (systemBack) ? navigationController : self
-        let sel = (systemBack) ? #selector(navigationController?.popViewController) : #selector(customBackButtonAction)
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: Asset.iconArrowLeft.image,
-            style: .plain,
-            target: target,
-            action: sel
-        )
-    }
-    
-    func createCustomLeftBackButton() -> UIBarButtonItem {
-        UIBarButtonItem(
-            image: Asset.iconArrowLeft.image,
-            style: .plain,
-            target: navigationController,
-            action: #selector(navigationController?.popViewController)
-        )
-    }
-    
-    func setCustomCancelButton() {
-        navigationItem.leftBarButtonItem = createCustomCancelButton()
-    }
-    
-    func createCustomCancelButton() -> UIBarButtonItem {
-        UIBarButtonItem(
-            title: T.Commons.cancel,
-            style: .plain,
-            target: self,
-            action: #selector(cancelButtonAction)
-        )
-    }
-    
-    @objc
-    func cancelButtonAction() { }
-    
-    @objc
-    func customBackButtonAction() { }
-        
     // Keyboard Safe Area adjustment
     
     func startSafeAreaKeyboardAdjustment() {

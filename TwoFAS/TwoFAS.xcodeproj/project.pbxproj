@@ -6879,8 +6879,13 @@
 /* Begin PBXShellScriptBuildPhase section */
 		C2035D422938143C00B94834 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
+			inputPaths = (
+				"$(SRCROOT)/.swiftlint.yml",
+			);
 			name = SwiftLint;
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/swiftlint.txt",
+			);
 			shellPath = /bin/sh;
 			shellScript = (
 				"export PATH=\"$PATH:/opt/homebrew/bin\"",
@@ -6889,6 +6894,7 @@
 				"else",
 				"    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"",
 				"fi",
+				"touch \"$DERIVED_FILE_DIR/swiftlint.txt\"",
 				"",
 			);
 		};
@@ -8828,6 +8834,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
@@ -10220,6 +10227,7 @@
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				WATCHOS_DEPLOYMENT_TARGET = 26.2;
@@ -10284,6 +10292,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEV;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;

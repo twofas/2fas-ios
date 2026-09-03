@@ -43,6 +43,8 @@ final class LoginPresenter {
     var enteredDigitCount: Int = 0
     var isBlocked = false
     var isResetVisible = false
+    /// Key shown left of "0" on the keypad; `nil` hides the slot when biometry can't be used.
+    var biometryKey: TFPinKey?
 
     private var isAuthenticating = false
 
@@ -90,6 +92,8 @@ final class LoginPresenter {
             }
         } else if digit.isDelete {
             _ = pin.popLast()
+        } else if digit == .faceID || digit == .touchID {
+            biometry(userInitiated: true)
         }
     }
     
@@ -99,11 +103,13 @@ final class LoginPresenter {
 }
 
 private extension LoginPresenter {
-    func biometry() {
+    func biometry(userInitiated: Bool = false) {
         guard !isAuthenticating else { return }
         isAuthenticating = true
-        interactor.verifyUsingBiometry(reason: reason) { [weak self] result in
+        interactor.verifyUsingBiometry(reason: reason, userInitiated: userInitiated) { [weak self] result in
             self?.isAuthenticating = false
+            // Biometry may have become unavailable meanwhile (system lockout, re-enrolment).
+            self?.refreshBiometryKey()
             if result {
                 self?.userLoggedIn()
             }
@@ -153,6 +159,7 @@ private extension LoginPresenter {
                 self?.unlock.toggle()
                 self?.timer.cancel()
                 self?.isBlocked = false
+                self?.refreshBiometryKey()
             } else {
                 self?.info = self?.lockTimeMessage ?? ""
             }
@@ -174,6 +181,7 @@ private extension LoginPresenter {
         isVisible()
     }
     func isVisible() {
+        refreshBiometryKey()
         guard !isResetVisible else { return }
         if interactor.isLocked {
             lockedState()
@@ -181,6 +189,19 @@ private extension LoginPresenter {
             if interactor.isLoggedOut {
                 biometry()
             }
+        }
+    }
+
+    func refreshBiometryKey() {
+        // Biometry unlocks the app only; the `.verify` flow stays PIN-only, as it always was.
+        guard loginType == .login else {
+            biometryKey = nil
+            return
+        }
+        biometryKey = switch interactor.availableBiometryType {
+        case .faceID: .faceID
+        case .touchID: .touchID
+        case .none: nil
         }
     }
 }

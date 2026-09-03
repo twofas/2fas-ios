@@ -19,6 +19,7 @@
 
 import SwiftUI
 import Common
+import Data
 
 struct LoginView: View {
     @Bindable
@@ -46,7 +47,8 @@ struct LoginView: View {
                 enteredCount: $presenter.enteredDigitCount,
                 shake: presenter.shake,
                 isDisabled: presenter.isBlocked,
-                onKeyPressed: presenter.onKeyPressed
+                onKeyPressed: presenter.onKeyPressed,
+                biometryKey: presenter.biometryKey
             ) {
                 PINWelcomeHeader(loginType: presenter.loginType, info: $presenter.info)
             }
@@ -93,9 +95,10 @@ private final class PreviewLoginInteractor: LoginModuleInteracting {
     let isLoggedOut = true
     let lockTime: Int? = nil
     let codeLength = 4
+    let availableBiometryType: BiometryType = .faceID
 
     func verify(numbers: [Int]) -> Bool { false }
-    func verifyUsingBiometry(reason: String, completion: @escaping (Bool) -> Void) {}
+    func verifyUsingBiometry(reason: String, userInitiated: Bool, completion: @escaping (Bool) -> Void) {}
 }
 
 private func previewPresenter(loginType: LoginType) -> LoginPresenter {

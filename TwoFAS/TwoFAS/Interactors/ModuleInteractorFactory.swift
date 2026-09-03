@@ -379,10 +379,11 @@ final class ModuleInteractorFactory {
         LoginModuleInteractor(
             loginInteractor: InteractorFactory.shared.loginInteractor(),
             appLockStateInteractor: InteractorFactory.shared.appLockStateInteractor(),
-            appStateInteractor: InteractorFactory.shared.appStateInteractor()
+            appStateInteractor: InteractorFactory.shared.appStateInteractor(),
+            protectionInteractor: InteractorFactory.shared.protectionInteractor()
         )
     }
-    
+
     func introductionModuleInteractor() -> IntroductionModuleInteracting {
         IntroductionModuleInteractor(rootInteractor: InteractorFactory.shared.rootInteractor())
     }

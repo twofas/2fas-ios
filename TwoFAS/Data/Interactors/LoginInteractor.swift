@@ -30,7 +30,7 @@ public protocol LoginInteracting: AnyObject {
     func authFailed()
     
     func verifyPIN(_ code: PIN) -> Bool
-    func authenticateUsingBiometry(reason: String, completion: @escaping (Bool) -> Void)
+    func authenticateUsingBiometry(reason: String, userInitiated: Bool, completion: @escaping (Bool) -> Void)
 }
 
 final class LoginInteractor {
@@ -54,8 +54,8 @@ extension LoginInteractor: LoginInteracting {
         security.isAuthenticationRequired
     }
     
-    func authenticateUsingBiometry(reason: String, completion: @escaping (Bool) -> Void) {
-        security.authenticateUsingBiometry(reason: reason) { result in
+    func authenticateUsingBiometry(reason: String, userInitiated: Bool, completion: @escaping (Bool) -> Void) {
+        security.authenticateUsingBiometry(reason: reason, userInitiated: userInitiated) { result in
             switch result {
             case .autenticated: completion(true)
             default: completion(false)

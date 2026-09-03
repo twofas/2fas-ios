@@ -50,6 +50,8 @@ struct PINEntryBlock<Header: View>: View {
     let shake: Bool
     let isDisabled: Bool
     let onKeyPressed: (TFPinKey) -> Void
+    /// Biometry key shown left of "0"; `nil` leaves that slot empty.
+    var biometryKey: TFPinKey?
     @ViewBuilder let header: () -> Header
 
     var body: some View {
@@ -67,7 +69,7 @@ struct PINEntryBlock<Header: View>: View {
 
             gap
 
-            PINKeyboard(canDelete: enteredCount > 0, action: onKeyPressed)
+            PINKeyboard(canDelete: enteredCount > 0, biometryKey: biometryKey, action: onKeyPressed)
                 .disabled(isDisabled)
                 .layoutPriority(1)
         }
@@ -178,6 +180,8 @@ private final class PreviewPINEntryPresenter: PINEntryPresenting {
             enteredDigitCount = min(totalDigits, enteredDigitCount + 1)
         case .delete:
             enteredDigitCount = max(0, enteredDigitCount - 1)
+        case .faceID, .touchID:
+            break
         }
     }
 }

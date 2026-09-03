@@ -27,37 +27,42 @@ import SwiftUI
 /// TFPinButton(.digit(1)) { handle(.digit(1)) }
 /// TFPinButton(.digit(0)) { handle(.digit(0)) }
 /// TFPinButton(.delete)   { deleteLast() }
+/// TFPinButton(.faceID)   { authenticateWithBiometry() }
 /// ```
 public enum TFPinKey: Equatable, Hashable {
     /// A numeric digit — expected range 0 … 9.
     case digit(Int)
     /// The backspace / delete key.
     case delete
-    
+    /// Triggers Face ID authentication.
+    case faceID
+    /// Triggers Touch ID authentication.
+    case touchID
+
     public var isDelete: Bool {
         switch self {
-        case .digit: false
+        case .digit, .faceID, .touchID: false
         case .delete: true
         }
     }
-    
+
     public var number: Int? {
         switch self {
         case .digit(let int): int
-        case .delete: nil
+        case .delete, .faceID, .touchID: nil
         }
     }
 }
 
 // MARK: - TFPinButton
 
-/// PIN pad button — a 64 × 64 pt liquid-glass circle that displays a digit
-/// or the delete symbol.
+/// PIN pad button — a 64 × 64 pt liquid-glass circle that displays a digit,
+/// the delete symbol or a biometry symbol.
 ///
 /// Visual appearance is identical to
 /// `TFLiquidGlassButton(systemImage:size:.large, tinted:false)`.
-/// Digit labels use `Title1/Medium` (28 pt); the delete key uses the
-/// `delete.backward` SF Symbol at `Title2/Regular` size (22 pt).
+/// Digit labels use `Title1/Medium` (28 pt); the delete and biometry keys use
+/// SF Symbols (`delete.backward`, `faceid`, `touchid`) at `Title2/Regular` size (22 pt).
 /// A rigid impact haptic fires on press-down.
 ///
 /// ```swift
@@ -157,6 +162,12 @@ public struct TFPinButton: View {
         case .delete:
             // Title2/Regular — 22 pt, weight 400
             Image(icon: .deleteBackward)
+                .font(.system(size: 22, weight: .regular))
+        case .faceID:
+            Image(icon: .faceid)
+                .font(.system(size: 22, weight: .regular))
+        case .touchID:
+            Image(icon: .touchid)
                 .font(.system(size: 22, weight: .regular))
         }
     }

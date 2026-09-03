@@ -104,7 +104,14 @@ final class Security: SecurityProtocol {
         biometric.isEnabled
     }
     
-    func authenticateUsingBiometry(reason: String, completion: @escaping (BiometryAuthenticationResult) -> Void) {
+    func authenticateUsingBiometry(
+        reason: String,
+        userInitiated: Bool,
+        completion: @escaping (BiometryAuthenticationResult) -> Void
+    ) {
+        if userInitiated {
+            clearBio()
+        }
         guard
             !appInBackground &&
             isBioAuthEnabled &&

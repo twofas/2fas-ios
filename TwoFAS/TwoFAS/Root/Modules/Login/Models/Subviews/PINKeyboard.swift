@@ -24,6 +24,8 @@ struct PINKeyboard: View {
     /// Whether there is anything to delete. When `false` the delete key is hidden
     /// (but still occupies its slot so the grid does not reflow).
     let canDelete: Bool
+    /// Biometry key (`.faceID` / `.touchID`) shown left of "0"; `nil` keeps that slot empty.
+    let biometryKey: TFPinKey?
     let action: (TFPinKey) -> Void
 
     var body: some View {
@@ -42,8 +44,13 @@ struct PINKeyboard: View {
             TFPinButton(.digit(7), action: action)
             TFPinButton(.digit(8), action: action)
             TFPinButton(.digit(9), action: action)
-            TFPinButton(.delete, action: action)
-                .isHidden(true, remove: false)
+            if let biometryKey {
+                TFPinButton(biometryKey, action: action)
+            } else {
+                // Placeholder so the grid keeps its 12 slots and "0" stays centred.
+                TFPinButton(.delete, action: action)
+                    .isHidden(true, remove: false)
+            }
             TFPinButton(.digit(0), action: action)
             TFPinButton(.delete, action: action)
                 .opacity(canDelete ? 1 : 0)
@@ -54,7 +61,17 @@ struct PINKeyboard: View {
 }
 
 #Preview {
-    PINKeyboard(canDelete: true, action: { _ in })
+    PINKeyboard(canDelete: true, biometryKey: nil, action: { _ in })
+        .background(AppColor.backgroundsPrimary)
+}
+
+#Preview("Face ID") {
+    PINKeyboard(canDelete: true, biometryKey: .faceID, action: { _ in })
+        .background(AppColor.backgroundsPrimary)
+}
+
+#Preview("Touch ID") {
+    PINKeyboard(canDelete: false, biometryKey: .touchID, action: { _ in })
         .background(AppColor.backgroundsPrimary)
 }
 

@@ -26,24 +26,32 @@ protocol LoginModuleInteracting: AnyObject {
     var isLoggedOut: Bool { get }
     var lockTime: Int? { get }
     var codeLength: Int { get }
-    
+    /// Biometry the user can authenticate with right now: `.none` unless biometry is
+    /// both enabled in the app and available on the device.
+    var availableBiometryType: BiometryType { get }
+
     func verify(numbers: [Int]) -> Bool
-    func verifyUsingBiometry(reason: String, completion: @escaping (Bool) -> Void)
+    /// `userInitiated` marks a tap on the biometry key: it bypasses the automatic-prompt
+    /// attempt limit, so the prompt shows even after the user cancelled an automatic one.
+    func verifyUsingBiometry(reason: String, userInitiated: Bool, completion: @escaping (Bool) -> Void)
 }
 
 final class LoginModuleInteractor {
     private let loginInteractor: LoginInteracting
     private let appLockStateInteractor: AppLockStateInteracting
     private let appStateInteractor: AppStateInteracting
-    
+    private let protectionInteractor: ProtectionInteracting
+
     init(
         loginInteractor: LoginInteracting,
         appLockStateInteractor: AppLockStateInteracting,
-        appStateInteractor: AppStateInteracting
+        appStateInteractor: AppStateInteracting,
+        protectionInteractor: ProtectionInteracting
     ) {
         self.loginInteractor = loginInteractor
         self.appLockStateInteractor = appLockStateInteractor
         self.appStateInteractor = appStateInteractor
+        self.protectionInteractor = protectionInteractor
     }
 }
 
@@ -63,7 +71,14 @@ extension LoginModuleInteractor: LoginModuleInteracting {
     var codeLength: Int {
         loginInteractor.codeLength
     }
-    
+
+    var availableBiometryType: BiometryType {
+        guard protectionInteractor.isBiometryEnabled, protectionInteractor.isBiometryAvailable else {
+            return .none
+        }
+        return protectionInteractor.biometryType
+    }
+
     func verify(numbers: [Int]) -> Bool {
         let code = PIN.create(with: numbers)
         let codeIsCorrect = loginInteractor.verifyPIN(code)
@@ -76,7 +91,7 @@ extension LoginModuleInteractor: LoginModuleInteracting {
         }
     }
     
-    func verifyUsingBiometry(reason: String, completion: @escaping (Bool) -> Void) {
+    func verifyUsingBiometry(reason: String, userInitiated: Bool, completion: @escaping (Bool) -> Void) {
         func checkResult(_ result: Bool) {
             switch result {
             case true:
@@ -94,10 +109,14 @@ extension LoginModuleInteractor: LoginModuleInteracting {
         if appStateInteractor.willURLBeHandled {
             appStateInteractor.clearURLWillBeHandled()
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-                self.loginInteractor.authenticateUsingBiometry(reason: reason) { checkResult($0) }
+                self.loginInteractor.authenticateUsingBiometry(reason: reason, userInitiated: userInitiated) {
+                    checkResult($0)
+                }
             }
         } else {
-            loginInteractor.authenticateUsingBiometry(reason: reason) { checkResult($0) }
+            loginInteractor.authenticateUsingBiometry(reason: reason, userInitiated: userInitiated) {
+                checkResult($0)
+            }
         }
     }
 }

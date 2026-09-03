@@ -57,13 +57,13 @@ struct LoginView: View {
                 PINWelcomeFooter {
                     presenter.isResetVisible = true
                 }
-                .minimumBottomSpacing()
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .minimumBottomSpacing()
         .sensoryFeedback(.success, trigger: presenter.success) { _, new in new }
         .sensoryFeedback(.start, trigger: presenter.unlock)
-        .background(AppColor.backgroundsPrimary, ignoresSafeAreaEdges: .all)
+        .background(AppColor.backgroundsPrimary)
         .onAppear {
             presenter.onAppear()
         }

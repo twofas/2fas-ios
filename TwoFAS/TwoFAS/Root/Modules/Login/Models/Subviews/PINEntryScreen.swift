@@ -54,7 +54,7 @@ struct PINEntryBlock<Header: View>: View {
 
     var body: some View {
         VStack(spacing: .zero) {
-            AdaptiveReadableContainer {
+            AdaptiveReadableContainer(verticalMargin: .zero) {
                 header()
             }
 
@@ -63,7 +63,7 @@ struct PINEntryBlock<Header: View>: View {
             PINDots(count: totalDigits, enteredCount: $enteredCount)
                 .disabled(isDisabled)
                 .shake(on: shake)
-                .sensoryFeedback(.error, trigger: shake) { _, new in new }
+                .sensoryFeedback(.error, trigger: shake)
 
             gap
 
@@ -98,6 +98,8 @@ struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
         self.footer = footer
     }
 
+    private var hasFooter: Bool { Footer.self != EmptyView.self }
+
     var body: some View {
         VStack(spacing: .zero) {
             Spacer(minLength: 0)
@@ -112,20 +114,24 @@ struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
                 Text(presenter.info)
                     .textStyle(.title2, .emphasized)
                     .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .foregroundStyle(presenter.isError ? AppColor.accentsBrand : AppColor.labelsPrimary)
                     .animation(.easeInOut, value: presenter.info)
             }
 
             Spacer(minLength: 0)
 
-            HStack(alignment: .center) {
-                footer()
+            if hasFooter {
+                HStack(alignment: .center) {
+                    footer()
+                }
+                .frame(minHeight: Spacing.XXXL.value)
+                .padding(.top, .XL)
             }
-            .frame(minHeight: Spacing.XXXL.value)
-            .padding(.top, .XL)
-            .minimumBottomSpacing()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .minimumBottomSpacing()
         .background(AppColor.backgroundsPrimary)
     }
 }
@@ -188,7 +194,6 @@ private final class PreviewPINEntryPresenter: PINEntryPresenting {
     NavigationStack {
         PINEntryScreen(presenter: PreviewPINEntryPresenter(totalDigits: 6, enteredDigitCount: 2)) {
             TFButton(T.Settings.selectPinLength, variant: .borderless, size: .small) {}
-                .padding(.bottom, .XL)
         }
         .navigationTitle("PIN")
         .navigationBarTitleDisplayMode(.inline)

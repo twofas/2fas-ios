@@ -48,7 +48,6 @@ struct PINKeyboard: View {
             TFPinButton(.delete, action: action)
                 .opacity(canDelete ? 1 : 0)
                 .disabled(!canDelete)
-                .accessibilityHidden(!canDelete)
                 .animation(.easeInOut(duration: PINDotsAnimation.fillDuration), value: canDelete)
         }
     }

@@ -26,6 +26,8 @@ class CommonNavigationController: UINavigationController {
 
         guard #unavailable(iOS 26.0) else { return }
 
+        navigationBar.tintColor = AppColor.accentsBrand.uiColor
+
         let shadowLine = Asset.shadowLine.image
             .withRenderingMode(.alwaysTemplate)
             .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)

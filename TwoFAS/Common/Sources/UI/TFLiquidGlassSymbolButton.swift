@@ -29,8 +29,6 @@ public struct TFLiquidGlassSymbolButton: View {
 
     private let fontSize: CGFloat = 20
 
-    @GestureState
-    private var isPressed = false
     private let action: () -> Void
     private let symbol: Symbol
 
@@ -65,11 +63,6 @@ public struct TFLiquidGlassSymbolButton: View {
                 $0.buttonStyle(ButtonFeedbackStyle())
             }
         }
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .updating($isPressed) { _, state, _ in state = true }
-        )
-        .sensoryFeedback(.impact(flexibility: .rigid, intensity: 0.6), trigger: isPressed) { _, new in new }
     }
 
     private var symbolLabel: some View {

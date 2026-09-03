@@ -23,7 +23,7 @@ import Common
 final class TokensServiceName: UIView {
     private let label: UILabel = {
         let label = UILabel()
-        label.font = TextStyle.subheadline.uiFont(.emphasized)
+        label.font = TextStyle.headline.uiFont()
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
@@ -60,9 +60,9 @@ final class TokensServiceName: UIView {
     func setKind(_ kind: TokensCellKind) {
         switch kind {
         case .compact:
-            label.font = TextStyle.subheadline.uiFont(.medium)
+            label.font = TextStyle.subheadline.uiFont(.emphasized)
         case .edit:
-            label.font = TextStyle.subheadline.uiFont(.medium)
+            label.font = TextStyle.subheadline.uiFont(.emphasized)
         case .normal:
             label.font = TextStyle.headline.uiFont()
         case .pass:

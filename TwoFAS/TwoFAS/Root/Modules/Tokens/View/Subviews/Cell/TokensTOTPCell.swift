@@ -49,7 +49,11 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
     private var useNextToken = false
     private var isLocked = false
     private var shouldAnimate = true
-    
+
+    private var withAdditionalInfoConstraints: [NSLayoutConstraint] = []
+    private var withoutAdditionalInfoConstraints: [NSLayoutConstraint] = []
+
+    private let groupContainer = UIView()
     private let categoryView = TokensCategory()
     private var revealButton: TokensRevealButton = {
         let button = TokensRevealButton()
@@ -119,7 +123,8 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
             additionalInfoLabel.isHidden = true
             additionalInfoLabel.clear()
         }
-        
+        applyAdditionalInfoLayout(hasAdditionalInfo: !trimmedAdditionalInfo.isEmpty)
+
         clearTokenMarking()
         categoryView.setColor(category)
         logoView.configure(with: logoType)
@@ -210,29 +215,48 @@ private extension TokensTOTPCell {
             logoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         
-        contentView.addSubview(serviceNameLabel, with: [
-            serviceNameLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: Spacing.L.rawValue),
-            serviceNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Spacing.XL.rawValue)
+        contentView.addSubview(groupContainer, with: [
+            groupContainer.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: Spacing.L.rawValue),
+            groupContainer.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
-        
-        let additionalInfoMinHeight = additionalInfoLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 16)
-        additionalInfoMinHeight.priority = .defaultHigh
-        contentView.addSubview(additionalInfoLabel, with: [
-            additionalInfoLabel.leadingAnchor.constraint(equalTo: serviceNameLabel.leadingAnchor),
-            additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor),
-            additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor),
-            additionalInfoMinHeight
+
+        let groupTopMargin = groupContainer.topAnchor.constraint(
+            greaterThanOrEqualTo: contentView.topAnchor,
+            constant: Spacing.XL.rawValue
+        )
+        groupTopMargin.priority = .defaultHigh
+        let groupBottomMargin = groupContainer.bottomAnchor.constraint(
+            lessThanOrEqualTo: contentView.bottomAnchor,
+            constant: -Spacing.XL.rawValue
+        )
+        groupBottomMargin.priority = .defaultHigh
+        NSLayoutConstraint.activate([groupTopMargin, groupBottomMargin])
+
+        groupContainer.addSubview(serviceNameLabel, with: [
+            serviceNameLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
+            serviceNameLabel.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor),
+            serviceNameLabel.topAnchor.constraint(equalTo: groupContainer.topAnchor)
         ])
-        
-        contentView.addSubview(tokenLabel, with: [
-            additionalInfoLabel.bottomAnchor.constraint(
-                equalTo: tokenLabel.topAnchor,
-                constant: -tokenNegativeMargin
-            ),
-            tokenLabel.leadingAnchor.constraint(equalTo: serviceNameLabel.leadingAnchor),
-            tokenLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Spacing.XL.rawValue)
+
+        groupContainer.addSubview(additionalInfoLabel, with: [
+            additionalInfoLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
+            additionalInfoLabel.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor),
+            additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor)
         ])
-        
+
+        groupContainer.addSubview(tokenLabel, with: [
+            tokenLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
+            tokenLabel.bottomAnchor.constraint(equalTo: groupContainer.bottomAnchor)
+        ])
+
+        withAdditionalInfoConstraints = [
+            tokenLabel.topAnchor.constraint(equalTo: additionalInfoLabel.bottomAnchor, constant: tokenNegativeMargin)
+        ]
+        withoutAdditionalInfoConstraints = [
+            tokenLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor, constant: tokenNegativeMargin)
+        ]
+        NSLayoutConstraint.activate(withoutAdditionalInfoConstraints)
+
         contentView.addSubview(nextTokenLabel, with: [
             nextTokenLabel.leadingAnchor.constraint(equalTo: tokenLabel.trailingAnchor, constant: hMargin),
             nextTokenLabel.topAnchor.constraint(equalTo: tokenLabel.topAnchor),
@@ -240,7 +264,7 @@ private extension TokensTOTPCell {
         ])
 
         contentView.addSubview(accessoryContainer, with: [
-            serviceNameLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
+            groupContainer.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
             accessoryContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -hMargin),
             accessoryContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
@@ -267,6 +291,16 @@ private extension TokensTOTPCell {
         tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
     }
     
+    func applyAdditionalInfoLayout(hasAdditionalInfo: Bool) {
+        NSLayoutConstraint.deactivate(withAdditionalInfoConstraints)
+        NSLayoutConstraint.deactivate(withoutAdditionalInfoConstraints)
+        if hasAdditionalInfo {
+            NSLayoutConstraint.activate(withAdditionalInfoConstraints)
+        } else {
+            NSLayoutConstraint.activate(withoutAdditionalInfoConstraints)
+        }
+    }
+
     func setupRevealButton() {
         revealButton.addTarget(self, action: #selector(ditTapReveal), for: .touchUpInside)
     }

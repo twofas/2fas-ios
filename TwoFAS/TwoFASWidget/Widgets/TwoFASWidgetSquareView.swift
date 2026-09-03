@@ -62,7 +62,7 @@ struct TwoFASWidgetSquareView: View {
                 
                 Spacer()
                 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: .S) {
                     Text(entryData.name)
                         .foregroundStyle(.labelsPrimary)
                         .textStyle(.subheadline, .emphasized)

@@ -57,7 +57,7 @@ public enum TextStyle {
     case token
     /// SF Pro 28pt — maps to `Font.TextStyle.body`
     case compactToken
-    /// SF Pro 15pt — maps to `Font.TextStyle.subheadline`
+    /// SF Pro 28pt — maps to `Font.TextStyle.title1`
     case smallToken
     /// SF Pro 13pt — maps to `Font.TextStyle.footnote
     case counter

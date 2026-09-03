@@ -312,8 +312,8 @@ extension TokensViewController {
             return .estimated(60)
         }
         switch presenter.listStyle {
-        case .default: return .estimated(135)
-        case .compact: return .absolute(90)
+        case .default: return .absolute(109)
+        case .compact: return .absolute(95)
         }
     }
     

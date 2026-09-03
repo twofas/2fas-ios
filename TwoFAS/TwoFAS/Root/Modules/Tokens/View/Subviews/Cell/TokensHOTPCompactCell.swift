@@ -38,7 +38,9 @@ final class TokensHOTPCompactCell: UICollectionViewCell, TokenCounterConsumer, T
     private var hideTokenWithoutAdditionalInfoConstraints: [NSLayoutConstraint] = []
 
     private var hasAdditionalInfo = false
-    
+
+    private let groupContainer = UIView()
+
     private let tokenLabel: TokensTokenView = {
         let view = TokensTokenView()
         view.setKind(.compact)
@@ -184,7 +186,6 @@ private extension TokensHOTPCompactCell {
     }
     
     func setupLayout() {
-        let tokenBottomOffset = 2.0
         contentView.addSubview(separator, with: [
             separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -204,61 +205,77 @@ private extension TokensHOTPCompactCell {
             logoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
         ])
         
-        contentView.addSubview(serviceNameLabel, with: [
-            serviceNameLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin)
+        contentView.addSubview(groupContainer, with: [
+            groupContainer.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
+            groupContainer.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
 
-        contentView.addSubview(additionalInfoLabel, with: [
-            additionalInfoLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin)
-        ])
-
-        contentView.addSubview(tokenLabel, with: [
-            tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            tokenLabel.bottomAnchor.constraint(
-                equalTo: contentView.bottomAnchor,
-                constant: -vMargin + tokenBottomOffset
-            )
-        ])
-
-        let serviceNameTop = serviceNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin)
-        let serviceNameBottom = serviceNameLabel.bottomAnchor.constraint(
-            equalTo: contentView.bottomAnchor,
+        let groupTopMargin = groupContainer.topAnchor.constraint(
+            greaterThanOrEqualTo: contentView.topAnchor,
+            constant: vMargin
+        )
+        groupTopMargin.priority = .defaultHigh
+        let groupBottomMargin = groupContainer.bottomAnchor.constraint(
+            lessThanOrEqualTo: contentView.bottomAnchor,
             constant: -vMargin
         )
-        let serviceNameCenterY = serviceNameLabel.bottomAnchor.constraint(equalTo: contentView.centerYAnchor)
-        let tokenFromServiceName = tokenLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor)
-        let tokenFromAdditionalInfo = tokenLabel.topAnchor.constraint(equalTo: additionalInfoLabel.bottomAnchor)
+        groupBottomMargin.priority = .defaultHigh
+        NSLayoutConstraint.activate([groupTopMargin, groupBottomMargin])
+
+        groupContainer.addSubview(serviceNameLabel, with: [
+            serviceNameLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
+            serviceNameLabel.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor),
+            serviceNameLabel.topAnchor.constraint(equalTo: groupContainer.topAnchor)
+        ])
+
+        groupContainer.addSubview(additionalInfoLabel, with: [
+            additionalInfoLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
+            additionalInfoLabel.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor)
+        ])
+
+        groupContainer.addSubview(tokenLabel, with: [
+            tokenLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
+            tokenLabel.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor)
+        ])
+
+        let tokenFromServiceName = tokenLabel.topAnchor.constraint(
+            equalTo: serviceNameLabel.bottomAnchor,
+            constant: Spacing.SM.rawValue
+        )
+        let tokenFromAdditionalInfo = tokenLabel.topAnchor.constraint(
+            equalTo: additionalInfoLabel.bottomAnchor,
+            constant: Spacing.SM.rawValue
+        )
         let additionalInfoTop = additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor)
-        let additionalInfoWidth = additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
-        let additionalInfoHeight = additionalInfoLabel.heightAnchor.constraint(equalTo: serviceNameLabel.heightAnchor)
+        let containerBottomToToken = groupContainer.bottomAnchor.constraint(equalTo: tokenLabel.bottomAnchor)
+        let containerBottomToAdditionalInfo = groupContainer.bottomAnchor.constraint(
+            equalTo: additionalInfoLabel.bottomAnchor
+        )
+        let containerBottomToServiceName = groupContainer.bottomAnchor.constraint(
+            equalTo: serviceNameLabel.bottomAnchor
+        )
 
         showTokenWithAdditionalInfoConstraints = [
-            serviceNameTop,
             additionalInfoTop,
-            additionalInfoWidth,
-            additionalInfoHeight,
-            tokenFromAdditionalInfo
+            tokenFromAdditionalInfo,
+            containerBottomToToken
         ]
         showTokenWithoutAdditionalInfoConstraints = [
-            serviceNameTop,
-            tokenFromServiceName
+            tokenFromServiceName,
+            containerBottomToToken
         ]
         hideTokenWithAdditionalInfoConstraints = [
-            serviceNameCenterY,
             additionalInfoTop,
-            additionalInfoWidth,
-            additionalInfoHeight
+            containerBottomToAdditionalInfo
         ]
         hideTokenWithoutAdditionalInfoConstraints = [
-            serviceNameTop,
-            serviceNameBottom
+            containerBottomToServiceName
         ]
 
         NSLayoutConstraint.activate(showTokenWithoutAdditionalInfoConstraints)
 
         contentView.addSubview(accessoryContainer, with: [
-            tokenLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
-            serviceNameLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
+            groupContainer.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
             accessoryContainer.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor,
                 constant: -hMargin + 4

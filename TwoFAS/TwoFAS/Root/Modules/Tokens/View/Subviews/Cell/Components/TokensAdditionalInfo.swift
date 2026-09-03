@@ -60,9 +60,9 @@ final class TokensAdditionalInfo: UIView {
     func setKind(_ kind: TokensCellKind) {
         switch kind {
         case .compact:
-            label.font = TextStyle.caption1.uiFont(.medium)
+            label.font = TextStyle.caption1.uiFont()
         case .edit:
-            label.font = TextStyle.caption1.uiFont(.medium)
+            label.font = TextStyle.caption1.uiFont()
         case .normal:
             label.font = TextStyle.footnote.uiFont()
         case .pass:

@@ -29,7 +29,10 @@ import Common
 /// content-height bottom sheet in compact. Works with any `UIViewController`; the content
 /// is expected to report its measured height into `setContentHeight(_:)` — for a
 /// `UIHostingController` with `SheetContent` that is `onHeightChange(_:)` — otherwise the
-/// fallback size applies.
+/// fallback size applies. The presented content decides its own backdrop through the
+/// `backgroundColor` argument: nil leaves the system presentation material showing (the
+/// popover material, Liquid Glass for the compact sheet on iOS 26), a color paints an
+/// opaque backdrop under the content in every incarnation.
 ///
 /// The owner (typically a flow controller) keeps the host alive for the lifetime of the
 /// presentation; the presented controller itself is only referenced weakly.
@@ -38,16 +41,19 @@ final class AdaptiveModalHost: NSObject {
     private var pendingDetentInvalidation = false
     private var lastContentHeight: CGFloat?
     private var popoverAnchorProvider: (() -> UIView?)?
+    private var backgroundColor: UIColor?
     private weak var presented: UIViewController?
     private weak var presentingTarget: UIViewController?
 
     func presentAsPopover(
         _ viewController: UIViewController,
         on parentViewController: UIViewController,
-        anchor: (() -> UIView?)? = nil
+        anchor: (() -> UIView?)? = nil,
+        backgroundColor: UIColor? = nil
     ) {
         presented = viewController
         popoverAnchorProvider = anchor
+        self.backgroundColor = backgroundColor
         // Set the style before anything can touch the presentation controller: it is
         // created lazily on first access and cached — a later style change would be
         // silently ignored.
@@ -78,16 +84,21 @@ final class AdaptiveModalHost: NSObject {
             ? Theme.Metrics.popoverPreferredWidth
             : (window?.bounds.width ?? Theme.Metrics.popoverPreferredWidth)
         measureContent(of: viewController, in: parentViewController, width: measurementWidth) {
-            self.presentPopover(viewController, isAdaptedToSheet: !isRegularWidth)
+            self.presentPopover(viewController)
         }
     }
 
     /// Presents a plain system form sheet: a centered card at the measured content height
     /// in regular width, a content-height bottom sheet in compact — the system switches
     /// between the two live during window resizes.
-    func presentAsFormSheet(_ viewController: UIViewController, on parentViewController: UIViewController) {
+    func presentAsFormSheet(
+        _ viewController: UIViewController,
+        on parentViewController: UIViewController,
+        backgroundColor: UIColor? = nil
+    ) {
         presented = viewController
         popoverAnchorProvider = nil
+        self.backgroundColor = backgroundColor
         viewController.modalPresentationStyle = .formSheet
 
         let window = parentViewController.viewIfLoaded?.window
@@ -150,13 +161,13 @@ private extension AdaptiveModalHost {
         }
     }
 
-    func presentPopover(_ viewController: UIViewController, isAdaptedToSheet: Bool) {
+    func presentPopover(_ viewController: UIViewController) {
         // The presentation was deferred by a runloop turn for the measurement, so the
         // callers' presentedViewController == nil guards no longer protect against a rapid
         // second activation — re-check here, where the presentation actually happens.
         guard let presentingTarget, presentingTarget.presentedViewController == nil else { return }
 
-        applyPopoverBackground(isAdaptedToSheet: isAdaptedToSheet)
+        applyBackground()
         viewController.preferredContentSize = contentSize()
 
         if let popover = viewController.popoverPresentationController {
@@ -190,7 +201,7 @@ private extension AdaptiveModalHost {
         // deferred by a runloop turn for the measurement.
         guard let presentingTarget, presentingTarget.presentedViewController == nil else { return }
 
-        viewController.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+        applyBackground()
 
         if let sheet = viewController.sheetPresentationController {
             sheet.prefersGrabberVisible = false
@@ -265,14 +276,11 @@ private extension AdaptiveModalHost {
         }
     }
 
-    // The popover itself needs an opaque background; the compact-adapted sheet uses the
-    // same transparent Liquid Glass treatment as a plain bottom sheet on iOS 26.
-    func applyPopoverBackground(isAdaptedToSheet: Bool) {
-        if #available(iOS 26.0, *), isAdaptedToSheet {
-            presented?.view.backgroundColor = .clear
-        } else {
-            presented?.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
-        }
+    // The content's declared backdrop, or none: with nil the system presentation material
+    // shows through — the popover material, the same transparent Liquid Glass treatment as
+    // a plain bottom sheet for the compact incarnations on iOS 26.
+    func applyBackground() {
+        presented?.view.backgroundColor = backgroundColor ?? .clear
     }
 
     /// The measured height with the pre-measurement fallback, capped at the large-modal
@@ -332,14 +340,12 @@ extension AdaptiveModalHost: UIPopoverPresentationControllerDelegate {
     }
 
     // Fires when the popover adapts to the compact sheet and again (with .none) when it
-    // returns to the popover — the background follows the current incarnation.
+    // returns to the popover.
     func presentationController(
         _ presentationController: UIPresentationController,
         willPresentWithAdaptiveStyle style: UIModalPresentationStyle,
         transitionCoordinator: UIViewControllerTransitionCoordinator?
     ) {
-        applyPopoverBackground(isAdaptedToSheet: style != .none)
-
         if let transitionCoordinator {
             isAdaptationTransitionRunning = true
             transitionCoordinator.animate(alongsideTransition: nil) { [weak self] _ in

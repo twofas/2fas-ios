@@ -63,7 +63,11 @@ final class DeleteServiceFlowController: FlowController {
         // A centered card at the measured content height in regular width; in compact the
         // same height drives the bottom sheet's detent. SheetContent's fillViewport
         // stretches and centers the content inside whatever it gets.
-        flowController.modalHost.presentAsFormSheet(hosting, on: viewController)
+        flowController.modalHost.presentAsFormSheet(
+            hosting,
+            on: viewController,
+            backgroundColor: AppColor.backgroundsPrimaryElevated.uiColor
+        )
     }
 }
 

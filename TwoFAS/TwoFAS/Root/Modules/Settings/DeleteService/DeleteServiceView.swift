@@ -53,7 +53,6 @@ struct DeleteServiceView: View {
         }
         .balancedBottomSpacing()
         .onHeightChange(onHeightChange)
-        .background(.backgroundsPrimaryElevated)
     }
 }
 

@@ -84,7 +84,6 @@ internal enum Asset {
   internal static let introductionPage2 = ImageAsset(name: "IntroductionPage2")
   internal static let introductionaryLogo = ImageAsset(name: "IntroductionaryLogo")
   internal static let logoGrid = ImageAsset(name: "LogoGrid")
-  internal static let naviIconAdd = ImageAsset(name: "NaviIconAdd")
   internal static let naviIconAddFirst = ImageAsset(name: "NaviIconAddFirst")
   internal static let naviSortIcon = ImageAsset(name: "NaviSortIcon")
   internal static let navibarNewsIcon = ImageAsset(name: "NavibarNewsIcon")
@@ -97,8 +96,6 @@ internal enum Asset {
   internal static let pinLogo = ImageAsset(name: "PINLogo")
   internal static let passFrameLight = ImageAsset(name: "PassFrameLight")
   internal static let permissionsPushNotifications = ImageAsset(name: "PermissionsPushNotifications")
-  internal static let radioSelectionDeselected = ImageAsset(name: "RadioSelectionDeselected")
-  internal static let radioSelectionSelected = ImageAsset(name: "RadioSelectionSelected")
   internal static let refreshTokenCounter = ImageAsset(name: "RefreshTokenCounter")
   internal static let requestProvider = ImageAsset(name: "RequestProvider")
   internal static let requestSocial = ImageAsset(name: "RequestSocial")
@@ -118,8 +115,6 @@ internal enum Asset {
   internal static let socialReddit = ImageAsset(name: "social_reddit")
   internal static let socialTwitter = ImageAsset(name: "social_twitter")
   internal static let socialYoutube = ImageAsset(name: "social_youtube")
-  internal static let tabBarIconServicesInactive = ImageAsset(name: "TabBarIconServicesInactive")
-  internal static let tabBarIconSettingsInactive = ImageAsset(name: "TabBarIconSettingsInactive")
   internal static let trashIcon = ImageAsset(name: "TrashIcon")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

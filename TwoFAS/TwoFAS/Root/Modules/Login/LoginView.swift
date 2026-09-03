@@ -39,35 +39,31 @@ struct LoginView: View {
                 .padding(.XL)
             }
             
-            VStack(spacing: .XXXL) {
-                Spacer()
-                AdaptiveReadableContainer {
-                    PINWelcomeHeader(loginType: presenter.loginType, info: $presenter.info)
-                }
-                Spacer()
-            }
-            .containerRelativeFrame(.vertical) { length, _ in
-                length * (presenter.loginType == .verify ? 0.20 : 0.25)
+            Spacer(minLength: 0)
+            
+            PINEntryBlock(
+                totalDigits: presenter.totalDigits,
+                enteredCount: $presenter.enteredDigitCount,
+                shake: presenter.shake,
+                isDisabled: presenter.isBlocked,
+                onKeyPressed: presenter.onKeyPressed
+            ) {
+                PINWelcomeHeader(loginType: presenter.loginType, info: $presenter.info)
             }
             
-            PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
-                .disabled(presenter.isBlocked)
-                .shake(on: presenter.shake)
-                .sensoryFeedback(.error, trigger: presenter.shake) { _, new in new }
-            
-            PINKeyboard(action: presenter.onKeyPressed)
-                .disabled(presenter.isBlocked)
+            Spacer(minLength: 0)
             
             if presenter.loginType == .login {
                 PINWelcomeFooter {
                     presenter.isResetVisible = true
                 }
+                .minimumBottomSpacing()
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .sensoryFeedback(.success, trigger: presenter.success) { _, new in new }
         .sensoryFeedback(.start, trigger: presenter.unlock)
-        .background(AppColor.backgroundsPrimary)
+        .background(AppColor.backgroundsPrimary, ignoresSafeAreaEdges: .all)
         .onAppear {
             presenter.onAppear()
         }
@@ -83,4 +79,37 @@ struct LoginView: View {
             AppReset()
         }
     }
+}
+
+// MARK: - Preview
+
+private final class PreviewLoginFlowController: LoginFlowControlling {
+    func toClose() {}
+    func toLoggedIn() {}
+}
+
+private final class PreviewLoginInteractor: LoginModuleInteracting {
+    let isLocked = false
+    let isLoggedOut = true
+    let lockTime: Int? = nil
+    let codeLength = 4
+
+    func verify(numbers: [Int]) -> Bool { false }
+    func verifyUsingBiometry(reason: String, completion: @escaping (Bool) -> Void) {}
+}
+
+private func previewPresenter(loginType: LoginType) -> LoginPresenter {
+    LoginPresenter(
+        loginType: loginType,
+        flowController: PreviewLoginFlowController(),
+        interactor: PreviewLoginInteractor()
+    )
+}
+
+#Preview("Login") {
+    LoginView(presenter: previewPresenter(loginType: .login))
+}
+
+#Preview("Verify") {
+    LoginView(presenter: previewPresenter(loginType: .verify))
 }

@@ -54,7 +54,5 @@ struct PINDots: View {
         .animation(.easeInOut(duration: PINDotsAnimation.fillDuration), value: enteredCount)
         .frame(maxWidth: .infinity)
         .frame(height: size)
-        .padding(.top, .XXXXXL)
-        .padding(.bottom, .L)
     }
 }

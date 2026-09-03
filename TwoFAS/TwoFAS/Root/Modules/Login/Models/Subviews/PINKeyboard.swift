@@ -21,16 +21,12 @@ import SwiftUI
 import Common
 
 struct PINKeyboard: View {
+    /// Whether there is anything to delete. When `false` the delete key is hidden
+    /// (but still occupies its slot so the grid does not reflow).
+    let canDelete: Bool
     let action: (TFPinKey) -> Void
 
     var body: some View {
-        keypad
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.XL)
-    }
-
-    @ViewBuilder
-    private var keypad: some View {
         // Note: the buttons are intentionally NOT wrapped in a `GlassEffectContainer`.
         // The keys are spaced far apart, so they never blend or morph — the container would
         // add no visual benefit. Worse, it merges all keys into a single rendered glass shape,
@@ -50,12 +46,16 @@ struct PINKeyboard: View {
                 .isHidden(true, remove: false)
             TFPinButton(.digit(0), action: action)
             TFPinButton(.delete, action: action)
+                .opacity(canDelete ? 1 : 0)
+                .disabled(!canDelete)
+                .accessibilityHidden(!canDelete)
+                .animation(.easeInOut(duration: PINDotsAnimation.fillDuration), value: canDelete)
         }
     }
 }
 
 #Preview {
-    PINKeyboard(action: { _ in })
+    PINKeyboard(canDelete: true, action: { _ in })
         .background(AppColor.backgroundsPrimary)
 }
 

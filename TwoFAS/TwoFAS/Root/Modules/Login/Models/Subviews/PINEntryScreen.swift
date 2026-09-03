@@ -38,6 +38,48 @@ extension PINEntryPresenting {
     var isInputDisabled: Bool { false }
 }
 
+/// The shared centre of every PIN screen: a header, the dots and the keypad, with fixed gaps
+/// that shrink when space is tight. Used by `PINEntryScreen` and `LoginView`.
+///
+/// The block claims a higher layout priority than its siblings, so a host can centre it
+/// between plain `Spacer`s and it still keeps its natural height; inside, the keypad is
+/// sized before the gaps so they compress first.
+struct PINEntryBlock<Header: View>: View {
+    let totalDigits: Int
+    @Binding var enteredCount: Int
+    let shake: Bool
+    let isDisabled: Bool
+    let onKeyPressed: (TFPinKey) -> Void
+    @ViewBuilder let header: () -> Header
+
+    var body: some View {
+        VStack(spacing: .zero) {
+            AdaptiveReadableContainer {
+                header()
+            }
+
+            gap
+
+            PINDots(count: totalDigits, enteredCount: $enteredCount)
+                .disabled(isDisabled)
+                .shake(on: shake)
+                .sensoryFeedback(.error, trigger: shake) { _, new in new }
+
+            gap
+
+            PINKeyboard(canDelete: enteredCount > 0, action: onKeyPressed)
+                .disabled(isDisabled)
+                .layoutPriority(1)
+        }
+        .layoutPriority(1)
+    }
+
+    private var gap: some View {
+        Spacer(minLength: Spacing.M.value)
+            .frame(maxHeight: Spacing.XXXXXXXL.value)
+    }
+}
+
 /// A reusable PIN-entry layout: info text, dots, keyboard and an optional footer.
 ///
 /// This view is intentionally navigation-bar agnostic — it renders no title bar
@@ -57,29 +99,31 @@ struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
     }
 
     var body: some View {
-        VStack(spacing: .XXXL) {
-            Text(presenter.info)
-                .textStyle(.title2, .emphasized)
-                .multilineTextAlignment(.center)
-                .foregroundStyle(presenter.isError ? AppColor.accentsBrand : AppColor.labelsPrimary)
-                .animation(.easeInOut, value: presenter.info)
-                .padding(.horizontal, .XL)
-                .padding(.top, .XL)
-
+        VStack(spacing: .zero) {
             Spacer(minLength: 0)
 
-            PINDots(count: presenter.totalDigits, enteredCount: $presenter.enteredDigitCount)
-                .disabled(presenter.isInputDisabled)
-                .shake(on: presenter.shake)
-                .sensoryFeedback(.error, trigger: presenter.shake) { _, new in new }
+            PINEntryBlock(
+                totalDigits: presenter.totalDigits,
+                enteredCount: $presenter.enteredDigitCount,
+                shake: presenter.shake,
+                isDisabled: presenter.isInputDisabled,
+                onKeyPressed: presenter.onKeyPressed
+            ) {
+                Text(presenter.info)
+                    .textStyle(.title2, .emphasized)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(presenter.isError ? AppColor.accentsBrand : AppColor.labelsPrimary)
+                    .animation(.easeInOut, value: presenter.info)
+            }
 
-            PINKeyboard(action: presenter.onKeyPressed)
-                .disabled(presenter.isInputDisabled)
+            Spacer(minLength: 0)
 
             HStack(alignment: .center) {
                 footer()
             }
-            .frame(minHeight: Spacing.XXXL.rawValue)
+            .frame(minHeight: Spacing.XXXL.value)
+            .padding(.top, .XL)
+            .minimumBottomSpacing()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(AppColor.backgroundsPrimary)
@@ -95,4 +139,66 @@ extension PINEntryScreen where Footer == EmptyView {
             footer: { EmptyView() }
         )
     }
+}
+
+// MARK: - Preview
+
+@Observable
+private final class PreviewPINEntryPresenter: PINEntryPresenting {
+    var info: String
+    let isError: Bool
+    let shake = false
+    var totalDigits: Int
+    var enteredDigitCount: Int
+    var isInputDisabled: Bool
+
+    init(
+        info: String = T.Security.enterPinShort,
+        isError: Bool = false,
+        totalDigits: Int = 4,
+        enteredDigitCount: Int = 0,
+        isInputDisabled: Bool = false
+    ) {
+        self.info = info
+        self.isError = isError
+        self.totalDigits = totalDigits
+        self.enteredDigitCount = enteredDigitCount
+        self.isInputDisabled = isInputDisabled
+    }
+
+    func onKeyPressed(_ key: TFPinKey) {
+        switch key {
+        case .digit:
+            enteredDigitCount = min(totalDigits, enteredDigitCount + 1)
+        case .delete:
+            enteredDigitCount = max(0, enteredDigitCount - 1)
+        }
+    }
+}
+
+#Preview("Default") {
+    NavigationStack {
+        PINEntryScreen(presenter: PreviewPINEntryPresenter())
+            .navigationTitle("PIN")
+            .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+#Preview("With footer, 6 digits") {
+    NavigationStack {
+        PINEntryScreen(presenter: PreviewPINEntryPresenter(totalDigits: 6, enteredDigitCount: 2)) {
+            TFButton(T.Settings.selectPinLength, variant: .borderless, size: .small) {}
+                .padding(.bottom, .XL)
+        }
+        .navigationTitle("PIN")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+#Preview("Error") {
+    PINEntryScreen(presenter: PreviewPINEntryPresenter(info: T.Security.pinErrorIncorrect, isError: true))
+}
+
+#Preview("Disabled") {
+    PINEntryScreen(presenter: PreviewPINEntryPresenter(isInputDisabled: true))
 }

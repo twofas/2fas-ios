@@ -24,40 +24,30 @@ import Common
 /// Presents a view controller as an adaptive popover: anchored (with an arrow) when a
 /// `popoverAnchor` resolves, centered and arrow-less otherwise; in compact width the system
 /// adapts it — both ways, live during window resizes — to a bottom sheet with a
-/// content-height detent. `presentAsSystemFormSheet(_:on:)` presents a plain form sheet
-/// instead: default system size in regular width, the same content-height bottom sheet in
-/// compact. Works with any `UIViewController`; the content is expected to report its
-/// measured height into `setContentHeight(_:)` — for a `UIHostingController` with
-/// `SheetContent` that is `onHeightChange(_:)` — otherwise the fallback size applies.
+/// content-height detent. `presentAsFormSheet(_:on:)` presents a plain form sheet
+/// instead: a centered card at the measured content height in regular width, the same
+/// content-height bottom sheet in compact. Works with any `UIViewController`; the content
+/// is expected to report its measured height into `setContentHeight(_:)` — for a
+/// `UIHostingController` with `SheetContent` that is `onHeightChange(_:)` — otherwise the
+/// fallback size applies.
 ///
 /// The owner (typically a flow controller) keeps the host alive for the lifetime of the
 /// presentation; the presented controller itself is only referenced weakly.
-final class AdaptivePopoverHost: NSObject {
-    /// How the form sheet sizes itself in regular width (compact always uses the
-    /// content-height detent).
-    enum FormSheetRegularSizing {
-        /// The standard system form sheet: default size, centered.
-        case systemDefault
-        /// A centered card at the measured content height (via `preferredContentSize` —
-        /// a custom detent would drop the sheet below center).
-        case contentHeight
-    }
-
+final class AdaptiveModalHost: NSObject {
     private var isAdaptationTransitionRunning = false
     private var pendingDetentInvalidation = false
     private var lastContentHeight: CGFloat?
     private var popoverAnchorProvider: (() -> UIView?)?
-    private var formSheetRegularSizing: FormSheetRegularSizing = .systemDefault
     private weak var presented: UIViewController?
     private weak var presentingTarget: UIViewController?
 
-    func present(
+    func presentAsPopover(
         _ viewController: UIViewController,
         on parentViewController: UIViewController,
-        popoverAnchor: (() -> UIView?)? = nil
+        anchor: (() -> UIView?)? = nil
     ) {
         presented = viewController
-        popoverAnchorProvider = popoverAnchor
+        popoverAnchorProvider = anchor
         // Set the style before anything can touch the presentation controller: it is
         // created lazily on first access and cached — a later style change would be
         // silently ignored.
@@ -92,18 +82,12 @@ final class AdaptivePopoverHost: NSObject {
         }
     }
 
-    /// Presents a plain system form sheet: a centered card in regular width (at the default
-    /// system size or the measured content height, per `regularSizing`), a content-height
-    /// bottom sheet in compact — the system switches between the two live during window
-    /// resizes.
-    func presentAsSystemFormSheet(
-        _ viewController: UIViewController,
-        on parentViewController: UIViewController,
-        regularSizing: FormSheetRegularSizing = .systemDefault
-    ) {
+    /// Presents a plain system form sheet: a centered card at the measured content height
+    /// in regular width, a content-height bottom sheet in compact — the system switches
+    /// between the two live during window resizes.
+    func presentAsFormSheet(_ viewController: UIViewController, on parentViewController: UIViewController) {
         presented = viewController
         popoverAnchorProvider = nil
-        formSheetRegularSizing = regularSizing
         viewController.modalPresentationStyle = .formSheet
 
         let window = parentViewController.viewIfLoaded?.window
@@ -116,10 +100,9 @@ final class AdaptivePopoverHost: NSObject {
         }
         presentingTarget = target
 
-        // Measure at the width the presentation will actually use: the modal width for a
-        // content-height card in regular, the window width for the compact sheet (with
-        // system-default regular sizing the measurement only drives the compact detent).
-        let measurementWidth = isRegularWidth && regularSizing == .contentHeight
+        // Measure at the width the presentation will actually use: the modal width for the
+        // regular-width card, the window width for the compact sheet.
+        let measurementWidth = isRegularWidth
             ? Theme.Metrics.modalPreferredWidth
             : (window?.bounds.width ?? Theme.Metrics.modalPreferredWidth)
         measureContent(of: viewController, in: parentViewController, width: measurementWidth) {
@@ -138,7 +121,7 @@ final class AdaptivePopoverHost: NSObject {
     }
 }
 
-private extension AdaptivePopoverHost {
+private extension AdaptiveModalHost {
     // The popover should come in at its final, content-fitted height, but SwiftUI content
     // only lays out inside a window: it is laid out invisibly in the presenting window
     // first (the measurement arrives via setContentHeight) and the actual presentation
@@ -251,16 +234,14 @@ private extension AdaptivePopoverHost {
     func applyFormSheetDetents(isRegularWidth: Bool) {
         guard let presented, let sheet = presented.sheetPresentationController else { return }
         if isRegularWidth {
-            // With the default large detent the system centers the card; a content-height
-            // card additionally follows preferredContentSize.
+            // With the default large detent the system centers the card, which then
+            // follows preferredContentSize.
             sheet.detents = [.large()]
             sheet.selectedDetentIdentifier = nil
-            if formSheetRegularSizing == .contentHeight {
-                presented.preferredContentSize = CGSize(
-                    width: Theme.Metrics.modalPreferredWidth,
-                    height: cappedContentHeight
-                )
-            }
+            presented.preferredContentSize = CGSize(
+                width: Theme.Metrics.modalPreferredWidth,
+                height: cappedContentHeight
+            )
         } else {
             sheet.detents = [contentDetent()]
             sheet.selectedDetentIdentifier = .adaptiveSheetContent
@@ -326,7 +307,7 @@ private extension AdaptivePopoverHost {
     }
 }
 
-extension AdaptivePopoverHost: UIPopoverPresentationControllerDelegate {
+extension AdaptiveModalHost: UIPopoverPresentationControllerDelegate {
     // Called whenever the popover needs to re-layout (window resize, adaptation back from
     // the compact sheet). The original anchor may be stale by then — collection views
     // reflow and reuse cells — so resolve the current one and re-point the arrow; the

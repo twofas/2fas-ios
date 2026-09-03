@@ -33,7 +33,7 @@ protocol TrashServiceFlowControlling: AnyObject {
 
 final class TrashServiceFlowController: FlowController {
     private weak var parent: TrashServiceFlowControllerParent?
-    private let sheetHost = AdaptivePopoverHost()
+    private let modalHost = AdaptiveModalHost()
 
     static func present(
         on viewController: UIViewController,
@@ -53,11 +53,11 @@ final class TrashServiceFlowController: FlowController {
         )
         hosting.rootView = AnyView(
             TrashServiceView(presenter: presenter) { [weak flowController] height in
-                flowController?.sheetHost.setContentHeight(height)
+                flowController?.modalHost.setContentHeight(height)
             }
         )
 
-        flowController.sheetHost.present(hosting, on: viewController, popoverAnchor: anchor)
+        flowController.modalHost.presentAsPopover(hosting, on: viewController, anchor: anchor)
     }
 }
 

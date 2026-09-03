@@ -50,7 +50,7 @@ extension View {
     /// Marks SwiftUI-presented sheet content with the presenting view's width class.
     /// Deliberately not public API: a plain `.sheet` that forgets this injection silently
     /// mis-sizes on iPad, so SwiftUI presentations go through `sheetContentPopover` (UIKit
-    /// ones manage sizing in `AdaptivePopoverHost` and leave the compact default).
+    /// ones manage sizing in `AdaptiveModalHost` and leave the compact default).
     fileprivate func presentedFromRegularWidth(_ isRegularWidth: Bool) -> some View {
         environment(\.presentedFromRegularWidth, isRegularWidth)
     }

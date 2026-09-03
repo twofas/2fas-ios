@@ -36,7 +36,7 @@ struct ImporterFileErrorView: View {
     
     var body: some View {
         TFInfoView(
-            icon: .image(Asset.fileError.image, .original),
+            icon: .systemImage(.documentBadgeEllipsis),
             title: title,
             attributedDescription: attributedDescription,
             buttons: {

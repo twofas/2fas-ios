@@ -33,7 +33,7 @@ struct SelectFromGalleryAdvice: View {
 
     var body: some View {
         TFInfoView(
-            icon: .image(Asset.selectFromGalleryAdviceIcon.image, .original),
+            icon: .systemImage(.photoBadgeMagnifyingglass),
             title: T.Tokens.galleryAdviceTitle,
             attributedDescription: adviceDescription,
             buttons: {

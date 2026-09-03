@@ -27,7 +27,7 @@ struct BrowserExtensionPairingFailureView: View {
     
     var body: some View {
         TFInfoView(
-            icon: .image(Asset.pairingFailed.image, .original),
+            icon: .systemImage(.laptopcomputerTrianglebadgeExclamationmark),
             title: T.Browser.pairingFailedTitle,
             description: T.Browser.pairingFailedDescription,
             background: .backgroundsPrimary,

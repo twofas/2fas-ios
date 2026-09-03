@@ -25,7 +25,7 @@ struct PushNotificationPermissionView: View {
     
     var body: some View {
         TFInfoView(
-            icon: .image(Asset.permissionsPushNotifications.image, .original),
+            icon: .systemImage(.bellBadge),
             title: T.Browser.pushNotificationsTitle,
             description: T.Browser.pushNotificationsContent,
             background: .backgroundsPrimary,

@@ -25,7 +25,7 @@ struct BrowserExtensionPairingSuccessfulView: View {
         
     var body: some View {
         TFInfoView(
-            icon: .image(Asset.pairingSuccessful.image, .original),
+            icon: .systemImage(.checkmarkCircle),
             title: T.Browser.pairingSuccessfulTitle,
             description: T.Browser.pairingSuccessfulDescription,
             background: .backgroundsPrimary,

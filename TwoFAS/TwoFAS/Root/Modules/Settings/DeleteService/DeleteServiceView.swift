@@ -30,7 +30,7 @@ struct DeleteServiceView: View {
     var body: some View {
         NavigationStack {
             TFInfoView(
-                icon: .image(Asset.deleteForeverIcon.image, .original),
+                icon: .systemImage(.trashSlash),
                 title: T.Commons.warning.uppercased(),
                 description: T.Tokens.tokenNotPossibleToRestore,
                 buttons: {

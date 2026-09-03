@@ -30,7 +30,7 @@ struct ExporterMainScreenView: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             TFInfoView(
-                icon: .image(Asset.exportBackup.image, .original),
+                icon: .systemImage(.squareAndArrowUp),
                 title: T.Backup.exportToBackupFile,
                 description: T.Backup.importFileTitle,
                 buttons: {

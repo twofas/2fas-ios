@@ -53,7 +53,7 @@ public struct TFInfoContent: View {
                 .accessibilityHidden(true)
             
             Text(title)
-                .textStyle(.title2, .emphasized)
+                .textStyle(.title2, .medium)
                 .foregroundStyle(.labelsPrimary)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)

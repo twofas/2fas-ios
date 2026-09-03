@@ -43,7 +43,7 @@ struct ImporterPreimportSummaryView: View {
                     }
                 ))
             }
-            return .image(Asset.importBackup.image, .original)
+            return .systemImage(.squareAndArrowDown)
         }(),
                    title: presenter.title,
                    attributedDescription: attributedDescription,

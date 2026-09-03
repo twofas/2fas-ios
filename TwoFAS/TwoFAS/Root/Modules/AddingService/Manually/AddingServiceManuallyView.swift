@@ -282,7 +282,7 @@ struct AddingServiceManuallyView: View {
                 )
             }
         }
-        .groupedSectionBackground()
+        .groupedSectionBackground(isElevated: true)
     }
 
     @ViewBuilder

@@ -26,13 +26,11 @@ protocol LoginModuleInteracting: AnyObject {
     var isLoggedOut: Bool { get }
     var lockTime: Int? { get }
     var codeLength: Int { get }
-    /// Biometry the user can authenticate with right now: `.none` unless biometry is
-    /// both enabled in the app and available on the device.
+    /// Biometry the user can authenticate with right now; `.none` when it is disabled
+    /// in the app or unavailable on the device.
     var availableBiometryType: BiometryType { get }
 
     func verify(numbers: [Int]) -> Bool
-    /// `userInitiated` marks a tap on the biometry key: it bypasses the automatic-prompt
-    /// attempt limit, so the prompt shows even after the user cancelled an automatic one.
     func verifyUsingBiometry(reason: String, userInitiated: Bool, completion: @escaping (Bool) -> Void)
 }
 
@@ -73,10 +71,8 @@ extension LoginModuleInteractor: LoginModuleInteracting {
     }
 
     var availableBiometryType: BiometryType {
-        guard protectionInteractor.isBiometryEnabled, protectionInteractor.isBiometryAvailable else {
-            return .none
-        }
-        return protectionInteractor.biometryType
+        // `biometryType` is already `.none` when the device can't evaluate biometrics.
+        protectionInteractor.isBiometryEnabled ? protectionInteractor.biometryType : .none
     }
 
     func verify(numbers: [Int]) -> Bool {
@@ -106,17 +102,18 @@ extension LoginModuleInteractor: LoginModuleInteracting {
             completion(false)
             return
         }
+        let authenticate = { [loginInteractor] in
+            loginInteractor.authenticateUsingBiometry(
+                reason: reason,
+                userInitiated: userInitiated,
+                completion: checkResult
+            )
+        }
         if appStateInteractor.willURLBeHandled {
             appStateInteractor.clearURLWillBeHandled()
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-                self.loginInteractor.authenticateUsingBiometry(reason: reason, userInitiated: userInitiated) {
-                    checkResult($0)
-                }
-            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: authenticate)
         } else {
-            loginInteractor.authenticateUsingBiometry(reason: reason, userInitiated: userInitiated) {
-                checkResult($0)
-            }
+            authenticate()
         }
     }
 }

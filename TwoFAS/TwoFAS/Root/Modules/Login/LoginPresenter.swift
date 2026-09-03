@@ -81,18 +81,20 @@ final class LoginPresenter {
         isVisible()
     }
     
-    func onKeyPressed(_ digit: TFPinKey) {
+    func onKeyPressed(_ key: TFPinKey) {
         guard !isBlocked else { return }
-        if let number = digit.number, pin.count < totalDigits {
+        switch key {
+        case .digit(let number):
+            guard pin.count < totalDigits else { return }
             pin.append(number)
             if pin.count >= totalDigits {
                 DispatchQueue.main.asyncAfter(deadline: .now() + PINDotsAnimation.fillDuration) { [weak self] in
                     self?.allEntered()
                 }
             }
-        } else if digit.isDelete {
+        case .delete:
             _ = pin.popLast()
-        } else if digit == .faceID || digit == .touchID {
+        case .biometry:
             biometry(userInitiated: true)
         }
     }
@@ -159,7 +161,6 @@ private extension LoginPresenter {
                 self?.unlock.toggle()
                 self?.timer.cancel()
                 self?.isBlocked = false
-                self?.refreshBiometryKey()
             } else {
                 self?.info = self?.lockTimeMessage ?? ""
             }
@@ -199,8 +200,8 @@ private extension LoginPresenter {
             return
         }
         biometryKey = switch interactor.availableBiometryType {
-        case .faceID: .faceID
-        case .touchID: .touchID
+        case .faceID: .biometry(.faceID)
+        case .touchID: .biometry(.touchID)
         case .none: nil
         }
     }

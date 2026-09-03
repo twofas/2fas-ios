@@ -91,16 +91,24 @@ struct PINEntryBlock<Header: View>: View {
 struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
     @Bindable private var presenter: Presenter
     private let footer: () -> Footer
+    private let hasFooter: Bool
 
     init(
         presenter: Presenter,
         @ViewBuilder footer: @escaping () -> Footer
     ) {
-        self._presenter = Bindable(wrappedValue: presenter)
-        self.footer = footer
+        self.init(presenter: presenter, footer: footer, hasFooter: true)
     }
 
-    private var hasFooter: Bool { Footer.self != EmptyView.self }
+    private init(
+        presenter: Presenter,
+        footer: @escaping () -> Footer,
+        hasFooter: Bool
+    ) {
+        self._presenter = Bindable(wrappedValue: presenter)
+        self.footer = footer
+        self.hasFooter = hasFooter
+    }
 
     var body: some View {
         VStack(spacing: .zero) {
@@ -144,7 +152,8 @@ extension PINEntryScreen where Footer == EmptyView {
     ) {
         self.init(
             presenter: presenter,
-            footer: { EmptyView() }
+            footer: { EmptyView() },
+            hasFooter: false
         )
     }
 }
@@ -180,7 +189,7 @@ private final class PreviewPINEntryPresenter: PINEntryPresenting {
             enteredDigitCount = min(totalDigits, enteredDigitCount + 1)
         case .delete:
             enteredDigitCount = max(0, enteredDigitCount - 1)
-        case .faceID, .touchID:
+        case .biometry:
             break
         }
     }

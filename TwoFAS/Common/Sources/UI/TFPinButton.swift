@@ -27,21 +27,32 @@ import SwiftUI
 /// TFPinButton(.digit(1)) { handle(.digit(1)) }
 /// TFPinButton(.digit(0)) { handle(.digit(0)) }
 /// TFPinButton(.delete)   { deleteLast() }
-/// TFPinButton(.faceID)   { authenticateWithBiometry() }
+/// TFPinButton(.biometry(.faceID)) { authenticateWithBiometry() }
 /// ```
 public enum TFPinKey: Equatable, Hashable {
+    /// Biometry kind a `.biometry` key stands for; picks the symbol shown on the key.
+    public enum Biometry: Equatable, Hashable {
+        case faceID
+        case touchID
+
+        var icon: IconName {
+            switch self {
+            case .faceID: .faceid
+            case .touchID: .touchid
+            }
+        }
+    }
+
     /// A numeric digit — expected range 0 … 9.
     case digit(Int)
     /// The backspace / delete key.
     case delete
-    /// Triggers Face ID authentication.
-    case faceID
-    /// Triggers Touch ID authentication.
-    case touchID
+    /// Triggers biometric authentication.
+    case biometry(Biometry)
 
     public var isDelete: Bool {
         switch self {
-        case .digit, .faceID, .touchID: false
+        case .digit, .biometry: false
         case .delete: true
         }
     }
@@ -49,7 +60,7 @@ public enum TFPinKey: Equatable, Hashable {
     public var number: Int? {
         switch self {
         case .digit(let int): int
-        case .delete, .faceID, .touchID: nil
+        case .delete, .biometry: nil
         }
     }
 }
@@ -160,15 +171,15 @@ public struct TFPinButton: View {
             Text(verbatim: "\(n)")
                 .textStyle(.title1, .medium)
         case .delete:
-            // Title2/Regular — 22 pt, weight 400
-            Image(icon: .deleteBackward)
-                .font(.system(size: 22, weight: .regular))
-        case .faceID:
-            Image(icon: .faceid)
-                .font(.system(size: 22, weight: .regular))
-        case .touchID:
-            Image(icon: .touchid)
-                .font(.system(size: 22, weight: .regular))
+            symbol(.deleteBackward)
+        case .biometry(let kind):
+            symbol(kind.icon)
         }
+    }
+
+    /// Title2/Regular — 22 pt, weight 400
+    private func symbol(_ icon: IconName) -> some View {
+        Image(icon: icon)
+            .font(.system(size: 22, weight: .regular))
     }
 }

@@ -103,11 +103,6 @@ extension ExporterRouter: ExporterPasswordProtectionFlowControlling {
     func toPINKeyboard(with password: String) {
         pushPIN(password: password)
     }
-
-    func back() {
-        guard !path.isEmpty else { return }
-        path.removeLast()
-    }
 }
 
 // MARK: - ExporterPINFlowControlling

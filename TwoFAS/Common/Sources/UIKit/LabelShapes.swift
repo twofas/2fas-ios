@@ -19,8 +19,8 @@
 
 import UIKit
 
-public enum LabelShapes {
-    public static func generate(for size: CGSize) -> (backgroundCircle: UIBezierPath, upperRect: UIBezierPath) {
+enum LabelShapes {
+    static func generate(for size: CGSize) -> (backgroundCircle: UIBezierPath, upperRect: UIBezierPath) {
         let width = size.width / 62.0
         let height = size.height / 62.0
         let backgroundCircle = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: size.width, height: size.height))

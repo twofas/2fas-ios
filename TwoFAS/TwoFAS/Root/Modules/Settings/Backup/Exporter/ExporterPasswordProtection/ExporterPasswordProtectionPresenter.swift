@@ -67,10 +67,6 @@ final class ExporterPasswordProtectionPresenter {
         flowController.toClose()
     }
 
-    func handleBack() {
-        flowController.back()
-    }
-
     func handleFirstChanged(_ newValue: String) {
         if newValue.isEmpty {
             password1Error = nil

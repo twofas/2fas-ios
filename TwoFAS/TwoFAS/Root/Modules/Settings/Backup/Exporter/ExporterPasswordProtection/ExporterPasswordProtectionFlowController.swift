@@ -24,5 +24,4 @@ protocol ExporterPasswordProtectionFlowControlling: AnyObject {
     func toExport(with url: URL)
     func toPINKeyboard(with password: String)
     func toExportError()
-    func back()
 }

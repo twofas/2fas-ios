@@ -20,7 +20,7 @@
 import Foundation
 import Protection
 
-public enum BiometryAuthenticationResult {
+enum BiometryAuthenticationResult {
     case autenticated
     case notAvailable
     case failed

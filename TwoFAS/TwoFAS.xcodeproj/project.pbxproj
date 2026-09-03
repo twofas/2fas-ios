@@ -267,7 +267,6 @@
 		C240486B27655BD70076376E /* ImporterOpenFilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240486A27655BD70076376E /* ImporterOpenFilePresenter.swift */; };
 		C240486F27655E760076376E /* ImporterOpenFileFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240486E27655E760076376E /* ImporterOpenFileFlowController.swift */; };
 		C24048712765612F0076376E /* RootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24048702765612F0076376E /* RootNavigationController.swift */; };
-		C240487C27656DB40076376E /* ImporterFileErrorFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240487B27656DB40076376E /* ImporterFileErrorFlowController.swift */; };
 		C2404885276572060076376E /* ImporterPreimportSummaryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404884276572060076376E /* ImporterPreimportSummaryPresenter.swift */; };
 		C24048872765723C0076376E /* ImporterPreimportSummaryFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24048862765723C0076376E /* ImporterPreimportSummaryFlowController.swift */; };
 		C2404889276573420076376E /* ImporterPreimportSummaryModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404888276573420076376E /* ImporterPreimportSummaryModuleInteractor.swift */; };
@@ -2127,7 +2126,6 @@
 		C240486A27655BD70076376E /* ImporterOpenFilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFilePresenter.swift; sourceTree = "<group>"; };
 		C240486E27655E760076376E /* ImporterOpenFileFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileFlowController.swift; sourceTree = "<group>"; };
 		C24048702765612F0076376E /* RootNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootNavigationController.swift; sourceTree = "<group>"; };
-		C240487B27656DB40076376E /* ImporterFileErrorFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterFileErrorFlowController.swift; sourceTree = "<group>"; };
 		C2404884276572060076376E /* ImporterPreimportSummaryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterPreimportSummaryPresenter.swift; sourceTree = "<group>"; };
 		C24048862765723C0076376E /* ImporterPreimportSummaryFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterPreimportSummaryFlowController.swift; sourceTree = "<group>"; };
 		C2404888276573420076376E /* ImporterPreimportSummaryModuleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImporterPreimportSummaryModuleInteractor.swift; sourceTree = "<group>"; };
@@ -3932,7 +3930,6 @@
 		C240487227656A6E0076376E /* ImporterFileError */ = {
 			isa = PBXGroup;
 			children = (
-				C240487B27656DB40076376E /* ImporterFileErrorFlowController.swift */,
 				C2150834300306E9008B66E2 /* ImporterFileErrorView.swift */,
 			);
 			path = ImporterFileError;
@@ -7458,7 +7455,6 @@
 				C2EBDFFC2AC44750008FD744 /* GuideMenuViewController.swift in Sources */,
 				8F43E7032C4C511A0006D380 /* AppleWatchFlowController.swift in Sources */,
 				C2E236502EC936B900676709 /* ContentNavigationControlllerFlow.swift in Sources */,
-				C240487C27656DB40076376E /* ImporterFileErrorFlowController.swift in Sources */,
 				C2A74FD72610D3A8007E5AB3 /* TintColor.swift in Sources */,
 				C2FBF1302A7EBCCB00CA80CE /* AddingServiceCameraViewport.swift in Sources */,
 				C2529CBC2E5C6B6F00515AB7 /* TwoFASControlIntent.swift in Sources */,

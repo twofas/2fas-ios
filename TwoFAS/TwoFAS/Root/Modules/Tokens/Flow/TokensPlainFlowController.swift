@@ -358,12 +358,6 @@ extension TokensPlainFlowController: SelectFromGalleryFlowControllerParent {
         }
     }
     
-    func galleryDidFinish() {
-        dismiss(actions: [.finishedFlow, .newData, .sync]) { [weak self] in
-            self?.galleryViewController = nil
-        }
-    }
-    
     func galleryDidCancel() {
         dismiss { [weak self] in
             self?.galleryViewController = nil

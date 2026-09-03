@@ -136,8 +136,6 @@ extension ImporterRouter: ImporterEnterPasswordFlowControlling {}
 
 extension ImporterRouter: ImporterPreimportSummaryFlowControlling {}
 
-extension ImporterRouter: ImporterFileErrorFlowControlling {}
-
 // MARK: - Root view
 
 struct ImporterRootView: View {

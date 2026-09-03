@@ -20,7 +20,7 @@
 import Foundation
 import Data
 
-public protocol CameraDelegate: AnyObject {
+protocol CameraDelegate: AnyObject {
     func didStartScanning()
     func didFoundCode(_ code: CodeType)
 }

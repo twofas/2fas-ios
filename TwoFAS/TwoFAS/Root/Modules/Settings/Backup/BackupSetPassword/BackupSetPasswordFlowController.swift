@@ -17,9 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
 import SwiftUI
-import Common
 
 protocol BackupSetPasswordFlowControllerParent: AnyObject {
     func closeSetPassword()

@@ -267,7 +267,6 @@
 		C240486B27655BD70076376E /* ImporterOpenFilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240486A27655BD70076376E /* ImporterOpenFilePresenter.swift */; };
 		C240486F27655E760076376E /* ImporterOpenFileFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240486E27655E760076376E /* ImporterOpenFileFlowController.swift */; };
 		C24048712765612F0076376E /* RootNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24048702765612F0076376E /* RootNavigationController.swift */; };
-		C240487A27656C590076376E /* ImporterFileErrorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240487927656C590076376E /* ImporterFileErrorPresenter.swift */; };
 		C240487C27656DB40076376E /* ImporterFileErrorFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240487B27656DB40076376E /* ImporterFileErrorFlowController.swift */; };
 		C2404885276572060076376E /* ImporterPreimportSummaryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404884276572060076376E /* ImporterPreimportSummaryPresenter.swift */; };
 		C24048872765723C0076376E /* ImporterPreimportSummaryFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24048862765723C0076376E /* ImporterPreimportSummaryFlowController.swift */; };
@@ -278,7 +277,6 @@
 		C2404F7E2B72FC6000EBD8DC /* SelectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404F742B72E4AB00EBD8DC /* SelectService.swift */; };
 		C2404F7F2B72FC6400EBD8DC /* ServiceAppEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404F752B72E4AB00EBD8DC /* ServiceAppEntity.swift */; };
 		C240FB4027FCD2F900D9E630 /* NetworkCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = C240FB3F27FCD2F900D9E630 /* NetworkCall.swift */; };
-		C2418F683006C2DB008B674A /* SwiftUIButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2418F673006C2DB008B674A /* SwiftUIButtons.swift */; };
 		C2418F6A3006DCA6008B674A /* TFRowHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2418F693006DCA6008B674A /* TFRowHeight.swift */; };
 		C2418F6B3006DCA6008B674A /* TFRowHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2418F693006DCA6008B674A /* TFRowHeight.swift */; };
 		C2418F6D3006E19D008B674A /* BrowserExtensionMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2418F6C3006E19D008B674A /* BrowserExtensionMainView.swift */; };
@@ -343,7 +341,6 @@
 		C2529CBB2E5C6B6F00515AB7 /* TwoFASControlIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */; };
 		C2529CBC2E5C6B6F00515AB7 /* TwoFASControlIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */; };
 		C2529CC02E5C757D00515AB7 /* TwoFASControlWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CAB2E5C6AE200515AB7 /* TwoFASControlWidget.swift */; };
-		C252B38C2981D45200C2074D /* MainContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C252B38B2981D45200C2074D /* MainContent.swift */; };
 		C25371A2281DCF56005FB118 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25371A1281DCF56005FB118 /* UINavigationController+.swift */; };
 		C254D12026ACB777005FEBD4 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254D11F26ACB777005FEBD4 /* Provider.swift */; };
 		C254D12226ACB7D8005FEBD4 /* CodeRedaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254D12126ACB7D8005FEBD4 /* CodeRedaction.swift */; };
@@ -1034,7 +1031,6 @@
 		C2D61E4125602F5000C5BE3A /* LogEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E2F25602F4100C5BE3A /* LogEntity+CoreDataClass.swift */; };
 		C2D61E4225602F5000C5BE3A /* LogEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E3025602F4100C5BE3A /* LogEntity+CoreDataProperties.swift */; };
 		C2D61E522560393000C5BE3A /* LogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D61E512560393000C5BE3A /* LogHandler.swift */; };
-		C2D6731B25DB2C5D004BD697 /* KeyboardObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D6731625DB2C5C004BD697 /* KeyboardObserver.swift */; };
 		C2D75D37297D51B60002531E /* iCloudIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D75D36297D51B60002531E /* iCloudIdentifier.swift */; };
 		C2D97E7D2E24436900E213A7 /* QRCodeGeneratorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E7C2E24436200E213A7 /* QRCodeGeneratorInteractor.swift */; };
 		C2D97E802E2454D600E213A7 /* QRCodeDisplayFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E7F2E2454D600E213A7 /* QRCodeDisplayFlowController.swift */; };
@@ -2132,7 +2128,6 @@
 		C240486A27655BD70076376E /* ImporterOpenFilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFilePresenter.swift; sourceTree = "<group>"; };
 		C240486E27655E760076376E /* ImporterOpenFileFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterOpenFileFlowController.swift; sourceTree = "<group>"; };
 		C24048702765612F0076376E /* RootNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootNavigationController.swift; sourceTree = "<group>"; };
-		C240487927656C590076376E /* ImporterFileErrorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterFileErrorPresenter.swift; sourceTree = "<group>"; };
 		C240487B27656DB40076376E /* ImporterFileErrorFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterFileErrorFlowController.swift; sourceTree = "<group>"; };
 		C2404884276572060076376E /* ImporterPreimportSummaryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterPreimportSummaryPresenter.swift; sourceTree = "<group>"; };
 		C24048862765723C0076376E /* ImporterPreimportSummaryFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImporterPreimportSummaryFlowController.swift; sourceTree = "<group>"; };
@@ -2141,7 +2136,6 @@
 		C2404F752B72E4AB00EBD8DC /* ServiceAppEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAppEntity.swift; sourceTree = "<group>"; };
 		C2404F7A2B72E89100EBD8DC /* AppIntentProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIntentProvider.swift; sourceTree = "<group>"; };
 		C240FB3F27FCD2F900D9E630 /* NetworkCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCall.swift; sourceTree = "<group>"; };
-		C2418F673006C2DB008B674A /* SwiftUIButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIButtons.swift; sourceTree = "<group>"; };
 		C2418F693006DCA6008B674A /* TFRowHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFRowHeight.swift; sourceTree = "<group>"; };
 		C2418F6C3006E19D008B674A /* BrowserExtensionMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionMainView.swift; sourceTree = "<group>"; };
 		C2418F6E3006E44D008B674A /* BrowserExtensionServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionServiceView.swift; sourceTree = "<group>"; };
@@ -2211,7 +2205,6 @@
 		C2529CB02E5C6AE200515AB7 /* TwoFASWidgetRectangular.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetRectangular.swift; sourceTree = "<group>"; };
 		C2529CB12E5C6AE200515AB7 /* TwoFASWidgetSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetSquareView.swift; sourceTree = "<group>"; };
 		C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASControlIntent.swift; sourceTree = "<group>"; };
-		C252B38B2981D45200C2074D /* MainContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContent.swift; sourceTree = "<group>"; };
 		C25371A1281DCF56005FB118 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
 		C254D11F26ACB777005FEBD4 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		C254D12126ACB7D8005FEBD4 /* CodeRedaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeRedaction.swift; sourceTree = "<group>"; };
@@ -2799,7 +2792,6 @@
 		C2D672F325DB2BD2004BD697 /* Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generator.swift; sourceTree = "<group>"; };
 		C2D672F425DB2BD2004BD697 /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 		C2D672F625DB2BD3004BD697 /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
-		C2D6731625DB2C5C004BD697 /* KeyboardObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObserver.swift; sourceTree = "<group>"; };
 		C2D75D36297D51B60002531E /* iCloudIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudIdentifier.swift; sourceTree = "<group>"; };
 		C2D958CF276FABE500B5A6BD /* TwoFAS5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwoFAS5.xcdatamodel; sourceTree = "<group>"; };
 		C2D97E7C2E24436200E213A7 /* QRCodeGeneratorInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGeneratorInteractor.swift; sourceTree = "<group>"; };
@@ -3943,7 +3935,6 @@
 			isa = PBXGroup;
 			children = (
 				C240487B27656DB40076376E /* ImporterFileErrorFlowController.swift */,
-				C240487927656C590076376E /* ImporterFileErrorPresenter.swift */,
 				C2150834300306E9008B66E2 /* ImporterFileErrorView.swift */,
 			);
 			path = ImporterFileError;
@@ -5112,7 +5103,6 @@
 				C2DD28C421D5590600034476 /* Controls */,
 				C223DAD7217BAFC0003F6E76 /* Architecture */,
 				C28B38C827CD784D00BD4A96 /* RefreshTokenCounter.swift */,
-				C2D6731625DB2C5C004BD697 /* KeyboardObserver.swift */,
 				C266542A2725EF7B00DC3A3C /* ExportFileRules.swift */,
 				C2CC0A4B29D0D4FC00677A7B /* ExternalImportService.swift */,
 				C20E2DE42A7C27A500DB64BB /* GlobalState.swift */,
@@ -5368,7 +5358,6 @@
 			isa = PBXGroup;
 			children = (
 				C2F9E15A2D982D68004B7DFA /* SyncMigration */,
-				C252B38B2981D45200C2074D /* MainContent.swift */,
 				C28705F32980776300745459 /* MainFlowController.swift */,
 				C2C02243297F224700D596A8 /* MainModuleInteractor.swift */,
 				C2C02241297F222100D596A8 /* MainPresenter.swift */,
@@ -5919,7 +5908,6 @@
 				C206CACE27A35ABE0068284C /* View+.swift */,
 				C20524C22807620500B2B20C /* NavigationBarHiddenHostingController.swift */,
 				C2B6D0F02FF182E100C4C73D /* TFColorPickerMenu.swift */,
-				C2418F673006C2DB008B674A /* SwiftUIButtons.swift */,
 				C2CBE27830449483009A65EC /* View+CloseToolbar.swift */,
 			);
 			path = SwiftUI;
@@ -7073,7 +7061,6 @@
 				C21B1B2B2A8820FB0021CAF1 /* AddingServiceTokenView.swift in Sources */,
 				C23B33F12A48DF6A0014B804 /* ImporterOpenFileViewController.swift in Sources */,
 				C2E7C3462ADB021500478D89 /* Camera.swift in Sources */,
-				C2418F683006C2DB008B674A /* SwiftUIButtons.swift in Sources */,
 				C2FDEE63279CC37E002CAB9E /* CameraScannerFlowController.swift in Sources */,
 				C2E3D55927D94ECB0050AF48 /* BrowserExtensionIntroView.swift in Sources */,
 				C2AD653727F26139008997DB /* BrowserExtensionPairingSuccessFlowController.swift in Sources */,
@@ -7162,7 +7149,6 @@
 				C2E7C3472ADB021500478D89 /* CameraControllerDelegate.swift in Sources */,
 				C231856A2EC648F700DD1ABE /* BackupSetPasswordView.swift in Sources */,
 				C207DACD302B4BD3004FC767 /* ImporterRouter.swift in Sources */,
-				C2D6731B25DB2C5D004BD697 /* KeyboardObserver.swift in Sources */,
 				C23B899727C287480028FE34 /* NavigationFlowController.swift in Sources */,
 				C295AF842FD1DE9C000DF064 /* MainScreenModalView.swift in Sources */,
 				C20E2DFE2A7C4DE000DB64BB /* AddingServiceFlowController.swift in Sources */,
@@ -7192,7 +7178,6 @@
 				C28633C41FF9327900C8F4B4 /* AlertController.swift in Sources */,
 				C21851402A1AB01600A8352A /* TokensTOTPCompactCell.swift in Sources */,
 				C2117185276CE95F00042D28 /* VerifyPINPresenter.swift in Sources */,
-				C252B38C2981D45200C2074D /* MainContent.swift in Sources */,
 				C20E60FD28189D2000AB002E /* PushNotificationPermissionModuleInteractor.swift in Sources */,
 				C27C03C327F4FF0D0020DB5E /* BrowserExtensionMainPresenter+Menu.swift in Sources */,
 				C21347882D98799A00D325F6 /* EncryptedByUserPasswordSyncFlowController.swift in Sources */,
@@ -7298,7 +7283,6 @@
 				C2FDEE61279CC36C002CAB9E /* CameraScannerModuleInteractor.swift in Sources */,
 				C2F7FE012A8AB099004B2C95 /* AddingServiceManuallyFlowController.swift in Sources */,
 				C2CC0A4629D098CB00677A7B /* ExternalImportInstructionsView.swift in Sources */,
-				C240487A27656C590076376E /* ImporterFileErrorPresenter.swift in Sources */,
 				C25EF6E3303B408A00907B49 /* QuickAction.swift in Sources */,
 				C2AD653327F25ABD008997DB /* BrowserExtensionFailurePresenter.swift in Sources */,
 				C249773A277F618A00DC872C /* TrashServiceFlowController.swift in Sources */,

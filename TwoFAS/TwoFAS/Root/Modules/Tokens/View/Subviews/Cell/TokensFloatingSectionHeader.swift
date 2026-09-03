@@ -18,7 +18,6 @@
 //
 
 import UIKit
-import Common
 
 /// A `TokensSectionHeader` that floats at the top edge of a scroll view, standing in for the
 /// section header that has scrolled out of view. Place it above the scroll view (as a sibling,

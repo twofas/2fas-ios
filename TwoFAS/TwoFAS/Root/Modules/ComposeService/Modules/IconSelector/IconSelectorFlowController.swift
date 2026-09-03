@@ -18,7 +18,6 @@
 //
 
 import Common
-import Data
 
 protocol IconSelectorFlowControlling: AnyObject {
     func toSelection(iconTypeID: IconTypeID)

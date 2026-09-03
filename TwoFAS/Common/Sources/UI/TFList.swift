@@ -24,9 +24,7 @@ import SwiftUI
 /// A scrollable list container matching the 2FAS Settings design system.
 ///
 /// Stacks `TFListSection`s (or arbitrary content) with 24 pt vertical spacing
-/// and the standard horizontal / bottom insets. Sits on
-/// `.backgroundsPrimaryElevated` and is meant to be composed underneath a
-/// `TFScreenTitleBar`.
+/// and the standard horizontal / bottom insets.
 public struct TFListScreen<Content: View>: View {
     private let backgroundColor: AppColor
     private let content: Content
@@ -237,81 +235,3 @@ public struct TFListMenuRow<MenuContent: View>: View {
     }
 }
 #endif
-
-// MARK: - TFScreenTitleBar
-
-/// Internal SwiftUI navigation bar for screens that use
-/// `NavigationBarHiddenHostingController`. Provides:
-/// - Optional leading back button (`.back` symbol) via `onBack`
-/// - Centered `TFTitleView`
-/// - Optional trailing accessory
-public struct TFScreenTitleBar<Trailing: View>: View {
-    private let title: String
-    private let leadingSymbol: TFLiquidGlassSymbolButton.Symbol?
-    private let onLeadingTap: (() -> Void)?
-    private let trailing: Trailing
-
-    public init(
-        title: String,
-        leadingSymbol: TFLiquidGlassSymbolButton.Symbol? = .back,
-        onLeadingTap: (() -> Void)? = nil,
-        @ViewBuilder trailing: () -> Trailing
-    ) {
-        self.title = title
-        self.leadingSymbol = leadingSymbol
-        self.onLeadingTap = onLeadingTap
-        self.trailing = trailing()
-    }
-
-    public init(
-        title: String,
-        leadingSymbol: TFLiquidGlassSymbolButton.Symbol? = .back,
-        onLeadingTap: (() -> Void)? = nil
-    ) where Trailing == EmptyView {
-        self.title = title
-        self.leadingSymbol = leadingSymbol
-        self.onLeadingTap = onLeadingTap
-        self.trailing = EmptyView()
-    }
-
-    /// Convenience initializer preserving the older `showsBackButton` API.
-    public init(
-        title: String,
-        showsBackButton: Bool,
-        onBack: (() -> Void)? = nil,
-        @ViewBuilder trailing: () -> Trailing
-    ) {
-        self.title = title
-        self.leadingSymbol = showsBackButton ? .back : nil
-        self.onLeadingTap = onBack
-        self.trailing = trailing()
-    }
-
-    public init(
-        title: String,
-        showsBackButton: Bool,
-        onBack: (() -> Void)? = nil
-    ) where Trailing == EmptyView {
-        self.title = title
-        self.leadingSymbol = showsBackButton ? .back : nil
-        self.onLeadingTap = onBack
-        self.trailing = EmptyView()
-    }
-
-    public var body: some View {
-        ZStack {
-            HStack(spacing: .zero) {
-                if let leadingSymbol, let onLeadingTap {
-                    TFLiquidGlassSymbolButton(symbol: leadingSymbol, action: onLeadingTap)
-                }
-                Spacer()
-                trailing
-            }
-            TFTitleView(title: title)
-        }
-        .padding(.horizontal, .XXXL)
-        .padding(.top, .XL)
-        .padding(.bottom, .XL)
-        .frame(alignment: .top)
-    }
-}

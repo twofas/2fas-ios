@@ -77,48 +77,48 @@ struct ManageWatchView: View {
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                        Button {
-                            presenter.onDelete(item)
-                        } label: {
-                            Label(T.Commons.delete, icon: .trashFill)
-                        }
-                        .tint(AppColor.accentsBrand)
-
-                        Button {
-                            presenter.onRename(item)
-                        } label: {
-                            Label(T.Commons.rename, icon: .pencil)
-                        }
-                        .tint(AppColor.accentsBlue)
-                    }
             }
         }
         .animation(.default, value: presenter.list.count)
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
+        .padding(.top, .XL)
     }
 
     @ViewBuilder
     private func watchCell(_ item: PairedWatch) -> some View {
-        AdaptiveReadableContainer(horizontalMargin: .zero, verticalMargin: .zero) {
+        AdaptiveReadableContainer(verticalMargin: .zero) {
             HStack(spacing: .M) {
                 Image(icon: .appleWatch)
                     .textStyle(.title3)
                     .foregroundStyle(.accentsBrand)
                     .frame(width: 28)
-                
+
                 Text(item.deviceName)
                     .textStyle(.body)
                     .foregroundStyle(.labelsPrimary)
-                
+
                 Spacer(minLength: 0)
+
+                TFMenuButton {
+                    Button {
+                        presenter.onRename(item)
+                    } label: {
+                        Label(T.Commons.rename, icon: .pencil)
+                    }
+
+                    Button(role: .destructive) {
+                        presenter.onDelete(item)
+                    } label: {
+                        Label(T.Commons.delete, icon: .trashFill)
+                    }
+                }
             }
             .padding(.horizontal, .XL)
             .padding(.vertical, .L)
             .background(
                 RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue, style: .continuous)
-                    .foregroundStyle(.backgroundsSecondary)
+                    .foregroundStyle(.backgroundsGroupedTertiary)
             )
             .frame(minHeight: .list)
         }

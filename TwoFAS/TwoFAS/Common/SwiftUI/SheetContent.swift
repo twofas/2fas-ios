@@ -394,7 +394,7 @@ struct SheetContent<Content: View, Buttons: View, BottomAccessory: View>: View {
             VStack(spacing: .XXXL) {
                 bottomAccessory
 
-                VStack(spacing: .M) {
+                VStack(spacing: .L) {
                     buttons
                 }
             }

@@ -91,7 +91,7 @@ private struct PressFeedbackButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .sensoryFeedback(
-                .impact(flexibility: .rigid, intensity: 0.6),
+                .selection,
                 trigger: configuration.isPressed
             ) { _, new in new }
     }

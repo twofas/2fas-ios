@@ -18,13 +18,21 @@
 //
 
 import SwiftUI
+import Common
 
 extension View {
     func closeToolbar(action: @escaping () -> Void) -> some View {
         toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Button(action: action) {
-                    Image(icon: .xmark)
+                if #available(iOS 26, *) {
+                    Button(action: action) {
+                        Image(icon: .xmark)
+                    }
+                } else {
+                    Button(action: action) {
+                        Image(icon: .xmark)
+                    }
+                    .tint(.accentsBrand)
                 }
             }
         }

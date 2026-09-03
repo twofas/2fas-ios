@@ -137,9 +137,7 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
                             .aspectRatio(contentMode: .fit)
                             .tint(.labelsTertiary)
                     }
-                    .sensoryFeedback(
-                        .impact(flexibility: .rigid, intensity: 0.6),
-                        trigger: clearTapped) { _, new in new }
+                    .sensoryFeedback(.selection, trigger: clearTapped) { _, new in new }
                 }
             }
         }

@@ -44,10 +44,14 @@ struct TokensEmptyListView: View {
     var body: some View {
         VStack(spacing: .zero) {
             if model.trashCount > 0 {
-                TrashWarningCard(count: model.trashCount) {
-                    model.goToTrashAction?()
+                AdaptiveReadableContainer(
+                    ipadMaxWidth: Theme.Metrics.componentWidth,
+                    verticalMargin: .zero
+                ) {
+                    TrashWarningCard(count: model.trashCount) {
+                        model.goToTrashAction?()
+                    }
                 }
-                .frame(maxWidth: Theme.Metrics.componentWidth)
                 .padding(.top, .XL)
             }
 
@@ -115,38 +119,37 @@ private struct TrashWarningCard: View {
     let action: () -> Void
 
     var body: some View {
-        Button(action: action) {
-            HStack(alignment: .top, spacing: .S) {
-                Image(icon: .trash)
-                    .textStyle(.subheadline, .emphasized)
-                    .foregroundStyle(.labelsPrimary)
+        VStack(alignment: .leading, spacing: .XXL) {
+            HStack(alignment: .center, spacing: .L) {
+                Image(icon: .trashFill)
+                    .textStyle(.title3)
+                    .foregroundStyle(.accentsBlue)
 
                 VStack(alignment: .leading, spacing: .S) {
-                    Text(summary)
-                        .textStyle(.subheadline)
+                    Text(T.Tokens.emptyScreenTrashedTitle)
+                        .textStyle(.body, .emphasized)
                         .foregroundStyle(.labelsPrimary)
                         .multilineTextAlignment(.leading)
                         .fixedSize(horizontal: false, vertical: true)
 
-                    HStack(spacing: .S) {
-                        Text(T.Commons.goToTrash)
-                            .textStyle(.callout)
-                        Image(icon: .arrowUpForward)
-                            .textStyle(.callout)
-                    }
-                    .foregroundStyle(.accentsBrand)
+                    Text(summary)
+                        .textStyle(.footnote)
+                        .foregroundStyle(.labelsSecondary)
                 }
-
-                Spacer(minLength: 0)
             }
-            .padding(.horizontal, .XL)
-            .padding(.vertical, .L)
-            .background(
-                RoundedRectangle(.large)
-                    .fill(AppColor.backgroundsSecondary)
+            
+            TFButton(
+                T.Commons.goToTrash,
+                variant: .borderedSecondary,
+                size: .medium,
+                action: action
             )
         }
-        .buttonStyle(.plain)
+        .padding(.XL)
+        .background(
+            RoundedRectangle(.large)
+                .stroke(AppColor.bordersPrimary, lineWidth: 1.5)
+        )
     }
 
     private var summary: AttributedString {

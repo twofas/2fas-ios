@@ -96,7 +96,6 @@ struct ExporterPasswordProtectionView: View {
                 .padding(.bottom, .XL)
             }
         }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
         .navigationTitle(T.backupSettingsPasswordSetTitle)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -117,5 +116,6 @@ struct ExporterPasswordProtectionView: View {
         .dismissKeyboardOnTapOutside()
         .minimumBottomSpacing()
         .background(.backgroundsPrimary)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }

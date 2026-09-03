@@ -92,5 +92,6 @@ struct ImporterEnterPasswordView: View {
         }
         .dismissKeyboardOnTapOutside()
         .minimumBottomSpacing()
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }

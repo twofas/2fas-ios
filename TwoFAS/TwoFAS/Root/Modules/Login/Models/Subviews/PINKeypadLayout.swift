@@ -61,53 +61,55 @@ struct PINKeypadLayout: Layout {
         let availableH = proposal.height ?? Self.maxHeight
 
         return CGSize(
-            width: clamp(availableW, Self.minWidth, Self.maxWidth),
-            height: clamp(availableH, Self.minHeight, Self.maxHeight)
+            width: Self.clamp(availableW, Self.minWidth, Self.maxWidth),
+            height: Self.clamp(availableH, Self.minHeight, Self.maxHeight)
         )
     }
 
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
-        let cols = Self.columns
+        let cellProposal = ProposedViewSize(width: Self.buttonSize, height: Self.buttonSize)
+        for (index, subview) in subviews.enumerated() {
+            subview.place(at: Self.slotCentre(at: index, in: bounds), anchor: .center, proposal: cellProposal)
+        }
+    }
 
-        let layoutW = clamp(bounds.width, Self.minWidth, Self.maxWidth)
-        let layoutH = clamp(bounds.height, Self.minHeight, Self.maxHeight)
+    /// Centre of the slot at `index` (reading order, "1" is 0) when the grid is laid out in
+    /// `bounds`. The same maths drives placement, so a key can use it to find another slot.
+    static func slotCentre(at index: Int, in bounds: CGRect) -> CGPoint {
+        let layoutW = clamp(bounds.width, minWidth, maxWidth)
+        let layoutH = clamp(bounds.height, minHeight, maxHeight)
 
-        let tH = fraction(layoutW, Self.minWidth, Self.maxWidth)
-        let tV = fraction(layoutH, Self.minHeight, Self.maxHeight)
+        let tH = fraction(layoutW, minWidth, maxWidth)
+        let tV = fraction(layoutH, minHeight, maxHeight)
 
-        let hSpacing = lerp(Self.hSpacingMin, Self.hSpacingMax, tH)
-        let hMargin = lerp(Self.hMarginMin, Self.hMarginMax, tH)
-        let vSpacing = lerp(Self.vSpacingMin, Self.vSpacingMax, tV)
+        let hSpacing = lerp(hSpacingMin, hSpacingMax, tH)
+        let hMargin = lerp(hMarginMin, hMarginMax, tH)
+        let vSpacing = lerp(vSpacingMin, vSpacingMax, tV)
 
         // Center the grid inside bounds.
         let originX = bounds.minX + (bounds.width - layoutW) / 2
         let originY = bounds.minY + (bounds.height - layoutH) / 2
 
-        let cellProposal = ProposedViewSize(width: Self.buttonSize, height: Self.buttonSize)
+        let col = index % columns
+        let row = index / columns
 
-        for (index, subview) in subviews.enumerated() {
-            let col = index % cols
-            let row = index / cols
-
-            let cx = originX + hMargin + CGFloat(col) * (Self.buttonSize + hSpacing) + Self.buttonSize / 2
-            let cy = originY + vSpacing + CGFloat(row) * (Self.buttonSize + vSpacing) + Self.buttonSize / 2
-
-            subview.place(at: CGPoint(x: round(cx), y: round(cy)), anchor: .center, proposal: cellProposal)
-        }
+        let cx = originX + hMargin + CGFloat(col) * (buttonSize + hSpacing) + buttonSize / 2
+        let cy = originY + vSpacing + CGFloat(row) * (buttonSize + vSpacing) + buttonSize / 2
+        return CGPoint(x: round(cx), y: round(cy))
     }
 
     // MARK: Helpers
 
-    private func clamp(_ value: CGFloat, _ lower: CGFloat, _ upper: CGFloat) -> CGFloat {
+    private static func clamp(_ value: CGFloat, _ lower: CGFloat, _ upper: CGFloat) -> CGFloat {
         min(max(value, lower), upper)
     }
 
-    private func fraction(_ value: CGFloat, _ lower: CGFloat, _ upper: CGFloat) -> CGFloat {
+    private static func fraction(_ value: CGFloat, _ lower: CGFloat, _ upper: CGFloat) -> CGFloat {
         guard upper > lower else { return 0 }
         return clamp((value - lower) / (upper - lower), 0, 1)
     }
 
-    private func lerp(_ from: CGFloat, _ to: CGFloat, _ t: CGFloat) -> CGFloat {
+    private static func lerp(_ from: CGFloat, _ to: CGFloat, _ t: CGFloat) -> CGFloat {
         from + (to - from) * t
     }
 }

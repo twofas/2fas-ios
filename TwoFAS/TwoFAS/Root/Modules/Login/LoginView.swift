@@ -28,6 +28,20 @@ struct LoginView: View {
     @Environment(\.scenePhase)
     private var scenePhase
 
+#if DEBUG
+    /// Hides the keypad the way a running biometry prompt does, so the animation can be
+    /// watched without Face ID. Toggled by the debug button in the top-right corner.
+    @State private var debugHidesKeyboard = false
+#endif
+
+    private var isKeyboardHidden: Bool {
+#if DEBUG
+        presenter.isAuthenticating || debugHidesKeyboard
+#else
+        presenter.isAuthenticating
+#endif
+    }
+
     var body: some View {
         VStack(spacing: .S) {
             if presenter.loginType == .verify {
@@ -49,7 +63,7 @@ struct LoginView: View {
                 isDisabled: presenter.isBlocked,
                 onKeyPressed: presenter.onKeyPressed,
                 biometryKey: presenter.biometryKey,
-                isKeyboardHidden: presenter.isAuthenticating
+                isKeyboardHidden: isKeyboardHidden
             ) {
                 PINWelcomeHeader(loginType: presenter.loginType, info: $presenter.info)
             }
@@ -63,6 +77,15 @@ struct LoginView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+#if DEBUG
+        .overlay(alignment: .topTrailing) {
+            Button(debugHidesKeyboard ? "Show keypad" : "Hide keypad") {
+                debugHidesKeyboard.toggle()
+            }
+            .buttonStyle(.bordered)
+            .padding(.XL)
+        }
+#endif
         .minimumBottomSpacing(.M)
         .sensoryFeedback(.success, trigger: presenter.success) { _, new in new }
         .sensoryFeedback(.start, trigger: presenter.unlock)

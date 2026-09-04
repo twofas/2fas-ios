@@ -62,7 +62,7 @@ struct LoginView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .minimumBottomSpacing()
+        .minimumBottomSpacing(.M)
         .sensoryFeedback(.success, trigger: presenter.success) { _, new in new }
         .sensoryFeedback(.start, trigger: presenter.unlock)
         .background(AppColor.backgroundsPrimary)

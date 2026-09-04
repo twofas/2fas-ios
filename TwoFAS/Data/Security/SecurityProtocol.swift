@@ -44,8 +44,8 @@ protocol SecurityProtocol: AnyObject {
     var isBioAuthAvailable: Bool { get }
     var isBioAuthEnabled: Bool { get }
     
-    /// `userInitiated` resets the automatic-prompt attempt limit, so a tap on the biometry key
-    /// always shows the system prompt even after the user cancelled an automatic one.
+    /// A `userInitiated` request bypasses the automatic-prompt attempt limit without
+    /// resetting it, so it always shows the system prompt while biometry is usable.
     func authenticateUsingBiometry(
         reason: String,
         userInitiated: Bool,

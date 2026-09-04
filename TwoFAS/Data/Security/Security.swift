@@ -109,9 +109,6 @@ final class Security: SecurityProtocol {
         userInitiated: Bool,
         completion: @escaping (BiometryAuthenticationResult) -> Void
     ) {
-        if userInitiated {
-            clearBio()
-        }
         guard
             !appInBackground &&
             isBioAuthEnabled &&
@@ -122,10 +119,14 @@ final class Security: SecurityProtocol {
             return
         }
 
-        bioAuthCount += 1
-        if bioAuthCount >= bioLimit {
-            completion(.notAvailable)
-            return
+        // Only automatic prompts count against the limit; a user-initiated request neither
+        // consumes it nor clears the lock a cancelled prompt left behind.
+        if !userInitiated {
+            bioAuthCount += 1
+            if bioAuthCount >= bioLimit {
+                completion(.notAvailable)
+                return
+            }
         }
         isAuthenticatingUsingBiometric = true
         self.completion = completion

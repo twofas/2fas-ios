@@ -29,11 +29,10 @@ struct NewPINView: View {
             presenter: presenter
         ) {
             if presenter.showsPinLengthButton {
-                HStack(alignment: .center) {
-                    TFButton(T.Settings.selectPinLength, variant: .borderless, size: .small) {
-                        presenter.handleChangePINType()
-                    }
+                TFButton(T.Settings.selectPinLength, variant: .borderless, size: .small) {
+                    presenter.handleChangePINType()
                 }
+                .padding(.top, .XL)
             }
         }
         .onAppear {

@@ -59,13 +59,14 @@ struct PINEntryBlock<Header: View>: View {
             AdaptiveReadableContainer(verticalMargin: .zero) {
                 header()
             }
-
+            
             gap
 
             PINDots(count: totalDigits, enteredCount: $enteredCount)
                 .disabled(isDisabled)
                 .shake(on: shake)
                 .sensoryFeedback(.error, trigger: shake)
+                .padding(.top, .XL)
 
             gap
 
@@ -90,24 +91,15 @@ struct PINEntryBlock<Header: View>: View {
 /// leading button (Close/X) via `.toolbar` on its enclosing navigation stack.
 struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
     @Bindable private var presenter: Presenter
-    private let footer: () -> Footer
-    private let hasFooter: Bool
+    /// `nil` when the screen was created without a footer; the footer band is then not laid out.
+    private let footer: (() -> Footer)?
 
     init(
         presenter: Presenter,
         @ViewBuilder footer: @escaping () -> Footer
     ) {
-        self.init(presenter: presenter, footer: footer, hasFooter: true)
-    }
-
-    private init(
-        presenter: Presenter,
-        footer: @escaping () -> Footer,
-        hasFooter: Bool
-    ) {
         self._presenter = Bindable(wrappedValue: presenter)
         self.footer = footer
-        self.hasFooter = hasFooter
     }
 
     var body: some View {
@@ -132,12 +124,13 @@ struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
 
             Spacer(minLength: 0)
 
-            if hasFooter {
+            if let footer {
+                // Only the band's minimum height is reserved here; a footer whose content
+                // is conditional adds its own top padding so an empty footer stays compact.
                 HStack(alignment: .center) {
                     footer()
                 }
                 .frame(minHeight: Spacing.XXXL.value)
-                .padding(.top, .XL)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -147,14 +140,9 @@ struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
 }
 
 extension PINEntryScreen where Footer == EmptyView {
-    init(
-        presenter: Presenter
-    ) {
-        self.init(
-            presenter: presenter,
-            footer: { EmptyView() },
-            hasFooter: false
-        )
+    init(presenter: Presenter) {
+        self._presenter = Bindable(wrappedValue: presenter)
+        self.footer = nil
     }
 }
 

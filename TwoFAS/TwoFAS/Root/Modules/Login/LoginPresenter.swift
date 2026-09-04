@@ -70,6 +70,7 @@ final class LoginPresenter {
                 object: nil
             )
         totalDigits = interactor.codeLength
+        refreshBiometryKey()
     }
 
     func onAppear() {
@@ -110,8 +111,6 @@ private extension LoginPresenter {
         isAuthenticating = true
         interactor.verifyUsingBiometry(reason: reason, userInitiated: userInitiated) { [weak self] result in
             self?.isAuthenticating = false
-            // Biometry may have become unavailable meanwhile (system lockout, re-enrolment).
-            self?.refreshBiometryKey()
             if result {
                 self?.userLoggedIn()
             }
@@ -195,14 +194,18 @@ private extension LoginPresenter {
 
     func refreshBiometryKey() {
         // Biometry unlocks the app only; the `.verify` flow stays PIN-only, as it always was.
-        guard loginType == .login else {
-            biometryKey = nil
-            return
+        let key: TFPinKey? = if loginType == .login {
+            switch interactor.availableBiometryType {
+            case .faceID: .biometry(.faceID)
+            case .touchID: .biometry(.touchID)
+            case .none: nil
+            }
+        } else {
+            nil
         }
-        biometryKey = switch interactor.availableBiometryType {
-        case .faceID: .biometry(.faceID)
-        case .touchID: .biometry(.touchID)
-        case .none: nil
+        // Assign only on change: every mutation re-evaluates the whole keypad.
+        if key != biometryKey {
+            biometryKey = key
         }
     }
 }

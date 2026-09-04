@@ -31,10 +31,8 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
     private let sMargin: CGFloat = Spacing.M.rawValue
     private let vMargin: CGFloat = Spacing.L.rawValue
     
-    private var showTokenWithAdditionalInfoConstraints: [NSLayoutConstraint] = []
-    private var showTokenWithoutAdditionalInfoConstraints: [NSLayoutConstraint] = []
-    private var hideTokenWithAdditionalInfoConstraints: [NSLayoutConstraint] = []
-    private var hideTokenWithoutAdditionalInfoConstraints: [NSLayoutConstraint] = []
+    private var withAdditionalInfoConstraints: [NSLayoutConstraint] = []
+    private var withoutAdditionalInfoConstraints: [NSLayoutConstraint] = []
 
     private var hasAdditionalInfo = false
 
@@ -142,8 +140,8 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
         self.shouldAnimate = shouldAnimate
         
         isLocked = false
-        showToken()
-        
+        refreshLayout()
+
         nextTokenLabel.hideNextToken(animated: false)
     }
     
@@ -154,7 +152,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             
             nextTokenLabel.hideNextToken(animated: false)
             tokenLabel.maskToken()
-            hideToken()
+            refreshLayout()
             circularProgress.isHidden = true
             revealButton.isHidden = false
         case .unlocked(let progress, let period, let currentToken, let nextToken, let tokenType, let willChangeSoon):
@@ -167,7 +165,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             circularProgress.setProgress(progress, animated: false)
             tokenLabel.setToken(currentToken, tokenType: tokenType, animated: wasLocked)
             nextTokenLabel.set(nextToken: nextToken, tokenType: tokenType)
-            showToken()
+            refreshLayout()
             shouldMark(willChangeSoon: willChangeSoon, isPlanned: false)
         }
         updateAccessibility()
@@ -181,7 +179,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             
             nextTokenLabel.hideNextToken(animated: true)
             tokenLabel.maskToken()
-            hideToken()
+            refreshLayout()
             circularProgress.isHidden = true
             revealButton.isHidden = false
         case .unlocked(let progress, let isPlanned, let currentToken, let nextToken, let tokenType, let willChangeSoon):
@@ -192,7 +190,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             revealButton.isHidden = true
             circularProgress.setProgress(progress, animated: isPlanned)
             tokenLabel.setToken(currentToken, tokenType: tokenType, animated: !isPlanned && !blockAnimation)
-            showToken()
+            refreshLayout()
             shouldMark(willChangeSoon: willChangeSoon, isPlanned: isPlanned && !blockAnimation)
             nextTokenLabel.set(nextToken: nextToken, tokenType: tokenType)
         }
@@ -268,31 +266,18 @@ private extension TokensTOTPCompactCell {
         )
         let additionalInfoTop = additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor)
         let containerBottomToToken = groupContainer.bottomAnchor.constraint(equalTo: tokenLabel.bottomAnchor)
-        let containerBottomToAdditionalInfo = groupContainer.bottomAnchor.constraint(
-            equalTo: additionalInfoLabel.bottomAnchor
-        )
-        let containerBottomToServiceName = groupContainer.bottomAnchor.constraint(
-            equalTo: serviceNameLabel.bottomAnchor
-        )
 
-        showTokenWithAdditionalInfoConstraints = [
+        withAdditionalInfoConstraints = [
             additionalInfoTop,
             tokenFromAdditionalInfo,
             containerBottomToToken
         ]
-        showTokenWithoutAdditionalInfoConstraints = [
+        withoutAdditionalInfoConstraints = [
             tokenFromServiceName,
             containerBottomToToken
         ]
-        hideTokenWithAdditionalInfoConstraints = [
-            additionalInfoTop,
-            containerBottomToAdditionalInfo
-        ]
-        hideTokenWithoutAdditionalInfoConstraints = [
-            containerBottomToServiceName
-        ]
 
-        NSLayoutConstraint.activate(showTokenWithoutAdditionalInfoConstraints)
+        NSLayoutConstraint.activate(withoutAdditionalInfoConstraints)
 
         contentView.addSubview(nextTokenLabel, with: [
             nextTokenLabel.leadingAnchor.constraint(equalTo: tokenLabel.trailingAnchor, constant: hMargin),
@@ -332,31 +317,14 @@ private extension TokensTOTPCompactCell {
         nextTokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
     }
     
-    func showToken() {
-        tokenLabel.isHidden = false
-        deactivateAllVerticalGroups()
+    func refreshLayout() {
+        NSLayoutConstraint.deactivate(withAdditionalInfoConstraints)
+        NSLayoutConstraint.deactivate(withoutAdditionalInfoConstraints)
         if hasAdditionalInfo {
-            NSLayoutConstraint.activate(showTokenWithAdditionalInfoConstraints)
+            NSLayoutConstraint.activate(withAdditionalInfoConstraints)
         } else {
-            NSLayoutConstraint.activate(showTokenWithoutAdditionalInfoConstraints)
+            NSLayoutConstraint.activate(withoutAdditionalInfoConstraints)
         }
-    }
-
-    func hideToken() {
-        tokenLabel.isHidden = true
-        deactivateAllVerticalGroups()
-        if hasAdditionalInfo {
-            NSLayoutConstraint.activate(hideTokenWithAdditionalInfoConstraints)
-        } else {
-            NSLayoutConstraint.activate(hideTokenWithoutAdditionalInfoConstraints)
-        }
-    }
-
-    private func deactivateAllVerticalGroups() {
-        NSLayoutConstraint.deactivate(showTokenWithAdditionalInfoConstraints)
-        NSLayoutConstraint.deactivate(showTokenWithoutAdditionalInfoConstraints)
-        NSLayoutConstraint.deactivate(hideTokenWithAdditionalInfoConstraints)
-        NSLayoutConstraint.deactivate(hideTokenWithoutAdditionalInfoConstraints)
     }
     
     func setupRevealButton() {

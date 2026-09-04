@@ -30,10 +30,8 @@ final class TokensHOTPCompactCell: UICollectionViewCell, TokenCounterConsumer, T
     private let hMargin: CGFloat = Spacing.XL.rawValue
     private let vMargin: CGFloat = Spacing.L.rawValue
 
-    private var showTokenWithAdditionalInfoConstraints: [NSLayoutConstraint] = []
-    private var showTokenWithoutAdditionalInfoConstraints: [NSLayoutConstraint] = []
-    private var hideTokenWithAdditionalInfoConstraints: [NSLayoutConstraint] = []
-    private var hideTokenWithoutAdditionalInfoConstraints: [NSLayoutConstraint] = []
+    private var withAdditionalInfoConstraints: [NSLayoutConstraint] = []
+    private var withoutAdditionalInfoConstraints: [NSLayoutConstraint] = []
 
     private var hasAdditionalInfo = false
 
@@ -124,8 +122,8 @@ final class TokensHOTPCompactCell: UICollectionViewCell, TokenCounterConsumer, T
         
         self.shouldAnimate = shouldAnimate
         isLocked = false
-        showToken()
-        
+        refreshLayout()
+
         categoryView.setColor(category)
         logoView.configure(with: logoType)
     }
@@ -136,14 +134,14 @@ final class TokensHOTPCompactCell: UICollectionViewCell, TokenCounterConsumer, T
             isLocked = true
             isActive = true
             tokenLabel.maskToken()
-            hideToken()
+            refreshLayout()
             refreshCounter.unlock()
-            
+
         case .unlocked(let isRefreshLocked, let currentToken):
             isLocked = false
             isActive = !isRefreshLocked
             tokenLabel.setToken(currentToken, tokenType: .hotp, animated: false)
-            showToken()
+            refreshLayout()
             if isRefreshLocked {
                 refreshCounter.lock()
             } else {
@@ -159,14 +157,14 @@ final class TokensHOTPCompactCell: UICollectionViewCell, TokenCounterConsumer, T
             isLocked = true
             isActive = true
             tokenLabel.maskToken()
-            hideToken()
+            refreshLayout()
             refreshCounter.unlock()
-            
+
         case .unlocked(let isRefreshLocked, let currentToken):
             isLocked = false
             isActive = !isRefreshLocked
             tokenLabel.setToken(currentToken, tokenType: .hotp, animated: shouldAnimate)
-            showToken()
+            refreshLayout()
             if isRefreshLocked {
                 refreshCounter.lock()
             } else {
@@ -246,31 +244,18 @@ private extension TokensHOTPCompactCell {
         )
         let additionalInfoTop = additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor)
         let containerBottomToToken = groupContainer.bottomAnchor.constraint(equalTo: tokenLabel.bottomAnchor)
-        let containerBottomToAdditionalInfo = groupContainer.bottomAnchor.constraint(
-            equalTo: additionalInfoLabel.bottomAnchor
-        )
-        let containerBottomToServiceName = groupContainer.bottomAnchor.constraint(
-            equalTo: serviceNameLabel.bottomAnchor
-        )
 
-        showTokenWithAdditionalInfoConstraints = [
+        withAdditionalInfoConstraints = [
             additionalInfoTop,
             tokenFromAdditionalInfo,
             containerBottomToToken
         ]
-        showTokenWithoutAdditionalInfoConstraints = [
+        withoutAdditionalInfoConstraints = [
             tokenFromServiceName,
             containerBottomToToken
         ]
-        hideTokenWithAdditionalInfoConstraints = [
-            additionalInfoTop,
-            containerBottomToAdditionalInfo
-        ]
-        hideTokenWithoutAdditionalInfoConstraints = [
-            containerBottomToServiceName
-        ]
 
-        NSLayoutConstraint.activate(showTokenWithoutAdditionalInfoConstraints)
+        NSLayoutConstraint.activate(withoutAdditionalInfoConstraints)
 
         contentView.addSubview(accessoryContainer, with: [
             groupContainer.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
@@ -295,31 +280,14 @@ private extension TokensHOTPCompactCell {
         tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
     }
     
-    func showToken() {
-        tokenLabel.isHidden = false
-        deactivateAllVerticalGroups()
+    func refreshLayout() {
+        NSLayoutConstraint.deactivate(withAdditionalInfoConstraints)
+        NSLayoutConstraint.deactivate(withoutAdditionalInfoConstraints)
         if hasAdditionalInfo {
-            NSLayoutConstraint.activate(showTokenWithAdditionalInfoConstraints)
+            NSLayoutConstraint.activate(withAdditionalInfoConstraints)
         } else {
-            NSLayoutConstraint.activate(showTokenWithoutAdditionalInfoConstraints)
+            NSLayoutConstraint.activate(withoutAdditionalInfoConstraints)
         }
-    }
-
-    func hideToken() {
-        tokenLabel.isHidden = true
-        deactivateAllVerticalGroups()
-        if hasAdditionalInfo {
-            NSLayoutConstraint.activate(hideTokenWithAdditionalInfoConstraints)
-        } else {
-            NSLayoutConstraint.activate(hideTokenWithoutAdditionalInfoConstraints)
-        }
-    }
-
-    private func deactivateAllVerticalGroups() {
-        NSLayoutConstraint.deactivate(showTokenWithAdditionalInfoConstraints)
-        NSLayoutConstraint.deactivate(showTokenWithoutAdditionalInfoConstraints)
-        NSLayoutConstraint.deactivate(hideTokenWithAdditionalInfoConstraints)
-        NSLayoutConstraint.deactivate(hideTokenWithoutAdditionalInfoConstraints)
     }
     
     func setupConfiguration() {

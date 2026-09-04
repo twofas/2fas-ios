@@ -47,60 +47,63 @@ struct TrashView: View {
         )
     }
 
+    /// Adaptive grid: as many columns as fit at the minimum cell width,
+    /// each column stretching to share the remaining width evenly.
+    private let columns = [
+        GridItem(.adaptive(minimum: Theme.Metrics.defaultCellWidth), spacing: Spacing.XL.value)
+    ]
+
     private var trashList: some View {
-        List {
-            ForEach(presenter.services, id: \.secret) { service in
-                trashCell(service)
-                    .padding(.bottom, .XL)
-                    .listRowBackground(Color.clear)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+        ScrollView(.vertical) {
+            LazyVGrid(columns: columns, spacing: Spacing.XL.value) {
+                ForEach(presenter.services, id: \.secret) { service in
+                    trashCell(service)
+                }
             }
+            .padding(.XL)
         }
-        .scrollContentBackground(.hidden)
     }
 
     @ViewBuilder
     private func trashCell(_ service: ServiceData) -> some View {
-        AdaptiveReadableContainer(horizontalMargin: .zero, verticalMargin: .zero) {
-            HStack(spacing: .M) {
-                ServiceIconView(icon: service.iconDetails, showBackground: false)
+        HStack(spacing: .M) {
+            ServiceIconView(icon: service.iconDetails, showBackground: false)
+            
+            VStack(alignment: .leading, spacing: 2) {
+                Text(service.name)
+                    .textStyle(.body)
+                    .foregroundStyle(.labelsPrimary)
                 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(service.name)
-                        .textStyle(.body)
-                        .foregroundStyle(.labelsPrimary)
-                    
-                    if let additionalInfo = service.additionalInfo, !additionalInfo.isEmpty {
-                        Text(additionalInfo)
-                            .textStyle(.subheadline)
-                            .foregroundStyle(.labelsSecondary)
-                    }
-                }
-                
-                Spacer(minLength: 0)
-
-                TFMenuButton {
-                    Button {
-                        presenter.handleRestore(service)
-                    } label: {
-                        Label(T.Settings.restore, icon: .arrowClockwise)
-                    }
-
-                    Button(role: .destructive) {
-                        presenter.handleDelete(service)
-                    } label: {
-                        Label(T.Commons.delete, icon: .trashFill)
-                    }
+                if let additionalInfo = service.additionalInfo, !additionalInfo.isEmpty {
+                    Text(additionalInfo)
+                        .textStyle(.subheadline)
+                        .foregroundStyle(.labelsSecondary)
                 }
             }
-            .padding(.horizontal, .XL)
-            .padding(.vertical, .L)
-            .background(
-                RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue, style: .continuous)
-                    .foregroundStyle(AppColor.backgroundsSecondary)
-            )
-            .frame(minHeight: .list)
+            
+            Spacer(minLength: 0)
+
+            TFMenuButton {
+                Button {
+                    presenter.handleRestore(service)
+                } label: {
+                    Label(T.Settings.restore, icon: .arrowClockwise)
+                }
+
+                Button(role: .destructive) {
+                    presenter.handleDelete(service)
+                } label: {
+                    Label(T.Commons.delete, icon: .trashFill)
+                }
+            }
         }
+        .padding(.horizontal, .XL)
+        .padding(.vertical, .L)
+        .frame(maxWidth: .infinity)
+        .frame(minHeight: .list)
+        .background(
+            RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue, style: .continuous)
+                .foregroundStyle(AppColor.backgroundsSecondary)
+        )
     }
 }

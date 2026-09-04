@@ -26,7 +26,16 @@ struct PINKeyboard: View {
     let canDelete: Bool
     /// Biometry key shown left of "0"; `nil` keeps that slot empty.
     let biometryKey: TFPinKey?
+    /// Fades every key out (and back in) with a slight shrink, each key starting a beat after
+    /// the previous one in reading order, and disables the keypad meanwhile. The slots stay,
+    /// so the grid keeps its size either way.
+    var isHidden = false
     let action: (TFPinKey) -> Void
+
+    private let hiddenScale: CGFloat = 0.9
+    private let toggleDuration: TimeInterval = 0.25
+    /// Gap between consecutive keys' start times; 12 keys spread over about a third of a second.
+    private let keyStagger: TimeInterval = 0.03
 
     var body: some View {
         // Note: the buttons are intentionally NOT wrapped in a `GlassEffectContainer`.
@@ -35,24 +44,44 @@ struct PINKeyboard: View {
         // so the interactive press of one `.buttonStyle(.glass)` key (press-in + press-out)
         // forces the whole shape to re-render, making every button flash twice on each tap.
         PINKeypadLayout {
-            TFPinButton(.digit(1), action: action)
-            TFPinButton(.digit(2), action: action)
-            TFPinButton(.digit(3), action: action)
-            TFPinButton(.digit(4), action: action)
-            TFPinButton(.digit(5), action: action)
-            TFPinButton(.digit(6), action: action)
-            TFPinButton(.digit(7), action: action)
-            TFPinButton(.digit(8), action: action)
-            TFPinButton(.digit(9), action: action)
+            staggered(TFPinButton(.digit(1), action: action), at: 0)
+            staggered(TFPinButton(.digit(2), action: action), at: 1)
+            staggered(TFPinButton(.digit(3), action: action), at: 2)
+            staggered(TFPinButton(.digit(4), action: action), at: 3)
+            staggered(TFPinButton(.digit(5), action: action), at: 4)
+            staggered(TFPinButton(.digit(6), action: action), at: 5)
+            staggered(TFPinButton(.digit(7), action: action), at: 6)
+            staggered(TFPinButton(.digit(8), action: action), at: 7)
+            staggered(TFPinButton(.digit(9), action: action), at: 8)
             // Hidden key keeps the slot so "0" stays centred.
-            TFPinButton(biometryKey ?? .delete, action: action)
-                .isHidden(biometryKey == nil, remove: false)
-            TFPinButton(.digit(0), action: action)
-            TFPinButton(.delete, action: action)
-                .opacity(canDelete ? 1 : 0)
-                .disabled(!canDelete)
-                .animation(.easeInOut(duration: PINDotsAnimation.fillDuration), value: canDelete)
+            staggered(
+                TFPinButton(biometryKey ?? .delete, action: action)
+                    .isHidden(biometryKey == nil, remove: false),
+                at: 9
+            )
+            staggered(TFPinButton(.digit(0), action: action), at: 10)
+            staggered(
+                TFPinButton(.delete, action: action)
+                    .opacity(canDelete ? 1 : 0)
+                    .disabled(!canDelete)
+                    .animation(.easeInOut(duration: PINDotsAnimation.fillDuration), value: canDelete),
+                at: 11
+            )
         }
+        .disabled(isHidden)
+        .accessibilityHidden(isHidden)
+    }
+
+    /// Applies the hide/show effect to one key; `index` is its position in reading order and
+    /// sets how long the key waits before its animation starts.
+    private func staggered<Key: View>(_ key: Key, at index: Int) -> some View {
+        key
+            .opacity(isHidden ? 0 : 1)
+            .scaleEffect(isHidden ? hiddenScale : 1)
+            .animation(
+                .easeInOut(duration: toggleDuration).delay(Double(index) * keyStagger),
+                value: isHidden
+            )
     }
 }
 

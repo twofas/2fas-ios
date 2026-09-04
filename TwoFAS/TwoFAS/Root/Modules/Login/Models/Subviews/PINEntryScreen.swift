@@ -52,8 +52,8 @@ struct PINEntryBlock<Header: View>: View {
     let onKeyPressed: (TFPinKey) -> Void
     /// Biometry key shown left of "0"; `nil` leaves that slot empty.
     var biometryKey: TFPinKey?
-    /// Fades the keypad out and disables it while keeping its slot, so the header and dots
-    /// stay put when it comes back.
+    /// Hides and disables the keypad (see `PINKeyboard.isHidden`) while keeping its slot,
+    /// so the header and dots stay put when it comes back.
     var isKeyboardHidden = false
     @ViewBuilder let header: () -> Header
 
@@ -73,13 +73,14 @@ struct PINEntryBlock<Header: View>: View {
 
             gap
 
-            PINKeyboard(canDelete: enteredCount > 0, biometryKey: biometryKey, action: onKeyPressed)
-                .disabled(isDisabled || isKeyboardHidden)
-                .opacity(isKeyboardHidden ? 0 : 1)
-                .scaleEffect(isKeyboardHidden ? hiddenKeyboardScale : 1)
-                .accessibilityHidden(isKeyboardHidden)
-                .animation(.easeInOut(duration: keyboardToggleDuration), value: isKeyboardHidden)
-                .layoutPriority(1)
+            PINKeyboard(
+                canDelete: enteredCount > 0,
+                biometryKey: biometryKey,
+                isHidden: isKeyboardHidden,
+                action: onKeyPressed
+            )
+            .disabled(isDisabled)
+            .layoutPriority(1)
         }
         .layoutPriority(1)
     }
@@ -88,9 +89,6 @@ struct PINEntryBlock<Header: View>: View {
         Spacer(minLength: Spacing.M.value)
             .frame(maxHeight: Spacing.XXXXXXXL.value)
     }
-
-    private let hiddenKeyboardScale: CGFloat = 0.9
-    private let keyboardToggleDuration: TimeInterval = 0.25
 }
 
 /// A reusable PIN-entry layout: info text, dots, keyboard and an optional footer.

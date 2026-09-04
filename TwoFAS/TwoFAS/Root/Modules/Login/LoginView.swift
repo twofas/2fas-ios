@@ -48,7 +48,8 @@ struct LoginView: View {
                 shake: presenter.shake,
                 isDisabled: presenter.isBlocked,
                 onKeyPressed: presenter.onKeyPressed,
-                biometryKey: presenter.biometryKey
+                biometryKey: presenter.biometryKey,
+                isKeyboardHidden: presenter.isAuthenticating
             ) {
                 PINWelcomeHeader(loginType: presenter.loginType, info: $presenter.info)
             }

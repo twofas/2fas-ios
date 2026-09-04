@@ -45,8 +45,9 @@ final class LoginPresenter {
     var isResetVisible = false
     /// Key shown left of "0" on the keypad; `nil` hides the slot when biometry can't be used.
     var biometryKey: TFPinKey?
-
-    private var isAuthenticating = false
+    /// `true` from the moment biometry is requested until its result arrives. The keypad is
+    /// hidden for that time and comes back only when the attempt fails or is cancelled.
+    private(set) var isAuthenticating = false
 
     private var pin: [Int] = [] {
         didSet {
@@ -83,7 +84,8 @@ final class LoginPresenter {
     }
     
     func onKeyPressed(_ key: TFPinKey) {
-        guard !isBlocked else { return }
+        // Hardware keys must not fill the dots while the keypad is hidden behind biometry.
+        guard !isBlocked, !isAuthenticating else { return }
         switch key {
         case .digit(let number):
             guard pin.count < totalDigits else { return }

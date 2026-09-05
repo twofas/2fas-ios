@@ -106,13 +106,7 @@ struct LoginView: View {
         .sensoryFeedback(.success, trigger: presenter.success) { _, new in new }
         .sensoryFeedback(.start, trigger: presenter.unlock)
         .background(AppColor.backgroundsPrimary)
-        // Exit over the app, see `UnlockTransition`. Sits after the background so the whole
-        // screen, not just its content, grows and fades. The scale takes its own spring; the
-        // opacity stays on the transaction's curve set by the presenter.
-        .scaleEffect(presenter.isLeaving ? UnlockTransition.loginScale : 1)
-        .animation(UnlockTransition.scaleAnimation, value: presenter.isLeaving)
-        .opacity(presenter.isLeaving ? 0 : 1)
-        .allowsHitTesting(!presenter.isLeaving)
+        .modifier(UnlockExit(isLeaving: presenter.isLeaving))
         .onAppear {
             presenter.onAppear()
         }
@@ -127,6 +121,22 @@ struct LoginView: View {
         }) {
             AppReset()
         }
+    }
+}
+
+/// Exit of the login screen over the app, see `UnlockTransition.Login`. Goes after the
+/// background so the whole screen, not just its content, grows and fades. The scale takes its
+/// own curve; the opacity stays on the transaction's curve the presenter animates with, which
+/// is also what its completion waits for.
+private struct UnlockExit: ViewModifier {
+    let isLeaving: Bool
+
+    func body(content: Content) -> some View {
+        content
+            .scaleEffect(isLeaving ? UnlockTransition.Login.scale : 1)
+            .animation(UnlockTransition.Login.zoom, value: isLeaving)
+            .opacity(isLeaving ? 0 : 1)
+            .allowsHitTesting(!isLeaving)
     }
 }
 

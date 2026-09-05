@@ -171,7 +171,7 @@ private extension LoginPresenter {
         // flies away over it.
         flowController.toLoggedIn()
         guard loginType == .login else { return }
-        withAnimation(UnlockTransition.animation) {
+        withAnimation(UnlockTransition.Login.fade) {
             isLeaving = true
         } completion: { [weak self] in
             self?.flowController.toLoggedInTransitionFinished()

@@ -30,7 +30,8 @@ protocol RootFlowControllerParent: AnyObject {}
 
 protocol RootFlowControlling: AnyObject {
     func toIntro()
-    func toMain(immediately: Bool)
+    /// `animated` brings the app in under the departing login screen, see `UnlockTransition`.
+    func toMain(animated: Bool)
     func toStorageError(error: String)
 
     func toCover()
@@ -99,26 +100,36 @@ extension RootFlowController: RootFlowControlling {
         IntroductionNavigationFlowController.embedAsRoot(in: viewController, parent: self)
     }
     
-    func toMain(immediately: Bool) {
+    func toMain(animated: Bool) {
         if mainViewController == nil {
-            mainViewController = MainFlowController.showAsRoot(in: viewController, parent: self, immediately: immediately)
+            mainViewController = MainFlowController.showAsRoot(in: viewController, parent: self)
         } else {
             mainViewController?.viewDidAppear(false)
         }
-        guard !immediately, let main = mainViewController?.view else { return }
-        // Comes into focus and up to full size under the login screen flying away, see
-        // `UnlockTransition`. A visual effect view over the app blurs what is beneath it;
-        // animating its effect away interpolates the blur down to nothing, then the view is
-        // gone. The blur view is inside `main`, so it scales along with it.
-        let blur = UnlockTransition.mainBlur.map { effect in
+        if animated, let main = mainViewController?.view {
+            reveal(main)
+        }
+    }
+
+    /// Brings the app in under the login screen flying away, see `UnlockTransition.Main`:
+    /// it comes into focus, fades up and grows to full size. The blur is a visual effect view
+    /// laid over the app, which blurs what is beneath it; animating its effect away takes the
+    /// radius down to nothing, then the view is removed. It sits inside `main`, so it scales
+    /// along with it.
+    private func reveal(_ main: UIView) {
+        typealias Config = UnlockTransition.Main
+
+        let blur = Config.blur.map { effect in
             let view = UIVisualEffectView(effect: effect)
             view.isUserInteractionEnabled = false
             main.addSubview(view)
             view.pinToParent()
             return view
         }
-        main.alpha = UnlockTransition.mainStartAlpha
-        let focus = UIViewPropertyAnimator(duration: UnlockTransition.mainDuration, curve: .easeOut) {
+        main.alpha = Config.startAlpha
+        main.transform = CGAffineTransform(scaleX: Config.scale, y: Config.scale)
+
+        let focus = UIViewPropertyAnimator(duration: Config.duration, curve: .easeOut) {
             blur?.effect = nil
             main.alpha = 1
         }
@@ -126,9 +137,8 @@ extension RootFlowController: RootFlowControlling {
             blur?.removeFromSuperview()
         }
         focus.startAnimation()
-        // The zoom is a critically damped spring, see `UnlockTransition.scaleAnimation`.
-        main.transform = CGAffineTransform(scaleX: UnlockTransition.mainScale, y: UnlockTransition.mainScale)
-        UIViewPropertyAnimator(duration: UnlockTransition.mainDuration, dampingRatio: 1) {
+
+        UIViewPropertyAnimator(duration: Config.duration, dampingRatio: 1) {
             main.transform = .identity
         }
         .startAnimation()

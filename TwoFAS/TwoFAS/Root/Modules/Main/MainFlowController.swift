@@ -56,8 +56,7 @@ final class MainFlowController: FlowController {
     
     static func showAsRoot(
         in viewController: UIViewController,
-        parent: MainFlowControllerParent,
-        immediately: Bool
+        parent: MainFlowControllerParent
     ) -> MainViewController {
         let view = MainViewController()
         let flowController = MainFlowController(viewController: view)

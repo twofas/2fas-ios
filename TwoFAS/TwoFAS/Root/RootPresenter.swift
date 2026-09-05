@@ -126,7 +126,7 @@ final class RootPresenter {
         } else if interactor.isAuthenticationRequired {
             presentLogin(immediately: coldRun)
         } else {
-            presentMain(immediately: coldRun)
+            presentMain()
         }
     }
     
@@ -159,13 +159,13 @@ final class RootPresenter {
         flowController.toIntro()
     }
     
-    private func presentMain(immediately: Bool) {
+    private func presentMain() {
         guard currentState != .main else { return }
-        // Coming from the lock screen the app grows in under it, see `UnlockTransition`.
-        let immediately = currentState != .login
+        // Coming from the lock screen the app animates in under it, see `UnlockTransition`.
+        let fromLogin = currentState == .login
         changeState(.main)
         Log("Presenting Main")
-        flowController.toMain(immediately: immediately)
+        flowController.toMain(animated: fromLogin)
     }
     
     private func presentLogin(immediately: Bool) {

@@ -46,12 +46,12 @@ struct PINKeyboard: View {
     @State private var keypadSize: CGSize = .zero
 
     /// Drives the removal transition of every key.
-    private let fadeOut: Animation = .easeInOut(duration: 0.2)
+    static let fadeOut: Animation = .easeInOut(duration: 0.2)
     /// Opacity part of the entrance, shared by all keys; the flight is what differs.
-    private let fadeIn: Animation = .easeIn(duration: 0.2)
+    static let fadeIn: Animation = .easeIn(duration: 0.2)
     /// Pause before the entrance starts. The keys are already in place, invisible on "5", so
     /// the screen stays calm while whatever hid them (the biometry alert) is still going away.
-    private let entranceDelay: TimeInterval = 0.2
+    static let entranceDelay: TimeInterval = 0.2
 
     // Spring tuning for the entrance, interpolated between the nearest key ("5" itself,
     // travel 0) and the farthest corner.
@@ -111,7 +111,7 @@ struct PINKeyboard: View {
         // Sets the transaction the keys are inserted and removed in; the removal fade uses it
         // directly, the entrance overrides it per key inside the transition. Showing always
         // needs an animation here, or the insertion transition would not run at all.
-        .animation(isHidden && !animatesHiding ? nil : fadeOut, value: isHidden)
+        .animation(isHidden && !animatesHiding ? nil : Self.fadeOut, value: isHidden)
         .disabled(isHidden)
         .accessibilityHidden(isHidden)
     }
@@ -126,8 +126,8 @@ struct PINKeyboard: View {
             key.transition(AsymmetricTransition(
                 insertion: KeyEntrance(
                     flight: spring(for: index),
-                    fade: fadeIn,
-                    startDelay: entranceDelay,
+                    fade: Self.fadeIn,
+                    startDelay: Self.entranceDelay,
                     keypadSpace: keypadSpace,
                     gatherSlot: gatherSlot
                 ),

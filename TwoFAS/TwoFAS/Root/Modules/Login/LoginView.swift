@@ -42,6 +42,16 @@ struct LoginView: View {
 #endif
     }
 
+    /// Mirrors the keypad: an automatic hide is instant, a user's hide fades, showing fades in
+    /// after the keypad's entrance delay.
+    private var footerAnimation: Animation? {
+        if isKeyboardHidden {
+            presenter.animatesKeyboardHiding ? PINKeyboard.fadeOut : nil
+        } else {
+            PINKeyboard.fadeIn.delay(PINKeyboard.entranceDelay)
+        }
+    }
+
     var body: some View {
         VStack(spacing: .S) {
             if presenter.loginType == .verify {
@@ -72,9 +82,14 @@ struct LoginView: View {
             Spacer(minLength: 0)
             
             if presenter.loginType == .login {
+                // Goes away and comes back with the keypad, on the keypad's timing, but keeps
+                // its slot so the block above does not move.
                 PINWelcomeFooter {
                     presenter.isResetVisible = true
                 }
+                .opacity(isKeyboardHidden ? 0 : 1)
+                .disabled(isKeyboardHidden)
+                .animation(footerAnimation, value: isKeyboardHidden)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

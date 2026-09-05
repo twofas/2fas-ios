@@ -26,41 +26,26 @@ struct PINKeyboard: View {
     let canDelete: Bool
     /// Biometry key shown left of "0"; `nil` keeps that slot empty.
     let biometryKey: TFPinKey?
-    /// Hiding fades the keys out in place; showing grows them back from the "5" slot, each
+    /// Hiding fades the keys out in place; showing brings them back from the "5" slot, each
     /// on its own spring: a longer way means a later start, a longer flight and a bigger
-    /// bounce on landing. The keypad is disabled while hidden. The slots stay, so the grid
-    /// keeps its size either way.
+    /// bounce on landing. The keypad is disabled while hidden. Every slot keeps a placeholder
+    /// while its key is out, so the grid keeps its size either way.
     var isHidden = false
     let action: (TFPinKey) -> Void
-
-    init(canDelete: Bool, biometryKey: TFPinKey?, isHidden: Bool = false, action: @escaping (TFPinKey) -> Void) {
-        self.canDelete = canDelete
-        self.biometryKey = biometryKey
-        self.isHidden = isHidden
-        self.action = action
-        _isGathered = State(initialValue: isHidden)
-    }
 
     /// Coordinate space of the whole keypad; each key measures its slot in it and asks the
     /// layout where the "5" slot is in the same space.
     private let keypadSpace = "PINKeyboard"
     /// Reading-order index of the slot the keys gather on.
     private let gatherSlot = 4
-    /// Size of a key while it sits on the gather slot; it grows back to 1 on the way out.
-    private let gatheredScale: CGFloat = 0.1
 
     /// Size of the laid-out keypad, needed to know each key's travel before it animates.
     @State private var keypadSize: CGSize = .zero
-    /// Whether the keys sit on the "5" slot. Set without animation once the fade-out has
-    /// finished, so the move is never seen; cleared with the springs when the keys come back.
-    @State private var isGathered = false
-    /// Pending switch to the gathered position; cancelled if the keys are shown again first.
-    @State private var gatherTask: Task<Void, Never>?
 
-    private let fadeOut: Animation = .easeIn(duration: 0.1)
-    private let fadeOutDuration: TimeInterval = 0.1
-    /// Share of a key's flight over which it fades in, so it is fully opaque before it lands.
-    private let fadeInShare = 0.6
+    /// Drives the removal transition of every key.
+    private let fadeOut: Animation = .easeInOut(duration: 0.2)
+    /// Opacity part of the entrance, shared by all keys; the flight is what differs.
+    private let fadeIn: Animation = .easeIn(duration: 0.2)
 
     // Spring tuning for the entrance, interpolated between the nearest key ("5" itself,
     // travel 0) and the farthest corner.
@@ -69,9 +54,10 @@ struct PINKeyboard: View {
     private let nearBounce = 0.2
     private let farBounce = 0.45
     /// The two bottom-corner slots (biometry and delete) travel the farthest and would
-    /// overshoot the most, so they get this fixed bounce instead of the interpolated one.
+    /// overshoot the most, so they get a fixed bounce and delay instead of the interpolated ones.
     private let outerKeys: Set<Int> = [9, 11]
     private let outerBounce = 0.3
+    private let outerDelay: TimeInterval = 0.05
     /// Farthest key's head start; the nearest starts at once.
     private let farReleaseDelay: TimeInterval = 0.1
     /// Speed the keys already have when released, as a fraction of their own travel per
@@ -86,23 +72,23 @@ struct PINKeyboard: View {
         // so the interactive press of one `.buttonStyle(.glass)` key (press-in + press-out)
         // forces the whole shape to re-render, making every button flash twice on each tap.
         PINKeypadLayout {
-            staggered(TFPinButton(.digit(1), action: action), at: 0)
-            staggered(TFPinButton(.digit(2), action: action), at: 1)
-            staggered(TFPinButton(.digit(3), action: action), at: 2)
-            staggered(TFPinButton(.digit(4), action: action), at: 3)
-            staggered(TFPinButton(.digit(5), action: action), at: 4)
-            staggered(TFPinButton(.digit(6), action: action), at: 5)
-            staggered(TFPinButton(.digit(7), action: action), at: 6)
-            staggered(TFPinButton(.digit(8), action: action), at: 7)
-            staggered(TFPinButton(.digit(9), action: action), at: 8)
+            slot(TFPinButton(.digit(1), action: action), at: 0)
+            slot(TFPinButton(.digit(2), action: action), at: 1)
+            slot(TFPinButton(.digit(3), action: action), at: 2)
+            slot(TFPinButton(.digit(4), action: action), at: 3)
+            slot(TFPinButton(.digit(5), action: action), at: 4)
+            slot(TFPinButton(.digit(6), action: action), at: 5)
+            slot(TFPinButton(.digit(7), action: action), at: 6)
+            slot(TFPinButton(.digit(8), action: action), at: 7)
+            slot(TFPinButton(.digit(9), action: action), at: 8)
             // Hidden key keeps the slot so "0" stays centred.
-            staggered(
+            slot(
                 TFPinButton(biometryKey ?? .delete, action: action)
                     .isHidden(biometryKey == nil, remove: false),
                 at: 9
             )
-            staggered(TFPinButton(.digit(0), action: action), at: 10)
-            staggered(
+            slot(TFPinButton(.digit(0), action: action), at: 10)
+            slot(
                 TFPinButton(.delete, action: action)
                     .opacity(canDelete ? 1 : 0)
                     .disabled(!canDelete)
@@ -116,78 +102,44 @@ struct PINKeyboard: View {
         } action: { size in
             keypadSize = size
         }
+        // Sets the transaction the keys are inserted and removed in; the removal fade uses it
+        // directly, the entrance overrides it pe r key inside the transition.
+        .animation(fadeOut, value: isHidden)
         .disabled(isHidden)
         .accessibilityHidden(isHidden)
-        .onChange(of: isHidden) { _, hidden in
-            gatherTask?.cancel()
-            if hidden {
-                gatherTask = Task {
-                    try? await Task.sleep(for: .seconds(fadeOutDuration))
-                    guard !Task.isCancelled else { return }
-                    isGathered = true
-                }
-            } else {
-                isGathered = false
-            }
-        }
     }
 
-    /// Applies the hide/show effect to one key; `index` is its position in reading order and
-    /// picks the spring for its travel. The travel is a pure offset, so the slot itself never
-    /// moves and the grid does not reflow. Moving onto "5" is instant (`nil` animation), it
-    /// happens while the key is already invisible; only the way back is sprung.
-    ///
-    /// Slot and target are both in the keypad's space. `bounds(of:)` reports the keypad in the
-    /// key's own local space, so only its size is taken from it; the target comes from the
-    /// layout's placement maths for that size.
-    private func staggered<Key: View>(_ key: Key, at index: Int) -> some View {
-        let isGathered = isGathered
-//        let gatheredScale = gatheredScale
-        let keypadSpace = keypadSpace
-        let gatherSlot = gatherSlot
-        return key
-            .visualEffect { content, proxy in
-                let slot = proxy.frame(in: .named(keypadSpace))
-                let keypadSize = proxy.bounds(of: .named(keypadSpace))?.size ?? slot.size
-                let target = PINKeypadLayout.slotCentre(
-                    at: gatherSlot,
-                    in: CGRect(origin: .zero, size: keypadSize)
-                )
-                return content
-//                    .scaleEffect((isGathered && index == 4) ? gatheredScale : 1)
-                    .offset(
-                        x: isGathered ? target.x - slot.midX : 0,
-                        y: isGathered ? target.y - slot.midY : 0
-                    )
-            }
-            .animation(isGathered ? nil : spring(for: index), value: isGathered)
-            .opacity(isHidden ? 0 : 1)
-            .animation(isHidden ? fadeOut : .easeIn(duration: 0.2), value: isHidden)
+    /// One slot of the grid: the key while shown, a same-sized blank while hidden, so the
+    /// layout always sees twelve subviews. `index` is the slot's position in reading order.
+    @ViewBuilder
+    private func slot<Key: View>(_ key: Key, at index: Int) -> some View {
+        if isHidden {
+            Color.clear
+        } else {
+            key.transition(AsymmetricTransition(
+                insertion: KeyEntrance(
+                    flight: spring(for: index),
+                    fade: fadeIn,
+                    keypadSpace: keypadSpace,
+                    gatherSlot: gatherSlot
+                ),
+                removal: .blurReplace
+            ))
+        }
     }
 
     /// Entrance spring for the key at `index`, scaled by its travel relative to the farthest key.
     private func spring(for index: Int) -> Animation {
-        let (flight, delay, t) = flight(of: index)
-        let bounce = outerKeys.contains(index) ? outerBounce : nearBounce + (farBounce - nearBounce) * t
+        let t = relativeTravel(of: index)
+        let flight = nearFlight + (farFlight - nearFlight) * t
+        let isOuter = outerKeys.contains(index)
+        let bounce = isOuter ? outerBounce : nearBounce + (farBounce - nearBounce) * t
+        let delay = isOuter ? outerDelay : farReleaseDelay * t
         return .interpolatingSpring(
             Spring(duration: flight, bounce: bounce),
             initialVelocity: launchVelocity
         )
-        .delay(outerKeys.contains(index) ? 0.05 : delay)
-    }
-
-    /// Entrance fade for the key at `index`: starts with its flight and finishes part-way
-    /// through it, so the key is fully visible while it still moves.
-    private func fadeIn(for index: Int) -> Animation {
-        let (flight, delay, _) = flight(of: index)
-        return .easeOut(duration: flight * fadeInShare).delay(delay)
-    }
-
-    /// Flight time and start delay of the key at `index`, with its relative travel.
-    private func flight(of index: Int) -> (duration: TimeInterval, delay: TimeInterval, travel: CGFloat) {
-        let t = relativeTravel(of: index)
-        let duration = nearFlight + (farFlight - nearFlight) * t
-        return (duration, farReleaseDelay * t, t)
+        .delay(delay)
     }
 
     /// Travel of the key at `index` to the gather slot as a fraction of the longest travel.
@@ -203,6 +155,42 @@ struct PINKeyboard: View {
         let longest = (0..<12).map(travel).max() ?? 0
         guard longest > 0 else { return 0 }
         return travel(index) / longest
+    }
+}
+
+/// Insertion transition of one key: it starts on the gather slot, invisible, and springs out
+/// to its own slot while fading in. The travel is a pure offset, so the slot itself never
+/// moves and the grid does not reflow.
+///
+/// Slot and target are both taken in the keypad's space. `bounds(of:)` reports the keypad in
+/// the key's own local space, so only its size is used; the target comes from the layout's
+/// placement maths for that size.
+private struct KeyEntrance: Transition {
+    let flight: Animation
+    let fade: Animation
+    let keypadSpace: String
+    let gatherSlot: Int
+
+    func body(content: Content, phase: TransitionPhase) -> some View {
+        let isGathered = !phase.isIdentity
+        let keypadSpace = keypadSpace
+        let gatherSlot = gatherSlot
+        content
+            .visualEffect { content, proxy in
+                let slot = proxy.frame(in: .named(keypadSpace))
+                let keypadSize = proxy.bounds(of: .named(keypadSpace))?.size ?? slot.size
+                let target = PINKeypadLayout.slotCentre(
+                    at: gatherSlot,
+                    in: CGRect(origin: .zero, size: keypadSize)
+                )
+                return content.offset(
+                    x: isGathered ? target.x - slot.midX : 0,
+                    y: isGathered ? target.y - slot.midY : 0
+                )
+            }
+            .animation(flight, value: phase)
+            .opacity(isGathered ? 0 : 1)
+            .animation(fade, value: phase)
     }
 }
 

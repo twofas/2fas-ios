@@ -134,10 +134,16 @@ private extension LoginPresenter {
         animatesKeyboardHiding = userInitiated
         isAuthenticating = true
         interactor.verifyUsingBiometry(reason: reason, userInitiated: userInitiated) { [weak self] result in
-            self?.isAuthenticating = false
-            self?.animatesKeyboardHiding = true
+            guard let self else { return }
+            isAuthenticating = false
+            animatesKeyboardHiding = true
             if result {
-                self?.userLoggedIn()
+                // Same feedback as a typed PIN: every dot fills, and the screen goes once the
+                // fill has been seen.
+                enteredDigitCount = totalDigits
+                DispatchQueue.main.asyncAfter(deadline: .now() + PINDotsAnimation.fillDuration) { [weak self] in
+                    self?.userLoggedIn()
+                }
             }
         }
     }

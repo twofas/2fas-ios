@@ -161,7 +161,8 @@ final class RootPresenter {
     
     private func presentMain(immediately: Bool) {
         guard currentState != .main else { return }
-        let immediately = !(currentState == .login || currentState == .intro)
+        // Coming from the lock screen the app grows in under it, see `UnlockTransition`.
+        let immediately = currentState != .login
         changeState(.main)
         Log("Presenting Main")
         flowController.toMain(immediately: immediately)

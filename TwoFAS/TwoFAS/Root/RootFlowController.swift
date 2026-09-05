@@ -100,11 +100,38 @@ extension RootFlowController: RootFlowControlling {
     }
     
     func toMain(immediately: Bool) {
-        guard mainViewController == nil else {
+        if mainViewController == nil {
+            mainViewController = MainFlowController.showAsRoot(in: viewController, parent: self, immediately: immediately)
+        } else {
             mainViewController?.viewDidAppear(false)
-            return
         }
-        mainViewController = MainFlowController.showAsRoot(in: viewController, parent: self, immediately: immediately)
+        guard !immediately, let main = mainViewController?.view else { return }
+        // Comes into focus and up to full size under the login screen flying away, see
+        // `UnlockTransition`. A visual effect view over the app blurs what is beneath it;
+        // animating its effect away interpolates the blur down to nothing, then the view is
+        // gone. The blur view is inside `main`, so it scales along with it.
+        let blur = UnlockTransition.mainBlur.map { effect in
+            let view = UIVisualEffectView(effect: effect)
+            view.isUserInteractionEnabled = false
+            main.addSubview(view)
+            view.pinToParent()
+            return view
+        }
+        main.alpha = UnlockTransition.mainStartAlpha
+        let focus = UIViewPropertyAnimator(duration: UnlockTransition.mainDuration, curve: .easeOut) {
+            blur?.effect = nil
+            main.alpha = 1
+        }
+        focus.addCompletion { _ in
+            blur?.removeFromSuperview()
+        }
+        focus.startAnimation()
+        // The zoom is a critically damped spring, see `UnlockTransition.scaleAnimation`.
+        main.transform = CGAffineTransform(scaleX: UnlockTransition.mainScale, y: UnlockTransition.mainScale)
+        UIViewPropertyAnimator(duration: UnlockTransition.mainDuration, dampingRatio: 1) {
+            main.transform = .identity
+        }
+        .startAnimation()
     }
     
     func toStorageError(error: String) {
@@ -179,7 +206,10 @@ extension RootFlowController: LoginFlowControllerParent {
     }
     
     func loginLoggedIn() {
-        toRemoveLogin()
         viewController.presenter.handleUserWasLoggedIn()
+    }
+
+    func loginTransitionFinished() {
+        toRemoveLogin()
     }
 }

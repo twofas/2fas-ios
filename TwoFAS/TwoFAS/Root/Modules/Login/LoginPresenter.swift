@@ -45,7 +45,9 @@ final class LoginPresenter {
     var isResetVisible = false
     /// Key shown left of "0" on the keypad; `nil` hides the slot when biometry can't be used.
     var biometryKey: TFPinKey?
-    /// `true` from the moment biometry is requested until its result arrives.
+    /// `true` from the moment biometry is requested until it fails or is cancelled. After a
+    /// success it stays `true`: the screen is on its way out and the keypad must not come
+    /// back into it.
     private(set) var isAuthenticating = false
     /// `true` while the next time the screen is seen is going to prompt for biometry on its
     /// own, so the keypad is absent from that first frame instead of showing up and hiding a
@@ -61,6 +63,9 @@ final class LoginPresenter {
     /// is up: the keypad then vanishes in the same frame, with no fade, because nothing the
     /// user did caused it. A prompt started from the biometry key hides the keypad animated.
     private(set) var animatesKeyboardHiding = true
+    /// `true` once the user is in and the lock screen is on its way out over the app, see
+    /// `UnlockTransition`; the view grows, blurs and fades while this is set.
+    private(set) var isLeaving = false
 
     private var pin: [Int] = [] {
         didSet {
@@ -135,15 +140,17 @@ private extension LoginPresenter {
         isAuthenticating = true
         interactor.verifyUsingBiometry(reason: reason, userInitiated: userInitiated) { [weak self] result in
             guard let self else { return }
-            isAuthenticating = false
-            animatesKeyboardHiding = true
             if result {
                 // Same feedback as a typed PIN: every dot fills, and the screen goes once the
-                // fill has been seen.
+                // fill has been seen. `isAuthenticating` stays set so the keypad does not start
+                // coming back under the exit.
                 enteredDigitCount = totalDigits
                 DispatchQueue.main.asyncAfter(deadline: .now() + PINDotsAnimation.fillDuration) { [weak self] in
                     self?.userLoggedIn()
                 }
+            } else {
+                isAuthenticating = false
+                animatesKeyboardHiding = true
             }
         }
     }
@@ -159,9 +166,16 @@ private extension LoginPresenter {
     
     func userLoggedIn() {
         success.toggle()
-        clearPIN()
         NotificationCenter.default.post(name: .userLoggedIn, object: nil)
+        // The parent puts the app underneath first; the dots stay filled while this screen
+        // flies away over it.
         flowController.toLoggedIn()
+        guard loginType == .login else { return }
+        withAnimation(UnlockTransition.animation) {
+            isLeaving = true
+        } completion: { [weak self] in
+            self?.flowController.toLoggedInTransitionFinished()
+        }
     }
     
     func userFailedToLogin() {

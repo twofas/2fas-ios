@@ -106,6 +106,13 @@ struct LoginView: View {
         .sensoryFeedback(.success, trigger: presenter.success) { _, new in new }
         .sensoryFeedback(.start, trigger: presenter.unlock)
         .background(AppColor.backgroundsPrimary)
+        // Exit over the app, see `UnlockTransition`. Sits after the background so the whole
+        // screen, not just its content, grows and fades. The scale takes its own spring; the
+        // opacity stays on the transaction's curve set by the presenter.
+        .scaleEffect(presenter.isLeaving ? UnlockTransition.loginScale : 1)
+        .animation(UnlockTransition.scaleAnimation, value: presenter.isLeaving)
+        .opacity(presenter.isLeaving ? 0 : 1)
+        .allowsHitTesting(!presenter.isLeaving)
         .onAppear {
             presenter.onAppear()
         }
@@ -128,6 +135,7 @@ struct LoginView: View {
 private final class PreviewLoginFlowController: LoginFlowControlling {
     func toClose() {}
     func toLoggedIn() {}
+    func toLoggedInTransitionFinished() {}
 }
 
 private final class PreviewLoginInteractor: LoginModuleInteracting {

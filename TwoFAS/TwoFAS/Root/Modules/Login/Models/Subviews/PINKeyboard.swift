@@ -28,8 +28,9 @@ struct PINKeyboard: View {
     let biometryKey: TFPinKey?
     /// Hiding fades the keys out in place; showing brings them back from the "5" slot, each
     /// on its own spring: a longer way means a later start, a longer flight and a bigger
-    /// bounce on landing. The keypad is disabled while hidden. Every slot keeps a placeholder
-    /// while its key is out, so the grid keeps its size either way.
+    /// bounce on landing. With Reduce Motion on, both directions are plain fades. The keypad
+    /// is disabled while hidden. Every slot keeps a placeholder while its key is out, so the
+    /// grid keeps its size either way.
     var isHidden = false
     /// `false` removes the keys in the same frame `isHidden` turns on, with no fade, for hides
     /// the user did not cause. Showing is animated regardless.
@@ -44,6 +45,8 @@ struct PINKeyboard: View {
 
     /// Size of the laid-out keypad, needed to know each key's travel before it animates.
     @State private var keypadSize: CGSize = .zero
+    /// With Reduce Motion on, the keys skip the flight and simply fade in where they belong.
+    @Environment(\.accessibilityReduceMotion) private var reducesMotion
 
     /// Drives the removal transition of every key.
     static let fadeOut: Animation = .easeInOut(duration: 0.2)
@@ -122,6 +125,11 @@ struct PINKeyboard: View {
     private func slot<Key: View>(_ key: Key, at index: Int) -> some View {
         if isHidden {
             Color.clear
+        } else if reducesMotion {
+            key.transition(AsymmetricTransition(
+                insertion: .opacity.animation(Self.fadeIn.delay(Self.entranceDelay)),
+                removal: .opacity
+            ))
         } else {
             key.transition(AsymmetricTransition(
                 insertion: KeyEntrance(

@@ -31,6 +31,9 @@ struct PINKeyboard: View {
     /// bounce on landing. The keypad is disabled while hidden. Every slot keeps a placeholder
     /// while its key is out, so the grid keeps its size either way.
     var isHidden = false
+    /// `false` removes the keys in the same frame `isHidden` turns on, with no fade, for hides
+    /// the user did not cause. Showing is animated regardless.
+    var animatesHiding = true
     let action: (TFPinKey) -> Void
 
     /// Coordinate space of the whole keypad; each key measures its slot in it and asks the
@@ -46,6 +49,9 @@ struct PINKeyboard: View {
     private let fadeOut: Animation = .easeInOut(duration: 0.2)
     /// Opacity part of the entrance, shared by all keys; the flight is what differs.
     private let fadeIn: Animation = .easeIn(duration: 0.2)
+    /// Pause before the entrance starts. The keys are already in place, invisible on "5", so
+    /// the screen stays calm while whatever hid them (the biometry alert) is still going away.
+    private let entranceDelay: TimeInterval = 0.2
 
     // Spring tuning for the entrance, interpolated between the nearest key ("5" itself,
     // travel 0) and the farthest corner.
@@ -103,8 +109,9 @@ struct PINKeyboard: View {
             keypadSize = size
         }
         // Sets the transaction the keys are inserted and removed in; the removal fade uses it
-        // directly, the entrance overrides it pe r key inside the transition.
-        .animation(fadeOut, value: isHidden)
+        // directly, the entrance overrides it per key inside the transition. Showing always
+        // needs an animation here, or the insertion transition would not run at all.
+        .animation(isHidden && !animatesHiding ? nil : fadeOut, value: isHidden)
         .disabled(isHidden)
         .accessibilityHidden(isHidden)
     }
@@ -120,6 +127,7 @@ struct PINKeyboard: View {
                 insertion: KeyEntrance(
                     flight: spring(for: index),
                     fade: fadeIn,
+                    startDelay: entranceDelay,
                     keypadSpace: keypadSpace,
                     gatherSlot: gatherSlot
                 ),
@@ -168,6 +176,9 @@ struct PINKeyboard: View {
 private struct KeyEntrance: Transition {
     let flight: Animation
     let fade: Animation
+    /// Pause before both animations start; the key waits it out invisible on the gather slot.
+    /// Adds to whatever delay `flight` already carries for its place in the wave.
+    let startDelay: TimeInterval
     let keypadSpace: String
     let gatherSlot: Int
 
@@ -188,9 +199,9 @@ private struct KeyEntrance: Transition {
                     y: isGathered ? target.y - slot.midY : 0
                 )
             }
-            .animation(flight, value: phase)
+            .animation(flight.delay(startDelay), value: phase)
             .opacity(isGathered ? 0 : 1)
-            .animation(fade, value: phase)
+            .animation(fade.delay(startDelay), value: phase)
     }
 }
 

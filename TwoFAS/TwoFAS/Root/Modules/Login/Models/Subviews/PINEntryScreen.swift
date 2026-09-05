@@ -55,6 +55,8 @@ struct PINEntryBlock<Header: View>: View {
     /// Hides and disables the keypad (see `PINKeyboard.isHidden`) while keeping its slot,
     /// so the header and dots stay put when it comes back.
     var isKeyboardHidden = false
+    /// `false` makes the next hide instant instead of a fade; showing always animates.
+    var keyboardAnimatesHiding = true
     @ViewBuilder let header: () -> Header
 
     var body: some View {
@@ -77,6 +79,7 @@ struct PINEntryBlock<Header: View>: View {
                 canDelete: enteredCount > 0,
                 biometryKey: biometryKey,
                 isHidden: isKeyboardHidden,
+                animatesHiding: keyboardAnimatesHiding,
                 action: onKeyPressed
             )
             .disabled(isDisabled)

@@ -36,9 +36,9 @@ struct LoginView: View {
 
     private var isKeyboardHidden: Bool {
 #if DEBUG
-        presenter.isAuthenticating || debugHidesKeyboard
+        presenter.isKeyboardHidden || debugHidesKeyboard
 #else
-        presenter.isAuthenticating
+        presenter.isKeyboardHidden
 #endif
     }
 
@@ -63,7 +63,8 @@ struct LoginView: View {
                 isDisabled: presenter.isBlocked,
                 onKeyPressed: presenter.onKeyPressed,
                 biometryKey: presenter.biometryKey,
-                isKeyboardHidden: isKeyboardHidden
+                isKeyboardHidden: isKeyboardHidden,
+                keyboardAnimatesHiding: presenter.animatesKeyboardHiding
             ) {
                 PINWelcomeHeader(loginType: presenter.loginType, info: $presenter.info)
             }
@@ -120,6 +121,8 @@ private final class PreviewLoginInteractor: LoginModuleInteracting {
     let lockTime: Int? = nil
     let codeLength = 4
     let availableBiometryType: BiometryType = .faceID
+    let willPromptBiometryOnAppear = false
+    let isAppInBackground = false
 
     func verify(numbers: [Int]) -> Bool { false }
     func verifyUsingBiometry(reason: String, userInitiated: Bool, completion: @escaping (Bool) -> Void) {}

@@ -109,12 +109,7 @@ final class Security: SecurityProtocol {
         userInitiated: Bool,
         completion: @escaping (BiometryAuthenticationResult) -> Void
     ) {
-        guard
-            !appInBackground &&
-            isBioAuthEnabled &&
-            isBioAuthAvailable &&
-            !isAuthenticatingUsingBiometric
-        else {
+        guard !appInBackground && isBiometryUsable else {
             completion(.notAvailable)
             return
         }
@@ -135,6 +130,20 @@ final class Security: SecurityProtocol {
         biometric.authenticate(reason: reason)
     }
     
+    var canPromptBiometryAutomatically: Bool {
+        // Mirrors the automatic path of `authenticateUsingBiometry`: the next call increments
+        // the counter first and gives up once it reaches the limit.
+        isBiometryUsable && bioAuthCount + 1 < bioLimit
+    }
+
+    /// Common precondition of every biometry prompt, automatic or user-initiated, apart from
+    /// the app being in the foreground.
+    private var isBiometryUsable: Bool {
+        isBioAuthEnabled &&
+        isBioAuthAvailable &&
+        !isAuthenticatingUsingBiometric
+    }
+
     func applicationWillEnterForeground() {
         appInBackground = false
         

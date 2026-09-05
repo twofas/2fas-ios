@@ -29,6 +29,15 @@ protocol LoginModuleInteracting: AnyObject {
     /// Biometry the user can authenticate with right now; `.none` when it is disabled
     /// in the app or unavailable on the device.
     var availableBiometryType: BiometryType { get }
+    /// `true` when the login screen will prompt for biometry on its own as soon as it appears:
+    /// the user is logged out, not locked out and the automatic prompt is still allowed. Lets
+    /// the screen start without the keypad instead of showing it for a frame and hiding it.
+    /// Safe to ask while the app is still in the background, which is where the screen is
+    /// usually created.
+    var willPromptBiometryOnAppear: Bool { get }
+    /// `true` while the app is in the background, e.g. when this screen is being prepared as
+    /// the lock cover; no biometry prompt can be shown then.
+    var isAppInBackground: Bool { get }
 
     func verify(numbers: [Int]) -> Bool
     func verifyUsingBiometry(reason: String, userInitiated: Bool, completion: @escaping (Bool) -> Void)
@@ -75,6 +84,18 @@ extension LoginModuleInteractor: LoginModuleInteracting {
         protectionInteractor.isBiometryEnabled ? protectionInteractor.biometryType : .none
     }
 
+    var willPromptBiometryOnAppear: Bool {
+        // The preconditions `verifyUsingBiometry` checks before it prompts, minus the
+        // foreground check: that one is only false while the screen is being prepared.
+        !loginInteractor.isLocked
+            && loginInteractor.isLoggedOut
+            && loginInteractor.canPromptBiometryAutomatically
+    }
+
+    var isAppInBackground: Bool {
+        UIApplication.shared.applicationState == .background
+    }
+
     func verify(numbers: [Int]) -> Bool {
         let code = PIN.create(with: numbers)
         let codeIsCorrect = loginInteractor.verifyPIN(code)
@@ -98,7 +119,7 @@ extension LoginModuleInteractor: LoginModuleInteracting {
             }
         }
         
-        guard !loginInteractor.isLocked && UIApplication.shared.applicationState != .background else {
+        guard !loginInteractor.isLocked && !isAppInBackground else {
             completion(false)
             return
         }

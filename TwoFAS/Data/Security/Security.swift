@@ -130,10 +130,12 @@ final class Security: SecurityProtocol {
         biometric.authenticate(reason: reason)
     }
     
-    var canPromptBiometryAutomatically: Bool {
-        // Mirrors the automatic path of `authenticateUsingBiometry`: the next call increments
-        // the counter first and gives up once it reaches the limit.
-        isBiometryUsable && bioAuthCount + 1 < bioLimit
+    var canPromptBiometryAutomaticallyOnNextAppearance: Bool {
+        // `applicationWillEnterForeground` calls `unlock()`, which clears the count, unless
+        // the app is locked out; only then does the count carry over. The automatic path of
+        // `authenticateUsingBiometry` increments it first and gives up at the limit.
+        let locked = interactor?.isAppLocked == true
+        return isBiometryUsable && (!locked || bioAuthCount + 1 < bioLimit)
     }
 
     /// Common precondition of every biometry prompt, automatic or user-initiated, apart from

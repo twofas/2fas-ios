@@ -89,7 +89,7 @@ extension LoginModuleInteractor: LoginModuleInteracting {
         // foreground check: that one is only false while the screen is being prepared.
         !loginInteractor.isLocked
             && loginInteractor.isLoggedOut
-            && loginInteractor.canPromptBiometryAutomatically
+            && loginInteractor.canPromptBiometryAutomaticallyOnNextAppearance
     }
 
     var isAppInBackground: Bool {

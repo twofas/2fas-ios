@@ -148,27 +148,30 @@ final class AddingServiceFlowController: FlowController {
     }
 
     /// The layers the system zoom pushes back, wherever UIKit picks them: up
-    /// from the zoom source to the screen's root (iOS 26 SDK), and down from
-    /// the presenting controller through the selected tab and navigation
-    /// stack to the visible content (iOS 27 SDK).
+    /// from the zoom source to the screen's root (iOS 26), and anywhere in
+    /// the presenting controller's view tree, which holds the visible
+    /// screen's content scroll view (iOS 27). Only layers adopting
+    /// `ZoomPushBackSuppressingLayer` qualify, so the walk cannot pick a
+    /// wrong view.
     private static func zoomPushBackTargets(
         host: UIViewController,
         zoomSourceView: UIView
     ) -> [any ZoomPushBackSuppressingLayer] {
         var targets: [any ZoomPushBackSuppressingLayer] = []
-        for view in sequence(first: zoomSourceView, next: { $0.superview }) {
-            if let target = view.layer as? ZoomPushBackSuppressingLayer {
-                targets.append(target)
-            }
+        func append(_ view: UIView) {
+            guard let target = view.layer as? ZoomPushBackSuppressingLayer,
+                  !targets.contains(where: { $0 === target }) else { return }
+            targets.append(target)
         }
-        var viewController: UIViewController? = host
-        while let current = viewController {
-            if let target = current.viewIfLoaded?.layer as? ZoomPushBackSuppressingLayer,
-               !targets.contains(where: { $0 === target }) {
-                targets.append(target)
-            }
-            viewController = (current as? UITabBarController)?.selectedViewController
-                ?? (current as? UINavigationController)?.topViewController
+        func walk(_ view: UIView) {
+            append(view)
+            view.subviews.forEach(walk)
+        }
+        for view in sequence(first: zoomSourceView, next: { $0.superview }) {
+            append(view)
+        }
+        if let hostView = host.viewIfLoaded {
+            walk(hostView)
         }
         return targets
     }
@@ -410,12 +413,12 @@ extension AddingServiceFlowController: SelectFromGalleryFlowControllerParent {
 ///
 /// The system zoom transition pushes back the screen behind the presented
 /// card by animating a layer's `sublayerTransform` (≈0.91 while presented):
-/// the presenting screen's root view when linked against the iOS 26 SDK, the
-/// selected tab's content view from the iOS 27 SDK. There is no public option
-/// to opt out. A view whose layer adopts this protocol (via `layerClass`)
-/// stays still while `suppressesZoomPushBack` is set: the layer ignores any
-/// `sublayerTransform` change. With the flag unset it behaves like a regular
-/// `CALayer`.
+/// the presenting screen's root view on iOS 26, the visible screen's content
+/// scroll view on iOS 27 (whichever SDK the app is linked against). There is
+/// no public option to opt out. A view whose layer adopts this protocol (via
+/// `layerClass`) stays still while `suppressesZoomPushBack` is set: the layer
+/// ignores any `sublayerTransform` change. With the flag unset it behaves
+/// like a regular `CALayer`.
 protocol ZoomPushBackSuppressingLayer: CALayer {
     var suppressesZoomPushBack: Bool { get set }
 }

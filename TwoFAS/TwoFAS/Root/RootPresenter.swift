@@ -163,7 +163,7 @@ final class RootPresenter {
     /// `fromColdStart` is `true` when the app is the first thing after the system launch
     /// screen, with no lock screen in between; it then comes in the way it does from under
     /// the lock screen, see `UnlockTransition`.
-    private func presentMain(fromColdStart: Bool = false) {
+    private func presentMain(fromColdStart: Bool) {
         guard currentState != .main else { return }
         let transition: MainTransition = if currentState == .login {
             // Coming from the lock screen the app animates in under it.

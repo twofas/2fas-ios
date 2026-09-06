@@ -35,74 +35,48 @@ struct LoginView: View {
     @Namespace private var logoNamespace
     /// Picked once per screen, so the greeting does not change while the screen is up.
     @State private var greeting = LoginBrand.greetings.randomElement() ?? T.Login.helloHeader
-    /// The launch screen has no greeting, so a screen that continues it fades the greeting
-    /// in: on appearing, when a biometry prompt is going to hold the splash with the brand at
-    /// the centre, or in the header as soon as the brand is there. Any other start has it
-    /// from the first frame.
-    @State private var greetingRevealed: Bool
-    /// `true` when the brand reached the header while the splash was still up, ahead of a
-    /// biometry alert: the subtitle and dots then come in on their own shared beat, with no
-    /// flight to wait for. Kept from the moment the brand rises until it is back on the
-    /// splash, so it is still known when the splash is left.
-    @State private var brandRoseEarly = false
 
-    init(presenter: LoginPresenter) {
-        _presenter = Bindable(presenter)
-        _greetingRevealed = State(
-            initialValue: !(presenter.showsSplash && presenter.splashFollowsLaunchScreen)
-        )
-    }
-
-    private var keypadEntranceDelay: TimeInterval {
-        presenter.keypadEntranceDelay
-    }
-
-    private var showsSplash: Bool {
-        presenter.showsSplash
-    }
+    /// `true` when the system draws the biometry prompt over the screen centre: Touch ID,
+    /// Face ID behind a notch, iPad. Face ID on a Dynamic Island phone animates in the island
+    /// instead.
+    private static let biometryAlertCoversCentre = !UIDevice.hasDynamicIsland
 
     /// Where the brand sits. On the splash, except on a device whose biometry alert covers
     /// the screen centre: there the brand is in the header while a prompt is up, lifting
     /// ahead of the alert on a cold start, and from the first frame on a return from the
     /// background, where nothing ties the splash to the launch screen. The rest of the screen
     /// still waits for the prompt's outcome.
-    private func brandOnSplash(alertCoversCentre: Bool) -> Bool {
-        guard showsSplash else { return false }
-        guard alertCoversCentre else { return true }
+    private var brandOnSplash: Bool {
+        guard presenter.showsSplash else { return false }
+        guard Self.biometryAlertCoversCentre else { return true }
         return presenter.splashFollowsLaunchScreen && !presenter.isAuthenticating
-    }
-
-    /// `true` when the system draws the biometry prompt over the screen centre: Touch ID,
-    /// Face ID behind a notch, iPad. Face ID on a Dynamic Island phone animates in the island
-    /// instead; the island is what makes the top inset this deep.
-    private func biometryAlertCoversCentre(topInset: CGFloat) -> Bool {
-        let hasDynamicIsland = UIDevice.current.userInterfaceIdiom == .phone && topInset >= 59
-        return !hasDynamicIsland
-    }
-
-    private var isKeyboardHidden: Bool {
-        presenter.isKeyboardHidden
-    }
-
-    /// Logo and greeting, big on the splash and small in the header. Only the lock screen
-    /// greets. `greetsOnSplash`
-    /// has the greeting join the brand at the centre and fade in there; otherwise it belongs
-    /// to the header, fading in like the subtitle once the brand is up.
-    private func brand(contentWidth: CGFloat, greetsOnSplash: Bool) -> LoginBrand {
-        LoginBrand(
-            greeting: presenter.loginType == .login ? greeting : nil,
-            isGreetingRevealed: greetingRevealed && !presenter.greetingIsAway,
-            revealAnimation: greetsOnSplash ? SplashTransition.greeting : SplashTransition.subtitleReveal,
-            drawsGreeting: greetsOnSplash,
-            greetingMaxWidth: greetingMaxWidth(contentWidth: contentWidth)
-        )
     }
 
     /// The greeting sits on the splash only when a biometry prompt holds the splash with the
     /// brand at the centre. Where the alert takes the centre, the brand lifts alone, as it
     /// does with no biometry at all, and the greeting fades in up in the header.
-    private func greetsOnSplash(alertCoversCentre: Bool) -> Bool {
-        presenter.promptsOnSplash && !alertCoversCentre
+    private var greetsOnSplash: Bool {
+        presenter.promptsOnSplash && !Self.biometryAlertCoversCentre
+    }
+
+    /// `true` when the brand is already up in the header as the splash is left, having
+    /// lifted ahead of a biometry alert: the subtitle then comes in on the header's beat,
+    /// with no flight to wait for.
+    private var brandRoseEarly: Bool {
+        presenter.promptsOnSplash && Self.biometryAlertCoversCentre
+    }
+
+    /// Logo and greeting, big on the splash and small in the header. Only the lock screen
+    /// greets. `greetsOnSplash` has the greeting join the brand at the centre and fade in
+    /// there; otherwise it belongs to the header, fading in like the subtitle once the brand
+    /// is up.
+    private func brand(contentWidth: CGFloat) -> LoginBrand {
+        LoginBrand(
+            greeting: presenter.loginType == .login ? greeting : nil,
+            isGreetingRevealed: !presenter.greetingIsAway,
+            drawsGreeting: greetsOnSplash,
+            greetingMaxWidth: greetingMaxWidth(contentWidth: contentWidth)
+        )
     }
 
     /// The width the header offers its texts (the readable width of
@@ -112,25 +86,27 @@ struct LoginView: View {
     /// width changes, so its width must be right from the first pass.
     private func greetingMaxWidth(contentWidth: CGFloat) -> CGFloat? {
         guard contentWidth > 0 else { return nil }
-        let readableMaxWidth: CGFloat = horizontalSizeClass == .compact ? .infinity : 720
-        let readableWidth = min(readableMaxWidth, contentWidth - 2 * Spacing.XL.value)
+        let readableWidth = AdaptiveReadableContainer<EmptyView>.readableWidth(
+            available: contentWidth,
+            sizeClass: horizontalSizeClass
+        )
         return readableWidth / SplashTransition.greetingScale
     }
 
     private var dotsAnimation: Animation? {
-        if showsSplash {
+        if presenter.showsSplash {
             nil
         } else if presenter.isBlocked {
             PINInfoMessage.fadeOut
         } else {
-            brandRoseEarly ? SplashTransition.headerReveal : SplashTransition.dotsReveal
+            SplashTransition.dotsReveal
         }
     }
 
     /// The footer goes with the keypad, except through a lock-out: the way to restore the app
     /// is worth keeping in reach while the keypad is replaced by the lock message.
     private var isFooterHidden: Bool {
-        isKeyboardHidden && !presenter.isBlocked
+        presenter.isKeyboardHidden && !presenter.isBlocked
     }
 
     /// Mirrors the keypad: an automatic hide is instant, a user's hide fades, showing fades in
@@ -139,23 +115,17 @@ struct LoginView: View {
         if isFooterHidden {
             presenter.animatesKeyboardHiding ? PINKeyboard.fadeOut : nil
         } else {
-            PINKeyboard.fadeIn.delay(keypadEntranceDelay)
+            PINKeyboard.fadeIn.delay(presenter.keypadEntranceDelay)
         }
     }
 
     var body: some View {
         GeometryReader { proxy in
-            let alertCoversCentre = biometryAlertCoversCentre(topInset: proxy.safeAreaInsets.top)
-            let greetsOnSplash = greetsOnSplash(alertCoversCentre: alertCoversCentre)
-            content(
-                brand: brand(contentWidth: proxy.size.width, greetsOnSplash: greetsOnSplash),
-                brandOnSplash: brandOnSplash(alertCoversCentre: alertCoversCentre),
-                greetsOnSplash: greetsOnSplash
-            )
+            content(brand: brand(contentWidth: proxy.size.width))
         }
     }
 
-    private func content(brand: LoginBrand, brandOnSplash: Bool, greetsOnSplash: Bool) -> some View {
+    private func content(brand: LoginBrand) -> some View {
         VStack(spacing: .zero) {
             if presenter.loginType == .verify {
                 HStack {
@@ -178,19 +148,19 @@ struct LoginView: View {
                 isDisabled: presenter.isBlocked,
                 onKeyPressed: presenter.onKeyPressed,
                 biometryKey: presenter.biometryKey,
-                isKeyboardHidden: isKeyboardHidden,
+                isKeyboardHidden: presenter.isKeyboardHidden,
                 keyboardAnimatesHiding: presenter.animatesKeyboardHiding,
-                keyboardEntranceDelay: keypadEntranceDelay,
+                keyboardEntranceDelay: presenter.keypadEntranceDelay,
                 // The dots are out on the splash and through a lock-out; a lock that starts
                 // under the user's fingers fades them, the splash exit reveals them.
-                hidesDots: showsSplash || presenter.isBlocked,
+                hidesDots: presenter.showsSplash || presenter.isBlocked,
                 dotsAnimation: dotsAnimation,
-                betweenHeaderAndDots: AnyView(PINInfoMessage(info: presenter.info, isHidden: presenter.isBlocked))
+                betweenHeaderAndDots: PINInfoMessage(info: presenter.info, isHidden: presenter.isBlocked)
             ) {
                 PINWelcomeHeader(
                     brand: brand,
                     logoNamespace: logoNamespace,
-                    showsSplash: showsSplash,
+                    showsSplash: presenter.showsSplash,
                     brandOnSplash: brandOnSplash,
                     subtitleReveal: brandRoseEarly ? SplashTransition.headerReveal : SplashTransition.subtitleReveal,
                     hidesSubtitle: presenter.isBlocked
@@ -230,8 +200,8 @@ struct LoginView: View {
                 info: presenter.lockMessage,
                 color: .labelsPrimary,
                 style: .title3,
-                isHidden: showsSplash,
-                reveal: showsSplash ? nil : PINKeyboard.fadeIn.delay(keypadEntranceDelay)
+                isHidden: presenter.showsSplash,
+                reveal: PINKeyboard.fadeIn.delay(presenter.keypadEntranceDelay)
             )
             .padding(.horizontal, .XL)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -242,16 +212,7 @@ struct LoginView: View {
         .background(AppColor.backgroundsPrimary)
         .modifier(UnlockExit(isLeaving: presenter.isLeaving))
         .onAppear {
-            if greetsOnSplash {
-                greetingRevealed = true
-            }
             presenter.onAppear()
-        }
-        .onChange(of: brandOnSplash, initial: true) { _, brandOnSplash in
-            if !brandOnSplash {
-                greetingRevealed = true
-            }
-            brandRoseEarly = !brandOnSplash && showsSplash
         }
         .onChange(of: scenePhase) { oldValue, newValue in
             guard oldValue != newValue else { return }

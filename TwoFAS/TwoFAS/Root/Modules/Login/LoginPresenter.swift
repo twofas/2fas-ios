@@ -62,19 +62,23 @@ final class LoginPresenter {
     /// followed by an automatic prompt, so the return shows the splash again. Never `true`
     /// for `.verify`.
     private(set) var showsSplash: Bool
-    /// `true` while the splash is going to be held by an automatic biometry prompt, so it is
-    /// worth greeting on it; a splash that is left right away shows the logo alone and the
-    /// greeting comes in with the rest of the header.
+    /// `true` once the splash has been, or is about to be, held by an automatic biometry
+    /// prompt: it is worth greeting on such a splash, and the greeting then belongs to the
+    /// logo rather than to the header. A splash that is left right away shows the logo
+    /// alone and the greeting comes in with the rest of the header. Never cleared: the
+    /// greeting stays where it was first drawn.
     private(set) var promptsOnSplash: Bool
     /// `true` while the splash is the continuation of the system launch screen, which is the
     /// only time its logo has to sit at the screen centre. A splash re-entered on the way to
     /// the background is free to start in whatever shape suits the next prompt.
     private(set) var splashFollowsLaunchScreen: Bool
-    /// `true` from a trip to the background that put the screen back on the splash until it
-    /// is next seen in the foreground: the greeting is out meanwhile, so the app switcher
-    /// shows the launch screen's look, and comes back in the way it does on a cold start.
-    /// Set in the same pass as `showsSplash`, so the snapshot cannot catch the greeting.
-    private(set) var greetingIsAway = false
+    /// `true` while the screen shows the launch screen's look and has not yet been seen in
+    /// the foreground: from creation, when the splash continues the system launch screen,
+    /// and from a trip to the background that put the screen back on the splash. The
+    /// greeting is out meanwhile, so the app switcher shows the launch screen's look, and
+    /// fades in the first time the screen is worked with. Set in the same pass as
+    /// `showsSplash`, so the snapshot cannot catch the greeting.
+    private(set) var greetingIsAway: Bool
     /// The keypad is out on the splash and while a biometry prompt is up; it comes back only
     /// when the attempt fails or is cancelled.
     var isKeyboardHidden: Bool {
@@ -110,9 +114,11 @@ final class LoginPresenter {
         self.interactor = interactor
         self.notificationCenter = .default
         let willPrompt = interactor.willPromptBiometryOnAppear
-        showsSplash = loginType == .login && (followsLaunchScreen || willPrompt)
+        let startsOnSplash = loginType == .login && (followsLaunchScreen || willPrompt)
+        showsSplash = startsOnSplash
         promptsOnSplash = loginType == .login && willPrompt
         splashFollowsLaunchScreen = followsLaunchScreen
+        greetingIsAway = startsOnSplash && followsLaunchScreen
         
         timer = CancellableTimer()
 
@@ -146,7 +152,7 @@ final class LoginPresenter {
     func onKeyPressed(_ key: TFPinKey) {
         // Hardware keys must not fill the dots while the keypad is out: on the splash or
         // behind biometry.
-        guard !isBlocked, !isKeyboardHidden else { return }
+        guard !isKeyboardHidden else { return }
         // Any key means the wrong-PIN note has been seen; it need not wait out its time.
         dismissInfo()
         switch key {

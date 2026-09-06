@@ -64,8 +64,8 @@ struct PINEntryBlock<Header: View>: View {
     /// Animation of the dots' fade; `nil` switches them instantly.
     var dotsAnimation: Animation?
     /// Laid over the space between the header and the dots, centred in it, without taking
-    /// any: a place for a message that must not move the rest.
-    var betweenHeaderAndDots: AnyView?
+    /// any: a message that must not move the rest.
+    var betweenHeaderAndDots: PINInfoMessage?
     @ViewBuilder let header: () -> Header
 
     var body: some View {

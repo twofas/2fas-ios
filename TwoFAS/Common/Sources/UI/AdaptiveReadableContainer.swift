@@ -21,6 +21,17 @@ import SwiftUI
 import UIKit
 
 public struct AdaptiveReadableContainer<Content: View>: View {
+    public static var defaultIPhoneMaxWidth: CGFloat { .infinity }
+    public static var defaultIPadMaxWidth: CGFloat { 720 }
+    public static var defaultHorizontalMargin: CGFloat { Spacing.XL.value }
+
+    /// The width the container, with its defaults, gives its content out of `available`:
+    /// for a host that lays something out to match the content without being inside.
+    public static func readableWidth(available: CGFloat, sizeClass: UserInterfaceSizeClass?) -> CGFloat {
+        let maxWidth = sizeClass == .compact ? defaultIPhoneMaxWidth : defaultIPadMaxWidth
+        return min(maxWidth, available - 2 * defaultHorizontalMargin)
+    }
+
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     private let iphoneMaxWidth: CGFloat
@@ -31,9 +42,9 @@ public struct AdaptiveReadableContainer<Content: View>: View {
     private let content: Content
     
     public init(
-        iphoneMaxWidth: CGFloat = .infinity,
-        ipadMaxWidth: CGFloat = 720,
-        horizontalMargin: CGFloat = Spacing.XL.value,
+        iphoneMaxWidth: CGFloat = defaultIPhoneMaxWidth,
+        ipadMaxWidth: CGFloat = defaultIPadMaxWidth,
+        horizontalMargin: CGFloat = defaultHorizontalMargin,
         verticalMargin: CGFloat = Spacing.XL.value,
         @ViewBuilder content: () -> Content
     ) {

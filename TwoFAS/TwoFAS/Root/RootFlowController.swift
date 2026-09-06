@@ -30,7 +30,6 @@ protocol RootFlowControllerParent: AnyObject {}
 
 protocol RootFlowControlling: AnyObject {
     func toIntro()
-    /// `animated` brings the app in under the departing login screen, see `UnlockTransition`.
     func toMain(transition: MainTransition)
     func toStorageError(error: String)
 
@@ -132,10 +131,7 @@ extension RootFlowController: RootFlowControlling {
         case .fromLogin:
             reveal(main)
         case .fromLaunchScreen:
-            // The same pause the lock screen takes before it leaves its splash.
-            DispatchQueue.main.asyncAfter(deadline: .now() + SplashTransition.delay) { [weak self] in
-                self?.toRemoveCover(animated: true)
-            }
+            toRemoveCover(animated: true)
         }
     }
 

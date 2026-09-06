@@ -34,22 +34,22 @@ enum SplashTransition {
     static let greetingScale: CGFloat = 1.1
     /// Gap between the logo and the greeting on the splash; the header has `LoginBrand.gap`.
     static let splashGap: CGFloat = Spacing.XXXL.rawValue
-    /// Pause before anything moves, shared with the keypad: a cancelled biometry alert is
-    /// still going away when the failure arrives, and the exit must not start under it.
-    static let delay: TimeInterval = PINKeyboard.entranceDelay
+    /// Pause before anything moves. The system is still cross-fading its launch screen out
+    /// when this screen takes over; a logo that moves during that overlap shows up twice.
+    /// Everything else is timed from the end of this pause.
+    static let delay: TimeInterval = 0.2
     /// The brand's lift from the screen centre to the header: position and size in one go.
-    static let flight: Animation = .smooth(duration: 0.35).delay(delay) //spring(duration: 0.6, bounce: 0.15).delay(delay)
+    static let flight: Animation = .smooth(duration: 0.35).delay(delay)
     /// The text under the brand fades in once the brand is nearly in place, so the greeting
     /// does not fly over it.
     static let subtitleReveal: Animation = .easeIn(duration: 0.2).delay(delay + 0.2)
-    /// The dots fade in on their own beat, after the subtitle.
+    /// The dots fade in on their own beat, before the subtitle.
     static let dotsReveal: Animation = .easeIn(duration: 0.2).delay(delay + 0.1)
     /// The subtitle and the dots together, when the brand is already up in the header as the
     /// splash is left (a biometry alert took the centre) and nothing flies over them.
     static let headerReveal: Animation = .easeIn(duration: 0.2).delay(delay + 0.1)
-    /// Pause before the keys come out of the "5" slot, counted from the splash exit: the same
-    /// beat as the brand's lift. The keypad's own `entranceDelay` applies to every other
-    /// entrance.
+    /// Pause before the keys come out of the "5" slot, counted from the splash exit. The
+    /// keypad's own `entranceDelay` applies to every other entrance.
     static let keypadDelay: TimeInterval = delay + 0.1
     /// Reduce Motion: no travel, the brand crossfades between its two places.
     static let crossfade: Animation = .easeInOut(duration: 0.3)
@@ -78,9 +78,8 @@ struct LoginBrand: View {
     /// take.
     let greeting: String?
     /// `false` keeps the greeting out, leaving its space, until its first appearance: on the
-    /// splash, or with the header once the splash is gone. Fades in with `revealAnimation`.
+    /// splash, or with the header once the splash is gone.
     let isGreetingRevealed: Bool
-    let revealAnimation: Animation
     /// `false` keeps the greeting's space but leaves drawing it to the header (see
     /// `PINWelcomeHeader`), for a splash that is left right away: the greeting then fades in
     /// where it belongs instead of arriving with the logo.
@@ -96,7 +95,7 @@ struct LoginBrand: View {
     var greetingMaxWidth: CGFloat?
 
     /// Gap between the logo and the greeting, as the header has it.
-    static let gap = Spacing.M.rawValue + Spacing.S.rawValue
+    static let gap = Spacing.L.rawValue
 
     /// Where between the header (`0`) and the splash (`1`) the brand is.
     private var progress: CGFloat {
@@ -144,6 +143,12 @@ private extension LoginBrand {
 extension LoginBrand {
     /// The greeting as the brand lays it out, with its fades. Drawn by the brand itself, or
     /// by the header over the brand's slot when the brand is not drawing it.
+    /// A greeting on the splash fades in on its own; one that belongs to the header fades in
+    /// like the subtitle there.
+    private var revealAnimation: Animation {
+        drawsGreeting ? SplashTransition.greeting : SplashTransition.subtitleReveal
+    }
+
     @ViewBuilder
     var greetingView: some View {
         if let greeting {

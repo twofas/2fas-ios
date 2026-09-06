@@ -81,8 +81,8 @@ struct PINSubtitle: View {
 }
 
 /// An info message of the lock screen: the wrong-PIN note between the header and the dots,
-/// or the lock-out notice in the keypad's place. Fades in and out, keeping its last wording
-/// while it fades out; takes no layout space of its own, so nothing moves around it.
+/// or the lock-out notice in the keypad's place. Fades in and out, and takes no layout space
+/// of its own, so nothing moves around it.
 struct PINInfoMessage: View {
     /// The message's appearance.
     static let fadeIn: Animation = .easeInOut(duration: 0.2)
@@ -98,28 +98,20 @@ struct PINInfoMessage: View {
     /// Animation of the message's appearance; `fadeIn` unless the caller has a beat of its
     /// own, `nil` for an instant switch.
     var reveal: Animation? = PINInfoMessage.fadeIn
-    /// Animation of the message's disappearance.
-    var dismiss: Animation? = PINInfoMessage.fadeOut
-
-    /// The last message shown, so the fade out keeps its wording after `info` is `nil`.
-    @State private var lastInfo: String?
 
     private var isShown: Bool {
         info != nil && !isHidden
     }
 
     var body: some View {
+        // A removed view keeps its wording for the length of its transition, so the message
+        // fades out reading as it did; a wording change while shown stays in place.
         ZStack {
-            if let message = info ?? lastInfo {
-                PINSubtitle(message, color: color, style: style)
-                    .opacity(isShown ? 1 : 0)
+            if let info, isShown {
+                PINSubtitle(info, color: color, style: style)
+                    .transition(.opacity)
             }
         }
-        .animation(isShown ? reveal : dismiss, value: isShown)
-        .onChange(of: info, initial: true) { _, info in
-            if let info {
-                lastInfo = info
-            }
-        }
+        .animation(isShown ? reveal : Self.fadeOut, value: isShown)
     }
 }

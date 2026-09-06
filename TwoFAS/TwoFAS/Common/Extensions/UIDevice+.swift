@@ -22,6 +22,9 @@ import DeviceKit
 
 extension UIDevice {
     static var isiPad: Bool { UIDevice.current.userInterfaceIdiom == .pad }
+    /// Face ID animates in the island on these phones; elsewhere the biometry prompt is an
+    /// alert over the screen centre.
+    static var hasDynamicIsland: Bool { Device.current.hasDynamicIsland }
     static var isSmallScreen: Bool {
         guard Device.current.diagonal > 0 else { return false }
         return Device.current.diagonal <= 4.1

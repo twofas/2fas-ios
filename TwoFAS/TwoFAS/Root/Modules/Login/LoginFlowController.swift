@@ -28,7 +28,7 @@ enum UnlockTransition {
     enum Login {
         static let duration: TimeInterval = 0.2
         /// Final scale, as if the screen flew past the viewer.
-        static let scale: CGFloat = 1.15    
+        static let scale: CGFloat = 1.15
         /// Fade curve. Ease-out is mostly done early on and ends exactly at `duration`, so no
         /// half-transparent ghost trails behind.
         static var fade: Animation { .easeOut(duration: duration) }

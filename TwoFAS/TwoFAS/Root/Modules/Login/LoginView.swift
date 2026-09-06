@@ -167,7 +167,9 @@ struct LoginView: View {
                 .padding(.XL)
             }
             
-            Spacer(minLength: 0)
+            // Keeps the logo off the top edge on a short screen; with room to spare the
+            // spacers share it as before and this minimum never binds.
+            Spacer(minLength: Spacing.XXXL.value)
             
             PINEntryBlock(
                 totalDigits: presenter.totalDigits,

@@ -70,6 +70,11 @@ final class LoginPresenter {
     /// only time its logo has to sit at the screen centre. A splash re-entered on the way to
     /// the background is free to start in whatever shape suits the next prompt.
     private(set) var splashFollowsLaunchScreen: Bool
+    /// `true` from a trip to the background that put the screen back on the splash until it
+    /// is next seen in the foreground: the greeting is out meanwhile, so the app switcher
+    /// shows the launch screen's look, and comes back in the way it does on a cold start.
+    /// Set in the same pass as `showsSplash`, so the snapshot cannot catch the greeting.
+    private(set) var greetingIsAway = false
     /// The keypad is out on the splash and while a biometry prompt is up; it comes back only
     /// when the attempt fails or is cancelled.
     var isKeyboardHidden: Bool {
@@ -298,6 +303,7 @@ private extension LoginPresenter {
         showsSplash = true
         promptsOnSplash = true
         splashFollowsLaunchScreen = false
+        greetingIsAway = true
     }
 
     func isVisible() {
@@ -305,6 +311,7 @@ private extension LoginPresenter {
         // `onAppear` also fires while the screen is being prepared in the background, where a
         // prompt is impossible; stay on the splash and wait for `didBecomeActive`.
         guard !interactor.isAppInBackground else { return }
+        greetingIsAway = false
         // A prompt is up, or has just succeeded and the screen is on its way out: its
         // completion decides. This also absorbs the `didBecomeActive` the biometry alert's
         // dismissal fires.

@@ -153,7 +153,9 @@ extension LoginBrand {
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .opacity(isGreetingRevealed ? 1 : 0)
-                .animation(revealAnimation, value: isGreetingRevealed)
+                // Taken out in one frame: that happens on the way to the background, and
+                // the app switcher's snapshot must not catch it half gone.
+                .animation(isGreetingRevealed ? revealAnimation : nil, value: isGreetingRevealed)
                 .frame(maxWidth: greetingMaxWidth)
         }
     }

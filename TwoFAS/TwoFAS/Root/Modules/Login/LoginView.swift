@@ -91,7 +91,7 @@ struct LoginView: View {
     private func brand(contentWidth: CGFloat, greetsOnSplash: Bool) -> LoginBrand {
         LoginBrand(
             greeting: presenter.loginType == .login ? greeting : nil,
-            isGreetingRevealed: greetingRevealed,
+            isGreetingRevealed: greetingRevealed && !presenter.greetingIsAway,
             revealAnimation: greetsOnSplash ? SplashTransition.greeting : SplashTransition.subtitleReveal,
             drawsGreeting: greetsOnSplash,
             greetingMaxWidth: greetingMaxWidth(contentWidth: contentWidth)

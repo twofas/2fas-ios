@@ -122,10 +122,8 @@ public struct TFPinButton: View {
             configuration.label
                 .frame(maxWidth: TFPinButton.size, maxHeight: TFPinButton.size)
                 .aspectRatio(1, contentMode: .fit)
-                .glassEffect(.regular, in: .circle)
+                .glassEffect(.regular.interactive(), in: .circle)
                 .shadow(.glass)
-                .scaleEffect(configuration.isPressed ? 0.82 : 1)
-                .animation(.spring(response: 0.2, dampingFraction: 0.7), value: configuration.isPressed)
                 .frame(
                     width: TFPinButton.size + TFPinButton.tapInset * 2,
                     height: TFPinButton.size + TFPinButton.tapInset * 2

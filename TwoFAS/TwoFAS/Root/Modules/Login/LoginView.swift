@@ -45,39 +45,16 @@ struct LoginView: View {
         _greetingRevealed = State(initialValue: !presenter.showsSplash)
     }
 
-#if DEBUG
-    /// Hides the keypad the way a running biometry prompt does, so the animation can be
-    /// watched without Face ID. Toggled by a debug button in the top-right corner.
-    @State private var debugHidesKeyboard = false
-    /// Puts the screen back on the splash the way a trip to the background does; turning it
-    /// off runs the whole splash exit. Toggled by a debug button in the top-right corner.
-    @State private var debugShowsSplash = false
-    /// `true` after the debug splash exit, so the keypad takes the splash exit's beat.
-    @State private var debugLeftSplash = false
-#endif
-
     private var keypadEntranceDelay: TimeInterval {
-#if DEBUG
-        debugLeftSplash ? SplashTransition.keypadDelay : presenter.keypadEntranceDelay
-#else
         presenter.keypadEntranceDelay
-#endif
     }
 
     private var showsSplash: Bool {
-#if DEBUG
-        presenter.showsSplash || debugShowsSplash
-#else
         presenter.showsSplash
-#endif
     }
 
     private var isKeyboardHidden: Bool {
-#if DEBUG
-        presenter.isKeyboardHidden || debugHidesKeyboard || debugShowsSplash
-#else
         presenter.isKeyboardHidden
-#endif
     }
 
     /// Logo and greeting, big on the splash and small in the header. Only the lock screen
@@ -170,22 +147,6 @@ struct LoginView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-#if DEBUG
-        .overlay(alignment: .topTrailing) {
-            HStack {
-                Button(debugShowsSplash ? "Leave splash" : "Splash") {
-                    debugLeftSplash = debugShowsSplash
-                    debugShowsSplash.toggle()
-                }
-                Button(debugHidesKeyboard ? "Show keypad" : "Hide keypad") {
-                    debugLeftSplash = false
-                    debugHidesKeyboard.toggle()
-                }
-            }
-            .buttonStyle(.bordered)
-            .padding(.XL)
-        }
-#endif
         .minimumBottomSpacing(.M)
         // The launch screen's logo box: window centre, natural size, safe areas ignored. Goes
         // after the bottom spacing so the slot spans the whole screen, not just the content.

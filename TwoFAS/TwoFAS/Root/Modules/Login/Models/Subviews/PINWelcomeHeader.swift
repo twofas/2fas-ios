@@ -23,9 +23,6 @@ import Common
 struct PINWelcomeHeader: View {
     /// Logo and greeting; drawn by the floating brand, only their place is reserved here.
     let brand: LoginBrand
-    
-    @Binding
-    var info: String?
     /// Ties the brand's slot to the floating brand, see `LoginFloatingBrand`.
     let logoNamespace: Namespace.ID
     /// While the screen is on the splash the brand sits at the screen centre and the text
@@ -36,6 +33,8 @@ struct PINWelcomeHeader: View {
     let brandOnSplash: Bool
     /// The subtitle's fade in as the splash is left.
     let subtitleReveal: Animation
+    /// `true` takes the prompt out, through a lock-out, when there is no keypad to prompt for.
+    var hidesSubtitle = false
     
     var body: some View {
         VStack(spacing: .zero) {
@@ -47,17 +46,80 @@ struct PINWelcomeHeader: View {
                         brand.greetingView
                     }
                 }
-            let text = info ?? T.Security.enterPinShort
-            Text(text)
-                .textStyle(.body)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .foregroundStyle(.labelsSecondary)
-                .fixedSize(horizontal: false, vertical: true)
-                .animation(.easeInOut, value: text)
+            // The prompt stays up through an info message (see `PINInfoMessage`), which has
+            // its own place lower down.
+            PINSubtitle(T.Security.enterPinShort, color: .labelsSecondary)
                 .padding(.top, .S)
+                .opacity(hidesSubtitle ? 0 : 1)
+                .animation(hidesSubtitle ? PINInfoMessage.fadeOut : PINInfoMessage.fadeIn, value: hidesSubtitle)
                 .opacity(showsSplash ? 0 : 1)
                 .animation(showsSplash ? nil : subtitleReveal, value: showsSplash)
+        }
+    }
+}
+
+/// A line of the header's small text.
+struct PINSubtitle: View {
+    let text: String
+    let color: AppColor
+    var style: TextStyle = .body
+
+    init(_ text: String, color: AppColor, style: TextStyle = .body) {
+        self.text = text
+        self.color = color
+        self.style = style
+    }
+
+    var body: some View {
+        Text(text)
+            .textStyle(style)
+            .multilineTextAlignment(.center)
+            .lineLimit(nil)
+            .foregroundStyle(color)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+}
+
+/// An info message of the lock screen: the wrong-PIN note between the header and the dots,
+/// or the lock-out notice in the keypad's place. Fades in and out, keeping its last wording
+/// while it fades out; takes no layout space of its own, so nothing moves around it.
+struct PINInfoMessage: View {
+    /// The message's appearance.
+    static let fadeIn: Animation = .easeInOut(duration: 0.2)
+    /// The message's disappearance, quicker: it is on its way out because of something the
+    /// user did.
+    static let fadeOut: Animation = .easeInOut(duration: 0.1)
+
+    let info: String?
+    var color: AppColor = .accentsBrand
+    var style: TextStyle = .body
+    /// Keeps the message out even when there is one, e.g. while the screen is on the splash.
+    var isHidden = false
+    /// Animation of the message's appearance; `fadeIn` unless the caller has a beat of its
+    /// own, `nil` for an instant switch.
+    var reveal: Animation? = PINInfoMessage.fadeIn
+    /// Animation of the message's disappearance.
+    var dismiss: Animation? = PINInfoMessage.fadeOut
+
+    /// The last message shown, so the fade out keeps its wording after `info` is `nil`.
+    @State private var lastInfo: String?
+
+    private var isShown: Bool {
+        info != nil && !isHidden
+    }
+
+    var body: some View {
+        ZStack {
+            if let message = info ?? lastInfo {
+                PINSubtitle(message, color: color, style: style)
+                    .opacity(isShown ? 1 : 0)
+            }
+        }
+        .animation(isShown ? reveal : dismiss, value: isShown)
+        .onChange(of: info, initial: true) { _, info in
+            if let info {
+                lastInfo = info
+            }
         }
     }
 }

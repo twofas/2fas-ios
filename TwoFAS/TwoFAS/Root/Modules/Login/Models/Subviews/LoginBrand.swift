@@ -54,7 +54,7 @@ enum SplashTransition {
     /// Reduce Motion: no travel, the brand crossfades between its two places.
     static let crossfade: Animation = .easeInOut(duration: 0.3)
     /// The greeting's fade in on the splash, once the screen has taken over from the launch
-    /// screen; also its fade out and back when an info message stands in for it.
+    /// screen.
     static let greeting: Animation = .easeInOut(duration: 0.4)
     /// Matched geometry ids of the brand's two places. Both slots are permanent sources; the
     /// floating brand switches between the ids, which animates it from one to the other.
@@ -81,9 +81,6 @@ struct LoginBrand: View {
     /// splash, or with the header once the splash is gone. Fades in with `revealAnimation`.
     let isGreetingRevealed: Bool
     let revealAnimation: Animation
-    /// `false` takes the greeting out, keeping its space, while an info message stands in
-    /// for it.
-    let showsGreeting: Bool
     /// `false` keeps the greeting's space but leaves drawing it to the header (see
     /// `PINWelcomeHeader`), for a splash that is left right away: the greeting then fades in
     /// where it belongs instead of arriving with the logo.
@@ -155,8 +152,6 @@ extension LoginBrand {
                 .foregroundStyle(.labelsPrimary)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
-                .opacity(showsGreeting ? 1 : 0)
-                .animation(SplashTransition.greeting, value: showsGreeting)
                 .opacity(isGreetingRevealed ? 1 : 0)
                 .animation(revealAnimation, value: isGreetingRevealed)
                 .frame(maxWidth: greetingMaxWidth)

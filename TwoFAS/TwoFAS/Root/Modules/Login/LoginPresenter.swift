@@ -35,7 +35,10 @@ final class LoginPresenter {
         
     private let timer: CancellableTimer
     
+    /// A wrong PIN's message, shown for a moment under the prompt.
     var info: String?
+    /// The lock-out message, shown in the keypad's place for as long as the lock lasts.
+    var lockMessage: String?
     var shake = false
     var success = false
     var unlock = false
@@ -70,7 +73,7 @@ final class LoginPresenter {
     /// The keypad is out on the splash and while a biometry prompt is up; it comes back only
     /// when the attempt fails or is cancelled.
     var isKeyboardHidden: Bool {
-        isAuthenticating || showsSplash
+        isAuthenticating || showsSplash || isBlocked
     }
     /// `false` while a prompt the app started on its own (on appearing or on becoming active)
     /// is up, or while the screen is back on the splash for one: the keypad then vanishes in
@@ -139,6 +142,8 @@ final class LoginPresenter {
         // Hardware keys must not fill the dots while the keypad is out: on the splash or
         // behind biometry.
         guard !isBlocked, !isKeyboardHidden else { return }
+        // Any key means the wrong-PIN note has been seen; it need not wait out its time.
+        dismissInfo()
         switch key {
         case .digit(let number):
             guard pin.count < totalDigits else { return }
@@ -155,6 +160,13 @@ final class LoginPresenter {
         }
     }
     
+    /// Takes the wrong-PIN note down, and the timer that would have.
+    private func dismissInfo() {
+        guard info != nil else { return }
+        info = nil
+        timer.cancel()
+    }
+
     func onClose() {
         flowController.toClose()
     }
@@ -244,15 +256,18 @@ private extension LoginPresenter {
     
     func lockedState() {
         isBlocked = true
-        info = lockTimeMessage
+        // A wrong-PIN note from the attempt before may still be up, and its timer is about
+        // to be replaced by the countdown; the lock message says it all.
+        info = nil
+        lockMessage = lockTimeMessage
         timer.start(interval: .seconds(1)) { [weak self] in
             if self?.interactor.isLocked == false {
-                self?.info = nil
+                self?.lockMessage = nil
                 self?.unlock.toggle()
                 self?.timer.cancel()
                 self?.isBlocked = false
             } else {
-                self?.info = self?.lockTimeMessage ?? ""
+                self?.lockMessage = self?.lockTimeMessage ?? ""
             }
         }
     }

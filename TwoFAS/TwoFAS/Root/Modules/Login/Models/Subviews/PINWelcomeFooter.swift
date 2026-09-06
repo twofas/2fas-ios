@@ -24,6 +24,6 @@ struct PINWelcomeFooter: View {
     let action: Callback
     var body: some View {
         TFButton(T.Restore.howToRestore, variant: .borderless, size: .large, action: action)
-            .padding(.L)
+            .padding(.horizontal, .L)
     }
 }

@@ -63,6 +63,9 @@ struct PINEntryBlock<Header: View>: View {
     var hidesDots = false
     /// Animation of the dots' fade; `nil` switches them instantly.
     var dotsAnimation: Animation?
+    /// Laid over the space between the header and the dots, centred in it, without taking
+    /// any: a place for a message that must not move the rest.
+    var betweenHeaderAndDots: AnyView?
     @ViewBuilder let header: () -> Header
 
     var body: some View {
@@ -72,6 +75,15 @@ struct PINEntryBlock<Header: View>: View {
             }
             
             gap
+                // A spacer is as narrow as nothing in a vertical stack; the overlay needs the
+                // full width to lay its text out in.
+                .frame(maxWidth: .infinity)
+                .overlay {
+                    // The dots' top padding is part of the space too; sit in its middle.
+                    betweenHeaderAndDots?
+                        .padding(.horizontal, .XL)
+                        .offset(y: Spacing.XL.value / 2)
+                }
 
             PINDots(count: totalDigits, enteredCount: $enteredCount)
                 .disabled(isDisabled)

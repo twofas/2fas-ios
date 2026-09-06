@@ -85,7 +85,7 @@ struct LoginView: View {
     }
 
     /// Logo and greeting, big on the splash and small in the header. Only the lock screen
-    /// greets; an info message takes the greeting's place while it is up. `greetsOnSplash`
+    /// greets. `greetsOnSplash`
     /// has the greeting join the brand at the centre and fade in there; otherwise it belongs
     /// to the header, fading in like the subtitle once the brand is up.
     private func brand(contentWidth: CGFloat, greetsOnSplash: Bool) -> LoginBrand {
@@ -93,7 +93,6 @@ struct LoginView: View {
             greeting: presenter.loginType == .login ? greeting : nil,
             isGreetingRevealed: greetingRevealed,
             revealAnimation: greetsOnSplash ? SplashTransition.greeting : SplashTransition.subtitleReveal,
-            showsGreeting: presenter.info == nil,
             drawsGreeting: greetsOnSplash,
             greetingMaxWidth: greetingMaxWidth(contentWidth: contentWidth)
         )
@@ -118,10 +117,26 @@ struct LoginView: View {
         return readableWidth / SplashTransition.greetingScale
     }
 
+    private var dotsAnimation: Animation? {
+        if showsSplash {
+            nil
+        } else if presenter.isBlocked {
+            PINInfoMessage.fadeOut
+        } else {
+            brandRoseEarly ? SplashTransition.headerReveal : SplashTransition.dotsReveal
+        }
+    }
+
+    /// The footer goes with the keypad, except through a lock-out: the way to restore the app
+    /// is worth keeping in reach while the keypad is replaced by the lock message.
+    private var isFooterHidden: Bool {
+        isKeyboardHidden && !presenter.isBlocked
+    }
+
     /// Mirrors the keypad: an automatic hide is instant, a user's hide fades, showing fades in
     /// after the keypad's entrance delay.
     private var footerAnimation: Animation? {
-        if isKeyboardHidden {
+        if isFooterHidden {
             presenter.animatesKeyboardHiding ? PINKeyboard.fadeOut : nil
         } else {
             PINKeyboard.fadeIn.delay(keypadEntranceDelay)
@@ -141,7 +156,7 @@ struct LoginView: View {
     }
 
     private func content(brand: LoginBrand, brandOnSplash: Bool, greetsOnSplash: Bool) -> some View {
-        VStack(spacing: .S) {
+        VStack(spacing: .zero) {
             if presenter.loginType == .verify {
                 HStack {
                     TFLiquidGlassSymbolButton(symbol: .close) {
@@ -164,16 +179,19 @@ struct LoginView: View {
                 isKeyboardHidden: isKeyboardHidden,
                 keyboardAnimatesHiding: presenter.animatesKeyboardHiding,
                 keyboardEntranceDelay: keypadEntranceDelay,
-                hidesDots: showsSplash,
-                dotsAnimation: showsSplash ? nil : (brandRoseEarly ? SplashTransition.headerReveal : SplashTransition.dotsReveal)
+                // The dots are out on the splash and through a lock-out; a lock that starts
+                // under the user's fingers fades them, the splash exit reveals them.
+                hidesDots: showsSplash || presenter.isBlocked,
+                dotsAnimation: dotsAnimation,
+                betweenHeaderAndDots: AnyView(PINInfoMessage(info: presenter.info, isHidden: presenter.isBlocked))
             ) {
                 PINWelcomeHeader(
                     brand: brand,
-                    info: $presenter.info,
                     logoNamespace: logoNamespace,
                     showsSplash: showsSplash,
                     brandOnSplash: brandOnSplash,
-                    subtitleReveal: brandRoseEarly ? SplashTransition.headerReveal : SplashTransition.subtitleReveal
+                    subtitleReveal: brandRoseEarly ? SplashTransition.headerReveal : SplashTransition.subtitleReveal,
+                    hidesSubtitle: presenter.isBlocked
                 )
             }
             
@@ -185,9 +203,9 @@ struct LoginView: View {
                 PINWelcomeFooter {
                     presenter.isResetVisible = true
                 }
-                .opacity(isKeyboardHidden ? 0 : 1)
-                .disabled(isKeyboardHidden)
-                .animation(footerAnimation, value: isKeyboardHidden)
+                .opacity(isFooterHidden ? 0 : 1)
+                .disabled(isFooterHidden)
+                .animation(footerAnimation, value: isFooterHidden)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -201,6 +219,21 @@ struct LoginView: View {
         }
         .overlay {
             LoginFloatingBrand(brand: brand, isSplash: brandOnSplash, namespace: logoNamespace)
+        }
+        // The lock message at the screen centre, where the keypad and dots were. Comes in on
+        // the keypad's beat: after the keys have faded out, or with the rest of the screen
+        // out of the splash.
+        .overlay {
+            PINInfoMessage(
+                info: presenter.lockMessage,
+                color: .labelsPrimary,
+                style: .title3,
+                isHidden: showsSplash,
+                reveal: showsSplash ? nil : PINKeyboard.fadeIn.delay(keypadEntranceDelay)
+            )
+            .padding(.horizontal, .XL)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .ignoresSafeArea()
         }
         .sensoryFeedback(.success, trigger: presenter.success) { _, new in new }
         .sensoryFeedback(.start, trigger: presenter.unlock)

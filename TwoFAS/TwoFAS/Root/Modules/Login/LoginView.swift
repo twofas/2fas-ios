@@ -35,14 +35,17 @@ struct LoginView: View {
     @Namespace private var logoNamespace
     /// Picked once per screen, so the greeting does not change while the screen is up.
     @State private var greeting = LoginBrand.greetings.randomElement() ?? T.Login.helloHeader
-    /// The launch screen has no greeting, so a screen that starts as its copy fades the
-    /// greeting in: on appearing, when a biometry prompt is going to hold the splash, or with
-    /// the subtitle once the splash is left. Any other start has it from the first frame.
+    /// The launch screen has no greeting, so a screen that continues it fades the greeting
+    /// in: on appearing, when a biometry prompt is going to hold the splash with the brand at
+    /// the centre, or in the header as soon as the brand is there. Any other start has it
+    /// from the first frame.
     @State private var greetingRevealed: Bool
 
     init(presenter: LoginPresenter) {
         _presenter = Bindable(presenter)
-        _greetingRevealed = State(initialValue: !presenter.showsSplash)
+        _greetingRevealed = State(
+            initialValue: !(presenter.showsSplash && presenter.splashFollowsLaunchScreen)
+        )
     }
 
     private var keypadEntranceDelay: TimeInterval {
@@ -53,21 +56,49 @@ struct LoginView: View {
         presenter.showsSplash
     }
 
+    /// Where the brand sits. On the splash, except on a device whose biometry alert covers
+    /// the screen centre: there the brand is in the header while a prompt is up, lifting
+    /// ahead of the alert on a cold start, and from the first frame on a return from the
+    /// background, where nothing ties the splash to the launch screen. The rest of the screen
+    /// still waits for the prompt's outcome.
+    private func brandOnSplash(alertCoversCentre: Bool) -> Bool {
+        guard showsSplash else { return false }
+        guard alertCoversCentre else { return true }
+        return presenter.splashFollowsLaunchScreen && !presenter.isAuthenticating
+    }
+
+    /// `true` when the system draws the biometry prompt over the screen centre: Touch ID,
+    /// Face ID behind a notch, iPad. Face ID on a Dynamic Island phone animates in the island
+    /// instead; the island is what makes the top inset this deep.
+    private func biometryAlertCoversCentre(topInset: CGFloat) -> Bool {
+        let hasDynamicIsland = UIDevice.current.userInterfaceIdiom == .phone && topInset >= 59
+        return !hasDynamicIsland
+    }
+
     private var isKeyboardHidden: Bool {
         presenter.isKeyboardHidden
     }
 
     /// Logo and greeting, big on the splash and small in the header. Only the lock screen
-    /// greets; an info message takes the greeting's place while it is up.
-    private func brand(contentWidth: CGFloat) -> LoginBrand {
+    /// greets; an info message takes the greeting's place while it is up. `greetsOnSplash`
+    /// has the greeting join the brand at the centre and fade in there; otherwise it belongs
+    /// to the header, fading in like the subtitle once the brand is up.
+    private func brand(contentWidth: CGFloat, greetsOnSplash: Bool) -> LoginBrand {
         LoginBrand(
             greeting: presenter.loginType == .login ? greeting : nil,
             isGreetingRevealed: greetingRevealed,
-            revealAnimation: presenter.promptsOnSplash ? SplashTransition.greeting : SplashTransition.subtitleReveal,
+            revealAnimation: greetsOnSplash ? SplashTransition.greeting : SplashTransition.subtitleReveal,
             showsGreeting: presenter.info == nil,
-            drawsGreeting: presenter.promptsOnSplash,
+            drawsGreeting: greetsOnSplash,
             greetingMaxWidth: greetingMaxWidth(contentWidth: contentWidth)
         )
+    }
+
+    /// The greeting sits on the splash only when a biometry prompt holds the splash with the
+    /// brand at the centre. Where the alert takes the centre, the brand lifts alone, as it
+    /// does with no biometry at all, and the greeting fades in up in the header.
+    private func greetsOnSplash(alertCoversCentre: Bool) -> Bool {
+        presenter.promptsOnSplash && !alertCoversCentre
     }
 
     /// The width the header offers its texts (the readable width of
@@ -94,11 +125,17 @@ struct LoginView: View {
 
     var body: some View {
         GeometryReader { proxy in
-            content(brand: brand(contentWidth: proxy.size.width))
+            let alertCoversCentre = biometryAlertCoversCentre(topInset: proxy.safeAreaInsets.top)
+            let greetsOnSplash = greetsOnSplash(alertCoversCentre: alertCoversCentre)
+            content(
+                brand: brand(contentWidth: proxy.size.width, greetsOnSplash: greetsOnSplash),
+                brandOnSplash: brandOnSplash(alertCoversCentre: alertCoversCentre),
+                greetsOnSplash: greetsOnSplash
+            )
         }
     }
 
-    private func content(brand: LoginBrand) -> some View {
+    private func content(brand: LoginBrand, brandOnSplash: Bool, greetsOnSplash: Bool) -> some View {
         VStack(spacing: .S) {
             if presenter.loginType == .verify {
                 HStack {
@@ -129,7 +166,8 @@ struct LoginView: View {
                     brand: brand,
                     info: $presenter.info,
                     logoNamespace: logoNamespace,
-                    showsSplash: showsSplash
+                    showsSplash: showsSplash,
+                    brandOnSplash: brandOnSplash
                 )
             }
             
@@ -151,25 +189,25 @@ struct LoginView: View {
         // The launch screen's logo box: window centre, natural size, safe areas ignored. Goes
         // after the bottom spacing so the slot spans the whole screen, not just the content.
         .overlay {
-            LoginBrandSplashSlot(brand: brand, isCurrent: showsSplash, namespace: logoNamespace)
+            LoginBrandSplashSlot(brand: brand, isCurrent: brandOnSplash, namespace: logoNamespace)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .ignoresSafeArea()
         }
         .overlay {
-            LoginFloatingBrand(brand: brand, isSplash: showsSplash, namespace: logoNamespace)
+            LoginFloatingBrand(brand: brand, isSplash: brandOnSplash, namespace: logoNamespace)
         }
         .sensoryFeedback(.success, trigger: presenter.success) { _, new in new }
         .sensoryFeedback(.start, trigger: presenter.unlock)
         .background(AppColor.backgroundsPrimary)
         .modifier(UnlockExit(isLeaving: presenter.isLeaving))
         .onAppear {
-            if presenter.promptsOnSplash {
+            if greetsOnSplash {
                 greetingRevealed = true
             }
             presenter.onAppear()
         }
-        .onChange(of: showsSplash) { _, showsSplash in
-            if !showsSplash {
+        .onChange(of: brandOnSplash) { _, brandOnSplash in
+            if !brandOnSplash {
                 greetingRevealed = true
             }
         }

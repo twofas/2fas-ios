@@ -31,10 +31,13 @@ struct PINWelcomeHeader: View {
     /// While the screen is on the splash the brand sits at the screen centre and the text
     /// under it is out; it fades in as the brand arrives.
     let showsSplash: Bool
+    /// `false` while the brand is in the header, which can be before the splash is left: a
+    /// biometry alert that covers the screen centre has it lifted out of the way early.
+    let brandOnSplash: Bool
     
     var body: some View {
         VStack(spacing: .zero) {
-            LoginBrandHeaderSlot(brand: brand, isCurrent: !showsSplash, namespace: logoNamespace)
+            LoginBrandHeaderSlot(brand: brand, isCurrent: !brandOnSplash, namespace: logoNamespace)
                 // A greeting the brand leaves to the header sits where the brand's own
                 // would, at the slot's bottom, and only fades.
                 .overlay(alignment: .bottom) {

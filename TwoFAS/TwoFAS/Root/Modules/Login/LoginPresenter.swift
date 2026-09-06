@@ -63,6 +63,10 @@ final class LoginPresenter {
     /// worth greeting on it; a splash that is left right away shows the logo alone and the
     /// greeting comes in with the rest of the header.
     private(set) var promptsOnSplash: Bool
+    /// `true` while the splash is the continuation of the system launch screen, which is the
+    /// only time its logo has to sit at the screen centre. A splash re-entered on the way to
+    /// the background is free to start in whatever shape suits the next prompt.
+    private(set) var splashFollowsLaunchScreen: Bool
     /// The keypad is out on the splash and while a biometry prompt is up; it comes back only
     /// when the attempt fails or is cancelled.
     var isKeyboardHidden: Bool {
@@ -100,6 +104,7 @@ final class LoginPresenter {
         let willPrompt = interactor.willPromptBiometryOnAppear
         showsSplash = loginType == .login && (followsLaunchScreen || willPrompt)
         promptsOnSplash = loginType == .login && willPrompt
+        splashFollowsLaunchScreen = followsLaunchScreen
         
         timer = CancellableTimer()
 
@@ -277,6 +282,7 @@ private extension LoginPresenter {
         animatesKeyboardHiding = false
         showsSplash = true
         promptsOnSplash = true
+        splashFollowsLaunchScreen = false
     }
 
     func isVisible() {

@@ -221,8 +221,9 @@ struct LoginBrandSplashSlot: View {
 
 /// The visible brand. Hangs from the top edge of the slot it is matched to, its logo grown
 /// on the splash: instantly into the splash (that happens out of sight, on the way to the
-/// background) and on a spring out of it. Not drawn with Reduce Motion, where the slots
-/// show the brand themselves.
+/// background) and on `flight` out of it, whether the keypad follows or a biometry alert is
+/// about to take the centre. Not drawn with Reduce Motion, where the slots show the brand
+/// themselves.
 struct LoginFloatingBrand: View {
     let brand: LoginBrand
     let isSplash: Bool

@@ -34,6 +34,8 @@ struct PINWelcomeHeader: View {
     /// `false` while the brand is in the header, which can be before the splash is left: a
     /// biometry alert that covers the screen centre has it lifted out of the way early.
     let brandOnSplash: Bool
+    /// The subtitle's fade in as the splash is left.
+    let subtitleReveal: Animation
     
     var body: some View {
         VStack(spacing: .zero) {
@@ -55,7 +57,7 @@ struct PINWelcomeHeader: View {
                 .animation(.easeInOut, value: text)
                 .padding(.top, .S)
                 .opacity(showsSplash ? 0 : 1)
-                .animation(showsSplash ? nil : SplashTransition.subtitleReveal, value: showsSplash)
+                .animation(showsSplash ? nil : subtitleReveal, value: showsSplash)
         }
     }
 }

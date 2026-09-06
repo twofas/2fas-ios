@@ -40,6 +40,11 @@ struct LoginView: View {
     /// the centre, or in the header as soon as the brand is there. Any other start has it
     /// from the first frame.
     @State private var greetingRevealed: Bool
+    /// `true` when the brand reached the header while the splash was still up, ahead of a
+    /// biometry alert: the subtitle and dots then come in on their own shared beat, with no
+    /// flight to wait for. Kept from the moment the brand rises until it is back on the
+    /// splash, so it is still known when the splash is left.
+    @State private var brandRoseEarly = false
 
     init(presenter: LoginPresenter) {
         _presenter = Bindable(presenter)
@@ -160,14 +165,15 @@ struct LoginView: View {
                 keyboardAnimatesHiding: presenter.animatesKeyboardHiding,
                 keyboardEntranceDelay: keypadEntranceDelay,
                 hidesDots: showsSplash,
-                dotsAnimation: showsSplash ? nil : SplashTransition.dotsReveal
+                dotsAnimation: showsSplash ? nil : (brandRoseEarly ? SplashTransition.headerReveal : SplashTransition.dotsReveal)
             ) {
                 PINWelcomeHeader(
                     brand: brand,
                     info: $presenter.info,
                     logoNamespace: logoNamespace,
                     showsSplash: showsSplash,
-                    brandOnSplash: brandOnSplash
+                    brandOnSplash: brandOnSplash,
+                    subtitleReveal: brandRoseEarly ? SplashTransition.headerReveal : SplashTransition.subtitleReveal
                 )
             }
             
@@ -206,10 +212,11 @@ struct LoginView: View {
             }
             presenter.onAppear()
         }
-        .onChange(of: brandOnSplash) { _, brandOnSplash in
+        .onChange(of: brandOnSplash, initial: true) { _, brandOnSplash in
             if !brandOnSplash {
                 greetingRevealed = true
             }
+            brandRoseEarly = !brandOnSplash && showsSplash
         }
         .onChange(of: scenePhase) { oldValue, newValue in
             guard oldValue != newValue else { return }

@@ -80,7 +80,8 @@ final class RootPresenter {
         Log("App: applicationWillEnterForeground")
         lockScreenIsInactive()
         interactor.applicationWillEnterForeground()
-        removeCover()
+        // The cover stays up until the app is active, when it flies away over the app
+        // coming in, see `applicationDidBecomeActive`.
         handleViewFlow()
     }
     
@@ -126,7 +127,7 @@ final class RootPresenter {
         } else if interactor.isAuthenticationRequired {
             presentLogin(fromColdStart: coldRun)
         } else {
-            presentMain()
+            presentMain(fromColdStart: coldRun)
         }
     }
     
@@ -149,7 +150,7 @@ final class RootPresenter {
     private func removeCover(animated: Bool = false) {
         guard isCoverActive else { return }
         isCoverActive = false
-        flowController.toRemoveCover()
+        flowController.toRemoveCover(animated: animated)
     }
     
     private func presentIntroduction() {
@@ -159,13 +160,22 @@ final class RootPresenter {
         flowController.toIntro()
     }
     
-    private func presentMain() {
+    /// `fromColdStart` is `true` when the app is the first thing after the system launch
+    /// screen, with no lock screen in between; it then comes in the way it does from under
+    /// the lock screen, see `UnlockTransition`.
+    private func presentMain(fromColdStart: Bool = false) {
         guard currentState != .main else { return }
-        // Coming from the lock screen the app animates in under it, see `UnlockTransition`.
-        let fromLogin = currentState == .login
+        let transition: MainTransition = if currentState == .login {
+            // Coming from the lock screen the app animates in under it.
+            .fromLogin
+        } else if fromColdStart {
+            .fromLaunchScreen
+        } else {
+            .none
+        }
         changeState(.main)
         Log("Presenting Main")
-        flowController.toMain(animated: fromLogin)
+        flowController.toMain(transition: transition)
     }
     
     /// `fromColdStart` is `true` when the login screen is the first thing after the system

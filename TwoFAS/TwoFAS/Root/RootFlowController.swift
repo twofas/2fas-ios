@@ -31,17 +31,30 @@ protocol RootFlowControllerParent: AnyObject {}
 protocol RootFlowControlling: AnyObject {
     func toIntro()
     /// `animated` brings the app in under the departing login screen, see `UnlockTransition`.
-    func toMain(animated: Bool)
+    func toMain(transition: MainTransition)
     func toStorageError(error: String)
 
     func toCover()
-    func toRemoveCover()
+    /// `animated`: the app comes in from under the cover flying away, see `UnlockTransition`;
+    /// otherwise the cover is simply gone.
+    func toRemoveCover(animated: Bool)
 
     /// `fromColdStart`: the login screen follows the system launch screen directly.
     func toLogin(fromColdStart: Bool)
     func toRemoveLogin()
 
     func toDismissKeyboard()
+}
+
+/// How the app's main screen comes in.
+enum MainTransition {
+    /// In place, with no animation.
+    case none
+    /// From under the lock screen flying away, see `UnlockTransition`.
+    case fromLogin
+    /// From under a copy of the system launch screen, which flies away the way the lock
+    /// screen does: a cold start with no lock screen looks like an unlock.
+    case fromLaunchScreen
 }
 
 final class RootFlowController: FlowController {
@@ -101,15 +114,64 @@ extension RootFlowController: RootFlowControlling {
         IntroductionNavigationFlowController.embedAsRoot(in: viewController, parent: self)
     }
     
-    func toMain(animated: Bool) {
+    func toMain(transition: MainTransition) {
+        // The cover goes up before the app exists, so the first frame is still the launch
+        // screen.
+        if transition == .fromLaunchScreen {
+            toCover()
+        }
         if mainViewController == nil {
             mainViewController = MainFlowController.showAsRoot(in: viewController, parent: self)
         } else {
             mainViewController?.viewDidAppear(false)
         }
-        if animated, let main = mainViewController?.view {
+        guard let main = mainViewController?.view else { return }
+        switch transition {
+        case .none:
+            break
+        case .fromLogin:
             reveal(main)
+        case .fromLaunchScreen:
+            // The same pause the lock screen takes before it leaves its splash.
+            DispatchQueue.main.asyncAfter(deadline: .now() + SplashTransition.delay) { [weak self] in
+                self?.toRemoveCover(animated: true)
+            }
         }
+    }
+
+    func toRemoveCover(animated: Bool) {
+        guard animated, let cover = coverWindow.rootViewController?.view, let main = mainViewController?.view else {
+            removeCover()
+            return
+        }
+        reveal(main)
+        flyAway(cover)
+    }
+
+    /// Sends the cover off the way the lock screen goes, see `UnlockTransition.Login`: it
+    /// grows past the viewer and fades, then the window is taken down.
+    private func flyAway(_ cover: UIView) {
+        typealias Config = UnlockTransition.Login
+
+        UIViewPropertyAnimator(duration: Config.duration, curve: .easeIn) {
+            cover.transform = CGAffineTransform(scaleX: Config.scale, y: Config.scale)
+        }
+        .startAnimation()
+
+        let fade = UIViewPropertyAnimator(duration: Config.duration, curve: .easeOut) {
+            cover.alpha = 0
+        }
+        fade.addCompletion { [weak self] _ in
+            self?.removeCover()
+        }
+        fade.startAnimation()
+    }
+
+    private func removeCover() {
+        coverWindow.rootViewController = nil
+        coverWindow.removeFromSuperview()
+        coverWindow.isHidden = true
+        window?.makeKey()
     }
 
     /// Brings the app in under the login screen flying away, see `UnlockTransition.Main`:
@@ -158,12 +220,6 @@ extension RootFlowController: RootFlowControlling {
         coverWindow.windowScene = window?.windowScene
         coverWindow.isHidden = false
         coverWindow.makeKeyAndVisible()
-    }
-    
-    func toRemoveCover() {
-        coverWindow.rootViewController = nil
-        coverWindow.removeFromSuperview()
-        coverWindow.isHidden = true
     }
     
     func toLogin(fromColdStart: Bool) {

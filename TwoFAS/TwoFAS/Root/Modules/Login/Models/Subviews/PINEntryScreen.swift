@@ -57,6 +57,12 @@ struct PINEntryBlock<Header: View>: View {
     var isKeyboardHidden = false
     /// `false` makes the next hide instant instead of a fade; showing always animates.
     var keyboardAnimatesHiding = true
+    /// Pause before the keypad's entrance, see `PINKeyboard.entranceDelay`.
+    var keyboardEntranceDelay: TimeInterval = PINKeyboard.entranceDelay
+    /// Fades the dots out while keeping their slot, so the header and keypad stay put.
+    var hidesDots = false
+    /// Animation of the dots' fade; `nil` switches them instantly.
+    var dotsAnimation: Animation?
     @ViewBuilder let header: () -> Header
 
     var body: some View {
@@ -72,6 +78,8 @@ struct PINEntryBlock<Header: View>: View {
                 .shake(on: shake)
                 .sensoryFeedback(.error, trigger: shake)
                 .padding(.top, .XL)
+                .opacity(hidesDots ? 0 : 1)
+                .animation(dotsAnimation, value: hidesDots)
 
             gap
 
@@ -80,6 +88,7 @@ struct PINEntryBlock<Header: View>: View {
                 biometryKey: biometryKey,
                 isHidden: isKeyboardHidden,
                 animatesHiding: keyboardAnimatesHiding,
+                entranceDelay: keyboardEntranceDelay,
                 action: onKeyPressed
             )
             .disabled(isDisabled)

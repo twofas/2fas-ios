@@ -28,18 +28,81 @@ struct LoginView: View {
     @Environment(\.scenePhase)
     private var scenePhase
 
+    @Environment(\.horizontalSizeClass)
+    private var horizontalSizeClass
+
+    /// Ties the floating brand to its splash slot and header slot, see `LoginFloatingBrand`.
+    @Namespace private var logoNamespace
+    /// Picked once per screen, so the greeting does not change while the screen is up.
+    @State private var greeting = LoginBrand.greetings.randomElement() ?? T.Login.helloHeader
+    /// The launch screen has no greeting, so a screen that starts as its copy fades the
+    /// greeting in: on appearing, when a biometry prompt is going to hold the splash, or with
+    /// the subtitle once the splash is left. Any other start has it from the first frame.
+    @State private var greetingRevealed: Bool
+
+    init(presenter: LoginPresenter) {
+        _presenter = Bindable(presenter)
+        _greetingRevealed = State(initialValue: !presenter.showsSplash)
+    }
+
 #if DEBUG
     /// Hides the keypad the way a running biometry prompt does, so the animation can be
-    /// watched without Face ID. Toggled by the debug button in the top-right corner.
+    /// watched without Face ID. Toggled by a debug button in the top-right corner.
     @State private var debugHidesKeyboard = false
+    /// Puts the screen back on the splash the way a trip to the background does; turning it
+    /// off runs the whole splash exit. Toggled by a debug button in the top-right corner.
+    @State private var debugShowsSplash = false
+    /// `true` after the debug splash exit, so the keypad takes the splash exit's beat.
+    @State private var debugLeftSplash = false
 #endif
+
+    private var keypadEntranceDelay: TimeInterval {
+#if DEBUG
+        debugLeftSplash ? SplashTransition.keypadDelay : presenter.keypadEntranceDelay
+#else
+        presenter.keypadEntranceDelay
+#endif
+    }
+
+    private var showsSplash: Bool {
+#if DEBUG
+        presenter.showsSplash || debugShowsSplash
+#else
+        presenter.showsSplash
+#endif
+    }
 
     private var isKeyboardHidden: Bool {
 #if DEBUG
-        presenter.isKeyboardHidden || debugHidesKeyboard
+        presenter.isKeyboardHidden || debugHidesKeyboard || debugShowsSplash
 #else
         presenter.isKeyboardHidden
 #endif
+    }
+
+    /// Logo and greeting, big on the splash and small in the header. Only the lock screen
+    /// greets; an info message takes the greeting's place while it is up.
+    private func brand(contentWidth: CGFloat) -> LoginBrand {
+        LoginBrand(
+            greeting: presenter.loginType == .login ? greeting : nil,
+            isGreetingRevealed: greetingRevealed,
+            revealAnimation: presenter.promptsOnSplash ? SplashTransition.greeting : SplashTransition.subtitleReveal,
+            showsGreeting: presenter.info == nil,
+            drawsGreeting: presenter.promptsOnSplash,
+            greetingMaxWidth: greetingMaxWidth(contentWidth: contentWidth)
+        )
+    }
+
+    /// The width the header offers its texts (the readable width of
+    /// `AdaptiveReadableContainer`), shrunk so the greeting still fits it once grown to the
+    /// splash scale. Taken from the layout pass itself, not from a measurement that lands a
+    /// pass later: the floating brand's matched position is not refreshed when only its own
+    /// width changes, so its width must be right from the first pass.
+    private func greetingMaxWidth(contentWidth: CGFloat) -> CGFloat? {
+        guard contentWidth > 0 else { return nil }
+        let readableMaxWidth: CGFloat = horizontalSizeClass == .compact ? .infinity : 720
+        let readableWidth = min(readableMaxWidth, contentWidth - 2 * Spacing.XL.value)
+        return readableWidth / SplashTransition.greetingScale
     }
 
     /// Mirrors the keypad: an automatic hide is instant, a user's hide fades, showing fades in
@@ -48,11 +111,17 @@ struct LoginView: View {
         if isKeyboardHidden {
             presenter.animatesKeyboardHiding ? PINKeyboard.fadeOut : nil
         } else {
-            PINKeyboard.fadeIn.delay(PINKeyboard.entranceDelay)
+            PINKeyboard.fadeIn.delay(keypadEntranceDelay)
         }
     }
 
     var body: some View {
+        GeometryReader { proxy in
+            content(brand: brand(contentWidth: proxy.size.width))
+        }
+    }
+
+    private func content(brand: LoginBrand) -> some View {
         VStack(spacing: .S) {
             if presenter.loginType == .verify {
                 HStack {
@@ -74,9 +143,17 @@ struct LoginView: View {
                 onKeyPressed: presenter.onKeyPressed,
                 biometryKey: presenter.biometryKey,
                 isKeyboardHidden: isKeyboardHidden,
-                keyboardAnimatesHiding: presenter.animatesKeyboardHiding
+                keyboardAnimatesHiding: presenter.animatesKeyboardHiding,
+                keyboardEntranceDelay: keypadEntranceDelay,
+                hidesDots: showsSplash,
+                dotsAnimation: showsSplash ? nil : SplashTransition.dotsReveal
             ) {
-                PINWelcomeHeader(loginType: presenter.loginType, info: $presenter.info)
+                PINWelcomeHeader(
+                    brand: brand,
+                    info: $presenter.info,
+                    logoNamespace: logoNamespace,
+                    showsSplash: showsSplash
+                )
             }
             
             Spacer(minLength: 0)
@@ -95,20 +172,45 @@ struct LoginView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
 #if DEBUG
         .overlay(alignment: .topTrailing) {
-            Button(debugHidesKeyboard ? "Show keypad" : "Hide keypad") {
-                debugHidesKeyboard.toggle()
+            HStack {
+                Button(debugShowsSplash ? "Leave splash" : "Splash") {
+                    debugLeftSplash = debugShowsSplash
+                    debugShowsSplash.toggle()
+                }
+                Button(debugHidesKeyboard ? "Show keypad" : "Hide keypad") {
+                    debugLeftSplash = false
+                    debugHidesKeyboard.toggle()
+                }
             }
             .buttonStyle(.bordered)
             .padding(.XL)
         }
 #endif
         .minimumBottomSpacing(.M)
+        // The launch screen's logo box: window centre, natural size, safe areas ignored. Goes
+        // after the bottom spacing so the slot spans the whole screen, not just the content.
+        .overlay {
+            LoginBrandSplashSlot(brand: brand, isCurrent: showsSplash, namespace: logoNamespace)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .ignoresSafeArea()
+        }
+        .overlay {
+            LoginFloatingBrand(brand: brand, isSplash: showsSplash, namespace: logoNamespace)
+        }
         .sensoryFeedback(.success, trigger: presenter.success) { _, new in new }
         .sensoryFeedback(.start, trigger: presenter.unlock)
         .background(AppColor.backgroundsPrimary)
         .modifier(UnlockExit(isLeaving: presenter.isLeaving))
         .onAppear {
+            if presenter.promptsOnSplash {
+                greetingRevealed = true
+            }
             presenter.onAppear()
+        }
+        .onChange(of: showsSplash) { _, showsSplash in
+            if !showsSplash {
+                greetingRevealed = true
+            }
         }
         .onChange(of: scenePhase) { oldValue, newValue in
             guard oldValue != newValue else { return }

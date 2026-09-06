@@ -37,7 +37,8 @@ protocol RootFlowControlling: AnyObject {
     func toCover()
     func toRemoveCover()
 
-    func toLogin()
+    /// `fromColdStart`: the login screen follows the system launch screen directly.
+    func toLogin(fromColdStart: Bool)
     func toRemoveLogin()
 
     func toDismissKeyboard()
@@ -165,12 +166,13 @@ extension RootFlowController: RootFlowControlling {
         coverWindow.isHidden = true
     }
     
-    func toLogin() {
+    func toLogin(fromColdStart: Bool) {
         guard loginViewController == nil else { return }
         
         let loginViewController = LoginFlowController.setAsCover(
             in: loginWindow,
-            parent: self
+            parent: self,
+            fromColdStart: fromColdStart
         )
         
         self.loginViewController = loginViewController

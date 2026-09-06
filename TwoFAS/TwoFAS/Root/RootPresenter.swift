@@ -72,7 +72,7 @@ final class RootPresenter {
         interactor.applicationDidEnterBackground()
         interactor.lockApplicationIfNeeded { [weak self] in
             self?.removeCover()
-            self?.presentLogin(immediately: true)
+            self?.presentLogin(fromColdStart: false)
         }
     }
     
@@ -124,7 +124,7 @@ final class RootPresenter {
         if !interactor.introductionWasShown {
             presentIntroduction()
         } else if interactor.isAuthenticationRequired {
-            presentLogin(immediately: coldRun)
+            presentLogin(fromColdStart: coldRun)
         } else {
             presentMain()
         }
@@ -168,13 +168,15 @@ final class RootPresenter {
         flowController.toMain(animated: fromLogin)
     }
     
-    private func presentLogin(immediately: Bool) {
+    /// `fromColdStart` is `true` when the login screen is the first thing after the system
+    /// launch screen, so it can take over from it seamlessly.
+    private func presentLogin(fromColdStart: Bool) {
         guard currentState != .login else { return }
         changeState(.login)
         
         interactor.lockScreenActive()
         Log("Presenting Login")
-        flowController.toLogin()
+        flowController.toLogin(fromColdStart: fromColdStart)
     }
     
     private func changeState(_ newState: State) {

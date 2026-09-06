@@ -28,7 +28,7 @@ enum UnlockTransition {
     enum Login {
         static let duration: TimeInterval = 0.2
         /// Final scale, as if the screen flew past the viewer.
-        static let scale: CGFloat = 1.2
+        static let scale: CGFloat = 1.15    
         /// Fade curve. Ease-out is mostly done early on and ends exactly at `duration`, so no
         /// half-transparent ghost trails behind.
         static var fade: Animation { .easeOut(duration: duration) }
@@ -69,9 +69,12 @@ protocol LoginFlowControlling: AnyObject {
 final class LoginFlowController: FlowController {
     private weak var parent: LoginFlowControllerParent?
     
+    /// `fromColdStart`: the screen is the first thing after the system launch screen and
+    /// starts as its copy, see `LoginPresenter.showsSplash`.
     static func setAsCover(
         in window: UIWindow,
-        parent: LoginFlowControllerParent
+        parent: LoginFlowControllerParent,
+        fromColdStart: Bool
     ) -> UIViewController {
         let flowController = LoginFlowController(viewController: UIViewController())
         flowController.parent = parent
@@ -80,7 +83,8 @@ final class LoginFlowController: FlowController {
         let presenter = LoginPresenter(
             loginType: .login,
             flowController: flowController,
-            interactor: interactor
+            interactor: interactor,
+            followsLaunchScreen: fromColdStart
         )
         
         let viewController = LoginViewController(presenter: presenter)

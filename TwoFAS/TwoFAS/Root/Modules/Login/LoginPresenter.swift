@@ -46,23 +46,36 @@ final class LoginPresenter {
     /// Key shown left of "0" on the keypad; `nil` hides the slot when biometry can't be used.
     var biometryKey: TFPinKey?
     /// `true` from the moment biometry is requested until it fails or is cancelled. After a
-    /// success it stays `true`: the screen is on its way out and the keypad must not come
-    /// back into it.
+    /// success it stays `true`: the screen is on its way out and neither the keypad nor the
+    /// splash must change under it.
     private(set) var isAuthenticating = false
-    /// `true` while the next time the screen is seen is going to prompt for biometry on its
-    /// own, so the keypad is absent from that first frame instead of showing up and hiding a
-    /// moment later. Set on creation and again whenever the app goes to the background;
-    /// spent the first time the screen is worked with in the foreground.
-    private(set) var expectsAutomaticBiometry: Bool
-    /// The keypad is out while a biometry prompt is up or about to come up; it comes back only
+    /// `true` while the screen looks like the launch screen: only the logo, centred, nothing
+    /// else. The lock screen starts like this when it takes over from the system launch
+    /// screen, or when an automatic biometry prompt is coming: the prompt runs over the
+    /// splash and the splash goes only when the prompt fails. Otherwise it leaves the splash
+    /// the first time it is worked with in the foreground. A lock screen prepared while the
+    /// app is already running, with no prompt to come, skips the splash and starts complete.
+    /// Re-entered, without animation, on a trip to the background that is going to be
+    /// followed by an automatic prompt, so the return shows the splash again. Never `true`
+    /// for `.verify`.
+    private(set) var showsSplash: Bool
+    /// `true` while the splash is going to be held by an automatic biometry prompt, so it is
+    /// worth greeting on it; a splash that is left right away shows the logo alone and the
+    /// greeting comes in with the rest of the header.
+    private(set) var promptsOnSplash: Bool
+    /// The keypad is out on the splash and while a biometry prompt is up; it comes back only
     /// when the attempt fails or is cancelled.
     var isKeyboardHidden: Bool {
-        isAuthenticating || expectsAutomaticBiometry
+        isAuthenticating || showsSplash
     }
     /// `false` while a prompt the app started on its own (on appearing or on becoming active)
-    /// is up: the keypad then vanishes in the same frame, with no fade, because nothing the
-    /// user did caused it. A prompt started from the biometry key hides the keypad animated.
+    /// is up, or while the screen is back on the splash for one: the keypad then vanishes in
+    /// the same frame, with no fade, because nothing the user did caused it. A prompt started
+    /// from the biometry key hides the keypad animated.
     private(set) var animatesKeyboardHiding = true
+    /// Pause before the keypad's next entrance: the keypad's own after a biometry prompt,
+    /// the splash exit's beat when the keypad comes in with the rest of the screen.
+    private(set) var keypadEntranceDelay: TimeInterval = PINKeyboard.entranceDelay
     /// `true` once the user is in and the lock screen is on its way out over the app, see
     /// `UnlockTransition`; the view grows, blurs and fades while this is set.
     private(set) var isLeaving = false
@@ -73,12 +86,20 @@ final class LoginPresenter {
         }
     }
         
-    init(loginType: LoginType, flowController: LoginFlowControlling, interactor: LoginModuleInteracting) {
+    /// `followsLaunchScreen`: the screen is the first thing after the system launch screen.
+    init(
+        loginType: LoginType,
+        flowController: LoginFlowControlling,
+        interactor: LoginModuleInteracting,
+        followsLaunchScreen: Bool = false
+    ) {
         self.loginType = loginType
         self.flowController = flowController
         self.interactor = interactor
         self.notificationCenter = .default
-        expectsAutomaticBiometry = interactor.willPromptBiometryOnAppear
+        let willPrompt = interactor.willPromptBiometryOnAppear
+        showsSplash = loginType == .login && (followsLaunchScreen || willPrompt)
+        promptsOnSplash = loginType == .login && willPrompt
         
         timer = CancellableTimer()
 
@@ -110,8 +131,9 @@ final class LoginPresenter {
     }
     
     func onKeyPressed(_ key: TFPinKey) {
-        // Hardware keys must not fill the dots while the keypad is hidden behind biometry.
-        guard !isBlocked, !isAuthenticating else { return }
+        // Hardware keys must not fill the dots while the keypad is out: on the splash or
+        // behind biometry.
+        guard !isBlocked, !isKeyboardHidden else { return }
         switch key {
         case .digit(let number):
             guard pin.count < totalDigits else { return }
@@ -137,22 +159,41 @@ private extension LoginPresenter {
     func biometry(userInitiated: Bool = false) {
         guard !isAuthenticating else { return }
         animatesKeyboardHiding = userInitiated
+        keypadEntranceDelay = PINKeyboard.entranceDelay
         isAuthenticating = true
         interactor.verifyUsingBiometry(reason: reason, userInitiated: userInitiated) { [weak self] result in
             guard let self else { return }
-            if result {
+            guard result else {
+                isAuthenticating = false
+                animatesKeyboardHiding = true
+                // An automatic prompt over the splash has failed: time for the keypad. In the
+                // background nothing is seen; `isVisible()` decides again on return.
+                if !interactor.isAppInBackground {
+                    leaveSplash()
+                }
+                return
+            }
+            // `isAuthenticating` stays set so nothing starts coming back under the exit.
+            if showsSplash {
+                // Straight out of the splash: the logo stays centred, there are no dots to fill.
+                userLoggedIn()
+            } else {
                 // Same feedback as a typed PIN: every dot fills, and the screen goes once the
-                // fill has been seen. `isAuthenticating` stays set so the keypad does not start
-                // coming back under the exit.
+                // fill has been seen.
                 enteredDigitCount = totalDigits
                 DispatchQueue.main.asyncAfter(deadline: .now() + PINDotsAnimation.fillDuration) { [weak self] in
                     self?.userLoggedIn()
                 }
-            } else {
-                isAuthenticating = false
-                animatesKeyboardHiding = true
             }
         }
+    }
+
+    /// The view animates this direction on its own: the logo lifts into the header while the
+    /// keypad, texts, dots and footer come in.
+    func leaveSplash() {
+        guard showsSplash else { return }
+        keypadEntranceDelay = SplashTransition.keypadDelay
+        showsSplash = false
     }
     
     func allEntered() {
@@ -227,24 +268,26 @@ private extension LoginPresenter {
     }
 
     /// The screen usually stays alive across a trip to the background and is the first thing
-    /// seen on return, right before `didBecomeActive` prompts for biometry. Taking the keypad
-    /// down now, while nothing is on screen, means the return shows no keypad at all.
+    /// seen on return, right before `didBecomeActive` prompts for biometry. Going back to the
+    /// splash now, while nothing is on screen, means the return starts from the splash with
+    /// the prompt over it, as a cold start does.
     @objc
     func didEnterBackground() {
-        guard interactor.willPromptBiometryOnAppear else { return }
+        guard loginType == .login, interactor.willPromptBiometryOnAppear else { return }
         animatesKeyboardHiding = false
-        expectsAutomaticBiometry = true
+        showsSplash = true
+        promptsOnSplash = true
     }
 
     func isVisible() {
         refreshBiometryKey()
         // `onAppear` also fires while the screen is being prepared in the background, where a
-        // prompt is impossible; leave the prediction alone and wait for `didBecomeActive`.
+        // prompt is impossible; stay on the splash and wait for `didBecomeActive`.
         guard !interactor.isAppInBackground else { return }
-        // Whatever happens next is decided in this same pass, so the prediction is spent:
-        // either `biometry()` flips `isAuthenticating` before the next frame, or the keypad
-        // comes in.
-        expectsAutomaticBiometry = false
+        // A prompt is up, or has just succeeded and the screen is on its way out: its
+        // completion decides. This also absorbs the `didBecomeActive` the biometry alert's
+        // dismissal fires.
+        guard !isAuthenticating else { return }
         defer {
             // If the keypad stays or comes in after all, the next hide is a user's doing again.
             if !isKeyboardHidden { animatesKeyboardHiding = true }
@@ -252,10 +295,12 @@ private extension LoginPresenter {
         guard !isResetVisible else { return }
         if interactor.isLocked {
             lockedState()
+            leaveSplash()
+        } else if interactor.isLoggedOut {
+            // Runs over the splash; a failure leaves it.
+            biometry()
         } else {
-            if interactor.isLoggedOut {
-                biometry()
-            }
+            leaveSplash()
         }
     }
 

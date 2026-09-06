@@ -35,6 +35,8 @@ struct PINKeyboard: View {
     /// `false` removes the keys in the same frame `isHidden` turns on, with no fade, for hides
     /// the user did not cause. Showing is animated regardless.
     var animatesHiding = true
+    /// Pause before the entrance starts; `entranceDelay` unless the caller has its own beat.
+    var entranceDelay: TimeInterval = PINKeyboard.entranceDelay
     let action: (TFPinKey) -> Void
 
     /// Coordinate space of the whole keypad; each key measures its slot in it and asks the
@@ -54,6 +56,8 @@ struct PINKeyboard: View {
     static let fadeIn: Animation = .easeIn(duration: 0.2)
     /// Pause before the entrance starts. The keys are already in place, invisible on "5", so
     /// the screen stays calm while whatever hid them (the biometry alert) is still going away.
+    /// Coming out of the splash it also puts the keypad on the second beat, behind the logo's
+    /// lift into the header.
     static let entranceDelay: TimeInterval = 0.2
 
     // Spring tuning for the entrance, interpolated between the nearest key ("5" itself,
@@ -127,7 +131,7 @@ struct PINKeyboard: View {
             Color.clear
         } else if reducesMotion {
             key.transition(AsymmetricTransition(
-                insertion: .opacity.animation(Self.fadeIn.delay(Self.entranceDelay)),
+                insertion: .opacity.animation(Self.fadeIn.delay(entranceDelay)),
                 removal: .opacity
             ))
         } else {
@@ -135,7 +139,7 @@ struct PINKeyboard: View {
                 insertion: KeyEntrance(
                     flight: spring(for: index),
                     fade: Self.fadeIn,
-                    startDelay: Self.entranceDelay,
+                    startDelay: entranceDelay,
                     keypadSpace: keypadSpace,
                     gatherSlot: gatherSlot
                 ),

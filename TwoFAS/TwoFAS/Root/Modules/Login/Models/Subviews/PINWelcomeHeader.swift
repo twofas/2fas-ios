@@ -21,54 +21,38 @@ import SwiftUI
 import Common
 
 struct PINWelcomeHeader: View {
-    private static let helloHeaders: [String] = [
-        T.Login.helloHeader,
-        T.Login.helloHeader1,
-        T.Login.helloHeader2,
-        T.Login.helloHeader3,
-        T.Login.helloHeader4
-    ]
-    
-    let loginType: LoginType
+    /// Logo and greeting; drawn by the floating brand, only their place is reserved here.
+    let brand: LoginBrand
     
     @Binding
     var info: String?
-    
-    @State
-    private var helloHeader: String = PINWelcomeHeader.helloHeaders.randomElement() ?? T.Login.helloHeader
+    /// Ties the brand's slot to the floating brand, see `LoginFloatingBrand`.
+    let logoNamespace: Namespace.ID
+    /// While the screen is on the splash the brand sits at the screen centre and the text
+    /// under it is out; it fades in as the brand arrives.
+    let showsSplash: Bool
     
     var body: some View {
         VStack(spacing: .zero) {
-            Asset.pinLogo.swiftUIImage
-                .padding(.bottom, .M)
-                .alignmentGuide(.centerAlign) { d in d[VerticalAlignment.center] }
-            VStack(spacing: .S) {
-                if loginType == .login {
-                    Text(helloHeader)
-                        .textStyle(.title2, .emphasized)
-                        .foregroundStyle(.labelsPrimary)
-                        .isHidden(info != nil, remove: false)
-                        .animation(.easeInOut, value: info)
-                } else {
-                    Spacer()
-                        .frame(height: Spacing.XL.rawValue)
+            LoginBrandHeaderSlot(brand: brand, isCurrent: !showsSplash, namespace: logoNamespace)
+                // A greeting the brand leaves to the header sits where the brand's own
+                // would, at the slot's bottom, and only fades.
+                .overlay(alignment: .bottom) {
+                    if !brand.drawsGreeting {
+                        brand.greetingView
+                    }
                 }
-                let text = info ?? T.Security.enterPinShort
-                Text(text)
-                    .textStyle(.body)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .foregroundStyle(.labelsSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .animation(.easeInOut, value: text)
-            }
-            .alignmentGuide(.centerAlign) { d in d[VerticalAlignment.top] }
-            .padding(.top, .S)
+            let text = info ?? T.Security.enterPinShort
+            Text(text)
+                .textStyle(.body)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .foregroundStyle(.labelsSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+                .animation(.easeInOut, value: text)
+                .padding(.top, .S)
+                .opacity(showsSplash ? 0 : 1)
+                .animation(showsSplash ? nil : SplashTransition.subtitleReveal, value: showsSplash)
         }
     }
 }
-
-private struct CenterAlignID: AlignmentID {
-    static func defaultValue(in d: ViewDimensions) -> CGFloat { d[VerticalAlignment.center] }
-}
-private extension VerticalAlignment { static let centerAlign = VerticalAlignment(CenterAlignID.self) }

@@ -23,16 +23,13 @@ import DeviceKit
 extension UIDevice {
     static var isiPad: Bool { UIDevice.current.userInterfaceIdiom == .pad }
     /// Face ID animates in the island on these phones; elsewhere the biometry prompt is an
-    /// alert over the screen centre. DeviceKit knows the models it was built with; a newer
-    /// one it reports as unknown is judged by its top safe area instead, which only the
-    /// island makes this deep.
+    /// alert over the screen centre. DeviceKit's list holds the models it was built with, and
+    /// even a model it knows can be missing from it; a phone the list does not vouch for is
+    /// judged by its top safe area instead, which only the island makes this deep.
     static var hasDynamicIsland: Bool {
-        let device = Device.current
-        if case .unknown = device.realDevice {
-            let topInset = UIApplication.keyWindow?.safeAreaInsets.top ?? 0
-            return !isiPad && topInset >= dynamicIslandTopInset
-        }
-        return device.hasDynamicIsland
+        if Device.current.hasDynamicIsland { return true }
+        let topInset = UIApplication.keyWindow?.safeAreaInsets.top ?? 0
+        return !isiPad && topInset >= dynamicIslandTopInset
     }
 
     /// Smallest top safe area of a phone with a Dynamic Island (59 pt on the first ones); a

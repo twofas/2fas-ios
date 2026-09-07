@@ -131,11 +131,12 @@ final class Security: SecurityProtocol {
     }
     
     var canPromptBiometryAutomaticallyOnNextAppearance: Bool {
-        // `applicationWillEnterForeground` calls `unlock()`, which clears the count, unless
-        // the app is locked out; only then does the count carry over. The automatic path of
-        // `authenticateUsingBiometry` increments it first and gives up at the limit.
-        let locked = interactor?.isAppLocked == true
-        return isBiometryUsable && (!locked || bioAuthCount + 1 < bioLimit)
+        // A prompt that is up now does not count: it is over by the next appearance, and it
+        // is what the answer is asked about in the first place (on the way to the
+        // background, with the cancel still in flight). The automatic-prompt limit does not
+        // count either: every return to the foreground that is not locked out clears it,
+        // and while locked out nothing asks.
+        isBioAuthEnabled && isBioAuthAvailable
     }
 
     /// Common precondition of every biometry prompt, automatic or user-initiated, apart from

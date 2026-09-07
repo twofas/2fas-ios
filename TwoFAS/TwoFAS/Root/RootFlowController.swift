@@ -163,7 +163,12 @@ extension RootFlowController: RootFlowControlling {
     /// laid over the app, which blurs what is beneath it; animating its effect away takes the
     /// radius down to nothing, then the view is removed. It sits inside `main`, so it scales
     /// along with it.
+    ///
+    /// A screen presented over the app lives in the window, outside `main`, and would stand
+    /// still while the app behind it came in; under one the app stays put and the screen on
+    /// its way out flies away over it.
     private func reveal(_ main: UIView) {
+        guard viewController.presentedViewController == nil else { return }
         typealias Config = UnlockTransition.Main
 
         let blur = Config.blur.map { effect in

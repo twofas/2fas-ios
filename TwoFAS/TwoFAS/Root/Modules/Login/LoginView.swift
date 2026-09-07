@@ -155,7 +155,10 @@ struct LoginView: View {
                 // under the user's fingers fades them, the splash exit reveals them.
                 hidesDots: presenter.showsSplash || presenter.isBlocked,
                 dotsAnimation: dotsAnimation,
-                betweenHeaderAndDots: PINInfoMessage(info: presenter.info, isHidden: presenter.isBlocked)
+                betweenHeaderAndDots: PINInfoMessage(
+                    info: presenter.info,
+                    isHidden: presenter.isBlocked || presenter.showsSplash
+                )
             ) {
                 PINWelcomeHeader(
                     brand: brand,

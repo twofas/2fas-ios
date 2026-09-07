@@ -314,6 +314,9 @@ private extension LoginPresenter {
     func didEnterBackground() {
         guard loginType == .login, interactor.willPromptBiometryOnAppear else { return }
         animatesKeyboardHiding = false
+        // The splash has no place for a wrong-PIN note, and its timer would not run in
+        // the background anyway.
+        dismissInfo()
         showsSplash = true
         promptsOnSplash = true
         splashFollowsLaunchScreen = false

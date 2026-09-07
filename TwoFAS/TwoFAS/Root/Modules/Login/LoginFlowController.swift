@@ -22,13 +22,17 @@ import SwiftUI
 /// Timing and geometry of the hand-over from the login screen to the app. The login screen
 /// grows towards the viewer and fades out; the app underneath comes into focus, fades up and
 /// grows to full size. The two halves live in different windows and run on their own clocks.
+/// With Reduce Motion on, both halves only fade: no zoom, no blur. Resolved here, so every
+/// consumer, SwiftUI or UIKit, follows the setting the same way.
 enum UnlockTransition {
+    private static var reducesMotion: Bool { UIAccessibility.isReduceMotionEnabled }
+
     /// The login screen on its way out. `LoginView` applies these; `LoginPresenter` drives
     /// them and releases the window when `fade` ends.
     enum Login {
         static let duration: TimeInterval = 0.2
         /// Final scale, as if the screen flew past the viewer.
-        static let scale: CGFloat = 1.15
+        static var scale: CGFloat { reducesMotion ? 1 : 1.15 }
         /// Fade curve. Ease-out is mostly done early on and ends exactly at `duration`, so no
         /// half-transparent ghost trails behind.
         static var fade: Animation { .easeOut(duration: duration) }
@@ -42,12 +46,12 @@ enum UnlockTransition {
     enum Main {
         static let duration: TimeInterval = 0.3
         /// Starting scale; `1` keeps the app still.
-        static let scale: CGFloat = 0.8
+        static var scale: CGFloat { reducesMotion ? 1 : 0.8 }
         /// Starting opacity; `1` skips the fade.
         static let startAlpha: CGFloat = 0
         /// Blur the app starts under; the style sets the radius and the haze the system lays
         /// over blurred content. `nil` leaves the app sharp throughout.
-        static let blur: UIBlurEffect? = UIBlurEffect(style: .regular)
+        static var blur: UIBlurEffect? { reducesMotion ? nil : UIBlurEffect(style: .regular) }
     }
 }
 

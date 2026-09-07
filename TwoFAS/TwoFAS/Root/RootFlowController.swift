@@ -30,8 +30,9 @@ protocol RootFlowControllerParent: AnyObject {}
 
 protocol RootFlowControlling: AnyObject {
     func toIntro()
-    /// `animated` brings the app in from under a cover flying away, see `UnlockTransition`:
-    /// the lock screen, which the login flow sends off itself.
+    /// `animated` brings the app in from under something flying away, see
+    /// `UnlockTransition`: the lock screen, which the login flow sends off itself, or the
+    /// introduction.
     func toMain(animated: Bool)
     func toStorageError(error: String)
 
@@ -124,26 +125,28 @@ extension RootFlowController: RootFlowControlling {
             return
         }
         reveal(main)
-        flyAway(cover)
+        flyAway(cover) { [weak self] in
+            // A cover put up in the meantime, for a trip to the background, stays.
+            guard let self, cover === coverWindow.rootViewController?.view else { return }
+            removeCover()
+        }
     }
 
-    /// Sends the cover off the way the lock screen goes, see `UnlockTransition.Login`: it
-    /// grows past the viewer and fades, then the window is taken down.
-    private func flyAway(_ cover: UIView) {
+    /// Sends a view off the way the lock screen goes, see `UnlockTransition.Login`: it grows
+    /// past the viewer and fades; `completion` then takes it down.
+    private func flyAway(_ view: UIView, completion: @escaping () -> Void) {
         typealias Config = UnlockTransition.Login
 
         UIViewPropertyAnimator(duration: Config.duration, curve: .easeIn) {
-            cover.transform = CGAffineTransform(scaleX: Config.scale, y: Config.scale)
+            view.transform = CGAffineTransform(scaleX: Config.scale, y: Config.scale)
         }
         .startAnimation()
 
         let fade = UIViewPropertyAnimator(duration: Config.duration, curve: .easeOut) {
-            cover.alpha = 0
+            view.alpha = 0
         }
-        fade.addCompletion { [weak self] _ in
-            // A cover put up in the meantime, for a trip to the background, stays.
-            guard let self, cover === coverWindow.rootViewController?.view else { return }
-            removeCover()
+        fade.addCompletion { _ in
+            completion()
         }
         fade.startAnimation()
     }
@@ -242,14 +245,15 @@ extension RootFlowController: RootFlowControlling {
 
 extension RootFlowController: IntroductionNavigationFlowControllerParent {
     func introductionHasFinished(introViewController: UIViewController) {
-        UIView.animate(withDuration: Theme.Animations.Timing.quick, delay: 0, options: .curveEaseInOut) {
-            introViewController.view.alpha = 0
-        } completion: { _ in
+        // What follows comes in underneath, the way the app does from under the lock screen
+        // (see `UnlockTransition`), while the introduction flies away over it.
+        viewController.presenter.handleIntroHasFinished()
+        viewController.view.bringSubviewToFront(introViewController.view)
+        flyAway(introViewController.view) {
             introViewController.willMove(toParent: nil)
             introViewController.removeFromParent()
             introViewController.view.removeFromSuperview()
             introViewController.didMove(toParent: nil)
-            self.viewController.presenter.handleIntroHasFinished()
         }
     }
 }

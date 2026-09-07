@@ -59,6 +59,9 @@ enum MainTransition {
 final class RootFlowController: FlowController {
     private weak var parent: RootFlowControllerParent?
     private weak var loginViewController: UIViewController?
+    /// `true` from the unlock until the login screen has flown away and been taken down. A
+    /// lock that lands meanwhile needs a fresh login screen at once, not the departing one.
+    private var isLoginLeaving = false
     private weak var window: UIWindow?
     
     private let coverWindow: UIWindow = {
@@ -219,7 +222,13 @@ extension RootFlowController: RootFlowControlling {
     }
     
     func toLogin(fromColdStart: Bool) {
-        guard loginViewController == nil else { return }
+        if loginViewController != nil {
+            // Already up, unless it is on its way out: then it goes now and a new one
+            // takes its place. The old exit's completion is ignored, see
+            // `loginTransitionFinished(of:)`.
+            guard isLoginLeaving else { return }
+            toRemoveLogin()
+        }
         
         let loginViewController = LoginFlowController.setAsCover(
             in: loginWindow,
@@ -234,6 +243,7 @@ extension RootFlowController: RootFlowControlling {
     }
     
     func toRemoveLogin() {
+        isLoginLeaving = false
         loginViewController?.view.removeFromSuperview()
         loginViewController = nil
         loginWindow.endEditing(true)
@@ -270,10 +280,13 @@ extension RootFlowController: LoginFlowControllerParent {
     }
     
     func loginLoggedIn() {
+        isLoginLeaving = true
         viewController.presenter.handleUserWasLoggedIn()
     }
 
-    func loginTransitionFinished() {
+    func loginTransitionFinished(of viewController: UIViewController) {
+        // A lock during the exit has replaced the screen; the replacement stays.
+        guard viewController === loginViewController else { return }
         toRemoveLogin()
     }
 }

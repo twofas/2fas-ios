@@ -161,7 +161,7 @@ extension ComposeServiceFlowController: LoginFlowControllerParent {
         dismiss()
     }
 
-    func loginTransitionFinished() {
+    func loginTransitionFinished(of viewController: UIViewController) {
         // The verify screen is dismissed as a modal in `loginLoggedIn`; it has no exit animation of its own.
     }
 }

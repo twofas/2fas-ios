@@ -210,7 +210,15 @@ private extension LoginPresenter {
                 // fill has been seen.
                 enteredDigitCount = totalDigits
                 DispatchQueue.main.asyncAfter(deadline: .now() + PINDotsAnimation.fillDuration) { [weak self] in
-                    self?.userLoggedIn()
+                    guard let self else { return }
+                    // A trip to the background in the meantime has locked the app again;
+                    // this unlock is void and the return starts over.
+                    guard !interactor.isLoggedOut else {
+                        isAuthenticating = false
+                        clearPIN()
+                        return
+                    }
+                    userLoggedIn()
                 }
             }
         }

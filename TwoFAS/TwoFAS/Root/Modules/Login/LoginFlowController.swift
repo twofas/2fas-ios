@@ -56,8 +56,10 @@ protocol LoginFlowControllerParent: AnyObject {
     /// The user is in: show the app. For the lock screen the login window is still up and
     /// animating away; it is released in `loginTransitionFinished`.
     func loginLoggedIn()
-    /// The login screen has finished its exit animation and can be taken down.
-    func loginTransitionFinished()
+    /// The login screen has finished its exit animation and can be taken down. Carries the
+    /// screen, because a lock that lands during the animation replaces it with a fresh one,
+    /// whose parent must not take that one down when the stale animation ends.
+    func loginTransitionFinished(of viewController: UIViewController)
 }
 
 protocol LoginFlowControlling: AnyObject {
@@ -68,6 +70,8 @@ protocol LoginFlowControlling: AnyObject {
 
 final class LoginFlowController: FlowController {
     private weak var parent: LoginFlowControllerParent?
+    /// The screen this flow drives; named to the parent when it is done.
+    private weak var loginViewController: UIViewController?
     
     /// `fromColdStart`: the screen is the first thing after the system launch screen and
     /// starts as its copy, see `LoginPresenter.showsSplash`.
@@ -88,6 +92,7 @@ final class LoginFlowController: FlowController {
         )
         
         let viewController = LoginViewController(presenter: presenter)
+        flowController.loginViewController = viewController
         window.rootViewController = viewController
 
         return viewController
@@ -106,6 +111,7 @@ final class LoginFlowController: FlowController {
             interactor: interactor
         )
         let view = LoginViewController(presenter: presenter)
+        flowController.loginViewController = view
 
         view.configureAsModal()
         viewController.present(view, animated: true, completion: nil)
@@ -122,6 +128,7 @@ extension LoginFlowController: LoginFlowControlling {
     }
 
     func toLoggedInTransitionFinished() {
-        parent?.loginTransitionFinished()
+        guard let loginViewController else { return }
+        parent?.loginTransitionFinished(of: loginViewController)
     }
 }

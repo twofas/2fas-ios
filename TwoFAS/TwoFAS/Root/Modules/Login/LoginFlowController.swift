@@ -22,27 +22,25 @@ import SwiftUI
 /// Timing and geometry of the hand-over from the login screen to the app. The login screen
 /// grows towards the viewer and fades out; the app underneath comes into focus, fades up and
 /// grows to full size. The two halves live in different windows and run on their own clocks.
-/// With Reduce Motion on, both halves only fade: no zoom, no blur. Resolved here, so every
-/// consumer, SwiftUI or UIKit, follows the setting the same way.
+/// With Reduce Motion on, both halves only fade: no zoom, no blur. Resolved here, so both
+/// halves follow the setting the same way. `RootFlowController` applies both with UIKit
+/// animators.
 enum UnlockTransition {
     private static var reducesMotion: Bool { UIAccessibility.isReduceMotionEnabled }
 
-    /// The login screen on its way out. `LoginView` applies these; `LoginPresenter` drives
-    /// them and releases the window when `fade` ends.
+    /// A screen on its way out over the app: the lock screen, the cover, the introduction.
+    /// The scale runs on an ease-in, which keeps gaining speed so the screen is still
+    /// accelerating when the fade has removed it: a fly-past, not a stop. The fade runs on an
+    /// ease-out, mostly done early on and ending exactly at `duration`, so no
+    /// half-transparent ghost trails behind.
     enum Login {
         static let duration: TimeInterval = 0.2
         /// Final scale, as if the screen flew past the viewer.
         static var scale: CGFloat { reducesMotion ? 1 : 1.15 }
-        /// Fade curve. Ease-out is mostly done early on and ends exactly at `duration`, so no
-        /// half-transparent ghost trails behind.
-        static var fade: Animation { .easeOut(duration: duration) }
-        /// Scale curve. Ease-in keeps gaining speed, so the screen is still accelerating when
-        /// the fade has removed it: a fly-past, not a stop.
-        static var zoom: Animation { .easeIn(duration: duration) }
     }
 
-    /// The app settling in underneath. `RootFlowController` applies these with UIKit
-    /// animators: fade and blur on an ease-out, the zoom on a critically damped spring.
+    /// The app settling in underneath: fade and blur on an ease-out, the zoom on a critically
+    /// damped spring.
     enum Main {
         static let duration: TimeInterval = 0.3
         /// Starting scale; `1` keeps the app still.
@@ -57,25 +55,18 @@ enum UnlockTransition {
 
 protocol LoginFlowControllerParent: AnyObject {
     func loginClose()
-    /// The user is in: show the app. For the lock screen the login window is still up and
-    /// animating away; it is released in `loginTransitionFinished`.
+    /// The user is in: show the app. The lock screen's parent sends the screen off over the
+    /// app and releases its window afterwards.
     func loginLoggedIn()
-    /// The login screen has finished its exit animation and can be taken down. Carries the
-    /// screen, because a lock that lands during the animation replaces it with a fresh one,
-    /// whose parent must not take that one down when the stale animation ends.
-    func loginTransitionFinished(of viewController: UIViewController)
 }
 
 protocol LoginFlowControlling: AnyObject {
     func toClose()
     func toLoggedIn()
-    func toLoggedInTransitionFinished()
 }
 
 final class LoginFlowController: FlowController {
     private weak var parent: LoginFlowControllerParent?
-    /// The screen this flow drives; named to the parent when it is done.
-    private weak var loginViewController: UIViewController?
     
     /// `fromColdStart`: the screen is the first thing after the system launch screen and
     /// starts as its copy, see `LoginPresenter.showsSplash`.
@@ -96,7 +87,6 @@ final class LoginFlowController: FlowController {
         )
         
         let viewController = LoginViewController(presenter: presenter)
-        flowController.loginViewController = viewController
         window.rootViewController = viewController
 
         return viewController
@@ -115,7 +105,6 @@ final class LoginFlowController: FlowController {
             interactor: interactor
         )
         let view = LoginViewController(presenter: presenter)
-        flowController.loginViewController = view
 
         view.configureAsModal()
         viewController.present(view, animated: true, completion: nil)
@@ -129,10 +118,5 @@ extension LoginFlowController: LoginFlowControlling {
     
     func toLoggedIn() {
         parent?.loginLoggedIn()
-    }
-
-    func toLoggedInTransitionFinished() {
-        guard let loginViewController else { return }
-        parent?.loginTransitionFinished(of: loginViewController)
     }
 }

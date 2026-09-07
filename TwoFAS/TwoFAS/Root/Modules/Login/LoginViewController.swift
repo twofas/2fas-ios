@@ -34,13 +34,6 @@ final class LoginViewController: UIHostingController<LoginView> {
 
     override var canBecomeFirstResponder: Bool { true }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // The SwiftUI view paints its own background and fades it out on exit; the hosting
-        // view must not paint another one behind it or the app would not show through.
-        view.backgroundColor = .clear
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         becomeFirstResponder()

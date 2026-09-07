@@ -45,9 +45,9 @@ enum SplashTransition {
     static let subtitleReveal: Animation = .easeIn(duration: 0.2).delay(delay + 0.2)
     /// The dots fade in on their own beat, before the subtitle.
     static let dotsReveal: Animation = .easeIn(duration: 0.2).delay(delay + 0.1)
-    /// The subtitle and the dots together, when the brand is already up in the header as the
-    /// splash is left (a biometry alert took the centre) and nothing flies over them.
-    static let headerReveal: Animation = .easeIn(duration: 0.2).delay(delay + 0.1)
+    /// The subtitle on the dots' beat, when the brand is already up in the header as the
+    /// splash is left (a biometry alert took the centre) and nothing flies over it.
+    static let headerReveal = dotsReveal
     /// Pause before the keys come out of the "5" slot, counted from the splash exit. The
     /// keypad's own `entranceDelay` applies to every other entrance.
     static let keypadDelay: TimeInterval = delay + 0.1

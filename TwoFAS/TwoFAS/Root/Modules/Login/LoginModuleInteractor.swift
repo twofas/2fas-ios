@@ -85,11 +85,14 @@ extension LoginModuleInteractor: LoginModuleInteracting {
     }
 
     var willPromptBiometryOnAppear: Bool {
-        // The preconditions `verifyUsingBiometry` checks before it prompts, minus the
-        // foreground check: that one is only false while the screen is being prepared.
+        // The preconditions `verifyUsingBiometry` checks before it prompts, minus two that do
+        // not hold up to the next appearance: the foreground check, false only while the
+        // screen is being prepared, and the automatic-prompt limit, which every return to the
+        // foreground that is not locked out clears. Biometry itself is judged the way the
+        // keypad's biometry key is, so the two cannot disagree.
         !loginInteractor.isLocked
             && loginInteractor.isLoggedOut
-            && loginInteractor.canPromptBiometryAutomaticallyOnNextAppearance
+            && availableBiometryType != .none
     }
 
     var isAppInBackground: Bool {

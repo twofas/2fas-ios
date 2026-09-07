@@ -87,14 +87,15 @@ final class LoginPresenter {
     /// `false` while a prompt the app started on its own (on appearing or on becoming active)
     /// is up, or while the screen is back on the splash for one: the keypad then vanishes in
     /// the same frame, with no fade, because nothing the user did caused it. A prompt started
-    /// from the biometry key hides the keypad animated.
-    private(set) var animatesKeyboardHiding = true
+    /// from the biometry key hides the keypad animated, and so does a lock-out.
+    var animatesKeyboardHiding: Bool {
+        !showsSplash && !(isAuthenticating && !promptIsUserInitiated)
+    }
+    /// Whether the prompt `isAuthenticating` stands for was started from the biometry key.
+    private var promptIsUserInitiated = false
     /// Pause before the keypad's next entrance: the keypad's own after a biometry prompt,
     /// the splash exit's beat when the keypad comes in with the rest of the screen.
     private(set) var keypadEntranceDelay: TimeInterval = PINKeyboard.entranceDelay
-    /// `true` once the user is in and the lock screen is on its way out over the app, see
-    /// `UnlockTransition`; the view grows, blurs and fades while this is set.
-    private(set) var isLeaving = false
 
     private var pin: [Int] = [] {
         didSet {
@@ -186,14 +187,13 @@ final class LoginPresenter {
 private extension LoginPresenter {
     func biometry(userInitiated: Bool = false) {
         guard !isAuthenticating else { return }
-        animatesKeyboardHiding = userInitiated
+        promptIsUserInitiated = userInitiated
         keypadEntranceDelay = PINKeyboard.entranceDelay
         isAuthenticating = true
         interactor.verifyUsingBiometry(reason: reason, userInitiated: userInitiated) { [weak self] result in
             guard let self else { return }
             guard result else {
                 isAuthenticating = false
-                animatesKeyboardHiding = true
                 // An automatic prompt over the splash has failed: time for the keypad. In the
                 // background nothing is seen; `isVisible()` decides again on return.
                 if !interactor.isAppInBackground {
@@ -244,15 +244,9 @@ private extension LoginPresenter {
     func userLoggedIn() {
         success.toggle()
         NotificationCenter.default.post(name: .userLoggedIn, object: nil)
-        // The parent puts the app underneath first; the dots stay filled while this screen
-        // flies away over it.
+        // The parent puts the app underneath and sends this screen off over it; the dots stay
+        // filled meanwhile.
         flowController.toLoggedIn()
-        guard loginType == .login else { return }
-        withAnimation(UnlockTransition.Login.fade) {
-            isLeaving = true
-        } completion: { [weak self] in
-            self?.flowController.toLoggedInTransitionFinished()
-        }
     }
     
     func userFailedToLogin() {
@@ -313,7 +307,6 @@ private extension LoginPresenter {
     @objc
     func didEnterBackground() {
         guard loginType == .login, interactor.willPromptBiometryOnAppear else { return }
-        animatesKeyboardHiding = false
         // The splash has no place for a wrong-PIN note, and its timer would not run in
         // the background anyway.
         dismissInfo()
@@ -333,15 +326,11 @@ private extension LoginPresenter {
         // completion decides. This also absorbs the `didBecomeActive` the biometry alert's
         // dismissal fires.
         guard !isAuthenticating else { return }
-        defer {
-            // If the keypad stays or comes in after all, the next hide is a user's doing again.
-            if !isKeyboardHidden { animatesKeyboardHiding = true }
-        }
         guard !isResetVisible else { return }
         if interactor.isLocked {
             lockedState()
             leaveSplash()
-        } else if interactor.isLoggedOut, interactor.willPromptBiometryOnAppear {
+        } else if interactor.willPromptBiometryOnAppear {
             // Runs over the splash; a failure leaves it. Asked for only when it can be
             // shown: the request takes the keypad down at once, and a deep link defers the
             // answer by a second.

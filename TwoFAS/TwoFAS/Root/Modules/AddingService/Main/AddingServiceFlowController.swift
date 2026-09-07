@@ -200,8 +200,6 @@ final class AddingServiceFlowController: FlowController {
     private static let zoomSourceTag = 0xADD5_E70C
 
     private enum DynamicIsland {
-        /// Value of `safeAreaInsets.top` above which we're determining device has Dynamic Island.
-        static let detectionThreshold: CGFloat = 51
         static let width: CGFloat = 124
         static let height: CGFloat = 37
         /// Spacing between Dynamic Island and `safeAreaInsets.top`.
@@ -230,7 +228,7 @@ final class AddingServiceFlowController: FlowController {
 
         let constraints: [NSLayoutConstraint]
         let topInset = viewController.view.safeAreaInsets.top
-        if topInset >= DynamicIsland.detectionThreshold {
+        if UIDevice.hasDynamicIsland {
             constraints = [
                 marker.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor),
                 marker.widthAnchor.constraint(equalToConstant: DynamicIsland.width),

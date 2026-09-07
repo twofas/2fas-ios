@@ -81,7 +81,6 @@ struct PINEntryBlock<Header: View>: View {
                 .overlay {
                     // The dots' top padding is part of the space too; sit in its middle.
                     betweenHeaderAndDots?
-                        .padding(.horizontal, .XL)
                         .offset(y: Spacing.XL.value / 2)
                 }
 

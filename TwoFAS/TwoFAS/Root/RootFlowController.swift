@@ -31,8 +31,7 @@ protocol RootFlowControllerParent: AnyObject {}
 protocol RootFlowControlling: AnyObject {
     func toIntro()
     /// `animated` brings the app in from under something flying away, see
-    /// `UnlockTransition`: the lock screen, which the login flow sends off itself, or the
-    /// introduction.
+    /// `UnlockTransition`: the lock screen or the introduction.
     func toMain(animated: Bool)
     func toStorageError(error: String)
 
@@ -50,10 +49,10 @@ protocol RootFlowControlling: AnyObject {
 
 final class RootFlowController: FlowController {
     private weak var parent: RootFlowControllerParent?
+    /// The lock screen while it is up. `nil` from the unlock on: the departing screen still
+    /// sits in the window while it flies away, but a lock that lands meanwhile puts a fresh
+    /// one in its place.
     private weak var loginViewController: UIViewController?
-    /// `true` from the unlock until the login screen has flown away and been taken down. A
-    /// lock that lands meanwhile needs a fresh login screen at once, not the departing one.
-    private var isLoginLeaving = false
     private weak var window: UIWindow?
     
     private let coverWindow: UIWindow = {
@@ -132,11 +131,12 @@ extension RootFlowController: RootFlowControlling {
         }
     }
 
-    /// Sends a view off the way the lock screen goes, see `UnlockTransition.Login`: it grows
-    /// past the viewer and fades; `completion` then takes it down.
+    /// Sends a view off, see `UnlockTransition.Login`: it grows past the viewer and fades,
+    /// taking no touches meanwhile; `completion` then takes it down.
     private func flyAway(_ view: UIView, completion: @escaping () -> Void) {
         typealias Config = UnlockTransition.Login
 
+        view.isUserInteractionEnabled = false
         UIViewPropertyAnimator(duration: Config.duration, curve: .easeIn) {
             view.transform = CGAffineTransform(scaleX: Config.scale, y: Config.scale)
         }
@@ -207,14 +207,10 @@ extension RootFlowController: RootFlowControlling {
     }
     
     func toLogin(fromColdStart: Bool) {
-        if loginViewController != nil {
-            // Already up, unless it is on its way out: then it goes now and a new one
-            // takes its place. The old exit's completion is ignored, see
-            // `loginTransitionFinished(of:)`.
-            guard isLoginLeaving else { return }
-            toRemoveLogin()
-        }
+        guard loginViewController == nil else { return }
         
+        // Replaces a screen still flying away, whose exit then ends without taking the window
+        // down, see `loginLoggedIn`.
         let loginViewController = LoginFlowController.setAsCover(
             in: loginWindow,
             parent: self,
@@ -228,9 +224,8 @@ extension RootFlowController: RootFlowControlling {
     }
     
     func toRemoveLogin() {
-        isLoginLeaving = false
-        loginViewController?.view.removeFromSuperview()
         loginViewController = nil
+        loginWindow.rootViewController?.view.removeFromSuperview()
         loginWindow.endEditing(true)
         loginWindow.isHidden = true
         loginWindow.rootViewController = nil
@@ -266,13 +261,16 @@ extension RootFlowController: LoginFlowControllerParent {
     }
     
     func loginLoggedIn() {
-        isLoginLeaving = true
+        // The app comes in underneath first; the lock screen then flies away over it, the way
+        // the cover and the introduction do, and the window goes once it is out of sight.
+        let login = loginViewController
+        loginViewController = nil
         viewController.presenter.handleUserWasLoggedIn()
-    }
-
-    func loginTransitionFinished(of viewController: UIViewController) {
-        // A lock during the exit has replaced the screen; the replacement stays.
-        guard viewController === loginViewController else { return }
-        toRemoveLogin()
+        guard let login else { return }
+        flyAway(login.view) { [weak self] in
+            // A lock during the exit has replaced the screen; the replacement stays.
+            guard let self, login === loginWindow.rootViewController else { return }
+            toRemoveLogin()
+        }
     }
 }

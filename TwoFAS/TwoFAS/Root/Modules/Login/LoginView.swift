@@ -206,14 +206,12 @@ struct LoginView: View {
                 isHidden: presenter.showsSplash,
                 reveal: PINKeyboard.fadeIn.delay(presenter.keypadEntranceDelay)
             )
-            .padding(.horizontal, .XL)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeArea()
         }
         .sensoryFeedback(.success, trigger: presenter.success) { _, new in new }
         .sensoryFeedback(.start, trigger: presenter.unlock)
         .background(AppColor.backgroundsPrimary)
-        .modifier(UnlockExit(isLeaving: presenter.isLeaving))
         .onAppear {
             presenter.onAppear()
         }
@@ -231,28 +229,11 @@ struct LoginView: View {
     }
 }
 
-/// Exit of the login screen over the app, see `UnlockTransition.Login`. Goes after the
-/// background so the whole screen, not just its content, grows and fades. The scale takes its
-/// own curve; the opacity stays on the transaction's curve the presenter animates with, which
-/// is also what its completion waits for.
-private struct UnlockExit: ViewModifier {
-    let isLeaving: Bool
-
-    func body(content: Content) -> some View {
-        content
-            .scaleEffect(isLeaving ? UnlockTransition.Login.scale : 1)
-            .animation(UnlockTransition.Login.zoom, value: isLeaving)
-            .opacity(isLeaving ? 0 : 1)
-            .allowsHitTesting(!isLeaving)
-    }
-}
-
 // MARK: - Preview
 
 private final class PreviewLoginFlowController: LoginFlowControlling {
     func toClose() {}
     func toLoggedIn() {}
-    func toLoggedInTransitionFinished() {}
 }
 
 private final class PreviewLoginInteractor: LoginModuleInteracting {

@@ -43,13 +43,6 @@ protocol SecurityProtocol: AnyObject {
     
     var isBioAuthAvailable: Bool { get }
     var isBioAuthEnabled: Bool { get }
-    /// `true` when an automatic (not user-initiated) `authenticateUsingBiometry` call made the
-    /// next time a screen appears in the foreground would show the system prompt: biometry is
-    /// enabled and available. A prompt that is up now is disregarded, as is the
-    /// automatic-prompt limit, which every return to the foreground clears unless the app is
-    /// locked out, and a locked-out app does not ask. The answer is valid while a screen is
-    /// being prepared in the background and on the way there.
-    var canPromptBiometryAutomaticallyOnNextAppearance: Bool { get }
     
     /// A `userInitiated` request bypasses the automatic-prompt attempt limit without
     /// resetting it, so it always shows the system prompt while biometry is usable.

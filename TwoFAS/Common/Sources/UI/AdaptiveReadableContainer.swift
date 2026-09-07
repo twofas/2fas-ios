@@ -28,8 +28,12 @@ public struct AdaptiveReadableContainer<Content: View>: View {
     /// The width the container, with its defaults, gives its content out of `available`:
     /// for a host that lays something out to match the content without being inside.
     public static func readableWidth(available: CGFloat, sizeClass: UserInterfaceSizeClass?) -> CGFloat {
-        let maxWidth = sizeClass == .compact ? defaultIPhoneMaxWidth : defaultIPadMaxWidth
+        let maxWidth = maxWidth(for: sizeClass, iphone: defaultIPhoneMaxWidth, ipad: defaultIPadMaxWidth)
         return min(maxWidth, available - 2 * defaultHorizontalMargin)
+    }
+
+    private static func maxWidth(for sizeClass: UserInterfaceSizeClass?, iphone: CGFloat, ipad: CGFloat) -> CGFloat {
+        sizeClass == .compact ? iphone : ipad
     }
 
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -56,7 +60,7 @@ public struct AdaptiveReadableContainer<Content: View>: View {
     }
     
     private var maxWidth: CGFloat {
-        horizontalSizeClass == .compact ? iphoneMaxWidth : ipadMaxWidth
+        Self.maxWidth(for: horizontalSizeClass, iphone: iphoneMaxWidth, ipad: ipadMaxWidth)
     }
     
     public var body: some View {

@@ -25,9 +25,6 @@ public protocol LoginInteracting: AnyObject {
     var codeLength: Int { get }
     var isLocked: Bool { get }
     var isLoggedOut: Bool { get }
-    /// Whether an automatic biometry request made the next time a screen appears in the
-    /// foreground would show the system prompt.
-    var canPromptBiometryAutomaticallyOnNextAppearance: Bool { get }
     
     func authSuccessfully()
     func authFailed()
@@ -55,10 +52,6 @@ extension LoginInteractor: LoginInteracting {
     
     var isLoggedOut: Bool {
         security.isAuthenticationRequired
-    }
-
-    var canPromptBiometryAutomaticallyOnNextAppearance: Bool {
-        security.canPromptBiometryAutomaticallyOnNextAppearance
     }
     
     func authenticateUsingBiometry(reason: String, userInitiated: Bool, completion: @escaping (Bool) -> Void) {

@@ -109,7 +109,12 @@ final class Security: SecurityProtocol {
         userInitiated: Bool,
         completion: @escaping (BiometryAuthenticationResult) -> Void
     ) {
-        guard !appInBackground && isBiometryUsable else {
+        guard
+            !appInBackground &&
+            isBioAuthEnabled &&
+            isBioAuthAvailable &&
+            !isAuthenticatingUsingBiometric
+        else {
             completion(.notAvailable)
             return
         }
@@ -130,23 +135,6 @@ final class Security: SecurityProtocol {
         biometric.authenticate(reason: reason)
     }
     
-    var canPromptBiometryAutomaticallyOnNextAppearance: Bool {
-        // A prompt that is up now does not count: it is over by the next appearance, and it
-        // is what the answer is asked about in the first place (on the way to the
-        // background, with the cancel still in flight). The automatic-prompt limit does not
-        // count either: every return to the foreground that is not locked out clears it,
-        // and while locked out nothing asks.
-        isBioAuthEnabled && isBioAuthAvailable
-    }
-
-    /// Common precondition of every biometry prompt, automatic or user-initiated, apart from
-    /// the app being in the foreground.
-    private var isBiometryUsable: Bool {
-        isBioAuthEnabled &&
-        isBioAuthAvailable &&
-        !isAuthenticatingUsingBiometric
-    }
-
     func applicationWillEnterForeground() {
         appInBackground = false
         

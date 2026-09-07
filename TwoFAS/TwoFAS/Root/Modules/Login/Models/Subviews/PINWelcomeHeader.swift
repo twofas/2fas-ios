@@ -81,8 +81,8 @@ struct PINSubtitle: View {
 }
 
 /// An info message of the lock screen: the wrong-PIN note between the header and the dots,
-/// or the lock-out notice in the keypad's place. Fades in and out, and takes no layout space
-/// of its own, so nothing moves around it.
+/// or the lock-out notice in the keypad's place. Fades in and out, keeps off the screen edges,
+/// and takes no layout space of its own, so nothing moves around it.
 struct PINInfoMessage: View {
     /// The message's appearance.
     static let fadeIn: Animation = .easeInOut(duration: 0.2)
@@ -113,5 +113,6 @@ struct PINInfoMessage: View {
             }
         }
         .animation(isShown ? reveal : Self.fadeOut, value: isShown)
+        .padding(.horizontal, .XL)
     }
 }

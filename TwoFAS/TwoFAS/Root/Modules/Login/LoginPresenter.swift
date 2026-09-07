@@ -341,8 +341,10 @@ private extension LoginPresenter {
         if interactor.isLocked {
             lockedState()
             leaveSplash()
-        } else if interactor.isLoggedOut {
-            // Runs over the splash; a failure leaves it.
+        } else if interactor.isLoggedOut, interactor.willPromptBiometryOnAppear {
+            // Runs over the splash; a failure leaves it. Asked for only when it can be
+            // shown: the request takes the keypad down at once, and a deep link defers the
+            // answer by a second.
             biometry()
         } else {
             leaveSplash()

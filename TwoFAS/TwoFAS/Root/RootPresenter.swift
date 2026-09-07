@@ -165,17 +165,20 @@ final class RootPresenter {
     /// the lock screen, see `UnlockTransition`.
     private func presentMain(fromColdStart: Bool) {
         guard currentState != .main else { return }
-        let transition: MainTransition = if currentState == .login {
-            // Coming from the lock screen the app animates in under it.
-            .fromLogin
-        } else if fromColdStart {
-            .fromLaunchScreen
-        } else {
-            .none
-        }
+        // Coming from the lock screen the app animates in under it, see `UnlockTransition`.
+        let fromLogin = currentState == .login
         changeState(.main)
         Log("Presenting Main")
-        flowController.toMain(transition: transition)
+        // With no lock screen, a cold start comes in the same way: from under a copy of the
+        // launch screen, put up before the app exists so the first frame is still the launch
+        // screen, then sent off the way every cover is.
+        if fromColdStart {
+            installCover()
+        }
+        flowController.toMain(animated: fromLogin)
+        if fromColdStart {
+            removeCover(animated: true)
+        }
     }
     
     /// `fromColdStart` is `true` when the login screen is the first thing after the system

@@ -30,7 +30,9 @@ protocol RootFlowControllerParent: AnyObject {}
 
 protocol RootFlowControlling: AnyObject {
     func toIntro()
-    func toMain(transition: MainTransition)
+    /// `animated` brings the app in from under a cover flying away, see `UnlockTransition`:
+    /// the lock screen, which the login flow sends off itself.
+    func toMain(animated: Bool)
     func toStorageError(error: String)
 
     func toCover()
@@ -43,17 +45,6 @@ protocol RootFlowControlling: AnyObject {
     func toRemoveLogin()
 
     func toDismissKeyboard()
-}
-
-/// How the app's main screen comes in.
-enum MainTransition {
-    /// In place, with no animation.
-    case none
-    /// From under the lock screen flying away, see `UnlockTransition`.
-    case fromLogin
-    /// From under a copy of the system launch screen, which flies away the way the lock
-    /// screen does: a cold start with no lock screen looks like an unlock.
-    case fromLaunchScreen
 }
 
 final class RootFlowController: FlowController {
@@ -116,25 +107,14 @@ extension RootFlowController: RootFlowControlling {
         IntroductionNavigationFlowController.embedAsRoot(in: viewController, parent: self)
     }
     
-    func toMain(transition: MainTransition) {
-        // The cover goes up before the app exists, so the first frame is still the launch
-        // screen.
-        if transition == .fromLaunchScreen {
-            toCover()
-        }
+    func toMain(animated: Bool) {
         if mainViewController == nil {
             mainViewController = MainFlowController.showAsRoot(in: viewController, parent: self)
         } else {
             mainViewController?.viewDidAppear(false)
         }
-        guard let main = mainViewController?.view else { return }
-        switch transition {
-        case .none:
-            break
-        case .fromLogin:
+        if animated, let main = mainViewController?.view {
             reveal(main)
-        case .fromLaunchScreen:
-            toRemoveCover(animated: true)
         }
     }
 
@@ -161,7 +141,9 @@ extension RootFlowController: RootFlowControlling {
             cover.alpha = 0
         }
         fade.addCompletion { [weak self] _ in
-            self?.removeCover()
+            // A cover put up in the meantime, for a trip to the background, stays.
+            guard let self, cover === coverWindow.rootViewController?.view else { return }
+            removeCover()
         }
         fade.startAnimation()
     }

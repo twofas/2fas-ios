@@ -242,9 +242,9 @@ private final class PreviewLoginInteractor: LoginModuleInteracting {
     let lockTime: Int? = nil
     let codeLength = 4
     let availableBiometryType: BiometryType = .faceID
-    let willPromptBiometryOnAppear = false
     let isAppInBackground = false
 
+    func willPromptBiometryOnAppear(for loginType: LoginType) -> Bool { false }
     func verify(numbers: [Int]) -> Bool { false }
     func verifyUsingBiometry(reason: String, userInitiated: Bool, completion: @escaping (Bool) -> Void) {}
 }

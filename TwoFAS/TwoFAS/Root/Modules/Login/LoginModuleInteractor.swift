@@ -29,12 +29,15 @@ protocol LoginModuleInteracting: AnyObject {
     /// Biometry the user can authenticate with right now; `.none` when it is disabled
     /// in the app or unavailable on the device.
     var availableBiometryType: BiometryType { get }
-    /// `true` when the login screen will prompt for biometry on its own as soon as it appears:
-    /// the user is logged out, not locked out and the automatic prompt is still allowed. Lets
-    /// the screen start without the keypad instead of showing it for a frame and hiding it.
-    /// Safe to ask while the app is still in the background, which is where the screen is
-    /// usually created.
-    var willPromptBiometryOnAppear: Bool { get }
+    /// `true` when a screen of this kind will prompt for biometry on its own as soon as it
+    /// appears: the user is not locked out, biometry is usable, and the app is in the state
+    /// the screen prompts in. The lock screen prompts while the app is logged out. The verify
+    /// sheet prompts while it is logged in: logged out means the lock screen stands over it and
+    /// prompts for itself, and its unlock leaves the sheet to its keypad and its biometry key.
+    /// Lets a screen start without the keypad instead of showing it for a frame and hiding
+    /// it. Safe to ask while the app is still in the background, which is where the lock
+    /// screen is usually created.
+    func willPromptBiometryOnAppear(for loginType: LoginType) -> Bool
     /// `true` while the app is in the background, e.g. when this screen is being prepared as
     /// the lock cover; no biometry prompt can be shown then.
     var isAppInBackground: Bool { get }
@@ -84,15 +87,19 @@ extension LoginModuleInteractor: LoginModuleInteracting {
         protectionInteractor.isBiometryEnabled ? protectionInteractor.biometryType : .none
     }
 
-    var willPromptBiometryOnAppear: Bool {
+    func willPromptBiometryOnAppear(for loginType: LoginType) -> Bool {
         // The preconditions `verifyUsingBiometry` checks before it prompts, minus two that do
         // not hold up to the next appearance: the foreground check, false only while the
         // screen is being prepared, and the automatic-prompt limit, which every return to the
         // foreground that is not locked out clears. Biometry itself is judged the way the
         // keypad's biometry key is, so the two cannot disagree.
-        !loginInteractor.isLocked
-            && loginInteractor.isLoggedOut
+        let appIsInTheStateThisScreenPromptsIn = switch loginType {
+        case .login: loginInteractor.isLoggedOut
+        case .verify: !loginInteractor.isLoggedOut
+        }
+        return !loginInteractor.isLocked
             && availableBiometryType != .none
+            && appIsInTheStateThisScreenPromptsIn
     }
 
     var isAppInBackground: Bool {

@@ -114,7 +114,7 @@ final class LoginPresenter {
         self.flowController = flowController
         self.interactor = interactor
         self.notificationCenter = .default
-        let willPrompt = interactor.willPromptBiometryOnAppear
+        let willPrompt = interactor.willPromptBiometryOnAppear(for: loginType)
         let startsOnSplash = loginType == .login && (followsLaunchScreen || willPrompt)
         showsSplash = startsOnSplash
         promptsOnSplash = loginType == .login && willPrompt
@@ -306,7 +306,7 @@ private extension LoginPresenter {
     /// the prompt over it, as a cold start does.
     @objc
     func didEnterBackground() {
-        guard loginType == .login, interactor.willPromptBiometryOnAppear else { return }
+        guard loginType == .login, interactor.willPromptBiometryOnAppear(for: loginType) else { return }
         // The splash has no place for a wrong-PIN note, and its timer would not run in
         // the background anyway.
         dismissInfo()
@@ -330,10 +330,10 @@ private extension LoginPresenter {
         if interactor.isLocked {
             lockedState()
             leaveSplash()
-        } else if interactor.willPromptBiometryOnAppear {
-            // Runs over the splash; a failure leaves it. Asked for only when it can be
-            // shown: the request takes the keypad down at once, and a deep link defers the
-            // answer by a second.
+        } else if interactor.willPromptBiometryOnAppear(for: loginType) {
+            // Runs over the splash, where there is one; a failure leaves it. Asked for only
+            // when it can be shown: the request takes the keypad down at once, and a deep
+            // link defers the answer by a second.
             biometry()
         } else {
             leaveSplash()
@@ -341,15 +341,10 @@ private extension LoginPresenter {
     }
 
     func refreshBiometryKey() {
-        // Biometry unlocks the app only; the `.verify` flow stays PIN-only, as it always was.
-        let key: TFPinKey? = if loginType == .login {
-            switch interactor.availableBiometryType {
-            case .faceID: .biometry(.faceID)
-            case .touchID: .biometry(.touchID)
-            case .none: nil
-            }
-        } else {
-            nil
+        let key: TFPinKey? = switch interactor.availableBiometryType {
+        case .faceID: .biometry(.faceID)
+        case .touchID: .biometry(.touchID)
+        case .none: nil
         }
         // Assign only on change: every mutation re-evaluates the whole keypad.
         if key != biometryKey {

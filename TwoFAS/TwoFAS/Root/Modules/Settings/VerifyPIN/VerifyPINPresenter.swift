@@ -50,9 +50,17 @@ final class VerifyPINPresenter {
 
         interactor.unlock = { [weak self] in self?.handleUnlock() }
         interactor.updateState = { [weak self] in self?.handleUpdateState() }
+        // The prompt is part of the first frame; set on appearance only, it would come in as
+        // an animated change of the text, see `PINEntryScreen`.
+        showPrompt()
     }
 
     func viewWillAppear() {
+        showPrompt()
+    }
+
+    /// The lock-out message while the input is locked, the prompt otherwise.
+    private func showPrompt() {
         if interactor.isLocked {
             handleUpdateState()
         } else {

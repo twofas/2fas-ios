@@ -109,11 +109,13 @@ final class NewPINFlowController: FlowController {
         flowController.action = action
         flowController.step = step
 
-        let presenter = NewPINPresenter(flowController: flowController, interactor: interactor)
-        presenter.action = action
-        if case .second = step {
-            presenter.isSecond = true
-        }
+        let isSecond = if case .second = step { true } else { false }
+        let presenter = NewPINPresenter(
+            flowController: flowController,
+            interactor: interactor,
+            action: action,
+            isSecond: isSecond
+        )
         flowController.presenter = presenter
         hosting.rootView = AnyView(NewPINView(presenter: presenter))
         // The hosted view's `navigationBarBackButtonHidden` reaches the navigation item only

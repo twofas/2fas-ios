@@ -26,10 +26,10 @@ final class NewPINPresenter {
     private let flowController: NewPINFlowControlling
     private let interactor: NewPINModuleInteracting
 
-    var isSecond = false
-    var action: NewPINFlowController.Action?
+    let isSecond: Bool
+    let action: NewPINFlowController.Action
 
-    var title: String = ""
+    let title: String
     var info: String = ""
     var isError: Bool = false
     var shake: Bool = false
@@ -53,22 +53,31 @@ final class NewPINPresenter {
     private let textChangeTime: Int = 3
     private let timer = CancellableTimer()
 
-    init(flowController: NewPINFlowControlling, interactor: NewPINModuleInteracting) {
+    /// `isSecond`: this is the confirmation step, asking for the PIN gathered a step earlier.
+    init(
+        flowController: NewPINFlowControlling,
+        interactor: NewPINModuleInteracting,
+        action: NewPINFlowController.Action,
+        isSecond: Bool
+    ) {
         self.flowController = flowController
         self.interactor = interactor
+        self.action = action
+        self.isSecond = isSecond
         self.totalDigits = interactor.pinType.digits
+        title = switch action {
+        case .change: T.Security.changePin
+        case .create: T.Security.createPin
+        }
+        showsPinLengthButton = !isSecond
+        // The prompt is part of the first frame; set on appearance only, it would come in as
+        // an animated change of the text, see `PINEntryScreen`.
+        configureNormalScreen()
     }
 
     func viewWillAppear() {
         pin = []
         showsPinLengthButton = !isSecond
-
-        if let action {
-            switch action {
-            case .change: title = T.Security.changePin
-            case .create: title = T.Security.createPin
-            }
-        }
         configureNormalScreen()
     }
 

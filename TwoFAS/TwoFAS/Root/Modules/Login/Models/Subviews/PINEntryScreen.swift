@@ -140,10 +140,13 @@ struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
 
     var body: some View {
         VStack(spacing: .zero) {
-            // The block is centred between the spacers. The top minimum keeps it off the top
-            // edge on a short screen; the bottom minimum is the footer band, laid inside the
-            // bottom spacer. With room to spare the spacers share it and neither minimum binds.
-            Spacer(minLength: Spacing.XXXL.value)
+            // The block is centred between two flexible gaps. The top minimum keeps it off the
+            // top edge on a short screen; the bottom minimum is the footer band, laid inside
+            // the bottom gap. With room to spare the gaps share it and neither minimum binds.
+            // They are clear colours, not spacers: a stack hands its spacers only what every
+            // other child has left, and a spacer under a modifier is such a child, so a
+            // spacer and a modified spacer would not share.
+            Color.clear.frame(minHeight: Spacing.XXXL.value, maxHeight: .infinity)
 
             PINEntryBlock(
                 totalDigits: presenter.totalDigits,
@@ -161,11 +164,8 @@ struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
                     .animation(.easeInOut, value: presenter.info)
             }
 
-            Spacer(minLength: Self.footerBandHeight)
-                // A spacer is as narrow as nothing in a vertical stack; the footer needs the
-                // full width.
-                .frame(maxWidth: .infinity)
-                // The footer sits at the bottom of the spacer, within it: the spacer is never
+            Color.clear.frame(minHeight: Self.footerBandHeight, maxHeight: .infinity)
+                // The footer sits at the bottom of the gap, within it: the gap is never
                 // shorter than the band, so the footer cannot reach the keypad above, however
                 // little room the screen leaves.
                 .overlay(alignment: .bottom) {

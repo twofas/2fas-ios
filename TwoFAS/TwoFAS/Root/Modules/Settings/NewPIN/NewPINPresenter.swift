@@ -35,7 +35,13 @@ final class NewPINPresenter {
     var shake: Bool = false
     var totalDigits: Int = 0
     var enteredDigitCount: Int = 0
-    var showsCancelButton: Bool = false
+    /// The X that abandons the whole flow, standing in for the back button on the entry step:
+    /// the modal's root, or the step after verifying the current PIN. The confirmation step
+    /// is pushed on the entry step and keeps the system back button instead, so a mistyped
+    /// PIN can be entered again. Out while the navigation is locked.
+    var showsCancelButton: Bool {
+        !interactor.lockNavigation && !isSecond
+    }
     var showsPinLengthButton: Bool = false
 
     private var pin: [Int] = [] {
@@ -51,7 +57,6 @@ final class NewPINPresenter {
         self.flowController = flowController
         self.interactor = interactor
         self.totalDigits = interactor.pinType.digits
-        showsCancelButton = !interactor.lockNavigation
     }
 
     func viewWillAppear() {

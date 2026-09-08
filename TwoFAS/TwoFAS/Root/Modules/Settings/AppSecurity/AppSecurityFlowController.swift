@@ -129,6 +129,9 @@ private extension AppSecurityFlowController {
     func navigationControllerForModal() -> UINavigationController {
         let navi = RootNavigationController()
         navi.configureAsModal()
+        // The PIN confirmation step goes back to the entry step with the system back button,
+        // which needs that step still on the stack.
+        navi.keepsFullStack = true
         return navi
     }
 

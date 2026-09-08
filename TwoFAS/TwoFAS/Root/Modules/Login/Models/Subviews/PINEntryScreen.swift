@@ -122,8 +122,13 @@ struct PINEntryBlock<Header: View>: View {
 /// leading button (Close/X) via `.toolbar` on its enclosing navigation stack.
 struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
     @Bindable private var presenter: Presenter
-    /// `nil` when the screen was created without a footer; the footer band is then not laid out.
+    /// `nil` when the screen was created without a footer; the footer band is laid out
+    /// regardless, see `footerBandHeight`.
     private let footer: (() -> Footer)?
+    /// Height of the band at the bottom the footer is laid in: room for a small button with
+    /// a gap above it. Reserved under the block on every PIN screen, footer or not, so the
+    /// block sits at one place on all of them.
+    private static var footerBandHeight: CGFloat { 44 }
 
     init(
         presenter: Presenter,
@@ -135,7 +140,10 @@ struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
 
     var body: some View {
         VStack(spacing: .zero) {
-            Spacer(minLength: 0)
+            // The block is centred between the spacers. The top minimum keeps it off the top
+            // edge on a short screen; the bottom minimum is the footer band, laid inside the
+            // bottom spacer. With room to spare the spacers share it and neither minimum binds.
+            Spacer(minLength: Spacing.XXXL.value)
 
             PINEntryBlock(
                 totalDigits: presenter.totalDigits,
@@ -153,19 +161,22 @@ struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
                     .animation(.easeInOut, value: presenter.info)
             }
 
-            Spacer(minLength: 0)
-
-            if let footer {
-                // Only the band's minimum height is reserved here; a footer whose content
-                // is conditional adds its own top padding so an empty footer stays compact.
-                HStack(alignment: .center) {
-                    footer()
+            Spacer(minLength: Self.footerBandHeight)
+                // A spacer is as narrow as nothing in a vertical stack; the footer needs the
+                // full width.
+                .frame(maxWidth: .infinity)
+                // The footer sits at the bottom of the spacer, within it: the spacer is never
+                // shorter than the band, so the footer cannot reach the keypad above, however
+                // little room the screen leaves.
+                .overlay(alignment: .bottom) {
+                    HStack(alignment: .center) {
+                        footer?()
+                    }
+                    .frame(height: Self.footerBandHeight)
                 }
-                .frame(minHeight: Spacing.XXXL.value)
-            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .minimumBottomSpacing()
+        .minimumBottomSpacing(.L)
         .background(AppColor.backgroundsPrimary)
     }
 }

@@ -116,6 +116,10 @@ final class NewPINFlowController: FlowController {
         }
         flowController.presenter = presenter
         hosting.rootView = AnyView(NewPINView(presenter: presenter))
+        // The hosted view's `navigationBarBackButtonHidden` reaches the navigation item only
+        // after its first evaluation, on iOS 18 already into the push, while UIKit builds the
+        // back button before that; hidden here as well, it never shows up.
+        hosting.navigationItem.setHidesBackButton(presenter.showsCancelButton, animated: false)
         return hosting
     }
 }

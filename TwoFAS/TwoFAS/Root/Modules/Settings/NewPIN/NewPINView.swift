@@ -32,7 +32,6 @@ struct NewPINView: View {
                 TFButton(T.Settings.selectPinLength, variant: .borderless, size: .small) {
                     presenter.handleChangePINType()
                 }
-                .padding(.top, .XL)
             }
         }
         .onAppear {

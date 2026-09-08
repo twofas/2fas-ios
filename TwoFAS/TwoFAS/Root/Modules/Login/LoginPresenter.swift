@@ -73,11 +73,12 @@ final class LoginPresenter {
     /// the background is free to start in whatever shape suits the next prompt.
     private(set) var splashFollowsLaunchScreen: Bool
     /// `true` while the screen shows the launch screen's look and has not yet been seen in
-    /// the foreground: from creation, when the splash continues the system launch screen,
-    /// and from a trip to the background that put the screen back on the splash. The
-    /// greeting is out meanwhile, so the app switcher shows the launch screen's look, and
-    /// fades in the first time the screen is worked with. Set in the same pass as
-    /// `showsSplash`, so the snapshot cannot catch the greeting.
+    /// the foreground: from creation on the splash, whether it continues the system launch
+    /// screen or is prepared on the way to the background for the prompt on return, and from
+    /// a trip to the background that put the screen back on the splash. The greeting is out
+    /// meanwhile, so the app switcher shows the launch screen's look, and fades in the first
+    /// time the screen is worked with. Set in the same pass as `showsSplash`, so the snapshot
+    /// cannot catch the greeting.
     private(set) var greetingIsAway: Bool
     /// The keypad is out on the splash and while a biometry prompt is up; it comes back only
     /// when the attempt fails or is cancelled.
@@ -119,7 +120,7 @@ final class LoginPresenter {
         showsSplash = startsOnSplash
         promptsOnSplash = loginType == .login && willPrompt
         splashFollowsLaunchScreen = followsLaunchScreen
-        greetingIsAway = startsOnSplash && followsLaunchScreen
+        greetingIsAway = startsOnSplash
         
         timer = CancellableTimer()
 

@@ -60,19 +60,20 @@ struct PINKeyboard: View {
     /// lift into the header.
     static let entranceDelay: TimeInterval = 0.2
 
-    // Spring tuning for the entrance, interpolated between the nearest key ("5" itself,
-    // travel 0) and the farthest corner.
+    // Spring tuning for the entrance, interpolated by each key's travel between the nearest
+    // key ("5" itself, travel 0) and the farthest corners (travel 1).
     private let nearFlight: TimeInterval = 0.15
     private let farFlight: TimeInterval = 0.5
+    // The corners take the fixed outer bounce and delay below, so the far bounce and the far
+    // head start are where the keys in between are headed, not what any key gets.
     private let nearBounce = 0.2
     private let farBounce = 0.45
-    /// The two bottom-corner slots (biometry and delete) travel the farthest and would
+    private let farReleaseDelay: TimeInterval = 0.1
+    /// The two bottom-corner slots (biometry and delete), the only keys at travel 1, would
     /// overshoot the most, so they get a fixed bounce and delay instead of the interpolated ones.
     private let outerKeys: Set<Int> = [9, 11]
     private let outerBounce = 0.3
     private let outerDelay: TimeInterval = 0.05
-    /// Farthest key's head start; the nearest starts at once.
-    private let farReleaseDelay: TimeInterval = 0.1
     /// Speed the keys already have when released, as a fraction of their own travel per
     /// second, so every key leaves "5" with the same kick regardless of distance. Zero would
     /// start them from rest, which reads as static.

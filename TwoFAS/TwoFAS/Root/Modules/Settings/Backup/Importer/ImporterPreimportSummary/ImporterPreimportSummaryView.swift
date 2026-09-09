@@ -43,7 +43,7 @@ struct ImporterPreimportSummaryView: View {
                     }
                 ))
             }
-            return .systemImage(.squareAndArrowDown)
+            return .systemImage(.squareAndArrowDown, bounces: true)
         }(),
                    title: presenter.title,
                    attributedDescription: attributedDescription,

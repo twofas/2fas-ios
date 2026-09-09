@@ -25,7 +25,7 @@ struct BrowserExtensionPairingAlreadyPairedView: View {
 
     var body: some View {
         TFInfoView(
-            icon: .systemImage(.macbookAndIphone),
+            icon: .systemImage(.macbookAndIphone, bounces: true),
             title: T.Browser.alreadyPairedTitle,
             description: T.Browser.alreadyPairedDescription,
             background: .backgroundsPrimary,

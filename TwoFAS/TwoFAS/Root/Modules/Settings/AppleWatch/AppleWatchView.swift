@@ -41,7 +41,6 @@ struct AppleWatchView: View {
                         .textStyle(.iconLarge)
                         .foregroundStyle(.accentsBrand)
                         .padding(.top, .XXXXXL)
-                        .symbolBounceOnAppear()
                     
                     Text(T.AppleWatch.installationInfoTitle)
                         .textStyle(.title1, .emphasized)

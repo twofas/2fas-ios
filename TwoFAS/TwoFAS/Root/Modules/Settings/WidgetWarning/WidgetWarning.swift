@@ -27,7 +27,7 @@ struct WidgetWarning: View {
     var body: some View {
         NavigationStack {
             TFInfoView(
-                icon: .systemImage(.exclamationmarkTriangle),
+                icon: .systemImage(.exclamationmarkTriangle, bounces: true),
                 title: "\(T.Commons.warning.uppercased())!",
                 description: T.Settings.widgetsTitle,
                 buttons: {

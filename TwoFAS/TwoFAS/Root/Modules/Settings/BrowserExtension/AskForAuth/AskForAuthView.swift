@@ -35,7 +35,7 @@ struct AskForAuthView: View {
     
     var body: some View {
         TFInfoView(
-            icon: .systemImage(.personBadgeShieldCheckmark),
+            icon: .systemImage(.personBadgeShieldCheckmark, bounces: true),
             title: T.Browser._2faTokenRequestTitle,
             attributedDescription: attributedDescription,
             buttons: {

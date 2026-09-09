@@ -118,9 +118,15 @@ extension TokensPresenter {
     func handleAppBecomesInactive() {
         Log("TokensPresenter - handleAppBecomesInactive appState=\(UIApplication.shared.applicationState.rawValue)")
         interactor.stopCounters()
-        view?.stopSearch()
-        if isSearching {
-            handleClearSearchPhrase()
+        // willResignActive can be transient — e.g. the biometry overlay being torn down
+        // right after unlock fires it while the app is still .active, which would close
+        // a freshly focused active search. Real backgrounding re-runs this handler via
+        // didEnterBackground with a non-active state, so search teardown happens there.
+        if UIApplication.shared.applicationState != .active {
+            view?.stopSearch()
+            if isSearching {
+                handleClearSearchPhrase()
+            }
         }
         if currentState == .edit {
             handleLeaveEditMode()

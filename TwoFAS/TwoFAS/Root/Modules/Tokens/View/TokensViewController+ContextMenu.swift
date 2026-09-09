@@ -31,6 +31,8 @@ extension TokensViewController {
                 presenter.enableMenu
         else { return nil }
         
+        beginContextMenuLift()
+        
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak self] _ in
             let edit = UIAction(
                 title: T.Commons.edit,
@@ -87,9 +89,63 @@ extension TokensViewController {
     
     func collectionView(
         _ collectionView: UICollectionView,
+        willDisplayContextMenu configuration: UIContextMenuConfiguration,
+        animator: UIContextMenuInteractionAnimating?
+    ) {
+        if case .lifting(let expiry) = contextMenuState {
+            expiry.cancel()
+        }
+        contextMenuState = .shown
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
         willEndContextMenuInteraction configuration: UIContextMenuConfiguration,
         animator: UIContextMenuInteractionAnimating?
     ) {
         presenter.handleMenuEnded()
+        if case .lifting(let expiry) = contextMenuState {
+            expiry.cancel()
+        }
+        contextMenuState = .none
+        // The cell flies back into the list first, so a reload that came in the meantime does not swap it
+        // mid-flight. A reload triggered by the chosen action is not held back: the state is already clear.
+        if let animator {
+            animator.addCompletion { [weak self] in
+                self?.applyPendingReload()
+            }
+        } else {
+            applyPendingReload()
+        }
+    }
+    
+    var isContextMenuActive: Bool {
+        switch contextMenuState {
+        case .none: return false
+        case .lifting, .shown: return true
+        }
+    }
+    
+    /// Once the lift has run for this long with no menu shown, the press was released early and the
+    /// interaction is over. UIKit does not report a lift that ends before the menu appears.
+    private static let contextMenuLiftTimeout: TimeInterval = 2
+    
+    private func beginContextMenuLift() {
+        if case .lifting(let expiry) = contextMenuState {
+            expiry.cancel()
+        }
+        let expiry = DispatchWorkItem { [weak self] in
+            guard let self, case .lifting = self.contextMenuState else { return }
+            self.contextMenuState = .none
+            self.applyPendingReload()
+        }
+        contextMenuState = .lifting(expiry: expiry)
+        DispatchQueue.main.asyncAfter(deadline: .now() + Self.contextMenuLiftTimeout, execute: expiry)
+    }
+    
+    private func applyPendingReload() {
+        guard let pendingReload else { return }
+        self.pendingReload = nil
+        reloadData(newSnapshot: pendingReload.snapshot, scrollTo: pendingReload.scrollTo)
     }
 }

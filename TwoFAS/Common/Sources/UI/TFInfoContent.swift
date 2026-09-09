@@ -21,7 +21,8 @@ import SwiftUI
 
 public struct TFInfoContent: View {
     public enum Icon {
-        case systemImage(IconName)
+        /// `bounces` plays a one-shot bounce on the symbol shortly after the view appears.
+        case systemImage(IconName, bounces: Bool = false)
         case image(UIImage, Image.TemplateRenderingMode)
         case view(view: AnyView)
     }
@@ -88,11 +89,11 @@ public struct TFInfoContent: View {
     @ViewBuilder
     private var iconView: some View {
         switch icon {
-        case let .systemImage(name):
+        case let .systemImage(name, bounces):
             Image(icon: name)
                 .textStyle(.iconLarge)
                 .foregroundStyle(.accentsBrand)
-                .symbolBounceOnAppear()
+                .symbolBounceOnAppear(enabled: bounces)
         case let .image(image, renderingMode):
             Group {
                 switch renderingMode {

@@ -64,7 +64,7 @@ struct ManageWatchView: View {
 
     private var emptyState: some View {
         TFEmptyScreen(
-            icon: .systemImage(.appleWatch),
+            icon: .systemImage(.appleWatch, bounces: true),
             title: T.Backup.managePairedWatchesEmptyList
         )
     }

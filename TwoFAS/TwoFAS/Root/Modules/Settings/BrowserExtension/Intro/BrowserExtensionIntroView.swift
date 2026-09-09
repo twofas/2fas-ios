@@ -43,7 +43,6 @@ struct BrowserExtensionIntroView: View {
                         .textStyle(.iconLarge)
                         .foregroundStyle(.accentsBrand)
                         .padding(.top, .XXXXXL)
-                        .symbolBounceOnAppear()
                     
                     Text(T.Browser.infoTitle)
                         .textStyle(.title1, .emphasized)

@@ -30,7 +30,7 @@ struct BackupDeleteView: View {
     var body: some View {
         NavigationStack {
             TFInfoView(
-                icon: .systemImage(.icloudSlash),
+                icon: .systemImage(.icloudSlash, bounces: true),
                 title: T.Backup.delete2fasBackup,
                 description: T.Backup.warningIntroduction,
                 buttons: {

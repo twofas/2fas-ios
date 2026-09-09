@@ -27,7 +27,7 @@ struct SyncMigrationToNewestVersionView: View {
     var body: some View {
         NavigationStack {
             TFInfoView(
-                icon: .systemImage(.exclamationmarkIcloud),
+                icon: .systemImage(.exclamationmarkIcloud, bounces: true),
                 title: T.Backup.migrationTitle,
                 subtitle: T.Backup.migrationSubtitle,
                 description: T.Backup.migrationDescription,

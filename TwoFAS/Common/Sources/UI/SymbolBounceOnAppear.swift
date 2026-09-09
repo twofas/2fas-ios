@@ -20,6 +20,7 @@
 import SwiftUI
 
 private struct SymbolBounceOnAppear: ViewModifier {
+    let enabled: Bool
     let delay: CGFloat
 
     @State
@@ -29,6 +30,7 @@ private struct SymbolBounceOnAppear: ViewModifier {
         content
             .symbolEffect(.bounce.down.byLayer, value: animate)
             .task {
+                guard enabled else { return }
                 try? await Task.sleep(for: .seconds(delay))
                 animate = true
             }
@@ -36,7 +38,9 @@ private struct SymbolBounceOnAppear: ViewModifier {
 }
 
 public extension View {
-    func symbolBounceOnAppear(delay: CGFloat = 0.4) -> some View {
-        modifier(SymbolBounceOnAppear(delay: delay))
+    /// Plays a one-shot bounce on the symbol `delay` seconds after the view appears.
+    /// With `enabled` false the view is left untouched.
+    func symbolBounceOnAppear(enabled: Bool = true, delay: CGFloat = 0.4) -> some View {
+        modifier(SymbolBounceOnAppear(enabled: enabled, delay: delay))
     }
 }

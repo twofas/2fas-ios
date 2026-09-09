@@ -67,6 +67,19 @@ final class TokensViewController: UIViewController {
     var searchBarAdded = false
     var pendingSearchFocus = false
 
+    /// A context menu lifts the pressed cell out of the list. Reloading the list while it is lifted swaps
+    /// the cell underneath and the lifted preview turns into a black plate. Reloads that arrive during the
+    /// lift, or while the menu is open, wait here and are applied once the menu is away.
+    enum ContextMenuState {
+        case none
+        /// The configuration was requested and the cell is lifting. The menu may still not appear if the
+        /// finger lifts early, so this state expires on its own.
+        case lifting(expiry: DispatchWorkItem)
+        case shown
+    }
+    var contextMenuState: ContextMenuState = .none
+    var pendingReload: (snapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>, scrollTo: IndexPath?)?
+
     let searchController = CommonSearchController()
     
     override func loadView() {

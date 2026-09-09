@@ -24,7 +24,7 @@ import Common
 final class TokensViewEmptySearchScreen: UIView {
     private let hostingController = UIHostingController(
         rootView: TFEmptyScreen(
-            icon: .systemImage(.magnifyingglass),
+            icon: .systemImage(.magnifyingglass, bounces: true),
             title: T.Tokens.serviceNotFoundSearch,
             description: T.Tokens.tryDifferentSearchTerm
         )

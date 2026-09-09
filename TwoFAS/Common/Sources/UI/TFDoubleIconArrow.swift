@@ -23,11 +23,14 @@ public struct TFDoubleIconArrow: View {
     private let leadingSymbol: IconName
     private let trailingSymbol: IconName
     private let spacing: Spacing
+    private let bounces: Bool
 
-    public init(leadingSymbol: IconName, trailingSymbol: IconName, spacing: Spacing = .XL) {
+    /// `bounces` plays a one-shot bounce on the leading symbol, then on the trailing one, after the view appears.
+    public init(leadingSymbol: IconName, trailingSymbol: IconName, spacing: Spacing = .XL, bounces: Bool = false) {
         self.leadingSymbol = leadingSymbol
         self.trailingSymbol = trailingSymbol
         self.spacing = spacing
+        self.bounces = bounces
     }
 
     public var body: some View {
@@ -35,12 +38,12 @@ public struct TFDoubleIconArrow: View {
             Image(icon: leadingSymbol)
                 .textStyle(.iconLarge)
                 .foregroundStyle(.accentsBrand)
-                .symbolBounceOnAppear(delay: 0.2)
+                .symbolBounceOnAppear(enabled: bounces, delay: 0.2)
             ArrowIcon()
             Image(icon: trailingSymbol)
                 .textStyle(.iconLarge)
                 .foregroundStyle(.accentsBrand)
-                .symbolBounceOnAppear(delay: 0.8)
+                .symbolBounceOnAppear(enabled: bounces, delay: 0.8)
         }
     }
 }

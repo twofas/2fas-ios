@@ -49,6 +49,12 @@ protocol TokensViewControlling: AnyObject {
 extension TokensViewController: TokensViewControlling {
     // MARK: - Data managment
     func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>, scrollTo: IndexPath?) {
+        if isContextMenuActive {
+            pendingReload = (newSnapshot, scrollTo)
+            return
+        }
+        // A newer snapshot supersedes one that was held back by the menu.
+        pendingReload = nil
         if tokensView.hasActiveDrag || tokensView.hasActiveDrop {
             tokensView.cancelInteractiveMovement()
         }

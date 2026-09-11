@@ -1,0 +1,312 @@
+//
+//  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
+//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Contributed by Zbigniew Cisiński. All rights reserved.
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
+//
+
+import UIKit
+import Common
+import Data
+
+protocol MainFlowControllerParent: AnyObject {}
+
+protocol MainFlowControlling: AnyObject {
+    func toAuthRequestFetch()
+    func toClearAuthList()
+    func toAuthorize(for tokenRequestID: String)
+    func toSecretSyncError(_ serviceName: String)
+    func toOpenFileImport(url: URL)
+    func toSetupSplit()
+    func toSetPIN()
+    
+    func toMigrationToNewestVersion()
+    func toiCloudIsEncryptedByUser()
+    func toiCloudIsEncryptedBySystemError()
+    func toiCloudIsEncryptedBySystemSwitch(switchKey: @escaping () -> Void)
+    func toNeverVersionOfiCloud()
+    func toMigrationEndedSuccessfuly()
+    func toMigrationError(_ error: CloudState.NotAvailableReason)
+    
+    // MARK: - App update
+    func toShowNewVersionAlert(for appStoreURL: URL, skip: @escaping Callback)
+}
+
+final class MainFlowController: FlowController {
+    private var authRequestsFlowController: AuthRequestsFlowControllerChild?
+    
+    private weak var parent: MainFlowControllerParent?
+    private weak var naviViewController: UINavigationController!
+    private var galleryViewController: UIViewController?
+    private var importer: ImporterOpenFileHeadlessFlowController?
+    
+    private var syncMigrationHandler: ((MigrationResult) -> Void)?
+    
+    static func showAsRoot(
+        in viewController: UIViewController,
+        parent: MainFlowControllerParent
+    ) -> MainViewController {
+        let view = MainViewController()
+        let flowController = MainFlowController(viewController: view)
+        flowController.parent = parent
+        flowController.authRequestsFlowController = AuthRequestsFlowController.create(parent: flowController)
+        let interactor = ModuleInteractorFactory.shared.mainModuleInteractor()
+        let presenter = MainPresenter(
+            flowController: flowController,
+            interactor: interactor
+        )
+        view.presenter = presenter
+        presenter.view = view
+        
+        viewController.addChild(view)
+        viewController.view.addSubview(view.view)
+        view.view.pinToParent()
+        view.didMove(toParent: viewController)
+        
+        return view
+    }
+}
+
+extension MainFlowController {
+    var viewController: MainViewController { _viewController as! MainViewController }
+}
+
+extension MainFlowController: MainFlowControlling {
+    func toSetupSplit() {
+        MainTabFlowController.showAsRoot(in: viewController, parent: self)
+    }
+    func toAuthRequestFetch() {
+        authRequestsFlowController?.refresh()
+    }
+    
+    func toClearAuthList() {
+        authRequestsFlowController?.clearList()
+    }
+    
+    func toAuthorize(for tokenRequestID: String) {
+        authRequestsFlowController?.authorizeFromApp(for: tokenRequestID)
+    }
+    
+    func toSecretSyncError(_ serviceName: String) {
+        let alert = AlertControllerDismissFlow(
+            title: T.Commons.error,
+            message: T.Backup.incorrectSecret(serviceName),
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: T.Commons.ok, style: .cancel, handler: nil))
+        _viewController.present(alert, animated: true, completion: nil)
+    }
+    
+    func toOpenFileImport(url: URL) {
+        importer = ImporterOpenFileHeadlessFlowController.present(on: _viewController, parent: self, url: url)
+    }
+    
+    // MARK: - App update
+    
+    func toShowNewVersionAlert(for appStoreURL: URL, skip: @escaping Callback) {
+        let alertTitle = T.NewVersion.newVersionTitle
+        let alertMessage = T.NewVersion.newVersionMessageIos
+        
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        
+        let updateButton = UIAlertAction(title: T.NewVersion.updateAction, style: .default) { _ in
+            guard UIApplication.shared.canOpenURL(appStoreURL) else { return }
+            UIApplication.shared.open(appStoreURL, options: [:], completionHandler: nil)
+        }
+        
+        alertController.addAction(updateButton)
+        
+        let notNowButton = UIAlertAction(title: T.NewVersion.updateLater, style: .cancel)
+        alertController.addAction(notNowButton)
+        
+        let skipButton = UIAlertAction(title: T.NewVersion.skipTitle, style: .destructive) { _ in
+            skip()
+        }
+        alertController.addAction(skipButton)
+        
+        guard viewController.presentedViewController == nil else { return }
+        
+        viewController.present(alertController, animated: true, completion: nil)
+    }
+    
+    // MARK: - MDM requriments
+    
+    func toSetPIN() {
+        NewPINNavigationFlowController.present(on: viewController, parent: self)
+    }
+    
+    func toMigrationToNewestVersion() {
+        guard viewController.presentedViewController == nil else { return }
+        syncMigrationHandler = SyncMigrationToNewestVersionFlowController.showAsRoot(in: _viewController, parent: self)
+    }
+    
+    func toiCloudIsEncryptedByUser() {
+        guard viewController.presentedViewController == nil else { return }
+        syncMigrationHandler = EncryptedByUserPasswordSyncFlowController.showAsRoot(in: viewController, parent: self)
+    }
+    
+    func toiCloudIsEncryptedBySystemError() {
+        let alertTitle = T.Backup.cloudErrorTitle
+        let alertMessage = T.Backup.cloudErrorMissingSystemKeyContent
+        
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: T.Commons.ok, style: .default)
+        
+        alertController.addAction(okButton)
+        guard viewController.presentedViewController == nil else { return }
+        
+        viewController.present(alertController, animated: true, completion: nil)
+    }
+    
+    func toiCloudIsEncryptedBySystemSwitch(switchKey: @escaping () -> Void) {
+        let alertTitle = T.Backup.cloudErrorTitle
+        let alertMessage = T.Backup.cloudErrorMismatchKeyContent
+        
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        let switchButton = UIAlertAction(title: T.Backup.cloudSwitchSystemKey, style: .default) { _ in
+            switchKey()
+        }
+        let offButton = UIAlertAction(title: T.Backup.cloudTurnBackupOff, style: .default)
+        
+        alertController.addAction(switchButton)
+        alertController.addAction(offButton)
+        guard viewController.presentedViewController == nil else { return }
+        
+        viewController.present(alertController, animated: true, completion: nil)
+    }
+    
+    func toNeverVersionOfiCloud() {
+        let alertTitle = T.NewVersion.newVersionTitle
+        let alertMessage = T.Backup.cloudErrorNewVersionContent
+        
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: T.Commons.ok, style: .default)
+        
+        alertController.addAction(okButton)
+        guard viewController.presentedViewController == nil else { return }
+        
+        viewController.present(alertController, animated: true, completion: nil)
+    }
+    
+    func toMigrationEndedSuccessfuly() {
+        syncMigrationHandler?(.success)
+    }
+    
+    func toMigrationError(_ error: CloudState.NotAvailableReason) {
+        syncMigrationHandler?(.error(error))
+    }
+}
+
+extension MainFlowController: SyncMigrationToNewestVersionFlowControllerParent {
+    func closeMigrationToNewestVersion() {
+        syncMigrationHandler = nil
+        _viewController.dismiss(animated: true)
+    }
+}
+
+extension MainFlowController: EncryptedByUserPasswordSyncFlowControllerParent {
+    func closeEncryptedByUser() {
+        syncMigrationHandler = nil
+        _viewController.dismiss(animated: true)
+    }
+}
+
+extension MainFlowController: ImporterOpenFileHeadlessFlowControllerParent {
+    func importerCloseOnSucessfulImport() {
+        handleImporterClose()
+    }
+    
+    func importerClose() {
+        handleImporterClose()
+    }
+    
+    private func handleImporterClose() {
+        viewController.dismiss(animated: true) { [weak self] in
+            NotificationCenter.default.post(name: .servicesWereUpdated, object: nil)
+            self?.importer = nil
+        }
+    }
+}
+
+extension MainFlowController: AuthRequestsFlowControllerParent {
+    func authRequestAskUserForAuthorization(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest) {
+        guard viewController.presentedViewController == nil else { return }
+        AskForAuthFlowController.present(on: viewController, parent: self, auth: auth, pair: pair)
+    }
+    
+    func authRequestShowServiceSelection(auth: WebExtensionAwaitingAuth) {
+        guard viewController.presentedViewController == nil else { return }
+        SelectServiceFlowController.present(on: viewController, parent: self, authRequest: auth)
+    }
+}
+
+extension MainFlowController: SelectServiceFlowControllerParent {
+    func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool) {
+        viewController.dismiss(animated: true) { [weak self] in
+            self?.authRequestsFlowController?.didSelectService(serviceData, auth: authRequest, save: save)
+        }
+    }
+    
+    func serviceSelectionCancelled(for tokenRequestID: String) {
+        viewController.dismiss(animated: true) { [weak self] in
+            self?.authRequestsFlowController?.didCancelServiceSelection(for: tokenRequestID)
+        }
+    }
+}
+
+extension MainFlowController: AskForAuthFlowControllerParent {
+    func askForAuthAllow(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest) {
+        viewController.dismiss(animated: true) { [weak self] in
+            self?.authRequestsFlowController?.authorize(auth: auth, pair: pair)
+        }
+    }
+    
+    func askForAuthDeny(tokenRequestID: String) {
+        viewController.dismiss(animated: true) { [weak self] in
+            self?.authRequestsFlowController?.skip(for: tokenRequestID)
+        }
+    }
+}
+
+extension MainFlowController: MainSplitFlowControllerParent {
+    func navigationSwitchedToTokens() {
+        toAuthRequestFetch()
+    }
+    
+    func navigationSwitchedToSettings() {
+        viewController.presenter.handleSwitchedToSettings()
+    }
+    
+    func navigationSwitchedToSettingsExternalImport() {
+        viewController.presenter.handleSwitchToExternalImport()
+    }
+    
+    func navigationSwitchedToSettingsBackup() {
+        viewController.presenter.handleSwitchToBackup()
+    }
+    
+    func navigationSwitchedToSettingsTrash() {
+        viewController.presenter.handleSwitchToTrash()
+    }
+}
+
+extension MainFlowController: NewPINNavigationFlowControllerParent {
+    func pinGathered(with PIN: String, pinType: PINType) {
+        viewController.presenter.handleSavePIN(PIN, pinType: pinType)
+        viewController.dismiss(animated: true) { [weak viewController] in
+            viewController?.presenter.handleViewIsVisible()
+        }
+    }
+}

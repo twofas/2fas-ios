@@ -47,8 +47,7 @@ final class TokensNextTokenView: UIView {
     
     private var constraintValue: CGFloat {
         switch kind {
-        case .compact, .edit: return -lineWidth
-        case .normal: return -lineHeight
+        case .compact, .edit, .normal: return -lineWidth
         case .pass: return 0
         }
     }
@@ -87,8 +86,15 @@ final class TokensNextTokenView: UIView {
         
         nextTokenLabel.text = TokenValue.empty
         setNextTokenHidden()
-        
+
         nextTokenLabel.isAccessibilityElement = false
+
+        setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
+        setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+    }
+
+    override var intrinsicContentSize: CGSize {
+        nextTokenLabel.intrinsicContentSize
     }
     
     func set(nextToken: TokenValue, tokenType: TokenType) {
@@ -98,7 +104,8 @@ final class TokensNextTokenView: UIView {
         nextTokenLabel.text = nextToken.formattedValue(for: tokenType)
         let tokenVO = (nextToken.components(separatedBy: "")).joined(separator: " ")
         accessibilityValue = T.Tokens.nextToken(tokenVO)
-        
+
+        invalidateIntrinsicContentSize()
         updateConsts()
     }
     
@@ -112,7 +119,7 @@ final class TokensNextTokenView: UIView {
         
         isAccessibilityElement = true
        
-        nextTokenLabel.textColor = Theme.Colors.Text.main
+        nextTokenLabel.textColor = AppColor.labelsPrimary.uiColor
         
         if animated {
             currentState = .animating
@@ -166,24 +173,19 @@ final class TokensNextTokenView: UIView {
     func setKind(_ kind: TokensCellKind) {
         self.kind = kind
         switch kind {
-        case .compact:
+        case .compact, .normal:
             movingConstraint = innerContainer.leadingAnchor.constraint(equalTo: outerContainer.leadingAnchor)
             NSLayoutConstraint.activate([
                 innerContainer.topAnchor.constraint(equalTo: outerContainer.topAnchor),
                 movingConstraint
             ])
-            
+
             nextTokenLabel.setContentCompressionResistancePriority(.defaultHigh + 2, for: .horizontal)
-        case .normal:
-            movingConstraint = innerContainer.topAnchor.constraint(equalTo: outerContainer.topAnchor)
-            NSLayoutConstraint.activate([
-                innerContainer.leadingAnchor.constraint(equalTo: outerContainer.leadingAnchor),
-                movingConstraint
-            ])
         default:
             break
         }
         nextTokenLabel.setKind(kind)
+        invalidateIntrinsicContentSize()
     }
     
     override func layoutSubviews() {
@@ -192,7 +194,7 @@ final class TokensNextTokenView: UIView {
     }
     
     private func setNextTokenHidden() {
-        nextTokenLabel.textColor = Theme.Colors.Fill.background.withAlphaComponent(0.1)
+        nextTokenLabel.textColor = AppColor.backgroundsPrimary.uiColor.withAlphaComponent(0.1)
         nextTokenLabel.alpha = 0.1
     }
     

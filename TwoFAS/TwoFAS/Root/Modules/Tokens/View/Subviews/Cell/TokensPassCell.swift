@@ -34,7 +34,6 @@ final class TokensPassCell: UICollectionViewCell {
     private let pressedAnimDuration: CGFloat = 0.1
     private let releaseAnimDuration: CGFloat = 0.15
     
-    private let size = CGSize(width: 328, height: 163)
     private let imageFrame = UIImage(asset: Asset.passFrameLight)
     private let imageDecoration = UIImage(asset: Asset.framePassDecoration)
     
@@ -47,7 +46,7 @@ final class TokensPassCell: UICollectionViewCell {
         label.minimumScaleFactor = 0.7
         label.allowsDefaultTighteningForTruncation = true
         label.textAlignment = .center
-        label.textColor = Theme.Colors.Text.main
+        label.textColor = AppColor.labelsPrimary.uiColor
         label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
@@ -66,7 +65,7 @@ final class TokensPassCell: UICollectionViewCell {
         label.allowsDefaultTighteningForTruncation = true
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
-        label.textColor = Theme.Colors.Text.main
+        label.textColor = AppColor.labelsPrimary.uiColor
         label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
@@ -78,7 +77,7 @@ final class TokensPassCell: UICollectionViewCell {
     private let cancelButtonLabel: UILabel = {
         let label = UILabel()
         label.text = T.passPromoBannerNegativeCta
-        label.textColor = Theme.Colors.Text.main
+        label.textColor = AppColor.labelsPrimary.uiColor
         label.font = UIFontMetrics(forTextStyle: .body)
             .scaledFont(for: .systemFont(ofSize: 13, weight: .bold))
         return label
@@ -87,14 +86,19 @@ final class TokensPassCell: UICollectionViewCell {
     private let cancelButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
-        button.applyRoundedBorder(withBorderColor: Theme.Colors.Text.main, width: 1, cornerRadius: cornerRadius)
+        button
+            .applyRoundedBorder(
+                withBorderColor: AppColor.labelsPrimary.uiColor,
+                width: 1,
+                cornerRadius: cornerRadius
+            )
         return button
     }()
     
     private let gotoStoreButtonLabel: UILabel = {
         let label = UILabel()
         label.text = T.passPromoBannerPositiveCta
-        label.textColor = Theme.Colors.Text.light
+        label.textColor = AppColor.graysWhite.uiColor
         label.font = UIFontMetrics(forTextStyle: .body)
             .scaledFont(for: .systemFont(ofSize: 13, weight: .bold))
         return label
@@ -246,8 +250,8 @@ final class TokensPassCell: UICollectionViewCell {
     
     @objc private func cancelButtonPressed() {
         UIView.animate(withDuration: pressedAnimDuration) {
-            self.cancelButton.backgroundColor = Theme.Colors.Text.main
-            self.cancelButtonLabel.textColor = Theme.Colors.Fill.background
+            self.cancelButton.backgroundColor = AppColor.labelsPrimary.uiColor
+            self.cancelButtonLabel.textColor = AppColor.backgroundsPrimary.uiColor
             self.cancelAction?()
         }
     }
@@ -255,7 +259,7 @@ final class TokensPassCell: UICollectionViewCell {
     @objc private func cancelButtonReleased() {
         UIView.animate(withDuration: releaseAnimDuration) {
             self.cancelButton.backgroundColor = .clear
-            self.cancelButtonLabel.textColor = Theme.Colors.Text.main
+            self.cancelButtonLabel.textColor = AppColor.labelsPrimary.uiColor
         }
     }
     
@@ -270,7 +274,7 @@ final class TokensPassCell: UICollectionViewCell {
     @objc private func gotoStoreButtonReleased() {
         UIView.animate(withDuration: releaseAnimDuration) {
             self.gotoStoreButton.backgroundColor = .blue
-            self.gotoStoreButtonLabel.textColor = Theme.Colors.Text.light
+            self.gotoStoreButtonLabel.textColor = AppColor.graysWhite.uiColor
         }
     }
 }

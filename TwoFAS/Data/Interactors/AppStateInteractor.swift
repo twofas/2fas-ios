@@ -18,19 +18,36 @@
 //
 
 import Foundation
+import CoreGraphics
 
 public protocol AppStateInteracting: AnyObject {
     var isLockScreenActive: Bool { get }
-    
+
     func lockScreenActive()
     func lockScreenInactive()
-    
+
+    var isBiometryAuthenticating: Bool { get }
+    func biometryAuthenticationStarted()
+    func biometryAuthenticationEnded()
+
     var appState: AppState { get }
     func saveAppState(_ appState: AppState)
-    
+
     var willURLBeHandled: Bool { get }
     func clearURLWillBeHandled()
     func markURLWillBeHandled()
+
+    func storeQuickAction(_ action: QuickAction)
+    func takeQuickAction() -> QuickAction?
+
+    var openBackupExportOnAppear: Bool { get }
+    func setOpenBackupExportOnAppear(_ value: Bool)
+
+    var openAddServiceOnAppear: Bool { get }
+    func setOpenAddServiceOnAppear(_ value: Bool)
+
+    var focusSearchOnAppear: Bool { get }
+    func setFocusSearchOnAppear(_ value: Bool)
 }
 
 final class AppStateInteractor {
@@ -55,7 +72,19 @@ extension AppStateInteractor: AppStateInteracting {
     func lockScreenInactive() {
         mainRepository.lockScreenInactive()
     }
-    
+
+    var isBiometryAuthenticating: Bool {
+        mainRepository.isBiometryAuthenticating
+    }
+
+    func biometryAuthenticationStarted() {
+        mainRepository.biometryAuthenticationStarted()
+    }
+
+    func biometryAuthenticationEnded() {
+        mainRepository.biometryAuthenticationEnded()
+    }
+
     var appState: AppState {
         mainRepository.appState
     }
@@ -66,12 +95,39 @@ extension AppStateInteractor: AppStateInteracting {
     }
     
     var willURLBeHandled: Bool { mainRepository.willURLBeHandled }
-    
+
     func clearURLWillBeHandled() {
         mainRepository.clearURLWillBeHandled()
     }
-    
+
     func markURLWillBeHandled() {
         mainRepository.markURLWillBeHandled()
+    }
+
+    func storeQuickAction(_ action: QuickAction) {
+        mainRepository.storeQuickAction(action)
+        NotificationCenter.default.post(name: .quickActionRequested, object: nil)
+    }
+
+    func takeQuickAction() -> QuickAction? {
+        mainRepository.takeQuickAction()
+    }
+
+    var openBackupExportOnAppear: Bool { mainRepository.openBackupExportOnAppear }
+
+    func setOpenBackupExportOnAppear(_ value: Bool) {
+        mainRepository.setOpenBackupExportOnAppear(value)
+    }
+
+    var openAddServiceOnAppear: Bool { mainRepository.openAddServiceOnAppear }
+
+    func setOpenAddServiceOnAppear(_ value: Bool) {
+        mainRepository.setOpenAddServiceOnAppear(value)
+    }
+
+    var focusSearchOnAppear: Bool { mainRepository.focusSearchOnAppear }
+
+    func setFocusSearchOnAppear(_ value: Bool) {
+        mainRepository.setFocusSearchOnAppear(value)
     }
 }

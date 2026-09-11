@@ -63,13 +63,13 @@ public final class BiometricAuth {
         }
         
         Log("Enabling Biometric Auth")
-        BiometryFingerprintStorage.clear()
+        BiometryStateHashStorage.clear()
         storage.saveBool(for: .bioAuthEnabled, value: true)
     }
     
     public func disable() {
         Log("Disabling Biometric Auth")
-        BiometryFingerprintStorage.clear()
+        BiometryStateHashStorage.clear()
         storage.remove(for: .bioAuthEnabled)
     }
     
@@ -102,16 +102,16 @@ public final class BiometricAuth {
                     guard let self else { return }
                     
                     if success {
-                        let currentFingerprint = BiometryFingerprintStorage.fingerprint
-                        let newFingerprint = self.context.evaluatedPolicyDomainState
+                        let savedStateHash = BiometryStateHashStorage.stateHash
+                        let stateHash = context.domainState.biometry.stateHash
                         
-                        guard currentFingerprint == nil || currentFingerprint == newFingerprint else {
+                        guard savedStateHash == nil || savedStateHash == stateHash else {
                             self.disable()
                             self.delegate?.bioAuthFailed()
                             return
                         }
-                        if let newFingerprint, currentFingerprint == nil {
-                            BiometryFingerprintStorage.save(fingerprint: newFingerprint)
+                        if let stateHash, savedStateHash == nil {
+                            BiometryStateHashStorage.save(stateHash: stateHash)
                         }
                         
                         self.delegate?.bioAuthSuccess()

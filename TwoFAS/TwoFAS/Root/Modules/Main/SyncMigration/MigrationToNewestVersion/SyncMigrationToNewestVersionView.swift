@@ -25,66 +25,33 @@ struct SyncMigrationToNewestVersionView: View {
     var presenter: SyncMigrationToNewestVersionPresenter
     
     var body: some View {
-        VStack(alignment: .center) {
-            VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-                Spacer()
-                VStack(spacing: Theme.Metrics.standardSpacing) {
-                    Asset.cloudBackup.swiftUIImage
-                    Spacer()
-                        .frame(height: Theme.Metrics.doubleMargin)
-                    Text(verbatim: T.Backup.migrationTitle)
-                        .font(.title2)
-                        .multilineTextAlignment(.center)
-                    Text(verbatim: T.Backup.migrationSubtitle)
-                        .font(.title3)
-                        .fontWeight(.medium)
-                        .multilineTextAlignment(.center)
-                        .foregroundStyle(Color(Theme.Colors.Text.theme))
-                    Spacer()
-                    Text(verbatim: T.Backup.migrationDescription)
-                        .font(.caption)
-                        .minimumScaleFactor(0.5)
-                        .multilineTextAlignment(.center)
-                    Spacer()
-                }
-                Spacer()
-                if presenter.isMigrating {
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .scaleEffect(1.5)
-                        .tint(Color(ThemeColor.theme))
-                        .padding(.vertical, Theme.Metrics.doubleMargin)
-                } else {
-                    VStack {
-                        if let migrationFailureReason = presenter.migrationFailureReason {
-                            Label(
-                                T.Backup.enterPasswordFailure(migrationFailureReason.description),
-                                systemImage: "xmark.circle.fill"
-                            )
-                                .font(.callout)
-                                .fontWeight(.bold)
-                                .foregroundStyle(Color(Theme.Colors.Text.theme))
-                        } else {
-                            Label(T.Commons.successEx, systemImage: "checkmark.circle.fill")
-                                .font(.callout)
-                                .fontWeight(.bold)
-                                .foregroundStyle(Color.green)
-                        }
-                        Button {
-                            presenter.close()
-                        } label: {
-                            Text(T.Commons.done)
-                                .frame(minWidth: 0, maxWidth: .infinity)
-                        }
-                        .buttonStyle(RoundedFilledButtonStyle())
-                        .padding(.vertical, Theme.Metrics.doubleMargin)
+        NavigationStack {
+            TFInfoView(
+                icon: .systemImage(.exclamationmarkIcloud, bounces: true),
+                title: T.Backup.migrationTitle,
+                subtitle: T.Backup.migrationSubtitle,
+                description: T.Backup.migrationDescription,
+                buttons: {
+            if presenter.isMigrating {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .scaleEffect(1.5)
+                    .tint(.accentsBrand)
+                    .padding(.vertical, .XL)
+            } else {
+                VStack {
+                    if let migrationFailureReason = presenter.migrationFailureReason {
+                        TFFailureView(title: T.Backup.enterPasswordFailure(migrationFailureReason.description))
+                    } else {
+                        TFSuccessView(title: T.Commons.successEx)
+                    }
+                    TFButton(T.Commons.done, variant: .borderedProminent, size: .large) {
+                        presenter.close()
                     }
                 }
             }
-            .frame(maxWidth: Theme.Metrics.componentWidth)
-            .padding(.vertical, Theme.Metrics.doubleMargin)
+        })
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .frame(maxWidth: .infinity)
-        .background(Color(Theme.Colors.Fill.System.second))
     }
 }

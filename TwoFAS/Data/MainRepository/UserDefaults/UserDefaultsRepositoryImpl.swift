@@ -51,6 +51,7 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case mainMenuLandscapeCollapsed
         case dateOfFirstRun
         case wasPassPromoSeen
+        case passPromoDateNavigatedToAppStore
         case syncSuccessDate
         case localNotificationPublicationDate
         case localNotificationPublicationID
@@ -275,6 +276,18 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
     
     func markPassPromoAsSeen() {
         userDefaults.set(true, forKey: Keys.wasPassPromoSeen.rawValue)
+        userDefaults.synchronize()
+    }
+    
+    var passPromoDateNavigatedToAppStore: Date? {
+        guard userDefaults.object(forKey: Keys.passPromoDateNavigatedToAppStore.rawValue) != nil else { return nil }
+        let value = userDefaults.double(forKey: Keys.passPromoDateNavigatedToAppStore.rawValue)
+        let date = Date(timeIntervalSince1970: value)
+        return date
+    }
+    
+    func markPassPromoDateNavigatedToAppStore() {
+        userDefaults.set(Date.now.timeIntervalSince1970, forKey: Keys.passPromoDateNavigatedToAppStore.rawValue)
         userDefaults.synchronize()
     }
     

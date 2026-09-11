@@ -40,7 +40,6 @@ struct RevealTokenOverlayView: View {
             VStack {
                 Spacer()
                 RevealTokenImage()
-                    .frame(width: 40, height: 40)
                 Spacer()
                 revealText(type: .short)
             }
@@ -48,7 +47,6 @@ struct RevealTokenOverlayView: View {
             VStack {
                 Spacer()
                 RevealTokenImage()
-                    .frame(width: 40, height: 40)
                 Spacer()
                 revealText(type: .long)
             }
@@ -57,7 +55,6 @@ struct RevealTokenOverlayView: View {
             VStack(spacing: 12) {
                 Spacer()
                 RevealTokenImage()
-                    .frame(width: 40, height: 40)
                 revealText(type: .long)
                 Spacer()
             }
@@ -73,7 +70,7 @@ struct RevealTokenOverlayView: View {
     
     private func revealText(type: RevealTokenMessageType) -> some View {
         Text(type.message)
-            .foregroundStyle(.gray10)
-            .font(.caption2)
+            .foregroundStyle(.labelsSecondary)
+            .textStyle(.caption2)
     }
 }

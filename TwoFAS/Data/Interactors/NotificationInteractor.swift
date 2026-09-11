@@ -21,10 +21,7 @@ import Foundation
 import Common
 
 public protocol NotificationInteracting: AnyObject {
-    func copyWithSuccess(value: String)
-    func error()
-    func warning()
-    func success()
+    func copy(value: String)
 }
 
 final class NotificationInteractor {
@@ -36,21 +33,8 @@ final class NotificationInteractor {
 }
 
 extension NotificationInteractor: NotificationInteracting {
-    func copyWithSuccess(value: String) {
-        Log("NotificationInteractor - copy with success", module: .interactor)
+    func copy(value: String) {
+        Log("NotificationInteractor - copy", module: .interactor)
         mainRepository.copy(value)
-        mainRepository.wobbleSuccess()
-    }
-        
-    func error() {
-        mainRepository.wobbleError()
-    }
-    
-    func warning() {
-        mainRepository.wobbleWarning()
-    }
-    
-    func success() {
-        mainRepository.wobbleSuccess()
     }
 }

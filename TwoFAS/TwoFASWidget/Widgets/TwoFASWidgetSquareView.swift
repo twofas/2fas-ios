@@ -54,8 +54,7 @@ struct TwoFASWidgetSquareView: View {
         } else {
             VStack(alignment: .leading) {
                 HStack {
-                    IconRenderer(entry: entryValue)
-                        .frame(width: 32, height: 32)
+                    ServiceIconView(icon: entryData.icon, dimension: 32)
                     Spacer()
                     CountdownTimerText(date: entryData.countdownTo)
                         .redacted(reason: codeReason)
@@ -63,15 +62,15 @@ struct TwoFASWidgetSquareView: View {
                 
                 Spacer()
                 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: .S) {
                     Text(entryData.name)
-                        .foregroundStyle(.textPrimary)
-                        .font(.system(size: 12).weight(.regular).monospacedDigit())
+                        .foregroundStyle(.labelsPrimary)
+                        .textStyle(.subheadline, .emphasized)
                         .multilineTextAlignment(.leading)
                         .redacted(reason: codeReason)
                     Text(entryData.code)
-                        .foregroundStyle(.textPrimary)
-                        .font(.system(size: 31).weight(.light).monospacedDigit())
+                        .foregroundStyle(.labelsPrimary)
+                        .textStyle(.token)
                         .multilineTextAlignment(.leading)
                         .minimumScaleFactor(0.1)
                         .contentTransition(.numericText())
@@ -79,9 +78,9 @@ struct TwoFASWidgetSquareView: View {
                     
                     if let info = entryData.info, !info.isEmpty {
                         Text(info)
-                            .foregroundStyle(.textSecondary)
+                            .foregroundStyle(.labelsSecondary)
+                            .textStyle(.caption1)
                             .lineLimit(1)
-                            .font(.system(size: 12).weight(.regular))
                     }
                 }
             }
@@ -113,14 +112,11 @@ struct TwoFASWidgetSquareView: View {
             .widgetAccentable()
             .opacity(0.4)
             .unredacted()
-            .addWidgetContentMargins()
     }
     
     func showLogo() -> Bool {
-        if #available(iOS 17.0, *) {
-            if redactionReasons.contains(.invalidated) {
-                return true
-            }
+        if redactionReasons.contains(.invalidated) {
+            return true
         }
 
         return false

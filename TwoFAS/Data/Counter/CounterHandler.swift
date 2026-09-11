@@ -36,11 +36,11 @@ public protocol TokenCounterConsumer: AnyObject {
     var autoManagable: Bool { get }
 }
 
-public protocol CounterHandlerStart {
+protocol CounterHandlerStart {
     func start(with counterSecrets: [CounterSecret], startLocked: Bool)
 }
 
-public protocol CounterHandlerTokens {
+protocol CounterHandlerTokens {
     func register(_ consumer: TokenCounterConsumer)
     func remove(_ consumer: TokenCounterConsumer, lock: Bool)
     func token(for secret: Secret) -> TokenValue?
@@ -48,7 +48,7 @@ public protocol CounterHandlerTokens {
     func lockAllConsumers()
 }
 
-public protocol CounterHandlerStop {
+protocol CounterHandlerStop {
     func stop()
 }
 

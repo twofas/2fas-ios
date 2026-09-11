@@ -20,11 +20,15 @@
 import Foundation
 import Protection
 
+enum BiometryAuthenticationResult {
+    case autenticated
+    case notAvailable
+    case failed
+}
+
 public typealias PIN = Protection.PIN
 
 final class Security: SecurityProtocol {
-    weak var delegate: SecurityDelegate?
-
     private let codeStorage: CodeStorage
     private let biometric: BiometricAuth
 
@@ -36,6 +40,7 @@ final class Security: SecurityProtocol {
     private var timer: Timer?
     private var appInBackground = false
 
+    private var completion: ((BiometryAuthenticationResult) -> Void)?
     private(set) var isAuthenticatingUsingBiometric = false
     
     init(biometric: BiometricAuth, codeStorage: CodeStorage) {
@@ -59,7 +64,6 @@ final class Security: SecurityProtocol {
         if authCount == interactor?.appLockAttempts.value {
             lockBio()
             interactor?.lockApp()
-            delegate?.securityLockUI()
         }
     }
     
@@ -100,28 +104,43 @@ final class Security: SecurityProtocol {
         biometric.isEnabled
     }
     
-    func authenticateUsingBioAuthIfPossible(reason: String) {
+    func authenticateUsingBiometry(
+        reason: String,
+        userInitiated: Bool,
+        completion: @escaping (BiometryAuthenticationResult) -> Void
+    ) {
         guard
-            !appInBackground && isBioAuthEnabled && isBioAuthAvailable && !isAuthenticatingUsingBiometric
-        else { return }
-        
-        bioAuthCount += 1
-        if bioAuthCount >= bioLimit {
+            !appInBackground &&
+            isBioAuthEnabled &&
+            isBioAuthAvailable &&
+            !isAuthenticatingUsingBiometric
+        else {
+            completion(.notAvailable)
             return
         }
+
+        // Only automatic prompts count against the limit; a user-initiated request neither
+        // consumes it nor clears the lock a cancelled prompt left behind.
+        if !userInitiated {
+            bioAuthCount += 1
+            if bioAuthCount >= bioLimit {
+                completion(.notAvailable)
+                return
+            }
+        }
         isAuthenticatingUsingBiometric = true
+        self.completion = completion
+
+        interactor?.biometryAuthenticationStarted()
         biometric.authenticate(reason: reason)
     }
     
     func applicationWillEnterForeground() {
         appInBackground = false
         
-        if interactor?.isAppLocked == true {
-            delegate?.securityLockUI()
-        } else {
+        if interactor?.isAppLocked == false {
             unlock()
         }
-        delegate?.retryBioAuthIfNecessary()
     }
     
     func applicationDidEnterBackground() {
@@ -167,7 +186,6 @@ final class Security: SecurityProtocol {
     }
     
     private func unlock() {
-        delegate?.securityUnlockUI()
         clearBio()
         clearAuth()
     }
@@ -188,18 +206,25 @@ final class Security: SecurityProtocol {
 extension Security: BiometricAuthDelegate {
     func bioAuthSuccess() {
         isAuthenticatingUsingBiometric = false
-        delegate?.securityBioAuthSuccess()
+        interactor?.biometryAuthenticationEnded()
+        completion?(.autenticated)
+        completion = nil
         clearBio()
         clearAuth()
     }
-    
+
     func bioAuthFailed() {
         isAuthenticatingUsingBiometric = false
-        delegate?.securityBioAuthFailure()
+        interactor?.biometryAuthenticationEnded()
+        completion?(.failed)
+        completion = nil
     }
-    
+
     func bioAuthUserCancelled() {
         isAuthenticatingUsingBiometric = false
+        interactor?.biometryAuthenticationEnded()
+        completion?(.notAvailable)
+        completion = nil
         lockBio()
     }
 }

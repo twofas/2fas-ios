@@ -1,0 +1,109 @@
+//
+//  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
+//  Copyright © 2026 Two Factor Authentication Service, Inc.
+//  Contributed by Zbigniew Cisiński. All rights reserved.
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
+//
+
+import SwiftUI
+import Common
+
+struct TrashView: View {
+    @Bindable
+    var presenter: TrashPresenter
+
+    var body: some View {
+        Group {
+            if presenter.services.isEmpty {
+                emptyState
+            } else {
+                trashList
+            }
+        }
+        .background(.backgroundsPrimary)
+        .navigationTitle(T.Settings.trash)
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            presenter.viewWillAppear()
+        }
+    }
+
+    private var emptyState: some View {
+        TFEmptyScreen(
+            icon: .systemImage(.trashFill),
+            title: T.Settings.trashIsEmpty
+        )
+    }
+
+    /// Adaptive grid: as many columns as fit at the minimum cell width,
+    /// each column stretching to share the remaining width evenly.
+    private let columns = [
+        GridItem(.adaptive(minimum: Theme.Metrics.defaultCellWidth), spacing: Spacing.XL.value)
+    ]
+
+    private var trashList: some View {
+        ScrollView(.vertical) {
+            LazyVGrid(columns: columns, spacing: Spacing.XL.value) {
+                ForEach(presenter.services, id: \.secret) { service in
+                    trashCell(service)
+                }
+            }
+            .padding(.XL)
+        }
+    }
+
+    @ViewBuilder
+    private func trashCell(_ service: ServiceData) -> some View {
+        HStack(spacing: .M) {
+            ServiceIconView(icon: service.iconDetails, showBackground: false)
+            
+            VStack(alignment: .leading, spacing: 2) {
+                Text(service.name)
+                    .textStyle(.body)
+                    .foregroundStyle(.labelsPrimary)
+                
+                if let additionalInfo = service.additionalInfo, !additionalInfo.isEmpty {
+                    Text(additionalInfo)
+                        .textStyle(.subheadline)
+                        .foregroundStyle(.labelsSecondary)
+                }
+            }
+            
+            Spacer(minLength: 0)
+
+            TFMenuButton {
+                Button {
+                    presenter.handleRestore(service)
+                } label: {
+                    Label(T.Settings.restore, icon: .arrowClockwise)
+                }
+
+                Button(role: .destructive) {
+                    presenter.handleDelete(service)
+                } label: {
+                    Label(T.Commons.delete, icon: .trashFill)
+                }
+            }
+        }
+        .padding(.horizontal, .XL)
+        .padding(.vertical, .L)
+        .frame(maxWidth: .infinity)
+        .frame(minHeight: .list)
+        .background(
+            RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue, style: .continuous)
+                .foregroundStyle(AppColor.backgroundsSecondary)
+        )
+    }
+}

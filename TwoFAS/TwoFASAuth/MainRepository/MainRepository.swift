@@ -21,7 +21,6 @@ import Foundation
 import Common
 import Data
 import NetworkStack
-import TimeVerification
 
 protocol MainRepository: AnyObject {
     // MARK: - DeviceID

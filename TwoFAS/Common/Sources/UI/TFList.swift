@@ -1,0 +1,237 @@
+//
+//  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
+//  Copyright © 2026 Two Factor Authentication Service, Inc.
+//  Contributed by Zbigniew Cisiński. All rights reserved.
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
+//
+
+import SwiftUI
+
+// MARK: - TFListScreen
+
+/// A scrollable list container matching the 2FAS Settings design system.
+///
+/// Stacks `TFListSection`s (or arbitrary content) with 24 pt vertical spacing
+/// and the standard horizontal / bottom insets.
+public struct TFListScreen<Content: View>: View {
+    private let backgroundColor: AppColor
+    private let content: Content
+
+    public init(
+        backgroundColor: AppColor = AppColor.backgroundsPrimary,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.backgroundColor = backgroundColor
+        self.content = content()
+    }
+
+    public var body: some View {
+        ScrollView(.vertical) {
+            AdaptiveReadableContainer(
+                verticalMargin: .zero
+            ) {
+                VStack(spacing: .XXXL) {
+                    content
+                }
+            }
+            .padding(.bottom, .XXXL)
+        }
+        .scrollContentBackground(.hidden)
+        .background(backgroundColor)
+        .modify { view in
+            if #unavailable(iOS 26.0) {
+                view.padding(.top, .XL)
+            } else {
+                view
+            }
+        }
+    }
+}
+
+// MARK: - TFListSection
+
+/// A grouped section with optional header/footer and the standard
+/// `.groupedSectionBackground()` card around its rows.
+///
+/// Rows are provided via `@ViewBuilder`. To render separators between
+/// rows, use `TFListSeparator` between them.
+public struct TFListSection<Content: View>: View {
+    private let title: String?
+    private let footer: String?
+    private let isElevated: Bool
+    private let content: Content
+
+    public init(
+        title: String? = nil,
+        footer: String? = nil,
+        isElevated: Bool = false,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.title = title
+        self.footer = footer
+        self.isElevated = isElevated
+        self.content = content()
+    }
+
+    public var body: some View {
+        VStack(alignment: .leading, spacing: .zero) {
+            if let title {
+                TFListSectionHeader(title)
+            }
+
+            VStack(alignment: .leading, spacing: .zero) {
+                content
+            }
+            .groupedSectionBackground(isElevated: isElevated)
+
+            if let footer {
+                TFListSectionFooter(footer)
+            }
+        }
+    }
+}
+
+// MARK: - TFListSectionHeader
+
+/// Section header text — headline weight, secondary label color.
+struct TFListSectionHeader: View {
+    private let text: String
+
+    init(_ text: String) {
+        self.text = text
+    }
+
+    var body: some View {
+        Text(text)
+            .textStyle(.headline)
+            .foregroundStyle(AppColor.labelsSecondary)
+            .accessibilityAddTraits(.isHeader)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, .ML)
+            .padding(.horizontal, .XL)
+    }
+}
+
+// MARK: - TFListSectionFooter
+
+/// Section footer text — tight footnote, secondary label color.
+struct TFListSectionFooter: View {
+    private let text: String
+
+    init(_ text: String) {
+        self.text = text
+    }
+
+    var body: some View {
+        Text(text)
+            .textStyle(.footnote, .regular, .tight)
+            .foregroundStyle(AppColor.labelsSecondary)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, .M)
+            .padding(.horizontal, .XL)
+    }
+}
+
+// MARK: - TFListSeparator
+
+/// A row separator inside a `TFListSection`. Set `hasLeadingIcon` to inset
+/// the divider past the standard 28 pt icon + `.ML` spacing when the
+/// preceding row uses a leading icon (`BrandIconTile` / `GradientIconTile`).
+public struct TFListSeparator: View {
+    private let hasLeadingIcon: Bool
+
+    public init(hasLeadingIcon: Bool = false) {
+        self.hasLeadingIcon = hasLeadingIcon
+    }
+
+    /// Standard 28 pt icon tile + 10 pt HStack spacing.
+    public static let iconLeadingInset: CGFloat = 28 + Spacing.ML.value
+
+    public var body: some View {
+        Divider()
+            .foregroundStyle(AppColor.separatorsNonOpaque)
+            .padding(.leading, hasLeadingIcon ? Self.iconLeadingInset : 0)
+    }
+}
+
+// MARK: - TFListMenuRow
+
+#if os(iOS)
+/// Standard row for opening a pop-up menu picker inside a `TFListSection`.
+///
+/// Renders as:
+/// `[title (labelsPrimary) ────────── currentValue (labelsSecondary) ⇅]`
+///
+/// The `content` builder supplies the menu's items — typically a `Picker`
+/// bound to a selection.
+///
+/// ```swift
+/// TFListMenuRow(title: "Algorithm", value: selectedAlgorithm.rawValue) {
+///     Picker(selection: $algorithm) {
+///         ForEach(Algorithm.allCases, id: \.self) {
+///             Text($0.rawValue).tag($0)
+///         }
+///     } label: { EmptyView() }
+/// }
+/// ```
+public struct TFListMenuRow<MenuContent: View>: View {
+    private let title: String
+    private let value: String
+    private let content: MenuContent
+    
+    private let minWidth: CGFloat = 55
+
+    public init(
+        title: String,
+        value: String,
+        @ViewBuilder content: () -> MenuContent
+    ) {
+        self.title = title
+        self.value = value
+        self.content = content()
+    }
+
+    public var body: some View {
+        HStack(spacing: .ML) {
+            Text(title)
+                .textStyle(.body)
+                .foregroundStyle(AppColor.labelsPrimary)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            Menu {
+                content
+            } label: {
+                HStack(spacing: .ML) {
+                    Text(value)
+                        .textStyle(.body)
+                        .foregroundStyle(AppColor.labelsSecondary)
+                    
+                    Image(icon: .chevronUpChevronDown)
+                        .textStyle(.body)
+                        .foregroundStyle(AppColor.labelsSecondary)
+                        .accessibilityHidden(true)
+                }
+                .padding(.vertical, .L)
+                .contentShape(Rectangle())
+                .frame(minHeight: .normal)
+                .frame(minWidth: minWidth, alignment: .trailing)
+            }
+            .labelStyle(.titleAndIcon)
+            .menuStyle(.button)
+        }
+    }
+}
+#endif

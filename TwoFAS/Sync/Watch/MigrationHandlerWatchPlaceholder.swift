@@ -18,7 +18,6 @@
 //
 
 import CloudKit
-import CommonWatch
 
 final class MigrationHandlerWatchPlaceholder: MigrationHandling {
     var clearCloudState: Callback?

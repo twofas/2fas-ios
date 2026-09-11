@@ -1,0 +1,79 @@
+//
+//  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
+//  Copyright © 2026 Two Factor Authentication Service, Inc.
+//  Contributed by Zbigniew Cisiński. All rights reserved.
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
+//
+
+import SwiftUI
+
+public struct TFLiquidGlassSymbolButton: View {
+    public enum Symbol: String {
+        case close = "xmark"
+        case back = "chevron.left"
+        case add = "plus"
+        case sidebar = "sidebar.left"
+    }
+
+    private let fontSize: CGFloat = 20
+
+    private let action: () -> Void
+    private let symbol: Symbol
+
+    public init(symbol: Symbol, action: @escaping () -> Void) {
+        self.symbol = symbol
+        self.action = action
+    }
+
+    public var body: some View {
+        Button(action: action) {
+            if #available(iOS 26, *) {
+                symbolLabel
+                    .padding(.S)
+            } else {
+                symbolLabel
+                    .frame(width: fallbackDiameter, height: fallbackDiameter)
+                    .padding(.S)
+                    .background {
+                        Circle()
+                            .fill(AppColor.fillsTertiary)
+                    }
+            }
+        }
+        .modify {
+            if #available(iOS 26, *) {
+                $0.tint(nil)
+                    .buttonStyle(.glass)
+                    .buttonBorderShape(.circle)
+                    .clipShape(Circle())
+                    .shadow(.glass)
+            } else {
+                $0.buttonStyle(ButtonFeedbackStyle())
+            }
+        }
+    }
+
+    private var symbolLabel: some View {
+        Image(systemName: symbol.rawValue)
+            .font(.system(size: fontSize, weight: .regular))
+            .foregroundStyle(AppColor.labelsVibrantPrimary)
+    }
+
+    /// Matches the iOS 26 `.glass` + `.circle` circular button size
+    /// (20 pt symbol + 8 pt padding on each side).
+    private var fallbackDiameter: CGFloat {
+        fontSize + 2 * Spacing.M.value
+    }
+}

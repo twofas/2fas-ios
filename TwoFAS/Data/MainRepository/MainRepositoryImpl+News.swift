@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import Storage
 
 extension MainRepositoryImpl {
     func storeNewsCompletions(_ completion: @escaping () -> Void) {

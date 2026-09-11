@@ -26,7 +26,12 @@ public protocol QRCodeGeneratorInteracting: AnyObject {
 
 final class QRCodeGeneratorInteractor: QRCodeGeneratorInteracting {
     func qrCode(of size: CGFloat, margin: CGFloat, for link: String) async -> UIImage? {
-        await withCheckedContinuation { continuation in
+        let scale = await MainActor.run {
+            UIApplication.shared.connectedScenes
+                .compactMap { ($0 as? UIWindowScene)?.keyWindow?.traitCollection.displayScale }
+                .first ?? 3.0
+        }
+        return await withCheckedContinuation { continuation in
             DispatchQueue.global(qos: .userInitiated).async {
                 guard let data = link.data(using: .ascii) else {
                     continuation.resume(returning: nil)
@@ -46,7 +51,6 @@ final class QRCodeGeneratorInteractor: QRCodeGeneratorInteracting {
                     return
                 }
                 let finalSize = size - 2 * margin
-                let scale = UIScreen.main.scale
                 let scaledSize = CGSize(width: finalSize * scale, height: finalSize * scale)
                 let context = CIContext(options: [
                     .useSoftwareRenderer: false,

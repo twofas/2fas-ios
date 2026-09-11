@@ -19,7 +19,6 @@
 
 import Foundation
 import Common
-import Storage
 
 public final class InteractorFactory {
     public static let shared = InteractorFactory()
@@ -189,8 +188,11 @@ public final class InteractorFactory {
         AppInfoInteractor(mainRepository: MainRepositoryImpl.shared)
     }
     
-    public func logUploadingInteractor() -> LogUploadingInteracting {
-        LogUploadingInteractor(mainRepository: MainRepositoryImpl.shared)
+    public func logGenerationInteractor() -> LogGenerationInteracting {
+        LogGenerationInteractor(
+            mainRepository: MainRepositoryImpl.shared,
+            compressionInteractor: compressionInteractor()
+        )
     }
     
     public func tokenInteractor() -> TokenInteracting {
@@ -283,4 +285,10 @@ public final class InteractorFactory {
     public func watchPairingInteractor() -> WatchPairingInteracting {
         WatchPairingInteractor(mainRepository: MainRepositoryImpl.shared)
     }
+
+    #if DEV
+    public func debugToolsInteractor() -> DebugToolsInteracting {
+        DebugToolsInteractor(mainRepository: MainRepositoryImpl.shared)
+    }
+    #endif
 }

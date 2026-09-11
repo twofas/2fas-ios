@@ -23,7 +23,7 @@ import UIKit
 import Storage
 import Protection
 import Common
-import CommonUIKit
+import Content
 
 final class IntentHandler: INExtension, SelectServiceIntentHandling {
     private let domain = "2FAS_Widget"
@@ -96,5 +96,19 @@ private extension IntentHandler {
             code: 603,
             userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("widget_no_services", comment: "")]
         )
+    }
+}
+
+extension WidgetService: @retroactive ServiceIconDefinition {
+    public var icon: UIImage {
+        switch iconType {
+        case .brand:
+            return ServiceIcon.for(iconTypeID: iconTypeID)
+        case .label:
+            return LabelImageRenderer.render(
+                with: labelTitle,
+                tintColor: labelColor
+            )
+        }
     }
 }

@@ -17,6 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 import SwiftUI
+import Common
 
 struct CountdownTimerText: View {
     let date: Date?
@@ -32,9 +33,10 @@ struct CountdownTimerText: View {
     var body: some View {
         timerText
             .frame(width: 40, height: 18)
-            .foregroundStyle(.textPrimary)
+            .foregroundStyle(.labelsPrimary)
             .multilineTextAlignment(.trailing)
-            .font(.caption.weight(.semibold).monospacedDigit())
+            .textStyle(.caption1, .emphasized)
+            .monospacedDigit()
             .lineLimit(1)
             .contentTransition(.numericText(countsDown: true))
     }

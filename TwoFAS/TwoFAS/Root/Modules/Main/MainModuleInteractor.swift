@@ -1,0 +1,227 @@
+//
+//  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
+//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Contributed by Zbigniew Cisiński. All rights reserved.
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
+//
+
+import Foundation
+import Data
+import Common
+
+protocol MainModuleInteracting: AnyObject {
+    var showMigrationToNewestVersion: (() -> Void)? { get set }
+    var showiCloudIsEncryptedByUser: (() -> Void)? { get set }
+    var showiCloudIsEncryptedBySystemError: (() -> Void)? { get set }
+    var showiCloudIsEncryptedBySystemSwitch: (() -> Void)? { get set }
+    var showNeverVersionOfiCloud: (() -> Void)? { get set }
+    var migrationEndedSuccessfuly: (() -> Void)? { get set }
+    var migrationError: ((CloudState.NotAvailableReason) -> Void)? { get set }
+    
+    func switchCloudEncryptionToSystemKey()
+    
+    var secretSyncError: ((String) -> Void)? { get set }
+    var isAppLocked: Bool { get }
+    var isBrowserExtensionAllowed: Bool { get }
+    var shouldSetPasscode: Bool { get }
+    
+    func applyMDMRules()
+    func initialize()
+    func checkForImport() -> URL?
+    func clearImportedFileURL()
+    
+    func savePIN(_ PIN: String, ofType pinType: PINType)
+    func saveSuccessSync()
+    func clearSavesuccessSync()
+    func markAllServicesRemovedAsPending()
+    
+    func checkForCompanionApp()
+    func setNotificationGroupID()
+
+    // MARK: - New app version
+    func checkForNewAppVersion(completion: @escaping (URL?) -> Void)
+    func skipAppVersion()
+
+    // MARK: - Quick Action
+    func takeQuickAction() -> QuickAction?
+    func setOpenBackupExportOnAppear(_ value: Bool)
+    func setOpenAddServiceOnAppear(_ value: Bool)
+    func setFocusSearchOnAppear(_ value: Bool)
+}
+
+final class MainModuleInteractor {
+    var showMigrationToNewestVersion: (() -> Void)?
+    var showiCloudIsEncryptedByUser: (() -> Void)?
+    var showiCloudIsEncryptedBySystemError: (() -> Void)?
+    var showiCloudIsEncryptedBySystemSwitch: (() -> Void)?
+    var showNeverVersionOfiCloud: (() -> Void)?
+    var migrationEndedSuccessfuly: (() -> Void)?
+    var migrationError: ((CloudState.NotAvailableReason) -> Void)?
+    
+    var secretSyncError: ((String) -> Void)?
+    
+    var isAppLocked: Bool {
+        rootInteractor.isAuthenticationRequired
+    }
+    
+    var isBrowserExtensionAllowed: Bool {
+        !mdmInteractor.isBrowserExtensionBlocked
+    }
+    
+    var shouldSetPasscode: Bool {
+        mdmInteractor.shouldSetPasscode
+    }
+    
+    private let logGenerationInteractor: LogGenerationInteracting
+    private let cloudBackupStateInteractor: CloudBackupStateInteracting
+    private let fileInteractor: FileInteracting
+    private let newVersionInteractor: NewVersionInteracting
+    private let networkStatusInteractor: NetworkStatusInteracting
+    private let appInfoInteractor: AppInfoInteracting
+    private let rootInteractor: RootInteracting
+    private let mdmInteractor: MDMInteracting
+    private let protectionInteractor: ProtectionInteracting
+    private let syncMigrationInteractor: SyncMigrationInteracting
+    private let appStateInteractor: AppStateInteracting
+
+    init(
+        logGenerationInteractor: LogGenerationInteracting,
+        viewPathInteractor: ViewPathIteracting,
+        cloudBackupStateInteractor: CloudBackupStateInteracting,
+        fileInteractor: FileInteracting,
+        newVersionInteractor: NewVersionInteracting,
+        networkStatusInteractor: NetworkStatusInteracting,
+        appInfoInteractor: AppInfoInteracting,
+        rootInteractor: RootInteracting,
+        mdmInteractor: MDMInteracting,
+        protectionInteractor: ProtectionInteracting,
+        syncMigrationInteractor: SyncMigrationInteracting,
+        appStateInteractor: AppStateInteracting
+    ) {
+        self.logGenerationInteractor = logGenerationInteractor
+        self.cloudBackupStateInteractor = cloudBackupStateInteractor
+        self.fileInteractor = fileInteractor
+        self.newVersionInteractor = newVersionInteractor
+        self.networkStatusInteractor = networkStatusInteractor
+        self.appInfoInteractor = appInfoInteractor
+        self.rootInteractor = rootInteractor
+        self.mdmInteractor = mdmInteractor
+        self.protectionInteractor = protectionInteractor
+        self.syncMigrationInteractor = syncMigrationInteractor
+        self.appStateInteractor = appStateInteractor
+
+        cloudBackupStateInteractor.secretSyncError = { [weak self] in self?.secretSyncError?($0) }
+        
+        syncMigrationInteractor.showMigrationToNewestVersion = { [weak self] in self?.showMigrationToNewestVersion?() }
+        syncMigrationInteractor.showiCloudIsEncryptedByUser = { [weak self] in self?.showiCloudIsEncryptedByUser?() }
+        syncMigrationInteractor.showiCloudIsEncryptedBySystem = { [weak self] in
+            if syncMigrationInteractor.currentEncryption == .system {
+                self?.showiCloudIsEncryptedBySystemError?()
+            } else {
+                self?.showiCloudIsEncryptedBySystemSwitch?()
+            }
+        }
+        syncMigrationInteractor.showNeverVersionOfiCloud = { [weak self] in self?.showNeverVersionOfiCloud?() }
+        syncMigrationInteractor.migrationEndedSuccessfuly = { [weak self] in
+            self?.migrationEndedSuccessfuly?()
+        }
+        syncMigrationInteractor.reencryptionEndedSuccessfuly = { [weak self] in
+            self?.migrationEndedSuccessfuly?() // common method
+        }
+        syncMigrationInteractor.migrationError = { [weak self] error in self?.migrationError?(error) }
+    }
+}
+
+extension MainModuleInteractor: MainModuleInteracting {
+    func initialize() {
+        networkStatusInteractor.installListeners()
+        DebugLog(logGenerationInteractor.summarize())
+        appInfoInteractor.markDateOfFirstRunIfNeeded()
+    }
+    
+    func checkForImport() -> URL? {
+        fileInteractor.url
+    }
+    
+    func clearImportedFileURL() {
+        fileInteractor.markAsHandled()
+    }
+    
+    func applyMDMRules() {
+        mdmInteractor.apply()
+    }
+    
+    func savePIN(_ PIN: String, ofType pinType: PINType) {
+        protectionInteractor.savePIN(PIN, typeOfPIN: pinType)
+    }
+
+    func saveSuccessSync() {
+        cloudBackupStateInteractor.saveSuccessSyncDate()
+    }
+    
+    func clearSavesuccessSync() {
+        cloudBackupStateInteractor.clearSaveSuccessSync()
+    }
+
+    func markAllServicesRemovedAsPending() {
+        cloudBackupStateInteractor.markAllServicesRemovedAsPending()
+    }
+    
+    func checkForCompanionApp() {
+        appInfoInteractor.update2FASPassMissingDate()
+    }
+
+    func switchCloudEncryptionToSystemKey() {
+        syncMigrationInteractor.switchLocallyToUseSystemPassword()
+    }
+    
+    func setNotificationGroupID() {
+        appInfoInteractor.setNotificationGroupID()
+    }
+    
+    // MARK: - New app version
+    
+    func checkForNewAppVersion(completion: @escaping (URL?) -> Void) {
+        newVersionInteractor.checkForNewVersion { [weak self] newVersionAvailable in
+            guard let appStoreURL = self?.newVersionInteractor.appStoreURL, newVersionAvailable else {
+                completion(nil)
+                return
+            }
+            completion(appStoreURL)
+        }
+    }
+    
+    func skipAppVersion() {
+        newVersionInteractor.userSkippedVersion()
+    }
+
+    // MARK: - Quick Action
+
+    func takeQuickAction() -> QuickAction? {
+        appStateInteractor.takeQuickAction()
+    }
+
+    func setOpenBackupExportOnAppear(_ value: Bool) {
+        appStateInteractor.setOpenBackupExportOnAppear(value)
+    }
+
+    func setOpenAddServiceOnAppear(_ value: Bool) {
+        appStateInteractor.setOpenAddServiceOnAppear(value)
+    }
+
+    func setFocusSearchOnAppear(_ value: Bool) {
+        appStateInteractor.setFocusSearchOnAppear(value)
+    }
+}

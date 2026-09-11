@@ -20,7 +20,6 @@
 import WidgetKit
 import UIKit
 import Common
-import CommonUIKit
 
 struct CodeEntry: TimelineEntry, Encodable {
     let date: Date
@@ -71,5 +70,16 @@ struct CodeEntry: TimelineEntry, Encodable {
         let code: String
         var countdownTo: Date?
         var rawEntry: RawEntryData?
+    }
+}
+
+extension CodeEntry.EntryData {
+    var icon: IconDetails {
+        switch iconType {
+        case .brand:
+            .brand(iconTypeID: iconTypeID)
+        case .label:
+            .label(title: labelTitle, tintColor: labelColor)
+        }
     }
 }

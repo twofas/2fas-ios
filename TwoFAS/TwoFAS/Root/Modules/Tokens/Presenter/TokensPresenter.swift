@@ -34,6 +34,7 @@ final class TokensPresenter {
     private var changeRequriesTokenRefresh = false
     private var serviceWasCreated: ServiceData?
     private var focusOnService: ServiceData?
+    private var lastActiveSearchFocusDate: Date?
     
     weak var view: TokensViewControlling?
     
@@ -42,7 +43,6 @@ final class TokensPresenter {
     
     var isMainOnlyCategory: Bool { interactor.isMainOnlyCategory }
     var hasUnreadNews: Bool { interactor.hasUnreadNews }
-    var showPassCell: Bool = false
 
     var listStyle: ListStyle {
         interactor.currentListStyle
@@ -66,10 +66,6 @@ final class TokensPresenter {
 
 extension TokensPresenter {
     // MARK: - Sort Type
-    var isSortingEnabled: Bool {
-        interactor.isSortingEnabled
-    }
-    
     var shouldAnimate: Bool {
         interactor.shouldAnimate
     }
@@ -83,6 +79,7 @@ extension TokensPresenter {
     func handleSetSortType(_ sortType: SortType) {
         Log("TokensPresenter - handleSetSortType: \(sortType)")
         interactor.setSortType(sortType)
+        reloadData()
     }
     
     // MARK: - App events
@@ -119,11 +116,17 @@ extension TokensPresenter {
     }
     
     func handleAppBecomesInactive() {
-        Log("TokensPresenter - handleAppBecomesInactive")
+        Log("TokensPresenter - handleAppBecomesInactive appState=\(UIApplication.shared.applicationState.rawValue)")
         interactor.stopCounters()
-        view?.stopSearch()
-        if isSearching {
-            handleClearSearchPhrase()
+        // willResignActive can be transient — e.g. the biometry overlay being torn down
+        // right after unlock fires it while the app is still .active, which would close
+        // a freshly focused active search. Real backgrounding re-runs this handler via
+        // didEnterBackground with a non-active state, so search teardown happens there.
+        if UIApplication.shared.applicationState != .active {
+            view?.stopSearch()
+            if isSearching {
+                handleClearSearchPhrase()
+            }
         }
         if currentState == .edit {
             handleLeaveEditMode()
@@ -150,7 +153,6 @@ extension TokensPresenter {
             self?.handleClearStoredCode()
         }
         case .shouldAddCode(let descriptionText): flowController.toShowShouldAddCode(with: descriptionText)
-        case .sendLogs(let auditID): flowController.toSendLogs(auditID: auditID)
         case .newData: handleNewData()
         case .shouldRename(let currentName, let secret):
             flowController.toShouldRenameService(currentName: currentName, secret: secret)
@@ -203,7 +205,7 @@ extension TokensPresenter {
         }
     }
     
-    func handleServicesWereUpdated(modified: [Secret]?, deleted: [Secret]?) {
+    func handleServicesWereUpdated(modified _: [Secret]?, deleted _: [Secret]?) {
         interactor.servicesWereUpdated()
         handleNewData()
     }
@@ -225,19 +227,6 @@ extension TokensPresenter {
     }
     
     // MARK: - Actions
-    func handleShowCamera() {
-        Log("TokensPresenter - handleShowCamera")
-        interactor.checkCameraPermission { [weak self] value in
-            if value {
-                Log("TokensPresenter - toShowCamera")
-                self?.flowController.toShowCamera()
-            } else {
-                Log("TokensPresenter - toCameraNotAvailable")
-                self?.flowController.toCameraNotAvailable()
-            }
-        }
-    }
-    
     func handleImportExternalFile() {
         Log("TokensPresenter - handleImportExternalFile")
         flowController.toFileImport()
@@ -248,24 +237,20 @@ extension TokensPresenter {
         flowController.toHelp()
     }
     
-    func handleShowSortSelection() {
-        Log("TokensPresenter - handleShowSortSelection")
-        flowController.toShowSortTypes(selectedSortOption: interactor.selectedSortType) { [weak self] selectedValue in
-            self?.interactor.setSortType(selectedValue)
-            self?.reloadData()
+    func handleActiveSearchShouldFocus() {
+        guard interactor.isActiveSearchEnabled, showSearchBar else { return }
+        let now = Date()
+        if let last = lastActiveSearchFocusDate, now.timeIntervalSince(last) < 0.3 {
+            return
         }
-    }
-    
-    func handleTokensScreenIsVisible() {
-        if interactor.isActiveSearchEnabled && showSearchBar {
-            view?.showKeyboard()
-        }
+        lastActiveSearchFocusDate = now
+        view?.focusSearchBar()
     }
     
     // MARK: - Search
     
     var showSearchBar: Bool {
-        count > 1 && currentState == .normal
+        count > 0 && currentState == .normal
     }
     
     func handleSetSearchPhrase(_ phrase: String) {
@@ -380,12 +365,6 @@ extension TokensPresenter {
         }
     }
     
-    func handleAddSection(with name: String) {
-        Log("TokensPresenter - handleAddSection")
-        interactor.createSection(with: name)
-        reloadData()
-    }
-    
     func handleToggleCollapseAction(with section: TokensSection) {
         interactor.toggleCollapseSection(section)
         reloadData()
@@ -425,6 +404,18 @@ extension TokensPresenter {
     func handleAddService() {
         Log("TokensPresenter - handleAddService - toAddService")
         flowController.toAddService()
+    }
+
+    func handleAddServiceQuickActionIfNeeded() {
+        guard interactor.openAddServiceOnAppear else { return }
+        interactor.setOpenAddServiceOnAppear(false)
+        handleAddService()
+    }
+
+    func shouldFocusSearchOnQuickAction() -> Bool {
+        guard interactor.focusSearchOnAppear else { return false }
+        interactor.setFocusSearchOnAppear(false)
+        return true
     }
     
     func handleEditService(_ serviceData: ServiceData) {
@@ -496,6 +487,7 @@ extension TokensPresenter {
     }
     
     func passCellGoToStore() {
+        interactor.markPassPromoCellAsNavigated()
         flowController.toPassStore()
     }
     

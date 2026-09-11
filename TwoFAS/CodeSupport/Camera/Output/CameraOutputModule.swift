@@ -20,7 +20,7 @@
 import Foundation
 import AVFoundation
 
-public protocol CameraOutputModule: AnyObject {
+protocol CameraOutputModule: AnyObject {
     var output: AVCaptureOutput? { get }
 
     func registered()

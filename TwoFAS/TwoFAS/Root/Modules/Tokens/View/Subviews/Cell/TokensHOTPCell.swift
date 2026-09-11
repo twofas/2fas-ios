@@ -27,19 +27,18 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
     
     var didTapRefreshCounter: ((Secret) -> Void)?
     
-    private let hMargin: CGFloat = Theme.Metrics.doubleMargin
-    private let vMargin: CGFloat = Theme.Metrics.mediumMargin
-    private let manualOffset: CGFloat = 3
-    
+    private let hMargin: CGFloat = Spacing.XL.rawValue
+    private let vMargin: CGFloat = Spacing.L.rawValue
+
     private let tokenLabel: TokensTokenView = {
         let view = TokensTokenView()
         view.setKind(.normal)
         return view
     }()
-    private let nextTokenLabel = TokensNextTokenLabel()
     private let refreshCounter: RefreshTokenCounter = {
         let view = RefreshTokenCounter()
         view.adjustsImageSizeForAccessibilityContentSizeCategory(true)
+        view.setKind(.normal)
         return view
     }()
     
@@ -47,7 +46,11 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
     private var serviceTypeName: String = ""
     private var isActive = true
     private var shouldAnimate = true
-    
+
+    private var withAdditionalInfoConstraints: [NSLayoutConstraint] = []
+    private var withoutAdditionalInfoConstraints: [NSLayoutConstraint] = []
+
+    private let groupContainer = UIView()
     private let categoryView = TokensCategory()
     private var logoView: TokensLogo = {
         let comp = TokensLogo()
@@ -67,12 +70,12 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
     private let accessoryContainer = UIView()
     private let separator: UIView = {
         let line = UIView()
-        line.backgroundColor = Theme.Colors.Line.separator
+        line.backgroundColor = AppColor.separatorsOpaque.uiColor
         line.isAccessibilityElement = false
         line.isUserInteractionEnabled = false
         return line
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -102,14 +105,16 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         serviceNameLabel.setText(name)
         self.secret = secret
         self.serviceTypeName = serviceTypeName
-        if let additionalInfo, !additionalInfo.isEmpty {
+        let trimmedAdditionalInfo = additionalInfo?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !trimmedAdditionalInfo.isEmpty {
             additionalInfoLabel.isHidden = false
-            additionalInfoLabel.setText(additionalInfo)
+            additionalInfoLabel.setText(trimmedAdditionalInfo)
         } else {
             additionalInfoLabel.isHidden = true
             additionalInfoLabel.clear()
         }
-        
+        applyAdditionalInfoLayout(hasAdditionalInfo: !trimmedAdditionalInfo.isEmpty)
+
         self.shouldAnimate = shouldAnimate
         
         categoryView.setColor(category)
@@ -155,14 +160,14 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
 
 private extension TokensHOTPCell {
     func setupBackground() {
-        contentView.backgroundColor = Theme.Colors.Fill.background
-        backgroundColor = Theme.Colors.Fill.background
+        contentView.backgroundColor = AppColor.backgroundsPrimary.uiColor
+        backgroundColor = AppColor.backgroundsPrimary.uiColor
     }
     
     func setupLayout() {
-        let tokenNegativeMargin = round(hMargin / 4.0)
-        let logoViewTopOffset = vMargin + 14.0
-        let accessoryContainerTopOffset = vMargin + 16.0
+        let tokenTopSpacing = Spacing.SM.rawValue
+        let logoViewTopOffset = vMargin
+        let accessoryContainerTopOffset = vMargin
         contentView.addSubview(separator, with: [
             separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -182,35 +187,54 @@ private extension TokensHOTPCell {
             logoView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
         ])
         
-        contentView.addSubview(serviceNameLabel, with: [
-            serviceNameLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            serviceNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin)
-        ])
-        
-        contentView.addSubview(additionalInfoLabel, with: [
-            additionalInfoLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor),
-            additionalInfoLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
-        ])
-        
-        contentView.addSubview(tokenLabel, with: [
-            additionalInfoLabel.bottomAnchor.constraint(equalTo: tokenLabel.topAnchor, constant: tokenNegativeMargin),
-            tokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            tokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor)
-        ])
-        
-        contentView.addSubview(nextTokenLabel, with: [
-            nextTokenLabel.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
-            nextTokenLabel.widthAnchor.constraint(equalTo: serviceNameLabel.widthAnchor),
-            nextTokenLabel.topAnchor.constraint(equalTo: tokenLabel.bottomAnchor, constant: -tokenNegativeMargin),
-            nextTokenLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)
+        contentView.addSubview(groupContainer, with: [
+            groupContainer.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
+            groupContainer.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
 
+        let groupTopMargin = groupContainer.topAnchor.constraint(
+            greaterThanOrEqualTo: contentView.topAnchor,
+            constant: Spacing.XL.rawValue
+        )
+        groupTopMargin.priority = .defaultHigh
+        let groupBottomMargin = groupContainer.bottomAnchor.constraint(
+            lessThanOrEqualTo: contentView.bottomAnchor,
+            constant: -Spacing.XL.rawValue
+        )
+        groupBottomMargin.priority = .defaultHigh
+        NSLayoutConstraint.activate([groupTopMargin, groupBottomMargin])
+
+        groupContainer.addSubview(serviceNameLabel, with: [
+            serviceNameLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
+            serviceNameLabel.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor),
+            serviceNameLabel.topAnchor.constraint(equalTo: groupContainer.topAnchor)
+        ])
+
+        groupContainer.addSubview(additionalInfoLabel, with: [
+            additionalInfoLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
+            additionalInfoLabel.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor),
+            additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor)
+        ])
+
+        groupContainer.addSubview(tokenLabel, with: [
+            tokenLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
+            tokenLabel.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor),
+            tokenLabel.bottomAnchor.constraint(equalTo: groupContainer.bottomAnchor)
+        ])
+
+        withAdditionalInfoConstraints = [
+            tokenLabel.topAnchor.constraint(equalTo: additionalInfoLabel.bottomAnchor, constant: tokenTopSpacing)
+        ]
+        withoutAdditionalInfoConstraints = [
+            tokenLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor, constant: tokenTopSpacing)
+        ]
+        NSLayoutConstraint.activate(withoutAdditionalInfoConstraints)
+
         contentView.addSubview(accessoryContainer, with: [
-            serviceNameLabel.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
+            groupContainer.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
             accessoryContainer.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor,
-                constant: -hMargin - manualOffset
+                constant: -hMargin + 4
             ),
             accessoryContainer.topAnchor.constraint(
                 equalTo: contentView.topAnchor,
@@ -222,10 +246,9 @@ private extension TokensHOTPCell {
         accessoryContainer.addSubview(refreshCounter, with: [
             refreshCounter.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor),
             refreshCounter.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
-            refreshCounter.topAnchor.constraint(greaterThanOrEqualTo: accessoryContainer.topAnchor),
-            refreshCounter.bottomAnchor.constraint(lessThanOrEqualTo: accessoryContainer.bottomAnchor),
             refreshCounter.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor),
-            refreshCounter.widthAnchor.constraint(equalTo: accessoryContainer.widthAnchor)
+            refreshCounter.widthAnchor.constraint(equalToConstant: RefreshTokenCounter.sizeNormal),
+            refreshCounter.heightAnchor.constraint(equalToConstant: RefreshTokenCounter.sizeNormal)
         ])
         
         tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
@@ -233,14 +256,21 @@ private extension TokensHOTPCell {
         tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
     }
     
+    func applyAdditionalInfoLayout(hasAdditionalInfo: Bool) {
+        NSLayoutConstraint.deactivate(withAdditionalInfoConstraints)
+        NSLayoutConstraint.deactivate(withoutAdditionalInfoConstraints)
+        if hasAdditionalInfo {
+            NSLayoutConstraint.activate(withAdditionalInfoConstraints)
+        } else {
+            NSLayoutConstraint.activate(withoutAdditionalInfoConstraints)
+        }
+    }
+
     func setupConfiguration() {
         accessoryContainer.addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(animateRefreshCounter))
         )
         tokenLabel.maskToken()
-        nextTokenLabel.textColor = Theme.Colors.Fill.background.withAlphaComponent(0.1)
-        nextTokenLabel.text = TokenValue.empty
-        nextTokenLabel.isAccessibilityElement = false
     }
     
     @objc

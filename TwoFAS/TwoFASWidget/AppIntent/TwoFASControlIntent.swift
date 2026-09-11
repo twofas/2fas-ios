@@ -19,7 +19,6 @@
 
 import AppIntents
 
-@available(iOS 18.0, *)
 struct TwoFASControlIntent: AppIntent {
     static let title = LocalizedStringResource("widget__open_app")
     

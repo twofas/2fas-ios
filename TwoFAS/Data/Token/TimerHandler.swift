@@ -55,11 +55,11 @@ public protocol TokenTimerConsumer: AnyObject {
     var didTapUnlock: ((TokenTimerConsumer) -> Void)? { get set }
 }
 
-public protocol TimerHandlerStart {
+protocol TimerHandlerStart {
     func start(with timedSecret: [TimedSecret])
 }
 
-public protocol TimerHandlerTokens {
+protocol TimerHandlerTokens {
     func register(_ consumer: TokenTimerConsumer, isLocked: Bool)
     func unlockConsumer(_ consumer: TokenTimerConsumer)
     func remove(_ consumer: TokenTimerConsumer)
@@ -67,7 +67,7 @@ public protocol TimerHandlerTokens {
     func lockAllConsumers()
 }
 
-public protocol TimerHandlerStop {
+protocol TimerHandlerStop {
     func stop()
 }
 

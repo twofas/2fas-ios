@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
 import Data
 
@@ -28,35 +29,77 @@ final class TokensViewController: UIViewController {
     }
 
     var presenter: TokensPresenter!
-    var addButton: UIBarButtonItem? {
-        navigationItem.rightBarButtonItem
-    }
     var newsButton: NewsButtonType?
 
+    var newsButtonSourceView: UIView? {
+        guard #available(iOS 26.0, *) else { return nil }
+        let item: UIBarButtonItem?
+        switch newsButton {
+        case .unread(let button), .read(let button): item = button
+        case .none: item = nil
+        }
+        guard let view = item?.customView,
+              view.window != nil,
+              view.bounds.width > 0,
+              view.bounds.height > 0
+        else { return nil }
+        return view
+    }
+
     private(set) var tokensView: TokensView!
+    private(set) var floatingHeader: TokensFloatingSectionHeader!
+    /// Set while the search bar is being presented or dismissed.
+    var isSearchTransitioning = false
     private(set) var dataSource: UICollectionViewDiffableDataSource<TokensSection, TokenCell>!
     
     let headerHeight: CGFloat = 44
+    private static let searchTransitioningLayoutAnimationDuration: TimeInterval = 0.3
     let emptySearchScreenView = TokensViewEmptySearchScreen()
-    let emptyListScreenView = TokensViewEmptyListScreen()
+
+    let emptyListModel = TokensEmptyListModel()
+    private(set) lazy var emptyListHostingController = UIHostingController(
+        rootView: TokensEmptyListView(model: emptyListModel)
+    )
+    var emptyListScreenView: UIView { emptyListHostingController.view }
     
     private var layout: UICollectionViewCompositionalLayout!
     
     var searchBarAdded = false
-    
+    var pendingSearchFocus = false
+
+    /// A context menu lifts the pressed cell out of the list. Reloading the list while it is lifted swaps
+    /// the cell underneath and the lifted preview turns into a black plate. Reloads that arrive during the
+    /// lift, or while the menu is open, wait here and are applied once the menu is away.
+    enum ContextMenuState {
+        case none
+        /// The configuration was requested and the cell is lifting. The menu may still not appear if the
+        /// finger lifts early, so this state expires on its own.
+        case lifting(expiry: DispatchWorkItem)
+        case shown
+    }
+    var contextMenuState: ContextMenuState = .none
+    var pendingReload: (snapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>, scrollTo: IndexPath?)?
+
     let searchController = CommonSearchController()
     
     override func loadView() {
         createLayout()
         tokensView = TokensView(frame: .zero, collectionViewLayout: layout)
-        self.view = tokensView
         tokensView.configure()
+        // The list is wrapped so the floating header can sit above it, outside the scroll view.
+        let container = UIView()
+        tokensView.frame = container.bounds
+        tokensView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        container.addSubview(tokensView)
+        view = container
+        setContentScrollView(tokensView, for: .all)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
+        setupFloatingHeader()
         setupEmptyScreensLayout()
         setupEmptyScreensEvents()
         setupDelegates()
@@ -78,9 +121,43 @@ final class TokensViewController: UIViewController {
         super.viewWillAppear(animated)
         presenter.viewWillAppear()
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        applyLargeTitleIfNeeded()
         startSafeAreaKeyboardAdjustment()
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tryFulfillPendingSearchFocus()
+        consumePendingTokensQuickActions()
+    }
+
+    override func willTransition(
+        to newCollection: UITraitCollection,
+        with coordinator: UIViewControllerTransitionCoordinator
+    ) {
+        super.willTransition(to: newCollection, with: coordinator)
+        applyLargeTitleIfNeeded(sizeClass: newCollection.horizontalSizeClass)
+    }
+
+    private func applyLargeTitleIfNeeded(sizeClass: UIUserInterfaceSizeClass? = nil) {
+        guard #available(iOS 26.0, *) else { return }
+        let horizontal = sizeClass ?? traitCollection.horizontalSizeClass
+        let isCompact = horizontal == .compact
+        navigationController?.navigationBar.prefersLargeTitles = isCompact
+        navigationItem.largeTitleDisplayMode = isCompact ? .always : .never
+    }
     
+    override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
+        // The search bar's presentation moves the safe area in one step; animating the layout keeps
+        // views pinned to it (the floating header) moving with the bar.
+        if isSearchTransitioning {
+            UIView.animate(withDuration: Self.searchTransitioningLayoutAnimationDuration) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -95,14 +172,27 @@ final class TokensViewController: UIViewController {
 private extension TokensViewController {
     func setupView() {
         extendedLayoutIncludesOpaqueBars = true
-        view.backgroundColor = Theme.Colors.Fill.background
+        view.backgroundColor = AppColor.backgroundsPrimary.uiColor
         title = T.Commons.tokens
         accessibilityTraits = .header
     }
     
     func setupDelegates() {
         searchController.searchBarDelegate = self
+        searchController.delegate = self
         tokensView.delegate = self
+        tokensView.didLayout = { [weak self] in self?.updateFloatingHeader() }
+    }
+
+    func setupFloatingHeader() {
+        floatingHeader = TokensFloatingSectionHeader(scrollView: tokensView)
+        floatingHeader.header.dataSource = self
+        floatingHeader.isHidden = true
+        view.addSubview(floatingHeader, with: [
+            floatingHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            floatingHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            floatingHeader.header.topAnchor.constraint(equalTo: view.safeTopAnchor)
+        ])
     }
     
     func setupDataSource() {
@@ -124,7 +214,9 @@ private extension TokensViewController {
     }
     
     func setupEmptyScreensLayout() {
-        view.addSubview(emptySearchScreenView, with: [
+        // Both empty screens live inside the list, not in the root view: a hosted SwiftUI view
+        // that receives real safe-area insets there relayouts endlessly once the keyboard is up.
+        tokensView.addSubview(emptySearchScreenView, with: [
             emptySearchScreenView.leadingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.leadingAnchor),
             emptySearchScreenView.trailingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.trailingAnchor),
             emptySearchScreenView.topAnchor.constraint(equalTo: tokensView.frameLayoutGuide.topAnchor),
@@ -133,12 +225,15 @@ private extension TokensViewController {
         emptySearchScreenView.isHidden = true
         emptySearchScreenView.alpha = 0
         
-        view.addSubview(emptyListScreenView, with: [
+        addChild(emptyListHostingController)
+        emptyListScreenView.backgroundColor = AppColor.backgroundsPrimary.uiColor
+        tokensView.addSubview(emptyListScreenView, with: [
             emptyListScreenView.leadingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.leadingAnchor),
             emptyListScreenView.trailingAnchor.constraint(equalTo: tokensView.frameLayoutGuide.trailingAnchor),
             emptyListScreenView.topAnchor.constraint(equalTo: tokensView.safeTopAnchor),
             emptyListScreenView.bottomAnchor.constraint(equalTo: tokensView.safeBottomAnchor)
         ])
+        emptyListHostingController.didMove(toParent: self)
         emptyListScreenView.isHidden = true
         emptyListScreenView.alpha = 0
     }
@@ -150,13 +245,13 @@ private extension TokensViewController {
     }
     
     func setupEmptyScreensEvents() {
-        emptyListScreenView.pairNewService = { [weak self] in self?.presenter.handleAddService() }
-        emptyListScreenView.importFromExternalService = { [weak self] in
+        emptyListModel.pairNewService = { [weak self] in self?.presenter.handleAddService() }
+        emptyListModel.importFromExternalService = { [weak self] in
             AppEventLog(.onboardingBackupFile)
             self?.presenter.handleImportExternalFile()
         }
-        emptyListScreenView.help = { [weak self] in self?.presenter.handleShowHelp() }
-        emptyListScreenView.goToTrashAction = { [weak self] in self?.presenter.goToTrash() }
+        emptyListModel.help = { [weak self] in self?.presenter.handleShowHelp() }
+        emptyListModel.goToTrashAction = { [weak self] in self?.presenter.goToTrash() }
     }
     
     func setupNotificationsListeners() {
@@ -199,14 +294,20 @@ private extension TokensViewController {
         )
         center.addObserver(
             self,
-            selector: #selector(tokensScreenIsVisible),
-            name: .tokensScreenIsVisible,
+            selector: #selector(activeSearchShouldFocus),
+            name: .activeSearchShouldFocus,
             object: nil
         )
         center.addObserver(
             self,
             selector: #selector(userLoggedIn),
             name: .userLoggedIn,
+            object: nil
+        )
+        center.addObserver(
+            self,
+            selector: #selector(quickActionTokensRequested),
+            name: .quickActionTokensRequested,
             object: nil
         )
         center.addObserver(

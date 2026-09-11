@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import CommonWatch
 
 struct ServiceListView: View {
     @Bindable
@@ -27,7 +28,7 @@ struct ServiceListView: View {
         Group {
             if presenter.list.isEmpty {
                 VStack(alignment: .center, spacing: 8) {
-                    Image(systemName: "folder")
+                    Image(icon: .folder)
                         .font(.system(size: 40))
                     Text(T.Tokens.tokensListIsEmpty)
                 }

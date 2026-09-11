@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class TokensNextTokenLabel: UILabel {
     init() {
@@ -35,7 +36,14 @@ final class TokensNextTokenLabel: UILabel {
     private func commonInit() {
         adjustsFontForContentSizeCategory = true
         numberOfLines = 1
-        textColor = Theme.Colors.Text.main
+        textColor = AppColor.labelsPrimary.uiColor
+        
+        minimumScaleFactor = 0.8
+        allowsDefaultTighteningForTruncation = true
+        adjustsFontSizeToFitWidth = true
+        baselineAdjustment = .alignCenters
+        textAlignment = .left
+
         setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
         setContentHuggingPriority(.defaultLow - 1, for: .vertical)
@@ -44,10 +52,9 @@ final class TokensNextTokenLabel: UILabel {
     func setKind(_ kind: TokensCellKind) {
         switch kind {
         case .compact:
-            font = UIFont.systemFont(ofSize: 17, weight: .bold)
+            font = TextStyle.smallToken.uiFont()
         case .normal:
-            font = UIFontMetrics(forTextStyle: .headline)
-                .scaledFont(for: .systemFont(ofSize: 17, weight: .bold))
+            font = TextStyle.smallToken.uiFont()
         default:
             break
         }

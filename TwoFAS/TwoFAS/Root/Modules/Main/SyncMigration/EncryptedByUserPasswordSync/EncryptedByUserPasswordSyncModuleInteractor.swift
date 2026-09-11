@@ -22,7 +22,6 @@ import Data
 import Common
 
 protocol EncryptedByUserPasswordSyncModuleInteracting: AnyObject {
-    
     var syncSuccess: (() -> Void)? { get set }
     var syncFailure: ((CloudState.NotAvailableReason) -> Void)? { get set }
     

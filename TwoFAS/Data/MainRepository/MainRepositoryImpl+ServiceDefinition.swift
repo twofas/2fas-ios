@@ -19,6 +19,7 @@
 
 import UIKit
 import Common
+import Content
 
 extension MainRepositoryImpl {
     func serviceDefinition(using serviceTypeID: ServiceTypeID) -> ServiceDefinition? {

@@ -80,9 +80,9 @@ extension SortType {
     func image(forSelectedOption option: Self, configuration: UIImage.SymbolConfiguration) -> UIImage {
         var image: UIImage?
         switch self {
-        case .az: image = UIImage(systemName: "arrow.down")
-        case .za: image = UIImage(systemName: "arrow.up")
-        case .manual: image = UIImage(systemName: "line.3.horizontal")
+        case .az: image = UIImage(icon: .arrowDown)
+        case .za: image = UIImage(icon: .arrowUp)
+        case .manual: image = UIImage(icon: .line3Horizontal)
         }
 
         if self == option {
@@ -100,7 +100,7 @@ extension SortType {
         func onAppear() {}
         func set(_ sortType: SortType) {}
         func image(for sortType: SortType) -> Image {
-            .init(systemName: "arrowDown")
+            .init(icon: .arrowDown)
         }
     }
 

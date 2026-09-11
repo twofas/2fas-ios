@@ -32,16 +32,16 @@ extension TokensSectionHeader {
         
         private let collapse: UIImageView = {
             let config = UIImage.SymbolConfiguration(textStyle: .body)
-            let img = UIImageView(image: UIImage(systemName: "chevron.up", withConfiguration: config))
-            img.tintColor = Theme.Colors.inactiveInverted
+            let img = UIImageView(image: UIImage(icon: .chevronUp, withConfiguration: config))
+            img.tintColor = AppColor.labelsSecondary.uiColor
             img.adjustsImageSizeForAccessibilityContentSizeCategory = true
             img.contentMode = .center
             return img
         }()
         private let expand: UIImageView = {
             let config = UIImage.SymbolConfiguration(textStyle: .body)
-            let img = UIImageView(image: UIImage(systemName: "chevron.down", withConfiguration: config))
-            img.tintColor = Theme.Colors.inactiveInverted
+            let img = UIImageView(image: UIImage(icon: .chevronDown, withConfiguration: config))
+            img.tintColor = AppColor.labelsSecondary.uiColor
             img.adjustsImageSizeForAccessibilityContentSizeCategory = true
             img.contentMode = .center
             return img
@@ -97,16 +97,16 @@ extension TokensSectionHeader {
         private let down: UIButton = {
             let b = UIButton()
             let config = UIImage.SymbolConfiguration(textStyle: .body)
-            b.setImage(UIImage(systemName: "chevron.down", withConfiguration: config), for: .normal)
-            b.imageView?.tintColor = Theme.Colors.inactiveInverted
+            b.setImage(UIImage(icon: .chevronDown, withConfiguration: config), for: .normal)
+            b.imageView?.tintColor = AppColor.labelsSecondary.uiColor
             b.adjustsImageSizeForAccessibilityContentSizeCategory = true
             return b
         }()
         private let up: UIButton = {
             let b = UIButton()
             let config = UIImage.SymbolConfiguration(textStyle: .body)
-            b.setImage(UIImage(systemName: "chevron.up", withConfiguration: config), for: .normal)
-            b.imageView?.tintColor = Theme.Colors.inactiveInverted
+            b.setImage(UIImage(icon: .chevronUp, withConfiguration: config), for: .normal)
+            b.imageView?.tintColor = AppColor.labelsSecondary.uiColor
             b.adjustsImageSizeForAccessibilityContentSizeCategory = true
             b.setPreferredSymbolConfiguration(config, forImageIn: .normal)
             return b
@@ -194,26 +194,35 @@ extension TokensSectionHeader {
         }
         
         private func commonInit() {
-            font = UIFont.preferredFont(forTextStyle: .body)
+            font = TextStyle.body.uiFont(.medium)
             textAlignment = .left
             numberOfLines = 1
             allowsDefaultTighteningForTruncation = true
             lineBreakMode = .byTruncatingTail
             setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
-            textColor = Theme.Colors.inactiveInverted
+            textColor = AppColor.labelsSecondary.uiColor
             accessibilityTraits = .header
         }
     }
     
     final class ElementCounter: UIView {
+        private let bgView: UIView = {
+            let v = UIView()
+            v.backgroundColor = AppColor.backgroundsPrimary.uiColor
+            v.applyRoundedCorners(
+                    withBackgroundColor: AppColor.backgroundsPrimary.uiColor,
+                    cornerRadius: TFCornerRadius.small.value
+                )
+            return v
+        }()
+        
         private let label: UILabel = {
             let label = UILabel()
-            label.font = UIFontMetrics(forTextStyle: .caption1)
-                .scaledFont(for: .systemFont(ofSize: 12, weight: .medium))
+            label.font = TextStyle.subheadline.uiFont(.emphasized)
             label.adjustsFontForContentSizeCategory = true
             label.numberOfLines = 1
             label.textAlignment = .center
-            label.textColor = Theme.Colors.inactiveInverted
+            label.textColor = AppColor.labelsSecondary.uiColor
             label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
             return label
         }()
@@ -229,8 +238,11 @@ extension TokensSectionHeader {
         }
         
         private func commonInit() {
-            let margin = Theme.Metrics.standardMargin / 2.0
+            addSubview(bgView)
+            bgView.pinToParent()
             
+            let margin = Spacing.S.rawValue
+                        
             addSubview(label, with: [
                 widthAnchor.constraint(equalTo: heightAnchor),
                 label.topAnchor.constraint(equalTo: topAnchor),
@@ -238,6 +250,13 @@ extension TokensSectionHeader {
                 label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
                 label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin)
             ])
+            
+            registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, previousTraitCollection) in
+                guard self.traitCollection.userInterfaceStyle !=
+                        previousTraitCollection.userInterfaceStyle else { return }
+                
+                self.applyBorder()
+            }
         }
         
         func setCount(_ count: String) {
@@ -249,16 +268,12 @@ extension TokensSectionHeader {
             applyBorder()
         }
         
-        override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-            super.traitCollectionDidChange(previousTraitCollection)
-            
-            guard traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle else { return }
-
-            applyBorder()
-        }
-        
         private func applyBorder() {
-            applyRoundedBorder(withBorderColor: ThemeColor.tableSeparator, width: 1)
+            applyRoundedBorder(
+                withBorderColor: AppColor.bordersPrimary.uiColor,
+                width: 1,
+                cornerRadius: TFCornerRadius.small.value
+            )
         }
     }
     
@@ -276,8 +291,8 @@ extension TokensSectionHeader {
         private func commonInit() {
             let config = UIImage.SymbolConfiguration(textStyle: .body)
             adjustsImageSizeForAccessibilityContentSizeCategory = true
-            setImage(UIImage(systemName: "ellipsis", withConfiguration: config), for: .normal)
-            imageView?.tintColor = Theme.Colors.Icon.normal
+            setImage(UIImage(icon: .ellipsis, withConfiguration: config), for: .normal)
+            imageView?.tintColor = AppColor.labelsSecondary.uiColor
             showsMenuAsPrimaryAction = true
         }
     }

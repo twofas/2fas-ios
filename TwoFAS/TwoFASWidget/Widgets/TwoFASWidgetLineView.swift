@@ -88,34 +88,33 @@ struct TwoFASWidgetLineView: View {
         data: CodeEntry.EntryData,
         reason: RedactionReasons
     ) -> some View {
-        HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: 0) {
-            IconRenderer(entry: entry)
-                .frame(width: 24)
-                .scaledToFit()
+        HStack(alignment: .center, spacing: 0) {
+            ServiceIconView(icon: data.icon, dimension: 24)
                 .padding(.trailing, 12)
                 .redacted(reason: reason)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(data.name)
-                    .foregroundStyle(.textPrimary)
-                    .font(.system(size: 11).weight(.regular))
+                    .foregroundStyle(.labelsPrimary)
+                    .textStyle(.subheadline, .emphasized)
                     .redacted(reason: reason)
                     .multilineTextAlignment(.leading)
                     .lineLimit(1)
                 
                 if let info = data.info, !info.isEmpty {
                     Text(info)
-                        .foregroundStyle(.textSecondary)
+                        .foregroundStyle(.labelsSecondary)
+                        .textStyle(.caption1)
                         .lineLimit(1)
-                        .font(.system(size: 11).weight(.regular))
                 }
             }
             
             Spacer()
             
             Text(verbatim: data.code)
-                .foregroundStyle(.textPrimary)
-                .font(.system(size: 27).weight(.light).monospacedDigit())
+                .foregroundStyle(.labelsPrimary)
+                .textStyle(.token)
+                .monospacedDigit()
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.1)
                 .lineLimit(1)

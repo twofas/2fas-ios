@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 protocol TokensViewControlling: AnyObject {
     func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>, scrollTo: IndexPath?)
@@ -39,11 +40,8 @@ protocol TokensViewControlling: AnyObject {
     func removeSearchBar()
     func stopSearch()
     
-    func enableBounce()
-    func disableBounce()
-    
-    func showKeyboard()
-    
+    func focusSearchBar()
+
     func copyToken()
     func copyNextToken()
 }
@@ -51,6 +49,12 @@ protocol TokensViewControlling: AnyObject {
 extension TokensViewController: TokensViewControlling {
     // MARK: - Data managment
     func reloadData(newSnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell>, scrollTo: IndexPath?) {
+        if isContextMenuActive {
+            pendingReload = (newSnapshot, scrollTo)
+            return
+        }
+        // A newer snapshot supersedes one that was held back by the menu.
+        pendingReload = nil
         if tokensView.hasActiveDrag || tokensView.hasActiveDrop {
             tokensView.cancelInteractiveMovement()
         }
@@ -67,6 +71,7 @@ extension TokensViewController: TokensViewControlling {
     
     // MARK: - Empty screen or list
     func showList() {
+        tokensView.isScrollEnabled = true
         if presenter.showSearchBar {
             addSearchBar()
             tokensView.alwaysBounceVertical = true
@@ -84,17 +89,20 @@ extension TokensViewController: TokensViewControlling {
             completion: { _ in
                 self.emptyListScreenView.isHidden = true
                 self.emptySearchScreenView.isHidden = true
+                self.updateFloatingHeader()
             }
         )
     }
     
     func showEmptyScreen() {
         removeSearchBar()
+        tokensView.isScrollEnabled = false
         VoiceOver.say(T.Voiceover.useAddServiceButtonTitle)
-        emptyListScreenView.setItemsInTrashCount(presenter.trashedServicesCount)
+        emptyListModel.setItemsInTrashCount(presenter.trashedServicesCount)
         guard emptyListScreenView.isHidden else { return }
         emptyListScreenView.alpha = 0
         emptyListScreenView.isHidden = false
+        updateFloatingHeader()
         UIView.animate(withDuration: Theme.Animations.Timing.show, animations: {
             self.emptyListScreenView.alpha = 1
         })
@@ -104,6 +112,7 @@ extension TokensViewController: TokensViewControlling {
         VoiceOver.say(T.Voiceover.noSearchResults)
         emptySearchScreenView.alpha = 0
         emptySearchScreenView.isHidden = false
+        updateFloatingHeader()
         UIView.animate(
             withDuration: Theme.Animations.Timing.show,
             delay: 0,
@@ -113,9 +122,30 @@ extension TokensViewController: TokensViewControlling {
         }
     }
     
-    func showKeyboard() {
-        guard !searchController.searchBar.isFirstResponder && searchBarAdded else { return }
-        searchController.searchBar.becomeFirstResponder()
+    func focusSearchBar() {
+        pendingSearchFocus = true
+        tryFulfillPendingSearchFocus()
+    }
+
+    func tryFulfillPendingSearchFocus() {
+        guard pendingSearchFocus else { return }
+        guard let window = viewIfLoaded?.window, searchBarAdded else {
+            Log("TokensViewController - focusSearchBar: deferred, view/search bar not ready")
+            return
+        }
+        let sceneState = window.windowScene?.activationState
+        guard sceneState == .foregroundActive || sceneState == .foregroundInactive else {
+            Log("TokensViewController - focusSearchBar: deferred, scene not in foreground")
+            return
+        }
+        guard !searchController.searchBar.isFirstResponder else {
+            pendingSearchFocus = false
+            return
+        }
+        let didBecome = searchController.searchBar.becomeFirstResponder()
+        if didBecome {
+            pendingSearchFocus = false
+        }
     }
     
     // MARK: - Dragging
@@ -131,93 +161,73 @@ extension TokensViewController: TokensViewControlling {
     func updateNaviIcons(using state: TokensViewControllerAddState, hasUnreadNews: Bool) {
         func createNewsButton() -> UIBarButtonItem {
             if hasUnreadNews {
-                let naviButton = UnreadNewsNaviButton()
+                let naviButton: UIButton
+                if #available(iOS 26.0, *) {
+                    let button = UnreadNewsNaviButton()
+                    button.animate()
+                    naviButton = button
+                } else {
+                    let button = LegacyUnreadNewsNaviButton()
+                    button.animate()
+                    naviButton = button
+                }
                 naviButton.translatesAutoresizingMaskIntoConstraints = false
                 naviButton.accessibilityLabel = T.Commons.notifications
                 naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
-                naviButton.animate()
                 let uiBarButtonItem = UIBarButtonItem(customView: naviButton)
+                if #available(iOS 26.0, *) {
+                    uiBarButtonItem.hidesSharedBackground = true
+                }
                 newsButton = .unread(uiBarButtonItem)
                 return uiBarButtonItem
             } else {
-                let naviButton = UIButton(type: .custom)
-                naviButton.setBackgroundImage(Asset.navibarNewsIcon.image, for: .normal)
-                naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
-                naviButton.translatesAutoresizingMaskIntoConstraints = false
-                naviButton.accessibilityLabel = T.Commons.notifications
-                let uiBarButtonItem = UIBarButtonItem(customView: naviButton)
+                let uiBarButtonItem: UIBarButtonItem
+                if #available(iOS 26.0, *) {
+                    let naviButton = UnreadNewsNaviButton(iconPointSize: UnreadNewsNaviButton.iconReadPointSize)
+                    naviButton.translatesAutoresizingMaskIntoConstraints = false
+                    naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
+                    let item = UIBarButtonItem(customView: naviButton)
+                    item.hidesSharedBackground = true
+                    uiBarButtonItem = item
+                } else {
+                    let naviButton = UIButton(type: .custom)
+                    naviButton.setBackgroundImage(Asset.navibarNewsIcon.image, for: .normal)
+                    naviButton.addTarget(self, action: #selector(showNotifications), for: .touchUpInside)
+                    naviButton.translatesAutoresizingMaskIntoConstraints = false
+                    uiBarButtonItem = UIBarButtonItem(customView: naviButton)
+                }
+                uiBarButtonItem.accessibilityLabel = T.Commons.notifications
                 newsButton = .read(uiBarButtonItem)
                 return uiBarButtonItem
             }
         }
-        
-        func createAddButton(image: UIImage) -> UIBarButtonItem {
-            let buttonAdd = UIBarButtonItem(
-                image: image,
-                style: .plain,
-                target: self,
-                action: #selector(addServiceAction)
-            )
-            buttonAdd.accessibilityLabel = T.Voiceover.addService
-            return buttonAdd
+
+        func resolvedNewsButton() -> UIBarButtonItem {
+            switch (hasUnreadNews, newsButton) {
+            case (true, .unread(let b)): return b
+            case (false, .read(let b)): return b
+            default: return createNewsButton()
+            }
         }
-            
+
         switch state {
         case .firstTime:
-            switch (hasUnreadNews, newsButton) {
-            case (true, .unread(let unreadNewsButton)):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAddFirst.image),
-                    unreadNewsButton
-                ]
-            case (false, .unread):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAddFirst.image),
-                    createNewsButton()
-                ]
-            case (true, .read):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAddFirst.image),
-                    createNewsButton()
-                ]
-            case (false, .read(let readNewsButton)):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAddFirst.image),
-                    readNewsButton
-                ]
-            case (_, .none):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAddFirst.image),
-                    createNewsButton()
-                ]
+            if #available(iOS 26.0, *) {
+                navigationItem.rightBarButtonItems = [resolvedNewsButton()]
+            } else {
+                // iOS 18: the news bell moves to the leading side and the full "+" stays on the trailing side.
+                navigationItem.rightBarButtonItems = [makeAddServiceButton()]
+                navigationItem.leftBarButtonItem = resolvedNewsButton()
             }
         case .normal:
-            switch (hasUnreadNews, newsButton) {
-            case (true, .unread(let unreadNewsButton)):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAdd.image),
-                    unreadNewsButton
-                ]
-            case (false, .unread):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAdd.image),
-                    createNewsButton()
-                ]
-            case (true, .read):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAdd.image),
-                    createNewsButton()
-                ]
-            case (false, .read(let readNewsButton)):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAdd.image),
-                    readNewsButton
-                ]
-            case (_, .none):
-                navigationItem.rightBarButtonItems = [
-                    createAddButton(image: Asset.naviIconAdd.image),
-                    createNewsButton()
-                ]
+            if #available(iOS 26.0, *) {
+                // fixedSpace(0) splits the shared glass background so the two buttons always
+                // render as separate glass capsules, regardless of the unread badge state.
+                navigationItem.rightBarButtonItems = [makeMoreMenuButton(), .fixedSpace(0), resolvedNewsButton()]
+            } else {
+                // iOS 18: the news bell moves to the leading side and a "+" button takes its place next to "...".
+                navigationItem.rightBarButtonItems = [makeMoreMenuButton(), makeAddServicePlusButton()]
+                navigationItem.leftBarButtonItem = resolvedNewsButton()
             }
         case .none:
             let buttonSection = UIBarButtonItem(
@@ -227,28 +237,84 @@ extension TokensViewController: TokensViewControlling {
                 action: #selector(addSectionAction)
             )
             buttonSection.accessibilityLabel = T.Voiceover.addGroup
-            let buttonSort = UIBarButtonItem(
-                image: Asset.naviSortIcon.image,
-                style: .plain,
-                target: self,
-                action: #selector(showSortSelection)
-            )
-            buttonSort.accessibilityLabel = T.Voiceover.sortByTitle
-            navigationItem.rightBarButtonItems = [buttonSection, buttonSort]
+            navigationItem.rightBarButtonItems = [buttonSection]
+        }
+    }
+
+    private func makeMoreMenuButton() -> UIBarButtonItem {
+        let editAction = UIAction(
+            title: T.Commons.edit,
+            image: UIImage(icon: .pencil)
+        ) { [weak self] _ in
+            self?.presenter.handleEnterEditMode()
+        }
+
+        let deferredSortChildren = UIDeferredMenuElement.uncached { [weak self] completion in
+            guard let self else {
+                completion([])
+                return
+            }
+            let selected = self.presenter.selectedSortType
+            let actions: [UIAction] = SortType.allCases.map { sortType in
+                UIAction(
+                    title: sortType.localized,
+                    image: UIImage(icon: self.sortSystemImageName(for: sortType)),
+                    state: sortType == selected ? .on : .off
+                ) { [weak self] _ in
+                    self?.presenter.handleSetSortType(sortType)
+                }
+            }
+            completion(actions)
+        }
+        let sortMenu = UIMenu(
+            title: T.Tokens.sortBy,
+            image: Asset.naviSortIcon.image,
+            children: [deferredSortChildren]
+        )
+
+        let children: [UIMenuElement] = [editAction, sortMenu]
+        let menu = UIMenu(children: children)
+        let button = UIBarButtonItem(image: UIImage(icon: .ellipsis), menu: menu)
+        button.accessibilityLabel = T.Commons.optionsTitle
+        return button
+    }
+
+    private func makeAddServiceButton() -> UIBarButtonItem {
+        let button = UIBarButtonItem(
+            image: Asset.naviIconAddFirst.image,
+            style: .plain,
+            target: self,
+            action: #selector(addServiceAction)
+        )
+        button.accessibilityLabel = T.Voiceover.addService
+        return button
+    }
+
+    private func makeAddServicePlusButton() -> UIBarButtonItem {
+        let button = UIBarButtonItem(
+            image: UIImage(icon: .plus),
+            style: .plain,
+            target: self,
+            action: #selector(addServiceAction)
+        )
+        button.accessibilityLabel = T.Voiceover.addService
+        return button
+    }
+
+    private func sortSystemImageName(for sortType: SortType) -> IconName {
+        switch sortType {
+        case .az: .arrowDown
+        case .za: .arrowUp
+        case .manual: .line3Horizontal
         }
     }
     
     func updateEditState(using state: TokensViewControllerEditState) {
         let button: UIBarButtonItem?
-        
+
         switch state {
         case .edit:
-            button = UIBarButtonItem(
-                title: T.Commons.edit,
-                style: .plain,
-                target: self,
-                action: #selector(enterEditMode)
-            )
+            button = leadingNewsButtonForLegacyLayout()
             tokensView.isEditing = false
         case .cancel:
             button = UIBarButtonItem(
@@ -259,11 +325,21 @@ extension TokensViewController: TokensViewControlling {
             )
             tokensView.isEditing = true
         case .none:
-            button = nil
+            button = leadingNewsButtonForLegacyLayout()
             tokensView.isEditing = false
         }
-        
+
         navigationItem.leftBarButtonItem = button
+    }
+
+    // On iOS 18 the news bell lives on the leading side, so when there is no "Done" button to show
+    // we keep the bell there instead of clearing the slot.
+    private func leadingNewsButtonForLegacyLayout() -> UIBarButtonItem? {
+        guard #unavailable(iOS 26.0) else { return nil }
+        switch newsButton {
+        case .unread(let item), .read(let item): return item
+        case .none: return nil
+        }
     }
     
     func gridCell(for indexPath: IndexPath) -> TokenCell? {
@@ -285,11 +361,14 @@ extension TokensViewController: TokensViewControlling {
     func lockBars() {
         tabBarController?.tabBar.isUserInteractionEnabled = false
         navigationController?.navigationBar.isUserInteractionEnabled = false
+        // Lets a drop over the floating header fall through to the list beneath it.
+        floatingHeader.isUserInteractionEnabled = false
     }
     
     func unlockBars() {
         tabBarController?.tabBar.isUserInteractionEnabled = true
         navigationController?.navigationBar.isUserInteractionEnabled = true
+        floatingHeader.isUserInteractionEnabled = true
     }
     
     // MARK: - Search Bars
@@ -297,42 +376,41 @@ extension TokensViewController: TokensViewControlling {
     func addSearchBar() {
         guard !searchBarAdded else { return }
         searchBarAdded = true
+        if #available(iOS 26.0, *) {
+            navigationItem.preferredSearchBarPlacement = .stacked
+        }
         navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = true
+        navigationItem.hidesSearchBarWhenScrolling = false
+        tryFulfillPendingSearchFocus()
     }
     
     func removeSearchBar() {
         guard searchBarAdded else { return }
         searchBarAdded = false
         navigationItem.searchController?.isActive = false
-        navigationItem.largeTitleDisplayMode = .never
         navigationItem.searchController = nil
+        if #available(iOS 26.0, *), traitCollection.horizontalSizeClass == .compact {
+            navigationItem.largeTitleDisplayMode = .always
+        } else {
+            navigationItem.largeTitleDisplayMode = .never
+        }
     }
     
     func stopSearch() {
+        pendingSearchFocus = false
         searchController.isActive = false
     }
     
-    // MARK: - Bounce
-    
-    func enableBounce() {
-        tokensView.alwaysBounceVertical = true
-    }
-    
-    func disableBounce() {
-        tokensView.alwaysBounceVertical = false
-    }
-
     // MARK: - Notifications
     
     func copyToken() {
         VoiceOver.say(T.Notifications.tokenCopied)
-        HUDNotification.presentSuccess(title: T.Notifications.tokenCopied)
+        ToastPresenter.shared.presentTokenCopied()
     }
     
     func copyNextToken() {
         VoiceOver.say(T.Notifications.nextTokenCopied)
-        HUDNotification.presentSuccess(title: T.Notifications.nextTokenCopied)
+        ToastPresenter.shared.presentNextTokenCopied()
     }
 }
 
@@ -340,11 +418,6 @@ private extension TokensViewController {
     @objc
     func addSectionAction() {
         presenter.handleShowSectionCreation()
-    }
-    
-    @objc
-    func showSortSelection() {
-        presenter.handleShowSortSelection()
     }
     
     @objc
@@ -384,6 +457,7 @@ extension TokensViewController {
     @objc
     func notificationAppDidBecomeActive() {
         presenter.handleAppDidBecomeActive()
+        tryFulfillPendingSearchFocus()
     }
     
     @objc
@@ -392,7 +466,7 @@ extension TokensViewController {
     }
     
     @objc
-    func tokensScreenIsVisible() {
+    func activeSearchShouldFocus() {
         guard viewIfLoaded?.window != nil else { return }
         var modalPresent = false
         var vc: UIViewController? = self
@@ -403,14 +477,26 @@ extension TokensViewController {
             }
             vc = vc?.parent
         } while vc != nil
-        
+
         guard !modalPresent else { return }
-        presenter.handleTokensScreenIsVisible()
+        presenter.handleActiveSearchShouldFocus()
     }
     
     @objc
     func userLoggedIn() {
         presenter.handleAppUnlocked()
+    }
+
+    @objc
+    func quickActionTokensRequested() {
+        consumePendingTokensQuickActions()
+    }
+
+    func consumePendingTokensQuickActions() {
+        presenter.handleAddServiceQuickActionIfNeeded()
+        if presenter.shouldFocusSearchOnQuickAction() {
+            focusSearchBar()
+        }
     }
 
     @objc
@@ -420,7 +506,150 @@ extension TokensViewController {
 }
 
 private extension TokensViewController {
+    @available(iOS 26.0, *)
     final class UnreadNewsNaviButton: UIButton {
+        // MARK: - Configuration
+        static let iconSymbolName = IconName.bellFill
+        static let iconPointSize: CGFloat = 20
+        static let iconReadPointSize: CGFloat = 16
+        static let iconWeight: UIImage.SymbolWeight = .regular
+
+        static let badgeSize: CGFloat = 8
+        static let badgeBorderWidth: CGFloat = 1
+        static var badgeFillColor: UIColor { AppColor.accentsBrand.uiColor }
+        static var badgeBorderColor: UIColor { AppColor.backgroundsPrimary.uiColor }
+
+        // Badge position measured inward from the top-trailing corner of the button.
+        static let badgeCornerInset: CGFloat = 12
+
+        // Diameter of the circular glass background. Kept square so the capsule renders as a
+        // circle matching the adjacent standard bar button items (e.g. the "more" button).
+        static let glassDiameter: CGFloat = 44
+
+        static let badgePopScale: CGFloat = 2.0
+        static let badgeSettleScale: CGFloat = 1.0
+
+        let newsImageView = UIImageView()
+        let badgeView = UIView()
+        let glassEffectView: UIVisualEffectView = {
+            let effect = UIGlassEffect()
+            effect.isInteractive = true
+            let view = UIVisualEffectView(effect: effect)
+            view.cornerConfiguration = .capsule()
+            return view
+        }()
+
+        private let iconPointSize: CGFloat
+
+        init(iconPointSize: CGFloat = UnreadNewsNaviButton.iconPointSize) {
+            self.iconPointSize = iconPointSize
+            super.init(frame: .zero)
+            setupViews()
+        }
+
+        required init?(coder: NSCoder) {
+            iconPointSize = Self.iconPointSize
+            super.init(coder: coder)
+            setupViews()
+        }
+
+        private func setupViews() {
+            glassEffectView.translatesAutoresizingMaskIntoConstraints = false
+            glassEffectView.isUserInteractionEnabled = false
+            addSubview(glassEffectView)
+
+            let cfg = UIImage.SymbolConfiguration(
+                pointSize: iconPointSize,
+                weight: Self.iconWeight
+            )
+            newsImageView.image = UIImage(icon: Self.iconSymbolName, withConfiguration: cfg)
+            newsImageView.contentMode = .center
+            newsImageView.translatesAutoresizingMaskIntoConstraints = false
+            newsImageView.tintColor = AppColor.labelsPrimary.uiColor
+            glassEffectView.contentView.addSubview(newsImageView)
+
+            // The badge lives on top of the glass (not inside its content view) so it keeps its
+            // full brand color and isn't clipped by the capsule shape.
+            badgeView.backgroundColor = Self.badgeFillColor
+            badgeView.layer.borderWidth = Self.badgeBorderWidth
+            badgeView.layer.borderColor = Self.badgeBorderColor.cgColor
+            badgeView.layer.cornerRadius = Self.badgeSize / 2
+            badgeView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(badgeView)
+            badgeView.isHidden = true
+
+            registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
+                self.badgeView.layer.borderColor = Self.badgeBorderColor.cgColor
+            }
+
+            let content = glassEffectView.contentView
+            NSLayoutConstraint.activate([
+                glassEffectView.topAnchor.constraint(equalTo: topAnchor),
+                glassEffectView.bottomAnchor.constraint(equalTo: bottomAnchor),
+                glassEffectView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                glassEffectView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                glassEffectView.widthAnchor.constraint(equalToConstant: Self.glassDiameter),
+                glassEffectView.heightAnchor.constraint(equalToConstant: Self.glassDiameter),
+
+                newsImageView.centerXAnchor.constraint(equalTo: content.centerXAnchor),
+                newsImageView.centerYAnchor.constraint(equalTo: content.centerYAnchor),
+
+                badgeView.centerXAnchor.constraint(equalTo: trailingAnchor, constant: -Self.badgeCornerInset),
+                badgeView.centerYAnchor.constraint(equalTo: topAnchor, constant: Self.badgeCornerInset),
+                badgeView.widthAnchor.constraint(equalToConstant: Self.badgeSize),
+                badgeView.heightAnchor.constraint(equalToConstant: Self.badgeSize)
+            ])
+        }
+
+        func animate() {
+            let angle: Double = .pi / 12
+            let numberOfFrames: Double = 5
+            let frameDuration = Double(0.7 / numberOfFrames)
+
+            UIView.animateKeyframes(
+                withDuration: 1,
+                delay: 0,
+                animations: { [newsImageView] in
+                    UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: frameDuration) {
+                        newsImageView.transform = CGAffineTransform(rotationAngle: -angle)
+                    }
+                    UIView.addKeyframe(withRelativeStartTime: frameDuration, relativeDuration: frameDuration) {
+                        newsImageView.transform = CGAffineTransform(rotationAngle: +angle)
+                    }
+                    UIView.addKeyframe(withRelativeStartTime: 2 * frameDuration, relativeDuration: frameDuration) {
+                        newsImageView.transform = CGAffineTransform(rotationAngle: -angle)
+                    }
+                    UIView.addKeyframe(withRelativeStartTime: 3 * frameDuration, relativeDuration: frameDuration) {
+                        newsImageView.transform = CGAffineTransform(rotationAngle: +angle)
+                    }
+                    UIView.addKeyframe(withRelativeStartTime: 4 * frameDuration, relativeDuration: frameDuration) {
+                        newsImageView.transform = CGAffineTransform.identity
+                    }
+                },
+                completion: { [weak self] _ in
+                    self?.badgeView.isHidden = false
+                    self?.animateBadge()
+                }
+            )
+        }
+
+        private func animateBadge() {
+            let popScale = Self.badgePopScale
+            let settleScale = Self.badgeSettleScale
+            UIView.animate(
+                withDuration: 0.2,
+                animations: { [badgeView] in
+                    badgeView.transform = CGAffineTransform(scaleX: popScale, y: popScale)
+                }, completion: { [badgeView] _ in
+                    UIView.animate(withDuration: 0.15) {
+                        badgeView.transform = CGAffineTransform(scaleX: settleScale, y: settleScale)
+                    }
+                }
+            )
+        }
+    }
+
+    final class LegacyUnreadNewsNaviButton: UIButton {
         let newsImageView = UIImageView(image: Asset.navibarNewsIcon.image)
         let badgeImageView = UIImageView(image: Asset.badge.image)
 
@@ -447,10 +676,10 @@ private extension TokensViewController {
             NSLayoutConstraint.activate([
                 newsImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
                 newsImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-                badgeImageView.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.halfSpacing),
+                badgeImageView.topAnchor.constraint(equalTo: topAnchor, constant: Spacing.SM.rawValue),
                 badgeImageView.trailingAnchor.constraint(
                     equalTo: trailingAnchor,
-                    constant: -Theme.Metrics.quaterSpacing
+                    constant: -Spacing.XS.rawValue
                 ),
                 badgeImageView.widthAnchor.constraint(equalToConstant: badgeWidth),
                 badgeImageView.heightAnchor.constraint(equalToConstant: badgeWidth)
@@ -481,7 +710,7 @@ private extension TokensViewController {
                     UIView.addKeyframe(withRelativeStartTime: 4 * frameDuration, relativeDuration: frameDuration) {
                         newsImageView.transform = CGAffineTransform.identity
                     }
-                }, 
+                },
                 completion: { [weak self] _ in
                     self?.badgeImageView.isHidden = false
                     self?.animateBadge()

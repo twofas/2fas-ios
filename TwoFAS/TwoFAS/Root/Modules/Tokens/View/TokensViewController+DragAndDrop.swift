@@ -44,7 +44,7 @@ extension TokensViewController: UICollectionViewDragDelegate {
         if presenter.shouldAddCustomPreview {
             dragItem.previewProvider = {
                 let imageView = UIImageView(image: Asset.dragDropToken.image)
-                imageView.tintColor = Theme.Colors.Fill.theme
+                imageView.tintColor = AppColor.accentsBrand.uiColor
                 return UIDragPreview(view: imageView)
             }
         }

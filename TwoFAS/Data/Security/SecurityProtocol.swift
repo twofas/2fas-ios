@@ -20,19 +20,7 @@
 import Foundation
 import Protection
 
-public protocol SecurityDelegate: AnyObject {
-    
-    func securityBioAuthSuccess()
-    func securityBioAuthFailure()
-    func securityLockUI()
-    func securityUnlockUI()
-    func retryBioAuthIfNecessary()
-}
-
-public protocol SecurityProtocol: AnyObject {
-    
-    var delegate: SecurityDelegate? { get set }
-    
+protocol SecurityProtocol: AnyObject {
     var isAuthenticationRequired: Bool { get }
     
     // auth
@@ -56,7 +44,13 @@ public protocol SecurityProtocol: AnyObject {
     var isBioAuthAvailable: Bool { get }
     var isBioAuthEnabled: Bool { get }
     
-    func authenticateUsingBioAuthIfPossible(reason: String)
+    /// A `userInitiated` request bypasses the automatic-prompt attempt limit without
+    /// resetting it, so it always shows the system prompt while biometry is usable.
+    func authenticateUsingBiometry(
+        reason: String,
+        userInitiated: Bool,
+        completion: @escaping (BiometryAuthenticationResult) -> Void
+    )
     
     //
     func applicationWillEnterForeground()

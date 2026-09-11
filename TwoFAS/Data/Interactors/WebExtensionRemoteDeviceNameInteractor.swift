@@ -19,6 +19,7 @@
 
 import Foundation
 import Common
+import NetworkStack
 
 protocol WebExtensionRemoteDeviceNameInteracting: AnyObject {
     func setNewDeviceName(_ newName: String, completion: @escaping (Result<Void, NetworkCallError>) -> Void)

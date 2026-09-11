@@ -21,7 +21,7 @@ import UIKit
 import Common
 
 final class TokensCategory: UIView {
-    static let width: CGFloat = 5
+    static let width: CGFloat = 4
     
     func setColor(_ tintColor: TintColor) {
         backgroundColor = tintColor.color

@@ -25,9 +25,12 @@ public extension Notification.Name {
     static let switchToBrowserExtension = Notification.Name("switchToBrowserExtension")
     static let orientationSizeWillChange = Notification.Name("orientationSizeWillChange")
     static let tokensScreenIsVisible = Notification.Name("tokensScreenIsVisible")
+    static let activeSearchShouldFocus = Notification.Name("activeSearchShouldFocus")
     static let fileAwaitsOpening = Notification.Name("fileAwaitsOpening")
     static let lockScreenIsInactive = Notification.Name("lockScreenIsInactive")
     static let lockScreenIsActive = Notification.Name("lockScreenIsActive")
     static let userLoggedIn = Notification.Name("userLoggedIn")
     static let appStateDidChange = Notification.Name("appStateDidChange")
+    static let quickActionRequested = Notification.Name("quickActionRequested")
+    static let quickActionTokensRequested = Notification.Name("quickActionTokensRequested")
 }

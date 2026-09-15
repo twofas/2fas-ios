@@ -47,8 +47,8 @@ extension ServicePresenter {
         interactor.token(for: date)
     }
     
-    func timelineEntries() -> [Date] {
-        interactor.timelineEntries(for: Date())
+    func timelineEntries(from date: Date) -> [Date] {
+        interactor.timelineEntries(for: date)
     }
     
     func timeToNextDate(for date: Date) -> Date {

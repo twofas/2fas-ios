@@ -17,14 +17,11 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
+import SwiftUI
 
 enum AddingServiceMetrics {
-    static var cameraActiveAreaHeight: CGFloat = {
-        if #available(iOS 18.0, *) {
-            return 240
-        }
-        return UIDevice.isiPad ? 320 : 240
-    }()
+    static func cameraActiveAreaHeight(for horizontalSizeClass: UserInterfaceSizeClass?) -> CGFloat {
+        horizontalSizeClass == .regular ? 320 : 220
+    }
     static let largeSpacing: CGFloat = 15
 }

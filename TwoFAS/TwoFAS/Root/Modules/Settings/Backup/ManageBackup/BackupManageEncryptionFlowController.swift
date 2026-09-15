@@ -18,15 +18,11 @@
 //
 
 import UIKit
-import Common
+import SwiftUI
 
-protocol BackupManageEncryptionFlowControllerParent: AnyObject {
-    func backupManageEncryptionClose()
-}
+protocol BackupManageEncryptionFlowControllerParent: AnyObject {}
 
 protocol BackupManageEncryptionFlowControlling: AnyObject {
-    func close()
-    func toDeleteBackup()
     func toSetPassword()
     func toChangePassword()
     func toRemovePassword()
@@ -34,63 +30,51 @@ protocol BackupManageEncryptionFlowControlling: AnyObject {
 
 final class BackupManageEncryptionFlowController: FlowController {
     private weak var parent: BackupManageEncryptionFlowControllerParent?
-    private weak var navigationController: UINavigationController?
-    
+    private var navigationController: UINavigationController? { _viewController?.navigationController }
+
     static func push(
         in navigationController: UINavigationController,
         parent: BackupManageEncryptionFlowControllerParent
     ) {
-        let viewController = BackupManageEncryptionViewController()
-        let flowController = BackupManageEncryptionFlowController(viewController: viewController)
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = false
+        let flowController = BackupManageEncryptionFlowController(viewController: hosting)
         flowController.parent = parent
-        flowController.navigationController = navigationController
         let presenter = BackupManageEncryptionPresenter(
             flowController: flowController,
             interactor: ModuleInteractorFactory
                 .shared.backupManageEncryptionModuleInteractor())
-        viewController.presenter = presenter
-        presenter.view = viewController
-        
-        navigationController.pushViewController(viewController, animated: true)
-    }
-}
+        hosting.rootView = AnyView(BackupManageEncryptionView(presenter: presenter))
 
-extension BackupManageEncryptionFlowController {
-    var viewController: BackupManageEncryptionViewController {
-        _viewController as! BackupManageEncryptionViewController
+        navigationController.pushViewController(hosting, animated: true)
     }
 }
 
 extension BackupManageEncryptionFlowController: BackupManageEncryptionFlowControlling {
-    func close() {
-        parent?.backupManageEncryptionClose()
-    }
-    
-    func toDeleteBackup() {
-        BackupDeleteFlowController.present(on: viewController, parent: self)
-    }
-    
     func toSetPassword() {
+        guard let vc = _viewController else { return }
         BackupSetPasswordFlowController.present(
-            in: viewController,
+            in: vc,
             parent: self,
             flowType: .setPassword
         )
     }
-    
+
     func toChangePassword() {
+        guard let vc = _viewController else { return }
         EncryptedByUserPasswordSyncNavigationFlowController
             .present(
-                on: viewController,
+                on: vc,
                 parent: self,
                 actionType: .verifyPassword(.changePassword)
             )
     }
-    
+
     func toRemovePassword() {
+        guard let vc = _viewController else { return }
         EncryptedByUserPasswordSyncNavigationFlowController
             .present(
-                on: viewController,
+                on: vc,
                 parent: self,
                 actionType: .verifyPassword(.removePassword)
             )
@@ -99,13 +83,13 @@ extension BackupManageEncryptionFlowController: BackupManageEncryptionFlowContro
 
 extension BackupManageEncryptionFlowController: BackupSetPasswordFlowControllerParent {
     func closeSetPassword() {
-        viewController.dismiss(animated: true)
+        _viewController?.dismiss(animated: true)
     }
 }
 
 extension BackupManageEncryptionFlowController: BackupDeleteFlowControllerParent {
     func closeDeleteBackup(didDelete: Bool) {
-        viewController.dismiss(animated: true)
+        _viewController?.dismiss(animated: true)
         if didDelete {
             navigationController?.popViewController(animated: true)
         }
@@ -114,6 +98,6 @@ extension BackupManageEncryptionFlowController: BackupDeleteFlowControllerParent
 
 extension BackupManageEncryptionFlowController: EncryptedByUserPasswordSyncNavigationFlowControllerParent {
     func closeEncryptedByUserPasswordSync() {
-        viewController.dismiss(animated: true)
+        _viewController?.dismiss(animated: true)
     }
 }

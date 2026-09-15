@@ -17,9 +17,7 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import Common
-import Data
+import SwiftUI
 
 protocol BackupSetPasswordFlowControllerParent: AnyObject {
     func closeSetPassword()
@@ -36,43 +34,43 @@ enum BackupSetPasswordType {
 
 final class BackupSetPasswordFlowController: FlowController {
     private weak var parent: BackupSetPasswordFlowControllerParent?
-    
+
     static func present(
         in viewController: UIViewController,
         parent: BackupSetPasswordFlowControllerParent,
         flowType: BackupSetPasswordType
     ) {
-        let view = BackupSetPasswordViewController()
-        let flowController = BackupSetPasswordFlowController(viewController: view)
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
+        let flowController = BackupSetPasswordFlowController(viewController: hosting)
         flowController.parent = parent
         let presenter = BackupSetPasswordPresenter(
             flowController: flowController,
             interactor: ModuleInteractorFactory.shared.backupSetPasswordModuleInteractor(),
             flowType: flowType
         )
-        view.presenter = presenter
-        
-        view.configureAsModal()
-        viewController.present(view, animated: true)
+        hosting.rootView = AnyView(BackupSetPasswordView(presenter: presenter, embedsNavigationStack: true))
+
+        hosting.configureAsModal()
+        viewController.present(hosting, animated: true)
     }
-    
+
     static func push(
         in navigationController: UINavigationController,
         parent: BackupSetPasswordFlowControllerParent,
         flowType: BackupSetPasswordType
     ) {
-        let view = BackupSetPasswordViewController()
-        let flowController = BackupSetPasswordFlowController(viewController: view)
+        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        hosting.hidesBottomBarWhenPushed = true
+        let flowController = BackupSetPasswordFlowController(viewController: hosting)
         flowController.parent = parent
         let presenter = BackupSetPasswordPresenter(
             flowController: flowController,
             interactor: ModuleInteractorFactory.shared.backupSetPasswordModuleInteractor(),
             flowType: flowType
         )
-        view.presenter = presenter
-        view.navigationItem.setHidesBackButton(true, animated: false)
-        
-        navigationController.pushViewController(view, animated: true)
+        hosting.rootView = AnyView(BackupSetPasswordView(presenter: presenter, embedsNavigationStack: true))
+
+        navigationController.pushViewController(hosting, animated: true)
     }
 }
 

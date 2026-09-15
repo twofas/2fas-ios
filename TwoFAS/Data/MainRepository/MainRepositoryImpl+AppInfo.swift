@@ -43,4 +43,12 @@ extension MainRepositoryImpl {
     func markPassPromoAsSeen() {
         userDefaultsRepository.markPassPromoAsSeen()
     }
+    
+    var passPromoDateNavigatedToAppStore: Date? {
+        userDefaultsRepository.passPromoDateNavigatedToAppStore
+    }
+    
+    func markPassPromoDateNavigatedToAppStore() {
+        userDefaultsRepository.markPassPromoDateNavigatedToAppStore()
+    }
 }

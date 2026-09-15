@@ -21,11 +21,6 @@ import SwiftUI
 import Common
 
 struct CameraErrorTemplate: View {
-    private let paddingHorizontal: CGFloat = 3 * Theme.Metrics.standardSpacing
-    private let paddingVertical: CGFloat = Theme.Metrics.doubleSpacing
-    private let topSpacing: CGFloat = 6 * Theme.Metrics.standardSpacing
-    private let containerPadding: CGFloat = Theme.Metrics.standardSpacing
-    
     let title: String
     let subtitle: String
     let image: UIImage
@@ -36,67 +31,26 @@ struct CameraErrorTemplate: View {
     let cancelTitle: String?
     
     var body: some View {
-        Group {
-            VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-                Group {
-                    Image(uiImage: image)
-                        .frame(width: imageSize.width, height: imageSize.height)
+        TFInfoView(
+            icon: .image(image, .template),
+            title: title,
+            description: subtitle,
+            buttons: {
+            let actionTitleString: String = {
+                if let actionTitle {
+                    return actionTitle
                 }
-                .frame(maxHeight: .infinity, alignment: .center)
-                
-                VStack(spacing: Theme.Metrics.doubleSpacing) {
-                    Text(title)
-                        .font(.title)
-                        .multilineTextAlignment(.center)
-                    Text(subtitle)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                }
-                .frame(alignment: .center)
-                .layoutPriority(1)
-                
-                VStack(spacing: 0) {
-                    Button {
-                        action()
-                    } label: {
-                        let title: String = {
-                            if let actionTitle {
-                                return actionTitle
-                            }
-                            return T.Tokens.tryAgain
-                        }()
-                        Text(title)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                    }
-                    .buttonStyle(RoundedFilledButtonStyle())
-                    Button {
-                        cancel?()
-                    } label: {
-                        let title: String = {
-                            if let cancelTitle {
-                                return cancelTitle
-                            }
-                            return T.Commons.cancel
-                        }()
-                        Text(title)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                    }
-                    .buttonStyle(LinkButtonStyle())
-                    .isHidden(cancel == nil, remove: true)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                return T.Tokens.tryAgain
+            }()
+            TFButton(actionTitleString, variant: .borderedProminent, size: .large) {
+                action()
             }
-            .frame(maxWidth: Theme.Metrics.componentWidth)
-            .padding(EdgeInsets(
-                top: paddingVertical,
-                leading: paddingHorizontal,
-                bottom: paddingVertical,
-                trailing: paddingHorizontal))
-            .background(Color(Theme.Colors.decoratedContainer)
-            )
-            .cornerRadius(Theme.Metrics.cornerRadius)
-        }
-        .padding(containerPadding)
+            TFCancelButton(cancelTitle ?? T.Commons.cancel) {
+                cancel?()
+            }
+            .isHidden(cancel == nil, remove: true)
+        })
+        .navigationBarHidden(true)
     }
 }
 

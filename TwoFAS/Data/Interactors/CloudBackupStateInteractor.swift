@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Sync
 import Common
 
 // sourcery: Mock

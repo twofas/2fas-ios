@@ -23,6 +23,11 @@ import Common
 final class RefreshTokenCounter: UIView {
     var didAnimate: Callback?
     
+    static let sizeNormal: CGFloat = 30
+    static let sizeCompact: CGFloat = 28
+    
+    private var kind: TokensCellKind = .normal
+    
     private let image = RefreshImage()
     
     override init(frame: CGRect) {
@@ -64,6 +69,21 @@ final class RefreshTokenCounter: UIView {
     func adjustsImageSizeForAccessibilityContentSizeCategory(_ value: Bool) {
         image.adjustsImageSizeForAccessibilityContentSizeCategory(value)
     }
+    
+    func setKind(_ kind: TokensCellKind) {
+        self.kind = kind
+        invalidateIntrinsicContentSize()
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        let value: CGFloat = {
+            if kind == .compact {
+                return Self.sizeCompact
+            }
+            return Self.sizeNormal
+        }()
+        return .init(width: value, height: value)
+    }
 }
 
 private extension RefreshTokenCounter {
@@ -85,7 +105,13 @@ private extension RefreshTokenCounter {
         }
         
         private func commonInit() {
-            addSubview(image)
+            image.contentMode = .scaleAspectFit
+            addSubview(image, with: [
+                image.topAnchor.constraint(equalTo: topAnchor),
+                image.bottomAnchor.constraint(equalTo: bottomAnchor),
+                image.leadingAnchor.constraint(equalTo: leadingAnchor),
+                image.trailingAnchor.constraint(equalTo: trailingAnchor)
+            ])
             setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
             setContentHuggingPriority(.defaultHigh + 1, for: .vertical)
             setContentCompressionResistancePriority(.defaultHigh + 2, for: .horizontal)
@@ -114,11 +140,11 @@ private extension RefreshTokenCounter {
         }
         
         func lock() {
-            image.tintColor = Theme.Colors.Controls.inactive
+            image.tintColor = AppColor.fillsTertiary.uiColor
         }
         
         func unlock() {
-            image.tintColor = Theme.Colors.Controls.active
+            image.tintColor = AppColor.accentsBrand.uiColor
         }
         
         override var intrinsicContentSize: CGSize {

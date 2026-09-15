@@ -14,86 +14,113 @@
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with this program. If not, see <https://w2ww.gnu.org/licenses/>
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
 import SwiftUI
+import Common
 
 struct ManageWatchView: View {
     @ObservedObject
     var presenter: ManageWatchPresenter
-    
+
     var body: some View {
-        NavigationStack {
-            mainView
-            .onAppear {
-                presenter.onAppear()
+        content
+        .background(.backgroundsPrimaryElevated)
+        .navigationTitle(T.Backup.managePairedWatchesTitleShort)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    presenter.onClose()
+                } label: {
+                    Image(icon: .xmark)
+                }
             }
-            .navigationTitle(T.Backup.managePairedWatchesTitleShort)
-            .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(T.Commons.close) {
-                        presenter.onClose()
-                    }
-                    .tint(Color(Theme.Colors.Icon.theme))
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    presenter.onPairWatch()
+                } label: {
+                    Image(icon: .plus)
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        presenter.onPairWatch()
-                    }, label: {
-                        Label(T.Commons.add, systemImage: "plus")
-                    })
-                    .tint(Color(Theme.Colors.Icon.theme))
-                }
+                .accessibilityLabel(T.Commons.add)
             }
         }
-    }
-    
-    @ViewBuilder
-    private var mainView: some View {
-        VStack {
-            if presenter.isListAvailable {
-                if presenter.list.isEmpty {
-                    Text(T.Backup.managePairedWatchesEmptyList)
-                        .font(.caption)
-                        .fontWeight(.semibold)
-                } else {
-                    list()
-                }
-            } else {
-                Text(verbatim: T.Backup.managePairedWatchesSyncing)
-                    .font(.caption)
-                    .fontWeight(.semibold)
-            }
+        .onAppear {
+            presenter.onAppear()
         }
     }
-    
+
     @ViewBuilder
-    private func list() -> some View {
-        Spacer()
+    private var content: some View {
+        if !presenter.isListAvailable {
+            TFLoadingView(title: T.Backup.managePairedWatchesSyncing)
+        } else if presenter.list.isEmpty {
+            emptyState
+        } else {
+            watchList
+        }
+    }
+
+    private var emptyState: some View {
+        TFEmptyScreen(
+            icon: .systemImage(.appleWatch, bounces: true),
+            title: T.Backup.managePairedWatchesEmptyList
+        )
+    }
+
+    private var watchList: some View {
         List {
             ForEach(presenter.list) { item in
-                Text(item.deviceName)
-                    .padding(.vertical, Theme.Metrics.standardSpacing)
-                    .font(.body)
-                    .swipeActions(edge: .trailing) {
-                        Button(role: .destructive) {
-                            presenter.onDelete(item)
-                        } label: {
-                            Label(T.Commons.delete, systemImage: "trash")
-                        }
-                        .tint(.red)
-                        
-                        Button {
-                            presenter.onRename(item)
-                        } label: {
-                            Label(T.Commons.rename, systemImage: "pencil")
-                        }
-                        .tint(.blue)
-                    }
+                watchCell(item)
+                    .padding(.bottom, .XL)
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             }
         }
-        .listStyle(.insetGrouped)
+        .animation(.default, value: presenter.list.count)
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+        .padding(.top, .XL)
+    }
+
+    @ViewBuilder
+    private func watchCell(_ item: PairedWatch) -> some View {
+        AdaptiveReadableContainer(verticalMargin: .zero) {
+            HStack(spacing: .M) {
+                Image(icon: .appleWatch)
+                    .textStyle(.title3)
+                    .foregroundStyle(.accentsBrand)
+                    .frame(width: 28)
+
+                Text(item.deviceName)
+                    .textStyle(.body)
+                    .foregroundStyle(.labelsPrimary)
+
+                Spacer(minLength: 0)
+
+                TFMenuButton {
+                    Button {
+                        presenter.onRename(item)
+                    } label: {
+                        Label(T.Commons.rename, icon: .pencil)
+                    }
+
+                    Button(role: .destructive) {
+                        presenter.onDelete(item)
+                    } label: {
+                        Label(T.Commons.delete, icon: .trashFill)
+                    }
+                }
+            }
+            .padding(.horizontal, .XL)
+            .padding(.vertical, .L)
+            .background(
+                RoundedRectangle(cornerRadius: TFCornerRadius.large.rawValue, style: .continuous)
+                    .foregroundStyle(.backgroundsGroupedTertiary)
+            )
+            .frame(minHeight: .list)
+        }
     }
 }

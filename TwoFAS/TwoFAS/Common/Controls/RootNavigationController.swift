@@ -18,27 +18,33 @@
 //
 
 import UIKit
+import Common
 
 final class RootNavigationController: UINavigationController {
     var rootFlowController: FlowController!
-    
+    var keepsFullStack: Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        delegate = self
+
+        guard #unavailable(iOS 26.0) else { return }
+
         let shadowLine = Asset.shadowLine.image
             .withRenderingMode(.alwaysTemplate)
             .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
-        
+
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.shadowImage = shadowLine
-        navBarAppearance.shadowColor = Theme.Colors.Line.secondaryLine
-        navBarAppearance.titleTextAttributes = [.foregroundColor: Theme.Colors.Text.main]
-        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: Theme.Colors.Text.main]
-        navBarAppearance.backgroundColor = Theme.Colors.Fill.background
+        navBarAppearance.shadowColor = AppColor.separatorsOpaque.uiColor
+        navBarAppearance.titleTextAttributes = [.foregroundColor: AppColor.labelsPrimary.uiColor]
+        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: AppColor.labelsPrimary.uiColor]
+        navBarAppearance.backgroundColor = AppColor.backgroundsPrimary.uiColor
+        navBarAppearance.backButtonAppearance = .chevronOnly
         navigationBar.standardAppearance = navBarAppearance
         navigationBar.scrollEdgeAppearance = navBarAppearance
-        delegate = self
     }
 }
 
@@ -48,6 +54,7 @@ extension RootNavigationController: UINavigationControllerDelegate {
         didShow viewController: UIViewController,
         animated: Bool
     ) {
+        guard !keepsFullStack else { return }
         guard let last = viewControllers.last else { return }
         viewControllers = [last]
     }

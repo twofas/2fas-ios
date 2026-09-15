@@ -21,7 +21,6 @@ import UIKit
 import UserNotifications
 import UserNotificationsUI
 import Common
-import CommonUIKit
 
 protocol NotificationViewControlling: SpinnerDisplaying, AnyObject {
     func displayQuestion(domain: String, extensionName: String)
@@ -68,7 +67,7 @@ final class NotificationViewController: UIViewController, UNNotificationContentE
         super.viewDidLoad()
         presenter.view = self
         
-        view.backgroundColor = ThemeColor.background
+        view.backgroundColor = AppColor.backgroundsPrimary.uiColor
         notificationView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(notificationView)
         NSLayoutConstraint.activate([

@@ -61,6 +61,16 @@ final class EncryptedByUserPasswordSyncPresenter: ObservableObject {
             }
         }
     }
+
+    var title: String {
+        if isRemovingPassword {
+            T.backupSettingsPasswordRemoveTitle
+        } else if isVerifyingPassword {
+            T.Backup.changePassword
+        } else {
+            T.Commons.icloudBackupPassword
+        }
+    }
     
     init(
         flowController: EncryptedByUserPasswordSyncFlowControlling,

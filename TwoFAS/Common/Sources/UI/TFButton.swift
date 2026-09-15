@@ -1,0 +1,361 @@
+//
+//  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
+//  Copyright © 2026 Two Factor Authentication Service, Inc.
+//  Contributed by Zbigniew Cisiński. All rights reserved.
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
+//
+
+import SwiftUI
+
+// MARK: - TFButtonSize
+
+/// Size variants from the 2FAS button design system.
+@frozen
+public enum TFButtonSize {
+    /// 28 pt hit target, 15 pt semibold label
+    case small
+    /// 36 pt hit target, 17 pt medium label
+    case medium
+    /// 48 pt hit target, 17 pt medium label
+    case large
+}
+
+@frozen
+public enum TFButtonVariant {
+    case borderedProminent
+    case bordered
+    case borderedSecondary
+    case borderless
+    case borderlessNeutral
+}
+
+// MARK: - TFButton
+
+/// 2FAS Design System button.
+///
+/// Three content configurations:
+/// - **Text** — label string only
+/// - **Symbol** — SF Symbol icon in a circle
+/// - **Symbol + Text** — icon followed by label in a capsule
+///
+/// The button adapts automatically to `@Environment(\.isEnabled)` for the
+/// disabled state. A light haptic is fired on press-down via `SensoryFeedback`.
+///
+/// ```swift
+/// // Text-only
+/// TFButton("Play", variant: .borderedProminent, size: .large) { play() }
+/// TFButton("Edit", variant: .bordered, size: .medium) { edit() }
+/// TFButton("Info", variant: .borderless, size: .small)  { info() }
+///
+/// // Symbol-only (circular)
+/// TFButton(systemImage: .plus, variant: .borderedProminent, size: .large) { }
+///
+/// // Symbol + text
+/// TFButton(systemImage: .plus, "Play", variant: .bordered, size: .large) { }
+///
+/// // Disabled
+/// TFButton("Save", variant: .borderedProminent, size: .large) { save() }
+///     .disabled(true)
+/// ```
+public struct TFButton: View {
+    @Environment(\.colorScheme)
+    private var colorScheme
+    
+    @Environment(\.isEnabled)
+    private var isEnabled
+    
+    private let label: String?
+    private let systemImage: IconName?
+    private let variant: TFButtonVariant
+    private let size: TFButtonSize
+    private let applyGlass: Bool
+    private let useWideLayout: Bool
+    private let action: () -> Void
+
+    // MARK: Init – text only
+
+    public init(
+        _ label: String,
+        variant: TFButtonVariant,
+        size: TFButtonSize,
+        applyGlass: Bool = false,
+        useWideLayout: Bool = true,
+        action: @escaping () -> Void
+    ) {
+        self.label = label
+        self.systemImage = nil
+        self.variant = variant
+        self.size = size
+        self.applyGlass = applyGlass
+        self.useWideLayout = useWideLayout
+        self.action = action
+    }
+
+    // MARK: Init – symbol only
+
+    public init(
+        systemImage: IconName,
+        variant: TFButtonVariant,
+        size: TFButtonSize,
+        applyGlass: Bool = false,
+        useWideLayout: Bool = true,
+        action: @escaping () -> Void
+    ) {
+        self.label = nil
+        self.systemImage = systemImage
+        self.variant = variant
+        self.size = size
+        self.applyGlass = applyGlass
+        self.useWideLayout = useWideLayout
+        self.action = action
+    }
+
+    // MARK: Init – symbol + text
+
+    public init(
+        systemImage: IconName,
+        _ label: String,
+        variant: TFButtonVariant,
+        size: TFButtonSize,
+        applyGlass: Bool = false,
+        useWideLayout: Bool = true,
+        action: @escaping () -> Void
+    ) {
+        self.label = label
+        self.systemImage = systemImage
+        self.variant = variant
+        self.size = size
+        self.applyGlass = applyGlass
+        self.useWideLayout = useWideLayout
+        self.action = action
+    }
+
+    @GestureState
+    private var isPressed = false
+
+    public var body: some View {
+        Button(action: action) {
+            switch (systemImage, label) {
+            case (let img?, nil): symbolOnly(img)
+            case (nil, let lbl?): textOnly(lbl)
+            case (let img?, let lbl?): symbolAndText(img, lbl)
+            default: EmptyView()
+            }
+        }
+        .modify {
+            if #available(iOS 26, *) {
+                if let backgroundColor {
+                    $0.tint(backgroundColor.color(for: colorScheme))
+                        .buttonStyle(.glassProminent)
+                        .buttonBorderShape(.capsule)
+                } else {
+                    $0
+                }
+            } else {
+                $0.buttonStyle(ButtonFeedbackStyle())
+            }
+        }
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .updating($isPressed) { _, state, _ in state = true }
+        )
+        .sensoryFeedback(.impact(flexibility: .rigid, intensity: 0.6), trigger: isPressed) { _, new in new }
+    }
+    
+    @ViewBuilder
+    private func symbolOnly(_ imageName: IconName) -> some View {
+        Image(icon: imageName)
+            .font(symbolFont)
+            .foregroundStyle(labelColor)
+            .frame(width: symbolDimension, height: symbolDimension)
+            .background {
+                Circle()
+                    .fill(backgroundStyle)
+            }
+            .contentShape(Circle())
+    }
+    
+    @ViewBuilder
+    private func textOnly(_ text: String) -> some View {
+        let label = Text(text)
+            .frame(maxWidth: useWideLayout ? .infinity : nil)
+            .textStyle(textStyleSize, textStyleWeight)
+            .foregroundStyle(labelColor)
+            .lineLimit(1)
+            .padding(.horizontal, hPad)
+            .padding(.vertical, vPad)
+
+        if #available(iOS 26, *) {
+            label
+        } else {
+            label
+                .frame(minHeight: controlHeight)
+                .background(textBackground)
+                .contentShape(textButtonShape)
+        }
+    }
+    
+    @ViewBuilder
+    private func symbolAndText(_ imageName: IconName, _ text: String) -> some View {
+        HStack(spacing: iconSpacing) {
+            Image(icon: imageName)
+                .font(symbolFont)
+            Text(text)
+                .textStyle(textStyleSize, textStyleWeight)
+                .lineLimit(1)
+        }
+        .foregroundStyle(labelColor)
+        .padding(.horizontal, hPad)
+        .padding(.vertical, vPad)
+        .modify {
+            if #available(iOS 26, *) {
+                $0
+            } else {
+                $0.frame(minHeight: controlHeight)
+            }
+        }
+        .background {
+            Capsule()
+                .fill(backgroundStyle)
+        }
+        .contentShape(Capsule())
+    }
+
+    /// Borderless/Large uses a rounded rect; every other combination uses a capsule.
+    @ViewBuilder
+    private var textBackground: some View {
+        if (variant == .borderless || variant == .borderlessNeutral) && size == .large {
+            RoundedRectangle(.medium)
+                .fill(backgroundStyle)
+        } else {
+            Capsule()
+                .fill(backgroundStyle)
+        }
+    }
+
+    private var textButtonShape: AnyShape {
+        if (variant == .borderless || variant == .borderlessNeutral) && size == .large {
+            AnyShape(RoundedRectangle(.medium))
+        } else {
+            AnyShape(Capsule())
+        }
+    }
+    
+    private var labelColor: AppColor {
+        guard isEnabled else {
+            if colorScheme == .dark {
+                return .labelsTertiary
+            } else {
+                return .labelsPrimary
+            }
+        }
+        switch variant {
+        case .borderedProminent: return .graysWhite
+        case .bordered, .borderless: return .accentsBrand
+        case .borderedSecondary, .borderlessNeutral: return .labelsPrimary
+        }
+    }
+    
+    private var backgroundStyle: AnyShapeStyle {
+        if let backgroundColor {
+            AnyShapeStyle(backgroundColor)
+        } else {
+            AnyShapeStyle(Color.clear)
+        }
+    }
+    
+    private var backgroundColor: AppColor? {
+        guard isEnabled else {
+            switch variant {
+            case .borderless, .borderlessNeutral: return nil
+            default: return AppColor.fillsTertiary
+            }
+        }
+        switch variant {
+        case .borderedProminent: return AppColor.accentsBrand
+        case .bordered, .borderedSecondary: return AppColor.fillsTertiary
+        case .borderless, .borderlessNeutral: return nil
+        }
+    }
+    
+    // MARK: Metrics
+    
+    private var symbolDimension: CGFloat {
+        switch size {
+        case .small: 28
+        case .medium: 34
+        case .large: 48
+        }
+    }
+
+    /// Minimum control height matching the design-system hit targets.
+    /// Used only on iOS 18, where the fallback button style lacks the intrinsic
+    /// height that `.glassProminent` provides on iOS 26.
+    private var controlHeight: CGFloat {
+        switch size {
+        case .small: 28
+        case .medium: 36
+        case .large: 48
+        }
+    }
+    
+    /// Font used for the SF Symbol in standalone (icon-only) buttons.
+    private var symbolFont: Font {
+        switch size {
+        case .small, .medium: .system(size: 15, weight: .regular)
+        case .large: .system(size: 17, weight: .regular)
+        }
+    }
+    
+    private var textStyleSize: TextStyle {
+        switch size {
+        case .small: .subheadline
+        case .medium, .large: .body
+        }
+    }
+    
+    private var textStyleWeight: TextStyleVariant {
+        switch size {
+        case .small: .emphasized // semibold
+        case .medium, .large: .medium
+        }
+    }
+    
+    private var hPad: Spacing {
+        switch size {
+        case .small: .M // 8  (nearest to design 10)
+        case .medium: .L // 12 (nearest to design 14)
+        case .large: .XXL
+        }
+    }
+    
+    private var vPad: Spacing {
+        if useWideLayout {
+            return .SM
+        }
+        switch size {
+        case .small: return .S
+        case .medium: return .M // 8  (nearest to design 7)
+        case .large: return .L // 12 (nearest to design 14)
+        }
+    }
+    
+    private var iconSpacing: Spacing {
+        switch size {
+        case .small: .XS  // 2 (nearest to design 3)
+        case .medium, .large: .S
+        }
+    }
+}

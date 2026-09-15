@@ -1,0 +1,110 @@
+//
+//  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
+//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Contributed by Zbigniew Cisiński. All rights reserved.
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
+//
+
+import UIKit
+import SwiftUI
+import Common
+
+protocol TrashServiceFlowControllerParent: AnyObject {
+    func didTrashService()
+    func closeTrashService()
+}
+
+protocol TrashServiceFlowControlling: AnyObject {
+    func toTrashService()
+    func toClose()
+    func setContentHeight(_ height: CGFloat)
+}
+
+final class TrashServiceFlowController: FlowController {
+    private weak var parent: TrashServiceFlowControllerParent?
+    
+    static func present(
+        on viewController: UIViewController,
+        parent: TrashServiceFlowControllerParent,
+        serviceData: ServiceData
+    ) {
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
+        if #available(iOS 26.0, *) {
+            // Transparent so the sheet's system Liquid Glass background shows through.
+            hosting.view.backgroundColor = .clear
+        } else {
+            hosting.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+        }
+        let flowController = TrashServiceFlowController(viewController: hosting)
+        flowController.parent = parent
+        
+        let interactor = ModuleInteractorFactory.shared.trashServiceInteractor()
+        let presenter = TrashServicePresenter(
+            serviceData: serviceData,
+            flowController: flowController,
+            interactor: interactor
+        )
+        hosting.rootView = AnyView(TrashServiceView(presenter: presenter))
+        
+        flowController.presentAsHalfModal(on: viewController, view: hosting)
+    }
+}
+
+extension TrashServiceFlowController: TrashServiceFlowControlling {
+    func toClose() {
+        parent?.closeTrashService()
+    }
+    
+    func toTrashService() {
+        parent?.didTrashService()
+    }
+    
+    func setContentHeight(_ height: CGFloat) {
+        guard let sheet = _viewController?.sheetPresentationController else { return }
+        sheet.animateChanges {
+            sheet.detents = [
+                .custom(identifier: .trashContent) { context in
+                    min(height, context.maximumDetentValue)
+                }
+            ]
+            sheet.selectedDetentIdentifier = .trashContent
+        }
+    }
+}
+
+private extension TrashServiceFlowController {
+    func presentAsHalfModal(on parentViewController: UIViewController, view: UIViewController) {
+        view.modalPresentationStyle = .formSheet
+        
+        if let sheet = view.sheetPresentationController {
+            sheet.detents = [
+                .custom(identifier: .trashContent) { _ in
+                    Theme.Metrics.modalLargePreferredHeight
+                }
+            ]
+            sheet.selectedDetentIdentifier = .trashContent
+            sheet.prefersGrabberVisible = false
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersEdgeAttachedInCompactHeight = true
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+        }
+        
+        parentViewController.present(view, animated: true, completion: nil)
+    }
+}
+
+private extension UISheetPresentationController.Detent.Identifier {
+    static let trashContent = UISheetPresentationController.Detent.Identifier("trashContent")
+}

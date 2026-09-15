@@ -26,7 +26,6 @@ import Sync
 import NetworkStack
 import TimeVerification
 import Content
-import CommonUIKit
 
 final class MainRepositoryImpl: MainRepository {
     let service: ServiceHandler
@@ -64,9 +63,7 @@ final class MainRepositoryImpl: MainRepository {
     
     lazy var notificationStateController: NotificationStateProtocol = { pushNotifications.notificationState }()
     lazy var channelStateController: FCMHandlerProtocol = { pushNotifications.fcmHandler }()
-    
-    let feedbackGenerator = UINotificationFeedbackGenerator()
-    
+        
     var currentDate: Date {
         timeVerificationController.currentDate
     }
@@ -92,10 +89,16 @@ final class MainRepositoryImpl: MainRepository {
     var storageError: ((String) -> Void)?
     
     var _isLockScreenActive = false
+    var _isBiometryAuthenticating = false
     var _areLocalNotificationsHandled = false
     var _urlWillBeHandled = false
-    
+
     var _appState: AppState = .unknown
+
+    var _pendingQuickAction: QuickAction?
+    var _openBackupExportOnAppear = false
+    var _openAddServiceOnAppear = false
+    var _focusSearchOnAppear = false
     
     // Cached values for higher pefrormance
     var cachedSortType: SortType?

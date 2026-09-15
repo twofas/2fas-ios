@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Common
 
 final class CameraActiveArea: UIView {
     private var size: CGFloat = 0
@@ -31,7 +32,7 @@ final class CameraActiveArea: UIView {
         super.init(frame: frame)
         backgroundColor = .clear
         let img = UIImageView(image: Asset.bracket.image)
-        img.tintColor = Theme.Colors.Controls.active
+        img.tintColor = AppColor.accentsBrand.uiColor
         addSubview(img)
     }
     

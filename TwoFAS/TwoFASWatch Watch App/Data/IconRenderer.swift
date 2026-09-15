@@ -19,6 +19,7 @@
 
 import SwiftUI
 import CommonWatch
+import ContentWatch
 
 struct IconRenderer: View {
     let service: Service

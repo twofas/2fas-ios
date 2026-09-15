@@ -33,12 +33,6 @@ final class TokensSectionHeader: UICollectionReusableView {
     
     weak var dataSource: TokensSectionHeaderDataSource?
     
-    private let spacingLineView: UIView = {
-        let v = UIView()
-        v.backgroundColor = Theme.Colors.Line.secondaryLine
-        return v
-    }()
-    
     private let titleLabel = StandardLabel()
     private let counter = ElementCounter()
     
@@ -51,12 +45,21 @@ final class TokensSectionHeader: UICollectionReusableView {
     
     private let normalContainer = UIView()
     private let editContainer = UIView()
+
+    private(set) var isEditing = false
     
-    private let bgView = UIView()
-    
-    private var isEditing = false
-    
-    private var config: TokensSection?
+    private(set) var config: TokensSection?
+
+    /// Hides everything the header draws while keeping its size and its place in the layout, for
+    /// when a copy of it is drawn elsewhere. Kept out of `alpha`, which the collection view resets
+    /// whenever it re-applies layout attributes. Cleared on reuse.
+    var isContentHidden = false {
+        didSet {
+            guard isContentHidden != oldValue else { return }
+            let alpha: CGFloat = isContentHidden ? 0 : 1
+            [counter, titleLabel, normalContainer, editContainer].forEach { $0.alpha = alpha }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -74,12 +77,17 @@ final class TokensSectionHeader: UICollectionReusableView {
         setupCallbacks()
         setupMenu()
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        isContentHidden = false
+    }
         
     func setIsEditing(_ isEditing: Bool) {
         self.isEditing = isEditing
         setupContainers()
     }
-    
+
     func setConfiguration(_ config: TokensSection) {
         self.config = config
         updateCollapsedState()
@@ -95,28 +103,25 @@ final class TokensSectionHeader: UICollectionReusableView {
 }
 
 private extension TokensSectionHeader {
+    /// On iOS 26 the header is transparent so the scroll-edge blur shows through it when it's
+    /// pinned; earlier systems have no such blur and keep the header's own band.
     func setupBackground() {
-        backgroundColor = Theme.Colors.Fill.System.second
+        if #unavailable(iOS 26.0) {
+            backgroundColor = AppColor.backgroundsSecondary.uiColor
+        }
     }
-    
+
     func setupLayout() {
-        addSubview(spacingLineView, with: [
-            spacingLineView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            spacingLineView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            spacingLineView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            spacingLineView.heightAnchor.constraint(equalToConstant: Theme.Metrics.lineWidth)
-        ])
-        
         addSubview(counter, with: [
-            counter.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.standardMargin),
-            counter.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Theme.Metrics.standardMargin),
-            counter.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Theme.Metrics.doubleMargin)
+            counter.topAnchor.constraint(equalTo: topAnchor, constant: Spacing.M.rawValue),
+            counter.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Spacing.M.rawValue),
+            counter.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Spacing.XL.rawValue)
         ])
         
         addSubview(titleLabel, with: [
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: Theme.Metrics.standardMargin),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Theme.Metrics.standardMargin),
-            counter.trailingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -Theme.Metrics.doubleMargin)
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: Spacing.M.rawValue),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Spacing.M.rawValue),
+            counter.trailingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -Spacing.M.rawValue)
         ])
         
         setupNormalContainer()
@@ -124,11 +129,11 @@ private extension TokensSectionHeader {
         
         normalConstraint = titleLabel.trailingAnchor.constraint(
             equalTo: normalContainer.leadingAnchor,
-            constant: -Theme.Metrics.doubleMargin
+            constant: -Spacing.XL.rawValue
         )
         editConstraint = titleLabel.trailingAnchor.constraint(
             equalTo: editContainer.leadingAnchor,
-            constant: -Theme.Metrics.doubleMargin
+            constant: -Spacing.XL.rawValue
         )
         normalConstraint?.isActive = true
         
@@ -154,7 +159,7 @@ private extension TokensSectionHeader {
     }
     
     func setupNormalContainer() {
-        let margin = Theme.Metrics.standardMargin
+        let margin = Spacing.M.rawValue
         addSubview(normalContainer, with: [
             normalContainer.topAnchor.constraint(equalTo: topAnchor, constant: margin),
             normalContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
@@ -174,7 +179,7 @@ private extension TokensSectionHeader {
     }
     
     func setupEditContainer() {
-        let margin = Theme.Metrics.standardMargin
+        let margin = Spacing.M.rawValue
         addSubview(editContainer, with: [
             editContainer.topAnchor.constraint(equalTo: topAnchor, constant: margin),
             editContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
@@ -253,7 +258,7 @@ private extension TokensSectionHeader {
     func menu() -> UIMenu {
         let edit = UIAction(
             title: T.Commons.edit,
-            image: UIImage(systemName: "pencil")
+            image: UIImage(icon: .pencil)
         ) { [weak self] _ in
             guard let config = self?.config else { return }
             self?.dataSource?.rename(config)
@@ -261,7 +266,7 @@ private extension TokensSectionHeader {
         
         let delete = UIAction(
             title: T.Commons.delete,
-            image: UIImage(systemName: "trash"),
+            image: UIImage(icon: .trash),
             attributes: .destructive
         ) { [weak self] _ in
             guard let config = self?.config else { return }

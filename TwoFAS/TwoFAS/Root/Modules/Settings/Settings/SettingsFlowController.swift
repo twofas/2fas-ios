@@ -1,0 +1,238 @@
+//
+//  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
+//  Copyright © 2023 Two Factor Authentication Service, Inc.
+//  Contributed by Zbigniew Cisiński. All rights reserved.
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
+//
+
+import UIKit
+import Common
+import Data
+
+protocol SettingsFlowControllerParent: AnyObject {
+    func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
+    func settingsToRevealMenu()
+}
+
+protocol SettingsFlowControlling: AnyObject {
+    func toInitialConfiguration()
+    func toCollapsedView()
+    func toExpandedView()
+    func toShowingRootMenu()
+    func toRevealMenu()
+}
+
+final class SettingsFlowController: FlowController {
+    private weak var parent: SettingsFlowControllerParent?
+    
+    private var navigationMenu: SettingsMenuFlowControllerChild?
+    
+    private var isCollapsed: Bool {
+        viewController.isCollapsed
+    }
+    
+    static func setup(
+        parent: SettingsFlowControllerParent
+    ) -> SettingsViewController {
+        let view = SettingsViewController()
+        let flowController = SettingsFlowController(viewController: view)
+        flowController.parent = parent
+        let interactor = ModuleInteractorFactory.shared.settingsModuleInteractor()
+        let presenter = SettingsPresenter(
+            flowController: flowController,
+            interactor: interactor
+        )
+        presenter.view = view
+        view.presenter = presenter
+        
+        return view
+    }
+}
+
+private extension SettingsFlowController {
+    func setInitialMenu() {
+        let menu = SettingsMenuFlowController.showAsRoot(in: viewController.navigationNavi, parent: self)
+        navigationMenu = menu.flow
+        viewController.menu = menu.flow
+    }
+}
+
+extension SettingsFlowController: SettingsFlowControlling {
+    func toInitialConfiguration() {
+        setInitialMenu()
+    }
+    
+    func toCollapsedView() {
+        viewController.beginLayoutTransition(collapsed: true)
+        navigationMenu?.toCollapsed()
+
+        if viewController.contentNavi.viewControllers.isEmpty {
+            // Collapsed with an empty detail (e.g. a fresh launch): keep the menu
+            // list at its root. The remembered selection only becomes a detail
+            // screen once the layout expands (see toExpandedView).
+            viewController.navigationNavi.popToRootViewController(animated: false)
+        } else {
+            var vcs = viewController.navigationNavi.viewControllers
+            vcs += viewController.contentNavi.viewControllers
+            viewController.contentNavi.setViewControllers([], animated: false)
+
+            if let last = viewController.contentNavi.viewControllers.last,
+               let presented = last.presentedViewController { // dismissing any modals on top
+                presented.dismiss(animated: false) { [weak self] in
+                    self?.viewController.navigationNavi.setViewControllers(vcs, animated: false)
+                }
+            } else {
+                viewController.navigationNavi.setViewControllers(vcs, animated: false)
+            }
+        }
+    }
+    
+    func toExpandedView() {
+        viewController.beginLayoutTransition(collapsed: false)
+        navigationMenu?.toExpanded()
+        if let vcs = viewController.navigationNavi.popToRootViewController(animated: false), !vcs.isEmpty {
+            vcs.forEach({ $0.willMove(toParent: viewController.contentNavi) })
+            viewController.contentNavi.setViewControllers(vcs, animated: false)
+        } else {
+            navigationMenu?.toSelectedModule()
+        }
+    }
+    
+    func toShowingRootMenu() {
+        navigationMenu?.toShowingRoot()
+    }
+
+    func toRevealMenu() {
+        parent?.settingsToRevealMenu()
+    }
+}
+
+extension SettingsFlowController {
+    var viewController: SettingsViewController { _viewController as! SettingsViewController }
+}
+
+extension SettingsFlowController: SettingsMenuFlowControllerParent {
+    func toBackup() {
+        if isCollapsed {
+            BackupMenuFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            BackupMenuFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
+    
+    func toSecurity() {
+        if isCollapsed {
+            AppSecurityFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            AppSecurityFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
+    
+    func toTrash() {
+        if isCollapsed {
+            TrashFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            TrashFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
+    
+    func toFAQ() {
+        UIApplication.shared.open(ExternalLinks.support.url, options: [:], completionHandler: nil)
+    }
+    
+    func toAbout() {
+        if isCollapsed {
+            AboutFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            AboutFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
+    
+    func toBrowserExtension() {
+        if isCollapsed {
+            BrowserExtensionMainFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            BrowserExtensionMainFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
+    
+    func toTransfer() {
+        if isCollapsed {
+            TransferFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            TransferFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
+    
+    func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
+        parent?.settingsToUpdateCurrentPosition(viewPath)
+    }
+
+    func toPopDetailToRoot() {
+        viewController.contentNavi.popToRootViewController(animated: true)
+    }
+    
+    func toAppearance() {
+        if isCollapsed {
+            AppearanceFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            AppearanceFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
+
+    func toAppleWatch() {
+        if isCollapsed {
+            AppleWatchFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            AppleWatchFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
+
+    #if DEV
+    func toDebug() {
+        if isCollapsed {
+            DebugFlowController.push(in: viewController.navigationNavi, parent: self)
+        } else {
+            DebugFlowController.showAsRoot(in: viewController.contentNavi, parent: self)
+        }
+    }
+    #endif
+}
+extension SettingsFlowController: BackupMenuFlowControllerParent {}
+
+extension SettingsFlowController: PushNotificationPermissionPlainFlowControllerParent {
+    func pushNotificationsClose(extensionID: ExtensionID?) {}
+}
+
+extension SettingsFlowController: AppSecurityFlowControllerParent {
+    func appSecurityChaged() {
+        navigationMenu?.appSecurityChaged()
+    }
+}
+
+extension SettingsFlowController: AppleWatchFlowControllerParent {
+    func switchToBackup() {
+        navigationMenu?.toSwitchToBackup()
+    }
+}
+
+extension SettingsFlowController: TrashFlowControllerParent {}
+extension SettingsFlowController: BrowserExtensionMainFlowControllerParent {}
+extension SettingsFlowController: AboutFlowControllerParent {}
+#if DEV
+extension SettingsFlowController: DebugFlowControllerParent {}
+#endif
+extension SettingsFlowController: TransferFlowControllerParent {}
+extension SettingsFlowController: AppearanceFlowControllerParent {}

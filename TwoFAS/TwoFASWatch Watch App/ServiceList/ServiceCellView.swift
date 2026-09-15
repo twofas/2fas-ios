@@ -81,9 +81,9 @@ struct ServiceCellView: View {
                 additionalInfo: "contact@2fas.com",
                 iconType: .label,
                 iconTypeID: .default,
-                labelColor: TintColor.green.color,
+                labelColor: TintColor.green.color(for: .dark),
                 labelTitle: "2F",
-                badgeColor: TintColor.default.color
+                badgeColor: TintColor.default.color(for: .dark)
             ))
             .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
         }

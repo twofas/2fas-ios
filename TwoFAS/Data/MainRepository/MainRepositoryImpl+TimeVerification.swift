@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import TimeVerification
 
 extension MainRepositoryImpl {
     func timeVerificationStart() {

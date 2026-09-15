@@ -21,14 +21,13 @@ import UIKit
 import AVFoundation
 import Common
 
-public final class Camera {
+final class Camera {
     private let camera = CameraController()
     private let scanner = CameraOutputQRScanner()
-    private var isScanning = false
-    
-    public weak var delegate: CameraDelegate?
-    
-    public init(previewView: UIView, scanningRegion: CGRect) {
+
+    weak var delegate: CameraDelegate?
+
+    init(previewView: UIView, scanningRegion: CGRect) {
         Log("Camera - init with previewView: \(previewView), scanningRegion: \(scanningRegion)", module: .camera)
         camera.delegate = self
         scanner.didFoundCode = { [weak self] in self?.delegate?.didFoundCode($0) }
@@ -38,37 +37,37 @@ public final class Camera {
         scanner.setScanningRect(scanningRegion)
     }
     
-    public func updateScanningRegion(_ scanningRegion: CGRect) {
+    func updateScanningRegion(_ scanningRegion: CGRect) {
         Log("Camera - updateScanningRegion \(scanningRegion)", module: .camera)
         scanner.setScanningRect(scanningRegion)
     }
     
-    public func startScanning() {
+    func startScanning() {
         Log("Camera - startScanning", module: .camera)
         camera.startPreview()
     }
     
-    public func stopScanning() {
+    func stopScanning() {
         Log("Camera - stopScanning", module: .camera)
         camera.stopPreview()
     }
     
-    public func freeze() {
+    func freeze() {
         Log("Camera - freeze", module: .camera)
         camera.freezePreview()
     }
     
-    public func unfreeze() {
+    func unfreeze() {
         Log("Camera - unfreeze", module: .camera)
         camera.unfreezePreview()
     }
     
-    public func updateOrientation() {
+    func updateOrientation() {
         Log("Camera - updateOrientation", module: .camera)
         camera.updateOrientation()
     }
     
-    public func clear() {
+    func clear() {
         Log("Camera - clear", module: .camera)
         camera.clear()
     }

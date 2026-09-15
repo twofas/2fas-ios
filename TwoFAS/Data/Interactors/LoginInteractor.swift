@@ -19,34 +19,25 @@
 
 import Foundation
 import Common
+import Protection
 
 public protocol LoginInteracting: AnyObject {
-    var lock: Callback? { get set }
-    var unlock: Callback? { get set }
-    var bioAuth: Callback? { get set }
-    var userWasAuthenticated: Callback? { get set }
-    
     var codeLength: Int { get }
     var isLocked: Bool { get }
+    var isLoggedOut: Bool { get }
     
     func authSuccessfully()
     func authFailed()
     
     func verifyPIN(_ code: PIN) -> Bool
-    func authenticateUsingBioAuthIfPossible(reason: String)
+    func authenticateUsingBiometry(reason: String, userInitiated: Bool, completion: @escaping (Bool) -> Void)
 }
 
 final class LoginInteractor {
     private let security: SecurityProtocol
     
-    var lock: Callback?
-    var unlock: Callback?
-    var bioAuth: Callback?
-    var userWasAuthenticated: Callback?
-    
     init(security: SecurityProtocol) {
         self.security = security
-        security.delegate = self
     }
 }
 
@@ -59,8 +50,17 @@ extension LoginInteractor: LoginInteracting {
         !security.canAuthorize
     }
     
-    func authenticateUsingBioAuthIfPossible(reason: String) {
-        security.authenticateUsingBioAuthIfPossible(reason: reason)
+    var isLoggedOut: Bool {
+        security.isAuthenticationRequired
+    }
+    
+    func authenticateUsingBiometry(reason: String, userInitiated: Bool, completion: @escaping (Bool) -> Void) {
+        security.authenticateUsingBiometry(reason: reason, userInitiated: userInitiated) { result in
+            switch result {
+            case .autenticated: completion(true)
+            default: completion(false)
+            }
+        }
     }
     
     func verifyPIN(_ code: PIN) -> Bool {
@@ -73,29 +73,5 @@ extension LoginInteractor: LoginInteracting {
     
     func authFailed() {
         security.authFailed()
-    }
-}
-
-extension LoginInteractor: SecurityDelegate {
-    func securityBioAuthSuccess() {
-        security.authSuccessfully()
-        userWasAuthenticated?()
-    }
-
-    func securityBioAuthFailure() {
-        // use code instead. Do nothing
-    }
-
-    func securityLockUI() {
-        lock?()
-    }
-
-    func securityUnlockUI() {
-        unlock?()
-    }
-
-    func retryBioAuthIfNecessary() {
-        guard security.canAuthorize else { return }
-        bioAuth?()
     }
 }

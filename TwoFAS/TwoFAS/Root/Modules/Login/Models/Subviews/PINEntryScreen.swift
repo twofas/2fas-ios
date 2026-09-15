@@ -1,0 +1,252 @@
+//
+//  This file is part of the 2FAS iOS app (https://github.com/twofas/2fas-ios)
+//  Copyright © 2026 Two Factor Authentication Service, Inc.
+//  Contributed by Zbigniew Cisiński. All rights reserved.
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program. If not, see <https://www.gnu.org/licenses/>
+//
+
+import SwiftUI
+import Observation
+import Common
+
+/// Shared interface for the presenters backing a PIN-entry screen (create / verify PIN,
+/// exporter, transfer verification). Provides everything `PINEntryScreen` needs to render.
+protocol PINEntryPresenting: AnyObject, Observable {
+    var info: String { get }
+    var isError: Bool { get }
+    var shake: Bool { get }
+    var totalDigits: Int { get }
+    var enteredDigitCount: Int { get set }
+    /// Disables the dots and keyboard, e.g. while the input is locked after too many attempts.
+    var isInputDisabled: Bool { get }
+    func onKeyPressed(_ key: TFPinKey)
+}
+
+extension PINEntryPresenting {
+    var isInputDisabled: Bool { false }
+}
+
+/// The shared centre of every PIN screen: a header, the dots and the keypad, with fixed gaps
+/// that shrink when space is tight. Used by `PINEntryScreen` and `LoginView`.
+///
+/// The block claims a higher layout priority than its siblings, so a host can centre it
+/// between plain `Spacer`s and it still keeps its natural height; inside, the keypad is
+/// sized before the gaps so they compress first.
+struct PINEntryBlock<Header: View>: View {
+    let totalDigits: Int
+    @Binding var enteredCount: Int
+    let shake: Bool
+    let isDisabled: Bool
+    let onKeyPressed: (TFPinKey) -> Void
+    /// Biometry key shown left of "0"; `nil` leaves that slot empty.
+    var biometryKey: TFPinKey?
+    /// Hides and disables the keypad (see `PINKeyboard.isHidden`) while keeping its slot,
+    /// so the header and dots stay put when it comes back.
+    var isKeyboardHidden = false
+    /// `false` makes the next hide instant instead of a fade; showing always animates.
+    var keyboardAnimatesHiding = true
+    /// Pause before the keypad's entrance, see `PINKeyboard.entranceDelay`.
+    var keyboardEntranceDelay: TimeInterval = PINKeyboard.entranceDelay
+    /// Fades the dots out while keeping their slot, so the header and keypad stay put.
+    var hidesDots = false
+    /// Animation of the dots' fade; `nil` switches them instantly.
+    var dotsAnimation: Animation?
+    /// Laid over the space between the header and the dots, centred in it, without taking
+    /// any: a message that must not move the rest.
+    var betweenHeaderAndDots: PINInfoMessage?
+    @ViewBuilder let header: () -> Header
+
+    var body: some View {
+        VStack(spacing: .zero) {
+            AdaptiveReadableContainer(verticalMargin: .zero) {
+                header()
+            }
+            
+            gap
+                // A spacer is as narrow as nothing in a vertical stack; the overlay needs the
+                // full width to lay its text out in.
+                .frame(maxWidth: .infinity)
+                .overlay {
+                    // The dots' top padding is part of the space too; sit in its middle.
+                    betweenHeaderAndDots?
+                        .offset(y: Spacing.XL.value / 2)
+                }
+
+            PINDots(count: totalDigits, enteredCount: $enteredCount)
+                .disabled(isDisabled)
+                .shake(on: shake)
+                .sensoryFeedback(.error, trigger: shake)
+                .padding(.top, .XL)
+                .opacity(hidesDots ? 0 : 1)
+                .animation(dotsAnimation, value: hidesDots)
+
+            gap
+
+            PINKeyboard(
+                canDelete: enteredCount > 0,
+                biometryKey: biometryKey,
+                isHidden: isKeyboardHidden,
+                animatesHiding: keyboardAnimatesHiding,
+                entranceDelay: keyboardEntranceDelay,
+                action: onKeyPressed
+            )
+            .disabled(isDisabled)
+            .layoutPriority(1)
+        }
+        .layoutPriority(1)
+    }
+
+    private var gap: some View {
+        Spacer(minLength: Spacing.M.value)
+            .frame(maxHeight: Spacing.XXXXXXXL.value)
+    }
+}
+
+/// A reusable PIN-entry layout: info text, dots, keyboard and an optional footer.
+///
+/// This view is intentionally navigation-bar agnostic — it renders no title bar
+/// and never touches the navigation bar. The hosting view (one level up) is
+/// responsible for the chrome: setting a native `.navigationTitle` and any
+/// leading button (Close/X) via `.toolbar` on its enclosing navigation stack.
+struct PINEntryScreen<Presenter: PINEntryPresenting, Footer: View>: View {
+    @Bindable private var presenter: Presenter
+    /// `nil` when the screen was created without a footer; the footer band is laid out
+    /// regardless, see `footerBandHeight`.
+    private let footer: (() -> Footer)?
+    /// Height of the band at the bottom the footer is laid in: room for a small button with
+    /// a gap above it. Reserved under the block on every PIN screen, footer or not, so the
+    /// block sits at one place on all of them.
+    private static var footerBandHeight: CGFloat { 44 }
+
+    init(
+        presenter: Presenter,
+        @ViewBuilder footer: @escaping () -> Footer
+    ) {
+        self._presenter = Bindable(wrappedValue: presenter)
+        self.footer = footer
+    }
+
+    var body: some View {
+        VStack(spacing: .zero) {
+            // The block is centred between two flexible gaps. The top minimum keeps it off the
+            // top edge on a short screen; the bottom minimum is the footer band, laid inside
+            // the bottom gap. With room to spare the gaps share it and neither minimum binds.
+            // They are clear colours, not spacers: a stack hands its spacers only what every
+            // other child has left, and a spacer under a modifier is such a child, so a
+            // spacer and a modified spacer would not share.
+            Color.clear.frame(minHeight: Spacing.XXXL.value, maxHeight: .infinity)
+
+            PINEntryBlock(
+                totalDigits: presenter.totalDigits,
+                enteredCount: $presenter.enteredDigitCount,
+                shake: presenter.shake,
+                isDisabled: presenter.isInputDisabled,
+                onKeyPressed: presenter.onKeyPressed
+            ) {
+                Text(presenter.info)
+                    .textStyle(.title2, .emphasized)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .foregroundStyle(presenter.isError ? AppColor.accentsBrand : AppColor.labelsPrimary)
+                    .animation(.easeInOut, value: presenter.info)
+            }
+
+            Color.clear.frame(minHeight: Self.footerBandHeight, maxHeight: .infinity)
+                // The footer sits at the bottom of the gap, within it: the gap is never
+                // shorter than the band, so the footer cannot reach the keypad above, however
+                // little room the screen leaves.
+                .overlay(alignment: .bottom) {
+                    HStack(alignment: .center) {
+                        footer?()
+                    }
+                    .frame(height: Self.footerBandHeight)
+                }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .minimumBottomSpacing(.L)
+        .background(AppColor.backgroundsPrimary)
+    }
+}
+
+extension PINEntryScreen where Footer == EmptyView {
+    init(presenter: Presenter) {
+        self._presenter = Bindable(wrappedValue: presenter)
+        self.footer = nil
+    }
+}
+
+// MARK: - Preview
+
+@Observable
+private final class PreviewPINEntryPresenter: PINEntryPresenting {
+    var info: String
+    let isError: Bool
+    let shake = false
+    var totalDigits: Int
+    var enteredDigitCount: Int
+    var isInputDisabled: Bool
+
+    init(
+        info: String = T.Security.enterPinShort,
+        isError: Bool = false,
+        totalDigits: Int = 4,
+        enteredDigitCount: Int = 0,
+        isInputDisabled: Bool = false
+    ) {
+        self.info = info
+        self.isError = isError
+        self.totalDigits = totalDigits
+        self.enteredDigitCount = enteredDigitCount
+        self.isInputDisabled = isInputDisabled
+    }
+
+    func onKeyPressed(_ key: TFPinKey) {
+        switch key {
+        case .digit:
+            enteredDigitCount = min(totalDigits, enteredDigitCount + 1)
+        case .delete:
+            enteredDigitCount = max(0, enteredDigitCount - 1)
+        case .biometry:
+            break
+        }
+    }
+}
+
+#Preview("Default") {
+    NavigationStack {
+        PINEntryScreen(presenter: PreviewPINEntryPresenter())
+            .navigationTitle("PIN")
+            .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+#Preview("With footer, 6 digits") {
+    NavigationStack {
+        PINEntryScreen(presenter: PreviewPINEntryPresenter(totalDigits: 6, enteredDigitCount: 2)) {
+            TFButton(T.Settings.selectPinLength, variant: .borderless, size: .small) {}
+        }
+        .navigationTitle("PIN")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+#Preview("Error") {
+    PINEntryScreen(presenter: PreviewPINEntryPresenter(info: T.Security.pinErrorIncorrect, isError: true))
+}
+
+#Preview("Disabled") {
+    PINEntryScreen(presenter: PreviewPINEntryPresenter(isInputDisabled: true))
+}

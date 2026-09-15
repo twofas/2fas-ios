@@ -19,8 +19,8 @@
 
 import Foundation
 
-public enum Send2FAToken {
-    public struct Request: NetworkRequestFormat {
+enum Send2FAToken {
+    struct Request: NetworkRequestFormat {
         let deviceID: String
         let method: HTTPMethod = .POST
         var path: String { "mobile/devices/\(deviceID)/commands/send_2fa_token" }

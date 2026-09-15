@@ -35,6 +35,9 @@ struct TwoFASWidgetInline: View {
                     codePlaceholder()
                 } else {
                     code(entryData.code)
+                        .widgetURL(kind == .singleEntryHidden
+                                   ? WidgetTapURL.openApp
+                                   : WidgetTapURL.copy(code: entryData.code))
                 }
             } else {
                 codePlaceholder()
@@ -43,10 +46,8 @@ struct TwoFASWidgetInline: View {
     }
     
     func isRedacted() -> Bool {
-        if #available(iOS 17.0, *) {
-            if reasons.contains(.invalidated) {
-                return true
-            }
+        if reasons.contains(.invalidated) {
+            return true
         }
         
         if reasons.contains(.placeholder) || reasons.contains(.privacy) {
@@ -64,16 +65,16 @@ struct TwoFASWidgetInline: View {
     
     @ViewBuilder
     func code(_ code: String) -> some View {
-        
         Label {
             Text(code)
-                .font(Font.system(.title).weight(.medium).monospacedDigit())
+                .textStyle(.title1, .emphasized)
+                .monospacedDigit()
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.1)
                 .lineLimit(1)
                 .frame(alignment: .center)
         } icon: {
-            Image(systemName: "key.horizontal.fill")
+            Image(icon: .keyHorizontalFill)
                 .resizable()
                 .frame(width: 12, height: 21, alignment: .center)
                 .foregroundColor(.white)

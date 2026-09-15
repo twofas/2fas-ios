@@ -19,9 +19,9 @@
 
 import Foundation
 import Common
-import CommonUIKit
 import Storage
 import Data
+import Content
 
 enum TokensModuleInteractorState {
     case normal
@@ -32,7 +32,6 @@ protocol TokensModuleInteracting: AnyObject {
     var emptySnapshot: NSDiffableDataSourceSnapshot<TokensSection, TokenCell> { get }
     var trashedServicesCount: Int { get }
     var isiPhone: Bool { get }
-    var canBeDragged: Bool { get }
     var hasServices: Bool { get }
     var count: Int { get }
     var isSortingEnabled: Bool { get }
@@ -88,9 +87,15 @@ protocol TokensModuleInteracting: AnyObject {
     func moveServiceDown(serviceData: ServiceData)
     // MARK: Pass promo cell
     func markPassPromoCellAsSeen()
+    func markPassPromoCellAsNavigated()
     // MARK: Sync alerts
     var allServicesRemovedPending: Bool { get }
     func clearAllServicesRemovedPending()
+    // MARK: Quick Action
+    var openAddServiceOnAppear: Bool { get }
+    func setOpenAddServiceOnAppear(_ value: Bool)
+    var focusSearchOnAppear: Bool { get }
+    func setFocusSearchOnAppear(_ value: Bool)
 }
 
 final class TokensModuleInteractor {
@@ -126,7 +131,8 @@ final class TokensModuleInteractor {
     private let localNotificationFetchInteractor: LocalNotificationFetchInteracting
     private let appInfoInteractor: AppInfoInteracting
     private let trashInteractor: TrashingServiceInteracting
-    
+    private let appStateInteractor: AppStateInteracting
+
     private(set) var categoryData: [CategoryData] = []
     
     private var hasUnreadLocalNotification = false
@@ -151,7 +157,8 @@ final class TokensModuleInteractor {
         rootInteractor: RootInteracting,
         localNotificationFetchInteractor: LocalNotificationFetchInteracting,
         appInfoInteractor: AppInfoInteracting,
-        trashInteractor: TrashingServiceInteracting
+        trashInteractor: TrashingServiceInteracting,
+        appStateInteractor: AppStateInteracting
     ) {
         self.appearanceInteractor = appearanceInteractor
         self.serviceDefinitionsInteractor = serviceDefinitionsInteractor
@@ -171,7 +178,8 @@ final class TokensModuleInteractor {
         self.localNotificationFetchInteractor = localNotificationFetchInteractor
         self.appInfoInteractor = appInfoInteractor
         self.trashInteractor = trashInteractor
-        
+        self.appStateInteractor = appStateInteractor
+
         setupLinkInteractor()
     }
 }
@@ -259,10 +267,6 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     func enableHOTPCounter(for secret: Secret) {
         tokenInteractor.unlockCounter(for: secret)
-    }
-    
-    func unlockConsumer(for consumer: TokenTimerConsumer) {
-        tokenInteractor.unlockTOTPConsumer(consumer)
     }
     
     func stopCounters() {
@@ -562,6 +566,10 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     func markPassPromoCellAsSeen() {
         appInfoInteractor.markPassPromoAsSeen()
     }
+    
+    func markPassPromoCellAsNavigated() {
+        appInfoInteractor.markPassPromoDateNavigatedToAppStore()
+    }
 
     var allServicesRemovedPending: Bool {
         cloudBackupInteractor.allServicesRemovedPending
@@ -571,13 +579,35 @@ extension TokensModuleInteractor: TokensModuleInteracting {
         cloudBackupInteractor.clearAllServicesRemovedPending()
     }
 
+    var openAddServiceOnAppear: Bool {
+        appStateInteractor.openAddServiceOnAppear
+    }
+
+    func setOpenAddServiceOnAppear(_ value: Bool) {
+        appStateInteractor.setOpenAddServiceOnAppear(value)
+    }
+
+    var focusSearchOnAppear: Bool {
+        appStateInteractor.focusSearchOnAppear
+    }
+
+    func setFocusSearchOnAppear(_ value: Bool) {
+        appStateInteractor.setFocusSearchOnAppear(value)
+    }
+
     private var showPassPromoCell: Bool {
         guard !appInfoInteractor.wasPassPromoSeen else { return false }
         if appInfoInteractor.is2FASPASSInstalled {
-            appInfoInteractor.markPassPromoAsSeen()
             return false
         }
-        let date = appInfoInteractor.dateOfFirstRun
+        let markDate = appInfoInteractor.passPromoDateNavigatedToAppStore
+        let firstRunDate = appInfoInteractor.dateOfFirstRun
+        let date: Date = {
+            if let markDate {
+                return markDate
+            }
+            return firstRunDate
+        }()
         return date.days(from: .now) >= daysTillPassCellPresentation
     }
 }
@@ -587,7 +617,6 @@ private extension TokensModuleInteractor {
         linkInteractor.showCodeAlreadyExists = { [weak self] in self?.linkAction?(.codeAlreadyExists) }
         linkInteractor.showIncorrectCode = { [weak self] in self?.linkAction?(.incorrectCode) }
         linkInteractor.showShouldAddCode = { [weak self] in self?.linkAction?(.shouldAddCode(descriptionText: $0)) }
-        linkInteractor.showSendLogs = { [weak self] in self?.linkAction?(.sendLogs(auditID: $0)) }
         linkInteractor.reloadDataAndRefresh = { [weak self] in self?.linkAction?(.newData) }
         linkInteractor.shouldRename = { [weak self] currentName, secret in
             self?.linkAction?(.shouldRename(currentName: currentName, secret: secret))
@@ -802,11 +831,11 @@ private extension TokensModuleInteractor {
     }
     
     private func copyToken(_ token: String) {
-        notificationsInteractor.copyWithSuccess(value: token.removeWhitespaces())
+        notificationsInteractor.copy(value: token.removeWhitespaces())
     }
     
     private func copyNextToken(_ token: String) {
-        notificationsInteractor.copyWithSuccess(value: token.removeWhitespaces())
+        notificationsInteractor.copy(value: token.removeWhitespaces())
     }
 }
 

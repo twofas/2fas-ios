@@ -20,6 +20,7 @@
 import Foundation
 import Protection
 import Common
+import LocalAuthentication
 
 extension MainRepositoryImpl {
     var isPINSet: Bool {

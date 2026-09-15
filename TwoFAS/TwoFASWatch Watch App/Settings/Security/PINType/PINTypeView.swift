@@ -55,7 +55,7 @@ struct PINTypeView: View {
                     Button {
                         didClose?()
                     } label: {
-                        Label(T.Commons.close, systemImage: "xmark")
+                        Label(T.Commons.close, icon: .xmark)
                     }
                 }
             }

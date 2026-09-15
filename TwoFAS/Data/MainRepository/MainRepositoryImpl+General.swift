@@ -29,11 +29,11 @@ extension MainRepositoryImpl {
     }
     
     var willURLBeHandled: Bool { _urlWillBeHandled }
-    
+
     func clearURLWillBeHandled() {
         _urlWillBeHandled = false
     }
-    
+
     func markURLWillBeHandled() {
         _urlWillBeHandled = true
     }
@@ -88,6 +88,10 @@ extension MainRepositoryImpl {
         let hasGroupID = String(groupData.map { String(format: "%02hhx", $0) }.joined())
         let lastTwo = String(hasGroupID.suffix(2))
         userDefaultsRepository.saveNotificationGroupID(lastTwo)
+    }
+    
+    func copy(_ str: String) {
+        UIPasteboard.general.string = str
     }
 
     var is2FASPASSInstalled: Bool {

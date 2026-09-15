@@ -18,22 +18,28 @@
 //
 
 import UIKit
+import Common
 
 class CommonNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        guard #unavailable(iOS 26.0) else { return }
+
+        navigationBar.tintColor = AppColor.accentsBrand.uiColor
+
         let shadowLine = Asset.shadowLine.image
             .withRenderingMode(.alwaysTemplate)
             .resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
-        
+
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.shadowImage = shadowLine
-        navBarAppearance.shadowColor = Theme.Colors.Line.secondaryLine
-        navBarAppearance.titleTextAttributes = [.foregroundColor: Theme.Colors.Text.main]
-        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: Theme.Colors.Text.main]
-        navBarAppearance.backgroundColor = Theme.Colors.Fill.background
+        navBarAppearance.shadowColor = AppColor.separatorsOpaque.uiColor
+        navBarAppearance.titleTextAttributes = [.foregroundColor: AppColor.labelsPrimary.uiColor]
+        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: AppColor.labelsPrimary.uiColor]
+        navBarAppearance.backgroundColor = AppColor.backgroundsPrimary.uiColor
+        navBarAppearance.backButtonAppearance = .chevronOnly
         navigationBar.standardAppearance = navBarAppearance
         navigationBar.scrollEdgeAppearance = navBarAppearance
     }

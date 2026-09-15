@@ -113,7 +113,7 @@ enum RatingController {
         let twoSecondsFromNow = DispatchTime.now() + 4.0
         
         DispatchQueue.main.asyncAfter(deadline: twoSecondsFromNow) {
-            SKStoreReviewController.requestReview(in: scene)
+            AppStore.requestReview(in: scene)
         }
     }
     

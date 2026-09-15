@@ -18,16 +18,16 @@
 //
 
 import UIKit
+import Common
 
 final class TokensServiceName: UIView {
     private let label: UILabel = {
         let label = UILabel()
-        label.font = UIFontMetrics(forTextStyle: .headline)
-            .scaledFont(for: .systemFont(ofSize: 17, weight: .bold))
+        label.font = TextStyle.headline.uiFont()
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
-        label.textColor = Theme.Colors.Text.main
+        label.textColor = AppColor.labelsPrimary.uiColor
         label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
@@ -49,24 +49,30 @@ final class TokensServiceName: UIView {
     private func commonInit() {
         addSubview(label)
         label.pinToParent()
+        setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
+        setContentHuggingPriority(.defaultLow - 1, for: .vertical)
     }
-    
+
+    override var intrinsicContentSize: CGSize {
+        label.intrinsicContentSize
+    }
+
     func setKind(_ kind: TokensCellKind) {
         switch kind {
         case .compact:
-            label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+            label.font = TextStyle.subheadline.uiFont(.emphasized)
         case .edit:
-            label.font = UIFontMetrics(forTextStyle: .headline)
-                .scaledFont(for: .systemFont(ofSize: 13, weight: .bold))
+            label.font = TextStyle.subheadline.uiFont(.emphasized)
         case .normal:
-            label.font = UIFontMetrics(forTextStyle: .headline)
-                .scaledFont(for: .systemFont(ofSize: 17, weight: .bold))
+            label.font = TextStyle.headline.uiFont()
         case .pass:
             break
         }
+        invalidateIntrinsicContentSize()
     }
-    
+
     func setText(_ text: String) {
         label.text = text
+        invalidateIntrinsicContentSize()
     }
 }

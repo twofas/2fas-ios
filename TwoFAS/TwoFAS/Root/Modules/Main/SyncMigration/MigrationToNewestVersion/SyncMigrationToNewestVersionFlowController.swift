@@ -18,8 +18,8 @@
 //
 
 import UIKit
+import SwiftUI
 import Common
-import Data
 
 protocol SyncMigrationToNewestVersionFlowControllerParent: AnyObject {
     func closeMigrationToNewestVersion()
@@ -36,17 +36,19 @@ final class SyncMigrationToNewestVersionFlowController: FlowController {
         in viewController: UIViewController,
         parent: SyncMigrationToNewestVersionFlowControllerParent
     ) -> (MigrationResult) -> Void {
-        let view = SyncMigrationToNewestVersionViewController()
-        let flowController = SyncMigrationToNewestVersionFlowController(viewController: view)
+        let hostingController = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let flowController = SyncMigrationToNewestVersionFlowController(viewController: hostingController)
         flowController.parent = parent
         let presenter = SyncMigrationToNewestVersionPresenter(
             flowController: flowController
         )
-        view.presenter = presenter
 
-        view.configureAsPhoneFullscreenModal()
-        viewController.present(view, animated: true)
-        
+        hostingController.rootView = AnyView(SyncMigrationToNewestVersionView(presenter: presenter))
+        hostingController.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+
+        hostingController.configureAsPhoneFullscreenModal()
+        viewController.present(hostingController, animated: true)
+
         return presenter.callback
     }
 }

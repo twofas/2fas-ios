@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Storage
 
 extension MainRepositoryImpl {
     var hasServices: Bool { storageRepository.hasServices }

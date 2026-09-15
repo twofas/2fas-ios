@@ -41,9 +41,11 @@ final class TokensTokenView: UIView {
     private let tokenLabel = TokensTokenLabel()
     private let spacingLabel: TokensTokenLabel = {
         let label = TokensTokenLabel()
-        label.textColor = Theme.Colors.Fill.background
+        label.textColor = AppColor.backgroundsPrimary.uiColor
         return label
     }()
+
+    private var minHeightConstraint: NSLayoutConstraint?
     
     private var isMarked = false
     private var isMasked = false
@@ -64,24 +66,44 @@ final class TokensTokenView: UIView {
         spacingLabel.pinToParent()
         addSubview(tokenLabel)
         tokenLabel.pinToParent()
-        
+
         NSLayoutConstraint.activate([
             spacingLabel.widthAnchor.constraint(equalTo: tokenLabel.widthAnchor),
             spacingLabel.heightAnchor.constraint(equalTo: tokenLabel.heightAnchor)
         ])
-        
+
         spacingLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         spacingLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
         spacingLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
-        
+
         tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
         tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
-        
+
+        setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
+        setContentHuggingPriority(.defaultLow - 1, for: .vertical)
+
+        let minHeight = heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
+        minHeight.priority = .required - 1
+        minHeight.isActive = true
+        minHeightConstraint = minHeight
+        updateMinHeight()
+
         isAccessibilityElement = true
     }
-    
-    var currentToken: String? { tokenLabel.text }
+
+    private func updateMinHeight() {
+        guard let font = tokenLabel.font else { return }
+        minHeightConstraint?.constant = ceil(font.lineHeight)
+    }
+
+    override var intrinsicContentSize: CGSize {
+        var size = tokenLabel.intrinsicContentSize
+        if let font = tokenLabel.font {
+            size.height = max(size.height, ceil(font.lineHeight))
+        }
+        return size
+    }
     
     func mark() {
         guard !isMarked else { return }
@@ -102,6 +124,7 @@ final class TokensTokenView: UIView {
         let formattedToken = token.formattedValue(for: tokenType)
         spacingLabel.text = formattedToken
         currentText = formattedToken
+        invalidateIntrinsicContentSize()
         if isMasked {
             isMasked = false
             if animated {
@@ -131,6 +154,8 @@ final class TokensTokenView: UIView {
     func setKind(_ kind: TokensCellKind) {
         tokenLabel.setKind(kind)
         spacingLabel.setKind(kind)
+        updateMinHeight()
+        invalidateIntrinsicContentSize()
     }
     
     func maskToken() {
@@ -142,6 +167,7 @@ final class TokensTokenView: UIView {
         tokenLabel.text = maskedText
         clearAnimation()
         isAccessibilityElement = false
+        invalidateIntrinsicContentSize()
     }
     
     func clear() {
@@ -233,20 +259,19 @@ private class TokensTokenLabel: UILabel {
     }
     
     func mark() {
-        textColor = Theme.Colors.Text.theme
+        textColor = AppColor.accentsBrand.uiColor
     }
     
     func clearMarking() {
-        textColor = Theme.Colors.Text.main
+        textColor = AppColor.labelsPrimary.uiColor
     }
     
     func setKind(_ kind: TokensCellKind) {
         switch kind {
         case .compact:
-            font = UIFont.monospacedDigitSystemFont(ofSize: 30, weight: .thin)
+            font = TextStyle.compactToken.uiFont()
         case .normal:
-            font = UIFontMetrics(forTextStyle: .largeTitle)
-                .scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 50, weight: .thin))
+            font = TextStyle.token.uiFont()
         default:
             break
         }

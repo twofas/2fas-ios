@@ -18,22 +18,37 @@
 //
 
 import UIKit
+import Common
 
 final class TokensView: UICollectionView {
+    private var lastLayoutWidth: CGFloat = 0
+    /// Called after every layout pass, i.e. on scroll, data reload and size change.
+    var didLayout: Callback?
+
+    override static var layerClass: AnyClass { TokensLayer.self }
+
     override var isEditing: Bool {
         get {
             super.isEditing
         }
-        
         set {
             guard newValue != super.isEditing else { return }
             super.isEditing = newValue
             reloadHeaders()
         }
     }
-    
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if bounds.width != lastLayoutWidth {
+            lastLayoutWidth = bounds.width
+            collectionViewLayout.invalidateLayout()
+        }
+        didLayout?()
+    }
+
     func configure() {
-        backgroundColor = Theme.Colors.Fill.background
+        backgroundColor = AppColor.backgroundsPrimary.uiColor
         register(TokensTOTPCell.self, forCellWithReuseIdentifier: TokensTOTPCell.reuseIdentifier)
         register(TokensHOTPCell.self, forCellWithReuseIdentifier: TokensHOTPCell.reuseIdentifier)
         register(TokensEditCell.self, forCellWithReuseIdentifier: TokensEditCell.reuseIdentifier)
@@ -55,8 +70,33 @@ final class TokensView: UICollectionView {
     
     private func reloadHeaders() {
         guard let visible = visibleSupplementaryViews(
-            ofKind: UICollectionView.elementKindSectionHeader
+            ofKind: TokensSectionHeader.reuseIdentifier
         ) as? [TokensSectionHeader] else { return }
         visible.forEach({ $0.setIsEditing(isEditing) })
+    }
+}
+
+private final class TokensLayer: CALayer, ZoomPushBackSuppressingLayer {
+    var suppressesZoomPushBack = false
+
+    override init() {
+        super.init()
+    }
+
+    override init(layer: Any) {
+        super.init(layer: layer)
+        suppressesZoomPushBack = (layer as? TokensLayer)?.suppressesZoomPushBack ?? false
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    override var sublayerTransform: CATransform3D {
+        get { suppressesZoomPushBack ? CATransform3DIdentity : super.sublayerTransform }
+        set {
+            guard !suppressesZoomPushBack else { return }
+            super.sublayerTransform = newValue
+        }
     }
 }

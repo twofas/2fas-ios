@@ -21,13 +21,9 @@ import SwiftUI
 import Common
 
 struct CameraGoogleAuth: View {
-    private let paddingHorizontal: CGFloat = 3 * Theme.Metrics.standardSpacing
-    private let paddingVertical: CGFloat = Theme.Metrics.doubleSpacing
-    private let containerPadding: CGFloat = Theme.Metrics.standardSpacing
-    private let spacing: CGFloat = Theme.Metrics.doubleSpacing
+    private let spacing: Spacing = .XL
     
     private let image0 = Asset.gaImport0.image
-    private let image1 = Asset.gaImport1.image
     private let image2 = Asset.gaImport2.image
     
     let importedCount: Int
@@ -36,72 +32,32 @@ struct CameraGoogleAuth: View {
     let action: Callback
     let cancel: Callback
     
+    private var summaryDescription: AttributedString {
+        let first = AttributedString("\(T.Tokens.googleAuthImportSubtitle)\n\n")
+        var middle = AttributedString(T.Tokens.googleAuthOutOfTitle(importedCount, totalCount))
+        middle.inlinePresentationIntent = .stronglyEmphasized
+        let last = AttributedString("\n\n\(T.Tokens.googleAuthImportSubtitleEnd)")
+        return first + middle + last
+    }
+    
     var body: some View {
-        Group {
-            VStack(alignment: .center, spacing: Theme.Metrics.standardSpacing) {
-                HStack(spacing: spacing) {
-                    Image(uiImage: image0)
-                        .frame(width: image0.size.width, height: image0.size.height)
-                    Image(uiImage: image1)
-                        .frame(width: image1.size.width, height: image1.size.height)
-                    Image(uiImage: image2)
-                        .frame(width: image2.size.width, height: image2.size.height)
-                }
-                .frame(maxHeight: .infinity, alignment: .center)
-                
-                VStack(spacing: spacing) {
-                    Text(T.Tokens.googleAuthImport)
-                        .font(.title)
-                        .multilineTextAlignment(.center)
-                    Text(T.Tokens.googleAuthImportSubtitle)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                    Text(T.Tokens.googleAuthOutOfTitle(importedCount, totalCount))
-                        .font(.body.bold())
-                        .multilineTextAlignment(.center)
-                    Text(T.Tokens.googleAuthImportSubtitleEnd)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                }
-                .frame(alignment: .center)
-                .layoutPriority(1)
-                
-                VStack(spacing: 0) {
-                    Button {
-                        action()
-                    } label: {
-                        Text(T.Commons.continue)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                    }
-                    .modify {
-                        if importedCount == 0 {
-                            $0.buttonStyle(RoundedFilledInactiveButtonStyle())
-                        } else {
-                            $0.buttonStyle(RoundedFilledButtonStyle())
-                        }
-                    }
-                    
-                    Button {
-                        cancel()
-                    } label: {
-                        Text(T.Commons.cancel)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                    }
-                    .buttonStyle(LinkButtonStyle())
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+        TFInfoView(icon: .view(view: AnyView(
+            HStack(spacing: spacing) {
+                Image(uiImage: image0)
+                    .frame(width: image0.size.width, height: image0.size.height)
+                ArrowIcon()
+                Image(uiImage: image2)
+                    .frame(width: image2.size.width, height: image2.size.height)
             }
-            .frame(maxWidth: Theme.Metrics.componentWidth)
-            .padding(EdgeInsets(
-                top: paddingVertical,
-                leading: paddingHorizontal,
-                bottom: 0,
-                trailing: paddingHorizontal)
-            )
-            .background(Color(Theme.Colors.decoratedContainer))
-            .cornerRadius(Theme.Metrics.cornerRadius)
-        }
-        .padding(containerPadding)
+        )),
+        title: T.Tokens.googleAuthImport,
+        attributedDescription: summaryDescription,
+        buttons: {
+            TFButton(T.Commons.continue, variant: .borderedProminent, size: .large, action: action)
+                .disabled(importedCount == 0)
+            TFCancelButton(T.Commons.cancel, action: cancel)
+        })
+        .navigationBarHidden(true)
     }
 }
 

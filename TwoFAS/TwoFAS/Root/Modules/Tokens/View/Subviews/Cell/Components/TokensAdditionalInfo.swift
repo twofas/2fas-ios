@@ -18,16 +18,16 @@
 //
 
 import UIKit
+import Common
 
 final class TokensAdditionalInfo: UIView {
     private let label: UILabel = {
         let label = UILabel()
-        label.font = UIFontMetrics(forTextStyle: .body)
-            .scaledFont(for: .systemFont(ofSize: 17, weight: .medium))
+        label.font = TextStyle.caption1.uiFont()
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
-        label.textColor = Theme.Colors.Text.subtitle
+        label.textColor = AppColor.labelsSecondary.uiColor
         label.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         label.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
@@ -49,28 +49,35 @@ final class TokensAdditionalInfo: UIView {
     private func commonInit() {
         addSubview(label)
         label.pinToParent()
+        setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
+        setContentHuggingPriority(.defaultLow - 1, for: .vertical)
     }
-    
+
+    override var intrinsicContentSize: CGSize {
+        label.intrinsicContentSize
+    }
+
     func setKind(_ kind: TokensCellKind) {
         switch kind {
         case .compact:
-            label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+            label.font = TextStyle.caption1.uiFont()
         case .edit:
-            label.font = UIFontMetrics(forTextStyle: .body)
-                .scaledFont(for: .systemFont(ofSize: 13, weight: .medium))
+            label.font = TextStyle.caption1.uiFont()
         case .normal:
-            label.font = UIFontMetrics(forTextStyle: .body)
-                .scaledFont(for: .systemFont(ofSize: 15, weight: .regular))
+            label.font = TextStyle.footnote.uiFont()
         case .pass:
             break
         }
+        invalidateIntrinsicContentSize()
     }
-    
+
     func setText(_ text: String) {
         label.text = text
+        invalidateIntrinsicContentSize()
     }
-    
+
     func clear() {
         label.text = "<empty string>"
+        invalidateIntrinsicContentSize()
     }
 }

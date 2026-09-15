@@ -21,32 +21,14 @@ import SwiftUI
 
 struct AddingServiceTitleView: View {
     let text: String
-    let alignToLeading: Bool
-    
-    init(text: String, alignToLeading: Bool = false) {
-        self.text = text
-        self.alignToLeading = alignToLeading
-    }
     
     var body: some View {
         Text(text)
-            .font(.headline)
-            .foregroundColor(Color(Theme.Colors.Text.main))
-            .ifElse(
-                alignToLeading,
-                contentIf: {
-                    $0.multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }, contentElse: {
-                    $0.multilineTextAlignment(.center)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                }
-            )
-    }
-}
-
-struct AddingServiceTitleView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddingServiceTitleView(text: "Test text", alignToLeading: true)
+            .lineLimit(1)
+            .textStyle(.headline)
+            .foregroundStyle(.labelsPrimary)
+            .multilineTextAlignment(.leading)
+            .allowsTightening(true)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

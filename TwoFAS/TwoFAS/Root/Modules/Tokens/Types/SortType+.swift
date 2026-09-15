@@ -33,15 +33,15 @@ extension SortType {
         let configuration = UIImage.SymbolConfiguration(weight: .bold)
         var img: UIImage?
         switch self {
-        case .az: img = UIImage(systemName: "arrow.down")
-        case .za: img = UIImage(systemName: "arrow.up")
-        case .manual: img = UIImage(systemName: "line.3.horizontal") 
+        case .az: img = UIImage(icon: .arrowDown)
+        case .za: img = UIImage(icon: .arrowUp)
+        case .manual: img = UIImage(icon: .line3Horizontal)
         }
         
         if self == option {
             img = img?.withConfiguration(configuration)
         }
         
-        return img?.apply(Theme.Colors.Icon.theme)?.withRenderingMode(.alwaysOriginal) ?? UIImage()
+        return img?.apply(AppColor.accentsBrand.uiColor)?.withRenderingMode(.alwaysOriginal) ?? UIImage()
     }
 }

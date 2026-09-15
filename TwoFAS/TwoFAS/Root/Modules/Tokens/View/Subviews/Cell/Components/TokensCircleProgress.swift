@@ -18,11 +18,13 @@
 //
 
 import UIKit
+import Common
 
 final class TokensCircleProgress: UIView {
     private let circle = CircularShape()
     private let valueLabel: UILabel = {
         let label = UILabel()
+        label.font = TextStyle.counter.uiFont()
         label.numberOfLines = 1
         label.textAlignment = .center
         label.isAccessibilityElement = true
@@ -35,6 +37,7 @@ final class TokensCircleProgress: UIView {
     }()
     private let sizeLabel: UILabel = {
         let label = UILabel()
+        label.font = TextStyle.counter.uiFont()
         label.numberOfLines = 1
         label.textAlignment = .center
         label.isAccessibilityElement = false
@@ -53,7 +56,7 @@ final class TokensCircleProgress: UIView {
     private var cTop: NSLayoutConstraint?
     private var cBottom: NSLayoutConstraint?
     
-    private let standardLineWidth = 1.0
+    private let standardLineWidth = 2.0
     private let standardMargin = 8.0
     
     private var kind: TokensCellKind = .normal
@@ -98,6 +101,20 @@ final class TokensCircleProgress: UIView {
         
         isAccessibilityElement = false
         accessibilityElements = [valueLabel]
+        
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, previousTraitCollection) in
+            if self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
+                self.setCircleColor(marked: self.marked, animated: false)
+            }
+        }
+        
+        registerForTraitChanges([UITraitPreferredContentSizeCategory.self]) { (self: Self, previousTraitCollection) in
+            if self.traitCollection.preferredContentSizeCategory !=
+                previousTraitCollection.preferredContentSizeCategory {
+                self.setLineWidth()
+                self.setMargins()
+            }
+        }
     }
     
     func setPeriod(_ period: Int) {
@@ -118,8 +135,7 @@ final class TokensCircleProgress: UIView {
         
         setCircleColor(marked: true, animated: true)
         UIView.animate(withDuration: Theme.Animations.Timing.show) { [weak self] in
-            
-            self?.valueLabel.textColor = Theme.Colors.Text.theme
+            self?.valueLabel.textColor = AppColor.accentsBrand.uiColor
         }
         
         marked = true
@@ -130,40 +146,21 @@ final class TokensCircleProgress: UIView {
         
         setCircleColor(marked: false, animated: true)
         UIView.animate(withDuration: Theme.Animations.Timing.show) { [weak self] in
-            
-            self?.valueLabel.textColor = Theme.Colors.Text.main
+            self?.valueLabel.textColor = AppColor.labelsPrimary.uiColor
         }
         
         marked = false
-    }
-    
-    func setClearBackground() {
-        circle.setClearBackground()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        if traitCollection.userInterfaceStyle != previousTraitCollection?.userInterfaceStyle {
-            setCircleColor(marked: marked, animated: false)
-        }
-        
-        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
-            setLineWidth()
-            setMargins()
-        }
     }
     
     func setKind(_ kind: TokensCellKind) {
         self.kind = kind
         switch kind {
         case .compact:
-            let font = UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular)
+            let font = TextStyle.counter.uiFont()
             valueLabel.font = font
             sizeLabel.font = font
         case .normal:
-            let font = UIFontMetrics(forTextStyle: .caption2)
-                .scaledFont(for: UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular))
+            let font = TextStyle.counter.uiFont()
             valueLabel.font = font
             sizeLabel.font = font
         default:
@@ -173,7 +170,7 @@ final class TokensCircleProgress: UIView {
     }
     
     private func setCircleColor(marked: Bool, animated: Bool) {
-        let color = marked ? Theme.Colors.Line.theme : Theme.Colors.Line.primaryLine
+        let color = marked ? AppColor.accentsBrand.uiColor : AppColor.labelsPrimary.uiColor
         circle.setLineColor(color, animated: animated)
     }
     
@@ -202,18 +199,18 @@ final class TokensCircleProgress: UIView {
 private extension UIContentSizeCategory {
     var lineWidth: CGFloat {
         switch self {
-        case UIContentSizeCategory.accessibilityExtraExtraExtraLarge: return 4.0
-        case UIContentSizeCategory.accessibilityExtraExtraLarge: return 3.75
-        case UIContentSizeCategory.accessibilityExtraLarge: return 3.5
-        case UIContentSizeCategory.accessibilityLarge: return 3
-        case UIContentSizeCategory.accessibilityMedium: return 2.5
-        case UIContentSizeCategory.extraExtraExtraLarge: return 2
-        case UIContentSizeCategory.extraExtraLarge: return 1.5
-        case UIContentSizeCategory.extraLarge: return 1.25
-        case UIContentSizeCategory.large: return 1.0
-        case UIContentSizeCategory.medium: return 1.0
-        case UIContentSizeCategory.small: return 1.0
-        case UIContentSizeCategory.extraSmall: return 1.0
+        case UIContentSizeCategory.accessibilityExtraExtraExtraLarge: return 5.0
+        case UIContentSizeCategory.accessibilityExtraExtraLarge: return 4.75
+        case UIContentSizeCategory.accessibilityExtraLarge: return 4.5
+        case UIContentSizeCategory.accessibilityLarge: return 4
+        case UIContentSizeCategory.accessibilityMedium: return 3.5
+        case UIContentSizeCategory.extraExtraExtraLarge: return 3
+        case UIContentSizeCategory.extraExtraLarge: return 2.75
+        case UIContentSizeCategory.extraLarge: return 2.5
+        case UIContentSizeCategory.large: return 2.0
+        case UIContentSizeCategory.medium: return 2.0
+        case UIContentSizeCategory.small: return 2.0
+        case UIContentSizeCategory.extraSmall: return 2.0
         default: return 1.0
         }
     }

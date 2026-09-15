@@ -20,6 +20,7 @@
 import Foundation
 import PushNotifications
 import Common
+import NetworkStack
 
 public enum RegisterDeviceError: Error {
     case noInternet

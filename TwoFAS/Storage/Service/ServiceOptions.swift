@@ -24,8 +24,8 @@ import Common
 import CommonWatch
 #endif
 
-public enum ServiceOptions {
-    public enum TrashOptions {
+enum ServiceOptions {
+    enum TrashOptions {
         case yes
         case no
         case all // default

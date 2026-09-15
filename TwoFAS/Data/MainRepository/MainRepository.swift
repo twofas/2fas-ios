@@ -127,7 +127,19 @@ protocol MainRepository: AnyObject {
     var willURLBeHandled: Bool { get }
     func clearURLWillBeHandled()
     func markURLWillBeHandled()
-    
+
+    func copy(_ str: String)
+
+    // MARK: - Quick Action
+    func storeQuickAction(_ action: QuickAction)
+    func takeQuickAction() -> QuickAction?
+    var openBackupExportOnAppear: Bool { get }
+    func setOpenBackupExportOnAppear(_ value: Bool)
+    var openAddServiceOnAppear: Bool { get }
+    func setOpenAddServiceOnAppear(_ value: Bool)
+    var focusSearchOnAppear: Bool { get }
+    func setFocusSearchOnAppear(_ value: Bool)
+
     // MARK: - Services
     var hasServices: Bool { get }
     
@@ -243,6 +255,30 @@ protocol MainRepository: AnyObject {
         source: ServiceSource,
         sectionID: SectionID?
     )
+    #if DEV
+    /// Adds a service without triggering a cloud sync. Used by debug bulk generation
+    /// to avoid firing one availability check + cache purge per inserted service.
+    func addServiceWithoutSync(
+        name: String,
+        secret: String,
+        serviceTypeID: ServiceTypeID?,
+        additionalInfo: String?,
+        rawIssuer: String?,
+        otpAuth: String?,
+        tokenPeriod: Period?,
+        tokenLength: Digits,
+        badgeColor: TintColor?,
+        iconType: IconType,
+        iconTypeID: IconTypeID,
+        labelColor: TintColor,
+        labelTitle: String,
+        algorithm: Algorithm,
+        counter: Int?,
+        tokenType: TokenType,
+        source: ServiceSource,
+        sectionID: SectionID?
+    )
+    #endif
     func updateService(
         _ serviceData: ServiceData,
         name: String,
@@ -281,11 +317,18 @@ protocol MainRepository: AnyObject {
     func saveDateOfFirstRun(_ date: Date)
     var wasPassPromoSeen: Bool { get }
     func markPassPromoAsSeen()
+    var passPromoDateNavigatedToAppStore: Date? { get }
+    func markPassPromoDateNavigatedToAppStore()
     
     // MARK: - Lock Screen
     var isLockScreenActive: Bool { get }
     func lockScreenActive()
     func lockScreenInactive()
+
+    // MARK: - Biometry authentication (in-app)
+    var isBiometryAuthenticating: Bool { get }
+    func biometryAuthenticationStarted()
+    func biometryAuthenticationEnded()
     
     // MARK: - New Version
     var newVersionCounter: Int { get }
@@ -414,12 +457,6 @@ protocol MainRepository: AnyObject {
         noCompanionAppFrom: String?,
         completion: @escaping (Result<[ListNews.NewsEntry], NetworkError>) -> Void
     )
-    func uploadLogs(
-        _ logs: String,
-        auditID: String,
-        completion: @escaping (Result<Void, NetworkError>) -> Void
-    )
-    
     // MARK: - Notifications state
     var notificationState: PushNotificationState { get }
     func setNotificationState(_ state: PushNotificationState)
@@ -473,12 +510,6 @@ protocol MainRepository: AnyObject {
     func section(for secret: String) -> SectionData?
     @discardableResult
     func createSection(with title: String) -> SectionID
-    
-    // MARK: - Notifications
-    func copy(_ str: String)
-    func wobbleWarning()
-    func wobbleError()
-    func wobbleSuccess()
     
     // MARK: - Service Definition
     func serviceDefinition(using serviceTypeID: ServiceTypeID) -> ServiceDefinition?

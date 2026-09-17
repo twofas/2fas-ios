@@ -23,15 +23,15 @@ extension ServiceMatchRules {
     public func isMatching(for value: String) -> Bool {
         let template: String = {
             if ignoreCase {
-                return text.lowercased()
+                return text.trim().lowercased()
             }
-            return text
+            return text.trim()
         }()
         let value: String = {
             if ignoreCase {
-                return value.lowercased()
+                return value.trim().lowercased()
             }
-            return value
+            return value.trim()
         }()
         switch self.matcher {
         case .contains:

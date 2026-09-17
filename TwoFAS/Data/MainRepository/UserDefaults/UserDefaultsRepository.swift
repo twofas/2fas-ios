@@ -26,16 +26,7 @@ protocol UserDefaultsRepository: AnyObject {
 
     var appLockBlockTime: AppLockBlockTime? { get }
     func setAppLockBlockTime(_ value: AppLockBlockTime)
-    
-    var newVersionCounter: Int { get }
-    func setNewVersionCounter(_ counter: Int)
-    var newVersionTracked: String? { get }
-    func setNewVersionTracked(_ version: String)
-    var newVersionCheckDisabled: Bool { get }
-    func setNewVersionCheckDisabled(_ disabled: Bool)
-    var newVersionIgnored: String? { get }
-    func setNewVersionIgnored(_ version: String)
-    
+
     var sortType: SortType? { get }
     func setSortType(_ sortType: SortType)
     

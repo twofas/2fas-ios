@@ -28,8 +28,7 @@ final class MainPresenter {
     private let interactor: MainModuleInteracting
     
     private var handlingViewIsVisible = false
-    private var appVersionFetched = false
-    
+
     init(flowController: MainFlowControlling, interactor: MainModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
@@ -178,20 +177,6 @@ private extension MainPresenter {
             flowController.toOpenFileImport(url: url)
             interactor.clearImportedFileURL()
             handlingViewIsVisible = false
-        } else if !appVersionFetched {
-            appVersionFetched = true
-            
-            interactor.checkForNewAppVersion { [weak self] url in
-                guard let url else {
-                    self?.handleAuthRequest()
-                    self?.handlingViewIsVisible = false
-                    return
-                }
-                self?.flowController.toShowNewVersionAlert(for: url) { [weak self] in
-                    self?.interactor.skipAppVersion()
-                }
-                self?.handlingViewIsVisible = false
-            }
         } else {
             handleAuthRequest()
             handlingViewIsVisible = false

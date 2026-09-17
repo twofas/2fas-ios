@@ -327,7 +327,6 @@ final class ModuleInteractorFactory {
             viewPathInteractor: InteractorFactory.shared.viewPathInteractor(),
             cloudBackupStateInteractor: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: ""),
             fileInteractor: InteractorFactory.shared.fileInteractor(),
-            newVersionInteractor: InteractorFactory.shared.newVersionInteractor(),
             networkStatusInteractor: InteractorFactory.shared.networkStatusInteractor(),
             appInfoInteractor: InteractorFactory.shared.appInfoInteractor(),
             rootInteractor: InteractorFactory.shared.rootInteractor(),

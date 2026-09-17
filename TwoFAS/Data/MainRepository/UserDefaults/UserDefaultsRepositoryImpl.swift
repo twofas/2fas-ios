@@ -29,10 +29,6 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
     private enum Keys: String, CaseIterable {
         case appLockAttempts
         case appLockBlockTime
-        case newVersionCounter
-        case newVersionTracked
-        case newVersionIgnored
-        case newVersionCheckDisabled
         case sortType
         case extensionKeysGenerated
         case savedDeviceName
@@ -88,43 +84,7 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         userDefaults.set(value.rawValue, forKey: Keys.appLockBlockTime.rawValue)
         userDefaults.synchronize()
     }
-    
-    var newVersionCounter: Int {
-        userDefaults.integer(forKey: Keys.newVersionCounter.rawValue)
-    }
-    
-    func setNewVersionCounter(_ counter: Int) {
-        userDefaults.set(counter, forKey: Keys.newVersionCounter.rawValue)
-        userDefaults.synchronize()
-    }
-    
-    var newVersionTracked: String? {
-        userDefaults.string(forKey: Keys.newVersionTracked.rawValue)
-    }
-    
-    func setNewVersionTracked(_ version: String) {
-        userDefaults.set(version, forKey: Keys.newVersionTracked.rawValue)
-        userDefaults.synchronize()
-    }
-    
-    var newVersionIgnored: String? {
-        userDefaults.string(forKey: Keys.newVersionIgnored.rawValue)
-    }
-    
-    func setNewVersionIgnored(_ version: String) {
-        userDefaults.set(version, forKey: Keys.newVersionIgnored.rawValue)
-        userDefaults.synchronize()
-    }
-    
-    var newVersionCheckDisabled: Bool {
-        userDefaults.bool(forKey: Keys.newVersionCheckDisabled.rawValue)
-    }
-    
-    func setNewVersionCheckDisabled(_ disabled: Bool) {
-        userDefaults.set(disabled, forKey: Keys.newVersionCheckDisabled.rawValue)
-        userDefaults.synchronize()
-    }
-    
+
     var sortType: SortType? {
         guard let value = userDefaults.string(forKey: Keys.sortType.rawValue) else { return nil }
         return SortType(rawValue: value)

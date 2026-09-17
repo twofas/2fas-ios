@@ -50,10 +50,6 @@ protocol MainModuleInteracting: AnyObject {
     func checkForCompanionApp()
     func setNotificationGroupID()
 
-    // MARK: - New app version
-    func checkForNewAppVersion(completion: @escaping (URL?) -> Void)
-    func skipAppVersion()
-
     // MARK: - Quick Action
     func takeQuickAction() -> QuickAction?
     func setOpenBackupExportOnAppear(_ value: Bool)
@@ -87,7 +83,6 @@ final class MainModuleInteractor {
     private let logGenerationInteractor: LogGenerationInteracting
     private let cloudBackupStateInteractor: CloudBackupStateInteracting
     private let fileInteractor: FileInteracting
-    private let newVersionInteractor: NewVersionInteracting
     private let networkStatusInteractor: NetworkStatusInteracting
     private let appInfoInteractor: AppInfoInteracting
     private let rootInteractor: RootInteracting
@@ -101,7 +96,6 @@ final class MainModuleInteractor {
         viewPathInteractor: ViewPathIteracting,
         cloudBackupStateInteractor: CloudBackupStateInteracting,
         fileInteractor: FileInteracting,
-        newVersionInteractor: NewVersionInteracting,
         networkStatusInteractor: NetworkStatusInteracting,
         appInfoInteractor: AppInfoInteracting,
         rootInteractor: RootInteracting,
@@ -113,7 +107,6 @@ final class MainModuleInteractor {
         self.logGenerationInteractor = logGenerationInteractor
         self.cloudBackupStateInteractor = cloudBackupStateInteractor
         self.fileInteractor = fileInteractor
-        self.newVersionInteractor = newVersionInteractor
         self.networkStatusInteractor = networkStatusInteractor
         self.appInfoInteractor = appInfoInteractor
         self.rootInteractor = rootInteractor
@@ -189,22 +182,6 @@ extension MainModuleInteractor: MainModuleInteracting {
     
     func setNotificationGroupID() {
         appInfoInteractor.setNotificationGroupID()
-    }
-    
-    // MARK: - New app version
-    
-    func checkForNewAppVersion(completion: @escaping (URL?) -> Void) {
-        newVersionInteractor.checkForNewVersion { [weak self] newVersionAvailable in
-            guard let appStoreURL = self?.newVersionInteractor.appStoreURL, newVersionAvailable else {
-                completion(nil)
-                return
-            }
-            completion(appStoreURL)
-        }
-    }
-    
-    func skipAppVersion() {
-        newVersionInteractor.userSkippedVersion()
     }
 
     // MARK: - Quick Action

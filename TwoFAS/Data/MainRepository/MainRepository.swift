@@ -529,12 +529,7 @@ protocol MainRepository: AnyObject {
     var usedDiskSpace: String { get }
     var currentDevice: String { get }
     var systemVersion: String { get }
-    
-    // MARK: - View Path
-    func clearViewPath()
-    func saveViewPath(_ path: ViewPath)
-    func viewPath() -> (viewPath: ViewPath, savedAt: Date)?
-    
+
     // MARK: - Guides
     func listAllGuides() -> [ServiceGuide]
     func loadGuideData(for serviceGuide: ServiceGuide) -> ServiceGuideDescription?

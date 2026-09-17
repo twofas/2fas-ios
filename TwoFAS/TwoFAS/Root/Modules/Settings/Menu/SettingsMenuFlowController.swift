@@ -43,7 +43,6 @@ protocol SettingsMenuFlowControllerParent: AnyObject {
     func toTrash()
     func toAbout()
     func toBrowserExtension()
-    func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func toTransfer()
     func toAppearance()
     func toAppleWatch()
@@ -61,7 +60,6 @@ protocol SettingsMenuFlowControlling: AnyObject {
     func toWidgetEnablingWarning()
     func toBrowserExtension()
     func toAbout()
-    func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func toTransfer()
     func toAppearance()
     func toAppleWatch()
@@ -112,7 +110,6 @@ extension SettingsMenuFlowController: SettingsMenuFlowControlling {
         WidgetWarningFlowController.present(on: vc, parent: self)
     }
     func toBrowserExtension() { parent?.toBrowserExtension() }
-    func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) { parent?.toUpdateCurrentPosition(viewPath) }
     func toTransfer() { parent?.toTransfer() }
     func toAppearance() { parent?.toAppearance() }
     func toAppleWatch() { parent?.toAppleWatch() }

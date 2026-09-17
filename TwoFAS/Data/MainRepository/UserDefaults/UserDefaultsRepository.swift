@@ -54,11 +54,7 @@ protocol UserDefaultsRepository: AnyObject {
     
     var isSectionZeroCollapsed: Bool { get }
     func setSectionZeroIsCollapsed(_ collapsed: Bool)
-    
-    func clearViewPath()
-    func saveViewPath(_ path: ViewPath)
-    func viewPath() -> (viewPath: ViewPath, savedAt: Date)?
-    
+
     func setIntroductionAsShown()
     func introductionWasShown() -> Bool
     

@@ -26,8 +26,6 @@ final class MainTabFlowController: FlowController {
     private weak var tokensViewController: TokensViewController?
     private weak var settingsViewController: SettingsViewController?
 
-    private let viewPathInteractor = InteractorFactory.shared.viewPathInteractor()
-
     static func showAsRoot(
         in mainViewController: MainViewController,
         parent: MainSplitFlowControllerParent
@@ -76,16 +74,11 @@ final class MainTabFlowController: FlowController {
             }
         }
 
-        let restoredPath = flowController.viewPathInteractor.viewPath() ?? .main
-        container.navigateToView(restoredPath, isRestoration: true)
-        switch restoredPath {
-        case .main: parent.navigationSwitchedToTokens()
-        case .settings: parent.navigationSwitchedToSettings()
-        }
+        container.navigateToView(.main)
+        parent.navigationSwitchedToTokens()
     }
 
     private func handleSelect(_ path: ViewPath) {
-        viewPathInteractor.setViewPath(path)
         switch path {
         case .main: parent?.navigationSwitchedToTokens()
         case .settings: parent?.navigationSwitchedToSettings()
@@ -116,10 +109,6 @@ extension MainTabFlowController: TokensPlainFlowControllerParent {
 }
 
 extension MainTabFlowController: SettingsFlowControllerParent {
-    func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
-        viewPathInteractor.setViewPath(.settings(option: viewPath))
-    }
-
     func settingsToRevealMenu() {
         // Not applicable: the sidebar is managed natively by UIKit.
     }

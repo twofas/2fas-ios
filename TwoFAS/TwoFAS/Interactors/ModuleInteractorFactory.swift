@@ -324,7 +324,6 @@ final class ModuleInteractorFactory {
     func mainModuleInteractor() -> MainModuleInteracting {
         MainModuleInteractor(
             logGenerationInteractor: InteractorFactory.shared.logGenerationInteractor(),
-            viewPathInteractor: InteractorFactory.shared.viewPathInteractor(),
             cloudBackupStateInteractor: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: ""),
             fileInteractor: InteractorFactory.shared.fileInteractor(),
             networkStatusInteractor: InteractorFactory.shared.networkStatusInteractor(),

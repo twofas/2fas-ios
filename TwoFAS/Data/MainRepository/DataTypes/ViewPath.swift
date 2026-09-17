@@ -18,17 +18,20 @@
 //
 
 import Foundation
+import Common
 
-extension MainRepositoryImpl {
-    func clearViewPath() {
-        userDefaultsRepository.clearViewPath()
+public enum ViewPath: Equatable, Codable {
+    public enum Settings: String, Equatable, Codable {
+        case transfer
+        case backup
+        case security
+        case browserExtension
+        case trash
+        case about
+        case appearance
+        case appleWatch
     }
     
-    func saveViewPath(_ path: ViewPath) {
-        userDefaultsRepository.saveViewPath(path)
-    }
-    
-    func viewPath() -> (viewPath: ViewPath, savedAt: Date)? {
-        userDefaultsRepository.viewPath()
-    }
+    case main
+    case settings(option: Settings?)
 }

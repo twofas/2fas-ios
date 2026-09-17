@@ -93,7 +93,6 @@ final class MainModuleInteractor {
 
     init(
         logGenerationInteractor: LogGenerationInteracting,
-        viewPathInteractor: ViewPathIteracting,
         cloudBackupStateInteractor: CloudBackupStateInteracting,
         fileInteractor: FileInteracting,
         networkStatusInteractor: NetworkStatusInteracting,

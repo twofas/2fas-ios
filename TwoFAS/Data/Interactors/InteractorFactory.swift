@@ -198,10 +198,6 @@ public final class InteractorFactory {
         )
     }
     
-    public func viewPathInteractor() -> ViewPathIteracting {
-        ViewPathInteractor(mainRepository: MainRepositoryImpl.shared)
-	}
-
     public func networkStatusInteractor() -> NetworkStatusInteracting {
         NetworkStatusInteractor(mainRepository: MainRepositoryImpl.shared)
     }

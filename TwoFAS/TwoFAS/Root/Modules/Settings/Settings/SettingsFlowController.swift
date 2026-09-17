@@ -22,7 +22,6 @@ import Common
 import Data
 
 protocol SettingsFlowControllerParent: AnyObject {
-    func settingsToUpdateCurrentPosition(_ viewPath: ViewPath.Settings?)
     func settingsToRevealMenu()
 }
 
@@ -176,10 +175,6 @@ extension SettingsFlowController: SettingsMenuFlowControllerParent {
         }
     }
     
-    func toUpdateCurrentPosition(_ viewPath: ViewPath.Settings?) {
-        parent?.settingsToUpdateCurrentPosition(viewPath)
-    }
-
     func toPopDetailToRoot() {
         viewController.contentNavi.popToRootViewController(animated: true)
     }

@@ -45,9 +45,8 @@ struct AddingServiceManuallyView: View {
                 ScrollView(.vertical) {
                     AdaptiveReadableContainer {
                         VStack(spacing: .XXXL) {
-                            AddingServiceServiceIconView(serviceImage: $presenter.serviceIcon)
-                                .accessibilityHidden(true)
-                            
+                            iconRow()
+
                             mainFields()
                             
                             if presenter.advancedShown {
@@ -150,6 +149,45 @@ struct AddingServiceManuallyView: View {
                 }
             }
             .background(.backgroundsPrimaryElevated)
+        }
+    }
+    
+    @ViewBuilder
+    private func iconRow() -> some View {
+        VStack(spacing: .XXL) {
+            AddingServiceServiceIconView(
+                serviceImage: $presenter.serviceIcon,
+                isSelected: presenter.userCanCancelIcon
+            )
+            .accessibilityHidden(true)
+            .frame(maxWidth: .infinity)
+            .overlay(alignment: .trailing) {
+                iconActionButton()
+            }
+
+            Text(presenter.serviceTypeName.map { T.Tokens.serviceAutodetectedTitle($0) } ?? " ")
+                .textStyle(.caption1)
+                .foregroundStyle(.labelsSecondary)
+                .opacity(presenter.serviceTypeName == nil ? 0 : 1)
+                .accessibilityHidden(presenter.serviceTypeName == nil)
+        }
+        .animation(.default, value: presenter.serviceTypeName)
+        .animation(.default, value: presenter.userCanSelectIcon)
+        .animation(.default, value: presenter.userCanCancelIcon)
+    }
+
+    @ViewBuilder
+    private func iconActionButton() -> some View {
+        if presenter.userCanSelectIcon {
+            TFButton(T.Commons.select, variant: .bordered, size: .small, useWideLayout: false) {
+                presenter.onApplyIconType()
+            }
+            .transition(.opacity.combined(with: .scale(scale: 0.95)))
+        } else if presenter.userCanCancelIcon {
+            TFButton(T.Commons.clear, variant: .bordered, size: .small, useWideLayout: false) {
+                presenter.onClearIconType()
+            }
+            .transition(.opacity.combined(with: .scale(scale: 0.95)))
         }
     }
     

@@ -21,9 +21,11 @@ import SwiftUI
 
 struct AddingServiceServiceIconView: View {
     private let dimension: CGFloat = 45
-    
+    private let selectionMarkDimension: CGFloat = 20
+
     @Binding var serviceImage: UIImage?
-    
+    var isSelected: Bool = false
+
     var body: some View {
         image()
             .frame(width: dimension, height: dimension)
@@ -34,6 +36,23 @@ struct AddingServiceServiceIconView: View {
                     .frame(width: dimension, height: dimension)
                     .shadow(.glass)
             }
+            .overlay(alignment: .topTrailing) {
+                if isSelected {
+                    selectionMark()
+                        .offset(x: dimension / 8, y: -dimension / 8)
+                }
+            }
+            .padding(.top, dimension / 8)
+    }
+
+    @ViewBuilder
+    func selectionMark() -> some View {
+        Image(icon: .checkmarkCircleFill)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: selectionMarkDimension, height: selectionMarkDimension)
+            .foregroundStyle(.accentsGreen)
+            .background(Circle().foregroundStyle(.graysWhite))
     }
     
     @ViewBuilder

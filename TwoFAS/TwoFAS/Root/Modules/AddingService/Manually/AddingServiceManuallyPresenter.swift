@@ -46,6 +46,12 @@ final class AddingServiceManuallyPresenter: ObservableObject {
     
     private var iconTypeID: IconTypeID?
     
+    private var userSelectedIconTypeID: IconTypeID?
+    
+    @Published var userCanSelectIcon = false
+    @Published var userCanCancelIcon = false
+    @Published var serviceTypeName: String?
+    
     @Published var serviceName: String = "" {
         didSet { handleServiceNameChange() }
     }
@@ -104,7 +110,7 @@ extension AddingServiceManuallyPresenter {
             additionalInfo: additionalInfo,
             tokenPeriod: tokenPeriod,
             tokenLength: tokenLength,
-            iconTypeID: iconTypeID,
+            iconTypeID: userSelectedIconTypeID,
             algorithm: algorithm,
             counter: initialCounter,
             tokenType: selectedTokenType
@@ -143,10 +149,10 @@ extension AddingServiceManuallyPresenter {
             checkForServiceIcon()
             value = .correct
         } else if trimmed.isEmpty {
-            serviceIcon = nil
+            clearServiceIcon()
             value = .tooShort
         } else {
-            serviceIcon = nil
+            clearServiceIcon()
             value = .tooLong
         }
         validateAddService()
@@ -218,14 +224,7 @@ extension AddingServiceManuallyPresenter {
         validateAddService()
         return value
     }
-    
-    func checkForServiceIcon() {
-        interactor.checkForServiceIcon(using: serviceName) { [weak self] img, iconTypeID in
-            self?.serviceIcon = img
-            self?.iconTypeID = iconTypeID
-        }
-    }
-    
+
     func handleCancel() {
         flowController.toClose()
     }
@@ -253,9 +252,42 @@ extension AddingServiceManuallyPresenter {
             handleInitialCounter(value)
         }
     }
+    
+    func onApplyIconType() {
+        userSelectedIconTypeID = iconTypeID
+        updateSelectionState()
+    }
+    
+    func onClearIconType() {
+        userSelectedIconTypeID = nil
+        updateSelectionState()
+    }
 }
 
 private extension AddingServiceManuallyPresenter {
+    func checkForServiceIcon() {
+        guard userSelectedIconTypeID == nil else { return }
+        interactor.checkForServiceIcon(using: serviceName) { [weak self] img, iconTypeID, serviceTypeName in
+            self?.serviceIcon = img
+            self?.iconTypeID = iconTypeID
+            self?.serviceTypeName = serviceTypeName
+            self?.updateSelectionState()
+        }
+    }
+    
+    func clearServiceIcon() {
+        guard userSelectedIconTypeID == nil else { return }
+        serviceIcon = nil
+        iconTypeID = nil
+        serviceTypeName = nil
+        updateSelectionState()
+    }
+    
+    func updateSelectionState() {
+        userCanSelectIcon = userSelectedIconTypeID == nil && iconTypeID != nil
+        userCanCancelIcon = userSelectedIconTypeID != nil
+    }
+    
     func handleServiceNameChange() {
         serviceNameError = validateServiceName(serviceName.trim()).error
     }

@@ -616,6 +616,83 @@ extension ImportFromFileInteractor {
             }
     }
     
+    func parseProton(_ data: ProtonData) -> [ServiceData] {
+        Log("ImportFromFileInteractor - parseProton", module: .interactor)
+
+        let date = Date()
+        var current = Set<String>()
+
+        return data.entries
+            .compactMap { entry -> ServiceData? in
+                guard let url = URL(string: entry.content.uri),
+                      let code = Code.parseURL(url)
+                else { return nil }
+
+                let secret = code.secret.sanitazeSecret()
+                guard secret.isValidSecret(), shouldImport(&current, secret: secret) else { return nil }
+
+                let issuer = code.issuer
+                let digits = code.digits ?? .defaultValue
+                let kind = code.tokenType
+                let algo = code.algorithm ?? .defaultValue
+                let counter = code.counter ?? 0
+                let period = code.period ?? .defaultValue
+
+                let name: String = {
+                    let name = entry.content.name.sanitazeName()
+                    if !name.isEmpty {
+                        return name
+                    }
+                    if let issuer = issuer?.sanitazeName(), !issuer.isEmpty {
+                        return issuer
+                    }
+                    return modifyInteractor.createNameForUnknownService()
+                }()
+
+                let additionalInfo = code.label?.sanitizeInfo()
+
+                let serviceDef: ServiceDefinition? = {
+                    if let issuer {
+                        return serviceDefinitionInteractor.findService(using: issuer)
+                    }
+                    return nil
+                }()
+                let iconTypeID = serviceDef?.iconTypeID
+                let iconType: IconType = {
+                    if iconTypeID == nil {
+                        return .label
+                    }
+                    return .brand
+                }()
+
+                return ServiceData(
+                    name: name,
+                    secret: secret,
+                    serviceTypeID: serviceDef?.serviceTypeID,
+                    additionalInfo: additionalInfo,
+                    rawIssuer: issuer,
+                    modifiedAt: date,
+                    createdAt: date,
+                    tokenPeriod: period,
+                    tokenLength: digits,
+                    badgeColor: nil,
+                    iconType: iconType,
+                    iconTypeID: iconTypeID ?? .default,
+                    labelColor: .random,
+                    labelTitle: name.twoLetters,
+                    algorithm: algo,
+                    isTrashed: false,
+                    trashingDate: nil,
+                    counter: counter,
+                    tokenType: kind,
+                    source: .link,
+                    otpAuth: nil,
+                    order: nil,
+                    sectionID: nil
+                )
+            }
+    }
+
     private func shouldImport(_ set: inout Set<String>, secret: String) -> Bool {
         if set.contains(secret) {
             return false

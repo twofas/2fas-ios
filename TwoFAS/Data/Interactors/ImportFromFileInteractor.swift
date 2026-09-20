@@ -34,12 +34,17 @@ public enum ImportFromFileParsing {
     public enum LastPassResult {
         case success(LastPassData)
     }
+    public enum ProtonResult {
+        case error
+        case success(ProtonData)
+    }
     case twoFAS(ExchangeDataFormat)
     case aegis(AEGISParseResult)
     case lastPass(LastPassResult)
     case raivo([RaivoData])
     case andOTP([AndOTPData])
     case authenticatorPro([Code])
+    case proton(ProtonResult)
 }
 
 public enum ImportFromFileTwoFASCheck {
@@ -75,6 +80,7 @@ public protocol ImportFromFileInteracting: AnyObject {
     func parseRaivo(_ data: [RaivoData]) -> [ServiceData]
     func parseAndOTP(_ data: [AndOTPData]) -> [ServiceData]
     func parseAuthenticatorPro(_ data: [Code]) -> [ServiceData]
+    func parseProton(_ data: ProtonData) -> [ServiceData]
 }
 
 final class ImportFromFileInteractor {
@@ -140,7 +146,14 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
         if case ImportFromFileAuthenticatorPro.success(let list) = authenticatorPro {
             return .authenticatorPro(list)
         }
-        
+
+        if let proton = try? jsonDecoder.decode(ProtonData.self, from: data) {
+            guard proton.version == 1 else {
+                return .proton(.error)
+            }
+            return .proton(.success(proton))
+        }
+
         do {
             let services = try jsonDecoder.decode(AEGISData.self, from: data)
             return .aegis(.success(services))

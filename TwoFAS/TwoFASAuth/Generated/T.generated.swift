@@ -127,6 +127,8 @@ internal enum T {
   internal static let externalimportGoogleAuthenticator = T.tr("Localizable", "externalimport_google_authenticator", fallback: "Google Authenticator")
   /// LastPass
   internal static let externalimportLastpass = T.tr("Localizable", "externalimport_lastpass", fallback: "LastPass")
+  /// Proton Authenticator
+  internal static let externalimportProton = T.tr("Localizable", "externalimport_proton", fallback: "Proton Authenticator")
   /// Raivo OTP
   internal static let externalimportRaivo = T.tr("Localizable", "externalimport_raivo", fallback: "Raivo OTP")
   /// Select app
@@ -1014,6 +1016,8 @@ internal enum T {
     internal static let infoGoogleAuthenticatorTitle = T.tr("Localizable", "externalimport__info_google_authenticator_title", fallback: "Import Tokens from Google Authenticator")
     /// Import Tokens from LastPass
     internal static let infoLastpassTitle = T.tr("Localizable", "externalimport__info_lastpass_title", fallback: "Import Tokens from LastPass")
+    /// Import Tokens from Proton Authenticator
+    internal static let infoProtonTitle = T.tr("Localizable", "externalimport__info_proton_title", fallback: "Import Tokens from Proton Authenticator")
     /// Import Tokens from Raivo OTP
     internal static let infoRaivoTitle = T.tr("Localizable", "externalimport__info_raivo_title", fallback: "Import Tokens from Raivo OTP")
     /// Export your accounts from LastPass to an unencrypted JSON file and upload it using the "Choose JSON file" button. Remember to remove the file after a successful import.
@@ -1024,6 +1028,12 @@ internal enum T {
     internal static let lastpassTitle = T.tr("Localizable", "externalimport__lastpass_title", fallback: "Importing 2FA Tokens from LastPass app")
     /// However, there are no services that could be imported.
     internal static let noTokensMsg = T.tr("Localizable", "externalimport__no_tokens_msg", fallback: "However, there are no services that could be imported.")
+    /// Export your accounts from Proton Authenticator to a JSON file and upload it using the "Choose JSON file" button. Remember to remove the file after a successful import.
+    internal static let protonMsg = T.tr("Localizable", "externalimport__proton_msg", fallback: "Export your accounts from Proton Authenticator to a JSON file and upload it using the \"Choose JSON file\" button. Remember to remove the file after a successful import.")
+    /// This JSON file allows you to import Tokens from Proton Authenticator.
+    internal static let protonSuccessMsg = T.tr("Localizable", "externalimport__proton_success_msg", fallback: "This JSON file allows you to import Tokens from Proton Authenticator.")
+    /// Importing 2FA Tokens from Proton Authenticator app
+    internal static let protonTitle = T.tr("Localizable", "externalimport__proton_title", fallback: "Importing 2FA Tokens from Proton Authenticator app")
     /// Use the "Export OTPs to ZIP archive" option in Raivo's Settings, save a ZIP file, extract it and import the JSON file using the "Choose JSON file" button.
     internal static let raivoMsg = T.tr("Localizable", "externalimport__raivo_msg", fallback: "Use the \"Export OTPs to ZIP archive\" option in Raivo's Settings, save a ZIP file, extract it and import the JSON file using the \"Choose JSON file\" button.")
     /// This JSON file allows importing Tokens from Raivo.

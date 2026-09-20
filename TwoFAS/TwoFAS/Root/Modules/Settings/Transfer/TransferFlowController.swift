@@ -32,6 +32,7 @@ protocol TransferFlowControlling: AnyObject {
     func toGoogleAuth()
     func toAndOTP()
     func toAuthenticatorPro()
+    func toProton()
     func toOpenTXTFile()
     // MARK: - Export
     func toSaveOTPAuthFile()
@@ -91,6 +92,7 @@ extension TransferFlowController: TransferFlowControlling {
     func toGoogleAuth() { presentInstructions(service: .googleAuth) }
     func toAndOTP() { presentInstructions(service: .andOTP) }
     func toAuthenticatorPro() { presentInstructions(service: .authenticatorPro) }
+    func toProton() { presentInstructions(service: .proton) }
     func toOpenTXTFile() { presentInstructions(service: .otpAuthFile) }
 
     // MARK: - Export

@@ -40,6 +40,7 @@ struct TransferCell: Identifiable {
         case googleAuth
         case andOTP
         case authenticatorPro
+        case proton
         case otpAuthFileImport
         case otpAuthFileExport
         case exportQRCodes
@@ -94,6 +95,11 @@ extension TransferPresenter {
                         icon: .brand(Asset.externalImportIconAuthenticatorPro.image),
                         title: T.Externalimport.authenticatorpro,
                         action: .authenticatorPro
+                    ),
+                    .init(
+                        icon: .brand(Asset.externalImportIconProton.image),
+                        title: T.externalimportProton,
+                        action: .proton
                     ),
                     .init(
                         icon: .symbol(.docFill),

@@ -62,6 +62,8 @@ final class TransferPresenter {
             flowController.toAndOTP()
         case .authenticatorPro:
             flowController.toAuthenticatorPro()
+        case .proton:
+            flowController.toProton()
         case .otpAuthFileImport:
             flowController.toOpenTXTFile()
         case .otpAuthFileExport:

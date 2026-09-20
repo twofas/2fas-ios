@@ -46,6 +46,7 @@ final class ImporterPreimportSummaryPresenter {
         case .lastPass: Asset.externalImportLastPass.image
         case .andOTP: Asset.externalImportAndOTP.image
         case .authenticatorPro: Asset.externalImportAuthenticatorPro.image
+        case .proton: Asset.externalImportProton.image
         case .googleAuth, .twofas, .otpAuthFile: nil
         }
     }
@@ -57,6 +58,7 @@ final class ImporterPreimportSummaryPresenter {
         case .lastPass: T.Externalimport.lastpassTitle
         case .andOTP: T.Externalimport.andotpTitle
         case .authenticatorPro: T.Externalimport.authenticatorproTitle
+        case .proton: T.Externalimport.protonTitle
         case .googleAuth, .twofas: T.Backup.importBackupFile
         case .otpAuthFile: T.Backup.import
         }
@@ -69,6 +71,7 @@ final class ImporterPreimportSummaryPresenter {
         case .lastPass: T.Externalimport.lastpassSuccessMsg
         case .andOTP: T.Externalimport.andotpSuccessMsg
         case .authenticatorPro: T.Externalimport.authenticatorproSuccessMsg
+        case .proton: T.Externalimport.protonSuccessMsg
         case .googleAuth, .twofas: T.Backup.importOtherDevices
         case .otpAuthFile: T.Settings.importContentsFile
         }

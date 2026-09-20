@@ -120,6 +120,24 @@ private extension ImporterOpenFilePresenter {
                     externalImportService: interactor.importingOTPAuthFile ? .otpAuthFile : .authenticatorPro
                 )
             }
+        case .proton(let result):
+            switch result {
+            case .error:
+                flowController.toFileError(error: .cantReadFile(reason: nil))
+            case .success(let protonData):
+                let parseResult = interactor.parseProton(protonData)
+                if parseResult.isEmpty {
+                    flowController.toFileIsEmpty()
+                } else {
+                    flowController.toPreimportSummary(
+                        countNew: interactor.countNewServices(parseResult),
+                        countTotal: protonData.entries.count,
+                        sections: [],
+                        services: parseResult,
+                        externalImportService: .proton
+                    )
+                }
+            }
         case .aegis(let result):
             switch result {
             case .error, .encrypted:

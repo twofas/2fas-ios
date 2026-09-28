@@ -231,7 +231,7 @@ private extension TokensTOTPCell {
         )
         groupBottomMargin.priority = .defaultHigh
         NSLayoutConstraint.activate([groupTopMargin, groupBottomMargin])
-
+        
         groupContainer.addSubview(serviceNameLabel, with: [
             serviceNameLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
             serviceNameLabel.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor),
@@ -259,8 +259,7 @@ private extension TokensTOTPCell {
 
         contentView.addSubview(nextTokenLabel, with: [
             nextTokenLabel.leadingAnchor.constraint(equalTo: tokenLabel.trailingAnchor, constant: hMargin),
-            nextTokenLabel.topAnchor.constraint(equalTo: tokenLabel.topAnchor),
-            nextTokenLabel.bottomAnchor.constraint(equalTo: tokenLabel.bottomAnchor)
+            nextTokenLabel.centerYAnchor.constraint(equalTo: tokenLabel.centerYAnchor)
         ])
 
         contentView.addSubview(accessoryContainer, with: [

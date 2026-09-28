@@ -281,8 +281,7 @@ private extension TokensTOTPCompactCell {
 
         contentView.addSubview(nextTokenLabel, with: [
             nextTokenLabel.leadingAnchor.constraint(equalTo: tokenLabel.trailingAnchor, constant: hMargin),
-            nextTokenLabel.topAnchor.constraint(equalTo: tokenLabel.topAnchor),
-            nextTokenLabel.bottomAnchor.constraint(equalTo: tokenLabel.bottomAnchor)
+            nextTokenLabel.centerYAnchor.constraint(equalTo: tokenLabel.centerYAnchor)
         ])
 
         contentView.addSubview(accessoryContainer, with: [

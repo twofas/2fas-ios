@@ -24,6 +24,7 @@
 		8F7952532C01D1940053F776 /* KeyboardButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7952522C01D1940053F776 /* KeyboardButtonStyle.swift */; };
 		8F872DE92C24EE2600160D14 /* SortTokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DE82C24EE2600160D14 /* SortTokensPresenter.swift */; };
 		8F872DEB2C24EE5500160D14 /* SortTokensInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */; };
+		AA0100000000000000000001 /* ProtonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0100000000000000000002 /* ProtonData.swift */; };
 		C200E49E1FB3911B00D7C748 /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = C200E49C1FB3911B00D7C748 /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C200E4A11FB3911B00D7C748 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C200E4A21FB3911B00D7C748 /* Storage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1251,7 +1252,6 @@
 		C2E7C40E2ADB2BE500478D89 /* LastPassData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A31C929C8EEE40094679F /* LastPassData.swift */; };
 		C2E7C4102ADB2BE500478D89 /* ExchangeConsts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21BC54C25B37C8900B15F99 /* ExchangeConsts.swift */; };
 		C2E7C4112ADB2BE500478D89 /* RaivoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27A31CB29C90B110094679F /* RaivoData.swift */; };
-		AA0100000000000000000001 /* ProtonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0100000000000000000002 /* ProtonData.swift */; };
 		C2E7C4122ADB2BE500478D89 /* ExchangeData2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E881D928F35C030053A89D /* ExchangeData2.swift */; };
 		C2E7C4132ADB2BE500478D89 /* AppLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C287D4F8276A90EC0001B272 /* AppLock.swift */; };
 		C2E7C4142ADB2BE500478D89 /* BiometryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C287D4FC276A98FE0001B272 /* BiometryType.swift */; };
@@ -1881,6 +1881,7 @@
 		8FD3F0872C37324B0042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8FD3F0882C37324B0042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8FD3F0892C3732A80042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = ../TwoFAS/Other/el.lproj/Localizable.strings; sourceTree = "<group>"; };
+		AA0100000000000000000002 /* ProtonData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtonData.swift; sourceTree = "<group>"; };
 		C200E49A1FB3911B00D7C748 /* Storage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Storage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C200E49C1FB3911B00D7C748 /* Storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
 		C200E49D1FB3911B00D7C748 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2380,7 +2381,6 @@
 		C27A1EB429127C8D00702DB9 /* AlertController+Ready.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertController+Ready.swift"; sourceTree = "<group>"; };
 		C27A31C929C8EEE40094679F /* LastPassData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastPassData.swift; sourceTree = "<group>"; };
 		C27A31CB29C90B110094679F /* RaivoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RaivoData.swift; sourceTree = "<group>"; };
-		AA0100000000000000000002 /* ProtonData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtonData.swift; sourceTree = "<group>"; };
 		C27A549A27F0C92C00321D2B /* BrowserExtensionIntroPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroPresenter.swift; sourceTree = "<group>"; };
 		C27A549E27F0CAA400321D2B /* BrowserExtensionIntroModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroModuleInteractor.swift; sourceTree = "<group>"; };
 		C27A54A027F0CAFC00321D2B /* BrowserExtensionIntroFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserExtensionIntroFlowController.swift; sourceTree = "<group>"; };
@@ -8812,7 +8812,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				MARKETING_VERSION = 6.0.0;
+				MARKETING_VERSION = 6.0.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
@@ -10205,7 +10205,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				MARKETING_VERSION = 6.0.0;
+				MARKETING_VERSION = 6.0.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
@@ -10270,7 +10270,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				MARKETING_VERSION = 6.0.0;
+				MARKETING_VERSION = 6.0.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;

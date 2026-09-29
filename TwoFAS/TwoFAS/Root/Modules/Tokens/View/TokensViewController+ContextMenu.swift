@@ -107,7 +107,7 @@ extension TokensViewController {
         if case .lifting(let expiry) = contextMenuState {
             expiry.cancel()
         }
-        contextMenuState = .none
+        contextMenuState = .noState
         // The cell flies back into the list first, so a reload that came in the meantime does not swap it
         // mid-flight. A reload triggered by the chosen action is not held back: the state is already clear.
         if let animator {
@@ -121,7 +121,7 @@ extension TokensViewController {
     
     var isContextMenuActive: Bool {
         switch contextMenuState {
-        case .none: return false
+        case .noState: return false
         case .lifting, .shown: return true
         }
     }
@@ -136,7 +136,7 @@ extension TokensViewController {
         }
         let expiry = DispatchWorkItem { [weak self] in
             guard let self, case .lifting = self.contextMenuState else { return }
-            self.contextMenuState = .none
+            self.contextMenuState = .noState
             self.applyPendingReload()
         }
         contextMenuState = .lifting(expiry: expiry)

@@ -225,5 +225,4 @@ private extension SettingsMenuPresenter {
         @unknown default: return nil
         }
     }
-
 }

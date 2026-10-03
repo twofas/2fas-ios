@@ -42,6 +42,8 @@
 		C206AAD029636A3E0032B85E /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C206AACF29636A3E0032B85E /* Configs.swift */; };
 		C206CACF27A35ABE0068284C /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C206CACE27A35ABE0068284C /* View+.swift */; };
 		C207324929F724AB00FB294E /* TokensAdditionalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207324829F724AB00FB294E /* TokensAdditionalInfo.swift */; };
+		C2F1A0022EA0000100ABCDEF /* TokensServiceTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F1A0012EA0000100ABCDEF /* TokensServiceTitle.swift */; };
+		C2F1A0042EA0000100ABCDEF /* TokensTOTPTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F1A0032EA0000100ABCDEF /* TokensTOTPTokenView.swift */; };
 		C207766A2FBA361900F5ABC9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20776692FBA361900F5ABC9 /* LoginViewController.swift */; };
 		C207C11F2559F1CB0053975E /* CloudKitErrorParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207C11E2559F1CB0053975E /* CloudKitErrorParser.swift */; };
 		C207DAC7302B4A39004FC767 /* ExporterRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207DAC6302B4A39004FC767 /* ExporterRoute.swift */; };
@@ -882,6 +884,7 @@
 		C2B39E5029F5841700EC31F6 /* TokensEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E4F29F5841700EC31F6 /* TokensEditCell.swift */; };
 		C2B39E5229F5848700EC31F6 /* TokensLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5129F5848700EC31F6 /* TokensLogo.swift */; };
 		C2B39E5429F5880600EC31F6 /* TokensCellKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5329F5880600EC31F6 /* TokensCellKind.swift */; };
+		C2F1A0062EA0000100ABCDEF /* TokensCellMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F1A0052EA0000100ABCDEF /* TokensCellMetrics.swift */; };
 		C2B39E5929F5BD7800EC31F6 /* TokensCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5829F5BD7800EC31F6 /* TokensCategory.swift */; };
 		C2B39E5B29F5D0AA00EC31F6 /* TokensServiceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5A29F5D0AA00EC31F6 /* TokensServiceName.swift */; };
 		C2B3D1A8267E6BEC009E6DE0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B3D1A7267E6BEC009E6DE0 /* Extensions.swift */; };
@@ -1905,6 +1908,8 @@
 		C206AACF29636A3E0032B85E /* Configs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configs.swift; sourceTree = "<group>"; };
 		C206CACE27A35ABE0068284C /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		C207324829F724AB00FB294E /* TokensAdditionalInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensAdditionalInfo.swift; sourceTree = "<group>"; };
+		C2F1A0012EA0000100ABCDEF /* TokensServiceTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensServiceTitle.swift; sourceTree = "<group>"; };
+		C2F1A0032EA0000100ABCDEF /* TokensTOTPTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTOTPTokenView.swift; sourceTree = "<group>"; };
 		C20776692FBA361900F5ABC9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C207C11E2559F1CB0053975E /* CloudKitErrorParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitErrorParser.swift; sourceTree = "<group>"; };
 		C207DAC6302B4A39004FC767 /* ExporterRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExporterRoute.swift; sourceTree = "<group>"; };
@@ -2603,6 +2608,7 @@
 		C2B39E4F29F5841700EC31F6 /* TokensEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensEditCell.swift; sourceTree = "<group>"; };
 		C2B39E5129F5848700EC31F6 /* TokensLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensLogo.swift; sourceTree = "<group>"; };
 		C2B39E5329F5880600EC31F6 /* TokensCellKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCellKind.swift; sourceTree = "<group>"; };
+		C2F1A0052EA0000100ABCDEF /* TokensCellMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCellMetrics.swift; sourceTree = "<group>"; };
 		C2B39E5829F5BD7800EC31F6 /* TokensCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCategory.swift; sourceTree = "<group>"; };
 		C2B39E5A29F5D0AA00EC31F6 /* TokensServiceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensServiceName.swift; sourceTree = "<group>"; };
 		C2B3D1A7267E6BEC009E6DE0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -5000,8 +5006,10 @@
 				C2B39E5829F5BD7800EC31F6 /* TokensCategory.swift */,
 				C2B39E5A29F5D0AA00EC31F6 /* TokensServiceName.swift */,
 				C207324829F724AB00FB294E /* TokensAdditionalInfo.swift */,
-				C2A4C8362A11141D00AFD67C /* TokensNextTokenView.swift */,
+				C2F1A0012EA0000100ABCDEF /* TokensServiceTitle.swift */,
+				C2F1A0032EA0000100ABCDEF /* TokensTOTPTokenView.swift */,
 				C2A4C8382A1153A200AFD67C /* TokensTokenView.swift */,
+				C2A4C8362A11141D00AFD67C /* TokensNextTokenView.swift */,
 				C2A4C83A2A11736200AFD67C /* TokensCircleProgress.swift */,
 				C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */,
 				C2F9D6092A1FEC700085B65A /* TokensRevealButton.swift */,
@@ -5013,6 +5021,7 @@
 			isa = PBXGroup;
 			children = (
 				C2B39E5329F5880600EC31F6 /* TokensCellKind.swift */,
+				C2F1A0052EA0000100ABCDEF /* TokensCellMetrics.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -7271,6 +7280,8 @@
 				C21508273003009A008B66E2 /* NewPINView.swift in Sources */,
 				C2625F8E28BB858600D84C5C /* AboutPresenter.swift in Sources */,
 				C207324929F724AB00FB294E /* TokensAdditionalInfo.swift in Sources */,
+				C2F1A0022EA0000100ABCDEF /* TokensServiceTitle.swift in Sources */,
+				C2F1A0042EA0000100ABCDEF /* TokensTOTPTokenView.swift in Sources */,
 				C240484C276522320076376E /* WidgetWarningFlowController.swift in Sources */,
 				C2B5BF572946169D00E5092D /* TokensLinkAction.swift in Sources */,
 				C23386F32780E52F00F8DBC3 /* DeleteServiceFlowController.swift in Sources */,
@@ -7333,6 +7344,7 @@
 				C2EA566B2856925B00026BFE /* AskForAuthView.swift in Sources */,
 				C2830D7C293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift in Sources */,
 				C2B39E5429F5880600EC31F6 /* TokensCellKind.swift in Sources */,
+				C2F1A0062EA0000100ABCDEF /* TokensCellMetrics.swift in Sources */,
 				C215083B300307F6008B66E2 /* ExporterMainScreenView.swift in Sources */,
 				C2AB92CD276655EF00698382 /* ExporterPINPresenter.swift in Sources */,
 				C231856C2EC678CA00DD1ABE /* BackupSetPasswordModalInteractor.swift in Sources */,

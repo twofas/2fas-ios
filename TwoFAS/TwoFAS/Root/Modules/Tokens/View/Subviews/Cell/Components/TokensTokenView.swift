@@ -90,7 +90,10 @@ final class TokensTokenView: UIView {
         spacingLabel.setContentHuggingPriority(priority, for: axis)
     }
 
-    override func setContentCompressionResistancePriority(_ priority: UILayoutPriority, for axis: NSLayoutConstraint.Axis) {
+    override func setContentCompressionResistancePriority(
+        _ priority: UILayoutPriority,
+        for axis: NSLayoutConstraint.Axis
+    ) {
         super.setContentCompressionResistancePriority(priority, for: axis)
         tokenLabel.setContentCompressionResistancePriority(priority, for: axis)
         spacingLabel.setContentCompressionResistancePriority(priority, for: axis)

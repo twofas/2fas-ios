@@ -32,11 +32,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         view.setKind(.normal)
         return view
     }()
-    private let circularProgress: TokensCircleProgress = {
-        let view = TokensCircleProgress()
-        view.setKind(.normal)
-        return view
-    }()
+    private let circularProgress = TokensCircleProgress()
     
     private(set) var secret: String = ""
     private var serviceTypeName: String = ""
@@ -237,7 +233,7 @@ private extension TokensTOTPCell {
             accessoryContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             tokenView.trailingAnchor
-                .constraint(equalTo: accessoryContainer.leadingAnchor, constant: -tokenNegativeMargin)
+                .constraint(equalTo: accessoryContainer.trailingAnchor, constant: -tokenNegativeMargin)
         ])
         
         accessoryContainer.addSubview(circularProgress, with: [

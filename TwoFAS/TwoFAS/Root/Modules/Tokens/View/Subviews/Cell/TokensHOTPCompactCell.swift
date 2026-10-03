@@ -213,7 +213,7 @@ private extension TokensHOTPCompactCell {
             groupContainer.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
             accessoryContainer.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor,
-                constant: -hMargin + 4
+                constant: -hMargin + Spacing.XS.rawValue
             ),
             accessoryContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vMargin),
             accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -vMargin)

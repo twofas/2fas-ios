@@ -26,7 +26,6 @@ final class TokensTOTPTokenView: UIView {
 
     private let nextTokenLeadingSpacing = Spacing.L.rawValue
 
-    private var kindConstraints: [NSLayoutConstraint] = []
     private var useNextToken = false
 
     override init(frame: CGRect) {
@@ -47,43 +46,29 @@ final class TokensTOTPTokenView: UIView {
         ])
 
         addSubview(nextTokenView, with: [
-            nextTokenView.leadingAnchor.constraint(equalTo: tokenView.trailingAnchor, constant: nextTokenLeadingSpacing)
+            nextTokenView.leadingAnchor.constraint(
+                equalTo: tokenView.trailingAnchor,
+                constant: nextTokenLeadingSpacing
+            ),
+            nextTokenView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+            nextTokenView.bottomAnchor.constraint(equalTo: tokenView.bottomAnchor)
         ])
 
         tokenView.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
+        tokenView.setContentHuggingPriority(.defaultHigh + 1, for: .vertical)
+        
+        tokenView.setContentCompressionResistancePriority(.defaultHigh + 2, for: .horizontal)
+        tokenView.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
+
+        nextTokenView.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
+        nextTokenView.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
 
         accessibilityElements = [tokenView, nextTokenView]
     }
 
-    override var forFirstBaselineLayout: UIView { tokenView }
-    override var forLastBaselineLayout: UIView { tokenView }
-
     func setKind(_ kind: TokensCellKind) {
         tokenView.setKind(kind)
         nextTokenView.setKind(kind)
-
-        NSLayoutConstraint.deactivate(kindConstraints)
-        switch kind {
-        case .normal:
-            kindConstraints = [
-                nextTokenView.lastBaselineAnchor.constraint(equalTo: tokenView.lastBaselineAnchor),
-                nextTokenView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor)
-            ]
-            tokenView.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
-            tokenView.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
-        case .compact:
-            kindConstraints = [
-                nextTokenView.lastBaselineAnchor.constraint(equalTo: tokenView.lastBaselineAnchor, constant: -1),
-                nextTokenView.trailingAnchor.constraint(equalTo: trailingAnchor)
-            ]
-            nextTokenView.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
-        case .edit, .pass:
-            kindConstraints = [
-                nextTokenView.lastBaselineAnchor.constraint(equalTo: tokenView.lastBaselineAnchor),
-                nextTokenView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor)
-            ]
-        }
-        NSLayoutConstraint.activate(kindConstraints)
     }
 
     /// Prepares the view for a new token (e.g. on cell reuse).
@@ -99,9 +84,6 @@ final class TokensTOTPTokenView: UIView {
         tokenView.maskToken()
     }
 
-    /// - Parameters:
-    ///   - animateToken: animates appearance of the current token (e.g. after unlocking)
-    ///   - animateTransition: animates marking and showing/hiding of the next token
     func setToken(
         _ token: TokenValue,
         nextToken: TokenValue,

@@ -206,7 +206,7 @@ private extension TokensHOTPCell {
             groupContainer.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
             accessoryContainer.trailingAnchor.constraint(
                 equalTo: contentView.trailingAnchor,
-                constant: -hMargin + 4
+                constant: -hMargin + Spacing.XS.rawValue
             ),
             accessoryContainer.topAnchor.constraint(
                 equalTo: contentView.topAnchor,

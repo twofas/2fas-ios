@@ -21,46 +21,38 @@ import UIKit
 import Common
 
 final class TokensCircleProgress: UIView {
+    private let size: CGFloat = 36
     private let circle = CircularShape()
     private let valueLabel: UILabel = {
         let label = UILabel()
-        label.font = TextStyle.counter.uiFont()
+        label.font = TextStyle.counterMono.uiFont()
         label.numberOfLines = 1
         label.textAlignment = .center
         label.isAccessibilityElement = true
         label.accessibilityLabel = T.Voiceover.secondsLeftCounterTitle
         label.accessibilityTraits = .updatesFrequently
-        label.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
-        label.setContentHuggingPriority(.defaultHigh + 1, for: .vertical)
-        label.setContentCompressionResistancePriority(.defaultHigh + 2, for: .horizontal)
+        label.setContentHuggingPriority(.defaultHigh + 3, for: .horizontal)
+        label.setContentHuggingPriority(.defaultHigh + 3, for: .vertical)
+        label.setContentCompressionResistancePriority(.defaultHigh + 3, for: .horizontal)
         return label
     }()
     private let sizeLabel: UILabel = {
         let label = UILabel()
-        label.font = TextStyle.counter.uiFont()
+        label.font = TextStyle.counterMono.uiFont()
         label.numberOfLines = 1
         label.textAlignment = .center
         label.isAccessibilityElement = false
-        label.accessibilityTraits = .updatesFrequently
-        label.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
-        label.setContentHuggingPriority(.defaultHigh + 1, for: .vertical)
-        label.setContentCompressionResistancePriority(.defaultHigh + 2, for: .horizontal)
+        label.setContentHuggingPriority(.defaultHigh + 3, for: .horizontal)
+        label.setContentHuggingPriority(.defaultHigh + 3, for: .vertical)
+        label.setContentCompressionResistancePriority(.defaultHigh + 3, for: .horizontal)
         label.text = "00"
         label.isHidden = true
         return label
     }()
     private var marked = false
     
-    private var cLeading: NSLayoutConstraint?
-    private var cTrailing: NSLayoutConstraint?
-    private var cTop: NSLayoutConstraint?
-    private var cBottom: NSLayoutConstraint?
-    
-    private let standardLineWidth = 2.0
-    private let standardMargin = 8.0
-    
-    private var kind: TokensCellKind = .normal
-    
+    private let standardMargin = Spacing.M.value
+        
     init() {
         super.init(frame: CGRect.zero)
         
@@ -74,18 +66,16 @@ final class TokensCircleProgress: UIView {
     }
     
     private func commonInit() {
-        setLineWidth()
-        
         setCircleColor(marked: false, animated: false)
-        addSubview(circle)
-        circle.translatesAutoresizingMaskIntoConstraints = false
-        
-        cLeading = circle.leadingAnchor.constraint(equalTo: leadingAnchor)
-        cTrailing = circle.trailingAnchor.constraint(equalTo: trailingAnchor)
-        cTop = circle.topAnchor.constraint(equalTo: topAnchor)
-        cBottom = circle.bottomAnchor.constraint(equalTo: bottomAnchor)
-
-        [cLeading, cTrailing, cTop, cBottom].forEach { $0?.isActive = true }
+        addSubview(circle, with: [
+            circle.leadingAnchor.constraint(equalTo: leadingAnchor),
+            circle.trailingAnchor.constraint(equalTo: trailingAnchor),
+            circle.topAnchor.constraint(lessThanOrEqualTo: topAnchor, constant: standardMargin),
+            circle.bottomAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: -standardMargin),
+            circle.widthAnchor.constraint(equalToConstant: size),
+            circle.heightAnchor.constraint(equalToConstant: size),
+            circle.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
         
         let edgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
         
@@ -95,8 +85,6 @@ final class TokensCircleProgress: UIView {
         addSubview(valueLabel)
         valueLabel.pinToParent(with: edgeInsets)
         
-        setMargins()
-        
         backgroundColor = UIColor.clear
         
         isAccessibilityElement = false
@@ -105,14 +93,6 @@ final class TokensCircleProgress: UIView {
         registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, previousTraitCollection) in
             if self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
                 self.setCircleColor(marked: self.marked, animated: false)
-            }
-        }
-        
-        registerForTraitChanges([UITraitPreferredContentSizeCategory.self]) { (self: Self, previousTraitCollection) in
-            if self.traitCollection.preferredContentSizeCategory !=
-                previousTraitCollection.preferredContentSizeCategory {
-                self.setLineWidth()
-                self.setMargins()
             }
         }
     }
@@ -152,47 +132,9 @@ final class TokensCircleProgress: UIView {
         marked = false
     }
     
-    func setKind(_ kind: TokensCellKind) {
-        self.kind = kind
-        switch kind {
-        case .compact:
-            let font = TextStyle.counter.uiFont()
-            valueLabel.font = font
-            sizeLabel.font = font
-        case .normal:
-            let font = TextStyle.counter.uiFont()
-            valueLabel.font = font
-            sizeLabel.font = font
-        default:
-            break
-        }
-        setLineWidth()
-    }
-    
     private func setCircleColor(marked: Bool, animated: Bool) {
         let color = marked ? AppColor.accentsBrand.uiColor : AppColor.labelsPrimary.uiColor
         circle.setLineColor(color, animated: animated)
-    }
-    
-    private func setLineWidth() {
-        if kind == .normal {
-            circle.lineWidth = traitCollection.preferredContentSizeCategory.lineWidth
-            return
-        }
-        circle.lineWidth = standardLineWidth
-    }
-    
-    private func setMargins() {
-        let value: CGFloat = {
-            if kind == .normal {
-                return -traitCollection.preferredContentSizeCategory.margin
-            }
-            return standardMargin
-        }()
-        cLeading?.constant = value
-        cTrailing?.constant = -value
-        cTop?.constant = value
-        cBottom?.constant = -value
     }
 }
 

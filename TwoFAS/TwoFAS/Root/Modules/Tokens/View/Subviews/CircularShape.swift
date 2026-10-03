@@ -36,12 +36,9 @@ final class CircularShape: UIView {
         case end = "animatingShape"
     }
     
+    private let lineWidth: CGFloat = 2
+    
     var animationDuration: TimeInterval = 0.99
-    var lineWidth: CGFloat = 1 {
-        didSet {
-            shape.lineWidth = lineWidth
-        }
-    }
     
     init() {
         super.init(frame: CGRect.zero)
@@ -62,11 +59,11 @@ final class CircularShape: UIView {
     }
     
     private func commonInit() {
-        backgroundColor = AppColor.backgroundsPrimary.uiColor
+        backgroundColor = .clear
         isUserInteractionEnabled = false
 
         shape = CAShapeLayer()
-        shape.fillColor = AppColor.backgroundsPrimary.uiColor.cgColor
+        shape.fillColor = UIColor.clear.cgColor
         shape.strokeColor = AppColor.labelsPrimary.uiColor.cgColor
         shape.lineWidth = lineWidth
         shape.lineCap = .square

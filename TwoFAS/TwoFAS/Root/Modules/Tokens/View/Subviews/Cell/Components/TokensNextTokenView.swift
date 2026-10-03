@@ -30,7 +30,7 @@ final class TokensNextTokenView: UIView {
         case visible
     }
     
-    private let nextTokenLabel = TokensNextTokenLabel()
+    private let nextTokenLabel = TokensTokenLabel(role: .next)
     private let innerContainer = UIView()
     private let outerContainer = UIView()
     private let maskingView = UIView()
@@ -41,8 +41,9 @@ final class TokensNextTokenView: UIView {
     private var currentState: State = .hidden
     private var kind: TokensCellKind = .normal
     
-    private var options: UIView.AnimationOptions = []
+    private let spacing = Spacing.S.value
     
+    private var options: UIView.AnimationOptions = []
     private var currentValue: TokenValue?
     
     private var constraintValue: CGFloat {
@@ -51,7 +52,7 @@ final class TokensNextTokenView: UIView {
         case .pass: return 0
         }
     }
-    
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -88,14 +89,14 @@ final class TokensNextTokenView: UIView {
         setNextTokenHidden()
 
         nextTokenLabel.isAccessibilityElement = false
-
-        setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
-        setContentHuggingPriority(.defaultLow - 1, for: .vertical)
     }
 
     override var intrinsicContentSize: CGSize {
         nextTokenLabel.intrinsicContentSize
     }
+
+    override var forFirstBaselineLayout: UIView { nextTokenLabel }
+    override var forLastBaselineLayout: UIView { nextTokenLabel }
     
     func set(nextToken: TokenValue, tokenType: TokenType) {
         guard currentState != .animating, currentValue != nextToken else { return }
@@ -180,7 +181,7 @@ final class TokensNextTokenView: UIView {
                 movingConstraint
             ])
 
-            nextTokenLabel.setContentCompressionResistancePriority(.defaultHigh + 2, for: .horizontal)
+            nextTokenLabel.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         default:
             break
         }

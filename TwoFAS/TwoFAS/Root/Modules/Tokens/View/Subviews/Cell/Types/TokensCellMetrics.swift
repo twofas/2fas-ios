@@ -22,5 +22,5 @@ import Common
 
 enum TokensCellMetrics {
     /// Vertical distance between the service title and the token in HOTP and TOTP cells (normal and compact)
-    static let serviceTitleToTokenSpacing: CGFloat = Spacing.XL.rawValue
+    static let serviceTitleToTokenSpacing: CGFloat = Spacing.M.rawValue
 }

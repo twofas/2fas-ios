@@ -42,8 +42,6 @@
 		C206AAD029636A3E0032B85E /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = C206AACF29636A3E0032B85E /* Configs.swift */; };
 		C206CACF27A35ABE0068284C /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C206CACE27A35ABE0068284C /* View+.swift */; };
 		C207324929F724AB00FB294E /* TokensAdditionalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207324829F724AB00FB294E /* TokensAdditionalInfo.swift */; };
-		C2F1A0022EA0000100ABCDEF /* TokensServiceTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F1A0012EA0000100ABCDEF /* TokensServiceTitle.swift */; };
-		C2F1A0042EA0000100ABCDEF /* TokensTOTPTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F1A0032EA0000100ABCDEF /* TokensTOTPTokenView.swift */; };
 		C207766A2FBA361900F5ABC9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20776692FBA361900F5ABC9 /* LoginViewController.swift */; };
 		C207C11F2559F1CB0053975E /* CloudKitErrorParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207C11E2559F1CB0053975E /* CloudKitErrorParser.swift */; };
 		C207DAC7302B4A39004FC767 /* ExporterRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207DAC6302B4A39004FC767 /* ExporterRoute.swift */; };
@@ -344,6 +342,7 @@
 		C2529CBC2E5C6B6F00515AB7 /* TwoFASControlIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */; };
 		C2529CC02E5C757D00515AB7 /* TwoFASControlWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CAB2E5C6AE200515AB7 /* TwoFASControlWidget.swift */; };
 		C25371A2281DCF56005FB118 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25371A1281DCF56005FB118 /* UINavigationController+.swift */; };
+		C254BD863071826F0090EF3B /* TokensTokenLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254BD853071826F0090EF3B /* TokensTokenLabel.swift */; };
 		C254D12026ACB777005FEBD4 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254D11F26ACB777005FEBD4 /* Provider.swift */; };
 		C254D12226ACB7D8005FEBD4 /* CodeRedaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254D12126ACB7D8005FEBD4 /* CodeRedaction.swift */; };
 		C257DD742D80DC44004FB575 /* ServiceRecord3.swift in Sources */ = {isa = PBXBuildFile; fileRef = C257DD732D80DC44004FB575 /* ServiceRecord3.swift */; };
@@ -884,7 +883,6 @@
 		C2B39E5029F5841700EC31F6 /* TokensEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E4F29F5841700EC31F6 /* TokensEditCell.swift */; };
 		C2B39E5229F5848700EC31F6 /* TokensLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5129F5848700EC31F6 /* TokensLogo.swift */; };
 		C2B39E5429F5880600EC31F6 /* TokensCellKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5329F5880600EC31F6 /* TokensCellKind.swift */; };
-		C2F1A0062EA0000100ABCDEF /* TokensCellMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F1A0052EA0000100ABCDEF /* TokensCellMetrics.swift */; };
 		C2B39E5929F5BD7800EC31F6 /* TokensCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5829F5BD7800EC31F6 /* TokensCategory.swift */; };
 		C2B39E5B29F5D0AA00EC31F6 /* TokensServiceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5A29F5D0AA00EC31F6 /* TokensServiceName.swift */; };
 		C2B3D1A8267E6BEC009E6DE0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B3D1A7267E6BEC009E6DE0 /* Extensions.swift */; };
@@ -1294,6 +1292,9 @@
 		C2EF7B242DA9AE7100BAA559 /* ManageWatchFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF7B232DA9AE6800BAA559 /* ManageWatchFlowController.swift */; };
 		C2EFCE0725D05E320031293F /* ClearHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EFCE0625D05E320031293F /* ClearHandler.swift */; };
 		C2F10A022F9B3C0100D4E5A1 /* TokensFloatingSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F10A012F9B3C0100D4E5A1 /* TokensFloatingSectionHeader.swift */; };
+		C2F1A0022EA0000100ABCDEF /* TokensServiceTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F1A0012EA0000100ABCDEF /* TokensServiceTitle.swift */; };
+		C2F1A0042EA0000100ABCDEF /* TokensTOTPTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F1A0032EA0000100ABCDEF /* TokensTOTPTokenView.swift */; };
+		C2F1A0062EA0000100ABCDEF /* TokensCellMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F1A0052EA0000100ABCDEF /* TokensCellMetrics.swift */; };
 		C2F33940214AB53F0072FE80 /* RatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F3393F214AB53F0072FE80 /* RatingController.swift */; };
 		C2F51EFD27DAABD300A67C73 /* BrowserExtensionPairingSuccessfulView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F51EFC27DAABD300A67C73 /* BrowserExtensionPairingSuccessfulView.swift */; };
 		C2F51EFF27DAAD9900A67C73 /* BrowserExtensionPairingFailureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F51EFE27DAAD9900A67C73 /* BrowserExtensionPairingFailureView.swift */; };
@@ -1908,8 +1909,6 @@
 		C206AACF29636A3E0032B85E /* Configs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configs.swift; sourceTree = "<group>"; };
 		C206CACE27A35ABE0068284C /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		C207324829F724AB00FB294E /* TokensAdditionalInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensAdditionalInfo.swift; sourceTree = "<group>"; };
-		C2F1A0012EA0000100ABCDEF /* TokensServiceTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensServiceTitle.swift; sourceTree = "<group>"; };
-		C2F1A0032EA0000100ABCDEF /* TokensTOTPTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTOTPTokenView.swift; sourceTree = "<group>"; };
 		C20776692FBA361900F5ABC9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C207C11E2559F1CB0053975E /* CloudKitErrorParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitErrorParser.swift; sourceTree = "<group>"; };
 		C207DAC6302B4A39004FC767 /* ExporterRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExporterRoute.swift; sourceTree = "<group>"; };
@@ -2205,6 +2204,7 @@
 		C2529CB12E5C6AE200515AB7 /* TwoFASWidgetSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetSquareView.swift; sourceTree = "<group>"; };
 		C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASControlIntent.swift; sourceTree = "<group>"; };
 		C25371A1281DCF56005FB118 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
+		C254BD853071826F0090EF3B /* TokensTokenLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTokenLabel.swift; sourceTree = "<group>"; };
 		C254D11F26ACB777005FEBD4 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		C254D12126ACB7D8005FEBD4 /* CodeRedaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeRedaction.swift; sourceTree = "<group>"; };
 		C257DD732D80DC44004FB575 /* ServiceRecord3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceRecord3.swift; sourceTree = "<group>"; };
@@ -2608,7 +2608,6 @@
 		C2B39E4F29F5841700EC31F6 /* TokensEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensEditCell.swift; sourceTree = "<group>"; };
 		C2B39E5129F5848700EC31F6 /* TokensLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensLogo.swift; sourceTree = "<group>"; };
 		C2B39E5329F5880600EC31F6 /* TokensCellKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCellKind.swift; sourceTree = "<group>"; };
-		C2F1A0052EA0000100ABCDEF /* TokensCellMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCellMetrics.swift; sourceTree = "<group>"; };
 		C2B39E5829F5BD7800EC31F6 /* TokensCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCategory.swift; sourceTree = "<group>"; };
 		C2B39E5A29F5D0AA00EC31F6 /* TokensServiceName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensServiceName.swift; sourceTree = "<group>"; };
 		C2B3D1A7267E6BEC009E6DE0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -2936,6 +2935,9 @@
 		C2EF7B232DA9AE6800BAA559 /* ManageWatchFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchFlowController.swift; sourceTree = "<group>"; };
 		C2EFCE0625D05E320031293F /* ClearHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearHandler.swift; sourceTree = "<group>"; };
 		C2F10A012F9B3C0100D4E5A1 /* TokensFloatingSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensFloatingSectionHeader.swift; sourceTree = "<group>"; };
+		C2F1A0012EA0000100ABCDEF /* TokensServiceTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensServiceTitle.swift; sourceTree = "<group>"; };
+		C2F1A0032EA0000100ABCDEF /* TokensTOTPTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTOTPTokenView.swift; sourceTree = "<group>"; };
+		C2F1A0052EA0000100ABCDEF /* TokensCellMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCellMetrics.swift; sourceTree = "<group>"; };
 		C2F2E0132A24AB5800E81225 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
 		C2F2E0142A24AB5900E81225 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C2F2E0152A24AB5B00E81225 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -5013,6 +5015,7 @@
 				C2A4C83A2A11736200AFD67C /* TokensCircleProgress.swift */,
 				C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */,
 				C2F9D6092A1FEC700085B65A /* TokensRevealButton.swift */,
+				C254BD853071826F0090EF3B /* TokensTokenLabel.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -7413,6 +7416,7 @@
 				C2D2F70A2FF02EA00008FE4D /* LabelComposePresenter.swift in Sources */,
 				C2F5F9E528611DB300F778E1 /* BrowserExtensionPairingAlreadyPairedPresenter.swift in Sources */,
 				C21930EE2EC1094F001354C9 /* BackupManageEncryptionPresenter.swift in Sources */,
+				C254BD863071826F0090EF3B /* TokensTokenLabel.swift in Sources */,
 				C25ECA7F30056E5300D46587 /* TrashView.swift in Sources */,
 				C219CDBB278E270F00CBBF09 /* SettingsEventController.swift in Sources */,
 				C21EB2F12A7FD77000FA8AA1 /* AddingServiceTitleView.swift in Sources */,

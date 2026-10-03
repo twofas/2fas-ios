@@ -38,11 +38,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
         view.setKind(.compact)
         return view
     }()
-    private let circularProgress: TokensCircleProgress = {
-        let view = TokensCircleProgress()
-        view.setKind(.compact)
-        return view
-    }()
+    private let circularProgress = TokensCircleProgress()
     
     private(set) var secret: String = ""
     private var serviceTypeName: String = ""
@@ -233,10 +229,8 @@ private extension TokensTOTPCompactCell {
         ])
         
         contentView.addSubview(accessoryContainer, with: [
-            tokenView.trailingAnchor.constraint(
-                equalTo: accessoryContainer.leadingAnchor,
-                constant: -sMargin
-            ),
+            tokenView.trailingAnchor
+                .constraint(equalTo: accessoryContainer.trailingAnchor),
             groupContainer.trailingAnchor.constraint(
                 equalTo: accessoryContainer.leadingAnchor,
                 constant: -hMargin

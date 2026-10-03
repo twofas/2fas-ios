@@ -29,7 +29,7 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
     
     private let hMargin: CGFloat = Spacing.XL.rawValue
     private let vMargin: CGFloat = Spacing.L.rawValue
-
+    
     private let tokenLabel: TokensTokenView = {
         let view = TokensTokenView()
         view.setKind(.normal)
@@ -46,10 +46,7 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
     private var serviceTypeName: String = ""
     private var isActive = true
     private var shouldAnimate = true
-
-    private var withAdditionalInfoConstraints: [NSLayoutConstraint] = []
-    private var withoutAdditionalInfoConstraints: [NSLayoutConstraint] = []
-
+    
     private let groupContainer = UIView()
     private let categoryView = TokensCategory()
     private var logoView: TokensLogo = {
@@ -57,13 +54,8 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         comp.setKind(.normal)
         return comp
     }()
-    private var serviceNameLabel: TokensServiceName = {
-        let comp = TokensServiceName()
-        comp.setKind(.normal)
-        return comp
-    }()
-    private var additionalInfoLabel: TokensAdditionalInfo = {
-        let comp = TokensAdditionalInfo()
+    private var serviceTitle: TokensServiceTitle = {
+        let comp = TokensServiceTitle()
         comp.setKind(.normal)
         return comp
     }()
@@ -75,7 +67,7 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         line.isUserInteractionEnabled = false
         return line
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -102,19 +94,10 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         shouldAnimate: Bool
     ) {
         tokenLabel.clear()
-        serviceNameLabel.setText(name)
+        serviceTitle.setText(name: name, additionalInfo: additionalInfo)
         self.secret = secret
         self.serviceTypeName = serviceTypeName
-        let trimmedAdditionalInfo = additionalInfo?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        if !trimmedAdditionalInfo.isEmpty {
-            additionalInfoLabel.isHidden = false
-            additionalInfoLabel.setText(trimmedAdditionalInfo)
-        } else {
-            additionalInfoLabel.isHidden = true
-            additionalInfoLabel.clear()
-        }
-        applyAdditionalInfoLayout(hasAdditionalInfo: !trimmedAdditionalInfo.isEmpty)
-
+        
         self.shouldAnimate = shouldAnimate
         
         categoryView.setColor(category)
@@ -165,7 +148,6 @@ private extension TokensHOTPCell {
     }
     
     func setupLayout() {
-        let tokenTopSpacing = Spacing.SM.rawValue
         let logoViewTopOffset = vMargin
         let accessoryContainerTopOffset = vMargin
         contentView.addSubview(separator, with: [
@@ -191,7 +173,7 @@ private extension TokensHOTPCell {
             groupContainer.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
             groupContainer.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
-
+        
         let groupTopMargin = groupContainer.topAnchor.constraint(
             greaterThanOrEqualTo: contentView.topAnchor,
             constant: Spacing.XL.rawValue
@@ -203,33 +185,23 @@ private extension TokensHOTPCell {
         )
         groupBottomMargin.priority = .defaultHigh
         NSLayoutConstraint.activate([groupTopMargin, groupBottomMargin])
-
-        groupContainer.addSubview(serviceNameLabel, with: [
-            serviceNameLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
-            serviceNameLabel.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor),
-            serviceNameLabel.topAnchor.constraint(equalTo: groupContainer.topAnchor)
+        
+        groupContainer.addSubview(serviceTitle, with: [
+            serviceTitle.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
+            serviceTitle.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor),
+            serviceTitle.topAnchor.constraint(equalTo: groupContainer.topAnchor)
         ])
-
-        groupContainer.addSubview(additionalInfoLabel, with: [
-            additionalInfoLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
-            additionalInfoLabel.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor),
-            additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor)
-        ])
-
+        
         groupContainer.addSubview(tokenLabel, with: [
             tokenLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
             tokenLabel.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor),
+            tokenLabel.topAnchor.constraint(
+                equalTo: serviceTitle.bottomAnchor,
+                constant: TokensCellMetrics.serviceTitleToTokenSpacing
+            ),
             tokenLabel.bottomAnchor.constraint(equalTo: groupContainer.bottomAnchor)
         ])
-
-        withAdditionalInfoConstraints = [
-            tokenLabel.topAnchor.constraint(equalTo: additionalInfoLabel.bottomAnchor, constant: tokenTopSpacing)
-        ]
-        withoutAdditionalInfoConstraints = [
-            tokenLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor, constant: tokenTopSpacing)
-        ]
-        NSLayoutConstraint.activate(withoutAdditionalInfoConstraints)
-
+        
         contentView.addSubview(accessoryContainer, with: [
             groupContainer.trailingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor, constant: -hMargin),
             accessoryContainer.trailingAnchor.constraint(
@@ -256,16 +228,6 @@ private extension TokensHOTPCell {
         tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
     }
     
-    func applyAdditionalInfoLayout(hasAdditionalInfo: Bool) {
-        NSLayoutConstraint.deactivate(withAdditionalInfoConstraints)
-        NSLayoutConstraint.deactivate(withoutAdditionalInfoConstraints)
-        if hasAdditionalInfo {
-            NSLayoutConstraint.activate(withAdditionalInfoConstraints)
-        } else {
-            NSLayoutConstraint.activate(withoutAdditionalInfoConstraints)
-        }
-    }
-
     func setupConfiguration() {
         accessoryContainer.addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(animateRefreshCounter))

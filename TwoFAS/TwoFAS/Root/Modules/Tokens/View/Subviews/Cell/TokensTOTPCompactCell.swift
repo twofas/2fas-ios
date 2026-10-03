@@ -27,24 +27,14 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
     
     var didTapUnlock: ((TokenTimerConsumer) -> Void)?
     
-    private let hMargin: CGFloat = Spacing.XL.rawValue
+    private let hMargin: CGFloat = Spacing.L.rawValue
     private let sMargin: CGFloat = Spacing.M.rawValue
     private let vMargin: CGFloat = Spacing.L.rawValue
     
-    private var withAdditionalInfoConstraints: [NSLayoutConstraint] = []
-    private var withoutAdditionalInfoConstraints: [NSLayoutConstraint] = []
-
-    private var hasAdditionalInfo = false
-
     private let groupContainer = UIView()
-
-    private let tokenLabel: TokensTokenView = {
-        let view = TokensTokenView()
-        view.setKind(.compact)
-        return view
-    }()
-    private let nextTokenLabel: TokensNextTokenView = {
-        let view = TokensNextTokenView()
+    
+    private let tokenView: TokensTOTPTokenView = {
+        let view = TokensTOTPTokenView()
         view.setKind(.compact)
         return view
     }()
@@ -57,7 +47,6 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
     private(set) var secret: String = ""
     private var serviceTypeName: String = ""
     
-    private var useNextToken = false
     private var isLocked = false
     private var shouldAnimate = true
     
@@ -67,13 +56,8 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
         comp.setKind(.compact)
         return comp
     }()
-    private var serviceNameLabel: TokensServiceName = {
-        let comp = TokensServiceName()
-        comp.setKind(.compact)
-        return comp
-    }()
-    private var additionalInfoLabel: TokensAdditionalInfo = {
-        let comp = TokensAdditionalInfo()
+    private var serviceTitle: TokensServiceTitle = {
+        let comp = TokensServiceTitle()
         comp.setKind(.compact)
         return comp
     }()
@@ -117,32 +101,18 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
         useNextToken: Bool,
         shouldAnimate: Bool
     ) {
-        tokenLabel.clear()
-        serviceNameLabel.setText(name)
+        serviceTitle.setText(name: name, additionalInfo: additionalInfo)
         self.secret = secret
         self.serviceTypeName = serviceTypeName
-        let trimmedAdditionalInfo = additionalInfo?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        if !trimmedAdditionalInfo.isEmpty {
-            additionalInfoLabel.isHidden = false
-            additionalInfoLabel.setText(trimmedAdditionalInfo)
-            hasAdditionalInfo = true
-        } else {
-            additionalInfoLabel.isHidden = true
-            additionalInfoLabel.clear()
-            hasAdditionalInfo = false
-        }
         
-        clearTokenMarking()
+        tokenView.reset(useNextToken: useNextToken)
+        circularProgress.unmark()
         categoryView.setColor(category)
         logoView.configure(with: logoType)
-
-        self.useNextToken = useNextToken
+        
         self.shouldAnimate = shouldAnimate
         
         isLocked = false
-        refreshLayout()
-
-        nextTokenLabel.hideNextToken(animated: false)
     }
     
     func setInitial(_ state: TokenTimerInitialConsumerState) {
@@ -150,9 +120,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
         case .locked:
             isLocked = true
             
-            nextTokenLabel.hideNextToken(animated: false)
-            tokenLabel.maskToken()
-            refreshLayout()
+            tokenView.lock(animated: false)
             circularProgress.isHidden = true
             revealButton.isHidden = false
         case .unlocked(let progress, let period, let currentToken, let nextToken, let tokenType, let willChangeSoon):
@@ -163,10 +131,15 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             revealButton.isHidden = true
             circularProgress.setPeriod(period)
             circularProgress.setProgress(progress, animated: false)
-            tokenLabel.setToken(currentToken, tokenType: tokenType, animated: wasLocked)
-            nextTokenLabel.set(nextToken: nextToken, tokenType: tokenType)
-            refreshLayout()
-            shouldMark(willChangeSoon: willChangeSoon, isPlanned: false)
+            tokenView.setToken(
+                currentToken,
+                nextToken: nextToken,
+                tokenType: tokenType,
+                willChangeSoon: willChangeSoon,
+                animateToken: wasLocked,
+                animateTransition: false
+            )
+            markProgress(willChangeSoon: willChangeSoon)
         }
         updateAccessibility()
     }
@@ -177,9 +150,7 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             guard !isLocked else { return }
             isLocked = true
             
-            nextTokenLabel.hideNextToken(animated: true)
-            tokenLabel.maskToken()
-            refreshLayout()
+            tokenView.lock(animated: true)
             circularProgress.isHidden = true
             revealButton.isHidden = false
         case .unlocked(let progress, let isPlanned, let currentToken, let nextToken, let tokenType, let willChangeSoon):
@@ -189,10 +160,15 @@ final class TokensTOTPCompactCell: UICollectionViewCell, TokenTimerConsumer, Tok
             circularProgress.isHidden = false
             revealButton.isHidden = true
             circularProgress.setProgress(progress, animated: isPlanned)
-            tokenLabel.setToken(currentToken, tokenType: tokenType, animated: !isPlanned && !blockAnimation)
-            refreshLayout()
-            shouldMark(willChangeSoon: willChangeSoon, isPlanned: isPlanned && !blockAnimation)
-            nextTokenLabel.set(nextToken: nextToken, tokenType: tokenType)
+            tokenView.setToken(
+                currentToken,
+                nextToken: nextToken,
+                tokenType: tokenType,
+                willChangeSoon: willChangeSoon,
+                animateToken: !isPlanned && !blockAnimation,
+                animateTransition: isPlanned && !blockAnimation && shouldAnimate
+            )
+            markProgress(willChangeSoon: willChangeSoon)
         }
         updateAccessibility()
     }
@@ -228,7 +204,7 @@ private extension TokensTOTPCompactCell {
             groupContainer.leadingAnchor.constraint(equalTo: logoView.trailingAnchor, constant: hMargin),
             groupContainer.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
-
+        
         let groupTopMargin = groupContainer.topAnchor.constraint(
             greaterThanOrEqualTo: contentView.topAnchor,
             constant: vMargin
@@ -240,52 +216,24 @@ private extension TokensTOTPCompactCell {
         )
         groupBottomMargin.priority = .defaultHigh
         NSLayoutConstraint.activate([groupTopMargin, groupBottomMargin])
-
-        groupContainer.addSubview(serviceNameLabel, with: [
-            serviceNameLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
-            serviceNameLabel.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor),
-            serviceNameLabel.topAnchor.constraint(equalTo: groupContainer.topAnchor)
+        
+        groupContainer.addSubview(serviceTitle, with: [
+            serviceTitle.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
+            serviceTitle.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor),
+            serviceTitle.topAnchor.constraint(equalTo: groupContainer.topAnchor)
         ])
-
-        groupContainer.addSubview(additionalInfoLabel, with: [
-            additionalInfoLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
-            additionalInfoLabel.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor)
+        
+        groupContainer.addSubview(tokenView, with: [
+            tokenView.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
+            tokenView.topAnchor.constraint(
+                equalTo: serviceTitle.bottomAnchor,
+                constant: TokensCellMetrics.serviceTitleToTokenSpacing
+            ),
+            tokenView.bottomAnchor.constraint(equalTo: groupContainer.bottomAnchor)
         ])
-
-        groupContainer.addSubview(tokenLabel, with: [
-            tokenLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor)
-        ])
-
-        let tokenFromServiceName = tokenLabel.topAnchor.constraint(
-            equalTo: serviceNameLabel.bottomAnchor,
-            constant: Spacing.SM.rawValue
-        )
-        let tokenFromAdditionalInfo = tokenLabel.topAnchor.constraint(
-            equalTo: additionalInfoLabel.bottomAnchor,
-            constant: Spacing.SM.rawValue
-        )
-        let additionalInfoTop = additionalInfoLabel.topAnchor.constraint(equalTo: serviceNameLabel.bottomAnchor)
-        let containerBottomToToken = groupContainer.bottomAnchor.constraint(equalTo: tokenLabel.bottomAnchor)
-
-        withAdditionalInfoConstraints = [
-            additionalInfoTop,
-            tokenFromAdditionalInfo,
-            containerBottomToToken
-        ]
-        withoutAdditionalInfoConstraints = [
-            tokenFromServiceName,
-            containerBottomToToken
-        ]
-
-        NSLayoutConstraint.activate(withoutAdditionalInfoConstraints)
-
-        contentView.addSubview(nextTokenLabel, with: [
-            nextTokenLabel.leadingAnchor.constraint(equalTo: tokenLabel.trailingAnchor, constant: hMargin),
-            nextTokenLabel.centerYAnchor.constraint(equalTo: tokenLabel.centerYAnchor)
-        ])
-
+        
         contentView.addSubview(accessoryContainer, with: [
-            nextTokenLabel.trailingAnchor.constraint(
+            tokenView.trailingAnchor.constraint(
                 equalTo: accessoryContainer.leadingAnchor,
                 constant: -sMargin
             ),
@@ -311,19 +259,6 @@ private extension TokensTOTPCompactCell {
             revealButton.centerXAnchor.constraint(equalTo: accessoryContainer.centerXAnchor),
             revealButton.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor)
         ])
-        
-        tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
-        nextTokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
-    }
-    
-    func refreshLayout() {
-        NSLayoutConstraint.deactivate(withAdditionalInfoConstraints)
-        NSLayoutConstraint.deactivate(withoutAdditionalInfoConstraints)
-        if hasAdditionalInfo {
-            NSLayoutConstraint.activate(withAdditionalInfoConstraints)
-        } else {
-            NSLayoutConstraint.activate(withoutAdditionalInfoConstraints)
-        }
     }
     
     func setupRevealButton() {
@@ -335,41 +270,22 @@ private extension TokensTOTPCompactCell {
         didTapUnlock?(self)
     }
     
-    func shouldMark(willChangeSoon: Bool, isPlanned: Bool) {
-        if useNextToken {
-            if willChangeSoon {
-                nextTokenLabel.showNextToken(animated: isPlanned && shouldAnimate)
-            } else {
-                nextTokenLabel.hideNextToken(animated: isPlanned && shouldAnimate)
-            }
-        }
+    func markProgress(willChangeSoon: Bool) {
         if willChangeSoon {
-            markToken()
+            circularProgress.mark()
         } else {
-            clearTokenMarking()
+            circularProgress.unmark()
         }
-    }
-    
-    func markToken() {
-        tokenLabel.mark()
-        circularProgress.mark()
-    }
-    
-    func clearTokenMarking() {
-        tokenLabel.clearMarking()
-        circularProgress.unmark()
     }
     
     func updateAccessibility() {
         if isLocked {
-            accessibilityElements = [categoryView, serviceNameLabel, additionalInfoLabel, accessoryContainer]
+            accessibilityElements = [categoryView, serviceTitle, accessoryContainer]
         } else {
             accessibilityElements = [
                 categoryView,
-                serviceNameLabel,
-                additionalInfoLabel,
-                tokenLabel,
-                nextTokenLabel,
+                serviceTitle,
+                tokenView,
                 circularProgress
             ]
         }

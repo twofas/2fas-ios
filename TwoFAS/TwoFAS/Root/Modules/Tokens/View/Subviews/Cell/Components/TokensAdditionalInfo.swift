@@ -65,6 +65,8 @@ final class TokensAdditionalInfo: UIView {
             label.font = TextStyle.caption1.uiFont()
         case .normal:
             label.font = TextStyle.footnote.uiFont()
+        case .large:
+            label.font = TextStyle.subheadline.uiFont()
         case .pass:
             break
         }

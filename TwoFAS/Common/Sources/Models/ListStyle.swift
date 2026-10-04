@@ -22,4 +22,5 @@ import Foundation
 public enum ListStyle: Int {
     case `default` = 0
     case compact = 1
+    case large = 2
 }

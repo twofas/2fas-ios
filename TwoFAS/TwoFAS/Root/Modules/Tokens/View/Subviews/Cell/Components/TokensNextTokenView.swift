@@ -48,7 +48,7 @@ final class TokensNextTokenView: UIView {
     
     private var constraintValue: CGFloat {
         switch kind {
-        case .compact, .edit, .normal: return -lineWidth
+        case .compact, .edit, .normal, .large: return -lineWidth
         case .pass: return 0
         }
     }
@@ -174,12 +174,14 @@ final class TokensNextTokenView: UIView {
     func setKind(_ kind: TokensCellKind) {
         self.kind = kind
         switch kind {
-        case .compact, .normal:
-            movingConstraint = innerContainer.leadingAnchor.constraint(equalTo: outerContainer.leadingAnchor)
-            NSLayoutConstraint.activate([
-                innerContainer.topAnchor.constraint(equalTo: outerContainer.topAnchor),
-                movingConstraint
-            ])
+        case .compact, .normal, .large:
+            if movingConstraint == nil {
+                movingConstraint = innerContainer.leadingAnchor.constraint(equalTo: outerContainer.leadingAnchor)
+                NSLayoutConstraint.activate([
+                    innerContainer.topAnchor.constraint(equalTo: outerContainer.topAnchor),
+                    movingConstraint
+                ])
+            }
 
             nextTokenLabel.setContentCompressionResistancePriority(.defaultLow - 1, for: .horizontal)
         default:

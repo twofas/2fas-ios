@@ -27,7 +27,7 @@ final class TokensTokenLabel: UILabel {
     }
 
     private let role: Role
-    private let minScaleFactor: CGFloat = 0.8
+    private var minScaleFactor: CGFloat = 0.8
     private let bottomInset: CGFloat = 1
     private let topInset: CGFloat = 1
     private var baseFont = TextStyle.token.uiFont()
@@ -106,10 +106,25 @@ final class TokensTokenLabel: UILabel {
         switch (role, kind) {
         case (.primary, .compact):
             baseFont = TextStyle.compactToken.uiFont()
+            minScaleFactor = 0.8
+            allowsDefaultTighteningForTruncation = false
         case (.primary, .normal):
             baseFont = TextStyle.token.uiFont()
+            minScaleFactor = 0.8
+            allowsDefaultTighteningForTruncation = false
+        case (.primary, .large):
+            baseFont = TextStyle.largeToken.uiFont()
+            minScaleFactor = 0.8
+            allowsDefaultTighteningForTruncation = false
         case (.next, .compact), (.next, .normal):
             baseFont = TextStyle.smallToken.uiFont()
+            minScaleFactor = 0.8
+            allowsDefaultTighteningForTruncation = true
+        case (.next, .large):
+            baseFont = TextStyle.largeNextToken.uiFont()
+            minScaleFactor = 0.5
+            allowsDefaultTighteningForTruncation = true
+            
         default:
             return
         }

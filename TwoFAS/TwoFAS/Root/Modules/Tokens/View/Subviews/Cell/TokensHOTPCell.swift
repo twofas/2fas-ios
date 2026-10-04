@@ -35,16 +35,12 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         view.setKind(.normal)
         return view
     }()
-    private let refreshCounter: RefreshTokenCounter = {
-        let view = RefreshTokenCounter()
-        view.adjustsImageSizeForAccessibilityContentSizeCategory(true)
-        view.setKind(.normal)
-        return view
-    }()
+    private let refreshCounter = RefreshTokenCounter()
     
     private(set) var secret: String = ""
     private var serviceTypeName: String = ""
     private var isActive = true
+    private var isLocked = false
     private var shouldAnimate = true
     
     private let groupContainer = UIView()
@@ -99,19 +95,28 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         self.serviceTypeName = serviceTypeName
         
         self.shouldAnimate = shouldAnimate
-        
+        isLocked = false
+
         categoryView.setColor(category)
         logoView.configure(with: logoType)
     }
     
+    func setKind(_ kind: TokensCellKind) {
+        tokenLabel.setKind(kind)
+        logoView.setKind(kind)
+        serviceTitle.setKind(kind)
+    }
+
     func setInitial(_ state: TokenCounterConsumerState) {
         switch state {
         case .locked:
+            isLocked = true
             isActive = true
             tokenLabel.maskToken()
             refreshCounter.unlock()
-            
+
         case .unlocked(let isRefreshLocked, let currentToken):
+            isLocked = false
             isActive = !isRefreshLocked
             tokenLabel.setToken(currentToken, tokenType: .hotp, animated: false)
             if isRefreshLocked {
@@ -120,16 +125,19 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
                 refreshCounter.unlock()
             }
         }
+        updateAccessibility()
     }
-    
+
     func setUpdate(_ state: TokenCounterConsumerState) {
         switch state {
         case .locked:
+            isLocked = true
             isActive = true
             tokenLabel.maskToken()
             refreshCounter.unlock()
-            
+
         case .unlocked(let isRefreshLocked, let currentToken):
+            isLocked = false
             isActive = !isRefreshLocked
             tokenLabel.setToken(currentToken, tokenType: .hotp, animated: shouldAnimate)
             if isRefreshLocked {
@@ -138,10 +146,19 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
                 refreshCounter.unlock()
             }
         }
+        updateAccessibility()
     }
 }
 
 private extension TokensHOTPCell {
+    func updateAccessibility() {
+        if isLocked {
+            accessibilityElements = [categoryView, serviceTitle, refreshCounter]
+        } else {
+            accessibilityElements = [categoryView, serviceTitle, tokenLabel, refreshCounter]
+        }
+    }
+
     func setupBackground() {
         contentView.backgroundColor = AppColor.backgroundsPrimary.uiColor
         backgroundColor = AppColor.backgroundsPrimary.uiColor
@@ -219,8 +236,8 @@ private extension TokensHOTPCell {
             refreshCounter.leadingAnchor.constraint(equalTo: accessoryContainer.leadingAnchor),
             refreshCounter.trailingAnchor.constraint(equalTo: accessoryContainer.trailingAnchor),
             refreshCounter.centerYAnchor.constraint(equalTo: accessoryContainer.centerYAnchor),
-            refreshCounter.widthAnchor.constraint(equalToConstant: RefreshTokenCounter.sizeNormal),
-            refreshCounter.heightAnchor.constraint(equalToConstant: RefreshTokenCounter.sizeNormal)
+            refreshCounter.widthAnchor.constraint(equalToConstant: RefreshTokenCounter.size),
+            refreshCounter.heightAnchor.constraint(equalToConstant: RefreshTokenCounter.size)
         ])
         
         tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)

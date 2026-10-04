@@ -18,10 +18,22 @@
 //
 
 import Foundation
+import Common
+
+extension ListStyle {
+    var cellKind: TokensCellKind {
+        switch self {
+        case .default: return .normal
+        case .compact: return .compact
+        case .large: return .large
+        }
+    }
+}
 
 enum TokensCellKind {
     case compact
     case normal
+    case large
     case edit
     case pass
 }
@@ -29,7 +41,7 @@ enum TokensCellKind {
 extension TokensCellKind {
     var iconDimension: CGFloat {
         switch self {
-        case .normal: return 52
+        case .normal, .large: return 52
         case .compact, .edit: return 40
         case .pass: return TokensPassCell.height
         }
@@ -37,7 +49,7 @@ extension TokensCellKind {
 
     var iconImageDimension: CGFloat {
         switch self {
-        case .normal: return 32
+        case .normal, .large: return 32
         case .compact, .edit: return 24
         case .pass: return TokensPassCell.height
         }

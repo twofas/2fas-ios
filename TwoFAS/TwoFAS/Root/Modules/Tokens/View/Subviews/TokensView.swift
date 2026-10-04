@@ -52,8 +52,6 @@ final class TokensView: UICollectionView {
         register(TokensTOTPCell.self, forCellWithReuseIdentifier: TokensTOTPCell.reuseIdentifier)
         register(TokensHOTPCell.self, forCellWithReuseIdentifier: TokensHOTPCell.reuseIdentifier)
         register(TokensEditCell.self, forCellWithReuseIdentifier: TokensEditCell.reuseIdentifier)
-        register(TokensTOTPCompactCell.self, forCellWithReuseIdentifier: TokensTOTPCompactCell.reuseIdentifier)
-        register(TokensHOTPCompactCell.self, forCellWithReuseIdentifier: TokensHOTPCompactCell.reuseIdentifier)
         register(
             TokensEmptyDropSpaceCell.self,
             forCellWithReuseIdentifier: TokensEmptyDropSpaceCell.reuseIdentifier

@@ -107,6 +107,13 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         self.shouldAnimate = shouldAnimate
     }
     
+    func setKind(_ kind: TokensCellKind) {
+        tokenView.setKind(kind)
+        logoView.setKind(kind)
+        serviceTitle.setKind(kind)
+        revealButton.setKind(kind)
+    }
+
     func setInitial(_ state: TokenTimerInitialConsumerState) {
         switch state {
         case .locked:
@@ -134,8 +141,9 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
             )
             markProgress(willChangeSoon: willChangeSoon)
         }
+        updateAccessibility()
     }
-    
+
     func setUpdate(_ state: TokenTimerUpdateConsumerState) {
         switch state {
         case .locked:
@@ -163,17 +171,25 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
             )
             markProgress(willChangeSoon: willChangeSoon)
         }
+        updateAccessibility()
     }
 }
 
 private extension TokensTOTPCell {
+    func updateAccessibility() {
+        if isLocked {
+            accessibilityElements = [categoryView, serviceTitle, accessoryContainer]
+        } else {
+            accessibilityElements = [categoryView, serviceTitle, tokenView, circularProgress]
+        }
+    }
+
     func setupBackground() {
         contentView.backgroundColor = AppColor.backgroundsPrimary.uiColor
         backgroundColor = AppColor.backgroundsPrimary.uiColor
     }
     
     func setupLayout() {
-        let tokenNegativeMargin = Spacing.XL.rawValue
         let hMargin: CGFloat = Spacing.L.rawValue
         
         contentView.addSubview(separator, with: [
@@ -233,7 +249,7 @@ private extension TokensTOTPCell {
             accessoryContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             accessoryContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             tokenView.trailingAnchor
-                .constraint(equalTo: accessoryContainer.trailingAnchor, constant: -tokenNegativeMargin)
+                .constraint(equalTo: contentView.trailingAnchor)
         ])
         
         accessoryContainer.addSubview(circularProgress, with: [

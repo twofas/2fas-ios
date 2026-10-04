@@ -55,6 +55,8 @@ final class AppearancePresenter {
             interactor.setSelectListStyle(.default)
         case .compactList:
             interactor.setSelectListStyle(.compact)
+        case .largeList:
+            interactor.setSelectListStyle(.large)
         default:
             break
         }

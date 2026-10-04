@@ -59,6 +59,10 @@ public enum TextStyle {
     case compactToken
     /// SF Pro 28pt — maps to `Font.TextStyle.title1`
     case smallToken
+    /// SF Pro 40pt — maps to `Font.TextStyle.largeTitle`
+    case largeToken
+    /// SF Pro 20pt — maps to `Font.TextStyle.title3`
+    case largeNextToken
     /// SF Pro 13pt — maps to `Font.TextStyle.footnote
     case counter
     /// SF Pro 13pt — maps to `Font.TextStyle.footnote, monospaced
@@ -282,6 +286,26 @@ private extension TextStyle {
                 weight: .semibold,
                 isItalic: false,
                 semanticStyle: .subheadline,
+                monospacedDigits: false
+            )
+        case .largeToken:
+            return TextStyleAttributes(
+                size: 40,
+                lineHeight: 40 + pad,
+                tracking: 0.4,
+                weight: .regular,
+                isItalic: false,
+                semanticStyle: .largeTitle,
+                monospacedDigits: false
+            )
+        case .largeNextToken:
+            return TextStyleAttributes(
+                size: 20,
+                lineHeight: 20 + pad,
+                tracking: 0,
+                weight: .semibold,
+                isItalic: false,
+                semanticStyle: .title3,
                 monospacedDigits: false
             )
         case .counter:

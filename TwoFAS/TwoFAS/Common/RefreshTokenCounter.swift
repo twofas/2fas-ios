@@ -23,11 +23,8 @@ import Common
 final class RefreshTokenCounter: UIView {
     var didAnimate: Callback?
     
-    static let sizeNormal: CGFloat = 30
-    static let sizeCompact: CGFloat = 28
-    
-    private var kind: TokensCellKind = .normal
-    
+    static let size: CGFloat = 30
+        
     private let image = RefreshImage()
     
     override init(frame: CGRect) {
@@ -70,19 +67,8 @@ final class RefreshTokenCounter: UIView {
         image.adjustsImageSizeForAccessibilityContentSizeCategory(value)
     }
     
-    func setKind(_ kind: TokensCellKind) {
-        self.kind = kind
-        invalidateIntrinsicContentSize()
-    }
-    
     override var intrinsicContentSize: CGSize {
-        let value: CGFloat = {
-            if kind == .compact {
-                return Self.sizeCompact
-            }
-            return Self.sizeNormal
-        }()
-        return .init(width: value, height: value)
+        .init(width: Self.size, height: Self.size)
     }
 }
 

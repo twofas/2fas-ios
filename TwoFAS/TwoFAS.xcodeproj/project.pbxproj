@@ -173,9 +173,6 @@
 		C217CDC73032260F007D88C0 /* TFCancelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217CDC63032260F007D88C0 /* TFCancelButton.swift */; };
 		C217CDCD303226F5007D88C0 /* TFMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C217CDCA303226F5007D88C0 /* TFMenuButton.swift */; };
 		C218513C2A1A873F00A8352A /* TokensHOTPCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513B2A1A873F00A8352A /* TokensHOTPCell.swift */; };
-		C218513E2A1A8EF600A8352A /* TokensNextTokenLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */; };
-		C21851402A1AB01600A8352A /* TokensTOTPCompactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */; };
-		C21851422A1AC77900A8352A /* TokensHOTPCompactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21851412A1AC77900A8352A /* TokensHOTPCompactCell.swift */; };
 		C21930EA2EC1045B001354C9 /* BackupManageEncryptionFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21930E92EC1044A001354C9 /* BackupManageEncryptionFlowController.swift */; };
 		C21930EE2EC1094F001354C9 /* BackupManageEncryptionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21930ED2EC10947001354C9 /* BackupManageEncryptionPresenter.swift */; };
 		C21930F02EC111DF001354C9 /* BackupManageEncryptionPresenter+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21930EF2EC111D1001354C9 /* BackupManageEncryptionPresenter+Menu.swift */; };
@@ -2009,9 +2006,6 @@
 		C217CDC63032260F007D88C0 /* TFCancelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFCancelButton.swift; sourceTree = "<group>"; };
 		C217CDCA303226F5007D88C0 /* TFMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFMenuButton.swift; sourceTree = "<group>"; };
 		C218513B2A1A873F00A8352A /* TokensHOTPCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensHOTPCell.swift; sourceTree = "<group>"; };
-		C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNextTokenLabel.swift; sourceTree = "<group>"; };
-		C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensTOTPCompactCell.swift; sourceTree = "<group>"; };
-		C21851412A1AC77900A8352A /* TokensHOTPCompactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensHOTPCompactCell.swift; sourceTree = "<group>"; };
 		C21930E92EC1044A001354C9 /* BackupManageEncryptionFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupManageEncryptionFlowController.swift; sourceTree = "<group>"; };
 		C21930ED2EC10947001354C9 /* BackupManageEncryptionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupManageEncryptionPresenter.swift; sourceTree = "<group>"; };
 		C21930EF2EC111D1001354C9 /* BackupManageEncryptionPresenter+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackupManageEncryptionPresenter+Menu.swift"; sourceTree = "<group>"; };
@@ -4014,8 +4008,6 @@
 				C2F10A012F9B3C0100D4E5A1 /* TokensFloatingSectionHeader.swift */,
 				C2A4C8342A10F13800AFD67C /* TokensTOTPCell.swift */,
 				C218513B2A1A873F00A8352A /* TokensHOTPCell.swift */,
-				C218513F2A1AB01600A8352A /* TokensTOTPCompactCell.swift */,
-				C21851412A1AC77900A8352A /* TokensHOTPCompactCell.swift */,
 				C2B39E4E29F5834400EC31F6 /* Components */,
 			);
 			path = Cell;
@@ -5016,7 +5008,6 @@
 				C2A4C8382A1153A200AFD67C /* TokensTokenView.swift */,
 				C2A4C8362A11141D00AFD67C /* TokensNextTokenView.swift */,
 				C2A4C83A2A11736200AFD67C /* TokensCircleProgress.swift */,
-				C218513D2A1A8EF600A8352A /* TokensNextTokenLabel.swift */,
 				C2F9D6092A1FEC700085B65A /* TokensRevealButton.swift */,
 				C254BD853071826F0090EF3B /* TokensTokenLabel.swift */,
 			);
@@ -7185,7 +7176,6 @@
 				C25B221227C177170052AAC4 /* ComposeServiceFlowController.swift in Sources */,
 				C23386F52780E53800F8DBC3 /* DeleteServiceInteractor.swift in Sources */,
 				C28633C41FF9327900C8F4B4 /* AlertController.swift in Sources */,
-				C21851402A1AB01600A8352A /* TokensTOTPCompactCell.swift in Sources */,
 				C2117185276CE95F00042D28 /* VerifyPINPresenter.swift in Sources */,
 				C20E60FD28189D2000AB002E /* PushNotificationPermissionModuleInteractor.swift in Sources */,
 				C27C03C327F4FF0D0020DB5E /* BrowserExtensionMainPresenter+Menu.swift in Sources */,
@@ -7429,7 +7419,6 @@
 				C271B64827BAE67500D0D743 /* ComposeServiceModuleInteractor.swift in Sources */,
 				C2830D7E293D4A6900B3DDAF /* TokensViewController+UICollectionViewDelegate.swift in Sources */,
 				C2CACFBE2AFEC905001E0F8E /* LoginType.swift in Sources */,
-				C21851422A1AC77900A8352A /* TokensHOTPCompactCell.swift in Sources */,
 				C2FA3E8C280B628D0097ED71 /* AuthRequestsModuleInteractor.swift in Sources */,
 				C2D2F7062FF025570008FE4D /* UserIconInfoFlowController.swift in Sources */,
 				C26764AE287246F300D468B2 /* ComposeServiceCategorySelectionModuleInteractor.swift in Sources */,
@@ -7452,7 +7441,6 @@
 				C21987C727961BF600724E63 /* CameraErrorTemplate.swift in Sources */,
 				C25AE525300A591600D9ABFB /* ToastPresenter+DefaultActions.swift in Sources */,
 				C2D2F70C2FF02EAC0008FE4D /* LabelComposeFlowController.swift in Sources */,
-				C218513E2A1A8EF600A8352A /* TokensNextTokenLabel.swift in Sources */,
 				C2CFA6A62AEEF0CB00E574FC /* RootModuleInteractor.swift in Sources */,
 				C258EC6E227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift in Sources */,
 				C27BE513275D4A2A0090CA12 /* BackupMenuPresenter+Menu.swift in Sources */,

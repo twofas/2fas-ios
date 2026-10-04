@@ -110,5 +110,7 @@ enum Theme {
         static let compactCellWidth: CGFloat = 340
         /// 380
         static let defaultCellWidth: CGFloat = 380
+        /// 460
+        static let largeCellWidth: CGFloat = 460
     }
 }

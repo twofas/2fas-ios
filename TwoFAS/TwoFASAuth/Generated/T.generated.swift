@@ -718,6 +718,10 @@ internal enum T {
     internal static func requestSourceDescription(_ p1: Any, _ p2: Any) -> String {
       return T.tr("Localizable", "browser__request_source_description", String(describing: p1), String(describing: p2), fallback: "%@ requested a 2FA Token for %@. Select the service to authorize and save it with this domain.")
     }
+    /// requested a 2FA Token for %@. Select the service to authorize and save it with this domain.
+    internal static func requestSourceDescriptionIos(_ p1: Any) -> String {
+      return T.tr("Localizable", "browser__request_source_description_ios", String(describing: p1), fallback: "requested a 2FA Token for %@. Select the service to authorize and save it with this domain.")
+    }
     /// Your 2FAS app is already paired with this browser.
     internal static let resultErrorBrowserPaired = T.tr("Localizable", "browser__result_error_browser_paired", fallback: "Your 2FAS app is already paired with this browser.")
     /// Scan the QR code again

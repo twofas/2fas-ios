@@ -1974,8 +1974,8 @@ internal enum T {
     internal static let notSelected = T.tr("Localizable", "voiceover__not_selected", fallback: "Not selected")
     /// This field contains a hidden Secret Key. To reveal it, use the Show button. It will only work if you have set up the apps PIN for the lock screen
     internal static let revealHiddenSecretKeyButtonTitle = T.tr("Localizable", "voiceover__reveal_hidden_secret_key_button_title", fallback: "This field contains a hidden Secret Key. To reveal it, use the Show button. It will only work if you have set up the apps PIN for the lock screen")
-    /// Counter with seconds left to Token change
-    internal static let secondsLeftCounterTitle = T.tr("Localizable", "voiceover__seconds_left_counter_title", fallback: "Counter with seconds left to Token change")
+    /// Token time left
+    internal static let secondsLeftCounterTitle = T.tr("Localizable", "voiceover__seconds_left_counter_title", fallback: "Token time left")
     /// Only numbers 2 to 9, letters. At least 4 characters
     internal static let secretHint = T.tr("Localizable", "voiceover__secret_hint", fallback: "Only numbers 2 to 9, letters. At least 4 characters")
     /// Selected

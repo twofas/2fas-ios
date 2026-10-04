@@ -25,6 +25,7 @@
 		8F872DE92C24EE2600160D14 /* SortTokensPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DE82C24EE2600160D14 /* SortTokensPresenter.swift */; };
 		8F872DEB2C24EE5500160D14 /* SortTokensInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F872DEA2C24EE5500160D14 /* SortTokensInteractor.swift */; };
 		AA0100000000000000000001 /* ProtonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0100000000000000000002 /* ProtonData.swift */; };
+		AA0100000000000000000003 /* BitwardenData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0100000000000000000004 /* BitwardenData.swift */; };
 		C200E49E1FB3911B00D7C748 /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = C200E49C1FB3911B00D7C748 /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C200E4A11FB3911B00D7C748 /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; };
 		C200E4A21FB3911B00D7C748 /* Storage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C200E49A1FB3911B00D7C748 /* Storage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1886,6 +1887,7 @@
 		8FD3F0882C37324B0042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8FD3F0892C3732A80042092E /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = ../TwoFAS/Other/el.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AA0100000000000000000002 /* ProtonData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtonData.swift; sourceTree = "<group>"; };
+		AA0100000000000000000004 /* BitwardenData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitwardenData.swift; sourceTree = "<group>"; };
 		C200E49A1FB3911B00D7C748 /* Storage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Storage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C200E49C1FB3911B00D7C748 /* Storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
 		C200E49D1FB3911B00D7C748 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -3904,6 +3906,7 @@
 				C229403D2AB3A50700D55B58 /* AndOTPData.swift */,
 				C27A31CB29C90B110094679F /* RaivoData.swift */,
 				AA0100000000000000000002 /* ProtonData.swift */,
+				AA0100000000000000000004 /* BitwardenData.swift */,
 				C237368F2ABF5E2C00792054 /* Guides.swift */,
 				C25EF6E6303B513600907B49 /* QuickAction.swift */,
 				C225E618241D35FE0041C238 /* ViewPath.swift */,
@@ -8099,6 +8102,7 @@
 				C25EF6E7303B513600907B49 /* QuickAction.swift in Sources */,
 				C2E7C4112ADB2BE500478D89 /* RaivoData.swift in Sources */,
 				AA0100000000000000000001 /* ProtonData.swift in Sources */,
+				AA0100000000000000000003 /* BitwardenData.swift in Sources */,
 				C2E7C4032ADB2BB400478D89 /* TokenGeneratorInteractor.swift in Sources */,
 				C2E7C3D62ADB2B9C00478D89 /* MainRepositoryImpl+PushNotifications.swift in Sources */,
 				C2E7C40B2ADB2BE500478D89 /* SocialChannel.swift in Sources */,

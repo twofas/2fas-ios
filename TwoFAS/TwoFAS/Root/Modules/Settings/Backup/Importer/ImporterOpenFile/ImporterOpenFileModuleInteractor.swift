@@ -42,6 +42,7 @@ protocol ImporterOpenFileModuleInteracting: AnyObject {
     func parseAndOTP(_ data: [AndOTPData]) -> [ServiceData]
     func parseAuthenticatorPro(_ data: [Code]) -> [ServiceData]
     func parseProton(_ data: ProtonData) -> [ServiceData]
+    func parseBitwarden(_ data: BitwardenData) -> [ServiceData]
 }
 
 final class ImporterOpenFileModuleInteractor {
@@ -122,5 +123,9 @@ extension ImporterOpenFileModuleInteractor: ImporterOpenFileModuleInteracting {
 
     func parseProton(_ data: ProtonData) -> [ServiceData] {
         importInteractor.parseProton(data)
+    }
+
+    func parseBitwarden(_ data: BitwardenData) -> [ServiceData] {
+        importInteractor.parseBitwarden(data)
     }
 }

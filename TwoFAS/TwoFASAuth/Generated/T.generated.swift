@@ -121,6 +121,8 @@ internal enum T {
   internal static let externalimportAegis = T.tr("Localizable", "externalimport_aegis", fallback: "Aegis")
   /// andOTP
   internal static let externalimportAndotp = T.tr("Localizable", "externalimport_andotp", fallback: "andOTP")
+  /// Bitwarden
+  internal static let externalimportBitwarden = T.tr("Localizable", "externalimport_bitwarden", fallback: "Bitwarden")
   /// Choose an app from the list and follow the instructions.
   internal static let externalimportDescription = T.tr("Localizable", "externalimport_description", fallback: "Choose an app from the list and follow the instructions.")
   /// Google Authenticator
@@ -998,6 +1000,14 @@ internal enum T {
     internal static let authenticatorproSuccessMsg = T.tr("Localizable", "externalimport__authenticatorpro_success_msg", fallback: "This text file allows you to import Tokens from Authenticator Pro.")
     /// Importing 2FA Tokens from Authenticator Pro app
     internal static let authenticatorproTitle = T.tr("Localizable", "externalimport__authenticatorpro_title", fallback: "Importing 2FA Tokens from Authenticator Pro app")
+    /// Export your accounts from Bitwarden Authenticator to an unencrypted JSON or CSV file and upload it using the "Choose file" button. Remember to remove the file after a successful import.
+    internal static let bitwardenMsg = T.tr("Localizable", "externalimport__bitwarden_msg", fallback: "Export your accounts from Bitwarden Authenticator to an unencrypted JSON or CSV file and upload it using the \"Choose file\" button. Remember to remove the file after a successful import.")
+    /// This file allows you to import Tokens from Bitwarden.
+    internal static let bitwardenSuccessMsg = T.tr("Localizable", "externalimport__bitwarden_success_msg", fallback: "This file allows you to import Tokens from Bitwarden.")
+    /// Importing 2FA Tokens from Bitwarden app
+    internal static let bitwardenTitle = T.tr("Localizable", "externalimport__bitwarden_title", fallback: "Importing 2FA Tokens from Bitwarden app")
+    /// Choose JSON or CSV file
+    internal static let chooseJsonCsvCta = T.tr("Localizable", "externalimport__choose_json_csv_cta", fallback: "Choose JSON or CSV file")
     /// Choose JSON file
     internal static let chooseJsonCta = T.tr("Localizable", "externalimport__choose_json_cta", fallback: "Choose JSON file")
     /// Choose text file
@@ -1012,6 +1022,8 @@ internal enum T {
     internal static let infoAndotpTitle = T.tr("Localizable", "externalimport__info_andotp_title", fallback: "Import Tokens from andOTP")
     /// Import Tokens from Authenticator Pro
     internal static let infoAuthenticatorproTitle = T.tr("Localizable", "externalimport__info_authenticatorpro_title", fallback: "Import Tokens from Authenticator Pro")
+    /// Import Tokens from Bitwarden
+    internal static let infoBitwardenTitle = T.tr("Localizable", "externalimport__info_bitwarden_title", fallback: "Import Tokens from Bitwarden")
     /// Import Tokens from Google Authenticator
     internal static let infoGoogleAuthenticatorTitle = T.tr("Localizable", "externalimport__info_google_authenticator_title", fallback: "Import Tokens from Google Authenticator")
     /// Import Tokens from LastPass
@@ -1710,6 +1722,8 @@ internal enum T {
     internal static let group = T.tr("Localizable", "tokens__group", fallback: "Group")
     /// Group name:
     internal static let groupName = T.tr("Localizable", "tokens__group_name", fallback: "Group name:")
+    /// Use default
+    internal static let groupUseDefaultName = T.tr("Localizable", "tokens__group_use_default_name", fallback: "Use default")
     /// HOTP
     internal static let hotp = T.tr("Localizable", "tokens__hotp", fallback: "HOTP")
     /// HOTP services aren't supported yet

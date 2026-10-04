@@ -19,15 +19,32 @@
 
 import Foundation
 
-enum ExternalImportService {
-    case aegis
-    case raivo
-    case lastPass
-    case googleAuth
-    case twofas
-    case andOTP
-    case authenticatorPro
-    case otpAuthFile
-    case proton
-    case bitwarden
+public struct BitwardenData: Decodable {
+    public struct Item: Decodable {
+        public struct Login: Decodable {
+            public let totp: String?
+            public let username: String?
+
+            public init(totp: String?, username: String?) {
+                self.totp = totp
+                self.username = username
+            }
+        }
+
+        public let name: String?
+        public let login: Login?
+
+        public init(name: String?, login: Login?) {
+            self.name = name
+            self.login = login
+        }
+    }
+
+    public let encrypted: Bool
+    public let items: [Item]?
+
+    public init(encrypted: Bool, items: [Item]?) {
+        self.encrypted = encrypted
+        self.items = items
+    }
 }

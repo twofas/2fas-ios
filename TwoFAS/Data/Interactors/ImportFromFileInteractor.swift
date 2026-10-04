@@ -38,6 +38,10 @@ public enum ImportFromFileParsing {
         case error
         case success(ProtonData)
     }
+    public enum BitwardenResult {
+        case error
+        case success(BitwardenData)
+    }
     case twoFAS(ExchangeDataFormat)
     case aegis(AEGISParseResult)
     case lastPass(LastPassResult)
@@ -45,6 +49,7 @@ public enum ImportFromFileParsing {
     case andOTP([AndOTPData])
     case authenticatorPro([Code])
     case proton(ProtonResult)
+    case bitwarden(BitwardenResult)
 }
 
 public enum ImportFromFileTwoFASCheck {
@@ -81,6 +86,7 @@ public protocol ImportFromFileInteracting: AnyObject {
     func parseAndOTP(_ data: [AndOTPData]) -> [ServiceData]
     func parseAuthenticatorPro(_ data: [Code]) -> [ServiceData]
     func parseProton(_ data: ProtonData) -> [ServiceData]
+    func parseBitwarden(_ data: BitwardenData) -> [ServiceData]
 }
 
 final class ImportFromFileInteractor {
@@ -152,6 +158,17 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
                 return .proton(.error)
             }
             return .proton(.success(proton))
+        }
+
+        if let bitwarden = try? jsonDecoder.decode(BitwardenData.self, from: data) {
+            guard !bitwarden.encrypted, bitwarden.items != nil else {
+                return .bitwarden(.error)
+            }
+            return .bitwarden(.success(bitwarden))
+        }
+
+        if let bitwardenCSV = importFromBitwardenCSVFileFormat(data) {
+            return .bitwarden(.success(bitwardenCSV))
         }
 
         do {

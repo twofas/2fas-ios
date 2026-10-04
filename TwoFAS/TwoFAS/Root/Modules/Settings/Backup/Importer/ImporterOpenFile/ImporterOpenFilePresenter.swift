@@ -138,6 +138,24 @@ private extension ImporterOpenFilePresenter {
                     )
                 }
             }
+        case .bitwarden(let result):
+            switch result {
+            case .error:
+                flowController.toFileError(error: .cantReadFile(reason: nil))
+            case .success(let bitwardenData):
+                let parseResult = interactor.parseBitwarden(bitwardenData)
+                if parseResult.isEmpty {
+                    flowController.toFileIsEmpty()
+                } else {
+                    flowController.toPreimportSummary(
+                        countNew: interactor.countNewServices(parseResult),
+                        countTotal: bitwardenData.items?.count ?? parseResult.count,
+                        sections: [],
+                        services: parseResult,
+                        externalImportService: .bitwarden
+                    )
+                }
+            }
         case .aegis(let result):
             switch result {
             case .error, .encrypted:

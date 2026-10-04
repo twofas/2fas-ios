@@ -33,6 +33,7 @@ protocol TransferFlowControlling: AnyObject {
     func toAndOTP()
     func toAuthenticatorPro()
     func toProton()
+    func toBitwarden()
     func toOpenTXTFile()
     // MARK: - Export
     func toSaveOTPAuthFile()
@@ -93,6 +94,7 @@ extension TransferFlowController: TransferFlowControlling {
     func toAndOTP() { presentInstructions(service: .andOTP) }
     func toAuthenticatorPro() { presentInstructions(service: .authenticatorPro) }
     func toProton() { presentInstructions(service: .proton) }
+    func toBitwarden() { presentInstructions(service: .bitwarden) }
     func toOpenTXTFile() { presentInstructions(service: .otpAuthFile) }
 
     // MARK: - Export

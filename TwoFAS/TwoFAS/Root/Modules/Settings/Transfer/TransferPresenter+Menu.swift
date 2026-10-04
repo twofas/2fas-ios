@@ -41,6 +41,7 @@ struct TransferCell: Identifiable {
         case andOTP
         case authenticatorPro
         case proton
+        case bitwarden
         case otpAuthFileImport
         case otpAuthFileExport
         case exportQRCodes
@@ -100,6 +101,11 @@ extension TransferPresenter {
                         icon: .brand(Asset.externalImportIconProton.image),
                         title: T.externalimportProton,
                         action: .proton
+                    ),
+                    .init(
+                        icon: .brand(Asset.externalImportIconBitwarden.image),
+                        title: T.externalimportBitwarden,
+                        action: .bitwarden
                     ),
                     .init(
                         icon: .symbol(.docFill),

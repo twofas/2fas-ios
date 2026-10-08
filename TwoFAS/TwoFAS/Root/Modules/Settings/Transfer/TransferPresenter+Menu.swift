@@ -68,34 +68,20 @@ extension TransferPresenter {
                 title: T.Transfer.importSectionTitle,
                 cells: [
                     .init(
-                        icon: .brand(Asset.externalImportIconAegis.image),
-                        title: T.externalimportAegis,
-                        action: .aegis
-                    ),
-                    .init(
-                        icon: .brand(Asset.externalImportIconRaivo.image),
-                        title: T.externalimportRaivo,
-                        action: .raivo
+                        icon: .brand(Asset.externalmportIconGoogleAuth.image),
+                        title: T.externalimportGoogleAuthenticator,
+                        action: .googleAuth
                     ),
                     .init(
                         icon: .brand(Asset.externalImportIconLastPass.image),
                         title: T.externalimportLastpass,
                         action: .lastPass
                     ),
+                    // 1password
                     .init(
-                        icon: .brand(Asset.externalmportIconGoogleAuth.image),
-                        title: T.externalimportGoogleAuthenticator,
-                        action: .googleAuth
-                    ),
-                    .init(
-                        icon: .brand(Asset.externalImportIconAndOTP.image),
-                        title: T.externalimportAndotp,
-                        action: .andOTP
-                    ),
-                    .init(
-                        icon: .brand(Asset.externalImportIconAuthenticatorPro.image),
-                        title: T.Externalimport.authenticatorpro,
-                        action: .authenticatorPro
+                        icon: .brand(Asset.externalImportIconAegis.image),
+                        title: T.externalimportAegis,
+                        action: .aegis
                     ),
                     .init(
                         icon: .brand(Asset.externalImportIconProton.image),
@@ -106,6 +92,22 @@ extension TransferPresenter {
                         icon: .brand(Asset.externalImportIconBitwarden.image),
                         title: T.externalimportBitwarden,
                         action: .bitwarden
+                    ),
+                    // ente
+                    .init(
+                        icon: .brand(Asset.externalImportIconAuthenticatorPro.image),
+                        title: T.Externalimport.authenticatorpro,
+                        action: .authenticatorPro
+                    ),
+                    .init(
+                        icon: .brand(Asset.externalImportIconAndOTP.image),
+                        title: T.externalimportAndotp,
+                        action: .andOTP
+                    ),
+                    .init(
+                        icon: .brand(Asset.externalImportIconRaivo.image),
+                        title: T.externalimportRaivo,
+                        action: .raivo
                     ),
                     .init(
                         icon: .symbol(.docFill),

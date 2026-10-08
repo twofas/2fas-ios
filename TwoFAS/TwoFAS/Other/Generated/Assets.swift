@@ -85,7 +85,6 @@ internal enum Asset {
   internal static let notificationYoutube = ImageAsset(name: "NotificationYoutube")
   internal static let openGallery = ImageAsset(name: "OpenGallery")
   internal static let passFrameLight = ImageAsset(name: "PassFrameLight")
-  internal static let refreshTokenCounter = ImageAsset(name: "RefreshTokenCounter")
   internal static let requestProvider = ImageAsset(name: "RequestProvider")
   internal static let requestSocial = ImageAsset(name: "RequestSocial")
   internal static let shareIcon = ImageAsset(name: "ShareIcon")

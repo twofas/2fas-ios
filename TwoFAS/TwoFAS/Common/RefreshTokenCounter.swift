@@ -63,10 +63,6 @@ final class RefreshTokenCounter: UIView {
         image.unlock()
     }
     
-    func adjustsImageSizeForAccessibilityContentSizeCategory(_ value: Bool) {
-        image.adjustsImageSizeForAccessibilityContentSizeCategory(value)
-    }
-    
     override var intrinsicContentSize: CGSize {
         .init(width: Self.size, height: Self.size)
     }
@@ -76,9 +72,8 @@ private extension RefreshTokenCounter {
     final class RefreshImage: UIView {
         var didAnimate: Callback?
         
-        private let image = UIImageView(
-            image: Asset.refreshTokenCounter.image.withRenderingMode(.alwaysTemplate)
-        )
+        private var container = UIView()
+        private let image = UIImageView()
         
         override init(frame: CGRect) {
             super.init(frame: frame)
@@ -92,20 +87,18 @@ private extension RefreshTokenCounter {
         
         private func commonInit() {
             image.contentMode = .scaleAspectFit
-            addSubview(image, with: [
-                image.topAnchor.constraint(equalTo: topAnchor),
-                image.bottomAnchor.constraint(equalTo: bottomAnchor),
-                image.leadingAnchor.constraint(equalTo: leadingAnchor),
-                image.trailingAnchor.constraint(equalTo: trailingAnchor)
-            ])
+            let configuration = UIImage.SymbolConfiguration(pointSize: 30, weight: .medium, scale: .large)
+            image.image = UIImage(systemName: "arrow.clockwise", withConfiguration: configuration)
+            addSubview(container)
+            container.pinToParent()
+            container.addSubview(image)
+            image.pinToParent()
+            
             setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
             setContentHuggingPriority(.defaultHigh + 1, for: .vertical)
             setContentCompressionResistancePriority(.defaultHigh + 2, for: .horizontal)
+            
             unlock()
-        }
-        
-        func adjustsImageSizeForAccessibilityContentSizeCategory(_ value: Bool) {
-            image.adjustsImageSizeForAccessibilityContentSizeCategory = value
         }
         
         func rotate() {
@@ -113,13 +106,13 @@ private extension RefreshTokenCounter {
                 withDuration: Theme.Animations.Timing.quick,
                 delay: 0,
                 options: [.curveEaseIn, .beginFromCurrentState],
-                animations: { self.image.transform = CGAffineTransform(rotationAngle: Double.pi) },
+                animations: { self.container.transform = CGAffineTransform(rotationAngle: Double.pi) },
                 completion: { _ in
                 UIView.animate(
                     withDuration: Theme.Animations.Timing.quick,
                     delay: 0,
                     options: [.curveEaseOut, .beginFromCurrentState],
-                    animations: { self.image.transform = CGAffineTransform(rotationAngle: 2 * Double.pi) },
+                    animations: { self.container.transform = CGAffineTransform(rotationAngle: 2 * Double.pi) },
                     completion: { _ in self.didAnimate?() }
                 )}
             )

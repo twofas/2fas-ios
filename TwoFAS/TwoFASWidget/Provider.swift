@@ -145,14 +145,7 @@ struct Provider: IntentTimelineProvider {
                 guard case Values.entry(let entryDescription) = value
                 else { return CodeEntry.Entry.placeholder() }
                 
-                let secondsToNewOne: Int = {
-                    let period = entryDescription.period.rawValue
-                    let currentSeconds: Int = calendar.component(.second, from: tokenDate)
-                    if currentSeconds >= period {
-                        return 2 * period - currentSeconds
-                    }
-                    return period - currentSeconds
-                }()
+                let secondsToNewOne = tokenDate.secondsTillNextChange(with: entryDescription.period.rawValue)
                 
                 let countdownTo = calendar.date(byAdding: .second, value: secondsToNewOne, to: entryDate)!
                 let token = TokenGenerator.generateTOTP(

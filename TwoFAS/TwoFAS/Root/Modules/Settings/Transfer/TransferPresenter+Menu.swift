@@ -42,6 +42,8 @@ struct TransferCell: Identifiable {
         case authenticatorPro
         case proton
         case bitwarden
+        case ente
+        case onePassword
         case otpAuthFileImport
         case otpAuthFileExport
         case exportQRCodes
@@ -77,7 +79,11 @@ extension TransferPresenter {
                         title: T.externalimportLastpass,
                         action: .lastPass
                     ),
-                    // 1password
+                    .init(
+                        icon: .brand(Asset.externalImportIconOnePassword.image),
+                        title: T.externalimportOnepassword,
+                        action: .onePassword
+                    ),
                     .init(
                         icon: .brand(Asset.externalImportIconAegis.image),
                         title: T.externalimportAegis,
@@ -93,7 +99,11 @@ extension TransferPresenter {
                         title: T.externalimportBitwarden,
                         action: .bitwarden
                     ),
-                    // ente
+                    .init(
+                        icon: .brand(Asset.externalImportIconEnte.image),
+                        title: T.externalimportEnte,
+                        action: .ente
+                    ),
                     .init(
                         icon: .brand(Asset.externalImportIconAuthenticatorPro.image),
                         title: T.Externalimport.authenticatorpro,

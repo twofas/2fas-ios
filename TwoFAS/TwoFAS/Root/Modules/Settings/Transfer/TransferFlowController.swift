@@ -34,6 +34,8 @@ protocol TransferFlowControlling: AnyObject {
     func toAuthenticatorPro()
     func toProton()
     func toBitwarden()
+    func toEnte()
+    func toOnePassword()
     func toOpenTXTFile()
     // MARK: - Export
     func toSaveOTPAuthFile()
@@ -95,6 +97,8 @@ extension TransferFlowController: TransferFlowControlling {
     func toAuthenticatorPro() { presentInstructions(service: .authenticatorPro) }
     func toProton() { presentInstructions(service: .proton) }
     func toBitwarden() { presentInstructions(service: .bitwarden) }
+    func toEnte() { presentInstructions(service: .ente) }
+    func toOnePassword() { presentInstructions(service: .onePassword) }
     func toOpenTXTFile() { presentInstructions(service: .otpAuthFile) }
 
     // MARK: - Export

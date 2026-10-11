@@ -30,4 +30,6 @@ enum ExternalImportService {
     case otpAuthFile
     case proton
     case bitwarden
+    case ente
+    case onePassword
 }

@@ -125,10 +125,14 @@ internal enum T {
   internal static let externalimportBitwarden = T.tr("Localizable", "externalimport_bitwarden", fallback: "Bitwarden")
   /// Choose an app from the list and follow the instructions.
   internal static let externalimportDescription = T.tr("Localizable", "externalimport_description", fallback: "Choose an app from the list and follow the instructions.")
+  /// Ente Auth
+  internal static let externalimportEnte = T.tr("Localizable", "externalimport_ente", fallback: "Ente Auth")
   /// Google Authenticator
   internal static let externalimportGoogleAuthenticator = T.tr("Localizable", "externalimport_google_authenticator", fallback: "Google Authenticator")
   /// LastPass
   internal static let externalimportLastpass = T.tr("Localizable", "externalimport_lastpass", fallback: "LastPass")
+  /// 1Password
+  internal static let externalimportOnepassword = T.tr("Localizable", "externalimport_onepassword", fallback: "1Password")
   /// Proton Authenticator
   internal static let externalimportProton = T.tr("Localizable", "externalimport_proton", fallback: "Proton Authenticator")
   /// Raivo OTP
@@ -1010,12 +1014,20 @@ internal enum T {
     internal static let bitwardenSuccessMsg = T.tr("Localizable", "externalimport__bitwarden_success_msg", fallback: "This file allows you to import Tokens from Bitwarden.")
     /// Importing 2FA Tokens from Bitwarden app
     internal static let bitwardenTitle = T.tr("Localizable", "externalimport__bitwarden_title", fallback: "Importing 2FA Tokens from Bitwarden app")
+    /// Choose CSV file
+    internal static let chooseCsvCta = T.tr("Localizable", "externalimport__choose_csv_cta", fallback: "Choose CSV file")
     /// Choose JSON or CSV file
     internal static let chooseJsonCsvCta = T.tr("Localizable", "externalimport__choose_json_csv_cta", fallback: "Choose JSON or CSV file")
     /// Choose JSON file
     internal static let chooseJsonCta = T.tr("Localizable", "externalimport__choose_json_cta", fallback: "Choose JSON file")
     /// Choose text file
     internal static let chooseTxtCta = T.tr("Localizable", "externalimport__choose_txt_cta", fallback: "Choose text file")
+    /// Export your accounts from Ente Auth to a plain text file and upload it using the "Choose text file" button. Remember to remove the file after a successful import.
+    internal static let enteMsg = T.tr("Localizable", "externalimport__ente_msg", fallback: "Export your accounts from Ente Auth to a plain text file and upload it using the \"Choose text file\" button. Remember to remove the file after a successful import.")
+    /// This text file allows you to import Tokens from Ente Auth.
+    internal static let enteSuccessMsg = T.tr("Localizable", "externalimport__ente_success_msg", fallback: "This text file allows you to import Tokens from Ente Auth.")
+    /// Importing 2FA Tokens from Ente Auth app
+    internal static let enteTitle = T.tr("Localizable", "externalimport__ente_title", fallback: "Importing 2FA Tokens from Ente Auth app")
     /// This QR code allows importing Tokens from Google Authenticator.
     internal static let gaSuccessMsg = T.tr("Localizable", "externalimport__ga_success_msg", fallback: "This QR code allows importing Tokens from Google Authenticator.")
     /// Importing 2FA Tokens from Google Authenticator app
@@ -1028,10 +1040,14 @@ internal enum T {
     internal static let infoAuthenticatorproTitle = T.tr("Localizable", "externalimport__info_authenticatorpro_title", fallback: "Import Tokens from Authenticator Pro")
     /// Import Tokens from Bitwarden
     internal static let infoBitwardenTitle = T.tr("Localizable", "externalimport__info_bitwarden_title", fallback: "Import Tokens from Bitwarden")
+    /// Import Tokens from Ente Auth
+    internal static let infoEnteTitle = T.tr("Localizable", "externalimport__info_ente_title", fallback: "Import Tokens from Ente Auth")
     /// Import Tokens from Google Authenticator
     internal static let infoGoogleAuthenticatorTitle = T.tr("Localizable", "externalimport__info_google_authenticator_title", fallback: "Import Tokens from Google Authenticator")
     /// Import Tokens from LastPass
     internal static let infoLastpassTitle = T.tr("Localizable", "externalimport__info_lastpass_title", fallback: "Import Tokens from LastPass")
+    /// Import Tokens from 1Password
+    internal static let infoOnepasswordTitle = T.tr("Localizable", "externalimport__info_onepassword_title", fallback: "Import Tokens from 1Password")
     /// Import Tokens from Proton Authenticator
     internal static let infoProtonTitle = T.tr("Localizable", "externalimport__info_proton_title", fallback: "Import Tokens from Proton Authenticator")
     /// Import Tokens from Raivo OTP
@@ -1044,6 +1060,12 @@ internal enum T {
     internal static let lastpassTitle = T.tr("Localizable", "externalimport__lastpass_title", fallback: "Importing 2FA Tokens from LastPass app")
     /// However, there are no services that could be imported.
     internal static let noTokensMsg = T.tr("Localizable", "externalimport__no_tokens_msg", fallback: "However, there are no services that could be imported.")
+    /// Export your accounts from 1Password to a CSV file and upload it using the "Choose CSV file" button. Remember to remove the file after a successful import.
+    internal static let onepasswordMsg = T.tr("Localizable", "externalimport__onepassword_msg", fallback: "Export your accounts from 1Password to a CSV file and upload it using the \"Choose CSV file\" button. Remember to remove the file after a successful import.")
+    /// This CSV file allows you to import Tokens from 1Password.
+    internal static let onepasswordSuccessMsg = T.tr("Localizable", "externalimport__onepassword_success_msg", fallback: "This CSV file allows you to import Tokens from 1Password.")
+    /// Importing 2FA Tokens from 1Password app
+    internal static let onepasswordTitle = T.tr("Localizable", "externalimport__onepassword_title", fallback: "Importing 2FA Tokens from 1Password app")
     /// Export your accounts from Proton Authenticator to a JSON file and upload it using the "Choose JSON file" button. Remember to remove the file after a successful import.
     internal static let protonMsg = T.tr("Localizable", "externalimport__proton_msg", fallback: "Export your accounts from Proton Authenticator to a JSON file and upload it using the \"Choose JSON file\" button. Remember to remove the file after a successful import.")
     /// This JSON file allows you to import Tokens from Proton Authenticator.
@@ -1426,13 +1448,13 @@ internal enum T {
     internal static let optionFingerprintDescription = T.tr("Localizable", "settings__option_fingerprint_description", fallback: "To enable Biometric Lock, you need to enable and set a PIN Code.")
     /// Allow screenshots
     internal static let optionScreenshots = T.tr("Localizable", "settings__option_screenshots", fallback: "Allow screenshots")
-    /// Are you sure? This option allows you to screenshot and record any screen within the app. However, this will also allow any external attempts of capturing screens in the app.
-    /// For safety reasons, this option will be automatically turned off after 5 minutes.
-    internal static let optionScreenshotsConfirmDescription = T.tr("Localizable", "settings__option_screenshots_confirm_description", fallback: "Are you sure? This option allows you to screenshot and record any screen within the app. However, this will also allow any external attempts of capturing screens in the app.\nFor safety reasons, this option will be automatically turned off after 5 minutes.")
+    /// Are you sure? This option allows you to take screenshots and record any screen within the app. However, this will also allow any external attempts to capture screens in the app.
+    /// For safety reasons, this option will be automatically turned off after 30 minutes.
+    internal static let optionScreenshotsConfirmDescription = T.tr("Localizable", "settings__option_screenshots_confirm_description", fallback: "Are you sure? This option allows you to take screenshots and record any screen within the app. However, this will also allow any external attempts to capture screens in the app.\nFor safety reasons, this option will be automatically turned off after 30 minutes.")
     /// Allow screenshots of the app?
     internal static let optionScreenshotsConfirmTitle = T.tr("Localizable", "settings__option_screenshots_confirm_title", fallback: "Allow screenshots of the app?")
-    /// Allow screenshots of the app for 5 minutes.
-    internal static let optionScreenshotsDescription = T.tr("Localizable", "settings__option_screenshots_description", fallback: "Allow screenshots of the app for 5 minutes.")
+    /// Allow screenshots of the app for 30 minutes.
+    internal static let optionScreenshotsDescription = T.tr("Localizable", "settings__option_screenshots_description", fallback: "Allow screenshots of the app for 30 minutes.")
     /// Theme
     internal static let optionTheme = T.tr("Localizable", "settings__option_theme", fallback: "Theme")
     /// 4-digits code

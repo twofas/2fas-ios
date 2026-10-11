@@ -120,6 +120,32 @@ private extension ImporterOpenFilePresenter {
                     externalImportService: interactor.importingOTPAuthFile ? .otpAuthFile : .authenticatorPro
                 )
             }
+        case .ente(let data):
+            let parseResult = interactor.parseEnte(data)
+            if parseResult.isEmpty {
+                flowController.toFileIsEmpty()
+            } else {
+                flowController.toPreimportSummary(
+                    countNew: interactor.countNewServices(parseResult),
+                    countTotal: data.count,
+                    sections: [],
+                    services: parseResult,
+                    externalImportService: .ente
+                )
+            }
+        case .onePassword(let data):
+            let parseResult = interactor.parseOnePassword(data)
+            if parseResult.isEmpty {
+                flowController.toFileIsEmpty()
+            } else {
+                flowController.toPreimportSummary(
+                    countNew: interactor.countNewServices(parseResult),
+                    countTotal: data.count,
+                    sections: [],
+                    services: parseResult,
+                    externalImportService: .onePassword
+                )
+            }
         case .proton(let result):
             switch result {
             case .error:

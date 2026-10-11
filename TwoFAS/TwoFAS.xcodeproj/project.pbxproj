@@ -340,6 +340,7 @@
 		C2529CBC2E5C6B6F00515AB7 /* TwoFASControlIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */; };
 		C2529CC02E5C757D00515AB7 /* TwoFASControlWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2529CAB2E5C6AE200515AB7 /* TwoFASControlWidget.swift */; };
 		C25371A2281DCF56005FB118 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25371A1281DCF56005FB118 /* UINavigationController+.swift */; };
+		C2539281307C23C500C84793 /* OnePasswordData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2539280307C23C500C84793 /* OnePasswordData.swift */; };
 		C254BD863071826F0090EF3B /* TokensTokenLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254BD853071826F0090EF3B /* TokensTokenLabel.swift */; };
 		C254D12026ACB777005FEBD4 /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254D11F26ACB777005FEBD4 /* Provider.swift */; };
 		C254D12226ACB7D8005FEBD4 /* CodeRedaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254D12126ACB7D8005FEBD4 /* CodeRedaction.swift */; };
@@ -2200,6 +2201,7 @@
 		C2529CB12E5C6AE200515AB7 /* TwoFASWidgetSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASWidgetSquareView.swift; sourceTree = "<group>"; };
 		C2529CBA2E5C6B6F00515AB7 /* TwoFASControlIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFASControlIntent.swift; sourceTree = "<group>"; };
 		C25371A1281DCF56005FB118 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
+		C2539280307C23C500C84793 /* OnePasswordData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordData.swift; sourceTree = "<group>"; };
 		C254BD853071826F0090EF3B /* TokensTokenLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTokenLabel.swift; sourceTree = "<group>"; };
 		C254D11F26ACB777005FEBD4 /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		C254D12126ACB7D8005FEBD4 /* CodeRedaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeRedaction.swift; sourceTree = "<group>"; };
@@ -3884,6 +3886,7 @@
 		C240485627652E170076376E /* DataTypes */ = {
 			isa = PBXGroup;
 			children = (
+				C2539280307C23C500C84793 /* OnePasswordData.swift */,
 				C26AC9312F62179600ADFE62 /* CloudKeysExchange.swift */,
 				C2AF24782E7B5A9C001475AF /* AppState.swift */,
 				C2A2D23228F7513400B5D91E /* ExchangeDataFormat.swift */,
@@ -8090,6 +8093,7 @@
 				C25EF6E7303B513600907B49 /* QuickAction.swift in Sources */,
 				C2E7C4112ADB2BE500478D89 /* RaivoData.swift in Sources */,
 				AA0100000000000000000001 /* ProtonData.swift in Sources */,
+				C2539281307C23C500C84793 /* OnePasswordData.swift in Sources */,
 				AA0100000000000000000003 /* BitwardenData.swift in Sources */,
 				C2E7C4032ADB2BB400478D89 /* TokenGeneratorInteractor.swift in Sources */,
 				C2E7C3D62ADB2B9C00478D89 /* MainRepositoryImpl+PushNotifications.swift in Sources */,

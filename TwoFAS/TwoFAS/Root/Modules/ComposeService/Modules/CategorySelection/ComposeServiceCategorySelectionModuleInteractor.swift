@@ -46,7 +46,7 @@ extension ComposeServiceCategorySelectionModuleInteractor: ComposeServiceCategor
     }
     
     func addSection(with title: String) {
-        sectionInteractor.create(with: title)
+        _ = sectionInteractor.create(with: title)
     }
     
     func setSelection(_ sectionID: SectionID?) {

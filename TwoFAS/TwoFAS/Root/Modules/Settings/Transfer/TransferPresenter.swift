@@ -66,6 +66,10 @@ final class TransferPresenter {
             flowController.toProton()
         case .bitwarden:
             flowController.toBitwarden()
+        case .ente:
+            flowController.toEnte()
+        case .onePassword:
+            flowController.toOnePassword()
         case .otpAuthFileImport:
             flowController.toOpenTXTFile()
         case .otpAuthFileExport:

@@ -639,12 +639,12 @@ extension ImportFromFileInteractor {
                 let period = code.period ?? .defaultValue
 
                 let name: String = {
+                    if let issuer = issuer?.sanitazeName(), !issuer.isEmpty {
+                        return issuer
+                    }
                     let name = entry.content.name.sanitazeName()
                     if !name.isEmpty {
                         return name
-                    }
-                    if let issuer = issuer?.sanitazeName(), !issuer.isEmpty {
-                        return issuer
                     }
                     return modifyInteractor.createNameForUnknownService()
                 }()
@@ -738,11 +738,11 @@ extension ImportFromFileInteractor {
                 }
 
                 let name: String = {
-                    if let name = item.name?.sanitazeName(), !name.isEmpty {
-                        return name
-                    }
                     if let issuer = issuer?.sanitazeName(), !issuer.isEmpty {
                         return issuer
+                    }
+                    if let name = item.name?.sanitazeName(), !name.isEmpty {
+                        return name
                     }
                     return modifyInteractor.createNameForUnknownService()
                 }()

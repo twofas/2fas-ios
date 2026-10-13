@@ -33,7 +33,16 @@ final class ExternalImportInstructionsPresenter {
 extension ExternalImportInstructionsPresenter {
     var hasSecondaryAction: Bool {
         switch service {
-        case .aegis, .raivo, .andOTP, .twofas, .authenticatorPro, .otpAuthFile, .proton, .bitwarden, .ente, .onePassword: false
+        case .aegis,
+                .raivo,
+                .andOTP,
+                .twofas,
+                .authenticatorPro,
+                .otpAuthFile,
+                .proton,
+                .bitwarden,
+                .ente,
+                .onePassword: false
         case .googleAuth, .lastPass: true
         }
     }
@@ -109,7 +118,16 @@ extension ExternalImportInstructionsPresenter {
     
     var secondaryActionName: String? {
         switch service {
-        case .aegis, .raivo, .twofas, .andOTP, .authenticatorPro, .otpAuthFile, .proton, .bitwarden, .ente, .onePassword: nil
+        case .aegis,
+                .raivo,
+                .twofas,
+                .andOTP,
+                .authenticatorPro,
+                .otpAuthFile,
+                .proton,
+                .bitwarden,
+                .ente,
+                .onePassword: nil
         case .lastPass: T.Commons.scanQrCode
         case .googleAuth: T.Introduction.chooseQrCode
         }
@@ -119,7 +137,17 @@ extension ExternalImportInstructionsPresenter {
     
     func handleAction() {
         switch service {
-        case .aegis, .raivo, .lastPass, .twofas, .andOTP, .authenticatorPro, .otpAuthFile, .proton, .bitwarden, .ente, .onePassword:
+        case .aegis,
+                .raivo,
+                .lastPass,
+                .twofas,
+                .andOTP,
+                .authenticatorPro,
+                .otpAuthFile,
+                .proton,
+                .bitwarden,
+                .ente,
+                .onePassword:
             flowController.toOpenFile(service: service)
         case .googleAuth: flowController.toCamera()
         }
@@ -131,7 +159,16 @@ extension ExternalImportInstructionsPresenter {
     
     func handleSecondaryAction() {
         switch service {
-        case .aegis, .raivo, .twofas, .andOTP, .authenticatorPro, .otpAuthFile, .proton, .bitwarden, .ente, .onePassword: break
+        case .aegis,
+                .raivo,
+                .twofas,
+                .andOTP,
+                .authenticatorPro,
+                .otpAuthFile,
+                .proton,
+                .bitwarden,
+                .ente,
+                .onePassword: break
         case .lastPass: flowController.toCamera()
         case .googleAuth: flowController.toGallery()
         }

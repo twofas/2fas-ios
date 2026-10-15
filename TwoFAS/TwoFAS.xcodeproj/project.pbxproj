@@ -1342,6 +1342,20 @@
 		C2FF03062FAB975A00362B88 /* PINKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF03052FAB973E00362B88 /* PINKeyboard.swift */; };
 		C2FF3EEC27B1CF0100642FA4 /* IconSelectorModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF3EEB27B1CF0100642FA4 /* IconSelectorModels.swift */; };
 		F359D064687935A24E141C3F /* BackupAdvancedModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E918664AADE7F5DD559327 /* BackupAdvancedModels.swift */; };
+		F2FA50000000000000000007 = {
+			isa = PBXBuildFile;
+			fileRef = F2FA50000000000000000004;
+		};
+		F2FA50000000000000000008 = {
+			isa = PBXBuildFile;
+			fileRef = F2FA50000000000000000006;
+		};
+		F2FA5000000000000000000D = {
+			isa = PBXBuildFile;
+			fileRef = F2FA50000000000000000002;
+			settings = {ATTRIBUTES = (RemoveHeadersOnCopy, );
+			};
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1800,6 +1814,13 @@
 			remoteGlobalIDString = C2E7C3812ADB19F300478D89;
 			remoteInfo = Data;
 		};
+		F2FA5000000000000000000E = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C236666B1FB2644900989ACA;
+			proxyType = 1;
+			remoteGlobalIDString = F2FA50000000000000000001;
+			remoteInfo = TwoFASWatchComplications;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1854,6 +1875,15 @@
 				C28633D91FFABD2200C8F4B4 /* TwoFASAuth.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+		};
+		F2FA5000000000000000000C = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (F2FA5000000000000000000D, );
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -2993,6 +3023,31 @@
 		C2FF03032FAB6DD500362B88 /* BorderShield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderShield.swift; sourceTree = "<group>"; };
 		C2FF03052FAB973E00362B88 /* PINKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINKeyboard.swift; sourceTree = "<group>"; };
 		C2FF3EEB27B1CF0100642FA4 /* IconSelectorModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorModels.swift; sourceTree = "<group>"; };
+		F2FA50000000000000000002 = {
+			isa = PBXFileReference;
+			explicitFileType = "wrapper.app-extension";
+			includeInIndex = 0;
+			path = TwoFASWatchComplications.appex;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F2FA50000000000000000004 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = LaunchComplication.swift;
+			sourceTree = "<group>";
+		};
+		F2FA50000000000000000005 = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.xml;
+			path = Info.plist;
+			sourceTree = "<group>";
+		};
+		F2FA50000000000000000006 = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.json.xcstrings;
+			path = Localizable.xcstrings;
+			sourceTree = "<group>";
+		};
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3203,6 +3258,12 @@
 			files = (
 				C2FA857E2426BB7300AACFC9 /* Protection.framework in Frameworks */,
 			);
+		};
+		F2FA5000000000000000000B = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -3750,6 +3811,7 @@
 		C236666A1FB2644900989ACA = {
 			isa = PBXGroup;
 			children = (
+				F2FA50000000000000000003,
 				C23666751FB2644900989ACA /* TwoFAS */,
 				C2E7C3832ADB19F300478D89 /* Data */,
 				C200E49B1FB3911B00D7C748 /* Storage */,
@@ -3776,6 +3838,7 @@
 		C23666741FB2644900989ACA /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				F2FA50000000000000000002,
 				C23666731FB2644900989ACA /* TwoFAS Dev.app */,
 				C200E49A1FB3911B00D7C748 /* Storage.framework */,
 				C21F05BA1FC761450038E28F /* PushNotifications.framework */,
@@ -5923,6 +5986,12 @@
 			path = BackupAdvanced;
 			sourceTree = "<group>";
 		};
+		F2FA50000000000000000003 = {
+			isa = PBXGroup;
+			children = (F2FA50000000000000000004, F2FA50000000000000000005, F2FA50000000000000000006, );
+			path = TwoFASWatchComplications;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -6244,6 +6313,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C274C9DB2BAB8ABC008E7212 /* Build configuration list for PBXNativeTarget "TwoFASWatch Watch App" */;
 			buildPhases = (
+				F2FA5000000000000000000C,
 				C274C9C92BAB8ABB008E7212 /* Sources */,
 				C274C9CA2BAB8ABB008E7212 /* Frameworks */,
 				C274C9CB2BAB8ABB008E7212 /* Resources */,
@@ -6252,6 +6322,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				F2FA5000000000000000000F,
 				C274C9E22BAB8B2E008E7212 /* PBXTargetDependency */,
 				C274CA8B2BAB8CBD008E7212 /* PBXTargetDependency */,
 				C274CA8F2BAB8CC0008E7212 /* PBXTargetDependency */,
@@ -6548,6 +6619,17 @@
 			productReference = C2FA85792426BB7300AACFC9 /* ProtectionTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		F2FA50000000000000000001 = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2FA50000000000000000010;
+			buildPhases = (F2FA50000000000000000009, F2FA5000000000000000000B, F2FA5000000000000000000A, );
+			buildRules = ();
+			dependencies = ();
+			name = TwoFASWatchComplications;
+			productName = TwoFASWatchComplications;
+			productReference = F2FA50000000000000000002;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -6693,6 +6775,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				F2FA50000000000000000001,
 				C23666721FB2644900989ACA /* TwoFAS */,
 				C2E7C3812ADB19F300478D89 /* Data */,
 				C200E4991FB3911B00D7C748 /* Storage */,
@@ -6870,6 +6953,12 @@
 			isa = PBXResourcesBuildPhase;
 			files = (
 			);
+		};
+		F2FA5000000000000000000A = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (F2FA50000000000000000008, );
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
@@ -8198,6 +8287,12 @@
 				C20F012A25699C000026FBB2 /* LocalKeyEncryptionTests.swift in Sources */,
 			);
 		};
+		F2FA50000000000000000009 = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (F2FA50000000000000000007, );
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -8537,6 +8632,11 @@
 			isa = PBXTargetDependency;
 			target = C2E7C3812ADB19F300478D89 /* Data */;
 			targetProxy = C2FA915F2ADD58F200F1D29F /* PBXContainerItemProxy */;
+		};
+		F2FA5000000000000000000F = {
+			isa = PBXTargetDependency;
+			target = F2FA50000000000000000001;
+			targetProxy = F2FA5000000000000000000E;
 		};
 /* End PBXTargetDependency section */
 
@@ -12006,6 +12106,72 @@
 			};
 			name = Release;
 		};
+		F2FA50000000000000000011 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {APPLICATION_EXTENSION_API_ONLY = "YES";
+			CODE_SIGN_STYLE = "Automatic";
+			CURRENT_PROJECT_VERSION = "1";
+			GENERATE_INFOPLIST_FILE = "YES";
+			INFOPLIST_FILE = "TwoFASWatchComplications/Info.plist";
+			INFOPLIST_KEY_CFBundleDisplayName = "2FAS";
+			LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", );
+			MARKETING_VERSION = "$(MARKETING_VERSION)";
+			PRODUCT_BUNDLE_IDENTIFIER = "com.twofas.org.dev.watchkitapp.complications";
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = "watchos";
+			SKIP_INSTALL = "YES";
+			SWIFT_VERSION = "5.0";
+			SWIFT_EMIT_LOC_STRINGS = "YES";
+			TARGETED_DEVICE_FAMILY = "4";
+			WATCHOS_DEPLOYMENT_TARGET = "$(inherited)";
+			LOCALIZATION_PREFERS_STRING_CATALOGS = "YES";
+			};
+			name = Debug;
+		};
+		F2FA50000000000000000012 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {APPLICATION_EXTENSION_API_ONLY = "YES";
+			CODE_SIGN_STYLE = "Automatic";
+			CURRENT_PROJECT_VERSION = "1";
+			GENERATE_INFOPLIST_FILE = "YES";
+			INFOPLIST_FILE = "TwoFASWatchComplications/Info.plist";
+			INFOPLIST_KEY_CFBundleDisplayName = "2FAS";
+			LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", );
+			MARKETING_VERSION = "$(MARKETING_VERSION)";
+			PRODUCT_BUNDLE_IDENTIFIER = "com.twofas.org.dev.watchkitapp.complications";
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = "watchos";
+			SKIP_INSTALL = "YES";
+			SWIFT_VERSION = "5.0";
+			SWIFT_EMIT_LOC_STRINGS = "YES";
+			TARGETED_DEVICE_FAMILY = "4";
+			WATCHOS_DEPLOYMENT_TARGET = "$(inherited)";
+			LOCALIZATION_PREFERS_STRING_CATALOGS = "YES";
+			};
+			name = Release;
+		};
+		F2FA50000000000000000013 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {APPLICATION_EXTENSION_API_ONLY = "YES";
+			CODE_SIGN_STYLE = "Automatic";
+			CURRENT_PROJECT_VERSION = "1";
+			GENERATE_INFOPLIST_FILE = "YES";
+			INFOPLIST_FILE = "TwoFASWatchComplications/Info.plist";
+			INFOPLIST_KEY_CFBundleDisplayName = "2FAS";
+			LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", );
+			MARKETING_VERSION = "$(MARKETING_VERSION)";
+			PRODUCT_BUNDLE_IDENTIFIER = "com.twofas.org.watchkitapp.complications";
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = "watchos";
+			SKIP_INSTALL = "YES";
+			SWIFT_VERSION = "5.0";
+			SWIFT_EMIT_LOC_STRINGS = "YES";
+			TARGETED_DEVICE_FAMILY = "4";
+			WATCHOS_DEPLOYMENT_TARGET = "$(inherited)";
+			LOCALIZATION_PREFERS_STRING_CATALOGS = "YES";
+			};
+			name = Production;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -12232,6 +12398,12 @@
 				C2FA85832426BB7300AACFC9 /* Release configuration for PBXNativeTarget "ProtectionTests" */,
 				C2099DD72F9BEECD00490BC3 /* Production configuration for PBXNativeTarget "ProtectionTests" */,
 			);
+			defaultConfigurationName = Release;
+		};
+		F2FA50000000000000000010 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (F2FA50000000000000000011, F2FA50000000000000000012, F2FA50000000000000000013, );
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */

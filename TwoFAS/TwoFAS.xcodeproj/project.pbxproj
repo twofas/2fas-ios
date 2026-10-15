@@ -1039,6 +1039,7 @@
 		C2D97E892E2469EA00E213A7 /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E872E2469BD00E213A7 /* T.generated.swift */; };
 		C2D97E8A2E246A0F00E213A7 /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E872E2469BD00E213A7 /* T.generated.swift */; };
 		C2DB8E5D21F8FE33002F124B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2DB8E5C21F8FE33002F124B /* Assets.xcassets */; };
+		C2DC57E430816EB800172343 /* GoogleScanData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC57E330816EAD00172343 /* GoogleScanData.swift */; };
 		C2DCAA802FF554B100FAB19D /* TFInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DCAA7F2FF5549E00FAB19D /* TFInfoView.swift */; };
 		C2DCAA812FF554B100FAB19D /* TFInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DCAA7F2FF5549E00FAB19D /* TFInfoView.swift */; };
 		C2DDEB25289F3D5200011712 /* TokensViewEmptyListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */; };
@@ -2796,6 +2797,7 @@
 		C2D97E832E2455F400E213A7 /* QRCodeDisplayPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDisplayPresenter.swift; sourceTree = "<group>"; };
 		C2D97E872E2469BD00E213A7 /* T.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = T.generated.swift; path = TwoFASAuth/Generated/T.generated.swift; sourceTree = SOURCE_ROOT; };
 		C2DB8E5C21F8FE33002F124B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C2DC57E330816EAD00172343 /* GoogleScanData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleScanData.swift; sourceTree = "<group>"; };
 		C2DCAA7F2FF5549E00FAB19D /* TFInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFInfoView.swift; sourceTree = "<group>"; };
 		C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensViewEmptyListScreen.swift; sourceTree = "<group>"; };
 		C2DEC7A226767B28006DB1E6 /* SectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHandler.swift; sourceTree = "<group>"; };
@@ -3388,6 +3390,7 @@
 		C21111E1274AB8C100CA7C78 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				C2DC57E230816EA400172343 /* GoogleImport */,
 				8F594C402C3024E60066562F /* AppleWatch */,
 				C2B1208529D767150020281E /* Appearance */,
 				C2CC0A4129D08D7700677A7B /* ExternalImportInstructions */,
@@ -5377,6 +5380,14 @@
 			path = QRCodeDisplay;
 			sourceTree = "<group>";
 		};
+		C2DC57E230816EA400172343 /* GoogleImport */ = {
+			isa = PBXGroup;
+			children = (
+				C2DC57E330816EAD00172343 /* GoogleScanData.swift */,
+			);
+			path = GoogleImport;
+			sourceTree = "<group>";
+		};
 		C2DD28C421D5590600034476 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -7193,6 +7204,7 @@
 				C2AC2208276615FB00271402 /* ExporterMainScreenPresenter.swift in Sources */,
 				C25AD8A2300A453300D9ABFB /* DebugModels.swift in Sources */,
 				C2BDC6D91FC1CBE100967D0E /* String+Extensions.swift in Sources */,
+				C2DC57E430816EB800172343 /* GoogleScanData.swift in Sources */,
 				C2DFDBD7302C824900EFA0B5 /* UIBarButtonItemAppearance+ChevronOnly.swift in Sources */,
 				C20E2E072A7C51E700DB64BB /* AddingServiceTokenFlowController.swift in Sources */,
 				C235FA76229DAED80098F8E9 /* GridViewItemProviderWriting.swift in Sources */,

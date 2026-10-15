@@ -27,6 +27,7 @@ protocol CameraScannerFlowControllerParent: AnyObject {
     func cameraScannerDidFinish()
     func cameraScannerDidImport(count: Int)
     func cameraScannerServiceWasCreated(serviceData: ServiceData)
+    func cameraScannerToGoogleAuthImport(data: GoogleScanData)
 }
 
 protocol CameraScannerFlowControlling: AnyObject {
@@ -36,7 +37,7 @@ protocol CameraScannerFlowControlling: AnyObject {
     func toGallery()
     func toFinish()
     func toImportSummary(count: Int)
-    func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
+    func toGoogleAuthImport(data: GoogleScanData)
     func toLastPassSummary(importable: Int, total: Int, codes: [Code])
     func toCameraError(_ error: String)
     func toTwoFASWebExtensionPairing(for extensionID: ExtensionID)
@@ -54,7 +55,8 @@ final class CameraScannerFlowController: FlowController {
     
     static func present(
         on viewController: UIViewController,
-        parent: CameraScannerFlowControllerParent
+        parent: CameraScannerFlowControllerParent,
+        googleMultiscanFeedback: ((GoogleScanData?) -> Void)? = nil
     ) {
         let view = CameraScannerViewController()
         let flowController = CameraScannerFlowController(viewController: view)
@@ -66,6 +68,7 @@ final class CameraScannerFlowController: FlowController {
             interactor: interactor
         )
         presenter.view = view
+        presenter.googleMultiscanFeedback = googleMultiscanFeedback
         view.presenter = presenter
         view.modalPresentationStyle = .fullScreen
         view.isModalInPresentation = true
@@ -141,24 +144,8 @@ extension CameraScannerFlowController: CameraScannerFlowControlling {
         parent?.cameraScannerDidImport(count: count)
     }
     
-    func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code]) {
-        let google = CameraGoogleAuth(
-            importedCount: importable,
-            totalCount: total,
-            action: { [weak self] in
-                if importable == 0 {
-                    self?.dismissModal()
-                } else {
-                    self?.viewController.presenter.handleGoogleAuthImport(codes)
-                }
-            }, cancel: { [weak self] in
-                self?.dismissModal()
-            })
-        
-        let vc = UIHostingController(rootView: google)
-        vc.view.backgroundColor = .clear
-        vc.configureAsModal()
-        viewController.present(vc, animated: true, completion: nil)
+    func toGoogleAuthImport(data: GoogleScanData) {
+        parent?.cameraScannerToGoogleAuthImport(data: data)
     }
     
     func toLastPassSummary(importable: Int, total: Int, codes: [Code]) {

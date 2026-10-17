@@ -180,6 +180,12 @@ final class ModuleInteractorFactory {
             newCodeInteractor: InteractorFactory.shared.newCodeInteractor()
         )
     }
+
+    func googleImportModuleInteractor() -> GoogleImportModuleInteracting {
+        GoogleImportModuleInteractor(
+            newCodeInteractor: InteractorFactory.shared.newCodeInteractor()
+        )
+    }
     
     func iconSelectorModuleInteractor(
         defaultIcon: IconTypeID?,

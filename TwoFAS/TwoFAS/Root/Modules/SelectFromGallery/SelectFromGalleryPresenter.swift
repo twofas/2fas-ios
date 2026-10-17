@@ -24,9 +24,11 @@ import Storage
 import Data
 
 final class SelectFromGalleryPresenter {
+    var googleMultiscanFeedback: ((GoogleScanData?) -> Void)?
+
     private let flowController: SelectFromGalleryFlowControlling
     private let interactor: SelectFromGalleryModuleInteracting
-    
+        
     init(flowController: SelectFromGalleryFlowControlling, interactor: SelectFromGalleryModuleInteracting) {
         self.flowController = flowController
         self.interactor = interactor
@@ -118,16 +120,18 @@ private extension SelectFromGalleryPresenter {
         switch codeType {
         case .service(let code):
             handleService(code)
-        case .googleAuth(let codes):
+        case .googleAuth(let index, let size, let batchID, let codes):
             Log("SelectFromGalleryPresenter: Found Google Auth codes: \(codes.count)")
             Log("Codes: \(codes)", save: false)
             
-            let importableCodes = interactor.filterImportableCodes(codes)
-            flowController.toGoogleAuthSummary(
-                importable: importableCodes.count,
-                total: codes.count,
-                codes: importableCodes
-            )
+            let data = GoogleScanData(index: index, size: size, batchID: batchID, codes: codes)
+            
+            if let feedback = googleMultiscanFeedback {
+                feedback(data)
+                return
+            }
+            
+            flowController.toGoogleAuthImport(data: data)
         case .lastPass(let codes, let totalCodesCount):
             Log("SelectFromGalleryPresenter: Found LastPass codes: \(codes.count)")
             Log("Codes: \(codes)", save: false)

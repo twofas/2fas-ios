@@ -26,6 +26,7 @@ protocol CameraScannerNavigationFlowControllerParent: AnyObject {
     func cameraScannerDidFinish()
     func cameraScannerDidImport(count: Int)
     func cameraScannerServiceWasCreated(serviceData: ServiceData)
+    func cameraScannerToGoogleAuthImport(data: GoogleScanData)
 }
 
 final class CameraScannerNavigationFlowController: NavigationFlowController {
@@ -61,5 +62,9 @@ extension CameraScannerNavigationFlowController: CameraScannerFlowControllerPare
     
     func cameraScannerServiceWasCreated(serviceData: ServiceData) {
         parent?.cameraScannerServiceWasCreated(serviceData: serviceData)
+    }
+    
+    func cameraScannerToGoogleAuthImport(data: GoogleScanData) {
+        parent?.cameraScannerToGoogleAuthImport(data: data)
     }
 }

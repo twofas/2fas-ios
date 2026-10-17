@@ -1744,6 +1744,24 @@ internal enum T {
     internal static func googleAuthOutOfTitle(_ p1: Int, _ p2: Int) -> String {
       return T.tr("Localizable", "tokens__google_auth_out_of_title", p1, p2, fallback: "%d out of %d")
     }
+    /// You have already scanned this QR code.
+    internal static let googleImportAlreadyScannedMessage = T.tr("Localizable", "tokens__google_import_already_scanned_message", fallback: "You have already scanned this QR code.")
+    /// Already scanned
+    internal static let googleImportAlreadyScannedTitle = T.tr("Localizable", "tokens__google_import_already_scanned_title", fallback: "Already scanned")
+    /// This QR code comes from a different Google Authenticator export. Scan all codes from a single export.
+    internal static let googleImportDifferentBatchMessage = T.tr("Localizable", "tokens__google_import_different_batch_message", fallback: "This QR code comes from a different Google Authenticator export. Scan all codes from a single export.")
+    /// Different export
+    internal static let googleImportDifferentBatchTitle = T.tr("Localizable", "tokens__google_import_different_batch_title", fallback: "Different export")
+    /// This is part of a multiple QR code export
+    internal static let googleImportMultiSubtitle = T.tr("Localizable", "tokens__google_import_multi_subtitle", fallback: "This is part of a multiple QR code export")
+    /// Import only scanned codes
+    internal static let googleImportOnlyScanned = T.tr("Localizable", "tokens__google_import_only_scanned", fallback: "Import only scanned codes")
+    /// Scanned %d of %d QR codes
+    internal static func googleImportScannedCount(_ p1: Int, _ p2: Int) -> String {
+      return T.tr("Localizable", "tokens__google_import_scanned_count", p1, p2, fallback: "Scanned %d of %d QR codes")
+    }
+    /// Google Authenticator import
+    internal static let googleImportTitle = T.tr("Localizable", "tokens__google_import_title", fallback: "Google Authenticator import")
     /// Group
     internal static let group = T.tr("Localizable", "tokens__group", fallback: "Group")
     /// Group name:

@@ -23,7 +23,7 @@ import Common
 public enum CodeType: Hashable {
     case appStore
     case service(code: Code)
-    case googleAuth(codes: [Code])
+    case googleAuth(index: Int, size: Int, batchID: Int, codes: [Code])
     case lastPass(codes: [Code], totalCodesCount: Int)
     case twoFASWebExtension(extensionID: String)
     case open
@@ -85,8 +85,13 @@ public extension Code {
 
         if let code = parser.parse(codeStr: data) {
             return .service(code: code)
-        } else if let codes = Code.checkGoogleAuth(with: data) {
-            return .googleAuth(codes: codes)
+        } else if let result = Code.checkGoogleAuth(with: data) {
+            return .googleAuth(
+                index: result.index,
+                size: result.size,
+                batchID: result.batchID,
+                codes: result.codes
+            )
         } else if let extensionID = Code.checkTwoFASWebExtension(with: data) {
             return .twoFASWebExtension(extensionID: extensionID)
         } else if let parsedData = Code.checkLastPass(with: data) {

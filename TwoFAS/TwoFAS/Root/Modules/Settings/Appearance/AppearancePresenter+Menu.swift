@@ -99,14 +99,14 @@ extension AppearancePresenter {
                         value: selectedValue,
                         options: [
                             AppearanceCell.PickerOption(
-                                title: T.Settings.listStyleOptionDefault,
-                                kind: .defaultList,
-                                isSelected: selectedStyle == .default
-                            ),
-                            AppearanceCell.PickerOption(
                                 title: T.Settings.listStyleOptionCompact,
                                 kind: .compactList,
                                 isSelected: selectedStyle == .compact
+                            ),
+                            AppearanceCell.PickerOption(
+                                title: T.Settings.listStyleOptionDefault,
+                                kind: .defaultList,
+                                isSelected: selectedStyle == .default
                             ),
                             AppearanceCell.PickerOption(
                                 title: T.Settings.listStyleOptionLarge,

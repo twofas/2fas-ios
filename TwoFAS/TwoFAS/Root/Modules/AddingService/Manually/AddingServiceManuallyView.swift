@@ -104,7 +104,19 @@ struct AddingServiceManuallyView: View {
                 .dismissKeyboardOnTapOutside()
                 .onChange(of: focusedField) { oldField, newField in
                     if let newField {
-                        proxy.scrollTo(newField, anchor: .center)
+                        let centerField = {
+                            withAnimation(.easeInOut(duration: Theme.Animations.Timing.keyboard)) {
+                                proxy.scrollTo(newField, anchor: .center)
+                            }
+                        }
+                        if oldField == nil {
+                            DispatchQueue.main.asyncAfter(
+                                deadline: .now() + Theme.Animations.Timing.keyboard,
+                                execute: centerField
+                            )
+                        } else {
+                            centerField()
+                        }
                     }
                     switch oldField {
                     case .serviceName: touchedServiceName = true
@@ -116,7 +128,6 @@ struct AddingServiceManuallyView: View {
                 .onChange(of: presenter.serviceName) { _, _ in touchedServiceName = true }
                 .onChange(of: presenter.secret) { _, _ in touchedSecret = true }
                 .onChange(of: presenter.additionalInfo) { _, _ in touchedAdditionalInfo = true }
-                .scrollDismissesKeyboard(.interactively)
                 .onTapGesture {
                     dismissKeyboard()
                 }

@@ -79,6 +79,7 @@ enum Theme {
         enum Timing {
             static let show: TimeInterval = 0.1
             static let quick: TimeInterval = 0.2
+            static let keyboard: TimeInterval = 0.25
             static let displayNotification: TimeInterval = 2
         }
     }

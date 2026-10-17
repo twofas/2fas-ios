@@ -25,7 +25,9 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
     let height: CGFloat
     @Binding
     var cameraFreeze: Bool
-    
+    @Binding
+    var cameraStopped: Bool
+
     var didRegisterError: (String?) -> Void
     var didFoundCode: (CodeType) -> Void
     
@@ -109,6 +111,11 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: CameraScanningView, context: Context) {
+        if cameraStopped {
+            uiView.stop()
+            return
+        }
+        uiView.start()
         if cameraFreeze {
             uiView.freeze()
         } else {

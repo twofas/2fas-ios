@@ -34,6 +34,7 @@ enum AddingServiceAlert: Identifiable, Hashable {
 @Observable
 final class AddingServicePresenter {
     var freezeCamera = false
+    var cameraStopped = false
     var isCameraUnavailable = false
     var alert: AddingServiceAlert?
 
@@ -194,10 +195,11 @@ private extension AddingServicePresenter {
     }
 
     func presentOverlay() {
-        freezeCamera = true
+        cameraStopped = true
     }
 
     func handleOverlayDismissed() {
+        cameraStopped = false
         freezeCamera = false
     }
 

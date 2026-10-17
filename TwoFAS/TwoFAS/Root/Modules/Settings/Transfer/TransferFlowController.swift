@@ -22,7 +22,9 @@ import SwiftUI
 import Common
 import Data
 
-protocol TransferFlowControllerParent: AnyObject {}
+protocol TransferFlowControllerParent: AnyObject {
+    func transferToGoogleImport(data: GoogleScanData)
+}
 
 protocol TransferFlowControlling: AnyObject {
     // MARK: - Import
@@ -229,6 +231,13 @@ extension TransferFlowController: CameraScannerFlowControllerParent {
         }
     }
     func cameraScannerServiceWasCreated(serviceData: ServiceData) { dismissInnerModal() }
+    func cameraScannerToGoogleAuthImport(data: GoogleScanData) {
+        dismissInnerModal { [weak self] in
+            self?.dismissModal {
+                self?.parent?.transferToGoogleImport(data: data)
+            }
+        }
+    }
 }
 
 extension TransferFlowController: SelectFromGalleryFlowControllerParent {
@@ -244,6 +253,14 @@ extension TransferFlowController: SelectFromGalleryFlowControllerParent {
         dismissInnerModal { [weak self] in
             self?.galleryViewController = nil
             self?.showSummary(count: count)
+        }
+    }
+    func galleryToGoogleAuthImport(data: GoogleScanData) {
+        galleryViewController = nil
+        dismissInnerModal { [weak self] in
+            self?.dismissModal {
+                self?.parent?.transferToGoogleImport(data: data)
+            }
         }
     }
 }

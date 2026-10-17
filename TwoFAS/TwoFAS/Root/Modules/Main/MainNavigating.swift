@@ -34,4 +34,5 @@ protocol MainSplitFlowControllerParent: AnyObject {
     func navigationSwitchedToSettingsExternalImport()
     func navigationSwitchedToSettingsBackup()
     func navigationSwitchedToSettingsTrash()
+    func navigationToGoogleImport(data: GoogleScanData)
 }

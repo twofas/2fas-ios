@@ -131,7 +131,7 @@ private extension SelectFromGalleryPresenter {
                 return
             }
             
-            flowController.toGoogleAuthImport(data)
+            flowController.toGoogleAuthImport(data: data)
         case .lastPass(let codes, let totalCodesCount):
             Log("SelectFromGalleryPresenter: Found LastPass codes: \(codes.count)")
             Log("Codes: \(codes)", save: false)

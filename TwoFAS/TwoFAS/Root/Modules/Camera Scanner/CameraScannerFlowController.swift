@@ -287,6 +287,11 @@ extension CameraScannerFlowController: SelectFromGalleryFlowControllerParent {
         viewController.presenter.handleGalleryCancelled()
         galleryViewController = nil
     }
+    
+    func galleryToGoogleAuthImport(data: GoogleScanData) {
+        parent?.cameraScannerToGoogleAuthImport(data: data)
+        galleryViewController = nil
+    }
 }
 
 extension CameraScannerFlowController: BrowserExtensionPairingPlainFlowControllerParent {

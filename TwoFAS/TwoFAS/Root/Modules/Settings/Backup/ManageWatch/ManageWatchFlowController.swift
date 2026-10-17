@@ -97,4 +97,5 @@ extension ManageWatchFlowController: CameraScannerFlowControllerParent {
     }
     func cameraScannerDidImport(count: Int) {}
     func cameraScannerServiceWasCreated(serviceData: ServiceData) {}
+    func cameraScannerToGoogleAuthImport(data: GoogleScanData) {}
 }

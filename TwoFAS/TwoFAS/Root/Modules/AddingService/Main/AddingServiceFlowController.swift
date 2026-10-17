@@ -402,6 +402,11 @@ extension AddingServiceFlowController: SelectFromGalleryFlowControllerParent {
         galleryViewController = nil
         parent?.addingServiceToToken(serviceData)
     }
+    
+    func galleryToGoogleAuthImport(data: GoogleScanData) {
+        parent?.addingServiceToGoogleAuthImport(data: data)
+        galleryViewController = nil
+    }
 }
 
 // MARK: - System zoom push-back

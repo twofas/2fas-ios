@@ -119,7 +119,7 @@ extension CameraScannerPresenter {
                 return
             }
             
-            flowController.toGoogleAuthImport(data)
+            flowController.toGoogleAuthImport(data: data)
         case .lastPass(let codes, let totalCodesCount):
             view?.enableOverlay()
             let importableCodes = interactor.filterImportableCodes(codes)

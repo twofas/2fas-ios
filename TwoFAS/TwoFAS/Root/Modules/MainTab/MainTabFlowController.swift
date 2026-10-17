@@ -106,11 +106,19 @@ extension MainTabFlowController: TokensPlainFlowControllerParent {
     func tokensSwitchToSettingsTrash() {
         parent?.navigationSwitchedToSettingsTrash()
     }
+
+    func tokensToGoogleImport(data: GoogleScanData) {
+        parent?.navigationToGoogleImport(data: data)
+    }
 }
 
 extension MainTabFlowController: SettingsFlowControllerParent {
     func settingsToRevealMenu() {
         // Not applicable: the sidebar is managed natively by UIKit.
+    }
+
+    func settingsToGoogleImport(data: GoogleScanData) {
+        parent?.navigationToGoogleImport(data: data)
     }
 }
 

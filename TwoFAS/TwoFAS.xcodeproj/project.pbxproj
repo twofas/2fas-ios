@@ -1040,6 +1040,10 @@
 		C2D97E8A2E246A0F00E213A7 /* T.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D97E872E2469BD00E213A7 /* T.generated.swift */; };
 		C2DB8E5D21F8FE33002F124B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2DB8E5C21F8FE33002F124B /* Assets.xcassets */; };
 		C2DC57E430816EB800172343 /* GoogleScanData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC57E330816EAD00172343 /* GoogleScanData.swift */; };
+		C2DC57E63083C8FD00172343 /* GoogleImportModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC57E53083C8FD00172343 /* GoogleImportModuleInteractor.swift */; };
+		C2DC57E83083C90700172343 /* GoogleImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC57E73083C90700172343 /* GoogleImportPresenter.swift */; };
+		C2DC57EA3083C91400172343 /* GoogleImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC57E93083C91400172343 /* GoogleImportView.swift */; };
+		C2DC57EC3083C94A00172343 /* GoogleImportFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC57EB3083C94A00172343 /* GoogleImportFlowController.swift */; };
 		C2DCAA802FF554B100FAB19D /* TFInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DCAA7F2FF5549E00FAB19D /* TFInfoView.swift */; };
 		C2DCAA812FF554B100FAB19D /* TFInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DCAA7F2FF5549E00FAB19D /* TFInfoView.swift */; };
 		C2DDEB25289F3D5200011712 /* TokensViewEmptyListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */; };
@@ -2798,6 +2802,10 @@
 		C2D97E872E2469BD00E213A7 /* T.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = T.generated.swift; path = TwoFASAuth/Generated/T.generated.swift; sourceTree = SOURCE_ROOT; };
 		C2DB8E5C21F8FE33002F124B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C2DC57E330816EAD00172343 /* GoogleScanData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleScanData.swift; sourceTree = "<group>"; };
+		C2DC57E53083C8FD00172343 /* GoogleImportModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleImportModuleInteractor.swift; sourceTree = "<group>"; };
+		C2DC57E73083C90700172343 /* GoogleImportPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleImportPresenter.swift; sourceTree = "<group>"; };
+		C2DC57E93083C91400172343 /* GoogleImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleImportView.swift; sourceTree = "<group>"; };
+		C2DC57EB3083C94A00172343 /* GoogleImportFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleImportFlowController.swift; sourceTree = "<group>"; };
 		C2DCAA7F2FF5549E00FAB19D /* TFInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFInfoView.swift; sourceTree = "<group>"; };
 		C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensViewEmptyListScreen.swift; sourceTree = "<group>"; };
 		C2DEC7A226767B28006DB1E6 /* SectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHandler.swift; sourceTree = "<group>"; };
@@ -5384,6 +5392,10 @@
 			isa = PBXGroup;
 			children = (
 				C2DC57E330816EAD00172343 /* GoogleScanData.swift */,
+				C2DC57EB3083C94A00172343 /* GoogleImportFlowController.swift */,
+				C2DC57E53083C8FD00172343 /* GoogleImportModuleInteractor.swift */,
+				C2DC57E73083C90700172343 /* GoogleImportPresenter.swift */,
+				C2DC57E93083C91400172343 /* GoogleImportView.swift */,
 			);
 			path = GoogleImport;
 			sourceTree = "<group>";
@@ -7116,6 +7128,7 @@
 				C25BB2CC2DAAE3FF00BEC626 /* ManageWatchView.swift in Sources */,
 				C2A2DA5E2FE5BAEE004FD390 /* TrashServiceView.swift in Sources */,
 				C21930F22EC11439001354C9 /* BackupManageEncryptionModels.swift in Sources */,
+				C2DC57EC3083C94A00172343 /* GoogleImportFlowController.swift in Sources */,
 				C2DFDBD9302C888600EFA0B5 /* View+ChevronOnlyBackButton.swift in Sources */,
 				C29E833D2FC0BB4400CBE671 /* AddingServiceView.swift in Sources */,
 				C2A7946027F9071F00E5C641 /* BrowserExtensionServicePresenter.swift in Sources */,
@@ -7130,6 +7143,7 @@
 				C218513C2A1A873F00A8352A /* TokensHOTPCell.swift in Sources */,
 				C2117183276CE83B00042D28 /* VerifyPINModuleInteractor.swift in Sources */,
 				C24048712765612F0076376E /* RootNavigationController.swift in Sources */,
+				C2DC57EA3083C91400172343 /* GoogleImportView.swift in Sources */,
 				C21111E8274AB98000CA7C78 /* SettingsViewController.swift in Sources */,
 				C25C91D52B0A632500E58729 /* IntroductionNavigationFlowController.swift in Sources */,
 				C2A4C8352A10F13800AFD67C /* TokensTOTPCell.swift in Sources */,
@@ -7334,6 +7348,7 @@
 				C207DACB302B4BBF004FC767 /* ImporterRoute.swift in Sources */,
 				689BFDC04760BA4D88CC5754 /* BackupAdvancedPresenter.swift in Sources */,
 				37D4E0A4779DA4A4A8EE9456 /* BackupAdvancedPresenter+Menu.swift in Sources */,
+				C2DC57E63083C8FD00172343 /* GoogleImportModuleInteractor.swift in Sources */,
 				640506B23BFADE99A62F57C6 /* BackupAdvancedFlowController.swift in Sources */,
 				C2EA566F28569A5E00026BFE /* AskForAuthPresenter.swift in Sources */,
 				C20E2DE52A7C27A500DB64BB /* GlobalState.swift in Sources */,
@@ -7460,6 +7475,7 @@
 				C258EC6E227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift in Sources */,
 				C27BE513275D4A2A0090CA12 /* BackupMenuPresenter+Menu.swift in Sources */,
 				C2B5BF5529460E9C00E5092D /* TokensExternalAction.swift in Sources */,
+				C2DC57E83083C90700172343 /* GoogleImportPresenter.swift in Sources */,
 				C2C66F8E1FE0684100AD5A1C /* MainViewController.swift in Sources */,
 				C2F51EFF27DAAD9900A67C73 /* BrowserExtensionPairingFailureView.swift in Sources */,
 				C20E60FF28189E8800AB002E /* PushNotificationPermissionPlainFlowController.swift in Sources */,

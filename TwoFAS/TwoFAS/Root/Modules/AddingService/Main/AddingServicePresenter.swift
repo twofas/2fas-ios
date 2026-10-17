@@ -88,7 +88,7 @@ extension AddingServicePresenter {
             
             let data = GoogleScanData(index: index, size: size, batchID: batchID, codes: codes)
             
-            flowController.toGoogleAuthImport(data)
+            flowController.toGoogleAuthImport(data: data)
         case .lastPass(let codes, let totalCodesCount):
             let importableCodes = interactor.filterImportableCodes(codes)
             flowController.toLastPassSummary(

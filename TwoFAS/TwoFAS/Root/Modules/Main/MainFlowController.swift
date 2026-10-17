@@ -269,6 +269,23 @@ extension MainFlowController: MainSplitFlowControllerParent {
     func navigationSwitchedToSettingsTrash() {
         viewController.presenter.handleSwitchToTrash()
     }
+
+    func navigationToGoogleImport(data: GoogleScanData) {
+        guard viewController.presentedViewController == nil else { return }
+        GoogleImportFlowController.present(on: viewController, parent: self, data: data)
+    }
+}
+
+extension MainFlowController: GoogleImportFlowControllerParent {
+    func googleImportClose() {
+        viewController.dismiss(animated: true)
+    }
+
+    func googleImportDidImport(count: Int) {
+        viewController.dismiss(animated: true) {
+            NotificationCenter.default.post(name: .servicesWereUpdated, object: nil)
+        }
+    }
 }
 
 extension MainFlowController: NewPINNavigationFlowControllerParent {

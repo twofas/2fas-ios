@@ -27,6 +27,7 @@ protocol TokensPlainFlowControllerParent: AnyObject {
     func tokensSwitchToSettingsExternalImport()
     func tokensSwitchToSettingsBackup()
     func tokensSwitchToSettingsTrash()
+    func tokensToGoogleImport(data: GoogleScanData)
 }
 
 protocol TokensPlainFlowControlling: AnyObject {
@@ -302,6 +303,12 @@ extension TokensPlainFlowController: TokensPlainFlowControlling {
         alert.addAction(UIAlertAction(title: T.Commons.ok, style: .default, handler: { _ in completion() }))
         presentAlertOnMainSplitViewController(alert)
     }
+    
+    // MARK: - Show Google Import
+    
+    func toGoogleImport(data: GoogleScanData) {
+        parent?.tokensToGoogleImport(data: data)
+    }
 }
 
 extension TokensPlainFlowController {
@@ -337,6 +344,12 @@ extension TokensPlainFlowController: CameraScannerNavigationFlowControllerParent
         parent?.tokensSwitchToTokensTab()
         dismiss(actions: [.finishedFlow, .addedService(serviceData: serviceData), .sync])
     }
+    
+    func cameraScannerToGoogleAuthImport(data: GoogleScanData) {
+        dismiss(actions: [.finishedFlow]) { [weak self] in
+            self?.toGoogleImport(data: data)
+        }
+    }
 }
 
 extension TokensPlainFlowController: SelectFromGalleryFlowControllerParent {
@@ -362,6 +375,13 @@ extension TokensPlainFlowController: SelectFromGalleryFlowControllerParent {
         dismiss { [weak self] in
             self?.galleryViewController = nil
             self?.toAddService()
+        }
+    }
+    
+    func galleryToGoogleAuthImport(data: GoogleScanData) {
+        dismiss { [weak self] in
+            self?.galleryViewController = nil
+            self?.toGoogleImport(data: data)
         }
     }
 }
@@ -403,6 +423,12 @@ extension TokensPlainFlowController: ComposeServiceNavigationFlowControllerParen
 }
 
 extension TokensPlainFlowController: AddingServiceFlowControllerParent {
+    func addingServiceToGoogleAuthImport(data: GoogleScanData) {
+        dismiss(actions: [.finishedFlow]) { [weak self] in
+            self?.toGoogleImport(data: data)
+        }
+    }
+
     func addingServiceDismiss() {
         dismiss()
     }

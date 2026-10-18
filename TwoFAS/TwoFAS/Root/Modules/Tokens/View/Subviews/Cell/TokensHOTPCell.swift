@@ -63,7 +63,8 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         line.isUserInteractionEnabled = false
         return line
     }()
-    
+    private var serviceTitleToTokenConstraint: NSLayoutConstraint?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -105,6 +106,7 @@ final class TokensHOTPCell: UICollectionViewCell, TokenCounterConsumer, TokensHO
         tokenLabel.setKind(kind)
         logoView.setKind(kind)
         serviceTitle.setKind(kind)
+        serviceTitleToTokenConstraint?.constant = TokensCellMetrics.serviceTitleToTokenSpacing(for: kind)
     }
 
     func setInitial(_ state: TokenCounterConsumerState) {
@@ -209,13 +211,15 @@ private extension TokensHOTPCell {
             serviceTitle.topAnchor.constraint(equalTo: groupContainer.topAnchor)
         ])
         
+        let serviceTitleToTokenConstraint = tokenLabel.topAnchor.constraint(
+            equalTo: serviceTitle.bottomAnchor,
+            constant: TokensCellMetrics.serviceTitleToTokenSpacing(for: .normal)
+        )
+        self.serviceTitleToTokenConstraint = serviceTitleToTokenConstraint
         groupContainer.addSubview(tokenLabel, with: [
             tokenLabel.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
             tokenLabel.trailingAnchor.constraint(equalTo: groupContainer.trailingAnchor),
-            tokenLabel.topAnchor.constraint(
-                equalTo: serviceTitle.bottomAnchor,
-                constant: TokensCellMetrics.serviceTitleToTokenSpacing
-            ),
+            serviceTitleToTokenConstraint,
             tokenLabel.bottomAnchor.constraint(equalTo: groupContainer.bottomAnchor)
         ])
         

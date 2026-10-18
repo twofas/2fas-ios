@@ -66,7 +66,8 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         line.isUserInteractionEnabled = false
         return line
     }()
-    
+    private var serviceTitleToTokenConstraint: NSLayoutConstraint?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -112,6 +113,7 @@ final class TokensTOTPCell: UICollectionViewCell, TokenTimerConsumer, TokensTOTP
         logoView.setKind(kind)
         serviceTitle.setKind(kind)
         revealButton.setKind(kind)
+        serviceTitleToTokenConstraint?.constant = TokensCellMetrics.serviceTitleToTokenSpacing(for: kind)
     }
 
     func setInitial(_ state: TokenTimerInitialConsumerState) {
@@ -234,12 +236,14 @@ private extension TokensTOTPCell {
             serviceTitle.topAnchor.constraint(equalTo: groupContainer.topAnchor)
         ])
         
+        let serviceTitleToTokenConstraint = tokenView.topAnchor.constraint(
+            equalTo: serviceTitle.bottomAnchor,
+            constant: TokensCellMetrics.serviceTitleToTokenSpacing(for: .normal)
+        )
+        self.serviceTitleToTokenConstraint = serviceTitleToTokenConstraint
         groupContainer.addSubview(tokenView, with: [
             tokenView.leadingAnchor.constraint(equalTo: groupContainer.leadingAnchor),
-            tokenView.topAnchor.constraint(
-                equalTo: serviceTitle.bottomAnchor,
-                constant: TokensCellMetrics.serviceTitleToTokenSpacing
-            ),
+            serviceTitleToTokenConstraint,
             tokenView.bottomAnchor.constraint(equalTo: groupContainer.bottomAnchor)
         ])
         

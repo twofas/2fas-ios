@@ -21,6 +21,11 @@ import UIKit
 import Common
 
 enum TokensCellMetrics {
-    /// Vertical distance between the service title and the token in HOTP and TOTP cells (normal and compact)
-    static let serviceTitleToTokenSpacing: CGFloat = Spacing.M.rawValue
+    /// Vertical distance between the service title and the token in HOTP and TOTP cells
+    static func serviceTitleToTokenSpacing(for kind: TokensCellKind) -> CGFloat {
+        switch kind {
+        case .large: return Spacing.L.rawValue
+        default: return Spacing.M.rawValue
+        }
+    }
 }

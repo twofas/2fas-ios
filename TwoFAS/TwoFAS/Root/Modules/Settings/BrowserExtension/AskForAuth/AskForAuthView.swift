@@ -39,17 +39,18 @@ struct AskForAuthView: View {
             title: T.Browser._2faTokenRequestTitle,
             attributedDescription: attributedDescription,
             buttons: {
-            TFButton(T.Commons.approve, variant: .bordered, size: .large) {
+                TFButton(T.Commons.approve, variant: .borderedProminent, size: .large) {
                 action()
             }
-            TFButton(T.Commons.deny, variant: .bordered, size: .large) {
+                TFButton(T.Commons.deny, variant: .borderless, size: .large) {
                 cancel()
             }
         })
         .navigationBarHidden(true)
+        .ignoresSafeArea()
     }
 }
 
 #Preview {
-    AskForAuthView(action: {}, cancel: {}, domain: "https://example.com")
+    AskForAuthView(action: {}, cancel: {}, domain: "google.com")
 }

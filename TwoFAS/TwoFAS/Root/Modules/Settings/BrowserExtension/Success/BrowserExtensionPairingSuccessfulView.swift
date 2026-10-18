@@ -37,6 +37,11 @@ struct BrowserExtensionPairingSuccessfulView: View {
                     action: action
                 )
             })
+        .background {
+            Rectangle()
+                .fill(.backgroundsPrimary)
+                .ignoresSafeArea()
+        }
     }
 }
 

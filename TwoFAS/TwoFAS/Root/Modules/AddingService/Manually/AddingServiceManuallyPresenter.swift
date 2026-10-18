@@ -26,6 +26,25 @@ final class AddingServiceManuallyPresenter: ObservableObject {
         case name
         case secret
     }
+    
+    enum SecretValidationResult {
+        case correct
+        case duplicated
+        case incorrect
+        case tooShort
+        case tooLong
+        
+        var error: String? {
+            switch self {
+            case .correct: return nil
+            case .duplicated: return T.Tokens.duplicatedPrivateKey
+            case .incorrect: return T.Tokens.incorrectServiceKey
+            case .tooShort: return T.Tokens.serviceKeyToShort
+            case .tooLong: return T.Commons.textLongTitle(ServiceRules.privateKeyMaxLength)
+            }
+        }
+    }
+    
     @Published var isAddServiceEnabled = false
     
     var keyboardInitialFocus: KeyboardInitialFocus {
@@ -45,8 +64,12 @@ final class AddingServiceManuallyPresenter: ObservableObject {
     private var isCorrectAdditionalInfo = true
     
     private var iconTypeID: IconTypeID?
-    
-    private var userSelectedIconTypeID: IconTypeID?
+
+    private var isIconCleared = false
+
+    private var assignedIconTypeID: IconTypeID? {
+        isIconCleared ? nil : iconTypeID
+    }
     
     @Published var userCanSelectIcon = false
     @Published var userCanCancelIcon = false
@@ -110,7 +133,7 @@ extension AddingServiceManuallyPresenter {
             additionalInfo: additionalInfo,
             tokenPeriod: tokenPeriod,
             tokenLength: tokenLength,
-            iconTypeID: userSelectedIconTypeID,
+            iconTypeID: assignedIconTypeID,
             algorithm: algorithm,
             counter: initialCounter,
             tokenType: selectedTokenType
@@ -157,24 +180,6 @@ extension AddingServiceManuallyPresenter {
         }
         validateAddService()
         return value
-    }
-    
-    enum SecretValidationResult {
-        case correct
-        case duplicated
-        case incorrect
-        case tooShort
-        case tooLong
-        
-        var error: String? {
-            switch self {
-            case .correct: return nil
-            case .duplicated: return T.Tokens.duplicatedPrivateKey
-            case .incorrect: return T.Tokens.incorrectServiceKey
-            case .tooShort: return T.Tokens.serviceKeyToShort
-            case .tooLong: return T.Commons.textLongTitle(ServiceRules.privateKeyMaxLength)
-            }
-        }
     }
     
     func validateSecret(_ secret: String) -> SecretValidationResult {
@@ -254,19 +259,19 @@ extension AddingServiceManuallyPresenter {
     }
     
     func onApplyIconType() {
-        userSelectedIconTypeID = iconTypeID
+        isIconCleared = false
         updateSelectionState()
     }
-    
+
     func onClearIconType() {
-        userSelectedIconTypeID = nil
+        isIconCleared = true
         updateSelectionState()
     }
 }
 
 private extension AddingServiceManuallyPresenter {
     func checkForServiceIcon() {
-        guard userSelectedIconTypeID == nil else { return }
+        guard !isIconCleared else { return }
         interactor.checkForServiceIcon(using: serviceName) { [weak self] img, iconTypeID, serviceTypeName in
             self?.serviceIcon = img
             self?.iconTypeID = iconTypeID
@@ -276,7 +281,7 @@ private extension AddingServiceManuallyPresenter {
     }
     
     func clearServiceIcon() {
-        guard userSelectedIconTypeID == nil else { return }
+        guard !isIconCleared else { return }
         serviceIcon = nil
         iconTypeID = nil
         serviceTypeName = nil
@@ -284,8 +289,8 @@ private extension AddingServiceManuallyPresenter {
     }
     
     func updateSelectionState() {
-        userCanSelectIcon = userSelectedIconTypeID == nil && iconTypeID != nil
-        userCanCancelIcon = userSelectedIconTypeID != nil
+        userCanSelectIcon = iconTypeID != nil && isIconCleared
+        userCanCancelIcon = iconTypeID != nil && !isIconCleared
     }
     
     func handleServiceNameChange() {

@@ -153,10 +153,9 @@ struct AddingServiceManuallyView: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(T.Commons.pair) {
+                    TFSaveButton(T.Commons.pair, isEnabled: presenter.isAddServiceEnabled) {
                         presenter.handlePair()
                     }
-                    .disabled(!presenter.isAddServiceEnabled)
                 }
             }
             .background(.backgroundsPrimaryElevated)

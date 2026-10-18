@@ -66,10 +66,9 @@ struct ComposeServiceView: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(T.Commons.save) {
+                    TFSaveButton(T.Commons.save, isEnabled: presenter.isSaveEnabled) {
                         presenter.handleSave()
                     }
-                    .disabled(!presenter.isSaveEnabled)
                 }
             }
             .navigationDestination(for: ComposeServiceRoute.self) { route in

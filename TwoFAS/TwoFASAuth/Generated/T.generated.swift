@@ -165,6 +165,12 @@ internal enum T {
   internal static let importGaSuccess = T.tr("Localizable", "import_ga_success", fallback: "Services successfully imported!")
   /// System error! There is no system gallery app.
   internal static let intentErrorNoGalleryApp = T.tr("Localizable", "intent_error_no_gallery_app", fallback: "System error! There is no system gallery app.")
+  /// No logs available
+  internal static let logsEmpty = T.tr("Localizable", "logs_empty", fallback: "No logs available")
+  /// Share logs
+  internal static let logsShareTitle = T.tr("Localizable", "logs_share_title", fallback: "Share logs")
+  /// Logs
+  internal static let logsTitle = T.tr("Localizable", "logs_title", fallback: "Logs")
   /// Used for scanning QR codes
   internal static let nsCameraUsageDescription = T.tr("Localizable", "NSCameraUsageDescription", fallback: "Used for scanning QR codes")
   /// You can unlock the application using Face ID
@@ -1028,6 +1034,38 @@ internal enum T {
     internal static let enteSuccessMsg = T.tr("Localizable", "externalimport__ente_success_msg", fallback: "This text file allows you to import Tokens from Ente Auth.")
     /// Importing 2FA Tokens from Ente Auth app
     internal static let enteTitle = T.tr("Localizable", "externalimport__ente_title", fallback: "Importing 2FA Tokens from Ente Auth app")
+    /// This QR code has already been scanned
+    internal static let gaBatchAlreadyScanned = T.tr("Localizable", "externalimport__ga_batch_already_scanned", fallback: "This QR code has already been scanned")
+    /// This QR code belongs to a different export
+    internal static let gaBatchDifferentExport = T.tr("Localizable", "externalimport__ga_batch_different_export", fallback: "This QR code belongs to a different export")
+    /// Import Tokens
+    internal static let gaBatchImportCta = T.tr("Localizable", "externalimport__ga_batch_import_cta", fallback: "Import Tokens")
+    /// Your Google Authenticator export consists of %d QR codes. Scan all of them to import all your Tokens.
+    internal static func gaBatchMsg(_ p1: Int) -> String {
+      return T.tr("Localizable", "externalimport__ga_batch_msg", p1, fallback: "Your Google Authenticator export consists of %d QR codes. Scan all of them to import all your Tokens.")
+    }
+    /// Not scanned yet
+    internal static let gaBatchNotScanned = T.tr("Localizable", "externalimport__ga_batch_not_scanned", fallback: "Not scanned yet")
+    /// Pick next QR code
+    internal static let gaBatchPickCta = T.tr("Localizable", "externalimport__ga_batch_pick_cta", fallback: "Pick next QR code")
+    /// %1$d of %2$d scanned
+    internal static func gaBatchProgress(_ p1: Int, _ p2: Int) -> String {
+      return T.tr("Localizable", "externalimport__ga_batch_progress", p1, p2, fallback: "%1$d of %2$d scanned")
+    }
+    /// QR code %1$d of %2$d
+    internal static func gaBatchQrCode(_ p1: Int, _ p2: Int) -> String {
+      return T.tr("Localizable", "externalimport__ga_batch_qr_code", p1, p2, fallback: "QR code %1$d of %2$d")
+    }
+    /// Could not find a QR code in this image
+    internal static let gaBatchReadError = T.tr("Localizable", "externalimport__ga_batch_read_error", fallback: "Could not find a QR code in this image")
+    /// Scan next QR code
+    internal static let gaBatchScanCta = T.tr("Localizable", "externalimport__ga_batch_scan_cta", fallback: "Scan next QR code")
+    /// Scanned · %d Tokens
+    internal static func gaBatchScanned(_ p1: Int) -> String {
+      return T.tr("Localizable", "externalimport__ga_batch_scanned", p1, fallback: "Scanned · %d Tokens")
+    }
+    /// Multiple QR codes detected
+    internal static let gaBatchTitle = T.tr("Localizable", "externalimport__ga_batch_title", fallback: "Multiple QR codes detected")
     /// This QR code allows importing Tokens from Google Authenticator.
     internal static let gaSuccessMsg = T.tr("Localizable", "externalimport__ga_success_msg", fallback: "This QR code allows importing Tokens from Google Authenticator.")
     /// Importing 2FA Tokens from Google Authenticator app
@@ -1693,6 +1731,8 @@ internal enum T {
     internal static let copySecret = T.tr("Localizable", "tokens__copy_secret", fallback: "Copy Secret Key")
     /// Copy
     internal static let copyToken = T.tr("Localizable", "tokens__copy_token", fallback: "Copy")
+    /// Copy token
+    internal static let copyTokenLong = T.tr("Localizable", "tokens__copy_token_long", fallback: "Copy token")
     /// Copy URI
     internal static let copyUri = T.tr("Localizable", "tokens__copy_uri", fallback: "Copy URI")
     /// Counter

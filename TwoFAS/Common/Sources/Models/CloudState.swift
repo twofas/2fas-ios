@@ -21,6 +21,13 @@ import Foundation
 
 public enum CloudState: Equatable {
     public enum NotAvailableReason: Equatable {
+        public enum EncryptionError: Equatable {
+            case cantCreateEncryptionElements
+            case missingSystemKey
+            case missingUserKey
+            case missingAllKeys
+        }
+        
         case overQuota
         case disabledByUser
         case error(error: NSError?)
@@ -30,6 +37,7 @@ public enum CloudState: Equatable {
         case incorrectService(serviceName: String)
         case cloudEncryptedUser
         case cloudEncryptedSystem
+        case encryptionError(encryptionError: EncryptionError)
     }
     
     public enum Sync: Equatable {
@@ -41,4 +49,11 @@ public enum CloudState: Equatable {
     case disabledNotAvailable(reason: NotAvailableReason)
     case disabledAvailable
     case enabled(sync: Sync)
+}
+
+public enum EncryptionError: Error {
+    case cantCreateEncryptionElements
+    case missingSystemKey
+    case missingUserKey
+    case missingAllKeys
 }

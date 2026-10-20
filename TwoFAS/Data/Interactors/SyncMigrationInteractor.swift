@@ -29,7 +29,10 @@ public protocol SyncMigrationInteracting: AnyObject {
     var migrationEndedSuccessfuly: (() -> Void)? { get set }
     var reencryptionEndedSuccessfuly: (() -> Void)? { get set }
     var migrationError: ((CloudState.NotAvailableReason) -> Void)? { get set }
-    
+
+    var showCantCreateEncryptionElements: (() -> Void)? { get set }
+    var showMissingKey: ((CloudState.NotAvailableReason.EncryptionError) -> Void)? { get set }
+
     var currentEncryption: CloudEncryptionType { get }
     var currentCloudState: CloudState { get }
     
@@ -104,7 +107,10 @@ final class SyncMigrationInteractor {
         }
     }
     var migrationError: ((CloudState.NotAvailableReason) -> Void)?
-    
+
+    var showCantCreateEncryptionElements: (() -> Void)?
+    var showMissingKey: ((CloudState.NotAvailableReason.EncryptionError) -> Void)?
+
     private let mainRepository: MainRepository
     private let notificationCenter: NotificationCenter
     

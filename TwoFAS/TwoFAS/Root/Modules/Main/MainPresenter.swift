@@ -57,6 +57,12 @@ final class MainPresenter {
         interactor.migrationError = { [weak flowController] error in
             flowController?.toMigrationError(error)
         }
+        interactor.showCantCreateEncryptionElements = { [weak flowController] in
+            flowController?.toCantCreateEncryptionElements()
+        }
+        interactor.showMissingKey = { [weak flowController] error in
+            flowController?.toMissingKey(error)
+        }
     }
     
     func viewDidLoad() {
@@ -142,6 +148,10 @@ final class MainPresenter {
 
     func handleSavePIN(_ PIN: String, pinType: PINType) {
         interactor.savePIN(PIN, ofType: pinType)
+    }
+
+    func handleMissingKeyResolved() {
+        interactor.enableBackup()
     }
 }
 

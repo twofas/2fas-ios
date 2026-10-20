@@ -24,7 +24,8 @@ import CommonWatch
 final class RequirementCheckWatchHandler {
     var newerVersion: (() -> Void)?
     var cloudEncrypted: ((Info.Encryption?) -> Void)?
-    
+    var encryptionError: ((EncryptionError) -> Void)?
+
     private let encryptionHandler: SyncEncryptionWatchHandler
     private let infoHandler: InfoHandler
     

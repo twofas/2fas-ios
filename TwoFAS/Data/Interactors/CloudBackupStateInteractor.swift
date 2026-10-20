@@ -55,6 +55,7 @@ public protocol CloudBackupStateInteracting: AnyObject {
     func packKeys(salt: Data, systemKey: Data) -> Data?
     func unpackKeys(from jsonData: Data) -> (salt: Data, systemKey: Data)?
     func reloadKeys()
+    func createEncryptionElements()
 
     var allServicesRemovedPending: Bool { get }
     func markAllServicesRemovedAsPending()
@@ -193,6 +194,10 @@ extension CloudBackupStateInteractor: CloudBackupStateInteracting {
     
     func reloadKeys() {
         mainRepository.cloudReloadKeys()
+    }
+
+    func createEncryptionElements() {
+        mainRepository.cloudCreateEncryptionElements()
     }
 
     var allServicesRemovedPending: Bool {

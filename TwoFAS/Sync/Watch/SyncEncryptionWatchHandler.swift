@@ -145,7 +145,19 @@ extension SyncEncryptionWatchHandler: SyncEncryptionHandling {
     var encryptionReference: Data? {
         cachedEncryptionReference
     }
-    
+
+    var hasCompleteEncryptionElements: Bool {
+        if cachedUsedKey == .user {
+            cachedSystemKey != nil && cachedUserKey != nil
+        } else {
+            cachedSystemKey != nil
+        }
+    }
+
+    var hasSystemEncryptionElements: Bool {
+        cachedSystemKey != nil
+    }
+
     var encryptionType: Info.Encryption {
         cachedUsedKey
     }

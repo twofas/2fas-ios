@@ -255,4 +255,8 @@ extension MainRepositoryImpl {
     func cloudReloadKeys() {
         SyncInstance.debugReloadAllKeys()
     }
+
+    func cloudCreateEncryptionElements() {
+        SyncInstance.createEncryptionElements()
+    }
 }

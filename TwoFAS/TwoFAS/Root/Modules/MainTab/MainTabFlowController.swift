@@ -116,10 +116,6 @@ extension MainTabFlowController: SettingsFlowControllerParent {
     func settingsToRevealMenu() {
         // Not applicable: the sidebar is managed natively by UIKit.
     }
-
-    func settingsToGoogleImport(data: GoogleScanData) {
-        parent?.navigationToGoogleImport(data: data)
-    }
 }
 
 final class MainTabSidebarViewController: UITabBarController, MainNavigating {

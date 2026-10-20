@@ -22,9 +22,7 @@ import SwiftUI
 import Common
 import Data
 
-protocol TransferFlowControllerParent: AnyObject {
-    func transferToGoogleImport(data: GoogleScanData)
-}
+protocol TransferFlowControllerParent: AnyObject {}
 
 protocol TransferFlowControlling: AnyObject {
     // MARK: - Import
@@ -234,7 +232,7 @@ extension TransferFlowController: CameraScannerFlowControllerParent {
     func cameraScannerToGoogleAuthImport(data: GoogleScanData) {
         dismissInnerModal { [weak self] in
             self?.dismissModal {
-                self?.parent?.transferToGoogleImport(data: data)
+                self?.pushGoogleImport(data: data)
             }
         }
     }
@@ -259,9 +257,32 @@ extension TransferFlowController: SelectFromGalleryFlowControllerParent {
         galleryViewController = nil
         dismissInnerModal { [weak self] in
             self?.dismissModal {
-                self?.parent?.transferToGoogleImport(data: data)
+                self?.pushGoogleImport(data: data)
             }
         }
+    }
+}
+
+extension TransferFlowController: GoogleImportFlowControllerParent {
+    func googleImportClose() {
+        popToTransferRoot()
+    }
+
+    func googleImportDidImport(count: Int) {
+        popToTransferRoot()
+        NotificationCenter.default.post(name: .servicesWereUpdated, object: nil)
+    }
+}
+
+private extension TransferFlowController {
+    func pushGoogleImport(data: GoogleScanData) {
+        guard let navigationController = _viewController?.navigationController else { return }
+        GoogleImportFlowController.push(in: navigationController, parent: self, data: data)
+    }
+
+    func popToTransferRoot() {
+        guard let viewController = _viewController else { return }
+        viewController.navigationController?.popToViewController(viewController, animated: true)
     }
 }
 

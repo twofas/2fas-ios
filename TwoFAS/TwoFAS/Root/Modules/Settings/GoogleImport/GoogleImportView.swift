@@ -24,92 +24,88 @@ struct GoogleImportView: View {
     @Bindable
     var presenter: GoogleImportPresenter
 
+    let showsCloseButton: Bool
+
     var body: some View {
-        NavigationStack {
-            AdaptiveReadableContainer {
-                VStack(spacing: Spacing.XL) {
-                    GeometryReader { proxy in
-                        ScrollView {
-                            VStack(spacing: Spacing.XL) {
-                                Spacer(minLength: 0)
+        AdaptiveReadableContainer {
+            VStack(spacing: Spacing.XL) {
+                GeometryReader { proxy in
+                    ScrollView {
+                        VStack(spacing: Spacing.XL) {
+                            Spacer(minLength: 0)
 
-                                VStack(spacing: Spacing.M) {
-                                    Text(T.Tokens.googleImportTitle)
-                                        .textStyle(.title2, .emphasized)
-                                        .foregroundStyle(.labelsPrimary)
-                                        .multilineTextAlignment(.center)
+                            VStack(spacing: Spacing.M) {
+                                Text(T.Tokens.googleImportTitle)
+                                    .textStyle(.title2, .emphasized)
+                                    .foregroundStyle(.labelsPrimary)
+                                    .multilineTextAlignment(.center)
 
-                                    Text(T.Tokens.googleImportMultiSubtitle)
-                                        .textStyle(.title3)
-                                        .foregroundStyle(.labelsPrimary)
-                                        .multilineTextAlignment(.center)
+                                Text(T.Tokens.googleImportMultiSubtitle)
+                                    .textStyle(.title3)
+                                    .foregroundStyle(.labelsPrimary)
+                                    .multilineTextAlignment(.center)
 
-                                    Text(T.Tokens.googleImportScannedCount(presenter.scannedCount, presenter.totalCount))
-                                        .textStyle(.body)
-                                        .foregroundStyle(.labelsSecondary)
-                                        .multilineTextAlignment(.center)
-                                }
-
-                                if presenter.totalCount > 0 {
-                                    GoogleImportCodesGrid(scannedList: presenter.scannedList)
-                                        .frame(maxWidth: .infinity)
-                                }
-
-                                Spacer(minLength: 0)
+                                Text(T.Tokens.googleImportScannedCount(presenter.scannedCount, presenter.totalCount))
+                                    .textStyle(.body)
+                                    .foregroundStyle(.labelsSecondary)
+                                    .multilineTextAlignment(.center)
                             }
-                            .frame(minHeight: proxy.size.height)
-                            .frame(maxWidth: .infinity)
+
+                            if presenter.totalCount > 0 {
+                                GoogleImportCodesGrid(scannedList: presenter.scannedList)
+                                    .frame(maxWidth: .infinity)
+                            }
+
+                            Spacer(minLength: 0)
                         }
-                        .scrollBounceBehavior(.basedOnSize)
+                        .frame(minHeight: proxy.size.height)
+                        .frame(maxWidth: .infinity)
                     }
+                    .scrollBounceBehavior(.basedOnSize)
+                }
 
-                    if !presenter.isComplete {
-                        VStack(spacing: Spacing.M) {
-                            TFButton(T.Commons.scanQrCode, variant: .borderedProminent, size: .large) {
-                                presenter.handleScanWithCamera()
-                            }
+                if !presenter.isComplete {
+                    VStack(spacing: Spacing.M) {
+                        TFButton(T.Commons.scanQrCode, variant: .borderedProminent, size: .large) {
+                            presenter.handleScanWithCamera()
+                        }
 
-                            TFButton(T.Tokens.selectFromGallery, variant: .bordered, size: .large) {
-                                presenter.handleScanFromGallery()
-                            }
+                        TFButton(T.Tokens.selectFromGallery, variant: .bordered, size: .large) {
+                            presenter.handleScanFromGallery()
+                        }
 
-                            TFButton(T.Tokens.googleImportOnlyScanned, variant: .borderless, size: .large) {
-                                presenter.handleOnlyScanned()
-                            }
+                        TFButton(T.Tokens.googleImportOnlyScanned, variant: .borderless, size: .large) {
+                            presenter.handleOnlyScanned()
                         }
                     }
                 }
-                .frame(maxHeight: .infinity)
             }
-            .minimumBottomSpacing()
-            .background(.backgroundsPrimaryElevated)
-            .navigationBarTitleDisplayMode(.inline)
-            .closeToolbar {
-                presenter.handleClose()
+            .frame(maxHeight: .infinity)
+        }
+        .minimumBottomSpacing()
+        .background(.backgroundsPrimaryElevated)
+        .onAppear {
+            presenter.handleViewAppeared()
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .modify { view in
+            if showsCloseButton {
+                view.closeToolbar {
+                    presenter.handleClose()
+                }
+            } else {
+                view
             }
-            .navigationDestination(isPresented: $presenter.isShowingSummary) {
-                CameraGoogleAuth(
-                    importedCount: presenter.importableCodesCount,
-                    totalCount: presenter.foundCodesCount,
-                    action: {
-                        presenter.handleImport()
-                    },
-                    cancel: {
-                        presenter.handleClose()
-                    }
-                )
-                .ignoresSafeArea()
-            }
-            .alert(T.Tokens.googleImportDifferentBatchTitle, isPresented: $presenter.showBatchError) {
-                Button(T.Commons.ok, role: .cancel) {}
-            } message: {
-                Text(T.Tokens.googleImportDifferentBatchMessage)
-            }
-            .alert(T.Tokens.googleImportAlreadyScannedTitle, isPresented: $presenter.alreadyScanned) {
-                Button(T.Commons.ok, role: .cancel) {}
-            } message: {
-                Text(T.Tokens.googleImportAlreadyScannedMessage)
-            }
+        }
+        .alert(T.Tokens.googleImportDifferentBatchTitle, isPresented: $presenter.showBatchError) {
+            Button(T.Commons.ok, role: .cancel) {}
+        } message: {
+            Text(T.Tokens.googleImportDifferentBatchMessage)
+        }
+        .alert(T.Tokens.googleImportAlreadyScannedTitle, isPresented: $presenter.alreadyScanned) {
+            Button(T.Commons.ok, role: .cancel) {}
+        } message: {
+            Text(T.Tokens.googleImportAlreadyScannedMessage)
         }
     }
 }

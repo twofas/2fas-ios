@@ -30,6 +30,7 @@ protocol GoogleImportFlowControllerParent: AnyObject {
 protocol GoogleImportFlowControlling: AnyObject {
     func toCamera()
     func toGallery()
+    func toSummary(importableCount: Int, totalCount: Int)
     func toImportSummary(count: Int)
     func close()
 }
@@ -37,6 +38,7 @@ protocol GoogleImportFlowControlling: AnyObject {
 final class GoogleImportFlowController: FlowController {
     private weak var parent: GoogleImportFlowControllerParent?
     private weak var presenter: GoogleImportPresenter?
+    private weak var navigationController: UINavigationController?
     private var galleryViewController: UIViewController?
 
     static func present(
@@ -44,6 +46,35 @@ final class GoogleImportFlowController: FlowController {
         parent: GoogleImportFlowControllerParent,
         data: GoogleScanData
     ) {
+        let built = makeFlowController(parent: parent, data: data, showsCloseButton: true)
+        let navi = CommonNavigationController()
+        navi.modalPresentationStyle = .fullScreen
+        navi.isModalInPresentation = true
+        built.flowController.navigationController = navi
+        built.flowController.presentInitial(importViewController: built.viewController, in: navi, animated: false)
+
+        viewController.present(navi, animated: true)
+    }
+
+    static func push(
+        in navigationController: UINavigationController,
+        parent: GoogleImportFlowControllerParent,
+        data: GoogleScanData
+    ) {
+        let built = makeFlowController(parent: parent, data: data, showsCloseButton: false)
+        built.flowController.navigationController = navigationController
+        built.flowController.presentInitial(
+            importViewController: built.viewController,
+            in: navigationController,
+            animated: true
+        )
+    }
+
+    private static func makeFlowController(
+        parent: GoogleImportFlowControllerParent,
+        data: GoogleScanData,
+        showsCloseButton: Bool
+    ) -> (viewController: UIViewController, flowController: GoogleImportFlowController) {
         let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         hosting.view.backgroundColor = AppColor.backgroundsPrimary.uiColor
         let flowController = GoogleImportFlowController(viewController: hosting)
@@ -55,12 +86,20 @@ final class GoogleImportFlowController: FlowController {
             data: data
         )
         flowController.presenter = presenter
-        hosting.rootView = AnyView(GoogleImportView(presenter: presenter))
+        hosting.rootView = AnyView(GoogleImportView(presenter: presenter, showsCloseButton: showsCloseButton))
+        return (hosting, flowController)
+    }
 
-        hosting.modalPresentationStyle = .fullScreen
-        hosting.isModalInPresentation = true
-
-        viewController.present(hosting, animated: true)
+    private func presentInitial(
+        importViewController: UIViewController,
+        in navigationController: UINavigationController,
+        animated: Bool
+    ) {
+        var stack = navigationController.viewControllers + [importViewController]
+        if presenter?.isComplete == true, let params = presenter?.beginSummary() {
+            stack.append(makeSummaryViewController(importableCount: params.importable, totalCount: params.total))
+        }
+        navigationController.setViewControllers(stack, animated: animated)
     }
 }
 
@@ -91,12 +130,34 @@ extension GoogleImportFlowController: GoogleImportFlowControlling {
         )
     }
 
+    func toSummary(importableCount: Int, totalCount: Int) {
+        guard let navigationController else { return }
+        let hosting = makeSummaryViewController(importableCount: importableCount, totalCount: totalCount)
+        navigationController.pushViewController(hosting, animated: true)
+    }
+
     func toImportSummary(count: Int) {
         parent?.googleImportDidImport(count: count)
     }
 
     func close() {
         parent?.googleImportClose()
+    }
+}
+
+private extension GoogleImportFlowController {
+    func makeSummaryViewController(importableCount: Int, totalCount: Int) -> UIViewController {
+        let summary = CameraGoogleAuth(
+            importedCount: importableCount,
+            totalCount: totalCount,
+            action: { [weak presenter] in presenter?.handleImport() },
+            cancel: { [weak presenter] in presenter?.handleClose() }
+        )
+        let hosting = SummaryHostingController(
+            rootView: AnyView(summary.background(AppColor.backgroundsPrimaryElevated, ignoresSafeAreaEdges: .all))
+        )
+        hosting.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+        return hosting
     }
 }
 
@@ -128,5 +189,17 @@ extension GoogleImportFlowController: SelectFromGalleryFlowControllerParent {
 
     func galleryToGoogleAuthImport(data: GoogleScanData) {
         // Delivered through googleMultiscanFeedback.
+    }
+}
+
+private final class SummaryHostingController<Content: View>: UIHostingController<Content> {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 }

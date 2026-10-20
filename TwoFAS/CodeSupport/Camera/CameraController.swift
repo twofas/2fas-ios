@@ -40,7 +40,9 @@ final class CameraController {
     private weak var layer: AVCaptureVideoPreviewLayer?
     
     private let notificationCenter = NotificationCenter.default
-    
+
+    private let sessionQueue = DispatchQueue(label: "com.twofas.camera.session")
+
     weak var delegate: CameraControllerDelegate?
 
     var isRunning: Bool { captureSession?.isRunning ?? false }
@@ -144,10 +146,11 @@ final class CameraController {
         if tracksDeviceOrientation {
             UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         }
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.captureSession?.startRunning()
+        sessionQueue.async { [weak self] in
+            guard let session = self?.captureSession, !session.isRunning else { return }
+            session.startRunning()
             DispatchQueue.main.async {
-                self.delegate?.cameraStartedPreview()
+                self?.delegate?.cameraStartedPreview()
             }
         }
     }
@@ -158,9 +161,12 @@ final class CameraController {
         if tracksDeviceOrientation {
             UIDevice.current.endGeneratingDeviceOrientationNotifications()
         }
-        DispatchQueue.main.async {
-            self.captureSession?.stopRunning()
-            self.delegate?.cameraStoppedPreview()
+        sessionQueue.async { [weak self] in
+            guard let session = self?.captureSession, session.isRunning else { return }
+            session.stopRunning()
+            DispatchQueue.main.async {
+                self?.delegate?.cameraStoppedPreview()
+            }
         }
     }
     

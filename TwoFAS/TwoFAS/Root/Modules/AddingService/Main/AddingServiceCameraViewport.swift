@@ -50,6 +50,18 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
             )
             notificationCenter.addObserver(
                 self,
+                selector: #selector(resumeCamera),
+                name: AVCaptureSession.interruptionEndedNotification,
+                object: nil
+            )
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(resumeCamera),
+                name: UIApplication.didBecomeActiveNotification,
+                object: nil
+            )
+            notificationCenter.addObserver(
+                self,
                 selector: #selector(pauseCamera),
                 name: .lockScreenIsActive,
                 object: nil
@@ -99,7 +111,9 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
 
         @objc
         private func resumeCamera() {
+            guard !parent.cameraStopped else { return }
             camera?.start()
+            camera?.unfreeze()
         }
     }
 

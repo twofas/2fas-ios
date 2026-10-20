@@ -19,7 +19,6 @@
 
 import UIKit
 import SwiftUI
-import UniformTypeIdentifiers
 import Common
 
 protocol BackupAdvancedFlowControllerParent: AnyObject {}
@@ -28,18 +27,13 @@ protocol BackupAdvancedFlowControlling: AnyObject {
     func toDeleteBackup()
     func toExportKeys(url: URL)
     func toKeysError(_ message: String)
-    func toImportKeysWarning(confirm: @escaping () -> Void)
-    func toAskEncryptionTypeForImport(completion: @escaping (BackupAdvancedImportEncryptionType) -> Void)
-    func toCollectPasswordForImport(completion: @escaping (String) -> Void)
-    func toImportKeys(completion: @escaping (URL) -> Void)
-    func importKeysSuccess()
-    func toKeysImportError()
+    func toImportKeys()
 }
 
 final class BackupAdvancedFlowController: FlowController {
     private weak var parent: BackupAdvancedFlowControllerParent?
     private var navigationController: UINavigationController? { _viewController?.navigationController }
-    private var importKeysPickerDelegateHandler: BackupAdvancedImportKeysDocumentPickerDelegate?
+    private var importKeysFlow: ImportKeysFlowController?
 
     static func push(
         in navigationController: UINavigationController,
@@ -88,78 +82,18 @@ extension BackupAdvancedFlowController: BackupAdvancedFlowControlling {
         vc.present(alert, animated: true)
     }
 
-    func toImportKeysWarning(confirm: @escaping () -> Void) {
+    func toImportKeys() {
         guard let vc = _viewController else { return }
-        let alert = UIAlertController(
-            title: T.Backup.cloudBackup,
-            message: T.Backup.keysImportWarning,
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel))
-        alert.addAction(UIAlertAction(title: T.Commons.ok, style: .destructive) { _ in confirm() })
-        vc.present(alert, animated: true)
+        let flow = ImportKeysFlowController.make(presentingOn: vc, parent: self, showWarning: true)
+        importKeysFlow = flow
+        flow.start()
     }
+}
 
-    func toAskEncryptionTypeForImport(completion: @escaping (BackupAdvancedImportEncryptionType) -> Void) {
-        guard let vc = _viewController else { return }
-        let alert = UIAlertController(
-            title: T.Backup.encryptionTitle,
-            message: T.Backup.encryptionMethodFooter,
-            preferredStyle: .actionSheet
-        )
-        alert.addAction(UIAlertAction(title: T.Backup.keyImportSystemKey, style: .default) { _ in
-            completion(.systemKey)
-        })
-        alert.addAction(UIAlertAction(title: T.Backup.customPassword, style: .default) { _ in
-            completion(.customPassword)
-        })
-        alert.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel))
-        if let popover = alert.popoverPresentationController {
-            popover.sourceView = vc.view
-            popover.sourceRect = CGRect(
-                x: vc.view.bounds.midX,
-                y: vc.view.bounds.midY,
-                width: 0,
-                height: 0
-            )
-            popover.permittedArrowDirections = []
-        }
-        vc.present(alert, animated: true)
-    }
-
-    func toCollectPasswordForImport(completion: @escaping (String) -> Void) {
-        guard let vc = _viewController else { return }
-        let alert = UIAlertController(
-            title: T.Backup.enterPasswordDialogTitle,
-            message: nil,
-            preferredStyle: .alert
-        )
-        alert.addTextField { textField in
-            textField.isSecureTextEntry = true
-            textField.placeholder = T.Backup.password
-        }
-        alert.addAction(UIAlertAction(title: T.Commons.cancel, style: .cancel))
-        alert.addAction(UIAlertAction(title: T.Commons.apply, style: .default) { _ in
-            let password = alert.textFields?.first?.text ?? ""
-            completion(password)
-        })
-        vc.present(alert, animated: true)
-    }
-
-    func toImportKeys(completion: @escaping (URL) -> Void) {
-        guard let vc = _viewController else { return }
-        let delegate = BackupAdvancedImportKeysDocumentPickerDelegate(completion: completion) { [weak self] in
-            self?.importKeysPickerDelegateHandler = nil
-        }
-        importKeysPickerDelegateHandler = delegate
-        let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.data, .item])
-        picker.delegate = delegate
-        picker.allowsMultipleSelection = false
-        vc.present(picker, animated: true)
-    }
-
-    func importKeysSuccess() {
-        guard let vc = _viewController else { return }
+extension BackupAdvancedFlowController: ImportKeysFlowControllerParent {
+    func importKeysDidFinish(success: Bool) {
+        importKeysFlow = nil
+        guard success, let vc = _viewController else { return }
         let alert = UIAlertController(
             title: nil,
             message: T.Commons.done,
@@ -169,8 +103,8 @@ extension BackupAdvancedFlowController: BackupAdvancedFlowControlling {
         vc.present(alert, animated: true)
     }
 
-    func toKeysImportError() {
-        toKeysError(T.Backup.keysImportError)
+    func importKeysDidCancel() {
+        importKeysFlow = nil
     }
 }
 
@@ -180,23 +114,5 @@ extension BackupAdvancedFlowController: BackupDeleteFlowControllerParent {
         if didDelete {
             navigationController?.popViewController(animated: true)
         }
-    }
-}
-
-private final class BackupAdvancedImportKeysDocumentPickerDelegate: NSObject, UIDocumentPickerDelegate {
-    private let completion: (URL) -> Void
-    private let onDone: () -> Void
-    init(completion: @escaping (URL) -> Void, onDone: @escaping () -> Void) {
-        self.completion = completion
-        self.onDone = onDone
-    }
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        guard let url = urls.first else { return }
-        controller.dismiss(animated: true)
-        onDone()
-        completion(url)
-    }
-    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        onDone()
     }
 }

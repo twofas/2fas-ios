@@ -24,6 +24,12 @@ import CryptoKit
 import Common
 
 final class SyncEncryptionHandler {
+    enum CreationError: Error {
+        case cantCreateSalt
+        case cantCreateSystemKey
+        case missingUserKey
+    }
+    
     var keyDidChange: Callback?
     
     private let keychain = Keychain(service: Config.keychainSync)
@@ -54,46 +60,50 @@ final class SyncEncryptionHandler {
     func initialize() {
         if let savedSalt = keychain[data: saltKey] {
             cachedSalt = savedSalt
-        } else {
-            guard let createdSalt = createSalt() else {
-                Log("SyncEncryptionHandler: Can't create salt!", module: .cloudSync, severity: .error)
-                return
-            }
-            keychain[data: saltKey] = createdSalt
-            cachedSalt = createdSalt
         }
         
         if let savedSystemKey = keychain[data: systemKeyKey] {
             cachedSystemKey = SymmetricKey(data: savedSystemKey)
-        } else {
-            var keyData = Data(count: 32)
-            let result = keyData.withUnsafeMutableBytes {
-                SecRandomCopyBytes(kSecRandomDefault, 32, $0.baseAddress!)
-            }
-            guard result == errSecSuccess else {
-                Log("SyncEncryptionHandler: Can't create system key!", module: .cloudSync, severity: .error)
-                return
-            }
-            
-            keychain[data: systemKeyKey] = keyData
-            cachedSystemKey = SymmetricKey(data: keyData)
         }
         
-        if var usedKeyValue = usedKey() {
+        if let usedKeyValue = usedKey() {
             if usedKeyValue == .user {
                 if let userKeyValue = userKey() {
                     cachedUserKey = SymmetricKey(data: userKeyValue)
-                } else { // the key is missing - trying to recover
-                    usedKeyValue = .system
                 }
             }
             cachedUsedKey = usedKeyValue
-        } else {
-            cachedUsedKey = .system
-            setUsedKey(.system)
         }
         
         cachedEncryptionReference = encrypt(reference)
+    }
+    
+    func create() -> Result<Void, CreationError> {
+        guard let createdSalt = createSalt() else {
+            Log("SyncEncryptionHandler: Can't create salt!", module: .cloudSync, severity: .error)
+            return .failure(.cantCreateSalt)
+        }
+        keychain[data: saltKey] = createdSalt
+        cachedSalt = createdSalt
+        
+        var keyData = Data(count: 32)
+        let result = keyData.withUnsafeMutableBytes {
+            SecRandomCopyBytes(kSecRandomDefault, 32, $0.baseAddress!)
+        }
+        guard result == errSecSuccess else {
+            Log("SyncEncryptionHandler: Can't create system key!", module: .cloudSync, severity: .error)
+            return .failure(.cantCreateSystemKey)
+        }
+        
+        keychain[data: systemKeyKey] = keyData
+        cachedSystemKey = SymmetricKey(data: keyData)
+        
+        cachedUsedKey = .system
+        setUsedKey(.system)
+        
+        cachedEncryptionReference = encrypt(reference)
+        
+        return .success(())
     }
     
     func exportKeys() -> (salt: Data, systemKey: Data)? {
@@ -132,91 +142,24 @@ final class SyncEncryptionHandler {
         keychain[data: systemKeyKey] = nil
         userDefaults.removeObject(forKey: userKeyKey)
         setUsedKey(.system)
-        initialize()
+        _ = create()
     }
 }
 
-// MARK: - Deriving the user's key off the main thread
-
-extension SyncEncryptionHandler {
-    /// The key of `password`, derived off the calling thread – deriving takes a noticeable moment. Has to be
-    /// called on the main thread; `completion` is called there too, with `nil` when the key can't be derived.
-    func deriveUserKey(for password: String, completion: @escaping (Data?) -> Void) {
-        // Read here – deriving touches nothing of the handler
-        let salt = cachedSalt
-        DispatchQueue.global(qos: .userInitiated).async {
-            let key = Self.deriveKey(for: password, salt: salt)
-            DispatchQueue.main.async {
-                completion(key)
-            }
+extension SyncEncryptionHandler: SyncEncryptionHandling {
+    var hasCompleteEncryptionElements: Bool {
+        if usedKey() == .user {
+            hasSystemEncryptionElements && userKey() != nil
+        } else {
+            hasSystemEncryptionElements
         }
     }
     
-    /// `verifyUserPassword(_:)` with the key derived off the calling thread. Has to be called on the main thread;
-    /// `completion` is called there too.
-    func verifyUserPassword(_ password: String, completion: @escaping (Bool) -> Void) {
-        guard canVerifyUserPassword else {
-            completion(false)
-            return
-        }
-        deriveUserKey(for: password) { [weak self] key in
-            completion(self?.isUserKeyValid(key) ?? false)
-        }
+    var hasSystemEncryptionElements: Bool {
+        cachedSalt != nil && cachedSystemKey != nil
     }
     
-    /// Touches nothing of the handler – can be called on any thread
-    static func deriveKey(for password: String, salt: Data?) -> Data? {
-        guard let hexPassword = normalizeStringIntoHEXData(password) else {
-            Log("SyncEncryptionHandler: Can't create HEX from Password", module: .cloudSync, severity: .error)
-            return nil
-        }
-        
-        guard let passwordData = Data(hexString: hexPassword) else {
-            Log("SyncEncryptionHandler: Can't create HEX from Key", module: .cloudSync, severity: .error)
-            return nil
-        }
-        guard let salt, salt.count >= 16 else {
-            Log("SyncEncryptionHandler: Cant' get salt!", module: .cloudSync, severity: .error)
-            return nil
-        }
-        let partOfSalt = Data(salt.prefix(16))
-        do {
-            let (rawHash, _) = try Argon2.hash(
-                iterations: UInt32(3),
-                memoryInKiB: UInt32(64 * 1024),
-                threads: UInt32(4),
-                password: passwordData,
-                salt: partOfSalt,
-                desiredLength: 32,
-                variant: .id,
-                version: .v13
-            )
-            return rawHash
-        } catch {
-            Log("SyncEncryptionHandler: Can't create key, error: \(error)", module: .cloudSync, severity: .error)
-        }
-        return nil
-    }
-    
-    private static func normalizeStringIntoHEXData(_ string: String) -> String? {
-        let normalized = string.decomposedStringWithCompatibilityMapping
-        return normalized.data(using: .utf8)?
-            .hexEncodedString()
-    }
-    
-    /// What `setUserPassword(_:)` does with the key of the password
-    func setUserKey(_ key: Data) {
-        saveUserKey(key)
-        cachedUserKey = SymmetricKey(data: key)
-        
-        setUsedKey(.user)
-        cachedUsedKey = .user
-        
-        cachedEncryptionReference = encrypt(reference)
-        keyDidChange?()
-    }
-    
-    private var canVerifyUserPassword: Bool {
+    func verifyUserPassword(_ password: String) -> Bool {
         guard usedKey() == .user else {
             Log(
                 "SyncEncryptionHandler: Using system encryption - can't verify password",
@@ -225,7 +168,7 @@ extension SyncEncryptionHandler {
             )
             return false
         }
-        guard cachedEncryptionReference != nil else {
+        guard let cachedEncryptionReference else {
             Log(
                 "SyncEncryptionHandler: No cached encryption reference",
                 module: .cloudSync,
@@ -233,13 +176,7 @@ extension SyncEncryptionHandler {
             )
             return false
         }
-        return true
-    }
-    
-    /// Whether `key` opens the current encryption reference
-    private func isUserKeyValid(_ key: Data?) -> Bool {
-        guard let cachedEncryptionReference else { return false }
-        guard let key else {
+        guard let key = generateKey(for: password) else {
             Log("SyncEncryptionHandler: Can't recreate user key for verification", module: .cloudSync, severity: .error)
             return false
         }
@@ -249,20 +186,20 @@ extension SyncEncryptionHandler {
         }
         return data == reference
     }
-}
-
-extension SyncEncryptionHandler: SyncEncryptionHandling {
-    func verifyUserPassword(_ password: String) -> Bool {
-        guard canVerifyUserPassword else { return false }
-        return isUserKeyValid(generateKey(for: password))
-    }
     
     func setUserPassword(_ password: String) {
         guard let key = generateKey(for: password) else {
             Log("SyncEncryptionHandler: Can't create user key!", module: .cloudSync, severity: .error)
             return
         }
-        setUserKey(key)
+        saveUserKey(key)
+        cachedUserKey = SymmetricKey(data: key)
+        
+        setUsedKey(.user)
+        cachedUsedKey = .user
+        
+        cachedEncryptionReference = encrypt(reference)
+        keyDidChange?()
     }
     
     func setSystemKey() {
@@ -350,7 +287,41 @@ private extension SyncEncryptionHandler {
     }
     
     func generateKey(for password: String) -> Data? {
-        Self.deriveKey(for: password, salt: cachedSalt)
+        guard let hexPassword = normalizeStringIntoHEXData(password) else {
+            Log("SyncEncryptionHandler: Can't create HEX from Password", module: .cloudSync, severity: .error)
+            return nil
+        }
+        
+        guard let passwordData = Data(hexString: hexPassword) else {
+            Log("SyncEncryptionHandler: Can't create HEX from Key", module: .cloudSync, severity: .error)
+            return nil
+        }
+        guard let partOfSalt = cachedSalt?[0...15] else {
+            Log("SyncEncryptionHandler: Cant' get salt!", module: .cloudSync, severity: .error)
+            return nil
+        }
+        do {
+            let (rawHash, _) = try Argon2.hash(
+                iterations: UInt32(3),
+                memoryInKiB: UInt32(64 * 1024),
+                threads: UInt32(4),
+                password: passwordData,
+                salt: partOfSalt,
+                desiredLength: 32,
+                variant: .id,
+                version: .v13
+            )
+            return rawHash
+        } catch {
+            Log("SyncEncryptionHandler: Can't create key, error: \(error)", module: .cloudSync, severity: .error)
+        }
+        return nil
+    }
+    
+    private func normalizeStringIntoHEXData(_ string: String) -> String? {
+        let normalized = string.decomposedStringWithCompatibilityMapping
+        return normalized.data(using: .utf8)?
+            .hexEncodedString()
     }
     
     private func createSalt() -> Data? {

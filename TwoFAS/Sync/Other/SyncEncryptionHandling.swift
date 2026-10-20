@@ -21,6 +21,9 @@ import Foundation
 
 protocol SyncEncryptionHandling: AnyObject {
     var encryptionReference: Data? { get }
+    var hasCompleteEncryptionElements: Bool { get }
+    var hasSystemEncryptionElements: Bool { get }
+    
     func encrypt(_ data: Data) -> Data?
     func decrypt(_ data: Data) -> Data?
     func verifyUserPassword(_ password: String) -> Bool

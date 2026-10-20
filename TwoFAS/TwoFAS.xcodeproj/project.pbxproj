@@ -1046,6 +1046,12 @@
 		C2DC57EC3083C94A00172343 /* GoogleImportFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC57EB3083C94A00172343 /* GoogleImportFlowController.swift */; };
 		C2DC57EE3084FDF200172343 /* TFSaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC57ED3084FDF200172343 /* TFSaveButton.swift */; };
 		C2DC57EF3084FDF200172343 /* TFSaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC57ED3084FDF200172343 /* TFSaveButton.swift */; };
+		C2DC57F2308577AE00172343 /* ImportKeysModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC57F1308577AE00172343 /* ImportKeysModuleInteractor.swift */; };
+		C2DC57F4308577C800172343 /* ImportKeysFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC57F3308577C800172343 /* ImportKeysFlowController.swift */; };
+		C2DC57F7308577D200172343 /* MissingKeyModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC57F6308577D200172343 /* MissingKeyModuleInteractor.swift */; };
+		C2DC57F9308577DD00172343 /* MissingKeyPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC57F8308577DD00172343 /* MissingKeyPresenter.swift */; };
+		C2DC57FB308577EB00172343 /* MissingKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC57FA308577EB00172343 /* MissingKeyView.swift */; };
+		C2DC57FD308577FA00172343 /* MissingKeyFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC57FC308577FA00172343 /* MissingKeyFlowController.swift */; };
 		C2DCAA802FF554B100FAB19D /* TFInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DCAA7F2FF5549E00FAB19D /* TFInfoView.swift */; };
 		C2DCAA812FF554B100FAB19D /* TFInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DCAA7F2FF5549E00FAB19D /* TFInfoView.swift */; };
 		C2DDEB25289F3D5200011712 /* TokensViewEmptyListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */; };
@@ -2809,6 +2815,12 @@
 		C2DC57E93083C91400172343 /* GoogleImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleImportView.swift; sourceTree = "<group>"; };
 		C2DC57EB3083C94A00172343 /* GoogleImportFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleImportFlowController.swift; sourceTree = "<group>"; };
 		C2DC57ED3084FDF200172343 /* TFSaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFSaveButton.swift; sourceTree = "<group>"; };
+		C2DC57F1308577AE00172343 /* ImportKeysModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportKeysModuleInteractor.swift; sourceTree = "<group>"; };
+		C2DC57F3308577C800172343 /* ImportKeysFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportKeysFlowController.swift; sourceTree = "<group>"; };
+		C2DC57F6308577D200172343 /* MissingKeyModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissingKeyModuleInteractor.swift; sourceTree = "<group>"; };
+		C2DC57F8308577DD00172343 /* MissingKeyPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissingKeyPresenter.swift; sourceTree = "<group>"; };
+		C2DC57FA308577EB00172343 /* MissingKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissingKeyView.swift; sourceTree = "<group>"; };
+		C2DC57FC308577FA00172343 /* MissingKeyFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissingKeyFlowController.swift; sourceTree = "<group>"; };
 		C2DCAA7F2FF5549E00FAB19D /* TFInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFInfoView.swift; sourceTree = "<group>"; };
 		C2DDEB24289F3D5200011712 /* TokensViewEmptyListScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensViewEmptyListScreen.swift; sourceTree = "<group>"; };
 		C2DEC7A226767B28006DB1E6 /* SectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHandler.swift; sourceTree = "<group>"; };
@@ -3925,13 +3937,6 @@
 			path = DataTypes;
 			sourceTree = "<group>";
 		};
-		C2404862276550840076376E /* PasswordInput */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = PasswordInput;
-			sourceTree = "<group>";
-		};
 		C2404863276559990076376E /* ImporterOpenFile */ = {
 			isa = PBXGroup;
 			children = (
@@ -4831,6 +4836,7 @@
 				C284AF6C2760112900FEE810 /* BackupDelete */,
 				C2AC21FA27660DEA00271402 /* Importer */,
 				C2AC21FF276611EC00271402 /* Exporter */,
+				C2DC57F0308577AE00172343 /* ImportKeys */,
 			);
 			path = Backup;
 			sourceTree = "<group>";
@@ -5110,7 +5116,6 @@
 				C24F81752FB90DFF00339C8B /* CancellableTimer.swift */,
 				C2D50B5325C719EC00CBB959 /* Camera */,
 				C2FDEE55279C8FE8002CAB9E /* SwiftUI */,
-				C2404862276550840076376E /* PasswordInput */,
 				C2EC83DC21E69B2A00DF5C49 /* Theming */,
 				C2DD28C521D5591500034476 /* Extensions */,
 				C26B7F0D23CB719900C6AAE2 /* Camera */,
@@ -5402,6 +5407,26 @@
 				C2DC57E93083C91400172343 /* GoogleImportView.swift */,
 			);
 			path = GoogleImport;
+			sourceTree = "<group>";
+		};
+		C2DC57F0308577AE00172343 /* ImportKeys */ = {
+			isa = PBXGroup;
+			children = (
+				C2DC57F1308577AE00172343 /* ImportKeysModuleInteractor.swift */,
+				C2DC57F3308577C800172343 /* ImportKeysFlowController.swift */,
+			);
+			path = ImportKeys;
+			sourceTree = "<group>";
+		};
+		C2DC57F5308577D200172343 /* MissingKey */ = {
+			isa = PBXGroup;
+			children = (
+				C2DC57F6308577D200172343 /* MissingKeyModuleInteractor.swift */,
+				C2DC57F8308577DD00172343 /* MissingKeyPresenter.swift */,
+				C2DC57FA308577EB00172343 /* MissingKeyView.swift */,
+				C2DC57FC308577FA00172343 /* MissingKeyFlowController.swift */,
+			);
+			path = MissingKey;
 			sourceTree = "<group>";
 		};
 		C2DD28C421D5590600034476 /* Controls */ = {
@@ -5889,6 +5914,7 @@
 				C21347852D98794700D325F6 /* MigrationResult.swift */,
 				C21347802D98785000D325F6 /* EncryptedByUserPasswordSync */,
 				C2F9E15B2D982D75004B7DFA /* MigrationToNewestVersion */,
+				C2DC57F5308577D200172343 /* MissingKey */,
 			);
 			path = SyncMigration;
 			sourceTree = "<group>";
@@ -7121,6 +7147,7 @@
 				C25AD8A4300A455200D9ABFB /* DebugModuleInteractor.swift in Sources */,
 				C2D4777E2FB3C41C0057CA25 /* LoginPresenter.swift in Sources */,
 				C2C0A7FC2DA2B46D000A1772 /* CloudState+.swift in Sources */,
+				C2DC57FB308577EB00172343 /* MissingKeyView.swift in Sources */,
 				C25C661428BADAB0008EC66A /* AboutFlowController.swift in Sources */,
 				C2E2364E2EC9230300676709 /* EncryptedByUserPasswordSyncNavigationFlowController.swift in Sources */,
 				C20E60FB2818971300AB002E /* PushNotificationPermissionPresenter.swift in Sources */,
@@ -7240,6 +7267,7 @@
 				C21B1B272A8811920021CAF1 /* TOTPAdapter.swift in Sources */,
 				C2E7C3492ADB021500478D89 /* CameraDelegate.swift in Sources */,
 				C2F7FE032A8AB3D2004B2C95 /* AddingServiceManuallyPresenter.swift in Sources */,
+				C2DC57F2308577AE00172343 /* ImportKeysModuleInteractor.swift in Sources */,
 				C28C441724A67B7000534B30 /* CommonSearchBar.swift in Sources */,
 				C2418F6D3006E19D008B674A /* BrowserExtensionMainView.swift in Sources */,
 				C28B38C927CD784D00BD4A96 /* RefreshTokenCounter.swift in Sources */,
@@ -7250,6 +7278,7 @@
 				C21347822D98786B00D325F6 /* EncryptedByUserPasswordSyncView.swift in Sources */,
 				C26BCE03281013A700CA6A9A /* SelectServiceFlowController.swift in Sources */,
 				C21B40DC28C520E400348E04 /* ImporterOpenFileError.swift in Sources */,
+				C2DC57FD308577FA00172343 /* MissingKeyFlowController.swift in Sources */,
 				C2529CC02E5C757D00515AB7 /* TwoFASControlWidget.swift in Sources */,
 				C2FDEE5F279CC316002CAB9E /* CameraScannerPresenter.swift in Sources */,
 				C2BE805B2811DF3D009CBC4A /* AuthRequestsFlowController.swift in Sources */,
@@ -7373,11 +7402,13 @@
 				C2A7B98E26B706B000055738 /* TwoFASWidget.intentdefinition in Sources */,
 				C2EA566B2856925B00026BFE /* AskForAuthView.swift in Sources */,
 				C2830D7C293D49E700B3DDAF /* TokensViewController+CommonSearchDataSourceSearchable.swift in Sources */,
+				C2DC57F4308577C800172343 /* ImportKeysFlowController.swift in Sources */,
 				C2B39E5429F5880600EC31F6 /* TokensCellKind.swift in Sources */,
 				C2F1A0062EA0000100ABCDEF /* TokensCellMetrics.swift in Sources */,
 				C215083B300307F6008B66E2 /* ExporterMainScreenView.swift in Sources */,
 				C2AB92CD276655EF00698382 /* ExporterPINPresenter.swift in Sources */,
 				C231856C2EC678CA00DD1ABE /* BackupSetPasswordModalInteractor.swift in Sources */,
+				C2DC57F7308577D200172343 /* MissingKeyModuleInteractor.swift in Sources */,
 				C2FDEE54279C8F39002CAB9E /* CameraGoogleAuth.swift in Sources */,
 				C2F51EFD27DAABD300A67C73 /* BrowserExtensionPairingSuccessfulView.swift in Sources */,
 				C2625F9228BBB87700D84C5C /* AboutModels.swift in Sources */,
@@ -7467,6 +7498,7 @@
 				C296D4D22A89709E005F05E2 /* PushNotificationPermissionNavigationFlowController.swift in Sources */,
 				C2B1208F29D76BD10020281E /* AppearancePresenter+Menu.swift in Sources */,
 				C2BC3FC92B94E70F004C4BA0 /* NewPINNavigationFlowController.swift in Sources */,
+				C2DC57F9308577DD00172343 /* MissingKeyPresenter.swift in Sources */,
 				C2B39E5929F5BD7800EC31F6 /* TokensCategory.swift in Sources */,
 				C26BCE01281010A000CA6A9A /* SelectServiceModuleInteractor.swift in Sources */,
 				C2508E222753D1EE0072C564 /* SettingsMenuModels.swift in Sources */,

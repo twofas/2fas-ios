@@ -42,6 +42,9 @@ public protocol SyncMigrationHandling: AnyObject {
     func setMissingUserPassword(_ password: String)
     
     func verifyUserPassword(_ password: String) -> Bool
+    
+    var showCantCreateEncryptionElements: (() -> Void)? { get set }
+    var showMissingKey: ((CloudCurrentState.NotAvailableReason.EncryptionError) -> Void)? { get set }
 }
 
 final class SyncMigrationHandler {
@@ -73,6 +76,9 @@ final class SyncMigrationHandler {
         case .user: .user
         }
     }
+    
+    var showCantCreateEncryptionElements: (() -> Void)?
+    var showMissingKey: ((CloudCurrentState.NotAvailableReason.EncryptionError) -> Void)?
     
     private var canChangePassword = false
     private var passwordChangePending: SyncMigrationChangeType?
@@ -191,6 +197,12 @@ extension SyncMigrationHandler: SyncMigrationHandling {
             case .incorrectService(let serviceName):
                 canChangePassword = false
                 showiCloudIncorrectSerice?(serviceName)
+            case .encryptionError(let encryptionError):
+                canChangePassword = false
+                switch encryptionError {
+                case .cantCreateEncryptionElements: showCantCreateEncryptionElements?()
+                default: showMissingKey?(encryptionError)
+                }
             default:
                 canChangePassword = false
                 showMigrationGeneralError?()

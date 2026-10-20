@@ -39,6 +39,8 @@ protocol MainFlowControlling: AnyObject {
     func toNeverVersionOfiCloud()
     func toMigrationEndedSuccessfuly()
     func toMigrationError(_ error: CloudState.NotAvailableReason)
+    func toCantCreateEncryptionElements()
+    func toMissingKey(_ error: CloudState.NotAvailableReason.EncryptionError)
 }
 
 final class MainFlowController: FlowController {
@@ -175,6 +177,36 @@ extension MainFlowController: MainFlowControlling {
     
     func toMigrationError(_ error: CloudState.NotAvailableReason) {
         syncMigrationHandler?(.error(error))
+    }
+
+    func toCantCreateEncryptionElements() {
+        let alertTitle = T.Commons.error
+        let alertMessage = "Can't create encryption elements. Try to reboot the device. If problem persist check if you have disk space and iCloud Keychain is enabled"
+        
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: T.Commons.ok, style: .default)
+        
+        alertController.addAction(okButton)
+        guard viewController.presentedViewController == nil else { return }
+        
+        viewController.present(alertController, animated: true, completion: nil)
+    }
+
+    func toMissingKey(_ error: CloudState.NotAvailableReason.EncryptionError) {
+        guard viewController.presentedViewController == nil else { return }
+        MissingKeyFlowController.present(on: viewController, parent: self, encryptionError: error)
+    }
+}
+
+extension MainFlowController: MissingKeyFlowControllerParent {
+    func missingKeyClose() {
+        _viewController.dismiss(animated: true)
+    }
+
+    func missingKeyResolved() {
+        _viewController.dismiss(animated: true) { [weak self] in
+            self?.viewController.presenter.handleMissingKeyResolved()
+        }
     }
 }
 

@@ -413,6 +413,18 @@ final class ModuleInteractorFactory {
             cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "")
         )
     }
+
+    func missingKeyModuleInteractor() -> MissingKeyModuleInteracting {
+        MissingKeyModuleInteractor(
+            cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "")
+        )
+    }
+
+    func importKeysModuleInteractor() -> ImportKeysModuleInteracting {
+        ImportKeysModuleInteractor(
+            cloudBackup: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: "")
+        )
+    }
     
     func manageWatchModuleInteractor() -> ManageWatchModuleInteracting {
         ManageWatchModuleInteractor(manageWatch: InteractorFactory.shared.watchPairingInteractor())

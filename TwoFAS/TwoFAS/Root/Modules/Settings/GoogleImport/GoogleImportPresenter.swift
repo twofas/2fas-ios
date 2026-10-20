@@ -34,7 +34,6 @@ final class GoogleImportPresenter {
     var showBatchError = false
     var alreadyScanned = false
 
-    
     var scannedList: [Bool] {
         var list: [Bool] = Array(repeating: false, count: totalCount)
         pages.forEach { key, _ in

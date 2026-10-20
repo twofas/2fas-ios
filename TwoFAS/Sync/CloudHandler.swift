@@ -26,6 +26,13 @@ import CommonWatch
 
 public enum CloudCurrentState: Equatable {
     public enum NotAvailableReason: Equatable {
+        public enum EncryptionError: Equatable {
+            case cantCreateEncryptionElements
+            case missingSystemKey
+            case missingUserKey
+            case missingAllKeys
+        }
+        
         case overQuota
         case disabledByUser
         case useriCloudProblem
@@ -35,6 +42,7 @@ public enum CloudCurrentState: Equatable {
         case incorrectService(serviceName: String)
         case cloudEncryptedUser
         case cloudEncryptedSystem
+        case encryptionError(encryptionError: EncryptionError)
     }
     
     public enum Sync: Equatable {
@@ -72,6 +80,15 @@ public enum CloudCurrentState: Equatable {
                 return .disabledNotAvailable(reason: .cloudEncryptedUser)
             case .cloudEncryptedSystem:
                 return .disabledNotAvailable(reason: .cloudEncryptedSystem)
+            case .encryptionError(let encryptionError):
+                return .disabledNotAvailable(reason: .encryptionError(encryptionError: {
+                    switch encryptionError {
+                    case .cantCreateEncryptionElements: .cantCreateEncryptionElements
+                    case .missingSystemKey: .missingSystemKey
+                    case .missingUserKey: .missingUserKey
+                    case .missingAllKeys: .missingAllKeys
+                    }
+                }()))
             }
         case .disabledAvailable:
             return .disabledAvailable
@@ -193,6 +210,7 @@ final class CloudHandler: CloudHandlerType {
         
         requirementCheckHandler.newerVersion = { [weak self] in self?.newerVersionOfCloud() }
         requirementCheckHandler.cloudEncrypted = { [weak self] in self?.cloudIsEncrypted($0) }
+        requirementCheckHandler.encryptionError = { [weak self] in self?.encryptionError($0) }
     }
     
     func registerForStateChange(_ listener: @escaping CloudHandlerStateListener, with id: String) {
@@ -478,6 +496,26 @@ final class CloudHandler: CloudHandlerType {
             currentState = .disabledNotAvailable(reason: .cloudEncryptedSystem)
         case .user:
             currentState = .disabledNotAvailable(reason: .cloudEncryptedUser)
+        }
+    }
+    
+    private func encryptionError(_ error: EncryptionError) {
+        Log("Cloud Handler - encryption error", module: .cloudSync)
+        setDisabled()
+        cloudAvailability.clear()
+        switch error {
+        case .cantCreateEncryptionElements:
+            currentState =
+                .disabledNotAvailable(reason: .encryptionError(encryptionError: .cantCreateEncryptionElements))
+        case .missingSystemKey:
+            currentState =
+                .disabledNotAvailable(reason: .encryptionError(encryptionError: .missingSystemKey))
+        case .missingUserKey:
+            currentState =
+                .disabledNotAvailable(reason: .encryptionError(encryptionError: .missingUserKey))
+        case .missingAllKeys:
+            currentState =
+                .disabledNotAvailable(reason: .encryptionError(encryptionError: .missingAllKeys))
         }
     }
 }

@@ -195,7 +195,8 @@ protocol MainRepository: AnyObject {
     func cloudPackKeys(salt: Data, systemKey: Data) -> Data?
     func cloudUnpackKeys(from jsonData: Data) -> (salt: Data, systemKey: Data)?
     func cloudReloadKeys()
-    
+    func cloudCreateEncryptionElements()
+
     // MARK: - Import
     var fileURL: URL? { get set }
     func countNewServices(from services: [ServiceData]) -> Int

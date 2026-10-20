@@ -18,9 +18,15 @@
 //
 
 import CloudKit
+#if os(iOS)
+import Common
+#elseif os(watchOS)
+import CommonWatch
+#endif
 
 protocol RequirementCheckHandling: AnyObject {
     var newerVersion: (() -> Void)? { get set }
     var cloudEncrypted: ((Info.Encryption?) -> Void)? { get set }
+    var encryptionError: ((EncryptionError) -> Void)? { get set }
     func checkIfStopSync(using records: [CKRecord], migrationPending: Bool, encryptionPending: Bool) -> Bool
 }

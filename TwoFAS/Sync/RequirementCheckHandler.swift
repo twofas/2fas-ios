@@ -24,6 +24,7 @@ import Common
 final class RequirementCheckHandler {
     var newerVersion: (() -> Void)?
     var cloudEncrypted: ((Info.Encryption?) -> Void)?
+    var encryptionError: ((EncryptionError) -> Void)?
     
     private let encryptionHandler: SyncEncryptionHandler
     private let infoHandler: InfoHandler
@@ -45,30 +46,67 @@ extension RequirementCheckHandler: RequirementCheckHandling {
                 return true
             }
             if !migrationPending && !encryptionPending {
-                if encryptionHandler.encryptionType.rawValue == info.encryption {
-                    if let infoEncryptionReference = info.encryptionReference,
-                       let infoDecryptedReference = encryptionHandler.decrypt(infoEncryptionReference),
-                       let encryptionReference,
-                       let decryptedReference = encryptionHandler.decrypt(encryptionReference) {
-                        if infoDecryptedReference != decryptedReference {
+                if info.encryption.isEmpty {
+                    if !firstEncryptionRun() {
+                        encryptionError?(.cantCreateEncryptionElements)
+                        return true
+                    }
+                } else {
+                    if encryptionHandler.encryptionType.rawValue == info.encryption {
+                        if !encryptionHandler.hasCompleteEncryptionElements {
+                            if encryptionHandler.encryptionType == .user {
+                                if encryptionHandler.hasSystemEncryptionElements {
+                                    encryptionError?(.missingUserKey)
+                                } else {
+                                    encryptionError?(.missingAllKeys)
+                                }
+                            } else {
+                                encryptionError?(.missingSystemKey)
+                            }
+                            return true
+                        }
+                        
+                        if let infoEncryptionReference = info.encryptionReference,
+                           let infoDecryptedReference = encryptionHandler.decrypt(infoEncryptionReference),
+                           let encryptionReference,
+                           let decryptedReference = encryptionHandler.decrypt(encryptionReference) {
+                            if infoDecryptedReference != decryptedReference {
+                                Log(
+                                    "RequirementCheckHandler - STOP: Different encryption reference!",
+                                    module: .cloudSync
+                                )
+                                cloudEncrypted?(Info.Encryption(rawValue: info.encryption))
+                                return true
+                            }
+                        } else { // if we have info.encryption then this path is set also - we shouldn't enter here ever
                             Log("RequirementCheckHandler - STOP: Different encryption reference!", module: .cloudSync)
                             cloudEncrypted?(Info.Encryption(rawValue: info.encryption))
                             return true
                         }
                     } else {
-                        Log("RequirementCheckHandler - STOP: Different encryption reference!", module: .cloudSync)
+                        Log("RequirementCheckHandler - STOP: Different encryption type!", module: .cloudSync)
                         cloudEncrypted?(Info.Encryption(rawValue: info.encryption))
                         return true
                     }
-                } else {
-                    Log("RequirementCheckHandler - STOP: Different encryption type!", module: .cloudSync)
-                    cloudEncrypted?(Info.Encryption(rawValue: info.encryption))
-                    return true
                 }
+            }
+        } else {
+            if !firstEncryptionRun() {
+                encryptionError?(.cantCreateEncryptionElements)
+                return true
             }
         }
         Log("RequirementCheckHandler - everything is fine. Continuing ...", module: .cloudSync)
         return false
+    }
+    
+    // First run on clean iCloud
+    // Set encryption to .system and create the key
+    private func firstEncryptionRun() -> Bool {
+        switch encryptionHandler.create() {
+        case .success: true
+        case .failure: false
+        }
     }
     
     private var encryptionReference: Data? {

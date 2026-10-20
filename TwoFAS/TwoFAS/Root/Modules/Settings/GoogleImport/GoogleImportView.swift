@@ -44,7 +44,9 @@ struct GoogleImportView: View {
                                         .foregroundStyle(.labelsPrimary)
                                         .multilineTextAlignment(.center)
 
-                                    Text(T.Tokens.googleImportScannedCount(presenter.scannedCount, presenter.totalCount))
+                                    Text(
+                                        T.Tokens.googleImportScannedCount(presenter.scannedCount, presenter.totalCount)
+                                    )
                                         .textStyle(.body)
                                         .foregroundStyle(.labelsSecondary)
                                         .multilineTextAlignment(.center)

@@ -24,6 +24,12 @@ import CryptoKit
 import Common
 
 final class SyncEncryptionHandler {
+    enum CreationError: Error {
+        case cantCreateSalt
+        case cantCreateSystemKey
+        case missingUserKey
+    }
+    
     var keyDidChange: Callback?
     
     private let keychain = Keychain(service: Config.keychainSync)
@@ -54,46 +60,50 @@ final class SyncEncryptionHandler {
     func initialize() {
         if let savedSalt = keychain[data: saltKey] {
             cachedSalt = savedSalt
-        } else {
-            guard let createdSalt = createSalt() else {
-                Log("SyncEncryptionHandler: Can't create salt!", module: .cloudSync, severity: .error)
-                return
-            }
-            keychain[data: saltKey] = createdSalt
-            cachedSalt = createdSalt
         }
         
         if let savedSystemKey = keychain[data: systemKeyKey] {
             cachedSystemKey = SymmetricKey(data: savedSystemKey)
-        } else {
-            var keyData = Data(count: 32)
-            let result = keyData.withUnsafeMutableBytes {
-                SecRandomCopyBytes(kSecRandomDefault, 32, $0.baseAddress!)
-            }
-            guard result == errSecSuccess else {
-                Log("SyncEncryptionHandler: Can't create system key!", module: .cloudSync, severity: .error)
-                return
-            }
-            
-            keychain[data: systemKeyKey] = keyData
-            cachedSystemKey = SymmetricKey(data: keyData)
         }
         
-        if var usedKeyValue = usedKey() {
+        if let usedKeyValue = usedKey() {
             if usedKeyValue == .user {
                 if let userKeyValue = userKey() {
                     cachedUserKey = SymmetricKey(data: userKeyValue)
-                } else { // the key is missing - trying to recover
-                    usedKeyValue = .system
                 }
             }
             cachedUsedKey = usedKeyValue
-        } else {
-            cachedUsedKey = .system
-            setUsedKey(.system)
         }
         
         cachedEncryptionReference = encrypt(reference)
+    }
+    
+    func create() -> Result<Void, CreationError> {
+        guard let createdSalt = createSalt() else {
+            Log("SyncEncryptionHandler: Can't create salt!", module: .cloudSync, severity: .error)
+            return .failure(.cantCreateSalt)
+        }
+        keychain[data: saltKey] = createdSalt
+        cachedSalt = createdSalt
+        
+        var keyData = Data(count: 32)
+        let result = keyData.withUnsafeMutableBytes {
+            SecRandomCopyBytes(kSecRandomDefault, 32, $0.baseAddress!)
+        }
+        guard result == errSecSuccess else {
+            Log("SyncEncryptionHandler: Can't create system key!", module: .cloudSync, severity: .error)
+            return .failure(.cantCreateSystemKey)
+        }
+        
+        keychain[data: systemKeyKey] = keyData
+        cachedSystemKey = SymmetricKey(data: keyData)
+        
+        cachedUsedKey = .system
+        setUsedKey(.system)
+        
+        cachedEncryptionReference = encrypt(reference)
+        
+        return .success(())
     }
     
     func exportKeys() -> (salt: Data, systemKey: Data)? {
@@ -132,11 +142,23 @@ final class SyncEncryptionHandler {
         keychain[data: systemKeyKey] = nil
         userDefaults.removeObject(forKey: userKeyKey)
         setUsedKey(.system)
-        initialize()
+        _ = create()
     }
 }
 
 extension SyncEncryptionHandler: SyncEncryptionHandling {
+    var hasCompleteEncryptionElements: Bool {
+        if usedKey() == .user {
+            hasSystemEncryptionElements && userKey() != nil
+        } else {
+            hasSystemEncryptionElements
+        }
+    }
+    
+    var hasSystemEncryptionElements: Bool {
+        cachedSalt != nil && cachedSystemKey != nil
+    }
+    
     func verifyUserPassword(_ password: String) -> Bool {
         guard usedKey() == .user else {
             Log(

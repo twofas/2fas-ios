@@ -29,9 +29,13 @@ protocol MainModuleInteracting: AnyObject {
     var showNeverVersionOfiCloud: (() -> Void)? { get set }
     var migrationEndedSuccessfuly: (() -> Void)? { get set }
     var migrationError: ((CloudState.NotAvailableReason) -> Void)? { get set }
-    
+
+    var showCantCreateEncryptionElements: (() -> Void)? { get set }
+    var showMissingKey: ((CloudState.NotAvailableReason.EncryptionError) -> Void)? { get set }
+
     func switchCloudEncryptionToSystemKey()
-    
+    func enableBackup()
+
     var secretSyncError: ((String) -> Void)? { get set }
     var isAppLocked: Bool { get }
     var isBrowserExtensionAllowed: Bool { get }
@@ -65,7 +69,10 @@ final class MainModuleInteractor {
     var showNeverVersionOfiCloud: (() -> Void)?
     var migrationEndedSuccessfuly: (() -> Void)?
     var migrationError: ((CloudState.NotAvailableReason) -> Void)?
-    
+
+    var showCantCreateEncryptionElements: (() -> Void)?
+    var showMissingKey: ((CloudState.NotAvailableReason.EncryptionError) -> Void)?
+
     var secretSyncError: ((String) -> Void)?
     
     var isAppLocked: Bool {
@@ -133,6 +140,10 @@ final class MainModuleInteractor {
             self?.migrationEndedSuccessfuly?() // common method
         }
         syncMigrationInteractor.migrationError = { [weak self] error in self?.migrationError?(error) }
+        syncMigrationInteractor.showCantCreateEncryptionElements = { [weak self] in
+            self?.showCantCreateEncryptionElements?()
+        }
+        syncMigrationInteractor.showMissingKey = { [weak self] error in self?.showMissingKey?(error) }
     }
 }
 
@@ -177,6 +188,10 @@ extension MainModuleInteractor: MainModuleInteracting {
 
     func switchCloudEncryptionToSystemKey() {
         syncMigrationInteractor.switchLocallyToUseSystemPassword()
+    }
+
+    func enableBackup() {
+        cloudBackupStateInteractor.enableBackup()
     }
     
     func setNotificationGroupID() {

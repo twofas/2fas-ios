@@ -127,10 +127,10 @@ private extension Bool {
 private extension CloudState {
     var readableValue: String {
         switch self {
-        case .unknown: return "unknown"
-        case .disabledNotAvailable(let reason): return "off, not available, reason: \(reason.readableValue)"
-        case .disabledAvailable: return "off, available"
-        case .enabled(let sync): return "enabled, \(sync.readableValue)"
+        case .unknown: "unknown"
+        case .disabledNotAvailable(let reason): "off, not available, reason: \(reason.readableValue)"
+        case .disabledAvailable: "off, available"
+        case .enabled(let sync): "enabled, \(sync.readableValue)"
         }
     }
 }
@@ -138,8 +138,19 @@ private extension CloudState {
 private extension CloudState.Sync {
     var readableValue: String {
         switch self {
-        case .synced: return "synced"
-        case .syncing: return "syncing"
+        case .synced: "synced"
+        case .syncing: "syncing"
+        }
+    }
+}
+
+private extension CloudState.NotAvailableReason.EncryptionError {
+    var readableValue: String {
+        switch self {
+        case .cantCreateEncryptionElements: "Can't create encryption elements"
+        case .missingSystemKey: "Missing system key"
+        case .missingUserKey: "Missing user key"
+        case .missingAllKeys: "Missing all keys"
         }
     }
 }
@@ -147,15 +158,16 @@ private extension CloudState.Sync {
 private extension CloudState.NotAvailableReason {
     var readableValue: String {
         switch self {
-        case .overQuota: return "over quota"
-        case .disabledByUser: return "disabled by user"
-        case .error(let error): return "error: \(String(describing: error))"
-        case .other: return "other"
-        case .incorrectService(let serviceName): return "incorrect service named: \(serviceName)"
-        case .useriCloudProblem: return "User has iCloud problem"
-        case .newerVersion: return "Newer version of cloud is available"
-        case .cloudEncryptedUser: return "Cloud is encrypted using user password"
-        case .cloudEncryptedSystem: return "Cloud is encrypted using system password"
+        case .overQuota: "over quota"
+        case .disabledByUser: "disabled by user"
+        case .error(let error): "error: \(String(describing: error))"
+        case .other: "other"
+        case .incorrectService(let serviceName): "incorrect service named: \(serviceName)"
+        case .useriCloudProblem: "User has iCloud problem"
+        case .newerVersion: "Newer version of cloud is available"
+        case .cloudEncryptedUser: "Cloud is encrypted using user password"
+        case .cloudEncryptedSystem: "Cloud is encrypted using system password"
+        case .encryptionError(let encryptionError): "Encryption error. Reason: \(encryptionError.readableValue)"
         }
     }
 }

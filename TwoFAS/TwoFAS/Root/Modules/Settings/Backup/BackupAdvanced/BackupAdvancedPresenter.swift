@@ -59,27 +59,7 @@ final class BackupAdvancedPresenter {
                 }
             }
         case .importKeys:
-            flowController.toImportKeysWarning { [weak self] in
-                guard let self else { return }
-                self.flowController.toAskEncryptionTypeForImport { [weak self] choice in
-                    guard let self else { return }
-                    switch choice {
-                    case .systemKey:
-                        self.flowController.toImportKeys { [weak self] url in
-                            guard let self else { return }
-                            self.runImportKeys(url: url, password: nil)
-                        }
-                    case .customPassword:
-                        self.flowController.toCollectPasswordForImport { [weak self] password in
-                            guard let self else { return }
-                            self.flowController.toImportKeys { [weak self] url in
-                                guard let self else { return }
-                                self.runImportKeys(url: url, password: password)
-                            }
-                        }
-                    }
-                }
-            }
+            flowController.toImportKeys()
         case .deleteBackup:
             flowController.toDeleteBackup()
         }
@@ -89,17 +69,5 @@ final class BackupAdvancedPresenter {
 private extension BackupAdvancedPresenter {
     func reload() {
         sections = buildMenu()
-    }
-
-    func runImportKeys(url: URL, password: String?) {
-        interactor.importKeys(url: url, password: password) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success:
-                self.flowController.importKeysSuccess()
-            case .failure:
-                self.flowController.toKeysImportError()
-            }
-        }
     }
 }

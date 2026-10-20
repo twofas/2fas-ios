@@ -157,6 +157,14 @@ public enum SyncInstance {
     public static func debugReloadAllKeys() {
         syncEncryptionHandler.debugReloadAllKeys()
     }
+
+    @discardableResult
+    public static func createEncryptionElements() -> Bool {
+        switch syncEncryptionHandler.create() {
+        case .success: true
+        case .failure: false
+        }
+    }
     
     public static func exportKeys() -> (salt: Data, systemKey: Data)? {
         syncEncryptionHandler.exportKeys()

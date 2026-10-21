@@ -229,17 +229,14 @@ final class CameraController {
         guard !isClearing else { return }
         isClearing = true
         Log("CameraController - clearSession. Use async: \(useAsync)", module: .camera)
-        func removeDependencies(captureSession: AVCaptureSession, callDelegate: Bool) {
+        // Reconfiguring the session blocks the calling thread for seconds, so it runs as one batch
+        // and, when async, on the session queue rather than main.
+        func tearDown(_ captureSession: AVCaptureSession) {
+            captureSession.beginConfiguration()
             captureSession.inputs.forEach(captureSession.removeInput)
             captureSession.outputs.forEach(captureSession.removeOutput)
-            outputs.forEach { $0.clear() }
-            outputs = []
+            captureSession.commitConfiguration()
             captureSession.stopRunning()
-            self.captureSession = nil
-            if callDelegate {
-                Log("CameraController - did clear!", module: .camera)
-                delegate?.cameraDidClear()
-            }
         }
         
         layer?.session = nil
@@ -252,12 +249,20 @@ final class CameraController {
             return
         }
         
+        outputs.forEach { $0.clear() }
+        outputs = []
+        self.captureSession = nil
+        
         if useAsync {
-            DispatchQueue.main.async {
-                removeDependencies(captureSession: captureSession, callDelegate: true)
+            sessionQueue.async { [weak self] in
+                tearDown(captureSession)
+                DispatchQueue.main.async {
+                    Log("CameraController - did clear!", module: .camera)
+                    self?.delegate?.cameraDidClear()
+                }
             }
         } else {
-            removeDependencies(captureSession: captureSession, callDelegate: false)
+            tearDown(captureSession)
         }
         Log("CameraController - did clear!", module: .camera)
     }

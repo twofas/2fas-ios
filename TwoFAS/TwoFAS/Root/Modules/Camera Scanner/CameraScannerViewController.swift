@@ -179,6 +179,9 @@ private final class CameraViewModel {
 
 extension CameraViewModel: CameraViewModelType {
     func initialize() {
+        // Already set up (e.g. returning after an alert kept the session alive):
+        // keep the existing session instead of rebuilding it.
+        guard camera == nil else { return }
         guard
             let previewView = delegate?.viewForCamera(),
             let scanningRegion = delegate?.scanningRegion()

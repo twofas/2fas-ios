@@ -27,8 +27,11 @@ final class Camera {
 
     weak var delegate: CameraDelegate?
 
+    private var scanningRegion: CGRect
+
     init(previewView: UIView, scanningRegion: CGRect) {
         Log("Camera - init with previewView: \(previewView), scanningRegion: \(scanningRegion)", module: .camera)
+        self.scanningRegion = scanningRegion
         camera.delegate = self
         scanner.didFoundCode = { [weak self] in self?.delegate?.didFoundCode($0) }
         scanner.initialize(with: previewView)
@@ -36,9 +39,10 @@ final class Camera {
         camera.setPreview(previewView)
         scanner.setScanningRect(scanningRegion)
     }
-    
+
     func updateScanningRegion(_ scanningRegion: CGRect) {
         Log("Camera - updateScanningRegion \(scanningRegion)", module: .camera)
+        self.scanningRegion = scanningRegion
         scanner.setScanningRect(scanningRegion)
     }
     
@@ -79,7 +83,9 @@ final class Camera {
 }
 
 extension Camera: CameraControllerDelegate {
-    func cameraDidInitialize() {}
+    func cameraDidInitialize() {
+        scanner.setScanningRect(scanningRegion)
+    }
     func cameraFailedToInitilize(with error: CameraController.CameraError) {
         Log("Camera - can't start: \(error)", module: .camera)
     }

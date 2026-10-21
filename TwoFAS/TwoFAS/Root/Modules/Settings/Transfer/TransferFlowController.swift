@@ -183,7 +183,11 @@ private extension TransferFlowController {
     }
 
     func dismissInnerModal(completion: (() -> Void)? = nil) {
-        modalNavigationController?.dismiss(animated: true, completion: completion)
+        guard let modalNavigationController, modalNavigationController.presentedViewController != nil else {
+            completion?()
+            return
+        }
+        modalNavigationController.dismiss(animated: true, completion: completion)
     }
 }
 
@@ -231,9 +235,7 @@ extension TransferFlowController: CameraScannerFlowControllerParent {
     func cameraScannerServiceWasCreated(serviceData: ServiceData) { dismissInnerModal() }
     func cameraScannerToGoogleAuthImport(data: GoogleScanData) {
         dismissInnerModal { [weak self] in
-            self?.dismissModal {
-                self?.pushGoogleImport(data: data)
-            }
+            self?.pushGoogleImport(data: data)
         }
     }
 }
@@ -256,33 +258,26 @@ extension TransferFlowController: SelectFromGalleryFlowControllerParent {
     func galleryToGoogleAuthImport(data: GoogleScanData) {
         galleryViewController = nil
         dismissInnerModal { [weak self] in
-            self?.dismissModal {
-                self?.pushGoogleImport(data: data)
-            }
+            self?.pushGoogleImport(data: data)
         }
     }
 }
 
 extension TransferFlowController: GoogleImportFlowControllerParent {
     func googleImportClose() {
-        popToTransferRoot()
+        dismissModal()
     }
 
     func googleImportDidImport(count: Int) {
-        popToTransferRoot()
+        dismissModal()
         NotificationCenter.default.post(name: .servicesWereUpdated, object: nil)
     }
 }
 
 private extension TransferFlowController {
     func pushGoogleImport(data: GoogleScanData) {
-        guard let navigationController = _viewController?.navigationController else { return }
-        GoogleImportFlowController.push(in: navigationController, parent: self, data: data)
-    }
-
-    func popToTransferRoot() {
-        guard let viewController = _viewController else { return }
-        viewController.navigationController?.popToViewController(viewController, animated: true)
+        guard let modalNavigationController else { return }
+        GoogleImportFlowController.push(in: modalNavigationController, parent: self, data: data)
     }
 }
 

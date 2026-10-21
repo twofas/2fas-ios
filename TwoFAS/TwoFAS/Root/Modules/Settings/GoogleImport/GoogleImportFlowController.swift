@@ -61,12 +61,13 @@ final class GoogleImportFlowController: FlowController {
         parent: GoogleImportFlowControllerParent,
         data: GoogleScanData
     ) {
-        let built = makeFlowController(parent: parent, data: data, showsCloseButton: false)
+        let built = makeFlowController(parent: parent, data: data, showsCloseButton: true)
         built.flowController.navigationController = navigationController
         built.flowController.presentInitial(
             importViewController: built.viewController,
             in: navigationController,
-            animated: true
+            animated: true,
+            replacingStack: true
         )
     }
 
@@ -93,9 +94,10 @@ final class GoogleImportFlowController: FlowController {
     private func presentInitial(
         importViewController: UIViewController,
         in navigationController: UINavigationController,
-        animated: Bool
+        animated: Bool,
+        replacingStack: Bool = false
     ) {
-        var stack = navigationController.viewControllers + [importViewController]
+        var stack = (replacingStack ? [] : navigationController.viewControllers) + [importViewController]
         if presenter?.isComplete == true, let params = presenter?.beginSummary() {
             stack.append(makeSummaryViewController(importableCount: params.importable, totalCount: params.total))
         }

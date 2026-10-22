@@ -447,12 +447,6 @@
 		C26983822BCC8326009B3BE2 /* AppPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26983812BCC8326009B3BE2 /* AppPresenter.swift */; };
 		C26A5FE3290475EA00A5A620 /* Sync4-Sync5.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C26A5FE2290475EA00A5A620 /* Sync4-Sync5.xcmappingmodel */; };
 		C26AC9322F6217A000ADFE62 /* CloudKeysExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26AC9312F62179600ADFE62 /* CloudKeysExchange.swift */; };
-		C26B19302D90C5D8006FDDE0 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = C26B192F2D90C5D8006FDDE0 /* FirebaseCore */; };
-		C26B19322D90C5D8006FDDE0 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C26B19312D90C5D8006FDDE0 /* FirebaseCrashlytics */; };
-		C26B19342D90C5D8006FDDE0 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C26B19332D90C5D8006FDDE0 /* FirebaseMessaging */; };
-		C26B19362D90C6DE006FDDE0 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C26B19352D90C6DE006FDDE0 /* FirebaseMessaging */; };
-		C26B19382D90C73B006FDDE0 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C26B19372D90C73B006FDDE0 /* FirebaseCrashlytics */; };
-		C26B193A2D90CE04006FDDE0 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = C26B19392D90CE04006FDDE0 /* FirebaseCore */; };
 		C26BCE01281010A000CA6A9A /* SelectServiceModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE00281010A000CA6A9A /* SelectServiceModuleInteractor.swift */; };
 		C26BCE03281013A700CA6A9A /* SelectServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE02281013A700CA6A9A /* SelectServiceFlowController.swift */; };
 		C26D1AC52600041400D3D868 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D1AC42600041400D3D868 /* UIImage+.swift */; };
@@ -1284,6 +1278,9 @@
 		C2EBDFFE2AC4476D008FD744 /* GuideMenuPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBDFFD2AC4476D008FD744 /* GuideMenuPresenter.swift */; };
 		C2EBE0022AC44787008FD744 /* GuideMenuFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBE0012AC44787008FD744 /* GuideMenuFlowController.swift */; };
 		C2EBE0042AC44DC3008FD744 /* GuideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBE0032AC44DC3008FD744 /* GuideMenuView.swift */; };
+		C2EC5C95308AB66E00079E78 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = C2EC5C94308AB66E00079E78 /* FirebaseCore */; };
+		C2EC5C97308AB66E00079E78 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C2EC5C96308AB66E00079E78 /* FirebaseCrashlytics */; };
+		C2EC5C99308AB66E00079E78 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C2EC5C98308AB66E00079E78 /* FirebaseMessaging */; };
 		C2EE37AA291D2B9800CAB85C /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EE37A9291D2B9800CAB85C /* Assets.swift */; };
 		C2EF21D725630C9D0075743D /* CloudAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF21D625630C9D0075743D /* CloudAvailability.swift */; };
 		C2EF3F6E25575D730006735E /* ServiceRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF3F6D25575D730006735E /* ServiceRecord.swift */; };
@@ -3034,10 +3031,10 @@
 		C21F05B61FC761450038E28F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				C2EC5C99308AB66E00079E78 /* FirebaseMessaging in Frameworks */,
+				C2EC5C97308AB66E00079E78 /* FirebaseCrashlytics in Frameworks */,
+				C2EC5C95308AB66E00079E78 /* FirebaseCore in Frameworks */,
 				C2E53B982B62DE3E008E1E70 /* Common.framework in Frameworks */,
-				C26B19382D90C73B006FDDE0 /* FirebaseCrashlytics in Frameworks */,
-				C26B193A2D90CE04006FDDE0 /* FirebaseCore in Frameworks */,
-				C26B19362D90C6DE006FDDE0 /* FirebaseMessaging in Frameworks */,
 			);
 		};
 		C23666701FB2644900989ACA /* Frameworks */ = {
@@ -3047,14 +3044,11 @@
 				C2E53B512B62DDCB008E1E70 /* Content.framework in Frameworks */,
 				C200E4A11FB3911B00D7C748 /* Storage.framework in Frameworks */,
 				C29626DD2370BD7F00C133BC /* TimeVerification.framework in Frameworks */,
-				C26B19342D90C5D8006FDDE0 /* FirebaseMessaging in Frameworks */,
 				C2E7C3882ADB19F300478D89 /* Data.framework in Frameworks */,
 				C24D1C2F253C744F0029D27D /* Sync.framework in Frameworks */,
 				C251EDDB2AE87150007722F2 /* Base32.framework in Frameworks */,
 				C2147CBC205D78600001D011 /* Protection.framework in Frameworks */,
 				C2AE5F772ADC8A1500AED670 /* NetworkStack.framework in Frameworks */,
-				C26B19322D90C5D8006FDDE0 /* FirebaseCrashlytics in Frameworks */,
-				C26B19302D90C5D8006FDDE0 /* FirebaseCore in Frameworks */,
 				C21F05C11FC761450038E28F /* PushNotifications.framework in Frameworks */,
 				C260DF4C2F5B07D4009A0357 /* KeychainAccess in Frameworks */,
 			);
@@ -6133,9 +6127,9 @@
 			);
 			name = PushNotifications;
 			packageProductDependencies = (
-				C26B19352D90C6DE006FDDE0 /* FirebaseMessaging */,
-				C26B19372D90C73B006FDDE0 /* FirebaseCrashlytics */,
-				C26B19392D90CE04006FDDE0 /* FirebaseCore */,
+				C2EC5C94308AB66E00079E78 /* FirebaseCore */,
+				C2EC5C96308AB66E00079E78 /* FirebaseCrashlytics */,
+				C2EC5C98308AB66E00079E78 /* FirebaseMessaging */,
 			);
 			productName = PushNotifications;
 			productReference = C21F05BA1FC761450038E28F /* PushNotifications.framework */;
@@ -6173,9 +6167,6 @@
 			);
 			name = TwoFAS;
 			packageProductDependencies = (
-				C26B192F2D90C5D8006FDDE0 /* FirebaseCore */,
-				C26B19312D90C5D8006FDDE0 /* FirebaseCrashlytics */,
-				C26B19332D90C5D8006FDDE0 /* FirebaseMessaging */,
 				C260DF4B2F5B07D4009A0357 /* KeychainAccess */,
 			);
 			productName = TwoFAS;
@@ -6583,7 +6574,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 2630;
-				LastUpgradeCheck = 2660;
+				LastUpgradeCheck = 2700;
 				ORGANIZATIONNAME = "Two Factor Authentication Service, Inc.";
 				TargetAttributes = {
 					C200E4991FB3911B00D7C748 = {
@@ -6712,8 +6703,8 @@
 				C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */,
 				C28FD19D2E4028450053B0BE /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 				C25CB3C72D878E2B0099FAFD /* XCRemoteSwiftPackageReference "Argon2" */,
-				C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C2C0A9862DA33A72000A1772 /* XCRemoteSwiftPackageReference "EFQRCode" */,
+				C2EC5C93308AB66E00079E78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = C23666741FB2644900989ACA /* Products */;
@@ -9648,7 +9639,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9693,7 +9684,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9739,7 +9730,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9785,7 +9776,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9828,7 +9819,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9872,7 +9863,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9917,7 +9908,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9962,7 +9953,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10742,7 +10733,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10788,7 +10779,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10915,7 +10906,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10963,7 +10954,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11009,7 +11000,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11057,7 +11048,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11103,7 +11094,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11149,7 +11140,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11362,7 +11353,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11409,7 +11400,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12276,7 +12267,7 @@
 			repositoryURL = "https://github.com/devicekit/DeviceKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.5.0;
+				minimumVersion = 5.8.0;
 			};
 		};
 		C23EBF102651276800FA9E81 /* XCRemoteSwiftPackageReference "Kronos" */ = {
@@ -12293,14 +12284,6 @@
 			requirement = {
 				branch = main;
 				kind = branch;
-			};
-		};
-		C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 11.10.0;
 			};
 		};
 		C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */ = {
@@ -12324,7 +12307,7 @@
 			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.19;
+				minimumVersion = 0.9.20;
 			};
 		};
 		C2C0A9862DA33A72000A1772 /* XCRemoteSwiftPackageReference "EFQRCode" */ = {
@@ -12332,7 +12315,7 @@
 			repositoryURL = "https://github.com/EFPrefix/EFQRCode.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 6.2.2;
+				minimumVersion = 7.0.3;
 			};
 		};
 		C2CE0E1127934579007DB667 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
@@ -12340,7 +12323,15 @@
 			repositoryURL = "https://github.com/apple/swift-protobuf.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.28.2;
+				minimumVersion = 1.38.0;
+			};
+		};
+		C2EC5C93308AB66E00079E78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 13.1.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -12381,36 +12372,6 @@
 			package = C25CB3C72D878E2B0099FAFD /* XCRemoteSwiftPackageReference "Argon2" */;
 			productName = SignalArgon2;
 		};
-		C26B192F2D90C5D8006FDDE0 /* FirebaseCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCore;
-		};
-		C26B19312D90C5D8006FDDE0 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		C26B19332D90C5D8006FDDE0 /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
-		};
-		C26B19352D90C6DE006FDDE0 /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
-		};
-		C26B19372D90C73B006FDDE0 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		C26B19392D90CE04006FDDE0 /* FirebaseCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCore;
-		};
 		C278121E27F9F4C000F31453 /* SwCrypt */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */;
@@ -12450,6 +12411,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C2C0A9862DA33A72000A1772 /* XCRemoteSwiftPackageReference "EFQRCode" */;
 			productName = EFQRCode;
+		};
+		C2EC5C94308AB66E00079E78 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2EC5C93308AB66E00079E78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		C2EC5C96308AB66E00079E78 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2EC5C93308AB66E00079E78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		C2EC5C98308AB66E00079E78 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2EC5C93308AB66E00079E78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 

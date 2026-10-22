@@ -60,7 +60,7 @@ public final class ToastPresentationController {
         scale = CGSize(width: 1, height: 1)
         
         Task {
-            try await Task.sleep(for: Constants.autohideDelay)
+            guard (try? await Task.sleep(for: Constants.autohideDelay)) != nil else { return }
             hide()
         }
     }
@@ -136,7 +136,7 @@ public struct ToastPresenterView: View {
                 return
             }
             Task {
-                try await Task.sleep(for: Constants.sensoryFeedbackDelay)
+                guard (try? await Task.sleep(for: Constants.sensoryFeedbackDelay)) != nil else { return }
                 sensoryFeedback = true
             }
         })

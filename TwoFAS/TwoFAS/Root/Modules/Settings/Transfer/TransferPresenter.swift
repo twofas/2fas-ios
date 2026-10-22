@@ -97,11 +97,11 @@ final class TransferPresenter {
                 }
                 return
             }
-            await MainActor.run {
-                self.flowController.toShareOTPAuthFileContents(url) { [weak self] in
+            await MainActor.run { [weak self] in
+                self?.flowController.toShareOTPAuthFileContents(url) { [weak self] in
                     self?.interactor.cleanupTemporaryFiles(urls: [url])
                 }
-                self.isExporting = false
+                self?.isExporting = false
             }
         }
     }
@@ -116,11 +116,11 @@ final class TransferPresenter {
                 }
                 return
             }
-            await MainActor.run {
-                self.flowController.toShareQRCodes(url) { [weak self] in
+            await MainActor.run { [weak self] in
+                self?.flowController.toShareQRCodes(url) { [weak self] in
                     self?.interactor.cleanupTemporaryFiles(urls: [url])
                 }
-                self.isExporting = false
+                self?.isExporting = false
             }
         }
     }

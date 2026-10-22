@@ -28,7 +28,7 @@ public protocol SectionInteracting: AnyObject {
     func section(for sectionID: SectionID) -> SectionData?
     func listSections() -> [SectionData]
     func moveServiceToSection(move serviceSecret: String, to sectionID: SectionID?)
-    func create(with title: String)
+    func create(with title: String) -> SectionData?
     
     func setSectionZeroIsCollapsed(_ isCollapsed: Bool)
     func collapse(_ section: SectionData, isCollapsed: Bool)
@@ -87,9 +87,10 @@ extension SectionInteractor: SectionInteracting {
         mainRepository.listAllSections().first(where: { $0.sectionID == sectionID })
     }
     
-    func create(with title: String) {
+    func create(with title: String) -> SectionData? {
         Log("SectionInteractor - create section. Title: \(title)", module: .interactor)
-        mainRepository.createSection(with: title)
+        let sectionID = mainRepository.createSection(with: title)
+        return section(for: sectionID)
     }
     
     func moveDown(_ sectionData: SectionData) {

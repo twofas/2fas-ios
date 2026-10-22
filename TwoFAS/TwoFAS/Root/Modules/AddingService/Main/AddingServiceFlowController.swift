@@ -23,12 +23,12 @@ import Data
 
 protocol AddingServiceFlowControllerParent: AnyObject {
     func addingServiceDismiss()
-    func addingServiceToGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
     func addingServiceToLastPassSummary(importable: Int, total: Int, codes: [Code])
     func addingServiceToPushPermissions(for extensionID: Common.ExtensionID)
     func addingServiceToTwoFASWebExtensionPairing(for extensionID: Common.ExtensionID)
     func addingServiceToToken(_ serviceData: ServiceData)
     func addingServiceGalleryDidImport(count: Int)
+    func addingServiceToGoogleAuthImport(data: GoogleScanData)
 }
 
 protocol AddingServiceFlowControlling: AnyObject {
@@ -41,7 +41,7 @@ protocol AddingServiceFlowControlling: AnyObject {
     func toAppSettings()
     func toGuides()
 
-    func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
+    func toGoogleAuthImport(data: GoogleScanData)
     func toLastPassSummary(importable: Int, total: Int, codes: [Code])
     func toGallery()
     func toTwoFASWebExtensionPairing(for extensionID: ExtensionID)
@@ -318,8 +318,8 @@ extension AddingServiceFlowController: AddingServiceFlowControlling {
         )
     }
     
-    func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code]) {
-        parent?.addingServiceToGoogleAuthSummary(importable: importable, total: total, codes: codes)
+    func toGoogleAuthImport(data: GoogleScanData) {
+        parent?.addingServiceToGoogleAuthImport(data: data)
     }
     
     func toLastPassSummary(importable: Int, total: Int, codes: [Code]) {
@@ -401,6 +401,11 @@ extension AddingServiceFlowController: SelectFromGalleryFlowControllerParent {
     func galleryServiceWasCreated(serviceData: ServiceData) {
         galleryViewController = nil
         parent?.addingServiceToToken(serviceData)
+    }
+    
+    func galleryToGoogleAuthImport(data: GoogleScanData) {
+        parent?.addingServiceToGoogleAuthImport(data: data)
+        galleryViewController = nil
     }
 }
 

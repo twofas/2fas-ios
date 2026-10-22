@@ -49,7 +49,7 @@ protocol TokensModuleInteracting: AnyObject {
     func enableHOTPCounter(for secret: Secret)
     func stopCounters()
     func setSortType(_ sortType: SortType)
-    func createSection(with name: String)
+    func createSection(with name: String) -> SectionData?
     func toggleCollapseSection(_ section: TokensSection)
     func openSection(_ sectionOffset: Int)
     func moveDown(_ section: TokensSection)
@@ -412,9 +412,9 @@ extension TokensModuleInteractor: TokensModuleInteracting {
     
     // MARK: - Section
     
-    func createSection(with name: String) {
+    func createSection(with name: String) -> SectionData? {
         AppEventLog(.groupAdd)
-        sectionInteractor.create(with: name)
+        return sectionInteractor.create(with: name)
     }
     
     func toggleCollapseSection(_ section: TokensSection) {

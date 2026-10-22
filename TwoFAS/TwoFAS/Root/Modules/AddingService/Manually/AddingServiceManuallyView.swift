@@ -45,9 +45,8 @@ struct AddingServiceManuallyView: View {
                 ScrollView(.vertical) {
                     AdaptiveReadableContainer {
                         VStack(spacing: .XXXL) {
-                            AddingServiceServiceIconView(serviceImage: $presenter.serviceIcon)
-                                .accessibilityHidden(true)
-                            
+                            iconRow()
+
                             mainFields()
                             
                             if presenter.advancedShown {
@@ -105,7 +104,19 @@ struct AddingServiceManuallyView: View {
                 .dismissKeyboardOnTapOutside()
                 .onChange(of: focusedField) { oldField, newField in
                     if let newField {
-                        proxy.scrollTo(newField, anchor: .center)
+                        let centerField = {
+                            withAnimation(.easeInOut(duration: Theme.Animations.Timing.keyboard)) {
+                                proxy.scrollTo(newField, anchor: .center)
+                            }
+                        }
+                        if oldField == nil {
+                            DispatchQueue.main.asyncAfter(
+                                deadline: .now() + Theme.Animations.Timing.keyboard,
+                                execute: centerField
+                            )
+                        } else {
+                            centerField()
+                        }
                     }
                     switch oldField {
                     case .serviceName: touchedServiceName = true
@@ -117,7 +128,6 @@ struct AddingServiceManuallyView: View {
                 .onChange(of: presenter.serviceName) { _, _ in touchedServiceName = true }
                 .onChange(of: presenter.secret) { _, _ in touchedSecret = true }
                 .onChange(of: presenter.additionalInfo) { _, _ in touchedAdditionalInfo = true }
-                .scrollDismissesKeyboard(.interactively)
                 .onTapGesture {
                     dismissKeyboard()
                 }
@@ -143,13 +153,51 @@ struct AddingServiceManuallyView: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(T.Commons.pair) {
+                    TFSaveButton(T.Commons.pair, isEnabled: presenter.isAddServiceEnabled) {
                         presenter.handlePair()
                     }
-                    .disabled(!presenter.isAddServiceEnabled)
                 }
             }
             .background(.backgroundsPrimaryElevated)
+        }
+    }
+    
+    @ViewBuilder
+    private func iconRow() -> some View {
+        VStack(spacing: .XXL) {
+            AddingServiceServiceIconView(
+                serviceImage: $presenter.serviceIcon,
+                isSelected: presenter.userCanCancelIcon
+            )
+            .accessibilityHidden(true)
+            .frame(maxWidth: .infinity)
+            .overlay(alignment: .trailing) {
+                iconActionButton()
+            }
+
+            Text(presenter.serviceTypeName.map { T.Tokens.serviceAutodetectedTitle($0) } ?? " ")
+                .textStyle(.caption1)
+                .foregroundStyle(.labelsSecondary)
+                .opacity(presenter.serviceTypeName == nil ? 0 : 1)
+                .accessibilityHidden(presenter.serviceTypeName == nil)
+        }
+        .animation(.default, value: presenter.serviceTypeName)
+        .animation(.default, value: presenter.userCanSelectIcon)
+        .animation(.default, value: presenter.userCanCancelIcon)
+    }
+
+    @ViewBuilder
+    private func iconActionButton() -> some View {
+        if presenter.userCanSelectIcon {
+            TFButton(T.Commons.select, variant: .bordered, size: .small, useWideLayout: false) {
+                presenter.onApplyIconType()
+            }
+            .transition(.opacity.combined(with: .scale(scale: 0.95)))
+        } else if presenter.userCanCancelIcon {
+            TFButton(T.Commons.clear, variant: .bordered, size: .small, useWideLayout: false) {
+                presenter.onClearIconType()
+            }
+            .transition(.opacity.combined(with: .scale(scale: 0.95)))
         }
     }
     

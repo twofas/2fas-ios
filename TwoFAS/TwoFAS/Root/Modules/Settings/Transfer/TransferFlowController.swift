@@ -32,6 +32,10 @@ protocol TransferFlowControlling: AnyObject {
     func toGoogleAuth()
     func toAndOTP()
     func toAuthenticatorPro()
+    func toProton()
+    func toBitwarden()
+    func toEnte()
+    func toOnePassword()
     func toOpenTXTFile()
     // MARK: - Export
     func toSaveOTPAuthFile()
@@ -91,6 +95,10 @@ extension TransferFlowController: TransferFlowControlling {
     func toGoogleAuth() { presentInstructions(service: .googleAuth) }
     func toAndOTP() { presentInstructions(service: .andOTP) }
     func toAuthenticatorPro() { presentInstructions(service: .authenticatorPro) }
+    func toProton() { presentInstructions(service: .proton) }
+    func toBitwarden() { presentInstructions(service: .bitwarden) }
+    func toEnte() { presentInstructions(service: .ente) }
+    func toOnePassword() { presentInstructions(service: .onePassword) }
     func toOpenTXTFile() { presentInstructions(service: .otpAuthFile) }
 
     // MARK: - Export
@@ -175,7 +183,11 @@ private extension TransferFlowController {
     }
 
     func dismissInnerModal(completion: (() -> Void)? = nil) {
-        modalNavigationController?.dismiss(animated: true, completion: completion)
+        guard let modalNavigationController, modalNavigationController.presentedViewController != nil else {
+            completion?()
+            return
+        }
+        modalNavigationController.dismiss(animated: true, completion: completion)
     }
 }
 
@@ -221,6 +233,11 @@ extension TransferFlowController: CameraScannerFlowControllerParent {
         }
     }
     func cameraScannerServiceWasCreated(serviceData: ServiceData) { dismissInnerModal() }
+    func cameraScannerToGoogleAuthImport(data: GoogleScanData) {
+        dismissInnerModal { [weak self] in
+            self?.pushGoogleImport(data: data)
+        }
+    }
 }
 
 extension TransferFlowController: SelectFromGalleryFlowControllerParent {
@@ -237,6 +254,30 @@ extension TransferFlowController: SelectFromGalleryFlowControllerParent {
             self?.galleryViewController = nil
             self?.showSummary(count: count)
         }
+    }
+    func galleryToGoogleAuthImport(data: GoogleScanData) {
+        galleryViewController = nil
+        dismissInnerModal { [weak self] in
+            self?.pushGoogleImport(data: data)
+        }
+    }
+}
+
+extension TransferFlowController: GoogleImportFlowControllerParent {
+    func googleImportClose() {
+        dismissModal()
+    }
+
+    func googleImportDidImport(count: Int) {
+        dismissModal()
+        NotificationCenter.default.post(name: .servicesWereUpdated, object: nil)
+    }
+}
+
+private extension TransferFlowController {
+    func pushGoogleImport(data: GoogleScanData) {
+        guard let modalNavigationController else { return }
+        GoogleImportFlowController.push(in: modalNavigationController, parent: self, data: data)
     }
 }
 

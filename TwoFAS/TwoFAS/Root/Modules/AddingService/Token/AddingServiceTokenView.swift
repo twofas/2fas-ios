@@ -36,7 +36,10 @@ struct AddingServiceTokenView: View {
             ) {
                 tokenView()
             } footer: {
-                TFButton(T.Tokens.copyToken, variant: .borderedSecondary, size: .large, applyGlass: false) {
+                TFButton(T.Commons.done, variant: .borderedProminent, size: .large) {
+                    dismiss()
+                }
+                TFButton(T.Tokens.copyTokenLong, variant: .borderless, size: .large) {
                     presenter.handleCopyCode()
                 }
             }
@@ -75,4 +78,42 @@ struct AddingServiceTokenView: View {
         )
         .padding(.vertical, .XL)
     }
+}
+
+#Preview {
+    AddingServiceTokenView(
+        presenter: .init(
+            flowController: AddingServiceTokenFlowController(viewController: UIViewController()),
+            interactor: ModuleInteractorFactory
+                .shared
+                .addingServiceTokenModuleInteractor(
+                    serviceData: .init(
+                        name: "2FAS",
+                        secret: "JBSWY3DPEHPK3PXP",
+                        serviceTypeID: nil,
+                        additionalInfo: "john@example.com",
+                        rawIssuer: "2FAS",
+                        modifiedAt: Date(),
+                        createdAt: Date(),
+                        tokenPeriod: .period30,
+                        tokenLength: .digits6,
+                        badgeColor: .default,
+                        iconType: .brand,
+                        iconTypeID: .default,
+                        labelColor: .default,
+                        labelTitle: "2F",
+                        algorithm: .SHA1,
+                        isTrashed: false,
+                        trashingDate: nil,
+                        counter: nil,
+                        tokenType: .totp,
+                        source: .manual,
+                        otpAuth: nil,
+                        order: 0,
+                        sectionID: nil
+                    )
+                )
+        ),
+        dismiss: {}
+    )
 }

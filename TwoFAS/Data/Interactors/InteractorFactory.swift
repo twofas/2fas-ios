@@ -42,10 +42,6 @@ public final class InteractorFactory {
         ServiceModifyInteractor(mainRepository: MainRepositoryImpl.shared)
     }
     
-    public func newVersionInteractor() -> NewVersionInteracting {
-        NewVersionInteractor(mainRepository: MainRepositoryImpl.shared)
-    }
-    
     public func newCodeInteractor() -> NewCodeInteracting {
         NewCodeInteractor(
             interactorModify: serviceModifyInteractor(),
@@ -202,10 +198,6 @@ public final class InteractorFactory {
         )
     }
     
-    public func viewPathInteractor() -> ViewPathIteracting {
-        ViewPathInteractor(mainRepository: MainRepositoryImpl.shared)
-	}
-
     public func networkStatusInteractor() -> NetworkStatusInteracting {
         NetworkStatusInteractor(mainRepository: MainRepositoryImpl.shared)
     }

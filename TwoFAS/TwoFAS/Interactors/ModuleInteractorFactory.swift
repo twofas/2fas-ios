@@ -180,6 +180,12 @@ final class ModuleInteractorFactory {
             newCodeInteractor: InteractorFactory.shared.newCodeInteractor()
         )
     }
+
+    func googleImportModuleInteractor() -> GoogleImportModuleInteracting {
+        GoogleImportModuleInteractor(
+            newCodeInteractor: InteractorFactory.shared.newCodeInteractor()
+        )
+    }
     
     func iconSelectorModuleInteractor(
         defaultIcon: IconTypeID?,
@@ -324,10 +330,8 @@ final class ModuleInteractorFactory {
     func mainModuleInteractor() -> MainModuleInteracting {
         MainModuleInteractor(
             logGenerationInteractor: InteractorFactory.shared.logGenerationInteractor(),
-            viewPathInteractor: InteractorFactory.shared.viewPathInteractor(),
             cloudBackupStateInteractor: InteractorFactory.shared.cloudBackupStateInteractor(listenerID: ""),
             fileInteractor: InteractorFactory.shared.fileInteractor(),
-            newVersionInteractor: InteractorFactory.shared.newVersionInteractor(),
             networkStatusInteractor: InteractorFactory.shared.networkStatusInteractor(),
             appInfoInteractor: InteractorFactory.shared.appInfoInteractor(),
             rootInteractor: InteractorFactory.shared.rootInteractor(),

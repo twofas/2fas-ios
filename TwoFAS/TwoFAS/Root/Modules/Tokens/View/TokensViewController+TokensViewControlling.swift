@@ -231,13 +231,23 @@ extension TokensViewController: TokensViewControlling {
             }
         case .none:
             let buttonSection = UIBarButtonItem(
-                image: Asset.addCategory.image,
+                image: UIImage(icon: .rectangleStackBadgePlus),
                 style: .plain,
                 target: self,
                 action: #selector(addSectionAction)
             )
             buttonSection.accessibilityLabel = T.Voiceover.addGroup
-            navigationItem.rightBarButtonItems = [buttonSection]
+            if #available(iOS 26.0, *) {
+                let done = UIBarButtonItem(
+                    barButtonSystemItem: .done,
+                    target: self,
+                    action: #selector(leaveEditMode)
+                )
+                done.style = .prominent
+                navigationItem.rightBarButtonItems = [done, buttonSection]
+            } else {
+                navigationItem.rightBarButtonItems = [buttonSection]
+            }
         }
     }
 
@@ -317,12 +327,16 @@ extension TokensViewController: TokensViewControlling {
             button = leadingNewsButtonForLegacyLayout()
             tokensView.isEditing = false
         case .cancel:
-            button = UIBarButtonItem(
-                title: T.Commons.done,
-                style: .plain,
-                target: self,
-                action: #selector(leaveEditMode)
-            )
+            if #available(iOS 26.0, *) {
+                button = leadingNewsButtonForLegacyLayout()
+            } else {
+                button = UIBarButtonItem(
+                    title: T.Commons.done,
+                    style: .plain,
+                    target: self,
+                    action: #selector(leaveEditMode)
+                )
+            }
             tokensView.isEditing = true
         case .none:
             button = leadingNewsButtonForLegacyLayout()

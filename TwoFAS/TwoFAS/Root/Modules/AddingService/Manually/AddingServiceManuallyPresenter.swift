@@ -26,6 +26,25 @@ final class AddingServiceManuallyPresenter: ObservableObject {
         case name
         case secret
     }
+    
+    enum SecretValidationResult {
+        case correct
+        case duplicated
+        case incorrect
+        case tooShort
+        case tooLong
+        
+        var error: String? {
+            switch self {
+            case .correct: return nil
+            case .duplicated: return T.Tokens.duplicatedPrivateKey
+            case .incorrect: return T.Tokens.incorrectServiceKey
+            case .tooShort: return T.Tokens.serviceKeyToShort
+            case .tooLong: return T.Commons.textLongTitle(ServiceRules.privateKeyMaxLength)
+            }
+        }
+    }
+    
     @Published var isAddServiceEnabled = false
     
     var keyboardInitialFocus: KeyboardInitialFocus {
@@ -45,6 +64,16 @@ final class AddingServiceManuallyPresenter: ObservableObject {
     private var isCorrectAdditionalInfo = true
     
     private var iconTypeID: IconTypeID?
+
+    private var isIconCleared = false
+
+    private var assignedIconTypeID: IconTypeID? {
+        isIconCleared ? nil : iconTypeID
+    }
+    
+    @Published var userCanSelectIcon = false
+    @Published var userCanCancelIcon = false
+    @Published var serviceTypeName: String?
     
     @Published var serviceName: String = "" {
         didSet { handleServiceNameChange() }
@@ -104,7 +133,7 @@ extension AddingServiceManuallyPresenter {
             additionalInfo: additionalInfo,
             tokenPeriod: tokenPeriod,
             tokenLength: tokenLength,
-            iconTypeID: iconTypeID,
+            iconTypeID: assignedIconTypeID,
             algorithm: algorithm,
             counter: initialCounter,
             tokenType: selectedTokenType
@@ -143,32 +172,14 @@ extension AddingServiceManuallyPresenter {
             checkForServiceIcon()
             value = .correct
         } else if trimmed.isEmpty {
-            serviceIcon = nil
+            clearServiceIcon()
             value = .tooShort
         } else {
-            serviceIcon = nil
+            clearServiceIcon()
             value = .tooLong
         }
         validateAddService()
         return value
-    }
-    
-    enum SecretValidationResult {
-        case correct
-        case duplicated
-        case incorrect
-        case tooShort
-        case tooLong
-        
-        var error: String? {
-            switch self {
-            case .correct: return nil
-            case .duplicated: return T.Tokens.duplicatedPrivateKey
-            case .incorrect: return T.Tokens.incorrectServiceKey
-            case .tooShort: return T.Tokens.serviceKeyToShort
-            case .tooLong: return T.Commons.textLongTitle(ServiceRules.privateKeyMaxLength)
-            }
-        }
     }
     
     func validateSecret(_ secret: String) -> SecretValidationResult {
@@ -218,14 +229,7 @@ extension AddingServiceManuallyPresenter {
         validateAddService()
         return value
     }
-    
-    func checkForServiceIcon() {
-        interactor.checkForServiceIcon(using: serviceName) { [weak self] img, iconTypeID in
-            self?.serviceIcon = img
-            self?.iconTypeID = iconTypeID
-        }
-    }
-    
+
     func handleCancel() {
         flowController.toClose()
     }
@@ -253,9 +257,42 @@ extension AddingServiceManuallyPresenter {
             handleInitialCounter(value)
         }
     }
+    
+    func onApplyIconType() {
+        isIconCleared = false
+        updateSelectionState()
+    }
+
+    func onClearIconType() {
+        isIconCleared = true
+        updateSelectionState()
+    }
 }
 
 private extension AddingServiceManuallyPresenter {
+    func checkForServiceIcon() {
+        guard !isIconCleared else { return }
+        interactor.checkForServiceIcon(using: serviceName) { [weak self] img, iconTypeID, serviceTypeName in
+            self?.serviceIcon = img
+            self?.iconTypeID = iconTypeID
+            self?.serviceTypeName = serviceTypeName
+            self?.updateSelectionState()
+        }
+    }
+    
+    func clearServiceIcon() {
+        guard !isIconCleared else { return }
+        serviceIcon = nil
+        iconTypeID = nil
+        serviceTypeName = nil
+        updateSelectionState()
+    }
+    
+    func updateSelectionState() {
+        userCanSelectIcon = iconTypeID != nil && isIconCleared
+        userCanCancelIcon = iconTypeID != nil && !isIconCleared
+    }
+    
     func handleServiceNameChange() {
         serviceNameError = validateServiceName(serviceName.trim()).error
     }

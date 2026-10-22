@@ -44,6 +44,7 @@ struct AppearanceCell: Identifiable {
         case activeSearch
         case defaultList
         case compactList
+        case largeList
         case hideTokens
     }
 
@@ -82,9 +83,13 @@ extension AppearancePresenter {
         )
 
         let selectedStyle = interactor.selectedListStyle
-        let selectedValue: String = selectedStyle == .default
-            ? T.Settings.listStyleOptionDefault
-            : T.Settings.listStyleOptionCompact
+        let selectedValue: String = {
+            switch selectedStyle {
+            case .default: return T.Settings.listStyleOptionDefault
+            case .compact: return T.Settings.listStyleOptionCompact
+            case .large: return T.Settings.listStyleOptionLarge
+            }
+        }()
         let listStyle = AppearanceSection(
             title: nil,
             cells: [
@@ -94,14 +99,19 @@ extension AppearancePresenter {
                         value: selectedValue,
                         options: [
                             AppearanceCell.PickerOption(
+                                title: T.Settings.listStyleOptionCompact,
+                                kind: .compactList,
+                                isSelected: selectedStyle == .compact
+                            ),
+                            AppearanceCell.PickerOption(
                                 title: T.Settings.listStyleOptionDefault,
                                 kind: .defaultList,
                                 isSelected: selectedStyle == .default
                             ),
                             AppearanceCell.PickerOption(
-                                title: T.Settings.listStyleOptionCompact,
-                                kind: .compactList,
-                                isSelected: selectedStyle == .compact
+                                title: T.Settings.listStyleOptionLarge,
+                                kind: .largeList,
+                                isSelected: selectedStyle == .large
                             )
                         ]
                     ),

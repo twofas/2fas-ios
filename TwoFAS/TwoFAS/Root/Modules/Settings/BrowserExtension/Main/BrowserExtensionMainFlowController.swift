@@ -128,6 +128,10 @@ extension BrowserExtensionMainFlowController: CameraScannerNavigationFlowControl
     func cameraScannerServiceWasCreated(serviceData: ServiceData) {
         // not implemented
     }
+    
+    func cameraScannerToGoogleAuthImport(data: GoogleScanData) {
+        // not implemented
+    }
 }
 
 extension BrowserExtensionMainFlowController: BrowserExtensionServiceFlowControllerParent {

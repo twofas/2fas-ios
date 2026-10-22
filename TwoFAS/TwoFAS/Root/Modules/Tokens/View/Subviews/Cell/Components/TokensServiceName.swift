@@ -65,6 +65,8 @@ final class TokensServiceName: UIView {
             label.font = TextStyle.subheadline.uiFont(.emphasized)
         case .normal:
             label.font = TextStyle.headline.uiFont()
+        case .large:
+            label.font = TextStyle.title3.uiFont(.emphasized)
         case .pass:
             break
         }

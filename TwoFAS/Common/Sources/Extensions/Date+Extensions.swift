@@ -21,7 +21,7 @@ import Foundation
 
 public extension Date {
     func secondsTillNextChange(with period: Int) -> Int {
-        period - (seconds % period)
+        period - (Int(timeIntervalSince1970) % period)
     }
         
     var seconds: Int {

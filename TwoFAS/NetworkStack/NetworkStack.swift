@@ -20,12 +20,10 @@
 import Foundation
 
 public protocol NetworkStackType: AnyObject {
-    var appVersion: AppVersionHandling { get }
     var network: NetworkStackRepository { get }
 }
 
 public final class NetworkStack {
-    private let appVersionHandler = AppVersionHandler()
     private let networkHandler: NetworkStackRepositoryImpl
         
     public init(baseURL: URL, notificationsBaseURL: URL) {
@@ -37,6 +35,5 @@ public final class NetworkStack {
 }
 
 extension NetworkStack: NetworkStackType {
-    public var appVersion: AppVersionHandling { appVersionHandler }
     public var network: NetworkStackRepository { networkHandler }
 }

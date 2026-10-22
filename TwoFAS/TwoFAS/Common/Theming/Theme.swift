@@ -79,6 +79,7 @@ enum Theme {
         enum Timing {
             static let show: TimeInterval = 0.1
             static let quick: TimeInterval = 0.2
+            static let keyboard: TimeInterval = 0.25
             static let displayNotification: TimeInterval = 2
         }
     }
@@ -106,9 +107,11 @@ enum Theme {
 
         /// 288
         static let componentWidth: CGFloat = 288
-        /// 280
-        static let compactCellWidth: CGFloat = 280
-        /// 310
-        static let defaultCellWidth: CGFloat = 310
+        /// 320
+        static let compactCellWidth: CGFloat = 340
+        /// 380
+        static let defaultCellWidth: CGFloat = 380
+        /// 460
+        static let largeCellWidth: CGFloat = 460
     }
 }

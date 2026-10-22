@@ -65,10 +65,9 @@ struct LabelComposeView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button(T.Commons.save) {
+                TFSaveButton(T.Commons.save, isEnabled: presenter.isSaveEnabled) {
                     presenter.handleSave()
                 }
-                .disabled(!presenter.isSaveEnabled)
             }
         }
         .onChange(of: presenter.title) { _, newValue in

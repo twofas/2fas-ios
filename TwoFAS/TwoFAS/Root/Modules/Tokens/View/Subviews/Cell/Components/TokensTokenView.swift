@@ -44,67 +44,61 @@ final class TokensTokenView: UIView {
         label.textColor = AppColor.backgroundsPrimary.uiColor
         return label
     }()
-
-    private var minHeightConstraint: NSLayoutConstraint?
     
     private var isMarked = false
     private var isMasked = false
     private var previousToken: TokenValue?
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
     }
-    
+
     private func commonInit() {
+        spacingLabel.translatesAutoresizingMaskIntoConstraints = false
+        tokenLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(spacingLabel)
-        spacingLabel.pinToParent()
         addSubview(tokenLabel)
-        tokenLabel.pinToParent()
 
         NSLayoutConstraint.activate([
-            spacingLabel.widthAnchor.constraint(equalTo: tokenLabel.widthAnchor),
-            spacingLabel.heightAnchor.constraint(equalTo: tokenLabel.heightAnchor)
+            tokenLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tokenLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tokenLabel.topAnchor.constraint(equalTo: topAnchor),
+            tokenLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            spacingLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            spacingLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            spacingLabel.topAnchor.constraint(equalTo: topAnchor),
+            spacingLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            spacingLabel.widthAnchor.constraint(equalTo: tokenLabel.widthAnchor)
         ])
-
-        spacingLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
-        spacingLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
-        spacingLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
-
-        tokenLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
-        tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .horizontal)
-        tokenLabel.setContentHuggingPriority(.defaultLow - 1, for: .vertical)
-
-        setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
-        setContentHuggingPriority(.defaultLow - 1, for: .vertical)
-
-        let minHeight = heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
-        minHeight.priority = .required - 1
-        minHeight.isActive = true
-        minHeightConstraint = minHeight
-        updateMinHeight()
 
         isAccessibilityElement = true
     }
 
-    private func updateMinHeight() {
-        guard let font = tokenLabel.font else { return }
-        minHeightConstraint?.constant = ceil(font.lineHeight)
+    override var intrinsicContentSize: CGSize {
+        CGSize(width: spacingLabel.intrinsicContentSize.width, height: tokenLabel.digitHeight)
     }
 
-    override var intrinsicContentSize: CGSize {
-        var size = tokenLabel.intrinsicContentSize
-        if let font = tokenLabel.font {
-            size.height = max(size.height, ceil(font.lineHeight))
-        }
-        return size
+    override func setContentHuggingPriority(_ priority: UILayoutPriority, for axis: NSLayoutConstraint.Axis) {
+        super.setContentHuggingPriority(priority, for: axis)
+        tokenLabel.setContentHuggingPriority(priority, for: axis)
+        spacingLabel.setContentHuggingPriority(priority, for: axis)
     }
-    
+
+    override func setContentCompressionResistancePriority(
+        _ priority: UILayoutPriority,
+        for axis: NSLayoutConstraint.Axis
+    ) {
+        super.setContentCompressionResistancePriority(priority, for: axis)
+        tokenLabel.setContentCompressionResistancePriority(priority, for: axis)
+        spacingLabel.setContentCompressionResistancePriority(priority, for: axis)
+    }
+
     func mark() {
         guard !isMarked else { return }
         
@@ -154,7 +148,6 @@ final class TokensTokenView: UIView {
     func setKind(_ kind: TokensCellKind) {
         tokenLabel.setKind(kind)
         spacingLabel.setKind(kind)
-        updateMinHeight()
         invalidateIntrinsicContentSize()
     }
     
@@ -233,47 +226,6 @@ final class TokensTokenView: UIView {
             tokenLabel.text = txtOverMatrix
         } else {
             tokenLabel.text = currentText
-        }
-    }
-}
-
-private class TokensTokenLabel: UILabel {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
-    
-    private func commonInit() {
-        minimumScaleFactor = 0.4
-        numberOfLines = 1
-        allowsDefaultTighteningForTruncation = true
-        adjustsFontSizeToFitWidth = true
-        baselineAdjustment = .alignCenters
-        textAlignment = .left
-        isAccessibilityElement = false
-    }
-    
-    func mark() {
-        textColor = AppColor.accentsBrand.uiColor
-    }
-    
-    func clearMarking() {
-        textColor = AppColor.labelsPrimary.uiColor
-    }
-    
-    func setKind(_ kind: TokensCellKind) {
-        switch kind {
-        case .compact:
-            font = TextStyle.compactToken.uiFont()
-        case .normal:
-            font = TextStyle.token.uiFont()
-        default:
-            break
         }
     }
 }

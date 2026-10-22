@@ -133,15 +133,7 @@ struct AppIntentProvider: AppIntentTimelineProvider {
                 else { return CodeEntry.Entry.placeholder() }
                 
                 let showWithCode = !isLast
-                let secondsToNewOne: Int = {
-                    let period = entryDescription.period.rawValue
-                    let currentSeconds: Int = calendar.component(.second, from: tokenDate)
-                    if currentSeconds >= period {
-                        let times = (currentSeconds / period) + 1
-                        return times * period - currentSeconds
-                    }
-                    return period - currentSeconds
-                }()
+                let secondsToNewOne = tokenDate.secondsTillNextChange(with: entryDescription.period.rawValue)
                 
                 let formattedCode: String = {
                     if showWithCode {

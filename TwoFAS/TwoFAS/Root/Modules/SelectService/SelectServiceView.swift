@@ -167,12 +167,7 @@ private struct SelectServiceListHeader: View {
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity, alignment: .center)
                 
-                Text(
-                    String(
-                    format: "requested a 2FA Token for %@. Select the service to authorize and save with this domain.",
-                    domain
-                    )
-                )
+                Text(T.Browser.requestSourceDescriptionIos(domain))
                     .textStyle(.subheadline)
                     .foregroundStyle(.labelsSecondary)
                     .multilineTextAlignment(.center)

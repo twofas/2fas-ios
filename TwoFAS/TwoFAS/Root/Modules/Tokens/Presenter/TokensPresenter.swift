@@ -33,7 +33,11 @@ final class TokensPresenter {
     private var isSearching = false
     private var changeRequriesTokenRefresh = false
     private var serviceWasCreated: ServiceData?
+    
+    // Scroll to after adding functionality
     private var focusOnService: ServiceData?
+    private var focusOnSection: SectionData?
+    
     private var lastActiveSearchFocusDate: Date?
     
     weak var view: TokensViewControlling?
@@ -360,7 +364,7 @@ extension TokensPresenter {
     func handleShowSectionCreation() {
         Log("TokensPresenter - handleShowSectionCreation")
         flowController.toCreateSection { [weak self] name in
-            self?.interactor.createSection(with: name)
+            self?.focusOnSection = self?.interactor.createSection(with: name)
             self?.reloadData()
         }
     }
@@ -440,6 +444,11 @@ extension TokensPresenter {
         }
     }
     
+    func handleFocusOnService(_ serviceData: ServiceData) {
+        focusOnService = serviceData
+        reloadData()
+    }
+    
     // MARK: - Timer and Counter support
     
     func handleRegisterTOTP(_ consumer: TokenTimerConsumer) {
@@ -464,11 +473,6 @@ extension TokensPresenter {
     
     func handleUnlockTOTP(for consumer: TokenTimerConsumer) {
         interactor.unlockTOTPConsumer(consumer)
-    }
-    
-    func handleFocusOnService(_ serviceData: ServiceData) {
-        focusOnService = serviceData
-        reloadData()
     }
     
     func handleShowNotifications() {
@@ -578,6 +582,11 @@ private extension TokensPresenter {
             if let focusOnService {
                 let indexPath = newServices.indexPath(of: focusOnService)
                 self.focusOnService = nil
+                return indexPath
+            }
+            if let focusOnSection {
+                let indexPath = newServices.indexPath(of: focusOnSection)
+                self.focusOnSection = nil
                 return indexPath
             }
             return nil

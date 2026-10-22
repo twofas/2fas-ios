@@ -37,6 +37,7 @@ protocol SelectFromGalleryFlowControllerParent: AnyObject {
     /// runs alongside it and reports whether the gesture was cancelled.
     func galleryWillCancel(alongside coordinator: UIViewControllerTransitionCoordinator?)
     func galleryServiceWasCreated(serviceData: ServiceData)
+    func galleryToGoogleAuthImport(data: GoogleScanData)
 }
 
 protocol SelectFromGalleryFlowControlling: AnyObject {
@@ -50,7 +51,7 @@ protocol SelectFromGalleryFlowControlling: AnyObject {
     func toCancel()
     func toWillCancel(alongside coordinator: UIViewControllerTransitionCoordinator?)
     func toWillShow(alongside coordinator: UIViewControllerTransitionCoordinator?)
-    func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code])
+    func toGoogleAuthImport(data: GoogleScanData)
     func toLastPassSummary(importable: Int, total: Int, codes: [Code])
     func toRename(currentName: String, secret: String)
 }
@@ -63,7 +64,8 @@ final class SelectFromGalleryFlowController: FlowController {
     static func present(
         on viewController: UIViewController,
         applyOverlay: Bool,
-        parent: SelectFromGalleryFlowControllerParent
+        parent: SelectFromGalleryFlowControllerParent,
+        googleMultiscanFeedback: ((GoogleScanData?) -> Void)? = nil
     ) -> UIViewController {
         let view = SelectFromGalleryViewController()
         let flowController = SelectFromGalleryFlowController(viewController: view)
@@ -75,6 +77,8 @@ final class SelectFromGalleryFlowController: FlowController {
             interactor: interactor
         )
         view.presenter = presenter
+        
+        presenter.googleMultiscanFeedback = googleMultiscanFeedback
         
         flowController.parentViewController = viewController
         flowController.applyOverlay = applyOverlay
@@ -193,24 +197,8 @@ extension SelectFromGalleryFlowController: SelectFromGalleryFlowControlling {
         parent?.galleryWillShow(alongside: coordinator)
     }
     
-    func toGoogleAuthSummary(importable: Int, total: Int, codes: [Code]) {
-        let google = CameraGoogleAuth(
-            importedCount: importable,
-            totalCount: total,
-            action: { [weak self] in
-                if importable == 0 {
-                    self?.dismissModal()
-                } else {
-                    self?.viewController.presenter.handleGoogleAuthImport(codes)
-                }
-            },
-            cancel: { [weak self] in
-                self?.dismissModal()
-            })
-        
-        let vc = UIHostingController(rootView: google)
-        configureViewController(vc)
-        parentViewController?.present(vc, animated: true, completion: nil)
+    func toGoogleAuthImport(data: GoogleScanData) {
+        parent?.galleryToGoogleAuthImport(data: data)
     }
     
     func toLastPassSummary(importable: Int, total: Int, codes: [Code]) {

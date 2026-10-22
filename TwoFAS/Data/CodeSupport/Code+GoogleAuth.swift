@@ -22,8 +22,15 @@ import Common
 import SwiftProtobuf
 
 extension Code {
+    struct GoogleParseResult {
+        let index: Int
+        let size: Int
+        let batchID: Int
+        let codes: [Code]
+    }
+    
     /// Chech if path is parsable: otpauth-migration://offline?data=...
-    static func checkGoogleAuth(with data: String) -> [Code]? {
+    static func checkGoogleAuth(with data: String) -> GoogleParseResult? {
         guard let components = NSURLComponents(string: data),
               let scheme = components.scheme, scheme == "otpauth-migration",
               let host = components.host, host == "offline",
@@ -34,7 +41,7 @@ extension Code {
               let unpacked = try? MigrationPayload(serializedBytes: encodeData)
         else { return nil }
                 
-        return unpacked.otpParameters.compactMap { param -> Code? in
+        let codes = unpacked.otpParameters.compactMap { param -> Code? in
             guard let secret = param.secretValue?.sanitazeSecret(), secret.isValidSecret() else { return nil }
             let digits: Digits = {
                 if let value = param.digitsValue {
@@ -70,5 +77,12 @@ extension Code {
                 otpAuth: nil
             )
         }
+        
+        return .init(
+            index: Int(unpacked.batchIndex),
+            size: Int(unpacked.batchSize),
+            batchID: Int(unpacked.batchID),
+            codes: codes
+        )
     }
 }

@@ -25,7 +25,9 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
     let height: CGFloat
     @Binding
     var cameraFreeze: Bool
-    
+    @Binding
+    var cameraStopped: Bool
+
     var didRegisterError: (String?) -> Void
     var didFoundCode: (CodeType) -> Void
     
@@ -44,6 +46,18 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
                 self,
                 selector: #selector(cameraStateChanged),
                 name: AVCaptureSession.wasInterruptedNotification,
+                object: nil
+            )
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(resumeCamera),
+                name: AVCaptureSession.interruptionEndedNotification,
+                object: nil
+            )
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(resumeCamera),
+                name: UIApplication.didBecomeActiveNotification,
                 object: nil
             )
             notificationCenter.addObserver(
@@ -97,7 +111,9 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
 
         @objc
         private func resumeCamera() {
+            guard !parent.cameraStopped else { return }
             camera?.start()
+            camera?.unfreeze()
         }
     }
 
@@ -109,6 +125,11 @@ struct AddingServiceCameraViewport: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: CameraScanningView, context: Context) {
+        if cameraStopped {
+            uiView.stop()
+            return
+        }
+        uiView.start()
         if cameraFreeze {
             uiView.freeze()
         } else {

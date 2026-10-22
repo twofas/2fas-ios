@@ -539,10 +539,112 @@ extension ImportFromFileInteractor {
             var code = $0
             return code.transformIfSteam()
         })
-        
+
         return .success(codesSteam)
     }
-    
+
+    func importFromEnteFileFormat(_ data: Data) -> [Code]? {
+        guard let string = String(data: data, encoding: .utf8), string.contains("codeDisplay=") else {
+            return nil
+        }
+        var current = Set<String>()
+
+        let lines = string.split(separator: "\n")
+            .map({ String($0) })
+            .compactMap({ URL(string: $0) })
+            .filter({ $0.scheme == "otpauth" })
+
+        let codes = lines.compactMap({ Code.parseURL($0) })
+            .filter({ entry in
+                self.shouldImport(&current, secret: entry.secret)
+            })
+        guard !codes.isEmpty else { return nil }
+
+        return codes.map({
+            var code = $0
+            return code.transformIfSteam()
+        })
+    }
+
+    func parseEnte(_ data: [Code]) -> [ServiceData] {
+        Log("ImportFromFileInteractor - parseEnte", module: .interactor)
+
+        let date = Date()
+        var current = Set<String>()
+
+        return data
+            .filter({ entry in
+                self.shouldImport(&current, secret: entry.secret)
+            })
+            .compactMap { code -> ServiceData? in
+                let secret = code.secret.sanitazeSecret()
+
+                guard secret.isValidSecret() else { return nil }
+
+                let issuer = code.issuer
+                let additionalInfoArray = code.label?.sanitizeInfo().split(separator: ":")
+                let additionalInfo: String? = {
+                    if let service = additionalInfoArray?[safe: 1], !service.isEmpty {
+                        return String(service)
+                    }
+                    return nil
+                }()
+                let digits = code.digits ?? .defaultValue
+                let kind = code.tokenType
+                let algo = code.algorithm ?? .defaultValue
+                let counter = code.counter ?? 0
+                let period = code.period ?? .defaultValue
+
+                let name: String = {
+                    if let name = issuer?.sanitazeName()
+                        .replacingOccurrences(of: "+", with: " "), !name.isEmpty {
+                        return name
+                    }
+                    return modifyInteractor.createNameForUnknownService()
+                }()
+
+                let serviceDef: ServiceDefinition? = {
+                    if let issuer {
+                        return serviceDefinitionInteractor.findService(using: issuer)
+                    }
+                    return nil
+                }()
+                let iconTypeID = serviceDef?.iconTypeID
+                let iconType: IconType = {
+                    if iconTypeID == nil {
+                        return .label
+                    }
+                    return .brand
+                }()
+
+                return ServiceData(
+                    name: name,
+                    secret: secret,
+                    serviceTypeID: serviceDef?.serviceTypeID,
+                    additionalInfo: additionalInfo,
+                    rawIssuer: issuer,
+                    modifiedAt: date,
+                    createdAt: date,
+                    tokenPeriod: period,
+                    tokenLength: digits,
+                    badgeColor: nil,
+                    iconType: iconType,
+                    iconTypeID: iconTypeID ?? .default,
+                    labelColor: .random,
+                    labelTitle: name.twoLetters,
+                    algorithm: algo,
+                    isTrashed: false,
+                    trashingDate: nil,
+                    counter: counter,
+                    tokenType: kind,
+                    source: .link,
+                    otpAuth: nil,
+                    order: nil,
+                    sectionID: nil
+                )
+            }
+    }
+
     func parseAuthenticatorPro(_ data: [Code]) -> [ServiceData] {
         Log("ImportFromFileInteractor - AutenticatorPro", module: .interactor)
         
@@ -616,6 +718,381 @@ extension ImportFromFileInteractor {
             }
     }
     
+    func parseProton(_ data: ProtonData) -> [ServiceData] {
+        Log("ImportFromFileInteractor - parseProton", module: .interactor)
+
+        let date = Date()
+        var current = Set<String>()
+
+        return data.entries
+            .compactMap { entry -> ServiceData? in
+                guard let url = URL(string: entry.content.uri),
+                      let code = Code.parseURL(url)
+                else { return nil }
+
+                let secret = code.secret.sanitazeSecret()
+                guard secret.isValidSecret(), shouldImport(&current, secret: secret) else { return nil }
+
+                let issuer = code.issuer
+                let digits = code.digits ?? .defaultValue
+                let kind = code.tokenType
+                let algo = code.algorithm ?? .defaultValue
+                let counter = code.counter ?? 0
+                let period = code.period ?? .defaultValue
+
+                let name: String = {
+                    if let issuer = issuer?.sanitazeName(), !issuer.isEmpty {
+                        return issuer
+                    }
+                    let name = entry.content.name.sanitazeName()
+                    if !name.isEmpty {
+                        return name
+                    }
+                    return modifyInteractor.createNameForUnknownService()
+                }()
+
+                let additionalInfo = code.label?.sanitizeInfo()
+
+                let serviceDef: ServiceDefinition? = {
+                    if let issuer {
+                        return serviceDefinitionInteractor.findService(using: issuer)
+                    }
+                    return nil
+                }()
+                let iconTypeID = serviceDef?.iconTypeID
+                let iconType: IconType = {
+                    if iconTypeID == nil {
+                        return .label
+                    }
+                    return .brand
+                }()
+
+                return ServiceData(
+                    name: name,
+                    secret: secret,
+                    serviceTypeID: serviceDef?.serviceTypeID,
+                    additionalInfo: additionalInfo,
+                    rawIssuer: issuer,
+                    modifiedAt: date,
+                    createdAt: date,
+                    tokenPeriod: period,
+                    tokenLength: digits,
+                    badgeColor: nil,
+                    iconType: iconType,
+                    iconTypeID: iconTypeID ?? .default,
+                    labelColor: .random,
+                    labelTitle: name.twoLetters,
+                    algorithm: algo,
+                    isTrashed: false,
+                    trashingDate: nil,
+                    counter: counter,
+                    tokenType: kind,
+                    source: .link,
+                    otpAuth: nil,
+                    order: nil,
+                    sectionID: nil
+                )
+            }
+    }
+
+    func parseBitwarden(_ data: BitwardenData) -> [ServiceData] {
+        Log("ImportFromFileInteractor - parseBitwarden", module: .interactor)
+
+        let date = Date()
+        var current = Set<String>()
+
+        return (data.items ?? [])
+            .compactMap { item -> ServiceData? in
+                guard let totp = item.login?.totp?.trimmingCharacters(in: .whitespacesAndNewlines),
+                      !totp.isEmpty
+                else { return nil }
+
+                let code: Code? = {
+                    guard let url = URL(string: totp) else { return nil }
+                    return Code.parseURL(url)
+                }()
+
+                let issuer: String?
+                let digits: Digits
+                let period: Period
+                let algo: Algorithm
+                let counter: Int
+                let kind: TokenType
+                let label: String?
+                let rawSecret: String
+
+                if let code {
+                    rawSecret = code.secret
+                    issuer = code.issuer
+                    digits = code.digits ?? .defaultValue
+                    period = code.period ?? .defaultValue
+                    algo = code.algorithm ?? .defaultValue
+                    counter = code.counter ?? 0
+                    kind = code.tokenType
+                    label = code.label
+                } else {
+                    return nil
+                }
+
+                let secret = rawSecret.sanitazeSecret()
+                guard secret.isValidSecret(), shouldImport(&current, secret: secret) else {
+                    return nil
+                }
+
+                let name: String = {
+                    if let issuer = issuer?.sanitazeName(), !issuer.isEmpty {
+                        return issuer
+                    }
+                    if let name = item.name?.sanitazeName(), !name.isEmpty {
+                        return name
+                    }
+                    return modifyInteractor.createNameForUnknownService()
+                }()
+
+                let additionalInfo: String? = {
+                    if let label, !label.isEmpty {
+                        return label.sanitizeInfo()
+                    }
+                    if let username = item.login?.username, !username.isEmpty {
+                        return username.sanitizeInfo()
+                    }
+                    return nil
+                }()
+
+                let serviceDef: ServiceDefinition? = {
+                    if let issuer {
+                        return serviceDefinitionInteractor.findService(using: issuer)
+                    }
+                    return nil
+                }()
+                let iconTypeID = serviceDef?.iconTypeID
+                let iconType: IconType = {
+                    if iconTypeID == nil {
+                        return .label
+                    }
+                    return .brand
+                }()
+                
+                return ServiceData(
+                    name: name,
+                    secret: secret,
+                    serviceTypeID: serviceDef?.serviceTypeID,
+                    additionalInfo: additionalInfo,
+                    rawIssuer: issuer,
+                    modifiedAt: date,
+                    createdAt: date,
+                    tokenPeriod: period,
+                    tokenLength: digits,
+                    badgeColor: nil,
+                    iconType: iconType,
+                    iconTypeID: iconTypeID ?? .default,
+                    labelColor: .random,
+                    labelTitle: name.twoLetters,
+                    algorithm: algo,
+                    isTrashed: false,
+                    trashingDate: nil,
+                    counter: counter,
+                    tokenType: kind,
+                    source: .link,
+                    otpAuth: nil,
+                    order: nil,
+                    sectionID: nil
+                )
+            }
+    }
+
+    func importFromBitwardenCSVFileFormat(_ data: Data) -> BitwardenData? {
+        guard let string = String(data: data, encoding: .utf8) else { return nil }
+
+        let rows = parseCSVRows(string)
+        guard let header = rows.first else { return nil }
+
+        let columns = header.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+        guard let totpIndex = columns.firstIndex(of: "login_totp") else { return nil }
+        let nameIndex = columns.firstIndex(of: "name")
+        let usernameIndex = columns.firstIndex(of: "login_username")
+
+        func value(_ row: [String], _ index: Int?) -> String? {
+            guard let index, index < row.count else { return nil }
+            return row[index]
+        }
+
+        let items: [BitwardenData.Item] = rows.dropFirst().compactMap { row in
+            guard totpIndex < row.count else { return nil }
+            let totp = row[totpIndex].trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !totp.isEmpty else { return nil }
+            return BitwardenData.Item(
+                name: value(row, nameIndex),
+                login: BitwardenData.Item.Login(totp: totp, username: value(row, usernameIndex))
+            )
+        }
+
+        return BitwardenData(encrypted: false, items: items)
+    }
+
+    func parseOnePassword(_ data: [OnePasswordData]) -> [ServiceData] {
+        Log("ImportFromFileInteractor - parseOnePassword", module: .interactor)
+
+        let date = Date()
+        var current = Set<String>()
+
+        return data
+            .compactMap { item -> ServiceData? in
+                guard let url = URL(string: item.otpAuth),
+                      let code = Code.parseURL(url)
+                else { return nil }
+
+                let secret = code.secret.sanitazeSecret()
+                guard secret.isValidSecret(), shouldImport(&current, secret: secret) else { return nil }
+
+                let issuer = code.issuer
+                let digits = code.digits ?? .defaultValue
+                let kind = code.tokenType
+                let algo = code.algorithm ?? .defaultValue
+                let counter = code.counter ?? 0
+                let period = code.period ?? .defaultValue
+
+                let name: String = {
+                    if let title = item.title?.sanitazeName(), !title.isEmpty {
+                        return title
+                    }
+                    if let issuer = issuer?.sanitazeName(), !issuer.isEmpty {
+                        return issuer
+                    }
+                    if let label = code.label?.sanitazeName(), !label.isEmpty {
+                        return label
+                    }
+                    return modifyInteractor.createNameForUnknownService()
+                }()
+
+                let additionalInfo: String? = {
+                    if let username = item.username, !username.isEmpty {
+                        return username.sanitizeInfo()
+                    }
+                    if let label = code.label, !label.isEmpty {
+                        return label.sanitizeInfo()
+                    }
+                    return nil
+                }()
+
+                let serviceDef: ServiceDefinition? = {
+                    if let issuer {
+                        return serviceDefinitionInteractor.findService(using: issuer)
+                    }
+                    return nil
+                }()
+                let iconTypeID = serviceDef?.iconTypeID
+                let iconType: IconType = {
+                    if iconTypeID == nil {
+                        return .label
+                    }
+                    return .brand
+                }()
+
+                return ServiceData(
+                    name: name,
+                    secret: secret,
+                    serviceTypeID: serviceDef?.serviceTypeID,
+                    additionalInfo: additionalInfo,
+                    rawIssuer: issuer,
+                    modifiedAt: date,
+                    createdAt: date,
+                    tokenPeriod: period,
+                    tokenLength: digits,
+                    badgeColor: nil,
+                    iconType: iconType,
+                    iconTypeID: iconTypeID ?? .default,
+                    labelColor: .random,
+                    labelTitle: name.twoLetters,
+                    algorithm: algo,
+                    isTrashed: false,
+                    trashingDate: nil,
+                    counter: counter,
+                    tokenType: kind,
+                    source: .link,
+                    otpAuth: nil,
+                    order: nil,
+                    sectionID: nil
+                )
+            }
+    }
+
+    func importFromOnePasswordCSVFileFormat(_ data: Data) -> [OnePasswordData]? {
+        guard let string = String(data: data, encoding: .utf8) else { return nil }
+
+        let rows = parseCSVRows(string)
+        guard let header = rows.first else { return nil }
+
+        let columns = header.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+        guard let otpAuthIndex = columns.firstIndex(of: "otpauth") else { return nil }
+        let titleIndex = columns.firstIndex(of: "title")
+        let usernameIndex = columns.firstIndex(of: "username")
+
+        func value(_ row: [String], _ index: Int?) -> String? {
+            guard let index, index < row.count else { return nil }
+            return row[index]
+        }
+
+        return rows.dropFirst().compactMap { row -> OnePasswordData? in
+            guard otpAuthIndex < row.count else { return nil }
+            let otpAuth = row[otpAuthIndex].trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !otpAuth.isEmpty else { return nil }
+            return OnePasswordData(
+                title: value(row, titleIndex),
+                username: value(row, usernameIndex),
+                otpAuth: otpAuth
+            )
+        }
+    }
+
+    private func parseCSVRows(_ text: String) -> [[String]] {
+        var rows = [[String]]()
+        var row = [String]()
+        var field = ""
+        var inQuotes = false
+        let characters = Array(text)
+        var index = 0
+
+        while index < characters.count {
+            let character = characters[index]
+            if inQuotes {
+                if character == "\"" {
+                    if index + 1 < characters.count, characters[index + 1] == "\"" {
+                        field.append("\"")
+                        index += 1
+                    } else {
+                        inQuotes = false
+                    }
+                } else {
+                    field.append(character)
+                }
+            } else {
+                switch character {
+                case "\"":
+                    inQuotes = true
+                case ",":
+                    row.append(field)
+                    field = ""
+                case "\n":
+                    row.append(field)
+                    field = ""
+                    rows.append(row)
+                    row = []
+                case "\r":
+                    break
+                default:
+                    field.append(character)
+                }
+            }
+            index += 1
+        }
+
+        row.append(field)
+        rows.append(row)
+
+        return rows.filter { !($0.count == 1 && $0[0].trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) }
+    }
+
     private func shouldImport(_ set: inout Set<String>, secret: String) -> Bool {
         if set.contains(secret) {
             return false

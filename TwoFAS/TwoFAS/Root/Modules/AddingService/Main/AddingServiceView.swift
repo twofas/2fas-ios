@@ -63,6 +63,7 @@ struct AddingServiceView: View {
                     AddingServiceCameraViewport(
                         height: AddingServiceMetrics.cameraActiveAreaHeight(for: horizontalSizeClass),
                         cameraFreeze: $presenter.freezeCamera,
+                        cameraStopped: $presenter.cameraStopped,
                         didRegisterError: { error in
                             self.errorReason = error
                         },

@@ -120,6 +120,68 @@ private extension ImporterOpenFilePresenter {
                     externalImportService: interactor.importingOTPAuthFile ? .otpAuthFile : .authenticatorPro
                 )
             }
+        case .ente(let data):
+            let parseResult = interactor.parseEnte(data)
+            if parseResult.isEmpty {
+                flowController.toFileIsEmpty()
+            } else {
+                flowController.toPreimportSummary(
+                    countNew: interactor.countNewServices(parseResult),
+                    countTotal: data.count,
+                    sections: [],
+                    services: parseResult,
+                    externalImportService: .ente
+                )
+            }
+        case .onePassword(let data):
+            let parseResult = interactor.parseOnePassword(data)
+            if parseResult.isEmpty {
+                flowController.toFileIsEmpty()
+            } else {
+                flowController.toPreimportSummary(
+                    countNew: interactor.countNewServices(parseResult),
+                    countTotal: data.count,
+                    sections: [],
+                    services: parseResult,
+                    externalImportService: .onePassword
+                )
+            }
+        case .proton(let result):
+            switch result {
+            case .error:
+                flowController.toFileError(error: .cantReadFile(reason: nil))
+            case .success(let protonData):
+                let parseResult = interactor.parseProton(protonData)
+                if parseResult.isEmpty {
+                    flowController.toFileIsEmpty()
+                } else {
+                    flowController.toPreimportSummary(
+                        countNew: interactor.countNewServices(parseResult),
+                        countTotal: protonData.entries.count,
+                        sections: [],
+                        services: parseResult,
+                        externalImportService: .proton
+                    )
+                }
+            }
+        case .bitwarden(let result):
+            switch result {
+            case .error:
+                flowController.toFileError(error: .cantReadFile(reason: nil))
+            case .success(let bitwardenData):
+                let parseResult = interactor.parseBitwarden(bitwardenData)
+                if parseResult.isEmpty {
+                    flowController.toFileIsEmpty()
+                } else {
+                    flowController.toPreimportSummary(
+                        countNew: interactor.countNewServices(parseResult),
+                        countTotal: bitwardenData.items?.count ?? parseResult.count,
+                        sections: [],
+                        services: parseResult,
+                        externalImportService: .bitwarden
+                    )
+                }
+            }
         case .aegis(let result):
             switch result {
             case .error, .encrypted:

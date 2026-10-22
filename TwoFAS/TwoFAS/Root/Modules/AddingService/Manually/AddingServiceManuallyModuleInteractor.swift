@@ -22,7 +22,7 @@ import Common
 import Data
 
 protocol AddingServiceManuallyModuleInteracting: AnyObject {
-    func checkForServiceIcon(using str: String, callback: @escaping (UIImage?, IconTypeID?) -> Void)
+    func checkForServiceIcon(using str: String, callback: @escaping (UIImage?, IconTypeID?, String?) -> Void)
     func isPrivateKeyUsed(_ privateKey: String) -> Bool
     func addService(
         name: String,
@@ -54,16 +54,16 @@ final class AddingServiceManuallyModuleInteractor {
 }
 
 extension AddingServiceManuallyModuleInteractor: AddingServiceManuallyModuleInteracting {
-    func checkForServiceIcon(using str: String, callback: @escaping (UIImage?, IconTypeID?) -> Void) {
+    func checkForServiceIcon(using str: String, callback: @escaping (UIImage?, IconTypeID?, String?) -> Void) {
         guard let service = serviceDatabase.findServicesByTagOrIssuer(
             str,
             exactMatch: true,
             useTags: false
         ).first else {
-            callback(nil, nil)
+            callback(nil, nil, nil)
             return
         }
-        callback(service.icon, service.iconTypeID)
+        callback(service.icon, service.iconTypeID, service.name)
     }
     
     func isPrivateKeyUsed(_ privateKey: String) -> Bool {

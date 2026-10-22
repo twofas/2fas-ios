@@ -19,16 +19,32 @@
 
 import Foundation
 
-extension MainRepositoryImpl {
-    func clearViewPath() {
-        userDefaultsRepository.clearViewPath()
+public struct BitwardenData: Decodable {
+    public struct Item: Decodable {
+        public struct Login: Decodable {
+            public let totp: String?
+            public let username: String?
+
+            public init(totp: String?, username: String?) {
+                self.totp = totp
+                self.username = username
+            }
+        }
+
+        public let name: String?
+        public let login: Login?
+
+        public init(name: String?, login: Login?) {
+            self.name = name
+            self.login = login
+        }
     }
-    
-    func saveViewPath(_ path: ViewPath) {
-        userDefaultsRepository.saveViewPath(path)
-    }
-    
-    func viewPath() -> (viewPath: ViewPath, savedAt: Date)? {
-        userDefaultsRepository.viewPath()
+
+    public let encrypted: Bool
+    public let items: [Item]?
+
+    public init(encrypted: Bool, items: [Item]?) {
+        self.encrypted = encrypted
+        self.items = items
     }
 }

@@ -41,6 +41,10 @@ protocol ImporterOpenFileModuleInteracting: AnyObject {
     func parseRaivo(_ data: [RaivoData]) -> [ServiceData]
     func parseAndOTP(_ data: [AndOTPData]) -> [ServiceData]
     func parseAuthenticatorPro(_ data: [Code]) -> [ServiceData]
+    func parseProton(_ data: ProtonData) -> [ServiceData]
+    func parseBitwarden(_ data: BitwardenData) -> [ServiceData]
+    func parseOnePassword(_ data: [OnePasswordData]) -> [ServiceData]
+    func parseEnte(_ data: [Code]) -> [ServiceData]
 }
 
 final class ImporterOpenFileModuleInteractor {
@@ -49,7 +53,7 @@ final class ImporterOpenFileModuleInteractor {
     let url: URL?
     let importingOTPAuthFile: Bool
     let isFromClipboard: Bool
-    
+
     init(
         importInteractor: ImportFromFileInteracting,
         url: URL?,
@@ -117,5 +121,21 @@ extension ImporterOpenFileModuleInteractor: ImporterOpenFileModuleInteracting {
     
     func parseAuthenticatorPro(_ data: [Code]) -> [ServiceData] {
         importInteractor.parseAuthenticatorPro(data)
+    }
+
+    func parseProton(_ data: ProtonData) -> [ServiceData] {
+        importInteractor.parseProton(data)
+    }
+
+    func parseBitwarden(_ data: BitwardenData) -> [ServiceData] {
+        importInteractor.parseBitwarden(data)
+    }
+
+    func parseOnePassword(_ data: [OnePasswordData]) -> [ServiceData] {
+        importInteractor.parseOnePassword(data)
+    }
+
+    func parseEnte(_ data: [Code]) -> [ServiceData] {
+        importInteractor.parseEnte(data)
     }
 }

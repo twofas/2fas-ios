@@ -249,7 +249,9 @@ final class CameraViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+
+        let isCovered = presentedViewController != nil || parent?.presentedViewController != nil
+        guard !isCovered else { return }
         viewModel.viewWillDisappear()
     }
     

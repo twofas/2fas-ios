@@ -330,17 +330,6 @@ protocol MainRepository: AnyObject {
     func biometryAuthenticationStarted()
     func biometryAuthenticationEnded()
     
-    // MARK: - New Version
-    var newVersionCounter: Int { get }
-    func setNewVersionCounter(_ counter: Int)
-    var newVersionCheckDisabled: Bool { get }
-    func setNewVersionCheckDisabled(_ disabled: Bool)
-    var newVersionTracked: String? { get }
-    func setNewVersionTracked(_ version: String)
-    var newVersionIgnored: String? { get }
-    func setNewVersionIgnored(_ version: String)
-    func fetchNewVersion(completion: @escaping (Result<FetchNewVersionAppInfo, Error>) -> Void)
-    
     // MARK: - Code
     var storedURL: URL? { get }
     func handleURL(_ url: URL) -> (canHandle: Bool, shouldSave: Bool)
@@ -540,12 +529,7 @@ protocol MainRepository: AnyObject {
     var usedDiskSpace: String { get }
     var currentDevice: String { get }
     var systemVersion: String { get }
-    
-    // MARK: - View Path
-    func clearViewPath()
-    func saveViewPath(_ path: ViewPath)
-    func viewPath() -> (viewPath: ViewPath, savedAt: Date)?
-    
+
     // MARK: - Guides
     func listAllGuides() -> [ServiceGuide]
     func loadGuideData(for serviceGuide: ServiceGuide) -> ServiceGuideDescription?

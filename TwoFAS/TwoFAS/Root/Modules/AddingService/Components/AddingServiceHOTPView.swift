@@ -30,6 +30,8 @@ struct AddingServiceHOTPView: View {
     @Binding
     var refreshTokenLocked: Bool
     
+    private let iconSize: CGFloat = 30
+    
     var handleRefresh: () -> Void
     
     var body: some View {
@@ -42,13 +44,19 @@ struct AddingServiceHOTPView: View {
                 rotationAngle = 360.0
             }
         } label: {
-            Asset.refreshTokenCounter.swiftUIImage
-                .tint(
-                    Color(
-                        refreshTokenLocked ? AppColor.graysGray2.color(for: colorScheme) :
-                        AppColor.accentsBrand.color(for: colorScheme)
-                    )
-                )
+            Rectangle()
+                .foregroundStyle(.clear)
+                .frame(width: iconSize, height: iconSize)
+                .background {
+                    Image(systemName: "arrow.clockwise")
+                        .font(Font.system(size: 30, weight: .medium))
+                        .tint(
+                            Color(
+                                refreshTokenLocked ? AppColor.graysGray2.color(for: colorScheme) :
+                                    AppColor.accentsBrand.color(for: colorScheme)
+                            )
+                        )
+                }
                 .rotationEffect(.degrees(rotationAngle))
         }
         .disabled(refreshTokenLocked)

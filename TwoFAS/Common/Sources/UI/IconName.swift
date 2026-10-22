@@ -97,6 +97,7 @@ public enum IconName: String {
     case questionmarkCircle = "questionmark.circle"
     case questionmarkCircleFill = "questionmark.circle.fill"
     case rectangleOnRectangle = "rectangle.on.rectangle"
+    case rectangleStackBadgePlus = "rectangle.stack.badge.plus"
     case sidebarLeft = "sidebar.left"
     case squareAndArrowDown = "square.and.arrow.down"
     case squareAndArrowDownOnSquareFill = "square.and.arrow.down.on.square.fill"

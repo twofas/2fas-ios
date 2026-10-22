@@ -23,6 +23,8 @@ import Data
 
 final class CameraScannerPresenter {
     weak var view: CameraScannerViewControlling?
+    
+    var googleMultiscanFeedback: ((GoogleScanData?) -> Void)?
         
     private var lockScanning = false
     
@@ -105,14 +107,19 @@ extension CameraScannerPresenter {
                 view?.freezeCamera()
                 interactor.addCode(code, force: false)
             }
-        case .googleAuth(let codes):
+        case .googleAuth(let index, let size, let batchID, let codes):
             view?.enableOverlay()
-            let importableCodes = interactor.filterImportableCodes(codes)
-            flowController.toGoogleAuthSummary(
-                importable: importableCodes.count,
-                total: codes.count,
-                codes: importableCodes
-            )
+            Log("CameraScannerPresenter: Found Google Auth codes: \(codes.count)")
+            Log("Codes: \(codes)", save: false)
+            
+            let data = GoogleScanData(index: index, size: size, batchID: batchID, codes: codes)
+            
+            if let feedback = googleMultiscanFeedback {
+                feedback(data)
+                return
+            }
+            
+            flowController.toGoogleAuthImport(data: data)
         case .lastPass(let codes, let totalCodesCount):
             view?.enableOverlay()
             let importableCodes = interactor.filterImportableCodes(codes)

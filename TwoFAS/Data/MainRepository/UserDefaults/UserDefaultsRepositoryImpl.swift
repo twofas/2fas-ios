@@ -21,18 +21,9 @@ import Foundation
 import Common
 
 final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
-    private struct ViewStatePath: Codable {
-        let savedAt: Date
-        let path: ViewPath
-    }
-    
     private enum Keys: String, CaseIterable {
         case appLockAttempts
         case appLockBlockTime
-        case newVersionCounter
-        case newVersionTracked
-        case newVersionIgnored
-        case newVersionCheckDisabled
         case sortType
         case extensionKeysGenerated
         case savedDeviceName
@@ -41,7 +32,6 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         case widgetWarning = "com.2fas.WidgetWarningStorage"
         case nextToken = "com.2fas.NextTokenStateController-TokenEnabled"
         case isSectionZeroCollapsed = "com.2fas.SectionZeroCollapsedState"
-        case viewPath = "ViewPathController.ViewStatePath"
         case introductionWasShown = "IntroductionWasShown"
         case crashlyticsDisabled
         case activeSearchEnabled
@@ -65,9 +55,6 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
     }
     private let userDefaults = UserDefaults()
     private let sharedDefaults = UserDefaults(suiteName: Config.groupIdentifier)!
-    
-    private let encoder = JSONEncoder()
-    private let decoder = JSONDecoder()
 
     var appLockAttempts: AppLockAttempts? {
         guard let value = userDefaults.string(forKey: Keys.appLockAttempts.rawValue) else { return nil }
@@ -88,43 +75,7 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         userDefaults.set(value.rawValue, forKey: Keys.appLockBlockTime.rawValue)
         userDefaults.synchronize()
     }
-    
-    var newVersionCounter: Int {
-        userDefaults.integer(forKey: Keys.newVersionCounter.rawValue)
-    }
-    
-    func setNewVersionCounter(_ counter: Int) {
-        userDefaults.set(counter, forKey: Keys.newVersionCounter.rawValue)
-        userDefaults.synchronize()
-    }
-    
-    var newVersionTracked: String? {
-        userDefaults.string(forKey: Keys.newVersionTracked.rawValue)
-    }
-    
-    func setNewVersionTracked(_ version: String) {
-        userDefaults.set(version, forKey: Keys.newVersionTracked.rawValue)
-        userDefaults.synchronize()
-    }
-    
-    var newVersionIgnored: String? {
-        userDefaults.string(forKey: Keys.newVersionIgnored.rawValue)
-    }
-    
-    func setNewVersionIgnored(_ version: String) {
-        userDefaults.set(version, forKey: Keys.newVersionIgnored.rawValue)
-        userDefaults.synchronize()
-    }
-    
-    var newVersionCheckDisabled: Bool {
-        userDefaults.bool(forKey: Keys.newVersionCheckDisabled.rawValue)
-    }
-    
-    func setNewVersionCheckDisabled(_ disabled: Bool) {
-        userDefaults.set(disabled, forKey: Keys.newVersionCheckDisabled.rawValue)
-        userDefaults.synchronize()
-    }
-    
+
     var sortType: SortType? {
         guard let value = userDefaults.string(forKey: Keys.sortType.rawValue) else { return nil }
         return SortType(rawValue: value)
@@ -323,34 +274,6 @@ final class UserDefaultsRepositoryImpl: UserDefaultsRepository {
         userDefaults.synchronize()
     }
 
-    // MARK: - View Path
-    
-    func clearViewPath() {
-        userDefaults.removeObject(forKey: Keys.viewPath.rawValue)
-        userDefaults.synchronize()
-    }
-    
-    func saveViewPath(_ path: ViewPath) {
-        let path = ViewStatePath(savedAt: Date(), path: path)
-        do {
-            let encodedNode = try encoder.encode(path)
-            userDefaults.set(encodedNode, forKey: Keys.viewPath.rawValue)
-            userDefaults.synchronize()
-        } catch {
-            Log("Can't save View State Path! Error: \(error)", severity: .error)
-        }
-    }
-    
-    func viewPath() -> (viewPath: ViewPath, savedAt: Date)? {
-        guard
-            let nodeData = userDefaults.object(forKey: Keys.viewPath.rawValue) as? Data,
-            let node = try? decoder.decode(ViewStatePath.self, from: nodeData)
-        else {
-            return nil
-        }
-        return (viewPath: node.path, savedAt: node.savedAt)
-    }
-    
     // MARK: - Crashlytics
     
     var isCrashlyticsDisabled: Bool {

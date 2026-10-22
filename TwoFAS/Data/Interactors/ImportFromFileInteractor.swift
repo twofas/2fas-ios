@@ -34,12 +34,24 @@ public enum ImportFromFileParsing {
     public enum LastPassResult {
         case success(LastPassData)
     }
+    public enum ProtonResult {
+        case error
+        case success(ProtonData)
+    }
+    public enum BitwardenResult {
+        case error
+        case success(BitwardenData)
+    }
     case twoFAS(ExchangeDataFormat)
     case aegis(AEGISParseResult)
     case lastPass(LastPassResult)
     case raivo([RaivoData])
     case andOTP([AndOTPData])
     case authenticatorPro([Code])
+    case proton(ProtonResult)
+    case bitwarden(BitwardenResult)
+    case onePassword([OnePasswordData])
+    case ente([Code])
 }
 
 public enum ImportFromFileTwoFASCheck {
@@ -75,6 +87,10 @@ public protocol ImportFromFileInteracting: AnyObject {
     func parseRaivo(_ data: [RaivoData]) -> [ServiceData]
     func parseAndOTP(_ data: [AndOTPData]) -> [ServiceData]
     func parseAuthenticatorPro(_ data: [Code]) -> [ServiceData]
+    func parseProton(_ data: ProtonData) -> [ServiceData]
+    func parseBitwarden(_ data: BitwardenData) -> [ServiceData]
+    func parseOnePassword(_ data: [OnePasswordData]) -> [ServiceData]
+    func parseEnte(_ data: [Code]) -> [ServiceData]
 }
 
 final class ImportFromFileInteractor {
@@ -136,11 +152,37 @@ extension ImportFromFileInteractor: ImportFromFileInteracting {
             return .andOTP(andOTP)
         }
         
+        if let ente = importFromEnteFileFormat(data) {
+            return .ente(ente)
+        }
+
         let authenticatorPro = importFromAuthenticatorProFileFormat(data)
         if case ImportFromFileAuthenticatorPro.success(let list) = authenticatorPro {
             return .authenticatorPro(list)
         }
-        
+
+        if let proton = try? jsonDecoder.decode(ProtonData.self, from: data) {
+            guard proton.version == 1 else {
+                return .proton(.error)
+            }
+            return .proton(.success(proton))
+        }
+
+        if let bitwarden = try? jsonDecoder.decode(BitwardenData.self, from: data) {
+            guard !bitwarden.encrypted, bitwarden.items != nil else {
+                return .bitwarden(.error)
+            }
+            return .bitwarden(.success(bitwarden))
+        }
+
+        if let bitwardenCSV = importFromBitwardenCSVFileFormat(data) {
+            return .bitwarden(.success(bitwardenCSV))
+        }
+
+        if let onePassword = importFromOnePasswordCSVFileFormat(data) {
+            return .onePassword(onePassword)
+        }
+
         do {
             let services = try jsonDecoder.decode(AEGISData.self, from: data)
             return .aegis(.success(services))

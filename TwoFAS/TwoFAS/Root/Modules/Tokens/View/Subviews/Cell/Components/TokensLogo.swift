@@ -112,7 +112,7 @@ final class TokensLogo: UIView {
         currentKind = kind
         applyKindConstraints()
         switch kind {
-        case .normal:
+        case .normal, .large:
             titleLabel.font = TextStyle.title3.uiFont()
         case .compact, .edit:
             titleLabel.font = TextStyle.subheadline.uiFont(.emphasized)

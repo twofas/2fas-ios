@@ -153,8 +153,6 @@ private extension SettingsMenuPresenter {
             selectedModule = nil
         }
 
-        flowController.toUpdateCurrentPosition(navigateToViewPath(navigateTo: navigateTo))
-
         if !isCollapsed {
             reload()
         }
@@ -225,24 +223,6 @@ private extension SettingsMenuPresenter {
         case .appearance: return .appearance
         case .appleWatch: return .appleWatch
         @unknown default: return nil
-        }
-    }
-
-    func navigateToViewPath(navigateTo: SettingsNavigationModule) -> ViewPath.Settings? {
-        switch navigateTo {
-        case .backup: .backup
-        case .security: .security
-        case .browserExtension: .browserExtension
-        case .trash: .trash
-        case .about: .about
-        case .transfer: .transfer
-        case .appearance: .appearance
-        case .appleWatch: .appleWatch
-        case .faq, .appStorePass, .openPass: nil
-        #if DEV
-        case .debug: nil
-        #endif
-        @unknown default: nil
         }
     }
 }

@@ -70,16 +70,8 @@ extension ServiceInteractor: ServiceInteracting {
     func timeToNextDate(for date: Date) -> Date {
         guard let serviceData else { return Date.now }
         
-        let secondsToNewOne: Int = {
-            let period = serviceData.period
-            let currentSeconds: Int = calendar.component(.second, from: date)
-            if currentSeconds >= period {
-                let times = (currentSeconds / period) + 1
-                return times * period - currentSeconds
-            }
-            return period - currentSeconds
-        }()
-        
+        let secondsToNewOne = date.secondsTillNextChange(with: serviceData.period)
+
         return calendar.date(byAdding: .second, value: secondsToNewOne, to: date)!
     }
     
@@ -88,12 +80,8 @@ extension ServiceInteractor: ServiceInteracting {
         var entries: [Date] = []
         
         let smallestIncrement = serviceData.period
-        
-        let seconds = calendar.component(.second, from: date)
-        let offset: Int = {
-            let rest = seconds % smallestIncrement
-            return smallestIncrement - rest
-        }()
+
+        let offset = date.secondsTillNextChange(with: smallestIncrement)
         let upTo = 256
         
         for i in 0 ..< upTo {

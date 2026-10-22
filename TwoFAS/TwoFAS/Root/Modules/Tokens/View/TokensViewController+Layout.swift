@@ -90,18 +90,11 @@ extension TokensViewController {
         indexPath: IndexPath,
         item: TokenCell
     ) -> UICollectionViewCell? {
-        let cell: (UICollectionViewCell & TokensTOTPCellType)? = {
-            switch presenter.listStyle {
-            case .default: return collectionView.dequeueReusableCell(
-                withReuseIdentifier: TokensTOTPCell.reuseIdentifier,
-                for: indexPath
-            ) as? TokensTOTPCell
-            case .compact: return collectionView.dequeueReusableCell(
-                withReuseIdentifier: TokensTOTPCompactCell.reuseIdentifier,
-                for: indexPath
-            ) as? TokensTOTPCompactCell
-            }
-        }()
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: TokensTOTPCell.reuseIdentifier,
+            for: indexPath
+        ) as? TokensTOTPCell
+        cell?.setKind(presenter.listStyle.cellKind)
         cell?.update(
             name: item.name,
             secret: item.secret,
@@ -121,18 +114,11 @@ extension TokensViewController {
         indexPath: IndexPath,
         item: TokenCell
     ) -> UICollectionViewCell? {
-        let cell: (UICollectionViewCell & TokensHOTPCellType)? = {
-            switch presenter.listStyle {
-            case .default: return collectionView.dequeueReusableCell(
-                withReuseIdentifier: TokensHOTPCell.reuseIdentifier,
-                for: indexPath
-            ) as? TokensHOTPCell
-            case .compact: return collectionView.dequeueReusableCell(
-                withReuseIdentifier: TokensHOTPCompactCell.reuseIdentifier,
-                for: indexPath
-            ) as? TokensHOTPCompactCell
-            }
-        }()
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: TokensHOTPCell.reuseIdentifier,
+            for: indexPath
+        ) as? TokensHOTPCell
+        cell?.setKind(presenter.listStyle.cellKind)
         cell?.update(
             name: item.name,
             secret: item.secret,
@@ -188,8 +174,11 @@ extension TokensViewController {
         }
 
         let minimumCellWidth: CGFloat = {
-            guard presenter.listStyle == .default else { return Theme.Metrics.compactCellWidth }
-            return Theme.Metrics.defaultCellWidth
+            switch presenter.listStyle {
+            case .default: return Theme.Metrics.defaultCellWidth
+            case .compact: return Theme.Metrics.compactCellWidth
+            case .large: return Theme.Metrics.largeCellWidth
+            }
         }()
         let itemsInRow: Int = {
             let snapshot = self.dataSource.snapshot()
@@ -201,7 +190,7 @@ extension TokensViewController {
             let availableWidth = enviroment.container.effectiveContentSize.width
             var columns = Int(availableWidth / minimumCellWidth)
             let layoutMultiplier: CGFloat = {
-                guard presenter.listStyle == .default else { return 1.0 }
+                guard presenter.listStyle != .compact else { return 1.0 }
                 return enviroment.traitCollection.preferredContentSizeCategory.layoutMultiplier
             }()
             if columns > 1 && layoutMultiplier != 1.0 {
@@ -314,6 +303,7 @@ extension TokensViewController {
         switch presenter.listStyle {
         case .default: return .absolute(109)
         case .compact: return .absolute(95)
+        case .large: return .absolute(125)
         }
     }
     

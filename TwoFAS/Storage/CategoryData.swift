@@ -48,4 +48,13 @@ public extension Array where Element == CategoryData {
         }
         return nil
     }
+    
+    func indexPath(of sectionData: SectionData) -> IndexPath? {
+        for (sectionIndex, category) in self.enumerated() {
+            if category.section?.sectionID == sectionData.sectionID {
+                return IndexPath(row: 0, section: sectionIndex)
+            }
+        }
+        return nil
+    }
 }

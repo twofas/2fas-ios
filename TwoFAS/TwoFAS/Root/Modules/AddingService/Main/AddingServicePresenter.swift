@@ -34,6 +34,7 @@ enum AddingServiceAlert: Identifiable, Hashable {
 @Observable
 final class AddingServicePresenter {
     var freezeCamera = false
+    var cameraStopped = false
     var isCameraUnavailable = false
     var alert: AddingServiceAlert?
 
@@ -82,13 +83,13 @@ extension AddingServicePresenter {
                 Log("AddingServiceMainPresenter: Adding unique code: \(code)")
                 interactor.addCode(code, force: false)
             }
-        case .googleAuth(let codes):
-            let importableCodes = interactor.filterImportableCodes(codes)
-            flowController.toGoogleAuthSummary(
-                importable: importableCodes.count,
-                total: codes.count,
-                codes: importableCodes
-            )
+        case .googleAuth(let index, let size, let batchID, let codes):
+            Log("AddingServicePresenter: Found Google Auth codes: \(codes.count)")
+            Log("Codes: \(codes)", save: false)
+            
+            let data = GoogleScanData(index: index, size: size, batchID: batchID, codes: codes)
+            
+            flowController.toGoogleAuthImport(data: data)
         case .lastPass(let codes, let totalCodesCount):
             let importableCodes = interactor.filterImportableCodes(codes)
             flowController.toLastPassSummary(
@@ -194,10 +195,11 @@ private extension AddingServicePresenter {
     }
 
     func presentOverlay() {
-        freezeCamera = true
+        cameraStopped = true
     }
 
     func handleOverlayDismissed() {
+        cameraStopped = false
         freezeCamera = false
     }
 

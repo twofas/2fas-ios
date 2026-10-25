@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 import Common
 
 struct RevealTokenOverlayView: View {

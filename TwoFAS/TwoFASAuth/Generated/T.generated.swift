@@ -1679,8 +1679,8 @@ internal enum T {
     internal static let addOtherMethods = T.tr("Localizable", "tokens__add_other_methods", fallback: "Other methods")
     /// Add new service
     internal static let addServiceTitle = T.tr("Localizable", "tokens__add_service_title", fallback: "Add new service")
-    /// To finish pairing the service, you need to retype this Token.
-    internal static let addSuccessDescription = T.tr("Localizable", "tokens__add_success_description", fallback: "To finish pairing the service, you need to retype this Token.")
+    /// Enter this Token on the service’s website to finish pairing.
+    internal static let addSuccessDescription = T.tr("Localizable", "tokens__add_success_description", fallback: "Enter this Token on the service’s website to finish pairing.")
     /// Almost done!
     internal static let addSuccessTitle = T.tr("Localizable", "tokens__add_success_title", fallback: "Almost done!")
     /// Pair the service with 2FAS
@@ -1731,8 +1731,8 @@ internal enum T {
     internal static let copySecret = T.tr("Localizable", "tokens__copy_secret", fallback: "Copy Secret Key")
     /// Copy
     internal static let copyToken = T.tr("Localizable", "tokens__copy_token", fallback: "Copy")
-    /// Copy token
-    internal static let copyTokenLong = T.tr("Localizable", "tokens__copy_token_long", fallback: "Copy token")
+    /// Copy Token
+    internal static let copyTokenLong = T.tr("Localizable", "tokens__copy_token_long", fallback: "Copy Token")
     /// Copy URI
     internal static let copyUri = T.tr("Localizable", "tokens__copy_uri", fallback: "Copy URI")
     /// Counter

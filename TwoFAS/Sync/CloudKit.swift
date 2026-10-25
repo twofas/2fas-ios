@@ -79,10 +79,10 @@ final class CloudKit {
         collectedActions = []
         zoneUpdated = false
 
-        DispatchQueue.global(qos: .utility).async {
-            self.syncTokenHandler.prepare()
+        DispatchQueue.global(qos: .utility).async { [weak self] in
+            self?.syncTokenHandler.prepare()
             
-            self.creatingCustomZone { [weak self] in
+            self?.creatingCustomZone { [weak self] in
                 self?.subscribeToChanges { [weak self] in
                     self?.fetchDatabaseChanges { [weak self] in
                         self?.fetchZoneChanges()

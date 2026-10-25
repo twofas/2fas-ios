@@ -162,6 +162,7 @@ public struct TFButton: View {
                         .buttonBorderShape(.capsule)
                 } else {
                     $0
+                        .frame(minHeight: controlHeight)
                 }
             } else {
                 $0.buttonStyle(ButtonFeedbackStyle())

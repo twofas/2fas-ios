@@ -50,6 +50,20 @@ final class CameraScannerViewController: UIViewController {
 
         notificationCenter.addObserver(
             self,
+            selector: #selector(resumeCamera),
+            name: AVCaptureSession.interruptionEndedNotification,
+            object: nil
+        )
+
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(resumeCamera),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+
+        notificationCenter.addObserver(
+            self,
             selector: #selector(appDidEnterBackground),
             name: UIApplication.didEnterBackgroundNotification,
             object: nil
@@ -107,6 +121,11 @@ final class CameraScannerViewController: UIViewController {
     }
     
     @objc
+    private func resumeCamera() {
+        cameraViewModel.startIfPossible()
+    }
+
+    @objc
     private func appDidEnterBackground() {
         cameraViewModel.stopIfNeeded()
     }
@@ -160,6 +179,9 @@ private final class CameraViewModel {
 
 extension CameraViewModel: CameraViewModelType {
     func initialize() {
+        // Already set up (e.g. returning after an alert kept the session alive):
+        // keep the existing session instead of rebuilding it.
+        guard camera == nil else { return }
         guard
             let previewView = delegate?.viewForCamera(),
             let scanningRegion = delegate?.scanningRegion()

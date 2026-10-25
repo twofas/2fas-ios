@@ -40,11 +40,19 @@ final class CameraController {
     private weak var layer: AVCaptureVideoPreviewLayer?
     
     private let notificationCenter = NotificationCenter.default
-    
+
+    private let sessionQueue = DispatchQueue(label: "com.twofas.camera.session", qos: .userInitiated)
+
     weak var delegate: CameraControllerDelegate?
 
-    var isRunning: Bool { captureSession?.isRunning ?? false }
+    /// Main-thread mirror of the requested preview state. `AVCaptureSession.isRunning`
+    /// can block while `startRunning`/`stopRunning` hold the session on `sessionQueue`,
+    /// so it must never be read from the main thread.
+    private(set) var isRunning = false
     private var isClearing = false
+    /// A start requested before the (now asynchronous) session configuration
+    /// finished; honored once `initialize` completes.
+    private var pendingStart = false
 
     /// On iPhone we lock the preview to portrait; on iPad we keep the dynamic
     /// orientation tracking based on device rotation notifications.
@@ -67,8 +75,6 @@ final class CameraController {
     /// Use outputs for e.g. Photo or QR Code scanning
     func initialize(with outputs: [CameraOutputModule]) {
         Log("CameraController - initialize", module: .camera)
-        let captureSession = AVCaptureSession()
-        captureSession.sessionPreset = .high
 
         if tracksDeviceOrientation {
             notificationCenter.addObserver(
@@ -78,49 +84,71 @@ final class CameraController {
                 object: nil
             )
         }
-        
-        self.outputs = outputs
-        
-        guard let device = AVCaptureDevice.default(for: .video) else { return }
-        do {
-            try device.lockForConfiguration()
-            if device.isFocusModeSupported(.continuousAutoFocus) {
-                device.focusMode = .continuousAutoFocus
-            }
-            device.unlockForConfiguration()
-        } catch {
-            initializationFailed(.deviceInitialization(error: error))
-            return
-        }
-        self.captureDevice = device
-        
-        let videoInput: AVCaptureDeviceInput
-        do {
-            videoInput = try AVCaptureDeviceInput(device: device)
-        } catch {
-            initializationFailed(.inputDeviceInitialization(error: error))
-            return
-        }
-        
-        if captureSession.canAddInput(videoInput) {
-            captureSession.addInput(videoInput)
-        } else {
-            initializationFailed(.inputDeviceRegistration)
-            return
-        }
-        
-        for outputModule in outputs {
-            guard let output = outputModule.output, captureSession.canAddOutput(output) else {
-                initializationFailed(.outputModuleRegistration(module: outputModule))
+
+        sessionQueue.async { [weak self] in
+            guard let self else { return }
+
+            let captureSession = AVCaptureSession()
+            captureSession.sessionPreset = .high
+
+            guard let device = AVCaptureDevice.default(for: .video) else { return }
+            do {
+                try device.lockForConfiguration()
+                if device.isFocusModeSupported(.continuousAutoFocus) {
+                    device.focusMode = .continuousAutoFocus
+                }
+                device.unlockForConfiguration()
+            } catch {
+                DispatchQueue.main.async { self.initializationFailed(.deviceInitialization(error: error)) }
                 return
             }
-            captureSession.addOutput(output)
-            outputModule.registered()
+
+            let videoInput: AVCaptureDeviceInput
+            do {
+                videoInput = try AVCaptureDeviceInput(device: device)
+            } catch {
+                DispatchQueue.main.async { self.initializationFailed(.inputDeviceInitialization(error: error)) }
+                return
+            }
+
+            captureSession.beginConfiguration()
+
+            guard captureSession.canAddInput(videoInput) else {
+                captureSession.commitConfiguration()
+                DispatchQueue.main.async { self.initializationFailed(.inputDeviceRegistration) }
+                return
+            }
+            captureSession.addInput(videoInput)
+
+            for outputModule in outputs {
+                guard let output = outputModule.output, captureSession.canAddOutput(output) else {
+                    captureSession.commitConfiguration()
+                    DispatchQueue.main.async {
+                        self.initializationFailed(.outputModuleRegistration(module: outputModule))
+                    }
+                    return
+                }
+                captureSession.addOutput(output)
+                outputModule.registered()
+            }
+
+            captureSession.commitConfiguration()
+
+            DispatchQueue.main.async {
+                guard !self.isClearing else { return }
+                self.captureDevice = device
+                self.outputs = outputs
+                self.captureSession = captureSession
+                self.layer?.session = captureSession
+                self.updateOrientation()
+                self.delegate?.cameraDidInitialize()
+                Log("CameraController - initialize successful", module: .camera)
+                if self.pendingStart {
+                    self.pendingStart = false
+                    self.startPreview()
+                }
+            }
         }
-        
-        self.captureSession = captureSession
-        delegate?.cameraDidInitialize()
-        Log("CameraController - initialize successful", module: .camera)
     }
     
     /// Set the view backed by AVCaptureViewPreviewLayer
@@ -139,47 +167,65 @@ final class CameraController {
     
     func startPreview() {
         guard !isRunning else { return }
+        guard let session = captureSession else {
+            pendingStart = true
+            return
+        }
+        isRunning = true
         Log("CameraController - startPreview. Starting!", module: .camera)
         updateOrientation()
         if tracksDeviceOrientation {
             UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         }
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.captureSession?.startRunning()
+        sessionQueue.async { [weak self] in
+            guard !session.isRunning else { return }
+            session.startRunning()
             DispatchQueue.main.async {
-                self.delegate?.cameraStartedPreview()
+                self?.delegate?.cameraStartedPreview()
             }
         }
     }
 
     func stopPreview() {
-        guard isRunning else { return }
+        guard isRunning, let session = captureSession else {
+            return
+        }
+        isRunning = false
         Log("CameraController - stopPreview. Stopping!", module: .camera)
         if tracksDeviceOrientation {
             UIDevice.current.endGeneratingDeviceOrientationNotifications()
         }
-        DispatchQueue.main.async {
-            self.captureSession?.stopRunning()
-            self.delegate?.cameraStoppedPreview()
+        sessionQueue.async { [weak self] in
+            guard session.isRunning else { return }
+            session.stopRunning()
+            DispatchQueue.main.async {
+                self?.delegate?.cameraStoppedPreview()
+            }
         }
     }
     
     /// Useful for freezing the screen for a while e.g. when simulating taking the photo
     func freezePreview() {
         Log("CameraController - freezePreview", module: .camera)
-        let connection = layer?.connection
-        DispatchQueue.main.async {
-            connection?.isEnabled = false
-            self.delegate?.cameraFreezedPreview()
+        let layer = layer
+        sessionQueue.async { [weak self] in
+            // Touching the connection can block while the session is starting/stopping.
+            layer?.connection?.isEnabled = false
+            DispatchQueue.main.async {
+                self?.delegate?.cameraFreezedPreview()
+            }
         }
     }
     
     func unfreezePreview() {
         Log("CameraController - unfreezePreview", module: .camera)
-        let connection = layer?.connection
-        DispatchQueue.main.async {
-            connection?.isEnabled = true
-            self.delegate?.cameraUnfreezedPreview()
+        let layer = layer
+        sessionQueue.async { [weak self] in
+            // Touching the connection can block while the session is starting/stopping.
+            layer?.connection?.isEnabled = true
+            DispatchQueue.main.async {
+                self?.delegate?.cameraUnfreezedPreview()
+            }
         }
     }
     
@@ -220,42 +266,47 @@ final class CameraController {
     // MARK: - Private
     
     private func clearSession(useAsync: Bool) {
-        guard !isClearing else { return }
-        isClearing = true
-        Log("CameraController - clearSession. Use async: \(useAsync)", module: .camera)
-        func removeDependencies(captureSession: AVCaptureSession, callDelegate: Bool) {
-            captureSession.inputs.forEach(captureSession.removeInput)
-            captureSession.outputs.forEach(captureSession.removeOutput)
-            outputs.forEach { $0.clear() }
-            outputs = []
-            captureSession.stopRunning()
-            self.captureSession = nil
-            if callDelegate {
-                Log("CameraController - did clear!", module: .camera)
-                delegate?.cameraDidClear()
-            }
-        }
-        
-        layer?.session = nil
-        layer = nil
-        
-        guard let captureSession else {
-            Log("CameraController - did clear!", module: .camera)
-            outputs = []
-            delegate?.cameraDidClear()
+        guard !isClearing else {
             return
         }
-        
+        isClearing = true
+        pendingStart = false
+        isRunning = false
+        Log("CameraController - clearSession. Use async: \(useAsync)", module: .camera)
+
+        layer = nil
+        let session = captureSession
+        captureSession = nil
+        let modulesToClear = outputs
+        outputs = []
+
+        func teardown() {
+            guard let session else { return }
+            session.inputs.forEach(session.removeInput)
+            session.outputs.forEach(session.removeOutput)
+            modulesToClear.forEach { $0.clear() }
+            if session.isRunning {
+                session.stopRunning()
+            }
+        }
+
         if useAsync {
-            DispatchQueue.main.async {
-                removeDependencies(captureSession: captureSession, callDelegate: true)
+            sessionQueue.async { [weak self] in
+                teardown()
+                DispatchQueue.main.async { [weak self] in
+                    Log("CameraController - did clear!", module: .camera)
+                    self?.delegate?.cameraDidClear()
+                }
+                Log("CameraController - did clear in async!", module: .camera)
             }
         } else {
-            removeDependencies(captureSession: captureSession, callDelegate: false)
+            sessionQueue.async {
+                teardown()
+                Log("CameraController - did clear!", module: .camera)
+            }
         }
-        Log("CameraController - did clear!", module: .camera)
     }
-    
+
     deinit {
         Log("CameraController - deinit!", module: .camera)
         notificationCenter.removeObserver(self)

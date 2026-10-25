@@ -27,13 +27,12 @@ final class GoogleImportPresenter {
     var totalCount: Int = 0
     var isComplete: Bool = false
 
-    var isShowingSummary = false
-    var foundCodesCount = 0
-    var importableCodesCount: Int { importableCodes.count }
-
     var showBatchError = false
     var alreadyScanned = false
 
+    private var isShowingSummary = false
+    private var viewAppeared = false
+    
     var scannedList: [Bool] {
         var list: [Bool] = Array(repeating: false, count: totalCount)
         pages.forEach { key, _ in
@@ -71,6 +70,21 @@ extension GoogleImportPresenter {
 
     func handleScanFromGallery() {
         flowController.toGallery()
+    }
+
+    func handleViewAppeared() {
+        viewAppeared = true
+        if isComplete {
+            prepareSummary()
+        }
+    }
+
+    func beginSummary() -> (importable: Int, total: Int)? {
+        guard !isShowingSummary else { return nil }
+        isShowingSummary = true
+        let codes = collectedCodes
+        importableCodes = interactor.filterImportableCodes(codes)
+        return (importableCodes.count, codes.count)
     }
 
     func handleScannedBatch(_ data: GoogleScanData?) {
@@ -115,15 +129,13 @@ private extension GoogleImportPresenter {
         scannedCount = pages.count
         isComplete = scannedCount >= totalCount
 
-        if isComplete {
+        if isComplete, viewAppeared {
             prepareSummary()
         }
     }
 
     func prepareSummary() {
-        let codes = collectedCodes
-        foundCodesCount = codes.count
-        importableCodes = interactor.filterImportableCodes(codes)
-        isShowingSummary = true
+        guard let params = beginSummary() else { return }
+        flowController.toSummary(importableCount: params.importable, totalCount: params.total)
     }
 }

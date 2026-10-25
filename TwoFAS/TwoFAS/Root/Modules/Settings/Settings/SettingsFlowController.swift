@@ -23,7 +23,6 @@ import Data
 
 protocol SettingsFlowControllerParent: AnyObject {
     func settingsToRevealMenu()
-    func settingsToGoogleImport(data: GoogleScanData)
 }
 
 protocol SettingsFlowControlling: AnyObject {
@@ -230,9 +229,5 @@ extension SettingsFlowController: AboutFlowControllerParent {}
 #if DEV
 extension SettingsFlowController: DebugFlowControllerParent {}
 #endif
-extension SettingsFlowController: TransferFlowControllerParent {
-    func transferToGoogleImport(data: GoogleScanData) {
-        parent?.settingsToGoogleImport(data: data)
-    }
-}
+extension SettingsFlowController: TransferFlowControllerParent {}
 extension SettingsFlowController: AppearanceFlowControllerParent {}

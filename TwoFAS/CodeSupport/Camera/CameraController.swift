@@ -291,7 +291,7 @@ final class CameraController {
         }
 
         if useAsync {
-            sessionQueue.async {
+            sessionQueue.async { [weak self] in
                 teardown()
                 DispatchQueue.main.async { [weak self] in
                     Log("CameraController - did clear!", module: .camera)

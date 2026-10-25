@@ -51,7 +51,7 @@ public final class CoreDataStack {
         
         container.persistentStoreDescriptions = [storeDescription]
 
-        migrateStoreIfNeeded {
+        migrateStoreIfNeeded { [weak self] in
             container.loadPersistentStores { [weak self] _, error in
                 if let error = error as NSError? {
                     // swiftlint:disable line_length

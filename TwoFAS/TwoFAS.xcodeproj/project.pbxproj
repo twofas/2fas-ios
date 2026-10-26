@@ -8873,7 +8873,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				MARKETING_VERSION = 6.0.1;
+				MARKETING_VERSION = 6.0.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
@@ -10266,7 +10266,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				MARKETING_VERSION = 6.0.1;
+				MARKETING_VERSION = 6.0.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
@@ -10331,7 +10331,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				MARKETING_VERSION = 6.0.1;
+				MARKETING_VERSION = 6.0.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;

@@ -152,7 +152,7 @@ extension AddingServiceManuallyPresenter {
         var error: String? {
             switch self {
             case .correct: return nil
-            case .tooLong: return T.Commons.textLongTitle(ServiceRules.serviceNameMaxLength)
+            case .tooLong: return T.Tokens.serviceNameTooLong(ServiceRules.serviceNameMaxLength)
             case .tooShort: return T.Tokens.serviceNameTooShort(ServiceRules.serviceNameMinLength)
             }
         }

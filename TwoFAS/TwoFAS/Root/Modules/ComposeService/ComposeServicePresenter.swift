@@ -268,7 +268,7 @@ private extension ComposeServicePresenter {
         if trimmed.isEmpty {
             serviceNameError = T.Tokens.serviceNameTooShort(ServiceRules.serviceNameMinLength)
         } else if trimmed.count > ServiceRules.serviceNameMaxLength {
-            serviceNameError = T.Commons.textLongTitle(ServiceRules.serviceNameMaxLength)
+            serviceNameError = T.Tokens.serviceNameTooLong(ServiceRules.serviceNameMaxLength)
         } else {
             serviceNameError = nil
         }

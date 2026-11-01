@@ -40,7 +40,7 @@ struct AddingServiceAdvancedSettingsView: View {
                 }
             }
         }
-        .navigationTitle(T.Tokens.addManualOtherSettingsTitle)
+        .navigationTitle(T.Tokens.addManualOtherSettings)
         .navigationBarTitleDisplayMode(.inline)
         .background(.backgroundsPrimaryElevated)
     }

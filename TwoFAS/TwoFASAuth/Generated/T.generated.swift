@@ -1669,10 +1669,16 @@ internal enum T {
     internal static let addManualOther = T.tr("Localizable", "tokens__add_manual_other", fallback: "Other settings")
     /// (optional)
     internal static let addManualOtherOptional = T.tr("Localizable", "tokens__add_manual_other_optional", fallback: "(optional)")
+    /// Other optional settings
+    internal static let addManualOtherSettings = T.tr("Localizable", "tokens__add_manual_other_settings", fallback: "Other optional settings")
     /// Secret Key
     internal static let addManualServiceKey = T.tr("Localizable", "tokens__add_manual_service_key", fallback: "Secret Key")
+    /// Key
+    internal static let addManualServiceKeyPlaceholder = T.tr("Localizable", "tokens__add_manual_service_key_placeholder", fallback: "Key")
     /// Service name
     internal static let addManualServiceName = T.tr("Localizable", "tokens__add_manual_service_name", fallback: "Service name")
+    /// Name
+    internal static let addManualServiceNamePlaceholder = T.tr("Localizable", "tokens__add_manual_service_name_placeholder", fallback: "Name")
     /// Pair the service with 2FAS
     internal static let addManualTitle = T.tr("Localizable", "tokens__add_manual_title", fallback: "Pair the service with 2FAS")
     /// Other methods
@@ -1717,6 +1723,8 @@ internal enum T {
     internal static let caution = T.tr("Localizable", "tokens__caution", fallback: "CAUTION")
     /// Change brand icon
     internal static let changeBrandIcon = T.tr("Localizable", "tokens__change_brand_icon", fallback: "Change brand icon")
+    /// Change icon
+    internal static let changeIcon = T.tr("Localizable", "tokens__change_icon", fallback: "Change icon")
     /// Change label
     internal static let changeLabel = T.tr("Localizable", "tokens__change_label", fallback: "Change label")
     /// Check if the app has proper permissions in the System Settings
@@ -1751,6 +1759,8 @@ internal enum T {
     internal static let doYouReallyWantToRemoveAllDevices = T.tr("Localizable", "tokens__do_you_really_want_to_remove_all_devices", fallback: "Do you want to permanently delete this 2FA service?")
     /// Duplicated Secret Key
     internal static let duplicatedPrivateKey = T.tr("Localizable", "tokens__duplicated_private_key", fallback: "Duplicated Secret Key")
+    /// Edit icon
+    internal static let editIcon = T.tr("Localizable", "tokens__edit_icon", fallback: "Edit icon")
     /// Add first service
     internal static let emptyListTitle = T.tr("Localizable", "tokens__empty_list_title", fallback: "Add first service")
     /// You have **%d** services in your Trash.
@@ -1814,6 +1824,12 @@ internal enum T {
     internal static let hotpNotSupported = T.tr("Localizable", "tokens__hotp_not_supported", fallback: "HOTP services aren't supported yet")
     /// Yes, I want to delete this service
     internal static let iWantToDeleteThisToken = T.tr("Localizable", "tokens__i_want_to_delete_this_token", fallback: "Yes, I want to delete this service")
+    /// Icon
+    internal static let iconEditorIcon = T.tr("Localizable", "tokens__icon_editor_icon", fallback: "Icon")
+    /// 1 or 2 characters
+    internal static let iconEditorLabelPlaceholder = T.tr("Localizable", "tokens__icon_editor_label_placeholder", fallback: "1 or 2 characters")
+    /// Search services
+    internal static let iconEditorSearch = T.tr("Localizable", "tokens__icon_editor_search", fallback: "Search services")
     /// Incorrect Secret Key (only numbers 2 to 7, letters), max. 512 chars long
     internal static let incorrectServiceKey = T.tr("Localizable", "tokens__incorrect_service_key", fallback: "Incorrect Secret Key (only numbers 2 to 7, letters), max. 512 chars long")
     /// Initial counter
@@ -1960,6 +1976,14 @@ internal enum T {
     internal static let serviceKeyToShort = T.tr("Localizable", "tokens__service_key_to_short", fallback: "Secret Key is too short. Minimum 4 characters")
     /// Service Name
     internal static let serviceName = T.tr("Localizable", "tokens__service_name", fallback: "Service Name")
+    /// Provided name is too long (max %d chars)
+    internal static func serviceNameTooLong(_ p1: Int) -> String {
+      return T.tr("Localizable", "tokens__service_name_too_long", p1, fallback: "Provided name is too long (max %d chars)")
+    }
+    /// Provided name is too short (min. %d chars)
+    internal static func serviceNameTooShort(_ p1: Int) -> String {
+      return T.tr("Localizable", "tokens__service_name_too_short", p1, fallback: "Provided name is too short (min. %d chars)")
+    }
     /// Unfortunately, we don't know that service. How would you like to name it?
     internal static let serviceNameUnknownTitle = T.tr("Localizable", "tokens__service_name_unknown_title", fallback: "Unfortunately, we don't know that service. How would you like to name it?")
     /// Sorry, service not found

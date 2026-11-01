@@ -22,7 +22,7 @@ import Common
 import Data
 
 protocol AddingServiceManuallyModuleInteracting: AnyObject {
-    func checkForServiceIcon(using str: String, callback: @escaping (UIImage?, IconTypeID?, String?) -> Void)
+    func detectedIconTypeID(for serviceName: String) -> IconTypeID?
     func isPrivateKeyUsed(_ privateKey: String) -> Bool
     func addService(
         name: String,
@@ -30,7 +30,10 @@ protocol AddingServiceManuallyModuleInteracting: AnyObject {
         additionalInfo: String?,
         tokenPeriod: Period?,
         tokenLength: Digits?,
+        iconType: IconType,
         iconTypeID: IconTypeID?,
+        labelTitle: String,
+        labelColor: TintColor,
         algorithm: Algorithm?,
         counter: Int?,
         tokenType: TokenType?
@@ -54,16 +57,13 @@ final class AddingServiceManuallyModuleInteractor {
 }
 
 extension AddingServiceManuallyModuleInteractor: AddingServiceManuallyModuleInteracting {
-    func checkForServiceIcon(using str: String, callback: @escaping (UIImage?, IconTypeID?, String?) -> Void) {
-        guard let service = serviceDatabase.findServicesByTagOrIssuer(
-            str,
+    func detectedIconTypeID(for serviceName: String) -> IconTypeID? {
+        guard !serviceName.isEmpty else { return nil }
+        return serviceDatabase.findServicesByTagOrIssuer(
+            serviceName,
             exactMatch: true,
             useTags: false
-        ).first else {
-            callback(nil, nil, nil)
-            return
-        }
-        callback(service.icon, service.iconTypeID, service.name)
+        ).first?.iconTypeID
     }
     
     func isPrivateKeyUsed(_ privateKey: String) -> Bool {
@@ -76,17 +76,14 @@ extension AddingServiceManuallyModuleInteractor: AddingServiceManuallyModuleInte
         additionalInfo: String?,
         tokenPeriod: Period?,
         tokenLength: Digits?,
+        iconType: IconType,
         iconTypeID: IconTypeID?,
+        labelTitle: String,
+        labelColor: TintColor,
         algorithm: Algorithm?,
         counter: Int?,
         tokenType: TokenType?
     ) -> ServiceData? {
-        let iconType: IconType = {
-            if iconTypeID != nil {
-                return .brand
-            }
-            return .label
-        }()
         serviceModifyInteractor.addService(
             name: name,
             secret: secret.uppercased(),
@@ -99,8 +96,8 @@ extension AddingServiceManuallyModuleInteractor: AddingServiceManuallyModuleInte
             badgeColor: .default,
             iconType: iconType,
             iconTypeID: iconTypeID ?? .default,
-            labelColor: .random,
-            labelTitle: name.twoLetters,
+            labelColor: labelColor,
+            labelTitle: labelTitle.isEmpty ? name.twoLetters : labelTitle,
             algorithm: algorithm ?? .defaultValue,
             counter: counter,
             tokenType: tokenType ?? .defaultValue,

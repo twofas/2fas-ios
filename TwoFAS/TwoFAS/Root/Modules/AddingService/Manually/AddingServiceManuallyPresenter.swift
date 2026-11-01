@@ -63,40 +63,27 @@ final class AddingServiceManuallyPresenter: ObservableObject {
     private var isCorrectSecret = false
     private var isCorrectAdditionalInfo = true
     
-    private var iconTypeID: IconTypeID?
+    private var isIconTypeUserDefined = false
+    private var isBrandIconUserDefined = false
+    private var isLabelTitleUserDefined = false
 
-    private var isIconCleared = false
+    @Published private(set) var iconValue: IconEditorValue
 
-    private var assignedIconTypeID: IconTypeID? {
-        isIconCleared ? nil : iconTypeID
-    }
-    
-    @Published var userCanSelectIcon = false
-    @Published var userCanCancelIcon = false
-    @Published var serviceTypeName: String?
-    
     @Published var serviceName: String = "" {
         didSet { handleServiceNameChange() }
     }
     @Published var serviceNameError: String?
-    @Published var serviceIcon: UIImage?
     @Published var secret: String = "" {
         didSet { handleSecretChange() }
     }
     @Published var secretError: String?
-    @Published var advancedShown = false
     @Published var additionalInfo: String = "" {
         didSet { handleAdditionalInfoChange() }
     }
     @Published var additionalInfoError: String?
-    @Published var selectedTokenType: TokenType = .totp
-    @Published var selectedAlgorithm: Algorithm = .defaultValue
-    @Published var selectedRefreshTime: Period = .defaultValue
-    @Published var selectedDigits: Digits = .defaultValue
-    @Published var initialCounter: Int = 0
-    @Published var isInitialCounterAlertPresented: Bool = false
-    @Published var initialCounterInput: String = ""
-        
+
+    private var advancedSettings = AddingServiceAdvancedSettings()
+
     private let flowController: AddingServiceManuallyFlowControlling
     private let interactor: AddingServiceManuallyModuleInteracting
     private let providedName: String?
@@ -109,19 +96,26 @@ final class AddingServiceManuallyPresenter: ObservableObject {
         self.flowController = flowController
         self.interactor = interactor
         self.providedName = providedName
+        self.iconValue = IconEditorValue(
+            iconType: .brand,
+            iconTypeID: nil,
+            labelTitle: "",
+            labelColor: .random
+        )
         self.serviceName = providedName ?? ""
+        updateAutomaticIcon()
     }
 }
 
 extension AddingServiceManuallyPresenter {
     var algorithm: Algorithm {
-        selectedTokenType == TokenType.steam ? Algorithm.SHA1 : selectedAlgorithm
+        advancedSettings.tokenType == TokenType.steam ? Algorithm.SHA1 : advancedSettings.algorithm
     }
     var tokenPeriod: Period {
-        selectedTokenType == TokenType.steam ? Period.period30 : selectedRefreshTime
+        advancedSettings.tokenType == TokenType.steam ? Period.period30 : advancedSettings.refreshTime
     }
     var tokenLength: Digits {
-        selectedTokenType == TokenType.steam ? Digits.digits5 : selectedDigits
+        advancedSettings.tokenType == TokenType.steam ? Digits.digits5 : advancedSettings.digits
     }
 
     func handleAddService() {
@@ -133,10 +127,13 @@ extension AddingServiceManuallyPresenter {
             additionalInfo: additionalInfo,
             tokenPeriod: tokenPeriod,
             tokenLength: tokenLength,
-            iconTypeID: assignedIconTypeID,
+            iconType: iconValue.iconType,
+            iconTypeID: iconValue.iconTypeID,
+            labelTitle: iconValue.labelTitle,
+            labelColor: iconValue.labelColor,
             algorithm: algorithm,
-            counter: initialCounter,
-            tokenType: selectedTokenType
+            counter: advancedSettings.initialCounter,
+            tokenType: advancedSettings.tokenType
         ) else { return }
         flowController.toClose(serviceData)
     }
@@ -144,8 +141,7 @@ extension AddingServiceManuallyPresenter {
 
 extension AddingServiceManuallyPresenter {
     func validateAddService() {
-        isAddServiceEnabled = isCorrectServiceName && isCorrectSecret &&
-        ((advancedShown && isCorrectAdditionalInfo) || (!advancedShown))
+        isAddServiceEnabled = isCorrectServiceName && isCorrectSecret && isCorrectAdditionalInfo
     }
     
     enum ServiceNameValidationResult: Error {
@@ -157,7 +153,7 @@ extension AddingServiceManuallyPresenter {
             switch self {
             case .correct: return nil
             case .tooLong: return T.Commons.textLongTitle(ServiceRules.serviceNameMaxLength)
-            case .tooShort: return T.Commons.textShortTitle(ServiceRules.serviceNameMinLength)
+            case .tooShort: return T.Tokens.serviceNameTooShort(ServiceRules.serviceNameMinLength)
             }
         }
     }
@@ -169,13 +165,10 @@ extension AddingServiceManuallyPresenter {
         if trimmed.count >= ServiceRules.serviceNameMinLength &&
             trimmed.count <= ServiceRules.serviceNameMaxLength {
             isCorrectServiceName = true
-            checkForServiceIcon()
             value = .correct
         } else if trimmed.isEmpty {
-            clearServiceIcon()
             value = .tooShort
         } else {
-            clearServiceIcon()
             value = .tooLong
         }
         validateAddService()
@@ -243,58 +236,51 @@ extension AddingServiceManuallyPresenter {
         isFirstAppear = false
     }
     
-    func handleInitialCounter(_ counter: Int) {
-        self.initialCounter = counter
+    func handleShowAdvancedSettings() {
+        flowController.toAdvancedSettings(advancedSettings)
     }
 
-    func handleShowInitialCounterAlert() {
-        initialCounterInput = "\(initialCounter)"
-        isInitialCounterAlertPresented = true
-    }
-
-    func handleSaveInitialCounterFromAlert() {
-        if let value = Int(initialCounterInput), value >= 0 {
-            handleInitialCounter(value)
-        }
+    func handleAdvancedSettings(_ settings: AddingServiceAdvancedSettings) {
+        advancedSettings = settings
     }
     
-    func onApplyIconType() {
-        isIconCleared = false
-        updateSelectionState()
+    var previewIcon: IconDetails {
+        iconValue.iconDetails
     }
 
-    func onClearIconType() {
-        isIconCleared = true
-        updateSelectionState()
+    func handleEditIcon() {
+        flowController.toIconEditor(iconValue)
+    }
+
+    func handleIconEditorSave(_ value: IconEditorValue) {
+        isIconTypeUserDefined = true
+        if value.iconType == .brand {
+            isBrandIconUserDefined = true
+        }
+        if value.labelTitle != iconValue.labelTitle {
+            isLabelTitleUserDefined = true
+        }
+        iconValue = value
     }
 }
 
 private extension AddingServiceManuallyPresenter {
-    func checkForServiceIcon() {
-        guard !isIconCleared else { return }
-        interactor.checkForServiceIcon(using: serviceName) { [weak self] img, iconTypeID, serviceTypeName in
-            self?.serviceIcon = img
-            self?.iconTypeID = iconTypeID
-            self?.serviceTypeName = serviceTypeName
-            self?.updateSelectionState()
+    func updateAutomaticIcon() {
+        let trimmed = serviceName.trim()
+        if !isLabelTitleUserDefined {
+            iconValue.labelTitle = trimmed.twoLetters
+        }
+        if !isBrandIconUserDefined {
+            iconValue.iconTypeID = interactor.detectedIconTypeID(for: trimmed)
+        }
+        if !isIconTypeUserDefined {
+            iconValue.iconType = .brand
         }
     }
-    
-    func clearServiceIcon() {
-        guard !isIconCleared else { return }
-        serviceIcon = nil
-        iconTypeID = nil
-        serviceTypeName = nil
-        updateSelectionState()
-    }
-    
-    func updateSelectionState() {
-        userCanSelectIcon = iconTypeID != nil && isIconCleared
-        userCanCancelIcon = iconTypeID != nil && !isIconCleared
-    }
-    
+
     func handleServiceNameChange() {
         serviceNameError = validateServiceName(serviceName.trim()).error
+        updateAutomaticIcon()
     }
 
     func handleSecretChange() {

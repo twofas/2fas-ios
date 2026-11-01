@@ -29,31 +29,21 @@ final class ComposeServiceRouter {
     weak var presenter: ComposeServicePresenter?
     weak var viewController: UIViewController?
 
-    private var iconSelectorPresenter: IconSelectorPresenter?
+    private var iconEditorPresenter: IconEditorPresenter?
     private var userIconInfoPresenter: UserIconInfoPresenter?
-    private var labelComposePresenter: LabelComposePresenter?
     private var advancedSummaryPresenter: ComposeServiceAdvancedSummaryPresenter?
     private var webExtensionPresenter: ComposeServiceWebExtensionPresenter?
     private var categorySelectionPresenter: ComposeServiceCategorySelectionPresenter?
 
     // MARK: - Navigation intents (called by ComposeServicePresenter)
 
-    func showIconSelector(selectedIcon: IconTypeID?, animated: Bool) {
-        let interactor = ModuleInteractorFactory.shared.iconSelectorModuleInteractor(
-            defaultIcon: .default,
-            selectedIcon: selectedIcon
-        )
-        iconSelectorPresenter = IconSelectorPresenter(
+    func showIconEditor(value: IconEditorValue, animated: Bool) {
+        iconEditorPresenter = IconEditorPresenter(
             flowController: self,
-            interactor: interactor,
-            selectedIconTypeID: selectedIcon
+            interactor: ModuleInteractorFactory.shared.iconEditorModuleInteractor(),
+            value: value
         )
-        push(.iconSelector, animated: animated)
-    }
-
-    func showLabelEditor(title: String, color: TintColor) {
-        labelComposePresenter = LabelComposePresenter(flowController: self, title: title, color: color)
-        push(.labelEditor)
+        push(.iconEditor, animated: animated)
     }
 
     func showAdvancedSummary(settings: ComposeServiceAdvancedSettings) {
@@ -90,17 +80,13 @@ final class ComposeServiceRouter {
     func destination(for route: ComposeServiceRoute) -> some View {
         Group {
             switch route {
-            case .iconSelector:
-                if let iconSelectorPresenter {
-                    IconSelectorView(presenter: iconSelectorPresenter)
+            case .iconEditor:
+                if let iconEditorPresenter {
+                    IconEditorView(presenter: iconEditorPresenter)
                 }
             case .userIconInfo:
                 if let userIconInfoPresenter {
                     UserIconInfoView(presenter: userIconInfoPresenter)
-                }
-            case .labelEditor:
-                if let labelComposePresenter {
-                    LabelComposeView(presenter: labelComposePresenter)
                 }
             case .advancedSummary:
                 if let advancedSummaryPresenter {
@@ -139,11 +125,11 @@ final class ComposeServiceRouter {
     }
 }
 
-// MARK: - IconSelectorFlowControlling
+// MARK: - IconEditorFlowControlling
 
-extension ComposeServiceRouter: IconSelectorFlowControlling {
-    func toSelection(iconTypeID: IconTypeID) {
-        presenter?.handleIconSelectorDidSelect(selectedIconTypeID: iconTypeID)
+extension ComposeServiceRouter: IconEditorFlowControlling {
+    func toSave(_ value: IconEditorValue) {
+        presenter?.handleIconEditorSave(value)
         pop()
     }
 
@@ -175,15 +161,6 @@ extension ComposeServiceRouter: UserIconInfoFlowControlling {
     func toShare() {
         let vc = ShareActivityController.createWithText(T.Tokens.requestIconProviderMessage)
         viewController?.present(vc, animated: true, completion: nil)
-    }
-}
-
-// MARK: - LabelComposeFlowControlling
-
-extension ComposeServiceRouter: LabelComposeFlowControlling {
-    func toSave(title: String, color: TintColor) {
-        presenter?.handleLabelComposeSave(title: title, color: color)
-        pop()
     }
 }
 

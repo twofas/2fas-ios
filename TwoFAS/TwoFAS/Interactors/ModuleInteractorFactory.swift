@@ -199,6 +199,13 @@ final class ModuleInteractorFactory {
         )
     }
     
+    func iconEditorModuleInteractor() -> IconEditorModuleInteracting {
+        IconEditorModuleInteractor(
+            iconInteractor: InteractorFactory.shared.iconInteractor(),
+            serviceDefinitionInteractor: InteractorFactory.shared.serviceDefinitionInteractor()
+        )
+    }
+
     func composeServiceModuleInteractor(secret: Secret?) -> ComposeServiceModuleInteracting {
         ComposeServiceModuleInteractor(
             modifyInteractor: InteractorFactory.shared.serviceModifyInteractor(),

@@ -20,9 +20,8 @@
 import Foundation
 
 enum ComposeServiceRoute: Hashable {
-    case iconSelector
+    case iconEditor
     case userIconInfo
-    case labelEditor
     case advancedSummary
     case browserExtension
     case categorySelection

@@ -76,12 +76,13 @@ extension ComposeServicePresenter {
         interactor.isBrowserExtensionAllowed
     }
 
-    var isBrandIconRowEnabled: Bool {
-        interactor.isBrandIconEnabled
-    }
-
-    var isLabelRowEnabled: Bool {
-        interactor.isLabelEnabled
+    var iconDetails: IconDetails {
+        IconEditorValue(
+            iconType: iconType,
+            iconTypeID: iconTypeID,
+            labelTitle: labelTitle,
+            labelColor: labelColor
+        ).iconDetails
     }
 
     func viewWillAppear() {
@@ -108,24 +109,13 @@ extension ComposeServicePresenter {
         validateAdditionalInfo()
     }
 
-    func handleIconType(_ iconType: IconType) {
-        interactor.setIconType(iconType)
-        reload()
-    }
-
     func handleBadgeColor(_ color: TintColor) {
         interactor.setBadgeColor(color)
         reload()
     }
 
-    func handleLabel() {
-        guard interactor.iconType == .label else { return }
-        router?.showLabelEditor(title: interactor.labelTitle, color: interactor.labelColor)
-    }
-
-    func handleBrandIcon() {
-        guard interactor.iconType == .brand else { return }
-        router?.showIconSelector(selectedIcon: interactor.iconTypeID, animated: true)
+    func handleEditIcon() {
+        router?.showIconEditor(value: iconEditorValue, animated: true)
     }
 
     func handleAdvanced() {
@@ -188,13 +178,12 @@ extension ComposeServicePresenter {
         reload()
     }
 
-    func handleIconSelectorDidSelect(selectedIconTypeID: IconTypeID) {
-        interactor.setIconTypeID(selectedIconTypeID)
-        reload()
-    }
-
-    func handleLabelComposeSave(title: String, color: TintColor) {
-        interactor.setLabel(title, labelColor: color)
+    func handleIconEditorSave(_ value: IconEditorValue) {
+        interactor.setIconType(value.iconType)
+        if value.iconType == .brand {
+            interactor.setIconTypeID(value.iconTypeID ?? .default)
+        }
+        interactor.setLabel(value.labelTitle, labelColor: value.labelColor)
         reload()
     }
 
@@ -242,11 +231,20 @@ extension ComposeServicePresenter {
 
     // MARK: - Start editing
     func handleToIconEditFromStart() {
-        router?.showIconSelector(selectedIcon: interactor.iconTypeID, animated: false)
+        router?.showIconEditor(value: iconEditorValue, animated: false)
     }
 }
 
 private extension ComposeServicePresenter {
+    var iconEditorValue: IconEditorValue {
+        IconEditorValue(
+            iconType: interactor.iconType,
+            iconTypeID: interactor.iconTypeID,
+            labelTitle: interactor.labelTitle,
+            labelColor: interactor.labelColor
+        )
+    }
+
     func reload() {
         serviceName = interactor.serviceName ?? ""
         additionalInfo = interactor.additionalInfo ?? ""
@@ -268,7 +266,7 @@ private extension ComposeServicePresenter {
     func validateServiceName() {
         let trimmed = serviceName.trim()
         if trimmed.isEmpty {
-            serviceNameError = T.Commons.textShortTitle(ServiceRules.serviceNameMinLength)
+            serviceNameError = T.Tokens.serviceNameTooShort(ServiceRules.serviceNameMinLength)
         } else if trimmed.count > ServiceRules.serviceNameMaxLength {
             serviceNameError = T.Commons.textLongTitle(ServiceRules.serviceNameMaxLength)
         } else {

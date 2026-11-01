@@ -51,18 +51,20 @@ struct TFColorPickerMenu: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             Menu {
-                ForEach(colors, id: \.self) { color in
-                    Button {
-                        selectedColor = color
-                    } label: {
+                Picker(selection: $selectedColor) {
+                    ForEach(colors, id: \.self) { color in
                         Label {
                             Text(color.localizedName)
                         } icon: {
                             Image(uiImage: UIImage(icon: .circleFill)!
                                 .withTintColor(color.color, renderingMode: .alwaysOriginal))
                         }
+                        .tag(color)
                     }
+                } label: {
+                    Text(title)
                 }
+                .pickerStyle(.inline)
             } label: {
                 HStack(spacing: .ML) {
                     Circle()

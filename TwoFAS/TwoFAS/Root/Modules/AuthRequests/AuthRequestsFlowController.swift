@@ -23,20 +23,17 @@ import Common
 import Data
 
 protocol AuthRequestsFlowControllerParent: AnyObject {
-    func authRequestShowServiceSelection(auth: WebExtensionAwaitingAuth)
-    func authRequestAskUserForAuthorization(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest)
+    func authRequestAskUserForAuthorization(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest?)
 }
 
 protocol AuthRequestsFlowControlling: AnyObject {
     func toAuthorizationSuccess()
     func toAuthorizationFailure(reason: String?)
-    func toServiceSelection(auth: WebExtensionAwaitingAuth)
-    func toAskUserForAuthorization(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest)
+    func toAskUserForAuthorization(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest?)
 }
 
 protocol AuthRequestsFlowControllerChild: AnyObject {
     func refresh()
-    func didCancelServiceSelection(for tokenRequestID: String)
     func didSelectService(_ serviceData: ServiceData, auth: WebExtensionAwaitingAuth, save: Bool)
     func authorizeFromApp(for tokenRequestID: String)
     func authorize(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest)
@@ -83,11 +80,7 @@ extension AuthRequestsFlowController: AuthRequestsFlowControlling {
         }
     }
     
-    func toServiceSelection(auth: WebExtensionAwaitingAuth) {
-        parent?.authRequestShowServiceSelection(auth: auth)
-    }
-    
-    func toAskUserForAuthorization(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest) {
+    func toAskUserForAuthorization(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest?) {
         parent?.authRequestAskUserForAuthorization(auth: auth, pair: pair)
     }
 }
@@ -95,10 +88,6 @@ extension AuthRequestsFlowController: AuthRequestsFlowControlling {
 extension AuthRequestsFlowController: AuthRequestsFlowControllerChild {
     func refresh() {
         presenter?.handleRefresh()
-    }
-    
-    func didCancelServiceSelection(for tokenRequestID: String) {
-        presenter?.handleSkip(for: tokenRequestID)
     }
     
     func didSelectService(_ serviceData: ServiceData, auth: WebExtensionAwaitingAuth, save: Bool) {

@@ -54,7 +54,7 @@ extension AuthRequestsPresenter {
         case .askForAuth(let auth, let pair):
             flowController?.toAskUserForAuthorization(auth: auth, pair: pair)
         case .pairWithService(let auth):
-            flowController?.toServiceSelection(auth: auth)
+            flowController?.toAskUserForAuthorization(auth: auth, pair: nil)
         case .expired:
             flowController?.toAuthorizationFailure(reason: T.Browser.requestExpired)
         case .automatically(let auth, let pair):

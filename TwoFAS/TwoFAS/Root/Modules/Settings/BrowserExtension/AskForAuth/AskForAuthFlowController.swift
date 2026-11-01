@@ -24,11 +24,13 @@ import Data
 
 protocol AskForAuthFlowControllerParent: AnyObject {
     func askForAuthAllow(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest)
+    func askForAuthDidSelectService(_ serviceData: ServiceData, auth: WebExtensionAwaitingAuth, save: Bool)
     func askForAuthDeny(tokenRequestID: String)
 }
 
 protocol AskForAuthFlowControlling: AnyObject {
     func toAuth(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest)
+    func toSelectService(auth: WebExtensionAwaitingAuth)
     func toCancel(tokenRequestID: String)
 }
 
@@ -39,35 +41,38 @@ final class AskForAuthFlowController: FlowController {
         on viewController: UIViewController,
         parent: AskForAuthFlowControllerParent,
         auth: WebExtensionAwaitingAuth,
-        pair: PairedAuthRequest
+        pair: PairedAuthRequest?
     ) {
-        let hosting = NavigationBarHiddenHostingController(rootView: AnyView(EmptyView()))
+        let hosting = UIHostingController(rootView: AnyView(EmptyView()))
         let flowController = AskForAuthFlowController(viewController: hosting)
         flowController.parent = parent
+        let router = AskForAuthRouter()
+        router.flowController = flowController
         let presenter = AskForAuthPresenter(
-            flowController: flowController,
+            flowController: router,
             auth: auth,
             pair: pair
         )
-        hosting.rootView = AnyView(
-            AskForAuthView(
-                action: presenter.handleAction,
-                cancel: presenter.handleCancel,
-                domain: presenter.domain
-            )
-        )
-        hosting.configureAsModal()
+        hosting.rootView = AnyView(AskForAuthView(presenter: presenter, router: router))
+        hosting.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
+        if pair == nil {
+            hosting.configureAsLargeModal()
+        } else {
+            hosting.configureAsModal()
+        }
 
         viewController.present(hosting, animated: true, completion: nil)
     }
-}
-
-extension AskForAuthFlowController: AskForAuthFlowControlling {
-    func toAuth(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest) {
+    
+    func allow(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest) {
         parent?.askForAuthAllow(auth: auth, pair: pair)
     }
     
-    func toCancel(tokenRequestID: String) {
+    func didSelectService(_ serviceData: ServiceData, auth: WebExtensionAwaitingAuth, save: Bool) {
+        parent?.askForAuthDidSelectService(serviceData, auth: auth, save: save)
+    }
+    
+    func deny(tokenRequestID: String) {
         parent?.askForAuthDeny(tokenRequestID: tokenRequestID)
     }
 }

@@ -24,20 +24,24 @@ import Data
 final class AskForAuthPresenter {
     private let flowController: AskForAuthFlowControlling
     private let auth: WebExtensionAwaitingAuth
-    private let pair: PairedAuthRequest
+    private let pair: PairedAuthRequest?
     
-    init(flowController: AskForAuthFlowControlling, auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest) {
+    init(flowController: AskForAuthFlowControlling, auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest?) {
         self.flowController = flowController
         self.auth = auth
         self.pair = pair
     }
     
     var domain: String {
-        pair.domain
+        pair?.domain ?? auth.domain
     }
     
     func handleAction() {
-        flowController.toAuth(auth: auth, pair: pair)
+        if let pair {
+            flowController.toAuth(auth: auth, pair: pair)
+        } else {
+            flowController.toSelectService(auth: auth)
+        }
     }
     
     func handleCancel() {

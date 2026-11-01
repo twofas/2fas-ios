@@ -1313,6 +1313,8 @@
 		C2EF7B242DA9AE7100BAA559 /* ManageWatchFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF7B232DA9AE6800BAA559 /* ManageWatchFlowController.swift */; };
 		C2EFCE0725D05E320031293F /* ClearHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EFCE0625D05E320031293F /* ClearHandler.swift */; };
 		C2F10A022F9B3C0100D4E5A1 /* TokensFloatingSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F10A012F9B3C0100D4E5A1 /* TokensFloatingSectionHeader.swift */; };
+		C2F11EB1309729DE00759029 /* AskForAuthRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F11EB0309729DE00759029 /* AskForAuthRoute.swift */; };
+		C2F11EB3309729E500759029 /* AskForAuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F11EB2309729E500759029 /* AskForAuthRouter.swift */; };
 		C2F1A0022EA0000100ABCDEF /* TokensServiceTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F1A0012EA0000100ABCDEF /* TokensServiceTitle.swift */; };
 		C2F1A0042EA0000100ABCDEF /* TokensTOTPTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F1A0032EA0000100ABCDEF /* TokensTOTPTokenView.swift */; };
 		C2F1A0062EA0000100ABCDEF /* TokensCellMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F1A0052EA0000100ABCDEF /* TokensCellMetrics.swift */; };
@@ -2987,6 +2989,8 @@
 		C2EF7B232DA9AE6800BAA559 /* ManageWatchFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchFlowController.swift; sourceTree = "<group>"; };
 		C2EFCE0625D05E320031293F /* ClearHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearHandler.swift; sourceTree = "<group>"; };
 		C2F10A012F9B3C0100D4E5A1 /* TokensFloatingSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensFloatingSectionHeader.swift; sourceTree = "<group>"; };
+		C2F11EB0309729DE00759029 /* AskForAuthRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskForAuthRoute.swift; sourceTree = "<group>"; };
+		C2F11EB2309729E500759029 /* AskForAuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskForAuthRouter.swift; sourceTree = "<group>"; };
 		C2F1A0012EA0000100ABCDEF /* TokensServiceTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensServiceTitle.swift; sourceTree = "<group>"; };
 		C2F1A0032EA0000100ABCDEF /* TokensTOTPTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTOTPTokenView.swift; sourceTree = "<group>"; };
 		C2F1A0052EA0000100ABCDEF /* TokensCellMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCellMetrics.swift; sourceTree = "<group>"; };
@@ -5814,6 +5818,8 @@
 				C2EA567028569ADD00026BFE /* AskForAuthFlowController.swift */,
 				C2EA566E28569A5E00026BFE /* AskForAuthPresenter.swift */,
 				C2EA566A2856925B00026BFE /* AskForAuthView.swift */,
+				C2F11EB0309729DE00759029 /* AskForAuthRoute.swift */,
+				C2F11EB2309729E500759029 /* AskForAuthRouter.swift */,
 			);
 			path = AskForAuth;
 			sourceTree = "<group>";
@@ -7171,6 +7177,7 @@
 				C2A7067E276D1A7500885D79 /* NewPINFlowController.swift in Sources */,
 				C206AAD029636A3E0032B85E /* Configs.swift in Sources */,
 				C2E2C80927B0377B00F04B70 /* IconSelectorFlowController.swift in Sources */,
+				C2F11EB1309729DE00759029 /* AskForAuthRoute.swift in Sources */,
 				C209E9B9267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift in Sources */,
 				C21EB2FA2A800E7200FA8AA1 /* AddingServiceModuleInteractor.swift in Sources */,
 				C23387042781068E00F8DBC3 /* TrashPresenter.swift in Sources */,
@@ -7554,6 +7561,7 @@
 				C28705F42980776300745459 /* MainFlowController.swift in Sources */,
 				C21987C727961BF600724E63 /* CameraErrorTemplate.swift in Sources */,
 				C25AE525300A591600D9ABFB /* ToastPresenter+DefaultActions.swift in Sources */,
+				C2F11EB3309729E500759029 /* AskForAuthRouter.swift in Sources */,
 				C2D2F70C2FF02EAC0008FE4D /* LabelComposeFlowController.swift in Sources */,
 				C2CFA6A62AEEF0CB00E574FC /* RootModuleInteractor.swift in Sources */,
 				C258EC6E227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift in Sources */,

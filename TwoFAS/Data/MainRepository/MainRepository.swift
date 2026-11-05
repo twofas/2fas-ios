@@ -381,6 +381,12 @@ protocol MainRepository: AnyObject {
     var registrationDate: Date? { get }
     func saveRegistrationDate()
     
+    // MARK: - Request signing
+    var publicSigningKey: String? { get }
+    var isPublicSigningKeyUploaded: Bool { get }
+    var isSigningKeyLost: Bool { get }
+    func markPublicSigningKeyAsUploaded()
+    
     // MARK: - FCM Token
     var isGCMTokenSet: Bool { get }
     var gcmToken: String? { get }
@@ -395,6 +401,7 @@ protocol MainRepository: AnyObject {
     func registerDevice(
         for name: String,
         gcmToken: GCMToken?,
+        publicSigningKey: String?,
         completion: @escaping (Result<RegisterDevice.ResultData, NetworkError>) -> Void
     )
     func pairWithWebExtension(
@@ -425,6 +432,7 @@ protocol MainRepository: AnyObject {
     func updateDeviceNameToken(
         _ deviceName: String,
         gcmToken: String,
+        publicSigningKey: String?,
         for deviceID: String,
         completion: @escaping (Result<Void, NetworkError>) -> Void
     )

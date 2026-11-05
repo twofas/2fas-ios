@@ -23,6 +23,7 @@ import Common
 public protocol TokenStorageRead: AnyObject {
     var deviceID: String? { get }
     var GCMToken: String? { get }
+    var isPublicSigningKeyUploaded: Bool { get }
 }
 
 public protocol TokenStorageUpdate: AnyObject {
@@ -38,6 +39,7 @@ public protocol TokenStorageUpdate: AnyObject {
 public protocol TokenStorageSave: AnyObject {
     func save(GCMToken: String)
     func save(deviceID: String)
+    func markPublicSigningKeyAsUploaded()
 }
 
 public protocol TokenStorageVerify: TokenStorageUpdate, TokenStorageRead {}

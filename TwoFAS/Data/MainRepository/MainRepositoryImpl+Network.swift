@@ -42,9 +42,15 @@ extension MainRepositoryImpl {
     func registerDevice(
         for name: String,
         gcmToken: String?,
+        publicSigningKey: String?,
         completion: @escaping (Result<RegisterDevice.ResultData, NetworkError>) -> Void
     ) {
-        networkStack.network.registerDevice(for: name, gcmToken: gcmToken, completion: completion)
+        networkStack.network.registerDevice(
+            for: name,
+            gcmToken: gcmToken,
+            publicSigningKey: publicSigningKey,
+            completion: completion
+        )
     }
     
     func pairWithWebExtension(
@@ -96,12 +102,14 @@ extension MainRepositoryImpl {
     func updateDeviceNameToken(
         _ deviceName: String,
         gcmToken: String,
+        publicSigningKey: String?,
         for deviceID: String,
         completion: @escaping (Result<Void, NetworkError>) -> Void
     ) {
         networkStack.network.updateDeviceNameToken(
             deviceName,
             gcmToken: gcmToken,
+            publicSigningKey: publicSigningKey,
             for: deviceID,
             completion: completion
         )

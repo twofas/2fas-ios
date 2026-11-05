@@ -59,10 +59,20 @@ extension WebExtensionRemoteDeviceNameInteractor: WebExtensionRemoteDeviceNameIn
             return
         }
         
-        mainRepository.updateDeviceNameToken(newName, gcmToken: gcmToken, for: deviceID) { result in
+        let publicSigningKey = mainRepository.publicSigningKey
+        
+        mainRepository.updateDeviceNameToken(
+            newName,
+            gcmToken: gcmToken,
+            publicSigningKey: publicSigningKey,
+            for: deviceID
+        ) { [weak self] result in
             switch result {
             case .success:
                 Log("WebExtensionRemoteDeviceNameInteractor - setNewDeviceName. Success", module: .interactor)
+                if publicSigningKey != nil {
+                    self?.mainRepository.markPublicSigningKeyAsUploaded()
+                }
                 completion(.success(Void()))
             case .failure(let networkError):
                 Log(

@@ -26,10 +26,19 @@ public protocol NetworkStackType: AnyObject {
 public final class NetworkStack {
     private let networkHandler: NetworkStackRepositoryImpl
         
-    public init(baseURL: URL, notificationsBaseURL: URL) {
+    /// - Parameters:
+    ///   - signPayload: returns ASN.1 DER encoded ECDSA P-256 SHA-256 signature of the passed payload
+    ///   - currentDate: date used for signature timestamp. The server accepts only a limited clock skew
+    public init(
+        baseURL: URL,
+        notificationsBaseURL: URL,
+        signPayload: @escaping (Data) -> Data?,
+        currentDate: @escaping () -> Date
+    ) {
         networkHandler = NetworkStackRepositoryImpl(
             baseURL: baseURL,
-            notificationsBaseURL: notificationsBaseURL
+            notificationsBaseURL: notificationsBaseURL,
+            requestSigner: NetworkRequestSigner(signPayload: signPayload, currentDate: currentDate)
         )
     }
 }

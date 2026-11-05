@@ -29,6 +29,7 @@ enum DataKey: String {
     case migration = "com.2fas.dataKey.migration"
     case widgetsEnabled = "com.2fas.dataKey.widgetsEnabled"
     case deviceID = "com.2fas.dataKey.deviceID"
+    case publicSigningKeyUploaded = "com.2fas.dataKey.publicSigningKeyUploaded"
 }
 
 final class LocalEncryptedStorage {

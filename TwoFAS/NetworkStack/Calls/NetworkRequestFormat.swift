@@ -22,4 +22,9 @@ import Foundation
 protocol NetworkRequestFormat {
     var path: String { get }
     var method: HTTPMethod { get }
+    var requiresSignature: Bool { get }
+}
+
+extension NetworkRequestFormat {
+    var requiresSignature: Bool { false }
 }

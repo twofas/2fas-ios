@@ -23,6 +23,7 @@ public protocol NetworkStackRepository {
     func registerDevice(
         for name: String,
         gcmToken: String?,
+        publicSigningKey: String?,
         completion: @escaping (Result<RegisterDevice.ResultData, NetworkError>) -> Void
     )
     func pairWithWebExtension(
@@ -53,6 +54,7 @@ public protocol NetworkStackRepository {
     func updateDeviceNameToken(
         _ deviceName: String,
         gcmToken: String,
+        publicSigningKey: String?,
         for deviceID: String,
         completion: @escaping (Result<Void, NetworkError>) -> Void
     )

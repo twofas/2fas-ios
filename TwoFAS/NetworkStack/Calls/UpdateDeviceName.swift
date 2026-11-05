@@ -23,6 +23,7 @@ enum UpdateDeviceName {
     struct Request: NetworkRequestFormat {
         let deviceID: String
         let method: HTTPMethod = .PUT
+        let requiresSignature = true
         var path: String { "mobile/devices/\(deviceID)" }
     }
     
@@ -30,5 +31,6 @@ enum UpdateDeviceName {
         let name: String
         let fcm_token: String
         let platform: String
+        let public_signing_key: String?
     }
 }

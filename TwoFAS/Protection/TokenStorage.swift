@@ -42,13 +42,18 @@ final class TokenStorage: TokenStorageType {
         storage.saveString(for: .deviceID, value: deviceID)
     }
     
+    func markPublicSigningKeyAsUploaded() {
+        storage.saveBool(for: .publicSigningKeyUploaded, value: true)
+    }
+    
     func removeAll() {
         storage.remove(for: .gcmToken)
-        storage.remove(for: .deviceID)
+        removeDeviceID()
     }
     
     func removeDeviceID() {
         storage.remove(for: .deviceID)
+        storage.remove(for: .publicSigningKeyUploaded)
     }
     
     func removeGCMToken() {
@@ -57,4 +62,5 @@ final class TokenStorage: TokenStorageType {
     
     var deviceID: String? { storage.stringValue(for: .deviceID) }
     var GCMToken: String? { storage.stringValue(for: .gcmToken) }
+    var isPublicSigningKeyUploaded: Bool { storage.boolValue(for: .publicSigningKeyUploaded) }
 }

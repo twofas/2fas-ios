@@ -796,7 +796,7 @@ extension ImportFromFileInteractor {
     }
 
     func parseBitwarden(_ data: BitwardenData) -> [ServiceData] {
-        Log("ImportFromFileInteractor - parseBitwarden", module: .interactor)
+        Log("ImportFromFileInteractor - parseBitwarden, source: \(data.source)", module: .interactor)
 
         let date = Date()
         var current = Set<String>()
@@ -804,64 +804,50 @@ extension ImportFromFileInteractor {
         return (data.items ?? [])
             .compactMap { item -> ServiceData? in
                 guard let totp = item.login?.totp?.trimmingCharacters(in: .whitespacesAndNewlines),
-                      !totp.isEmpty
+                      !totp.isEmpty,
+                      let code = parseBitwardenTOTP(totp)
                 else { return nil }
 
-                let code: Code? = {
-                    guard let url = URL(string: totp) else { return nil }
-                    return Code.parseURL(url)
-                }()
-
-                let issuer: String?
-                let digits: Digits
-                let period: Period
-                let algo: Algorithm
-                let counter: Int
-                let kind: TokenType
-                let label: String?
-                let rawSecret: String
-
-                if let code {
-                    rawSecret = code.secret
-                    issuer = code.issuer
-                    digits = code.digits ?? .defaultValue
-                    period = code.period ?? .defaultValue
-                    algo = code.algorithm ?? .defaultValue
-                    counter = code.counter ?? 0
-                    kind = code.tokenType
-                    label = code.label
-                } else {
-                    return nil
-                }
-
-                let secret = rawSecret.sanitazeSecret()
+                let secret = code.secret.sanitazeSecret()
                 guard secret.isValidSecret(), shouldImport(&current, secret: secret) else {
                     return nil
                 }
 
-                let name: String = {
-                    if let issuer = issuer?.sanitazeName(), !issuer.isEmpty {
-                        return issuer
-                    }
-                    if let name = item.name?.sanitazeName(), !name.isEmpty {
-                        return name
-                    }
-                    return modifyInteractor.createNameForUnknownService()
-                }()
+                let issuer = code.issuer?.sanitazeName().nilIfEmpty
+                let itemName = item.name?.sanitazeName().nilIfEmpty
+                let account = code.label.flatMap { bitwardenAccount(fromLabel: $0, issuer: issuer) }
+                let username = item.login?.username?.sanitizeInfo().nilIfEmpty
 
-                let additionalInfo: String? = {
-                    if let label, !label.isEmpty {
-                        return label.sanitizeInfo()
-                    }
-                    if let username = item.login?.username, !username.isEmpty {
-                        return username.sanitizeInfo()
-                    }
-                    return nil
-                }()
+                let name: String
+                let additionalInfo: String?
+                switch data.source {
+                case .authenticator:
+                    // Authenticator keeps the QR code's issuer, item name is secondary
+                    name = issuer ?? itemName ?? modifyInteractor.createNameForUnknownService()
+                    additionalInfo = account ?? username
+                case .passwordManager:
+                    // Password Manager item name is set by the user and describes the login it belongs to.
+                    // Issuer stored in the TOTP URI may point to a different service (or be missing)
+                    name = itemName ?? issuer ?? modifyInteractor.createNameForUnknownService()
+                    additionalInfo = username ?? account
+                }
 
                 let serviceDef: ServiceDefinition? = {
-                    if let issuer {
-                        return serviceDefinitionInteractor.findService(using: issuer)
+                    let candidates: [String] = {
+                        switch data.source {
+                        case .authenticator: return [issuer, itemName].compactMap { $0 }
+                        case .passwordManager: return [itemName, issuer].compactMap { $0 }
+                        }
+                    }()
+                    for candidate in candidates {
+                        if let service = serviceDefinitionInteractor.findService(using: candidate) {
+                            return service
+                        }
+                    }
+                    for domain in bitwardenDomains(from: item.login?.uris) {
+                        if let service = serviceDefinitionInteractor.findServices(domain: domain).first {
+                            return service
+                        }
                     }
                     return nil
                 }()
@@ -878,27 +864,88 @@ extension ImportFromFileInteractor {
                     secret: secret,
                     serviceTypeID: serviceDef?.serviceTypeID,
                     additionalInfo: additionalInfo,
-                    rawIssuer: issuer,
+                    rawIssuer: code.issuer,
                     modifiedAt: date,
                     createdAt: date,
-                    tokenPeriod: period,
-                    tokenLength: digits,
+                    tokenPeriod: code.period ?? .defaultValue,
+                    tokenLength: code.digits ?? .defaultValue,
                     badgeColor: nil,
                     iconType: iconType,
                     iconTypeID: iconTypeID ?? .default,
                     labelColor: .random,
                     labelTitle: name.twoLetters,
-                    algorithm: algo,
+                    algorithm: code.algorithm ?? .defaultValue,
                     isTrashed: false,
                     trashingDate: nil,
-                    counter: counter,
-                    tokenType: kind,
+                    counter: code.counter ?? 0,
+                    tokenType: code.tokenType,
                     source: .link,
                     otpAuth: nil,
                     order: nil,
                     sectionID: nil
                 )
             }
+    }
+
+    /// Bitwarden stores TOTP as one of: `otpauth://` URI, `steam://SECRET` or a bare Base32 secret
+    private func parseBitwardenTOTP(_ totp: String) -> Code? {
+        let steamPrefix = "steam://"
+        if totp.lowercased().hasPrefix("otpauth://") {
+            guard let url = URL(string: totp) else { return nil }
+            return Code.parseURL(url)
+        }
+        if totp.lowercased().hasPrefix(steamPrefix) {
+            let secret = String(totp.dropFirst(steamPrefix.count))
+            return Code(
+                issuer: "Steam",
+                label: nil,
+                secret: secret,
+                period: .period30,
+                digits: .digits5,
+                algorithm: .SHA1,
+                tokenType: .steam,
+                counter: nil,
+                otpAuth: nil
+            )
+        }
+        guard !totp.contains("://") else { return nil }
+        return Code(
+            issuer: nil,
+            label: nil,
+            secret: totp,
+            period: nil,
+            digits: nil,
+            algorithm: nil,
+            tokenType: .totp,
+            counter: nil,
+            otpAuth: nil
+        )
+    }
+
+    /// otpauth label has format `Issuer:account` or `account`
+    private func bitwardenAccount(fromLabel label: String, issuer: String?) -> String? {
+        let decoded = label.removingPercentEncoding ?? label
+        var account = decoded
+        if let separator = decoded.firstIndex(of: ":") {
+            let prefix = decoded[..<separator].trimmingCharacters(in: .whitespaces)
+            if issuer == nil || prefix.caseInsensitiveCompare(issuer ?? "") == .orderedSame {
+                account = String(decoded[decoded.index(after: separator)...])
+            }
+        }
+        return account.sanitizeInfo().nilIfEmpty
+    }
+
+    private func bitwardenDomains(from uris: [BitwardenData.Item.Login.URI]?) -> [String] {
+        (uris ?? []).compactMap { entry -> String? in
+            guard let uri = entry.uri?.trimmingCharacters(in: .whitespacesAndNewlines), !uri.isEmpty else {
+                return nil
+            }
+            let withScheme = uri.contains("://") ? uri : "https://\(uri)"
+            guard let host = URLComponents(string: withScheme)?.host?.lowercased(), host.contains(".") else {
+                return nil
+            }
+            return host.hasPrefix("www.") ? String(host.dropFirst(4)) : host
+        }
     }
 
     func importFromBitwardenCSVFileFormat(_ data: Data) -> BitwardenData? {
@@ -911,6 +958,9 @@ extension ImportFromFileInteractor {
         guard let totpIndex = columns.firstIndex(of: "login_totp") else { return nil }
         let nameIndex = columns.firstIndex(of: "name")
         let usernameIndex = columns.firstIndex(of: "login_username")
+        let uriIndex = columns.firstIndex(of: "login_uri")
+        // Password Manager CSV contains password column, Authenticator CSV does not
+        let source: BitwardenData.Source = columns.contains("login_password") ? .passwordManager : .authenticator
 
         func value(_ row: [String], _ index: Int?) -> String? {
             guard let index, index < row.count else { return nil }
@@ -923,11 +973,17 @@ extension ImportFromFileInteractor {
             guard !totp.isEmpty else { return nil }
             return BitwardenData.Item(
                 name: value(row, nameIndex),
-                login: BitwardenData.Item.Login(totp: totp, username: value(row, usernameIndex))
+                login: BitwardenData.Item.Login(
+                    totp: totp,
+                    username: value(row, usernameIndex),
+                    uris: value(row, uriIndex)?
+                        .split(separator: ",")
+                        .map { BitwardenData.Item.Login.URI(uri: String($0)) }
+                )
             )
         }
 
-        return BitwardenData(encrypted: false, items: items)
+        return BitwardenData(encrypted: false, items: items, source: source)
     }
 
     func parseOnePassword(_ data: [OnePasswordData]) -> [ServiceData] {
@@ -1138,5 +1194,11 @@ private extension Code {
             )
         }
         return self
+    }
+}
+
+private extension String {
+    var nilIfEmpty: String? {
+        isEmpty ? nil : self
     }
 }

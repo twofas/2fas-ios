@@ -241,11 +241,13 @@ private extension NetworkCall {
                 result = try jsonDecoder.decode(T.self, from: data)
             } catch {
                 Log("Network Stack: Parse error! error: \(error)", module: .network)
+                #if DEBUG
                 Log(
                     "Network Stack: Data: \(String(describing: String(data: data, encoding: .utf8)))",
                     module: .network,
                     save: false
                 )
+                #endif
             }
             return result
         }() else {

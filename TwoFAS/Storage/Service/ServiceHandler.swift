@@ -59,6 +59,7 @@ public final class ServiceHandler {
     }
     
     func move(from oldIndex: Int, currentSectionID: SectionID?, to newIndex: Int, newSectionID: SectionID?) {
+        #if DEBUG
         Log("""
             ServiceHandler in Storage: move:
             oldIndex: \(oldIndex)
@@ -69,6 +70,7 @@ public final class ServiceHandler {
             module: .storage,
             save: false
         )
+        #endif
         let updated = ServiceEntity.move(
             on: coreDataStack.context,
             from: oldIndex,
@@ -83,7 +85,9 @@ public final class ServiceHandler {
     }
     
     func clearCategory(for sectionID: SectionID) {
+        #if DEBUG
         Log("ServiceHandler in Storage: clearCategory: \(sectionID)", module: .storage, save: false)
+        #endif
         let countNilSection = ServiceEntity.listAll(on: coreDataStack.context, sectionID: nil).count
         let list = ServiceEntity.listAll(on: coreDataStack.context, sectionID: sectionID)
         var order = countNilSection
@@ -140,11 +144,15 @@ extension ServiceHandler: CommonServiceHandler {
         }
         
         Log("ServiceHandler in Storage: There's a difference! Will try to merge\nNew services (\(newServices.count)), current services (\(currentServices.count))", module: .storage)
+        #if DEBUG
         Log("ServiceHandler in Storage: New services: \(newServices)", module: .storage, save: false)
         Log("ServiceHandler in Storage: Current services: \(currentServices)", module: .storage, save: false)
+        #endif
         let changes = modifiedDeleted(for: currentServices, newServices: newServices)
         Log("ServiceHandler in Storage: Modified: \(changes.modified.count), Deleted: \(changes.deleted.count)", module: .storage)
+        #if DEBUG
         Log("ServiceHandler in Storage: Modified values: \(changes.modified), Deleted values: \(changes.deleted)", module: .storage, save: false)
+        #endif
         
         let currentlyInTrash = getAllTrashedServices()
         Log("ServiceHandler in Storage: Currently in trash: \(currentlyInTrash.count)", module: .storage)
@@ -179,7 +187,9 @@ extension ServiceHandler: CommonServiceHandler {
                 "ServiceHandler in Storage: \(reorderedWhileAdded.count) items reordered. Sending to sync",
                 module: .storage
             )
+            #if DEBUG
             Log("ServiceHandler in Storage: Values: \(reorderedWhileAdded)", module: .storage, save: false)
+            #endif
             commonDidModify?(reorderedWhileAdded)
         }
         // swiftlint:enable line_length
@@ -199,7 +209,9 @@ extension ServiceHandler: CommonServiceHandler {
     }
     
     private func modifyCounters(_ services: [ServiceData], current: [ServiceData]) -> [ServiceData] {
+        #if DEBUG
         Log("ServiceHandler in Storage: modifyCounters", module: .storage, save: false)
+        #endif
         var modifyServices = services
         services.enumerated().forEach { index, s in
             if let currentService = current.first(where: { $0.secret == s.secret }), s.tokenType == .hotp {
@@ -210,7 +222,9 @@ extension ServiceHandler: CommonServiceHandler {
                         currentService.counter ?? TokenType.hotpDefaultValue
                     )
                     modifiedServiceData.updateCounter(counterValue)
+                    #if DEBUG
                     Log("ServiceHandler in Storage: updating counter: \(counterValue)", module: .storage, save: false)
+                    #endif
                     modifyServices[index] = modifiedServiceData
                 }
             }
@@ -290,7 +304,9 @@ extension ServiceHandler: CommonServiceHandler {
             }
         }
         Log("ServiceHandler in Storage: Marking as trashed: count: \(deleted.count)", module: .storage)
+        #if DEBUG
         Log("ServiceHandler in Storage: Marking as trashed: items: \(deleted)", module: .storage, save: false)
+        #endif
         deleted.forEach({
             if let service = ServiceEntity.findService(
                 on: coreDataStack.context,
@@ -314,7 +330,9 @@ extension ServiceHandler: CommonServiceHandler {
             }
         })
         Log("ServiceHandler in Storage: Cleaning trash: count: \(inTrashNowAdded.count)", module: .storage)
+        #if DEBUG
         Log("ServiceHandler in Storage: Cleaning trash: \(inTrashNowAdded)", module: .storage, save: false)
+        #endif
         let forDeletition = inTrashNowAdded.compactMap {
             ServiceEntity.getService(on: coreDataStack.context, encryptedSecret: $0.secret.encrypt())
         }
@@ -378,11 +396,13 @@ public extension ServiceHandler {
         
         newServices.forEach { commonDidCreate?($0.secret) }
         Log("ServiceHandler in Storage: Data imported from file. Count: \(newServices.count)", module: .storage)
+        #if DEBUG
         Log(
             "ServiceHandler in Storage: Data imported from file. Services: \(newServices)",
             module: .storage,
             save: false
         )
+        #endif
         return newServices.count
     }
     

@@ -75,7 +75,10 @@ extension CameraOutputQRScanner: AVCaptureMetadataOutputObjectsDelegate {
             let metadata = metadataObjects.first,
             let readable = metadata as? AVMetadataMachineReadableCodeObject,
             let stringValue = readable.stringValue else { return }
-        Log("CameraOutputQRScanner - metadataOutput (found code!) \(stringValue)", module: .camera, save: false)
+        Log("CameraOutputQRScanner - metadataOutput", module: .camera)
+        #if DEBUG
+        Log("CameraOutputQRScanner - Code: \(stringValue)", module: .camera, save: false)
+        #endif
         let codeType = Code.parse(with: stringValue)
         didFoundCode?(codeType)
     }

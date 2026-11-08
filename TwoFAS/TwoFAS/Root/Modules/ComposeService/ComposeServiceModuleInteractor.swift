@@ -352,7 +352,9 @@ private extension ComposeServiceModuleInteractor {
         validateServiceName()
         validateAdditionalInfo()
         let correctData = isDataValid
+        #if DEBUG
         Log("ComposeServiceModuleInteractor - validate: \(correctData)", module: .moduleInteractor, save: false)
+        #endif
         isDataCorrectNotifier?(correctData)
     }
     

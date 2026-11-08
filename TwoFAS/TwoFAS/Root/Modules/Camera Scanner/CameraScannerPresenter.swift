@@ -110,7 +110,9 @@ extension CameraScannerPresenter {
         case .googleAuth(let index, let size, let batchID, let codes):
             view?.enableOverlay()
             Log("CameraScannerPresenter: Found Google Auth codes: \(codes.count)")
+            #if DEBUG
             Log("Codes: \(codes)", save: false)
+            #endif
             
             let data = GoogleScanData(index: index, size: size, batchID: batchID, codes: codes)
             
@@ -129,13 +131,17 @@ extension CameraScannerPresenter {
                 codes: importableCodes
             )
         case .appStore:
+            #if DEBUG
             Log("CameraScannerPresenter: Found wrong code: \(codeType)", save: false)
+            #endif
             Log("CameraScannerPresenter: It's an app store link!")
             view?.enableOverlay()
             view?.feedback()
             flowController.toAppStore()
         case .twoFASWebExtension(let extensionID):
+            #if DEBUG
             Log("CameraScannerPresenter: Found 2FAS Web Extension code for: \(codeType)", save: false)
+            #endif
             Log("CameraScannerPresenter: It's a 2FAS Web Extension!")
             view?.enableOverlay()
             view?.feedback()
@@ -156,7 +162,9 @@ extension CameraScannerPresenter {
                 flowController.toCantPairWatch()
             }
         case .unknown:
+            #if DEBUG
             Log("CameraScannerPresenter: Found wrong code: \(codeType)", save: false)
+            #endif
             Log("CameraScannerPresenter: General wrong code")
             view?.enableOverlay()
             view?.feedback()

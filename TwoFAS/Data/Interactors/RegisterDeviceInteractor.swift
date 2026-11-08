@@ -179,7 +179,9 @@ private extension RegisterDeviceInteractor {
             switch result {
             case .success(let data):
                 Log("RegisterDeviceInteractor - Register success!", module: .interactor)
+                #if DEBUG
                 Log("RegisterDeviceInteractor - DeviceID: \(data.id)", module: .interactor, save: false)
+                #endif
                 self?.mainRepository.saveDeviceID(data.id)
                 self?.mainRepository.saveRegistrationDate()
                 if publicSigningKey != nil {
@@ -289,7 +291,9 @@ private extension RegisterDeviceInteractor {
         }
         
         Log("RegisterDeviceInteractor - FCM token obtained! Partial-token: \(token.suffix(self.logTokenLength))", module: .interactor)
+        #if DEBUG
         Log("FCM/FCM: \(token)", module: .interactor, save: false)
+        #endif
         
         if isDeviceRegistered {
             Log("RegisterDeviceInteractor - Token obtained, device registered", module: .interactor)

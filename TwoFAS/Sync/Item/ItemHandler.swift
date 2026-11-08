@@ -205,7 +205,9 @@ extension ItemHandler {
                   let ref = encryption.encrypt(with: embedded, data: data)
             else {
                 Log("ItemHandler - Can't create CKRecord with ServiceData", module: .cloudSync)
+                #if DEBUG
                 Log("ItemHandler - Can't create CKRecord with ServiceData: \(item)", module: .cloudSync, save: false)
+                #endif
                 return nil
             }
             
@@ -242,7 +244,9 @@ extension ItemHandler {
                   let modified = list.first(where: { $0.secret == entityID })
             else {
                 Log("ItemHandler - Can't create CKRecord with ServiceData", module: .cloudSync)
+                #if DEBUG
                 Log("ItemHandler - Can't create CKRecord with ServiceData: \(item)", module: .cloudSync, save: false)
+                #endif
                 return nil
             }
             
@@ -268,7 +272,9 @@ extension ItemHandler {
                   let data = new.secret.data(using: .utf8),
                   let ref = encryption.encrypt(with: embedded, data: data) else {
                 Log("ItemHandler - Can't create CKRecord with ServiceData", module: .cloudSync)
+                #if DEBUG
                 Log("ItemHandler - Can't create CKRecord with ServiceData: \(item)", module: .cloudSync, save: false)
+                #endif
                 return nil
             }
             guard new.secret.isValidSecret() else {
@@ -311,7 +317,9 @@ extension ItemHandler {
             guard let new = item as? ServiceData,
                   let list = (allItems as? [ServiceData]) else {
                 Log("ItemHandler - Can't create CKRecord with ServiceData", module: .cloudSync)
+                #if DEBUG
                 Log("ItemHandler - Can't create CKRecord with ServiceData: \(item)", module: .cloudSync, save: false)
+                #endif
                 return nil
             }
             guard new.secret.isValidSecret() else {

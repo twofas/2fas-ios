@@ -96,11 +96,13 @@ extension PushNotificationRegistrationInteractor: PushNotificationRegistrationIn
             switch state {
             case .succesful(let deviceToken):
                 Log("PushNotificationRegistrationInteractor - deviceToken obtained!", module: .interactor)
+                #if DEBUG
                 Log(
                     "PushNotificationRegistrationInteractor - The Device Token: \(deviceToken)",
                     module: .interactor,
                     save: false
                 )
+                #endif
                 self?.mainRepository.setNotificationState(.allowed)
             case .failed(let error):
                 Log("""

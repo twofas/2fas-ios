@@ -72,13 +72,17 @@ final class DynamicTypesEntityMigrationPolicy: NSEntityMigrationPolicy {
     ) throws {
         guard sInstance.entity.name == entityName else { return }
 
+        #if DEBUG
         Log("Migration - createDestinationInstances", module: .storage, save: false)
+        #endif
 
         guard let name = sInstance.primitiveValue(forKey: Keys.name.rawValue) as? String,
               let secret = sInstance.primitiveValue(forKey: Keys.secret.rawValue) as? String,
               let serviceType = sInstance.primitiveValue(forKey: Keys.serviceType.rawValue) as? String,
               !secret.isEmpty else {
+            #if DEBUG
             Log("Migration of entity wasn't successful becase of missing data", module: .storage, save: false)
+            #endif
             return
         }
 
@@ -101,16 +105,22 @@ final class DynamicTypesEntityMigrationPolicy: NSEntityMigrationPolicy {
         let tokenType = sInstance.primitiveValue(forKey: Keys.tokenType.rawValue) as? String
         let trashingDate = sInstance.primitiveValue(forKey: Keys.trashingDate.rawValue) as? Date
 
+        #if DEBUG
         Log("Migrating EncryptSecretEntityMigrationPolicy -> \(name)", module: .storage, save: false)
+        #endif
 
         guard !secrets.contains(secret) else {
             // swiftlint:disable line_length
+            #if DEBUG
             Log("Migrating EncryptSecretEntityMigrationPolicy -> Skipping duplicated secret!", module: .storage, save: false)
+            #endif
             // swiftlint:enable line_length
             return
         }
 
+        #if DEBUG
         Log("Migrating EncryptSecretEntityMigrationPolicy -> creating encrypted secret", module: .storage, save: false)
+        #endif
 
         secrets.append(secret)
         

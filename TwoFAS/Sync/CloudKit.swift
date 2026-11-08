@@ -249,7 +249,9 @@ final class CloudKit {
         operation.fetchAllChanges = true
         operation.recordWasChangedBlock = { [weak self] recordID, result in
             Log("CloudKit - recordWasChangedBlock", module: .cloudSync)
+            #if DEBUG
             Log("CloudKit - recordWasChangedBlock - recordID: \(recordID)", module: .cloudSync, save: false)
+            #endif
             switch result {
             case .success(let record):
                 Log("CloudKit - recordWasChangedBlock - success", module: .cloudSync)
@@ -310,7 +312,9 @@ final class CloudKit {
             switch result {
             case .success:
                 Log("CloudKit - perRecordDeleteBlock - success", module: .cloudSync)
+                #if DEBUG
                 Log("CloudKit - perRecordDeleteBlock - recordID: \(recordID)", module: .cloudSync, save: false)
+                #endif
             case .failure(let error):
                 self?.savePartialOperationError(error)
                 Log("CloudKit - perRecordDeleteBlock - error: \(error)", module: .cloudSync)
@@ -320,11 +324,13 @@ final class CloudKit {
             switch result {
             case .success(let record):
                 Log("CloudKit - perRecordSaveBlock - success", module: .cloudSync)
+                #if DEBUG
                 Log(
                     "CloudKit - perRecordSaveBlock - recordID: \(recordID),\n\nrecord: \(record)",
                     module: .cloudSync,
                     save: false
                 )
+                #endif
             case .failure(let error):
                 self?.savePartialOperationError(error)
                 let nsError = error as NSError
@@ -457,13 +463,17 @@ final class CloudKit {
     
     private func recordChanged(_ changedRecord: CKRecord) {
         Log("CloudKit - Appending changed record of type: \(changedRecord.recordType)", module: .cloudSync)
+        #if DEBUG
         Log("Record: \(changedRecord)", module: .cloudSync, save: false)
+        #endif
         changedRecords.append(changedRecord)
     }
     
     private func recordDeleted(_ deletedRecord: CKRecord.ID, of type: CKRecord.RecordType) {
         Log("CloudKit - Appending deleted record of type: \(type)", module: .cloudSync)
+        #if DEBUG
         Log("Record: \(deletedRecord)", module: .cloudSync, save: false)
+        #endif
         let record = DeletedItem(record: deletedRecord, type: type)
         deletedRecords.append(record)
     }

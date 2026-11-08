@@ -125,7 +125,9 @@ public extension SectionHandler {
         removeAll()
         addSections(sections, collapsedState: collapsedState)
         Log("New sections count: \(sections.count)", module: .storage)
+        #if DEBUG
         Log("New sections: \(sections)", module: .storage, save: false)
+        #endif
         coreDataStack.save()
 
         NotificationCenter.default.post(name: .sectionsWereUpdated, object: nil)

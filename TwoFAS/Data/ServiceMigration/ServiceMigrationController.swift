@@ -77,7 +77,9 @@ public final class ServiceMigrationController {
         guard servicesForMigration.count > 0 else { Log("Nothing to migrate using issuer value"); return }
         
         Log("Count of services for migration: \(servicesForMigration.count)")
+        #if DEBUG
         Log("Services for migration:\n\n\(servicesForMigration)", save: false)
+        #endif
         
         for s in servicesForMigration {
             guard

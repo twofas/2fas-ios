@@ -114,7 +114,9 @@ extension MergeHandler {
                             return
                         }
                         Log("MergeHandler: Creation: Creating new item at index: \(entry.index)", module: .cloudSync)
+                        #if DEBUG
                         Log("MergeHandler: the item: \(entry.item)", module: .cloudSync, save: false)
+                        #endif
                         var list = listToSend[type] ?? []
                         list.safeInsert(entry.item, at: entry.index)
                         listToSend[type] = list

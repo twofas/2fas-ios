@@ -153,8 +153,8 @@ internal enum T {
   internal static let groupsDeleteMsg = T.tr("Localizable", "groups_delete_msg", fallback: "Are you sure you want to delete this group?")
   /// Import
   internal static let importBackupCta = T.tr("Localizable", "import_backup_cta", fallback: "Import")
-  /// You are going to import backup file with
-  internal static let importBackupMsg1 = T.tr("Localizable", "import_backup_msg1", fallback: "You are going to import backup file with")
+  /// You are going to import a backup file with
+  internal static let importBackupMsg1 = T.tr("Localizable", "import_backup_msg1", fallback: "You are going to import a backup file with")
   /// You are going to import an encrypted backup file.
   internal static let importBackupMsg1Encrypted = T.tr("Localizable", "import_backup_msg1_encrypted", fallback: "You are going to import an encrypted backup file.")
   /// The file will be synchronised with the app's service list.
@@ -247,8 +247,8 @@ internal enum T {
   internal static let pastDurationMonthsPlural4 = T.tr("Localizable", "past_duration_months-plural-4", fallback: "")
   /// 
   internal static let pastDurationMonthsPlural5 = T.tr("Localizable", "past_duration_months-plural-5", fallback: "")
-  /// moment ago
-  internal static let pastDurationSeconds = T.tr("Localizable", "past_duration_seconds", fallback: "moment ago")
+  /// a moment ago
+  internal static let pastDurationSeconds = T.tr("Localizable", "past_duration_seconds", fallback: "a moment ago")
   /// moments ago
   internal static let pastDurationSecondsPlural = T.tr("Localizable", "past_duration_seconds-plural", fallback: "moments ago")
   /// 
@@ -454,8 +454,8 @@ internal enum T {
     internal static let googleDriveDisabledTitle = T.tr("Localizable", "backup__google_drive_disabled_title", fallback: "Google Drive has been disabled by the user")
     /// Google Drive is not available
     internal static let googleDriveNotAvailable = T.tr("Localizable", "backup__google_drive_not_available", fallback: "Google Drive is not available")
-    /// There's a problem with iCloud. Check system settings
-    internal static let googleDriveProblemTitle = T.tr("Localizable", "backup__google_drive_problem_title", fallback: "There's a problem with iCloud. Check system settings")
+    /// There's a problem with Google Drive. Check system settings
+    internal static let googleDriveProblemTitle = T.tr("Localizable", "backup__google_drive_problem_title", fallback: "There's a problem with Google Drive. Check system settings")
     /// iCloud has been disabled by the user
     internal static let icloudDisabledTitle = T.tr("Localizable", "backup__icloud_disabled_title", fallback: "iCloud has been disabled by the user")
     /// iCloud is not available
@@ -468,8 +468,8 @@ internal enum T {
     internal static let `import` = T.tr("Localizable", "backup__import", fallback: "Import")
     /// Import backup file
     internal static let importBackupFile = T.tr("Localizable", "backup__import_backup_file", fallback: "Import backup file")
-    /// Import completed successfuly
-    internal static let importCompletedSuccessfuly = T.tr("Localizable", "backup__import_completed_successfuly", fallback: "Import completed successfuly")
+    /// Import completed successfully
+    internal static let importCompletedSuccessfuly = T.tr("Localizable", "backup__import_completed_successfuly", fallback: "Import completed successfully")
     /// The file you are trying to import is invalid or damaged. Please choose another file.
     internal static let importErrorFileInvalid = T.tr("Localizable", "backup__import_error_file_invalid", fallback: "The file you are trying to import is invalid or damaged. Please choose another file.")
     /// The file you are trying to import is too big. Size limit is 10 MB.
@@ -484,13 +484,13 @@ internal enum T {
     }
     /// You're going to import a backup file containing
     internal static let importOtherDevices = T.tr("Localizable", "backup__import_other_devices", fallback: "You're going to import a backup file containing")
-    /// Incorrect character. Use only letter A-Z, a-z, digits and special characters: -_/!#$%&+*~@?=^.,'(){}[]:;<>|
-    internal static let incorrectCharacterError = T.tr("Localizable", "backup__incorrect_character_error", fallback: "Incorrect character. Use only letter A-Z, a-z, digits and special characters: -_/!#$%&+*~@?=^.,'(){}[]:;<>|")
+    /// Incorrect character. Use only letters A-Z, a-z, digits and special characters: -_/!#$%&+*~@?=^.,'(){}[]:;<>|
+    internal static let incorrectCharacterError = T.tr("Localizable", "backup__incorrect_character_error", fallback: "Incorrect character. Use only letters A-Z, a-z, digits and special characters: -_/!#$%&+*~@?=^.,'(){}[]:;<>|")
     /// Incorrect Password
     internal static let incorrectPassword = T.tr("Localizable", "backup__incorrect_password", fallback: "Incorrect Password")
-    /// Couldn't backup Tokens because "%@" secret contains invalid characters. Remove it from list and try again
+    /// Couldn't back up Tokens because "%@" secret contains invalid characters. Remove it from the list and try again
     internal static func incorrectSecret(_ p1: Any) -> String {
-      return T.tr("Localizable", "backup__incorrect_secret", String(describing: p1), fallback: "Couldn't backup Tokens because \"%@\" secret contains invalid characters. Remove it from list and try again")
+      return T.tr("Localizable", "backup__incorrect_secret", String(describing: p1), fallback: "Couldn't back up Tokens because \"%@\" secret contains invalid characters. Remove it from the list and try again")
     }
     /// System Key
     internal static let keyImportSystemKey = T.tr("Localizable", "backup__key_import_system_key", fallback: "System Key")
@@ -610,8 +610,8 @@ internal enum T {
     internal static let synchronizationSettings = T.tr("Localizable", "backup__synchronization_settings", fallback: "Synchronization settings")
     /// System Key
     internal static let systemKey = T.tr("Localizable", "backup__system_key", fallback: "System Key")
-    /// Provided phrase is too short (min. 3 char)
-    internal static let toShortError = T.tr("Localizable", "backup__to_short_error", fallback: "Provided phrase is too short (min. 3 char)")
+    /// Provided phrase is too short (min. 3 chars)
+    internal static let toShortError = T.tr("Localizable", "backup__to_short_error", fallback: "Provided phrase is too short (min. 3 chars)")
     /// You'll need a new version of the app to import the contents of this file. You can find the newest version in the App Store
     internal static let updateRequiredToImportTitle = T.tr("Localizable", "backup__update_required_to_import_title", fallback: "You'll need a new version of the app to import the contents of this file. You can find the newest version in the App Store")
     /// You'll need a new version of the app to import the contents of this file. You can find the newest version in the Google Store
@@ -666,14 +666,14 @@ internal enum T {
     internal static let codeSuccessTitle = T.tr("Localizable", "browser__code_success_title", fallback: "Token sent successfully!")
     /// Contact support
     internal static let contactSupport = T.tr("Localizable", "browser__contact_support", fallback: "Contact support")
-    /// The next time you use the browser extension to login to %@, you'll be asked to pair this domain again.
+    /// The next time you use the browser extension to log in to %@, you'll be asked to pair this domain again.
     internal static func deletingExtensionPairingContent(_ p1: Any) -> String {
-      return T.tr("Localizable", "browser__deleting_extension_pairing_content", String(describing: p1), fallback: "The next time you use the browser extension to login to %@, you'll be asked to pair this domain again.")
+      return T.tr("Localizable", "browser__deleting_extension_pairing_content", String(describing: p1), fallback: "The next time you use the browser extension to log in to %@, you'll be asked to pair this domain again.")
     }
     /// Remove domain?
     internal static let deletingExtensionPairingTitle = T.tr("Localizable", "browser__deleting_extension_pairing_title", fallback: "Remove domain?")
-    /// Are you sure you want to delete paired device?
-    internal static let deletingPairedDeviceContent = T.tr("Localizable", "browser__deleting_paired_device_content", fallback: "Are you sure you want to delete paired device?")
+    /// Are you sure you want to delete the paired device?
+    internal static let deletingPairedDeviceContent = T.tr("Localizable", "browser__deleting_paired_device_content", fallback: "Are you sure you want to delete the paired device?")
     /// Deleting Paired Device
     internal static let deletingPairedDeviceTitle = T.tr("Localizable", "browser__deleting_paired_device_title", fallback: "Deleting Paired Device")
     /// Device nickname
@@ -716,8 +716,8 @@ internal enum T {
     internal static let pairingSuccessfulTitle = T.tr("Localizable", "browser__pairing_successful_title", fallback: "Pairing successful!")
     /// Pairing with browser
     internal static let pairingWithBrowser = T.tr("Localizable", "browser__pairing_with_browser", fallback: "Pairing with browser")
-    /// To access functionality like Browser Extension application needs access to Push Notifications. You can change this setting at any time in System Settings.
-    internal static let pushNotificationsContent = T.tr("Localizable", "browser__push_notifications_content", fallback: "To access functionality like Browser Extension application needs access to Push Notifications. You can change this setting at any time in System Settings.")
+    /// To access functionality like the Browser Extension, the application needs access to Push Notifications. You can change this setting at any time in System Settings.
+    internal static let pushNotificationsContent = T.tr("Localizable", "browser__push_notifications_content", fallback: "To access functionality like the Browser Extension, the application needs access to Push Notifications. You can change this setting at any time in System Settings.")
     /// Push Notifications
     internal static let pushNotificationsTitle = T.tr("Localizable", "browser__push_notifications_title", fallback: "Push Notifications")
     /// Browser request
@@ -754,8 +754,8 @@ internal enum T {
   internal enum Camera {
     /// The camera is unavailable because of system overload. Try rebooting the device
     internal static let cameraUnavailableTitle = T.tr("Localizable", "camera__camera_unavailable_title", fallback: "The camera is unavailable because of system overload. Try rebooting the device")
-    /// Another app uses the camera. If closing other apps don't help, then reboot the device
-    internal static let cameraUsedByOtherAppTitle = T.tr("Localizable", "camera__camera_used_by_other_app_title", fallback: "Another app uses the camera. If closing other apps don't help, then reboot the device")
+    /// Another app uses the camera. If closing other apps doesn't help, then reboot the device
+    internal static let cameraUsedByOtherAppTitle = T.tr("Localizable", "camera__camera_used_by_other_app_title", fallback: "Another app uses the camera. If closing other apps doesn't help, then reboot the device")
     /// Can't initialize the camera. Try rebooting the device
     internal static let cantInitializeCameraGeneral = T.tr("Localizable", "camera__cant_initialize_camera_general", fallback: "Can't initialize the camera. Try rebooting the device")
     /// Can't initialize camera in Split View mode. Open app in full screen and try again
@@ -918,8 +918,8 @@ internal enum T {
   internal enum Errors {
     /// Input can not be empty
     internal static let inputEmpty = T.tr("Localizable", "errors__input_empty", fallback: "Input can not be empty")
-    /// Input must be integer number
-    internal static let inputIntegerNumber = T.tr("Localizable", "errors__input_integer_number", fallback: "Input must be integer number")
+    /// Input must be an integer number
+    internal static let inputIntegerNumber = T.tr("Localizable", "errors__input_integer_number", fallback: "Input must be an integer number")
     /// Input must be a number
     internal static let inputNumber = T.tr("Localizable", "errors__input_number", fallback: "Input must be a number")
     /// Input is too long. Limit: %d
@@ -1188,8 +1188,8 @@ internal enum T {
     internal static let chooseQrCode = T.tr("Localizable", "introduction__choose_qr_code", fallback: "Choose QR code")
     /// Pair your online service account with 2FAS or import your Tokens
     internal static let descriptionTitle = T.tr("Localizable", "introduction__description_title", fallback: "Pair your online service account with 2FAS or import your Tokens")
-    /// Export your accounts from Google Authenticator to a QR code using the "Transfer Accounts" option. Then using another device, take a picture of exported QR code, send it to your device (or make a screenshot if possible), and use the "Choose QR code" option below. If you're importing codes from another device, use the "Scan QR code" button instead.
-    internal static let googleAuthenticatorImportProcess = T.tr("Localizable", "introduction__google_authenticator_import_process", fallback: "Export your accounts from Google Authenticator to a QR code using the \"Transfer Accounts\" option. Then using another device, take a picture of exported QR code, send it to your device (or make a screenshot if possible), and use the \"Choose QR code\" option below. If you're importing codes from another device, use the \"Scan QR code\" button instead.")
+    /// Export your accounts from Google Authenticator to a QR code using the "Transfer Accounts" option. Then using another device, take a picture of the exported QR code, send it to your device (or make a screenshot if possible), and use the "Choose QR code" option below. If you're importing codes from another device, use the "Scan QR code" button instead.
+    internal static let googleAuthenticatorImportProcess = T.tr("Localizable", "introduction__google_authenticator_import_process", fallback: "Export your accounts from Google Authenticator to a QR code using the \"Transfer Accounts\" option. Then using another device, take a picture of the exported QR code, send it to your device (or make a screenshot if possible), and use the \"Choose QR code\" option below. If you're importing codes from another device, use the \"Scan QR code\" button instead.")
     /// Import 2FAS backup file
     internal static let import2fasTitle = T.tr("Localizable", "introduction__import_2fas_title", fallback: "Import 2FAS backup file")
     /// Import from external app
@@ -1441,9 +1441,9 @@ internal enum T {
     internal static let hideTokensDescription = T.tr("Localizable", "settings__hide_tokens_description", fallback: "Tokens will be revealed on tap.")
     /// Hide Tokens
     internal static let hideTokensTitle = T.tr("Localizable", "settings__hide_tokens_title", fallback: "Hide Tokens")
-    /// Select the maximum number of unsuccessful attempts to enter the passcode before locking the application for set amount of time.
+    /// Select the maximum number of unsuccessful attempts to enter the passcode before locking the application for a set amount of time.
     /// 
-    internal static let howManyAttemptsFooter = T.tr("Localizable", "settings__how_many_attempts_footer", fallback: "Select the maximum number of unsuccessful attempts to enter the passcode before locking the application for set amount of time.\n")
+    internal static let howManyAttemptsFooter = T.tr("Localizable", "settings__how_many_attempts_footer", fallback: "Select the maximum number of unsuccessful attempts to enter the passcode before locking the application for a set amount of time.\n")
     /// Importing Tokens from text file
     internal static let importContentsFile = T.tr("Localizable", "settings__import_contents_file", fallback: "Importing Tokens from text file")
     /// Import from file
@@ -1495,10 +1495,10 @@ internal enum T {
     internal static let optionScreenshotsDescription = T.tr("Localizable", "settings__option_screenshots_description", fallback: "Allow screenshots of the app for 30 minutes.")
     /// Theme
     internal static let optionTheme = T.tr("Localizable", "settings__option_theme", fallback: "Theme")
-    /// 4-digits code
-    internal static let pin4Digits = T.tr("Localizable", "settings__pin_4_digits", fallback: "4-digits code")
-    /// 6-digits code
-    internal static let pin6Digits = T.tr("Localizable", "settings__pin_6_digits", fallback: "6-digits code")
+    /// 4-digit code
+    internal static let pin4Digits = T.tr("Localizable", "settings__pin_4_digits", fallback: "4-digit code")
+    /// 6-digit code
+    internal static let pin6Digits = T.tr("Localizable", "settings__pin_6_digits", fallback: "6-digit code")
     /// PIN code
     internal static let pinCode = T.tr("Localizable", "settings__pin_code", fallback: "PIN code")
     /// Preferences
@@ -1715,8 +1715,8 @@ internal enum T {
     internal static let brandIcon = T.tr("Localizable", "tokens__brand_icon", fallback: "Brand icon")
     /// Camera is unavailable
     internal static let cameraIsUnavailable = T.tr("Localizable", "tokens__camera_is_unavailable", fallback: "Camera is unavailable")
-    /// Camera is unavailable. Check apps' access permission in System Settings
-    internal static let cameraIsUnavailableAppPermission = T.tr("Localizable", "tokens__camera_is_unavailable_app_permission", fallback: "Camera is unavailable. Check apps' access permission in System Settings")
+    /// Camera is unavailable. Check app's access permission in System Settings
+    internal static let cameraIsUnavailableAppPermission = T.tr("Localizable", "tokens__camera_is_unavailable_app_permission", fallback: "Camera is unavailable. Check app's access permission in System Settings")
     /// System Settings
     internal static let cameraIsUnavailableAppPermissionUnderline = T.tr("Localizable", "tokens__camera_is_unavailable_app_permission_underline", fallback: "System Settings")
     /// CAUTION
@@ -1888,8 +1888,8 @@ internal enum T {
     internal static let otpAuthentication = T.tr("Localizable", "tokens__otp_authentication", fallback: "OTP Authentication")
     /// Personalization
     internal static let personalization = T.tr("Localizable", "tokens__personalization", fallback: "Personalization")
-    /// Pick background color:
-    internal static let pickBackgroundColor = T.tr("Localizable", "tokens__pick_background_color", fallback: "Pick background color:")
+    /// Background color:
+    internal static let pickBackgroundColor = T.tr("Localizable", "tokens__pick_background_color", fallback: "Background color:")
     /// This QR code takes you to the App Store
     internal static let qrCodeLeadsToAppStore = T.tr("Localizable", "tokens__qr_code_leads_to_app_store", fallback: "This QR code takes you to the App Store")
     /// This QR code takes you to the Google Store
@@ -1908,8 +1908,8 @@ internal enum T {
     internal static let qrReadImageTryAgain = T.tr("Localizable", "tokens__qr_read_image_try_again", fallback: "Try to select a different image.")
     /// Refresh time
     internal static let refreshTime = T.tr("Localizable", "tokens__refresh_time", fallback: "Refresh time")
-    /// Delete Token 
-    internal static let removeForever = T.tr("Localizable", "tokens__remove_forever", fallback: "Delete Token ")
+    /// Delete Token
+    internal static let removeForever = T.tr("Localizable", "tokens__remove_forever", fallback: "Delete Token")
     /// Delete
     internal static let removeItForever = T.tr("Localizable", "tokens__remove_it_forever", fallback: "Delete")
     /// Remove this service from 2FAS app
@@ -2080,8 +2080,8 @@ internal enum T {
     internal static let noSearchResults = T.tr("Localizable", "voiceover__no_search_results", fallback: "No search results")
     /// Not selected
     internal static let notSelected = T.tr("Localizable", "voiceover__not_selected", fallback: "Not selected")
-    /// This field contains a hidden Secret Key. To reveal it, use the Show button. It will only work if you have set up the apps PIN for the lock screen
-    internal static let revealHiddenSecretKeyButtonTitle = T.tr("Localizable", "voiceover__reveal_hidden_secret_key_button_title", fallback: "This field contains a hidden Secret Key. To reveal it, use the Show button. It will only work if you have set up the apps PIN for the lock screen")
+    /// This field contains a hidden Secret Key. To reveal it, use the Show button. It will only work if you have set up the app's PIN for the lock screen
+    internal static let revealHiddenSecretKeyButtonTitle = T.tr("Localizable", "voiceover__reveal_hidden_secret_key_button_title", fallback: "This field contains a hidden Secret Key. To reveal it, use the Show button. It will only work if you have set up the app's PIN for the lock screen")
     /// Token time left
     internal static let secondsLeftCounterTitle = T.tr("Localizable", "voiceover__seconds_left_counter_title", fallback: "Token time left")
     /// Only numbers 2 to 9, letters. At least 4 characters

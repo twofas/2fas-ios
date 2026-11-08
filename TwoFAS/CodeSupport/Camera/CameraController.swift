@@ -274,6 +274,7 @@ final class CameraController {
         isRunning = false
         Log("CameraController - clearSession. Use async: \(useAsync)", module: .camera)
 
+        let previewLayer = layer
         layer = nil
         let session = captureSession
         captureSession = nil
@@ -282,18 +283,25 @@ final class CameraController {
 
         func teardown() {
             guard let session else { return }
-            session.inputs.forEach(session.removeInput)
-            session.outputs.forEach(session.removeOutput)
-            modulesToClear.forEach { $0.clear() }
             if session.isRunning {
                 session.stopRunning()
             }
+            session.beginConfiguration()
+            session.inputs.forEach(session.removeInput)
+            session.outputs.forEach(session.removeOutput)
+            session.commitConfiguration()
+        }
+
+        func detach() {
+            previewLayer?.session = nil
+            modulesToClear.forEach { $0.clear() }
         }
 
         if useAsync {
             sessionQueue.async { [weak self] in
                 teardown()
                 DispatchQueue.main.async { [weak self] in
+                    detach()
                     Log("CameraController - did clear!", module: .camera)
                     self?.delegate?.cameraDidClear()
                 }
@@ -302,6 +310,9 @@ final class CameraController {
         } else {
             sessionQueue.async {
                 teardown()
+                DispatchQueue.main.async {
+                    detach()
+                }
                 Log("CameraController - did clear!", module: .camera)
             }
         }

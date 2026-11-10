@@ -1,0 +1,36 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "2FAS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2FAS"
+          }
+        }
+      }
+    },
+    "Open 2FAS": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open 2FAS"
+          }
+        }
+      }
+    },
+    "Open 2FAS on your Apple Watch.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open 2FAS on your Apple Watch."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

@@ -201,15 +201,7 @@ private struct IntroductionPage1: View {
                 .frame(alignment: .top)
                 Spacer()
             }
-            VStack {
-                Spacer()
-                    .containerRelativeFrame(.vertical) { size, _ in size * 0.5 }
-                VStack {
-                    Asset.introductionPage0.swiftUIImage
-                        .frame(alignment: .top)
-                    Spacer()
-                }
-            }
+            IntroductionIllustration(image: Asset.introductionPage0.swiftUIImage)
         }
     }
 }
@@ -229,15 +221,7 @@ private struct IntroductionPage2: View {
                 .frame(alignment: .top)
                 Spacer()
             }
-            VStack {
-                Spacer()
-                    .containerRelativeFrame(.vertical) { size, _ in size * 0.5 }
-                VStack {
-                    Asset.introductionPage1.swiftUIImage
-                        .frame(alignment: .top)
-                    Spacer()
-                }
-            }
+            IntroductionIllustration(image: Asset.introductionPage1.swiftUIImage)
         }
     }
 }
@@ -273,15 +257,20 @@ private struct IntroductionPage3: View {
                 .frame(alignment: .top)
                 Spacer()
             }
-            VStack {
-                Spacer()
-                    .containerRelativeFrame(.vertical) { size, _ in size * 0.5 }
-                VStack {
-                    Asset.introductionPage2.swiftUIImage
-                        .frame(alignment: .top)
-                    Spacer()
-                }
-            }
+            IntroductionIllustration(image: Asset.introductionPage2.swiftUIImage)
+        }
+    }
+}
+
+private struct IntroductionIllustration: View {
+    let image: Image
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Color.clear
+            image
+                .padding(.top, .XL)
+                .frame(maxHeight: .infinity, alignment: .top)
         }
     }
 }

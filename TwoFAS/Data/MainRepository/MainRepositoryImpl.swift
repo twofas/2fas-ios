@@ -109,11 +109,27 @@ final class MainRepositoryImpl: MainRepository {
     
     static func create(serviceNameTranslation: String) {
         ServiceIcon.log = { AppEventLog(.missingIcon($0)) }
-        let protection = Protection()
+        let protection = Protection(isMainApp: true)
         
         EncryptionHolder.initialize(with: protection.localKeyEncryption)
         
-        let storage = Storage(readOnly: false) { error in
+        let bootstrapResult = LocalStorageBootstrap.prepare(
+            cipher: protection.localStorageCipher,
+            storeNames: [Storage.storeName, SyncInstance.storeName],
+            storesRequiringMigration: [
+                Storage.storeRequiresMigration() ? Storage.storeName : nil,
+                SyncInstance.storeRequiresMigration() ? SyncInstance.storeName : nil
+            ].compactMap { $0 }
+        )
+        if bootstrapResult == .wipedStores {
+            SyncInstance.scheduleResetFromScratch()
+        }
+        
+        let storage = Storage(
+            readOnly: false,
+            cipher: protection.localStorageCipher,
+            allowsMigration: protection.localStorageCipher.state == .available
+        ) { error in
             DebugLog(error)
         }
         
@@ -125,12 +141,18 @@ final class MainRepositoryImpl: MainRepository {
             commonSectionHandler: storage.section,
             commonServiceHandler: storage.service,
             reference: protection.reference,
-            localEncryptionKeyData: protection.localEncryptionKeyData
+            localEncryptionKeyData: protection.localEncryptionKeyData,
+            cipher: protection.localStorageCipher,
+            allowsMigration: protection.localStorageCipher.state == .available,
+            storageMigrationDeferred: storage.isMigrationDeferred
         ) {
             DebugLog("Sync: \($0)")
         }
         SyncInstance.migrateStoreIfNeeded()
-        serviceMigration.migrateIfNeeded()
+        // It would be marked as done for this version on the empty in-memory store
+        if !storage.isMigrationDeferred {
+            serviceMigration.migrateIfNeeded()
+        }
         
         let security = Security(biometric: protection.biometricAuth, codeStorage: protection.codeStorage)
                                                                 

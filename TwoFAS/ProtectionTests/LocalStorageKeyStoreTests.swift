@@ -285,9 +285,6 @@ final class InMemoryKeychain: KeychainItemStoring {
         if let addError {
             throw addError
         }
-        guard items[account] == nil else {
-            throw KeychainItemError.duplicate
-        }
         items[account] = data
     }
 

@@ -25,13 +25,18 @@ struct CoreDataMigrationStep {
     let destinationModel: NSManagedObjectModel
     let mappingModel: NSMappingModel
     
+    var usesEntityMigrationPolicies: Bool {
+        mappingModel.entityMappings.contains { $0.entityMigrationPolicyClassName != nil }
+    }
+    
     // MARK: Init
     
     init(
         sourceVersion: CoreDataMigrationVersion,
         destinationVersion: CoreDataMigrationVersion,
         momdSubdirectory: String,
-        bundle: Bundle
+        bundle: Bundle,
+        customizeMapping: CoreDataMigratorProtocol.CustomizeMapping? = nil
     ) {
         let sourceModel = NSManagedObjectModel.managedObjectModel(
             forResource: sourceVersion.rawValue,
@@ -53,7 +58,7 @@ struct CoreDataMigrationStep {
         
         self.sourceModel = sourceModel
         self.destinationModel = destinationModel
-        self.mappingModel = mappingModel
+        self.mappingModel = customizeMapping?(sourceVersion, destinationVersion, mappingModel) ?? mappingModel
     }
     
     // MARK: - Mapping

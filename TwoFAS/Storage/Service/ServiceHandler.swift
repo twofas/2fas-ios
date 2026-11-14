@@ -44,18 +44,18 @@ public final class ServiceHandler {
     // MARK: - Public/depracated
     
     public func count() -> Int {
-        ServiceEntity.listAllNotTrashed(on: coreDataStack.context).count
+        ServiceEntity.countNotTrashed(on: coreDataStack.context)
     }
     
     // MARK: - Internal
     
     func listAllForWidget(search: String?, exclude: [ServiceID]) -> ServiceEntity.ServicesWithinSections {
-        ServiceEntity.listAllForWidget(on: coreDataStack.context, filter: search, excludeServices: exclude.encrypt())
+        ServiceEntity.listAllForWidget(on: coreDataStack.context, filter: search, excludeServices: exclude)
             .groupByCategory
     }
     
     func list(services: [ServiceID]) -> [ServiceEntity] {
-        ServiceEntity.list(on: coreDataStack.context, services: services.encrypt())
+        ServiceEntity.list(on: coreDataStack.context, services: services)
     }
     
     func move(from oldIndex: Int, currentSectionID: SectionID?, to newIndex: Int, newSectionID: SectionID?) {

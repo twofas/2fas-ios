@@ -73,7 +73,8 @@ extension Code: CustomDebugStringConvertible {
         #if DEBUG
         "[CODE]: \n\t\tIssuer: \(String(describing: issuer)))\n\t\tlabel: \(String(describing: label))\n\t\tsecret: \(secret)\n\t\tperiod: \(String(describing: period))\n\t\tdigits: \(String(describing: digits))\n\t\talgorithm: \(String(describing: algorithm))\n\t\ttokenType: \(tokenType)\n\t\tcounter: \(String(describing: counter))\n\t\totpAuth: \(String(describing: otpAuth))"
         #else
-        "[CODE]: \n\t\tIssuer: \(String(describing: issuer)))\n\t\tlabel: \(String(describing: label))\n\t\tperiod: \(String(describing: period))\n\t\tdigits: \(String(describing: digits))\n\t\talgorithm: \(String(describing: algorithm))\n\t\ttokenType: \(tokenType)\n\t\tcounter: \(String(describing: counter))\n\t\totpAuth: \(String(describing: otpAuth))"
+        // Issuer, label and otpAuth (which carries the secret) are encrypted at rest – never in a release description
+        "[CODE]: \n\t\tperiod: \(String(describing: period))\n\t\tdigits: \(String(describing: digits))\n\t\talgorithm: \(String(describing: algorithm))\n\t\ttokenType: \(tokenType)\n\t\tcounter: \(String(describing: counter))"
         #endif
     }
     // swiftlint: enable line_length

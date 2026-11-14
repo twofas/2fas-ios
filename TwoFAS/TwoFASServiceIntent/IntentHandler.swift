@@ -31,7 +31,12 @@ final class IntentHandler: INExtension, SelectServiceIntentHandling {
     private lazy var protection = Protection()
     private lazy var serviceHandler: WidgetServiceHandlerType = {
         EncryptionHolder.initialize(with: protection.localKeyEncryption)
-        return Storage(readOnly: true, logError: nil).widgetService
+        return Storage(
+            readOnly: true,
+            cipher: protection.localStorageCipher,
+            allowsMigration: false,
+            logError: nil
+        ).widgetService
     }()
     
     func provideServiceOptionsCollection(

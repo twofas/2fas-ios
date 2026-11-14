@@ -2,11 +2,18 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22757" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="AuthRequestEntity" representedClassName="AuthRequestEntity" syncable="YES">
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="domain" attributeType="String"/>
+        <attribute name="domainHash" attributeType="Binary"/>
+        <attribute name="encryptedContent" attributeType="Binary"/>
         <attribute name="extensionID" attributeType="String"/>
         <attribute name="lastUsed" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="secret" attributeType="String"/>
+        <attribute name="secretHash" attributeType="Binary"/>
         <attribute name="usedCount" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <fetchIndex name="bySecretHash">
+            <fetchIndexElement property="secretHash" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byDomainHash">
+            <fetchIndexElement property="domainHash" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <entity name="NewsEntity" representedClassName="NewsEntity" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -33,28 +40,25 @@
         <attribute name="title" attributeType="String"/>
     </entity>
     <entity name="ServiceEntity" representedClassName="ServiceEntity" syncable="YES">
-        <attribute name="additionalInfo" optional="YES" attributeType="String"/>
         <attribute name="algorithm" attributeType="String"/>
         <attribute name="badgeColor" optional="YES" attributeType="String"/>
         <attribute name="counter" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="encryptedContent" attributeType="Binary"/>
         <attribute name="iconType" attributeType="String"/>
-        <attribute name="iconTypeID" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isTrashed" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="labelColor" attributeType="String"/>
-        <attribute name="labelTitle" attributeType="String"/>
         <attribute name="modificationDate" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="name" attributeType="String"/>
-        <attribute name="otpAuth" optional="YES" attributeType="String"/>
-        <attribute name="rawIssuer" optional="YES" attributeType="String"/>
-        <attribute name="secret" attributeType="String"/>
+        <attribute name="secretHash" attributeType="Binary"/>
         <attribute name="sectionID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="sectionOrder" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="serviceTypeID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="source" attributeType="String"/>
         <attribute name="tokenLength" attributeType="Integer 32" usesScalarValueType="YES"/>
         <attribute name="tokenPeriod" optional="YES" attributeType="Integer 32" usesScalarValueType="YES"/>
         <attribute name="tokenType" attributeType="String"/>
         <attribute name="trashingDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <fetchIndex name="bySecretHash">
+            <fetchIndexElement property="secretHash" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
 </model>

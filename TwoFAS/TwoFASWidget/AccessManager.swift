@@ -25,7 +25,13 @@ import Common
 enum AccessManager {
     static var serviceHandler: WidgetServiceHandlerType = {
         EncryptionHolder.initialize(with: protection.localKeyEncryption)
-        return Storage(readOnly: true, initializeLogStorage: false, logError: nil).widgetService
+        return Storage(
+            readOnly: true,
+            initializeLogStorage: false,
+            cipher: protection.localStorageCipher,
+            allowsMigration: false,
+            logError: nil
+        ).widgetService
     }()
     static var protection: Protection = {
         Protection()

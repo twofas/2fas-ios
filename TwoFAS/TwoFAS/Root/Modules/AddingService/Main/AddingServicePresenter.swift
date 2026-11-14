@@ -74,10 +74,10 @@ extension AddingServicePresenter {
         
         switch codeType {
         case .service(let code):
-            Log("AddingServiceMainPresenter: Found code: \(code)")
+            Log("AddingServiceMainPresenter: Found code")
             if interactor.codeExists(code) {
-                guard let description = interactor.serviceDescription(for: code) else { return }
-                Log("AddingServiceMainPresenter: Found code which is a duplicate of: \(description)")
+                guard interactor.serviceDescription(for: code) != nil else { return }
+                Log("AddingServiceMainPresenter: Found code which is a duplicate of an existing service")
                 #if DEBUG
                 Log("Code: \(code)", save: false)
                 #endif

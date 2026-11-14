@@ -35,13 +35,6 @@ extension ServiceEntity {
         guard let source = ServiceSource(rawValue: source) else {
             return "unknown source"
         }
-        if source == .manual {
-            return "manual"
-        } else {
-            if let serviceTypeID {
-                return serviceTypeID.uuidString
-            }
-            return "unknown service ID"
-        }
+        return source == .manual ? "manual" : "service"
     }
 }

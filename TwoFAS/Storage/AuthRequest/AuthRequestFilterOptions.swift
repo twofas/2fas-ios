@@ -25,8 +25,8 @@ import CommonWatch
 #endif
 
 enum AuthRequestFilterOptions {
-    case domainExtension(domain: String, extensionID: ExtensionID)
-    case secret(secret: String)
+    case domainExtension(domainHash: Data, extensionID: ExtensionID)
+    case secretHash(Data)
     case extensionID(extensionID: ExtensionID)
     case all
 }
@@ -34,10 +34,10 @@ enum AuthRequestFilterOptions {
 extension AuthRequestFilterOptions {
     var predicate: NSPredicate? {
         switch self {
-        case .domainExtension(let domain, let extensionID):
-            return NSPredicate(format: "(domain == %@) AND (extensionID == %@)", domain, extensionID)
-        case .secret(let secret):
-            return NSPredicate(format: "secret == %@", secret)
+        case .domainExtension(let domainHash, let extensionID):
+            return NSPredicate(format: "(domainHash == %@) AND (extensionID == %@)", domainHash as NSData, extensionID)
+        case .secretHash(let secretHash):
+            return NSPredicate(format: "secretHash == %@", secretHash as NSData)
         case .extensionID(let extensionID):
             return NSPredicate(format: "extensionID == %@", extensionID)
         case .all:

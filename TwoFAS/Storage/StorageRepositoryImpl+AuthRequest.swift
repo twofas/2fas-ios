@@ -38,7 +38,7 @@ extension StorageRepositoryImpl {
     }
     
     func createAuthRequest(for secret: String, extensionID: ExtensionID, domain: String) {
-        AuthRequestEntity.create(on: context, secret: secret.encrypt(), extensionID: extensionID, domain: domain)
+        AuthRequestEntity.create(on: context, secret: secret, extensionID: extensionID, domain: domain)
         save()
     }
     
@@ -57,7 +57,7 @@ extension StorageRepositoryImpl {
     func listAllAuthRequestsForExtensionID(_ extensionID: ExtensionID) -> [PairedAuthRequest] {
         AuthRequestEntity
             .listAll(on: context, filterOptions: .extensionID(extensionID: extensionID))
-            .map({ $0.pairedAuthRequest })
+            .compactMap({ $0.pairedAuthRequest })
     }
     
     func updateAuthRequestUsage(for authRequest: PairedAuthRequest) {

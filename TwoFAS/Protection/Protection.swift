@@ -37,6 +37,8 @@ public final class Protection {
         let codeType: CodeType
     }
     public let reference = Keys.Reference.dataValue
+    /// Only the main app (`isMainApp`) can create the key, extensions only use an existing one
+    public let localStorageCipher: LocalStorageCipherAdmin
     #if os(iOS)
     public let localEncryptionKeyData: Data = Keys.LocalEncryptionKey.dataValue
     private let encryptedStorage: LocalEncryptedStorage
@@ -49,7 +51,8 @@ public final class Protection {
     
     private let migrationHandler: MigrationHandler
     
-    public init() {
+    public init(isMainApp: Bool = false) {
+        localStorageCipher = Self.makeLocalStorageCipher(isMainApp: isMainApp)
         encryptedStorage = LocalEncryptedStorage(defaults: UserDefaults(suiteName: Config.groupIdentifier)!)
         biometricAuth = BiometricAuth(storage: encryptedStorage)
         codeStorage = CodeStorage(storage: encryptedStorage)
@@ -62,9 +65,21 @@ public final class Protection {
     #elseif os(watchOS)
     public let localKeyEncryption: CommonLocalKeyEncryption
     public let localEncryptionKeyData: Data
-    public init() {
+    public init(isMainApp: Bool = false) {
+        localStorageCipher = Self.makeLocalStorageCipher(isMainApp: isMainApp)
         localKeyEncryption = LocalKeyEncryption()
         localEncryptionKeyData = Keys.LocalEncryptionKey.dataValue
     }
     #endif
+}
+
+private extension Protection {
+    static func makeLocalStorageCipher(isMainApp: Bool) -> LocalStorageCipherAdmin {
+        let keyStore = LocalStorageKeyStore(
+            defaults: UserDefaults(suiteName: Config.groupIdentifier)!,
+            keychain: SystemKeychainItemStore(),
+            protections: [SecureEnclaveDataKeyProtection(), PlainDataKeyProtection()]
+        )
+        return LocalStorageCipherImpl(keyStore: keyStore, canCreateKey: isMainApp)
+    }
 }

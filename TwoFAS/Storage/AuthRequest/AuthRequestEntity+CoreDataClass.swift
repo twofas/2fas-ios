@@ -29,6 +29,14 @@ import CommonWatch
 final class AuthRequestEntity: NSManagedObject {
     @nonobjc private static let entityName = "AuthRequestEntity"
     
+    /// Valid only for the current bytes of `encryptedContent`
+    let contentCache = SealedContentCache<AuthRequestSensitiveContent>()
+    
+    override func didTurnIntoFault() {
+        super.didTurnIntoFault()
+        contentCache.clear()
+    }
+    
     @nonobjc static func create(
         on context: NSManagedObjectContext,
         secret: String,

@@ -79,7 +79,9 @@ extension SectionInteractor: SectionInteracting {
             "SectionInteractor - moveServiceToSection. SectionID: \(String(describing: sectionID))",
             module: .interactor
         )
+        #if DEBUG
         Log("Service secret: \(serviceSecret)", module: .interactor, save: false)
+        #endif
         mainRepository.moveServiceToSection(secret: serviceSecret, sectionID: sectionID)
     }
     

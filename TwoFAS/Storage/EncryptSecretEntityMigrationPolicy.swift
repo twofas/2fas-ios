@@ -73,7 +73,9 @@ final class EncryptSecretEntityMigrationPolicy: NSEntityMigrationPolicy {
         }
         
         Log("Migrating EncryptSecretEntityMigrationPolicy -> creating encrypted secret", module: .storage)
+        #if DEBUG
         Log("-> \(secretEncrypted) from \(secret)", module: .storage, save: false)
+        #endif
         
         secrets.append(secretEncrypted)
         

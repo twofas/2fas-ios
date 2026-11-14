@@ -36,32 +36,32 @@ struct ComposeServiceSecretKeyField<FocusValue: Hashable, MenuContent: View>: Vi
     let onReveal: () -> Void
     @ViewBuilder let menuContent: () -> MenuContent
 
-    private let maskedPlaceholder = "•••••••••••••••"
+    private let maskedPlaceholder = "••••••••••••••••••"
 
     var body: some View {
         switch mode {
         case .empty:
-            TFFloatingTextField(
-                placeHolder: T.Tokens.serviceKey,
+            TFInlineTextField(
+                label: T.Tokens.serviceKey,
+                placeholder: T.Tokens.addManualServiceKeyPlaceholder,
                 text: $secret,
                 inputType: .secret,
                 keyboardType: .alphabet,
                 autocapitalization: .characters,
                 focused: focused,
                 focusValue: focusValue,
-                errorMessage: errorMessage
+                isInvalid: errorMessage.wrappedValue != nil
             )
         case .hidden:
             row(value: maskedPlaceholder, isMasked: true) {
                 Button(action: onReveal) {
                     Image(icon: .eyeSlashFill)
                         .textStyle(.body)
-                        .foregroundStyle(.accentsBrand)
+                        .foregroundStyle(.labelsPrimary)
                         .accessibilityLabel(T.Voiceover.showServiceKey)
                 }
                 .buttonStyle(.plain)
             }
-            .frame(minHeight: .input)
         case .hiddenNonCopyable:
             row(value: maskedPlaceholder, isMasked: true) {
                 EmptyView()
@@ -81,22 +81,19 @@ struct ComposeServiceSecretKeyField<FocusValue: Hashable, MenuContent: View>: Vi
         isMasked: Bool,
         @ViewBuilder accessory: () -> Accessory
     ) -> some View {
-        HStack(spacing: .ML) {
-            VStack(alignment: .leading, spacing: .S) {
-                Text(T.Tokens.serviceKey)
-                    .textStyle(.footnote)
-                    .foregroundStyle(.labelsSecondary)
+        TFInlineRow(label: T.Tokens.serviceKey) {
+            HStack(spacing: .M) {
                 Text(value)
-                    .textStyle(.body, .medium)
-                    .foregroundStyle(isMasked ? .labelsTertiary : .labelsPrimary)
+                    .textStyle(.body)
+                    .foregroundStyle(.labelsPrimary)
                     .lineLimit(1)
-                    .accessibilityLabel(isMasked ? T.Voiceover.revealHiddenSecretKeyButtonTitle : value)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
+                    .truncationMode(.middle)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .accessibilityLabel(T.Tokens.serviceKey)
+                    .accessibilityValue(isMasked ? T.Voiceover.revealHiddenSecretKeyButtonTitle : value)
 
-            accessory()
+                accessory()
+            }
         }
-        .padding(.vertical, .L)
-        .frame(minHeight: .input)
     }
 }

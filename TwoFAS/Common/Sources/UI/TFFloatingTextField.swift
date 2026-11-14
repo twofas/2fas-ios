@@ -30,14 +30,53 @@ public struct TFFormTextFieldSubmit {
     }
 }
 
-public struct TFFloatingTextField<FocusValue: Hashable>: View {
-    public enum InputType {
-        case name
-        case email
-        case secret
-        case password
-        case other
+public enum TFTextInputType {
+    case name
+    case email
+    case secret
+    case password
+    case other
+}
+
+struct TFTextInputFormatModifier: ViewModifier {
+    let inputType: TFTextInputType
+
+    init(_ inputType: TFTextInputType) {
+        self.inputType = inputType
     }
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        switch inputType {
+        case .email:
+            content
+                .keyboardType(.emailAddress)
+                .textContentType(.emailAddress)
+                .autocorrectionDisabled()
+                .textInputAutocapitalization(.never)
+        case .name:
+            content
+                .keyboardType(.asciiCapable)
+                .textContentType(.name)
+                .textInputAutocapitalization(.words)
+        case .secret:
+            content
+                .keyboardType(.alphabet)
+                .textContentType(nil)
+                .textInputAutocapitalization(.characters)
+                .autocorrectionDisabled()
+        case .password:
+            content
+                .autocorrectionDisabled()
+                .textInputAutocapitalization(.never)
+        case .other:
+            content
+        }
+    }
+}
+
+public struct TFFloatingTextField<FocusValue: Hashable>: View {
+    public typealias InputType = TFTextInputType
     
     // MARK: - Variable
     private let textFieldHeight: CGFloat = TFRowHeight.list.value
@@ -171,7 +210,7 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
                     .transition(.opacity.animation(.easeInOut(duration: AnimationTiming.duration)))
             }
         }
-        .modifier(FormatInputModifier(inputType))
+        .modifier(TFTextInputFormatModifier(inputType))
         .foregroundStyle(isEnabled ? .labelsPrimary : .labelsTertiary)
         .accentColor(AppColor.accentsBrand.color(for: colorScheme))
         .keyboardType(keyboardType)
@@ -206,43 +245,6 @@ public struct TFFloatingTextField<FocusValue: Hashable>: View {
 
     private func clearTextField() {
         text = ""
-    }
-
-    private struct FormatInputModifier: ViewModifier {
-        let inputType: InputType
-
-        init(_ inputType: InputType) {
-            self.inputType = inputType
-        }
-
-        @ViewBuilder
-        func body(content: Content) -> some View {
-            switch inputType {
-            case .email:
-                content
-                    .keyboardType(.emailAddress)
-                    .textContentType(.emailAddress)
-                    .autocorrectionDisabled()
-                    .textInputAutocapitalization(.never)
-            case .name:
-                content
-                    .keyboardType(.asciiCapable)
-                    .textContentType(.name)
-                    .textInputAutocapitalization(.words)
-            case .secret:
-                content
-                    .keyboardType(.alphabet)
-                    .textContentType(nil)
-                    .textInputAutocapitalization(.characters)
-                    .autocorrectionDisabled()
-            case .password:
-                content
-                    .autocorrectionDisabled()
-                    .textInputAutocapitalization(.never)
-            case .other:
-                content
-            }
-        }
     }
 }
 

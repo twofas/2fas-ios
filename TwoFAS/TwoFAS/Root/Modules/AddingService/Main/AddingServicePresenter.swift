@@ -77,15 +77,23 @@ extension AddingServicePresenter {
             Log("AddingServiceMainPresenter: Found code: \(code)")
             if interactor.codeExists(code) {
                 guard let description = interactor.serviceDescription(for: code) else { return }
-                Log("AddingServiceMainPresenter: Found code: \(code) which is a duplicate of: \(description)")
+                Log("AddingServiceMainPresenter: Found code which is a duplicate of: \(description)")
+                #if DEBUG
+                Log("Code: \(code)", save: false)
+                #endif
                 alert = .duplicatedCode(code: code)
             } else {
-                Log("AddingServiceMainPresenter: Adding unique code: \(code)")
+                Log("AddingServiceMainPresenter: Adding unique code")
+                #if DEBUG
+                Log("Code: \(code)", save: false)
+                #endif
                 interactor.addCode(code, force: false)
             }
         case .googleAuth(let index, let size, let batchID, let codes):
             Log("AddingServicePresenter: Found Google Auth codes: \(codes.count)")
+            #if DEBUG
             Log("Codes: \(codes)", save: false)
+            #endif
             
             let data = GoogleScanData(index: index, size: size, batchID: batchID, codes: codes)
             
@@ -98,11 +106,15 @@ extension AddingServicePresenter {
                 codes: importableCodes
             )
         case .appStore:
+            #if DEBUG
             Log("AddingServiceMainPresenter: Found wrong code: \(codeType)", save: false)
+            #endif
             Log("AddingServiceMainPresenter: It's an app store link!")
             alert = .appStore
         case .twoFASWebExtension(let extensionID):
+            #if DEBUG
             Log("AddingServiceMainPresenter: Found 2FAS Web Extension code for: \(codeType)", save: false)
+            #endif
             Log("AddingServiceMainPresenter: It's a 2FAS Web Extension!")
             if interactor.wasUserAskedAboutPush {
                 flowController.toTwoFASWebExtensionPairing(for: extensionID)
@@ -120,7 +132,9 @@ extension AddingServicePresenter {
         case .open:
             Log("CameraScannerPresenter: Found 2FAS open request.")
         case .unknown:
+            #if DEBUG
             Log("AddingServiceMainPresenter: Found wrong code: \(codeType)", save: false)
+            #endif
             Log("AddingServiceMainPresenter: General wrong code")
             alert = .generalError
         }

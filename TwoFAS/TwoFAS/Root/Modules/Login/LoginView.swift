@@ -39,7 +39,9 @@ struct LoginView: View {
     /// `true` when the system draws the biometry prompt over the screen centre: Touch ID,
     /// Face ID behind a notch, iPad. Face ID on a Dynamic Island phone animates in the island
     /// instead.
-    private static let biometryAlertCoversCentre = !UIDevice.hasDynamicIsland
+    private var biometryAlertCoversCentre: Bool {
+        !UIDevice.hasDynamicIsland
+    }
 
     /// Where the brand sits. On the splash, except on a device whose biometry alert covers
     /// the screen centre: there the brand is in the header while a prompt is up, lifting
@@ -48,7 +50,7 @@ struct LoginView: View {
     /// still waits for the prompt's outcome.
     private var brandOnSplash: Bool {
         guard presenter.showsSplash else { return false }
-        guard Self.biometryAlertCoversCentre else { return true }
+        guard biometryAlertCoversCentre else { return true }
         return presenter.splashFollowsLaunchScreen && !presenter.isAuthenticating
     }
 
@@ -56,14 +58,14 @@ struct LoginView: View {
     /// brand at the centre. Where the alert takes the centre, the brand lifts alone, as it
     /// does with no biometry at all, and the greeting fades in up in the header.
     private var greetsOnSplash: Bool {
-        presenter.promptsOnSplash && !Self.biometryAlertCoversCentre
+        presenter.promptsOnSplash && !biometryAlertCoversCentre
     }
 
     /// `true` when the brand is already up in the header as the splash is left, having
     /// lifted ahead of a biometry alert: the subtitle then comes in on the header's beat,
     /// with no flight to wait for.
     private var brandRoseEarly: Bool {
-        presenter.promptsOnSplash && Self.biometryAlertCoversCentre
+        presenter.promptsOnSplash && biometryAlertCoversCentre
     }
 
     /// Logo and greeting, big on the splash and small in the header. Only the lock screen

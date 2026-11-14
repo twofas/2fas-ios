@@ -25,30 +25,23 @@ struct SelectServiceView: View {
     var presenter: SelectServicePresenter
 
     var body: some View {
-        NavigationStack {
-            content
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        TFSymbolButton(symbol: .close) {
-                            presenter.handleCancel()
-                        }
-                    }
-                    ToolbarItem(placement: .principal) {
-                        TFTitleView(title: T.Browser.request)
-                    }
+        content
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    TFTitleView(title: T.Browser.request)
                 }
-                .searchable(text: $presenter.searchPhrase, prompt: Text(T.Commons.search))
-                .onChange(of: presenter.searchPhrase) { _, newValue in
-                    presenter.handleSearchChange(newValue)
-                }
-                .onAppear {
-                    presenter.viewWillAppear()
-                }
-                .toolbarBackground(AppColor.backgroundsPrimaryElevated, for: .navigationBar)
-                .toolbarBackground(.visible, for: .navigationBar)
-        }
-        .background(.backgroundsPrimaryElevated)
+            }
+            .searchable(text: $presenter.searchPhrase, prompt: Text(T.Commons.search))
+            .onChange(of: presenter.searchPhrase) { _, newValue in
+                presenter.handleSearchChange(newValue)
+            }
+            .onAppear {
+                presenter.viewWillAppear()
+            }
+            .toolbarBackground(AppColor.backgroundsPrimaryElevated, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .background(.backgroundsPrimaryElevated)
     }
 
     @ViewBuilder

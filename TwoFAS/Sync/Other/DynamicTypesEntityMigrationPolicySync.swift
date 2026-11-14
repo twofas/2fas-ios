@@ -32,10 +32,12 @@ final class DynamicTypesEntityMigrationPolicySync: NSEntityMigrationPolicy {
         in mapping: NSEntityMapping,
         manager: NSMigrationManager
     ) throws {
+        #if DEBUG
         Log(
             "Sync Migration - skipping items for \(String(describing: sInstance.entity.name))",
             module: .storage,
             save: false
         )
+        #endif
     }
 }

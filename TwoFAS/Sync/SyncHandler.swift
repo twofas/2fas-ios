@@ -339,7 +339,9 @@ final class SyncHandler {
         let cloudData = itemHandler.listAllCommonItems()
         let didSetNewData = commonItemHandler.setItems(cloudData)
         Log("SyncHandler - Sync completed! Did set new data: \(didSetNewData)", module: .cloudSync)
+        #if DEBUG
         Log("SyncHandler - The data: \(cloudData)", module: .cloudSync, save: false)
+        #endif
         return didSetNewData
     }
     

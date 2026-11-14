@@ -196,6 +196,24 @@
 		C21F05C11FC761450038E28F /* PushNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C21F05BA1FC761450038E28F /* PushNotifications.framework */; };
 		C21F05C21FC761450038E28F /* PushNotifications.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C21F05BA1FC761450038E28F /* PushNotifications.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C223E7B12A8428EE007E2546 /* AddingServiceTokenModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C223E7B02A8428EE007E2546 /* AddingServiceTokenModuleInteractor.swift */; };
+		C22435E1309619C900E815F0 /* AddingServiceAdvancedSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435E0309619C900E815F0 /* AddingServiceAdvancedSettings.swift */; };
+		C22435E3309619CA00E815F0 /* AddingServiceManuallyRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435E2309619CA00E815F0 /* AddingServiceManuallyRoute.swift */; };
+		C22435E5309619CB00E815F0 /* AddingServiceManuallyRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435E4309619CB00E815F0 /* AddingServiceManuallyRouter.swift */; };
+		C22435E7309619CC00E815F0 /* AddingServiceAdvancedSettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435E6309619CC00E815F0 /* AddingServiceAdvancedSettingsPresenter.swift */; };
+		C22435E9309619CE00E815F0 /* AddingServiceAdvancedSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435E8309619CE00E815F0 /* AddingServiceAdvancedSettingsView.swift */; };
+		C22435EB3096229C00E815F0 /* TFInlineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435EA3096229C00E815F0 /* TFInlineTextField.swift */; };
+		C22435EC3096229C00E815F0 /* TFInlineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435EA3096229C00E815F0 /* TFInlineTextField.swift */; };
+		C22435EE3096729500E815F0 /* TFSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435ED3096729500E815F0 /* TFSegmentedControl.swift */; };
+		C22435EF3096729500E815F0 /* TFSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435ED3096729500E815F0 /* TFSegmentedControl.swift */; };
+		C22435F13096729E00E815F0 /* TFSearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435F03096729E00E815F0 /* TFSearchField.swift */; };
+		C22435F23096729E00E815F0 /* TFSearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435F03096729E00E815F0 /* TFSearchField.swift */; };
+		C22435F4309672BF00E815F0 /* IconSelectorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435F3309672BF00E815F0 /* IconSelectorList.swift */; };
+		C22435F7309672CE00E815F0 /* IconEditorModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435F6309672CE00E815F0 /* IconEditorModels.swift */; };
+		C22435F9309672D100E815F0 /* IconEditorFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435F8309672D100E815F0 /* IconEditorFlowController.swift */; };
+		C22435FB309672D900E815F0 /* IconEditorModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435FA309672D900E815F0 /* IconEditorModuleInteractor.swift */; };
+		C22435FE309672E300E815F0 /* ServiceIconPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435FD309672E300E815F0 /* ServiceIconPreview.swift */; };
+		C2243600309672F200E815F0 /* IconEditorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22435FF309672F200E815F0 /* IconEditorPresenter.swift */; };
+		C22436023096730100E815F0 /* IconEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22436013096730100E815F0 /* IconEditorView.swift */; };
 		C225E612241CFCD10041C238 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C225E614241CFCD10041C238 /* InfoPlist.strings */; };
 		C225E615241CFCE90041C238 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C225E617241CFCE90041C238 /* Localizable.strings */; };
 		C228603226697250005E88E3 /* TokensSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C228603126697250005E88E3 /* TokensSection.swift */; };
@@ -367,6 +385,7 @@
 		C25AE51E300A58B800D9ABFB /* ToastPresenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AE51B300A58B800D9ABFB /* ToastPresenterView.swift */; };
 		C25AE520300A58B800D9ABFB /* ToastPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AE519300A58B800D9ABFB /* ToastPresenter.swift */; };
 		C25AE525300A591600D9ABFB /* ToastPresenter+DefaultActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25AE51A300A58B800D9ABFB /* ToastPresenter+DefaultActions.swift */; };
+		C25B16D4069CF778BD98E5BF /* RequestSigningKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B34B7EAE3A5B16D4069CF7 /* RequestSigningKey.swift */; };
 		C25B221227C177170052AAC4 /* ComposeServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25B221127C177170052AAC4 /* ComposeServiceFlowController.swift */; };
 		C25BB2CA2DAAE35000BEC626 /* ManageWatchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BB2C92DAAE34C00BEC626 /* ManageWatchPresenter.swift */; };
 		C25BB2CC2DAAE3FF00BEC626 /* ManageWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25BB2CB2DAAE3E500BEC626 /* ManageWatchView.swift */; };
@@ -447,12 +466,6 @@
 		C26983822BCC8326009B3BE2 /* AppPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26983812BCC8326009B3BE2 /* AppPresenter.swift */; };
 		C26A5FE3290475EA00A5A620 /* Sync4-Sync5.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C26A5FE2290475EA00A5A620 /* Sync4-Sync5.xcmappingmodel */; };
 		C26AC9322F6217A000ADFE62 /* CloudKeysExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26AC9312F62179600ADFE62 /* CloudKeysExchange.swift */; };
-		C26B19302D90C5D8006FDDE0 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = C26B192F2D90C5D8006FDDE0 /* FirebaseCore */; };
-		C26B19322D90C5D8006FDDE0 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C26B19312D90C5D8006FDDE0 /* FirebaseCrashlytics */; };
-		C26B19342D90C5D8006FDDE0 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C26B19332D90C5D8006FDDE0 /* FirebaseMessaging */; };
-		C26B19362D90C6DE006FDDE0 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C26B19352D90C6DE006FDDE0 /* FirebaseMessaging */; };
-		C26B19382D90C73B006FDDE0 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C26B19372D90C73B006FDDE0 /* FirebaseCrashlytics */; };
-		C26B193A2D90CE04006FDDE0 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = C26B19392D90CE04006FDDE0 /* FirebaseCore */; };
 		C26BCE01281010A000CA6A9A /* SelectServiceModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE00281010A000CA6A9A /* SelectServiceModuleInteractor.swift */; };
 		C26BCE03281013A700CA6A9A /* SelectServiceFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BCE02281013A700CA6A9A /* SelectServiceFlowController.swift */; };
 		C26D1AC52600041400D3D868 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26D1AC42600041400D3D868 /* UIImage+.swift */; };
@@ -687,6 +700,7 @@
 		C28B38C927CD784D00BD4A96 /* RefreshTokenCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28B38C827CD784D00BD4A96 /* RefreshTokenCounter.swift */; };
 		C28B9120268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = C28B911F268A3D330020A44A /* TwoFas3-TwoFas4.xcmappingmodel */; };
 		C28C441724A67B7000534B30 /* CommonSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28C441624A67B7000534B30 /* CommonSearchBar.swift */; };
+		C28F2CB69601177F4AF000A0 /* NetworkRequestSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24B2C6FC41E8F2CB6960117 /* NetworkRequestSigner.swift */; };
 		C28FC6E02E4011580053B0BE /* TransferModuleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28FC6DF2E4011560053B0BE /* TransferModuleInteractor.swift */; };
 		C28FD19F2E4028450053B0BE /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = C28FD19E2E4028450053B0BE /* ZIPFoundation */; };
 		C29378302BD1A218008D5125 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C293782F2BD1A218008D5125 /* SettingsView.swift */; };
@@ -861,6 +875,7 @@
 		C2AE5F852ADC8B0D00AED670 /* Code+LastPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25D5E752A64863000CA359B /* Code+LastPass.swift */; };
 		C2AE5F862ADC8B0D00AED670 /* CodeParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28ECE9F1FEE8273000EBB9D /* CodeParser.swift */; };
 		C2AE5F882ADC8B2300AED670 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = C2AE5F872ADC8B2300AED670 /* SwiftProtobuf */; };
+		C2AEDE7B95A64F4B3B840A6D /* NetworkRequestSignerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A2CB633127AEDE7B95A64F /* NetworkRequestSignerTests.swift */; platformFilter = ios; };
 		C2AF24792E7B5A9C001475AF /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AF24782E7B5A9C001475AF /* AppState.swift */; };
 		C2AF24822E7C5FBB001475AF /* ExportQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AF24802E7C5FBB001475AF /* ExportQuestionView.swift */; };
 		C2AF24832E7C5FBB001475AF /* ExportQuestionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AF247F2E7C5FBB001475AF /* ExportQuestionPresenter.swift */; };
@@ -886,6 +901,7 @@
 		C2B39E5B29F5D0AA00EC31F6 /* TokensServiceName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B39E5A29F5D0AA00EC31F6 /* TokensServiceName.swift */; };
 		C2B3D1A8267E6BEC009E6DE0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B3D1A7267E6BEC009E6DE0 /* Extensions.swift */; };
 		C2B3D1AA267E91E9009E6DE0 /* TokensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B3D1A9267E91E9009E6DE0 /* TokensView.swift */; };
+		C2B490D31A3DAEDE83C377BA /* RequestSigningKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C247AE539BABB490D31A3DAE /* RequestSigningKeyTests.swift */; };
 		C2B58A13302BAC8600E0FF36 /* TFRowContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B58A12302BAC8600E0FF36 /* TFRowContent.swift */; };
 		C2B58A14302BAC8600E0FF36 /* TFRowContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B58A12302BAC8600E0FF36 /* TFRowContent.swift */; };
 		C2B5BF53294601BE00E5092D /* TokensPlainFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B5BF52294601BE00E5092D /* TokensPlainFlowController.swift */; };
@@ -1284,6 +1300,9 @@
 		C2EBDFFE2AC4476D008FD744 /* GuideMenuPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBDFFD2AC4476D008FD744 /* GuideMenuPresenter.swift */; };
 		C2EBE0022AC44787008FD744 /* GuideMenuFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBE0012AC44787008FD744 /* GuideMenuFlowController.swift */; };
 		C2EBE0042AC44DC3008FD744 /* GuideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EBE0032AC44DC3008FD744 /* GuideMenuView.swift */; };
+		C2EC5C95308AB66E00079E78 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = C2EC5C94308AB66E00079E78 /* FirebaseCore */; };
+		C2EC5C97308AB66E00079E78 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C2EC5C96308AB66E00079E78 /* FirebaseCrashlytics */; };
+		C2EC5C99308AB66E00079E78 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C2EC5C98308AB66E00079E78 /* FirebaseMessaging */; };
 		C2EE37AA291D2B9800CAB85C /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EE37A9291D2B9800CAB85C /* Assets.swift */; };
 		C2EF21D725630C9D0075743D /* CloudAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF21D625630C9D0075743D /* CloudAvailability.swift */; };
 		C2EF3F6E25575D730006735E /* ServiceRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF3F6D25575D730006735E /* ServiceRecord.swift */; };
@@ -1298,6 +1317,8 @@
 		C2EF7B242DA9AE7100BAA559 /* ManageWatchFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EF7B232DA9AE6800BAA559 /* ManageWatchFlowController.swift */; };
 		C2EFCE0725D05E320031293F /* ClearHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EFCE0625D05E320031293F /* ClearHandler.swift */; };
 		C2F10A022F9B3C0100D4E5A1 /* TokensFloatingSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F10A012F9B3C0100D4E5A1 /* TokensFloatingSectionHeader.swift */; };
+		C2F11EB1309729DE00759029 /* AskForAuthRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F11EB0309729DE00759029 /* AskForAuthRoute.swift */; };
+		C2F11EB3309729E500759029 /* AskForAuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F11EB2309729E500759029 /* AskForAuthRouter.swift */; };
 		C2F1A0022EA0000100ABCDEF /* TokensServiceTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F1A0012EA0000100ABCDEF /* TokensServiceTitle.swift */; };
 		C2F1A0042EA0000100ABCDEF /* TokensTOTPTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F1A0032EA0000100ABCDEF /* TokensTOTPTokenView.swift */; };
 		C2F1A0062EA0000100ABCDEF /* TokensCellMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F1A0052EA0000100ABCDEF /* TokensCellMetrics.swift */; };
@@ -2047,6 +2068,21 @@
 		C22294E02A9F5B4300DB7965 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C22294E12A9F5B4400DB7965 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C223E7B02A8428EE007E2546 /* AddingServiceTokenModuleInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingServiceTokenModuleInteractor.swift; sourceTree = "<group>"; };
+		C22435E0309619C900E815F0 /* AddingServiceAdvancedSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceAdvancedSettings.swift; sourceTree = "<group>"; };
+		C22435E2309619CA00E815F0 /* AddingServiceManuallyRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceManuallyRoute.swift; sourceTree = "<group>"; };
+		C22435E4309619CB00E815F0 /* AddingServiceManuallyRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceManuallyRouter.swift; sourceTree = "<group>"; };
+		C22435E6309619CC00E815F0 /* AddingServiceAdvancedSettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceAdvancedSettingsPresenter.swift; sourceTree = "<group>"; };
+		C22435E8309619CE00E815F0 /* AddingServiceAdvancedSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingServiceAdvancedSettingsView.swift; sourceTree = "<group>"; };
+		C22435EA3096229C00E815F0 /* TFInlineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFInlineTextField.swift; sourceTree = "<group>"; };
+		C22435ED3096729500E815F0 /* TFSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFSegmentedControl.swift; sourceTree = "<group>"; };
+		C22435F03096729E00E815F0 /* TFSearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFSearchField.swift; sourceTree = "<group>"; };
+		C22435F3309672BF00E815F0 /* IconSelectorList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorList.swift; sourceTree = "<group>"; };
+		C22435F6309672CE00E815F0 /* IconEditorModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditorModels.swift; sourceTree = "<group>"; };
+		C22435F8309672D100E815F0 /* IconEditorFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditorFlowController.swift; sourceTree = "<group>"; };
+		C22435FA309672D900E815F0 /* IconEditorModuleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditorModuleInteractor.swift; sourceTree = "<group>"; };
+		C22435FD309672E300E815F0 /* ServiceIconPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceIconPreview.swift; sourceTree = "<group>"; };
+		C22435FF309672F200E815F0 /* IconEditorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditorPresenter.swift; sourceTree = "<group>"; };
+		C22436013096730100E815F0 /* IconEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditorView.swift; sourceTree = "<group>"; };
 		C225E613241CFCD10041C238 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C225E616241CFCE90041C238 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C225E618241D35FE0041C238 /* ViewPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPath.swift; sourceTree = "<group>"; };
@@ -2157,6 +2193,7 @@
 		C245877F2D8B917100F28B22 /* SyncMigrationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMigrationHandler.swift; sourceTree = "<group>"; };
 		C24590F7280F52620079C21C /* SelectServicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServicePresenter.swift; sourceTree = "<group>"; };
 		C24590F9280F54400079C21C /* SelectServiceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectServiceModels.swift; sourceTree = "<group>"; };
+		C247AE539BABB490D31A3DAE /* RequestSigningKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSigningKeyTests.swift; sourceTree = "<group>"; };
 		C248B14C2AC4C01600E6B897 /* GuidePagesFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesFlowController.swift; sourceTree = "<group>"; };
 		C248B14E2AC4C31300E6B897 /* GuidePagesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesPresenter.swift; sourceTree = "<group>"; };
 		C248B1522AC4C77100E6B897 /* GuidePagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidePagesView.swift; sourceTree = "<group>"; };
@@ -2168,6 +2205,7 @@
 		C249AF63278A40FE005F9D80 /* UserDefaultsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepository.swift; sourceTree = "<group>"; };
 		C249AF64278A40FE005F9D80 /* UserDefaultsRepositoryImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsRepositoryImpl.swift; sourceTree = "<group>"; };
 		C249AF7F278A537F005F9D80 /* MainRepositoryImpl+AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainRepositoryImpl+AppInfo.swift"; sourceTree = "<group>"; };
+		C24B2C6FC41E8F2CB6960117 /* NetworkRequestSigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequestSigner.swift; sourceTree = "<group>"; };
 		C24D1C1A253C744E0029D27D /* Sync.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sync.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C24D1C1C253C744E0029D27D /* Sync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sync.h; sourceTree = "<group>"; };
 		C24D1C1D253C744E0029D27D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2527,6 +2565,7 @@
 		C2A1B3B32BB6071C00D6B923 /* PINKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PINKeyboardView.swift; sourceTree = "<group>"; };
 		C2A2255B293BFE1E00B76115 /* TokenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenInteractor.swift; sourceTree = "<group>"; };
 		C2A283342186071200967022 /* AlertControllerPromptFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControllerPromptFactory.swift; sourceTree = "<group>"; };
+		C2A2CB633127AEDE7B95A64F /* NetworkRequestSignerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequestSignerTests.swift; sourceTree = "<group>"; };
 		C2A2D23228F7513400B5D91E /* ExchangeDataFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeDataFormat.swift; sourceTree = "<group>"; };
 		C2A2DA5B2FE548EE004FD390 /* NewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsView.swift; sourceTree = "<group>"; };
 		C2A2DA5D2FE5BAEE004FD390 /* TrashServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashServiceView.swift; sourceTree = "<group>"; };
@@ -2605,6 +2644,7 @@
 		C2B279C52FEC52AB00C41919 /* TFSymbolButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFSymbolButton.swift; sourceTree = "<group>"; };
 		C2B279C82FEC554800C41919 /* GroupedSectionBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedSectionBackground.swift; sourceTree = "<group>"; };
 		C2B2B9AE2AE932BD00AB61FD /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		C2B34B7EAE3A5B16D4069CF7 /* RequestSigningKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSigningKey.swift; sourceTree = "<group>"; };
 		C2B39C6F27A5882D00D3B579 /* SelectFromGalleryFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFromGalleryFlowController.swift; sourceTree = "<group>"; };
 		C2B39C7227A58E0800D3B579 /* SelectFromGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFromGalleryViewController.swift; sourceTree = "<group>"; };
 		C2B39C7427A58F0E00D3B579 /* SelectFromGalleryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFromGalleryPresenter.swift; sourceTree = "<group>"; };
@@ -2647,6 +2687,17 @@
 		C2B90F16281F1FD2004B8AEC /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		C2B950F829259ADA00F1C069 /* NSMutableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableData.swift; sourceTree = "<group>"; };
 		C2B950FB29259B1800F1C069 /* NetworkMultipartRequestFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMultipartRequestFormat.swift; sourceTree = "<group>"; };
+		C2BB7882308E936C006CBF37 /* lt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lt; path = lt.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
+		C2BB7883308E936D006CBF37 /* lt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lt; path = lt.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C2BB7884308E936D006CBF37 /* lt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lt; path = lt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C2BB7885308E9378006CBF37 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		C2BB7886308E9379006CBF37 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/TwoFASWidget.strings; sourceTree = "<group>"; };
+		C2BB7887308E9379006CBF37 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C2BB7888308E9379006CBF37 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C2BB7889308E93BC006CBF37 /* lt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lt; path = ../TwoFAS/Other/lt.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C2BB788A308E93BF006CBF37 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = ../TwoFAS/Other/sk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C2BB788B308E9417006CBF37 /* lt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lt; path = ../TwoFAS/Other/lt.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C2BB788C308E941A006CBF37 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = ../TwoFAS/Other/sk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C2BBD0222E270133004ECE56 /* QRCodeDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDisplayViewController.swift; sourceTree = "<group>"; };
 		C2BBD2342B81308C009A91FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = TwoFAS/Other/en.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
 		C2BBD2362B813099009A91FB /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = TwoFAS/Other/id.lproj/Localizable.strings; sourceTree = SOURCE_ROOT; };
@@ -2946,6 +2997,8 @@
 		C2EF7B232DA9AE6800BAA559 /* ManageWatchFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageWatchFlowController.swift; sourceTree = "<group>"; };
 		C2EFCE0625D05E320031293F /* ClearHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearHandler.swift; sourceTree = "<group>"; };
 		C2F10A012F9B3C0100D4E5A1 /* TokensFloatingSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensFloatingSectionHeader.swift; sourceTree = "<group>"; };
+		C2F11EB0309729DE00759029 /* AskForAuthRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskForAuthRoute.swift; sourceTree = "<group>"; };
+		C2F11EB2309729E500759029 /* AskForAuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskForAuthRouter.swift; sourceTree = "<group>"; };
 		C2F1A0012EA0000100ABCDEF /* TokensServiceTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensServiceTitle.swift; sourceTree = "<group>"; };
 		C2F1A0032EA0000100ABCDEF /* TokensTOTPTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTOTPTokenView.swift; sourceTree = "<group>"; };
 		C2F1A0052EA0000100ABCDEF /* TokensCellMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCellMetrics.swift; sourceTree = "<group>"; };
@@ -3034,10 +3087,10 @@
 		C21F05B61FC761450038E28F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				C2EC5C99308AB66E00079E78 /* FirebaseMessaging in Frameworks */,
+				C2EC5C97308AB66E00079E78 /* FirebaseCrashlytics in Frameworks */,
+				C2EC5C95308AB66E00079E78 /* FirebaseCore in Frameworks */,
 				C2E53B982B62DE3E008E1E70 /* Common.framework in Frameworks */,
-				C26B19382D90C73B006FDDE0 /* FirebaseCrashlytics in Frameworks */,
-				C26B193A2D90CE04006FDDE0 /* FirebaseCore in Frameworks */,
-				C26B19362D90C6DE006FDDE0 /* FirebaseMessaging in Frameworks */,
 			);
 		};
 		C23666701FB2644900989ACA /* Frameworks */ = {
@@ -3047,14 +3100,11 @@
 				C2E53B512B62DDCB008E1E70 /* Content.framework in Frameworks */,
 				C200E4A11FB3911B00D7C748 /* Storage.framework in Frameworks */,
 				C29626DD2370BD7F00C133BC /* TimeVerification.framework in Frameworks */,
-				C26B19342D90C5D8006FDDE0 /* FirebaseMessaging in Frameworks */,
 				C2E7C3882ADB19F300478D89 /* Data.framework in Frameworks */,
 				C24D1C2F253C744F0029D27D /* Sync.framework in Frameworks */,
 				C251EDDB2AE87150007722F2 /* Base32.framework in Frameworks */,
 				C2147CBC205D78600001D011 /* Protection.framework in Frameworks */,
 				C2AE5F772ADC8A1500AED670 /* NetworkStack.framework in Frameworks */,
-				C26B19322D90C5D8006FDDE0 /* FirebaseCrashlytics in Frameworks */,
-				C26B19302D90C5D8006FDDE0 /* FirebaseCore in Frameworks */,
 				C21F05C11FC761450038E28F /* PushNotifications.framework in Frameworks */,
 				C260DF4C2F5B07D4009A0357 /* KeychainAccess in Frameworks */,
 			);
@@ -3574,6 +3624,7 @@
 				C278121B27F9F3E600F31453 /* ExportPublicKey.swift */,
 				C278122027F9FA9900F31453 /* RSAEncryption.swift */,
 				C278122227FA16BC00F31453 /* RSAKeyStorage.swift */,
+				C2B34B7EAE3A5B16D4069CF7 /* RequestSigningKey.swift */,
 				C279C11F2FA65FFF006CC971 /* BiometryStateHashStorage.swift */,
 				C2C1513F294E831300F8B511 /* Keys.swift */,
 				C274CA942BAB8F92008E7212 /* Protection+.swift */,
@@ -3684,6 +3735,27 @@
 				C23B899627C287480028FE34 /* NavigationFlowController.swift */,
 			);
 			path = Architecture;
+			sourceTree = "<group>";
+		};
+		C22435F5309672CE00E815F0 /* IconEditor */ = {
+			isa = PBXGroup;
+			children = (
+				C22435F6309672CE00E815F0 /* IconEditorModels.swift */,
+				C22435F8309672D100E815F0 /* IconEditorFlowController.swift */,
+				C22435FA309672D900E815F0 /* IconEditorModuleInteractor.swift */,
+				C22435FC309672E300E815F0 /* Components */,
+				C22435FF309672F200E815F0 /* IconEditorPresenter.swift */,
+				C22436013096730100E815F0 /* IconEditorView.swift */,
+			);
+			path = IconEditor;
+			sourceTree = "<group>";
+		};
+		C22435FC309672E300E815F0 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				C22435FD309672E300E815F0 /* ServiceIconPreview.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		C22CD3902B913E85005FE348 /* MDMRepository */ = {
@@ -3975,6 +4047,7 @@
 				C241D447278B9E0E00D7C604 /* NetworkStack.h */,
 				C2A8584727FB937A00CBD9ED /* NetworkStackRepository.swift */,
 				C2A8584927FB939200CBD9ED /* NetworkStackRepositoryImpl.swift */,
+				C24B2C6FC41E8F2CB6960117 /* NetworkRequestSigner.swift */,
 				C240FB3F27FCD2F900D9E630 /* NetworkCall.swift */,
 			);
 			path = NetworkStack;
@@ -4686,6 +4759,9 @@
 				C2CBE27D3044A1D3009A65EC /* TFDoubleIconArrow.swift */,
 				C2CBE2803044B6C0009A65EC /* IconName.swift */,
 				C2DC57ED3084FDF200172343 /* TFSaveButton.swift */,
+				C22435EA3096229C00E815F0 /* TFInlineTextField.swift */,
+				C22435ED3096729500E815F0 /* TFSegmentedControl.swift */,
+				C22435F03096729E00E815F0 /* TFSearchField.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -4876,6 +4952,7 @@
 				C2ACF9E620A8A918003E0987 /* TwoFASTests.swift */,
 				C2726DAC214D731B00F17977 /* DateTests.swift */,
 				C2726DAE214D8DCD00F17977 /* RatingControllerTests.swift */,
+				C2A2CB633127AEDE7B95A64F /* NetworkRequestSignerTests.swift */,
 				C2ACF9E820A8A918003E0987 /* Info.plist */,
 			);
 			path = TwoFASTests;
@@ -5209,6 +5286,7 @@
 				C2A277AC26DBCFFC00A18F25 /* SelectFromGallery */,
 				C2153BBB1FE9A991005FD297 /* Camera Scanner */,
 				C2E5482821831244001AD1A5 /* TrashService */,
+				C22435F5309672CE00E815F0 /* IconEditor */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -5751,6 +5829,8 @@
 				C2EA567028569ADD00026BFE /* AskForAuthFlowController.swift */,
 				C2EA566E28569A5E00026BFE /* AskForAuthPresenter.swift */,
 				C2EA566A2856925B00026BFE /* AskForAuthView.swift */,
+				C2F11EB0309729DE00759029 /* AskForAuthRoute.swift */,
+				C2F11EB2309729E500759029 /* AskForAuthRouter.swift */,
 			);
 			path = AskForAuth;
 			sourceTree = "<group>";
@@ -5870,6 +5950,11 @@
 				C2F7FE042A8AB70D004B2C95 /* AddingServiceManuallyModuleInteractor.swift */,
 				C2F7FE022A8AB3D2004B2C95 /* AddingServiceManuallyPresenter.swift */,
 				C2F7FE082A8ABA25004B2C95 /* AddingServiceManuallyView.swift */,
+				C22435E0309619C900E815F0 /* AddingServiceAdvancedSettings.swift */,
+				C22435E2309619CA00E815F0 /* AddingServiceManuallyRoute.swift */,
+				C22435E4309619CB00E815F0 /* AddingServiceManuallyRouter.swift */,
+				C22435E6309619CC00E815F0 /* AddingServiceAdvancedSettingsPresenter.swift */,
+				C22435E8309619CE00E815F0 /* AddingServiceAdvancedSettingsView.swift */,
 			);
 			path = Manually;
 			sourceTree = "<group>";
@@ -5917,6 +6002,7 @@
 			isa = PBXGroup;
 			children = (
 				C20F012925699C000026FBB2 /* LocalKeyEncryptionTests.swift */,
+				C247AE539BABB490D31A3DAE /* RequestSigningKeyTests.swift */,
 				C2FA857D2426BB7300AACFC9 /* Info.plist */,
 			);
 			path = ProtectionTests;
@@ -5933,6 +6019,7 @@
 				C20524C22807620500B2B20C /* NavigationBarHiddenHostingController.swift */,
 				C2B6D0F02FF182E100C4C73D /* TFColorPickerMenu.swift */,
 				C2CBE27830449483009A65EC /* View+CloseToolbar.swift */,
+				C22435F3309672BF00E815F0 /* IconSelectorList.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -6133,9 +6220,9 @@
 			);
 			name = PushNotifications;
 			packageProductDependencies = (
-				C26B19352D90C6DE006FDDE0 /* FirebaseMessaging */,
-				C26B19372D90C73B006FDDE0 /* FirebaseCrashlytics */,
-				C26B19392D90CE04006FDDE0 /* FirebaseCore */,
+				C2EC5C94308AB66E00079E78 /* FirebaseCore */,
+				C2EC5C96308AB66E00079E78 /* FirebaseCrashlytics */,
+				C2EC5C98308AB66E00079E78 /* FirebaseMessaging */,
 			);
 			productName = PushNotifications;
 			productReference = C21F05BA1FC761450038E28F /* PushNotifications.framework */;
@@ -6173,9 +6260,6 @@
 			);
 			name = TwoFAS;
 			packageProductDependencies = (
-				C26B192F2D90C5D8006FDDE0 /* FirebaseCore */,
-				C26B19312D90C5D8006FDDE0 /* FirebaseCrashlytics */,
-				C26B19332D90C5D8006FDDE0 /* FirebaseMessaging */,
 				C260DF4B2F5B07D4009A0357 /* KeychainAccess */,
 			);
 			productName = TwoFAS;
@@ -6583,7 +6667,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 2630;
-				LastUpgradeCheck = 2660;
+				LastUpgradeCheck = 2700;
 				ORGANIZATIONNAME = "Two Factor Authentication Service, Inc.";
 				TargetAttributes = {
 					C200E4991FB3911B00D7C748 = {
@@ -6702,6 +6786,8 @@
 				ja,
 				sv,
 				"zh-Hant",
+				lt,
+				sk,
 			);
 			mainGroup = C236666A1FB2644900989ACA;
 			packageReferences = (
@@ -6712,8 +6798,8 @@
 				C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */,
 				C28FD19D2E4028450053B0BE /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 				C25CB3C72D878E2B0099FAFD /* XCRemoteSwiftPackageReference "Argon2" */,
-				C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C2C0A9862DA33A72000A1772 /* XCRemoteSwiftPackageReference "EFQRCode" */,
+				C2EC5C93308AB66E00079E78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = C23666741FB2644900989ACA /* Products */;
@@ -7016,6 +7102,7 @@
 				C2147CC8205D787A0001D011 /* CodeStorage.swift in Sources */,
 				C2673BE523D4765200A2CBA8 /* TokenStorageType.swift in Sources */,
 				C278122327FA16BC00F31453 /* RSAKeyStorage.swift in Sources */,
+				C25B16D4069CF778BD98E5BF /* RequestSigningKey.swift in Sources */,
 				C2147CC7205D787A0001D011 /* Protection.swift in Sources */,
 				C274CA952BAB8F92008E7212 /* Protection+.swift in Sources */,
 				C279C1202FA65FFF006CC971 /* BiometryStateHashStorage.swift in Sources */,
@@ -7075,6 +7162,7 @@
 				C28FC6E02E4011580053B0BE /* TransferModuleInteractor.swift in Sources */,
 				C2CC0A3E29D0603000677A7B /* TransferPresenter+Menu.swift in Sources */,
 				C25371A2281DCF56005FB118 /* UINavigationController+.swift in Sources */,
+				C22435F7309672CE00E815F0 /* IconEditorModels.swift in Sources */,
 				C215083730030747008B66E2 /* ImporterEnterPasswordView.swift in Sources */,
 				C2617E123029D07D0004AE2B /* ComposeServiceRouter.swift in Sources */,
 				C25DCB2F2B80318C00871035 /* AccessManager.swift in Sources */,
@@ -7098,12 +7186,15 @@
 				C2E7C34A2ADB021500478D89 /* CameraController.swift in Sources */,
 				C2153BC51FE9B2BF005FD297 /* CameraActiveArea.swift in Sources */,
 				C2153BC21FE9ABA6005FD297 /* CameraViewController.swift in Sources */,
+				C22435E3309619CA00E815F0 /* AddingServiceManuallyRoute.swift in Sources */,
 				C2A7067E276D1A7500885D79 /* NewPINFlowController.swift in Sources */,
 				C206AAD029636A3E0032B85E /* Configs.swift in Sources */,
 				C2E2C80927B0377B00F04B70 /* IconSelectorFlowController.swift in Sources */,
+				C2F11EB1309729DE00759029 /* AskForAuthRoute.swift in Sources */,
 				C209E9B9267A9D8600417D80 /* TokensEmptyDropSpaceCell.swift in Sources */,
 				C21EB2FA2A800E7200FA8AA1 /* AddingServiceModuleInteractor.swift in Sources */,
 				C23387042781068E00F8DBC3 /* TrashPresenter.swift in Sources */,
+				C2243600309672F200E815F0 /* IconEditorPresenter.swift in Sources */,
 				C25D5E782A64908200CA359B /* CameraLastPass.swift in Sources */,
 				C21930F02EC111DF001354C9 /* BackupManageEncryptionPresenter+Menu.swift in Sources */,
 				C27205602E7C9279004FB39A /* ExportQuestionPINVerificationModuleInteractor.swift in Sources */,
@@ -7140,6 +7231,7 @@
 				C2AB92E127668DE700698382 /* ShareActivityController.swift in Sources */,
 				C23FD50A2814635400E4E9C5 /* ComposeServiceWebExtensionFlowController.swift in Sources */,
 				C2B1209529D773770020281E /* AppearanceFlowController.swift in Sources */,
+				C22435F9309672D100E815F0 /* IconEditorFlowController.swift in Sources */,
 				C21111F2274ABD5200CA7C78 /* SettingsModuleInteractor.swift in Sources */,
 				C23387002780F14700F8DBC3 /* TrashFlowController.swift in Sources */,
 				C2830D80293D4BDC00B3DDAF /* TokensViewController+TokensSectionHeaderDataSource.swift in Sources */,
@@ -7183,6 +7275,7 @@
 				C207DACD302B4BD3004FC767 /* ImporterRouter.swift in Sources */,
 				C23B899727C287480028FE34 /* NavigationFlowController.swift in Sources */,
 				C295AF842FD1DE9C000DF064 /* MainScreenModalView.swift in Sources */,
+				C22435E1309619C900E815F0 /* AddingServiceAdvancedSettings.swift in Sources */,
 				C20E2DFE2A7C4DE000DB64BB /* AddingServiceFlowController.swift in Sources */,
 				C2AB10042FD1000100000001 /* AddingServiceCardPresentation.swift in Sources */,
 				C2CC80D827B99B0600294CF2 /* ComposeServicePresenter.swift in Sources */,
@@ -7272,6 +7365,7 @@
 				C248B14D2AC4C01600E6B897 /* GuidePagesFlowController.swift in Sources */,
 				C21347842D98789900D325F6 /* EncryptedByUserPasswordSyncPresenter.swift in Sources */,
 				C24590F8280F52620079C21C /* SelectServicePresenter.swift in Sources */,
+				C22435E5309619CB00E815F0 /* AddingServiceManuallyRouter.swift in Sources */,
 				C28633C11FF92D8100C8F4B4 /* TokensViewController+TokensViewControlling.swift in Sources */,
 				C2153BC31FE9ABA6005FD297 /* CameraViewModelProtocols.swift in Sources */,
 				C2A2DA5C2FE548F1004FD390 /* NewsView.swift in Sources */,
@@ -7306,9 +7400,12 @@
 				C239DEA62FEEB7B3007C75A3 /* IconSelectorView.swift in Sources */,
 				C21508393003078E008B66E2 /* ImporterPreimportSummaryView.swift in Sources */,
 				C27A54A127F0CAFC00321D2B /* BrowserExtensionIntroFlowController.swift in Sources */,
+				C22435F4309672BF00E815F0 /* IconSelectorList.swift in Sources */,
 				C21508273003009A008B66E2 /* NewPINView.swift in Sources */,
 				C2625F8E28BB858600D84C5C /* AboutPresenter.swift in Sources */,
+				C22435FB309672D900E815F0 /* IconEditorModuleInteractor.swift in Sources */,
 				C207324929F724AB00FB294E /* TokensAdditionalInfo.swift in Sources */,
+				C22435E7309619CC00E815F0 /* AddingServiceAdvancedSettingsPresenter.swift in Sources */,
 				C2F1A0022EA0000100ABCDEF /* TokensServiceTitle.swift in Sources */,
 				C2F1A0042EA0000100ABCDEF /* TokensTOTPTokenView.swift in Sources */,
 				C240484C276522320076376E /* WidgetWarningFlowController.swift in Sources */,
@@ -7352,6 +7449,7 @@
 				C207DACB302B4BBF004FC767 /* ImporterRoute.swift in Sources */,
 				689BFDC04760BA4D88CC5754 /* BackupAdvancedPresenter.swift in Sources */,
 				37D4E0A4779DA4A4A8EE9456 /* BackupAdvancedPresenter+Menu.swift in Sources */,
+				C22435FE309672E300E815F0 /* ServiceIconPreview.swift in Sources */,
 				C2DC57E63083C8FD00172343 /* GoogleImportModuleInteractor.swift in Sources */,
 				640506B23BFADE99A62F57C6 /* BackupAdvancedFlowController.swift in Sources */,
 				C2EA566F28569A5E00026BFE /* AskForAuthPresenter.swift in Sources */,
@@ -7420,6 +7518,7 @@
 				C279C1682FA66F0F006CC971 /* IntroductionNavigationbar.swift in Sources */,
 				C217B90C2F79CDD9000EAA7C /* TokensPassCell.swift in Sources */,
 				C2CC0A4A29D0CACC00677A7B /* ExternalImportInstructionsPresenter.swift in Sources */,
+				C22436023096730100E815F0 /* IconEditorView.swift in Sources */,
 				C27C03BF27F4FD6C0020DB5E /* BrowserExtensionMainModuleInteractor.swift in Sources */,
 				C2F7FE052A8AB70D004B2C95 /* AddingServiceManuallyModuleInteractor.swift in Sources */,
 				C2617E0C3027AF110004AE2B /* MainTabFlowController.swift in Sources */,
@@ -7448,6 +7547,7 @@
 				C219CDBB278E270F00CBBF09 /* SettingsEventController.swift in Sources */,
 				C21EB2F12A7FD77000FA8AA1 /* AddingServiceTitleView.swift in Sources */,
 				C272055E2E7C9140004FB39A /* ExportQuestionPINVerificationPresenter.swift in Sources */,
+				C22435E9309619CE00E815F0 /* AddingServiceAdvancedSettingsView.swift in Sources */,
 				C274BDC02769419300EE28BC /* AppSecurityModuleInteractor.swift in Sources */,
 				C21675C52808C71F00D43EDD /* ShortDateFormatter.swift in Sources */,
 				C271B64827BAE67500D0D743 /* ComposeServiceModuleInteractor.swift in Sources */,
@@ -7474,6 +7574,7 @@
 				C28705F42980776300745459 /* MainFlowController.swift in Sources */,
 				C21987C727961BF600724E63 /* CameraErrorTemplate.swift in Sources */,
 				C25AE525300A591600D9ABFB /* ToastPresenter+DefaultActions.swift in Sources */,
+				C2F11EB3309729E500759029 /* AskForAuthRouter.swift in Sources */,
 				C2D2F70C2FF02EAC0008FE4D /* LabelComposeFlowController.swift in Sources */,
 				C2CFA6A62AEEF0CB00E574FC /* RootModuleInteractor.swift in Sources */,
 				C258EC6E227A1B9C00AC8D6B /* TokensViewController+DragAndDrop.swift in Sources */,
@@ -7507,6 +7608,7 @@
 				C2C6FF6B28206F8800A5BFD2 /* ListNews.swift in Sources */,
 				C2E86ABF27FF7C1900C830BB /* DeleteAllPairings.swift in Sources */,
 				C2A8584A27FB939200CBD9ED /* NetworkStackRepositoryImpl.swift in Sources */,
+				C28F2CB69601177F4AF000A0 /* NetworkRequestSigner.swift in Sources */,
 				C2E86AC127FF7CE100C830BB /* GetPairing.swift in Sources */,
 				C2A8584027FB8CC900CBD9ED /* NetworkRequestFormat.swift in Sources */,
 				C241D452278B9E2D00D7C604 /* NetworkStack.swift in Sources */,
@@ -7712,6 +7814,7 @@
 				C274C9EF2BAB8B92008E7212 /* Log.swift in Sources */,
 				C263E9C62D8791D100E98298 /* Data+.swift in Sources */,
 				C274C9F12BAB8B92008E7212 /* CommonLocalKeyEncryption.swift in Sources */,
+				C22435F23096729E00E815F0 /* TFSearchField.swift in Sources */,
 				C2418F6B3006DCA6008B674A /* TFRowHeight.swift in Sources */,
 				C2A1B3B62BB6084100D6B923 /* PINType.swift in Sources */,
 				C274C9F22BAB8B92008E7212 /* PairedAuthRequest.swift in Sources */,
@@ -7746,6 +7849,7 @@
 				C274CA012BAB8B92008E7212 /* ServiceExistenceStatus.swift in Sources */,
 				C295AFA62FD1F6F8000DF064 /* View+.swift in Sources */,
 				C295AFA72FD1F6F8000DF064 /* AdaptiveReadableContainer.swift in Sources */,
+				C22435EE3096729500E815F0 /* TFSegmentedControl.swift in Sources */,
 				C2DCAA812FF554B100FAB19D /* TFInfoView.swift in Sources */,
 				C295AFA82FD1F6F8000DF064 /* TFCornerRadius.swift in Sources */,
 				C295AFA92FD1F6F8000DF064 /* TFShadow.swift in Sources */,
@@ -7784,6 +7888,7 @@
 				C274CA0E2BAB8B92008E7212 /* LegacyExchangeDatabase.swift in Sources */,
 				C274CA0F2BAB8B92008E7212 /* TokenType.swift in Sources */,
 				C274CA102BAB8B92008E7212 /* CommonSectionData.swift in Sources */,
+				C22435EB3096229C00E815F0 /* TFInlineTextField.swift in Sources */,
 				C274CA112BAB8B92008E7212 /* Date+Extensions.swift in Sources */,
 				C274CA122BAB8B92008E7212 /* AttributedText+Formatting.swift in Sources */,
 				C274CA132BAB8B92008E7212 /* WidgetServiceHandlerType.swift in Sources */,
@@ -7884,6 +7989,7 @@
 				C2ACF9E720A8A918003E0987 /* TwoFASTests.swift in Sources */,
 				C2726DAD214D731B00F17977 /* DateTests.swift in Sources */,
 				C2726DAF214D8DCD00F17977 /* RatingControllerTests.swift in Sources */,
+				C2AEDE7B95A64F4B3B840A6D /* NetworkRequestSignerTests.swift in Sources */,
 				C2035D412938129000B94834 /* Mock.generated.swift in Sources */,
 			);
 		};
@@ -7950,6 +8056,7 @@
 				C2E53B162B62DDAF008E1E70 /* Log.swift in Sources */,
 				C29B42C92D98943100F49DCE /* CloudEncryptionType.swift in Sources */,
 				C215084B30042CB3008B66E2 /* TFFailureView.swift in Sources */,
+				C22435EF3096729500E815F0 /* TFSegmentedControl.swift in Sources */,
 				C217CDC73032260F007D88C0 /* TFCancelButton.swift in Sources */,
 				C2E53B432B62DDAF008E1E70 /* CommonLocalKeyEncryption.swift in Sources */,
 				C2DFDBDE302C977100EFA0B5 /* TFEmptyScreen.swift in Sources */,
@@ -7963,6 +8070,7 @@
 				C295AF8E2FD1F6F8000DF064 /* View+.swift in Sources */,
 				C2B58A14302BAC8600E0FF36 /* TFRowContent.swift in Sources */,
 				C295AF8F2FD1F6F8000DF064 /* AdaptiveReadableContainer.swift in Sources */,
+				C22435F13096729E00E815F0 /* TFSearchField.swift in Sources */,
 				C25AE51D300A58B800D9ABFB /* ToastContentView.swift in Sources */,
 				C25AE51E300A58B800D9ABFB /* ToastPresenterView.swift in Sources */,
 				C25AE520300A58B800D9ABFB /* ToastPresenter.swift in Sources */,
@@ -7998,6 +8106,7 @@
 				C215084230030ECB008B66E2 /* TFList.swift in Sources */,
 				C2E53B372B62DDAF008E1E70 /* ServiceData+.swift in Sources */,
 				C2B279C92FEC554800C41919 /* GroupedSectionBackground.swift in Sources */,
+				C22435EC3096229C00E815F0 /* TFInlineTextField.swift in Sources */,
 				C2E53B3D2B62DDAF008E1E70 /* Notifications+.swift in Sources */,
 				C2E53B392B62DDAF008E1E70 /* Array+.swift in Sources */,
 				C2E53B422B62DDAF008E1E70 /* CommonServiceHandler.swift in Sources */,
@@ -8230,6 +8339,7 @@
 			isa = PBXSourcesBuildPhase;
 			files = (
 				C20F012A25699C000026FBB2 /* LocalKeyEncryptionTests.swift in Sources */,
+				C2B490D31A3DAEDE83C377BA /* RequestSigningKeyTests.swift in Sources */,
 			);
 		};
 /* End PBXSourcesBuildPhase section */
@@ -8595,6 +8705,8 @@
 				8F1077282C8C80320031448C /* ja */,
 				C259133B2DBD70EF0040EF78 /* sv */,
 				C2D3166A2E6648730044056F /* zh-Hant */,
+				C2BB7884308E936D006CBF37 /* lt */,
+				C2BB7888308E9379006CBF37 /* sk */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -8619,6 +8731,8 @@
 				8F1077272C8C80310031448C /* ja */,
 				C259133A2DBD70EF0040EF78 /* sv */,
 				C2D316692E6648730044056F /* zh-Hant */,
+				C2BB7883308E936D006CBF37 /* lt */,
+				C2BB7887308E9379006CBF37 /* sk */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8627,6 +8741,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C23666831FB2644900989ACA /* Base */,
+				C2BB7885308E9378006CBF37 /* sk */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -8652,6 +8767,8 @@
 				8F1077262C8C80310031448C /* ja */,
 				C25913392DBD70EF0040EF78 /* sv */,
 				C2D3166E2E66499B0044056F /* zh-Hant */,
+				C2BB7882308E936C006CBF37 /* lt */,
+				C2BB7886308E9379006CBF37 /* sk */,
 			);
 			name = TwoFASWidget.intentdefinition;
 			sourceTree = "<group>";
@@ -8676,6 +8793,8 @@
 				8F1077292C8C805B0031448C /* ja */,
 				C292044C2DBE4FC50061E985 /* sv */,
 				C2D3166B2E6648E90044056F /* zh-Hant */,
+				C2BB7889308E93BC006CBF37 /* lt */,
+				C2BB788A308E93BF006CBF37 /* sk */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8700,6 +8819,8 @@
 				C292044E2DBE4FE60061E985 /* ja */,
 				C292044F2DBE4FE90061E985 /* el */,
 				C2D3166C2E6648FD0044056F /* zh-Hant */,
+				C2BB788B308E9417006CBF37 /* lt */,
+				C2BB788C308E941A006CBF37 /* sk */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -8858,7 +8979,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				MARKETING_VERSION = 6.0.1;
+				MARKETING_VERSION = 6.0.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
@@ -9648,7 +9769,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9693,7 +9814,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9739,7 +9860,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9785,7 +9906,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9828,7 +9949,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9872,7 +9993,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9917,7 +10038,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9962,7 +10083,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10251,7 +10372,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				MARKETING_VERSION = 6.0.1;
+				MARKETING_VERSION = 6.0.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
@@ -10316,7 +10437,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Two Factor Authentication Service, Inc. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				MARKETING_VERSION = 6.0.1;
+				MARKETING_VERSION = 6.0.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LIBTOOLFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
@@ -10742,7 +10863,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10788,7 +10909,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10915,7 +11036,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10963,7 +11084,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11009,7 +11130,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11057,7 +11178,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11103,7 +11224,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11149,7 +11270,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11362,7 +11483,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11409,7 +11530,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "${inherited}";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12276,7 +12397,7 @@
 			repositoryURL = "https://github.com/devicekit/DeviceKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.5.0;
+				minimumVersion = 5.8.0;
 			};
 		};
 		C23EBF102651276800FA9E81 /* XCRemoteSwiftPackageReference "Kronos" */ = {
@@ -12293,14 +12414,6 @@
 			requirement = {
 				branch = main;
 				kind = branch;
-			};
-		};
-		C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 11.10.0;
 			};
 		};
 		C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */ = {
@@ -12324,7 +12437,7 @@
 			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.19;
+				minimumVersion = 0.9.20;
 			};
 		};
 		C2C0A9862DA33A72000A1772 /* XCRemoteSwiftPackageReference "EFQRCode" */ = {
@@ -12332,7 +12445,7 @@
 			repositoryURL = "https://github.com/EFPrefix/EFQRCode.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 6.2.2;
+				minimumVersion = 7.0.3;
 			};
 		};
 		C2CE0E1127934579007DB667 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
@@ -12340,7 +12453,15 @@
 			repositoryURL = "https://github.com/apple/swift-protobuf.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.28.2;
+				minimumVersion = 1.38.0;
+			};
+		};
+		C2EC5C93308AB66E00079E78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 13.1.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -12381,36 +12502,6 @@
 			package = C25CB3C72D878E2B0099FAFD /* XCRemoteSwiftPackageReference "Argon2" */;
 			productName = SignalArgon2;
 		};
-		C26B192F2D90C5D8006FDDE0 /* FirebaseCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCore;
-		};
-		C26B19312D90C5D8006FDDE0 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		C26B19332D90C5D8006FDDE0 /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
-		};
-		C26B19352D90C6DE006FDDE0 /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
-		};
-		C26B19372D90C73B006FDDE0 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		C26B19392D90CE04006FDDE0 /* FirebaseCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C26B192E2D90C5D8006FDDE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCore;
-		};
 		C278121E27F9F4C000F31453 /* SwCrypt */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C278121D27F9F4BF00F31453 /* XCRemoteSwiftPackageReference "SwCrypt" */;
@@ -12450,6 +12541,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C2C0A9862DA33A72000A1772 /* XCRemoteSwiftPackageReference "EFQRCode" */;
 			productName = EFQRCode;
+		};
+		C2EC5C94308AB66E00079E78 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2EC5C93308AB66E00079E78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		C2EC5C96308AB66E00079E78 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2EC5C93308AB66E00079E78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		C2EC5C98308AB66E00079E78 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C2EC5C93308AB66E00079E78 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 

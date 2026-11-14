@@ -82,11 +82,17 @@ extension RegisterDeviceInteractor: RegisterDeviceInteracting {
         Log("RegisterDeviceInteractor - Initializing", module: .interactor)
         channelState.initializeFCM()
         channelState.enableCrashlytics(!mainRepository.isCrashlyticsDisabled)
-        if isDeviceRegistered {
+        if mainRepository.isSigningKeyLost {
+            Log("RegisterDeviceInteractor - signing key lost, registering device again", module: .interactor)
+            mainRepository.clearDeviceID()
+            registerDevice { result in
+                Log("RegisterDeviceInteractor - result of registering again: \(result)", module: .interactor)
+            }
+        } else if isDeviceRegistered {
             Log("RegisterDeviceInteractor - device is registered: \(mainRepository.deviceID?.suffix(logTokenLength) ?? "-")", module: .interactor)
             channelState.enableFCM()
             
-            if shouldRefresh {
+            if shouldRefresh || !mainRepository.isPublicSigningKeyUploaded {
                 Log("RegisterDeviceInteractor - refreshing token, GCM token: \(mainRepository.isGCMTokenSet)", module: .interactor)
                 updateDevice { result in
                     Log("RegisterDeviceInteractor - result of refresh: \(result)", module: .interactor)
@@ -160,17 +166,27 @@ private extension RegisterDeviceInteractor {
         isRegistering = true
         let deviceName = localName.currentDeviceName
         let gcmToken = mainRepository.gcmToken
+        let publicSigningKey = mainRepository.publicSigningKey
         
         Log("RegisterDeviceInteractor - Registering device named: \(deviceName)", module: .interactor)
         
-        mainRepository.registerDevice(for: deviceName, gcmToken: gcmToken) { [weak self] result in
+        mainRepository.registerDevice(
+            for: deviceName,
+            gcmToken: gcmToken,
+            publicSigningKey: publicSigningKey
+        ) { [weak self] result in
             self?.isRegistering = false
             switch result {
             case .success(let data):
                 Log("RegisterDeviceInteractor - Register success!", module: .interactor)
+                #if DEBUG
                 Log("RegisterDeviceInteractor - DeviceID: \(data.id)", module: .interactor, save: false)
+                #endif
                 self?.mainRepository.saveDeviceID(data.id)
                 self?.mainRepository.saveRegistrationDate()
+                if publicSigningKey != nil {
+                    self?.mainRepository.markPublicSigningKeyAsUploaded()
+                }
                 if let awaitingGCMToken = self?.awaitingGCMToken {
                     self?.updateWithAwaitingGCMToken(awaitingGCMToken, completion: completion)
                 } else {
@@ -213,8 +229,14 @@ private extension RegisterDeviceInteractor {
         }
         
         let deviceName = localName.currentDeviceName
+        let publicSigningKey = mainRepository.publicSigningKey
         
-        mainRepository.updateDeviceNameToken(deviceName, gcmToken: gcmToken, for: deviceID) { [weak self] result in
+        mainRepository.updateDeviceNameToken(
+            deviceName,
+            gcmToken: gcmToken,
+            publicSigningKey: publicSigningKey,
+            for: deviceID
+        ) { [weak self] result in
             guard let self else { return }
             switch result {
             case .success:
@@ -223,6 +245,9 @@ private extension RegisterDeviceInteractor {
                     module: .interactor
                 )
                 mainRepository.saveRegistrationDate()
+                if publicSigningKey != nil {
+                    mainRepository.markPublicSigningKeyAsUploaded()
+                }
                 completion(.success(Void()))
             case .failure(let error):
                 Log("RegisterDeviceInteractor - Updating failure! error: \(error)", module: .interactor)
@@ -266,7 +291,9 @@ private extension RegisterDeviceInteractor {
         }
         
         Log("RegisterDeviceInteractor - FCM token obtained! Partial-token: \(token.suffix(self.logTokenLength))", module: .interactor)
+        #if DEBUG
         Log("FCM/FCM: \(token)", module: .interactor, save: false)
+        #endif
         
         if isDeviceRegistered {
             Log("RegisterDeviceInteractor - Token obtained, device registered", module: .interactor)

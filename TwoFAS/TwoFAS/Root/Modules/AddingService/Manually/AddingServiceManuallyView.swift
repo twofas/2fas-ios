@@ -23,7 +23,10 @@ import Common
 struct AddingServiceManuallyView: View {
     @ObservedObject
     var presenter: AddingServiceManuallyPresenter
-    
+
+    @ObservedObject
+    var router: AddingServiceManuallyRouter
+
     @FocusState
     private var focusedField: Field?
     private enum Field: Int, Hashable {
@@ -38,9 +41,9 @@ struct AddingServiceManuallyView: View {
     private var touchedSecret = false
     @State
     private var touchedAdditionalInfo = false
-    
+
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $router.path) {
             ScrollViewReader { proxy in
                 ScrollView(.vertical) {
                     AdaptiveReadableContainer {
@@ -48,57 +51,12 @@ struct AddingServiceManuallyView: View {
                             iconRow()
 
                             mainFields()
-                            
-                            if presenter.advancedShown {
-                                TFFloatingTextField(
-                                    placeHolder: T.Tokens.additionalInfo,
-                                    text: $presenter.additionalInfo,
-                                    inputType: .other,
-                                    keyboardType: .asciiCapable,
-                                    focused: $focusedField,
-                                    focusValue: .additionalInfo,
-                                    errorMessage: gatedError(
-                                        $presenter.additionalInfoError,
-                                        touched: touchedAdditionalInfo
-                                    ),
-                                    submit: .init(buttonType: .done, action: {
-                                        focusedField = nil
-                                        presenter.handleAddService()
-                                    })
-                                )
-                                .id(Field.additionalInfo)
-                                .groupedSectionBackground(isElevated: true)
-                                
-                                typeSelector()
-                                
-                                VStack(spacing: .ML) {
-                                    if presenter.selectedTokenType != .steam {
-                                        advancedParametersBuilder()
-                                    }
-                                    
-                                    AddServiceAdvancedWarningView()
-                                }
-                            } else {
-                                TFButton(
-                                    T.Tokens.addManualAdvanced,
-                                    variant: .borderless,
-                                    size: .small
-                                ) {
-                                    if focusedField != nil {
-                                        dismissKeyboard()
-                                        DispatchQueue.main.async {
-                                            withAnimation {
-                                                presenter.advancedShown.toggle()
-                                            }
-                                        }
-                                    } else {
-                                        withAnimation {
-                                            presenter.advancedShown.toggle()
-                                        }
-                                    }
-                                }
-                            }
+
+                            additionalInfoField()
+
+                            advancedSettingsRow()
                         }
+                        .tfInlineLabelAlignment()
                     }
                 }
                 .dismissKeyboardOnTapOutside()
@@ -159,100 +117,122 @@ struct AddingServiceManuallyView: View {
                 }
             }
             .background(.backgroundsPrimaryElevated)
+            .navigationDestination(for: AddingServiceManuallyRoute.self) { route in
+                router.destination(for: route)
+            }
         }
+    }
+
+    @ViewBuilder
+    private func advancedSettingsRow() -> some View {
+        Button {
+            dismissKeyboard()
+            presenter.handleShowAdvancedSettings()
+        } label: {
+            TFRowContent(title: T.Tokens.addManualOtherSettings) {
+                CheveronIcon()
+            }
+        }
+        .buttonStyle(.plain)
+        .groupedSectionBackground(isElevated: true)
     }
     
     @ViewBuilder
     private func iconRow() -> some View {
-        VStack(spacing: .XXL) {
-            AddingServiceServiceIconView(
-                serviceImage: $presenter.serviceIcon,
-                isSelected: presenter.userCanCancelIcon
-            )
-            .accessibilityHidden(true)
-            .frame(maxWidth: .infinity)
-            .overlay(alignment: .trailing) {
-                iconActionButton()
-            }
+        VStack(spacing: .L) {
+            ServiceIconPreview(icon: presenter.previewIcon)
 
-            Text(presenter.serviceTypeName.map { T.Tokens.serviceAutodetectedTitle($0) } ?? " ")
-                .textStyle(.caption1)
-                .foregroundStyle(.labelsSecondary)
-                .opacity(presenter.serviceTypeName == nil ? 0 : 1)
-                .accessibilityHidden(presenter.serviceTypeName == nil)
+            TFLiquidGlassTextButton(T.Tokens.editIcon) {
+                dismissKeyboard()
+                presenter.handleEditIcon()
+            }
         }
-        .animation(.default, value: presenter.serviceTypeName)
-        .animation(.default, value: presenter.userCanSelectIcon)
-        .animation(.default, value: presenter.userCanCancelIcon)
+        .padding(.top, .XL)
+        .frame(maxWidth: .infinity)
     }
 
-    @ViewBuilder
-    private func iconActionButton() -> some View {
-        if presenter.userCanSelectIcon {
-            TFButton(T.Commons.select, variant: .bordered, size: .small, useWideLayout: false) {
-                presenter.onApplyIconType()
-            }
-            .transition(.opacity.combined(with: .scale(scale: 0.95)))
-        } else if presenter.userCanCancelIcon {
-            TFButton(T.Commons.clear, variant: .bordered, size: .small, useWideLayout: false) {
-                presenter.onClearIconType()
-            }
-            .transition(.opacity.combined(with: .scale(scale: 0.95)))
-        }
+    private var serviceNameError: String? {
+        touchedServiceName ? presenter.serviceNameError : nil
     }
-    
+
+    private var secretError: String? {
+        touchedSecret ? presenter.secretError : nil
+    }
+
+    private var additionalInfoError: String? {
+        touchedAdditionalInfo ? presenter.additionalInfoError : nil
+    }
+
     @ViewBuilder
     private func mainFields() -> some View {
         VStack(spacing: .zero) {
             sectionHeader(T.Tokens.addManualDescription)
-            
-            VStack(alignment: .leading, spacing: 0) {
-                TFFloatingTextField(
-                    placeHolder: T.Tokens.addManualServiceName,
-                    text: $presenter.serviceName,
-                    inputType: .name,
-                    keyboardType: .asciiCapable,
-                    focused: $focusedField,
-                    focusValue: .serviceName,
-                    errorMessage: gatedError($presenter.serviceNameError, touched: touchedServiceName),
-                    submit: .init(buttonType: .next, action: {
-                        focusedField = .secret
-                    })
-                )
-                .id(Field.serviceName)
 
-                separator()
+            TFInlineTextFieldSection(isElevated: true, errors: [serviceNameError, secretError]) {
+                VStack(alignment: .leading, spacing: 0) {
+                    TFInlineTextField(
+                        label: T.Tokens.addManualServiceName,
+                        placeholder: T.Tokens.addManualServiceNamePlaceholder,
+                        text: $presenter.serviceName,
+                        inputType: .name,
+                        keyboardType: .asciiCapable,
+                        focused: $focusedField,
+                        focusValue: .serviceName,
+                        isInvalid: serviceNameError != nil,
+                        submit: .init(buttonType: .next, action: {
+                            focusedField = .secret
+                        })
+                    )
+                    .id(Field.serviceName)
 
-                TFFloatingTextField(
-                    placeHolder: T.Tokens.addManualServiceKey,
-                    text: $presenter.secret,
-                    inputType: .secret,
-                    keyboardType: .alphabet,
-                    focused: $focusedField,
-                    focusValue: .secret,
-                    errorMessage: gatedError($presenter.secretError, touched: touchedSecret),
-                    submit: .init(buttonType: .done, action: {
-                        focusedField = nil
-                        presenter.handleAddService()
-                    })
-                )
-                .id(Field.secret)
+                    separator()
+
+                    TFInlineTextField(
+                        label: T.Tokens.addManualServiceKey,
+                        placeholder: T.Tokens.addManualServiceKeyPlaceholder,
+                        text: $presenter.secret,
+                        inputType: .secret,
+                        keyboardType: .alphabet,
+                        focused: $focusedField,
+                        focusValue: .secret,
+                        isInvalid: secretError != nil,
+                        submit: .init(buttonType: .done, action: {
+                            focusedField = nil
+                            presenter.handleAddService()
+                        })
+                    )
+                    .id(Field.secret)
+                }
             }
-            .groupedSectionBackground(isElevated: true)
         }
     }
-    
-    private func gatedError(_ source: Binding<String?>, touched: Bool) -> Binding<String?> {
-        Binding(
-            get: { touched ? source.wrappedValue : nil },
-            set: { source.wrappedValue = $0 }
-        )
+
+    @ViewBuilder
+    private func additionalInfoField() -> some View {
+        TFInlineTextFieldSection(isElevated: true, errors: [additionalInfoError]) {
+            TFInlineTextField(
+                label: T.Tokens.additionalInfo,
+                placeholder: T.Tokens.addManualOtherOptional,
+                text: $presenter.additionalInfo,
+                inputType: .other,
+                keyboardType: .asciiCapable,
+                focused: $focusedField,
+                focusValue: .additionalInfo,
+                isInvalid: additionalInfoError != nil,
+                submit: .init(buttonType: .done, action: {
+                    focusedField = nil
+                    presenter.handleAddService()
+                })
+            )
+            .id(Field.additionalInfo)
+        }
     }
 
     @ViewBuilder
     private func separator() -> some View {
         Divider()
             .foregroundStyle(.separatorsNonOpaque)
+            .padding(.trailing, -Spacing.XL.value)
     }
     
     @ViewBuilder
@@ -264,190 +244,5 @@ struct AddingServiceManuallyView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.vertical, .ML)
             .padding(.horizontal, .XL)
-    }
-    
-    @ViewBuilder
-    private func typeSelector() -> some View {
-        VStack(spacing: .zero) {
-            sectionHeader(T.Tokens.addManualAdvanced)
-            
-            HStack(spacing: .XL) {
-                TokenTypeOption(
-                    tokenType: .totp,
-                    name: T.Tokens.totp,
-                    selectedTokenType: $presenter.selectedTokenType
-                )
-                Spacer()
-                TokenTypeOption(
-                    tokenType: .steam,
-                    name: T.Tokens.steam,
-                    selectedTokenType: $presenter.selectedTokenType
-                )
-                Spacer()
-                TokenTypeOption(
-                    tokenType: .hotp,
-                    name: T.Tokens.hotp,
-                    selectedTokenType: $presenter.selectedTokenType
-                )
-            }
-            .padding(.horizontal, .XXXXXL)
-            .padding(.vertical, .XXL)
-            .groupedSectionBackground(isElevated: true)
-        }
-    }
-    
-    @ViewBuilder
-    func advancedParametersBuilder() -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            switch presenter.selectedTokenType {
-            case .totp:
-                advancedMenu(
-                    title: T.Tokens.algorithm,
-                    selection: $presenter.selectedAlgorithm,
-                    display: { $0.rawValue }
-                )
-                separator()
-                advancedMenu(
-                    title: T.Tokens.refreshTime,
-                    selection: $presenter.selectedRefreshTime,
-                    display: { T.Tokens.second($0.rawValue) }
-                )
-                separator()
-                advancedMenu(
-                    title: T.Tokens.numberOfDigits,
-                    selection: $presenter.selectedDigits,
-                    display: { "\($0.rawValue)" }
-                )
-            case .steam:
-                EmptyView()
-            case .hotp:
-                initialCounterRow()
-                separator()
-                advancedMenu(
-                    title: T.Tokens.numberOfDigits,
-                    selection: $presenter.selectedDigits,
-                    display: { "\($0.rawValue)" }
-                )
-            }
-        }
-        .groupedSectionBackground(isElevated: true)
-    }
-
-    @ViewBuilder
-    private func advancedMenu<Value: Hashable & CaseIterable>(
-        title: String,
-        selection: Binding<Value>,
-        display: @escaping (Value) -> String
-    ) -> some View {
-        TFListMenuRow(title: title, value: display(selection.wrappedValue)) {
-            Picker(selection: selection) {
-                ForEach(Array(Value.allCases), id: \.self) { value in
-                    Text(display(value)).tag(value)
-                }
-            } label: {
-                Text(title)
-            }
-        }
-    }
-
-    @ViewBuilder
-    private func initialCounterRow() -> some View {
-        Button {
-            presenter.handleShowInitialCounterAlert()
-        } label: {
-            HStack(spacing: .ML) {
-                Text(T.Tokens.initialCounter)
-                    .textStyle(.body)
-                    .foregroundStyle(.labelsPrimary)
-                    .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                Text("\(presenter.initialCounter)")
-                    .textStyle(.body)
-                    .foregroundStyle(.labelsSecondary)
-
-                Image(icon: .pencil)
-                    .textStyle(.body)
-                    .foregroundStyle(.labelsSecondary)
-                    .accessibilityHidden(true)
-            }
-            .padding(.vertical, .L)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .alert(T.Tokens.initialCounter, isPresented: $presenter.isInitialCounterAlertPresented) {
-            TextField("", text: $presenter.initialCounterInput)
-                .keyboardType(.numberPad)
-            Button(T.Commons.cancel, role: .cancel) {}
-            Button(T.Commons.save) {
-                presenter.handleSaveInitialCounterFromAlert()
-            }
-            .disabled(Int(presenter.initialCounterInput).map { $0 < 0 } ?? true)
-        }
-    }
-}
-
-private struct TokenTypeOption: View {
-    let tokenType: TokenType
-    let name: String
-    @Binding
-    var selectedTokenType: TokenType
-    
-    private let circleSize: CGFloat = 22
-    
-    @GestureState
-    private var isPressed = false
-    
-    var body: some View {
-        Button(action: {
-            selectedTokenType = tokenType
-        }) {
-            VStack(spacing: .ML) {
-                Text(name)
-                    .textStyle(.body)
-                    .foregroundStyle(.labelsPrimary)
-                
-                if selectedTokenType == tokenType {
-                    Image(icon: .checkmark)
-                        .textStyle(.footnote, .emphasized)
-                        .foregroundStyle(.graysWhite)
-                        .frame(width: circleSize, height: circleSize, alignment: .center)
-                        .background(.accentsBrand)
-                        .cornerRadius(100)
-                } else {
-                    Circle()
-                        .inset(by: 0.75)
-                        .stroke(.graysGray3, lineWidth: 1.5)
-                        .frame(width: circleSize, height: circleSize)
-                }
-            }
-        }
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .updating($isPressed) { _, state, _ in state = true }
-        )
-        .sensoryFeedback(.selection, trigger: isPressed) { _, new in new }
-    }
-}
-
-private struct AddServiceAdvancedWarningView: View {
-    @Environment(\.colorScheme)
-    private var colorScheme
-    
-    var body: some View {
-        let attributedString: AttributedString = {
-            var result = AttributedString(T.Tokens.addManualAdvancedDescription)
-            result.foregroundColor = AppColor.labelsSecondary.color(for: colorScheme)
-            
-            if let range = result.range(of: T.Tokens.addManualAdvancedDescriptionHighlight) {
-                result[range].foregroundColor = AppColor.labelsPrimary.color(for: colorScheme)
-            }
-            return result
-        }()
-        Text(attributedString)
-            .textStyle(.footnote)
-            .multilineTextAlignment(.leading)
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal, .L)
     }
 }

@@ -23,6 +23,7 @@ enum Send2FAToken {
     struct Request: NetworkRequestFormat {
         let deviceID: String
         let method: HTTPMethod = .POST
+        let requiresSignature = true
         var path: String { "mobile/devices/\(deviceID)/commands/send_2fa_token" }
     }
     

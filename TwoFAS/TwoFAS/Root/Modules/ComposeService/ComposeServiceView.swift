@@ -44,12 +44,15 @@ struct ComposeServiceView: View {
                 AdaptiveReadableContainer {
                     VStack(spacing: .XXXL) {
                         serviceInformationSection
+                        additionalInfoSection
+                        advancedSection
                         personalizationSection
                         if presenter.isBrowserExtensionAllowed {
                             otherSection
                         }
                         deleteSection
                     }
+                    .tfInlineLabelAlignment()
                 }
                 .dismissKeyboardOnTapOutside()
             }
@@ -95,89 +98,105 @@ struct ComposeServiceView: View {
         }
     }
 
+    private var serviceNameError: String? {
+        touchedServiceName ? presenter.serviceNameError : nil
+    }
+
+    private var additionalInfoError: String? {
+        touchedAdditionalInfo ? presenter.additionalInfoError : nil
+    }
+
     @ViewBuilder
     private var serviceInformationSection: some View {
         VStack(spacing: .zero) {
             sectionHeader(T.Tokens.serviceInformation)
 
-            VStack(spacing: .zero) {
-                TFFloatingTextField(
-                    placeHolder: T.Tokens.serviceName,
-                    text: $presenter.serviceName,
-                    inputType: .name,
-                    keyboardType: .asciiCapable,
-                    focused: $focusedField,
-                    focusValue: .serviceName,
-                    errorMessage: gatedError($presenter.serviceNameError, touched: touchedServiceName),
-                    submit: .init(buttonType: .next, action: {
-                        focusedField = .additionalInfo
-                    })
-                )
-                .onChange(of: presenter.serviceName) { _, newValue in
-                    presenter.handleServiceNameUpdate(newValue)
+            TFInlineTextFieldSection(isElevated: true, errors: [serviceNameError]) {
+                VStack(spacing: .zero) {
+                    TFInlineTextField(
+                        label: T.Tokens.serviceName,
+                        placeholder: T.Tokens.addManualServiceNamePlaceholder,
+                        text: $presenter.serviceName,
+                        inputType: .name,
+                        keyboardType: .asciiCapable,
+                        focused: $focusedField,
+                        focusValue: .serviceName,
+                        isInvalid: serviceNameError != nil,
+                        submit: .init(buttonType: .next, action: {
+                            focusedField = .additionalInfo
+                        })
+                    )
+                    .onChange(of: presenter.serviceName) { _, newValue in
+                        presenter.handleServiceNameUpdate(newValue)
+                    }
+
+                    separator()
+
+                    ComposeServiceSecretKeyField(
+                        mode: presenter.secretKeyMode,
+                        secret: .constant(""),
+                        errorMessage: .constant(nil),
+                        focused: $focusedField,
+                        focusValue: .secret,
+                        onReveal: { presenter.handleReveal() }
+                    ) {
+                        Button {
+                            presenter.handleCopySecret()
+                        } label: {
+                            Label(T.Tokens.copySecret, icon: .docOnDoc)
+                        }
+                        Button {
+                            presenter.handleCopyLink()
+                        } label: {
+                            Label(T.Tokens.copyLink, icon: .link)
+                        }
+                        Button {
+                            presenter.handleShowQRCode()
+                        } label: {
+                            Label(T.Tokens.qrCodeShow, icon: .qrcode)
+                        }
+                        Button {
+                            presenter.handleShareQRCode()
+                        } label: {
+                            Label(T.Tokens.qrCodeShare, icon: .squareAndArrowUp)
+                        }
+                    }
                 }
-
-                separator()
-
-                ComposeServiceSecretKeyField(
-                    mode: presenter.secretKeyMode,
-                    secret: .constant(""),
-                    errorMessage: .constant(nil),
-                    focused: $focusedField,
-                    focusValue: .secret,
-                    onReveal: { presenter.handleReveal() }
-                ) {
-                    Button {
-                        presenter.handleCopySecret()
-                    } label: {
-                        Label(T.Tokens.copySecret, icon: .docOnDoc)
-                    }
-                    Button {
-                        presenter.handleCopyLink()
-                    } label: {
-                        Label(T.Tokens.copyLink, icon: .link)
-                    }
-                    Button {
-                        presenter.handleShowQRCode()
-                    } label: {
-                        Label(T.Tokens.qrCodeShow, icon: .qrcode)
-                    }
-                    Button {
-                        presenter.handleShareQRCode()
-                    } label: {
-                        Label(T.Tokens.qrCodeShare, icon: .squareAndArrowUp)
-                    }
-                }
-
-                separator()
-
-                TFFloatingTextField(
-                    placeHolder: T.Tokens.additionalInfo,
-                    text: $presenter.additionalInfo,
-                    inputType: .other,
-                    keyboardType: .asciiCapable,
-                    focused: $focusedField,
-                    focusValue: .additionalInfo,
-                    errorMessage: gatedError($presenter.additionalInfoError, touched: touchedAdditionalInfo),
-                    submit: .init(buttonType: .done, action: {
-                        focusedField = nil
-                    })
-                )
-                .onChange(of: presenter.additionalInfo) { _, newValue in
-                    presenter.handleAdditionalInfoUpdate(newValue)
-                }
-
-                separator()
-
-                navigationRow(
-                    title: T.Tokens.advanced,
-                    accessory: .arrow,
-                    isEnabled: true,
-                    action: { presenter.handleAdvanced() }
-                )
             }
-            .groupedSectionBackground(isElevated: true)
         }
+    }
+
+    @ViewBuilder
+    private var additionalInfoSection: some View {
+        TFInlineTextFieldSection(isElevated: true, errors: [additionalInfoError]) {
+            TFInlineTextField(
+                label: T.Tokens.additionalInfo,
+                placeholder: T.Tokens.addManualOtherOptional,
+                text: $presenter.additionalInfo,
+                inputType: .other,
+                keyboardType: .asciiCapable,
+                focused: $focusedField,
+                focusValue: .additionalInfo,
+                isInvalid: additionalInfoError != nil,
+                submit: .init(buttonType: .done, action: {
+                    focusedField = nil
+                })
+            )
+            .onChange(of: presenter.additionalInfo) { _, newValue in
+                presenter.handleAdditionalInfoUpdate(newValue)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var advancedSection: some View {
+        navigationRow(
+            title: T.Tokens.advanced,
+            accessory: .arrow,
+            isEnabled: true,
+            action: { presenter.handleAdvanced() }
+        )
+        .groupedSectionBackground(isElevated: true)
     }
 
     @ViewBuilder
@@ -186,33 +205,7 @@ struct ComposeServiceView: View {
             sectionHeader(T.Tokens.personalization)
 
             VStack(spacing: .zero) {
-                ComposeServiceIconTypeSelector(
-                    selectedType: Binding(
-                        get: { presenter.iconType },
-                        set: { presenter.handleIconType($0) }
-                    ),
-                    iconTypeID: presenter.iconTypeID,
-                    labelTitle: presenter.labelTitle,
-                    labelColor: presenter.labelColor
-                )
-
-                separator()
-
-                navigationRow(
-                    title: T.Tokens.changeBrandIcon,
-                    accessory: .arrow,
-                    isEnabled: presenter.isBrandIconRowEnabled,
-                    action: { presenter.handleBrandIcon() }
-                )
-
-                separator()
-
-                navigationRow(
-                    title: T.Tokens.changeLabel,
-                    accessory: .arrow,
-                    isEnabled: presenter.isLabelRowEnabled,
-                    action: { presenter.handleLabel() }
-                )
+                changeIconRow
 
                 separator()
 
@@ -237,6 +230,33 @@ struct ComposeServiceView: View {
             .groupedSectionBackground(isElevated: true)
         }
     }
+
+    @ViewBuilder
+    private var changeIconRow: some View {
+        Button {
+            presenter.handleEditIcon()
+        } label: {
+            HStack(spacing: .M) {
+                ServiceIconPreview(icon: presenter.iconDetails, dimension: changeIconDimension)
+
+                Text(T.Tokens.changeIcon)
+                    .textStyle(.body)
+                    .foregroundStyle(.labelsPrimary)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                Image(icon: .chevronRight)
+                    .textStyle(.footnote, .emphasized)
+                    .foregroundStyle(.labelsTertiary)
+                    .accessibilityHidden(true)
+            }
+            .padding(.vertical, .ML)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var changeIconDimension: CGFloat { 44 }
 
     @ViewBuilder
     private var otherSection: some View {
@@ -329,12 +349,5 @@ struct ComposeServiceView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.vertical, .ML)
             .padding(.horizontal, .XL)
-    }
-
-    private func gatedError(_ source: Binding<String?>, touched: Bool) -> Binding<String?> {
-        Binding(
-            get: { touched ? source.wrappedValue : nil },
-            set: { source.wrappedValue = $0 }
-        )
     }
 }

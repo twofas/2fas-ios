@@ -122,7 +122,9 @@ private extension SelectFromGalleryPresenter {
             handleService(code)
         case .googleAuth(let index, let size, let batchID, let codes):
             Log("SelectFromGalleryPresenter: Found Google Auth codes: \(codes.count)")
+            #if DEBUG
             Log("Codes: \(codes)", save: false)
+            #endif
             
             let data = GoogleScanData(index: index, size: size, batchID: batchID, codes: codes)
             
@@ -134,7 +136,9 @@ private extension SelectFromGalleryPresenter {
             flowController.toGoogleAuthImport(data: data)
         case .lastPass(let codes, let totalCodesCount):
             Log("SelectFromGalleryPresenter: Found LastPass codes: \(codes.count)")
+            #if DEBUG
             Log("Codes: \(codes)", save: false)
+            #endif
             
             let importableCodes = interactor.filterImportableCodes(codes)
             flowController.toLastPassSummary(
@@ -143,11 +147,15 @@ private extension SelectFromGalleryPresenter {
                 codes: importableCodes
             )
         case .appStore:
+            #if DEBUG
             Log("SelectFromGalleryPresenter: Found wrong code", save: false)
+            #endif
             Log("SelectFromGalleryPresenter: It's app store link!")
             flowController.toAppStore()
         default:
+            #if DEBUG
             Log("SelectFromGalleryPresenter: Found wrong code", save: false)
+            #endif
             Log("SelectFromGalleryPresenter: General wrong code")
             flowController.toErrorWhileScanning()
         }

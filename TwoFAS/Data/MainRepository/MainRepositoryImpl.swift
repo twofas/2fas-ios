@@ -46,7 +46,9 @@ final class MainRepositoryImpl: MainRepository {
     let logDataChange: LogDataChange
     let networkStack = NetworkStack(
         baseURL: Config.API.baseURL,
-        notificationsBaseURL: Config.API.notificationsURL
+        notificationsBaseURL: Config.API.notificationsURL,
+        signPayload: { RequestSigningKey.signature(for: $0) },
+        currentDate: { TimeOffsetStorage.currentDate }
     )
     let iconDatabase: IconDescriptionDatabase = IconDescriptionDatabaseImpl()
     let serviceDefinitionDatabase: ServiceDefinitionDatabase = ServiceDefinitionDatabaseImpl()

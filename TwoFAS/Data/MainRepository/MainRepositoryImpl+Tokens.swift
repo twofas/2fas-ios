@@ -47,6 +47,26 @@ extension MainRepositoryImpl {
     func saveRegistrationDate() {
         userDefaultsRepository.saveRegistrationDate(Date())
     }
+    
+    // MARK: - Request signing
+    
+    var publicSigningKey: String? {
+        RequestSigningKey.publicKeyCreatingIfNeeded()
+    }
+    
+    var isPublicSigningKeyUploaded: Bool {
+        protectionModule.tokenStorage.isPublicSigningKeyUploaded
+    }
+    
+    /// The key doesn't leave the device, but Device ID does (backup restored on a new device). The server keeps
+    /// the old public key and it can't be replaced, so such device has to be registered again.
+    var isSigningKeyLost: Bool {
+        isDeviceIDSet && isPublicSigningKeyUploaded && RequestSigningKey.isMissing
+    }
+    
+    func markPublicSigningKeyAsUploaded() {
+        protectionModule.tokenStorage.markPublicSigningKeyAsUploaded()
+    }
 
     // MARK: - FCM Token
     

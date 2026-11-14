@@ -66,7 +66,7 @@ final class FCM: NSObject, MessagingDelegate, FCMHandlerProtocol {
         Log("FCM - obtaining FCM Token", module: .unknown)
         Task {
             do {
-                try await messaging?.token()
+                _ = try await (messaging as LegacyFCMTokenProviding?)?.token()
             } catch {
                 Log("FCM Error while obtaining FCM Token: \(error)", module: .unknown, severity: .error)
             }
@@ -91,3 +91,9 @@ final class FCM: NSObject, MessagingDelegate, FCMHandlerProtocol {
         #endif
     }
 }
+
+private protocol LegacyFCMTokenProviding {
+    func token() async throws -> String
+}
+
+extension Messaging: LegacyFCMTokenProviding {}

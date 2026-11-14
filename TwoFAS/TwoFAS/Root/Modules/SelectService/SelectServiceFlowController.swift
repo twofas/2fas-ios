@@ -17,53 +17,9 @@
 //  along with this program. If not, see <https://www.gnu.org/licenses/>
 //
 
-import UIKit
-import SwiftUI
 import Common
 import Data
 
-protocol SelectServiceFlowControllerParent: AnyObject {
-    func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool)
-    func serviceSelectionCancelled(for tokenRequestID: String)
-}
-
 protocol SelectServiceFlowControlling: AnyObject {
     func toServiceSelection(with serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool)
-    func toCancel(for tokenRequestID: String)
-}
-
-final class SelectServiceFlowController: FlowController {
-    private weak var parent: SelectServiceFlowControllerParent?
-
-    static func present(
-        on viewController: UIViewController,
-        parent: SelectServiceFlowControllerParent,
-        authRequest: WebExtensionAwaitingAuth
-    ) {
-        let interactor = ModuleInteractorFactory.shared.selectServiceModuleInteractor()
-        let hostingController = UIHostingController(rootView: AnyView(EmptyView()))
-        let flowController = SelectServiceFlowController(viewController: hostingController)
-        flowController.parent = parent
-
-        let presenter = SelectServicePresenter(
-            interactor: interactor,
-            flowController: flowController,
-            authRequest: authRequest
-        )
-
-        hostingController.rootView = AnyView(SelectServiceView(presenter: presenter))
-        hostingController.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
-        hostingController.configureAsLargeModal()
-        viewController.present(hostingController, animated: true, completion: nil)
-    }
-}
-
-extension SelectServiceFlowController: SelectServiceFlowControlling {
-    func toServiceSelection(with serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool) {
-        parent?.serviceSelectionDidSelect(serviceData, authRequest: authRequest, save: save)
-    }
-
-    func toCancel(for tokenRequestID: String) {
-        parent?.serviceSelectionCancelled(for: tokenRequestID)
-    }
 }

@@ -73,7 +73,10 @@ extension LinkInteractor: LinkInteracting {
         }
 
         let (canHandle, shouldSave) = mainRepository.handleURL(url)
-        Log("URL: \(url), canHandle: \(canHandle), shoudlSave: \(shouldSave)", module: .interactor, save: false)
+        Log("LinkInteractor - shouldHandleURL: canHandle: \(canHandle), shouldSave: \(shouldSave)", module: .interactor)
+        #if DEBUG
+        Log("LinkInteractor - URL: \(url)", module: .interactor, save: false)
+        #endif
         
         guard canHandle else {
             mainRepository.saveHasIncorrectCode()

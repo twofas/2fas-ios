@@ -23,6 +23,7 @@ public enum ListAll2FARequests {
     public struct Request: NetworkRequestFormat {
         let deviceID: String
         let method: HTTPMethod = .GET
+        let requiresSignature = true
         var path: String { "mobile/devices/\(deviceID)/browser_extensions/2fa_requests" }
     }
     

@@ -89,7 +89,9 @@ final class APNS: NSObject, UNUserNotificationCenterDelegate, NotificationStateP
         let token = tokenParts.joined()
 
         Log("APNS: Did obtain Device Token")
+        #if DEBUG
         Log("APNS: Device Token: \(token)", save: false)
+        #endif
         
         registrationCompletion?(.succesful(deviceToken: token))
         registrationCompletion = nil
@@ -109,7 +111,9 @@ final class APNS: NSObject, UNUserNotificationCenterDelegate, NotificationStateP
     ) {
         clearNotifications()
 
+        #if DEBUG
         Log("APNS: Notification response: \(response.notification.request.content.userInfo)", save: false)
+        #endif
         
         let r = response.notification.request.content
 
@@ -131,7 +135,9 @@ final class APNS: NSObject, UNUserNotificationCenterDelegate, NotificationStateP
     ) {
         clearNotifications()
         
+        #if DEBUG
         Log("APNS: Notification received: \(notification.request.content.userInfo)", save: false)
+        #endif
         
         let r = notification.request.content
         

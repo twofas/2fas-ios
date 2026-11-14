@@ -74,10 +74,6 @@ extension SelectServicePresenter {
             save: saveSwitchValue
         )
     }
-
-    func handleCancel() {
-        flowController.toCancel(for: authRequest.tokenRequestID)
-    }
 }
 
 private extension SelectServicePresenter {

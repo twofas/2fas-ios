@@ -119,21 +119,18 @@ struct PairQRCodeView: View {
     private func generateQRCode() -> UIImage? {
         let deviceCode = MainRepositoryImpl.shared.deviceCode.code
         let devicePath = DeviceCodePath(code: deviceCode)
-        let generator = EFQRCodeGenerator(
-            content: devicePath.codePath,
-            encoding: .ascii,
-            size: EFIntSize(width: dimension, height: dimension)
-        )
-        generator.withMode(EFQRCodeMode.grayscale)
-        generator.withInputCorrectionLevel(EFInputCorrectionLevel.l)
-
-        guard let cgImage = generator.generate() else {
+        guard
+            let generator = try? EFQRCode.Generator(
+                devicePath.codePath,
+                encoding: .ascii,
+                errorCorrectLevel: .l,
+                style: .basic(params: EFStyleBasicParams())
+            ),
+            let image = try? generator.toImage(width: CGFloat(dimension))
+        else {
             return nil
         }
 
-        let image = UIImage(cgImage: cgImage)
-            .withRenderingMode(.alwaysOriginal)
-
-        return image
+        return image.withRenderingMode(.alwaysOriginal)
     }
 }

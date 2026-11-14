@@ -210,28 +210,9 @@ extension MainFlowController: ImporterOpenFileHeadlessFlowControllerParent {
 }
 
 extension MainFlowController: AuthRequestsFlowControllerParent {
-    func authRequestAskUserForAuthorization(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest) {
+    func authRequestAskUserForAuthorization(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest?) {
         guard viewController.presentedViewController == nil else { return }
         AskForAuthFlowController.present(on: viewController, parent: self, auth: auth, pair: pair)
-    }
-    
-    func authRequestShowServiceSelection(auth: WebExtensionAwaitingAuth) {
-        guard viewController.presentedViewController == nil else { return }
-        SelectServiceFlowController.present(on: viewController, parent: self, authRequest: auth)
-    }
-}
-
-extension MainFlowController: SelectServiceFlowControllerParent {
-    func serviceSelectionDidSelect(_ serviceData: ServiceData, authRequest: WebExtensionAwaitingAuth, save: Bool) {
-        viewController.dismiss(animated: true) { [weak self] in
-            self?.authRequestsFlowController?.didSelectService(serviceData, auth: authRequest, save: save)
-        }
-    }
-    
-    func serviceSelectionCancelled(for tokenRequestID: String) {
-        viewController.dismiss(animated: true) { [weak self] in
-            self?.authRequestsFlowController?.didCancelServiceSelection(for: tokenRequestID)
-        }
     }
 }
 
@@ -239,6 +220,12 @@ extension MainFlowController: AskForAuthFlowControllerParent {
     func askForAuthAllow(auth: WebExtensionAwaitingAuth, pair: PairedAuthRequest) {
         viewController.dismiss(animated: true) { [weak self] in
             self?.authRequestsFlowController?.authorize(auth: auth, pair: pair)
+        }
+    }
+    
+    func askForAuthDidSelectService(_ serviceData: ServiceData, auth: WebExtensionAwaitingAuth, save: Bool) {
+        viewController.dismiss(animated: true) { [weak self] in
+            self?.authRequestsFlowController?.didSelectService(serviceData, auth: auth, save: save)
         }
     }
     

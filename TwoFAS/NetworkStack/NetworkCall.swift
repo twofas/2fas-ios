@@ -60,10 +60,12 @@ final class NetworkCall {
         return config
     }()
     private let session: URLSession
+    private let requestSigner: NetworkRequestSigner
     
-    init(baseURL: URL, notificationsBaseURL: URL) {
+    init(baseURL: URL, notificationsBaseURL: URL, requestSigner: NetworkRequestSigner) {
         self.baseURL = baseURL
         self.notificationsBaseURL = notificationsBaseURL
+        self.requestSigner = requestSigner
         self.session = URLSession(configuration: configuration)
     }
     
@@ -239,11 +241,13 @@ private extension NetworkCall {
                 result = try jsonDecoder.decode(T.self, from: data)
             } catch {
                 Log("Network Stack: Parse error! error: \(error)", module: .network)
+                #if DEBUG
                 Log(
                     "Network Stack: Data: \(String(describing: String(data: data, encoding: .utf8)))",
                     module: .network,
                     save: false
                 )
+                #endif
             }
             return result
         }() else {
@@ -261,7 +265,7 @@ private extension NetworkCall {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.method.rawValue
         
-        return urlRequest
+        return request.requiresSignature ? requestSigner.signed(urlRequest) : urlRequest
     }
 
     func notificationsUrlRequest(for request: NetworkRequestFormat) -> URLRequest {
@@ -284,7 +288,7 @@ private extension NetworkCall {
         urlRequest.httpMethod = request.method.rawValue
         urlRequest.httpBody = try? jsonEncoder.encode(data)
         
-        return urlRequest
+        return request.requiresSignature ? requestSigner.signed(urlRequest) : urlRequest
     }
     
     func urlRequest(for request: NetworkMultipartRequestFormat) -> URLRequest {

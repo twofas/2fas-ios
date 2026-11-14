@@ -21,6 +21,27 @@ import SwiftUI
 import Common
 
 struct AskForAuthView: View {
+    let presenter: AskForAuthPresenter
+    
+    @ObservedObject
+    var router: AskForAuthRouter
+    
+    var body: some View {
+        NavigationStack(path: $router.path) {
+            AskForAuthContentView(
+                action: presenter.handleAction,
+                cancel: presenter.handleCancel,
+                domain: presenter.domain
+            )
+            .toolbar(.hidden, for: .navigationBar)
+            .navigationDestination(for: AskForAuthRoute.self) { route in
+                router.destination(for: route)
+            }
+        }
+    }
+}
+
+private struct AskForAuthContentView: View {
     let action: Callback
     let cancel: Callback
     let domain: String
@@ -46,11 +67,10 @@ struct AskForAuthView: View {
                 cancel()
             }
         })
-        .navigationBarHidden(true)
         .ignoresSafeArea()
     }
 }
 
 #Preview {
-    AskForAuthView(action: {}, cancel: {}, domain: "google.com")
+    AskForAuthContentView(action: {}, cancel: {}, domain: "google.com")
 }

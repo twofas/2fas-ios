@@ -29,6 +29,8 @@ protocol AddingServiceManuallyFlowControllerParent: AnyObject {
 protocol AddingServiceManuallyFlowControlling: AnyObject {
     func toClose(_ serviceData: ServiceData)
     func toClose()
+    func toAdvancedSettings(_ settings: AddingServiceAdvancedSettings)
+    func toIconEditor(_ value: IconEditorValue)
 }
 
 final class AddingServiceManuallyFlowController: FlowController {
@@ -44,25 +46,34 @@ final class AddingServiceManuallyFlowController: FlowController {
         flowController.parent = parent
 
         let interactor = ModuleInteractorFactory.shared.addingServiceManuallyModuleInteractor()
+        let router = AddingServiceManuallyRouter()
+        router.flowController = flowController
 
         let presenter = AddingServiceManuallyPresenter(
-            flowController: flowController,
+            flowController: router,
             interactor: interactor,
             providedName: name
         )
-        hosting.rootView = AnyView(AddingServiceManuallyView(presenter: presenter))
+        router.presenter = presenter
+
+        hosting.rootView = AnyView(AddingServiceManuallyView(presenter: presenter, router: router))
         hosting.view.backgroundColor = AppColor.backgroundsPrimaryElevated.uiColor
 
         navigationController.setViewControllers([hosting], animated: true)
     }
 }
 
-extension AddingServiceManuallyFlowController: AddingServiceManuallyFlowControlling {
-    func toClose(_ serviceData: ServiceData) {
+extension AddingServiceManuallyFlowController {
+    func close(_ serviceData: ServiceData) {
         parent?.addingServiceManuallyToClose(serviceData)
     }
     
-    func toClose() {
+    func cancel() {
         parent?.addingServiceManuallyToCancel()
+    }
+
+    func share(_ text: String) {
+        let activityController = ShareActivityController.createWithText(text)
+        _viewController.present(activityController, animated: true, completion: nil)
     }
 }

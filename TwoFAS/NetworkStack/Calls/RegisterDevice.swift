@@ -29,6 +29,7 @@ public enum RegisterDevice {
         let name: String
         let fcm_token: String?
         let platform: String
+        let public_signing_key: String?
     }
     
     public struct ResultData: Decodable {

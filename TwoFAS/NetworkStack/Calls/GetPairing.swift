@@ -24,6 +24,7 @@ public enum GetPairing {
         let deviceID: String
         let extensionID: String
         let method: HTTPMethod = .GET
+        let requiresSignature = true
         var path: String { "mobile/devices/\(deviceID)/browser_extensions/\(extensionID)" }
     }
     

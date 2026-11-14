@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "2660"
+   LastUpgradeVersion = "2700"
    version = "2.2">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -55,7 +55,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C274C9CC2BAB8ABB008E7212"
             BuildableName = "TwoFASWatch Watch App.app"
-            BlueprintName = "TwoFASWatch Watch App"
             ReferencedContainer = "container:TwoFAS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -72,7 +71,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C274C9CC2BAB8ABB008E7212"
             BuildableName = "TwoFASWatch Watch App.app"
-            BlueprintName = "TwoFASWatch Watch App"
             ReferencedContainer = "container:TwoFAS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

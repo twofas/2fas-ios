@@ -28,7 +28,9 @@ import TimeVerification
 final class MainRepositoryImpl {
     let network = NetworkStack(
         baseURL: Config.API.baseURL,
-        notificationsBaseURL: Config.API.notificationsURL
+        notificationsBaseURL: Config.API.notificationsURL,
+        signPayload: { RequestSigningKey.signature(for: $0) },
+        currentDate: { TimeOffsetStorage.currentDate }
     )
     let protectionModule = Protection()
     let storageRepository: StorageRepository

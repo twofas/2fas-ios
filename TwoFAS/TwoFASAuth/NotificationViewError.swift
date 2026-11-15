@@ -23,12 +23,14 @@ enum NotificationViewError: Error {
     case generalProblem
     case noInternet
     case authProblem
-    
+    case localDataUnavailable
+
     var localizedDescription: String {
         switch self {
         case .generalProblem: return T.Extension.errorOpenTheApp
         case .noInternet: return T.Extension.errorNoInternet
         case .authProblem: return T.Extension.tryAgain
+        case .localDataUnavailable: return T.Extension.localDataUnavailable
         }
     }
 }

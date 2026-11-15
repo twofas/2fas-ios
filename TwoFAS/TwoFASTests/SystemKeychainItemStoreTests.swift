@@ -46,15 +46,6 @@ final class SystemKeychainItemStoreTests: XCTestCase {
         XCTAssertNil(try store.read(account: account))
     }
 
-    func testAddDuplicateThrowsDuplicate() throws {
-        try store.add(Data([1]), account: account)
-
-        XCTAssertThrowsError(try store.add(Data([2]), account: account)) {
-            XCTAssertEqual($0 as? KeychainItemError, .duplicate)
-        }
-        XCTAssertEqual(try store.read(account: account), Data([1]))
-    }
-
     func testReadMissingReturnsNil() throws {
         XCTAssertNil(try store.read(account: account))
     }

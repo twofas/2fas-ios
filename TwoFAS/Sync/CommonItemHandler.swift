@@ -77,11 +77,20 @@ final class CommonItemHandler {
         }
     }
     
-    func logFirstImport() {
+    /// - Returns: Whether every item was logged (a failure also schedules a reset of the Sync cache).
+    @discardableResult
+    func logFirstImport() -> Bool {
         let recordType: RecordType = zoneManager.inOldVault ? .service2 : .service3
-        logHandler.logFirstImport(entityIDs: commonSectionHandler.getAllSections().map { $0.sectionID }, kind: .section)
-        logHandler.logFirstImport(entityIDs: commonServiceHandler.getAllServices().map { $0.secret }, kind: recordType)
-        logHandler.logFirstImport(entityIDs: [Info.id], kind: .info)
+        let sections = logHandler.logFirstImport(
+            entityIDs: commonSectionHandler.getAllSections().map { $0.sectionID },
+            kind: .section
+        )
+        let services = logHandler.logFirstImport(
+            entityIDs: commonServiceHandler.getAllServices().map { $0.secret },
+            kind: recordType
+        )
+        let info = logHandler.logFirstImport(entityIDs: [Info.id], kind: .info)
+        return sections && services && info
     }
     
     func setItems(_ items: [RecordType: [Any]]) -> Bool {

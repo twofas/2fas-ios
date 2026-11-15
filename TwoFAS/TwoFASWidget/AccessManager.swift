@@ -23,17 +23,34 @@ import Protection
 import Common
 
 enum AccessManager {
-    static var serviceHandler: WidgetServiceHandlerType = {
-        EncryptionHolder.initialize(with: protection.localKeyEncryption)
-        return Storage(
-            readOnly: true,
-            initializeLogStorage: false,
-            cipher: protection.localStorageCipher,
-            allowsMigration: false,
-            logError: nil
-        ).widgetService
-    }()
     static var protection: Protection = {
         Protection()
     }()
+
+    private static let lock = NSLock()
+    private static var cachedStorage: Storage?
+
+    /// A store opened in memory (its migration waits for the main app) isn't kept – the next call checks again, so
+    /// the widget shows the services once the main app has migrated the store
+    static var storage: Storage {
+        lock.withLock {
+            if let cachedStorage, !cachedStorage.isMigrationDeferred {
+                return cachedStorage
+            }
+            EncryptionHolder.initialize(with: protection.localKeyEncryption)
+            let storage = Storage(
+                readOnly: true,
+                initializeLogStorage: false,
+                cipher: protection.localStorageCipher,
+                allowsMigration: false,
+                logError: nil
+            )
+            cachedStorage = storage
+            return storage
+        }
+    }
+
+    static var serviceHandler: WidgetServiceHandlerType {
+        storage.widgetService
+    }
 }

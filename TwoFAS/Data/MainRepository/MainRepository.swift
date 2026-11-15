@@ -207,7 +207,9 @@ protocol MainRepository: AnyObject {
     
     // MARK: - Storage
     var storageError: ((String) -> Void)? { get set }
-    
+    /// The user's data can't be shown now (the local storage key is unavailable)
+    var isLocalDataUnavailable: Bool { get }
+
     func saveStorage()
     func trashService(_ serviceData: ServiceData)
     func untrashService(_ serviceData: ServiceData)

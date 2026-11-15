@@ -23,7 +23,8 @@ public protocol RootInteracting: AnyObject {
     var introductionWasShown: Bool { get }
     var isAuthenticationRequired: Bool { get }
     var storageError: ((String) -> Void)? { get set }
-    
+    var isLocalDataUnavailable: Bool { get }
+
     func initializeApp()
     func applicationWillResignActive()
     func applicationWillEnterForeground()
@@ -70,6 +71,10 @@ extension RootInteractor: RootInteracting {
     
     var isAuthenticationRequired: Bool {
         mainRepository.securityIsAuthenticationRequired
+    }
+
+    var isLocalDataUnavailable: Bool {
+        mainRepository.isLocalDataUnavailable
     }
     
     func initializeApp() {

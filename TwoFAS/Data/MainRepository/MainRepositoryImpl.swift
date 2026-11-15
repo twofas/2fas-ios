@@ -113,18 +113,21 @@ final class MainRepositoryImpl: MainRepository {
         
         EncryptionHolder.initialize(with: protection.localKeyEncryption)
         
+        let storesRequiringMigration = [
+            Storage.storeRequiresMigration() ? Storage.storeName : nil,
+            SyncInstance.storeRequiresMigration() ? SyncInstance.storeName : nil
+        ].compactMap { $0 }
         let bootstrapResult = LocalStorageBootstrap.prepare(
             cipher: protection.localStorageCipher,
             storeNames: [Storage.storeName, SyncInstance.storeName],
-            storesRequiringMigration: [
-                Storage.storeRequiresMigration() ? Storage.storeName : nil,
-                SyncInstance.storeRequiresMigration() ? SyncInstance.storeName : nil
-            ].compactMap { $0 }
+            storesRequiringMigration: storesRequiringMigration
         )
         if bootstrapResult == .wipedStores {
             SyncInstance.scheduleResetFromScratch()
         }
-        
+
+        let migrationTask = storesRequiringMigration.isEmpty ? nil : MigrationBackgroundTask()
+
         let storage = Storage(
             readOnly: false,
             cipher: protection.localStorageCipher,
@@ -132,7 +135,9 @@ final class MainRepositoryImpl: MainRepository {
         ) { error in
             DebugLog(error)
         }
-        
+        // Migrated now, while the background task runs – not on first use
+        storage.loadStore()
+
         LogStorage.setStorage(storage.log)
         
         let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
@@ -149,6 +154,7 @@ final class MainRepositoryImpl: MainRepository {
             DebugLog("Sync: \($0)")
         }
         SyncInstance.migrateStoreIfNeeded()
+        migrationTask?.end()
         // It would be marked as done for this version on the empty in-memory store
         if !storage.isMigrationDeferred {
             serviceMigration.migrateIfNeeded()
@@ -171,8 +177,12 @@ final class MainRepositoryImpl: MainRepository {
             syncMigration: SyncInstance.getSyncMigrationHandler(),
             watchPairing: SyncInstance.getWatchPairHandler()
         )
+        // Until the migration the widget showed that the data is unavailable
+        if migrationTask != nil, !storage.isMigrationDeferred {
+            _shared.reloadWidgets()
+        }
     }
-    
+
     init(
         pushNotifications: PushNotifications,
         cameraPermissions: CameraPermissions,
@@ -222,5 +232,27 @@ final class MainRepositoryImpl: MainRepository {
         storage.addUserPresentableError { [weak self] error in
             self?.storageError?(error)
         }
+    }
+
+    var isLocalDataUnavailable: Bool {
+        storage.isLocalDataUnavailable
+    }
+}
+
+/// Keeps the app running when it goes to the background during the migration of the local stores – suspended in the
+/// middle, the migration would start over at the next launch
+private final class MigrationBackgroundTask {
+    private var identifier = UIBackgroundTaskIdentifier.invalid
+
+    init() {
+        identifier = UIApplication.shared.beginBackgroundTask(withName: "LocalStorageMigration") { [weak self] in
+            self?.end()
+        }
+    }
+
+    func end() {
+        guard identifier != .invalid else { return }
+        UIApplication.shared.endBackgroundTask(identifier)
+        identifier = .invalid
     }
 }

@@ -24,7 +24,9 @@ import Common
 struct CodeEntry: TimelineEntry, Encodable {
     let date: Date
     let entries: [Entry]
-    
+    /// The user's data can't be read now – the widget asks to open the app instead
+    var isLocalDataUnavailable = false
+
     enum Kind: String, Identifiable, Encodable {
         case singleEntry
         case singleEntryHidden

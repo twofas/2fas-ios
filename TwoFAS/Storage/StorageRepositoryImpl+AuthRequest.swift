@@ -43,15 +43,17 @@ extension StorageRepositoryImpl {
     }
     
     func listAllAuthRequests(for secret: String) -> [PairedAuthRequest] {
-        AuthRequestEntity
-            .listAll(on: context, filterOptions: .secret(secret: secret.encrypt()))
-            .map({ $0.pairedAuthRequest })
+        guard let secretHash = AuthRequestEntity.secretHash(for: secret, on: context) else { return [] }
+        return AuthRequestEntity
+            .listAll(on: context, filterOptions: .secretHash(secretHash))
+            .compactMap({ $0.pairedAuthRequest })
     }
     
     func listAllAuthRequests(for domain: String, extensionID: ExtensionID) -> [PairedAuthRequest] {
-        AuthRequestEntity
-            .listAll(on: context, filterOptions: .domainExtension(domain: domain, extensionID: extensionID))
-            .map({ $0.pairedAuthRequest })
+        guard let domainHash = AuthRequestEntity.domainHash(for: domain, on: context) else { return [] }
+        return AuthRequestEntity
+            .listAll(on: context, filterOptions: .domainExtension(domainHash: domainHash, extensionID: extensionID))
+            .compactMap({ $0.pairedAuthRequest })
     }
     
     func listAllAuthRequestsForExtensionID(_ extensionID: ExtensionID) -> [PairedAuthRequest] {

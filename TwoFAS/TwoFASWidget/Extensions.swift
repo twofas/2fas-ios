@@ -38,6 +38,10 @@ extension CodeEntry {
         )}
         return .init(date: Date(), entries: data)
     }
+
+    static func localDataUnavailable() -> CodeEntry {
+        .init(date: Date(), entries: [], isLocalDataUnavailable: true)
+    }
 }
 
 extension CodeEntry.Entry {

@@ -87,6 +87,10 @@ extension MainRepositoryImpl: MainRepository {
     }
     
     // MARK: - Storage
+    var isLocalDataUnavailable: Bool {
+        storage.isLocalDataUnavailable
+    }
+
     func hasAnyServices() -> Bool {
         !storageRepository.listAllNotTrashed().isEmpty
     }

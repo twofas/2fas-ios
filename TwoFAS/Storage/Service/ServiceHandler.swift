@@ -78,7 +78,7 @@ public final class ServiceHandler {
             to: newIndex,
             newSectionID: newSectionID
         )
-        let secretsOfUpdated = updated.map { $0.secret.decrypt() }
+        let secretsOfUpdated = updated.readableSecrets
         coreDataStack.save()
         guard !secretsOfUpdated.isEmpty else { return }
         commonDidModify?(secretsOfUpdated)
@@ -96,14 +96,14 @@ public final class ServiceHandler {
             $0.sectionOrder = order
             order += 1
         })
-        let secretsOfUpdated = list.map { $0.secret.decrypt() }
+        let secretsOfUpdated = list.readableSecrets
         coreDataStack.save()
         guard !secretsOfUpdated.isEmpty else { return }
         commonDidModify?(secretsOfUpdated)
     }
     
     var hasServices: Bool {
-        !ServiceEntity.listAllNotTrashed(on: coreDataStack.context).isEmpty
+        ServiceEntity.countNotTrashed(on: coreDataStack.context) > 0
     }
     
     func listAllServicesWithinSections(
@@ -142,6 +142,8 @@ extension ServiceHandler: CommonServiceHandler {
             Log("ServiceHandler in Storage: Nothing new to import", module: .storage)
             return false
         }
+        // Before anything is trashed or removed – the new services couldn't be added without a key for writing
+        guard canWriteServices() else { return false }
         
         Log("ServiceHandler in Storage: There's a difference! Will try to merge\nNew services (\(newServices.count)), current services (\(currentServices.count))", module: .storage)
         #if DEBUG
@@ -198,14 +200,32 @@ extension ServiceHandler: CommonServiceHandler {
     
     public func getAllServices() -> [ServiceData] {
         ServiceEntity.listAllNotTrashed(on: coreDataStack.context)
-            .map { ServiceData.createFromManagedObject(entity: $0) }
+            .toServiceData()
     }
     
     // --
     
+    /// `false` (logged) when the content of new services can't be sealed (e.g. the key is unavailable)
+    private func canWriteServices() -> Bool {
+        do {
+            guard let cipher = coreDataStack.context.localStorageCipher else {
+                throw SealedEntity.Failure.missingCipher
+            }
+            try cipher.prepareForWriting()
+            return true
+        } catch {
+            Log(
+                "ServiceHandler in Storage: Can't merge, writing not possible: \(SealedEntity.describe(error))",
+                module: .storage,
+                severity: .error
+            )
+            return false
+        }
+    }
+    
     private func getAllTrashedServices() -> [ServiceData] {
         ServiceEntity.listAllTrashed(on: coreDataStack.context)
-            .map { ServiceData.createFromManagedObject(entity: $0) }
+            .toServiceData()
     }
     
     private func modifyCounters(_ services: [ServiceData], current: [ServiceData]) -> [ServiceData] {
@@ -272,7 +292,7 @@ extension ServiceHandler: CommonServiceHandler {
         ServiceEntity.create(
             on: coreDataStack.context,
             name: s.name,
-            encryptedSecret: s.secret.encrypt(),
+            secret: s.secret,
             serviceTypeID: s.serviceTypeID,
             additionalInfo: s.additionalInfo,
             rawIssuer: s.rawIssuer,
@@ -308,11 +328,8 @@ extension ServiceHandler: CommonServiceHandler {
         Log("ServiceHandler in Storage: Marking as trashed: items: \(deleted)", module: .storage, save: false)
         #endif
         deleted.forEach({
-            if let service = ServiceEntity.findService(
-                on: coreDataStack.context,
-                encryptedSecret: $0.secret.encrypt()
-            ) {
-                ServiceEntity.markAsTrashed(on: coreDataStack.context, encryptedSecret: service.secret)
+            if ServiceEntity.findService(on: coreDataStack.context, secret: $0.secret) != nil {
+                ServiceEntity.markAsTrashed(on: coreDataStack.context, secret: $0.secret)
             }
         })
         coreDataStack.save()
@@ -334,7 +351,7 @@ extension ServiceHandler: CommonServiceHandler {
         Log("ServiceHandler in Storage: Cleaning trash: \(inTrashNowAdded)", module: .storage, save: false)
         #endif
         let forDeletition = inTrashNowAdded.compactMap {
-            ServiceEntity.getService(on: coreDataStack.context, encryptedSecret: $0.secret.encrypt())
+            ServiceEntity.getService(on: coreDataStack.context, secret: $0.secret)
         }
         return forDeletition
     }

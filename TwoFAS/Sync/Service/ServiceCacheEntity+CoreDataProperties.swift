@@ -25,26 +25,20 @@ extension ServiceCacheEntity {
         NSFetchRequest<ServiceCacheEntity>(entityName: "ServiceCacheEntity")
     }
     
-    @NSManaged var name: String
-    @NSManaged var secret: String
-    @NSManaged var serviceTypeID: UUID?
-    @NSManaged var additionalInfo: String?
-    @NSManaged var rawIssuer: String?
-    @NSManaged var metadata: Data
+    @NSManaged var secretHash: Data
+    @NSManaged var encryptedContent: Data
+    @NSManaged var encryptedMetadata: Data
     @NSManaged var creationDate: Date
     @NSManaged var modificationDate: Date
     @NSManaged var tokenPeriod: NSNumber?
     @NSManaged var tokenLength: NSNumber
     @NSManaged var badgeColor: String?
-    @NSManaged var iconTypeID: UUID
     @NSManaged var iconType: String
     @NSManaged var labelColor: String
-    @NSManaged var labelTitle: String
     @NSManaged var sectionID: UUID?
     @NSManaged var sectionOrder: Int
     @NSManaged var tokenType: String
     @NSManaged var counter: NSNumber?
     @NSManaged var algorithm: String
-    @NSManaged var otpAuth: String?
     @NSManaged var source: String
 }

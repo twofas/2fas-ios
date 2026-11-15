@@ -44,18 +44,18 @@ final class ServiceHandler {
         switch iCloudIdentifier.parse(identifier) {
         case .v3(let secretHash):
             let list = ServiceCacheEntity.listAll(on: coreDataStack.context)
-                .filter({ iCloudIdentifier.hash(from: $0.secret.decrypt().uppercased()) == secretHash })
+                .filter({ iCloudIdentifier.hash(from: $0.secret.uppercased()) == secretHash })
             guard let first = list.first, list.count == 1 else {
                 Log("ServiceHandler - Can't find V3 identifier", severity: .error)
                 return
             }
             ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: first.secret)
         case .v2(let secret):
-            ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: secret.encrypt())
+            ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: secret)
         case .long(let hash, let beginsWith):
             let list = ServiceCacheEntity.listAll(on: coreDataStack.context)
-                .filter({ $0.secret.decrypt().hasPrefix(beginsWith) && $0.secret.count > Config.maxIdentifierLength })
-                .filter({ iCloudIdentifier.hash(from: $0.secret.decrypt()).uppercased() == hash })
+                .filter({ $0.secret.hasPrefix(beginsWith) && $0.secret.count > Config.maxIdentifierLength })
+                .filter({ iCloudIdentifier.hash(from: $0.secret).uppercased() == hash })
             guard let first = list.first, list.count == 1 else {
                 Log("ServiceHandler - Can't find long identifier", severity: .error)
                 return
@@ -71,14 +71,15 @@ final class ServiceHandler {
     
     func delete(identifiedBy secrets: [String]) {
         secrets.forEach { sec in
-            ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: sec.encrypt())
+            ServiceCacheEntity.delete(on: coreDataStack.context, identifiedBy: sec)
         }
         coreDataStack.save()
     }
     
+    /// Removes every entry without decrypting it – also the ones that can't be decrypted
     func purge() {
-        let list = listAll()
-        delete(identifiedBy: list.map { $0.secret })
+        ServiceCacheEntity.deleteAll(on: coreDataStack.context)
+        coreDataStack.save()
     }
     
     func listAll() -> [ServiceData] {
@@ -96,12 +97,12 @@ final class ServiceHandler {
 
     func findService(by secret: String) -> ServiceCacheEntity? {
         ServiceCacheEntity
-            .findService(on: coreDataStack.context, secret: secret.encrypt())
+            .findService(on: coreDataStack.context, secret: secret)
     }
     
     func findServices(by secrets: [String]) -> [ServiceData] {
         let services = secrets.compactMap {
-            ServiceCacheEntity.findService(on: coreDataStack.context, secret: $0.encrypt())
+            ServiceCacheEntity.findService(on: coreDataStack.context, secret: $0)
         }
         return services.map({ $0.serviceData })
     }
@@ -119,21 +120,22 @@ final class ServiceHandler {
         }
         
         if let service = findService(by: serviceData.secret) {
-            service.name = serviceData.name
-            service.serviceTypeID = serviceData.serviceTypeID
-            service.additionalInfo = serviceData.additionalInfo
-            service.rawIssuer = serviceData.rawIssuer
-            service.otpAuth = serviceData.otpAuth
-            service.metadata = record.encodeSystemFields()
+            guard update(service, metadata: record.encodeSystemFields(), content: { content in
+                content.name = serviceData.name
+                content.serviceTypeID = serviceData.serviceTypeID
+                content.additionalInfo = serviceData.additionalInfo
+                content.rawIssuer = serviceData.rawIssuer
+                content.otpAuth = serviceData.otpAuth
+                content.iconTypeID = serviceData.iconTypeID
+                content.labelTitle = serviceData.labelTitle
+            }) else { return }
             service.creationDate = record.creationDate
             service.modificationDate = record.modificationDate
             service.tokenLength = NSNumber(value: record.tokenLength)
             service.tokenPeriod = intToNumber(record.tokenPeriod)
             service.iconType = record.iconType
-            service.iconTypeID = serviceData.iconTypeID
             service.badgeColor = record.badgeColor
             service.labelColor = record.labelColor
-            service.labelTitle = serviceData.labelTitle
             service.sectionID = serviceData.sectionID
             service.sectionOrder = record.sectionOrder
             service.algorithm = record.algorithm
@@ -145,7 +147,7 @@ final class ServiceHandler {
                 on: coreDataStack.context,
                 metadata: record.encodeSystemFields(),
                 name: serviceData.name,
-                secret: serviceData.secret.encrypt(),
+                secret: serviceData.secret,
                 serviceTypeID: serviceData.serviceTypeID,
                 additionalInfo: serviceData.additionalInfo,
                 rawIssuer: serviceData.rawIssuer,
@@ -184,26 +186,27 @@ final class ServiceHandler {
             let secret = String(data: secretData, encoding: .utf8)
         else { return }
         if let service = findService(by: secret) {
-            service.name = record.name
-            service.serviceTypeID = {
-                if let serviceTypeID = record.serviceTypeID {
-                    return ServiceTypeID(uuidString: serviceTypeID)
-                }
-                return nil
-            }()
-            service.additionalInfo = record.additionalInfo
-            service.rawIssuer = record.rawIssuer
-            service.otpAuth = record.otpAuth
-            service.metadata = record.encodeSystemFields()
+            guard update(service, metadata: record.encodeSystemFields(), content: { content in
+                content.name = record.name
+                content.serviceTypeID = {
+                    if let serviceTypeID = record.serviceTypeID {
+                        return ServiceTypeID(uuidString: serviceTypeID)
+                    }
+                    return nil
+                }()
+                content.additionalInfo = record.additionalInfo
+                content.rawIssuer = record.rawIssuer
+                content.otpAuth = record.otpAuth
+                content.iconTypeID = IconTypeID(uuidString: record.iconTypeID) ?? IconTypeID.default
+                content.labelTitle = record.labelTitle
+            }) else { return }
             service.creationDate = record.creationDate
             service.modificationDate = record.modificationDate
             service.tokenLength = NSNumber(value: record.tokenLength)
             service.tokenPeriod = intToNumber(record.tokenPeriod)
             service.iconType = record.iconType
-            service.iconTypeID = IconTypeID(uuidString: record.iconTypeID) ?? IconTypeID.default
             service.badgeColor = record.badgeColor
             service.labelColor = record.labelColor
-            service.labelTitle = record.labelTitle
             service.sectionID = {
                 if let sectionID = record.sectionID {
                     return SectionID(uuidString: sectionID)
@@ -220,7 +223,7 @@ final class ServiceHandler {
                 on: coreDataStack.context,
                 metadata: record.encodeSystemFields(),
                 name: record.name,
-                secret: secret.encrypt(),
+                secret: secret,
                 serviceTypeID: {
                     if let serviceTypeID = record.serviceTypeID {
                         return ServiceTypeID(uuidString: serviceTypeID)
@@ -266,5 +269,24 @@ extension ServiceHandler {
     func intToNumber(_ int: Int?) -> NSNumber? {
         guard let int else { return nil }
         return NSNumber(value: int)
+    }
+    
+    private func update(
+        _ service: ServiceCacheEntity,
+        metadata: Data,
+        content change: (inout ServiceSensitiveContent) -> Void
+    ) -> Bool {
+        do {
+            try service.update(metadata: metadata, content: change)
+            return true
+        } catch {
+            Log(
+                "ServiceCacheEntity - can't update content: \(SealedEntity.describe(error))",
+                module: .cloudSync,
+                severity: .error
+            )
+            ConstStorage.syncResetRequired = true
+            return false
+        }
     }
 }

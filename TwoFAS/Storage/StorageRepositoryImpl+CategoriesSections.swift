@@ -33,8 +33,7 @@ extension StorageRepositoryImpl {
     }
     
     func moveServiceToEndOfSection(secret: String, sectionID: SectionID?) -> [String] {
-        let encryptedSecret = secret.encrypt()
-        guard let serviceData = ServiceEntity.getService(on: context, encryptedSecret: encryptedSecret) else {
+        guard let serviceData = ServiceEntity.getService(on: context, secret: secret) else {
             Log("Can't find service for provided secret in moveServiceToSection", module: .storage)
             return []
         }
@@ -48,12 +47,11 @@ extension StorageRepositoryImpl {
             newSectionID: sectionID
         )
         save()
-        return updated.map { $0.secret.decrypt() }
+        return updated.readableSecrets
     }
     
     func section(for secret: String) -> SectionData? {
-        let encryptedSecret = secret.encrypt()
-        guard let serviceData = ServiceEntity.getService(on: context, encryptedSecret: encryptedSecret) else {
+        guard let serviceData = ServiceEntity.getService(on: context, secret: secret) else {
             Log("Can't find service for provided secret in section(for: secret)", module: .storage)
             return nil
         }

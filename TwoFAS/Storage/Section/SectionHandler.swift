@@ -46,6 +46,7 @@ public final class SectionHandler: CommonSectionHandler {
         guard let objectID = section.objectID else { return }
         
         SectionEntity.delete(on: coreDataStack.context, identifiedByObjectID: objectID)
+        DeletedSectionEntity.record(on: coreDataStack.context, sectionID: section.sectionID, deletedAt: Date())
         commonDidDelete?(section.sectionID.uuidString)
         coreDataStack.save()
     }
@@ -124,6 +125,12 @@ public extension SectionHandler {
         let collapsedState = listCollapsedState()
         removeAll()
         addSections(sections, collapsedState: collapsedState)
+        // The sections that are gone were deleted – the ones that came back had their deletion removed when created
+        let remainingIDs = Set(sections.compactMap { UUID(uuidString: $0.sectionID) })
+        let deletedAt = Date()
+        for sectionID in collapsedState.keys where !remainingIDs.contains(sectionID) {
+            DeletedSectionEntity.record(on: coreDataStack.context, sectionID: sectionID, deletedAt: deletedAt)
+        }
         Log("New sections count: \(sections.count)", module: .storage)
         #if DEBUG
         Log("New sections: \(sections)", module: .storage, save: false)

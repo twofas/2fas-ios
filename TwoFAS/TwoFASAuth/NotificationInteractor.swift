@@ -22,6 +22,7 @@ import Common
 import Data
 
 enum NotificationError: Error {
+    case localDataUnavailable
     case noServicesExists
     case noInternet
     case notRegistered
@@ -64,6 +65,12 @@ extension NotificationInteractor: NotificationInteracting {
         extensionID: ExtensionID,
         completion: @escaping (Result<Void, NotificationError>) -> Void
     ) {
+        // Otherwise the empty store would look like no services or no pairing
+        guard !mainRepository.isLocalDataUnavailable else {
+            completion(.failure(.localDataUnavailable))
+            return
+        }
+
         guard mainRepository.hasAnyServices() else {
             completion(.failure(.noServicesExists))
             return

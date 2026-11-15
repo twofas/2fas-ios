@@ -24,7 +24,13 @@ import Data
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
-    private lazy var pushInteractor: RootInteracting = InteractorFactory.shared.rootInteractor()
+    private lazy var readyPushInteractor: RootInteracting = InteractorFactory.shared.rootInteractor()
+    /// `nil` while the local storage isn't ready (`LocalStoragePreflight`) – the app doesn't exist then. A launch
+    /// in the background (no scene yet) checks it here.
+    private var pushInteractor: RootInteracting? {
+        guard LocalStoragePreflight.run(userVisible: false) == .ready else { return nil }
+        return readyPushInteractor
+    }
 
     private var rootViewController: RootViewController? {
         UIApplication.shared.connectedScenes
@@ -52,11 +58,11 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Push Notifications
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        pushInteractor.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
+        pushInteractor?.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        pushInteractor.didFailToRegisterForRemoteNotifications(with: error)
+        pushInteractor?.didFailToRegisterForRemoteNotifications(with: error)
     }
 
     func application(
@@ -64,6 +70,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         didReceiveRemoteNotification userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     ) {
+        guard let pushInteractor else {
+            completionHandler(.failed)
+            return
+        }
         pushInteractor.didReceiveRemoteNotification(
             userInfo: userInfo,
             fetchCompletionHandler: completionHandler

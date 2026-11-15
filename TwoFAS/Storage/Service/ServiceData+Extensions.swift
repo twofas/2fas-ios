@@ -25,29 +25,31 @@ import CommonWatch
 #endif
 
 extension ServiceData {
-    static func createFromManagedObject(entity: ServiceEntity) -> ServiceData {
-        ServiceData(
-            name: entity.name,
-            secret: entity.secret.decrypt(),
-            serviceTypeID: entity.serviceTypeID,
-            additionalInfo: entity.additionalInfo,
-            rawIssuer: entity.rawIssuer,
+    /// `nil` when the entity's content can't be decrypted
+    static func createFromManagedObject(entity: ServiceEntity) -> ServiceData? {
+        guard let content = entity.content else { return nil }
+        return ServiceData(
+            name: content.name,
+            secret: content.secret,
+            serviceTypeID: content.serviceTypeID,
+            additionalInfo: content.additionalInfo,
+            rawIssuer: content.rawIssuer,
             modifiedAt: entity.modificationDate,
             createdAt: entity.creationDate,
             tokenPeriod: Period.create(entity.tokenPeriod?.intValue),
             tokenLength: Digits.create(entity.tokenLength.intValue),
             badgeColor: TintColor(optionalRawValue: entity.badgeColor),
             iconType: IconType(optionalWithDefaultRawValue: entity.iconType),
-            iconTypeID: entity.iconTypeID,
+            iconTypeID: content.iconTypeID,
             labelColor: TintColor(optionalWithDefaultRawValue: entity.labelColor),
-            labelTitle: entity.labelTitle,
+            labelTitle: content.labelTitle,
             algorithm: Algorithm.create(entity.algorithm),
             isTrashed: entity.isTrashed.boolValue,
             trashingDate: entity.trashingDate,
             counter: entity.counter?.intValue,
             tokenType: TokenType.create(entity.tokenType),
             source: ServiceSource(optionalWithDefaultRawValue: entity.source),
-            otpAuth: entity.otpAuth,
+            otpAuth: content.otpAuth,
             order: entity.sectionOrder,
             sectionID: entity.sectionID
         )

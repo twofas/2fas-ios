@@ -25,7 +25,8 @@ extension LogEntity {
         NSFetchRequest<LogEntity>(entityName: "LogEntity")
     }
 
-    @NSManaged var entityID: String
+    @NSManaged var entityIDHash: Data
+    @NSManaged var encryptedEntityID: Data
     @NSManaged var action: String
     @NSManaged var date: Date
     @NSManaged var isApplied: Bool

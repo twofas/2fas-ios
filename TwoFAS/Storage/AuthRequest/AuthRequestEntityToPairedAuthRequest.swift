@@ -26,11 +26,13 @@ import CommonWatch
 #endif
 
 extension AuthRequestEntity {
-    var pairedAuthRequest: PairedAuthRequest {
-        PairedAuthRequest(
-            extensionID: extensionID,
-            secret: secret.decrypt(),
-            domain: domain,
+    /// `nil` when the content can't be decrypted
+    var pairedAuthRequest: PairedAuthRequest? {
+        guard let content else { return nil }
+        return PairedAuthRequest(
+            extensionID: content.extensionID,
+            secret: content.secret,
+            domain: content.domain,
             usedCount: Int(usedCount),
             createdAt: creationDate,
             lastUsedAt: lastUsed,

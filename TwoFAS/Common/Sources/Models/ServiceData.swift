@@ -131,14 +131,7 @@ public struct ServiceData: Hashable {
 
 public extension ServiceData {
     var debugServiceType: String {
-        if source == .manual {
-            return "manual"
-        } else {
-            if let serviceTypeID {
-                return serviceTypeID.uuidString
-            }
-            return "unknown service ID"
-        }
+        source == .manual ? "manual" : "service"
     }
 }
 

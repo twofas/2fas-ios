@@ -28,7 +28,7 @@ extension ServiceCacheEntity {
     var serviceData: ServiceData {
         ServiceData(
             name: name,
-            secret: secret.decrypt(),
+            secret: secret,
             serviceTypeID: serviceTypeID,
             additionalInfo: additionalInfo,
             rawIssuer: rawIssuer,

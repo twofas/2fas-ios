@@ -101,7 +101,7 @@ extension SelectFromGalleryModuleInteractor: SelectFromGalleryModuleInteracting 
     }
     
     func addSelectedCode(_ code: Code, force: Bool) {
-        Log("Selected code: \(code)", module: .camera)
+        Log("Selected code", module: .camera)
         newCodeInteractor.addCode(code, force: force)
     }
     

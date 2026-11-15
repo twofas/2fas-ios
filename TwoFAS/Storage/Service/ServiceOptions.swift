@@ -25,22 +25,16 @@ import CommonWatch
 #endif
 
 enum ServiceOptions {
-    enum TrashOptions {
-        case yes
-        case no
-        case all // default
-    }
-    
-    case filterByPhrase(String?, sortBy: SortType, trashed: TrashOptions, ids: [ServiceTypeID])
-    case findExistingBySecret(String)
-    case findNotTrashedBySecret(String)
-    case includeServices([String])
+    case findExistingBySecretHash(Data)
+    case findNotTrashedBySecretHash(Data)
+    case includeServices([Data])
     case fromSection(SectionID?)
     case allTrashed
     case allNotTrashed
-    case unknownServices
+    /// Name and additional info are encrypted, so only the manual order is applied in SQL
+    case notTrashedSorted(SortType)
     case all
-    case widget(filter: String?, excludedServices: [String])
+    case widget(excludedHashes: [Data])
 }
 
 extension ServiceOptions {
@@ -48,46 +42,23 @@ extension ServiceOptions {
         var andPredicates: [NSPredicate] = []
         
         switch self {
-        case .filterByPhrase(let phrase, _, let trashed, let ids):
-            if let phrase, !phrase.isEmpty {
-                if ids.isEmpty {
-                    andPredicates.append(Predicate.findByPhrase(phrase))
-                } else {
-                    andPredicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: [
-                        Predicate.findByPhrase(phrase),
-                        Predicate.findByServiceTypes(ids)
-                    ]))
-                }
-            } else {
-                if !ids.isEmpty {
-                    andPredicates.append(Predicate.findByServiceTypes(ids))
-                }
-            }
-            if let trashPredicate = trashed.predicate {
-                andPredicates.append(trashPredicate)
-            }
-        case .findExistingBySecret(let secret):
-            andPredicates.append(Predicate.findBySecret(secret))
-        case .findNotTrashedBySecret(let secret):
-            andPredicates.append(contentsOf: [Predicate.findBySecret(secret), Predicate.notTrashedItems])
-        case .includeServices(let services):
-            andPredicates.append(contentsOf: [Predicate.services(services), Predicate.notTrashedItems])
+        case .findExistingBySecretHash(let secretHash):
+            andPredicates.append(Predicate.findBySecretHash(secretHash))
+        case .findNotTrashedBySecretHash(let secretHash):
+            andPredicates.append(contentsOf: [Predicate.findBySecretHash(secretHash), Predicate.notTrashedItems])
+        case .includeServices(let secretHashes):
+            andPredicates.append(contentsOf: [Predicate.services(secretHashes), Predicate.notTrashedItems])
         case .fromSection(let section):
             andPredicates.append(contentsOf: [Predicate.findBySection(section), Predicate.notTrashedItems])
         case .allTrashed:
             andPredicates.append(Predicate.trashedItems)
-        case .allNotTrashed:
+        case .allNotTrashed, .notTrashedSorted:
             andPredicates.append(Predicate.notTrashedItems)
-        case .unknownServices:
-            andPredicates.append(Predicate.unknownServices)
         case .all:
             andPredicates.append(contentsOf: [])
-        case .widget(let phrase, let excludedServices):
-            if let phrase, !phrase.isEmpty {
-                andPredicates.append(Predicate.findByPhrase(phrase))
-            }
-            if !excludedServices.isEmpty {
-                andPredicates.append(Predicate.excludeServices(excludedServices))
+        case .widget(let excludedHashes):
+            if !excludedHashes.isEmpty {
+                andPredicates.append(Predicate.excludeServices(excludedHashes))
             }
             andPredicates.append(Predicate.notTrashedItems)
         }
@@ -103,12 +74,10 @@ extension ServiceOptions {
     
     var sortDescriptors: [NSSortDescriptor] {
         switch self {
-        case .filterByPhrase(_, let sortBy, _, _):
+        case .notTrashedSorted(let sortBy):
             switch sortBy {
-            case .az:
-                return [ServiceSortDescriptor.sortByNameAscending, ServiceSortDescriptor.sortByInfoAscending]
-            case .za:
-                return [ServiceSortDescriptor.sortByNameDescending, ServiceSortDescriptor.sortByInfoDescending]
+            case .az, .za:
+                return []
             case .manual:
                 return [ServiceSortDescriptor.sectionID, ServiceSortDescriptor.sectionOrder]
             }
@@ -120,70 +89,26 @@ extension ServiceOptions {
     }
 }
 
-extension ServiceOptions.TrashOptions {
-    var predicate: NSPredicate? {
-        switch self {
-        case .yes:
-            return Predicate.trashedItems
-        case .no:
-            return Predicate.notTrashedItems
-        case .all:
-            return nil
-        }
-    }
-}
-
 enum ServiceSortDescriptor {
     static let sectionID = NSSortDescriptor(key: #keyPath(ServiceEntity.sectionID), ascending: true)
     static let sectionOrder = NSSortDescriptor(key: #keyPath(ServiceEntity.sectionOrder), ascending: true)
     static let trashingDate = NSSortDescriptor(key: #keyPath(ServiceEntity.trashingDate), ascending: false)
-    static let sortByNameAscending = NSSortDescriptor(
-        key: #keyPath(ServiceEntity.name),
-        ascending: true,
-        selector: #selector(NSString.localizedStandardCompare)
-    )
-    static let sortByNameDescending = NSSortDescriptor(
-        key: #keyPath(ServiceEntity.name),
-        ascending: false,
-        selector: #selector(NSString.localizedStandardCompare)
-    )
-    static let sortByInfoAscending = NSSortDescriptor(
-        key: #keyPath(ServiceEntity.additionalInfo),
-        ascending: true,
-        selector: #selector(NSString.localizedStandardCompare)
-    )
-    static let sortByInfoDescending = NSSortDescriptor(
-        key: #keyPath(ServiceEntity.additionalInfo),
-        ascending: false,
-        selector: #selector(NSString.localizedStandardCompare)
-    )
 }
 
 enum Predicate {
     static let trashedItems = NSPredicate(format: "isTrashed == TRUE")
     static let notTrashedItems = NSPredicate(format: "isTrashed == FALSE")
-    static let unknownServices = NSPredicate(
-        format: "(serviceTypeID == NULL) AND ((rawIssuer != NULL) OR (otpAuth != NULL))"
-    )
     
-    static func findBySecret(_ secret: String) -> NSPredicate {
-        NSPredicate(format: "secret == %@", secret)
+    static func findBySecretHash(_ secretHash: Data) -> NSPredicate {
+        NSPredicate(format: "secretHash == %@", secretHash as NSData)
     }
     
-    static func services(_ services: [String]) -> NSPredicate {
-        NSPredicate(format: "secret IN %@", services)
+    static func services(_ secretHashes: [Data]) -> NSPredicate {
+        NSPredicate(format: "secretHash IN %@", secretHashes)
     }
     
-    static func excludeServices(_ services: [String]) -> NSPredicate {
-        NSPredicate(format: "NOT (secret IN %@)", services)
-    }
-    
-    static func findByPhrase(_ phrase: String) -> NSPredicate {
-        NSPredicate(format: "(name contains[c] %@) OR (additionalInfo contains[c] %@)", phrase, phrase)
-    }
-    
-    static func findByServiceTypes(_ ids: [ServiceTypeID]) -> NSPredicate {
-        NSPredicate(format: "serviceTypeID in %@", ids)
+    static func excludeServices(_ secretHashes: [Data]) -> NSPredicate {
+        NSPredicate(format: "NOT (secretHash IN %@)", secretHashes)
     }
     
     static func findBySection(_ section: SectionID?) -> NSPredicate {

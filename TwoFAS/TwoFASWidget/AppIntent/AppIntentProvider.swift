@@ -29,8 +29,9 @@ import TimeVerification
 struct AppIntentProvider: AppIntentTimelineProvider {
     private let defaults = UserDefaults(suiteName: Config.groupIdentifier)
     private let calendar = Calendar.current
+    private static let localDataRecheckInterval: TimeInterval = 15 * 60
     typealias Intent = SelectService
-    
+
     private enum Values {
         case placeholder
         case entry(EntryDescription)
@@ -62,13 +63,19 @@ struct AppIntentProvider: AppIntentTimelineProvider {
     
     func timeline(for configuration: SelectService, in context: Context) async -> Timeline<CodeEntry> {
         let protection = AccessManager.protection
-        let serviceHandler = AccessManager.serviceHandler
-        
+        let storage = AccessManager.storage
+        let serviceHandler = storage.widgetService
+
         let slots = context.family.servicesCount
         guard protection.extensionsStorage.areWidgetsEnabled else {
             return Timeline<CodeEntry>(entries: [CodeEntry.placeholder(with: slots)], policy: .never)
         }
-        
+        guard !storage.isLocalDataUnavailable else {
+            // The main app reloads the widgets after the migration; the key may come back without it
+            let recheckDate = Date().addingTimeInterval(Self.localDataRecheckInterval)
+            return Timeline<CodeEntry>(entries: [CodeEntry.localDataUnavailable()], policy: .after(recheckDate))
+        }
+
         let isClickable = context.family.isClickable
         let (validSecret, secondsLeft) = handleClickableWidgets()
         let requestedServices: [Secret] = (configuration.service?.compactMap { $0.secret } ?? [])

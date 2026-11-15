@@ -26,7 +26,7 @@ extension SectionCacheEntity {
     }
 
     @NSManaged var sectionID: String
-    @NSManaged var title: String
+    @NSManaged var encryptedContent: Data
     @NSManaged var creationDate: Date
     @NSManaged var modificationDate: Date?
     @NSManaged var metadata: Data

@@ -81,6 +81,7 @@ public final class ServiceMigrationController {
         Log("Services for migration:\n\n\(servicesForMigration)", save: false)
         #endif
         
+        var migratedCount = 0
         for s in servicesForMigration {
             guard
                 let rawIssuer = s.rawIssuer,
@@ -116,8 +117,9 @@ public final class ServiceMigrationController {
                 labelTitle: s.labelTitle,
                 counter: s.counter
             )
-            Log("Service \(rawIssuer) successfuly updated to \(def)")
+            migratedCount += 1
         }
+        Log("Count of services migrated using issuer value: \(migratedCount)")
     }
 }
 

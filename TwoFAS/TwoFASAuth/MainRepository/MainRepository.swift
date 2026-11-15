@@ -38,6 +38,8 @@ protocol MainRepository: AnyObject {
     )
     
     // MARK: - Storage
+    /// The user's data can't be read now – the store waits for the main app or the key is unavailable
+    var isLocalDataUnavailable: Bool { get }
     func hasAnyServices() -> Bool
     func listAllPairedExtensions() -> [PairedWebExtension]
     func listAllAuthRequests(for domain: String, extensionID: ExtensionID) -> [PairedAuthRequest]

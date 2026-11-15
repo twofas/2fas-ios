@@ -38,26 +38,35 @@ extension StorageRepositoryImpl {
     }
     
     func createAuthRequest(for secret: String, extensionID: ExtensionID, domain: String) {
-        AuthRequestEntity.create(on: context, secret: secret.encrypt(), extensionID: extensionID, domain: domain)
+        AuthRequestEntity.create(on: context, secret: secret, extensionID: extensionID, domain: domain)
         save()
     }
     
     func listAllAuthRequests(for secret: String) -> [PairedAuthRequest] {
-        AuthRequestEntity
-            .listAll(on: context, filterOptions: .secret(secret: secret.encrypt()))
-            .map({ $0.pairedAuthRequest })
+        guard let secretHash = AuthRequestEntity.secretHash(for: secret, on: context) else { return [] }
+        return AuthRequestEntity
+            .listAll(on: context, filterOptions: .secretHash(secretHash))
+            .compactMap({ $0.pairedAuthRequest })
     }
     
     func listAllAuthRequests(for domain: String, extensionID: ExtensionID) -> [PairedAuthRequest] {
-        AuthRequestEntity
-            .listAll(on: context, filterOptions: .domainExtension(domain: domain, extensionID: extensionID))
-            .map({ $0.pairedAuthRequest })
+        guard let domainHash = AuthRequestEntity.domainHash(for: domain, on: context),
+              let extensionIDHash = AuthRequestEntity.extensionIDHash(for: extensionID, on: context)
+        else { return [] }
+        return AuthRequestEntity
+            .listAll(
+                on: context,
+                filterOptions: .domainExtension(domainHash: domainHash, extensionIDHash: extensionIDHash)
+            )
+            .compactMap({ $0.pairedAuthRequest })
     }
     
     func listAllAuthRequestsForExtensionID(_ extensionID: ExtensionID) -> [PairedAuthRequest] {
-        AuthRequestEntity
-            .listAll(on: context, filterOptions: .extensionID(extensionID: extensionID))
-            .map({ $0.pairedAuthRequest })
+        guard let extensionIDHash = AuthRequestEntity.extensionIDHash(for: extensionID, on: context)
+        else { return [] }
+        return AuthRequestEntity
+            .listAll(on: context, filterOptions: .extensionIDHash(extensionIDHash))
+            .compactMap({ $0.pairedAuthRequest })
     }
     
     func updateAuthRequestUsage(for authRequest: PairedAuthRequest) {

@@ -38,19 +38,40 @@ final class LogHandler {
         self.coreDataStack = coreDataStack
     }
     
-    func logFirstImport(entityIDs: [String], kind: RecordType) {
+    /// A failed entry schedules a reset of the cache – a sync without it would trash the items missing in the cloud.
+    /// - Returns: Whether every entry was logged.
+    @discardableResult
+    func logFirstImport(entityIDs: [String], kind: RecordType) -> Bool {
+        // Every entry would fail the same way – checked once instead of logging a failure per entry
+        do {
+            guard let cipher = coreDataStack.context.localStorageCipher else {
+                throw SealedEntity.Failure.missingCipher
+            }
+            try cipher.prepareForWriting()
+        } catch {
+            Log(
+                "LogEntity - can't seal new entities: \(SealedEntity.describe(error))",
+                module: .cloudSync,
+                severity: .error
+            )
+            ConstStorage.syncResetRequired = true
+            return false
+        }
         var counter: Int = 0
+        var loggedAll = true
         entityIDs.forEach {
-            LogEntity.create(
+            let logged = LogEntity.create(
                 on: coreDataStack.context,
                 entityID: $0,
                 action: LogActionType.created.rawValue,
                 date: Date.distantPast.addingTimeInterval((60 * 60 * 24) * Double(counter)),
                 kind: kind.rawValue
             )
+            loggedAll = loggedAll && logged
             counter += 1
         }
         coreDataStack.save()
+        return loggedAll
     }
     
     func log(entityID: String, actionType: LogActionType, kind: RecordType) {

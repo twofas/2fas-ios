@@ -31,10 +31,19 @@ final class ServiceEntity: NSManagedObject {
     
     @nonobjc private static let entityName = "ServiceEntity"
     
+    /// Valid only for the current bytes of `encryptedContent`. Not a transient attribute, so filling it never marks
+    /// the object as updated.
+    let contentCache = SealedContentCache<ServiceSensitiveContent>()
+    
+    override func didTurnIntoFault() {
+        super.didTurnIntoFault()
+        contentCache.clear()
+    }
+    
     @nonobjc static func update(
         on context: NSManagedObjectContext,
         name: String,
-        encryptedSecret: String,
+        secret: String,
         additionalInfo: String?,
         modificationDate: Date,
         badgeColor: String?,
@@ -44,24 +53,35 @@ final class ServiceEntity: NSManagedObject {
         labelTitle: String,
         counter: Int?
     ) {
-        
-        let services = listAllExisting(on: context)
-        guard let serviceForUpdating = services.first(where: { service in service.secret == encryptedSecret }) else {
+        guard let serviceForUpdating = listAllExisting(on: context, secret: secret).first else {
             Log("Can't find service for updating on local storage", module: .storage)
             return
         }
         
-        serviceForUpdating.name = name
-        serviceForUpdating.additionalInfo = additionalInfo
+        do {
+            try serviceForUpdating.updateContent { content in
+                content.name = name
+                content.additionalInfo = additionalInfo
+                content.iconTypeID = iconTypeID
+                content.labelTitle = labelTitle
+            }
+        } catch {
+            Log(
+                "\(entityName) - can't update content: \(SealedEntity.describe(error))",
+                module: .storage,
+                severity: .error
+            )
+            assertionFailure("\(entityName) - can't update content")
+            return
+        }
+        
         serviceForUpdating.modificationDate = modificationDate
 
         if let badgeColor {
             serviceForUpdating.badgeColor = badgeColor
         }
         serviceForUpdating.iconType = iconType
-        serviceForUpdating.iconTypeID = iconTypeID
         serviceForUpdating.labelColor = labelColor
-        serviceForUpdating.labelTitle = labelTitle
 
         if let counter {
             serviceForUpdating.counter = NSNumber(value: counter)
@@ -71,7 +91,7 @@ final class ServiceEntity: NSManagedObject {
     @nonobjc static func create(
         on context: NSManagedObjectContext,
         name: String,
-        encryptedSecret: String,
+        secret: String,
         serviceTypeID: ServiceTypeID?,
         additionalInfo: String?,
         rawIssuer: String?,
@@ -92,14 +112,42 @@ final class ServiceEntity: NSManagedObject {
         tokenType: String,
         source: String
     ) {
+        let content = ServiceSensitiveContent(
+            secret: secret.uppercased(),
+            name: name,
+            additionalInfo: additionalInfo,
+            rawIssuer: rawIssuer,
+            otpAuth: otpAuth,
+            labelTitle: labelTitle,
+            serviceTypeID: serviceTypeID,
+            iconTypeID: iconTypeID
+        )
+        let secretHash: Data
+        let sealed: Data
+        do {
+            guard let cipher = context.localStorageCipher else { throw SealedEntity.Failure.missingCipher }
+            // The hash is part of the associated data, so the key has to exist before hashing
+            try cipher.prepareForWriting()
+            secretHash = try Self.secretHash(for: content.secret, cipher: cipher)
+            sealed = try contentCodec.seal(content, hashes: [secretHash], cipher: cipher)
+        } catch {
+            Log(
+                "\(entityName) - can't seal new entity: \(SealedEntity.describe(error))",
+                module: .storage,
+                severity: .error
+            )
+            assertionFailure("\(entityName) - can't seal new entity")
+            return
+        }
+        
+        // A service that exists isn't a deleted one
+        DeletedServiceEntity.remove(on: context, secretHash: secretHash)
+        
         let service = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as! ServiceEntity
         
-        service.name = name
-        service.secret = encryptedSecret
-        service.serviceTypeID = serviceTypeID
-        service.additionalInfo = additionalInfo
-        service.rawIssuer = rawIssuer
-        service.otpAuth = otpAuth
+        service.secretHash = secretHash
+        service.encryptedContent = sealed
+        service.contentCache.store(content, sealed: sealed)
         service.modificationDate = modificationDate
         service.creationDate = creationDate
         if let tokenPeriod {
@@ -108,9 +156,7 @@ final class ServiceEntity: NSManagedObject {
         service.tokenLength = NSNumber(value: tokenLength)
         service.badgeColor = badgeColor
         service.iconType = iconType
-        service.iconTypeID = iconTypeID
         service.labelColor = labelColor
-        service.labelTitle = labelTitle
         service.sectionID = sectionID
         service.algorithm = algorithm
         service.isTrashed = NSNumber(value: false)
@@ -129,9 +175,8 @@ final class ServiceEntity: NSManagedObject {
         service.sectionOrder = order
     }
     
-    @nonobjc static func delete(on context: NSManagedObjectContext, encryptedSecret: String) {
-        let services = listAllExisting(on: context)
-        guard let serviceForDeletition = services.first(where: { $0.secret == encryptedSecret })
+    @nonobjc static func delete(on context: NSManagedObjectContext, secret: String) {
+        guard let serviceForDeletition = listAllExisting(on: context, secret: secret).first
         else { Log("Can't find service for deletition on local storage", module: .storage); return }
         var sectionList = listAll(on: context, sectionID: serviceForDeletition.sectionID)
         let modificationDate = Date()
@@ -142,25 +187,30 @@ final class ServiceEntity: NSManagedObject {
         delete(on: context, serviceEntity: serviceForDeletition)
     }
     
-    @nonobjc static func markAsTrashed(on context: NSManagedObjectContext, encryptedSecret: String) {
-        let services = listAllExisting(on: context)
-        guard let serviceForTrashing = services.first(where: { $0.secret == encryptedSecret })
+    @nonobjc static func markAsTrashed(on context: NSManagedObjectContext, secret: String) {
+        guard let serviceForTrashing = listAllExisting(on: context, secret: secret).first
         else { Log("Can't find service for trashing on local storage", module: .storage); return }
+        let trashingDate = Date()
         serviceForTrashing.isTrashed = NSNumber(value: true)
-        serviceForTrashing.trashingDate = Date()
+        serviceForTrashing.trashingDate = trashingDate
+        // Whatever puts a service in the trash – the service is a deleted one from now on
+        DeletedServiceEntity.record(on: context, secret: secret, deletedAt: trashingDate)
     }
     
-    @nonobjc static func markAsUntrashed(on context: NSManagedObjectContext, encryptedSecret: String) {
-        let trashedServices = listAllTrashed(on: context)
-        guard let serviceForUntrashing = trashedServices.first(where: { $0.secret == encryptedSecret })
+    @nonobjc static func markAsUntrashed(on context: NSManagedObjectContext, secret: String) {
+        guard let serviceForUntrashing = listAllExisting(on: context, secret: secret)
+            .first(where: { $0.isTrashed.boolValue })
         else { Log("Can't find service for untrashing on local storage", module: .storage); return }
         
         serviceForUntrashing.isTrashed = NSNumber(value: false)
         serviceForUntrashing.trashingDate = nil
+        // Restored after it was deleted: newer than its deletion, wherever that one is still known
+        serviceForUntrashing.modificationDate = Date()
+        DeletedServiceEntity.remove(on: context, secretHash: serviceForUntrashing.secretHash)
     }
     
-    @nonobjc static func getService(on context: NSManagedObjectContext, encryptedSecret: String) -> ServiceEntity? {
-        let list = listItemsWithOptions(on: context, options: .findExistingBySecret(encryptedSecret))
+    @nonobjc static func getService(on context: NSManagedObjectContext, secret: String) -> ServiceEntity? {
+        let list = listAllExisting(on: context, secret: secret)
         
         // If something went wrong (wrong migration, some bugs) -> remove duplicated entries instead of:
         if list.count > 1 {
@@ -173,8 +223,9 @@ final class ServiceEntity: NSManagedObject {
         return list.first
     }
     
-    @nonobjc static func findService(on context: NSManagedObjectContext, encryptedSecret: String) -> ServiceEntity? {
-        let list = listItemsWithOptions(on: context, options: .findNotTrashedBySecret(encryptedSecret))
+    @nonobjc static func findService(on context: NSManagedObjectContext, secret: String) -> ServiceEntity? {
+        guard let secretHash = Self.secretHash(for: secret, on: context) else { return nil }
+        let list = listItemsWithOptions(on: context, options: .findNotTrashedBySecretHash(secretHash))
         
         // If something went wrong (wrong migration, some bugs) -> remove duplicated entries instead of:
         if list.count > 1 {
@@ -237,13 +288,17 @@ final class ServiceEntity: NSManagedObject {
         listItemsWithOptions(on: context, options: .fromSection(sectionID))
     }
     
+    /// Not trashed, readable services filtered and sorted in memory (only the manual order comes from SQL)
     @nonobjc static func listItems(
         on context: NSManagedObjectContext,
         phrase: String?,
         sort: SortType,
         ids: [ServiceTypeID]
     ) -> [ServiceEntity] {
-        listItemsWithOptions(on: context, options: .filterByPhrase(phrase, sortBy: sort, trashed: .no, ids: ids))
+        let readable = listItemsWithOptions(on: context, options: .notTrashedSorted(sort))
+            .compactMap(ListedService.init(entity:))
+        return ServiceListing.sort(ServiceListing.filter(readable, phrase: phrase, ids: ids), by: sort)
+            .map(\.entity)
     }
     
     @nonobjc static func listAllExisting(on context: NSManagedObjectContext) -> [ServiceEntity] {
@@ -251,15 +306,32 @@ final class ServiceEntity: NSManagedObject {
     }
     
     @nonobjc static func findAllUnknownServices(on context: NSManagedObjectContext) -> [ServiceEntity] {
-        listItemsWithOptions(on: context, options: .unknownServices)
+        listAllExisting(on: context).filter { service in
+            guard let content = service.content else { return false }
+            return content.serviceTypeID == nil && (content.rawIssuer != nil || content.otpAuth != nil)
+        }
     }
     
     @nonobjc static func list(on context: NSManagedObjectContext, services: [ServiceID]) -> [ServiceEntity] {
-        listItemsWithOptions(on: context, options: .includeServices(services))
+        let secretHashes = services.compactMap { Self.secretHash(for: $0, on: context) }
+        guard !secretHashes.isEmpty else { return [] }
+        return listItemsWithOptions(on: context, options: .includeServices(secretHashes))
     }
     
     @nonobjc static func listAllNotTrashed(on context: NSManagedObjectContext) -> [ServiceEntity] {
         listItemsWithOptions(on: context, options: .allNotTrashed)
+    }
+    
+    /// Counted in SQL, without decrypting
+    @nonobjc static func countNotTrashed(on context: NSManagedObjectContext) -> Int {
+        let fetchRequest = ServiceEntity.request()
+        fetchRequest.predicate = ServiceOptions.allNotTrashed.predicate
+        do {
+            return try context.count(for: fetchRequest)
+        } catch {
+            Log("\(entityName) - can't count: \(SealedEntity.describe(error))", module: .storage, severity: .error)
+            return 0
+        }
     }
     
     @nonobjc static func listAll(on context: NSManagedObjectContext, sectionID: SectionID?) -> [ServiceEntity] {
@@ -267,6 +339,15 @@ final class ServiceEntity: NSManagedObject {
     }
     
     // MARK: - Private
+    /// Also trashed ones. Empty when the hash can't be computed.
+    @nonobjc private static func listAllExisting(
+        on context: NSManagedObjectContext,
+        secret: String
+    ) -> [ServiceEntity] {
+        guard let secretHash = Self.secretHash(for: secret, on: context) else { return [] }
+        return listItemsWithOptions(on: context, options: .findExistingBySecretHash(secretHash))
+    }
+    
     @nonobjc private static func listItemsWithOptions(
         on context: NSManagedObjectContext,
         options: ServiceOptions
@@ -323,9 +404,13 @@ final class ServiceEntity: NSManagedObject {
     @nonobjc static func listAllForWidget(
         on context: NSManagedObjectContext,
         filter: String?,
-        excludeServices: [String]
+        excludeServices: [ServiceID]
     ) -> [ServiceEntity] {
-        listItemsWithOptions(on: context, options: .widget(filter: filter, excludedServices: excludeServices))
+        let excludedHashes = excludeServices.compactMap { Self.secretHash(for: $0, on: context) }
+        let readable = listItemsWithOptions(on: context, options: .widget(excludedHashes: excludedHashes))
+            .compactMap(ListedService.init(entity:))
+        return ServiceListing.filter(readable, phrase: filter, ids: [])
+            .map(\.entity)
             .filter { $0.tokenType != TokenType.hotp.rawValue }
     }
 }

@@ -61,6 +61,7 @@ final class CloudKit {
     private var deletedRecords: [DeletedItem] = []
     
     private var collectedActions: [CloudKitAction] = []
+    private var consecutiveRetries = 0
     
     private let syncTokenHandler = SyncTokenHandler()
     private let zoneManager: ZoneManaging
@@ -414,6 +415,7 @@ final class CloudKit {
     private func handleOperationResult(error: Error?, next: Callback? = nil) {
         Log("CloudKit - handleOperationResult: \(String(describing: error))", module: .cloudSync)
         if error == nil && collectedActions.isEmpty {
+            consecutiveRetries = 0
             next?()
             return
         }
@@ -426,12 +428,14 @@ final class CloudKit {
             return
         }
         switch mostImportant {
-        case .retry(let after): retryAction(after)
+        case .retry(let after): retryAction(backedOff(after))
         case .purgeAndRetry(let after):
+            let after = backedOff(after)
             purgeCache { [weak self] in
                 self?.retryAction(after)
             }
         case .resetAndRetry(let after):
+            let after = backedOff(after)
             resetCache { [weak self] in
                 self?.retryAction(after)
             }
@@ -556,6 +560,15 @@ final class CloudKit {
             self.deleteAllEntries?()
             cachePurged?()
         }
+    }
+    
+    /// The delay doubled for every retry in a row (2 s, 4 s, 8 s … up to 30 min): an error that keeps coming back –
+    /// e.g. a zone that can't be created while the storage is full – mustn't be retried every 2 seconds forever.
+    /// Reset by an operation that succeeds.
+    private func backedOff(_ retryIn: TimeInterval) -> TimeInterval {
+        let delay = CloudKitRetryBackoff.delay(for: retryIn, consecutiveRetries: consecutiveRetries)
+        consecutiveRetries += 1
+        return delay
     }
     
     private func retryAction(_ retryIn: TimeInterval = 2.0) {

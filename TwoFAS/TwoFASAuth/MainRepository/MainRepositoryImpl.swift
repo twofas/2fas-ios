@@ -42,9 +42,14 @@ final class MainRepositoryImpl {
     
     init() {
         EncryptionHolder.initialize(with: protectionModule.localKeyEncryption)
-        storage = Storage(readOnly: false, logError: { error in
-            print("Storage error: \(error)")
-        })
+        storage = Storage(
+            readOnly: false,
+            cipher: protectionModule.localStorageCipher,
+            allowsMigration: false,
+            logError: { error in
+                print("Storage error: \(error)")
+            }
+        )
         storageRepository = storage.storageRepository
         MainRepositoryImpl._shared = self
     }
@@ -82,6 +87,10 @@ extension MainRepositoryImpl: MainRepository {
     }
     
     // MARK: - Storage
+    var isLocalDataUnavailable: Bool {
+        storage.isLocalDataUnavailable
+    }
+
     func hasAnyServices() -> Bool {
         !storageRepository.listAllNotTrashed().isEmpty
     }

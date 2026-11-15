@@ -130,16 +130,17 @@ extension CategoryHandler: WidgetServiceHandlerType {
 
 private extension Collection where Element == ServiceEntity {
     func transformToWidgetService() -> [WidgetService] {
-        map { service in
-            WidgetService(
-                serviceID: service.secret.decrypt(),
-                serviceName: service.name,
-                serviceTypeID: service.serviceTypeID,
+        compactMap { service in
+            guard let content = service.content else { return nil }
+            return WidgetService(
+                serviceID: content.secret,
+                serviceName: content.name,
+                serviceTypeID: content.serviceTypeID,
                 iconType: IconType(optionalWithDefaultRawValue: service.iconType),
-                iconTypeID: service.iconTypeID,
-                labelTitle: service.labelTitle,
+                iconTypeID: content.iconTypeID,
+                labelTitle: content.labelTitle,
                 labelColor: TintColor(optionalWithDefaultRawValue: service.labelColor),
-                serviceInfo: service.additionalInfo,
+                serviceInfo: content.additionalInfo,
                 period: Period.create(service.tokenPeriod?.intValue),
                 digits: Digits.create(service.tokenLength.intValue),
                 algorithm: Algorithm.create(service.algorithm),

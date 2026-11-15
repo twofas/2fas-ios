@@ -64,7 +64,7 @@ final class EncryptSecretEntityMigrationPolicy: NSEntityMigrationPolicy {
         let mobileSecretId = sInstance.primitiveValue(forKey: Keys.mobileSecretID.rawValue) as? String?
         let rawIssuer = sInstance.primitiveValue(forKey: Keys.rawIssuer.rawValue) as? String?
         
-        Log("Migrating EncryptSecretEntityMigrationPolicy -> \(name)", module: .storage)
+        Log("Migrating EncryptSecretEntityMigrationPolicy -> service", module: .storage)
         let secretEncrypted = secret.uppercased().encrypt()
         
         guard !secrets.contains(secretEncrypted) else {

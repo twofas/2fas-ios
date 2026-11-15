@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DeletedSectionCacheEntity" syncable="YES">
+        <attribute name="deletedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="metadata" optional="YES" attributeType="Binary"/>
+        <attribute name="sectionID" attributeType="String"/>
+        <fetchIndex name="bySectionID">
+            <fetchIndexElement property="sectionID" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="DeletedServiceCacheEntity" syncable="YES">
+        <attribute name="deletedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="encryptedContent" optional="YES" attributeType="Binary"/>
+        <attribute name="encryptedMetadata" optional="YES" attributeType="Binary"/>
+        <attribute name="secretHash" attributeType="Binary"/>
+        <fetchIndex name="bySecretHash">
+            <fetchIndexElement property="secretHash" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="LogEntity" representedClassName="LogEntity" syncable="YES">
+        <attribute name="action" attributeType="String"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="encryptedEntityID" attributeType="Binary"/>
+        <attribute name="entityIDHash" attributeType="Binary"/>
+        <attribute name="isApplied" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="kind" attributeType="String"/>
+        <fetchIndex name="byEntityIDHash">
+            <fetchIndexElement property="entityIDHash" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="SectionCacheEntity" representedClassName="SectionCacheEntity" syncable="YES">
+        <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="encryptedContent" attributeType="Binary"/>
+        <attribute name="metadata" attributeType="Binary"/>
+        <attribute name="modificationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="order" attributeType="Integer 32" usesScalarValueType="YES"/>
+        <attribute name="sectionID" attributeType="String"/>
+    </entity>
+    <entity name="ServiceCacheEntity" representedClassName="ServiceCacheEntity" syncable="YES">
+        <attribute name="algorithm" attributeType="String"/>
+        <attribute name="badgeColor" optional="YES" attributeType="String"/>
+        <attribute name="counter" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="encryptedContent" attributeType="Binary"/>
+        <attribute name="encryptedMetadata" attributeType="Binary"/>
+        <attribute name="iconType" attributeType="String"/>
+        <attribute name="labelColor" attributeType="String"/>
+        <attribute name="modificationDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="secretHash" attributeType="Binary"/>
+        <attribute name="sectionID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="sectionOrder" attributeType="Integer 64" usesScalarValueType="YES"/>
+        <attribute name="source" attributeType="String"/>
+        <attribute name="tokenLength" attributeType="Integer 64" usesScalarValueType="YES"/>
+        <attribute name="tokenPeriod" optional="YES" attributeType="Integer 64" usesScalarValueType="YES"/>
+        <attribute name="tokenType" attributeType="String"/>
+        <fetchIndex name="bySecretHash">
+            <fetchIndexElement property="secretHash" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+</model>

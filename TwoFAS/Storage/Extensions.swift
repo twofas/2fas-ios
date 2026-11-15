@@ -62,12 +62,17 @@ extension Array where Element == ServiceEntity {
 
 extension Collection where Element == ServiceEntity {
     func toServiceData() -> [ServiceData] {
-        self.map(ServiceData.createFromManagedObject)
+        self.compactMap(ServiceData.createFromManagedObject)
+    }
+    
+    /// Skips entities whose content can't be decrypted
+    var readableSecrets: [String] {
+        compactMap { $0.content?.secret }
     }
 }
 
 extension ServiceEntity {
-    func toServiceData() -> ServiceData {
+    func toServiceData() -> ServiceData? {
         ServiceData.createFromManagedObject(entity: self)
     }
 }
@@ -81,12 +86,6 @@ extension Array where Element == ServiceData {
 extension Array where Element == SectionEntity {
     func transformToSectionData() -> [SectionData] {
         self.map({ SectionData.createFromManagedObject($0) })
-    }
-}
-
-extension Array where Element == ServiceID {
-    func encrypt() -> [ServiceID] {
-        map({ $0.encrypt() })
     }
 }
 

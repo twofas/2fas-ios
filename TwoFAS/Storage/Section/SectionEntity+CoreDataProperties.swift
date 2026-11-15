@@ -30,7 +30,7 @@ extension SectionEntity {
         NSFetchRequest<SectionEntity>(entityName: "SectionEntity")
     }
 
-    @NSManaged var title: String
+    @NSManaged var encryptedContent: Data
     @NSManaged var sectionID: SectionID
     @NSManaged var order: Int32
     @NSManaged var isCollapsed: Bool

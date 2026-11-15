@@ -93,17 +93,17 @@ extension CameraScannerPresenter {
         
         switch codeType {
         case .service(let code):
-            Log("CameraScannerPresenter: Found code: \(code)")
+            Log("CameraScannerPresenter: Found code")
             if interactor.codeExists(code) {
-                guard let description = interactor.serviceDescription(for: code) else { return }
-                Log("CameraScannerPresenter: Found code: \(code) which is a duplicate of: \(description)")
+                guard interactor.serviceDescription(for: code) != nil else { return }
+                Log("CameraScannerPresenter: Found code which is a duplicate of an existing service")
                 view?.enableOverlay()
                 view?.feedback()
                 flowController.toDuplicatedCode { [weak self] in
                     self?.interactor.addCode(code, force: true)
                 }
             } else {
-                Log("CameraScannerPresenter: Adding unique code: \(code)")
+                Log("CameraScannerPresenter: Adding unique code")
                 view?.freezeCamera()
                 interactor.addCode(code, force: false)
             }

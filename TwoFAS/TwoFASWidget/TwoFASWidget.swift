@@ -26,7 +26,7 @@ struct TwoFASWidgetEntryView: View {
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
     
-    private var noEntryView: some View {
+    private func noEntryView(message: String) -> some View {
         VStack(alignment: .leading) {
             Image("TwoFASLogo")
                 .foregroundStyle(.white)
@@ -38,7 +38,7 @@ struct TwoFASWidgetEntryView: View {
             
             Spacer()
             
-            Text(T.Widget.noSelectedServices)
+            Text(message)
                 .foregroundStyle(.textAccent)
                 .multilineTextAlignment(.leading)
                 .font(.system(size: 16).weight(.semibold))
@@ -52,8 +52,10 @@ struct TwoFASWidgetEntryView: View {
     
     @ViewBuilder
     var body: some View {
-        if entry.entries.isEmpty || entry.entries.filter({ $0.kind != .placeholder }).isEmpty {
-            noEntryView
+        if entry.isLocalDataUnavailable {
+            noEntryView(message: T.Widget.localDataUnavailable)
+        } else if entry.entries.isEmpty || entry.entries.filter({ $0.kind != .placeholder }).isEmpty {
+            noEntryView(message: T.Widget.noSelectedServices)
         } else {
             Group {
                 switch family {

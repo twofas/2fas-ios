@@ -106,11 +106,33 @@ final class MainRepositoryImpl: MainRepository {
     private var favoriteServicesCache: [Secret]?
     
     static func create() {
-        let protection = Protection()
+        let protection = Protection(isMainApp: true)
         
         EncryptionHolder.initialize(with: protection.localKeyEncryption)
         
-        let storage = Storage(readOnly: false) { Log($0, module: .storage) }
+        var incompatibleStoreNames: [String] = []
+        if Storage.isStoreIncompatibleWithCurrentModel() {
+            incompatibleStoreNames.append(Storage.storeName)
+        }
+        if SyncInstanceWatch.isStoreIncompatibleWithCurrentModel() {
+            incompatibleStoreNames.append(SyncInstanceWatch.storeName)
+        }
+        let bootstrapResult = LocalStorageBootstrap.prepare(
+            cipher: protection.localStorageCipher,
+            storeNames: [Storage.storeName, SyncInstanceWatch.storeName],
+            incompatibleStoreNames: incompatibleStoreNames
+        )
+        if bootstrapResult == .wipedStores {
+            SyncInstanceWatch.scheduleResetFromScratch()
+        }
+        
+        let storage = Storage(
+            readOnly: false,
+            cipher: protection.localStorageCipher,
+            allowsMigration: protection.localStorageCipher.state == .available
+        ) { Log($0, module: .storage) }
+        
+        storage.removeExpiredDeletions()
         
         let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
         serviceMigration.serviceNameTranslation = T.Commons.service
@@ -119,7 +141,8 @@ final class MainRepositoryImpl: MainRepository {
             commonSectionHandler: storage.section,
             commonServiceHandler: storage.service,
             reference: protection.reference,
-            localEncryptionKeyData: protection.localEncryptionKeyData
+            localEncryptionKeyData: protection.localEncryptionKeyData,
+            cipher: protection.localStorageCipher
         ) {
             Log("Sync: \($0)")
         }

@@ -29,19 +29,46 @@ import CommonWatch
 final class PairingEntity: NSManagedObject {
     @nonobjc private static let entityName = "PairingEntity"
     
+    /// Valid only for the current bytes of `encryptedContent`
+    let contentCache = SealedContentCache<PairingSensitiveContent>()
+    
+    override func didTurnIntoFault() {
+        super.didTurnIntoFault()
+        contentCache.clear()
+    }
+    
     @nonobjc static func create(
         on context: NSManagedObjectContext,
         name: String,
         extensionID: ExtensionID,
         publicKey: String
     ) {
+        let content = PairingSensitiveContent(extensionID: extensionID, name: name, publicKey: publicKey)
+        let extensionIDHash: Data
+        let sealed: Data
+        do {
+            guard let cipher = context.localStorageCipher else { throw SealedEntity.Failure.missingCipher }
+            // The hash is part of the associated data, so the key has to exist before hashing
+            try cipher.prepareForWriting()
+            extensionIDHash = try Self.extensionIDHash(for: extensionID, cipher: cipher)
+            sealed = try contentCodec.seal(content, hashes: [extensionIDHash], cipher: cipher)
+        } catch {
+            Log(
+                "\(entityName) - can't seal new entity: \(SealedEntity.describe(error))",
+                module: .storage,
+                severity: .error
+            )
+            assertionFailure("\(entityName) - can't seal new entity")
+            return
+        }
+        
         let pairing = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as! PairingEntity
         
         let date = Date()
         
-        pairing.name = name
-        pairing.extensionID = extensionID
-        pairing.publicKey = publicKey
+        pairing.extensionIDHash = extensionIDHash
+        pairing.encryptedContent = sealed
+        pairing.contentCache.store(content, sealed: sealed)
         pairing.creationDate = date
         pairing.modifcationDate = date
     }
@@ -70,7 +97,17 @@ final class PairingEntity: NSManagedObject {
             return
         }
         
-        pairingForUpdate.name = name
+        do {
+            try pairingForUpdate.updateContent { $0.name = name }
+        } catch {
+            Log(
+                "\(entityName) - can't update content: \(SealedEntity.describe(error))",
+                module: .storage,
+                severity: .error
+            )
+            assertionFailure("\(entityName) - can't update content")
+            return
+        }
         pairingForUpdate.modifcationDate = Date()
     }
     
@@ -99,5 +136,43 @@ final class PairingEntity: NSManagedObject {
     
     @nonobjc private static func delete(on context: NSManagedObjectContext, pairingEntity: PairingEntity) {
         context.delete(pairingEntity)
+    }
+}
+
+// Encrypted fields are plain Swift properties (not `@objc`) – the legacy migration policies set the old model's
+// attributes of the same names through KVC on instances of this class.
+extension PairingEntity {
+    @nonobjc static let contentCodec = SealedContentCodec<PairingSensitiveContent>(entityName: "PairingEntity")
+    @nonobjc private static let extensionIDHashContext = "PairingEntity.extensionID"
+    
+    /// The ID isn't normalized – it's compared exactly
+    @nonobjc static func extensionIDHash(for extensionID: String, cipher: LocalStorageCipher) throws -> Data {
+        try cipher.lookupHash(for: extensionID, context: extensionIDHashContext)
+    }
+    
+    /// `nil` when the content can't be decrypted
+    @nonobjc var content: PairingSensitiveContent? {
+        SealedEntity.content(
+            of: self,
+            entityName: "PairingEntity",
+            module: .storage,
+            sealed: { encryptedContent },
+            hashes: { [extensionIDHash] },
+            codec: Self.contentCodec,
+            cache: contentCache
+        )
+    }
+    
+    /// Changes the content with a single seal. The extension ID identifies the pairing and can't be changed.
+    @nonobjc func updateContent(_ change: (inout PairingSensitiveContent) -> Void) throws {
+        guard let cipher = managedObjectContext?.localStorageCipher else { throw SealedEntity.Failure.missingCipher }
+        guard let current = content else { throw SealedEntity.Failure.unreadableContent }
+        var updated = current
+        change(&updated)
+        updated.extensionID = current.extensionID
+        guard updated != current else { return }
+        let sealed = try Self.contentCodec.seal(updated, hashes: [extensionIDHash], cipher: cipher)
+        encryptedContent = sealed
+        contentCache.store(updated, sealed: sealed)
     }
 }

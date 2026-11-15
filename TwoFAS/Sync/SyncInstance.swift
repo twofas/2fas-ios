@@ -315,7 +315,8 @@ public enum SyncInstance {
     /// Source entity name → policy moving its sensitive fields into sealed content (Sync5 → Sync6)
     private static let contentEncryptionPolicies = [
         "ServiceCacheEntity": NSStringFromClass(EncryptServiceCacheContentMigrationPolicy.self),
-        "LogEntity": NSStringFromClass(EncryptLogEntityMigrationPolicy.self)
+        "LogEntity": NSStringFromClass(EncryptLogEntityMigrationPolicy.self),
+        "SectionCacheEntity": NSStringFromClass(EncryptSectionCacheContentMigrationPolicy.self)
     ]
     
     private static func addContentEncryptionPolicies(

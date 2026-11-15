@@ -115,3 +115,10 @@ public enum SealedEntity {
 
     public static let defaultSealedKey = "encryptedContent"
 }
+
+public extension UUID {
+    /// The 16 bytes of the UUID – binds sealed content to the object the UUID identifies
+    var bytesData: Data {
+        withUnsafeBytes(of: uuid) { Data($0) }
+    }
+}

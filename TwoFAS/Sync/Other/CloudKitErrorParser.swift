@@ -60,6 +60,16 @@ extension Collection where Element == CloudKitAction {
     }
 }
 
+enum CloudKitRetryBackoff {
+    static let maxDelay: TimeInterval = 1800
+    
+    /// `retryIn` doubled for every retry in a row, up to `maxDelay`
+    static func delay(for retryIn: TimeInterval, consecutiveRetries: Int) -> TimeInterval {
+        let factor = pow(2, Double(min(max(consecutiveRetries, 0), 16)))
+        return min(max(retryIn, 0) * factor, maxDelay)
+    }
+}
+
 // swiftlint:disable legacy_objc_type
 final class CloudKitErrorParser {
     private let minSecondsToRetry: TimeInterval = 2
@@ -132,6 +142,12 @@ final class CloudKitErrorParser {
             return .retry(after: midSecondsToRetry)
         }
         
+        guard error.domain == CKErrorDomain else {
+            // Not a CloudKit error (network, system) – its code means nothing as a `CKError.Code`
+            Log("Not a CloudKit error (\(error.domain) \(error.code)), retrying", module: .cloudSync)
+            return .retry(after: midSecondsToRetry)
+        }
+        
         guard var errorCode = CKError.Code(rawValue: error.code) else {
             Log("Can't get error code from \(error). Purging and retrying", module: .cloudSync)
             return .purgeAndRetry(after: minSecondsToRetry)
@@ -149,6 +165,12 @@ final class CloudKitErrorParser {
            let partials = ckError.partialErrorsByItemID {
             if partials.values.contains(where: { ($0 as? CKError)?.code == .quotaExceeded }) {
                 return .stop(reason: .quotaExceeded)
+            }
+            // The most important of what the items failed with – not whichever comes first
+            let actions = partials.values.compactMap { ($0 as? CKError)?.code }
+                .compactMap { parseErrorCode($0, retryIn: retryIn) }
+            if let mostImportant = actions.sortedByImportance.last {
+                return mostImportant
             }
             if let first = partials.values.first as? CKError {
                 errorCode = first.code

@@ -74,7 +74,7 @@ final class StorageMigrationTests: XCTestCase {
     }
 
     private let sectionID = UUID()
-    private let sectionTitle = "Work"
+    private let sectionTitle = "SectionTitleMarker"
     private let sectionCreationDate = Date(timeIntervalSinceReferenceDate: 690_000_000)
     private let sectionModificationDate = Date(timeIntervalSinceReferenceDate: 690_000_500)
     private let extensionID = "extension-id"
@@ -263,6 +263,8 @@ final class StorageMigrationTests: XCTestCase {
             XCTAssertEqual(migrated.map(\.name), [active.name])
             XCTAssertEqual(migrated.first?.isTrashed, false)
             XCTAssertEqual(try countRows(of: "ServiceEntity"), 1)
+            // The trashed copy lost – nothing was deleted
+            XCTAssertEqual(try countRows(of: "DeletedServiceEntity"), 0)
             resetStore()
         }
     }
@@ -297,22 +299,45 @@ final class StorageMigrationTests: XCTestCase {
         XCTAssertTrue(Storage.storeContainsSealedData(directory: directory))
     }
 
-    /// Added ahead of the sync of deletions, so that it needs no migration of its own
-    func testMigratedStoreHasEmptyDeletedEntities() throws {
+    func testMigratedStoreHasDeletedEntities() throws {
         try makeTwoFAS7Store(at: storeURL)
 
         let storage = openMigratedStorage()
 
         let model = try XCTUnwrap(storage.coreDataStack.context.persistentStoreCoordinator?.managedObjectModel)
         let expectedAttributes: [String: Set<String>] = [
-            "DeletedServiceEntity": ["secretHash", "deletedAt", "encryptedContent"],
+            "DeletedServiceEntity": ["secretHash", "deletedAt", "encryptedContent", "syncID"],
             "DeletedSectionEntity": ["sectionID", "deletedAt"]
         ]
         for (entityName, attributes) in expectedAttributes {
             let entity = try XCTUnwrap(model.entitiesByName[entityName], entityName)
             XCTAssertEqual(Set(entity.attributesByName.keys), attributes, entityName)
-            XCTAssertEqual(try countRows(of: entityName), 0, entityName)
         }
+        XCTAssertEqual(try countRows(of: "DeletedSectionEntity"), 0)
+    }
+
+    /// A service that is in the trash is a deleted one – the migration gives it its deletion record
+    func testMigrationRecordsDeletionsOfTrashedServices() throws {
+        try makeTwoFAS7Store(at: storeURL)
+
+        let context = openMigratedStorage().coreDataStack.context
+
+        let deletions = DeletedServiceEntity.listAll(on: context)
+        XCTAssertEqual(deletions.count, 1)
+        let deletion = try XCTUnwrap(DeletedServiceEntity.find(on: context, secret: trashed.secret))
+        XCTAssertEqual(deletion.deletedAt, trashed.trashingDate)
+        XCTAssertEqual(deletion.secret, trashed.secret)
+        XCTAssertNil(deletion.syncID)
+        XCTAssertNil(DeletedServiceEntity.find(on: context, secret: regular.secret))
+    }
+
+    func testMigrationSealsSectionTitles() throws {
+        try makeTwoFAS7Store(at: storeURL)
+
+        let storage = openMigratedStorage()
+
+        XCTAssertEqual(storage.section.listAll().map(\.title), [sectionTitle])
+        XCTAssertNil(rawStoreBytes(name: Storage.storeName, in: directory).range(of: Data(sectionTitle.utf8)))
     }
 
     func testMigrationPreservesAuthRequestsPairingsSections() throws {

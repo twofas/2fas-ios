@@ -69,6 +69,8 @@
 		C20F00B0256946930026FBB2 /* EncryptSecretEntityMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20F00AF256946930026FBB2 /* EncryptSecretEntityMigrationPolicy.swift */; };
 		B4EDCEDF09BAA7B78B67BBA4 /* EncryptAuthRequestContentMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F91FFB9BCB039C27E5E2FA /* EncryptAuthRequestContentMigrationPolicy.swift */; };
 		3D7004567C9C4527319144C5 /* EncryptServiceContentMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD8BB63B313134442416834 /* EncryptServiceContentMigrationPolicy.swift */; };
+		F5BD810467272C4753640B87 /* DeletedEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A45569B91888F9A8D2782C /* DeletedEntities.swift */; };
+		70AB9756CB7883CB91E77656 /* DeletedEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A45569B91888F9A8D2782C /* DeletedEntities.swift */; };
 		C20F00DE25698F0A0026FBB2 /* LocalKeyEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20F00DD25698F0A0026FBB2 /* LocalKeyEncryption.swift */; };
 		61D9BD5434C384599F4F6668 /* LocalStorageCipherImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEE1D1494D10CF2EFD69CCD /* LocalStorageCipherImpl.swift */; };
 		BD2FE20B9638C070CD769719 /* LocalStorageKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C07CA403CE35043B81B2DE /* LocalStorageKeyStore.swift */; };
@@ -2026,6 +2028,7 @@
 		C20F00AF256946930026FBB2 /* EncryptSecretEntityMigrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptSecretEntityMigrationPolicy.swift; sourceTree = "<group>"; };
 		B3F91FFB9BCB039C27E5E2FA /* EncryptAuthRequestContentMigrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptAuthRequestContentMigrationPolicy.swift; sourceTree = "<group>"; };
 		7DD8BB63B313134442416834 /* EncryptServiceContentMigrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptServiceContentMigrationPolicy.swift; sourceTree = "<group>"; };
+		53A45569B91888F9A8D2782C /* DeletedEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedEntities.swift; sourceTree = "<group>"; };
 		C20F00DD25698F0A0026FBB2 /* LocalKeyEncryption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalKeyEncryption.swift; sourceTree = "<group>"; };
 		8EEE1D1494D10CF2EFD69CCD /* LocalStorageCipherImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageCipherImpl.swift; sourceTree = "<group>"; };
 		E4C07CA403CE35043B81B2DE /* LocalStorageKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageKeyStore.swift; sourceTree = "<group>"; };
@@ -3459,6 +3462,7 @@
 				C20F00AF256946930026FBB2 /* EncryptSecretEntityMigrationPolicy.swift */,
 				B3F91FFB9BCB039C27E5E2FA /* EncryptAuthRequestContentMigrationPolicy.swift */,
 				7DD8BB63B313134442416834 /* EncryptServiceContentMigrationPolicy.swift */,
+				53A45569B91888F9A8D2782C /* DeletedEntities.swift */,
 				C2AB25D928E0BF7B001CF6B3 /* DynamicTypesEntityMigrationPolicy.swift */,
 				C2B3D1A7267E6BEC009E6DE0 /* Extensions.swift */,
 			);
@@ -7153,6 +7157,7 @@
 				C20F00B0256946930026FBB2 /* EncryptSecretEntityMigrationPolicy.swift in Sources */,
 				B4EDCEDF09BAA7B78B67BBA4 /* EncryptAuthRequestContentMigrationPolicy.swift in Sources */,
 				3D7004567C9C4527319144C5 /* EncryptServiceContentMigrationPolicy.swift in Sources */,
+				F5BD810467272C4753640B87 /* DeletedEntities.swift in Sources */,
 				C258594F280374F4002DC749 /* StorageRepositoryImpl+Pairing.swift in Sources */,
 				C2D39DE32823302200E864E9 /* StorageRepositoryImpl+News.swift in Sources */,
 				C22CF3E327414073004F6A03 /* LogEntryEntity+CoreDataClass.swift in Sources */,
@@ -7207,6 +7212,7 @@
 				C213BC342BAC3C82000794C9 /* SectionEntity+CoreDataProperties.swift in Sources */,
 				C213BC352BAC3C82000794C9 /* ServiceOptions.swift in Sources */,
 				172C228E2FC093F84A3DDACE /* ServiceListing.swift in Sources */,
+				70AB9756CB7883CB91E77656 /* DeletedEntities.swift in Sources */,
 				C213BC602BAC3FE3000794C9 /* ServiceMigrationController.swift in Sources */,
 				C213BC362BAC3C82000794C9 /* AuthRequestFilterOptions.swift in Sources */,
 				23492661A71F502265396DCB /* AuthRequestEntity+SealedContent.swift in Sources */,

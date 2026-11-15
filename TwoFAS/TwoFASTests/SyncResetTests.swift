@@ -19,6 +19,7 @@
 
 import XCTest
 import CoreData
+import CloudKit
 @testable import Common
 @testable import Protection
 @testable import Sync
@@ -465,4 +466,63 @@ private final class StateCipher: LocalStorageCipher {
     }
 
     func prepareForWriting() throws {}
+}
+
+final class CloudKitErrorHandlingTests: XCTestCase {
+    private let parser = CloudKitErrorParser()
+
+    private func cloudKitError(_ code: CKError.Code, userInfo: [String: Any] = [:]) -> NSError {
+        NSError(domain: CKErrorDomain, code: code.rawValue, userInfo: userInfo)
+    }
+
+    func testQuotaExceededStopsSync() {
+        XCTAssertEqual(parser.handle(error: cloudKitError(.quotaExceeded)), .stop(reason: .quotaExceeded))
+    }
+
+    func testQuotaExceededOfOneItemStopsSync() {
+        let zoneID = CKRecordZone.ID(zoneName: "TestZone", ownerName: CKCurrentUserDefaultName)
+        let partials: [AnyHashable: Any] = [
+            CKRecord.ID(recordName: "a", zoneID: zoneID): CKError(.batchRequestFailed),
+            CKRecord.ID(recordName: "b", zoneID: zoneID): CKError(.quotaExceeded),
+            CKRecord.ID(recordName: "c", zoneID: zoneID): CKError(.batchRequestFailed)
+        ]
+        let error = CKError(.partialFailure, userInfo: [CKPartialErrorsByItemIDKey: partials])
+
+        XCTAssertEqual(parser.handle(error: error as NSError), .stop(reason: .quotaExceeded))
+    }
+
+    func testPartialFailureGivesTheMostImportantAction() {
+        let zoneID = CKRecordZone.ID(zoneName: "TestZone", ownerName: CKCurrentUserDefaultName)
+        let partials: [AnyHashable: Any] = [
+            CKRecord.ID(recordName: "a", zoneID: zoneID): CKError(.batchRequestFailed),
+            CKRecord.ID(recordName: "b", zoneID: zoneID): CKError(.serverRecordChanged),
+            CKRecord.ID(recordName: "c", zoneID: zoneID): CKError(.notAuthenticated)
+        ]
+        let error = CKError(.partialFailure, userInfo: [CKPartialErrorsByItemIDKey: partials])
+
+        XCTAssertEqual(parser.handle(error: error as NSError), .stop(reason: .notLoggedIn))
+    }
+
+    /// The code of an error from another domain means nothing as a `CKError.Code` – 25 is `quotaExceeded` there
+    func testErrorFromAnotherDomainIsNotReadAsCloudKitError() {
+        let error = NSError(domain: NSPOSIXErrorDomain, code: CKError.Code.quotaExceeded.rawValue)
+
+        guard case .retry = parser.handle(error: error) else {
+            return XCTFail("An error from another domain should only be retried")
+        }
+    }
+
+    func testOfflineIsRetried() {
+        guard case .retry = parser.handle(error: NSError(domain: NSURLErrorDomain, code: -1009)) else {
+            return XCTFail("Offline should be retried")
+        }
+    }
+
+    func testRetryDelayGrowsUpToTheLimit() {
+        XCTAssertEqual(CloudKitRetryBackoff.delay(for: 2, consecutiveRetries: 0), 2)
+        XCTAssertEqual(CloudKitRetryBackoff.delay(for: 2, consecutiveRetries: 1), 4)
+        XCTAssertEqual(CloudKitRetryBackoff.delay(for: 2, consecutiveRetries: 5), 64)
+        XCTAssertEqual(CloudKitRetryBackoff.delay(for: 2, consecutiveRetries: 40), CloudKitRetryBackoff.maxDelay)
+        XCTAssertEqual(CloudKitRetryBackoff.delay(for: 600, consecutiveRetries: 3), CloudKitRetryBackoff.maxDelay)
+    }
 }

@@ -564,3 +564,261 @@ private final class WritingUnavailableCipher: LocalStorageCipher {
         throw LocalStorageCipherError.keyUnavailable
     }
 }
+
+// MARK: - Deletion records and section titles
+
+extension StorageEncryptionTests {
+    private func trash(_ secret: String) throws -> ServiceData {
+        let service = try XCTUnwrap(repo.findService(for: secret))
+        _ = repo.trashService(service)
+        return try XCTUnwrap(repo.listTrashedServices().first { $0.secret == secret })
+    }
+
+    func testTrashingServiceRecordsItsDeletion() throws {
+        addService(secret: "DELETIONSECRETMARKER")
+        XCTAssertNil(DeletedServiceEntity.find(on: context, secret: "DELETIONSECRETMARKER"))
+
+        let trashed = try trash("DELETIONSECRETMARKER")
+
+        let deletion = try XCTUnwrap(DeletedServiceEntity.find(on: context, secret: "deletionsecretmarker"))
+        XCTAssertEqual(deletion.deletedAt, trashed.trashingDate)
+        XCTAssertEqual(deletion.secret, "DELETIONSECRETMARKER")
+        XCTAssertNil(deletion.syncID)
+        XCTAssertEqual(DeletedServiceEntity.listAll(on: context).count, 1)
+        storage.save()
+        let bytes = rawStoreBytes(name: Storage.storeName, in: directory)
+        XCTAssertNil(bytes.range(of: Data("DELETIONSECRETMARKER".utf8)))
+    }
+
+    func testRestoringServiceRemovesItsDeletionAndMakesItNewer() throws {
+        addService(secret: "RESTOREDSECRET")
+        let trashed = try trash("RESTOREDSECRET")
+        let deletedAt = try XCTUnwrap(trashed.trashingDate)
+
+        _ = repo.untrashService(trashed)
+
+        XCTAssertNil(DeletedServiceEntity.find(on: context, secret: "RESTOREDSECRET"))
+        let restored = try XCTUnwrap(repo.findService(for: "RESTOREDSECRET"))
+        // Newer than the deletion, wherever that one is still known
+        XCTAssertGreaterThanOrEqual(restored.modifiedAt, deletedAt)
+    }
+
+    func testRemovingServiceFromTrashKeepsItsDeletion() throws {
+        addService(secret: "REMOVEDSECRET")
+        let trashed = try trash("REMOVEDSECRET")
+
+        repo.deleteService(trashed)
+
+        XCTAssertEqual(try rawServiceCount(), 0)
+        let deletion = try XCTUnwrap(DeletedServiceEntity.find(on: context, secret: "REMOVEDSECRET"))
+        // What identifies the service elsewhere is still there
+        XCTAssertEqual(deletion.secret, "REMOVEDSECRET")
+    }
+
+    func testAddingServiceAgainRemovesItsDeletion() throws {
+        addService(secret: "READDEDSECRET")
+        repo.deleteService(try trash("READDEDSECRET"))
+        XCTAssertNotNil(DeletedServiceEntity.find(on: context, secret: "READDEDSECRET"))
+
+        addService(secret: "READDEDSECRET")
+
+        XCTAssertNil(DeletedServiceEntity.find(on: context, secret: "READDEDSECRET"))
+    }
+
+    /// Whatever puts a service in the trash records the deletion – also the data coming from Sync
+    func testServiceTrashedBySyncGetsItsDeletion() {
+        addService(secret: "KEPTSECRET")
+        addService(secret: "MISSINGSECRET")
+
+        XCTAssertTrue(storage.service.setServices([cloudService(name: "Kept", secret: "KEPTSECRET", order: 0)]))
+
+        XCTAssertNotNil(DeletedServiceEntity.find(on: context, secret: "MISSINGSECRET"))
+        XCTAssertNil(DeletedServiceEntity.find(on: context, secret: "KEPTSECRET"))
+    }
+
+    /// Once Sync gave the deletion its identifier, the secret isn't stored with it again
+    func testDeletionWithSyncIdentifierDoesNotKeepTheSecret() throws {
+        let later = Date()
+        DeletedServiceEntity.record(on: context, secret: "SYNCEDSECRET", deletedAt: later.addingTimeInterval(-100))
+        let deletion = try XCTUnwrap(DeletedServiceEntity.find(on: context, secret: "SYNCEDSECRET"))
+        deletion.syncID = Data([1, 2, 3])
+        deletion.encryptedContent = nil
+
+        DeletedServiceEntity.record(on: context, secret: "SYNCEDSECRET", deletedAt: later)
+
+        XCTAssertEqual(DeletedServiceEntity.listAll(on: context).count, 1)
+        XCTAssertEqual(deletion.deletedAt, later)
+        XCTAssertEqual(deletion.syncID, Data([1, 2, 3]))
+        XCTAssertNil(deletion.encryptedContent)
+        XCTAssertNil(deletion.secret)
+    }
+
+    func testExpiredDeletionsAreRemoved() {
+        let now = Date()
+        let expired = now.addingTimeInterval(-DeletionRetention.interval - 60)
+        let recent = now.addingTimeInterval(-DeletionRetention.interval + 60)
+        DeletedServiceEntity.record(on: context, secret: "EXPIREDSECRET", deletedAt: expired)
+        DeletedServiceEntity.record(on: context, secret: "RECENTSECRET", deletedAt: recent)
+        let expiredSection = UUID()
+        let recentSection = UUID()
+        DeletedSectionEntity.record(on: context, sectionID: expiredSection, deletedAt: expired)
+        DeletedSectionEntity.record(on: context, sectionID: recentSection, deletedAt: recent)
+        storage.save()
+
+        storage.removeExpiredDeletions()
+
+        XCTAssertNil(DeletedServiceEntity.find(on: context, secret: "EXPIREDSECRET"))
+        XCTAssertNotNil(DeletedServiceEntity.find(on: context, secret: "RECENTSECRET"))
+        XCTAssertNil(DeletedSectionEntity.find(on: context, sectionID: expiredSection))
+        XCTAssertNotNil(DeletedSectionEntity.find(on: context, sectionID: recentSection))
+    }
+
+    func testRecordingDeletionTwiceKeepsOneRecord() {
+        let later = Date()
+        DeletedServiceEntity.record(on: context, secret: "TWICESECRET", deletedAt: later.addingTimeInterval(-100))
+        DeletedServiceEntity.record(on: context, secret: "TWICESECRET", deletedAt: later)
+
+        XCTAssertEqual(DeletedServiceEntity.listAll(on: context).count, 1)
+        XCTAssertEqual(DeletedServiceEntity.find(on: context, secret: "TWICESECRET")?.deletedAt, later)
+    }
+
+    /// The same service deleted twice (e.g. on two devices before they synced) – the latest deletion counts,
+    /// whichever is recorded first
+    func testLatestDeletionOfServiceCounts() {
+        let later = Date()
+        DeletedServiceEntity.record(on: context, secret: "TWICESECRET", deletedAt: later)
+        DeletedServiceEntity.record(on: context, secret: "TWICESECRET", deletedAt: later.addingTimeInterval(-100))
+
+        XCTAssertEqual(DeletedServiceEntity.listAll(on: context).count, 1)
+        XCTAssertEqual(DeletedServiceEntity.find(on: context, secret: "TWICESECRET")?.deletedAt, later)
+    }
+
+    func testDuplicatedDeletionsOfServiceAreMerged() throws {
+        let later = Date()
+        DeletedServiceEntity.record(on: context, secret: "DUPLICATEDSECRET", deletedAt: later)
+        let recorded = try XCTUnwrap(DeletedServiceEntity.find(on: context, secret: "DUPLICATEDSECRET"))
+        // A second record of the same service, known to Sync and without the secret
+        let synced = DeletedServiceEntity(context: context)
+        synced.secretHash = recorded.secretHash
+        synced.deletedAt = later.addingTimeInterval(-100)
+        synced.syncID = Data([1, 2, 3])
+        DeletedServiceEntity.record(on: context, secret: "OTHERSECRET", deletedAt: later)
+        storage.save()
+
+        storage.removeExpiredDeletions()
+
+        XCTAssertEqual(DeletedServiceEntity.listAll(on: context).count, 2)
+        let merged = try XCTUnwrap(DeletedServiceEntity.find(on: context, secret: "DUPLICATEDSECRET"))
+        XCTAssertEqual(merged.deletedAt, later)
+        XCTAssertEqual(merged.syncID, Data([1, 2, 3]))
+        XCTAssertNotNil(DeletedServiceEntity.find(on: context, secret: "OTHERSECRET"))
+    }
+
+    func testLatestDeletionOfSectionCounts() throws {
+        let sectionID = UUID()
+        let later = Date()
+        DeletedSectionEntity.record(on: context, sectionID: sectionID, deletedAt: later)
+        DeletedSectionEntity.record(on: context, sectionID: sectionID, deletedAt: later.addingTimeInterval(-100))
+        let duplicate = DeletedSectionEntity(context: context)
+        duplicate.sectionID = sectionID
+        duplicate.deletedAt = later.addingTimeInterval(100)
+        storage.save()
+
+        storage.removeExpiredDeletions()
+
+        XCTAssertEqual(DeletedSectionEntity.listAll(on: context).count, 1)
+        XCTAssertEqual(
+            DeletedSectionEntity.find(on: context, sectionID: sectionID)?.deletedAt,
+            later.addingTimeInterval(100)
+        )
+    }
+
+    func testDeletingSectionRecordsItsDeletion() throws {
+        storage.section.create(with: "Section")
+        let section = try XCTUnwrap(storage.section.listAll().first)
+
+        storage.section.delete(section)
+
+        XCTAssertTrue(storage.section.listAll().isEmpty)
+        XCTAssertNotNil(DeletedSectionEntity.find(on: context, sectionID: section.sectionID))
+    }
+
+    func testSectionsRemovedBySyncGetTheirDeletions() throws {
+        storage.section.create(with: "Kept")
+        storage.section.create(with: "Removed")
+        let sections = storage.section.listAll()
+        let kept = try XCTUnwrap(sections.first { $0.title == "Kept" })
+        let removed = try XCTUnwrap(sections.first { $0.title == "Removed" })
+
+        XCTAssertTrue(storage.section.setSections([
+            CommonSectionData(
+                name: "Kept renamed",
+                sectionID: kept.sectionID.uuidString,
+                creationDate: kept.createdAt,
+                modificationDate: Date(),
+                isCollapsed: false
+            )
+        ]))
+
+        XCTAssertEqual(storage.section.listAll().map(\.title), ["Kept renamed"])
+        XCTAssertNotNil(DeletedSectionEntity.find(on: context, sectionID: removed.sectionID))
+        XCTAssertNil(DeletedSectionEntity.find(on: context, sectionID: kept.sectionID))
+    }
+
+    func testSectionCreatedAgainLosesItsDeletion() throws {
+        storage.section.create(with: "Section")
+        let section = try XCTUnwrap(storage.section.listAll().first)
+        storage.section.delete(section)
+
+        XCTAssertTrue(storage.section.setSections([
+            CommonSectionData(
+                name: "Section",
+                sectionID: section.sectionID.uuidString,
+                creationDate: section.createdAt,
+                modificationDate: nil,
+                isCollapsed: false
+            )
+        ]))
+
+        XCTAssertNil(DeletedSectionEntity.find(on: context, sectionID: section.sectionID))
+    }
+
+    func testResetForgetsDeletions() throws {
+        addService(secret: "RESETSECRET")
+        _ = try trash("RESETSECRET")
+        DeletedSectionEntity.record(on: context, sectionID: UUID(), deletedAt: Date())
+
+        storage.reset()
+
+        XCTAssertTrue(DeletedServiceEntity.listAll(on: context).isEmpty)
+        XCTAssertTrue(DeletedSectionEntity.listAll(on: context).isEmpty)
+    }
+
+    func testSectionTitleIsSealed() throws {
+        storage.section.create(with: "SectionTitleMarker")
+        storage.save()
+
+        let section = try XCTUnwrap(storage.section.listAll().first)
+        XCTAssertEqual(section.title, "SectionTitleMarker")
+        XCTAssertNil(
+            rawStoreBytes(name: Storage.storeName, in: directory).range(of: Data("SectionTitleMarker".utf8))
+        )
+
+        storage.section.update(section, with: "RenamedTitleMarker")
+
+        XCTAssertEqual(storage.section.listAll().map(\.title), ["RenamedTitleMarker"])
+        XCTAssertNil(
+            rawStoreBytes(name: Storage.storeName, in: directory).range(of: Data("RenamedTitleMarker".utf8))
+        )
+    }
+
+    func testSectionTitleCanNotBeReadWithAnotherKey() throws {
+        storage.section.create(with: "Section")
+        storage.save()
+
+        reopenStorage(cipher: makeTestCipher())
+
+        // The section stays – only its title can't be shown
+        XCTAssertEqual(storage.section.listAll().map(\.title), [""])
+    }
+}

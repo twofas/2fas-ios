@@ -126,6 +126,7 @@ final class MainRepositoryImpl: MainRepository {
             DebugLog(error)
         }
         storage.loadStore()
+        storage.removeExpiredDeletions()
 
         LogStorage.setStorage(storage.log)
         

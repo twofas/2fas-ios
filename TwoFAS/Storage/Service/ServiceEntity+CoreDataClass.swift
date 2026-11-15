@@ -140,6 +140,9 @@ final class ServiceEntity: NSManagedObject {
             return
         }
         
+        // A service that exists isn't a deleted one
+        DeletedServiceEntity.remove(on: context, secretHash: secretHash)
+        
         let service = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context) as! ServiceEntity
         
         service.secretHash = secretHash
@@ -187,8 +190,11 @@ final class ServiceEntity: NSManagedObject {
     @nonobjc static func markAsTrashed(on context: NSManagedObjectContext, secret: String) {
         guard let serviceForTrashing = listAllExisting(on: context, secret: secret).first
         else { Log("Can't find service for trashing on local storage", module: .storage); return }
+        let trashingDate = Date()
         serviceForTrashing.isTrashed = NSNumber(value: true)
-        serviceForTrashing.trashingDate = Date()
+        serviceForTrashing.trashingDate = trashingDate
+        // Whatever puts a service in the trash – the service is a deleted one from now on
+        DeletedServiceEntity.record(on: context, secret: secret, deletedAt: trashingDate)
     }
     
     @nonobjc static func markAsUntrashed(on context: NSManagedObjectContext, secret: String) {
@@ -198,6 +204,9 @@ final class ServiceEntity: NSManagedObject {
         
         serviceForUntrashing.isTrashed = NSNumber(value: false)
         serviceForUntrashing.trashingDate = nil
+        // Restored after it was deleted: newer than its deletion, wherever that one is still known
+        serviceForUntrashing.modificationDate = Date()
+        DeletedServiceEntity.remove(on: context, secretHash: serviceForUntrashing.secretHash)
     }
     
     @nonobjc static func getService(on context: NSManagedObjectContext, secret: String) -> ServiceEntity? {

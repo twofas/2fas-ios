@@ -164,3 +164,44 @@ final class EncryptLogEntityMigrationPolicy: NSEntityMigrationPolicy {
         manager.associate(sourceInstance: sInstance, withDestinationInstance: dInstance, for: mapping)
     }
 }
+
+/// Sync5 → Sync6: the title of `SectionCacheEntity` moves into sealed content bound to the ID of the section
+@objc(EncryptSectionCacheContentMigrationPolicy)
+final class EncryptSectionCacheContentMigrationPolicy: NSEntityMigrationPolicy {
+    enum Failure: Error {
+        case missingCipher
+    }
+
+    private static let entityName = "SectionCacheEntity"
+    private static let plainKeys = ["sectionID", "order", "metadata", "creationDate", "modificationDate"]
+
+    override func createDestinationInstances(
+        forSource sInstance: NSManagedObject,
+        in mapping: NSEntityMapping,
+        manager: NSMigrationManager
+    ) throws {
+        assert(sInstance.entity.name == Self.entityName, "Policy used for another entity")
+        guard let cipher = manager.localStorageCipher else { throw Failure.missingCipher }
+
+        guard let sectionID = sInstance.value(forKey: "sectionID") as? String else {
+            Log("Sync Migration - \(Self.entityName) skipped: no ID", module: .cloudSync, severity: .warning)
+            return
+        }
+        try cipher.prepareForWriting()
+        let sealed = try SectionCacheEntity.contentCodec.seal(
+            SectionSensitiveContent(title: sInstance.value(forKey: "title") as? String ?? ""),
+            hashes: [SectionCacheEntity.identityData(of: sectionID)],
+            cipher: cipher
+        )
+
+        let dInstance = NSEntityDescription.insertNewObject(
+            forEntityName: Self.entityName,
+            into: manager.destinationContext
+        )
+        dInstance.setValue(sealed, forKey: "encryptedContent")
+        for key in Self.plainKeys {
+            dInstance.setValue(sInstance.value(forKey: key), forKey: key)
+        }
+        manager.associate(sourceInstance: sInstance, withDestinationInstance: dInstance, for: mapping)
+    }
+}

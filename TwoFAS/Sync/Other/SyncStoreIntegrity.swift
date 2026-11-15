@@ -28,13 +28,16 @@ import CommonWatch
 #endif
 
 enum SyncStoreIntegrity {
-    /// Whether every `ServiceCacheEntity` (content and metadata) and every `LogEntity` can be decrypted. Has to be
-    /// called on the queue of the context.
+    /// Whether every `ServiceCacheEntity` (content and metadata), `SectionCacheEntity` and `LogEntity` can be
+    /// decrypted. Has to be called on the queue of the context.
     static func verify(context: NSManagedObjectContext) -> Bool {
         do {
             for service in ServiceCacheEntity.listAll(on: context) {
                 _ = try service.decryptedContent()
                 _ = try service.decryptedMetadata()
+            }
+            for section in SectionCacheEntity.listAll(on: context) {
+                _ = try section.decryptedContent()
             }
             for log in LogEntity.listAll(on: context) {
                 _ = try log.decryptedEntityID()

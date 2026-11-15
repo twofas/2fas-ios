@@ -13,11 +13,11 @@
     </entity>
     <entity name="SectionCacheEntity" representedClassName="SectionCacheEntity" syncable="YES">
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="encryptedContent" attributeType="Binary"/>
         <attribute name="metadata" attributeType="Binary"/>
         <attribute name="modificationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="order" attributeType="Integer 32" usesScalarValueType="YES"/>
         <attribute name="sectionID" attributeType="String"/>
-        <attribute name="title" attributeType="String"/>
     </entity>
     <entity name="ServiceCacheEntity" representedClassName="ServiceCacheEntity" syncable="YES">
         <attribute name="algorithm" attributeType="String"/>

@@ -187,7 +187,7 @@ final class SyncMigrationTests: XCTestCase {
         let sections = try stack.context.fetch(NSFetchRequest<NSManagedObject>(entityName: "SectionCacheEntity"))
         XCTAssertEqual(sections.count, 1)
         XCTAssertEqual(sections.first?.value(forKey: "sectionID") as? String, sectionID.uuidString)
-        XCTAssertEqual(sections.first?.value(forKey: "title") as? String, sectionTitle)
+        XCTAssertEqual((sections.first as? SectionCacheEntity)?.title, sectionTitle)
         XCTAssertEqual(sections.first?.value(forKey: "metadata") as? Data, sectionMetadata)
     }
 
@@ -252,8 +252,9 @@ final class SyncMigrationTests: XCTestCase {
         for marker in markers {
             XCTAssertNil(bytes.range(of: Data(marker.utf8)), "\(marker) found in the migrated store files")
         }
-        // Section cache stays as it was
-        XCTAssertNotNil(bytes.range(of: Data(sectionTitle.utf8)))
+        // The title of a section is sealed too; its record metadata stays as it was
+        XCTAssertNil(bytes.range(of: Data(sectionTitle.utf8)))
+        XCTAssertNotNil(bytes.range(of: sectionMetadata))
     }
 
     func testMigrationDropsDuplicateAndEmptySecrets() throws {

@@ -51,8 +51,18 @@ final class EncryptServiceContentMigrationPolicy: NSEntityMigrationPolicy {
         "source"
     ]
 
-    /// Destination instance of every migrated secret, with what decides which duplicate is kept
-    private var migrated: [Data: (instance: NSManagedObject, isTrashed: Bool, modificationDate: Date)] = [:]
+    private static let deletedEntityName = "DeletedServiceEntity"
+
+    private struct Migrated {
+        let instance: NSManagedObject
+        let isTrashed: Bool
+        let modificationDate: Date
+        /// The deletion record of a trashed service
+        var deletion: NSManagedObject?
+    }
+
+    /// What was migrated for every secret, with what decides which duplicate is kept
+    private var migrated: [Data: Migrated] = [:]
 
     override func createDestinationInstances(
         forSource sInstance: NSManagedObject,
@@ -105,7 +115,6 @@ final class EncryptServiceContentMigrationPolicy: NSEntityMigrationPolicy {
             forEntityName: Self.entityName,
             into: manager.destinationContext
         )
-        migrated[secretHash] = (dInstance, isTrashed, modificationDate)
         dInstance.setValue(secretHash, forKey: "secretHash")
         dInstance.setValue(sealed, forKey: "encryptedContent")
         for key in Self.plainKeys {
@@ -115,5 +124,76 @@ final class EncryptServiceContentMigrationPolicy: NSEntityMigrationPolicy {
         if duplicate == nil {
             manager.associate(sourceInstance: sInstance, withDestinationInstance: dInstance, for: mapping)
         }
+
+        // A service in the trash is a deleted one – it gets its deletion record, dated when it was trashed
+        var deletion = duplicate?.deletion
+        if isTrashed {
+            let deletedAt = sInstance.value(forKey: "trashingDate") as? Date ?? modificationDate
+            let sealedSecret = try DeletedServiceEntity.contentCodec.seal(
+                DeletedServiceSensitiveContent(secret: secret),
+                hashes: [secretHash],
+                cipher: cipher
+            )
+            let record = deletion ?? NSEntityDescription.insertNewObject(
+                forEntityName: Self.deletedEntityName,
+                into: manager.destinationContext
+            )
+            record.setValue(secretHash, forKey: "secretHash")
+            record.setValue(sealedSecret, forKey: "encryptedContent")
+            record.setValue(deletedAt, forKey: "deletedAt")
+            deletion = record
+        } else if let record = deletion {
+            manager.destinationContext.delete(record)
+            deletion = nil
+        }
+        migrated[secretHash] = Migrated(
+            instance: dInstance,
+            isTrashed: isTrashed,
+            modificationDate: modificationDate,
+            deletion: deletion
+        )
+    }
+}
+
+/// TwoFAS7 → TwoFAS8: the title of `SectionEntity` moves into sealed content bound to the ID of the section
+@objc(EncryptSectionContentMigrationPolicy)
+final class EncryptSectionContentMigrationPolicy: NSEntityMigrationPolicy {
+    enum Failure: Error {
+        case missingCipher
+    }
+
+    private static let entityName = "SectionEntity"
+    /// Attributes kept in plaintext under the same names
+    private static let plainKeys = ["sectionID", "order", "isCollapsed", "creationDate", "modificationDate"]
+
+    override func createDestinationInstances(
+        forSource sInstance: NSManagedObject,
+        in mapping: NSEntityMapping,
+        manager: NSMigrationManager
+    ) throws {
+        assert(sInstance.entity.name == Self.entityName, "Policy used for another entity")
+        guard let cipher = manager.localStorageCipher else { throw Failure.missingCipher }
+
+        guard let sectionID = sInstance.value(forKey: "sectionID") as? UUID else {
+            Log("Migration - \(Self.entityName) skipped: no ID", module: .storage, severity: .warning)
+            return
+        }
+        try cipher.prepareForWriting()
+        let sealed = try SectionEntity.contentCodec.seal(
+            SectionSensitiveContent(title: sInstance.value(forKey: "title") as? String ?? ""),
+            hashes: [sectionID.bytesData],
+            cipher: cipher
+        )
+
+        // Through KVC – the class' accessor of the title isn't a modeled attribute
+        let dInstance = NSEntityDescription.insertNewObject(
+            forEntityName: Self.entityName,
+            into: manager.destinationContext
+        )
+        dInstance.setValue(sealed, forKey: "encryptedContent")
+        for key in Self.plainKeys {
+            dInstance.setValue(sInstance.value(forKey: key), forKey: key)
+        }
+        manager.associate(sourceInstance: sInstance, withDestinationInstance: dInstance, for: mapping)
     }
 }

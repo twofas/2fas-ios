@@ -52,7 +52,12 @@ func makeTwoFASStore(version: String, at url: URL, sectionCount: Int) throws {
 func insertTestSection(into context: NSManagedObjectContext) {
     let section = NSEntityDescription.insertNewObject(forEntityName: "SectionEntity", into: context)
     section.setValue(UUID(), forKey: "sectionID")
-    section.setValue("Section", forKey: "title")
+    // The current model keeps the title sealed – the bytes only have to be there, these tests don't open them
+    if section.entity.attributesByName["title"] != nil {
+        section.setValue("Section", forKey: "title")
+    } else {
+        section.setValue(Data("Section".utf8), forKey: "encryptedContent")
+    }
     section.setValue(Date(), forKey: "creationDate")
     section.setValue(0, forKey: "order")
     section.setValue(false, forKey: "isCollapsed")

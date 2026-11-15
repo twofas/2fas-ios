@@ -48,3 +48,22 @@ public struct ServiceSensitiveContent: Codable, Equatable {
         self.iconTypeID = iconTypeID
     }
 }
+
+/// The sealed content of a section (category)
+public struct SectionSensitiveContent: Codable, Equatable {
+    public var title: String
+
+    public init(title: String) {
+        self.title = title
+    }
+}
+
+/// The sealed content of the record of a deleted service. The secret is what identifies the service on other
+/// devices – it's kept only until the deletion gets its sync identifier.
+public struct DeletedServiceSensitiveContent: Codable, Equatable {
+    public var secret: String
+
+    public init(secret: String) {
+        self.secret = secret
+    }
+}

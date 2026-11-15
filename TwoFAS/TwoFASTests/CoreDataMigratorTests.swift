@@ -55,6 +55,7 @@ final class CoreDataMigratorTests: XCTestCase {
     /// Title of the sections that are only in the uncheckpointed WAL of `makeStoreWithUncheckpointedWAL`
     private static let walOnlyTitle = "WALOnlySectionMarker"
 
+    private let migrationCipher = makeTestCipher()
     private var directory: URL!
     /// Temporary directory of the migrator (stores of migration steps)
     private var temporaryDirectory: URL!
@@ -86,6 +87,9 @@ final class CoreDataMigratorTests: XCTestCase {
             temporaryDirectory: temporaryDirectory
         )
         migrator.bundle = twoFASModelBundle
+        // TwoFAS7 → TwoFAS8 seals the content – a store can't get to the current version without it
+        migrator.migrationUserInfo = [LocalStorageUserInfoKey.cipher: migrationCipher]
+        migrator.customizeMapping = Storage.addContentEncryptionPolicies
         return migrator
     }
 
@@ -192,10 +196,18 @@ final class CoreDataMigratorTests: XCTestCase {
         let stack = makeStack(migrator: makeMigrator())
         defer { closeStores(of: stack) }
         let context = stack.context
+        // The migration sealed the titles
+        let cipher = migrationCipher
         let walOnly = try context.performAndWait {
-            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "SectionEntity")
-            request.predicate = NSPredicate(format: "title == %@", Self.walOnlyTitle)
-            return try context.count(for: request)
+            try context.fetch(SectionEntity.request()).filter { section in
+                // The sections of a store made at the current version hold placeholder bytes, not a sealed title
+                let content = try? SectionEntity.contentCodec.open(
+                    section.encryptedContent,
+                    hashes: [section.sectionID.bytesData],
+                    cipher: cipher
+                )
+                return content?.title == Self.walOnlyTitle
+            }.count
         }
         return (try countSections(in: context), walOnly)
     }
@@ -577,7 +589,11 @@ final class CoreDataMigratorTests: XCTestCase {
         let cipher = makeTestCipher()
         let migrator = makeMigrator()
         migrator.migrationUserInfo = [LocalStorageUserInfoKey.cipher: cipher, "test.marker": "marker"]
-        migrator.customizeMapping = { _, _, mapping in
+        migrator.customizeMapping = { source, destination, mapping in
+            // The step that seals the content keeps its own policies
+            guard source.rawValue != "TwoFAS7" else {
+                return Storage.addContentEncryptionPolicies(source: source, destination: destination, mapping: mapping)
+            }
             let sectionMapping = mapping.entityMappings.first { $0.sourceEntityName == "SectionEntity" }
             sectionMapping?.entityMigrationPolicyClassName = "UserInfoRecordingMigrationPolicy"
             return mapping
@@ -598,7 +614,7 @@ final class CoreDataMigratorTests: XCTestCase {
         migrator.customizeMapping = { source, destination, mapping in
             XCTAssertFalse(mapping.entityMappings.isEmpty)
             steps.append("\(source.rawValue)->\(destination.rawValue)")
-            return mapping
+            return Storage.addContentEncryptionPolicies(source: source, destination: destination, mapping: mapping)
         }
 
         try migrator.migrateStoreToCurrentVersion(at: storeURL)
@@ -628,7 +644,7 @@ final class CoreDataMigratorTests: XCTestCase {
         XCTAssertEqual(try storeDirectoryContents(temporaryDirectory), [])
         XCTAssertEqual(try premigrationFiles(), [])
         XCTAssertTrue(migrator.requiresMigrationToCurrentVersion(at: storeURL))
-        migrator.customizeMapping = nil
+        migrator.customizeMapping = Storage.addContentEncryptionPolicies
         XCTAssertTrue(try migrator.prepareStore(at: storeURL))
         XCTAssertEqual(try countSections(in: makeStack(migrator: nil).context), 2)
     }

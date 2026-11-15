@@ -213,15 +213,37 @@ public final class Storage {
         serviceHandler.removeAll()
         storageRepositoryImpl.removeAllPairings()
         storageRepositoryImpl.removeAllAuthRequests()
+        // Nothing is left to be deleted elsewhere
+        DeletedServiceEntity.removeAll(on: coreDataStack.context)
+        DeletedSectionEntity.removeAll(on: coreDataStack.context)
+        coreDataStack.save()
+    }
+    
+    /// Keeps the records of deletions in order: one record per deleted service or section (a duplicate is merged
+    /// into the latest deletion) and none older than a year, so that they don't pile up
+    public func removeExpiredDeletions() {
+        let context = coreDataStack.context
+        let duplicates = DeletedServiceEntity.removeDuplicates(on: context)
+            + DeletedSectionEntity.removeDuplicates(on: context)
+        let services = DeletedServiceEntity.removeExpired(on: context)
+        let sections = DeletedSectionEntity.removeExpired(on: context)
+        guard duplicates + services + sections > 0 else { return }
+        Log(
+            "Storage - deletions removed: expired services \(services), expired sections \(sections), "
+            + "duplicates \(duplicates)",
+            module: .storage
+        )
+        coreDataStack.save()
     }
 }
 
 #if os(iOS)
-private extension Storage {
+extension Storage {
     /// Source entity name → policy moving its sensitive fields into sealed content (TwoFAS7 → TwoFAS8)
-    static let contentEncryptionPolicies = [
+    private static let contentEncryptionPolicies = [
         "ServiceEntity": NSStringFromClass(EncryptServiceContentMigrationPolicy.self),
-        "AuthRequestEntity": NSStringFromClass(EncryptAuthRequestContentMigrationPolicy.self)
+        "AuthRequestEntity": NSStringFromClass(EncryptAuthRequestContentMigrationPolicy.self),
+        "SectionEntity": NSStringFromClass(EncryptSectionContentMigrationPolicy.self)
     ]
     
     static func addContentEncryptionPolicies(

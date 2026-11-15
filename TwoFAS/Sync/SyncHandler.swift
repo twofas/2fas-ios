@@ -107,6 +107,10 @@ final class SyncHandler {
         cloudKit.quotaExceeded = { [weak self] in
             Log("SyncHandler - Quota exceeded!", module: .cloudSync)
             self?.handleNotificationCompletionHandlerError()
+            // Sync stays enabled and is tried again later: it mustn't be left as still in progress, and the log of
+            // the changes waiting to be sent is kept
+            self?.isSyncing = false
+            self?.applyingChanges = false
             self?.quotaExceeded?()
         }
         cloudKit.userDisablediCloud = { [weak self] in

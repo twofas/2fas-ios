@@ -132,6 +132,8 @@ final class MainRepositoryImpl: MainRepository {
             allowsMigration: protection.localStorageCipher.state == .available
         ) { Log($0, module: .storage) }
         
+        storage.removeExpiredDeletions()
+        
         let serviceMigration = ServiceMigrationController(storageRepository: storage.storageRepository)
         serviceMigration.serviceNameTranslation = T.Commons.service
         

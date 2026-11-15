@@ -269,7 +269,10 @@ final class DeletedSectionEntity: NSManagedObject {
         return expired.count
     }
 
-    @nonobjc private static func list(on context: NSManagedObjectContext, sectionID: SectionID) -> [DeletedSectionEntity] {
+    @nonobjc private static func list(
+        on context: NSManagedObjectContext,
+        sectionID: SectionID
+    ) -> [DeletedSectionEntity] {
         fetch(on: context, predicate: NSPredicate(format: "sectionID == %@", sectionID as CVarArg))
     }
 

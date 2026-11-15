@@ -89,7 +89,7 @@ final class SealedContentTests: XCTestCase {
         XCTAssertNil(context.localStorageCipher)
         let cipher = makeTestCipher()
         context.setLocalStorageCipher(cipher)
-        XCTAssertTrue(context.localStorageCipher === cipher)
+        XCTAssertIdentical(context.localStorageCipher, cipher)
     }
 
     // MARK: - Schema
@@ -109,7 +109,10 @@ final class SealedContentTests: XCTestCase {
     }
 
     func testContentOfNewerSchemaIsRejected() {
-        let plaintext = Data(#"{"v":2,"secret":"S","name":"N","labelTitle":"L","iconTypeID":"\#(UUID().uuidString)"}"#.utf8)
+        let plaintext = Data(
+            #"{"v":2,"secret":"S","name":"N","labelTitle":"L","iconTypeID":"\#(UUID().uuidString)"}"#
+                .utf8
+        )
 
         XCTAssertThrowsError(try codec.decode(plaintext)) { error in
             guard case SealedEntity.Failure.unsupportedContentVersion(2) = error else {

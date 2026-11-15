@@ -18,7 +18,6 @@
 //
 
 import XCTest
-import Common
 @testable import Common
 
 private final class FakeCipherAdmin: LocalStorageCipherAdmin {
